@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import { generateMap, Tile, tileAt, TILE_METERS, type WorldMap } from "@lastword/shared";
+import { generateMap, stampTerrain, Tile, tileAt, TILE_METERS, type WorldMap } from "@lastword/shared";
 import { dictionary } from "./data.js";
 import { Hud } from "./hud.js";
 import { connect, type Connection } from "./net.js";
@@ -9,7 +9,8 @@ const PX = 16;
 const COLOURS: Record<Tile, number> = {
   [Tile.DeepWater]: 0x1f4e79, [Tile.Water]: 0x2f79b5, [Tile.Sand]: 0xd9c98a, [Tile.Grass]: 0x6aa84f,
   [Tile.Forest]: 0x2f6b3a, [Tile.Hill]: 0x8d8f5a, [Tile.Mountain]: 0x77706a, [Tile.Road]: 0xb59b6b,
-  [Tile.City]: 0xa9a39a,
+  [Tile.City]: 0xa9a39a, [Tile.Pit]: 0x2a2622, [Tile.Snow]: 0xe8eef2, [Tile.Swamp]: 0x55663f,
+  [Tile.Lava]: 0xd9541e, [Tile.Wall]: 0x5b5650,
 };
 
 interface Marker { box: Phaser.GameObjects.Rectangle; label: Phaser.GameObjects.Text; bar?: Phaser.GameObjects.Rectangle }
@@ -24,6 +25,8 @@ class World extends Phaser.Scene {
   private lastSteer = 0;
   private foe: string | null = null;
   private over = false;
+  private editsApplied = 0;
+  private mapImage?: Phaser.GameObjects.Image;
 
   async create() {
     this.hud = new Hud((text) => {
@@ -67,8 +70,11 @@ class World extends Phaser.Scene {
       if (this.over) return;
       const at = this.cameras.main.getWorldPoint(p.x, p.y);
       const x = at.x / PX, y = at.y / PX;
-      // A click on another player attacks them; a click anywhere else walks there and stops attacking.
+      // A click on another player or on a thing attacks it; a click anywhere else walks there and stops attacking.
       let hit: string | null = null;
+      this.net.state.things.forEach((thing: any, id: string) => {
+        if (Math.hypot(thing.x - x, thing.y - y) < 0.6) hit = id;
+      });
       this.net.state.players.forEach((other: any, id: string) => {
         if (id !== this.net.sessionId && Math.hypot(other.x - x, other.y - y) < 0.8) hit = id;
       });
@@ -82,7 +88,7 @@ class World extends Phaser.Scene {
   /** One pixel per tile on a canvas, scaled up without smoothing. */
   private drawMap() {
     const size = this.map.size;
-    const canvas = this.textures.createCanvas("map", size, size)!;
+    const canvas = (this.textures.exists("map") ? this.textures.get("map") : this.textures.createCanvas("map", size, size)) as Phaser.Textures.CanvasTexture;
     const image = canvas.context.createImageData(size, size);
     for (let i = 0; i < size * size; i++) {
       const c = COLOURS[this.map.tiles[i] as Tile];
@@ -91,7 +97,7 @@ class World extends Phaser.Scene {
     }
     canvas.context.putImageData(image, 0, 0);
     canvas.refresh();
-    this.add.image(0, 0, "map").setOrigin(0).setScale(PX);
+    if (!this.mapImage) this.mapImage = this.add.image(0, 0, "map").setOrigin(0).setScale(PX);
   }
 
   /** `below` puts the label under the box, so a thing's name is not hidden by a player standing on it. */
@@ -113,10 +119,23 @@ class World extends Phaser.Scene {
     const state = this.net.state, mine = this.net.sessionId;
     const live = new Set<string>();
 
+    // Terrain that words have laid down since we last looked.
+    if (state.edits.length > this.editsApplied) {
+      for (; this.editsApplied < state.edits.length; this.editsApplied++) {
+        const e = state.edits[this.editsApplied];
+        stampTerrain(this.map, { x: e.x, y: e.y, radius: e.radius, tile: e.tile });
+      }
+      this.drawMap();
+    }
+
     state.things.forEach((t: any, id: string) => {
       live.add(id);
-      const m = this.marker(id, t.owner === mine ? 0xffd166 : 0xd98c5f, 8, t.phrase.toUpperCase(), 5, true);
-      m.box.setPosition(t.x * PX, t.y * PX);
+      const m = this.marker(id, t.owner === mine ? 0xffd166 : t.owner ? 0xd98c5f : 0xb9b4a8, 8, t.phrase.toUpperCase(), 5, true);
+      m.box.setPosition(t.x * PX, t.y * PX).setStrokeStyle(id === this.foe ? 2 : 1, id === this.foe ? 0xffd166 : 0x14161a);
+      if (t.hp < 100) {
+        m.bar ??= this.add.rectangle(0, 0, 12, 2, 0xff8a80).setOrigin(0, 0.5).setDepth(6);
+        m.bar.setPosition(t.x * PX - 6, t.y * PX - 6).setSize(12 * (t.hp / 100), 2);
+      }
       m.label.setPosition(t.x * PX, t.y * PX + 6);
     });
     state.players.forEach((p: any, id: string) => {

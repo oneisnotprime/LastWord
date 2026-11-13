@@ -1,6 +1,6 @@
 import { boot, type ColyseusTestServer } from "@colyseus/testing";
 import { afterAll, beforeAll, expect, it } from "vitest";
-import { generateMap, tileAt, walkable } from "@lastword/shared";
+import { generateMap, Tile, tileAt, walkable } from "@lastword/shared";
 import appConfig from "./app.config.js";
 import type { WorldRoom } from "./WorldRoom.js";
 
@@ -231,4 +231,52 @@ it("fights: armor breaks before the body, the dead are knocked out and the last 
   expect(got.b.find(([t]) => t === "dead")![1]).toBe(wa.player.name);
   expect(wa.letters.z).toBe(3); // the dead player's letters go to the killer
   expect(got.a.some(([t]) => t === "won")).toBe(true);
+});
+
+it("lays terrain, pushes players out of it, and lets things on the ground be destroyed for letters", async () => {
+  const room = (await colyseus.createRoom("world", {})) as unknown as WorldRoom;
+  const a: any = await colyseus.connectTo(room as never);
+  const b: any = await colyseus.connectTo(room as never);
+  const got = { a: [] as [string, unknown][], b: [] as [string, unknown][] };
+  for (const type of ["letters", "spelled", "refused", "notice", "dead", "won"]) {
+    a.onMessage(type, (m: unknown) => got.a.push([type, m]));
+    b.onMessage(type, (m: unknown) => got.b.push([type, m]));
+  }
+  const walkers = (room as any).walkers;
+  const wa = walkers.get(a.sessionId), wb = walkers.get(b.sessionId);
+  const city = room.map.cities[0]!;
+  wa.player.x = city.x + 0.5; wa.player.y = city.y + 0.5;
+  wb.player.x = city.x + 1.5; wb.player.y = city.y + 0.5;
+  const wait = () => new Promise((r) => setTimeout(r, 150));
+
+  // A pond is water two tiles across; both players end up on its shore, and clients are told.
+  wa.letters = { p: 1, o: 1, n: 1, d: 1 };
+  a.send("spell", "pond");
+  await wait();
+  await (room as any).waitForNextPatch();
+  expect(tileAt(room.map, city.x + 0.5, city.y + 0.5)).toBe(Tile.Water);
+  for (const w of [wa, wb]) expect(walkable(room.map, w.player.x, w.player.y)).toBe(true);
+  expect(b.state.edits.length).toBe(1);
+  expect(b.state.edits[0].tile).toBe(Tile.Water);
+  const pond = [...room.state.things.entries()].find(([, t]) => t.phrase === "pond")![0];
+  a.send("take");
+  a.send("attack", pond); // part of the land: neither carried nor attacked
+  await wait();
+  expect(wa.gear).toHaveLength(0);
+  expect(wa.foe).toBeNull();
+
+  // B builds a chair; A smashes it and earns D for destroying and V for beating another's thing.
+  wb.letters = { c: 1, h: 1, a: 1, i: 1, r: 1 };
+  b.send("spell", "chair");
+  await wait();
+  const chair = [...room.state.things.entries()].find(([, t]) => t.phrase === "chair")![0];
+  wa.letters = {};
+  wa.player.x = wb.player.x; wa.player.y = wb.player.y; // there is no path-finding around the pond yet
+  a.send("attack", chair);
+  await wait();
+  for (let i = 0; i < 300 && room.state.things.has(chair); i++) room.update(0.1);
+  await wait();
+  expect(room.state.things.has(chair)).toBe(false);
+  expect(wa.letters).toEqual({ d: 1, v: 1 });
+  expect(got.b.some(([t, m]) => t === "notice" && m === "Your CHAIR was destroyed")).toBe(true);
 });

@@ -3,7 +3,7 @@ import { seeded } from "./rng.js";
 /** Metres across one map tile. Word properties are in metres; the map is in tiles. */
 export const TILE_METERS = 4;
 
-export enum Tile { DeepWater, Water, Sand, Grass, Forest, Hill, Mountain, Road, City }
+export enum Tile { DeepWater, Water, Sand, Grass, Forest, Hill, Mountain, Road, City, Pit, Snow, Swamp, Lava, Wall }
 
 /** Slowdown for walking across a tile; Infinity cannot be walked. */
 export const WALK_COST: Record<Tile, number> = {
@@ -16,7 +16,51 @@ export const WALK_COST: Record<Tile, number> = {
   [Tile.Mountain]: Infinity,
   [Tile.Road]: 0.5,
   [Tile.City]: 0.7,
+  [Tile.Pit]: Infinity,
+  [Tile.Snow]: 2,
+  [Tile.Swamp]: 4,
+  [Tile.Lava]: Infinity,
+  [Tile.Wall]: Infinity,
 };
+
+/** The `tile_type` property's values, as map tiles. */
+export const TILE_TYPES: Record<string, Tile> = {
+  water: Tile.Water, deep_water: Tile.DeepWater, hill: Tile.Hill, mountain: Tile.Mountain, pit: Tile.Pit,
+  forest: Tile.Forest, field: Tile.Grass, sand: Tile.Sand, snow: Tile.Snow, swamp: Tile.Swamp,
+  lava: Tile.Lava, road: Tile.Road, floor: Tile.City, wall: Tile.Wall,
+};
+
+/** A change a word made to the map: a disc of one kind of tile. */
+export interface Stamp { x: number; y: number; radius: number; tile: Tile }
+
+/** Applies a stamp. Server and client both do this, in the same order, so their maps agree. */
+export function stampTerrain(map: WorldMap, s: Stamp): void {
+  const r = Math.max(0, s.radius);
+  for (let y = Math.floor(s.y - r); y <= Math.floor(s.y + r); y++) {
+    for (let x = Math.floor(s.x - r); x <= Math.floor(s.x + r); x++) {
+      if (x < 0 || y < 0 || x >= map.size || y >= map.size) continue;
+      if (Math.hypot(x + 0.5 - s.x, y + 0.5 - s.y) <= r + 0.5) map.tiles[y * map.size + x] = s.tile;
+    }
+  }
+}
+
+/** The nearest point a walker can stand on, searching outward in rings. */
+export function nearestWalkable(map: WorldMap, p: Point): Point {
+  if (walkable(map, p.x, p.y)) return p;
+  for (let ring = 1; ring < map.size; ring++) {
+    let best: Point | null = null, bestDistance = Infinity;
+    for (let dy = -ring; dy <= ring; dy++) {
+      for (let dx = -ring; dx <= ring; dx++) {
+        if (Math.max(Math.abs(dx), Math.abs(dy)) !== ring) continue;
+        const q = { x: Math.floor(p.x) + dx + 0.5, y: Math.floor(p.y) + dy + 0.5 };
+        const d = Math.hypot(q.x - p.x, q.y - p.y);
+        if (d < bestDistance && walkable(map, q.x, q.y)) { best = q; bestDistance = d; }
+      }
+    }
+    if (best) return best;
+  }
+  return p;
+}
 
 export interface WorldMap {
   seed: number;

@@ -1,11 +1,11 @@
 import { Room, type Client } from "colyseus";
 import { StateView } from "@colyseus/schema";
 import {
-  addLetters, GATHER_SECONDS, gatherLetter, generateMap, GIVE_RANGE, missing, parsePhrase, production, randomWalkable, seeded, spend, stepToward, strikeUnit, TILE_METERS, Unit,
-  type Dictionary, type Letters, type Point, type Spelled, type WorldMap,
+  addLetters, GATHER_SECONDS, gatherLetter, generateMap, GIVE_RANGE, missing, parsePhrase, production, nearestWalkable, randomWalkable, resolve, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit,
+  type Dictionary, type Entity, type Letters, type Point, type Spelled, type WorldMap,
 } from "@lastword/shared";
 import { loadDictionary } from "./data.js";
-import { Player, Thing, WorldState } from "./state.js";
+import { Edit, Player, Thing, WorldState } from "./state.js";
 
 /** Simulation steps per second. */
 export const TICK_HZ = 10;
@@ -19,6 +19,8 @@ interface Gear {
   vehicle: boolean;
   /** Remaining integrity of protection and vehicles; null until first built into a unit. */
   integrity: number | null;
+  /** Part of the land (a lake, a mountain): cannot be picked up or attacked. */
+  terrain?: boolean;
 }
 
 /** How close, in tiles, a thing on the ground must be to pick it up. */
@@ -53,6 +55,9 @@ interface Producer { owner: string; rates: Letters; built: Letters }
 function starterLetters(rng: () => number): Letters {
   const common = "eeeeeeeeeeeiiiiiiiiaaaaaaaarrrrrrrnnnnnnnttttttoooooosssssslllllccccuuuudddpppmmmhhggyybb";
   const hand: Letters = {};
+  // LETTERS=9 is for trying things out: that many of every letter.
+  const plenty = Number(process.env.LETTERS);
+  if (plenty > 0) return Object.fromEntries([..."abcdefghijklmnopqrstuvwxyz"].map((ch) => [ch, plenty]));
   for (const ch of "sword") hand[ch] = (hand[ch] ?? 0) + 1;
   for (let i = 0; i < 20; i++) {
     const ch = common[Math.floor(rng() * common.length)]!;
@@ -88,6 +93,8 @@ export class WorldRoom extends Room {
   /** What each thing on the ground is, so it can be picked up again. */
   private grounded = new Map<string, Gear>();
   private everJoined = 0;
+  /** Things on the ground that have been attacked, with the damage they carry. */
+  private thingEntities = new Map<string, Entity>();
 
   messages = {
     /** Walk toward a point on the map. */
@@ -115,7 +122,7 @@ export class WorldRoom extends Room {
       this.state.things.forEach((t, id) => {
         const d = Math.hypot(t.x - walker.player.x, t.y - walker.player.y);
         const free = t.owner === client.sessionId || t.owner === "";
-        if (free && d <= bestDistance && this.grounded.has(id)) { best = id; bestDistance = d; }
+        if (free && d <= bestDistance && this.grounded.has(id) && !this.grounded.get(id)!.terrain) { best = id; bestDistance = d; }
       });
       if (!best) return void client.send("refused", "Nothing of yours to pick up here");
       const gear = this.grounded.get(best)!;
@@ -140,7 +147,9 @@ export class WorldRoom extends Room {
     attack: (client: Client, target: unknown) => {
       const walker = this.walkers.get(client.sessionId);
       if (!walker) return;
-      walker.foe = typeof target === "string" && target !== client.sessionId && this.walkers.has(target) ? target : null;
+      const ok = typeof target === "string" && target !== client.sessionId &&
+        (this.walkers.has(target) || (this.grounded.has(target) && !this.grounded.get(target)!.terrain));
+      walker.foe = ok ? (target as string) : null;
     },
     /** Hand letters to a player standing close by. */
     give: (client: Client, offer: unknown) => {
@@ -189,9 +198,15 @@ export class WorldRoom extends Room {
         };
         const wearable = gear.vehicle || phrase.stats.get("equip_slot") !== "none";
         // Things you can hold, wear or ride go straight onto you if there is room; the rest sit on the ground.
+        const here = { x: walker.player.x, y: walker.player.y }; // laying terrain may move the speller
         const worn = wearable && this.equip(walker, gear) === null;
+        const tile = TILE_TYPES[String(phrase.stats.get("tile_type"))];
+        if (tile !== undefined) {
+          gear.terrain = true;
+          this.reshape(walker.player.x, walker.player.y, phrase.stats.num("radius"), tile);
+        }
         if (!worn) {
-          const id = this.addThing(gear, client.sessionId, walker.player.x, walker.player.y);
+          const id = this.addThing(gear, client.sessionId, here.x, here.y);
           const rates = production(phrase.stats);
           if (Object.keys(rates).length) this.producers.set(id, { owner: client.sessionId, rates, built: {} });
         }
@@ -333,6 +348,7 @@ export class WorldRoom extends Room {
     if (killer) {
       for (const [ch, n] of Object.entries(dead.letters)) if (n > 0) addLetters(killer.letters, ch.repeat(n));
       const kc = this.clients.find((c) => c.sessionId === killerId);
+      addLetters(killer.letters, "k"); // K comes from kills
       kc?.send("letters", killer.letters);
       kc?.send("notice", `You killed ${dead.player.name} and took their letters`);
     }
@@ -349,6 +365,41 @@ export class WorldRoom extends Room {
     this.refreshViews();
   }
 
+  /** One strike on a thing lying on the ground. Destroying things is where D comes from. */
+  private strikeThing(attackerId: string, w: Walker, id: string, thing: Thing) {
+    const gear = this.grounded.get(id)!;
+    let entity = this.thingEntities.get(id);
+    if (!entity) {
+      entity = spawn(gear.phrase, resolve(this.dict, gear.spelled.noun, gear.spelled.adjectives));
+      if (gear.integrity !== null) entity.integrity = gear.integrity;
+      this.thingEntities.set(id, entity);
+    }
+    strike(w.unit.attack, entity, this.rng);
+    gear.integrity = entity.integrity;
+    thing.hp = Math.max(0, Math.ceil((entity.integrity / entity.stats.num("integrity")) * 100));
+    if (entity.integrity > 0) return;
+    const client = this.clients.find((c) => c.sessionId === attackerId);
+    const theirs = thing.owner !== "" && thing.owner !== attackerId;
+    addLetters(w.letters, theirs ? "dv" : "d"); // V comes from beating another player's things
+    client?.send("letters", w.letters);
+    client?.send("notice", `${gear.phrase.toUpperCase()} destroyed`);
+    if (theirs) this.clients.find((c) => c.sessionId === thing.owner)?.send("notice", `Your ${gear.phrase.toUpperCase()} was destroyed`);
+    this.removeThing(id);
+    w.foe = null;
+    this.refreshViews();
+  }
+
+  /** Lays terrain and moves anyone now standing where they cannot onto the nearest ground. */
+  reshape(x: number, y: number, radius: number, tile: number) {
+    const stamp = { x, y, radius, tile };
+    stampTerrain(this.map, stamp);
+    this.state.edits.push(Object.assign(new Edit(), stamp));
+    for (const w of this.walkers.values()) {
+      const safe = nearestWalkable(this.map, w.player);
+      if (safe !== w.player) { w.player.x = safe.x; w.player.y = safe.y; w.target = null; }
+    }
+  }
+
   removeThing(id: string) {
     const t = this.state.things.get(id);
     if (!t) return;
@@ -357,6 +408,7 @@ export class WorldRoom extends Room {
     this.state.things.delete(id);
     this.grounded.delete(id);
     this.producers.delete(id);
+    this.thingEntities.delete(id);
   }
 
   addThing(gear: Gear, owner: string, x: number, y: number): string {
@@ -365,6 +417,7 @@ export class WorldRoom extends Room {
     const phrase = gear.phrase;
     const thing = new Thing();
     thing.phrase = phrase;
+    thing.hp = 100;
     thing.owner = owner;
     thing.x = x;
     thing.y = y;
@@ -383,17 +436,21 @@ export class WorldRoom extends Room {
     for (const [id, w] of [...this.walkers]) {
       w.cooldown = Math.max(0, w.cooldown - seconds);
       const foeId = w.foe;
-      const foe = foeId ? this.walkers.get(foeId) : undefined;
-      if (!foeId || !foe || !this.walkers.has(id)) continue;
+      if (!foeId || !this.walkers.has(id)) continue;
+      const foe = this.walkers.get(foeId);
+      const thing = foe ? undefined : this.state.things.get(foeId);
+      const at = foe?.player ?? thing;
+      if (!at) { w.foe = null; continue; }
       const attack = w.unit.attack;
       const reach = Math.max(1, attack.num("attack_range") / TILE_METERS);
-      if (Math.hypot(foe.player.x - w.player.x, foe.player.y - w.player.y) > reach) {
-        w.target = { x: foe.player.x, y: foe.player.y }; // close the distance
+      if (Math.hypot(at.x - w.player.x, at.y - w.player.y) > reach) {
+        w.target = { x: at.x, y: at.y }; // close the distance
         continue;
       }
       w.target = null;
       if (w.cooldown > 0) continue;
-      strikeUnit(w.unit, foe.unit, this.rng);
+      if (thing) this.strikeThing(id, w, foeId, thing);
+      else strikeUnit(w.unit, foe!.unit, this.rng);
       const rate = attack.num("attack_rate");
       w.cooldown = rate > 0 ? 1 / rate : 1;
       if (attack.flag("single_use") && w.unit.weapon) {
@@ -401,6 +458,7 @@ export class WorldRoom extends Room {
         w.gear = w.gear.filter((g) => g.spelled !== spent);
         this.rebuild(w);
       }
+      if (!foe) continue;
       this.settle(foeId, foe);
       if (foe.unit.dead) this.kill(foeId, id);
     }

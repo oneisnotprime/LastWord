@@ -29,6 +29,10 @@
 - Every word feeds the same shared systems (PLAN.md); no private mechanics per word.
 - The game lives in its own repository.
 
+## High priority
+
+- [ ] Dedicated loadout and inventory screens
+
 ## Data
 
 - [x] Word lists by role, class and archetype (59,232 with a role, 5,385 inert)
@@ -135,8 +139,12 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
 - [ ] Trading is a typed command (give player2 abc); needs a real interface and two-way offers
 - [x] M5 (part): equipping, picking up and dropping, attacking players, death and knockout,
       last one alive wins
-- [ ] M5 (rest): placement rules (sky, target, region), terrain words, events such as THEFT,
-      attacking things on the ground, verbs, pets acting on their own
+- [x] M5: terrain words reshape the map; things on the ground can be attacked and destroyed;
+      D, K and V now have sources (destroying things, kills, beating another player's things)
+- [ ] M5 (rest): sky and region words (SUN, RAIN), events such as THEFT, verbs, pets acting on
+      their own
+- [ ] Terrain is laid where the speller stands and pushes everyone to the nearest ground; a
+      destroyed lake or mountain marker cannot be removed, and terrain cannot be undone
 - [ ] A round does not reset after someone wins; the dead stay connected as spectators
 - [ ] Labels of adjacent players overlap; fix in the art pass
 - [ ] M6 and M7 in PLAN.md
