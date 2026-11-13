@@ -45,6 +45,26 @@ Comparatives and superlatives reuse the base adjective's operations at a higher 
 (`operators.json`): a multiplier `f` becomes `f ** degree`, an added amount `a` becomes
 `a * degree`.
 
+## Generating more words
+
+`tools/generate_words.py` gives property values to more of the lexicon with Claude, through the
+Message Batches API. It picks the most common words that are not hand-written (leaving out
+grammar words), sends them twelve at a time with the property schema and every line of
+`demo_words.txt` as examples, and writes `tools/generated_words.txt` in the same format.
+
+```
+python tools/generate_words.py prepare 3000 <wordnet dict dir>   # pick words, write requests
+python tools/generate_words.py pilot 2                           # try two requests at full price
+python tools/generate_words.py submit                            # send the rest as one batch
+python tools/generate_words.py status
+python tools/generate_words.py collect                           # write generated_words.txt
+tools/build_all.sh <wordnet dict dir>
+```
+
+`build_demo.py` checks generated lines leniently: a bad token is dropped and a word it cannot
+place is skipped, both listed in `data/generated_problems.txt`. Hand-written words always win.
+Needs `pip install anthropic` and an `ANTHROPIC_API_KEY`.
+
 ## Rebuilding
 
 ```
