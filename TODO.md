@@ -92,6 +92,9 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
 - [x] Move to its own repository
 - [x] M0: scaffold packages, test commands, CI
 - [x] M1: rules engine (operators, degrees, absolutes, combat tick)
-- [ ] M2 to M7 in PLAN.md
+- [x] M2: server, generated map, movement, sight-based views; 100-bot load test passed
+- [ ] Repeat the load test once objects exist (thousands of entities in the state)
+- [ ] Path-finding: walkers stop at water and mountains instead of going around
+- [ ] M3 to M7 in PLAN.md
 - [ ] Map generator: cities, countryside, letter sources
 - [ ] Demo: one map, the 351-word dictionary, a handful of players

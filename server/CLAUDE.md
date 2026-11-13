@@ -13,7 +13,8 @@ Node process that owns the game state. One room per map instance (from milestone
 - `src/state.ts` what is sent to clients. Fields tagged `.view()` go only to clients whose
   view holds that instance. Keep it small: every field costs bandwidth for every viewer.
 - `loadtest/bots.ts` bot load test: `npx tsx loadtest/bots.ts 100 600` (add `crowd` after the
-  endpoint for the worst case). Run the server with `METRICS=1` to see CPU and tick time.
+  endpoint, and start the server with `CROWD=1`, for the worst case where everyone sees
+  everyone). Run the server with `METRICS=1` to see CPU and tick time.
 - Colyseus 0.18: `defineServer`/`defineRoom`, `messages = {}`, `setTimestep`, `@colyseus/sdk`
   on the client. Older tutorials use a different API; check docs.colyseus.io.
 - Ignore options a client sends when joining. A message with no handler disconnects the sender.

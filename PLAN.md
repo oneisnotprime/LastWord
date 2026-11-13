@@ -76,10 +76,16 @@ On a controller, spelling is done by picking from the letters you hold.
 - Word data (`demo.json`, later the full set) ships to the client as a static file. The wire
   carries word ids and changed values, never property tables.
 - Transport is WebSocket. No peer-to-peer.
-- Verify early: Colyseus publishes no benchmark for 100 players with thousands of objects. Its
-  guidance is that bandwidth from patch size and frequency is the limit, and to load test.
-  M2 ends with a 100-bot load test using `@colyseus/loadtest`; if it fails we switch to plain
-  `ws` before anything else is built on it.
+- Measured in M2 with 100 bots on one machine, players only (no objects yet):
+
+  | Case | Others in sight | Server CPU (one core) | Tick | Traffic per client |
+  |---|---|---|---|---|
+  | Spread out, 10 minutes | 1.5 | 2.3% average, 6.2% peak | 0.15 ms average, 1.7 ms worst | 1.4 KB/s |
+  | Everyone in one city, 2 minutes | 99 | 3.7% average | 0.4 ms average, 7.2 ms worst | 8.1 KB/s |
+
+  Traffic is counted on the loopback interface, both directions, with TCP overhead. Colyseus
+  stays. The test to repeat is the same one with thousands of objects in the state, since
+  its per-client views are documented as not optimised for large sets.
 
 ## Hosting
 

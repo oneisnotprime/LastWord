@@ -67,7 +67,11 @@ export class WorldRoom extends Room {
 
   onJoin(client: Client) {
     const body = resolve(this.dict, "human");
-    const spot = randomWalkable(this.map, this.rng);
+    // CROWD=1 is for load tests: everyone starts in the first city, in sight of each other.
+    const city = this.map.cities[0];
+    const spot = process.env.CROWD && city
+      ? { x: city.x + (this.rng() - 0.5) * 6, y: city.y + (this.rng() - 0.5) * 6 }
+      : randomWalkable(this.map, this.rng);
     const player = new Player();
     player.name = `player${this.clients.length}`;
     player.x = spot.x;
