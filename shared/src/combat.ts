@@ -56,11 +56,14 @@ export function strike(attacker: Stats, defender: Entity, rng: Rng): Strike {
     if (rng() < target.num("block")) return miss;
   }
 
+  // Siege weapons multiply their damage against things that are built or part of the land.
+  const fixed = !target.flag("alive") && !target.flag("portable");
+  const siege = fixed ? attacker.num("siege") : 1;
   const pierce = attacker.absolute("ignores_resistance");
   const byType: Record<string, number> = {};
   let total = 0;
   for (const type of damageTypes(attacker)) {
-    const raw = attacker.num(`dmg_${type}`);
+    const raw = attacker.num(`dmg_${type}`) * siege;
     if (raw <= 0) continue;
     let resistance = Math.min(1, target.num(`res_${type}`));
     const wall = target.absolute(`res_${type}`);

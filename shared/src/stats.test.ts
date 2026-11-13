@@ -36,8 +36,8 @@ describe("resolve", () => {
   });
 
   it("keeps an absolute through later arithmetic", () => {
-    const god = resolve(dict, "god", ["big"]);
-    expect(god.get("integrity")).toBe("ABS");
+    const rocket = resolve(dict, "rocket", ["flying"]); // FLYING adds 3000 m to a ceiling that is already absolute
+    expect(rocket.get("flight_ceiling")).toBe("ABS");
   });
 
   it("enforces the adjective slot limit", () => {

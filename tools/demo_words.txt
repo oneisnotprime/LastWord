@@ -16,6 +16,7 @@ rifle: mass=4 length=1.1 integrity=50 material=steel,wood equip_slot=held hands_
 cannon: mass=1200 length=3 integrity=400 hardness=8 material=iron portable=false dmg_blast=300 dmg_crush=200 attack_rate=0.1 attack_range=800 attack_area=4 siege=4 loudness=10 ammo_per_hit=1 ammo_type=ball
 bomb: mass=100 length=1 integrity=20 single_use=true dmg_blast=1500 dmg_fire=300 attack_area=15 attack_windup=5 siege=3 friendly_fire=true loudness=10
 grenade: mass=0.4 length=0.1 integrity=5 equip_slot=held hands_required=1 single_use=true dmg_blast=250 dmg_pierce=80 attack_range=30 attack_area=5 attack_windup=3 friendly_fire=true
+dynamite: mass=0.2 length=0.2 integrity=5 equip_slot=held hands_required=1 single_use=true dmg_blast=2500 attack_range=20 attack_area=6 attack_windup=4 siege=6 friendly_fire=true loudness=10
 missile: mass=1500 length=6 integrity=60 single_use=true speed_air=800 self_propelled=true requires_pilot=false dmg_blast=5000 dmg_fire=1000 attack_range=300000 attack_area=30 targets=land,air,water siege=4 friendly_fire=true
 nuke: mass=400 length=2 integrity=50 single_use=true dmg_blast=5000000 dmg_fire=2000000 dmg_radiation=500000 attack_area=3000 attack_windup=10 siege=10 friendly_fire=true lingering=600 radioactivity=10 loudness=10 luminosity=10
 arrow: mass=0.03 length=0.8 integrity=3 sharpness=7 material=wood single_use=true plural_count=20
@@ -171,8 +172,8 @@ ant: mass=0.000005 length=0.005 integrity=1 alive=true diet=omnivore speed_land=
 dragon: mass=20000 length=20 height=6 integrity=60000 alive=true sentient=true intelligence=8 loyalty=2 aggression=8 diet=carnivore food_need=5 speed_land=10 speed_air=45 flight_ceiling=6000 mountable=true seats=2 dmg_fire=2500 dmg_slash=900 attack_rate=0.5 attack_range=40 attack_area=10 targets=land,air,water armor=120 res_fire=1 res_slash=0.7 fear_aura=9 storage_letters=3000 security=8
 ghost: mass=0 integrity=200 alive=false sentient=true speed_land=4 speed_air=4 phase=true hover=true stealth=8 nocturnal=true res_blunt=1 res_slash=1 res_pierce=1 res_holy=-1 dmg_cold=20 dmg_psychic=30 inflict_fear=6 attack_rate=0.5 fear_aura=7 on_owner_death=vanish
 zombie: mass=70 integrity=250 alive=false aggression=10 intelligence=1 speed_land=1.5 dmg_blunt=20 dmg_disease=20 attack_rate=0.7 immune_fear=true immune_poison=true immune_sleep=true res_holy=-1 res_fire=-0.5 contagion=0.3 pack_size=5 hands=true
-god: mass=0 integrity=ABS alive=true sentient=true intelligence=10 loyalty=0 obedience=0 speed_land=ABS speed_air=ABS phase=true placement=sky dmg_holy=1000000 attack_rate=0.02 attack_range=ABS attack_area=50 targets=land,air,water,underground authority=10 fear_aura=10 recruit_rate=5 read_properties=10 heals=100 persistence=10 upkeep_food=500
-giant: mass=8000 height=8 integrity=9000 alive=true sentient=true intelligence=3 loyalty=4 aggression=6 diet=omnivore food_need=4 speed_land=9 hands=true dmg_crush=900 attack_rate=0.4 attack_range=5 attack_area=3 knockback=10 siege=4 fear_aura=6 labor=30
+god: mass=0 integrity=1000000 res_blunt=1 res_slash=1 res_pierce=1 res_crush=1 res_fire=1 res_cold=1 res_electric=1 res_acid=1 res_poison=1 res_radiation=1 res_blast=1 res_sonic=1 res_light=1 res_dark=1 res_water=1 res_wind=1 res_earth=1 res_disease=1 res_suffocation=1 res_hunger=1 alive=true sentient=true intelligence=10 loyalty=0 obedience=0 speed_land=ABS speed_air=ABS phase=true placement=sky dmg_holy=1000000 attack_rate=0.02 attack_range=ABS attack_area=50 targets=land,air,water,underground authority=10 fear_aura=10 recruit_rate=5 read_properties=10 heals=100 persistence=10
+giant: mass=8000 height=8 integrity=9000 alive=true sentient=true intelligence=3 loyalty=4 aggression=6 diet=omnivore food_need=4 speed_land=9 hands=true dmg_crush=900 attack_rate=0.4 attack_range=5 attack_area=3 knockback=10 siege=4 fear_aura=6 labor=30 strength=10
 angel: mass=70 integrity=5000 alive=true sentient=true intelligence=9 loyalty=10 speed_air=60 hover=true hands=true dmg_holy=400 attack_rate=1 heals=30 res_unholy=1 res_holy=1 luminosity=9 prevents_death=1 equip_slot=companion counters=ghost,zombie,demon
 demon: mass=300 height=3 integrity=8000 alive=true sentient=true intelligence=8 loyalty=1 aggression=9 speed_land=12 speed_air=20 hands=true dmg_unholy=600 dmg_fire=300 attack_rate=1 res_fire=1 res_unholy=1 res_holy=-1 fear_aura=9 letter_steal=3
 
@@ -182,8 +183,8 @@ queen: mass=65 integrity=110 alive=true sentient=true intelligence=8 hands=true 
 captain: mass=80 integrity=160 alive=true sentient=true intelligence=7 hands=true speech=true speed_land=5 authority=5 command_limit=20 courage=8 morale+3 accuracy+0.05
 
 # noun fighter
-knight: mass=110 integrity=700 alive=true sentient=true intelligence=6 loyalty=9 courage=9 hands=true speech=true speed_land=4 armor=30 dmg_slash=60 attack_rate=1 block=0.4 food_need=0.04 produce_K=0.05
-soldier: mass=90 integrity=200 alive=true sentient=true intelligence=5 loyalty=6 courage=6 hands=true speech=true speed_land=5 dmg_pierce=60 attack_rate=1.5 attack_range=200 targets=land,air food_need=0.04 pack_size=4
+knight: mass=110 integrity=700 alive=true sentient=true intelligence=6 loyalty=9 courage=9 hands=true speech=true speed_land=4 armor=30 dmg_slash=60 attack_rate=1 block=0.4 food_need=0.04 produce_K=0.05 strength=7 training=6
+soldier: mass=90 integrity=200 alive=true sentient=true intelligence=5 loyalty=6 courage=6 hands=true speech=true speed_land=5 dmg_pierce=60 attack_rate=1.5 attack_range=200 targets=land,air food_need=0.04 pack_size=4 training=4
 
 # noun criminal
 thief: mass=65 integrity=90 alive=true sentient=true intelligence=7 loyalty=2 hands=true speech=true speed_land=7 agility=8 climb=7 stealth=8 letter_steal=5 dmg_pierce=15 attack_rate=1.5 counters=lockable
@@ -227,10 +228,10 @@ sea: tile_type=deep_water radius=40 depth=200 moisture=8 blocks=land produce_O=5
 ocean: tile_type=deep_water radius=150 depth=4000 moisture=10 blocks=land produce_O=10 portable=false
 
 # noun elevation
-mountain: tile_type=mountain radius=8 elevation=2000 mass=1000000000000 integrity=ABS blocks=land,sight,projectiles movement_cost=6 portable=false produce_G=1 temperature_delta=-10 sight_range+5000
+mountain: tile_type=mountain radius=8 elevation=2000 mass=1000000000000 integrity=5000000 armor=2000 hardness=8 blocks=land,sight,projectiles movement_cost=6 portable=false produce_G=1 temperature_delta=-10 sight_range+5000
 hill: tile_type=hill radius=3 elevation=100 blocks=sight movement_cost=2 portable=false sight_range+500 attack_range+20 produce_G=0.2
-volcano: tile_type=mountain radius=6 elevation=1500 integrity=ABS blocks=land,sight movement_cost=6 portable=false temperature=1100 dmg_fire=4000 dmg_blast=2000 attack_rate=0.005 attack_area=400 friendly_fire=true lingering=30 fertility=6 produce_F=2 luminosity=6
-cliff: tile_type=wall radius=1 length=200 elevation=60 integrity=ABS blocks=land movement_cost=10 portable=false
+volcano: tile_type=mountain radius=6 elevation=1500 integrity=4000000 armor=2000 hardness=8 blocks=land,sight movement_cost=6 portable=false temperature=1100 dmg_fire=4000 dmg_blast=2000 attack_rate=0.005 attack_area=400 friendly_fire=true lingering=30 fertility=6 produce_F=2 luminosity=6
+cliff: tile_type=wall radius=1 length=200 elevation=60 integrity=2000000 armor=1500 hardness=8 blocks=land movement_cost=10 portable=false
 
 # noun depression
 pit: tile_type=pit radius=1 depth=10 blocks=land movement_cost=8 portable=false inflict_root=10 dmg_blunt=40 stealth=2
@@ -245,9 +246,9 @@ forest: tile_type=forest radius=10 movement_cost=2 blocks=sight cover=0.4 stealt
 beach: tile_type=sand radius=4 movement_cost=1.3 portable=false placeable_on=land,water produce_O=0.3
 
 # noun celestial
-sun: placement=sky mass=ABS integrity=ABS temperature=5500 luminosity=10 field_radius=ABS field_targets=all sets_daylight=day clears_weather=rain,fog,snow,storm temperature_delta=10 growth=1.5 persistence=10 night_vision=false stealth+-2 dmg_light=2 res_dark=1 counters=night,ghost,fog
-moon: placement=sky integrity=ABS luminosity=3 field_radius=ABS field_targets=all sets_daylight=night light_delta=2 persistence=10 produce_O=0 growth=1 moisture=1 counters=sun
-star: placement=sky integrity=ABS luminosity=1 field_radius=ABS light_delta=1 map_reveal=30 persistence=30 detect_letters=1000 plural_count=100
+sun: placement=sky mass=2e30 integrity=1000000000 armor=1000000 res_fire=1 res_light=1 temperature=5500 luminosity=10 field_radius=ABS field_targets=all sets_daylight=day clears_weather=rain,fog,snow,storm temperature_delta=10 growth=1.5 persistence=10 night_vision=false stealth+-2 dmg_light=2 res_dark=1 counters=night,ghost,fog
+moon: placement=sky integrity=100000000 armor=100000 luminosity=3 field_radius=ABS field_targets=all sets_daylight=night light_delta=2 persistence=10 produce_O=0 growth=1 moisture=1 counters=sun
+star: placement=sky integrity=1000000000 armor=1000000 res_fire=1 res_light=1 luminosity=1 field_radius=ABS light_delta=1 map_reveal=30 persistence=30 detect_letters=1000 plural_count=100
 
 # noun metal
 iron: mass=7.8 density=7800 hardness=6 melting_point=1538 conductivity=7 magnetism=5 integrity=200 value=5
@@ -385,8 +386,8 @@ heavy: mass*3 integrity*1.5 armor+10 knockback+2 speed_land*0.7 speed_air*0.6 bu
 light: mass*0.4 speed_land*1.2 speed_air*1.3 integrity*0.8 buoyancy+2
 fast: speed_land*2 speed_water*2 speed_air*2 attack_rate*1.3 evasion+0.1 upkeep_fuel*1.5 food_need*1.3
 slow: speed_land*0.5 speed_water*0.5 speed_air*0.5 attack_rate*0.7 upkeep_fuel*0.7
-strong: integrity*2 dmg_blunt*1.5 dmg_slash*1.5 dmg_crush*1.5 carry_capacity*2 tow_capacity*2 labor*1.5
-weak: integrity*0.5 dmg_blunt*0.6 dmg_slash*0.6 carry_capacity*0.5
+strong: integrity*2 dmg_blunt*1.5 dmg_slash*1.5 dmg_crush*1.5 carry_capacity*2 tow_capacity*2 labor*1.5 strength+3
+weak: integrity*0.5 dmg_blunt*0.6 dmg_slash*0.6 carry_capacity*0.5 strength+-2
 sharp: sharpness+3 dmg_slash*1.6 dmg_pierce*1.4 armor_pierce+0.2
 hard: hardness+3 armor+15 integrity*1.5 brittleness+1
 soft: hardness+-3 armor+-5 res_blunt+0.3 loudness+-2

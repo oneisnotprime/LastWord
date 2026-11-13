@@ -167,6 +167,8 @@ hands|bool|false||can hold tools and weapons
 speech|bool|false||can trade, negotiate and command
 heals|num|0|hp/s|integrity it restores to allies in reach
 morale|scale|5||fights worse when low; flees at 0
+strength|scale|5||scales the damage of weapons it swings; 5 is an ordinary person
+training|scale|0||skill at arms; each point adds a tenth to the damage of any weapon it uses
 """
 GROUPS["economy"] = "\n".join(
     [f"produce_{chr(c)}|num|0|/min|letter {chr(c)} it generates" for c in range(65, 91)] + """

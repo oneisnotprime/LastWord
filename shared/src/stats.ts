@@ -68,6 +68,13 @@ export class Stats {
     }
   }
 
+  clone(): Stats {
+    const copy = new Stats(this.dict);
+    for (const [id, value] of this.values) copy.values.set(id, value);
+    copy.absolutes.push(...this.absolutes);
+    return copy;
+  }
+
   /** Every property that differs from its default, for sending or showing. */
   entries(): [string, Value][] {
     return [...this.values.entries()];
@@ -83,7 +90,13 @@ export interface Modifier {
  * Builds an object from a noun and the adjectives on it, written as the player spells them:
  * resolve(dict, "sword", ["bigger", "sharp"]).
  */
-export function resolve(dict: Dictionary, noun: string, adjectives: readonly string[] = []): Stats {
+export function resolve(
+  dict: Dictionary,
+  noun: string,
+  adjectives: readonly string[] = [],
+  /** Adjectives lent by something else, such as a rider's own; these take no slot. */
+  lent: readonly string[] = [],
+): Stats {
   const base = dict.lookup(noun);
   if (!base || base.def.role !== "noun") throw new Error(`${noun} is not a noun`);
   const stats = new Stats(dict);
@@ -93,7 +106,7 @@ export function resolve(dict: Dictionary, noun: string, adjectives: readonly str
   if (adjectives.length > slots) {
     throw new Error(`${noun} holds ${slots} adjective${slots === 1 ? "" : "s"}, not ${adjectives.length}`);
   }
-  for (const text of adjectives) {
+  for (const text of [...adjectives, ...lent]) {
     const adj = dict.lookup(text);
     if (!adj || adj.def.role !== "adjective") throw new Error(`${text} is not an adjective`);
     const absolute = adj.def.set.is_absolute === true;
