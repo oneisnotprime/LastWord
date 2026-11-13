@@ -513,3 +513,29 @@ it("walks around water to reach the far side", async () => {
   }
   expect(Math.hypot(wa.player.x - goal.x, wa.player.y - goal.y)).toBeLessThan(0.05);
 });
+
+it("ends the round when one person is left: locks, tells everyone, then closes", async () => {
+  const room = (await colyseus.createRoom("world", {})) as unknown as WorldRoom;
+  const a: any = await colyseus.connectTo(room as never);
+  const b: any = await colyseus.connectTo(room as never);
+  const over: unknown[] = [];
+  for (const c of [a, b]) for (const type of ["letters", "spelled", "refused", "notice", "loadout", "dead", "won"]) c.onMessage(type, () => {});
+  a.onMessage("roundover", (m: unknown) => over.push(m));
+  b.onMessage("roundover", (m: unknown) => over.push(m));
+  const walkers = (room as any).walkers;
+  const wa = walkers.get(a.sessionId), wb = walkers.get(b.sessionId);
+  const c = room.map.cities[0]!;
+  wa.player.x = c.x + 0.5; wa.player.y = c.y + 0.5;
+  wb.player.x = c.x + 1; wb.player.y = c.y + 0.5;
+  wb.hp = 1; room.rebuild(wb);
+  a.send("attack", b.sessionId);
+  await new Promise((r) => setTimeout(r, 150));
+  for (let i = 0; i < 50 && walkers.has(b.sessionId); i++) room.update(0.1);
+  await new Promise((r) => setTimeout(r, 200));
+  expect(room.state.phase).toBe("over");
+  expect(room.state.winner).toBe(wa.player.name);
+  expect(over).toEqual([{ winner: wa.player.name, seconds: 1 }, { winner: wa.player.name, seconds: 1 }]);
+  expect((room as any).locked).toBe(true);
+  await new Promise((r) => setTimeout(r, 1500));
+  expect(room.clients.length).toBe(0);
+});

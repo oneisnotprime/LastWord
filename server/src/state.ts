@@ -50,6 +50,10 @@ export const WorldState = schema(
     daylight: t.string(),
     /** The weather word in force, or "". */
     weather: t.string(),
+    /** "playing", or "over" once someone has won. */
+    phase: t.string(),
+    /** Name of the winner once the round is over. */
+    winner: t.string(),
   },
   "WorldState",
 );

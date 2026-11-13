@@ -25,6 +25,7 @@ export interface Handlers {
   dead(killer: string): void;
   loadout(detail: LoadoutDetail): void;
   won(text: string): void;
+  roundover(info: { winner: string; seconds: number }): void;
   closed(): void;
 }
 
@@ -42,6 +43,7 @@ export async function connect(on: Handlers): Promise<Connection> {
   room.onMessage("dead", on.dead);
   room.onMessage("loadout", on.loadout);
   room.onMessage("won", on.won);
+  room.onMessage("roundover", on.roundover);
   room.onLeave(on.closed);
   await new Promise<void>((done) => {
     const ready = () => room.state?.seed && room.state.players?.get(room.sessionId);

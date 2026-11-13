@@ -25,6 +25,7 @@ class World extends Phaser.Scene {
   private lastSteer = 0;
   private foe: string | null = null;
   private over = false;
+  private roundOver = false;
   private editsApplied = 0;
   private mapImage?: Phaser.GameObjects.Image;
 
@@ -51,10 +52,22 @@ class World extends Phaser.Scene {
         refused: (reason) => this.hud.toast(reason, "bad"),
         gathered: (letter) => this.hud.toast(`+ ${letter.toUpperCase()}`, "good"),
         notice: (text) => this.hud.toast(text, "good"),
-        dead: (killer) => { this.over = true; this.hud.banner(`You were killed by ${killer}. Your letters are theirs. Reload to play again.`); },
-        won: (text) => this.hud.banner(`${text}. You win.`),
+        dead: (killer) => { this.over = true; this.hud.banner(`You were killed by ${killer}. Your letters are theirs.\nYou can watch until the round ends.`); },
+        won: () => {},
+        roundover: ({ winner, seconds }) => {
+          this.roundOver = true;
+          const mine = winner === this.net.state.players.get(this.net.sessionId)?.name;
+          const end = Date.now() + seconds * 1000;
+          const tick = () => {
+            const left = Math.max(0, Math.ceil((end - Date.now()) / 1000));
+            this.hud.banner(`${mine ? "You are the last one alive. You win." : `${winner} wins the round.`}\nNew map in ${left} s`);
+            if (left > 0) setTimeout(tick, 250);
+          };
+          tick();
+        },
         loadout: (detail) => this.hud.setLoadout(detail),
-        closed: () => this.hud.status("Disconnected"),
+        // When a finished round closes, start the next one on a fresh map.
+        closed: () => (this.roundOver ? location.reload() : this.hud.status("Disconnected")),
       });
     } catch {
       this.hud.status("Cannot reach the server");
