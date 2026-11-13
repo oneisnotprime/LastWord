@@ -12,7 +12,8 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
 
 - `src/main.ts` the Phaser scene: draws the map from the seed, markers for players and things,
   camera, movement input.
-- `src/net.ts` connection to the server (`VITE_SERVER` overrides the address).
+- `src/net.ts` connection to the server: port 2567 under Vite (ports 5173 and 4173), else the
+  page's own origin, since a deployed server serves the page. `VITE_SERVER` overrides both.
 - `src/hud.ts` the HTML overlay: status line, letter tiles, spelling box, toasts, and the
   inventory (I) and loadout (L) screens, drawn from the server's private `loadout` message.
 - `window.__lw` exposes the connection and map for browser checks.

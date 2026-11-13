@@ -7,6 +7,7 @@ inventory screens (M0 to M5). Not deployed yet.
 - `PLAN.md`: stack, netcode, hosting, art, milestones.
 - `TODO.md`: decisions made, open questions, task list. Read "Decided" before proposing design.
 - `README.md`: what each data file is and how words are classified.
+- `DEPLOY.md`: how to build the container and deploy it.
 
 ## Layout and commands
 

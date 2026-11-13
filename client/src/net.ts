@@ -29,8 +29,14 @@ export interface Handlers {
   closed(): void;
 }
 
+/**
+ * Where the game server is: VITE_SERVER if set at build time; otherwise port 2567 on this host
+ * during local development (Vite serves the page on another port), else the page's own origin,
+ * since a deployed server serves the page itself.
+ */
 const endpoint =
-  (import.meta.env.VITE_SERVER as string | undefined) ?? `${location.protocol}//${location.hostname}:2567`;
+  (import.meta.env.VITE_SERVER as string | undefined) ??
+  (location.port === "5173" || location.port === "4173" ? `${location.protocol}//${location.hostname}:2567` : location.origin);
 
 /** Joins the world room and waits for the first state. */
 export async function connect(on: Handlers): Promise<Connection> {
