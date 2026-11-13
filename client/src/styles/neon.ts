@@ -257,6 +257,7 @@ function neonText(ctx: Ctx, text: string, x: number, y: number, color: string, s
   ctx.globalAlpha = 1;
   ctx.shadowColor = color; ctx.shadowBlur = 7;
   ctx.fillStyle = color; ctx.fillText(text, x, y);
+  ctx.shadowBlur = 0; ctx.globalAlpha = 0.45; ctx.fillStyle = "#fff"; ctx.fillText(text, x, y);
   ctx.restore();
 }
 

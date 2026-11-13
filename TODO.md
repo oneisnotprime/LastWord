@@ -126,6 +126,7 @@ lexicon so every related word is captured.
 - [ ] Words that are not in WordNet (slang, new words)
 - [ ] Art pass (M7): before choosing, prototype a few distinct, unusual graphic styles for the
       user to pick from; then a sprite or icon per word in the chosen style
+- [ ] Pick an art style from the prototypes (client/styles.html)
 
 ## Special objects: dictionary and related words
 

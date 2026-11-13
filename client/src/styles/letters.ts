@@ -45,6 +45,9 @@ const SKELETONS: Record<"quadruped" | "flyer" | "humanoid", Slot[]> = {
   ],
 };
 
+/** Set while drawing creatures and objects, so their letters stand off the letter-filled ground. */
+let halo = false;
+
 function glyph(ctx: Ctx, ch: string, x: number, y: number, size: number, color: string, rot = 0, sx = 1, weight = 800) {
   ctx.save();
   ctx.translate(x, y);
@@ -53,6 +56,7 @@ function glyph(ctx: Ctx, ch: string, x: number, y: number, size: number, color: 
   ctx.font = f(weight, size);
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
+  if (halo) { ctx.lineJoin = "round"; ctx.strokeStyle = BONE; ctx.lineWidth = Math.max(2, size * 0.12); ctx.strokeText(ch, 0, 0); }
   ctx.fillStyle = color;
   ctx.fillText(ch, 0, 0);
   ctx.restore();
@@ -210,11 +214,17 @@ function sword(ctx: Ctx, x: number, y: number, scale: number, rot: number, burni
   ctx.scale(scale, scale);
   glyph(ctx, "+", 0, -2, 18, "#3a3a3a");
   "SWORD".split("").forEach((ch, i) => glyph(ctx, ch, 0, -12 - i * 9, 13 - i * 0.6, "#5d6b78", 0, 1, 800));
-  if (burning) rising(ctx, "BURNING", 0, -22, 9, 18, t, ["#ffd23f", "#ff9f1c", "#e4572e", "#a3261e"], 12, 0.6, 46, 5);
+  if (burning) rising(ctx, "BURNING", 9, -16, 6, 16, t, ["#ffd23f", "#ff9f1c", "#e4572e", "#a3261e"], 11, 0.6, 40, 5);
   ctx.restore();
 }
 
 function thing(ctx: Ctx, th: Thing, t: number) {
+  halo = th.kind !== "swarm" && th.kind !== "wall";
+  drawThing(ctx, th, t);
+  halo = false;
+}
+
+function drawThing(ctx: Ctx, th: Thing, t: number) {
   const { x, y, scale: s, facing } = th;
   switch (th.kind) {
     case "wolf": {
