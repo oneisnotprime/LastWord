@@ -3,6 +3,48 @@
 Status: plan only. No game code exists yet. Choices marked "verify" rest on vendor claims or
 general guidance and need a test of our own before we lean on them.
 
+## Design pillar: every word feeds the same systems
+
+The point of the game is that words interact. A word never gets a private mechanic. It reads
+and writes a small set of shared quantities, and every other word that touches the same
+quantity is affected. LOCUST lowers crop output, which lowers the letter A for whoever farms
+there, which is countered by BIRD, FIRE or WINTER, each of which has its own side effects.
+
+| System | Shared quantities | Example words |
+|---|---|---|
+| Heat and fire | temperature, flammability, burning | fire, lava, ice, winter, torch, fireproof |
+| Water | moisture, wetness, depth, flooding | rain, lake, drought, dam, sponge |
+| Growth and food | fertility, growth, food output, hunger | farm, locust, famine, fertile, wheat |
+| Life and disease | integrity, regeneration, contagion | plague, doctor, medicine, rot, zombie |
+| Light and sight | light level, visibility, stealth | sun, fog, night, torch, invisible, spy |
+| Force and damage | damage types, resistances, armor | sword, nuke, shield, bunker, sharp |
+| Matter | mass, hardness, material, conductivity | iron, wooden, magnet, lightning, acid |
+| Movement | speed by medium, movement cost, blocking | jet, wall, swamp, bridge, fly |
+| Production | letter output, labour, upkeep, storage | forge, miner, tax, harvester, vault |
+| Minds | loyalty, morale, fear, authority | king, love, fear, revolt, brave |
+| Ownership | owner, claims, security, agreements | theft, treaty, key, guard, heir |
+| Sky and time | daylight, weather, season, duration | sun, moon, storm, winter, hour |
+
+Rules that follow:
+
+- A new mechanic is added as a shared quantity that many words can touch, or not at all.
+- Letter production always depends on world quantities (fertility, labour, moisture, peace), so
+  any word that moves those quantities moves someone's income.
+- A word with no effect on any system is inert. The measure of the data work is how small the
+  inert bucket gets.
+- Every tile and every object carries the same quantities, so effects spread by adjacency
+  (fire, flood, plague, locusts) without special cases.
+
+## Map conditions
+
+Each map can start with five random adjectives applied to the whole map (FROZEN, FERTILE,
+DARK and so on), so the strongest opening differs from round to round. Later priority.
+
+## Later
+
+- Family mode with a filtered word list.
+- Spending on hosting, art and model tokens is acceptable when the time comes.
+
 ## Stack
 
 | Part | Choice | Why | Alternatives |

@@ -15,6 +15,8 @@
 - Acts and events are their own class and make things happen in the world.
 - Plurals spawn several; S is a powerful letter.
 - All assets and word data are generated ahead of time; no model at runtime.
+- Every word feeds the same shared systems (PLAN.md); no private mechanics per word.
+- The game moves to its own repository before code starts.
 
 ## Data
 
@@ -31,6 +33,8 @@
 - [ ] Plural rules, including irregular plurals; verb tenses
 - [ ] Full property pass over the lexicon with a cheap model, using the demo set as examples
 - [ ] Sanity checks on that pass: sibling ordering (pond < lake < sea < ocean), unit ranges
+- [ ] Map every property to one of the shared systems; drop or merge any that touch none
+- [ ] Tile-level quantities (temperature, moisture, fertility, light) so effects spread by adjacency
 - [ ] Find a use for the inert bucket (states, communication, shapes, processes, days and months)
 - [ ] Words that are not in WordNet (slang, new words)
 - [ ] Sprite or icon per word; choose an asset pack or generation style
@@ -63,10 +67,15 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
 - [ ] NPC behaviour in cities and countryside
 - [ ] Trading interface: barter, market, pooled spelling
 
+## Later
+
+- [ ] Map conditions: five random adjectives applied to the whole map at the start
+- [ ] Family mode with a filtered word list
+
 ## Build
 
 - [x] Choose stack, hosting, netcode and art approach (see PLAN.md)
-- [ ] Decide whether the game moves to its own repository before code starts
+- [ ] Create the new repository and move `lastword/` into it
 - [ ] Milestones M0 to M7 in PLAN.md
 - [ ] Map generator: cities, countryside, letter sources
 - [ ] Demo: one map, the 351-word dictionary, a handful of players
