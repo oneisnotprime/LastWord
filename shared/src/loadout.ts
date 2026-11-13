@@ -18,7 +18,7 @@ export interface LoadoutDetail {
   };
   /** Everything carried, in the order it was put on. `index` is what to send to drop it. */
   gear: { index: number; phrase: string; slot: string; integrity: number | null; max: number | null }[];
-  /** Verbs in force, with seconds left. */
+  /** Verbs in force, with seconds left; fields you stand in, with -1. */
   effects: { word: string; left: number }[];
   creatures: { name: string; health: number }[];
 }

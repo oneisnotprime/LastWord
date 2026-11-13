@@ -58,8 +58,8 @@
       what it modifies), IMPOSSIBLE (absolute evasion), CHRIST was excluded, TRUMP (a trump card
       that beats everything), DELETE (a verb that destroys a touched target)
 - [ ] Generated words use properties the engine does not act on yet (effect_multiplier on
-      adverbs, negates, copies, strips_adjectives, plural_count); sky words like PLANET that set
-      no daylight or weather do nothing
+      adverbs, negates, copies, strips_adjectives, plural_count); sky words like PLANET are now
+      fields
 - [ ] Plural forms in the lexicon (ROADS, LEGS, FALLS) need the plural rule rather than entries
 - [ ] Next batch: words 3,001 to 10,000
 - [ ] Grammar words (are, have, not, but, the rest of `GRAMMAR` in generate_words.py) need a
@@ -178,7 +178,11 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
       (temperature, moisture, light) are not built
 - [ ] Sky and weather change only sight and speed so far; their other effects (wetness, growth,
       crop output) wait on the tile systems
-- [ ] Auras, knowledge, institutions and measures still spell into inert markers on the ground
+- [x] Field words (120: LOVE, FEAR, HOPE, CHAOS, DISEASE, HEAVEN, PLANET, GALAXY...) are auras
+      that follow their maker, fields where aimed, or conditions over a region or the whole map;
+      every one is spelled in a test and every one does something
+- [ ] Field words' status effects (inflict_fear, inflict_confuse) and sets_hostile are not
+      acted on; contagion does not spread a DISEASE to new places
 - [ ] Hidden or invisible players are still drawn for others; stealth against detection is not
       used for what a client is sent
 - [ ] Right-click picking on a controller

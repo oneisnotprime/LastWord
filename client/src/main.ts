@@ -176,12 +176,15 @@ class World extends Phaser.Scene {
     // Events over an area: a translucent disc with the word on it.
     const ZONE: Record<string, number> = { fire: 0xff6a1a, war: 0xd02a2a, earthquake: 0x8a5a2b, famine: 0xd9b23a };
     const liveZones = new Set<string>();
+    const overMap: string[] = [];
     state.zones.forEach((z: any, id: string) => {
       liveZones.add(id);
+      if (z.radius === 0) { overMap.push(z.word.toUpperCase()); return; } // map-wide: shown in the status line
       const existing = this.zones.get(id);
       if (existing) {
         const disc = existing.list[0] as Phaser.GameObjects.Arc;
         if (Math.abs(disc.radius - z.radius * PX) > 0.5) disc.setRadius(z.radius * PX); // fire spreads
+        existing.setPosition(z.x * PX, z.y * PX); // auras move with their maker
         return;
       }
       const colour = ZONE[z.word] ?? 0x9a6ad9;
@@ -247,7 +250,8 @@ class World extends Phaser.Scene {
     this.hud.status(
       `${Tile[tileAt(this.map, me.x, me.y)]} · ${Math.round(me.x * TILE_METERS)}, ${Math.round(me.y * TILE_METERS)} m · ` +
       `${others} other${others === 1 ? "" : "s"} in sight · health ${me.hp}%${me.gear ? ` · ${me.gear}` : ""}` +
-      `${state.daylight === "night" ? " · night" : ""}${state.weather ? ` · ${state.weather}` : ""}`,
+      `${state.daylight === "night" ? " · night" : ""}${state.weather ? ` · ${state.weather}` : ""}` +
+      `${overMap.length ? ` · over the map: ${overMap.join(", ")}` : ""}`,
     );
   }
 }

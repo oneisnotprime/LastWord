@@ -9,7 +9,7 @@ export interface Phrase {
    * What spelling it does: makes an object, casts a verb on the speller, sets off an event on a
    * target, or changes the sky and weather.
    */
-  kind: "object" | "verb" | "event" | "sky";
+  kind: "object" | "verb" | "event" | "sky" | "field";
   noun: string;
   adjectives: string[];
   /** Every letter the phrase costs, in order, lower case. */
@@ -40,8 +40,27 @@ export function parsePhrase(dict: Dictionary, text: string): Phrase {
   if (def.role !== "noun") throw new Error(`${noun.toUpperCase()} is not a thing; end with a noun`);
   const stats = resolve(dict, noun, adjectives);
   const placement = stats.get("placement");
-  const kind = def.class === "event" ? "event" : placement === "sky" || placement === "region" || placement === "map" ? "sky" : "object";
+  const kind = def.class === "event" ? "event" : kindOf(stats, def.class);
   return { kind, noun, adjectives, letters: words.join(""), stats };
+}
+
+/** Classes whose words are things in the world, not states or feelings. */
+const PHYSICAL = new Set(["artifact", "creature", "person", "flora", "material", "consumable", "bodypart"]);
+
+/**
+ * Sky words change daylight or weather. Field words are auras and conditions that act on
+ * whoever is inside them (LOVE, FEAR, CHAOS, HEAVEN, a PLANET's gravity). Anything else is an object.
+ */
+function kindOf(stats: Stats, cls: string): Phrase["kind"] {
+  const placement = stats.get("placement");
+  const overhead = placement === "sky" || placement === "region" || placement === "map";
+  const changesSky = stats.get("sets_daylight") !== "none" || stats.get("sets_weather") !== "" || stats.tags("clears_weather").length > 0;
+  if (overhead && changesSky) return "sky";
+  const reaches = stats.num("field_radius") > 0;
+  if (PHYSICAL.has(cls)) return "object"; // a GOD in the sky is still a creature that fights for you
+  if (stats.get("tile_type") !== "none") return "object"; // RIVER and CANYON reshape the land
+  if (overhead || (reaches && cls !== "terrain")) return "field";
+  return "object";
 }
 
 /** Letters the player lacks for a spelling, as a string such as "ss" for two missing S. */
