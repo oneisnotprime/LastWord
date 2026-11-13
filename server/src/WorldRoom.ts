@@ -1,8 +1,8 @@
 import { Room, type Client } from "colyseus";
 import { StateView } from "@colyseus/schema";
 import {
-  addLetters, findPath, GATHER_SECONDS, gatherLetter, generateMap, GIVE_RANGE, missing, parsePhrase, production, nearestWalkable, randomWalkable, resolve, Tile, tileAt, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit,
-  type Dictionary, type Entity, type Stats, type Letters, type LoadoutDetail, type Op, type Phrase, type Point, type Spelled, type Value, type WorldMap,
+  addLetters, afflict, cure, findPath, hampered, inflicts, statusDamage, statusEffects, tickStatuses, wake, GATHER_SECONDS, gatherLetter, generateMap, GIVE_RANGE, missing, parsePhrase, production, nearestWalkable, randomWalkable, resolve, Tile, tileAt, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit,
+  type Affliction, type Dictionary, type Entity, type Hampered, type Status, type Stats, type Letters, type LoadoutDetail, type Op, type Phrase, type Point, type Spelled, type Value, type WorldMap,
 } from "@lastword/shared";
 import { loadDictionary } from "./data.js";
 import { Edit, Player, Thing, WorldState, Zone } from "./state.js";
@@ -55,7 +55,31 @@ interface Area {
   targets: string;
   /** A walker the area moves with (an aura around its maker), or null if it stays put. */
   follows: string | null;
+  /** Statuses it gives whoever it strikes, or, if it does no damage, whoever it covers each second. */
+  inflicts: [Status, number][];
+  /** Creatures inside fight the nearest walker not on its maker's side, whatever their master says. */
+  hostile: boolean;
+  /** Chance a minute that a damaging area spreads to a living walker it covers. */
+  contagion: number;
+  /** Statuses it takes away from whoever it reaches each second (RELIEF ends fear). */
+  cures: string[];
+  /** Room time of its last once-a-second pulse. */
+  pulsed: number;
+  /** Its radius and length when made, for copies of it that spread. */
+  baseRadius: number;
+  lasts: number;
 }
+
+/** What areas start with before a word's own properties say otherwise. */
+const AREA_DEFAULTS = { inflicts: [] as [Status, number][], hostile: false, contagion: 0, cures: [] as string[], pulsed: -Infinity };
+
+/** How a status reads in "you cannot spell while you are ...". */
+const STATE_WORDS: Partial<Record<Status, string>> = { stun: "stunned", freeze: "frozen", sleep: "asleep", silence: "silenced" };
+
+/** Tiles a frightened walker runs ahead of itself each tick. */
+const FLEE_TILES = 6;
+/** Tiles around itself a confused walker wanders or lashes out. */
+const CONFUSED_TILES = 4;
 
 /** How readily fire spreads over each kind of ground; anything missing does not burn. */
 const BURNS: Partial<Record<Tile, number>> = { [Tile.Forest]: 3, [Tile.Grass]: 1, [Tile.Swamp]: 0.2 };
@@ -121,6 +145,12 @@ interface Walker {
   letters: Letters;
   /** Seconds left on a gathering action, or 0. Moving cancels it. */
   gathering: number;
+  /** Statuses on it: stunned, poisoned, afraid... */
+  statuses: Affliction[];
+  /** What its statuses stop it doing; worked out again whenever they change. */
+  hamper: Hampered;
+  /** Seconds of damage over time built up and not yet dealt. */
+  dot: number;
 }
 
 /** An object's letter output: rate per minute and the fraction built up so far. */
@@ -287,6 +317,7 @@ export class WorldRoom extends Room {
       if (!walker) return;
       try {
         if (typeof text !== "string" || text.length > 80) throw new Error("Spell something");
+        if (!walker.hamper.spells) throw new Error(`You cannot spell while you are ${STATE_WORDS[walker.hamper.muteBy!] ?? walker.hamper.muteBy}`);
         const phrase = parsePhrase(this.dict, text);
         const lacking = missing(walker.letters, phrase.letters);
         if (lacking) throw new Error(`You need ${lacking.toUpperCase().split("").join(" ")}`);
@@ -386,6 +417,7 @@ export class WorldRoom extends Room {
     player.hp = 100;
     player.gear = "";
     player.owner = "";
+    player.status = "";
     this.state.players.set(client.sessionId, player);
     this.walkers.set(client.sessionId, {
       id: client.sessionId,
@@ -411,6 +443,9 @@ export class WorldRoom extends Room {
       seenThings: new Set(),
       letters: starterLetters(this.rng),
       gathering: 0,
+      statuses: [],
+      hamper: hampered([]),
+      dot: 0,
     });
     client.send("letters", this.walkers.get(client.sessionId)!.letters);
     this.tell(this.walkers.get(client.sessionId)!);
@@ -457,7 +492,7 @@ export class WorldRoom extends Room {
       body: walker.body,
       items: walker.gear.filter((g) => !g.vehicle).map((g) => g.spelled),
       riding: walker.gear.find((g) => g.vehicle)?.spelled,
-      effects: [...(this.weather ? [this.weather] : []), ...(walker.fields ?? []), ...walker.buffs],
+      effects: [...(this.weather ? [this.weather] : []), ...(walker.fields ?? []), ...walker.buffs, ...statusEffects(walker.statuses)],
     });
     unit.body.integrity = walker.hp;
     for (const g of walker.gear) {
@@ -513,6 +548,7 @@ export class WorldRoom extends Room {
         ...walker.buffs.map((b) => ({ word: b.word, left: Math.round(b.until - this.elapsed) })),
         ...(walker.fields ?? []).map((f) => ({ word: f.word, left: -1 })), // -1: while you stand in it
       ],
+      statuses: walker.statuses.map((a) => ({ status: a.status, left: Math.ceil(a.left) })),
       creatures: [...this.walkers.values()].filter((w) => w.master === walker.id).map((w) => ({ name: w.player.name, health: w.player.hp })),
     };
     client.send("loadout", detail);
@@ -529,11 +565,12 @@ export class WorldRoom extends Room {
     player.hp = 100;
     player.gear = "";
     player.owner = master;
+    player.status = "";
     this.state.players.set(id, player);
     const walker: Walker = {
       id, player, body: gear.spelled, master, unit, gear: [], hp: unit.body.integrity, foe: null, picked: null, aim: null, cooldown: 0,
       buffs: [], flying: false, target: null, route: [], routeTo: null, routeAge: 0, speed: 0, sight: 0, seen: new Set(), seenThings: new Set(),
-      letters: {}, gathering: 0,
+      letters: {}, gathering: 0, statuses: [], hamper: hampered([]), dot: 0,
     };
     this.walkers.set(id, walker);
     this.rebuild(walker);
@@ -627,6 +664,9 @@ export class WorldRoom extends Room {
     const def = this.dict.word(phrase.noun)!;
     const heal = phrase.stats.num("restores");
     if (heal > 0) walker.hp = Math.min(walker.unit.body.stats.num("integrity"), walker.hp + heal);
+    // A verb's effect_status lists what it ends on the caster: HEAL ends poison, bleeding and burns.
+    const cured = cure(walker.statuses, phrase.stats.tags("effect_status"));
+    if (cured.length) this.statusChanged(walker);
     const seconds = phrase.stats.num("duration");
     if (seconds > 0) {
       const { duration, restores, cast_time, effect_status, ...set } = def.set;
@@ -699,6 +739,8 @@ export class WorldRoom extends Room {
       const saved = needCreature();
       saved.player.x = walker.player.x; saved.player.y = walker.player.y; saved.target = null;
       saved.hp = Math.min(saved.unit.body.stats.num("integrity"), saved.hp + s.num("restores"));
+      cure(saved.statuses, s.tags("effect_status"));
+      this.statusChanged(saved);
       this.rebuild(saved);
       walker.foe = null;
       return `${saved.player.name} is beside you`;
@@ -739,14 +781,16 @@ export class WorldRoom extends Room {
       const blow = walker.unit.attack.clone();
       blow.set("critical", "ABS");
       blow.set("accuracy", "ABS");
-      strike(blow, victim.unit.outer, this.rng);
+      const r = strike(blow, victim.unit.outer, this.rng);
       this.settle(selected, victim);
       if (victim.unit.dead) this.kill(selected, id);
+      else if (r.hit) this.hurtWith(victim, inflicts(s, blow), id, id, true);
       return `Ambushed ${victim.player.name}`;
     }
     const minutes = s.num("event_duration");
     const killBonus = this.dict.word(phrase.noun)!.ops.find(([p, op]) => p === "produce_K" && op === "mul")?.[2] ?? 1;
-    if (!hasDamage(s) && killBonus === 1) throw new Error(`${word} does nothing yet`);
+    const given = inflicts(s), cures = s.tags("effect_status");
+    if (!hasDamage(s) && killBonus === 1 && !given.length && !s.flag("sets_hostile")) throw new Error(`${word} does nothing yet`);
     // A region event covers the speller's surroundings. Anything else lands where it was aimed:
     // a picked spot, else the picked or attacked target. It must be in reach.
     const regional = s.get("placement") === "region" || s.get("placement") === "map";
@@ -766,6 +810,13 @@ export class WorldRoom extends Room {
       effect: null,
       targets: "all",
       follows: null,
+      ...AREA_DEFAULTS,
+      inflicts: given,
+      hostile: s.flag("sets_hostile"),
+      contagion: s.num("contagion"),
+      cures,
+      baseRadius: Math.max(1, s.num("event_radius") / TILE_METERS),
+      lasts: Math.max(1, minutes * 60),
     };
     if (this.weather && this.countered(this.weather.word, area.word)) {
       throw new Error(`${word} cannot take hold: the ${this.weather.word} puts it out`);
@@ -829,8 +880,18 @@ export class WorldRoom extends Room {
       effect: ops.length || Object.keys(flags).length ? { word: phrase.noun, set: flags, ops, until: Infinity } : null,
       targets: String(s.get("field_targets")),
       follows: placement === "self" && !whole ? id : null,
+      ...AREA_DEFAULTS,
+      // A silence field keeps everyone inside it silenced, a second at a time.
+      inflicts: [...inflicts(s), ...(s.num("silences") > 0 && !s.num("inflict_silence") ? [["silence", 1.5] as [Status, number]] : [])],
+      hostile: s.flag("sets_hostile"),
+      contagion: s.num("contagion"),
+      cures: s.tags("effect_status"),
+      baseRadius: 0,
+      lasts,
     };
-    if (!area.attack && !area.effect && !Object.keys(rates).length) throw new Error(`${word} does nothing yet`);
+    area.baseRadius = area.radius;
+    const acts = area.attack || area.effect || area.inflicts.length || area.hostile || area.cures.length;
+    if (!acts && !Object.keys(rates).length) throw new Error(`${word} does nothing yet`);
     // Casting it again replaces your earlier one.
     for (const [k, a] of this.areas) if (a.owner === id && a.word === phrase.noun) { this.areas.delete(k); this.state.zones.delete(k); }
     const key = `z${this.nextThing++}`;
@@ -911,24 +972,156 @@ export class WorldRoom extends Room {
       const zone = this.state.zones.get(key);
       if (zone && Math.abs(zone.radius - a.radius) > 0.1) zone.radius = a.radius;
     }
+    if (this.elapsed - a.pulsed >= 1) {
+      const since = a.pulsed === -Infinity ? 0 : this.elapsed - a.pulsed;
+      a.pulsed = this.elapsed;
+      this.pulse(key, a, since);
+      if (!this.areas.has(key)) return;
+    }
     a.cooldown -= seconds;
     if (!a.attack || a.cooldown > 0) return;
     const rate = a.attack.num("attack_rate");
     a.cooldown = rate > 0 ? 1 / rate : Infinity; // no rate: it strikes once
     const inside = (p: { x: number; y: number }) => Math.hypot(p.x - a.x, p.y - a.y) <= a.radius;
     for (const [wid, w] of [...this.walkers]) {
-      if (!this.walkers.has(wid) || !inside(w.player)) continue;
-      if (!a.friendlyFire && (wid === a.owner || w.master === a.owner)) continue;
-      if (a.effect && !this.reaches(a, wid, w)) continue; // a field strikes only whom it targets
-      strike(a.attack, w.unit.outer, this.rng);
+      if (!this.walkers.has(wid) || !this.harms(a, wid, w)) continue;
+      const r = strike(a.attack, w.unit.outer, this.rng);
       this.settle(wid, w);
       if (w.unit.dead) this.kill(wid, a.owner);
+      else if (r.hit) this.hurtWith(w, a.inflicts, a.owner, key, true);
     }
     this.state.things.forEach((t, tid) => {
       const g = this.grounded.get(tid);
       if (!g || g.terrain || !inside(t) || (!a.friendlyFire && t.owner === a.owner)) return;
       this.strikeThing(a.owner, a.attack!, tid, t);
     });
+  }
+
+  /** True if an area's harm (damage, statuses) lands on a walker: inside it, and among whom it targets. */
+  private harms(a: Area, wid: string, w: Walker): boolean {
+    if (Math.hypot(w.player.x - a.x, w.player.y - a.y) > a.radius) return false;
+    if (!a.friendlyFire && (wid === a.owner || w.master === a.owner)) return false;
+    return !a.effect || this.reaches(a, wid, w); // a field strikes only whom it targets
+  }
+
+  /**
+   * Once a second: an area that does no damage gives its statuses to whoever it covers, one
+   * that cures ends statuses on whoever it reaches, and a contagious one may spread.
+   */
+  private pulse(key: string, a: Area, since: number) {
+    for (const [wid, w] of [...this.walkers]) {
+      if (!a.attack && a.inflicts.length && this.harms(a, wid, w)) this.hurtWith(w, a.inflicts, a.owner, key, false);
+      const reached = a.effect ? this.reaches(a, wid, w) : Math.hypot(w.player.x - a.x, w.player.y - a.y) <= a.radius;
+      if (a.cures.length && reached && cure(w.statuses, a.cures).length) this.statusChanged(w);
+    }
+    if (a.attack && a.contagion > 0 && since > 0 && this.rng() < 1 - (1 - Math.min(1, a.contagion)) ** (since / 60)) this.spread(a);
+  }
+
+  /**
+   * A disease passes on: a copy of it, at its first size and for its full length, settles on a
+   * living walker it covers and goes wherever they go. Nobody carries two of the same.
+   */
+  private spread(a: Area) {
+    const carriers = new Set([...this.areas.values()].filter((o) => o.word === a.word && o.follows).map((o) => o.follows));
+    const hosts = [...this.walkers].filter(([wid, w]) =>
+      !carriers.has(wid) && w.unit.body.stats.flag("alive") && this.harms(a, wid, w));
+    if (!hosts.length) return;
+    const [hid, host] = hosts[Math.floor(this.rng() * hosts.length)]!;
+    const copy: Area = {
+      ...a, x: host.player.x, y: host.player.y, radius: a.baseRadius, until: this.elapsed + a.lasts,
+      cooldown: 0, pulsed: this.elapsed, follows: hid,
+    };
+    const key = `z${this.nextThing++}`;
+    this.areas.set(key, copy);
+    this.state.zones.set(key, Object.assign(new Zone(), { word: copy.word, x: copy.x, y: copy.y, radius: copy.radius }));
+    this.clients.find((c) => c.sessionId === hid)?.send("notice", `You caught ${a.word.toUpperCase()}`);
+  }
+
+  /**
+   * Statuses reach a walker: from a blow that landed (which also wakes a sleeper) or from an
+   * area it stands in. `from` is to blame; `origin` is what a frightened walker runs from.
+   */
+  private hurtWith(w: Walker, given: [Status, number][], from: string, origin: string, blow: boolean) {
+    const woke = blow ? wake(w.statuses).length : 0;
+    const done = given.length ? afflict(w.statuses, given, w.unit.body.stats, from, origin).length : 0;
+    if (woke || done) this.statusChanged(w);
+  }
+
+  /** Statuses came or went: work out again what the walker may do, and rebuild it if the set changed. */
+  private statusChanged(w: Walker) {
+    w.hamper = hampered(w.statuses);
+    const key = [...new Set(w.statuses.map((a) => a.status))].join(" ");
+    if (key !== w.player.status) {
+      w.player.status = key;
+      this.rebuild(w);
+    }
+    if (!w.hamper.moves) { w.target = null; w.route = []; w.routeTo = null; }
+  }
+
+  /** Burn, poison and bleeding hurt once a second, and statuses run down. */
+  private sufferStatuses(id: string, w: Walker, seconds: number) {
+    const hurt = statusDamage(this.dict, w.statuses);
+    if (hurt) {
+      w.dot += seconds;
+      const longest = Math.max(...w.statuses.map((a) => a.left));
+      for (let n = Math.min(Math.floor(w.dot), Math.ceil(longest)); n > 0 && !w.unit.dead; n--) strike(hurt.attack, w.unit.body, this.rng);
+      w.dot -= Math.floor(w.dot);
+      if (w.unit.body.integrity !== w.hp) {
+        this.settle(id, w);
+        if (w.unit.dead) return void this.kill(id, hurt.from);
+      }
+    } else w.dot = 0;
+    const over = tickStatuses(w.statuses, seconds);
+    if (over.length) {
+      this.statusChanged(w);
+      this.clients.find((c) => c.sessionId === id)?.send("notice", `No longer ${over.join(", ")}`);
+    }
+  }
+
+  /**
+   * What statuses and hostility make walkers do, over what they or their master want: the
+   * frightened run, the confused wander and lash out, and creatures in a hostile area attack
+   * the nearest walker not on its maker's side.
+   */
+  private compel() {
+    const hostile = [...this.areas.values()].filter((a) => a.hostile);
+    const clamp = (v: number) => Math.min(this.map.size, Math.max(0, v));
+    const second = this.tickCount % TICK_HZ === 0;
+    for (const [id, w] of this.walkers) {
+      const h = w.hamper;
+      if (h.flees.length) {
+        w.foe = null;
+        w.gathering = 0;
+        const o = h.flees.map((k) => (k === id ? undefined : this.walkers.get(k)?.player ?? this.areas.get(k))).find(Boolean);
+        if (!o || !h.moves) continue;
+        let dx = w.player.x - o.x, dy = w.player.y - o.y;
+        const d = Math.hypot(dx, dy);
+        if (d < 1e-6) { const t = this.rng() * Math.PI * 2; dx = Math.cos(t); dy = Math.sin(t); } else { dx /= d; dy /= d; }
+        w.target = { x: clamp(w.player.x + dx * FLEE_TILES), y: clamp(w.player.y + dy * FLEE_TILES) };
+        continue;
+      }
+      if (h.random) {
+        if (!second) continue;
+        const near = [...this.walkers].filter(([oid, o]) => oid !== id && Math.hypot(o.player.x - w.player.x, o.player.y - w.player.y) <= CONFUSED_TILES);
+        if (near.length && this.rng() < 0.5) {
+          w.foe = near[Math.floor(this.rng() * near.length)]![0];
+        } else {
+          w.foe = null;
+          if (h.moves) w.target = { x: clamp(w.player.x + (this.rng() * 2 - 1) * CONFUSED_TILES), y: clamp(w.player.y + (this.rng() * 2 - 1) * CONFUSED_TILES) };
+        }
+        continue;
+      }
+      if (w.master === null) continue;
+      const rage = hostile.find((a) => Math.hypot(w.player.x - a.x, w.player.y - a.y) <= a.radius && (!a.effect || this.reaches(a, id, w)));
+      if (!rage) continue;
+      let best: string | null = null, bestDistance = w.sight || Infinity;
+      for (const [oid, o] of this.walkers) {
+        if (oid === id || oid === rage.owner || o.master === rage.owner) continue;
+        const d = Math.hypot(o.player.x - w.player.x, o.player.y - w.player.y);
+        if (d <= bestDistance) { best = oid; bestDistance = d; }
+      }
+      if (best) w.foe = best;
+    }
   }
 
   /** THEFT: the selected thing becomes yours if your stealth meets its security. */
@@ -1119,10 +1312,12 @@ export class WorldRoom extends Room {
         this.rebuild(w);
         this.clients.find((c) => c.sessionId === id)?.send("notice", `${over.map((b) => b.word.toUpperCase()).join(", ")} wore off`);
       }
-      if (w.target && (w.route.length || w.flying || this.routesLeft > 0)) this.walk(w, seconds);
+      if (w.target && w.hamper.moves && (w.route.length || w.flying || this.routesLeft > 0)) this.walk(w, seconds);
     }
+    for (const [id, w] of [...this.walkers]) if (w.statuses.length && this.walkers.has(id)) this.sufferStatuses(id, w, seconds);
     for (const [key, a] of [...this.areas]) this.burn(key, a, seconds);
     this.think();
+    this.compel();
     // Combat: each attacker strikes its foe whenever the foe is in reach.
     for (const [id, w] of [...this.walkers]) {
       w.cooldown = Math.max(0, w.cooldown - seconds);
@@ -1132,6 +1327,8 @@ export class WorldRoom extends Room {
       const thing = foe ? undefined : this.state.things.get(foeId);
       const at = foe?.player ?? thing;
       if (!at) { w.foe = null; continue; }
+      if (!w.hamper.acts) continue; // stunned, frozen, asleep or afraid
+      if (w.hamper.spares.includes(foeId)) { w.foe = null; continue; } // charmed: will not hurt the charmer
       const attack = w.unit.attack;
       const reach = Math.max(1, attack.num("attack_range") / TILE_METERS);
       if (Math.hypot(at.x - w.player.x, at.y - w.player.y) > reach) {
@@ -1140,10 +1337,12 @@ export class WorldRoom extends Room {
       }
       w.target = null;
       if (w.cooldown > 0) continue;
+      const given = inflicts(attack, w.unit.body.stats);
+      let landed = false;
       if (thing) this.strikeThing(id, w.unit.attack, foeId, thing);
-      else strikeUnit(w.unit, foe!.unit, this.rng);
-      const rate = attack.num("attack_rate");
-      w.cooldown = rate > 0 ? 1 / rate : 1;
+      else landed = strikeUnit(w.unit, foe!.unit, this.rng).hit;
+      const rate = attack.num("attack_rate") * w.hamper.tempo;
+      w.cooldown = rate > 0 ? 1 / rate : 1 / w.hamper.tempo;
       if (attack.flag("single_use") && w.unit.weapon) {
         const spent = w.unit.weapon; // a grenade is gone once thrown
         w.gear = w.gear.filter((g) => g.spelled !== spent);
@@ -1152,6 +1351,7 @@ export class WorldRoom extends Room {
       if (!foe) continue;
       this.settle(foeId, foe);
       if (foe.unit.dead) this.kill(foeId, id);
+      else if (landed) this.hurtWith(foe, given, id, id, true);
     }
     const changed = new Set<string>();
     for (const [id, w] of this.walkers) {
@@ -1189,7 +1389,7 @@ export class WorldRoom extends Room {
     // Once a second: fields follow people about, so work out again who stands in which.
     if (this.tickCount % TICK_HZ === 0 && this.areas.size) this.applyFields();
     // Once a second, anyone with a verb in force is told how long it has left.
-    if (this.tickCount % TICK_HZ === 0) for (const w of this.walkers.values()) if (w.buffs.length) this.tell(w);
+    if (this.tickCount % TICK_HZ === 0) for (const w of this.walkers.values()) if (w.buffs.length || w.statuses.length) this.tell(w);
     if (this.tickCount++ % VIEW_EVERY === 0) this.refreshViews();
     const ms = performance.now() - started;
     this.metrics.ticks++;

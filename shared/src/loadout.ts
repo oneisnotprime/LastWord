@@ -20,5 +20,7 @@ export interface LoadoutDetail {
   gear: { index: number; phrase: string; slot: string; integrity: number | null; max: number | null }[];
   /** Verbs in force, with seconds left; fields you stand in, with -1. */
   effects: { word: string; left: number }[];
+  /** Statuses on you (stun, poison...), with seconds left. */
+  statuses: { status: string; left: number }[];
   creatures: { name: string; health: number }[];
 }

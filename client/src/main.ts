@@ -214,7 +214,9 @@ class World extends Phaser.Scene {
       const colour = id === mine ? 0xffffff : !creature ? 0xe05a5a : p.owner === mine ? 0xffd166 : p.owner === "-" ? 0xb9b4a8 : 0xe08a3a;
       const m = this.marker(id, colour, creature ? 7 : 10, p.name, 10);
       m.box.setFillStyle(colour);
-      m.label.setText(creature ? p.name.toUpperCase() : p.gear ? `${p.name}\n${p.gear}` : p.name).setAlign("center");
+      // Statuses show on their own line under the name: STUN · POISON.
+      const status = p.status ? `\n${p.status.toUpperCase().split(" ").join(" · ")}` : "";
+      m.label.setText(`${creature ? p.name.toUpperCase() : p.gear ? `${p.name}\n${p.gear}` : p.name}${status}`).setAlign("center");
       m.box.setStrokeStyle(id === this.foe || id === this.picked ? 2 : 1, id === this.picked ? 0x5fd3f3 : id === this.foe ? 0xffd166 : 0x14161a);
       m.bar ??= this.add.rectangle(0, 0, 14, 2, 0x9be28f).setOrigin(0, 0.5).setDepth(12);
       // Ease toward the server's position so ten updates a second look smooth.
@@ -250,6 +252,7 @@ class World extends Phaser.Scene {
     this.hud.status(
       `${Tile[tileAt(this.map, me.x, me.y)]} · ${Math.round(me.x * TILE_METERS)}, ${Math.round(me.y * TILE_METERS)} m · ` +
       `${others} other${others === 1 ? "" : "s"} in sight · health ${me.hp}%${me.gear ? ` · ${me.gear}` : ""}` +
+      `${me.status ? ` · ${me.status.toUpperCase()}` : ""}` +
       `${state.daylight === "night" ? " · night" : ""}${state.weather ? ` · ${state.weather}` : ""}` +
       `${overMap.length ? ` · over the map: ${overMap.join(", ")}` : ""}`,
     );

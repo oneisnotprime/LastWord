@@ -3,6 +3,7 @@ import type { Dictionary } from "./dictionary.js";
 import type { Rng } from "./rng.js";
 import { resolve, type Stats } from "./stats.js";
 import type { Op, Value } from "./types.js";
+import { inflicts } from "./status.js";
 
 /** A noun with the adjectives on it. */
 export interface Spelled { noun: string; adjectives?: string[] }
@@ -61,7 +62,8 @@ export class Unit {
         const layer = spawn(item.noun, stats);
         protection.push(layer);
         this.entities.set(item, layer);
-      } else if (!weapon && hasDamage(stats)) {
+      } else if (!weapon && (hasDamage(stats) || inflicts(stats).length)) {
+        // A net or a rope does no damage but still catches whoever it hits.
         weapon = stats;
         this.weapon = item;
       }

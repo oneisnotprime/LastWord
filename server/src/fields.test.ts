@@ -37,6 +37,7 @@ it("spells every field word without error, and nearly all of them do something",
   })()).map(([w]) => w);
   expect(fields.length).toBeGreaterThan(100);
   const { room, a, wa, wb, said } = await twoPlayers();
+  const c = room.map.cities[0]!;
   const idle: string[] = [];
   for (const word of fields) {
     a.send("pick", { x: wb.player.x, y: wb.player.y }); // aimed fields land on B
@@ -44,6 +45,9 @@ it("spells every field word without error, and nearly all of them do something",
     await wait(20);
     room.update(0.1);
     wa.letters = all();
+    // Each word is tried on its own: what the last one did to A (stun, confusion) is undone.
+    for (const w of [wa, wb]) { w.statuses = []; (room as any).statusChanged(w); w.target = null; w.foe = null; }
+    wa.player.x = c.x + 0.5; wa.player.y = c.y + 0.5; wb.player.x = c.x + 2.5; wb.player.y = c.y + 0.5;
   }
   await wait(300);
   for (const [i, m] of said.entries()) if (/does nothing yet/.test(String(m))) idle.push(fields[i] ?? String(m));
@@ -73,6 +77,9 @@ it("LOVE helps you and yours, FEAR hurts the others, HEAVEN blesses your side ma
 
 it("fields follow their maker, wear off, and end when the maker dies", async () => {
   const { room, a, b, wa, wb } = await twoPlayers();
+  // B stands its ground: this test is about where fields reach, not about running from them.
+  wb.buffs.push({ word: "courage", set: { immune_fear: true }, ops: [], until: Infinity });
+  room.rebuild(wb);
   const morale = (w: any) => w.unit.body.stats.num("morale");
   const base = morale(wb);
   a.send("spell", "fear"); await wait();

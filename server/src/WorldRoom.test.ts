@@ -603,6 +603,10 @@ it("events act through their properties: murder, raid, repair, rescue, trade, re
   const hp = wb.hp;
   a.send("spell", "ambush"); await wait();
   expect(wb.hp).toBe(hp - 10); // bare hands: 5 blunt, doubled
+  expect(wb.player.status).toBe("stun"); // and B is stunned for five seconds: no spelling meanwhile
+  b.send("spell", "chair"); await wait();
+  expect(said("b")).toBe("You cannot spell while you are stunned");
+  wb.statuses = []; (room as any).statusChanged(wb);
   await select(dogId);
   a.send("spell", "murder"); await wait();
   expect(said("a")).toBe("dog sees you coming (detect stealth 5 against your stealth 0)");
@@ -652,6 +656,7 @@ it("fire spreads over forest, not stone, and rain or a flood puts it out", async
   const c = room.map.cities[0]!;
   wa.letters = Object.fromEntries([..."abcdefghijklmnopqrstuvwxyz"].map((ch) => [ch, 30]));
   wa.player.x = c.x + 0.5; wa.player.y = c.y + 0.5;
+  wa.hp = 1e6; room.rebuild(wa); // the fires burn their maker too, and the burns linger
   const wait = () => new Promise((r) => setTimeout(r, 150));
   const fire = () => [...room.state.zones.values()].find((z) => z.word === "fire");
   const fires = () => [...room.state.zones.values()].filter((z) => z.word === "fire").length;
