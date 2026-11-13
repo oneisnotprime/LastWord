@@ -1,7 +1,7 @@
 import { Room, type Client } from "colyseus";
 import { StateView } from "@colyseus/schema";
 import {
-  addLetters, findPath, GATHER_SECONDS, gatherLetter, generateMap, GIVE_RANGE, missing, parsePhrase, production, nearestWalkable, randomWalkable, resolve, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit,
+  addLetters, findPath, GATHER_SECONDS, gatherLetter, generateMap, GIVE_RANGE, missing, parsePhrase, production, nearestWalkable, randomWalkable, resolve, Tile, tileAt, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit,
   type Dictionary, type Entity, type Stats, type Letters, type LoadoutDetail, type Op, type Phrase, type Point, type Spelled, type Value, type WorldMap,
 } from "@lastword/shared";
 import { loadDictionary } from "./data.js";
@@ -47,7 +47,12 @@ interface Area {
   friendlyFire: boolean;
   /** Multiplier on the K a kill inside it gives. */
   killBonus: number;
+  /** Tiles a minute it grows over ground that burns. */
+  spread: number;
 }
+
+/** How readily fire spreads over each kind of ground; anything missing does not burn. */
+const BURNS: Partial<Record<Tile, number>> = { [Tile.Forest]: 3, [Tile.Grass]: 1, [Tile.Swamp]: 0.2 };
 
 function hasDamage(s: Stats): boolean {
   return s.entries().some(([k, v]) => k.startsWith("dmg_") && typeof v === "number" && v > 0);
@@ -741,7 +746,11 @@ export class WorldRoom extends Room {
       cooldown: 0,
       friendlyFire: s.flag("friendly_fire"),
       killBonus,
+      spread: s.num("spread_rate"),
     };
+    if (this.weather && this.countered(this.weather.word, area.word)) {
+      throw new Error(`${word} cannot take hold: the ${this.weather.word} puts it out`);
+    }
     const key = `z${this.nextThing++}`;
     this.areas.set(key, area);
     this.state.zones.set(key, Object.assign(new Zone(), { word: area.word, x: area.x, y: area.y, radius: area.radius }));
@@ -749,12 +758,41 @@ export class WorldRoom extends Room {
     return `${word} for ${minutes >= 1 ? `${minutes} minute${minutes === 1 ? "" : "s"}` : "a moment"}`;
   }
 
-  /** Strikes everything inside an area whose cooldown has run out; ends areas whose time is up. */
+  /** True if `word` lists `other` among the things it counters (RAIN counters FIRE). */
+  private countered(word: string, other: string): boolean {
+    const tags = this.dict.word(word)?.set.counters;
+    return Array.isArray(tags) && tags.includes(other);
+  }
+
+  /** Ends every area that `word` counters; returns how many. */
+  private counter(word: string): number {
+    let n = 0;
+    for (const [key, a] of [...this.areas]) {
+      if (this.countered(word, a.word)) { this.areas.delete(key); this.state.zones.delete(key); n++; }
+    }
+    return n;
+  }
+
+  /**
+   * Strikes everything inside an area whose cooldown has run out; grows areas that spread over
+   * ground that burns; ends areas whose time is up.
+   */
   private burn(key: string, a: Area, seconds: number) {
     if (this.elapsed >= a.until) {
       this.areas.delete(key);
       this.state.zones.delete(key);
       return;
+    }
+    if (a.spread > 0 && seconds > 0) {
+      // Sample the ground around the edge: forest feeds it, grass less, stone and water not at all.
+      let fuel = 0;
+      for (let i = 0; i < 8; i++) {
+        const t = (i / 8) * Math.PI * 2;
+        fuel += BURNS[tileAt(this.map, a.x + Math.cos(t) * (a.radius + 0.5), a.y + Math.sin(t) * (a.radius + 0.5))] ?? 0;
+      }
+      a.radius += (a.spread / 60) * seconds * (fuel / 8);
+      const zone = this.state.zones.get(key);
+      if (zone && Math.abs(zone.radius - a.radius) > 0.1) zone.radius = a.radius;
     }
     a.cooldown -= seconds;
     if (!a.attack || a.cooldown > 0) return;
@@ -811,6 +849,8 @@ export class WorldRoom extends Room {
       this.state.weather = weather;
       did = `${name.toUpperCase()} for ${minutes} minutes`;
     }
+    const out = this.counter(phrase.noun);
+    if (out) did = did ? `${did}; ${out} fire${out === 1 ? "" : "s"} put out` : `${out} fire${out === 1 ? "" : "s"} put out`;
     if (!did) throw new Error(`${name.toUpperCase()} does nothing yet`);
     const rates = production(s);
     if (Object.keys(rates).length) this.producers.set(`sky:${phrase.noun}:${id}`, { owner: id, rates, built: {} });

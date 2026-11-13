@@ -178,7 +178,12 @@ class World extends Phaser.Scene {
     const liveZones = new Set<string>();
     state.zones.forEach((z: any, id: string) => {
       liveZones.add(id);
-      if (this.zones.has(id)) return;
+      const existing = this.zones.get(id);
+      if (existing) {
+        const disc = existing.list[0] as Phaser.GameObjects.Arc;
+        if (Math.abs(disc.radius - z.radius * PX) > 0.5) disc.setRadius(z.radius * PX); // fire spreads
+        return;
+      }
       const colour = ZONE[z.word] ?? 0x9a6ad9;
       const disc = this.add.circle(0, 0, z.radius * PX, colour, 0.22).setStrokeStyle(2, colour, 0.8);
       const label = this.add.text(0, 0, z.word.toUpperCase(), { fontFamily: "monospace", fontSize: "9px", color: "#ffffff", stroke: "#14161a", strokeThickness: 2 })
