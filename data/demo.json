@@ -2439,6 +2439,7 @@
 "mass":75.0,
 "height":1.75,
 "integrity":100.0,
+"sight_range":60.0,
 "alive":true,
 "sentient":true,
 "intelligence":7.0,

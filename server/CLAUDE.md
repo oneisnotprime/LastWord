@@ -5,3 +5,15 @@ Node process that owns the game state. One room per map instance (from milestone
 - Test: `npm test -w server`. Typecheck: `npm run typecheck -w server`. Run: `npm run dev:server`.
 - Game rules live in `shared/`; this package does I/O, networking, map generation, persistence.
 - The server is the only authority. Never trust a value a client sends beyond its intent.
+
+## Map
+
+- `src/app.config.ts` server definition; `src/main.ts` starts it (`PORT`, `METRICS=1`).
+- `src/WorldRoom.ts` the room: joins, movement intents, 10 Hz tick, sight-based views.
+- `src/state.ts` what is sent to clients. Fields tagged `.view()` go only to clients whose
+  view holds that instance. Keep it small: every field costs bandwidth for every viewer.
+- `loadtest/bots.ts` bot load test: `npx tsx loadtest/bots.ts 100 600` (add `crowd` after the
+  endpoint for the worst case). Run the server with `METRICS=1` to see CPU and tick time.
+- Colyseus 0.18: `defineServer`/`defineRoom`, `messages = {}`, `setTimestep`, `@colyseus/sdk`
+  on the client. Older tutorials use a different API; check docs.colyseus.io.
+- Ignore options a client sends when joining. A message with no handler disconnects the sender.
