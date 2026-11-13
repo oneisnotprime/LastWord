@@ -49,6 +49,12 @@ interface Area {
   killBonus: number;
   /** Tiles a minute it grows over ground that burns. */
   spread: number;
+  /** What it does to bodies inside it (an aura or condition), or null. */
+  effect: Effect | null;
+  /** Who the effect reaches: self, owned, allies, enemies, living or all. */
+  targets: string;
+  /** A walker the area moves with (an aura around its maker), or null if it stays put. */
+  follows: string | null;
 }
 
 /** How readily fire spreads over each kind of ground; anything missing does not burn. */
@@ -98,6 +104,9 @@ interface Walker {
   buffs: Effect[];
   /** In the air: ground does not block or slow. */
   flying: boolean;
+  /** Effects of the fields this walker stands in, and a key to tell when they change. */
+  fields?: Effect[];
+  fieldKey?: string;
   target: Point | null;
   /** Waypoints toward `target`, worked out for `routeTo`; recomputed when the target moves. */
   route: Point[];
@@ -284,16 +293,20 @@ export class WorldRoom extends Room {
         const name = [...phrase.adjectives, phrase.noun].join(" ");
         if (phrase.kind !== "object") {
           // These throw if they cannot happen, before any letters are spent.
-          const done =
+          let done =
             phrase.kind === "verb" ? this.cast(walker, phrase)
             : phrase.kind === "event" ? this.happen(client.sessionId, walker, phrase)
+            : phrase.kind === "field" ? this.field(client.sessionId, walker, phrase)
             : this.sky(client.sessionId, phrase, name);
+          if (phrase.kind !== "sky") done = this.withCounters(phrase.noun, done);
           spend(walker.letters, phrase.letters);
           client.send("letters", walker.letters);
           client.send("spelled", done);
           return;
         }
         spend(walker.letters, phrase.letters);
+        const countered = this.counter(phrase.noun);
+        if (countered) client.send("notice", `${phrase.noun.toUpperCase()} ended ${countered} area${countered === 1 ? "" : "s"}`);
         const gear: Gear = {
           spelled: { noun: phrase.noun, adjectives: phrase.adjectives },
           phrase: name,
@@ -444,7 +457,7 @@ export class WorldRoom extends Room {
       body: walker.body,
       items: walker.gear.filter((g) => !g.vehicle).map((g) => g.spelled),
       riding: walker.gear.find((g) => g.vehicle)?.spelled,
-      effects: [...(this.weather ? [this.weather] : []), ...walker.buffs],
+      effects: [...(this.weather ? [this.weather] : []), ...(walker.fields ?? []), ...walker.buffs],
     });
     unit.body.integrity = walker.hp;
     for (const g of walker.gear) {
@@ -496,7 +509,10 @@ export class WorldRoom extends Room {
           max: layer ? layer.stats.num("integrity") : null,
         };
       }),
-      effects: walker.buffs.map((b) => ({ word: b.word, left: Math.round(b.until - this.elapsed) })),
+      effects: [
+        ...walker.buffs.map((b) => ({ word: b.word, left: Math.round(b.until - this.elapsed) })),
+        ...(walker.fields ?? []).map((f) => ({ word: f.word, left: -1 })), // -1: while you stand in it
+      ],
       creatures: [...this.walkers.values()].filter((w) => w.master === walker.id).map((w) => ({ name: w.player.name, health: w.player.hp })),
     };
     client.send("loadout", detail);
@@ -747,6 +763,9 @@ export class WorldRoom extends Room {
       friendlyFire: s.flag("friendly_fire"),
       killBonus,
       spread: s.num("spread_rate"),
+      effect: null,
+      targets: "all",
+      follows: null,
     };
     if (this.weather && this.countered(this.weather.word, area.word)) {
       throw new Error(`${word} cannot take hold: the ${this.weather.word} puts it out`);
@@ -756,6 +775,97 @@ export class WorldRoom extends Room {
     this.state.zones.set(key, Object.assign(new Zone(), { word: area.word, x: area.x, y: area.y, radius: area.radius }));
     this.burn(key, area, 0);
     return `${word} for ${minutes >= 1 ? `${minutes} minute${minutes === 1 ? "" : "s"}` : "a moment"}`;
+  }
+
+  /** Adds what a word ended by countering to the message for it. */
+  private withCounters(word: string, done: string): string {
+    const n = this.counter(word);
+    return n ? `${done}; ${n} ${n === 1 ? "area" : "areas"} ended` : done;
+  }
+
+  /**
+   * A field: an aura or condition. It moves with its maker (placement self), sits where it was
+   * aimed (target), covers the speller's surroundings (region) or the whole map (sky, map, or an
+   * absolute radius). Everyone it reaches gets the word's effects while inside; damage, if any,
+   * strikes as an area does.
+   */
+  private field(id: string, walker: Walker, phrase: Phrase): string {
+    const s = phrase.stats, def = this.dict.word(phrase.noun)!, word = phrase.noun.toUpperCase();
+    const placement = String(s.get("placement"));
+    const radiusM = s.num("field_radius");
+    const whole = placement === "sky" || placement === "map" || radiusM === Infinity;
+    let at: Point = walker.player;
+    if (placement === "target") {
+      const reach = Math.max(1.5, s.num("placement_range") / TILE_METERS);
+      const picked = walker.picked ?? walker.foe;
+      const target = walker.aim ?? (picked ? this.walkers.get(picked)?.player ?? this.state.things.get(picked) : undefined);
+      if (!target) throw new Error(`Aim ${word} first: right-click where it should go`);
+      if (Math.hypot(target.x - walker.player.x, target.y - walker.player.y) > reach) throw new Error(`Too far away for ${word}`);
+      at = { x: target.x, y: target.y };
+    }
+    // What it does to bodies: the word's operations, a named property change, and any flags it grants.
+    const ops: Op[] = [...def.ops];
+    const prop = String(s.get("field_property"));
+    if (prop && this.dict.properties.has(prop)) {
+      if (s.num("field_delta")) ops.push([prop, "add", s.num("field_delta")]);
+      if (s.num("field_multiplier") !== 1) ops.push([prop, "mul", s.num("field_multiplier")]);
+    }
+    const flags: Record<string, Value> = {};
+    for (const [k, v] of Object.entries(def.set)) {
+      if (v === true && (k.startsWith("immune_") || ["night_vision", "untargetable", "phase", "hover"].includes(k))) flags[k] = true;
+    }
+    const minutes = s.num("field_duration") || s.num("persistence");
+    const lasts = minutes > 0 && minutes < Infinity ? minutes * 60 : Infinity;
+    const rates = production(s);
+    const area: Area = {
+      word: phrase.noun, owner: id, x: at.x, y: at.y,
+      radius: whole ? this.map.size * 2 : Math.max(1, radiusM / TILE_METERS),
+      until: this.elapsed + lasts,
+      attack: hasDamage(s) ? alwaysHits(s) : null,
+      cooldown: 0,
+      friendlyFire: s.flag("friendly_fire"),
+      killBonus: 1,
+      spread: 0,
+      effect: ops.length || Object.keys(flags).length ? { word: phrase.noun, set: flags, ops, until: Infinity } : null,
+      targets: String(s.get("field_targets")),
+      follows: placement === "self" && !whole ? id : null,
+    };
+    if (!area.attack && !area.effect && !Object.keys(rates).length) throw new Error(`${word} does nothing yet`);
+    // Casting it again replaces your earlier one.
+    for (const [k, a] of this.areas) if (a.owner === id && a.word === phrase.noun) { this.areas.delete(k); this.state.zones.delete(k); }
+    const key = `z${this.nextThing++}`;
+    this.areas.set(key, area);
+    this.state.zones.set(key, Object.assign(new Zone(), { word: area.word, x: area.x, y: area.y, radius: whole ? 0 : area.radius }));
+    if (Object.keys(rates).length) this.producers.set(`field:${key}`, { owner: id, rates, built: {} });
+    this.applyFields();
+    const where = whole ? "over the whole map" : area.follows ? "around you" : "where it fell";
+    return `${word} ${where}${lasts < Infinity ? ` for ${minutes} minute${minutes === 1 ? "" : "s"}` : ""}`;
+  }
+
+  /** True if a field reaches a walker, by its targets and its position. */
+  private reaches(a: Area, wid: string, w: Walker): boolean {
+    if (Math.hypot(w.player.x - a.x, w.player.y - a.y) > a.radius) return false;
+    const mine = wid === a.owner || w.master === a.owner;
+    switch (a.targets) {
+      case "self": return wid === a.owner;
+      case "owned": case "allies": return mine;
+      case "enemies": return !mine;
+      case "living": return w.unit.body.stats.flag("alive");
+      default: return true;
+    }
+  }
+
+  /** Gives every walker the effects of the fields it stands in; rebuilds only those that changed. */
+  private applyFields() {
+    for (const [wid, w] of this.walkers) {
+      const now: Effect[] = [];
+      for (const a of this.areas.values()) if (a.effect && this.reaches(a, wid, w)) now.push(a.effect);
+      const key = now.map((e) => e.word).sort().join(",");
+      if (key === (w.fieldKey ?? "")) continue;
+      w.fieldKey = key;
+      w.fields = now;
+      this.rebuild(w);
+    }
   }
 
   /** True if `word` lists `other` among the things it counters (RAIN counters FIRE). */
@@ -778,10 +888,17 @@ export class WorldRoom extends Room {
    * ground that burns; ends areas whose time is up.
    */
   private burn(key: string, a: Area, seconds: number) {
-    if (this.elapsed >= a.until) {
+    const leader = a.follows ? this.walkers.get(a.follows) : undefined;
+    if (this.elapsed >= a.until || (a.follows && !leader)) {
       this.areas.delete(key);
       this.state.zones.delete(key);
+      this.producers.delete(`field:${key}`);
       return;
+    }
+    if (leader) {
+      a.x = leader.player.x; a.y = leader.player.y;
+      const zone = this.state.zones.get(key);
+      if (zone) { zone.x = a.x; zone.y = a.y; }
     }
     if (a.spread > 0 && seconds > 0) {
       // Sample the ground around the edge: forest feeds it, grass less, stone and water not at all.
@@ -802,6 +919,7 @@ export class WorldRoom extends Room {
     for (const [wid, w] of [...this.walkers]) {
       if (!this.walkers.has(wid) || !inside(w.player)) continue;
       if (!a.friendlyFire && (wid === a.owner || w.master === a.owner)) continue;
+      if (a.effect && !this.reaches(a, wid, w)) continue; // a field strikes only whom it targets
       strike(a.attack, w.unit.outer, this.rng);
       this.settle(wid, w);
       if (w.unit.dead) this.kill(wid, a.owner);
@@ -1068,6 +1186,8 @@ export class WorldRoom extends Room {
     for (const id of changed) {
       this.clients.find((c) => c.sessionId === id)?.send("letters", this.walkers.get(id)!.letters);
     }
+    // Once a second: fields follow people about, so work out again who stands in which.
+    if (this.tickCount % TICK_HZ === 0 && this.areas.size) this.applyFields();
     // Once a second, anyone with a verb in force is told how long it has left.
     if (this.tickCount % TICK_HZ === 0) for (const w of this.walkers.values()) if (w.buffs.length) this.tell(w);
     if (this.tickCount++ % VIEW_EVERY === 0) this.refreshViews();

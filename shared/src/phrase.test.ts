@@ -19,6 +19,8 @@ describe("parsePhrase", () => {
     expect(parsePhrase(dict, "theft").kind).toBe("event");
     expect(parsePhrase(dict, "sun").kind).toBe("sky");
     expect(parsePhrase(dict, "rain").kind).toBe("sky");
+    expect(parsePhrase(dict, "love").kind).toBe("field");
+    expect(parsePhrase(dict, "winter").kind).toBe("sky");
     expect(() => parsePhrase(dict, "big fly")).toThrow("FLY is something you do");
   });
 

@@ -685,7 +685,7 @@ it("fire spreads over forest, not stone, and rain or a flood puts it out", async
   expect([...a.state.zones.values()][0].radius).toBeGreaterThan(3);
 
   // FLOOD puts it out too.
-  a.send("spell", "flood"); await wait();
-  expect(said.at(-1)).toBe("1 fire put out");
+  a.send("spell", "flood"); await wait(); // terrain now: it lays water, and as a counter to FIRE ends it
+  expect(said.at(-1)).toBe("FLOOD made");
   expect(fire()).toBeUndefined();
 });

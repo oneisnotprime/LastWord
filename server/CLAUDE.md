@@ -19,6 +19,10 @@ Node process that owns the game state. One room per map instance (from milestone
   on the client. Older tutorials use a different API; check docs.colyseus.io.
 - Gear a player carries lives in the room (`Walker.gear`) and is shown to others only as the
   text in `Player.gear`; things on the ground are `Thing`s in the state.
+- Field words (`field`) are `Area`s with an `effect` applied to whoever they `reach`;
+  `applyFields` runs once a second and on every cast. A word ends areas it `counters` whatever
+  its kind.
+- Room test files share one port, so `vitest.config.ts` runs them one at a time.
 - Events use `Walker.picked` (right-click) before `Walker.foe`; area events use `Walker.aim`.
 - Events (`happen`) pick what to do from the word's properties, not its name; areas they
   leave behind are `Area`s ticked by `burn` and sent to clients as `Zone`s.
