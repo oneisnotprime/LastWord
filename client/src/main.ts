@@ -24,12 +24,25 @@ class World extends Phaser.Scene {
   private lastSteer = 0;
 
   async create() {
-    this.hud = new Hud((text) => this.net?.spell(text));
+    this.hud = new Hud((text) => {
+      // "give player2 abc" hands letters over; anything else is a spelling.
+      const give = /^\s*give\s+(\S+)\s+([a-z]+)\s*$/i.exec(text);
+      if (give) this.net?.give(give[1]!, give[2]!.toLowerCase());
+      else this.net?.spell(text);
+    });
+    window.addEventListener("keydown", (e) => {
+      if (e.key.toLowerCase() === "g" && !e.repeat && !this.hud.typing && this.net) {
+        this.net.gather();
+        this.hud.toast("Gathering…", "good");
+      }
+    });
     try {
       this.net = await connect({
         letters: (held) => this.hud.setLetters(held),
         spelled: (phrase) => this.hud.toast(`${phrase.toUpperCase()} made`, "good"),
         refused: (reason) => this.hud.toast(reason, "bad"),
+        gathered: (letter) => this.hud.toast(`+ ${letter.toUpperCase()}`, "good"),
+        notice: (text) => this.hud.toast(text, "good"),
         closed: () => this.hud.status("Disconnected"),
       });
     } catch {

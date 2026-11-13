@@ -99,6 +99,10 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
 - [ ] Controller input: movement, and spelling by picking from held letters
 - [ ] Spelled objects only sit on the ground; no equipping, placement rules or effects yet
 - [ ] Starter letters are a placeholder hand (SWORD plus 20 random) until letter sources exist
-- [ ] M4 to M7 in PLAN.md
+- [x] M4: gathering by hand, letter production from objects, giving letters to a nearby player
+- [ ] Letter sources are a first pass: gathering depends only on the ground, and objects pay
+      out without needing labour, water or fuel. D, F, H, K, V, J, Q, X, Z have no source yet
+- [ ] Trading is a typed command (give player2 abc); needs a real interface and two-way offers
+- [ ] M5 to M7 in PLAN.md
 - [ ] Map generator: cities, countryside, letter sources
 - [ ] Demo: one map, the 351-word dictionary, a handful of players
