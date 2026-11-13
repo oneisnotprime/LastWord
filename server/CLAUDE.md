@@ -36,3 +36,8 @@ Node process that owns the game state. One room per map instance (from milestone
   everyone in one city, `SEED_THINGS=5000` scatters that many objects at start.
 - `loadtest/bots.ts` modes: `wander`, `crowd`, `play` (gathers, spells and fights).
 - Ignore options a client sends when joining. A message with no handler disconnects the sender.
+- Statuses: `Walker.statuses` (rules in shared `status.ts`). `hurtWith` gives them on a landed
+  blow or an area pulse, `statusChanged` rebuilds and sets `Player.status`, `sufferStatuses`
+  deals damage over time and counts down, `compel` makes the frightened flee, the confused
+  wander and creatures in `sets_hostile` areas attack. Areas `pulse` once a second (statuses
+  from harmless areas, cures, `contagion`).

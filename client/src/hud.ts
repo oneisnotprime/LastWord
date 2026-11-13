@@ -139,7 +139,10 @@ export class Hud {
           ${stat("Strikes a second", String(d.attack.rate))}
           ${stat("Reach", `${d.attack.reach} m`)}
           <h3>In force</h3>
-          ${d.effects.map((e) => stat(e.word.toUpperCase(), e.left < 0 ? "while you stand in it" : `${e.left} s left`)).join("") || `<div class="hint">Nothing</div>`}
+          ${[
+            ...(d.statuses ?? []).map((s) => stat(s.status.toUpperCase(), `${s.left} s left`).replace('class="stat"', 'class="stat status"')),
+            ...d.effects.map((e) => stat(e.word.toUpperCase(), e.left < 0 ? "while you stand in it" : `${e.left} s left`)),
+          ].join("") || `<div class="hint">Nothing</div>`}
         </div>
       </div>`;
   }

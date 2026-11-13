@@ -15,6 +15,8 @@ export const Player = schema(
     gear: t.string(),
     /** For a creature someone spelled: its owner's session id, or "-" if it has none. "" for a person. */
     owner: t.string(),
+    /** Statuses on it, space separated: "stun poison". "" when there are none. */
+    status: t.string(),
   },
   "Player",
 );

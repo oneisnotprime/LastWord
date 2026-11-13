@@ -182,8 +182,17 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
 - [x] Field words (120: LOVE, FEAR, HOPE, CHAOS, DISEASE, HEAVEN, PLANET, GALAXY...) are auras
       that follow their maker, fields where aimed, or conditions over a region or the whole map;
       every one is spelled in a test and every one does something
-- [ ] Field words' status effects (inflict_fear, inflict_confuse) and sets_hostile are not
-      acted on; contagion does not spread a DISEASE to new places
+- [x] Statuses (shared `STATUS_RULES`): every strike, area, field and AMBUSH gives its
+      `inflict_*` unless the body is `immune_*`; stun, root, freeze and sleep stop walking;
+      fear makes you run; burn, poison and bleed hurt each second; silence (and SILENCE's
+      `silences` radius) stops spelling; verbs, RESCUE and fields with `effect_status` end them.
+      Shown under names and in the loadout. `sets_hostile` areas turn creatures inside on the
+      nearest walker not on the maker's side; contagious DISEASE passes from carrier to carrier
+- [ ] Statuses still to do: `contagion` on creatures and adjectives (RAT, ZOMBIE, SICK) does
+      nothing; objects with `effect_status` (MEDICINE, CURE, HOSPITAL) cannot be used yet;
+      SLEEP the verb ends sleep rather than causing it; CAP halves the blindness you inflict,
+      not the blindness you take; `sets_hostile` does not move people, only creatures; damage
+      over time is a flat amount a second, not scaled by what inflicted it
 - [ ] Hidden or invisible players are still drawn for others; stealth against detection is not
       used for what a client is sent
 - [ ] Right-click picking on a controller
