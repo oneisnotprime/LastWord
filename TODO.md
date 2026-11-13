@@ -46,7 +46,8 @@
 - [ ] Rule on comparatives that are also real words (number, flatter, better): which meaning wins
 - [ ] Review the scale of the demo numbers: real-world units and very large gaps between words
       (nuke 5,000,000 damage against sword 40); confirm or compress before the full pass
-- [ ] Plural rules, including irregular plurals; verb tenses
+- [x] Plural rules, including irregular plurals (shared `plural.ts`)
+- [ ] Verb tenses
 - [x] First property pass: 2,958 generated words merged (3,310 in the dictionary), written by
       Opus 5.5 subagents from the same prompt and examples the batch would use
 - [ ] Rule on words kept out of the dictionary (`EXCLUDED` in generate_words.py): nationalities,
@@ -60,7 +61,10 @@
 - [ ] Generated words use properties the engine does not act on yet (effect_multiplier on
       adverbs, negates, copies, strips_adjectives, plural_count); sky words like PLANET are now
       fields
-- [ ] Plural forms in the lexicon (ROADS, LEGS, FALLS) need the plural rule rather than entries
+- [x] Plural forms in the lexicon (ROADS, LEGS, FALLS): the plural rule wins when the entry has
+      the singular's archetype; an entry of another archetype (MEN, PEOPLE: groups) keeps its own data
+- [ ] WOLF comes as a pack of 4 (`pack_size`) but WOLVES gives 3 (`plural_count` default): give
+      pack animals a plural_count of several packs in the data
 - [ ] Next batch: words 3,001 to 10,000
 - [ ] Grammar words (are, have, not, but, the rest of `GRAMMAR` in generate_words.py) need a
       deliberate ruling: inert, or something spectacular
@@ -171,7 +175,23 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
       a word that counters it (RAIN, FLOOD) puts fires out and stops new ones taking hold
 - [ ] Burnt ground stays as it was; forest could turn to bare ground after a fire
 - [ ] EARTHQUAKE covers 375 tiles and hits everyone, its maker included
-- [ ] Creatures: no pack sizes or plurals, no hunger or upkeep, no orders (stay, guard, go
+- [x] Plurals and numbers: CATS is `plural_count` cats (3 by default) for one more S; a singular
+      comes as its `pack_size` (WOLF is four); number words (TEN, THOUSAND, MILLION: adjectives,
+      or quantity nouns used as one) set how many and take the adjective slot. Up to 12 spawn
+      separately; more are one creature or thing with a count (ANT ×1000) whose integrity, mass,
+      damage and letter output are multiplied by it. That is how large counts are represented,
+      not a cap. Terrain is laid once with its area multiplied by the count
+- [x] Verbs: `<adverb> <verb>` (QUICKLY RUN, FOREVER FLY). Adverb ops on effect properties change
+      the verb (duration, cast_time, restores); `effect_multiplier` is the strength the verb's own
+      ops apply at; other adverb properties add to what the verb does. One adverb per verb.
+      Touched verbs with event properties act on the picked target (DELETE, STEAL, BUY, CAPTURE,
+      GRANT, GRAB, PULL, SUCK, SEND). 287 of 288 verbs do something; REPEAT (`duplicates`) does not
+- [ ] Verbs still to do: `cast_time` is not a delay yet; 37 verbs only change properties nothing
+      reads yet (CLIMB, DIG, LISTEN, VOTE, POLISH...); `effect_target` held, companion, mount and
+      touched (other than event properties) still land on the caster; SEND pulls its target to you
+      instead of sending it away; an instant verb (HEAL) carries no adverb body effects
+- [ ] Plurals of events, fields and sky words (FIRES, SUNS) are refused; decide what they do
+- [ ] Creatures: no hunger or upkeep, no orders (stay, guard, go
       there), wild ones never act, and they do not gather or work
 - [ ] A wolf kills an unarmoured person in three bites (about two seconds); review creature
       damage against the 100 integrity of a human

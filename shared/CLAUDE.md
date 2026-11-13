@@ -14,7 +14,11 @@ server and the client import this, so anything here must give the same answer on
 - `combat.ts` `strike`, `tick`, `duel`. The absolute rules are documented on `strike`.
 - `world.ts` map generation from a seed, tile costs, `stepToward` movement, `stampTerrain` for
   words that reshape the land. 1 tile = 4 m.
-- `phrase.ts` `parsePhrase` reads what a player typed; `missing` and `spend` handle letters.
+- `phrase.ts` `parsePhrase` reads what a player typed (adjectives + noun, or adverb + verb);
+  `readNoun` reads plurals; `count` is plural_count or pack_size; `missing` and `spend` handle letters.
+- `plural.ts` `pluralize` and `singulars`: English plurals with a short irregular list.
+- `verb.ts` `castVerb`: the adverb rule (effect properties change the verb, the rest add to it).
+- `stats.ts` also has `massed`: many of one thing as one body, integrity, mass and damage scaled.
 - `letters.ts` what gathering yields on each ground, and what an object produces a minute.
 - `unit.ts` a character with its gear: damage layers, held weapon scaled by strength and
   training, riding. `strikeUnit` hits the outermost layer.

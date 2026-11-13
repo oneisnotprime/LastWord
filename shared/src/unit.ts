@@ -1,12 +1,20 @@
 import { destroyed, spawn, strike, type Entity, type Strike } from "./combat.js";
 import type { Dictionary } from "./dictionary.js";
 import type { Rng } from "./rng.js";
-import { resolve, type Stats } from "./stats.js";
+import { massed, resolve, type Stats } from "./stats.js";
 import type { Op, Value } from "./types.js";
 import { inflicts } from "./status.js";
 
-/** A noun with the adjectives on it. */
-export interface Spelled { noun: string; adjectives?: string[] }
+/**
+ * A noun with the adjectives on it. `count` above 1 is many of it as one body (a swarm, a
+ * stack): see `massed`.
+ */
+export interface Spelled { noun: string; adjectives?: string[]; count?: number }
+
+/** What a spelled thing is: its noun and adjectives resolved, scaled by how many there are. */
+export function resolveSpelled(dict: Dictionary, s: Spelled, lent: readonly string[] = []): Stats {
+  return massed(resolve(dict, s.noun, s.adjectives, lent), s.count ?? 1);
+}
 
 /** A character and everything it carries. */
 export interface Loadout {
@@ -45,14 +53,14 @@ export class Unit {
 
   constructor(dict: Dictionary, readonly loadout: Loadout) {
     const lent = loadout.body.adjectives ?? [];
-    const body = resolve(dict, loadout.body.noun, lent);
+    const body = massed(resolve(dict, loadout.body.noun, lent), loadout.body.count ?? 1);
     const protection: Entity[] = [];
     let weapon: Stats | null = null;
     let hands = 0;
 
     for (const item of loadout.items ?? []) {
       const def = dict.lookup(item.noun)?.def;
-      const stats = resolve(dict, item.noun, item.adjectives);
+      const stats = resolveSpelled(dict, item);
       hands += stats.num("hands_required");
       if (hands > 2) throw new Error(`${item.noun} needs a free hand`);
       if (stats.num("hands_required") > 0 && !body.flag("hands")) throw new Error(`${loadout.body.noun} has no hands`);
@@ -77,7 +85,7 @@ export class Unit {
     this.body = spawn(loadout.body.noun, body);
     // A rider's own adjectives carry over to what it rides: a FAST driver makes a fast tank.
     this.vehicle = loadout.riding
-      ? spawn(loadout.riding.noun, resolve(dict, loadout.riding.noun, loadout.riding.adjectives, lent))
+      ? spawn(loadout.riding.noun, resolveSpelled(dict, loadout.riding, lent))
       : null;
     if (this.vehicle) this.entities.set(loadout.riding!, this.vehicle);
     this.layers = [...(this.vehicle ? [this.vehicle] : []), ...protection, this.body];

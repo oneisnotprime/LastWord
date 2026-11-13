@@ -1,7 +1,7 @@
 import { Room, type Client } from "colyseus";
 import { StateView } from "@colyseus/schema";
 import {
-  addLetters, afflict, cure, findPath, hampered, inflicts, statusDamage, statusEffects, tickStatuses, wake, GATHER_SECONDS, gatherLetter, generateMap, GIVE_RANGE, missing, parsePhrase, production, nearestWalkable, randomWalkable, resolve, Tile, tileAt, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit,
+  addLetters, afflict, cure, findPath, hampered, inflicts, statusDamage, statusEffects, tickStatuses, wake, GATHER_SECONDS, gatherLetter, generateMap, GIVE_RANGE, missing, parsePhrase, production, resolveSpelled, SEPARATE_UP_TO, nearestWalkable, randomWalkable, resolve, Tile, tileAt, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit,
   type Affliction, type Dictionary, type Entity, type Hampered, type Status, type Stats, type Letters, type LoadoutDetail, type Op, type Phrase, type Point, type Spelled, type Value, type WorldMap,
 } from "@lastword/shared";
 import { loadDictionary } from "./data.js";
@@ -321,11 +321,12 @@ export class WorldRoom extends Room {
         const phrase = parsePhrase(this.dict, text);
         const lacking = missing(walker.letters, phrase.letters);
         if (lacking) throw new Error(`You need ${lacking.toUpperCase().split("").join(" ")}`);
-        const name = [...phrase.adjectives, phrase.noun].join(" ");
+        const name = [...phrase.adverbs, ...phrase.adjectives, phrase.noun].join(" ");
+        const spelledAs = text.toLowerCase().trim().split(/\s+/).join(" ").toUpperCase();
         if (phrase.kind !== "object") {
           // These throw if they cannot happen, before any letters are spent.
           let done =
-            phrase.kind === "verb" ? this.cast(walker, phrase)
+            phrase.kind === "verb" ? this.cast(client.sessionId, walker, phrase)
             : phrase.kind === "event" ? this.happen(client.sessionId, walker, phrase)
             : phrase.kind === "field" ? this.field(client.sessionId, walker, phrase)
             : this.sky(client.sessionId, phrase, name);
@@ -335,39 +336,15 @@ export class WorldRoom extends Room {
           client.send("spelled", done);
           return;
         }
+        if (phrase.count < 1) throw new Error(`${spelledAs} is none at all`);
         spend(walker.letters, phrase.letters);
         const countered = this.counter(phrase.noun);
         if (countered) client.send("notice", `${phrase.noun.toUpperCase()} ended ${countered} area${countered === 1 ? "" : "s"}`);
-        const gear: Gear = {
-          spelled: { noun: phrase.noun, adjectives: phrase.adjectives },
-          phrase: name,
-          vehicle: phrase.stats.flag("mountable"),
-          integrity: null,
-        };
-        const wearable = gear.vehicle || phrase.stats.get("equip_slot") !== "none";
-        // Things you can hold, wear or ride go straight onto you if there is room; the rest sit on the ground.
-        // Living things that can move act on their own; ones you can ride are gear instead.
-        if (phrase.stats.flag("alive") && !gear.vehicle && Math.max(phrase.stats.num("speed_land"), phrase.stats.num("speed_air")) > 0) {
-          this.addCreature(gear, client.sessionId, walker.player.x, walker.player.y);
-          client.send("letters", walker.letters);
-          client.send("spelled", `${name.toUpperCase()} is with you`);
-          this.refreshViews();
-          return;
-        }
-        const here = { x: walker.player.x, y: walker.player.y }; // laying terrain may move the speller
-        const worn = wearable && this.equip(walker, gear) === null;
-        const tile = TILE_TYPES[String(phrase.stats.get("tile_type"))];
-        if (tile !== undefined) {
-          gear.terrain = true;
-          this.reshape(walker.player.x, walker.player.y, phrase.stats.num("radius"), tile);
-        }
-        if (!worn) {
-          const id = this.addThing(gear, client.sessionId, here.x, here.y);
-          const rates = production(phrase.stats);
-          if (Object.keys(rates).length) this.producers.set(id, { owner: client.sessionId, rates, built: {} });
-        }
+        const done = this.make(client.sessionId, walker, phrase);
         client.send("letters", walker.letters);
-        client.send("spelled", `${name.toUpperCase()} ${worn ? "equipped" : "made"}`);
+        const many = phrase.count > 1 || phrase.plural;
+        client.send("spelled", many ? `${spelledAs} (${phrase.count}) ${done === "is with you" ? "are with you" : done}`
+          : `${[...phrase.adjectives.filter((a) => !this.onlyCounts(a)), phrase.noun].join(" ").toUpperCase()} ${done}`);
         this.refreshViews();
       } catch (e) {
         client.send("refused", (e as Error).message);
@@ -418,6 +395,7 @@ export class WorldRoom extends Room {
     player.gear = "";
     player.owner = "";
     player.status = "";
+    player.count = 1;
     this.state.players.set(client.sessionId, player);
     this.walkers.set(client.sessionId, {
       id: client.sessionId,
@@ -555,11 +533,12 @@ export class WorldRoom extends Room {
   }
 
   /** Puts a creature in the world as a walker with no client, following its master. */
-  addCreature(gear: Gear, master: string, x: number, y: number): string {
+  addCreature(gear: Gear, master: string, x: number, y: number, count = 1): string {
     const id = `c${this.nextThing++}`;
     const unit = new Unit(this.dict, { body: gear.spelled });
     const player = new Player();
     player.name = gear.phrase;
+    player.count = count;
     player.x = x + (this.rng() - 0.5);
     player.y = y + (this.rng() - 0.5);
     player.hp = 100;
@@ -659,23 +638,91 @@ export class WorldRoom extends Room {
     return [...this.walkers].filter(([, w]) => w.master === null).map(([id]) => id);
   }
 
-  /** A verb: a passing effect on the speller's own body. */
-  private cast(walker: Walker, phrase: Phrase): string {
-    const def = this.dict.word(phrase.noun)!;
-    const heal = phrase.stats.num("restores");
+  /**
+   * Makes an object someone spelled, as many as its count: up to SEPARATE_UP_TO creatures or
+   * things each on their own, more as one body with a count whose integrity, mass and damage are
+   * all of theirs together (a swarm). Terrain is laid once, its radius grown so its area is
+   * count times as large. Returns what happened: "is with you", "equipped", "made".
+   */
+  private make(owner: string, walker: Walker, phrase: Phrase): string {
+    const n = phrase.count;
+    const separate = n <= SEPARATE_UP_TO && TILE_TYPES[String(phrase.stats.get("tile_type"))] === undefined;
+    const copies = separate ? n : 1, each = separate ? 1 : n;
+    // Number words (TEN, THOUSAND) say how many, not what each one is called.
+    const shown = phrase.adjectives.filter((a) => !this.onlyCounts(a));
+    const at = (i: number) => {
+      if (copies === 1) return { x: walker.player.x, y: walker.player.y };
+      const t = (i / copies) * Math.PI * 2;
+      return { x: walker.player.x + Math.cos(t) * 0.8, y: walker.player.y + Math.sin(t) * 0.8 };
+    };
+    const one = (): Gear => ({
+      spelled: { noun: phrase.noun, adjectives: phrase.adjectives, ...(each > 1 ? { count: each } : {}) },
+      phrase: [...shown, phrase.noun].join(" "),
+      vehicle: phrase.stats.flag("mountable"),
+      integrity: null,
+    });
+    // Living things that can move act on their own; ones you can ride are gear instead.
+    if (phrase.stats.flag("alive") && !phrase.stats.flag("mountable") && Math.max(phrase.stats.num("speed_land"), phrase.stats.num("speed_air")) > 0) {
+      for (let i = 0; i < copies; i++) { const p = at(i); this.addCreature(one(), owner, p.x, p.y, each); }
+      return "is with you";
+    }
+    const here = { x: walker.player.x, y: walker.player.y }; // laying terrain may move the speller
+    const tile = TILE_TYPES[String(phrase.stats.get("tile_type"))];
+    if (tile !== undefined) this.reshape(walker.player.x, walker.player.y, phrase.stats.num("radius") * Math.sqrt(n), tile);
+    let worn = 0;
+    for (let i = 0; i < copies; i++) {
+      const gear = one();
+      if (tile !== undefined) gear.terrain = true;
+      // Things you can hold, wear or ride go straight onto you if there is room; the rest sit on the ground.
+      const wearable = gear.vehicle || phrase.stats.get("equip_slot") !== "none";
+      if (wearable && this.equip(walker, gear) === null) { worn++; continue; }
+      const p = i === 0 ? here : at(i);
+      const id = this.addThing(gear, owner, p.x, p.y);
+      const rates = production(phrase.stats);
+      for (const k of Object.keys(rates)) rates[k]! *= each; // a stack of a thousand makes a thousand's worth
+      if (Object.keys(rates).length) this.producers.set(id, { owner, rates, built: {} });
+    }
+    return worn === copies ? "equipped" : worn ? `made; ${worn} equipped` : "made";
+  }
+
+  /** True for a modifier that only says how many: TEN, THOUSAND, DOZEN. */
+  private onlyCounts(word: string): boolean {
+    const def = this.dict.lookup(word)?.def;
+    if (!def) return false;
+    const ids = [...Object.keys(def.set), ...def.ops.map((o) => o[0])];
+    return ids.length > 0 && ids.every((id) => id === "plural_count" || id === "pack_size" || id === "duplicates");
+  }
+
+  /**
+   * A verb: a passing effect on the speller's own body, with its adverbs (see shared
+   * `castVerb`). A verb whose `effect_target` is `touched` and that carries an event's
+   * properties (destroys_target, transfers_ownership, moves_target) also acts on what the
+   * speller picked, through the same code as events: DELETE destroys, STEAL takes, PULL drags.
+   * Throws if it would do nothing, before any letters are spent.
+   */
+  private cast(id: string, walker: Walker, phrase: Phrase): string {
+    const s = phrase.stats, effect = phrase.effect ?? { set: {}, ops: [] };
+    const name = [...phrase.adverbs, phrase.noun].join(" ");
+    const said: string[] = [];
+    const eventful = s.flag("destroys_target") || s.flag("transfers_ownership") || s.num("moves_target") > 0;
+    if (s.get("effect_target") === "touched" && eventful) said.push(this.happen(id, walker, phrase));
+    const heal = s.num("restores");
+    const cures = s.tags("effect_status");
+    const seconds = s.num("duration");
+    const lasting = seconds > 0 && (effect.ops.length > 0 || Object.keys(effect.set).length > 0);
+    if (!said.length && !(heal > 0) && !cures.length && !lasting) throw new Error(`${name.toUpperCase()} does nothing yet`);
     if (heal > 0) walker.hp = Math.min(walker.unit.body.stats.num("integrity"), walker.hp + heal);
     // A verb's effect_status lists what it ends on the caster: HEAL ends poison, bleeding and burns.
-    const cured = cure(walker.statuses, phrase.stats.tags("effect_status"));
-    if (cured.length) this.statusChanged(walker);
-    const seconds = phrase.stats.num("duration");
-    if (seconds > 0) {
-      const { duration, restores, cast_time, effect_status, ...set } = def.set;
-      walker.buffs = walker.buffs.filter((b) => b.word !== phrase.noun); // casting again restarts it
-      walker.buffs.push({ word: phrase.noun, set, ops: def.ops, until: this.elapsed + seconds });
+    if (cure(walker.statuses, cures).length) this.statusChanged(walker);
+    if (lasting) {
+      walker.buffs = walker.buffs.filter((b) => b.word.split(" ").at(-1) !== phrase.noun); // casting again restarts it
+      walker.buffs.push({ word: name, set: effect.set, ops: effect.ops, until: this.elapsed + seconds });
     }
     this.rebuild(walker);
     walker.player.hp = Math.min(100, Math.ceil((walker.hp / walker.unit.body.stats.num("integrity")) * 100));
-    return seconds > 0 && seconds < Infinity ? `${phrase.noun.toUpperCase()} for ${seconds} seconds` : phrase.noun.toUpperCase();
+    const upper = name.toUpperCase();
+    said.push(!lasting ? upper : seconds === Infinity ? `${upper} forever` : `${upper} for ${+seconds.toFixed(1)} seconds`);
+    return said.join("; ");
   }
 
   /**
@@ -695,6 +742,7 @@ export class WorldRoom extends Room {
     const thing = this.state.things.get(selected), gear = this.grounded.get(selected);
     const near = (p: { x: number; y: number }) => Math.hypot(p.x - walker.player.x, p.y - walker.player.y) <= reach;
     const contest = (theirs: Stats, what: string, living = false) => {
+      if (!s.get("contest_with") || !s.get("contested_by")) return; // nothing resists it
       const mine = walker.unit.body.stats.num(String(s.get("contest_with")));
       const against = theirs.num(String(s.get("contested_by")));
       const by = `${s.get("contested_by")} ${against} against your ${s.get("contest_with")} ${mine}`.replaceAll("_", " ");
@@ -708,7 +756,7 @@ export class WorldRoom extends Room {
     const needThing = () => {
       if (!thing || !gear || gear.terrain) throw new Error(`Select a thing for ${word} first: click it`);
       if (!near(thing)) throw new Error(`Too far away for ${word}`);
-      return { thing, gear, stats: resolve(this.dict, gear.spelled.noun, gear.spelled.adjectives) };
+      return { thing, gear, stats: resolveSpelled(this.dict, gear.spelled) };
     };
 
     if (s.flag("destroys_target")) {
@@ -1135,8 +1183,9 @@ export class WorldRoom extends Room {
     if (Math.hypot(thing.x - walker.player.x, thing.y - walker.player.y) > reach) throw new Error(`Too far away for ${word}`);
     // The speller's own stat against the thing's: stealth against security for a theft.
     const mine = walker.unit.body.stats.num(String(phrase.stats.get("contest_with")));
-    const theirs = resolve(this.dict, gear.spelled.noun, gear.spelled.adjectives).num(String(phrase.stats.get("contested_by")));
-    if (mine < theirs) throw new Error(`${gear.phrase.toUpperCase()} is too well guarded (security ${theirs} against your stealth ${mine})`);
+    const theirs = resolveSpelled(this.dict, gear.spelled).num(String(phrase.stats.get("contested_by")));
+    const [by, against] = [phrase.stats.get("contested_by"), phrase.stats.get("contest_with")].map((p) => String(p).replaceAll("_", " "));
+    if (mine < theirs) throw new Error(`${gear.phrase.toUpperCase()} is too well guarded (${by} ${theirs} against your ${against} ${mine})`);
     this.clients.find((c) => c.sessionId === thing.owner)?.send("notice", `Your ${gear.phrase.toUpperCase()} was stolen`);
     thing.owner = id;
     const producer = this.producers.get(targetId);
@@ -1232,7 +1281,7 @@ export class WorldRoom extends Room {
     const gear = this.grounded.get(id)!;
     let entity = this.thingEntities.get(id);
     if (!entity) {
-      entity = spawn(gear.phrase, resolve(this.dict, gear.spelled.noun, gear.spelled.adjectives));
+      entity = spawn(gear.phrase, resolveSpelled(this.dict, gear.spelled));
       if (gear.integrity !== null) entity.integrity = gear.integrity;
       this.thingEntities.set(id, entity);
     }
@@ -1286,6 +1335,7 @@ export class WorldRoom extends Room {
     const phrase = gear.phrase;
     const thing = new Thing();
     thing.phrase = phrase;
+    thing.count = gear.spelled.count ?? 1;
     thing.hp = 100;
     thing.owner = owner;
     thing.x = x;

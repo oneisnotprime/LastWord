@@ -63,7 +63,7 @@ it("a stunned or rooted walker cannot move, and a NET roots whoever it hits", as
   a.send("spell", "net"); await wait();
   expect(said.a.at(-1)).toBe("NET equipped");
   a.send("attack", b.sessionId); await wait();
-  ticks(room, 5);
+  for (let i = 0; i < 100 && !has(wb, "root"); i++) ticks(room, 1); // a throw can miss: keep throwing until one lands
   expect(has(wb, "root")).toBe(true);
   a.send("attack", null); await wait();
   at.y = wb.player.y; // B set off for its earlier goal once the stun ended, until the net caught it
@@ -130,8 +130,8 @@ it("SILENCE stops everyone inside it spelling", async () => {
 
 it("WAR turns creatures inside it on whoever is nearest and not its maker's, even their own master", async () => {
   const { room, a, b, wa, wb, creature } = await twoPlayers();
-  b.send("spell", "wolf"); await wait();
-  const [wolfId, wolf] = creature("wolf");
+  b.send("spell", "solo wolf"); await wait();
+  const [wolfId, wolf] = creature("solo wolf");
   wolf.player.x = wa.player.x; wolf.player.y = wa.player.y; // right beside A, the war's maker
   a.send("spell", "war"); await wait();
   ticks(room, 2);

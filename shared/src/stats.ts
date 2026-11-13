@@ -1,5 +1,5 @@
 import type { Dictionary } from "./dictionary.js";
-import type { Degree, Op, Value } from "./types.js";
+import type { Degree, Op, Value, WordDef } from "./types.js";
 
 /** Properties that describe an adjective itself and are not copied onto its noun. */
 const META = new Set(["is_absolute", "absolute_side", "specificity"]);
@@ -81,6 +81,14 @@ export class Stats {
   }
 }
 
+/**
+ * Words that may stand before a noun: adjectives, and number words such as THOUSAND or DOZEN
+ * (nouns of archetype quantity), which act exactly as adjectives do and take a slot like one.
+ */
+export function isModifier(def: WordDef): boolean {
+  return def.role === "adjective" || (def.role === "noun" && def.archetype === "quantity");
+}
+
 export interface Modifier {
   word: string;
   degree: Degree;
@@ -108,7 +116,7 @@ export function resolve(
   }
   for (const text of [...adjectives, ...lent]) {
     const adj = dict.lookup(text);
-    if (!adj || adj.def.role !== "adjective") throw new Error(`${text} is not an adjective`);
+    if (!adj || !isModifier(adj.def)) throw new Error(`${text} is not an adjective`);
     const absolute = adj.def.set.is_absolute === true;
     for (const [id, value] of Object.entries(adj.def.set)) {
       if (META.has(id)) continue;
@@ -125,5 +133,17 @@ export function resolve(
     // Absolutes do not grade: there is no "more invincible".
     stats.apply(adj.def.ops, absolute ? 1 : dict.degrees[adj.degree]);
   }
+  return stats;
+}
+
+/**
+ * Many of one thing as a single body: a swarm of a thousand ants is one walker whose integrity,
+ * mass and damage are a thousand ants' worth. This is how large counts are represented, so a
+ * MILLION of anything costs the server what one does; it is not a limit on how many there are.
+ */
+export function massed(stats: Stats, count: number): Stats {
+  if (count === 1) return stats;
+  const scaled = ["integrity", "mass", ...stats.entries().filter(([id, v]) => id.startsWith("dmg_") && typeof v === "number").map(([id]) => id)];
+  stats.apply(scaled.map((id) => [id, "mul", count]));
   return stats;
 }

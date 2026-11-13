@@ -13,6 +13,12 @@ const COLOURS: Record<Tile, number> = {
   [Tile.Lava]: 0xd9541e, [Tile.Wall]: 0x5b5650,
 };
 
+/** A label with how many it is: WOLF, or ANT ×1000 for a swarm. */
+function counted(name: string, count: number | undefined): string {
+  const n = count ?? 1;
+  return n > 1 ? `${name.toUpperCase()} ×${n.toLocaleString("en-US")}` : name.toUpperCase();
+}
+
 interface Marker { box: Phaser.GameObjects.Rectangle; label: Phaser.GameObjects.Text; bar?: Phaser.GameObjects.Rectangle }
 
 class World extends Phaser.Scene {
@@ -199,7 +205,8 @@ class World extends Phaser.Scene {
 
     state.things.forEach((t: any, id: string) => {
       live.add(id);
-      const m = this.marker(id, t.owner === mine ? 0xffd166 : t.owner ? 0xd98c5f : 0xb9b4a8, 8, t.phrase.toUpperCase(), 5, true);
+      const m = this.marker(id, t.owner === mine ? 0xffd166 : t.owner ? 0xd98c5f : 0xb9b4a8, 8, counted(t.phrase, t.count), 5, true);
+      m.label.setText(counted(t.phrase, t.count));
       m.box.setPosition(t.x * PX, t.y * PX).setStrokeStyle(id === this.foe || id === this.picked ? 2 : 1, id === this.picked ? 0x5fd3f3 : id === this.foe ? 0xffd166 : 0x14161a);
       if (t.hp < 100) {
         m.bar ??= this.add.rectangle(0, 0, 12, 2, 0xff8a80).setOrigin(0, 0.5).setDepth(6);
@@ -216,7 +223,7 @@ class World extends Phaser.Scene {
       m.box.setFillStyle(colour);
       // Statuses show on their own line under the name: STUN · POISON.
       const status = p.status ? `\n${p.status.toUpperCase().split(" ").join(" · ")}` : "";
-      m.label.setText(`${creature ? p.name.toUpperCase() : p.gear ? `${p.name}\n${p.gear}` : p.name}${status}`).setAlign("center");
+      m.label.setText(`${creature ? counted(p.name, p.count) : p.gear ? `${p.name}\n${p.gear}` : p.name}${status}`).setAlign("center");
       m.box.setStrokeStyle(id === this.foe || id === this.picked ? 2 : 1, id === this.picked ? 0x5fd3f3 : id === this.foe ? 0xffd166 : 0x14161a);
       m.bar ??= this.add.rectangle(0, 0, 14, 2, 0x9be28f).setOrigin(0, 0.5).setDepth(12);
       // Ease toward the server's position so ten updates a second look smooth.

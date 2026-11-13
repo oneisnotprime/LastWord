@@ -36,9 +36,9 @@ export interface Stamp { x: number; y: number; radius: number; tile: Tile }
 /** Applies a stamp. Server and client both do this, in the same order, so their maps agree. */
 export function stampTerrain(map: WorldMap, s: Stamp): void {
   const r = Math.max(0, s.radius);
-  for (let y = Math.floor(s.y - r); y <= Math.floor(s.y + r); y++) {
-    for (let x = Math.floor(s.x - r); x <= Math.floor(s.x + r); x++) {
-      if (x < 0 || y < 0 || x >= map.size || y >= map.size) continue;
+  // Only tiles on the map are visited, so a stamp far larger than the map costs no more than the map.
+  for (let y = Math.max(0, Math.floor(s.y - r)); y <= Math.min(map.size - 1, Math.floor(s.y + r)); y++) {
+    for (let x = Math.max(0, Math.floor(s.x - r)); x <= Math.min(map.size - 1, Math.floor(s.x + r)); x++) {
       if (Math.hypot(x + 0.5 - s.x, y + 0.5 - s.y) <= r + 0.5) map.tiles[y * map.size + x] = s.tile;
     }
   }
@@ -50,8 +50,9 @@ export function nearestWalkable(map: WorldMap, p: Point): Point {
   for (let ring = 1; ring < map.size; ring++) {
     let best: Point | null = null, bestDistance = Infinity;
     for (let dy = -ring; dy <= ring; dy++) {
-      for (let dx = -ring; dx <= ring; dx++) {
-        if (Math.max(Math.abs(dx), Math.abs(dy)) !== ring) continue;
+      // Only the ring's edge: whole rows at the top and bottom, two cells on the rows between.
+      const edge = dy === -ring || dy === ring;
+      for (let dx = -ring; dx <= ring; dx += edge ? 1 : 2 * ring) {
         const q = { x: Math.floor(p.x) + dx + 0.5, y: Math.floor(p.y) + dy + 0.5 };
         const d = Math.hypot(q.x - p.x, q.y - p.y);
         if (d < bestDistance && walkable(map, q.x, q.y)) { best = q; bestDistance = d; }
