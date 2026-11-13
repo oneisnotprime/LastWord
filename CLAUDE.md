@@ -16,6 +16,9 @@ modifiers, spells and events. Last player alive wins. Packages are scaffolded (m
 
 ## Rules
 
+- Work on a branch, open a pull request, and merge it yourself once typecheck, tests and (for
+  client changes) a headless browser check pass locally. Do not wait to be asked.
+
 - Files in `data/` are generated. Change `tools/` or `tools/demo_words.txt`, then rebuild.
   The only hand-edited file in `data/` is `overrides.tsv`.
 - Rebuild data: `tools/build_all.sh <wordnet dict dir>` (needs `npm i wordnet-db`,

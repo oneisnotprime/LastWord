@@ -59,7 +59,7 @@ DARK and so on), so the strongest opening differs from round to round. Later pri
 ## Input
 
 Desktop only: keyboard and mouse, or a controller. No touch input and no phone layout.
-Spelling on a controller is an open design question.
+On a controller, spelling is done by picking from the letters you hold.
 
 ## Netcode
 
