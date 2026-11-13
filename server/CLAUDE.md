@@ -23,6 +23,7 @@ Node process that owns the game state. One room per map instance (from milestone
   foe or a place to go each tick, and it shows in `state.players` with `owner` set.
 - A spelling is one of four kinds (`parsePhrase().kind`): object, verb (`cast`), event
   (`happen`), sky (`sky`). Each of the last three throws before any letters are spent.
-- `LETTERS=9` gives every player nine of each letter and `CROWD=1` spawns everyone in one
-  city; both are for local testing only.
+- For local testing only: `LETTERS=9` gives every player nine of each letter, `CROWD=1` spawns
+  everyone in one city, `SEED_THINGS=5000` scatters that many objects at start.
+- `loadtest/bots.ts` modes: `wander`, `crowd`, `play` (gathers, spells and fights).
 - Ignore options a client sends when joining. A message with no handler disconnects the sender.

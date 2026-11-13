@@ -15,7 +15,7 @@ if (process.env.METRICS) {
     for (const room of liveRooms) {
       const m = room.metrics;
       console.log(
-        `metrics clients=${room.clients.length} cpu=${percent.toFixed(1)}% ` +
+        `metrics clients=${room.clients.length} people=${room.counts.people} creatures=${room.counts.creatures} things=${room.counts.things} cpu=${percent.toFixed(1)}% ` +
         `tick_avg_ms=${(m.tickMsTotal / Math.max(1, m.ticks)).toFixed(3)} tick_max_ms=${m.tickMsMax.toFixed(2)} ` +
         `rss_mb=${(process.memoryUsage().rss / 2 ** 20).toFixed(0)}`,
       );

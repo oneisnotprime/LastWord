@@ -91,6 +91,9 @@ export const liveRooms = new Set<WorldRoom>();
 
 export interface RoomMetrics { ticks: number; tickMsTotal: number; tickMsMax: number }
 
+/** Counts for the load test's metrics line. */
+export interface RoomCounts { people: number; creatures: number; things: number }
+
 /** One map instance. The room owns all state; clients only send intents. */
 export class WorldRoom extends Room {
   state = new WorldState();
@@ -271,6 +274,13 @@ export class WorldRoom extends Room {
     this.state.size = this.map.size;
     this.setTimestep((ms) => this.update(ms / 1000), 1000 / TICK_HZ);
     liveRooms.add(this);
+    // SEED_THINGS=5000 is for load tests: scatter that many ownerless objects over the map.
+    const scatter = Number(process.env.SEED_THINGS);
+    const words = ["wall", "chair", "tree", "chest", "table", "barrel", "fence", "lamp"];
+    for (let i = 0; i < scatter; i++) {
+      const noun = words[i % words.length]!, at = randomWalkable(this.map, this.rng);
+      this.addThing({ spelled: { noun }, phrase: noun, vehicle: false, integrity: null }, "", at.x, at.y);
+    }
   }
 
   onDispose() {
@@ -444,17 +454,27 @@ export class WorldRoom extends Room {
    * their master, and otherwise stay close.
    */
   private think() {
+    // Who is attacking whom, worked out once: master id -> someone attacking them who is not their own.
+    const attackers = new Map<string, string>();
+    for (const [id, w] of this.walkers) {
+      if (w.foe && w.master !== w.foe && !attackers.has(w.foe)) attackers.set(w.foe, id);
+    }
     for (const [id, w] of this.walkers) {
       if (w.master === null) continue;
       const master = this.walkers.get(w.master);
       if (!master) { w.foe = null; w.target = null; continue; }
-      const attacker = [...this.walkers].find(([other, o]) => o.foe === w.master && other !== id && o.master !== w.master)?.[0];
+      const attacker = attackers.get(w.master);
       const foe = master.foe && master.foe !== id ? master.foe : attacker ?? null;
       w.foe = foe && (this.walkers.has(foe) || this.grounded.has(foe)) ? foe : null;
       if (w.foe) continue;
       const apart = Math.hypot(master.player.x - w.player.x, master.player.y - w.player.y);
       w.target = apart > 2 ? { x: master.player.x, y: master.player.y } : null;
     }
+  }
+
+  get counts(): RoomCounts {
+    const people = this.people.length;
+    return { people, creatures: this.walkers.size - people, things: this.state.things.size };
   }
 
   /** People still in the round. */
@@ -730,7 +750,8 @@ export class WorldRoom extends Room {
   /** Puts in each client's view exactly the players and things within its sight range. */
   refreshViews() {
     // Bucket players into cells one sight range wide, so each client checks nine cells.
-    const cell = Math.max(1, ...[...this.walkers.values()].map((w) => w.sight));
+    // Only people have views, so only their sight sets the cell size; a far-sighted creature must not.
+    const cell = Math.max(1, ...this.clients.map((c) => this.walkers.get(c.sessionId)?.sight ?? 0));
     const grid = new Map<number, string[]>();
     const key = (x: number, y: number) => Math.floor(x / cell) * 4096 + Math.floor(y / cell);
     for (const [id, w] of this.walkers) {

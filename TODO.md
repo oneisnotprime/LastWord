@@ -126,7 +126,7 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
 - [x] M0: scaffold packages, test commands, CI
 - [x] M1: rules engine (operators, degrees, absolutes, combat tick)
 - [x] M2: server, generated map, movement, sight-based views; 100-bot load test passed
-- [ ] Repeat the load test once objects exist (thousands of entities in the state)
+- [x] Load test with objects, creatures and playing bots (results in PLAN.md)
 - [ ] Path-finding: walkers stop at water and mountains instead of going around
 - [x] M3: client connects, draws the map, walks, and spells words into objects
 - [ ] Controller input: movement, and spelling by picking from held letters
@@ -162,6 +162,9 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
       destroyed lake or mountain marker cannot be removed, and terrain cannot be undone
 - [ ] A round does not reset after someone wins; the dead stay connected as spectators
 - [ ] Labels of adjacent players overlap; fix in the art pass
-- [ ] M6 and M7 in PLAN.md
+- [x] M6 (part): bots that play (gather, spell, fight) in the load test
+- [ ] M6 (rest): public deploy; needs a host account from the user
+- [ ] One 105 ms tick in a 5-minute playing run; find what caused it
+- [ ] M7 in PLAN.md
 - [ ] Map generator: cities, countryside, letter sources
 - [ ] Demo: one map, the 351-word dictionary, a handful of players
