@@ -83,9 +83,19 @@ On a controller, spelling is done by picking from the letters you hold.
   | Spread out, 10 minutes | 1.5 | 2.3% average, 6.2% peak | 0.15 ms average, 1.7 ms worst | 1.4 KB/s |
   | Everyone in one city, 2 minutes | 99 | 3.7% average | 0.4 ms average, 7.2 ms worst | 8.1 KB/s |
 
-  Traffic is counted on the loopback interface, both directions, with TCP overhead. Colyseus
-  stays. The test to repeat is the same one with thousands of objects in the state, since
-  its per-client views are documented as not optimised for large sets.
+  Traffic is counted on the loopback interface, both directions, with TCP overhead.
+
+- Repeated in M6 with objects, creatures and bots that play (gather, spell, fight):
+
+  | Case | Objects | Server CPU (one core) | Tick | Traffic per client |
+  |---|---|---|---|---|
+  | 5,000 objects, players spread out, 1 minute | 5,000 | 5% | 2.2 ms average, 24 ms worst | 1.7 KB/s |
+  | 20,000 objects, everyone in one city, 1 minute | 20,000 | 11% | 7.4 ms average, 81 ms worst | 11 KB/s |
+  | 100 bots playing, spread out, 5 minutes | up to 600, 60 creatures | 4% typical, one 43% spike | 1.3 ms average, one 105 ms worst | 1.1 KB/s |
+  | 100 bots playing in one city, 3 minutes | up to 160 | 12% at the start | 1.7 ms average, 8.6 ms worst | 1.3 KB/s |
+
+  The tick budget is 100 ms. Colyseus stays. The cost that grows is recomputing every client's
+  view of things; if maps get much busier, move it off the tick or cache per cell.
 
 ## Hosting
 

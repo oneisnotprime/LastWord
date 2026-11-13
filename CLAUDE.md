@@ -1,7 +1,8 @@
 # Last Word
 
 Multiplayer word game: players gather letters, spell words, and the words become objects,
-modifiers, spells and events. Last player alive wins. Packages are scaffolded (milestone M0); the rules engine is next.
+modifiers, spells and events. Last player alive wins. Playable locally: gather, spell, equip, fight, terrain, verbs, sky, creatures, loadout and
+inventory screens (M0 to M5). Not deployed yet.
 
 - `PLAN.md`: stack, netcode, hosting, art, milestones.
 - `TODO.md`: decisions made, open questions, task list. Read "Decided" before proposing design.
