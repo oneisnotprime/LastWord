@@ -144,7 +144,13 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
       selected thing if your stealth meets its security; sky words set day, night and weather
 - [x] M5: creatures you spell follow you, defend you and fight what you fight; ones you can
       ride are mounts instead; they outlive their master, ownerless
-- [ ] Other events (WAR, FIRE, MURDER, RAID) do nothing yet
+- [x] Events act through their properties: MURDER, RAID, REPAIR, RESCUE, TRADE, REVOLT, AMBUSH,
+      and areas that damage or turn hostile (FIRE, WAR, EARTHQUAKE, FAMINE); WAR triples K
+- [ ] SIEGE does nothing yet (needs food and water upkeep to cut off)
+- [ ] An area event with nothing selected lands on the speller; FIRE then burns its own maker.
+      Decide whether to aim it (a click on the map) instead
+- [ ] FIRE does not spread from tile to tile yet; EARTHQUAKE covers 375 tiles and hits everyone,
+      its maker included
 - [ ] Creatures: no pack sizes or plurals, no hunger or upkeep, no orders (stay, guard, go
       there), wild ones never act, and they do not gather or work
 - [ ] A wolf kills an unarmoured person in three bites (about two seconds); review creature

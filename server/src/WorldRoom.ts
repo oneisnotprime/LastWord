@@ -2,10 +2,10 @@ import { Room, type Client } from "colyseus";
 import { StateView } from "@colyseus/schema";
 import {
   addLetters, findPath, GATHER_SECONDS, gatherLetter, generateMap, GIVE_RANGE, missing, parsePhrase, production, nearestWalkable, randomWalkable, resolve, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit,
-  type Dictionary, type Entity, type Letters, type LoadoutDetail, type Op, type Phrase, type Point, type Spelled, type Value, type WorldMap,
+  type Dictionary, type Entity, type Stats, type Letters, type LoadoutDetail, type Op, type Phrase, type Point, type Spelled, type Value, type WorldMap,
 } from "@lastword/shared";
 import { loadDictionary } from "./data.js";
-import { Edit, Player, Thing, WorldState } from "./state.js";
+import { Edit, Player, Thing, WorldState, Zone } from "./state.js";
 
 /** Simulation steps per second. */
 export const TICK_HZ = 10;
@@ -28,6 +28,37 @@ interface Effect { word: string; set: Record<string, Value>; ops: Op[]; until: n
 
 /** Seconds between a win and everyone being sent on to a new round. ROUND_END_SECONDS overrides. */
 const ROUND_END_SECONDS = Number(process.env.ROUND_END_SECONDS ?? 15);
+
+/** An event going on over an area, with what it does to everything inside. */
+interface Area {
+  word: string;
+  owner: string;
+  x: number;
+  y: number;
+  /** Tiles. */
+  radius: number;
+  /** Room time at which it ends. */
+  until: number;
+  /** What it strikes with; null if it does no damage. */
+  attack: Stats | null;
+  /** Seconds until the next strike. */
+  cooldown: number;
+  /** Hurts its own maker and their creatures too. */
+  friendlyFire: boolean;
+  /** Multiplier on the K a kill inside it gives. */
+  killBonus: number;
+}
+
+function hasDamage(s: Stats): boolean {
+  return s.entries().some(([k, v]) => k.startsWith("dmg_") && typeof v === "number" && v > 0);
+}
+
+/** An event's strike: it cannot miss or be blocked. */
+function alwaysHits(s: Stats): Stats {
+  const c = s.clone();
+  c.set("accuracy", "ABS");
+  return c;
+}
 
 /** Route searches allowed in one tick; walkers over the limit wait a tick for theirs. */
 const ROUTES_PER_TICK = 12;
@@ -127,6 +158,7 @@ export class WorldRoom extends Room {
   /** Seconds this room has run. */
   private elapsed = 0;
   private routesLeft = ROUTES_PER_TICK;
+  private areas = new Map<string, Area>();
   /** The weather in force over the whole map, if any. */
   private weather: Effect | null = null;
 
@@ -563,10 +595,161 @@ export class WorldRoom extends Room {
     return seconds > 0 && seconds < Infinity ? `${phrase.noun.toUpperCase()} for ${seconds} seconds` : phrase.noun.toUpperCase();
   }
 
-  /** An event dropped on the thing the speller has selected. Only ownership changes exist so far. */
+  /**
+   * An event. What it does comes from its properties, in this order: taking ownership (THEFT),
+   * destroying a creature (MURDER), stealing letters (RAID), moving a creature to you (RESCUE),
+   * restoring a thing (REPAIR), exchange (TRADE), freeing what others own (REVOLT), a surprise
+   * strike (AMBUSH), and any damage or hostility over an area (FIRE, WAR, EARTHQUAKE, FAMINE).
+   * Targeted events act on whatever the speller last clicked.
+   */
   private happen(id: string, walker: Walker, phrase: Phrase): string {
+    const s = phrase.stats, word = phrase.noun.toUpperCase();
+    if (s.flag("transfers_ownership")) return this.steal(id, walker, phrase);
+    const reach = Math.max(1.5, s.num("placement_range") / TILE_METERS);
+    const selected = walker.foe ?? "";
+    const other = this.walkers.get(selected);
+    const thing = this.state.things.get(selected), gear = this.grounded.get(selected);
+    const near = (p: { x: number; y: number }) => Math.hypot(p.x - walker.player.x, p.y - walker.player.y) <= reach;
+    const contest = (theirs: Stats, what: string, living = false) => {
+      const mine = walker.unit.body.stats.num(String(s.get("contest_with")));
+      const against = theirs.num(String(s.get("contested_by")));
+      const by = `${s.get("contested_by")} ${against} against your ${s.get("contest_with")} ${mine}`.replaceAll("_", " ");
+      if (mine < against) throw new Error(living ? `${what} sees you coming (${by})` : `${what} is too well guarded (${by})`);
+    };
+    const needCreature = () => {
+      if (!other) throw new Error(`Select someone for ${word} first: click them`);
+      if (!near(other.player)) throw new Error(`Too far away for ${word}`);
+      return other;
+    };
+    const needThing = () => {
+      if (!thing || !gear || gear.terrain) throw new Error(`Select a thing for ${word} first: click it`);
+      if (!near(thing)) throw new Error(`Too far away for ${word}`);
+      return { thing, gear, stats: resolve(this.dict, gear.spelled.noun, gear.spelled.adjectives) };
+    };
+
+    if (s.flag("destroys_target")) {
+      const victim = needCreature();
+      contest(victim.unit.body.stats, victim.player.name, true);
+      walker.foe = null;
+      this.kill(selected, id);
+      return `${victim.player.name} is dead`;
+    }
+    if (s.num("letter_steal") > 0) {
+      const t = needThing();
+      if (t.thing.owner === id || t.thing.owner === "") throw new Error(`${word} needs a thing someone else owns`);
+      contest(t.stats, t.gear.phrase.toUpperCase());
+      const owner = this.walkers.get(t.thing.owner);
+      const pool = owner ? Object.entries(owner.letters).flatMap(([ch, n]) => ch.repeat(Math.max(0, n)).split("")) : [];
+      let taken = "";
+      for (let i = 0; i < s.num("letter_steal") && pool.length; i++) taken += pool.splice(Math.floor(this.rng() * pool.length), 1)[0]!;
+      if (owner) {
+        spend(owner.letters, taken);
+        this.clients.find((c) => c.sessionId === t.thing.owner)?.send("letters", owner.letters);
+        this.clients.find((c) => c.sessionId === t.thing.owner)?.send("notice", `${walker.player.name} raided your ${t.gear.phrase.toUpperCase()} and took ${taken.length} letters`);
+      }
+      addLetters(walker.letters, taken);
+      if (hasDamage(s)) this.strikeThing(id, alwaysHits(s), selected, t.thing);
+      return `Took ${taken.length} letters`;
+    }
+    if (s.num("moves_target") > 0) {
+      const saved = needCreature();
+      saved.player.x = walker.player.x; saved.player.y = walker.player.y; saved.target = null;
+      saved.hp = Math.min(saved.unit.body.stats.num("integrity"), saved.hp + s.num("restores"));
+      this.rebuild(saved);
+      walker.foe = null;
+      return `${saved.player.name} is beside you`;
+    }
+    if (s.num("restores") > 0) {
+      const t = needThing();
+      t.gear.integrity = null;
+      this.thingEntities.delete(selected);
+      t.thing.hp = 100;
+      return `${t.gear.phrase.toUpperCase()} repaired`;
+    }
+    if (s.num("produce_T") > 0) {
+      const partner = needCreature();
+      const t = "t".repeat(Math.round(s.num("produce_T")));
+      addLetters(walker.letters, t);
+      addLetters(partner.letters, t);
+      this.clients.find((c) => c.sessionId === selected)?.send("letters", partner.letters);
+      walker.foe = null;
+      return `Traded with ${partner.player.name}: both gain ${t.toUpperCase()}`;
+    }
+    if (s.flag("frees_target")) {
+      const radius = Math.max(1, s.num("event_radius") / TILE_METERS);
+      let freed = 0;
+      this.state.things.forEach((t) => {
+        if (t.owner && t.owner !== id && Math.hypot(t.x - walker.player.x, t.y - walker.player.y) <= radius) { t.owner = ""; freed++; }
+      });
+      for (const w of this.walkers.values()) {
+        if (w.master && w.master !== id && w.master !== "-" && Math.hypot(w.player.x - walker.player.x, w.player.y - walker.player.y) <= radius) {
+          w.master = "-"; w.player.owner = "-"; w.foe = null; freed++;
+        }
+      }
+      for (const [pid, p] of this.producers) if (!this.state.things.get(pid)?.owner && !pid.startsWith("sky:")) this.producers.delete(pid);
+      return `${freed} thing${freed === 1 ? "" : "s"} freed from their owners`;
+    }
+    if (s.num("inflict_stun") > 0 && s.get("event_target") === "character") {
+      const victim = needCreature();
+      contest(victim.unit.body.stats, victim.player.name, true);
+      const blow = walker.unit.attack.clone();
+      blow.set("critical", "ABS");
+      blow.set("accuracy", "ABS");
+      strike(blow, victim.unit.outer, this.rng);
+      this.settle(selected, victim);
+      if (victim.unit.dead) this.kill(selected, id);
+      return `Ambushed ${victim.player.name}`;
+    }
+    const minutes = s.num("event_duration");
+    const killBonus = this.dict.word(phrase.noun)!.ops.find(([p, op]) => p === "produce_K" && op === "mul")?.[2] ?? 1;
+    if (!hasDamage(s) && killBonus === 1) throw new Error(`${word} does nothing yet`);
+    // Centred on what you selected if it is in reach, else where you stand.
+    const at = other && near(other.player) ? other.player : thing && near(thing) ? thing : walker.player;
+    const area: Area = {
+      word: phrase.noun, owner: id, x: at.x, y: at.y,
+      radius: Math.max(1, s.num("event_radius") / TILE_METERS),
+      until: this.elapsed + Math.max(1, minutes * 60),
+      attack: hasDamage(s) ? alwaysHits(s) : null,
+      cooldown: 0,
+      friendlyFire: s.flag("friendly_fire"),
+      killBonus,
+    };
+    const key = `z${this.nextThing++}`;
+    this.areas.set(key, area);
+    this.state.zones.set(key, Object.assign(new Zone(), { word: area.word, x: area.x, y: area.y, radius: area.radius }));
+    this.burn(key, area, 0);
+    return `${word} for ${minutes >= 1 ? `${minutes} minute${minutes === 1 ? "" : "s"}` : "a moment"}`;
+  }
+
+  /** Strikes everything inside an area whose cooldown has run out; ends areas whose time is up. */
+  private burn(key: string, a: Area, seconds: number) {
+    if (this.elapsed >= a.until) {
+      this.areas.delete(key);
+      this.state.zones.delete(key);
+      return;
+    }
+    a.cooldown -= seconds;
+    if (!a.attack || a.cooldown > 0) return;
+    const rate = a.attack.num("attack_rate");
+    a.cooldown = rate > 0 ? 1 / rate : Infinity; // no rate: it strikes once
+    const inside = (p: { x: number; y: number }) => Math.hypot(p.x - a.x, p.y - a.y) <= a.radius;
+    for (const [wid, w] of [...this.walkers]) {
+      if (!this.walkers.has(wid) || !inside(w.player)) continue;
+      if (!a.friendlyFire && (wid === a.owner || w.master === a.owner)) continue;
+      strike(a.attack, w.unit.outer, this.rng);
+      this.settle(wid, w);
+      if (w.unit.dead) this.kill(wid, a.owner);
+    }
+    this.state.things.forEach((t, tid) => {
+      const g = this.grounded.get(tid);
+      if (!g || g.terrain || !inside(t) || (!a.friendlyFire && t.owner === a.owner)) return;
+      this.strikeThing(a.owner, a.attack!, tid, t);
+    });
+  }
+
+  /** THEFT: the selected thing becomes yours if your stealth meets its security. */
+  private steal(id: string, walker: Walker, phrase: Phrase): string {
     const word = phrase.noun.toUpperCase();
-    if (!phrase.stats.flag("transfers_ownership")) throw new Error(`${word} does nothing yet`);
     const targetId = walker.foe ?? "";
     const thing = this.state.things.get(targetId), gear = this.grounded.get(targetId);
     if (!thing || !gear || gear.terrain) throw new Error(`Select a thing for ${word} first: click it`);
@@ -576,7 +759,7 @@ export class WorldRoom extends Room {
     // The speller's own stat against the thing's: stealth against security for a theft.
     const mine = walker.unit.body.stats.num(String(phrase.stats.get("contest_with")));
     const theirs = resolve(this.dict, gear.spelled.noun, gear.spelled.adjectives).num(String(phrase.stats.get("contested_by")));
-    if (mine < theirs) throw new Error(`${gear.phrase.toUpperCase()} is too well guarded (${theirs} against your ${mine})`);
+    if (mine < theirs) throw new Error(`${gear.phrase.toUpperCase()} is too well guarded (security ${theirs} against your stealth ${mine})`);
     this.clients.find((c) => c.sessionId === thing.owner)?.send("notice", `Your ${gear.phrase.toUpperCase()} was stolen`);
     thing.owner = id;
     const producer = this.producers.get(targetId);
@@ -638,7 +821,10 @@ export class WorldRoom extends Room {
     if (killer) {
       for (const [ch, n] of Object.entries(dead.letters)) if (n > 0) addLetters(killer.letters, ch.repeat(n));
       const kc = this.clients.find((c) => c.sessionId === killerId);
-      addLetters(killer.letters, "k"); // K comes from kills
+      // K comes from kills; a war over the place multiplies it.
+      const bonus = Math.max(1, ...[...this.areas.values()]
+        .filter((a) => Math.hypot(a.x - dead.player.x, a.y - dead.player.y) <= a.radius).map((a) => a.killBonus));
+      addLetters(killer.letters, "k".repeat(Math.round(bonus)));
       kc?.send("letters", killer.letters);
       kc?.send("notice", `You killed ${dead.player.name} and took their letters`);
     }
@@ -662,7 +848,7 @@ export class WorldRoom extends Room {
   }
 
   /** One strike on a thing lying on the ground. Destroying things is where D comes from. */
-  private strikeThing(attackerId: string, w: Walker, id: string, thing: Thing) {
+  private strikeThing(attackerId: string, attack: Stats, id: string, thing: Thing) {
     const gear = this.grounded.get(id)!;
     let entity = this.thingEntities.get(id);
     if (!entity) {
@@ -670,18 +856,21 @@ export class WorldRoom extends Room {
       if (gear.integrity !== null) entity.integrity = gear.integrity;
       this.thingEntities.set(id, entity);
     }
-    strike(w.unit.attack, entity, this.rng);
+    strike(attack, entity, this.rng);
     gear.integrity = entity.integrity;
     thing.hp = Math.max(0, Math.ceil((entity.integrity / entity.stats.num("integrity")) * 100));
     if (entity.integrity > 0) return;
     const client = this.clients.find((c) => c.sessionId === attackerId);
+    const w = this.walkers.get(attackerId);
     const theirs = thing.owner !== "" && thing.owner !== attackerId;
-    addLetters(w.letters, theirs ? "dv" : "d"); // V comes from beating another player's things
-    client?.send("letters", w.letters);
-    client?.send("notice", `${gear.phrase.toUpperCase()} destroyed`);
+    if (w) {
+      addLetters(w.letters, theirs ? "dv" : "d"); // V comes from beating another player's things
+      client?.send("letters", w.letters);
+      client?.send("notice", `${gear.phrase.toUpperCase()} destroyed`);
+    }
     if (theirs) this.clients.find((c) => c.sessionId === thing.owner)?.send("notice", `Your ${gear.phrase.toUpperCase()} was destroyed`);
     this.removeThing(id);
-    w.foe = null;
+    for (const other of this.walkers.values()) if (other.foe === id) other.foe = null;
     this.refreshViews();
   }
 
@@ -742,6 +931,7 @@ export class WorldRoom extends Room {
       }
       if (w.target && (w.route.length || w.flying || this.routesLeft > 0)) this.walk(w, seconds);
     }
+    for (const [key, a] of [...this.areas]) this.burn(key, a, seconds);
     this.think();
     // Combat: each attacker strikes its foe whenever the foe is in reach.
     for (const [id, w] of [...this.walkers]) {
@@ -760,7 +950,7 @@ export class WorldRoom extends Room {
       }
       w.target = null;
       if (w.cooldown > 0) continue;
-      if (thing) this.strikeThing(id, w, foeId, thing);
+      if (thing) this.strikeThing(id, w.unit.attack, foeId, thing);
       else strikeUnit(w.unit, foe!.unit, this.rng);
       const rate = attack.num("attack_rate");
       w.cooldown = rate > 0 ? 1 / rate : 1;

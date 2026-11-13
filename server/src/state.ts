@@ -34,6 +34,10 @@ export const Thing = schema(
 );
 export type Thing = SchemaType<typeof Thing>;
 
+/** An event going on over an area: a fire, a war, an earthquake. */
+export const Zone = schema({ word: t.string(), x: t.float32(), y: t.float32(), radius: t.float32() }, "Zone");
+export type Zone = SchemaType<typeof Zone>;
+
 /** A disc of terrain a word laid down. Everyone gets these, in order, to keep maps in step. */
 export const Edit = schema({ x: t.float32(), y: t.float32(), radius: t.float32(), tile: t.uint8() }, "Edit");
 export type Edit = SchemaType<typeof Edit>;
@@ -46,6 +50,7 @@ export const WorldState = schema(
     players: t.map(Player).view(),
     things: t.map(Thing).view(),
     edits: t.array(Edit),
+    zones: t.map(Zone),
     /** "day" or "night". */
     daylight: t.string(),
     /** The weather word in force, or "". */

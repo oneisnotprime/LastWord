@@ -28,6 +28,7 @@ class World extends Phaser.Scene {
   private roundOver = false;
   private editsApplied = 0;
   private mapImage?: Phaser.GameObjects.Image;
+  private zones = new Map<string, Phaser.GameObjects.Container>();
 
   async create() {
     this.hud = new Hud((text) => {
@@ -141,6 +142,22 @@ class World extends Phaser.Scene {
       }
       this.drawMap();
     }
+
+    // Events over an area: a translucent disc with the word on it.
+    const ZONE: Record<string, number> = { fire: 0xff6a1a, war: 0xd02a2a, earthquake: 0x8a5a2b, famine: 0xd9b23a };
+    const liveZones = new Set<string>();
+    state.zones.forEach((z: any, id: string) => {
+      liveZones.add(id);
+      if (this.zones.has(id)) return;
+      const colour = ZONE[z.word] ?? 0x9a6ad9;
+      const disc = this.add.circle(0, 0, z.radius * PX, colour, 0.22).setStrokeStyle(2, colour, 0.8);
+      const label = this.add.text(0, 0, z.word.toUpperCase(), { fontFamily: "monospace", fontSize: "9px", color: "#ffffff", stroke: "#14161a", strokeThickness: 2 })
+        .setOrigin(0.5).setResolution(4);
+      const c = this.add.container(z.x * PX, z.y * PX, [disc, label]).setDepth(3);
+      this.tweens.add({ targets: disc, alpha: 0.6, duration: 700, yoyo: true, repeat: -1 });
+      this.zones.set(id, c);
+    });
+    for (const [id, c] of this.zones) if (!liveZones.has(id)) { c.destroy(); this.zones.delete(id); }
 
     state.things.forEach((t: any, id: string) => {
       live.add(id);
