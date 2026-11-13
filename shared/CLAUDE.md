@@ -18,5 +18,7 @@ server and the client import this, so anything here must give the same answer on
 - `letters.ts` what gathering yields on each ground, and what an object produces a minute.
 - `unit.ts` a character with its gear: damage layers, held weapon scaled by strength and
   training, riding. `strikeUnit` hits the outermost layer.
+- `path.ts` `findPath`: A* over tiles around anything that cannot be walked, preferring roads;
+  search buffers are shared, so it is not safe to call from two threads.
 - `rng.ts` seeded generator. Pass an `Rng` in; never call `Math.random`.
 - `testdata.ts` loads the demo dictionary from disk, for tests only.

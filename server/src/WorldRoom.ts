@@ -1,7 +1,7 @@
 import { Room, type Client } from "colyseus";
 import { StateView } from "@colyseus/schema";
 import {
-  addLetters, GATHER_SECONDS, gatherLetter, generateMap, GIVE_RANGE, missing, parsePhrase, production, nearestWalkable, randomWalkable, resolve, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit,
+  addLetters, findPath, GATHER_SECONDS, gatherLetter, generateMap, GIVE_RANGE, missing, parsePhrase, production, nearestWalkable, randomWalkable, resolve, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit,
   type Dictionary, type Entity, type Letters, type LoadoutDetail, type Op, type Phrase, type Point, type Spelled, type Value, type WorldMap,
 } from "@lastword/shared";
 import { loadDictionary } from "./data.js";
@@ -25,6 +25,9 @@ interface Gear {
 
 /** A passing effect on bodies: a verb someone cast, or weather over everyone. */
 interface Effect { word: string; set: Record<string, Value>; ops: Op[]; until: number }
+
+/** Route searches allowed in one tick; walkers over the limit wait a tick for theirs. */
+const ROUTES_PER_TICK = 12;
 
 /** Sight is multiplied by this at night for anyone without night vision. */
 const NIGHT_SIGHT = 0.5;
@@ -53,6 +56,10 @@ interface Walker {
   /** In the air: ground does not block or slow. */
   flying: boolean;
   target: Point | null;
+  /** Waypoints toward `target`, worked out for `routeTo`; recomputed when the target moves. */
+  route: Point[];
+  routeTo: Point | null;
+  routeAge: number;
   speed: number;
   /** Sight range in tiles. */
   sight: number;
@@ -116,6 +123,7 @@ export class WorldRoom extends Room {
   private thingEntities = new Map<string, Entity>();
   /** Seconds this room has run. */
   private elapsed = 0;
+  private routesLeft = ROUTES_PER_TICK;
   /** The weather in force over the whole map, if any. */
   private weather: Effect | null = null;
 
@@ -317,6 +325,9 @@ export class WorldRoom extends Room {
       buffs: [],
       flying: false,
       target: null,
+      route: [],
+      routeTo: null,
+      routeAge: 0,
       speed: body.num("speed_land"),
       sight: body.num("sight_range") / TILE_METERS,
       seen: new Set([client.sessionId]),
@@ -441,7 +452,7 @@ export class WorldRoom extends Room {
     this.state.players.set(id, player);
     const walker: Walker = {
       id, player, body: gear.spelled, master, unit, gear: [], hp: unit.body.integrity, foe: null, cooldown: 0,
-      buffs: [], flying: false, target: null, speed: 0, sight: 0, seen: new Set(), seenThings: new Set(),
+      buffs: [], flying: false, target: null, route: [], routeTo: null, routeAge: 0, speed: 0, sight: 0, seen: new Set(), seenThings: new Set(),
       letters: {}, gathering: 0,
     };
     this.walkers.set(id, walker);
@@ -475,6 +486,42 @@ export class WorldRoom extends Room {
   get counts(): RoomCounts {
     const people = this.people.length;
     return { people, creatures: this.walkers.size - people, things: this.state.things.size };
+  }
+
+  /** Moves a walker along a route to its target, going around anything it cannot cross. */
+  private walk(w: Walker, seconds: number) {
+    const target = w.target!;
+    if (w.flying) {
+      if (stepToward(this.map, w.player, target, w.speed, seconds, true)) w.target = null;
+      return;
+    }
+    w.routeAge += seconds;
+    // A chased target moves: work the route out again once it has moved two tiles, at most once a second.
+    const drift = w.routeTo ? Math.hypot(w.routeTo.x - target.x, w.routeTo.y - target.y) : Infinity;
+    if ((drift === Infinity || (drift > 2 && w.routeAge > 1)) && this.routesLeft > 0) {
+      this.routesLeft--;
+      // Aim for ground: asking for the sea should walk you to the shore, not search the whole map.
+      w.route = findPath(this.map, w.player, nearestWalkable(this.map, target));
+      w.routeTo = { ...target };
+      w.routeAge = 0;
+    }
+    let left = seconds;
+    while (left > 0 && w.route.length) {
+      const before = { x: w.player.x, y: w.player.y };
+      const leg = w.route[0]!;
+      const arrived = stepToward(this.map, w.player, leg, w.speed, left);
+      if (!arrived) return;
+      if (Math.hypot(w.player.x - leg.x, w.player.y - leg.y) > 1e-3) {
+        w.routeTo = null; // blocked short of the waypoint: work the route out again next tick
+        return;
+      }
+      w.route.shift();
+      // Spend what is left of the tick on the next leg.
+      const used = Math.hypot(w.player.x - before.x, w.player.y - before.y);
+      const perSecond = w.speed / TILE_METERS;
+      left = perSecond > 0 ? left - used / perSecond : 0;
+    }
+    if (!w.route.length) { w.target = null; w.routeTo = null; }
   }
 
   /** People still in the round. */
@@ -627,6 +674,7 @@ export class WorldRoom extends Room {
     for (const w of this.walkers.values()) {
       const safe = nearestWalkable(this.map, w.player);
       if (safe !== w.player) { w.player.x = safe.x; w.player.y = safe.y; w.target = null; }
+      w.routeTo = null; // the land changed: routes must be worked out again
     }
   }
 
@@ -660,6 +708,7 @@ export class WorldRoom extends Room {
   update(seconds: number) {
     const started = performance.now();
     this.elapsed += seconds;
+    this.routesLeft = ROUTES_PER_TICK;
     if (this.weather && this.elapsed >= this.weather.until) {
       this.weather = null;
       this.state.weather = "";
@@ -672,7 +721,7 @@ export class WorldRoom extends Room {
         this.rebuild(w);
         this.clients.find((c) => c.sessionId === id)?.send("notice", `${over.map((b) => b.word.toUpperCase()).join(", ")} wore off`);
       }
-      if (w.target && stepToward(this.map, w.player, w.target, w.speed, seconds, w.flying)) w.target = null;
+      if (w.target && (w.route.length || w.flying || this.routesLeft > 0)) this.walk(w, seconds);
     }
     this.think();
     // Combat: each attacker strikes its foe whenever the foe is in reach.

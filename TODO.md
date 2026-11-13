@@ -127,7 +127,7 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
 - [x] M1: rules engine (operators, degrees, absolutes, combat tick)
 - [x] M2: server, generated map, movement, sight-based views; 100-bot load test passed
 - [x] Load test with objects, creatures and playing bots (results in PLAN.md)
-- [ ] Path-finding: walkers stop at water and mountains instead of going around
+- [x] Path-finding: walkers go around water, mountains and walls, and prefer roads
 - [x] M3: client connects, draws the map, walks, and spells words into objects
 - [ ] Controller input: movement, and spelling by picking from held letters
 - [ ] Spelled objects only sit on the ground; no equipping, placement rules or effects yet
@@ -164,7 +164,8 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
 - [ ] Labels of adjacent players overlap; fix in the art pass
 - [x] M6 (part): bots that play (gather, spell, fight) in the load test
 - [ ] M6 (rest): public deploy; needs a host account from the user
-- [ ] One 105 ms tick in a 5-minute playing run; find what caused it
+- [x] Tick spikes: caused by many route searches in one tick; capped at 12 a tick, worst tick
+      in a 5-minute playing run is now 44 ms
 - [ ] M7 in PLAN.md
 - [ ] Map generator: cities, countryside, letter sources
 - [ ] Demo: one map, the 351-word dictionary, a handful of players

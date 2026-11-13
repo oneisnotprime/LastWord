@@ -94,7 +94,8 @@ On a controller, spelling is done by picking from the letters you hold.
   | 100 bots playing, spread out, 5 minutes | up to 600, 60 creatures | 4% typical, one 43% spike | 1.3 ms average, one 105 ms worst | 1.1 KB/s |
   | 100 bots playing in one city, 3 minutes | up to 160 | 12% at the start | 1.7 ms average, 8.6 ms worst | 1.3 KB/s |
 
-  The tick budget is 100 ms. Colyseus stays. The cost that grows is recomputing every client's
+  After path-finding was added, route searches are capped at 12 a tick; a 5-minute playing run
+  then had a worst tick of 44 ms. The tick budget is 100 ms. Colyseus stays. The cost that grows is recomputing every client's
   view of things; if maps get much busier, move it off the tick or cache per cell.
 
 ## Hosting
