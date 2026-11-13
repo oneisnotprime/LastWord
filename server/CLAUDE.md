@@ -41,3 +41,7 @@ Node process that owns the game state. One room per map instance (from milestone
   deals damage over time and counts down, `compel` makes the frightened flee, the confused
   wander and creatures in `sets_hostile` areas attack. Areas `pulse` once a second (statuses
   from harmless areas, cures, `contagion`).
+- Objects are made by `make`: up to `SEPARATE_UP_TO` (12) creatures or things each, more as one
+  with `count` (`Player.count`, `Thing.count`, `Spelled.count`; stats via shared `massed`).
+- `cast` applies a verb with its adverbs (shared `castVerb`); touched verbs with event properties
+  go through `happen` on the picked target. A verb that would do nothing is refused.

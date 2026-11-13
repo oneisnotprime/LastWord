@@ -10,3 +10,5 @@ export * from "./unit.js";
 export * from "./loadout.js";
 export * from "./path.js";
 export * from "./status.js";
+export * from "./plural.js";
+export * from "./verb.js";

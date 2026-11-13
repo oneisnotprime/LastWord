@@ -1,5 +1,8 @@
 import type { Dictionary } from "./dictionary.js";
-import { resolve, Stats } from "./stats.js";
+import { singulars } from "./plural.js";
+import { resolve, type Stats } from "./stats.js";
+import type { Op, Value } from "./types.js";
+import { castVerb } from "./verb.js";
 
 /** Letters a player holds: letter -> count. */
 export type Letters = Record<string, number>;
@@ -10,38 +13,82 @@ export interface Phrase {
    * target, or changes the sky and weather.
    */
   kind: "object" | "verb" | "event" | "sky" | "field";
+  /** The noun or verb, singular: CATS reads as cat. */
   noun: string;
   adjectives: string[];
-  /** Every letter the phrase costs, in order, lower case. */
+  /** Adverbs on a verb: QUICKLY in QUICKLY RUN. */
+  adverbs: string[];
+  /** Spelled as a plural: CATS, WOLVES, MICE. */
+  plural: boolean;
+  /**
+   * How many it makes: `plural_count` for a plural (3 by default), else `pack_size` (1 by
+   * default; a WOLF comes as a pack of four). Number words change both: TEN WOLVES is ten.
+   */
+  count: number;
+  /** Every letter the phrase costs, in order, lower case: CATS costs the S. */
   letters: string;
   stats: Stats;
+  /** For a verb: what it does to the body it lands on while it lasts. */
+  effect?: { set: Record<string, Value>; ops: Op[] };
+}
+
+/** Up to this many spawn as separate creatures or things; more are one body with a count (see `massed`). */
+export const SEPARATE_UP_TO = 12;
+
+/**
+ * What a typed word is as a noun: itself, or the plural of a noun. A plural wins over a word
+ * of the same spelling when that word is a noun of the same archetype as its singular (ROADS,
+ * LEGS, FALLS are many roads, legs, falls), and loses when it is something else (MEN and PEOPLE
+ * are groups with their own data; NEWS is not many NEWs).
+ */
+export function readNoun(dict: Dictionary, text: string): { word: string; plural: boolean } | undefined {
+  const own = dict.lookup(text);
+  for (const s of singulars(text)) {
+    const single = dict.word(s);
+    if (!single || single.role !== "noun") continue;
+    if (!own) return { word: s, plural: true };
+    if (own.def.role === "noun" && own.def.archetype === single.archetype && own.degree === "positive") return { word: s, plural: true };
+  }
+  return own ? { word: text, plural: false } : undefined;
 }
 
 /**
- * Reads what a player typed, such as "bigger sword": adjectives first, noun last.
- * Throws an Error with a message fit to show the player.
+ * Reads what a player typed: adjectives then a noun ("bigger sword", "ten wolves"), or adverbs
+ * then a verb ("quickly run"). Throws an Error with a message fit to show the player.
  */
 export function parsePhrase(dict: Dictionary, text: string): Phrase {
   const words = text.toLowerCase().trim().split(/\s+/).filter(Boolean);
   if (words.length === 0) throw new Error("Spell something");
   for (const w of words) {
     if (!/^[a-z]+$/.test(w)) throw new Error(`${w} is not a word`);
-    if (!dict.lookup(w)) throw new Error(`${w.toUpperCase()} is not in the dictionary yet`);
+    if (!dict.lookup(w) && !readNoun(dict, w)) throw new Error(`${w.toUpperCase()} is not in the dictionary yet`);
   }
-  const noun = words[words.length - 1]!;
-  const adjectives = words.slice(0, -1);
-  const def = dict.lookup(noun)!.def;
+  const last = words[words.length - 1]!;
+  const modifiers = words.slice(0, -1);
+  const letters = words.join("");
+  const head = readNoun(dict, last)!;
+  const def = dict.word(head.word) ?? dict.lookup(last)!.def;
+  const role = (w: string) => dict.lookup(w)?.def.role;
+  if (def.role === "adverb") {
+    throw new Error(`${last.toUpperCase()} says how you do something: follow it with a verb, as in ${last.toUpperCase()} RUN`);
+  }
   if (def.role === "verb") {
-    if (adjectives.length) throw new Error(`${noun.toUpperCase()} is something you do; spell it on its own`);
-    const stats = new Stats(dict);
-    for (const [id, value] of Object.entries(def.set)) stats.set(id, value);
-    return { kind: "verb", noun, adjectives, letters: noun, stats };
+    const wrong = modifiers.find((w) => role(w) !== "adverb");
+    if (wrong) throw new Error(`${last.toUpperCase()} is something you do; it takes an adverb, not ${wrong.toUpperCase()}`);
+    const cast = castVerb(dict, head.word, modifiers);
+    return { kind: "verb", noun: head.word, adjectives: [], adverbs: modifiers, plural: false, count: 1, letters, stats: cast.stats, effect: { set: cast.set, ops: cast.ops } };
   }
-  if (def.role !== "noun") throw new Error(`${noun.toUpperCase()} is not a thing; end with a noun`);
-  const stats = resolve(dict, noun, adjectives);
-  const placement = stats.get("placement");
+  if (def.role !== "noun") throw new Error(`${last.toUpperCase()} is not a thing; end with a noun`);
+  const adverb = modifiers.find((w) => role(w) === "adverb");
+  if (adverb) throw new Error(`${adverb.toUpperCase()} goes with a verb, not with ${last.toUpperCase()}`);
+  const stats = resolve(dict, head.word, modifiers);
   const kind = def.class === "event" ? "event" : kindOf(stats, def.class);
-  return { kind, noun, adjectives, letters: words.join(""), stats };
+  if (head.plural && kind !== "object") throw new Error(`${last.toUpperCase()}: only things come in plurals; spell ${head.word.toUpperCase()}`);
+  const count = Math.round(stats.num(head.plural ? "plural_count" : "pack_size"));
+  return {
+    kind, noun: head.word, adjectives: modifiers, adverbs: [], plural: head.plural,
+    count: head.plural ? count : Math.max(1, count), letters, stats,
+  };
 }
 
 /** Classes whose words are things in the world, not states or feelings. */

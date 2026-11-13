@@ -17,6 +17,8 @@ export const Player = schema(
     owner: t.string(),
     /** Statuses on it, space separated: "stun poison". "" when there are none. */
     status: t.string(),
+    /** How many it is: a swarm of a thousand ants is one walker with count 1000. 1 for a person. */
+    count: t.float64(),
   },
   "Player",
 );
@@ -31,6 +33,8 @@ export const Thing = schema(
     y: t.float32(),
     /** Integrity as a percentage. */
     hp: t.uint8(),
+    /** How many it is: a stack of a hundred arrows is one thing with count 100. */
+    count: t.float64(),
   },
   "Thing",
 );
