@@ -47,8 +47,21 @@
 - [ ] Review the scale of the demo numbers: real-world units and very large gaps between words
       (nuke 5,000,000 damage against sword 40); confirm or compress before the full pass
 - [ ] Plural rules, including irregular plurals; verb tenses
-- [ ] Full property pass over the lexicon with a model, using the demo set as examples:
-      pipeline built (`tools/generate_words.py`); first 3,000 words waiting on an API key
+- [x] First property pass: 2,958 generated words merged (3,310 in the dictionary), written by
+      Opus 5.5 subagents from the same prompt and examples the batch would use
+- [ ] Rule on words kept out of the dictionary (`EXCLUDED` in generate_words.py): nationalities,
+      religions, ethnicities, sexuality, disability, and sexual violence, self-harm and hate
+- [ ] Review generated entries the subagents flagged: PIECE (gun or chess piece), FIGURE,
+      DIFFERENCE, ROADS (written as an anchorage; players will expect the plural of ROAD), CHAT
+      (a bird), ABSOLUTE, ZERO and NONE (zero multipliers), NON and OTHERWISE (negative
+      multipliers), MILLION and BILLION (plural_count of a million and a billion), LATE (kills
+      what it modifies), IMPOSSIBLE (absolute evasion), CHRIST was excluded, TRUMP (a trump card
+      that beats everything), DELETE (a verb that destroys a touched target)
+- [ ] Generated words use properties the engine does not act on yet (effect_multiplier on
+      adverbs, negates, copies, strips_adjectives, plural_count); sky words like PLANET that set
+      no daylight or weather do nothing
+- [ ] Plural forms in the lexicon (ROADS, LEGS, FALLS) need the plural rule rather than entries
+- [ ] Next batch: words 3,001 to 10,000
 - [ ] Grammar words (are, have, not, but, the rest of `GRAMMAR` in generate_words.py) need a
       deliberate ruling: inert, or something spectacular
 - [ ] Sanity checks on that pass: sibling ordering (pond < lake < sea < ocean), unit ranges
