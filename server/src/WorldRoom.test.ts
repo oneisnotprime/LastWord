@@ -61,3 +61,42 @@ it("walks a player toward the point it asks for", async () => {
   await new Promise((r) => setTimeout(r, 100));
   expect(room.clients.length).toBe(1);
 });
+
+it("spells a word into an object, spends the letters, and refuses what it cannot make", async () => {
+  const room = (await colyseus.createRoom("world", {})) as unknown as WorldRoom;
+  const a: any = await colyseus.connectTo(room as never);
+  const b: any = await colyseus.connectTo(room as never);
+  const inbox = { letters: [] as unknown[], spelled: [] as unknown[], refused: [] as unknown[] };
+  for (const type of ["letters", "spelled", "refused"] as const) a.onMessage(type, (m: unknown) => inbox[type].push(m));
+  for (const type of Object.keys(inbox)) b.onMessage(type, () => {});
+  const pa = room.state.players.get(a.sessionId)!, pb = room.state.players.get(b.sessionId)!;
+  pa.x = 50; pa.y = 50; pb.x = 150; pb.y = 50;
+  await new Promise((r) => setTimeout(r, 100));
+  // The first hand is sent on join, before this test could listen; read it from the room.
+  const before = { ...(room as any).walkers.get(a.sessionId).letters } as Record<string, number>;
+  expect(before.s).toBeGreaterThanOrEqual(1);
+
+  a.send("spell", "sword");
+  a.send("spell", "zzz");
+  a.send("spell", "quetzal sword");
+  a.send("spell", 42);
+  await new Promise((r) => setTimeout(r, 300));
+  await (room as any).waitForNextPatch();
+
+  expect(inbox.spelled).toEqual(["sword"]);
+  expect(inbox.refused).toHaveLength(3);
+  expect(inbox.refused[0]).toBe("ZZZ is not in the dictionary yet");
+  const after = inbox.letters.at(-1) as Record<string, number>;
+  expect(after.s).toBe(before.s! - 1);
+  expect(after.w).toBe(before.w! - 1);
+
+  const things = [...a.state.things.values()];
+  expect(things).toHaveLength(1);
+  expect(things[0]).toMatchObject({ phrase: "sword", owner: a.sessionId });
+  expect(things[0].x).toBeCloseTo(50);
+  expect(b.state.things.size).toBe(0); // out of sight
+
+  for (let i = 0; i < 6; i++) a.send("spell", "sword");
+  await new Promise((r) => setTimeout(r, 300));
+  expect(inbox.refused.at(-1)).toMatch(/^You need /);
+});

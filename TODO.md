@@ -95,6 +95,10 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
 - [x] M2: server, generated map, movement, sight-based views; 100-bot load test passed
 - [ ] Repeat the load test once objects exist (thousands of entities in the state)
 - [ ] Path-finding: walkers stop at water and mountains instead of going around
-- [ ] M3 to M7 in PLAN.md
+- [x] M3: client connects, draws the map, walks, and spells words into objects
+- [ ] Controller input: movement, and spelling by picking from held letters
+- [ ] Spelled objects only sit on the ground; no equipping, placement rules or effects yet
+- [ ] Starter letters are a placeholder hand (SWORD plus 20 random) until letter sources exist
+- [ ] M4 to M7 in PLAN.md
 - [ ] Map generator: cities, countryside, letter sources
 - [ ] Demo: one map, the 351-word dictionary, a handful of players

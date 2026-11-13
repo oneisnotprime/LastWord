@@ -1,11 +1,11 @@
 import { Room, type Client } from "colyseus";
 import { StateView } from "@colyseus/schema";
 import {
-  generateMap, randomWalkable, resolve, seeded, stepToward, TILE_METERS,
-  type Dictionary, type Point, type WorldMap,
+  generateMap, missing, parsePhrase, randomWalkable, resolve, seeded, spend, stepToward, TILE_METERS,
+  type Dictionary, type Letters, type Point, type WorldMap,
 } from "@lastword/shared";
 import { loadDictionary } from "./data.js";
-import { Player, WorldState } from "./state.js";
+import { Player, Thing, WorldState } from "./state.js";
 
 /** Simulation steps per second. */
 export const TICK_HZ = 10;
@@ -19,7 +19,26 @@ interface Walker {
   /** Sight range in tiles. */
   sight: number;
   seen: Set<string>;
+  seenThings: Set<string>;
+  /** Held letters. Private: sent to their owner by message, never put in shared state. */
+  letters: Letters;
 }
+
+/** Placeholder until letter sources exist (M4): enough to spell SWORD plus a random handful. */
+function starterLetters(rng: () => number): Letters {
+  const common = "eeeeeeeeeeeiiiiiiiiaaaaaaaarrrrrrrnnnnnnnttttttoooooosssssslllllccccuuuudddpppmmmhhggyybb";
+  const hand: Letters = {};
+  for (const ch of "sword") hand[ch] = (hand[ch] ?? 0) + 1;
+  for (let i = 0; i < 20; i++) {
+    const ch = common[Math.floor(rng() * common.length)]!;
+    hand[ch] = (hand[ch] ?? 0) + 1;
+  }
+  return hand;
+}
+
+/** Cell width, in tiles, of the grid that things are bucketed into. */
+const THING_CELL = 16;
+const thingKey = (x: number, y: number) => Math.floor(x / THING_CELL) * 4096 + Math.floor(y / THING_CELL);
 
 /** Every live room in this process, for metrics. */
 export const liveRooms = new Set<WorldRoom>();
@@ -38,6 +57,8 @@ export class WorldRoom extends Room {
   private rng = seeded(Date.now());
   private walkers = new Map<string, Walker>();
   private tickCount = 0;
+  private thingGrid = new Map<number, string[]>();
+  private nextThing = 1;
 
   messages = {
     /** Walk toward a point on the map. */
@@ -47,6 +68,25 @@ export class WorldRoom extends Room {
       if (!walker || !p || !Number.isFinite(p.x) || !Number.isFinite(p.y)) return;
       const clamp = (v: number) => Math.min(this.map.size, Math.max(0, v));
       walker.target = { x: clamp(p.x!), y: clamp(p.y!) };
+    },
+    /** Spend letters to make an object where the player stands. */
+    spell: (client: Client, text: unknown) => {
+      const walker = this.walkers.get(client.sessionId);
+      if (!walker) return;
+      try {
+        if (typeof text !== "string" || text.length > 80) throw new Error("Spell something");
+        const phrase = parsePhrase(this.dict, text);
+        const lacking = missing(walker.letters, phrase.letters);
+        if (lacking) throw new Error(`You need ${lacking.toUpperCase().split("").join(" ")}`);
+        spend(walker.letters, phrase.letters);
+        const name = [...phrase.adjectives, phrase.noun].join(" ");
+        this.addThing(name, client.sessionId, walker.player.x, walker.player.y);
+        client.send("letters", walker.letters);
+        client.send("spelled", name);
+        this.refreshViews();
+      } catch (e) {
+        client.send("refused", (e as Error).message);
+      }
     },
   };
 
@@ -83,7 +123,10 @@ export class WorldRoom extends Room {
       speed: body.num("speed_land"),
       sight: body.num("sight_range") / TILE_METERS,
       seen: new Set([client.sessionId]),
+      seenThings: new Set(),
+      letters: starterLetters(this.rng),
     });
+    client.send("letters", this.walkers.get(client.sessionId)!.letters);
     client.view = new StateView();
     client.view.add(player);
   }
@@ -91,6 +134,19 @@ export class WorldRoom extends Room {
   onLeave(client: Client) {
     this.walkers.delete(client.sessionId);
     this.state.players.delete(client.sessionId);
+  }
+
+  addThing(phrase: string, owner: string, x: number, y: number): string {
+    const id = `t${this.nextThing++}`;
+    const thing = new Thing();
+    thing.phrase = phrase;
+    thing.owner = owner;
+    thing.x = x;
+    thing.y = y;
+    this.state.things.set(id, thing);
+    const k = thingKey(x, y);
+    (this.thingGrid.get(k) ?? this.thingGrid.set(k, []).get(k)!).push(id);
+    return id;
   }
 
   update(seconds: number) {
@@ -105,7 +161,7 @@ export class WorldRoom extends Room {
     this.metrics.tickMsMax = Math.max(this.metrics.tickMsMax, ms);
   }
 
-  /** Puts in each client's view exactly the players within its sight range. */
+  /** Puts in each client's view exactly the players and things within its sight range. */
   refreshViews() {
     // Bucket players into cells one sight range wide, so each client checks nine cells.
     const cell = Math.max(1, ...[...this.walkers.values()].map((w) => w.sight));
@@ -135,6 +191,23 @@ export class WorldRoom extends Room {
         }
       }
       me.seen = now;
+
+      const things = new Set<string>();
+      const reach = Math.ceil(me.sight / THING_CELL);
+      for (let dx = -reach; dx <= reach; dx++) {
+        for (let dy = -reach; dy <= reach; dy++) {
+          for (const id of this.thingGrid.get(thingKey(me.player.x + dx * THING_CELL, me.player.y + dy * THING_CELL)) ?? []) {
+            const t = this.state.things.get(id);
+            if (t && Math.hypot(t.x - me.player.x, t.y - me.player.y) <= me.sight) things.add(id);
+          }
+        }
+      }
+      for (const id of things) if (!me.seenThings.has(id)) client.view.add(this.state.things.get(id)!);
+      for (const id of me.seenThings) {
+        const gone = this.state.things.get(id);
+        if (!things.has(id) && gone) client.view.remove(gone);
+      }
+      me.seenThings = things;
     }
   }
 }

@@ -4,12 +4,20 @@ import { schema, t, type SchemaType } from "@colyseus/schema";
 export const Player = schema({ name: t.string(), x: t.float32(), y: t.float32() }, "Player");
 export type Player = SchemaType<typeof Player>;
 
+/** An object someone spelled into the world. */
+export const Thing = schema(
+  { phrase: t.string(), owner: t.string(), x: t.float32(), y: t.float32() },
+  "Thing",
+);
+export type Thing = SchemaType<typeof Thing>;
+
 export const WorldState = schema(
   {
     /** Clients rebuild the map from the seed; tiles are never sent. */
     seed: t.uint32(),
     size: t.uint16(),
     players: t.map(Player).view(),
+    things: t.map(Thing).view(),
   },
   "WorldState",
 );

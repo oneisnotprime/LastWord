@@ -5,12 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Last Word</title>
     <style>
-      html, body { margin: 0; height: 100%; background: #14161a; }
+      html, body { margin: 0; height: 100%; background: #14161a; overflow: hidden; }
       #game { width: 100%; height: 100%; }
+      #hud { position: fixed; inset: 0; pointer-events: none; font: 14px/1.3 ui-monospace, Menlo, Consolas, monospace; color: #e8e6df; }
+      #status { position: absolute; top: 12px; left: 12px; background: #14161acc; padding: 6px 10px; border-radius: 4px; }
+      #help { position: absolute; top: 12px; right: 12px; background: #14161acc; padding: 6px 10px; border-radius: 4px; color: #a9a79f; }
+      #toast { position: absolute; bottom: 132px; left: 50%; transform: translateX(-50%); padding: 6px 12px; border-radius: 4px; background: #14161aee; opacity: 0; transition: opacity .2s; }
+      #toast.show { opacity: 1; }
+      #toast.bad { color: #ff8a80; }
+      #toast.good { color: #9be28f; }
+      #spell { position: absolute; bottom: 84px; left: 50%; transform: translateX(-50%); width: min(480px, 80vw); pointer-events: auto;
+        font: inherit; font-size: 18px; text-transform: uppercase; letter-spacing: 2px; padding: 8px 12px; color: #ffd166;
+        background: #14161aee; border: 1px solid #55524a; border-radius: 4px; outline: none; }
+      #spell:focus { border-color: #ffd166; }
+      #letters { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; max-width: 96vw; }
+      .tile { width: 30px; height: 40px; background: #e9dfc3; color: #26221a; border-radius: 3px; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; font-weight: 700; font-size: 16px; box-shadow: 0 2px 0 #9c9274; }
+      .tile small { font-weight: 400; font-size: 10px; color: #6b6450; }
+      .tile.used { background: #ffd166; }
+      .tile.short { background: #ff8a80; }
     </style>
   </head>
   <body>
     <div id="game"></div>
+    <div id="hud">
+      <div id="status">Connecting…</div>
+      <div id="help">Move: WASD, arrows or click · Spell: Enter</div>
+      <div id="toast"></div>
+      <input id="spell" placeholder="Press Enter to spell" autocomplete="off" spellcheck="false" maxlength="80" />
+      <div id="letters"></div>
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
