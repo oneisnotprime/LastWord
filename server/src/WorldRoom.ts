@@ -1,8 +1,8 @@
 import { Room, type Client } from "colyseus";
 import { StateView } from "@colyseus/schema";
 import {
-  addLetters, afflict, cure, findPath, hampered, inflicts, statusDamage, statusEffects, tickStatuses, wake, GATHER_SECONDS, gatherLetter, generateMap, GIVE_RANGE, missing, parsePhrase, production, resolveSpelled, SEPARATE_UP_TO, nearestWalkable, randomWalkable, resolve, Tile, tileAt, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit,
-  type Affliction, type Dictionary, type Entity, type Hampered, type Status, type Stats, type Letters, type LoadoutDetail, type Op, type Phrase, type Point, type Spelled, type Value, type WorldMap,
+  addLetters, afflict, auras, bodyFlags, cure, useObject, findPath, hampered, inflicts, statusDamage, statusEffects, tickStatuses, wake, GATHER_SECONDS, gatherLetter, generateMap, GIVE_RANGE, missing, parsePhrase, production, resolveSpelled, SEPARATE_UP_TO, nearestWalkable, randomWalkable, resolve, Tile, tileAt, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit,
+  type Affliction, type Dictionary, type Entity, type Hampered, type Status, type Stats, type Letters, type LoadoutDetail, type Op, type Phrase, type Point, type Spelled, type Value, type WordDef, type WorldMap,
 } from "@lastword/shared";
 import { loadDictionary } from "./data.js";
 import { Edit, Player, Thing, WorldState, Zone } from "./state.js";
@@ -68,10 +68,20 @@ interface Area {
   /** Its radius and length when made, for copies of it that spread. */
   baseRadius: number;
   lasts: number;
+  /** Integrity a second it restores to its owner's side among whoever it reaches. */
+  heals: number;
 }
 
 /** What areas start with before a word's own properties say otherwise. */
-const AREA_DEFAULTS = { inflicts: [] as [Status, number][], hostile: false, contagion: 0, cures: [] as string[], pulsed: -Infinity };
+const AREA_DEFAULTS = { inflicts: [] as [Status, number][], hostile: false, contagion: 0, cures: [] as string[], pulsed: -Infinity, heals: 0 };
+
+/** True if an area would act on anything: damage, effects, statuses, hostility, cures or healing. */
+function acts(a: Area): boolean {
+  return !!(a.attack || a.effect || a.inflicts.length || a.hostile || a.cures.length || a.heals > 0);
+}
+
+/** Where something that radiates is: carried by a walker, or lying on the ground as a thing. */
+interface Radiating { holder: string; keys: string[] }
 
 /** How a status reads in "you cannot spell while you are ...". */
 const STATE_WORDS: Partial<Record<Status, string>> = { stun: "stunned", freeze: "frozen", sleep: "asleep", silence: "silenced" };
@@ -209,6 +219,14 @@ export class WorldRoom extends Room {
   private areas = new Map<string, Area>();
   /** The weather in force over the whole map, if any. */
   private weather: Effect | null = null;
+  /** Areas each radiating thing gives off, by what radiates: a Gear, or a walker's body. */
+  private radiating = new Map<object, Radiating>();
+  /** What radiates from each walker or thing, by its id. */
+  private radiators = new Map<string, Set<object>>();
+  /** When a radiating thing's field runs out (its field_duration), fixed when it first radiates. */
+  private radiantUntil = new WeakMap<object, number>();
+  /** Fields were made or ended: work out again who stands in which on the next tick. */
+  private fieldsDirty = false;
 
   messages = {
     /** Walk toward a point on the map. */
@@ -244,6 +262,7 @@ export class WorldRoom extends Room {
       const problem = wearable ? this.equip(walker, gear) : `${gear.phrase.toUpperCase()} cannot be carried`;
       if (problem) return void client.send("refused", problem);
       this.removeThing(best);
+      this.tell(walker);
       client.send("notice", `${gear.phrase.toUpperCase()} equipped`);
       this.refreshViews();
     },
@@ -256,8 +275,24 @@ export class WorldRoom extends Room {
       if (!gear) return;
       this.rebuild(walker);
       this.addThing(gear, client.sessionId, walker.player.x, walker.player.y);
+      this.tell(walker);
       client.send("notice", `${gear.phrase.toUpperCase()} dropped`);
       this.refreshViews();
+    },
+    /**
+     * Use something: eat, drink or take it. `which` is the index of something carried, the id of
+     * a thing on the ground in reach, or nothing for the last usable thing carried, else the
+     * nearest one on the ground.
+     */
+    use: (client: Client, which: unknown) => {
+      const walker = this.walkers.get(client.sessionId);
+      if (!walker) return;
+      try {
+        client.send("spelled", this.use(walker, which));
+        this.refreshViews();
+      } catch (e) {
+        client.send("refused", (e as Error).message);
+      }
     },
     /** Attack another player; the unit strikes whenever the target is in reach. Anything else stops. */
     attack: (client: Client, target: unknown) => {
@@ -345,6 +380,7 @@ export class WorldRoom extends Room {
         const many = phrase.count > 1 || phrase.plural;
         client.send("spelled", many ? `${spelledAs} (${phrase.count}) ${done === "is with you" ? "are with you" : done}`
           : `${[...phrase.adjectives.filter((a) => !this.onlyCounts(a)), phrase.noun].join(" ").toUpperCase()} ${done}`);
+        this.tell(walker); // what is now in reach to use
         this.refreshViews();
       } catch (e) {
         client.send("refused", (e as Error).message);
@@ -438,6 +474,7 @@ export class WorldRoom extends Room {
     }
     this.walkers.delete(client.sessionId);
     this.state.players.delete(client.sessionId);
+    this.unradiateAll(client.sessionId);
   }
 
   private slotOf(g: Gear): string {
@@ -490,6 +527,7 @@ export class WorldRoom extends Room {
       const ground = nearestWalkable(this.map, walker.player); // coming down over water puts you ashore
       if (ground !== walker.player) { walker.player.x = ground.x; walker.player.y = ground.y; walker.target = null; }
     }
+    this.syncRadiation(walker);
     this.tell(walker);
     if (walker.master) { const m = this.walkers.get(walker.master); if (m) this.tell(m); }
   }
@@ -520,8 +558,10 @@ export class WorldRoom extends Room {
           index, phrase: g.phrase, slot: this.slotOf(g),
           integrity: layer ? Math.max(0, Math.round(layer.integrity)) : null,
           max: layer ? layer.stats.num("integrity") : null,
+          usable: this.usable(g),
         };
       }),
+      nearby: this.usableNear(walker).map(([id, g]) => ({ id, phrase: g.phrase })),
       effects: [
         ...walker.buffs.map((b) => ({ word: b.word, left: Math.round(b.until - this.elapsed) })),
         ...(walker.fields ?? []).map((f) => ({ word: f.word, left: -1 })), // -1: while you stand in it
@@ -706,23 +746,113 @@ export class WorldRoom extends Room {
     const said: string[] = [];
     const eventful = s.flag("destroys_target") || s.flag("transfers_ownership") || s.num("moves_target") > 0;
     if (s.get("effect_target") === "touched" && eventful) said.push(this.happen(id, walker, phrase));
+    const done = this.affect(walker, name, s, effect);
+    if (!said.length && !done) throw new Error(`${name.toUpperCase()} does nothing yet`);
+    said.push(done ?? name.toUpperCase());
+    return said.join("; ");
+  }
+
+  /**
+   * What a verb, or an object used, does to one body: restores its `restores` integrity, ends
+   * the statuses in its `effect_status`, and for its `duration` puts its effect on the body
+   * (using or casting it again restarts it). Returns how it reads, or null if it does nothing.
+   */
+  private affect(walker: Walker, name: string, s: Stats, effect: { set: Record<string, Value>; ops: Op[] }): string | null {
     const heal = s.num("restores");
     const cures = s.tags("effect_status");
     const seconds = s.num("duration");
     const lasting = seconds > 0 && (effect.ops.length > 0 || Object.keys(effect.set).length > 0);
-    if (!said.length && !(heal > 0) && !cures.length && !lasting) throw new Error(`${name.toUpperCase()} does nothing yet`);
+    if (!(heal > 0) && !cures.length && !lasting) return null;
     if (heal > 0) walker.hp = Math.min(walker.unit.body.stats.num("integrity"), walker.hp + heal);
-    // A verb's effect_status lists what it ends on the caster: HEAL ends poison, bleeding and burns.
-    if (cure(walker.statuses, cures).length) this.statusChanged(walker);
+    // effect_status lists what it ends: HEAL and MEDICINE end poison, bleeding and burns.
+    const ended = cure(walker.statuses, cures);
+    if (ended.length) this.statusChanged(walker);
     if (lasting) {
-      walker.buffs = walker.buffs.filter((b) => b.word.split(" ").at(-1) !== phrase.noun); // casting again restarts it
+      const noun = name.split(" ").at(-1);
+      walker.buffs = walker.buffs.filter((b) => b.word.split(" ").at(-1) !== noun);
       walker.buffs.push({ word: name, set: effect.set, ops: effect.ops, until: this.elapsed + seconds });
     }
     this.rebuild(walker);
     walker.player.hp = Math.min(100, Math.ceil((walker.hp / walker.unit.body.stats.num("integrity")) * 100));
     const upper = name.toUpperCase();
-    said.push(!lasting ? upper : seconds === Infinity ? `${upper} forever` : `${upper} for ${+seconds.toFixed(1)} seconds`);
+    const said = [!lasting ? upper : seconds === Infinity ? `${upper} forever` : `${upper} for ${+seconds.toFixed(1)} seconds`];
+    if (ended.length) said.push(`no longer ${ended.join(", ")}`);
     return said.join("; ");
+  }
+
+  /** Heals a walker by `amount`, up to its full integrity. */
+  private restore(w: Walker, amount: number) {
+    const max = w.unit.body.stats.num("integrity");
+    if (w.hp >= max) return;
+    w.hp = Math.min(max, w.hp + amount);
+    w.unit.body.integrity = w.hp;
+    w.player.hp = Math.min(100, Math.ceil((w.hp / max) * 100));
+    this.tell(w);
+  }
+
+  /** True if using this would do something (see shared `useObject`). */
+  private usable(g: Gear): boolean {
+    return !g.terrain && useObject(this.dict, g.spelled.noun, g.spelled.adjectives) !== null;
+  }
+
+  /** Things on the ground in reach that a walker may use (or, if `only` is false, try to): its own or nobody's, nearest first. */
+  private usableNear(w: Walker, only = true): [string, Gear][] {
+    const out: [string, Gear, number][] = [];
+    for (let dx = -1; dx <= 1; dx++) {
+      for (let dy = -1; dy <= 1; dy++) {
+        for (const id of this.thingGrid.get(thingKey(w.player.x + dx * THING_CELL, w.player.y + dy * THING_CELL)) ?? []) {
+          const t = this.state.things.get(id), g = this.grounded.get(id);
+          if (!t || !g || (t.owner !== w.id && t.owner !== "")) continue;
+          const d = Math.hypot(t.x - w.player.x, t.y - w.player.y);
+          if (d <= TAKE_RANGE && !g.terrain && (!only || this.usable(g))) out.push([id, g, d]);
+        }
+      }
+    }
+    return out.sort((a, b) => a[2] - b[2]).map(([id, g]) => [id, g]);
+  }
+
+  /**
+   * Uses something: eats it, drinks it, takes it. `which` is the index of something carried, the
+   * id of a thing on the ground in reach, or nothing for the last usable thing carried, else
+   * the nearest usable thing in reach. It acts as a verb cast on yourself (`affect`); a
+   * `single_use` one is gone after, one of a stack at a time. Throws if there is nothing to use.
+   */
+  private use(walker: Walker, which: unknown): string {
+    let gear: Gear | undefined, thingId: string | undefined;
+    if (Number.isInteger(which)) {
+      gear = walker.gear[which as number];
+      if (!gear) throw new Error("You carry nothing there");
+    } else if (typeof which === "string") {
+      const t = this.state.things.get(which);
+      gear = this.grounded.get(which);
+      if (!t || !gear) throw new Error("That is not here any more");
+      if (t.owner !== walker.id && t.owner !== "") throw new Error(`${gear.phrase.toUpperCase()} is not yours`);
+      if (Math.hypot(t.x - walker.player.x, t.y - walker.player.y) > TAKE_RANGE) throw new Error(`${gear.phrase.toUpperCase()} is too far away`);
+      thingId = which;
+    } else {
+      gear = [...walker.gear].reverse().find((g) => this.usable(g));
+      if (!gear) [thingId, gear] = this.usableNear(walker)[0] ?? this.usableNear(walker, false)[0] ?? [];
+      // Nothing usable: say why the last thing carried cannot be used.
+      gear ??= walker.gear.at(-1);
+      if (!gear) throw new Error("Nothing here to use: spell something to eat, drink or take, and stand by it");
+    }
+    const effect = useObject(this.dict, gear.spelled.noun, gear.spelled.adjectives);
+    if (!effect || gear.terrain) throw new Error(`${gear.phrase.toUpperCase()} cannot be used: ${useObject(this.dict, gear.spelled.noun, []) === null && this.dict.base(gear.spelled.noun, "edible") === true ? "eating it does nothing yet" : "it heals, cures and changes nothing"}`);
+    const done = this.affect(walker, gear.phrase, effect.stats, effect)!;
+    if (effect.stats.flag("single_use")) {
+      const left = (gear.spelled.count ?? 1) - 1;
+      if (left > 0) {
+        gear.spelled.count = left; // one of a stack at a time
+        const t = thingId ? this.state.things.get(thingId) : undefined;
+        if (t) t.count = left;
+        else this.rebuild(walker);
+      } else if (thingId) this.removeThing(thingId);
+      else {
+        walker.gear.splice(walker.gear.indexOf(gear), 1);
+        this.rebuild(walker);
+      }
+    }
+    return `Used ${done}`;
   }
 
   /**
@@ -891,8 +1021,6 @@ export class WorldRoom extends Room {
   private field(id: string, walker: Walker, phrase: Phrase): string {
     const s = phrase.stats, def = this.dict.word(phrase.noun)!, word = phrase.noun.toUpperCase();
     const placement = String(s.get("placement"));
-    const radiusM = s.num("field_radius");
-    const whole = placement === "sky" || placement === "map" || radiusM === Infinity;
     let at: Point = walker.player;
     if (placement === "target") {
       const reach = Math.max(1.5, s.num("placement_range") / TILE_METERS);
@@ -902,6 +1030,30 @@ export class WorldRoom extends Room {
       if (Math.hypot(target.x - walker.player.x, target.y - walker.player.y) > reach) throw new Error(`Too far away for ${word}`);
       at = { x: target.x, y: target.y };
     }
+    const area = this.fieldArea(phrase.noun, s, def, id, at, placement === "self" ? id : null);
+    const rates = production(s);
+    if (!acts(area) && !Object.keys(rates).length) throw new Error(`${word} does nothing yet`);
+    // Casting it again replaces your earlier one.
+    for (const [k, a] of this.areas) if (a.owner === id && a.word === phrase.noun) { this.areas.delete(k); this.state.zones.delete(k); }
+    const key = this.addArea(area, true);
+    if (Object.keys(rates).length) this.producers.set(`field:${key}`, { owner: id, rates, built: {} });
+    this.applyFields();
+    const minutes = s.num("field_duration") || s.num("persistence");
+    const where = area.radius >= this.map.size * 2 ? "over the whole map" : area.follows ? "around you" : "where it fell";
+    return `${word} ${where}${area.lasts < Infinity ? ` for ${minutes} minute${minutes === 1 ? "" : "s"}` : ""}`;
+  }
+
+  /**
+   * The area a field gives off, from its properties: a field word, or an object with a
+   * `field_radius` of its own. It covers `field_radius` around `at`, or the whole map (placement
+   * sky or map, or an absolute radius), and moves with `follows` if that is set and it is not
+   * map-wide. Everyone it reaches (`field_targets`) gets the word's operations, a named
+   * property change and the flags it grants; damage, if any, strikes as an area does.
+   */
+  private fieldArea(word: string, s: Stats, def: WordDef, owner: string, at: Point, follows: string | null): Area {
+    const placement = String(s.get("placement"));
+    const radiusM = s.num("field_radius");
+    const whole = placement === "sky" || placement === "map" || radiusM === Infinity;
     // What it does to bodies: the word's operations, a named property change, and any flags it grants.
     const ops: Op[] = [...def.ops];
     const prop = String(s.get("field_property"));
@@ -909,46 +1061,113 @@ export class WorldRoom extends Room {
       if (s.num("field_delta")) ops.push([prop, "add", s.num("field_delta")]);
       if (s.num("field_multiplier") !== 1) ops.push([prop, "mul", s.num("field_multiplier")]);
     }
-    const flags: Record<string, Value> = {};
-    for (const [k, v] of Object.entries(def.set)) {
-      if (v === true && (k.startsWith("immune_") || ["night_vision", "untargetable", "phase", "hover"].includes(k))) flags[k] = true;
-    }
+    const flags = bodyFlags(def.set);
     const minutes = s.num("field_duration") || s.num("persistence");
     const lasts = minutes > 0 && minutes < Infinity ? minutes * 60 : Infinity;
-    const rates = production(s);
-    const area: Area = {
-      word: phrase.noun, owner: id, x: at.x, y: at.y,
-      radius: whole ? this.map.size * 2 : Math.max(1, radiusM / TILE_METERS),
+    const radius = whole ? this.map.size * 2 : Math.max(1, radiusM / TILE_METERS);
+    return {
+      word, owner, x: at.x, y: at.y, radius,
       until: this.elapsed + lasts,
       attack: hasDamage(s) ? alwaysHits(s) : null,
       cooldown: 0,
       friendlyFire: s.flag("friendly_fire"),
       killBonus: 1,
       spread: 0,
-      effect: ops.length || Object.keys(flags).length ? { word: phrase.noun, set: flags, ops, until: Infinity } : null,
+      effect: ops.length || Object.keys(flags).length ? { word, set: flags, ops, until: Infinity } : null,
       targets: String(s.get("field_targets")),
-      follows: placement === "self" && !whole ? id : null,
+      follows: whole ? null : follows,
       ...AREA_DEFAULTS,
       // A silence field keeps everyone inside it silenced, a second at a time.
       inflicts: [...inflicts(s), ...(s.num("silences") > 0 && !s.num("inflict_silence") ? [["silence", 1.5] as [Status, number]] : [])],
       hostile: s.flag("sets_hostile"),
       contagion: s.num("contagion"),
       cures: s.tags("effect_status"),
-      baseRadius: 0,
+      heals: s.num("heals"),
+      baseRadius: radius,
       lasts,
     };
-    area.baseRadius = area.radius;
-    const acts = area.attack || area.effect || area.inflicts.length || area.hostile || area.cures.length;
-    if (!acts && !Object.keys(rates).length) throw new Error(`${word} does nothing yet`);
-    // Casting it again replaces your earlier one.
-    for (const [k, a] of this.areas) if (a.owner === id && a.word === phrase.noun) { this.areas.delete(k); this.state.zones.delete(k); }
+  }
+
+  /** Puts an area in the world; `shown` also sends it to clients as a zone. Returns its key. */
+  private addArea(area: Area, shown: boolean): string {
     const key = `z${this.nextThing++}`;
     this.areas.set(key, area);
-    this.state.zones.set(key, Object.assign(new Zone(), { word: area.word, x: area.x, y: area.y, radius: whole ? 0 : area.radius }));
-    if (Object.keys(rates).length) this.producers.set(`field:${key}`, { owner: id, rates, built: {} });
-    this.applyFields();
-    const where = whole ? "over the whole map" : area.follows ? "around you" : "where it fell";
-    return `${word} ${where}${lasts < Infinity ? ` for ${minutes} minute${minutes === 1 ? "" : "s"}` : ""}`;
+    if (shown) this.state.zones.set(key, Object.assign(new Zone(), { word: area.word, x: area.x, y: area.y, radius: area.radius >= this.map.size * 2 ? 0 : area.radius }));
+    this.fieldsDirty = true;
+    return key;
+  }
+
+  /**
+   * Makes something radiate: an object with a `field_radius` gives off its field exactly as a
+   * field word does, and anything with light, fear or healing (shared `auras`) gives those off
+   * too. `holder` is the walker carrying it (the areas move with them) or the thing it lies as
+   * (the areas stay put). What it radiated before, wherever it was, ends first.
+   */
+  private radiate(source: object, spelled: Spelled, holder: string, owner: string, at: Point, follows: string | null, sightM: number) {
+    this.unradiate(source);
+    const def = this.dict.word(spelled.noun);
+    if (!def || def.role !== "noun") return;
+    const s = resolveSpelled(this.dict, spelled);
+    const made: [Area, boolean][] = [];
+    if (s.num("field_radius") > 0) {
+      const area = this.fieldArea(spelled.noun, s, def, owner, at, follows);
+      if (acts(area)) made.push([area, true]);
+    }
+    for (const aura of auras(s, sightM)) {
+      const radius = Math.max(1, aura.radius / TILE_METERS);
+      made.push([{
+        word: spelled.noun, owner, x: at.x, y: at.y, radius, until: Infinity, attack: null, cooldown: 0, friendlyFire: false, killBonus: 1,
+        spread: 0, effect: aura.set.night_vision || aura.ops.length ? { word: spelled.noun, set: aura.set, ops: aura.ops, until: Infinity } : null,
+        targets: aura.targets, follows, ...AREA_DEFAULTS, heals: aura.heals, baseRadius: radius, lasts: Infinity,
+      }, false]);
+    }
+    const keys: string[] = [];
+    // A field that runs out (STEAM's three minutes) does so once, wherever the thing goes after.
+    const until = this.radiantUntil.get(source);
+    for (const [area, shown] of made) {
+      if (area.lasts < Infinity) {
+        if (until === undefined) this.radiantUntil.set(source, area.until);
+        else area.until = until;
+        if (area.until <= this.elapsed) continue;
+      }
+      keys.push(this.addArea(area, shown));
+    }
+    this.radiating.set(source, { holder, keys });
+    (this.radiators.get(holder) ?? this.radiators.set(holder, new Set()).get(holder)!).add(source);
+  }
+
+  /** Ends what something radiates. */
+  private unradiate(source: object) {
+    const r = this.radiating.get(source);
+    if (!r) return;
+    for (const k of r.keys) {
+      if (this.areas.delete(k)) this.fieldsDirty = true;
+      this.state.zones.delete(k);
+    }
+    this.radiating.delete(source);
+    const held = this.radiators.get(r.holder);
+    held?.delete(source);
+    if (held && !held.size) this.radiators.delete(r.holder);
+  }
+
+  /** Ends everything a walker or thing radiates. */
+  private unradiateAll(holder: string) {
+    for (const source of [...(this.radiators.get(holder) ?? [])]) this.unradiate(source);
+  }
+
+  /**
+   * A walker's body and gear radiate around it: what it took up starts, what it no longer
+   * carries stops. A creature's areas are on its master's side.
+   */
+  private syncRadiation(w: Walker) {
+    if (this.walkers.get(w.id) !== w) return;
+    const sources: [object, Spelled][] = [[w.body, w.body], ...w.gear.map((g): [object, Spelled] => [g, g.spelled])];
+    const live = new Set(sources.map(([o]) => o));
+    for (const source of [...(this.radiators.get(w.id) ?? [])]) if (!live.has(source)) this.unradiate(source);
+    const sight = w.unit.body.stats.num("sight_range");
+    for (const [source, spelled] of sources) {
+      if (this.radiating.get(source)?.holder !== w.id) this.radiate(source, spelled, w.id, w.master ?? w.id, w.player, w.id, sight);
+    }
   }
 
   /** True if a field reaches a walker, by its targets and its position. */
@@ -966,6 +1185,7 @@ export class WorldRoom extends Room {
 
   /** Gives every walker the effects of the fields it stands in; rebuilds only those that changed. */
   private applyFields() {
+    this.fieldsDirty = false;
     for (const [wid, w] of this.walkers) {
       const now: Effect[] = [];
       for (const a of this.areas.values()) if (a.effect && this.reaches(a, wid, w)) now.push(a.effect);
@@ -1061,6 +1281,7 @@ export class WorldRoom extends Room {
       if (!a.attack && a.inflicts.length && this.harms(a, wid, w)) this.hurtWith(w, a.inflicts, a.owner, key, false);
       const reached = a.effect ? this.reaches(a, wid, w) : Math.hypot(w.player.x - a.x, w.player.y - a.y) <= a.radius;
       if (a.cures.length && reached && cure(w.statuses, a.cures).length) this.statusChanged(w);
+      if (a.heals > 0 && since > 0 && reached && (wid === a.owner || w.master === a.owner)) this.restore(w, a.heals * since);
     }
     if (a.attack && a.contagion > 0 && since > 0 && this.rng() < 1 - (1 - Math.min(1, a.contagion)) ** (since / 60)) this.spread(a);
   }
@@ -1188,6 +1409,7 @@ export class WorldRoom extends Room {
     if (mine < theirs) throw new Error(`${gear.phrase.toUpperCase()} is too well guarded (${by} ${theirs} against your ${against} ${mine})`);
     this.clients.find((c) => c.sessionId === thing.owner)?.send("notice", `Your ${gear.phrase.toUpperCase()} was stolen`);
     thing.owner = id;
+    for (const k of this.radiating.get(gear)?.keys ?? []) { const a = this.areas.get(k); if (a) a.owner = id; }
     const producer = this.producers.get(targetId);
     if (producer) producer.owner = id;
     walker.foe = null;
@@ -1256,6 +1478,7 @@ export class WorldRoom extends Room {
       kc?.send("letters", killer.letters);
       kc?.send("notice", `You killed ${dead.player.name} and took their letters`);
     }
+    this.unradiateAll(id); // what it carried radiates where it falls instead
     for (const g of dead.gear) this.addThing(g, "", dead.player.x, dead.player.y);
     client?.send("letters", {});
     client?.send("dead", killer?.player.name ?? "something");
@@ -1321,6 +1544,7 @@ export class WorldRoom extends Room {
   removeThing(id: string) {
     const t = this.state.things.get(id);
     if (!t) return;
+    this.unradiateAll(id);
     const cell = this.thingGrid.get(thingKey(t.x, t.y));
     if (cell) cell.splice(cell.indexOf(id), 1);
     this.state.things.delete(id);
@@ -1343,6 +1567,9 @@ export class WorldRoom extends Room {
     this.state.things.set(id, thing);
     const k = thingKey(x, y);
     (this.thingGrid.get(k) ?? this.thingGrid.set(k, []).get(k)!).push(id);
+    // A thing on the ground radiates around itself, by its own sight, while it lies there.
+    const sight = Number(this.dict.base(gear.spelled.noun, "sight_range"));
+    this.radiate(gear, gear.spelled, id, owner, { x, y }, null, sight);
     return id;
   }
 
@@ -1437,7 +1664,7 @@ export class WorldRoom extends Room {
       this.clients.find((c) => c.sessionId === id)?.send("letters", this.walkers.get(id)!.letters);
     }
     // Once a second: fields follow people about, so work out again who stands in which.
-    if (this.tickCount % TICK_HZ === 0 && this.areas.size) this.applyFields();
+    if ((this.tickCount % TICK_HZ === 0 && this.areas.size) || this.fieldsDirty) this.applyFields();
     // Once a second, anyone with a verb in force is told how long it has left.
     if (this.tickCount % TICK_HZ === 0) for (const w of this.walkers.values()) if (w.buffs.length || w.statuses.length) this.tell(w);
     if (this.tickCount++ % VIEW_EVERY === 0) this.refreshViews();

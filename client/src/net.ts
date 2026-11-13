@@ -12,6 +12,8 @@ export interface Connection {
   take(): void;
   /** Drop the item at `index` in the loadout, or the last thing equipped. */
   drop(index?: number): void;
+  /** Use (eat, drink, take) something carried, by index, or on the ground, by thing id; nothing for the last usable thing carried, else the nearest. */
+  use(which?: number | string): void;
   /** Attack a player by session id; null stops. */
   attack(target: string | null): void;
   /** Pick a target or spot for events without attacking it; null clears. */
@@ -67,6 +69,7 @@ export async function connect(on: Handlers): Promise<Connection> {
     give: (to, letters) => room.send("give", { to, letters }),
     take: () => room.send("take"),
     drop: (index) => room.send("drop", index),
+    use: (which) => room.send("use", which),
     attack: (target) => room.send("attack", target),
     pick: (what) => room.send("pick", what),
   };

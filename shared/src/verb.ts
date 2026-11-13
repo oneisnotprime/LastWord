@@ -1,5 +1,5 @@
 import type { Dictionary } from "./dictionary.js";
-import { Stats } from "./stats.js";
+import { resolve, Stats } from "./stats.js";
 import type { Op, Value } from "./types.js";
 
 /**
@@ -67,5 +67,34 @@ export function castVerb(dict: Dictionary, verb: string, adverbs: readonly strin
     ...def.ops.map(([id, op, amount]): Op => [id, op, op === "mul" ? amount ** m : amount * m]),
     ...extra,
   ];
+  return { stats, set, ops };
+}
+
+/**
+ * Body flags a word passes on to whoever it acts on: immunities and a few ways of being
+ * (night vision, untargetable, phase, hover). Its other own values describe the word itself.
+ */
+export function bodyFlags(set: Record<string, Value>): Record<string, Value> {
+  const flags: Record<string, Value> = {};
+  for (const [k, v] of Object.entries(set)) {
+    if (v === true && (k.startsWith("immune_") || ["night_vision", "untargetable", "phase", "hover"].includes(k))) flags[k] = true;
+  }
+  return flags;
+}
+
+/**
+ * Using an object (eating BREAD, drinking WINE, taking MEDICINE) works as casting a verb on
+ * yourself: it restores `restores` integrity, ends the statuses in `effect_status`, and for its
+ * `duration` its operations and body flags act on you. Returns null if using it would do nothing.
+ * Whether it is gone afterwards is its `single_use`.
+ */
+export function useObject(dict: Dictionary, noun: string, adjectives: readonly string[] = []): Cast | null {
+  const def = dict.word(noun);
+  if (!def || def.role !== "noun") return null;
+  const stats = resolve(dict, noun, adjectives);
+  const set = bodyFlags(def.set);
+  const ops = def.ops;
+  const lasting = stats.num("duration") > 0 && (ops.length > 0 || Object.keys(set).length > 0);
+  if (!(stats.num("restores") > 0) && !stats.tags("effect_status").length && !lasting) return null;
   return { stats, set, ops };
 }

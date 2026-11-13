@@ -58,7 +58,11 @@ describe("plural nouns", () => {
     const cats = parsePhrase(dict, "cats");
     expect(cats).toMatchObject({ kind: "object", noun: "cat", plural: true, count: 3, letters: "cats" });
     expect(parsePhrase(dict, "cat")).toMatchObject({ plural: false, count: 1 });
-    expect(parsePhrase(dict, "wolf").count).toBe(4); // a wolf comes as its pack
+    // A singular is exactly one, whatever the noun's pack_size; a collective is its pack_size.
+    for (const one of ["wolf", "bee", "ant", "sheep"]) expect(parsePhrase(dict, one).count).toBe(1);
+    expect(parsePhrase(dict, "wolves").count).toBe(3);
+    expect(parsePhrase(dict, "army").count).toBe(100);
+    expect(parsePhrase(dict, "ten wolf").count).toBe(10);
     expect(parsePhrase(dict, "ten wolves")).toMatchObject({ noun: "wolf", count: 10, letters: "tenwolves" });
     expect(parsePhrase(dict, "thousand ants")).toMatchObject({ noun: "ant", count: 1000 });
     expect(parsePhrase(dict, "million ants").count).toBe(1e6);

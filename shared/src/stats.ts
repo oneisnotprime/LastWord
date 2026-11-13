@@ -104,11 +104,13 @@ export function resolve(
   adjectives: readonly string[] = [],
   /** Adjectives lent by something else, such as a rider's own; these take no slot. */
   lent: readonly string[] = [],
+  /** Values that replace the noun's own before its adjectives apply. */
+  own: Record<string, Value> = {},
 ): Stats {
   const base = dict.lookup(noun);
   if (!base || base.def.role !== "noun") throw new Error(`${noun} is not a noun`);
   const stats = new Stats(dict);
-  for (const [id, value] of Object.entries(base.def.set)) stats.set(id, value);
+  for (const [id, value] of Object.entries({ ...base.def.set, ...own })) stats.set(id, value);
 
   const slots = stats.num("adjective_slots");
   if (adjectives.length > slots) {

@@ -406,12 +406,12 @@ it("creatures follow their master, defend them, join their fights and outlive th
   wa.letters = all(); wb.letters = all();
   const run = (seconds: number) => { for (let i = 0; i < seconds * 10; i++) room.update(0.1); };
 
-  a.send("spell", "solo wolf"); // a WOLF comes as its pack of four; SOLO is one
+  a.send("spell", "wolf"); // one wolf
   a.send("spell", "horse"); // a horse is ridden, not a follower
   await wait();
-  expect(got.a.filter(([t]) => t === "spelled").map(([, m]) => m)).toEqual(["SOLO WOLF is with you", "HORSE equipped"]);
+  expect(got.a.filter(([t]) => t === "spelled").map(([, m]) => m)).toEqual(["WOLF is with you", "HORSE equipped"]);
   const [wolfId, wolf] = [...walkers].find(([, w]) => w.master === a.sessionId)!;
-  expect(room.state.players.get(wolfId)).toMatchObject({ name: "solo wolf", owner: a.sessionId, count: 1 });
+  expect(room.state.players.get(wolfId)).toMatchObject({ name: "wolf", owner: a.sessionId, count: 1 });
   expect(wa.speed).toBe(18);
   a.send("attack", wolfId); // you cannot attack your own
   await wait();

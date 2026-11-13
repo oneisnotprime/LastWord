@@ -14,6 +14,12 @@
 - Each word has one role, whichever is most useful. Verbs act on the caster.
 - Acts and events are their own class and make things happen in the world.
 - Plurals spawn several; S is a powerful letter.
+- A singular noun makes exactly one: WOLF is one wolf, ANT one ant, SHEEP one sheep. A noun's own
+  `pack_size` no longer multiplies a singular spawn. Only plurals (`plural_count`, 3 by default),
+  number words and adjectives that change `pack_size` (TEN WOLVES, THOUSAND ANTS, TEN WOLF) and
+  collectives (archetype group: an ARMY is its `pack_size`) make more than one.
+- Objects do what their data says: using one (U) acts as a verb cast on yourself; anything
+  with a `field_radius`, light, fear or healing radiates around whoever carries it or where it lies.
 - Damage lands on the outermost thing first: vehicle, then armor and shield, then the character.
   Each must be destroyed before the next is hurt.
 - A swung weapon scales with its wielder's strength; any weapon scales with training.
@@ -28,6 +34,32 @@
 - All assets and word data are generated ahead of time; no model at runtime.
 - Every word feeds the same shared systems (PLAN.md); no private mechanics per word.
 - The game lives in its own repository.
+
+## Properties words use that the engine ignores
+
+Properties set by at least 20 words in `data/demo.json` that nothing in `shared/src` or
+`server/src` reads (searched for the id as a string, plus the `dmg_`, `res_`, `immune_`,
+`inflict_` and `produce_` prefixes). Not counted: `counters` (read as `set.counters`), `stealth`
+and `security` (read through THEFT's `contest_with` and `contested_by`). 82 properties,
+by how many words set them:
+
+  `sentient` 246, `intelligence` 240, `speech` 229, `food_need` 205, `footprint` 143,
+  `loudness` 139, `authority` 124, `value` 118, `recruit_rate` 118, `faction` 115,
+  `flammability` 109, `diet` 108, `reputation` 107, `command_limit` 104, `hardness` 102,
+  `enterable` 102, `read_properties` 102, `occupants` 93, `claim_radius` 90,
+  `storage_letters` 86, `labor` 86, `alarm` 85, `bind_penalty` 80, `trade_bonus` 77,
+  `map_reveal` 77, `binds` 76, `beauty` 73, `blocks` 72, `movement_cost` 71, `cover` 69,
+  `storage_objects` 68, `needs_foundation` 61, `tax_rate` 60, `lockable` 59, `food_output` 59,
+  `nutrition` 57, `law` 55, `craft_slots` 53, `density` 53, `shape` 49, `targets` 48, `state` 48,
+  `placeable_on` 47, `build_speed` 47, `read_inventory` 47, `survives_death` 46,
+  `grants_adjective_slots` 43, `detect_letters` 43, `grants_slots_to` 41, `seats` 39, `odor` 38,
+  `color` 38, `attack_area` 37, `upkeep_power` 37, `self_propelled` 36, `depth` 36,
+  `upkeep_fuel` 35, `camouflage` 34, `moisture` 34, `aggression` 33, `carry_capacity` 32,
+  `temperature_delta` 32, `prevents_death` 31, `fertility` 30, `detect_stealth` 30,
+  `container_slots` 29, `terrain_ignored` 28, `knockback` 28, `negates` 27, `water_output` 26,
+  `copies` 24, `harvest_bonus` 23, `brittleness` 23, `reproduction` 23, `locks` 23,
+  `conductivity` 22, `harvest_sources` 22, `teleport_range` 22, `burn_time` 21, `tamable` 20,
+  `growth_time` 20, `elevation` 20
 
 ## High priority
 
@@ -63,8 +95,6 @@
       fields
 - [x] Plural forms in the lexicon (ROADS, LEGS, FALLS): the plural rule wins when the entry has
       the singular's archetype; an entry of another archetype (MEN, PEOPLE: groups) keeps its own data
-- [ ] WOLF comes as a pack of 4 (`pack_size`) but WOLVES gives 3 (`plural_count` default): give
-      pack animals a plural_count of several packs in the data
 - [ ] Next batch: words 3,001 to 10,000
 - [ ] Grammar words (are, have, not, but, the rest of `GRAMMAR` in generate_words.py) need a
       deliberate ruling: inert, or something spectacular
@@ -176,7 +206,7 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
 - [ ] Burnt ground stays as it was; forest could turn to bare ground after a fire
 - [ ] EARTHQUAKE covers 375 tiles and hits everyone, its maker included
 - [x] Plurals and numbers: CATS is `plural_count` cats (3 by default) for one more S; a singular
-      comes as its `pack_size` (WOLF is four); number words (TEN, THOUSAND, MILLION: adjectives,
+      is exactly one (WOLF is one wolf; a collective such as ARMY is its `pack_size`); number words (TEN, THOUSAND, MILLION: adjectives,
       or quantity nouns used as one) set how many and take the adjective slot. Up to 12 spawn
       separately; more are one creature or thing with a count (ANT ×1000) whose integrity, mass,
       damage and letter output are multiplied by it. That is how large counts are represented,
@@ -191,6 +221,19 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
       touched (other than event properties) still land on the caster; SEND pulls its target to you
       instead of sending it away; an instant verb (HEAL) carries no adverb body effects
 - [ ] Plurals of events, fields and sky words (FIRES, SUNS) are refused; decide what they do
+- [x] Using objects: U (or Use in the I and L screens) eats, drinks or takes what you carry or
+      what lies within 2 tiles, as a verb cast on yourself: `restores`, `effect_status` cures,
+      ops for `duration`; `single_use` ones are gone after, one of a stack at a time
+- [x] Radiating objects: a `field_radius` object gives off its field as a field word does (held:
+      around the holder; on the ground: around itself; a creature: around itself); `luminosity`
+      lights that many tiles (night vision), `fear_aura` lowers enemies' morale in sight, `heals`
+      heals your side in reach. It ends when the thing is dropped (moves to the ground), destroyed
+      or dies
+- [ ] `morale` is changed by FEAR, LOVE and `fear_aura` but nothing reads it yet: make low morale
+      do something (flee, miss, slower strikes)
+- [ ] Hunger: `nutrition` and `food_need` are ignored, so WHEAT, RICE, CORN, LEAF and SEED do
+      nothing when eaten. `toxicity` (eating ACID, DRUG) and `potency` are ignored too
+- [ ] Edible creatures (FISH, TURKEY, BASS) spawn as creatures that follow you, not food
 - [ ] Creatures: no hunger or upkeep, no orders (stay, guard, go
       there), wild ones never act, and they do not gather or work
 - [ ] A wolf kills an unarmoured person in three bites (about two seconds); review creature
