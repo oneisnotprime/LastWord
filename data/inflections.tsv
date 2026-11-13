@@ -72,6 +72,8 @@ darker	dark	comparative	no
 darkest	dark	superlative	no
 deadlier	deadly	comparative	no
 deadliest	deadly	superlative	no
+dearer	dear	comparative	no
+dearest	dear	superlative	yes
 deeper	deep	comparative	no
 deepest	deep	superlative	no
 denser	dense	comparative	no
@@ -105,6 +107,7 @@ faster	fast	comparative	yes
 fastest	fast	superlative	yes
 fatter	fat	comparative	no
 fattest	fat	superlative	no
+feller	fell	comparative	yes
 fewer	few	comparative	yes
 fewest	few	superlative	yes
 fiercer	fierce	comparative	no
@@ -113,7 +116,6 @@ filthiest	filthy	superlative	no
 finer	fine	comparative	yes
 finest	fine	superlative	no
 firmer	firm	comparative	no
-fiver	five	comparative	yes
 flatter	flat	comparative	yes
 fonder	fond	comparative	no
 fondest	fond	superlative	no
@@ -205,6 +207,7 @@ luckiest	lucky	superlative	no
 madder	mad	comparative	yes
 maddest	mad	superlative	no
 mader	made	comparative	no
+maler	male	comparative	no
 more	many	comparative	yes
 most	many	superlative	yes
 meaner	mean	comparative	no
@@ -249,11 +252,9 @@ outer	out	comparative	yes
 owner	own	comparative	yes
 paler	pale	comparative	no
 pinker	pink	comparative	no
-plainer	plain	comparative	no
 plumper	plump	comparative	no
 poorer	poor	comparative	no
 poorest	poor	superlative	no
-presenter	present	comparative	yes
 prettier	pretty	comparative	no
 prettiest	pretty	superlative	no
 primer	prime	comparative	yes
@@ -305,11 +306,11 @@ sillier	silly	comparative	no
 silliest	silly	superlative	no
 simpler	simple	comparative	no
 simplest	simple	superlative	no
-sixer	six	comparative	yes
 skewer	skew	comparative	yes
 skinnier	skinny	comparative	no
 slacker	slack	comparative	yes
 sleeker	sleek	comparative	no
+slightest	slight	superlative	no
 slimmer	slim	comparative	no
 slimmest	slim	superlative	no
 slower	slow	comparative	yes
@@ -323,6 +324,7 @@ smoothest	smooth	superlative	no
 softer	soft	comparative	no
 softest	soft	superlative	no
 solder	sold	comparative	yes
+solider	solid	comparative	no
 southerner	southern	comparative	yes
 speedier	speedy	comparative	no
 spicier	spicy	comparative	no

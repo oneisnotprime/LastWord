@@ -56,6 +56,14 @@ def main():
     lex = {l.split("\t")[0]: l.split("\t")[1:4] for l in list(open(os.path.join(D, "lexicon.tsv")))[1:]}
     errors, out, seen = [], {}, set()
     dropped, skipped = [], []
+    # A comparative or superlative of a known adjective uses that adjective at a higher degree,
+    # so a generated entry of its own (BIGGER) is not wanted.
+    adjectives = {w for _, w, role, _, _ in entries if role == "adjective"}
+    graded = {}
+    for line in list(open(os.path.join(D, "inflections.tsv")))[1:]:
+        form, base, degree, _ = line.rstrip("\n").split("\t")
+        if base in adjectives:
+            graded[form] = base
     for n, w, role, arch, toks in entries:
         strict = strictness[w]
         def err(msg, word_level=False):
@@ -67,6 +75,8 @@ def main():
                 dropped.append(f"{w}: {msg}")
         if w in seen:
             err("duplicate", True); continue
+        if not strict and w in graded and role == "adjective":
+            err(f"a degree of {graded[w].upper()}, which it follows", True); continue
         seen.add(w)
         if w not in lex:
             err("not in lexicon", True); continue

@@ -1,0 +1,13 @@
+# Words skipped and tokens dropped from generated_words.txt by build_demo.py
+## skipped words
+jumping: lexicon has ['noun', 'event', 'act']
+stopping: lexicon has ['noun', 'artifact', 'device']
+bigger: a degree of BIG, which it follows
+closer: a degree of CLOSE, which it follows
+larger: a degree of LARGE, which it follows
+latest: a degree of LATE, which it follows
+older: a degree of OLD, which it follows
+smaller: a degree of SMALL, which it follows
+younger: a degree of YOUNG, which it follows
+
+## dropped tokens

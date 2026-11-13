@@ -6,6 +6,7 @@
     generate_words.py submit                                     send them as one batch
     generate_words.py status                                     show the batch's progress
     generate_words.py collect                                    write generated_words.txt
+    generate_words.py merge                                      or: join hand-made chunk files
 
 The model sees the property schema and every hand-written line of demo_words.txt as examples,
 and answers in the same line format. Its lines are checked by build_demo.py, which drops any
@@ -37,6 +38,15 @@ until because though although however therefore thus hence perhaps maybe yes yea
 thing things way ways lot lots kind sort part case point fact number whole else instead indeed
 first second third last next new old good bad great little big long high low right left sure
 able less least more most per via etc
+""".split())
+
+# Kept out of the generated dictionary until the user rules on them: groups of people
+# (nationalities, religions, ethnicities, sexuality, disability) and sexual violence, self-harm
+# and hate. Giving these words stats in a combat game would turn real people into game pieces.
+EXCLUDED = set("""
+american english british french european chinese russian german indian african christian
+japanese spanish canadian asian christ muslim italian jewish catholic irish korean islamic
+mexican gay disabled suicide rape racist racism nazi slave abortion
 """.split())
 
 
@@ -178,6 +188,32 @@ def prepare(count, dict_dir):
     print("first:", " ".join(r[0] for r in picked[:15]), "… last:", " ".join(r[0] for r in picked[-8:]))
 
 
+def merge():
+    """Joins the chunk files written by hand or by subagents into generated_words.txt."""
+    import glob
+    sections = collections.defaultdict(list)
+    left_out = []
+    for path in sorted(glob.glob(os.path.join(WORK, "chunks", "out_*.txt"))):
+        role = arch = None
+        for line in open(path):
+            line = line.strip()
+            m = re.fullmatch(r"# (noun|verb|adjective|adverb) (\w+)", line)
+            if m:
+                role, arch = m.groups()
+            elif line and not line.startswith("#") and role:
+                word = line.partition(":")[0].strip()
+                if word in EXCLUDED:
+                    left_out.append(word)
+                else:
+                    sections[(role, arch)].append(line)
+    with open(os.path.join(HERE, "generated_words.txt"), "w") as f:
+        f.write(f"# Generated with {MODEL} by generate_words.py. Do not edit by hand: fix demo_words.txt\n"
+                "# examples or the prompt and generate again. Checked leniently by build_demo.py.\n")
+        for (role, arch), lines in sorted(sections.items()):
+            f.write(f"\n# {role} {arch}\n" + "\n".join(sorted(lines)) + "\n")
+    print(f"{sum(map(len, sections.values()))} words merged; {len(left_out)} left out: {' '.join(sorted(left_out))}")
+
+
 def client():
     import anthropic
     return anthropic.Anthropic()
@@ -264,6 +300,8 @@ if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else ""
     if cmd == "prepare":
         prepare(int(sys.argv[2]), sys.argv[3])
+    elif cmd == "merge":
+        merge()
     elif cmd == "pilot":
         pilot(int(sys.argv[2]) if len(sys.argv) > 2 else 2)
     elif cmd in ("submit", "status", "collect"):
