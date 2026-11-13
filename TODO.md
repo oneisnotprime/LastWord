@@ -25,7 +25,9 @@
 - [x] Comparatives and superlatives (401 forms)
 - [ ] Review the role and archetype of every core-tier word (about 6,400); WordNet's first
       sense is often not the useful one (chair came out as a person, table as a group)
-- [ ] Decide what happens when an inflected form is also its own word (number, flatter, better)
+- [ ] Rule on comparatives that are also real words (number, flatter, better): which meaning wins
+- [ ] Review the scale of the demo numbers: real-world units and very large gaps between words
+      (nuke 5,000,000 damage against sword 40); confirm or compress before the full pass
 - [ ] Plural rules, including irregular plurals; verb tenses
 - [ ] Full property pass over the lexicon with a cheap model, using the demo set as examples
 - [ ] Sanity checks on that pass: sibling ordering (pond < lake < sea < ocean), unit ranges
@@ -63,6 +65,8 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
 
 ## Build
 
-- [ ] Choose client and server stack for 100-player real-time play
+- [x] Choose stack, hosting, netcode and art approach (see PLAN.md)
+- [ ] Decide whether the game moves to its own repository before code starts
+- [ ] Milestones M0 to M7 in PLAN.md
 - [ ] Map generator: cities, countryside, letter sources
 - [ ] Demo: one map, the 351-word dictionary, a handful of players
