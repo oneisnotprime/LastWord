@@ -21,7 +21,7 @@ export const dragonBody: Pt[] = [[54, -6], [47, -10], [41, -13], [37, -24], [34,
 
 /** The wing for a flap in [-1, 1]: 1 is fully up. */
 export function dragonWing(f: number): Pt[] {
-  const k = 0.55 + 0.45 * f;
+  const k = 0.75 + 0.3 * f;
   return [[6, -3], [16, -30 * k], [8, -54 * k], [-2, -34 * k], [-12, -46 * k], [-17, -28 * k], [-30, -36 * k], [-25, -12 * k], [-16, -3]];
 }
 

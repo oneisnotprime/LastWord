@@ -32,7 +32,7 @@ const SKELETONS: Record<"quadruped" | "flyer" | "humanoid", Slot[]> = {
   flyer: [
     { x: 0, y: -2, size: 46, sx: 1.35 },
     { x: -34, y: 2, size: 28, rot: 0.5 },
-    { x: -6, y: -36, size: 60, rot: -0.35, flap: 1 },
+    { x: -2, y: -34, size: 54, rot: -0.55, flap: 1 },
     { x: 34, y: -18, size: 32, rot: 0.15 },
     { x: 37, y: -22, size: 9 },
     { x: -54, y: 10, size: 22, rot: 1.0 },
@@ -68,7 +68,9 @@ function creature(ctx: Ctx, word: string, kind: keyof typeof SKELETONS, x: numbe
   if (kind === "flyer") {
     const w = slots[2]!;
     const flap = Math.sin(t * 4) * 0.35;
-    glyph(ctx, letters[2 % letters.length]!, x + (w.x + 14) * facing * scale, y + (w.y - 6) * scale, w.size * 0.85 * scale, colors[2]!, (w.rot! - flap + 0.5) * facing, 1, weight);
+    ctx.globalAlpha = 0.45;
+    glyph(ctx, letters[2 % letters.length]!, x + (w.x - 18) * facing * scale, y + (w.y + 2) * scale, w.size * 0.8 * scale, colors[2]!, (w.rot! - flap - 0.5) * facing, 1, weight);
+    ctx.globalAlpha = 1;
   }
   for (const i of order) {
     const s = slots[i % slots.length]!;
@@ -142,7 +144,7 @@ function buildTerrain(): HTMLCanvasElement {
     const X = tx * S, Y = ty * S;
     if (k === Tile.Grass) {
       for (let i = 0; i < 4; i++) {
-        if (r(i) < 0.35) continue;
+        if (r(i) < 0.55) continue;
         const ch = "grass,'"[Math.floor(r(i + 10) * 7)]!;
         const x = X + (i % 2) * 16 + 4 + r(i + 20) * 10, y = Y + Math.floor(i / 2) * 16 + 6 + r(i + 30) * 8;
         marks.push({ y, draw: () => glyph(ctx, ch, x, y, 10 + r(i + 40) * 5, ["#6a9a3a", "#8bb043", "#4f7d2c"][Math.floor(r(i + 50) * 3)]!, (r(i + 60) - 0.5) * 0.5, 1, 600) });
@@ -160,9 +162,9 @@ function buildTerrain(): HTMLCanvasElement {
         marks.push({ y, draw: () => glyph(ctx, "sand.:"[Math.floor(r(i + 3) * 6)]!, x, y, 9 + r(i + 4) * 3, "#c79f4e", 0, 1, 600) });
       }
     } else if (k === Tile.Hill) {
-      for (let i = 0; i < 2; i++) {
-        const x = X + 8 + r(i) * 16, y = Y + 8 + r(i + 9) * 16;
-        marks.push({ y, draw: () => glyph(ctx, r(i + 2) < 0.6 ? "n" : "h", x, y, 22 + r(i + 3) * 8, ["#9c8a3e", "#b39a48", "#857536"][Math.floor(r(i + 5) * 3)]!, 0, 1.3, 800) });
+      for (let i = 0; i < 1; i++) {
+        const x = X + 10 + r(i) * 12, y = Y + 10 + r(i + 9) * 12;
+        marks.push({ y, draw: () => glyph(ctx, r(i + 2) < 0.6 ? "n" : "h", x, y, 18 + r(i + 3) * 6, ["#9c8a3e", "#b39a48", "#857536"][Math.floor(r(i + 5) * 3)]!, 0, 1.3, 800) });
       }
     } else if (k === Tile.Mountain) {
       const x = X + 16 + (r(1) - 0.5) * 8, y = Y + 16 + (r(2) - 0.5) * 8;
@@ -171,13 +173,14 @@ function buildTerrain(): HTMLCanvasElement {
       const ch = "ROAD"[((tx % 4) + 4) % 4]!;
       marks.push({ y: Y, draw: () => glyph(ctx, ch, X + 16, Y + 16, 24, "#9a6a3a", 0, 1, 800) });
     } else if (k === Tile.City) {
-      const street = ((tx % 4) + 4) % 4 === 0 || ((ty % 4) + 4) % 4 === 0;
-      for (let j = 0; j < 3; j++) for (let i = 0; i < 3; i++) {
-        if (street && (i === 0 || j === 0)) continue;
-        const x = X + 5 + i * 11, y = Y + 6 + j * 10;
-        const ch = "CITY#"[Math.floor(hash(tx * 3 + i, ty * 3 + j, 4) * 5)]!;
-        const lit = hash(tx * 3 + i, ty * 3 + j, 5) < 0.08;
-        marks.push({ y, draw: () => glyph(ctx, ch, x, y, 11, lit ? "#e4572e" : ["#4b4b4b", "#6e6e6e", "#8a8a8a"][Math.floor(hash(tx + i, ty + j, 6) * 3)]!, 0, 1, 700) });
+      // Blocks of C-I-T-Y with streets every fourth row and column.
+      const street = ((tx % 3) + 3) % 3 === 0 || ((ty % 3) + 3) % 3 === 0;
+      if (street) continue;
+      for (let j = 0; j < 2; j++) for (let i = 0; i < 2; i++) {
+        const ch = "CITY"[(((tx % 3) + 3) % 3 - 1) * 2 + i]!;
+        const lit = hash(tx * 2 + i, ty * 2 + j, 5) < 0.1;
+        const x = X + 8 + i * 16, y = Y + 9 + j * 15;
+        marks.push({ y, draw: () => glyph(ctx, ch, x, y, 17, lit ? "#e4572e" : ["#55524c", "#6e6a63", "#7f7a72"][Math.floor(hash(tx + i, ty + j, 6) * 3)]!, 0, 1, 800) });
       }
     }
   }
@@ -207,7 +210,7 @@ function sword(ctx: Ctx, x: number, y: number, scale: number, rot: number, burni
   ctx.scale(scale, scale);
   glyph(ctx, "+", 0, -2, 18, "#3a3a3a");
   "SWORD".split("").forEach((ch, i) => glyph(ctx, ch, 0, -12 - i * 9, 13 - i * 0.6, "#5d6b78", 0, 1, 800));
-  if (burning) rising(ctx, "BURNING", 0, -30, 8, 16, t, ["#ffd23f", "#ff9f1c", "#e4572e", "#a3261e"], 13, 0.9, 30, 5);
+  if (burning) rising(ctx, "BURNING", 0, -22, 9, 18, t, ["#ffd23f", "#ff9f1c", "#e4572e", "#a3261e"], 12, 0.6, 46, 5);
   ctx.restore();
 }
 
@@ -215,7 +218,7 @@ function thing(ctx: Ctx, th: Thing, t: number) {
   const { x, y, scale: s, facing } = th;
   switch (th.kind) {
     case "wolf": {
-      const giant = s > 1.5;
+      const giant = th.label.startsWith("GIANT");
       ctx.fillStyle = "rgba(0,0,0,0.08)";
       ctx.beginPath(); ctx.ellipse(x, y, 26 * s, 4 * s, 0, 0, Math.PI * 2); ctx.fill();
       creature(ctx, th.word, "quadruped", x, y, s, facing, ["#3c4a5c", "#5b6b80", "#3c4a5c", "#7a8aa0"], t, giant ? 900 : 800);
@@ -260,10 +263,10 @@ function thing(ctx: Ctx, th: Thing, t: number) {
     }
     case "swarm": {
       const r = (th.size ?? 1.5) * S;
-      for (let i = 0; i < 260; i++) {
-        const a = i * 2.399963, d = Math.sqrt((i + 0.5) / 260) * r;
+      for (let i = 0; i < 170; i++) {
+        const a = i * 2.399963, d = Math.sqrt((i + 0.5) / 170) * r;
         const px = x + Math.cos(a) * d + Math.sin(t * 4 + i) * 2, py = y + Math.sin(a) * d * 0.7 + Math.cos(t * 3.3 + i * 1.3) * 2;
-        glyph(ctx, "ant"[i % 3]!, px, py, 7 + (i % 3), i % 5 === 0 ? "#7a3b1d" : "#1b1b1b", Math.sin(t * 2 + i), 1, 700);
+        glyph(ctx, "ant"[i % 3]!, px, py, 8 + (i % 3), i % 4 === 0 ? "#a0522d" : "#2b2b2b", Math.sin(t * 2 + i), 1, 700);
       }
       break;
     }
