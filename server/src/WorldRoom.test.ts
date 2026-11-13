@@ -640,3 +640,52 @@ it("events act through their properties: murder, raid, repair, rescue, trade, re
   room.update(31 * 60);
   expect(room.state.zones.size).toBe(0);
 });
+
+it("fire spreads over forest, not stone, and rain or a flood puts it out", async () => {
+  const room = (await colyseus.createRoom("world", {})) as unknown as WorldRoom;
+  const a: any = await colyseus.connectTo(room as never);
+  const said: unknown[] = [];
+  for (const type of ["letters", "notice", "loadout"]) a.onMessage(type, () => {});
+  a.onMessage("spelled", (m: unknown) => said.push(m));
+  a.onMessage("refused", (m: unknown) => said.push(m));
+  const wa = (room as any).walkers.get(a.sessionId);
+  const c = room.map.cities[0]!;
+  wa.letters = Object.fromEntries([..."abcdefghijklmnopqrstuvwxyz"].map((ch) => [ch, 30]));
+  wa.player.x = c.x + 0.5; wa.player.y = c.y + 0.5;
+  const wait = () => new Promise((r) => setTimeout(r, 150));
+  const fire = () => [...room.state.zones.values()].find((z) => z.word === "fire");
+  const fires = () => [...room.state.zones.values()].filter((z) => z.word === "fire").length;
+
+  // A fire set in the middle of the city does not grow.
+  a.send("pick", { x: c.x + 1.5, y: c.y + 0.5 }); await wait();
+  a.send("spell", "fire"); await wait();
+  wa.player.x -= 4; // step out of it
+  for (let i = 0; i < 600; i++) room.update(0.1);
+  expect(fire()!.radius).toBe(1);
+
+  // RAIN puts it out, and no new fire takes hold while it rains.
+  a.send("spell", "rain"); await wait();
+  expect(said.at(-1)).toBe("RAIN for 10 minutes; 1 fire put out");
+  expect(fire()).toBeUndefined();
+  wa.player.x = c.x + 0.5; // back in reach of the picked spot
+  a.send("spell", "fire"); await wait();
+  expect(said.at(-1)).toBe("FIRE cannot take hold: the rain puts it out");
+  expect(fires()).toBe(0);
+  a.send("spell", "sun"); await wait(); // clears the rain
+
+  // In a forest it spreads.
+  room.reshape(c.x + 10.5, c.y + 0.5, 6, Tile.Forest);
+  wa.player.x = c.x + 10.5; wa.player.y = c.y + 0.5;
+  a.send("pick", { x: c.x + 10.5, y: c.y + 0.5 }); await wait();
+  a.send("spell", "fire"); await wait();
+  wa.player.x = c.x - 10; // well away
+  for (let i = 0; i < 600; i++) room.update(0.1);
+  expect(fire()!.radius).toBeGreaterThan(3);
+  await (room as any).waitForNextPatch();
+  expect([...a.state.zones.values()][0].radius).toBeGreaterThan(3);
+
+  // FLOOD puts it out too.
+  a.send("spell", "flood"); await wait();
+  expect(said.at(-1)).toBe("1 fire put out");
+  expect(fire()).toBeUndefined();
+});

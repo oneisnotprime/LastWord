@@ -150,8 +150,10 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
 - [x] Right-click picks out a target or marks a spot without attacking; targeted area events
       (FIRE) must be aimed and in reach; region events (WAR, EARTHQUAKE, FAMINE) cover the speller's
       surroundings
-- [ ] FIRE does not spread from tile to tile yet; EARTHQUAKE covers 375 tiles and hits everyone,
-      its maker included
+- [x] FIRE spreads over forest (fast), grass (slower) and swamp (barely), not stone or water;
+      a word that counters it (RAIN, FLOOD) puts fires out and stops new ones taking hold
+- [ ] Burnt ground stays as it was; forest could turn to bare ground after a fire
+- [ ] EARTHQUAKE covers 375 tiles and hits everyone, its maker included
 - [ ] Creatures: no pack sizes or plurals, no hunger or upkeep, no orders (stay, guard, go
       there), wild ones never act, and they do not gather or work
 - [ ] A wolf kills an unarmoured person in three bites (about two seconds); review creature
