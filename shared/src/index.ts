@@ -8,3 +8,4 @@ export * from "./phrase.js";
 export * from "./letters.js";
 export * from "./unit.js";
 export * from "./loadout.js";
+export * from "./path.js";

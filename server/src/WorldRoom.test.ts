@@ -495,3 +495,21 @@ it("tells a player the detail of their own character and drops what they choose"
   await wait();
   expect(details.at(-1).gear.map((g: any) => g.phrase)).toEqual(["armor"]);
 });
+
+it("walks around water to reach the far side", async () => {
+  const room = (await colyseus.createRoom("world", {})) as unknown as WorldRoom;
+  const a: any = await colyseus.connectTo(room as never);
+  for (const type of ["letters", "spelled", "refused", "notice", "loadout"]) a.onMessage(type, () => {});
+  const wa = (room as any).walkers.get(a.sessionId);
+  const c = room.map.cities[0]!;
+  room.reshape(c.x + 0.5, c.y + 0.5, 3, Tile.Water);
+  wa.player.x = c.x - 4.5; wa.player.y = c.y + 0.5;
+  const goal = { x: c.x + 5.5, y: c.y + 0.5 };
+  a.send("move", goal);
+  await new Promise((r) => setTimeout(r, 150));
+  for (let i = 0; i < 300 && wa.target; i++) {
+    room.update(0.1);
+    expect(walkable(room.map, wa.player.x, wa.player.y)).toBe(true);
+  }
+  expect(Math.hypot(wa.player.x - goal.x, wa.player.y - goal.y)).toBeLessThan(0.05);
+});
