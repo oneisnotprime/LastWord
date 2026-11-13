@@ -14,6 +14,7 @@
 - Each word has one role, whichever is most useful. Verbs act on the caster.
 - Acts and events are their own class and make things happen in the world.
 - Plurals spawn several; S is a powerful letter.
+- Desktop only: keyboard and mouse, or a controller. No touch or phone layout.
 - All assets and word data are generated ahead of time; no model at runtime.
 - Every word feeds the same shared systems (PLAN.md); no private mechanics per word.
 - The game lives in its own repository.
@@ -66,6 +67,7 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
 - [ ] Letter generation rates and map distribution of sources
 - [ ] NPC behaviour in cities and countryside
 - [ ] Trading interface: barter, market, pooled spelling
+- [ ] How spelling works on a controller (letter wheel, or pick from the letters you hold)
 
 ## Later
 

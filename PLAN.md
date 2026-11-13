@@ -56,6 +56,11 @@ DARK and so on), so the strongest opening differs from round to round. Later pri
 | Storage | SQLite file on the server's disk | A round may last days; snapshot the instance every minute and on shutdown | Postgres once there is more than one server |
 | Tests | Vitest for rules and server; headless Playwright for the client | Fast loop for an agent: every change is checked without a human | - |
 
+## Input
+
+Desktop only: keyboard and mouse, or a controller. No touch input and no phone layout.
+Spelling on a controller is an open design question.
+
 ## Netcode
 
 - Server is the only authority. Clients send intents (move here, spell this, drop this on that).
