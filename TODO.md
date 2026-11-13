@@ -79,6 +79,12 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
 
 - [ ] Map conditions: five random adjectives applied to the whole map at the start
 - [ ] Family mode with a filtered word list
+- [ ] Map size scales with the number of players in the round
+- [ ] Winners' rounds: the winner of a round is matched against other winners
+- [ ] Track consecutive wins; reward streaks with appearance-only adjectives on the player
+      (GOLDEN, RADIANT and the like) that change how they look and nothing else
+- [ ] Rarity and chaos words (RANDOM, SPECIAL, MYTHIC, LEGENDARY, EPIC, RARE) change how letters
+      are generated and what nouns do, in large and showy ways
 
 ## Build
 

@@ -42,6 +42,10 @@ DARK and so on), so the strongest opening differs from round to round. Later pri
 
 ## Later
 
+- Map size scales with the number of players.
+- Winners' rounds and win streaks, with appearance-only adjectives as the reward.
+- Rarity and chaos words (RANDOM, MYTHIC, LEGENDARY) that reshape letter generation and what
+  nouns do. When choosing between a safe effect and a spectacular one, pick the spectacular one.
 - Family mode with a filtered word list.
 - Spending on hosting, art and model tokens is acceptable when the time comes.
 
