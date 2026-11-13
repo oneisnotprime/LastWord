@@ -83,6 +83,10 @@ interface Walker {
   hp: number;
   /** Who this player is attacking, by session id. */
   foe: string | null;
+  /** What this player has picked out for events without attacking it: a player, creature or thing. */
+  picked: string | null;
+  /** A spot on the map picked out for events. */
+  aim: Point | null;
   /** Seconds until the next strike. */
   cooldown: number;
   /** Verbs in force on this player. */
@@ -218,6 +222,22 @@ export class WorldRoom extends Room {
       const ok = typeof target === "string" && target !== client.sessionId && this.walkers.get(target)?.master !== client.sessionId &&
         (this.walkers.has(target) || (this.grounded.has(target) && !this.grounded.get(target)!.terrain));
       walker.foe = ok ? (target as string) : null;
+    },
+    /**
+     * Pick out a target for events without attacking it: { id } for a player, creature or thing,
+     * { x, y } for a spot on the map, or null to clear.
+     */
+    pick: (client: Client, what: unknown) => {
+      const walker = this.walkers.get(client.sessionId);
+      if (!walker) return;
+      const w = what as { id?: unknown; x?: unknown; y?: unknown } | null;
+      walker.picked = null;
+      walker.aim = null;
+      if (w && typeof w.id === "string" && (this.walkers.has(w.id) || this.state.things.has(w.id))) walker.picked = w.id;
+      else if (w && Number.isFinite(w.x) && Number.isFinite(w.y)) {
+        const clamp = (v: number) => Math.min(this.map.size, Math.max(0, v));
+        walker.aim = { x: clamp(w.x as number), y: clamp(w.y as number) };
+      }
     },
     /** Hand letters to a player standing close by. */
     give: (client: Client, offer: unknown) => {
@@ -358,6 +378,8 @@ export class WorldRoom extends Room {
       gear: [],
       hp: unit.body.integrity,
       foe: null,
+      picked: null,
+      aim: null,
       cooldown: 0,
       buffs: [],
       flying: false,
@@ -488,7 +510,7 @@ export class WorldRoom extends Room {
     player.owner = master;
     this.state.players.set(id, player);
     const walker: Walker = {
-      id, player, body: gear.spelled, master, unit, gear: [], hp: unit.body.integrity, foe: null, cooldown: 0,
+      id, player, body: gear.spelled, master, unit, gear: [], hp: unit.body.integrity, foe: null, picked: null, aim: null, cooldown: 0,
       buffs: [], flying: false, target: null, route: [], routeTo: null, routeAge: 0, speed: 0, sight: 0, seen: new Set(), seenThings: new Set(),
       letters: {}, gathering: 0,
     };
@@ -606,7 +628,8 @@ export class WorldRoom extends Room {
     const s = phrase.stats, word = phrase.noun.toUpperCase();
     if (s.flag("transfers_ownership")) return this.steal(id, walker, phrase);
     const reach = Math.max(1.5, s.num("placement_range") / TILE_METERS);
-    const selected = walker.foe ?? "";
+    // A target picked with right-click wins over what you are attacking.
+    const selected = walker.picked ?? walker.foe ?? "";
     const other = this.walkers.get(selected);
     const thing = this.state.things.get(selected), gear = this.grounded.get(selected);
     const near = (p: { x: number; y: number }) => Math.hypot(p.x - walker.player.x, p.y - walker.player.y) <= reach;
@@ -703,8 +726,13 @@ export class WorldRoom extends Room {
     const minutes = s.num("event_duration");
     const killBonus = this.dict.word(phrase.noun)!.ops.find(([p, op]) => p === "produce_K" && op === "mul")?.[2] ?? 1;
     if (!hasDamage(s) && killBonus === 1) throw new Error(`${word} does nothing yet`);
-    // Centred on what you selected if it is in reach, else where you stand.
-    const at = other && near(other.player) ? other.player : thing && near(thing) ? thing : walker.player;
+    // A region event covers the speller's surroundings. Anything else lands where it was aimed:
+    // a picked spot, else the picked or attacked target. It must be in reach.
+    const regional = s.get("placement") === "region" || s.get("placement") === "map";
+    const aimed = walker.aim ?? (other ? other.player : thing ?? null);
+    if (!regional && !aimed) throw new Error(`Aim ${word} first: right-click where it should go`);
+    if (!regional && !near(aimed!)) throw new Error(`Too far away for ${word}`);
+    const at = regional ? walker.player : aimed!;
     const area: Area = {
       word: phrase.noun, owner: id, x: at.x, y: at.y,
       radius: Math.max(1, s.num("event_radius") / TILE_METERS),
@@ -750,7 +778,7 @@ export class WorldRoom extends Room {
   /** THEFT: the selected thing becomes yours if your stealth meets its security. */
   private steal(id: string, walker: Walker, phrase: Phrase): string {
     const word = phrase.noun.toUpperCase();
-    const targetId = walker.foe ?? "";
+    const targetId = walker.picked ?? walker.foe ?? "";
     const thing = this.state.things.get(targetId), gear = this.grounded.get(targetId);
     if (!thing || !gear || gear.terrain) throw new Error(`Select a thing for ${word} first: click it`);
     if (thing.owner === id) throw new Error("That is already yours");
@@ -837,6 +865,7 @@ export class WorldRoom extends Room {
     if (owner) this.tell(owner);
     for (const w of this.walkers.values()) {
       if (w.foe === id) w.foe = null;
+      if (w.picked === id) w.picked = null;
       if (w.master === id) { w.master = "-"; w.player.owner = "-"; } // creatures outlive their master, ownerless
     }
     if (dead.master === null && this.people.length === 1 && this.everJoined > 1) {
@@ -870,7 +899,10 @@ export class WorldRoom extends Room {
     }
     if (theirs) this.clients.find((c) => c.sessionId === thing.owner)?.send("notice", `Your ${gear.phrase.toUpperCase()} was destroyed`);
     this.removeThing(id);
-    for (const other of this.walkers.values()) if (other.foe === id) other.foe = null;
+    for (const other of this.walkers.values()) {
+      if (other.foe === id) other.foe = null;
+      if (other.picked === id) other.picked = null;
+    }
     this.refreshViews();
   }
 

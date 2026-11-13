@@ -19,6 +19,7 @@ Node process that owns the game state. One room per map instance (from milestone
   on the client. Older tutorials use a different API; check docs.colyseus.io.
 - Gear a player carries lives in the room (`Walker.gear`) and is shown to others only as the
   text in `Player.gear`; things on the ground are `Thing`s in the state.
+- Events use `Walker.picked` (right-click) before `Walker.foe`; area events use `Walker.aim`.
 - Events (`happen`) pick what to do from the word's properties, not its name; areas they
   leave behind are `Area`s ticked by `burn` and sent to clients as `Zone`s.
 - A creature is a `Walker` with no client: `master` is its owner's id, `think()` gives it a

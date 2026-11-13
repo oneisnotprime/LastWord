@@ -614,13 +614,21 @@ it("events act through their properties: murder, raid, repair, rescue, trade, re
   // FIRE burns where it is set, its maker included; WAR triples the K a kill gives.
   b.send("spell", "chair"); await wait();
   const chair = thingNamed("chair");
-  await select(chair);
+  wa.foe = null;
+  a.send("spell", "fire"); await wait();
+  expect(said("a")).toBe("Aim FIRE first: right-click where it should go");
+  a.send("pick", { x: wa.player.x + 50, y: wa.player.y }); await wait();
+  a.send("spell", "fire"); await wait();
+  expect(said("a")).toBe("Too far away for FIRE");
+  const ch = room.state.things.get(chair)!;
+  a.send("pick", { x: ch.x, y: ch.y }); await wait();
   a.send("spell", "fire"); await wait();
   expect(room.state.zones.size).toBe(1);
   for (let i = 0; i < 100 && room.state.things.has(chair); i++) room.update(0.1);
   expect(room.state.things.has(chair)).toBe(false);
   wa.player.x = c.x - 20; // out of the fire
-  a.send("spell", "war"); await wait();
+  a.send("pick", null);
+  a.send("spell", "war"); await wait(); // a region event needs no aim
   expect(said("a")).toBe("WAR for 30 minutes");
   b.send("spell", "wolf"); await wait();
   const wolfId = [...walkers].find(([, w]) => w.player.name === "wolf")![0];

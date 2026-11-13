@@ -147,8 +147,9 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
 - [x] Events act through their properties: MURDER, RAID, REPAIR, RESCUE, TRADE, REVOLT, AMBUSH,
       and areas that damage or turn hostile (FIRE, WAR, EARTHQUAKE, FAMINE); WAR triples K
 - [ ] SIEGE does nothing yet (needs food and water upkeep to cut off)
-- [ ] An area event with nothing selected lands on the speller; FIRE then burns its own maker.
-      Decide whether to aim it (a click on the map) instead
+- [x] Right-click picks out a target or marks a spot without attacking; targeted area events
+      (FIRE) must be aimed and in reach; region events (WAR, EARTHQUAKE, FAMINE) cover the speller's
+      surroundings
 - [ ] FIRE does not spread from tile to tile yet; EARTHQUAKE covers 375 tiles and hits everyone,
       its maker included
 - [ ] Creatures: no pack sizes or plurals, no hunger or upkeep, no orders (stay, guard, go
@@ -162,8 +163,7 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
 - [ ] Auras, knowledge, institutions and measures still spell into inert markers on the ground
 - [ ] Hidden or invisible players are still drawn for others; stealth against detection is not
       used for what a client is sent
-- [ ] Targeting: an event uses whatever you last clicked, which also starts an attack on it;
-      needs a select-without-attacking control
+- [ ] Right-click picking on a controller
 - [ ] Terrain is laid where the speller stands and pushes everyone to the nearest ground; a
       destroyed lake or mountain marker cannot be removed, and terrain cannot be undone
 - [x] Rounds end: the room locks, everyone sees who won with a countdown, then all clients
