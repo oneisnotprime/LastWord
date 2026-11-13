@@ -1,0 +1,216 @@
+{
+ "operations": {
+  "mul": "multiply a numeric property",
+  "add": "add to a numeric property",
+  "set": "set a property to a value",
+  "abs": "set a property to ABS",
+  "tag": "add a tag",
+  "untag": "remove a tag",
+  "reset": "return a property to its default"
+ },
+ "degrees": {
+  "positive": 1,
+  "comparative": 1.5,
+  "superlative": 2
+ },
+ "absolutes": [
+  {
+   "word": "irresistible",
+   "side": "attack",
+   "property": "ignores_resistance"
+  },
+  {
+   "word": "unstoppable",
+   "side": "attack",
+   "property": "ignores_resistance"
+  },
+  {
+   "word": "unerring",
+   "side": "attack",
+   "property": "accuracy"
+  },
+  {
+   "word": "inescapable",
+   "side": "attack",
+   "property": "accuracy"
+  },
+  {
+   "word": "lethal",
+   "side": "attack",
+   "property": "critical"
+  },
+  {
+   "word": "omnipotent",
+   "side": "attack",
+   "property": "ignores_resistance"
+  },
+  {
+   "word": "indestructible",
+   "side": "defence",
+   "property": "indestructible"
+  },
+  {
+   "word": "invincible",
+   "side": "defence",
+   "property": "indestructible"
+  },
+  {
+   "word": "invulnerable",
+   "side": "defence",
+   "property": "indestructible"
+  },
+  {
+   "word": "unbreakable",
+   "side": "defence",
+   "property": "indestructible"
+  },
+  {
+   "word": "impenetrable",
+   "side": "defence",
+   "property": "armor"
+  },
+  {
+   "word": "impregnable",
+   "side": "defence",
+   "property": "armor"
+  },
+  {
+   "word": "immortal",
+   "side": "defence",
+   "property": "lifespan"
+  },
+  {
+   "word": "undying",
+   "side": "defence",
+   "property": "lifespan"
+  },
+  {
+   "word": "invisible",
+   "side": "defence",
+   "property": "stealth"
+  },
+  {
+   "word": "undetectable",
+   "side": "defence",
+   "property": "stealth"
+  },
+  {
+   "word": "fearless",
+   "side": "defence",
+   "property": "courage"
+  },
+  {
+   "word": "tireless",
+   "side": "defence",
+   "property": "sleep_need"
+  },
+  {
+   "word": "incorruptible",
+   "side": "defence",
+   "property": "loyalty"
+  },
+  {
+   "word": "fireproof",
+   "side": "defence",
+   "property": "res_fire"
+  },
+  {
+   "word": "waterproof",
+   "side": "defence",
+   "property": "res_water"
+  },
+  {
+   "word": "bulletproof",
+   "side": "defence",
+   "property": "res_pierce"
+  },
+  {
+   "word": "soundproof",
+   "side": "defence",
+   "property": "res_sonic"
+  },
+  {
+   "word": "bombproof",
+   "side": "defence",
+   "property": "res_blast"
+  },
+  {
+   "word": "rustproof",
+   "side": "defence",
+   "property": "res_acid"
+  },
+  {
+   "word": "airtight",
+   "side": "defence",
+   "property": "res_suffocation"
+  },
+  {
+   "word": "infinite",
+   "side": "none",
+   "property": "integrity"
+  },
+  {
+   "word": "endless",
+   "side": "neutral",
+   "property": "persistence"
+  },
+  {
+   "word": "eternal",
+   "side": "none",
+   "property": "persistence"
+  },
+  {
+   "word": "bottomless",
+   "side": "neutral",
+   "property": "storage_letters"
+  },
+  {
+   "word": "limitless",
+   "side": "none",
+   "property": "range"
+  },
+  {
+   "word": "omniscient",
+   "side": "neutral",
+   "property": "read_properties"
+  },
+  {
+   "word": "omnipresent",
+   "side": "none",
+   "property": "field_radius"
+  },
+  {
+   "word": "weightless",
+   "side": "neutral",
+   "property": "mass"
+  },
+  {
+   "word": "instant",
+   "side": "none",
+   "property": "cast_time"
+  },
+  {
+   "word": "silent",
+   "side": "neutral",
+   "property": "loudness"
+  }
+ ],
+ "unassigned_proof_adjectives": [
+  "burglarproof",
+  "creaseproof",
+  "flameproof",
+  "foolproof",
+  "greaseproof",
+  "leakproof",
+  "lightproof",
+  "mothproof",
+  "rainproof",
+  "runproof",
+  "shatterproof",
+  "shellproof",
+  "splinterproof",
+  "stormproof",
+  "weatherproof",
+  "wrinkleproof"
+ ]
+}

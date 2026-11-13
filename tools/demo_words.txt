@@ -1,0 +1,505 @@
+# Hand-assigned properties for the demo dictionary.
+# "# role archetype" starts a section; each line is  word: property ops.
+#   p=v sets the word's own property; p*x and p+x change that property on whatever the word
+#   modifies (adjective -> its noun, verb -> the caster, aura/weather/event -> things in reach).
+
+# noun weapon
+sword: mass=1.5 length=1 integrity=80 hardness=7 sharpness=8 material=steel equip_slot=held hands_required=1 dmg_slash=40 attack_rate=1 attack_range=1.5
+axe: mass=2 length=0.8 integrity=70 hardness=7 sharpness=7 material=steel,wood equip_slot=held hands_required=1 dmg_slash=50 attack_rate=0.7 attack_range=1.2 siege=2
+spear: mass=2 length=2.2 integrity=50 sharpness=7 material=wood,steel equip_slot=held hands_required=2 dmg_pierce=45 attack_rate=0.8 attack_range=3
+knife: mass=0.2 length=0.2 integrity=30 sharpness=8 material=steel equip_slot=held hands_required=1 dmg_slash=15 dmg_pierce=10 attack_rate=2 attack_range=0.8 stealth=1
+club: mass=3 length=0.8 integrity=60 material=wood equip_slot=held hands_required=1 dmg_blunt=35 attack_rate=0.8 attack_range=1.2 inflict_stun=0.5
+whip: mass=0.5 length=3 integrity=20 material=leather equip_slot=held hands_required=1 dmg_slash=12 attack_rate=1.2 attack_range=3 inflict_slow=1
+bow: mass=1 length=1.5 integrity=25 material=wood equip_slot=held hands_required=2 dmg_pierce=35 attack_rate=0.6 attack_range=60 targets=land,air ammo_per_hit=1 ammo_type=arrow
+gun: mass=1 length=0.2 integrity=40 material=steel equip_slot=held hands_required=1 dmg_pierce=60 attack_rate=1.5 attack_range=50 targets=land,air loudness=9 ammo_per_hit=1 ammo_type=bullet armor_pierce=0.3
+rifle: mass=4 length=1.1 integrity=50 material=steel,wood equip_slot=held hands_required=2 dmg_pierce=110 attack_rate=0.5 attack_range=400 targets=land,air loudness=9 ammo_per_hit=1 ammo_type=bullet armor_pierce=0.5 accuracy=0.95
+cannon: mass=1200 length=3 integrity=400 hardness=8 material=iron portable=false dmg_blast=300 dmg_crush=200 attack_rate=0.1 attack_range=800 attack_area=4 siege=4 loudness=10 ammo_per_hit=1 ammo_type=ball
+bomb: mass=100 length=1 integrity=20 single_use=true dmg_blast=1500 dmg_fire=300 attack_area=15 attack_windup=5 siege=3 friendly_fire=true loudness=10
+grenade: mass=0.4 length=0.1 integrity=5 equip_slot=held hands_required=1 single_use=true dmg_blast=250 dmg_pierce=80 attack_range=30 attack_area=5 attack_windup=3 friendly_fire=true
+missile: mass=1500 length=6 integrity=60 single_use=true speed_air=800 self_propelled=true requires_pilot=false dmg_blast=5000 dmg_fire=1000 attack_range=300000 attack_area=30 targets=land,air,water siege=4 friendly_fire=true
+nuke: mass=400 length=2 integrity=50 single_use=true dmg_blast=5000000 dmg_fire=2000000 dmg_radiation=500000 attack_area=3000 attack_windup=10 siege=10 friendly_fire=true lingering=600 radioactivity=10 loudness=10 luminosity=10
+arrow: mass=0.03 length=0.8 integrity=3 sharpness=7 material=wood single_use=true plural_count=20
+bullet: mass=0.01 length=0.03 integrity=3 material=lead single_use=true plural_count=30
+
+# noun protection
+shield: mass=6 length=1 integrity=300 hardness=7 material=wood,steel equip_slot=held hands_required=1 block=0.6 armor=10 res_blast=0.5 res_pierce=0.4 cover=0.3
+armor: mass=25 integrity=400 hardness=8 material=steel equip_slot=body armor=30 res_slash=0.6 res_pierce=0.4 res_blunt=0.3 conductivity=8 loudness=3
+helmet: mass=1.5 integrity=150 hardness=8 material=steel equip_slot=head armor=8 res_blunt=0.3 immune_stun=true
+mask: mass=0.3 integrity=20 equip_slot=face res_poison=0.8 res_suffocation=0.6 stealth=1
+
+# noun clothing
+hat: mass=0.2 integrity=10 material=cloth equip_slot=head temp_max+5 charm+1
+boot: plural_count=2 mass=1.5 integrity=40 material=leather equip_slot=feet speed_land+1 terrain_ignored=swamp,snow
+cloak: mass=1 integrity=15 material=cloth equip_slot=back stealth=3 temp_min+-15 camouflage=forest
+glove: plural_count=2 mass=0.2 integrity=15 material=leather equip_slot=hands res_cold=0.3 res_acid=0.3 res_electric=0.3
+crown: mass=1 integrity=40 material=gold equip_slot=head authority=6 command_limit=10 charm=3 value=5000 beauty=9
+
+# noun adornment
+ring: mass=0.01 integrity=30 material=gold equip_slot=finger grants_adjective_slots=1 grants_slots_to=artifact value=500 beauty=7
+
+# noun vehicle_land
+car: mass=1500 length=4.5 integrity=600 material=steel speed_land=40 self_propelled=true mountable=true seats=4 carry_capacity=400 range=600 upkeep_fuel=0.1 requires_road=false terrain_ignored=road movement_cost=1
+truck: mass=8000 length=8 integrity=1500 material=steel speed_land=28 self_propelled=true mountable=true seats=2 carry_capacity=10000 tow_capacity=20000 range=800 upkeep_fuel=0.3 storage_objects=10000
+tank: mass=60000 length=10 integrity=12000 hardness=9 material=steel speed_land=18 self_propelled=true mountable=true seats=4 armor=200 res_pierce=0.9 res_slash=1 res_blast=0.6 dmg_blast=1200 attack_rate=0.15 attack_range=3000 attack_area=6 siege=4 upkeep_fuel=1 terrain_ignored=swamp,sand,snow loudness=8
+bike: mass=10 length=1.8 integrity=60 material=steel speed_land=8 mountable=true seats=1 carry_capacity=20
+train: mass=400000 length=200 integrity=20000 material=steel speed_land=45 self_propelled=true mountable=true seats=400 carry_capacity=2000000 requires_road=true upkeep_fuel=2 loudness=8
+wagon: mass=400 length=4 integrity=200 material=wood speed_land=0 mountable=true seats=4 carry_capacity=1500 storage_objects=1500
+
+# noun vehicle_water
+boat: mass=300 length=5 integrity=200 material=wood buoyancy=8 speed_water=4 mountable=true seats=6 carry_capacity=600 placeable_on=water
+ship: mass=2000000 length=100 integrity=30000 material=steel buoyancy=10 speed_water=12 self_propelled=true mountable=true seats=200 carry_capacity=5000000 storage_objects=5000000 upkeep_fuel=3 placeable_on=deep_water
+submarine: mass=7000000 length=110 integrity=25000 hardness=8 material=steel speed_water=15 dive_depth=400 self_propelled=true mountable=true seats=100 stealth=8 upkeep_fuel=3 placeable_on=deep_water dmg_blast=3000 attack_rate=0.05 attack_range=20000 targets=water
+
+# noun vehicle_air
+plane: mass=1200 length=8 integrity=300 material=aluminum speed_air=60 flight_ceiling=4000 self_propelled=true mountable=true seats=4 carry_capacity=400 range=1200 requires_runway=true upkeep_fuel=0.5
+jet: mass=15000 length=17 integrity=1500 material=titanium speed_air=600 flight_ceiling=15000 self_propelled=true mountable=true seats=1 range=3000 requires_runway=true upkeep_fuel=4 loudness=10 dmg_pierce=400 dmg_blast=800 attack_rate=1 attack_range=5000 targets=land,air,water
+helicopter: mass=5000 length=15 integrity=800 material=aluminum speed_air=70 flight_ceiling=4000 hover=true self_propelled=true mountable=true seats=8 carry_capacity=2000 range=600 upkeep_fuel=1.5 loudness=9
+balloon: mass=300 length=20 height=25 integrity=40 material=cloth speed_air=4 flight_ceiling=3000 hover=true mountable=true seats=4 flammability=7 sight_range+2000
+rocket: mass=500000 length=70 integrity=3000 material=aluminum speed_air=3000 speed_space=8000 flight_ceiling=ABS self_propelled=true mountable=true seats=3 single_use=true upkeep_fuel=500 loudness=10
+
+# noun building
+house: mass=100000 footprint=4 height=6 integrity=3000 material=wood,brick portable=false enterable=true occupants=6 lockable=true cover=0.6 needs_foundation=true storage_objects=2000 claim_radius=3 produce_B=0.2
+barn: mass=60000 footprint=6 height=8 integrity=2000 material=wood portable=false enterable=true occupants=20 storage_objects=50000 flammability=6 needs_foundation=true produce_I=0.3 production_needs=livestock
+castle: mass=50000000 footprint=100 height=30 integrity=500000 hardness=8 material=stone portable=false enterable=true occupants=300 lockable=true cover=0.9 security=7 claim_radius=30 authority=5 storage_letters=2000 blocks=land,sight,projectiles
+tent: mass=10 footprint=2 height=2 integrity=20 material=cloth enterable=true occupants=3 cover=0.1 flammability=7
+bank: mass=2000000 footprint=12 height=10 integrity=40000 material=stone,steel portable=false enterable=true lockable=true security=8 storage_letters=5000 trade_bonus=0.2 produce_T=0.5 needs_foundation=true
+temple: mass=5000000 footprint=30 height=20 integrity=60000 material=stone portable=false enterable=true occupants=200 recruit_rate=0.2 heals=2 res_unholy=1 needs_foundation=true
+
+# noun fortification
+fort: mass=5000000 footprint=40 height=8 integrity=150000 hardness=7 material=stone,wood portable=false enterable=true occupants=100 lockable=true cover=0.8 security=6 claim_radius=15 blocks=land,sight,projectiles
+bunker: mass=3000000 footprint=6 height=1 integrity=200000 hardness=9 material=concrete portable=false enterable=true occupants=10 lockable=true cover=0.95 res_blast=0.95 res_radiation=0.95 res_fire=0.9 security=8 stealth=3 storage_letters=500
+
+# noun structure
+wall: mass=20000 footprint=1 height=4 integrity=8000 hardness=7 material=stone portable=false blocks=land,sight,projectiles cover=0.8 plural_count=8
+gate: mass=2000 footprint=1 height=4 integrity=3000 material=wood,iron portable=false lockable=true blocks=land,projectiles
+tower: mass=500000 footprint=2 height=25 integrity=30000 material=stone portable=false enterable=true occupants=6 sight_range+300 attack_range+30 cover=0.7 alarm=true
+bridge: mass=200000 footprint=10 height=2 integrity=20000 material=stone portable=false placeable_on=water,pit tile_type=road
+fence: mass=200 footprint=1 height=1.5 integrity=150 material=wood portable=false blocks=land plural_count=10
+dam: mass=10000000 footprint=20 height=30 integrity=400000 material=concrete portable=false placeable_on=water blocks=water,land power_output=5000 produce_W=1 moisture=-5
+mine: mass=50000 footprint=4 depth=50 integrity=5000 portable=false enterable=true placeable_on=hill,mountain produce_G=1 produce_X=0.02 production_needs=labor
+farm: mass=20000 footprint=25 integrity=1500 portable=false placeable_on=field fertility=8 produce_A=2 food_output=10 production_needs=labor,water flammability=5
+forge: mass=3000 footprint=2 integrity=4000 material=stone,iron portable=false temperature=1200 craft_slots=2 produce_C=1 upkeep_fuel=0.2 production_needs=labor luminosity=5
+mill: mass=40000 footprint=4 height=15 integrity=3000 material=wood,stone portable=false produce_W=1.5 food_output=5 production_needs=wind
+well: mass=5000 footprint=1 depth=20 integrity=2000 material=stone portable=false produce_O=1 water_output=20
+vault: mass=50000 footprint=2 integrity=100000 hardness=10 material=steel portable=false lockable=true security=10 storage_letters=10000 res_blast=0.9 res_fire=1 survives_death=true
+lighthouse: mass=800000 footprint=2 height=40 integrity=25000 material=stone portable=false luminosity=10 sight_range+2000 map_reveal=40 night_vision=true
+
+# noun route
+road: mass=100000 footprint=10 integrity=10000 material=stone portable=false tile_type=road movement_cost=0.5 produce_R=0.5 plural_count=5
+
+# noun furniture
+bed: mass=50 footprint=1 integrity=80 material=wood,cloth sleep_need*0.5 regeneration+1 occupants=2 produce_B=0.3
+chair: mass=6 integrity=40 material=wood produce_B=0.1 plural_count=4
+table: mass=30 footprint=1 integrity=80 material=wood craft_slots=1 produce_B=0.2
+shelf: mass=25 integrity=60 material=wood storage_objects=100 storage_letters=60 produce_B=0.1
+desk: mass=40 footprint=1 integrity=80 material=wood craft_slots=1 storage_letters=40 produce_B=0.2
+throne: mass=200 footprint=1 integrity=600 material=gold,wood authority=8 command_limit=25 tax_rate=0.1 beauty=9 produce_B=0.5
+
+# noun container
+chest: mass=30 integrity=250 material=wood,iron lockable=true security=3 storage_letters=200 storage_objects=100 container_slots=10
+box: mass=2 integrity=20 material=wood storage_letters=40 storage_objects=30 container_slots=4
+bag: mass=0.5 integrity=10 material=cloth equip_slot=back storage_letters=60 storage_objects=20 container_slots=6
+barrel: mass=30 integrity=80 material=wood storage_objects=200 volume=0.2
+
+# noun tool
+hammer: mass=1 length=0.3 integrity=120 hardness=8 material=steel,wood equip_slot=held hands_required=1 dmg_blunt=25 attack_rate=1 build_speed=2 siege=1.5
+saw: mass=0.8 length=0.6 integrity=40 sharpness=6 material=steel equip_slot=held hands_required=1 dmg_slash=15 harvest_bonus=2 harvest_sources=tree
+shovel: mass=2 length=1.2 integrity=60 material=steel,wood equip_slot=held hands_required=2 dmg_blunt=18 speed_underground=0.2 harvest_bonus=2 harvest_sources=dig,cache
+pick: mass=3 length=0.9 integrity=90 hardness=8 material=steel,wood equip_slot=held hands_required=2 dmg_pierce=30 siege=2 harvest_bonus=2.5 harvest_sources=quarry,mine
+plow: mass=200 length=2 integrity=200 material=steel fertility+3 harvest_bonus=2 harvest_sources=field
+key: mass=0.02 integrity=20 material=iron equip_slot=held security+-5 counters=lockable
+rope: mass=5 length=30 integrity=30 material=fiber climb+6 tow_capacity=500 inflict_root=3
+ladder: mass=10 length=4 integrity=40 material=wood climb+8 counters=wall
+net: mass=3 integrity=15 material=fiber equip_slot=held attack_range=6 inflict_root=6 targets=land,air,water harvest_bonus=3 harvest_sources=fishing
+torch: mass=0.5 length=0.5 integrity=10 material=wood equip_slot=held hands_required=1 luminosity=5 dmg_fire=8 attack_rate=1 temperature=600 burn_time=1800 fear_aura=1
+harvester: mass=12000 length=8 integrity=2500 material=steel speed_land=6 self_propelled=true mountable=true seats=1 reclaim_rate=0.5 reclaim_range=15 harvest_bonus=4 harvest_sources=field upkeep_fuel=0.5
+
+# noun device
+telescope: mass=5 length=1 integrity=15 material=glass,brass equip_slot=held sight_range+3000 read_properties=3
+radar: mass=2000 footprint=1 integrity=500 portable=false sight_range=50000 sees_through=fog,walls,night detect_stealth=6 alarm=true upkeep_power=20 targets=air
+compass: mass=0.1 integrity=10 equip_slot=held detect_letters=200 map_reveal=5
+magnet: mass=2 integrity=200 material=iron magnetism=8 letter_steal=1 attack_range=5 counters=steel,iron
+lamp: mass=1 integrity=10 material=glass,brass luminosity=6 night_vision=true upkeep_fuel=0.01
+clock: mass=3 integrity=20 material=brass,glass extends_duration=1.5 produce_Y=0.2
+mirror: mass=10 integrity=10 brittleness=9 material=glass reflectivity=10 res_light=1 reflect=0.3 duplicates=1 single_use=true
+oven: mass=80 footprint=1 integrity=300 material=iron temperature=250 food_output=4 upkeep_fuel=0.05 produce_B=0.2 produce_F=0.2
+
+# noun document
+map: mass=0.1 integrity=3 flammability=9 material=paper map_reveal=200 detect_letters=500
+book: mass=1 integrity=5 flammability=8 material=paper intelligence+2 grants_adjective_slots=1 grants_slots_to=person
+
+# noun mammal
+dog: mass=30 length=1 integrity=80 alive=true sentient=true intelligence=4 loyalty=9 aggression=3 diet=carnivore food_need=0.02 speed_land=12 dmg_pierce=20 attack_rate=1.2 smell_range=300 tracking=8 detect_stealth=5 alarm=true tamable=true trainable=7 equip_slot=companion produce_I=0.3
+cat: mass=4 length=0.5 integrity=25 alive=true sentient=true intelligence=4 loyalty=4 diet=carnivore food_need=0.005 speed_land=13 agility=9 climb=8 dmg_slash=6 attack_rate=2 night_vision=true stealth=6 evasion=0.4 equip_slot=companion produce_I=0.2 counters=rat
+horse: mass=500 length=2.4 height=1.6 integrity=400 alive=true sentient=true intelligence=3 loyalty=6 diet=herbivore food_need=0.2 speed_land=18 jump=2 mountable=true seats=1 carry_capacity=150 tow_capacity=1500 dmg_blunt=60 attack_rate=0.5 tamable=true equip_slot=mount produce_I=0.4
+cow: mass=700 length=2.5 integrity=450 alive=true diet=herbivore food_need=0.4 speed_land=7 food_output=3 produce_I=1 reproduction=0.5 tamable=true
+pig: mass=150 length=1.5 integrity=180 alive=true intelligence=4 diet=omnivore food_need=0.15 speed_land=5 food_output=2 produce_I=0.7 reproduction=2 smell_range=200 detect_underground=true
+sheep: mass=70 length=1.2 integrity=90 alive=true diet=herbivore food_need=0.08 speed_land=8 produce_I=0.6 reproduction=1 pack_size=3 courage=1
+wolf: mass=45 length=1.5 integrity=140 alive=true sentient=true intelligence=5 loyalty=3 aggression=7 diet=carnivore food_need=0.06 speed_land=16 dmg_pierce=35 attack_rate=1.2 pack_size=4 tracking=8 night_vision=true fear_aura=2
+bear: mass=400 length=2.5 height=1.5 integrity=900 alive=true aggression=6 diet=omnivore food_need=0.3 speed_land=13 speed_water=2 climb=5 dmg_slash=90 dmg_crush=60 attack_rate=0.8 armor=5 res_cold=0.5 fear_aura=4
+lion: mass=190 length=2 integrity=500 alive=true aggression=7 diet=carnivore food_need=0.25 speed_land=20 jump=3 dmg_slash=70 dmg_pierce=60 attack_rate=1 pack_size=3 stealth=4 fear_aura=5 loudness=8
+elephant: mass=5000 length=6 height=3.2 integrity=6000 alive=true sentient=true intelligence=6 loyalty=6 diet=herbivore food_need=3 water_need=3 speed_land=10 mountable=true seats=4 carry_capacity=1000 tow_capacity=8000 dmg_crush=500 dmg_pierce=200 attack_rate=0.4 knockback=5 siege=3 armor=20 fear_aura=4 tamable=true equip_slot=mount
+rat: mass=0.3 length=0.2 integrity=4 alive=true diet=scavenger food_need=0.001 speed_land=3 stealth=6 reproduction=20 pack_size=5 letter_steal=1 dmg_disease=2 attack_rate=1 contagion=0.1
+bat: mass=0.03 length=0.1 integrity=2 alive=true diet=carnivore speed_air=10 night_vision=true nocturnal=true sees_through=night,fog detect_stealth=4 pack_size=10 equip_slot=companion
+whale: mass=100000 length=25 integrity=40000 alive=true intelligence=6 diet=carnivore food_need=20 speed_water=8 dive_depth=1000 breathes=air placeable_on=deep_water dmg_crush=3000 attack_rate=0.1 loudness=9 mountable=true seats=10
+camel: mass=500 length=3 integrity=450 alive=true diet=herbivore food_need=0.1 water_need=0.01 speed_land=10 mountable=true seats=2 carry_capacity=250 temp_max=55 terrain_ignored=sand habitat=desert equip_slot=mount tamable=true
+mole: mass=0.1 length=0.15 integrity=3 alive=true diet=carnivore speed_underground=0.5 detect_underground=true harvest_bonus=1.5 harvest_sources=cache equip_slot=companion
+human: mass=75 height=1.75 integrity=100 alive=true sentient=true intelligence=7 diet=omnivore food_need=0.03 speed_land=5 hands=true speech=true labor=1 produce_N=0.3
+
+# noun bird
+eagle: mass=5 length=0.9 integrity=40 alive=true diet=carnivore food_need=0.01 speed_air=30 flight_ceiling=4000 sight_range=3000 dmg_slash=25 attack_rate=1 targets=land,air map_reveal=20 equip_slot=companion tamable=true
+hawk: mass=1 length=0.5 integrity=15 alive=true diet=carnivore speed_air=35 sight_range=2000 dmg_slash=10 attack_rate=1.5 targets=land,air tracking=7 equip_slot=companion tamable=true counters=rat,bat
+owl: mass=1.5 length=0.5 integrity=15 alive=true diet=carnivore speed_air=15 night_vision=true nocturnal=true stealth=7 detect_stealth=7 sight_range=500 equip_slot=companion
+chicken: mass=2 length=0.4 integrity=10 alive=true diet=omnivore food_need=0.003 speed_land=4 food_output=0.3 produce_I=0.2 reproduction=6 pack_size=3 courage=0
+duck: mass=1.2 length=0.5 integrity=10 alive=true diet=omnivore food_need=0.003 speed_land=2 speed_water=2 speed_air=20 food_output=0.2 produce_I=0.2 produce_O=0.1 pack_size=3
+
+# noun fish
+fish: mass=2 length=0.4 integrity=6 alive=true diet=omnivore speed_water=3 breathes=water placeable_on=water food_output=0.2 produce_O=0.3 reproduction=10 pack_size=6 edible=true nutrition=3
+shark: mass=900 length=5 integrity=1200 alive=true aggression=8 diet=carnivore food_need=0.3 speed_water=15 breathes=water placeable_on=deep_water dmg_pierce=250 dmg_slash=150 attack_rate=0.8 smell_range=1000 tracking=8 inflict_bleed=10 fear_aura=6
+
+# noun reptile
+snake: mass=3 length=2 integrity=20 alive=true aggression=4 diet=carnivore speed_land=3 speed_water=1 stealth=7 venomous=true dmg_pierce=5 dmg_poison=60 inflict_poison=30 attack_rate=1 camouflage=forest,swamp
+
+# noun invertebrate
+spider: mass=0.02 length=0.05 integrity=1 alive=true diet=carnivore speed_land=0.5 climb=10 stealth=7 venomous=true dmg_poison=20 inflict_poison=20 inflict_root=5 attack_rate=0.5 pack_size=4 fear_aura=2
+
+# noun insect
+bee: mass=0.0001 length=0.015 integrity=1 alive=true diet=herbivore speed_air=7 dmg_poison=3 inflict_slow=2 attack_rate=1 single_use=true pack_size=200 food_output=0.01 fertility+2 produce_P=0.01
+ant: mass=0.000005 length=0.005 integrity=1 alive=true diet=omnivore speed_land=0.05 speed_underground=0.01 carry_capacity=0.0002 pack_size=1000 labor=0.001 dmg_acid=1 attack_rate=1 reproduction=100
+
+# noun supernatural
+dragon: mass=20000 length=20 height=6 integrity=60000 alive=true sentient=true intelligence=8 loyalty=2 aggression=8 diet=carnivore food_need=5 speed_land=10 speed_air=45 flight_ceiling=6000 mountable=true seats=2 dmg_fire=2500 dmg_slash=900 attack_rate=0.5 attack_range=40 attack_area=10 targets=land,air,water armor=120 res_fire=1 res_slash=0.7 fear_aura=9 storage_letters=3000 security=8
+ghost: mass=0 integrity=200 alive=false sentient=true speed_land=4 speed_air=4 phase=true hover=true stealth=8 nocturnal=true res_blunt=1 res_slash=1 res_pierce=1 res_holy=-1 dmg_cold=20 dmg_psychic=30 inflict_fear=6 attack_rate=0.5 fear_aura=7 on_owner_death=vanish
+zombie: mass=70 integrity=250 alive=false aggression=10 intelligence=1 speed_land=1.5 dmg_blunt=20 dmg_disease=20 attack_rate=0.7 immune_fear=true immune_poison=true immune_sleep=true res_holy=-1 res_fire=-0.5 contagion=0.3 pack_size=5 hands=true
+god: mass=0 integrity=ABS alive=true sentient=true intelligence=10 loyalty=0 obedience=0 speed_land=ABS speed_air=ABS phase=true placement=sky dmg_holy=1000000 attack_rate=0.02 attack_range=ABS attack_area=50 targets=land,air,water,underground authority=10 fear_aura=10 recruit_rate=5 read_properties=10 heals=100 persistence=10 upkeep_food=500
+giant: mass=8000 height=8 integrity=9000 alive=true sentient=true intelligence=3 loyalty=4 aggression=6 diet=omnivore food_need=4 speed_land=9 hands=true dmg_crush=900 attack_rate=0.4 attack_range=5 attack_area=3 knockback=10 siege=4 fear_aura=6 labor=30
+angel: mass=70 integrity=5000 alive=true sentient=true intelligence=9 loyalty=10 speed_air=60 hover=true hands=true dmg_holy=400 attack_rate=1 heals=30 res_unholy=1 res_holy=1 luminosity=9 prevents_death=1 equip_slot=companion counters=ghost,zombie,demon
+demon: mass=300 height=3 integrity=8000 alive=true sentient=true intelligence=8 loyalty=1 aggression=9 speed_land=12 speed_air=20 hands=true dmg_unholy=600 dmg_fire=300 attack_rate=1 res_fire=1 res_unholy=1 res_holy=-1 fear_aura=9 letter_steal=3
+
+# noun leader
+king: mass=80 integrity=120 alive=true sentient=true intelligence=7 hands=true speech=true speed_land=4 authority=9 command_limit=50 tax_rate=0.2 recruit_rate=1 claim_radius=20 produce_S=1 morale+2 on_owner_death=pass_to_heir
+queen: mass=65 integrity=110 alive=true sentient=true intelligence=8 hands=true speech=true speed_land=4 authority=9 command_limit=40 charm=6 recruit_rate=1.5 claim_radius=20 produce_S=1 reproduction=0.1
+captain: mass=80 integrity=160 alive=true sentient=true intelligence=7 hands=true speech=true speed_land=5 authority=5 command_limit=20 courage=8 morale+3 accuracy+0.05
+
+# noun fighter
+knight: mass=110 integrity=700 alive=true sentient=true intelligence=6 loyalty=9 courage=9 hands=true speech=true speed_land=4 armor=30 dmg_slash=60 attack_rate=1 block=0.4 food_need=0.04 produce_K=0.05
+soldier: mass=90 integrity=200 alive=true sentient=true intelligence=5 loyalty=6 courage=6 hands=true speech=true speed_land=5 dmg_pierce=60 attack_rate=1.5 attack_range=200 targets=land,air food_need=0.04 pack_size=4
+
+# noun criminal
+thief: mass=65 integrity=90 alive=true sentient=true intelligence=7 loyalty=2 hands=true speech=true speed_land=7 agility=8 climb=7 stealth=8 letter_steal=5 dmg_pierce=15 attack_rate=1.5 counters=lockable
+
+# noun worker
+guard: mass=85 integrity=250 alive=true sentient=true intelligence=5 loyalty=7 courage=7 hands=true speech=true speed_land=5 armor=10 dmg_pierce=35 attack_rate=1 detect_stealth=6 alarm=true security+3 food_need=0.03 counters=thief,spy
+farmer: mass=75 integrity=100 alive=true sentient=true intelligence=5 hands=true speech=true speed_land=5 labor=3 harvest_bonus=2 harvest_sources=field produce_A=0.5 produce_N=0.3 food_need=0.03
+miner: mass=80 integrity=120 alive=true sentient=true intelligence=5 hands=true speech=true speed_land=4 speed_underground=0.1 labor=3 harvest_bonus=2 harvest_sources=mine,quarry produce_G=0.5 produce_N=0.3 food_need=0.04 night_vision=true
+smith: mass=90 integrity=130 alive=true sentient=true intelligence=6 hands=true speech=true labor=3 craft_slots=1 produce_C=0.5 produce_N=0.3 res_fire=0.3 food_need=0.03
+doctor: mass=70 integrity=90 alive=true sentient=true intelligence=9 hands=true speech=true speed_land=5 heals=10 res_disease=0.8 food_need=0.03 produce_N=0.3 counters=plague,poison
+merchant: mass=75 integrity=90 alive=true sentient=true intelligence=7 hands=true speech=true speed_land=5 trade_bonus=0.3 charm=5 produce_T=1 produce_N=0.3 storage_letters=100
+spy: mass=70 integrity=90 alive=true sentient=true intelligence=8 loyalty=5 hands=true speech=true speed_land=6 stealth=9 read_properties=8 read_inventory=true detect_stealth=5 sight_range=100
+wizard: mass=70 integrity=100 alive=true sentient=true intelligence=10 hands=true speech=true speed_land=4 dmg_magic=300 dmg_electric=200 attack_rate=0.5 attack_range=60 attack_area=4 targets=land,air grants_adjective_slots=1 grants_slots_to=artifact,creature extends_duration=2 transmute_in=12 produce_Z=0.02
+heir: mass=50 integrity=70 alive=true sentient=true intelligence=6 loyalty=8 hands=true speech=true speed_land=5 prevents_death=1 survives_death=true food_need=0.03
+
+# noun tree
+tree: mass=3000 height=20 footprint=1 integrity=3000 alive=true diet=photosynthesis material=wood portable=false flammability=6 growth_time=20 lifespan=0 blocks=sight cover=0.4 produce_P=0.3 produce_Y=0.05 placeable_on=land,field,forest spread_rate=0.01 plural_count=6
+oak: mass=12000 height=25 footprint=2 integrity=12000 alive=true diet=photosynthesis material=wood portable=false flammability=5 growth_time=60 hardness=6 blocks=sight cover=0.6 produce_P=0.5 produce_Y=0.2
+
+# noun produce
+wheat: mass=0.5 height=1 integrity=2 alive=true diet=photosynthesis flammability=8 growth_time=5 food_output=0.5 produce_A=0.5 edible=true nutrition=4 placeable_on=field plural_count=20 tile_type=field
+apple: mass=0.2 integrity=2 edible=true nutrition=3 restores=10 single_use=true plural_count=6
+corn: mass=1 height=2 integrity=3 alive=true diet=photosynthesis growth_time=6 food_output=0.7 produce_A=0.5 edible=true nutrition=5 placeable_on=field plural_count=20 tile_type=field blocks=sight
+
+# noun plant
+grass: mass=0.01 height=0.2 integrity=1 alive=true diet=photosynthesis flammability=7 growth_time=2 spread_rate=0.5 fertility=3 produce_E=0.1 tile_type=field radius=3
+vine: mass=5 length=10 integrity=20 alive=true diet=photosynthesis growth_time=5 spread_rate=0.3 climb+6 inflict_root=4 movement_cost=2 produce_P=0.2
+cactus: mass=500 height=4 integrity=400 alive=true diet=photosynthesis thorns=15 water_output=1 temp_max=60 habitat=desert placeable_on=sand produce_P=0.2
+
+# noun fungus
+mushroom: mass=0.05 height=0.1 integrity=1 alive=true edible=true nutrition=1 growth_time=3 spread_rate=0.2 produce_U=0.4 placeable_on=forest,land luminosity=0 plural_count=8
+
+# noun flower
+rose: mass=0.05 height=0.5 integrity=1 alive=true diet=photosynthesis beauty=9 charm+2 thorns=2 odor=4 produce_P=0.1 plural_count=12
+
+# noun water
+lake: tile_type=water radius=6 depth=20 persistence=0 moisture=6 blocks=land produce_O=1.5 water_output=100 placeable_on=land,field,sand portable=false
+pond: tile_type=water radius=2 depth=3 moisture=4 blocks=land produce_O=0.5 water_output=20 portable=false
+river: tile_type=water radius=1 length=4000 depth=5 moisture=6 blocks=land produce_O=1 produce_W=0.5 water_output=200 movement_cost=3 portable=false placement=region
+sea: tile_type=deep_water radius=40 depth=200 moisture=8 blocks=land produce_O=5 portable=false placement_range=0 temperature_delta=-2
+ocean: tile_type=deep_water radius=150 depth=4000 moisture=10 blocks=land produce_O=10 portable=false
+
+# noun elevation
+mountain: tile_type=mountain radius=8 elevation=2000 mass=1000000000000 integrity=ABS blocks=land,sight,projectiles movement_cost=6 portable=false produce_G=1 temperature_delta=-10 sight_range+5000
+hill: tile_type=hill radius=3 elevation=100 blocks=sight movement_cost=2 portable=false sight_range+500 attack_range+20 produce_G=0.2
+volcano: tile_type=mountain radius=6 elevation=1500 integrity=ABS blocks=land,sight movement_cost=6 portable=false temperature=1100 dmg_fire=4000 dmg_blast=2000 attack_rate=0.005 attack_area=400 friendly_fire=true lingering=30 fertility=6 produce_F=2 luminosity=6
+cliff: tile_type=wall radius=1 length=200 elevation=60 integrity=ABS blocks=land movement_cost=10 portable=false
+
+# noun depression
+pit: tile_type=pit radius=1 depth=10 blocks=land movement_cost=8 portable=false inflict_root=10 dmg_blunt=40 stealth=2
+canyon: tile_type=pit radius=3 length=3000 depth=300 blocks=land portable=false placement=region produce_X=0.05
+cave: tile_type=pit radius=2 depth=30 enterable=true occupants=30 cover=0.8 stealth=5 portable=false produce_U=1 luminosity=0 res_blast=0.6 placeable_on=hill,mountain
+
+# noun landform
+island: tile_type=sand radius=5 elevation=10 placeable_on=water,deep_water portable=false claim_radius=5 fertility=4
+swamp: tile_type=swamp radius=5 moisture=9 movement_cost=4 portable=false stealth=3 dmg_disease=1 produce_U=0.5 produce_O=0.5 fertility=5
+desert: tile_type=sand radius=30 moisture=-8 movement_cost=1.5 fertility=0 temperature_delta=15 portable=false water_need*3
+forest: tile_type=forest radius=10 movement_cost=2 blocks=sight cover=0.4 stealth=3 flammability=6 portable=false produce_P=3 produce_H=0.5 fertility=6 spread_rate=0.02
+beach: tile_type=sand radius=4 movement_cost=1.3 portable=false placeable_on=land,water produce_O=0.3
+
+# noun celestial
+sun: placement=sky mass=ABS integrity=ABS temperature=5500 luminosity=10 field_radius=ABS field_targets=all sets_daylight=day clears_weather=rain,fog,snow,storm temperature_delta=10 growth=1.5 persistence=10 night_vision=false stealth+-2 dmg_light=2 res_dark=1 counters=night,ghost,fog
+moon: placement=sky integrity=ABS luminosity=3 field_radius=ABS field_targets=all sets_daylight=night light_delta=2 persistence=10 produce_O=0 growth=1 moisture=1 counters=sun
+star: placement=sky integrity=ABS luminosity=1 field_radius=ABS light_delta=1 map_reveal=30 persistence=30 detect_letters=1000 plural_count=100
+
+# noun metal
+iron: mass=7.8 density=7800 hardness=6 melting_point=1538 conductivity=7 magnetism=5 integrity=200 value=5
+steel: mass=7.8 density=7800 hardness=8 melting_point=1400 conductivity=6 magnetism=5 integrity=350 value=15
+gold: mass=19 density=19300 hardness=3 melting_point=1064 conductivity=9 integrity=60 value=5000 beauty=9 trade_bonus=0.1 charm=2 produce_T=0.2
+lead: mass=11 density=11300 hardness=2 melting_point=327 toxicity=3 res_radiation=0.9 integrity=50 value=3
+
+# noun mineral
+stone: mass=2.6 density=2600 hardness=7 brittleness=3 integrity=300 melting_point=1200 value=1
+coal: mass=1.3 density=1300 hardness=3 flammability=8 burn_time=3600 fuel_output=2 produce_F=0.3 value=3
+glass: mass=2.5 density=2500 hardness=6 brittleness=9 transparency=0.95 integrity=10 melting_point=1400 value=4
+sand: mass=1.6 density=1600 state=solid shape=pile tile_type=sand radius=2 movement_cost=1.3 res_fire=0.8 value=0
+ice: mass=0.9 density=917 hardness=2 brittleness=7 temperature=-10 melting_point=0 slipperiness=9 transparency=0.6 tile_type=snow radius=2 dmg_cold=3 integrity=40
+diamond: mass=0.001 density=3500 hardness=10 sharpness=9 integrity=2000 transparency=0.9 value=50000 beauty=10 armor_pierce+0.5
+
+# noun material
+wood: mass=0.7 density=700 hardness=3 flammability=7 burn_time=1200 buoyancy=6 integrity=80 fuel_output=0.5 value=1
+lava: state=liquid temperature=1100 density=3000 tile_type=lava radius=2 dmg_fire=200 attack_rate=1 luminosity=6 blocks=land spread_rate=0.1 persistence=20 friendly_fire=true
+
+# noun liquid
+water: state=liquid mass=1 density=1000 wetness=10 temperature=15 freezing_point=0 tile_type=water radius=1 depth=1 water_output=10 dmg_water=1 counters=fire,lava produce_O=0.2
+oil: state=liquid mass=0.9 density=900 flammability=9 burn_time=600 slipperiness=8 fuel_output=5 value=40 tile_type=swamp radius=1
+acid: state=liquid density=1200 corrosiveness=9 toxicity=6 dmg_acid=120 attack_rate=1 lingering=5 armor_pierce=0.8 single_use=true friendly_fire=true counters=steel,iron,stone
+
+# noun poison
+poison: state=liquid toxicity=10 dmg_poison=200 inflict_poison=60 single_use=true stealth=6 odor=0
+
+# noun food
+bread: mass=0.5 integrity=1 edible=true nutrition=6 restores=15 single_use=true plural_count=4
+meat: mass=1 integrity=1 edible=true nutrition=10 restores=25 single_use=true odor=5 decay_rate=0.1
+cheese: mass=1 integrity=1 edible=true nutrition=8 restores=20 single_use=true odor=4
+honey: mass=0.5 state=liquid edible=true nutrition=7 restores=30 stickiness=8 single_use=true decay_rate=0
+egg: mass=0.06 integrity=1 brittleness=10 edible=true nutrition=3 restores=8 single_use=true plural_count=12
+
+# noun drink
+milk: mass=1 state=liquid edible=true nutrition=4 restores=12 single_use=true decay_rate=0.2
+beer: mass=0.5 state=liquid edible=true nutrition=2 potency=3 courage+3 accuracy+-0.1 duration=300 single_use=true plural_count=6
+
+# noun medicine
+medicine: mass=0.1 edible=true potency=7 restores=150 effect_status=poison,bleed,burn single_use=true res_disease+0.5 duration=600
+potion: mass=0.3 state=liquid edible=true potency=9 restores=400 regeneration+5 duration=60 single_use=true
+
+# noun bodypart
+wing: equip_slot=graft mass=5 integrity=60 speed_air+15 flight_ceiling+2000 jump+5 plural_count=2
+claw: equip_slot=graft mass=0.2 integrity=80 sharpness=8 dmg_slash+30 climb+4 plural_count=2
+eye: equip_slot=graft mass=0.01 integrity=5 sight_range+50 detect_stealth+2 accuracy+0.05 plural_count=2
+horn: equip_slot=graft mass=2 integrity=200 hardness=6 dmg_pierce+40 knockback+2 loudness+3 plural_count=2
+tail: equip_slot=graft mass=5 integrity=80 agility+2 speed_water+2 dmg_blunt+15
+fang: equip_slot=graft mass=0.01 integrity=60 sharpness=9 dmg_pierce+25 inflict_bleed+5 plural_count=2
+shell: equip_slot=graft mass=30 integrity=1500 hardness=8 armor+40 speed_land*0.6 block+0.3
+gill: equip_slot=graft mass=0.1 integrity=10 breathes=both dive_depth+200 plural_count=2
+heart: equip_slot=graft mass=0.3 integrity=30 regeneration+2 courage+2 prevents_death=1 single_use=true
+
+# noun weather
+rain: placement=region field_radius=2000 field_targets=all sets_weather=rain field_duration=10 wetness+5 flammability+-3 visibility=0.7 moisture=5 growth=1.5 produce_O=1 sight_range*0.7 counters=fire,drought
+storm: placement=region field_radius=3000 field_targets=all sets_weather=storm field_duration=8 wetness+6 visibility=0.4 dmg_electric=800 dmg_wind=20 attack_rate=0.05 attack_area=5 friendly_fire=true speed_air*0.3 accuracy+-0.3 produce_W=3 loudness=9
+fog: placement=region field_radius=1500 field_targets=all sets_weather=fog field_duration=15 visibility=0.1 stealth+4 sight_range*0.1 accuracy+-0.3
+snow: placement=region field_radius=2500 field_targets=all sets_weather=snow field_duration=20 temperature_delta=-20 visibility=0.6 movement_cost=2 growth=0.2 speed_land*0.6 tile_type=snow
+wind: placement=region field_radius=3000 field_targets=all field_duration=10 dmg_wind=5 speed_air*0.7 accuracy+-0.15 spread_rate+0.3 produce_W=2 clears_weather=fog
+lightning: placement=target placement_range=300 single_use=true dmg_electric=5000 dmg_fire=500 attack_area=3 inflict_stun=3 luminosity=10 loudness=10 targets=land,air,water friendly_fire=true
+
+# noun phenomenon
+flood: placement=region field_radius=500 field_duration=15 tile_type=water depth=3 dmg_water=30 dmg_suffocation=20 attack_rate=0.2 friendly_fire=true movement_cost=6 moisture=10 fertility+2 counters=fire,pit,mine
+drought: placement=region field_radius=3000 field_duration=30 moisture=-10 growth=0.1 water_need*3 flammability+3 clears_weather=rain,snow,fog,storm produce_O*0 counters=flood,swamp
+
+# noun season
+winter: placement=map field_radius=ABS field_targets=all field_duration=20 temperature_delta=-25 growth=0.1 sets_weather=snow food_need*1.5 produce_A*0.2 produce_P*0.2 speed_land*0.8 counters=summer
+summer: placement=map field_radius=ABS field_targets=all field_duration=20 temperature_delta=12 growth=2 produce_A*2 produce_P*2 water_need*1.5 clears_weather=snow counters=winter
+
+# noun affliction
+plague: placement=target placement_range=20 field_radius=10 field_targets=living field_duration=30 dmg_disease=15 attack_rate=0.2 contagion=0.4 friendly_fire=true morale+-3 labor*0.3 counters=army,city
+
+# noun feeling
+love: field_radius=30 field_targets=owned loyalty+4 morale+3 reproduction*2 aggression+-2
+fear: field_radius=40 field_targets=enemies morale+-4 courage+-4 accuracy+-0.2 inflict_fear=5
+rage: field_radius=20 field_targets=owned aggression+5 attack_rate*1.5 armor+-10 obedience+-3
+hope: field_radius=50 field_targets=owned morale+4 regeneration+1 courage+3 prevents_death=0
+courage: field_radius=30 field_targets=owned courage+6 immune_fear=true morale+2
+
+# noun attribute
+luck: field_radius=0 field_targets=self critical+0.25 evasion+0.15 harvest_bonus*1.5
+
+# noun conflict
+war: placement=region placement_range=500 event_target=faction event_radius=2000 event_duration=30 sets_hostile=true aggression+5 produce_K*3 produce_V*3 produce_S*0.3 produce_T*0 morale+-1
+siege: placement=target placement_range=200 event_target=structure event_radius=100 event_duration=20 food_output*0 water_output*0 regeneration*0 security+-3 morale+-3 contest_with=command_limit contested_by=storage_objects
+
+# noun crime
+theft: placement=target placement_range=5 event_target=object transfers_ownership=true contest_with=stealth contested_by=security
+
+# noun attack
+raid: placement=target placement_range=300 event_target=structure event_radius=30 letter_steal=50 contest_with=speed_land contested_by=security dmg_fire=100
+ambush: placement=target placement_range=100 event_target=character contest_with=stealth contested_by=detect_stealth inflict_stun=5 critical+1 event_duration=1
+
+# noun act
+murder: placement=target placement_range=2 event_target=creature destroys_target=true contest_with=stealth contested_by=detect_stealth
+rescue: placement=target placement_range=500 event_target=creature moves_target=500 effect_status=root,stun,sleep,fear restores=50
+repair: placement=target placement_range=5 event_target=object restores=ABS event_duration=1
+revolt: placement=target placement_range=1000 event_target=region event_radius=300 frees_target=true sets_hostile=true contest_with=charm contested_by=authority event_duration=10
+
+# noun exchange
+trade: placement=target placement_range=10 event_target=character trade_bonus+0.2 produce_T=3 event_duration=1
+
+# noun event
+fire: placement=target placement_range=10 event_target=tile event_radius=2 event_duration=10 dmg_fire=40 attack_rate=1 inflict_burn=5 spread_rate=1 luminosity=7 temperature=800 friendly_fire=true produce_F=1 clears_weather=snow counters=forest,wood,ice
+
+# noun disaster
+earthquake: placement=region placement_range=1000 event_target=region event_radius=1500 event_duration=1 dmg_earth=3000 dmg_crush=1000 siege=10 targets=land,underground friendly_fire=true inflict_stun=5
+famine: placement=region placement_range=1000 event_target=region event_radius=3000 event_duration=30 food_output*0 produce_A*0 morale+-4 dmg_hunger=5 attack_rate=0.1 friendly_fire=true
+
+# noun group
+army: pack_size=100 command_limit=100 authority=4 upkeep_food=5 produce_K=0.5 morale+2 fear_aura=6 faction=army
+clan: binds=8 bind_penalty=loyalty,reputation faction=clan morale+1 command_limit=20
+
+# noun possession
+tax: tax_rate=0.25 produce_S=2 produce_T=1 reputation=-3 morale+-1
+treaty: binds=2 bind_penalty=reputation,morale law=attack,theft,raid
+
+# noun knowledge
+science: produce_C*1.5 produce_M*1.5 build_speed*1.5 craft_slots+1 grants_adjective_slots=1 grants_slots_to=artifact
+magic: grants_adjective_slots=1 grants_slots_to=creature,person extends_duration=2 dmg_magic+50 transmute_in=15
+
+# noun quantity
+ton: mass*1000 integrity*3 speed_land*0.5
+dozen: plural_count=12
+
+# noun duration
+hour: extends_duration=60 persistence*6 field_duration*6
+
+# adjective quality
+big: mass*8 length*2 height*2 footprint*2 integrity*3 dmg_crush*2 dmg_blunt*2 stealth+-2 food_need*4 speed_land*0.9
+small: mass*0.125 length*0.5 height*0.5 integrity*0.4 stealth+2 evasion+0.1 food_need*0.25
+huge: mass*64 length*4 height*4 footprint*4 integrity*8 dmg_crush*4 dmg_blunt*4 stealth+-4 food_need*16 speed_land*0.8 fear_aura+2
+tiny: mass*0.001 length*0.1 height*0.1 integrity*0.1 stealth+5 evasion+0.3 food_need*0.01 dmg_blunt*0.1 dmg_slash*0.2
+heavy: mass*3 integrity*1.5 armor+10 knockback+2 speed_land*0.7 speed_air*0.6 buoyancy+-3
+light: mass*0.4 speed_land*1.2 speed_air*1.3 integrity*0.8 buoyancy+2
+fast: speed_land*2 speed_water*2 speed_air*2 attack_rate*1.3 evasion+0.1 upkeep_fuel*1.5 food_need*1.3
+slow: speed_land*0.5 speed_water*0.5 speed_air*0.5 attack_rate*0.7 upkeep_fuel*0.7
+strong: integrity*2 dmg_blunt*1.5 dmg_slash*1.5 dmg_crush*1.5 carry_capacity*2 tow_capacity*2 labor*1.5
+weak: integrity*0.5 dmg_blunt*0.6 dmg_slash*0.6 carry_capacity*0.5
+sharp: sharpness+3 dmg_slash*1.6 dmg_pierce*1.4 armor_pierce+0.2
+hard: hardness+3 armor+15 integrity*1.5 brittleness+1
+soft: hardness+-3 armor+-5 res_blunt+0.3 loudness+-2
+hot: temperature+300 dmg_fire+30 res_cold+0.5 res_fire+-0.3 luminosity+2
+cold: temperature+-60 dmg_cold+30 inflict_slow+2 res_fire+0.5 res_cold+-0.3
+wet: wetness+6 flammability+-5 conductivity+3 res_fire+0.4 res_electric+-0.4
+dry: wetness+-6 flammability+3 water_need*0.5
+dark: luminosity+-5 stealth+3 dmg_dark+20 res_light+-0.3 nocturnal=true
+bright: luminosity+5 stealth+-3 dmg_light+20 inflict_blind+2 sight_range*1.3
+loud: loudness+5 stealth+-3 fear_aura+2 dmg_sonic+15 hearing_range*0.5
+quiet: loudness+-5 stealth+3
+old: age+600 produce_Y*3 integrity*0.7 intelligence+2 value*2 speed_land*0.8
+young: growth_time*0.5 speed_land*1.1 integrity*0.8 trainable+2 lifespan*2
+tall: height*2 sight_range*1.5 attack_range+1 stealth+-1
+long: length*2 attack_range*1.5 range*1.5
+deep: depth*3 dive_depth*3 storage_objects*2 stealth+1
+wide: footprint*2 radius*2 attack_area*1.5 seats*2
+thick: integrity*2 armor+10 mass*1.5 cover+0.2 transparency*0.5
+thin: integrity*0.5 mass*0.6 stealth+1 evasion+0.1
+wild: aggression+4 obedience+-4 loyalty+-3 speed_land*1.2 dmg_slash*1.3 tamable=false
+tame: aggression+-5 obedience+4 loyalty+3 tamable=true
+loyal: loyalty+5 obedience+2 survives_death=true
+brave: courage+5 morale+2 immune_fear=true
+fierce: aggression+4 attack_rate*1.4 fear_aura+3 critical+0.1
+deadly: critical+0.3 dmg_pierce*1.5 dmg_slash*1.5 dmg_poison*2 armor_pierce+0.2
+toxic: toxicity+8 dmg_poison+60 inflict_poison+20 edible=false lingering+5
+holy: dmg_holy+80 res_unholy+0.8 heals+3 luminosity+3 counters=ghost,zombie,demon
+evil: dmg_unholy+80 res_holy+-0.5 fear_aura+4 loyalty+-3 reputation+-5
+rich: value*10 produce_T*2 trade_bonus+0.2 charm+2 security+-2
+fertile: fertility+5 growth*2 reproduction*3 produce_A*2 produce_P*2 food_output*2
+secret: stealth+6 untargetable=false read_properties+-5 alarm=false
+safe: security+5 res_blast+0.3 res_fire+0.3 letter_refund+0.3
+magnetic: magnetism+8 letter_steal+1 conductivity+3 counters=steel,iron
+electric: dmg_electric+100 inflict_stun+1 conductivity+5 upkeep_power+5 upkeep_fuel*0 speed_land*1.2
+wooden: material=wood mass*0.3 integrity*0.5 flammability+6 buoyancy+5 conductivity+-5 magnetism+-10
+golden: material=gold value*100 beauty+5 mass*2.5 hardness+-3 charm+3 produce_T+0.3
+armored: armor+60 res_pierce+0.5 res_slash+0.5 res_blast+0.3 mass*1.5 speed_land*0.8 speed_air*0.7
+hungry: food_need*2 aggression+3 attack_rate*1.2 letter_steal+1
+double: plural_count*2 pack_size*2
+
+# adjective participle
+flying: speed_air+20 flight_ceiling+3000 hover=true targets=land,air terrain_ignored=water,pit,wall
+burning: temperature+600 dmg_fire+60 inflict_burn+5 luminosity+5 decay_rate+5 fear_aura+2 stealth+-5
+frozen: temperature+-80 dmg_cold+50 inflict_freeze+3 speed_land*0.3 brittleness+5 decay_rate*0
+hidden: stealth+8 untargetable=true alarm=false
+armed: dmg_pierce+60 attack_rate+0.5 attack_range+100 targets=land,air ammo_per_hit+1
+haunted: fear_aura+6 dmg_psychic+20 occupants*0 nocturnal=true
+cursed: critical+-0.5 evasion+-0.3 loyalty+-5 regeneration*0 letter_refund*0
+
+# adjective absolute
+invisible: stealth=ABS is_absolute=true absolute_side=defence
+invincible: indestructible=true is_absolute=true absolute_side=defence
+indestructible: indestructible=true is_absolute=true absolute_side=defence
+irresistible: ignores_resistance=true is_absolute=true absolute_side=attack
+unstoppable: ignores_resistance=true movement_cost=ABS is_absolute=true absolute_side=attack
+immortal: lifespan=ABS prevents_death=ABS is_absolute=true absolute_side=defence
+fireproof: res_fire=ABS immune_burn=true is_absolute=true absolute_side=defence specificity=2
+waterproof: res_water=ABS wetness=0 is_absolute=true absolute_side=defence specificity=2
+bulletproof: res_pierce=ABS is_absolute=true absolute_side=defence specificity=2
+bombproof: res_blast=ABS is_absolute=true absolute_side=defence specificity=2
+infinite: integrity=ABS range=ABS storage_letters=ABS is_absolute=true
+eternal: persistence=ABS lifespan=ABS decay_rate=0 is_absolute=true
+lethal: critical=ABS is_absolute=true absolute_side=attack
+weightless: mass=0 is_absolute=true
+silent: loudness=0 is_absolute=true
+fearless: courage=ABS immune_fear=true is_absolute=true absolute_side=defence
+
+# verb movement
+fly: duration=60 speed_air+20 flight_ceiling+500 terrain_ignored=water,pit,wall
+run: duration=30 speed_land*2 food_need*2
+jump: duration=2 jump+8 evasion+0.5
+swim: duration=120 speed_water+3 dive_depth+10
+climb: duration=60 climb+8
+dive: duration=60 dive_depth+50 speed_water+4 stealth+3
+sneak: duration=60 stealth+5 speed_land*0.5 loudness+-5
+dash: duration=3 speed_land*5 evasion+0.5
+vanish: duration=10 stealth=ABS untargetable=true
+float: duration=120 buoyancy+10 hover=true
+dig: duration=30 speed_underground+0.5 detect_underground=true harvest_bonus*2
+
+# verb body
+heal: restores=200 effect_status=poison,bleed,burn
+sleep: duration=60 regeneration+10 sight_range*0 morale+3 effect_status=sleep
+rest: duration=30 regeneration+3 morale+1
+hide: duration=120 stealth+7 speed_land*0 untargetable=true
+
+# verb transform
+grow: duration=120 mass*8 height*2 integrity*3 dmg_blunt*2 stealth+-3 food_need*4
+shrink: duration=120 mass*0.01 height*0.2 integrity*0.3 stealth+5 evasion+0.3
+burn: duration=20 temperature+500 dmg_fire+40 inflict_burn+3 luminosity+5 self_damage=0.2
+freeze: duration=20 temperature+-80 dmg_cold+40 inflict_freeze+3 speed_land*0.5 armor+20
+harden: duration=60 armor+40 hardness+4 speed_land*0.6
+glow: duration=300 luminosity+6 stealth+-4 night_vision=true fear_aura+-1
+
+# verb consume
+eat: restores=30 food_need*0 duration=300 effect_status=bleed
+
+# verb perceive
+see: duration=60 sight_range*3 detect_stealth+5 read_properties+3
+listen: duration=60 hearing_range*5 detect_stealth+3 detect_underground=true
+smell: duration=60 smell_range+300 tracking+5 detect_life=200
+
+# verb combat
+fight: duration=30 attack_rate*1.5 courage+3 armor+-5
+defend: duration=30 armor+30 block+0.3 attack_rate*0.5
+charge: duration=5 speed_land*3 knockback+5 dmg_blunt+50 evasion+-0.2
+
+# verb contact
+kick: duration=1 dmg_blunt+40 knockback+4
+roar: duration=5 loudness+8 fear_aura+6 inflict_fear=5 stealth=0
+
+# adverb manner
+quickly: cast_time*0.3 duration*0.5 effect_multiplier=1.5
+slowly: cast_time*2 duration*3
+quietly: loudness+-6 stealth+3
+forever: duration=ABS

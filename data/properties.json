@@ -1,0 +1,2786 @@
+{
+ "count": 349,
+ "groups": {
+  "physical": 41,
+  "mobility": 25,
+  "offence": 57,
+  "defence": 51,
+  "perception": 14,
+  "life": 27,
+  "economy": 46,
+  "spatial": 19,
+  "social": 12,
+  "slots": 9,
+  "meta": 16,
+  "field": 14,
+  "event": 10,
+  "effect": 8
+ },
+ "damage_types": [
+  "blunt",
+  "slash",
+  "pierce",
+  "crush",
+  "fire",
+  "cold",
+  "electric",
+  "acid",
+  "poison",
+  "radiation",
+  "blast",
+  "sonic",
+  "light",
+  "dark",
+  "water",
+  "wind",
+  "earth",
+  "psychic",
+  "holy",
+  "unholy",
+  "disease",
+  "magic",
+  "suffocation",
+  "hunger"
+ ],
+ "media": [
+  "land",
+  "water",
+  "air",
+  "underground",
+  "space"
+ ],
+ "status_effects": [
+  "stun",
+  "slow",
+  "blind",
+  "fear",
+  "burn",
+  "freeze",
+  "poison",
+  "bleed",
+  "sleep",
+  "charm",
+  "silence",
+  "root",
+  "confuse",
+  "shrink"
+ ],
+ "properties": [
+  {
+   "id": "mass",
+   "group": "physical",
+   "type": "num",
+   "desc": "weight; drives carrying, knockback, crushing",
+   "unit": "kg",
+   "default": 1
+  },
+  {
+   "id": "length",
+   "group": "physical",
+   "type": "num",
+   "desc": "longest dimension",
+   "unit": "m",
+   "default": 1
+  },
+  {
+   "id": "height",
+   "group": "physical",
+   "type": "num",
+   "desc": "vertical size; blocks sight above 2",
+   "unit": "m",
+   "default": 1
+  },
+  {
+   "id": "footprint",
+   "group": "physical",
+   "type": "num",
+   "desc": "ground area occupied",
+   "unit": "tiles",
+   "default": 1
+  },
+  {
+   "id": "volume",
+   "group": "physical",
+   "type": "num",
+   "desc": "interior or bulk volume",
+   "unit": "m3",
+   "default": 0
+  },
+  {
+   "id": "integrity",
+   "group": "physical",
+   "type": "num",
+   "desc": "damage it takes before it is destroyed",
+   "unit": "hp",
+   "default": 10
+  },
+  {
+   "id": "hardness",
+   "group": "physical",
+   "type": "scale",
+   "desc": "resists cutting and piercing",
+   "default": 3
+  },
+  {
+   "id": "sharpness",
+   "group": "physical",
+   "type": "scale",
+   "desc": "cutting ability of its edges or points",
+   "default": 0
+  },
+  {
+   "id": "brittleness",
+   "group": "physical",
+   "type": "scale",
+   "desc": "chance to shatter from blunt or crush damage",
+   "default": 2
+  },
+  {
+   "id": "elasticity",
+   "group": "physical",
+   "type": "scale",
+   "desc": "bounces or absorbs impact",
+   "default": 1
+  },
+  {
+   "id": "density",
+   "group": "physical",
+   "type": "num",
+   "desc": "sinks above 1000",
+   "unit": "kg/m3",
+   "default": 1000
+  },
+  {
+   "id": "buoyancy",
+   "group": "physical",
+   "type": "scale",
+   "desc": "floats and carries load on water",
+   "default": 0
+  },
+  {
+   "id": "temperature",
+   "group": "physical",
+   "type": "num",
+   "desc": "its own temperature",
+   "unit": "C",
+   "default": 20
+  },
+  {
+   "id": "melting_point",
+   "group": "physical",
+   "type": "num",
+   "desc": "destroyed or liquefied above this",
+   "unit": "C",
+   "default": 1000
+  },
+  {
+   "id": "freezing_point",
+   "group": "physical",
+   "type": "num",
+   "desc": "frozen solid below this",
+   "unit": "C",
+   "default": -100
+  },
+  {
+   "id": "flammability",
+   "group": "physical",
+   "type": "scale",
+   "desc": "how easily it ignites",
+   "default": 1
+  },
+  {
+   "id": "burn_time",
+   "group": "physical",
+   "type": "num",
+   "desc": "how long it burns once lit",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "conductivity",
+   "group": "physical",
+   "type": "scale",
+   "desc": "passes electricity to whatever touches it",
+   "default": 1
+  },
+  {
+   "id": "magnetism",
+   "group": "physical",
+   "type": "scale",
+   "desc": "pulls or is pulled by metal",
+   "default": 0
+  },
+  {
+   "id": "radioactivity",
+   "group": "physical",
+   "type": "scale",
+   "desc": "radiation damage per tick to things nearby",
+   "default": 0
+  },
+  {
+   "id": "toxicity",
+   "group": "physical",
+   "type": "scale",
+   "desc": "poison damage when touched or eaten",
+   "default": 0
+  },
+  {
+   "id": "corrosiveness",
+   "group": "physical",
+   "type": "scale",
+   "desc": "dissolves what it touches",
+   "default": 0
+  },
+  {
+   "id": "wetness",
+   "group": "physical",
+   "type": "scale",
+   "desc": "douses fire, conducts electricity",
+   "default": 0
+  },
+  {
+   "id": "stickiness",
+   "group": "physical",
+   "type": "scale",
+   "desc": "slows what touches it",
+   "default": 0
+  },
+  {
+   "id": "slipperiness",
+   "group": "physical",
+   "type": "scale",
+   "desc": "makes movers slide",
+   "default": 0
+  },
+  {
+   "id": "transparency",
+   "group": "physical",
+   "type": "frac",
+   "desc": "fraction of sight that passes through",
+   "default": 0
+  },
+  {
+   "id": "luminosity",
+   "group": "physical",
+   "type": "scale",
+   "desc": "light it gives off",
+   "default": 0
+  },
+  {
+   "id": "reflectivity",
+   "group": "physical",
+   "type": "scale",
+   "desc": "bounces light and light damage",
+   "default": 1
+  },
+  {
+   "id": "loudness",
+   "group": "physical",
+   "type": "scale",
+   "desc": "noise it makes; reveals position",
+   "default": 0
+  },
+  {
+   "id": "odor",
+   "group": "physical",
+   "type": "scale",
+   "desc": "smell it gives off; reveals position",
+   "default": 0
+  },
+  {
+   "id": "state",
+   "group": "physical",
+   "type": "enum",
+   "desc": "state of matter",
+   "values": [
+    "solid",
+    "liquid",
+    "gas",
+    "plasma",
+    "energy",
+    "none"
+   ],
+   "default": "solid"
+  },
+  {
+   "id": "material",
+   "group": "physical",
+   "type": "tags",
+   "desc": "what it is made of (wood, steel, flesh, stone ...)",
+   "default": []
+  },
+  {
+   "id": "shape",
+   "group": "physical",
+   "type": "enum",
+   "desc": "rough form",
+   "values": [
+    "irregular",
+    "flat",
+    "round",
+    "long",
+    "hollow",
+    "pointed",
+    "sheet",
+    "pile"
+   ],
+   "default": "irregular"
+  },
+  {
+   "id": "color",
+   "group": "physical",
+   "type": "text",
+   "desc": "dominant color",
+   "default": ""
+  },
+  {
+   "id": "edible",
+   "group": "physical",
+   "type": "bool",
+   "desc": "can be eaten",
+   "default": false
+  },
+  {
+   "id": "nutrition",
+   "group": "physical",
+   "type": "num",
+   "desc": "food value when eaten",
+   "unit": "food",
+   "default": 0
+  },
+  {
+   "id": "potency",
+   "group": "physical",
+   "type": "scale",
+   "desc": "strength of its drug, medicine or alcohol effect",
+   "default": 0
+  },
+  {
+   "id": "decay_rate",
+   "group": "physical",
+   "type": "num",
+   "desc": "integrity lost per minute on its own",
+   "unit": "hp/min",
+   "default": 0
+  },
+  {
+   "id": "age",
+   "group": "physical",
+   "type": "num",
+   "desc": "time since it was spelled",
+   "unit": "min",
+   "default": 0
+  },
+  {
+   "id": "beauty",
+   "group": "physical",
+   "type": "scale",
+   "desc": "attracts and pleases; raises NPC attitude",
+   "default": 3
+  },
+  {
+   "id": "value",
+   "group": "physical",
+   "type": "num",
+   "desc": "price NPC markets pay",
+   "unit": "coins",
+   "default": 1
+  },
+  {
+   "id": "speed_land",
+   "group": "mobility",
+   "type": "num",
+   "desc": "top speed moving through land",
+   "unit": "m/s",
+   "default": 0
+  },
+  {
+   "id": "speed_water",
+   "group": "mobility",
+   "type": "num",
+   "desc": "top speed moving through water",
+   "unit": "m/s",
+   "default": 0
+  },
+  {
+   "id": "speed_air",
+   "group": "mobility",
+   "type": "num",
+   "desc": "top speed moving through air",
+   "unit": "m/s",
+   "default": 0
+  },
+  {
+   "id": "speed_underground",
+   "group": "mobility",
+   "type": "num",
+   "desc": "top speed moving through underground",
+   "unit": "m/s",
+   "default": 0
+  },
+  {
+   "id": "speed_space",
+   "group": "mobility",
+   "type": "num",
+   "desc": "top speed moving through space",
+   "unit": "m/s",
+   "default": 0
+  },
+  {
+   "id": "acceleration",
+   "group": "mobility",
+   "type": "scale",
+   "desc": "how fast it reaches top speed",
+   "default": 3
+  },
+  {
+   "id": "agility",
+   "group": "mobility",
+   "type": "scale",
+   "desc": "turning and dodging while moving",
+   "default": 3
+  },
+  {
+   "id": "climb",
+   "group": "mobility",
+   "type": "scale",
+   "desc": "crosses cliffs and walls",
+   "default": 0
+  },
+  {
+   "id": "jump",
+   "group": "mobility",
+   "type": "num",
+   "desc": "gap or height it can leap",
+   "unit": "m",
+   "default": 0
+  },
+  {
+   "id": "flight_ceiling",
+   "group": "mobility",
+   "type": "num",
+   "desc": "maximum altitude",
+   "unit": "m",
+   "default": 0
+  },
+  {
+   "id": "dive_depth",
+   "group": "mobility",
+   "type": "num",
+   "desc": "maximum depth under water",
+   "unit": "m",
+   "default": 0
+  },
+  {
+   "id": "hover",
+   "group": "mobility",
+   "type": "bool",
+   "desc": "can stay still in the air",
+   "default": false
+  },
+  {
+   "id": "phase",
+   "group": "mobility",
+   "type": "bool",
+   "desc": "passes through solid objects",
+   "default": false
+  },
+  {
+   "id": "teleport_range",
+   "group": "mobility",
+   "type": "num",
+   "desc": "instant relocation distance",
+   "unit": "m",
+   "default": 0
+  },
+  {
+   "id": "range",
+   "group": "mobility",
+   "type": "num",
+   "desc": "distance before it needs refuelling or rest",
+   "unit": "km",
+   "default": 0
+  },
+  {
+   "id": "carry_capacity",
+   "group": "mobility",
+   "type": "num",
+   "desc": "load it can move",
+   "unit": "kg",
+   "default": 0
+  },
+  {
+   "id": "seats",
+   "group": "mobility",
+   "type": "num",
+   "desc": "riders or passengers it holds",
+   "default": 0
+  },
+  {
+   "id": "tow_capacity",
+   "group": "mobility",
+   "type": "num",
+   "desc": "load it can pull",
+   "unit": "kg",
+   "default": 0
+  },
+  {
+   "id": "mountable",
+   "group": "mobility",
+   "type": "bool",
+   "desc": "a character can ride it",
+   "default": false
+  },
+  {
+   "id": "self_propelled",
+   "group": "mobility",
+   "type": "bool",
+   "desc": "moves without being carried or pushed",
+   "default": false
+  },
+  {
+   "id": "requires_runway",
+   "group": "mobility",
+   "type": "bool",
+   "desc": "needs flat open tiles to take off",
+   "default": false
+  },
+  {
+   "id": "requires_road",
+   "group": "mobility",
+   "type": "bool",
+   "desc": "moves only on routes",
+   "default": false
+  },
+  {
+   "id": "requires_pilot",
+   "group": "mobility",
+   "type": "bool",
+   "desc": "needs a rider to act",
+   "default": true
+  },
+  {
+   "id": "terrain_ignored",
+   "group": "mobility",
+   "type": "tags",
+   "desc": "terrain types that do not slow it",
+   "default": []
+  },
+  {
+   "id": "portable",
+   "group": "mobility",
+   "type": "bool",
+   "desc": "can be picked up and carried",
+   "default": true
+  },
+  {
+   "id": "dmg_blunt",
+   "group": "offence",
+   "type": "num",
+   "desc": "blunt damage per hit",
+   "unit": "hp",
+   "default": 0
+  },
+  {
+   "id": "dmg_slash",
+   "group": "offence",
+   "type": "num",
+   "desc": "slash damage per hit",
+   "unit": "hp",
+   "default": 0
+  },
+  {
+   "id": "dmg_pierce",
+   "group": "offence",
+   "type": "num",
+   "desc": "pierce damage per hit",
+   "unit": "hp",
+   "default": 0
+  },
+  {
+   "id": "dmg_crush",
+   "group": "offence",
+   "type": "num",
+   "desc": "crush damage per hit",
+   "unit": "hp",
+   "default": 0
+  },
+  {
+   "id": "dmg_fire",
+   "group": "offence",
+   "type": "num",
+   "desc": "fire damage per hit",
+   "unit": "hp",
+   "default": 0
+  },
+  {
+   "id": "dmg_cold",
+   "group": "offence",
+   "type": "num",
+   "desc": "cold damage per hit",
+   "unit": "hp",
+   "default": 0
+  },
+  {
+   "id": "dmg_electric",
+   "group": "offence",
+   "type": "num",
+   "desc": "electric damage per hit",
+   "unit": "hp",
+   "default": 0
+  },
+  {
+   "id": "dmg_acid",
+   "group": "offence",
+   "type": "num",
+   "desc": "acid damage per hit",
+   "unit": "hp",
+   "default": 0
+  },
+  {
+   "id": "dmg_poison",
+   "group": "offence",
+   "type": "num",
+   "desc": "poison damage per hit",
+   "unit": "hp",
+   "default": 0
+  },
+  {
+   "id": "dmg_radiation",
+   "group": "offence",
+   "type": "num",
+   "desc": "radiation damage per hit",
+   "unit": "hp",
+   "default": 0
+  },
+  {
+   "id": "dmg_blast",
+   "group": "offence",
+   "type": "num",
+   "desc": "blast damage per hit",
+   "unit": "hp",
+   "default": 0
+  },
+  {
+   "id": "dmg_sonic",
+   "group": "offence",
+   "type": "num",
+   "desc": "sonic damage per hit",
+   "unit": "hp",
+   "default": 0
+  },
+  {
+   "id": "dmg_light",
+   "group": "offence",
+   "type": "num",
+   "desc": "light damage per hit",
+   "unit": "hp",
+   "default": 0
+  },
+  {
+   "id": "dmg_dark",
+   "group": "offence",
+   "type": "num",
+   "desc": "dark damage per hit",
+   "unit": "hp",
+   "default": 0
+  },
+  {
+   "id": "dmg_water",
+   "group": "offence",
+   "type": "num",
+   "desc": "water damage per hit",
+   "unit": "hp",
+   "default": 0
+  },
+  {
+   "id": "dmg_wind",
+   "group": "offence",
+   "type": "num",
+   "desc": "wind damage per hit",
+   "unit": "hp",
+   "default": 0
+  },
+  {
+   "id": "dmg_earth",
+   "group": "offence",
+   "type": "num",
+   "desc": "earth damage per hit",
+   "unit": "hp",
+   "default": 0
+  },
+  {
+   "id": "dmg_psychic",
+   "group": "offence",
+   "type": "num",
+   "desc": "psychic damage per hit",
+   "unit": "hp",
+   "default": 0
+  },
+  {
+   "id": "dmg_holy",
+   "group": "offence",
+   "type": "num",
+   "desc": "holy damage per hit",
+   "unit": "hp",
+   "default": 0
+  },
+  {
+   "id": "dmg_unholy",
+   "group": "offence",
+   "type": "num",
+   "desc": "unholy damage per hit",
+   "unit": "hp",
+   "default": 0
+  },
+  {
+   "id": "dmg_disease",
+   "group": "offence",
+   "type": "num",
+   "desc": "disease damage per hit",
+   "unit": "hp",
+   "default": 0
+  },
+  {
+   "id": "dmg_magic",
+   "group": "offence",
+   "type": "num",
+   "desc": "magic damage per hit",
+   "unit": "hp",
+   "default": 0
+  },
+  {
+   "id": "dmg_suffocation",
+   "group": "offence",
+   "type": "num",
+   "desc": "suffocation damage per hit",
+   "unit": "hp",
+   "default": 0
+  },
+  {
+   "id": "dmg_hunger",
+   "group": "offence",
+   "type": "num",
+   "desc": "hunger damage per hit",
+   "unit": "hp",
+   "default": 0
+  },
+  {
+   "id": "inflict_stun",
+   "group": "offence",
+   "type": "num",
+   "desc": "seconds of stun applied on hit",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "inflict_slow",
+   "group": "offence",
+   "type": "num",
+   "desc": "seconds of slow applied on hit",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "inflict_blind",
+   "group": "offence",
+   "type": "num",
+   "desc": "seconds of blind applied on hit",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "inflict_fear",
+   "group": "offence",
+   "type": "num",
+   "desc": "seconds of fear applied on hit",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "inflict_burn",
+   "group": "offence",
+   "type": "num",
+   "desc": "seconds of burn applied on hit",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "inflict_freeze",
+   "group": "offence",
+   "type": "num",
+   "desc": "seconds of freeze applied on hit",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "inflict_poison",
+   "group": "offence",
+   "type": "num",
+   "desc": "seconds of poison applied on hit",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "inflict_bleed",
+   "group": "offence",
+   "type": "num",
+   "desc": "seconds of bleed applied on hit",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "inflict_sleep",
+   "group": "offence",
+   "type": "num",
+   "desc": "seconds of sleep applied on hit",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "inflict_charm",
+   "group": "offence",
+   "type": "num",
+   "desc": "seconds of charm applied on hit",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "inflict_silence",
+   "group": "offence",
+   "type": "num",
+   "desc": "seconds of silence applied on hit",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "inflict_root",
+   "group": "offence",
+   "type": "num",
+   "desc": "seconds of root applied on hit",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "inflict_confuse",
+   "group": "offence",
+   "type": "num",
+   "desc": "seconds of confuse applied on hit",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "inflict_shrink",
+   "group": "offence",
+   "type": "num",
+   "desc": "seconds of shrink applied on hit",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "attack_rate",
+   "group": "offence",
+   "type": "num",
+   "desc": "how often it strikes",
+   "unit": "hits/s",
+   "default": 0
+  },
+  {
+   "id": "attack_range",
+   "group": "offence",
+   "type": "num",
+   "desc": "reach of its attack",
+   "unit": "m",
+   "default": 1
+  },
+  {
+   "id": "attack_area",
+   "group": "offence",
+   "type": "num",
+   "desc": "blast or sweep radius around the target",
+   "unit": "m",
+   "default": 0
+  },
+  {
+   "id": "attack_windup",
+   "group": "offence",
+   "type": "num",
+   "desc": "delay before the first hit",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "accuracy",
+   "group": "offence",
+   "type": "frac",
+   "desc": "chance a hit lands before evasion",
+   "default": 0.9
+  },
+  {
+   "id": "critical",
+   "group": "offence",
+   "type": "frac",
+   "desc": "chance of a double-damage hit",
+   "default": 0
+  },
+  {
+   "id": "armor_pierce",
+   "group": "offence",
+   "type": "frac",
+   "desc": "fraction of armor ignored",
+   "default": 0
+  },
+  {
+   "id": "siege",
+   "group": "offence",
+   "type": "num",
+   "desc": "damage multiplier against structures",
+   "unit": "x",
+   "default": 1
+  },
+  {
+   "id": "knockback",
+   "group": "offence",
+   "type": "num",
+   "desc": "distance targets are pushed",
+   "unit": "m",
+   "default": 0
+  },
+  {
+   "id": "targets",
+   "group": "offence",
+   "type": "tags",
+   "desc": "layers it can hit (land, water, air, underground)",
+   "default": [
+    "land"
+   ]
+  },
+  {
+   "id": "multi_target",
+   "group": "offence",
+   "type": "num",
+   "desc": "separate targets hit per strike",
+   "default": 1
+  },
+  {
+   "id": "ammo_per_hit",
+   "group": "offence",
+   "type": "num",
+   "desc": "ammunition used each strike",
+   "default": 0
+  },
+  {
+   "id": "ammo_type",
+   "group": "offence",
+   "type": "text",
+   "desc": "word class it fires",
+   "default": ""
+  },
+  {
+   "id": "single_use",
+   "group": "offence",
+   "type": "bool",
+   "desc": "destroyed when it attacks",
+   "default": false
+  },
+  {
+   "id": "self_damage",
+   "group": "offence",
+   "type": "frac",
+   "desc": "fraction of its damage dealt to itself or its user",
+   "default": 0
+  },
+  {
+   "id": "friendly_fire",
+   "group": "offence",
+   "type": "bool",
+   "desc": "area damage also hits its owner's things",
+   "default": false
+  },
+  {
+   "id": "lifesteal",
+   "group": "offence",
+   "type": "frac",
+   "desc": "fraction of damage returned as integrity",
+   "default": 0
+  },
+  {
+   "id": "lingering",
+   "group": "offence",
+   "type": "num",
+   "desc": "how long its damage stays on the tile",
+   "unit": "min",
+   "default": 0
+  },
+  {
+   "id": "ignores_resistance",
+   "group": "offence",
+   "type": "bool",
+   "desc": "attack absolute: bypasses res_* and armor",
+   "default": false
+  },
+  {
+   "id": "res_blunt",
+   "group": "defence",
+   "type": "frac",
+   "desc": "fraction of blunt damage ignored (ABS = immune)",
+   "default": 0
+  },
+  {
+   "id": "res_slash",
+   "group": "defence",
+   "type": "frac",
+   "desc": "fraction of slash damage ignored (ABS = immune)",
+   "default": 0
+  },
+  {
+   "id": "res_pierce",
+   "group": "defence",
+   "type": "frac",
+   "desc": "fraction of pierce damage ignored (ABS = immune)",
+   "default": 0
+  },
+  {
+   "id": "res_crush",
+   "group": "defence",
+   "type": "frac",
+   "desc": "fraction of crush damage ignored (ABS = immune)",
+   "default": 0
+  },
+  {
+   "id": "res_fire",
+   "group": "defence",
+   "type": "frac",
+   "desc": "fraction of fire damage ignored (ABS = immune)",
+   "default": 0
+  },
+  {
+   "id": "res_cold",
+   "group": "defence",
+   "type": "frac",
+   "desc": "fraction of cold damage ignored (ABS = immune)",
+   "default": 0
+  },
+  {
+   "id": "res_electric",
+   "group": "defence",
+   "type": "frac",
+   "desc": "fraction of electric damage ignored (ABS = immune)",
+   "default": 0
+  },
+  {
+   "id": "res_acid",
+   "group": "defence",
+   "type": "frac",
+   "desc": "fraction of acid damage ignored (ABS = immune)",
+   "default": 0
+  },
+  {
+   "id": "res_poison",
+   "group": "defence",
+   "type": "frac",
+   "desc": "fraction of poison damage ignored (ABS = immune)",
+   "default": 0
+  },
+  {
+   "id": "res_radiation",
+   "group": "defence",
+   "type": "frac",
+   "desc": "fraction of radiation damage ignored (ABS = immune)",
+   "default": 0
+  },
+  {
+   "id": "res_blast",
+   "group": "defence",
+   "type": "frac",
+   "desc": "fraction of blast damage ignored (ABS = immune)",
+   "default": 0
+  },
+  {
+   "id": "res_sonic",
+   "group": "defence",
+   "type": "frac",
+   "desc": "fraction of sonic damage ignored (ABS = immune)",
+   "default": 0
+  },
+  {
+   "id": "res_light",
+   "group": "defence",
+   "type": "frac",
+   "desc": "fraction of light damage ignored (ABS = immune)",
+   "default": 0
+  },
+  {
+   "id": "res_dark",
+   "group": "defence",
+   "type": "frac",
+   "desc": "fraction of dark damage ignored (ABS = immune)",
+   "default": 0
+  },
+  {
+   "id": "res_water",
+   "group": "defence",
+   "type": "frac",
+   "desc": "fraction of water damage ignored (ABS = immune)",
+   "default": 0
+  },
+  {
+   "id": "res_wind",
+   "group": "defence",
+   "type": "frac",
+   "desc": "fraction of wind damage ignored (ABS = immune)",
+   "default": 0
+  },
+  {
+   "id": "res_earth",
+   "group": "defence",
+   "type": "frac",
+   "desc": "fraction of earth damage ignored (ABS = immune)",
+   "default": 0
+  },
+  {
+   "id": "res_psychic",
+   "group": "defence",
+   "type": "frac",
+   "desc": "fraction of psychic damage ignored (ABS = immune)",
+   "default": 0
+  },
+  {
+   "id": "res_holy",
+   "group": "defence",
+   "type": "frac",
+   "desc": "fraction of holy damage ignored (ABS = immune)",
+   "default": 0
+  },
+  {
+   "id": "res_unholy",
+   "group": "defence",
+   "type": "frac",
+   "desc": "fraction of unholy damage ignored (ABS = immune)",
+   "default": 0
+  },
+  {
+   "id": "res_disease",
+   "group": "defence",
+   "type": "frac",
+   "desc": "fraction of disease damage ignored (ABS = immune)",
+   "default": 0
+  },
+  {
+   "id": "res_magic",
+   "group": "defence",
+   "type": "frac",
+   "desc": "fraction of magic damage ignored (ABS = immune)",
+   "default": 0
+  },
+  {
+   "id": "res_suffocation",
+   "group": "defence",
+   "type": "frac",
+   "desc": "fraction of suffocation damage ignored (ABS = immune)",
+   "default": 0
+  },
+  {
+   "id": "res_hunger",
+   "group": "defence",
+   "type": "frac",
+   "desc": "fraction of hunger damage ignored (ABS = immune)",
+   "default": 0
+  },
+  {
+   "id": "immune_stun",
+   "group": "defence",
+   "type": "bool",
+   "desc": "cannot be affected by stun",
+   "default": false
+  },
+  {
+   "id": "immune_slow",
+   "group": "defence",
+   "type": "bool",
+   "desc": "cannot be affected by slow",
+   "default": false
+  },
+  {
+   "id": "immune_blind",
+   "group": "defence",
+   "type": "bool",
+   "desc": "cannot be affected by blind",
+   "default": false
+  },
+  {
+   "id": "immune_fear",
+   "group": "defence",
+   "type": "bool",
+   "desc": "cannot be affected by fear",
+   "default": false
+  },
+  {
+   "id": "immune_burn",
+   "group": "defence",
+   "type": "bool",
+   "desc": "cannot be affected by burn",
+   "default": false
+  },
+  {
+   "id": "immune_freeze",
+   "group": "defence",
+   "type": "bool",
+   "desc": "cannot be affected by freeze",
+   "default": false
+  },
+  {
+   "id": "immune_poison",
+   "group": "defence",
+   "type": "bool",
+   "desc": "cannot be affected by poison",
+   "default": false
+  },
+  {
+   "id": "immune_bleed",
+   "group": "defence",
+   "type": "bool",
+   "desc": "cannot be affected by bleed",
+   "default": false
+  },
+  {
+   "id": "immune_sleep",
+   "group": "defence",
+   "type": "bool",
+   "desc": "cannot be affected by sleep",
+   "default": false
+  },
+  {
+   "id": "immune_charm",
+   "group": "defence",
+   "type": "bool",
+   "desc": "cannot be affected by charm",
+   "default": false
+  },
+  {
+   "id": "immune_silence",
+   "group": "defence",
+   "type": "bool",
+   "desc": "cannot be affected by silence",
+   "default": false
+  },
+  {
+   "id": "immune_root",
+   "group": "defence",
+   "type": "bool",
+   "desc": "cannot be affected by root",
+   "default": false
+  },
+  {
+   "id": "immune_confuse",
+   "group": "defence",
+   "type": "bool",
+   "desc": "cannot be affected by confuse",
+   "default": false
+  },
+  {
+   "id": "immune_shrink",
+   "group": "defence",
+   "type": "bool",
+   "desc": "cannot be affected by shrink",
+   "default": false
+  },
+  {
+   "id": "armor",
+   "group": "defence",
+   "type": "num",
+   "desc": "flat damage removed from each hit",
+   "unit": "hp",
+   "default": 0
+  },
+  {
+   "id": "evasion",
+   "group": "defence",
+   "type": "frac",
+   "desc": "chance to avoid a hit entirely",
+   "default": 0
+  },
+  {
+   "id": "block",
+   "group": "defence",
+   "type": "frac",
+   "desc": "chance to stop a hit from the front",
+   "default": 0
+  },
+  {
+   "id": "shield_pool",
+   "group": "defence",
+   "type": "num",
+   "desc": "absorbs damage before integrity",
+   "unit": "hp",
+   "default": 0
+  },
+  {
+   "id": "shield_regen",
+   "group": "defence",
+   "type": "num",
+   "desc": "shield_pool restored per second",
+   "unit": "hp/s",
+   "default": 0
+  },
+  {
+   "id": "regeneration",
+   "group": "defence",
+   "type": "num",
+   "desc": "integrity restored per second",
+   "unit": "hp/s",
+   "default": 0
+  },
+  {
+   "id": "reflect",
+   "group": "defence",
+   "type": "frac",
+   "desc": "fraction of damage sent back",
+   "default": 0
+  },
+  {
+   "id": "thorns",
+   "group": "defence",
+   "type": "num",
+   "desc": "damage dealt to melee attackers",
+   "unit": "hp",
+   "default": 0
+  },
+  {
+   "id": "stealth",
+   "group": "defence",
+   "type": "scale",
+   "desc": "how hard it is to see",
+   "default": 0
+  },
+  {
+   "id": "camouflage",
+   "group": "defence",
+   "type": "tags",
+   "desc": "terrain types where stealth doubles",
+   "default": []
+  },
+  {
+   "id": "cover",
+   "group": "defence",
+   "type": "frac",
+   "desc": "damage reduction it gives things behind or inside it",
+   "default": 0
+  },
+  {
+   "id": "untargetable",
+   "group": "defence",
+   "type": "bool",
+   "desc": "cannot be chosen as a target",
+   "default": false
+  },
+  {
+   "id": "indestructible",
+   "group": "defence",
+   "type": "bool",
+   "desc": "defence absolute: integrity cannot reach 0",
+   "default": false
+  },
+  {
+   "id": "sight_range",
+   "group": "perception",
+   "type": "num",
+   "desc": "how far it sees",
+   "unit": "m",
+   "default": 10
+  },
+  {
+   "id": "hearing_range",
+   "group": "perception",
+   "type": "num",
+   "desc": "how far it detects loudness",
+   "unit": "m",
+   "default": 10
+  },
+  {
+   "id": "smell_range",
+   "group": "perception",
+   "type": "num",
+   "desc": "how far it detects odor",
+   "unit": "m",
+   "default": 0
+  },
+  {
+   "id": "night_vision",
+   "group": "perception",
+   "type": "bool",
+   "desc": "sees without light",
+   "default": false
+  },
+  {
+   "id": "sees_through",
+   "group": "perception",
+   "type": "tags",
+   "desc": "things its sight ignores (walls, fog, water)",
+   "default": []
+  },
+  {
+   "id": "detect_stealth",
+   "group": "perception",
+   "type": "scale",
+   "desc": "cancels this much stealth",
+   "default": 0
+  },
+  {
+   "id": "detect_underground",
+   "group": "perception",
+   "type": "bool",
+   "desc": "sees burrowed and buried things",
+   "default": false
+  },
+  {
+   "id": "detect_letters",
+   "group": "perception",
+   "type": "num",
+   "desc": "range at which it shows letter sources",
+   "unit": "m",
+   "default": 0
+  },
+  {
+   "id": "detect_life",
+   "group": "perception",
+   "type": "num",
+   "desc": "range at which it shows living things",
+   "unit": "m",
+   "default": 0
+  },
+  {
+   "id": "read_properties",
+   "group": "perception",
+   "type": "scale",
+   "desc": "how much of another player's stats it reveals",
+   "default": 0
+  },
+  {
+   "id": "read_inventory",
+   "group": "perception",
+   "type": "bool",
+   "desc": "shows letters another player holds",
+   "default": false
+  },
+  {
+   "id": "map_reveal",
+   "group": "perception",
+   "type": "num",
+   "desc": "radius of map uncovered around it",
+   "unit": "tiles",
+   "default": 0
+  },
+  {
+   "id": "tracking",
+   "group": "perception",
+   "type": "scale",
+   "desc": "follows targets that left sight",
+   "default": 0
+  },
+  {
+   "id": "alarm",
+   "group": "perception",
+   "type": "bool",
+   "desc": "warns its owner when enemies enter sight",
+   "default": false
+  },
+  {
+   "id": "alive",
+   "group": "life",
+   "type": "bool",
+   "desc": "is a living thing",
+   "default": false
+  },
+  {
+   "id": "sentient",
+   "group": "life",
+   "type": "bool",
+   "desc": "can follow orders and use words",
+   "default": false
+  },
+  {
+   "id": "intelligence",
+   "group": "life",
+   "type": "scale",
+   "desc": "quality of its own decisions",
+   "default": 0
+  },
+  {
+   "id": "loyalty",
+   "group": "life",
+   "type": "scale",
+   "desc": "resists being charmed, bribed or stolen",
+   "default": 5
+  },
+  {
+   "id": "aggression",
+   "group": "life",
+   "type": "scale",
+   "desc": "attacks without being told to",
+   "default": 0
+  },
+  {
+   "id": "courage",
+   "group": "life",
+   "type": "scale",
+   "desc": "resists fear",
+   "default": 5
+  },
+  {
+   "id": "obedience",
+   "group": "life",
+   "type": "scale",
+   "desc": "how reliably it follows orders",
+   "default": 5
+  },
+  {
+   "id": "diet",
+   "group": "life",
+   "type": "enum",
+   "desc": "what it must consume",
+   "values": [
+    "none",
+    "herbivore",
+    "carnivore",
+    "omnivore",
+    "scavenger",
+    "photosynthesis",
+    "fuel",
+    "power"
+   ],
+   "default": "none"
+  },
+  {
+   "id": "food_need",
+   "group": "life",
+   "type": "num",
+   "desc": "food it eats",
+   "unit": "food/min",
+   "default": 0
+  },
+  {
+   "id": "water_need",
+   "group": "life",
+   "type": "num",
+   "desc": "water it drinks",
+   "unit": "l/min",
+   "default": 0
+  },
+  {
+   "id": "sleep_need",
+   "group": "life",
+   "type": "frac",
+   "desc": "fraction of time it must rest",
+   "default": 0
+  },
+  {
+   "id": "lifespan",
+   "group": "life",
+   "type": "num",
+   "desc": "dies of age after this (0 = never)",
+   "unit": "min",
+   "default": 0
+  },
+  {
+   "id": "growth_time",
+   "group": "life",
+   "type": "num",
+   "desc": "time to reach full size",
+   "unit": "min",
+   "default": 0
+  },
+  {
+   "id": "reproduction",
+   "group": "life",
+   "type": "num",
+   "desc": "copies of itself it makes when fed",
+   "unit": "/hour",
+   "default": 0
+  },
+  {
+   "id": "tamable",
+   "group": "life",
+   "type": "bool",
+   "desc": "a wild one can be claimed",
+   "default": false
+  },
+  {
+   "id": "trainable",
+   "group": "life",
+   "type": "scale",
+   "desc": "gains ability from use",
+   "default": 0
+  },
+  {
+   "id": "pack_size",
+   "group": "life",
+   "type": "num",
+   "desc": "how many arrive when one is spelled without a plural",
+   "default": 1
+  },
+  {
+   "id": "venomous",
+   "group": "life",
+   "type": "bool",
+   "desc": "its bite or sting poisons",
+   "default": false
+  },
+  {
+   "id": "nocturnal",
+   "group": "life",
+   "type": "bool",
+   "desc": "active at night",
+   "default": false
+  },
+  {
+   "id": "habitat",
+   "group": "life",
+   "type": "tags",
+   "desc": "terrain where it thrives",
+   "default": []
+  },
+  {
+   "id": "temp_min",
+   "group": "life",
+   "type": "num",
+   "desc": "takes cold damage below this",
+   "unit": "C",
+   "default": -10
+  },
+  {
+   "id": "temp_max",
+   "group": "life",
+   "type": "num",
+   "desc": "takes fire damage above this",
+   "unit": "C",
+   "default": 40
+  },
+  {
+   "id": "breathes",
+   "group": "life",
+   "type": "enum",
+   "desc": "what it needs to breathe",
+   "values": [
+    "air",
+    "water",
+    "both",
+    "none"
+   ],
+   "default": "air"
+  },
+  {
+   "id": "hands",
+   "group": "life",
+   "type": "bool",
+   "desc": "can hold tools and weapons",
+   "default": false
+  },
+  {
+   "id": "speech",
+   "group": "life",
+   "type": "bool",
+   "desc": "can trade, negotiate and command",
+   "default": false
+  },
+  {
+   "id": "heals",
+   "group": "life",
+   "type": "num",
+   "desc": "integrity it restores to allies in reach",
+   "unit": "hp/s",
+   "default": 0
+  },
+  {
+   "id": "morale",
+   "group": "life",
+   "type": "scale",
+   "desc": "fights worse when low; flees at 0",
+   "default": 5
+  },
+  {
+   "id": "produce_A",
+   "group": "economy",
+   "type": "num",
+   "desc": "letter A it generates",
+   "unit": "/min",
+   "default": 0
+  },
+  {
+   "id": "produce_B",
+   "group": "economy",
+   "type": "num",
+   "desc": "letter B it generates",
+   "unit": "/min",
+   "default": 0
+  },
+  {
+   "id": "produce_C",
+   "group": "economy",
+   "type": "num",
+   "desc": "letter C it generates",
+   "unit": "/min",
+   "default": 0
+  },
+  {
+   "id": "produce_D",
+   "group": "economy",
+   "type": "num",
+   "desc": "letter D it generates",
+   "unit": "/min",
+   "default": 0
+  },
+  {
+   "id": "produce_E",
+   "group": "economy",
+   "type": "num",
+   "desc": "letter E it generates",
+   "unit": "/min",
+   "default": 0
+  },
+  {
+   "id": "produce_F",
+   "group": "economy",
+   "type": "num",
+   "desc": "letter F it generates",
+   "unit": "/min",
+   "default": 0
+  },
+  {
+   "id": "produce_G",
+   "group": "economy",
+   "type": "num",
+   "desc": "letter G it generates",
+   "unit": "/min",
+   "default": 0
+  },
+  {
+   "id": "produce_H",
+   "group": "economy",
+   "type": "num",
+   "desc": "letter H it generates",
+   "unit": "/min",
+   "default": 0
+  },
+  {
+   "id": "produce_I",
+   "group": "economy",
+   "type": "num",
+   "desc": "letter I it generates",
+   "unit": "/min",
+   "default": 0
+  },
+  {
+   "id": "produce_J",
+   "group": "economy",
+   "type": "num",
+   "desc": "letter J it generates",
+   "unit": "/min",
+   "default": 0
+  },
+  {
+   "id": "produce_K",
+   "group": "economy",
+   "type": "num",
+   "desc": "letter K it generates",
+   "unit": "/min",
+   "default": 0
+  },
+  {
+   "id": "produce_L",
+   "group": "economy",
+   "type": "num",
+   "desc": "letter L it generates",
+   "unit": "/min",
+   "default": 0
+  },
+  {
+   "id": "produce_M",
+   "group": "economy",
+   "type": "num",
+   "desc": "letter M it generates",
+   "unit": "/min",
+   "default": 0
+  },
+  {
+   "id": "produce_N",
+   "group": "economy",
+   "type": "num",
+   "desc": "letter N it generates",
+   "unit": "/min",
+   "default": 0
+  },
+  {
+   "id": "produce_O",
+   "group": "economy",
+   "type": "num",
+   "desc": "letter O it generates",
+   "unit": "/min",
+   "default": 0
+  },
+  {
+   "id": "produce_P",
+   "group": "economy",
+   "type": "num",
+   "desc": "letter P it generates",
+   "unit": "/min",
+   "default": 0
+  },
+  {
+   "id": "produce_Q",
+   "group": "economy",
+   "type": "num",
+   "desc": "letter Q it generates",
+   "unit": "/min",
+   "default": 0
+  },
+  {
+   "id": "produce_R",
+   "group": "economy",
+   "type": "num",
+   "desc": "letter R it generates",
+   "unit": "/min",
+   "default": 0
+  },
+  {
+   "id": "produce_S",
+   "group": "economy",
+   "type": "num",
+   "desc": "letter S it generates",
+   "unit": "/min",
+   "default": 0
+  },
+  {
+   "id": "produce_T",
+   "group": "economy",
+   "type": "num",
+   "desc": "letter T it generates",
+   "unit": "/min",
+   "default": 0
+  },
+  {
+   "id": "produce_U",
+   "group": "economy",
+   "type": "num",
+   "desc": "letter U it generates",
+   "unit": "/min",
+   "default": 0
+  },
+  {
+   "id": "produce_V",
+   "group": "economy",
+   "type": "num",
+   "desc": "letter V it generates",
+   "unit": "/min",
+   "default": 0
+  },
+  {
+   "id": "produce_W",
+   "group": "economy",
+   "type": "num",
+   "desc": "letter W it generates",
+   "unit": "/min",
+   "default": 0
+  },
+  {
+   "id": "produce_X",
+   "group": "economy",
+   "type": "num",
+   "desc": "letter X it generates",
+   "unit": "/min",
+   "default": 0
+  },
+  {
+   "id": "produce_Y",
+   "group": "economy",
+   "type": "num",
+   "desc": "letter Y it generates",
+   "unit": "/min",
+   "default": 0
+  },
+  {
+   "id": "produce_Z",
+   "group": "economy",
+   "type": "num",
+   "desc": "letter Z it generates",
+   "unit": "/min",
+   "default": 0
+  },
+  {
+   "id": "production_needs",
+   "group": "economy",
+   "type": "tags",
+   "desc": "inputs it must be supplied to produce",
+   "default": []
+  },
+  {
+   "id": "harvest_bonus",
+   "group": "economy",
+   "type": "num",
+   "desc": "multiplier on letters gathered by hand nearby",
+   "unit": "x",
+   "default": 1
+  },
+  {
+   "id": "harvest_sources",
+   "group": "economy",
+   "type": "tags",
+   "desc": "source types the bonus applies to",
+   "default": []
+  },
+  {
+   "id": "upkeep_food",
+   "group": "economy",
+   "type": "num",
+   "desc": "food to keep it working",
+   "unit": "food/min",
+   "default": 0
+  },
+  {
+   "id": "upkeep_fuel",
+   "group": "economy",
+   "type": "num",
+   "desc": "fuel to keep it working",
+   "unit": "fuel/min",
+   "default": 0
+  },
+  {
+   "id": "upkeep_power",
+   "group": "economy",
+   "type": "num",
+   "desc": "power to keep it working",
+   "unit": "kW",
+   "default": 0
+  },
+  {
+   "id": "food_output",
+   "group": "economy",
+   "type": "num",
+   "desc": "food it supplies",
+   "unit": "food/min",
+   "default": 0
+  },
+  {
+   "id": "fuel_output",
+   "group": "economy",
+   "type": "num",
+   "desc": "fuel it supplies",
+   "unit": "fuel/min",
+   "default": 0
+  },
+  {
+   "id": "power_output",
+   "group": "economy",
+   "type": "num",
+   "desc": "power it supplies",
+   "unit": "kW",
+   "default": 0
+  },
+  {
+   "id": "water_output",
+   "group": "economy",
+   "type": "num",
+   "desc": "water it supplies",
+   "unit": "l/min",
+   "default": 0
+  },
+  {
+   "id": "storage_letters",
+   "group": "economy",
+   "type": "num",
+   "desc": "letters it holds safely",
+   "default": 0
+  },
+  {
+   "id": "storage_objects",
+   "group": "economy",
+   "type": "num",
+   "desc": "objects it holds",
+   "unit": "kg",
+   "default": 0
+  },
+  {
+   "id": "security",
+   "group": "economy",
+   "type": "scale",
+   "desc": "resists theft and raiding of its contents",
+   "default": 0
+  },
+  {
+   "id": "reclaim_rate",
+   "group": "economy",
+   "type": "frac",
+   "desc": "fraction of letters returned from objects destroyed in reach",
+   "default": 0
+  },
+  {
+   "id": "reclaim_range",
+   "group": "economy",
+   "type": "num",
+   "desc": "reach of reclaim_rate",
+   "unit": "m",
+   "default": 0
+  },
+  {
+   "id": "transmute_in",
+   "group": "economy",
+   "type": "num",
+   "desc": "common letters consumed per rare letter made",
+   "default": 0
+  },
+  {
+   "id": "trade_bonus",
+   "group": "economy",
+   "type": "frac",
+   "desc": "better prices at NPC markets",
+   "default": 0
+  },
+  {
+   "id": "labor",
+   "group": "economy",
+   "type": "num",
+   "desc": "work it performs for stations and fields",
+   "unit": "work/min",
+   "default": 0
+  },
+  {
+   "id": "build_speed",
+   "group": "economy",
+   "type": "num",
+   "desc": "multiplier on placing structures",
+   "unit": "x",
+   "default": 1
+  },
+  {
+   "id": "craft_slots",
+   "group": "economy",
+   "type": "num",
+   "desc": "stations or processes it can run at once",
+   "default": 0
+  },
+  {
+   "id": "tile_type",
+   "group": "spatial",
+   "type": "enum",
+   "desc": "terrain it creates",
+   "values": [
+    "none",
+    "water",
+    "deep_water",
+    "hill",
+    "mountain",
+    "pit",
+    "forest",
+    "field",
+    "sand",
+    "snow",
+    "swamp",
+    "lava",
+    "road",
+    "floor",
+    "wall"
+   ],
+   "default": "none"
+  },
+  {
+   "id": "radius",
+   "group": "spatial",
+   "type": "num",
+   "desc": "size of the terrain or area it creates",
+   "unit": "tiles",
+   "default": 0
+  },
+  {
+   "id": "elevation",
+   "group": "spatial",
+   "type": "num",
+   "desc": "height it raises the ground",
+   "unit": "m",
+   "default": 0
+  },
+  {
+   "id": "depth",
+   "group": "spatial",
+   "type": "num",
+   "desc": "depth it lowers the ground or holds water",
+   "unit": "m",
+   "default": 0
+  },
+  {
+   "id": "blocks",
+   "group": "spatial",
+   "type": "tags",
+   "desc": "what cannot pass (land, water, air, sight, projectiles)",
+   "default": []
+  },
+  {
+   "id": "movement_cost",
+   "group": "spatial",
+   "type": "num",
+   "desc": "slowdown for things crossing it",
+   "unit": "x",
+   "default": 1
+  },
+  {
+   "id": "fertility",
+   "group": "spatial",
+   "type": "scale",
+   "desc": "growth multiplier for flora on it",
+   "default": 0
+  },
+  {
+   "id": "moisture",
+   "group": "spatial",
+   "type": "scale",
+   "desc": "water it adds to tiles around it",
+   "default": 0
+  },
+  {
+   "id": "placeable_on",
+   "group": "spatial",
+   "type": "tags",
+   "desc": "terrain it can be spelled onto",
+   "default": [
+    "land"
+   ]
+  },
+  {
+   "id": "needs_foundation",
+   "group": "spatial",
+   "type": "bool",
+   "desc": "must sit on floor or flat ground",
+   "default": false
+  },
+  {
+   "id": "enterable",
+   "group": "spatial",
+   "type": "bool",
+   "desc": "characters can go inside",
+   "default": false
+  },
+  {
+   "id": "occupants",
+   "group": "spatial",
+   "type": "num",
+   "desc": "characters and creatures it shelters",
+   "default": 0
+  },
+  {
+   "id": "lockable",
+   "group": "spatial",
+   "type": "bool",
+   "desc": "only its owner may enter or open it",
+   "default": false
+  },
+  {
+   "id": "stackable",
+   "group": "spatial",
+   "type": "bool",
+   "desc": "can be placed on top of another structure",
+   "default": false
+  },
+  {
+   "id": "spread_rate",
+   "group": "spatial",
+   "type": "num",
+   "desc": "how fast it grows into neighbouring tiles",
+   "unit": "tiles/min",
+   "default": 0
+  },
+  {
+   "id": "persistence",
+   "group": "spatial",
+   "type": "num",
+   "desc": "how long it lasts (0 = permanent)",
+   "unit": "min",
+   "default": 0
+  },
+  {
+   "id": "claim_radius",
+   "group": "spatial",
+   "type": "num",
+   "desc": "territory it claims for its owner",
+   "unit": "tiles",
+   "default": 0
+  },
+  {
+   "id": "placement",
+   "group": "spatial",
+   "type": "enum",
+   "desc": "where it appears: at the speller, on a chosen target, overhead, over an area, everywhere",
+   "values": [
+    "self",
+    "target",
+    "sky",
+    "region",
+    "map"
+   ],
+   "default": "self"
+  },
+  {
+   "id": "placement_range",
+   "group": "spatial",
+   "type": "num",
+   "desc": "how far from the speller a target or area may be",
+   "unit": "m",
+   "default": 0
+  },
+  {
+   "id": "authority",
+   "group": "social",
+   "type": "scale",
+   "desc": "NPCs and lesser units obey its owner",
+   "default": 0
+  },
+  {
+   "id": "command_limit",
+   "group": "social",
+   "type": "num",
+   "desc": "units it lets its owner control",
+   "default": 0
+  },
+  {
+   "id": "fear_aura",
+   "group": "social",
+   "type": "scale",
+   "desc": "lowers enemy morale in sight",
+   "default": 0
+  },
+  {
+   "id": "charm",
+   "group": "social",
+   "type": "scale",
+   "desc": "raises NPC attitude and trade prices",
+   "default": 0
+  },
+  {
+   "id": "intimidation",
+   "group": "social",
+   "type": "scale",
+   "desc": "makes NPCs yield letters or territory",
+   "default": 0
+  },
+  {
+   "id": "recruit_rate",
+   "group": "social",
+   "type": "num",
+   "desc": "NPCs it draws to its owner",
+   "unit": "/min",
+   "default": 0
+  },
+  {
+   "id": "tax_rate",
+   "group": "social",
+   "type": "frac",
+   "desc": "share of NPC letter income it collects",
+   "default": 0
+  },
+  {
+   "id": "law",
+   "group": "social",
+   "type": "tags",
+   "desc": "acts it forbids inside its claim",
+   "default": []
+  },
+  {
+   "id": "binds",
+   "group": "social",
+   "type": "num",
+   "desc": "players it can hold to an agreement",
+   "default": 0
+  },
+  {
+   "id": "bind_penalty",
+   "group": "social",
+   "type": "tags",
+   "desc": "what breaking the agreement costs",
+   "default": []
+  },
+  {
+   "id": "faction",
+   "group": "social",
+   "type": "text",
+   "desc": "group it belongs to or creates",
+   "default": ""
+  },
+  {
+   "id": "reputation",
+   "group": "social",
+   "type": "num",
+   "desc": "standing change with NPCs while owned",
+   "default": 0
+  },
+  {
+   "id": "adjective_slots",
+   "group": "slots",
+   "type": "num",
+   "desc": "adjectives it can carry",
+   "default": 1
+  },
+  {
+   "id": "grants_adjective_slots",
+   "group": "slots",
+   "type": "num",
+   "desc": "extra adjective slots it gives its owner's nouns",
+   "default": 0
+  },
+  {
+   "id": "grants_slots_to",
+   "group": "slots",
+   "type": "tags",
+   "desc": "noun classes that receive the extra slots",
+   "default": []
+  },
+  {
+   "id": "equip_slot",
+   "group": "slots",
+   "type": "enum",
+   "desc": "where a character wears or uses it",
+   "values": [
+    "none",
+    "head",
+    "face",
+    "neck",
+    "body",
+    "back",
+    "hands",
+    "feet",
+    "finger",
+    "held",
+    "graft",
+    "mount",
+    "companion"
+   ],
+   "default": "none"
+  },
+  {
+   "id": "hands_required",
+   "group": "slots",
+   "type": "num",
+   "desc": "hands needed to wield it",
+   "default": 0
+  },
+  {
+   "id": "grants_equip_slots",
+   "group": "slots",
+   "type": "tags",
+   "desc": "extra equip slots it gives its wearer",
+   "default": []
+  },
+  {
+   "id": "companion_slots",
+   "group": "slots",
+   "type": "num",
+   "desc": "extra companions it lets its owner keep",
+   "default": 0
+  },
+  {
+   "id": "container_slots",
+   "group": "slots",
+   "type": "num",
+   "desc": "objects it can hold inside itself",
+   "default": 0
+  },
+  {
+   "id": "plural_count",
+   "group": "slots",
+   "type": "num",
+   "desc": "how many appear when the plural is spelled",
+   "default": 3
+  },
+  {
+   "id": "is_absolute",
+   "group": "meta",
+   "type": "bool",
+   "desc": "sets a property to ABS instead of scaling it",
+   "default": false
+  },
+  {
+   "id": "absolute_side",
+   "group": "meta",
+   "type": "enum",
+   "desc": "attack absolutes beat defence absolutes",
+   "values": [
+    "none",
+    "attack",
+    "defence"
+   ],
+   "default": "none"
+  },
+  {
+   "id": "specificity",
+   "group": "meta",
+   "type": "num",
+   "desc": "depth in the word tree; specific beats general among absolutes",
+   "default": 0
+  },
+  {
+   "id": "counters",
+   "group": "meta",
+   "type": "tags",
+   "desc": "words, classes or properties it specifically defeats",
+   "default": []
+  },
+  {
+   "id": "strips_adjectives",
+   "group": "meta",
+   "type": "num",
+   "desc": "adjectives it removes from a target",
+   "default": 0
+  },
+  {
+   "id": "copies",
+   "group": "meta",
+   "type": "bool",
+   "desc": "becomes a copy of its target",
+   "default": false
+  },
+  {
+   "id": "negates",
+   "group": "meta",
+   "type": "tags",
+   "desc": "properties it resets to default on a target",
+   "default": []
+  },
+  {
+   "id": "silences",
+   "group": "meta",
+   "type": "num",
+   "desc": "radius in which verbs cannot be cast",
+   "unit": "m",
+   "default": 0
+  },
+  {
+   "id": "letter_refund",
+   "group": "meta",
+   "type": "frac",
+   "desc": "fraction of its own letters returned when it is destroyed",
+   "default": 0
+  },
+  {
+   "id": "letter_steal",
+   "group": "meta",
+   "type": "num",
+   "desc": "letters taken from a target's stores per hit",
+   "default": 0
+  },
+  {
+   "id": "duplicates",
+   "group": "meta",
+   "type": "num",
+   "desc": "extra copies made of the next word spelled",
+   "default": 0
+  },
+  {
+   "id": "extends_duration",
+   "group": "meta",
+   "type": "num",
+   "desc": "multiplier on durations of timed words",
+   "unit": "x",
+   "default": 1
+  },
+  {
+   "id": "on_owner_death",
+   "group": "meta",
+   "type": "enum",
+   "desc": "what it does when its owner dies",
+   "values": [
+    "drop",
+    "vanish",
+    "explode",
+    "pass_to_heir",
+    "revive_owner"
+   ],
+   "default": "drop"
+  },
+  {
+   "id": "survives_death",
+   "group": "meta",
+   "type": "bool",
+   "desc": "stays with a successor instead of becoming loot",
+   "default": false
+  },
+  {
+   "id": "prevents_death",
+   "group": "meta",
+   "type": "num",
+   "desc": "deaths it absorbs before it is used up",
+   "default": 0
+  },
+  {
+   "id": "locks",
+   "group": "meta",
+   "type": "bool",
+   "desc": "its target cannot be dismantled, moved or stolen",
+   "default": false
+  },
+  {
+   "id": "field_radius",
+   "group": "field",
+   "type": "num",
+   "desc": "reach of the aura or condition (ABS = whole map)",
+   "unit": "m",
+   "default": 0
+  },
+  {
+   "id": "field_targets",
+   "group": "field",
+   "type": "enum",
+   "desc": "what it affects",
+   "values": [
+    "self",
+    "owned",
+    "allies",
+    "enemies",
+    "living",
+    "objects",
+    "all"
+   ],
+   "default": "all"
+  },
+  {
+   "id": "field_property",
+   "group": "field",
+   "type": "text",
+   "desc": "property it changes on everything in reach",
+   "default": ""
+  },
+  {
+   "id": "field_delta",
+   "group": "field",
+   "type": "num",
+   "desc": "amount added to that property",
+   "default": 0
+  },
+  {
+   "id": "field_multiplier",
+   "group": "field",
+   "type": "num",
+   "desc": "multiplier applied to that property",
+   "unit": "x",
+   "default": 1
+  },
+  {
+   "id": "field_duration",
+   "group": "field",
+   "type": "num",
+   "desc": "how long it lasts (0 = while the word exists)",
+   "unit": "min",
+   "default": 0
+  },
+  {
+   "id": "light_delta",
+   "group": "field",
+   "type": "scale",
+   "desc": "change to light level",
+   "default": 0
+  },
+  {
+   "id": "temperature_delta",
+   "group": "field",
+   "type": "num",
+   "desc": "change to ambient temperature",
+   "unit": "C",
+   "default": 0
+  },
+  {
+   "id": "visibility",
+   "group": "field",
+   "type": "num",
+   "desc": "multiplier on all sight ranges",
+   "unit": "x",
+   "default": 1
+  },
+  {
+   "id": "growth",
+   "group": "field",
+   "type": "num",
+   "desc": "multiplier on flora and creature growth",
+   "unit": "x",
+   "default": 1
+  },
+  {
+   "id": "contagion",
+   "group": "field",
+   "type": "frac",
+   "desc": "chance per minute it spreads to a neighbour",
+   "default": 0
+  },
+  {
+   "id": "sets_daylight",
+   "group": "field",
+   "type": "enum",
+   "desc": "forces day or night in its field",
+   "values": [
+    "none",
+    "day",
+    "night"
+   ],
+   "default": "none"
+  },
+  {
+   "id": "sets_weather",
+   "group": "field",
+   "type": "text",
+   "desc": "weather it starts in its field",
+   "default": ""
+  },
+  {
+   "id": "clears_weather",
+   "group": "field",
+   "type": "tags",
+   "desc": "weather it ends in its field",
+   "default": []
+  },
+  {
+   "id": "event_target",
+   "group": "event",
+   "type": "enum",
+   "desc": "what the event is dropped on",
+   "values": [
+    "object",
+    "creature",
+    "character",
+    "structure",
+    "tile",
+    "region",
+    "faction",
+    "map"
+   ],
+   "default": "object"
+  },
+  {
+   "id": "event_radius",
+   "group": "event",
+   "type": "num",
+   "desc": "area around the target it also affects",
+   "unit": "m",
+   "default": 0
+  },
+  {
+   "id": "event_duration",
+   "group": "event",
+   "type": "num",
+   "desc": "how long the event runs (0 = instant)",
+   "unit": "min",
+   "default": 0
+  },
+  {
+   "id": "transfers_ownership",
+   "group": "event",
+   "type": "bool",
+   "desc": "the target becomes the speller's",
+   "default": false
+  },
+  {
+   "id": "destroys_target",
+   "group": "event",
+   "type": "bool",
+   "desc": "the target is destroyed outright",
+   "default": false
+  },
+  {
+   "id": "contest_with",
+   "group": "event",
+   "type": "text",
+   "desc": "speller's property that powers the event",
+   "default": ""
+  },
+  {
+   "id": "contested_by",
+   "group": "event",
+   "type": "text",
+   "desc": "target's property that resists it",
+   "default": ""
+  },
+  {
+   "id": "sets_hostile",
+   "group": "event",
+   "type": "bool",
+   "desc": "everything in the area fights everything not its own",
+   "default": false
+  },
+  {
+   "id": "frees_target",
+   "group": "event",
+   "type": "bool",
+   "desc": "the target stops belonging to anyone",
+   "default": false
+  },
+  {
+   "id": "moves_target",
+   "group": "event",
+   "type": "num",
+   "desc": "distance the target is carried toward the speller",
+   "unit": "m",
+   "default": 0
+  },
+  {
+   "id": "cast_time",
+   "group": "effect",
+   "type": "num",
+   "desc": "delay between spelling and effect",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "duration",
+   "group": "effect",
+   "type": "num",
+   "desc": "how long the effect lasts (0 = instant)",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "effect_target",
+   "group": "effect",
+   "type": "enum",
+   "desc": "what a verb acts on",
+   "values": [
+    "self",
+    "held",
+    "mount",
+    "companion",
+    "touched"
+   ],
+   "default": "self"
+  },
+  {
+   "id": "effect_property",
+   "group": "effect",
+   "type": "text",
+   "desc": "property it changes",
+   "default": ""
+  },
+  {
+   "id": "effect_delta",
+   "group": "effect",
+   "type": "num",
+   "desc": "amount added to that property",
+   "default": 0
+  },
+  {
+   "id": "effect_multiplier",
+   "group": "effect",
+   "type": "num",
+   "desc": "multiplier applied to that property",
+   "unit": "x",
+   "default": 1
+  },
+  {
+   "id": "effect_status",
+   "group": "effect",
+   "type": "tags",
+   "desc": "status effects it applies or removes",
+   "default": []
+  },
+  {
+   "id": "restores",
+   "group": "effect",
+   "type": "num",
+   "desc": "integrity restored",
+   "unit": "hp",
+   "default": 0
+  }
+ ]
+}

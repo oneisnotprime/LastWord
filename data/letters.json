@@ -1,0 +1,158 @@
+[
+ {
+  "letter": "E",
+  "class": "vowel",
+  "source": "foraged anywhere",
+  "lexicon_share": 0.1088
+ },
+ {
+  "letter": "I",
+  "class": "vowel",
+  "source": "livestock and pets",
+  "lexicon_share": 0.0881
+ },
+ {
+  "letter": "A",
+  "class": "vowel",
+  "source": "crop fields on tilled land",
+  "lexicon_share": 0.0846
+ },
+ {
+  "letter": "R",
+  "class": "core",
+  "source": "road and route segments held",
+  "lexicon_share": 0.0712
+ },
+ {
+  "letter": "N",
+  "class": "core",
+  "source": "hired NPC labour",
+  "lexicon_share": 0.0706
+ },
+ {
+  "letter": "T",
+  "class": "core",
+  "source": "per completed trade",
+  "lexicon_share": 0.0693
+ },
+ {
+  "letter": "O",
+  "class": "vowel",
+  "source": "water: wells, lakes, fishing",
+  "lexicon_share": 0.0692
+ },
+ {
+  "letter": "S",
+  "class": "core",
+  "source": "per NPC citizen in controlled cities",
+  "lexicon_share": 0.0628
+ },
+ {
+  "letter": "L",
+  "class": "core",
+  "source": "per tile of land held",
+  "lexicon_share": 0.0596
+ },
+ {
+  "letter": "C",
+  "class": "made",
+  "source": "crafting stations",
+  "lexicon_share": 0.0454
+ },
+ {
+  "letter": "U",
+  "class": "vowel",
+  "source": "caves and fungus",
+  "lexicon_share": 0.0366
+ },
+ {
+  "letter": "D",
+  "class": "made",
+  "source": "destroying objects and structures",
+  "lexicon_share": 0.0329
+ },
+ {
+  "letter": "P",
+  "class": "made",
+  "source": "planted flora, harvested on a cycle",
+  "lexicon_share": 0.03
+ },
+ {
+  "letter": "M",
+  "class": "made",
+  "source": "machines that convert vowels",
+  "lexicon_share": 0.0296
+ },
+ {
+  "letter": "H",
+  "class": "made",
+  "source": "hunting wild creatures",
+  "lexicon_share": 0.0249
+ },
+ {
+  "letter": "G",
+  "class": "made",
+  "source": "quarries and digging",
+  "lexicon_share": 0.0238
+ },
+ {
+  "letter": "Y",
+  "class": "vowel",
+  "source": "age of surviving objects",
+  "lexicon_share": 0.0221
+ },
+ {
+  "letter": "B",
+  "class": "made",
+  "source": "base furniture",
+  "lexicon_share": 0.0204
+ },
+ {
+  "letter": "F",
+  "class": "made",
+  "source": "burning objects",
+  "lexicon_share": 0.0132
+ },
+ {
+  "letter": "V",
+  "class": "made",
+  "source": "winning fights against player-owned objects",
+  "lexicon_share": 0.0104
+ },
+ {
+  "letter": "K",
+  "class": "made",
+  "source": "kills of NPCs or players",
+  "lexicon_share": 0.0086
+ },
+ {
+  "letter": "W",
+  "class": "made",
+  "source": "windmills and watermills, varying with weather",
+  "lexicon_share": 0.0077
+ },
+ {
+  "letter": "Z",
+  "class": "rare",
+  "source": "boss drops and transmutation",
+  "lexicon_share": 0.0036
+ },
+ {
+  "letter": "X",
+  "class": "rare",
+  "source": "buried caches and ruins",
+  "lexicon_share": 0.0034
+ },
+ {
+  "letter": "Q",
+  "class": "rare",
+  "source": "one unique site per map",
+  "lexicon_share": 0.0017
+ },
+ {
+  "letter": "J",
+  "class": "rare",
+  "source": "exploring undiscovered tiles",
+  "lexicon_share": 0.0016
+ }
+]

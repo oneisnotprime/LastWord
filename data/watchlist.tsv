@@ -1,0 +1,270 @@
+word	reason	length	cost	cost_per_letter	scarce_letters	roles
+ten	absolute and scaling modifiers	3	4.1	1.4	-	adjective:quality
+all	absolute and scaling modifiers	3	4.9	1.6	-	adjective:quality
+top	absolute and scaling modifiers	3	6.8	2.3	-	noun:place
+dire	absolute and scaling modifiers	4	7.1	1.8	-	adjective:quality
+sure	absolute and scaling modifiers	4	7.2	1.8	-	adjective:quality
+any	absolute and scaling modifiers	3	7.8	2.6	-	adjective:quality
+total	absolute and scaling modifiers	5	7.8	1.6	-	noun:artifact
+more	absolute and scaling modifiers	4	7.8	1.9	-	adjective:quality
+epic	absolute and scaling modifiers	4	8.3	2.1	-	adjective:quality
+most	absolute and scaling modifiers	4	8.6	2.1	-	adjective:quality
+pure	absolute and scaling modifiers	4	9.1	2.3	-	adjective:quality
+ultra	absolute and scaling modifiers	5	9.2	1.8	-	adjective:quality
+dual	absolute and scaling modifiers	4	9.4	2.4	-	adjective:quality
+best	absolute and scaling modifiers	4	9.6	2.4	-	adjective:quality
+eternal	absolute and scaling modifiers	7	9.8	1.4	-	adjective:absolute
+great	absolute and scaling modifiers	5	10.0	2.0	-	adjective:quality
+triple	absolute and scaling modifiers	6	10.8	1.8	-	noun:group
+super	absolute and scaling modifiers	5	10.9	2.2	-	adjective:quality
+big	absolute and scaling modifiers	3	11.1	3.7	-	adjective:quality
+prime	absolute and scaling modifiers	5	11.1	2.2	-	adjective:quality
+many	absolute and scaling modifiers	4	11.4	2.9	-	adjective:quality
+atomic	absolute and scaling modifiers	6	11.7	1.9	-	adjective:pertaining
+free	absolute and scaling modifiers	4	11.8	3.0	-	adjective:quality
+lethal	absolute and scaling modifiers	6	11.9	2.0	-	adjective:absolute
+safe	absolute and scaling modifiers	4	12.3	3.1	-	adjective:quality
+trillion	absolute and scaling modifiers	8	12.3	1.5	-	noun:quantity
+nuclear	absolute and scaling modifiers	7	12.5	1.8	-	adjective:quality
+holy	absolute and scaling modifiers	4	12.7	3.2	-	adjective:quality
+huge	absolute and scaling modifiers	4	12.9	3.2	-	adjective:quality
+million	absolute and scaling modifiers	7	12.9	1.8	-	adjective:quality
+cosmic	absolute and scaling modifiers	6	13.0	2.2	-	adjective:pertaining
+immune	absolute and scaling modifiers	6	14.1	2.4	-	noun:person
+fatal	absolute and scaling modifiers	5	14.2	2.8	-	adjective:quality
+billion	absolute and scaling modifiers	7	14.6	2.1	-	adjective:quality
+vast	absolute and scaling modifiers	4	15.1	3.8	V	adjective:quality
+ultimate	absolute and scaling modifiers	8	15.1	1.9	-	adjective:quality
+supreme	absolute and scaling modifiers	7	15.5	2.2	-	adjective:quality
+deadly	absolute and scaling modifiers	6	15.6	2.6	-	adjective:quality
+myriad	absolute and scaling modifiers	6	16.0	2.7	-	adjective:quality
+double	absolute and scaling modifiers	6	16.0	2.7	-	adjective:quality
+immortal	absolute and scaling modifiers	8	16.4	2.0	-	adjective:absolute
+infinite	absolute and scaling modifiers	8	17.6	2.2	-	adjective:absolute
+hundred	absolute and scaling modifiers	7	18.0	2.6	-	adjective:quality
+thousand	absolute and scaling modifiers	8	18.4	2.3	-	noun:quantity
+twin	absolute and scaling modifiers	4	18.5	4.6	W	noun:person
+divine	absolute and scaling modifiers	6	18.8	3.1	V	adjective:quality
+every	absolute and scaling modifiers	5	18.9	3.8	V	adjective:quality
+omnipotent	absolute and scaling modifiers	10	18.9	1.9	-	adjective:quality
+perfect	absolute and scaling modifiers	7	19.4	2.8	-	adjective:quality
+mighty	absolute and scaling modifiers	6	20.3	3.4	-	adjective:quality
+almighty	absolute and scaling modifiers	8	23.5	2.9	-	adjective:quality
+invisible	absolute and scaling modifiers	9	25.6	2.8	V	adjective:absolute
+invincible	absolute and scaling modifiers	10	27.8	2.8	V	adjective:absolute
+max	absolute and scaling modifiers	3	37.0	12.3	X	noun:medicine
+toxic	absolute and scaling modifiers	5	38.8	7.8	X	adjective:quality
+titan	beings and forces	5	7.2	1.4	-	noun:person
+ogre	beings and forces	4	8.7	2.2	-	noun:person
+host	beings and forces	4	9.2	2.3	-	noun:person
+genie	beings and forces	5	9.3	1.9	-	noun:supernatural
+god	beings and forces	3	9.5	3.2	-	noun:supernatural
+reaper	beings and forces	6	10.0	1.7	-	noun:worker
+angel	beings and forces	5	10.2	2.0	-	noun:supernatural
+giant	beings and forces	5	10.2	2.0	-	noun:supernatural
+mob	beings and forces	3	10.6	3.5	-	noun:group
+demon	beings and forces	5	11.1	2.2	-	noun:supernatural
+army	beings and forces	4	11.4	2.9	-	noun:group
+legion	beings and forces	6	11.7	1.9	-	noun:group
+horde	beings and forces	5	11.8	2.4	-	noun:group
+deity	beings and forces	5	12.0	2.4	-	noun:supernatural
+tyrant	beings and forces	6	12.4	2.1	-	noun:leader
+golem	beings and forces	5	12.6	2.5	-	noun:supernatural
+fleet	beings and forces	5	13.6	2.7	-	adjective:quality
+dragon	beings and forces	6	13.8	2.3	-	noun:supernatural
+ghost	beings and forces	5	13.8	2.8	-	noun:supernatural
+emperor	beings and forces	7	13.9	2.0	-	noun:leader
+hydra	beings and forces	5	15.4	3.1	-	noun:knowledge
+colossus	beings and forces	8	15.5	1.9	-	noun:person
+devil	beings and forces	5	17.8	3.6	V	noun:supernatural
+navy	beings and forces	4	18.2	4.5	V	noun:group
+king	beings and forces	4	20.0	5.0	K	noun:leader
+swarm	beings and forces	5	22.4	4.5	W	noun:group
+behemoth	beings and forces	8	22.9	2.9	-	noun:person
+leviathan	beings and forces	9	24.6	2.7	V	noun:person
+zombie	beings and forces	6	43.0	7.2	Z	noun:supernatural
+sphinx	beings and forces	6	44.5	7.4	X	noun:person
+wizard	beings and forces	6	51.7	8.6	WZ	noun:worker
+djinn	beings and forces	5	75.6	15.1	J	noun:supernatural
+heir	death escape	4	8.1	2.0	-	noun:worker
+soul	death escape	4	8.1	2.0	-	noun:person
+ark	death escape	3	15.5	5.2	K	noun:vehicle_water
+vault	death escape	5	18.1	3.6	V	noun:structure
+will	death escape	4	19.0	4.8	W	noun:knowledge
+heaven	death escape	6	19.7	3.3	V	noun:place
+bunker	death escape	6	25.0	4.2	K	noun:fortification
+elixir	death escape	6	38.8	6.5	X	noun:liquid
+phoenix	death escape	7	45.3	6.5	X	noun:plant
+ore	economy	3	4.1	1.4	-	noun:mineral
+oil	economy	3	4.6	1.5	-	noun:liquid
+rent	economy	4	5.6	1.4	-	noun:possession
+loan	economy	4	6.2	1.6	-	noun:possession
+loot	economy	4	6.5	1.6	-	noun:possession
+mint	economy	4	8.0	2.0	-	noun:quantity
+crop	economy	4	9.1	2.3	-	noun:exchange
+herd	economy	4	10.2	2.5	-	noun:group
+mirror	economy	6	11.1	1.8	-	noun:device
+debt	economy	4	11.2	2.8	-	noun:possession
+gold	economy	4	11.3	2.8	-	noun:metal
+farm	economy	4	14.7	3.7	-	noun:structure
+bank	economy	4	20.8	5.2	K	noun:building
+factory	economy	7	21.5	3.1	-	noun:structure
+tax	economy	3	34.9	11.6	X	noun:possession
+pen	letter and word meta	3	6.2	2.1	-	noun:tool
+rune	letter and word meta	4	7.0	1.8	-	noun:inert
+name	letter and word meta	4	7.5	1.9	-	noun:group
+noun	letter and word meta	4	7.6	1.9	-	noun:inert
+letter	letter and word meta	6	8.5	1.4	-	noun:person
+press	letter and word meta	5	9.6	1.9	-	verb:contact
+spell	letter and word meta	5	10.0	2.0	-	verb:create
+type	letter and word meta	4	11.1	2.8	-	noun:knowledge
+printer	letter and word meta	7	12.0	1.7	-	noun:worker
+font	letter and word meta	4	12.9	3.2	-	noun:container
+scribe	letter and word meta	6	13.2	2.2	-	noun:person
+consonant	letter and word meta	9	14.8	1.6	-	adjective:quality
+ink	letter and word meta	3	15.4	5.1	K	noun:liquid
+library	letter and word meta	7	17.7	2.5	-	noun:structure
+verb	letter and word meta	4	18.3	4.6	V	noun:inert
+glyph	letter and word meta	5	19.3	3.9	-	noun:artifact
+alphabet	letter and word meta	8	20.3	2.5	-	noun:knowledge
+word	letter and word meta	4	20.5	5.1	W	noun:inert
+dictionary	letter and word meta	10	20.6	2.1	-	noun:document
+book	letter and word meta	4	21.1	5.3	K	noun:document
+vowel	letter and word meta	5	29.0	5.8	VW	noun:inert
+text	letter and word meta	4	36.1	9.0	X	noun:document
+lexicon	letter and word meta	7	41.6	5.9	X	noun:knowledge
+ice	map-scale terrain and states	3	4.6	1.5	-	noun:mineral
+pit	map-scale terrain and states	3	6.4	2.1	-	noun:depression
+sand	map-scale terrain and states	4	7.9	2.0	-	noun:mineral
+moon	map-scale terrain and states	4	8.4	2.1	-	noun:celestial
+earth	map-scale terrain and states	5	9.8	2.0	-	noun:celestial
+space	map-scale terrain and states	5	10.0	2.0	-	noun:place
+planet	map-scale terrain and states	6	10.8	1.8	-	noun:celestial
+cosmos	map-scale terrain and states	6	12.7	2.1	-	noun:natural_object
+night	map-scale terrain and states	5	13.3	2.7	-	noun:inert
+fog	map-scale terrain and states	3	14.4	4.8	-	noun:weather
+dark	map-scale terrain and states	4	18.8	4.7	K	adjective:quality
+sky	map-scale terrain and states	3	19.3	6.4	K	noun:gas
+winter	map-scale terrain and states	6	21.0	3.5	W	noun:season
+universe	map-scale terrain and states	8	21.5	2.7	V	noun:natural_object
+world	map-scale terrain and states	5	22.4	4.5	W	noun:natural_object
+galaxy	map-scale terrain and states	6	45.9	7.6	X	noun:group
+sea	mass destruction	3	4.0	1.3	-	noun:water
+rot	mass destruction	3	4.7	1.6	-	verb:transform
+star	mass destruction	4	6.1	1.5	-	noun:celestial
+sun	mass destruction	3	6.2	2.1	-	noun:celestial
+tide	mass destruction	4	7.1	1.8	-	noun:event
+sarin	mass destruction	5	7.3	1.5	-	noun:gas
+mine	mass destruction	4	7.5	1.9	-	noun:structure
+ocean	mass destruction	5	7.8	1.6	-	noun:water
+atom	mass destruction	4	8.1	2.0	-	noun:material
+hell	mass destruction	4	9.0	2.2	-	noun:place
+doom	mass destruction	4	10.1	2.5	-	noun:event
+storm	mass destruction	5	10.1	2.0	-	noun:weather
+comet	mass destruction	5	10.2	2.0	-	noun:natural_object
+meteor	mass destruction	6	10.3	1.7	-	noun:natural_object
+death	mass destruction	5	11.5	2.3	-	noun:event
+tornado	mass destruction	7	12.4	1.8	-	noun:weather
+asteroid	mass destruction	8	13.2	1.6	-	noun:celestial
+napalm	mass destruction	6	13.2	2.2	-	noun:fuel
+tsunami	mass destruction	7	14.0	2.0	-	noun:disaster
+magma	mass destruction	5	14.5	2.9	-	noun:mineral
+deluge	mass destruction	6	14.7	2.4	-	noun:quantity
+nova	mass destruction	4	14.9	3.7	V	noun:celestial
+lava	mass destruction	4	14.9	3.7	V	noun:material
+abyss	mass destruction	5	15.0	3.0	-	noun:natural_object
+plague	mass destruction	6	15.3	2.6	-	noun:affliction
+bomb	mass destruction	4	15.9	4.0	-	noun:weapon
+antimatter	mass destruction	10	16.3	1.6	-	noun:material
+flood	mass destruction	5	16.5	3.3	-	noun:phenomenon
+void	mass destruction	4	16.6	4.2	V	adjective:quality
+inferno	mass destruction	7	16.7	2.4	-	noun:place
+war	mass destruction	3	16.9	5.6	W	noun:conflict
+famine	mass destruction	6	17.0	2.8	-	noun:disaster
+virus	mass destruction	5	17.9	3.6	V	noun:creature
+hurricane	mass destruction	9	17.9	2.0	-	noun:weather
+pandemic	mass destruction	8	18.1	2.3	-	noun:event
+nuke	mass destruction	4	18.2	4.5	K	noun:weapon
+blight	mass destruction	6	18.9	3.1	-	noun:affliction
+holocaust	mass destruction	9	19.3	2.1	-	noun:destruction
+volcano	mass destruction	7	20.7	3.0	V	noun:elevation
+cataclysm	mass destruction	9	21.1	2.3	-	noun:phenomenon
+apocalypse	mass destruction	10	23.3	2.3	-	noun:disaster
+supernova	mass destruction	9	25.7	2.9	V	noun:celestial
+pox	mass destruction	3	37.2	12.4	X	noun:affliction
+anthrax	mass destruction	7	43.6	6.2	X	noun:affliction
+quasar	mass destruction	6	72.8	12.1	Q	noun:celestial
+quake	mass destruction	5	81.9	16.4	KQ	noun:event
+earthquake	mass destruction	10	91.7	9.2	KQ	noun:disaster
+seer	rules, fate and information	4	5.3	1.3	-	noun:person
+eye	rules, fate and information	3	6.9	2.3	-	noun:bodypart
+time	rules, fate and information	4	7.5	1.9	-	noun:event
+omen	rules, fate and information	4	7.8	1.9	-	noun:event
+map	rules, fate and information	3	8.6	2.9	-	noun:document
+radar	rules, fate and information	5	8.9	1.8	-	noun:device
+peace	rules, fate and information	5	9.3	1.9	-	noun:feeling
+truce	rules, fate and information	5	9.5	1.9	-	noun:inert
+curse	rules, fate and information	5	9.6	1.9	-	verb:inert
+oracle	rules, fate and information	6	9.6	1.6	-	noun:person
+spy	rules, fate and information	3	10.3	3.4	-	noun:worker
+fate	rules, fate and information	4	12.1	3.0	-	noun:event
+miracle	rules, fate and information	7	12.9	1.8	-	noun:event
+magic	rules, fate and information	5	13.2	2.6	-	noun:knowledge
+charm	rules, fate and information	5	13.3	2.7	-	noun:attribute
+veto	rules, fate and information	4	14.6	3.6	V	noun:attribute
+law	rules, fate and information	3	17.2	5.7	W	noun:group
+key	rules, fate and information	3	18.6	6.2	K	noun:tool
+luck	rules, fate and information	4	19.8	5.0	K	noun:attribute
+victory	rules, fate and information	7	23.7	3.4	V	noun:event
+hex	rules, fate and information	3	37.4	12.5	X	adjective:pertaining
+jinx	rules, fate and information	4	102.8	25.7	JX	noun:person
+eat	verbs that end things	3	3.9	1.3	-	verb:consume
+die	verbs that end things	3	5.5	1.8	-	verb:transform
+end	verbs that end things	3	5.8	1.9	-	noun:place
+erase	verbs that end things	5	6.5	1.3	-	verb:transform
+reset	verbs that end things	5	6.8	1.4	-	noun:device
+ruin	verbs that end things	4	7.3	1.8	-	noun:building
+rule	verbs that end things	4	7.3	1.8	-	noun:knowledge
+steal	verbs that end things	5	7.4	1.5	-	verb:transfer
+ban	verbs that end things	3	8.2	2.7	-	noun:document
+rob	verbs that end things	3	8.4	2.8	-	verb:transfer
+stop	verbs that end things	4	8.5	2.1	-	verb:movement
+halt	verbs that end things	4	9.1	2.3	-	verb:movement
+gut	verbs that end things	3	9.1	3.0	-	noun:bodypart
+smite	verbs that end things	5	9.2	1.8	-	verb:contact
+mute	verbs that end things	4	9.2	2.3	-	adjective:quality
+undo	verbs that end things	4	9.4	2.4	-	verb:contact
+delete	verbs that end things	6	9.7	1.6	-	verb:contact
+slay	verbs that end things	4	9.8	2.5	-	verb:social
+reign	verbs that end things	5	9.9	2.0	-	verb:social
+bind	verbs that end things	4	11.4	2.9	-	verb:contact
+banish	verbs that end things	6	15.5	2.6	-	verb:social
+destroy	verbs that end things	7	15.6	2.2	-	verb:create
+take	verbs that end things	4	16.5	4.1	K	verb:social
+win	verbs that end things	3	16.9	5.6	W	verb:combat
+annihilate	verbs that end things	10	16.9	1.7	-	verb:transform
+own	verbs that end things	3	17.2	5.7	W	adjective:quality
+kill	verbs that end things	4	17.5	4.4	K	verb:contact
+obliterate	verbs that end things	10	17.9	1.8	-	verb:transform
+raze	verbs that end things	4	34.0	8.5	Z	verb:create
+axe	verbs that end things	3	34.3	11.4	X	noun:weapon
+zap	verbs that end things	3	35.1	11.7	Z	noun:event
+freeze	verbs that end things	6	43.0	7.2	Z	verb:transform
+cure	verbs that escape or multiply	4	7.9	2.0	-	noun:medicine
+clone	verbs that escape or multiply	5	8.3	1.7	-	noun:person
+heal	verbs that escape or multiply	4	8.5	2.1	-	verb:body
+hide	verbs that escape or multiply	4	9.9	2.5	-	verb:body
+breed	verbs that escape or multiply	5	12.2	2.4	-	noun:group
+copy	verbs that escape or multiply	4	12.5	3.1	-	noun:artifact
+teleport	verbs that escape or multiply	8	13.7	1.7	-	verb:movement
+fly	verbs that escape or multiply	3	15.0	5.0	-	verb:movement
+summon	verbs that escape or multiply	6	15.2	2.5	-	verb:create
+resurrect	verbs that escape or multiply	9	15.3	1.7	-	verb:body
+double	verbs that escape or multiply	6	16.0	2.7	-	adjective:quality
+warp	verbs that escape or multiply	4	20.6	5.2	W	noun:event
+vanish	verbs that escape or multiply	6	20.6	3.4	V	verb:movement
+wish	verbs that escape or multiply	4	21.5	5.4	W	noun:feeling
+multiply	verbs that escape or multiply	8	21.7	2.7	-	verb:transform
+grow	verbs that escape or multiply	4	21.8	5.5	W	verb:transform
+spawn	verbs that escape or multiply	5	22.3	4.5	W	noun:creature
+revive	verbs that escape or multiply	6	25.7	4.3	V	verb:body
