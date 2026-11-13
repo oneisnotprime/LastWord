@@ -26,6 +26,9 @@ interface Gear {
 /** A passing effect on bodies: a verb someone cast, or weather over everyone. */
 interface Effect { word: string; set: Record<string, Value>; ops: Op[]; until: number }
 
+/** Seconds between a win and everyone being sent on to a new round. ROUND_END_SECONDS overrides. */
+const ROUND_END_SECONDS = Number(process.env.ROUND_END_SECONDS ?? 15);
+
 /** Route searches allowed in one tick; walkers over the limit wait a tick for theirs. */
 const ROUTES_PER_TICK = 12;
 
@@ -278,6 +281,8 @@ export class WorldRoom extends Room {
     this.map = generateMap(seed);
     this.state.seed = seed;
     this.state.daylight = "day";
+    this.state.phase = "playing";
+    this.state.winner = "";
     this.state.weather = "";
     this.state.size = this.map.size;
     this.setTimestep((ms) => this.update(ms / 1000), 1000 / TICK_HZ);
@@ -488,6 +493,19 @@ export class WorldRoom extends Room {
     return { people, creatures: this.walkers.size - people, things: this.state.things.size };
   }
 
+  /**
+   * Ends the round: nobody new may join, everyone is told who won, and after a pause the room
+   * closes. Clients then join a fresh room with a new map.
+   */
+  private endRound(winner: string) {
+    if (this.state.phase === "over") return;
+    this.state.phase = "over";
+    this.state.winner = winner;
+    void this.lock();
+    this.broadcast("roundover", { winner, seconds: ROUND_END_SECONDS });
+    this.clock.setTimeout(() => void this.disconnect(), ROUND_END_SECONDS * 1000);
+  }
+
   /** Moves a walker along a route to its target, going around anything it cannot cross. */
   private walk(w: Walker, seconds: number) {
     const target = w.target!;
@@ -638,6 +656,7 @@ export class WorldRoom extends Room {
     if (dead.master === null && this.people.length === 1 && this.everJoined > 1) {
       const [winnerId] = this.people;
       this.clients.find((c) => c.sessionId === winnerId)?.send("won", "You are the last one alive");
+      this.endRound(this.walkers.get(winnerId!)!.player.name);
     }
     this.refreshViews();
   }

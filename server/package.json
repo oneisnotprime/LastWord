@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "tsx watch src/main.ts",
     "start": "tsx src/main.ts",
-    "test": "vitest run",
+    "test": "ROUND_END_SECONDS=1 vitest run",
     "typecheck": "tsc -p ."
   },
   "dependencies": {

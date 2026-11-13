@@ -23,6 +23,8 @@ Node process that owns the game state. One room per map instance (from milestone
   foe or a place to go each tick, and it shows in `state.players` with `owner` set.
 - A spelling is one of four kinds (`parsePhrase().kind`): object, verb (`cast`), event
   (`happen`), sky (`sky`). Each of the last three throws before any letters are spent.
+- A round ends when one person is left (`endRound`): the room locks, sends `roundover`, and
+  closes after `ROUND_END_SECONDS` (15; tests use 1). Clients reload into a new room.
 - For local testing only: `LETTERS=9` gives every player nine of each letter, `CROWD=1` spawns
   everyone in one city, `SEED_THINGS=5000` scatters that many objects at start.
 - `loadtest/bots.ts` modes: `wander`, `crowd`, `play` (gathers, spells and fights).

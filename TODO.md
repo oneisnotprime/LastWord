@@ -160,7 +160,10 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
       needs a select-without-attacking control
 - [ ] Terrain is laid where the speller stands and pushes everyone to the nearest ground; a
       destroyed lake or mountain marker cannot be removed, and terrain cannot be undone
-- [ ] A round does not reset after someone wins; the dead stay connected as spectators
+- [x] Rounds end: the room locks, everyone sees who won with a countdown, then all clients
+      join a fresh room with a new map. The dead watch until then
+- [ ] Waiting for players: a round starts as soon as one person joins, and anyone can join
+      mid-round until it ends
 - [ ] Labels of adjacent players overlap; fix in the art pass
 - [x] M6 (part): bots that play (gather, spell, fight) in the load test
 - [ ] M6 (rest): public deploy; needs a host account from the user
