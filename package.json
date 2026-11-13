@@ -1,0 +1,17 @@
+{
+  "name": "lastword",
+  "private": true,
+  "type": "module",
+  "workspaces": ["shared", "server", "client"],
+  "scripts": {
+    "test": "npm test --workspaces",
+    "typecheck": "npm run typecheck --workspaces",
+    "dev:client": "npm run dev -w client",
+    "dev:server": "npm run dev -w server"
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0",
+    "@types/node": "^22.0.0"
+  }
+}

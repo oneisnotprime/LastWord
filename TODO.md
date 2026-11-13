@@ -76,6 +76,8 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
 
 - [x] Choose stack, hosting, netcode and art approach (see PLAN.md)
 - [x] Move to its own repository
-- [ ] Milestones M0 to M7 in PLAN.md
+- [x] M0: scaffold packages, test commands, CI
+- [ ] M1: rules engine (operators, degrees, absolutes, combat tick)
+- [ ] M2 to M7 in PLAN.md
 - [ ] Map generator: cities, countryside, letter sources
 - [ ] Demo: one map, the 351-word dictionary, a handful of players

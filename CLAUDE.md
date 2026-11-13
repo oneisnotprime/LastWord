@@ -1,11 +1,18 @@
 # Last Word
 
 Multiplayer word game: players gather letters, spell words, and the words become objects,
-modifiers, spells and events. Last player alive wins. Design data exists; game code does not yet.
+modifiers, spells and events. Last player alive wins. Packages are scaffolded (milestone M0); the rules engine is next.
 
 - `PLAN.md`: stack, netcode, hosting, art, milestones.
 - `TODO.md`: decisions made, open questions, task list. Read "Decided" before proposing design.
 - `README.md`: what each data file is and how words are classified.
+
+## Layout and commands
+
+- `shared/` rules engine, `server/` game server, `client/` browser client. Each has its own
+  `CLAUDE.md`; work from the package you are changing.
+- `npm test` and `npm run typecheck` at the root run every package; add `-w <package>` for one.
+- `data/` generated word data, `tools/` the Python generators for it.
 
 ## Rules
 
