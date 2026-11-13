@@ -31,3 +31,6 @@ server and the client import this, so anything here must give the same answer on
   search buffers are shared, so it is not safe to call from two threads.
 - `rng.ts` seeded generator. Pass an `Rng` in; never call `Math.random`.
 - `testdata.ts` loads the demo dictionary from disk, for tests only.
+- `mind.ts` morale (`moraleGoal`, `nextMorale`, `routed`, `moraleAim`), how creatures choose
+  (`chooseTarget`, `retreats`, `ignoresOrder`) and command (`commandLimit`, `recruitRate`).
+- `upkeep.ts` food, fuel and power: `needs`, `outputs`, `draw`, `supply`, `groundFood`.

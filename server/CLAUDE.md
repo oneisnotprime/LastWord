@@ -50,3 +50,7 @@ Node process that owns the game state. One room per map instance (from milestone
   word makes (`fieldArea`), and shared `auras` adds light, fear and healing. Carried things and
   bodies radiate around their walker (synced in `rebuild`), things on the ground around
   themselves (`addThing`/`removeThing`).
+- Minds and upkeep run once a second in `beat`: morale climbs back and the broken flee
+  (`nerve`), each person's `command` limit (extras run wild), `upkeep` (stores in
+  `Walker.stores`; hungry creatures turn wild, machines stall), `recruit`, and wild creatures
+  `roam`. Loadouts a `rebuild` changes are sent once at the end of the tick (`toTell`).

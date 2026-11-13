@@ -72,7 +72,7 @@ it("BREAD and APPLE restore health; a stack of breads is eaten one at a time", a
   wa.hp = 50; room.rebuild(wa);
   a.send("spell", "bread"); await wait();
   a.send("use"); await wait();
-  expect(said.at(-1)).toBe("Used BREAD");
+  expect(said.at(-1)).toBe("Used BREAD; +6 food"); // its nutrition goes into the food store
   expect(wa.hp).toBe(65);
   a.send("spell", "apple"); await wait();
   a.send("use"); await wait();
@@ -92,7 +92,7 @@ it("WINE's courage lasts its duration and wears off", async () => {
   const courage = wa.unit.body.stats.num("courage");
   a.send("spell", "wine"); await wait();
   a.send("use"); await wait();
-  expect(said.at(-1)).toBe("Used WINE for 600 seconds");
+  expect(said.at(-1)).toBe("Used WINE for 600 seconds; +2 food");
   expect(wa.unit.body.stats.num("courage")).toBe(courage + 4);
   expect(wa.buffs.map((x: any) => x.word)).toEqual(["wine"]);
   room.update(599);
@@ -115,8 +115,8 @@ it("using what cannot be used is refused, and the thing stays", async () => {
   expect(said.at(-1)).toBe("Nothing here to use: spell something to eat, drink or take, and stand by it");
   a.send("spell", "leaf"); await wait();
   a.send("use"); await wait();
-  expect(said.at(-1)).toBe("LEAF cannot be used: eating it does nothing yet"); // nutrition, with no hunger yet
-  room.removeThing([...room.state.things.keys()][0]!);
+  expect(said.at(-1)).toBe("Used LEAF; +0.2 food"); // nutrition alone feeds the food store, and it is eaten
+  expect(room.state.things.size).toBe(0);
   a.send("use", 7); await wait();
   expect(said.at(-1)).toBe("You carry nothing there");
   // Someone else's bread is not yours to eat.
@@ -241,7 +241,8 @@ it("uses every usable word in the dictionary", async () => {
   }
   console.log(`usable words: ${candidates.length}; used to effect: ${did.length}; not: ${not.length}\n  ${not.join("\n  ")}`);
   // Every word the data gives an effect (shared useObject) was used, wherever spelling put it,
-  // unless spelling made it a creature that walks off on its own.
-  const effective = candidates.filter((w) => useObject(dict, w) && !(parsePhrase(dict, w).stats.flag("alive") && parsePhrase(dict, w).stats.num("speed_land") > 0));
+  // unless spelling made it a creature that walks off on its own, or land (a WHEAT field).
+  const effective = candidates.filter((w) => useObject(dict, w) && !dict.word(w)!.set.tile_type &&
+    !(parsePhrase(dict, w).stats.flag("alive") && parsePhrase(dict, w).stats.num("speed_land") > 0));
   for (const w of effective) expect(did.map((d) => d.split(" ")[0]), w).toContain(w);
 });

@@ -1,8 +1,8 @@
 import { Room, type Client } from "colyseus";
 import { StateView } from "@colyseus/schema";
 import {
-  addLetters, afflict, auras, bodyFlags, cure, useObject, findPath, hampered, inflicts, statusDamage, statusEffects, tickStatuses, wake, GATHER_SECONDS, gatherLetter, generateMap, GIVE_RANGE, missing, parsePhrase, production, resolveSpelled, SEPARATE_UP_TO, nearestWalkable, randomWalkable, resolve, Tile, tileAt, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit,
-  type Affliction, type Dictionary, type Entity, type Hampered, type Status, type Stats, type Letters, type LoadoutDetail, type Op, type Phrase, type Point, type Spelled, type Value, type WordDef, type WorldMap,
+  addLetters, afflict, aggressive, clearLine, courageOf, pluralize, auras, authorityOf, chooseTarget, commandLimit, draw, groundFood, hasAny, ignoresOrder, moraleAim, moraleGoal, needs, nextMorale, noStores, outputs, recruitRate, rerouteSeconds, retreats, routed, supply, theftResistance, HUNGER_LOYALTY, NORMAL, STARTING_STORES, STARVING, SUPPLIES, bodyFlags, cure, useObject, findPath, hampered, inflicts, statusDamage, statusEffects, tickStatuses, wake, GATHER_SECONDS, gatherLetter, generateMap, GIVE_RANGE, missing, parsePhrase, production, resolveSpelled, SEPARATE_UP_TO, nearestWalkable, randomWalkable, resolve, Tile, tileAt, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit,
+  type Affliction, type Candidate, type Dictionary, type Stores, type Supply, type Entity, type Hampered, type Status, type Stats, type Letters, type LoadoutDetail, type Op, type Phrase, type Point, type Spelled, type Value, type WordDef, type WorldMap,
 } from "@lastword/shared";
 import { loadDictionary } from "./data.js";
 import { Edit, Player, Thing, WorldState, Zone } from "./state.js";
@@ -21,6 +21,12 @@ interface Gear {
   integrity: number | null;
   /** Part of the land (a lake, a mountain): cannot be picked up or attacked. */
   terrain?: boolean;
+  /** A machine whose fuel, power or food ran short at the last count: it makes nothing and cannot strike. */
+  stalled?: boolean;
+  /** A living thing (a ridden DRAGON, a HORSE) that went hungry at the last count. */
+  hungry?: boolean;
+  /** Loyalty it has lost to hunger. */
+  hungerLost?: number;
 }
 
 /** A passing effect on bodies: a verb someone cast, or weather over everyone. */
@@ -88,6 +94,8 @@ const STATE_WORDS: Partial<Record<Status, string>> = { stun: "stunned", freeze: 
 
 /** Tiles a frightened walker runs ahead of itself each tick. */
 const FLEE_TILES = 6;
+/** Cell width, in tiles, of the grid `beat` buckets walkers into to find enemies near each. */
+const NEAR_CELL = 8;
 /** Tiles around itself a confused walker wanders or lashes out. */
 const CONFUSED_TILES = 4;
 
@@ -161,7 +169,46 @@ interface Walker {
   hamper: Hampered;
   /** Seconds of damage over time built up and not yet dealt. */
   dot: number;
+  /** Morale now, its own when nothing acts on it, and where it is heading (shared `moraleGoal`). */
+  morale: number;
+  moraleBase: number;
+  moraleGoal: number;
+  /** Its body's intelligence, for how it chooses and paths. */
+  intelligence: number;
+  /** Broken (morale 0) or, for a cunning creature, badly hurt: it runs from `fleeFrom` and does not strike. */
+  fleeing: boolean;
+  fleeFrom: string | null;
+  /** For a creature: the last order (its master's target) it was given, and whether it is ignoring it. */
+  order: string | null;
+  defiant: boolean;
+  /** For a creature: hungry at the last count, and loyalty lost to hunger. A person: starving. */
+  hungry: boolean;
+  hungerLost: number;
+  /** The statuses it was last rebuilt with. */
+  statusKey: string;
+  /** For a person: food, fuel and power in store, and what is drawn and supplied a minute. */
+  stores: Stores;
+  upkeep: { need: Stores; make: Stores; short: string[]; limit: number; have: number };
+  /** For a person: the best authority among what they are and own, and recruits built up toward the next. */
+  authority: number;
+  recruiting: number;
+  /** For a wild creature: prey it found it cannot reach, which it leaves alone. */
+  shunned?: string;
+  /** What the loadout last showed of morale, stores and command, to tell only when it changes. */
+  shown: string;
 }
+
+/** What a new walker's mind and stores start as. */
+function freshMind(moraleBase: number, person: boolean) {
+  return {
+    morale: moraleBase, moraleBase, moraleGoal: moraleBase, intelligence: 0, fleeing: false, fleeFrom: null, order: null, defiant: false,
+    hungry: false, hungerLost: 0, statusKey: "", stores: person ? { ...STARTING_STORES } : noStores(),
+    upkeep: { need: noStores(), make: noStores(), short: [], limit: 0, have: 0 }, authority: 0, recruiting: 0, shown: "",
+  };
+}
+
+/** What a person owns besides what they carry. */
+interface Holdings { creatures: [string, Walker][]; things: [string, Gear][] }
 
 /** An object's letter output: rate per minute and the fraction built up so far. */
 interface Producer { owner: string; rates: Letters; built: Letters }
@@ -227,6 +274,14 @@ export class WorldRoom extends Room {
   private radiantUntil = new WeakMap<object, number>();
   /** Fields were made or ended: work out again who stands in which on the next tick. */
   private fieldsDirty = false;
+  /** People whose loadout changed through a rebuild, told once at the end of the tick. */
+  private toTell = new Set<string>();
+  /** Creatures whose nerve changed this tick, by owner: "name|how" -> how many. */
+  private moods = new Map<string, Map<string, number>>();
+  /** Room time of the last `beat`. */
+  private lastBeat = 0;
+  /** What each carried or grounded thing is, resolved once, for upkeep and command. */
+  private resolved = new WeakMap<Gear, { count: number; stats: Stats }>();
 
   messages = {
     /** Walk toward a point on the map. */
@@ -378,7 +433,7 @@ export class WorldRoom extends Room {
         const done = this.make(client.sessionId, walker, phrase);
         client.send("letters", walker.letters);
         const many = phrase.count > 1 || phrase.plural;
-        client.send("spelled", many ? `${spelledAs} (${phrase.count}) ${done === "is with you" ? "are with you" : done}`
+        client.send("spelled", many ? `${spelledAs} (${phrase.count}) ${done.replace(/^is /, "are ").replace(/^runs /, "run ")}`
           : `${[...phrase.adjectives.filter((a) => !this.onlyCounts(a)), phrase.noun].join(" ").toUpperCase()} ${done}`);
         this.tell(walker); // what is now in reach to use
         this.refreshViews();
@@ -460,6 +515,7 @@ export class WorldRoom extends Room {
       statuses: [],
       hamper: hampered([]),
       dot: 0,
+      ...freshMind(body.num("morale"), true),
     });
     client.send("letters", this.walkers.get(client.sessionId)!.letters);
     this.tell(this.walkers.get(client.sessionId)!);
@@ -470,7 +526,7 @@ export class WorldRoom extends Room {
   onLeave(client: Client) {
     for (const w of this.walkers.values()) {
       if (w.foe === client.sessionId) w.foe = null;
-      if (w.master === client.sessionId) { w.master = "-"; w.player.owner = "-"; }
+      if (w.master === client.sessionId) { w.master = "-"; w.player.owner = "-"; this.showStatus(w); }
     }
     this.walkers.delete(client.sessionId);
     this.state.players.delete(client.sessionId);
@@ -517,6 +573,11 @@ export class WorldRoom extends Room {
       else layer.integrity = g.integrity;
     }
     walker.unit = unit;
+    const body = unit.body.stats;
+    walker.intelligence = body.num("intelligence");
+    // Morale only means something to the living; it falls at once (FEAR, a dragon's aura) and climbs back in `beat`.
+    walker.moraleGoal = body.flag("alive") ? moraleGoal(walker.moraleBase, body.num("morale"), courageOf(body)) : NORMAL;
+    if (walker.moraleGoal < walker.morale) { walker.morale = walker.moraleGoal; this.nerve(walker); }
     const air = unit.movement.num("speed_air");
     walker.flying = air > 0;
     walker.speed = Math.max(unit.movement.num("speed_land"), air);
@@ -528,8 +589,16 @@ export class WorldRoom extends Room {
       if (ground !== walker.player) { walker.player.x = ground.x; walker.player.y = ground.y; walker.target = null; }
     }
     this.syncRadiation(walker);
-    this.tell(walker);
-    if (walker.master) { const m = this.walkers.get(walker.master); if (m) this.tell(m); }
+    // Told at the end of the tick, once, however many times it was rebuilt (fields, a fleeing pack).
+    this.toTell.add(walker.master ?? walker.id);
+    if (walker.master === null) this.toTell.add(walker.id);
+  }
+
+  /** The carried thing a walker strikes with: what it rides, if that has weapons, else what it holds. */
+  private strikesWith(w: Walker): Gear | undefined {
+    const unit = w.unit;
+    if (unit.riding && unit.attack === unit.riding.stats) return w.gear.find((g) => g.vehicle);
+    return unit.weapon ? w.gear.find((g) => g.spelled === unit.weapon) : undefined;
   }
 
   /** Sends a person the private detail of their own character. */
@@ -567,13 +636,21 @@ export class WorldRoom extends Room {
         ...(walker.fields ?? []).map((f) => ({ word: f.word, left: -1 })), // -1: while you stand in it
       ],
       statuses: walker.statuses.map((a) => ({ status: a.status, left: Math.ceil(a.left) })),
-      creatures: [...this.walkers.values()].filter((w) => w.master === walker.id).map((w) => ({ name: w.player.name, health: w.player.hp })),
+      morale: Math.round(walker.morale * 10) / 10,
+      stores: Object.fromEntries(SUPPLIES.map((k) => [k, {
+        have: Math.round(walker.stores[k] * 100) / 100, need: Math.round(walker.upkeep.need[k] * 100) / 100, make: Math.round(walker.upkeep.make[k] * 100) / 100,
+      }])) as LoadoutDetail["stores"],
+      short: walker.upkeep.short,
+      command: { limit: walker.upkeep.limit, have: walker.upkeep.have },
+      creatures: [...this.walkers.values()].filter((w) => w.master === walker.id).map((w) => ({
+        name: w.player.name, health: w.player.hp, ...(w.hungry ? { hungry: true } : {}), ...(w.fleeing ? { fleeing: true } : {}),
+      })),
     };
     client.send("loadout", detail);
   }
 
   /** Puts a creature in the world as a walker with no client, following its master. */
-  addCreature(gear: Gear, master: string, x: number, y: number, count = 1): string {
+  addCreature(gear: Gear, master: string, x: number, y: number, count = 1, hp?: number): string {
     const id = `c${this.nextThing++}`;
     const unit = new Unit(this.dict, { body: gear.spelled });
     const player = new Player();
@@ -590,33 +667,370 @@ export class WorldRoom extends Room {
       id, player, body: gear.spelled, master, unit, gear: [], hp: unit.body.integrity, foe: null, picked: null, aim: null, cooldown: 0,
       buffs: [], flying: false, target: null, route: [], routeTo: null, routeAge: 0, speed: 0, sight: 0, seen: new Set(), seenThings: new Set(),
       letters: {}, gathering: 0, statuses: [], hamper: hampered([]), dot: 0,
+      ...freshMind(resolveSpelled(this.dict, gear.spelled).num("morale"), false),
     };
+    if (hp !== undefined) { walker.hp = hp; walker.unit.body.integrity = hp; }
     this.walkers.set(id, walker);
     this.rebuild(walker);
+    if (hp !== undefined) walker.player.hp = Math.min(100, Math.ceil((hp / walker.unit.body.stats.num("integrity")) * 100));
     return id;
   }
 
   /**
-   * What creatures do each tick: fight what their master fights, then whoever is attacking
-   * their master, and otherwise stay close.
+   * What creatures do each tick. An owned one fights what its master fights if it is sentient
+   * and heeds the order (shared `ignoresOrder`: obedience plus its master's authority), else
+   * whoever is attacking its master (the weakest of them if it is cunning, the nearest if not),
+   * and otherwise stays close. A wild one keeps to what `beat` chose for it.
    */
   private think() {
-    // Who is attacking whom, worked out once: master id -> someone attacking them who is not their own.
-    const attackers = new Map<string, string>();
+    // Who is attacking whom, worked out once: target id -> those attacking it who are not its own.
+    const attackers = new Map<string, string[]>();
     for (const [id, w] of this.walkers) {
-      if (w.foe && w.master !== w.foe && !attackers.has(w.foe)) attackers.set(w.foe, id);
+      if (w.foe && w.master !== w.foe) (attackers.get(w.foe) ?? attackers.set(w.foe, []).get(w.foe)!).push(id);
     }
     for (const [id, w] of this.walkers) {
       if (w.master === null) continue;
+      if (w.master === "-") {
+        if (w.foe && !this.walkers.has(w.foe)) w.foe = null;
+        continue;
+      }
       const master = this.walkers.get(w.master);
       if (!master) { w.foe = null; w.target = null; continue; }
-      const attacker = attackers.get(w.master);
-      const foe = master.foe && master.foe !== id ? master.foe : attacker ?? null;
+      // Only a sentient creature can follow an order; any creature defends its master.
+      let order = w.unit.body.stats.flag("sentient") && master.foe && master.foe !== id ? master.foe : null;
+      if (order !== w.order) {
+        w.order = order;
+        w.defiant = order !== null && ignoresOrder(w.unit.body.stats.num("obedience"), master.authority, this.rng);
+        if (w.defiant) this.clients.find((c) => c.sessionId === w.master)?.send("notice", `Your ${w.player.name.toUpperCase()} ignores your order`);
+      }
+      if (w.defiant) order = null;
+      const threats = (attackers.get(w.master) ?? []).filter((a) => a !== id && this.walkers.get(a)?.master !== w.master);
+      const foe = order ?? this.choose(w, threats);
       w.foe = foe && (this.walkers.has(foe) || this.grounded.has(foe)) ? foe : null;
       if (w.foe) continue;
       const apart = Math.hypot(master.player.x - w.player.x, master.player.y - w.player.y);
       w.target = apart > 2 ? { x: master.player.x, y: master.player.y } : null;
     }
+  }
+
+  /** Whom a creature goes for among walkers by id: shared `chooseTarget` by its intelligence. */
+  private choose(w: Walker, ids: readonly string[]): string | null {
+    const candidates: Candidate[] = [];
+    for (const oid of ids) {
+      const o = this.walkers.get(oid);
+      if (o) candidates.push({ id: oid, distance: Math.hypot(o.player.x - w.player.x, o.player.y - w.player.y), health: o.hp });
+    }
+    return chooseTarget(w.intelligence, candidates);
+  }
+
+  /** The side a walker is on: a person's own id, a creature's master, "-" for the wild. */
+  private side(id: string, w: Walker): string {
+    return w.master ?? id;
+  }
+
+  /** Walkers bucketed into cells NEAR_CELL tiles wide, built once a beat for `enemiesNear`. */
+  private nearGrid: Map<number, { id: string; x: number; y: number; side: string }[]> | null = null;
+
+  /** Walkers on another side within `tiles` of a walker; uses the beat's grid while there is one. */
+  private enemiesNear(id: string, w: Walker, tiles: number): string[] {
+    const mine = this.side(id, w), out: string[] = [];
+    const grid = this.nearGrid;
+    if (!grid || tiles === Infinity) {
+      for (const [oid, o] of this.walkers) {
+        if (oid !== id && this.side(oid, o) !== mine && Math.hypot(o.player.x - w.player.x, o.player.y - w.player.y) <= tiles) out.push(oid);
+      }
+      return out;
+    }
+    const { x, y } = w.player, t2 = tiles * tiles;
+    const reach = Math.ceil(tiles / NEAR_CELL), cx = Math.floor(x / NEAR_CELL), cy = Math.floor(y / NEAR_CELL);
+    for (let dx = -reach; dx <= reach; dx++) {
+      for (let dy = -reach; dy <= reach; dy++) {
+        const cell = grid.get((cx + dx) * 4096 + cy + dy);
+        if (cell) for (const e of cell) if (e.side !== mine && e.id !== id && (e.x - x) ** 2 + (e.y - y) ** 2 <= t2) out.push(e.id);
+      }
+    }
+    return out;
+  }
+
+  /** Morale or wounds changed: a walker breaks and runs, or steadies. Says so to whoever cares. */
+  private nerve(w: Walker) {
+    const max = w.unit.body.stats.num("integrity");
+    const fleeing = routed(w.morale) || (w.master !== null && retreats(w.intelligence, w.hp, max));
+    if (fleeing === w.fleeing) return;
+    w.fleeing = fleeing;
+    if (fleeing) { w.foe = null; w.gathering = 0; }
+    this.showStatus(w);
+    if (w.master === null) {
+      this.clients.find((c) => c.sessionId === w.id)?.send("notice", fleeing ? "You lose your nerve and run" : "You steady yourself");
+      return;
+    }
+    // A pack breaking is told once: gathered here and sent at the end of the tick.
+    const how = !fleeing ? "steadies" : routed(w.morale) ? "breaks and runs" : "pulls back, badly hurt";
+    const byOwner = this.moods.get(w.master) ?? this.moods.set(w.master, new Map()).get(w.master)!;
+    const key = `${w.player.name}|${how}`;
+    byOwner.set(key, (byOwner.get(key) ?? 0) + 1);
+  }
+
+  /** Tells each owner, once, which of their creatures broke, pulled back or steadied this tick. */
+  private tellMoods() {
+    if (!this.moods.size) return;
+    for (const [owner, byWhat] of this.moods) {
+      const client = this.clients.find((c) => c.sessionId === owner);
+      for (const [key, n] of byWhat) {
+        const [name, how] = key.split("|") as [string, string];
+        const plural = how.replace(/^steadies/, "steady").replace(/^breaks and runs/, "break and run").replace(/^pulls/, "pull");
+        client?.send("notice", n === 1 ? `Your ${name.toUpperCase()} ${how}` : `${n} of your ${pluralize(name).toUpperCase()} ${plural}`);
+      }
+    }
+    this.moods.clear();
+  }
+
+  /** What shows under a walker's name: its statuses, and whether it is fleeing, hungry or wild. */
+  private showStatus(w: Walker) {
+    const words: string[] = [...new Set(w.statuses.map((a) => a.status))];
+    if (w.fleeing && !words.includes("fear")) words.push("fleeing");
+    if (w.hungry) words.push(w.master === null ? "starving" : "hungry");
+    if (w.master === "-") words.push("wild");
+    const text = words.join(" ");
+    if (text !== w.player.status) w.player.status = text;
+  }
+
+  /** Puts a creature under someone else, or nobody ("-": wild). What it radiates changes side with it. */
+  private setMaster(id: string, w: Walker, master: string) {
+    const before = w.master;
+    w.master = master; w.player.owner = master;
+    w.foe = null; w.target = null; w.order = null; w.defiant = false; w.hungerLost = 0; w.hungry = false;
+    this.unradiateAll(id);
+    this.syncRadiation(w);
+    this.showStatus(w);
+    for (const m of [before, master]) { const p = m ? this.walkers.get(m) : undefined; if (p) this.tell(p); }
+  }
+
+  /** A carried or grounded thing's resolved properties, worked out once until its count changes. */
+  private statsOf(g: Gear): Stats {
+    const count = g.spelled.count ?? 1;
+    const had = this.resolved.get(g);
+    if (had && had.count === count) return had.stats;
+    const stats = resolveSpelled(this.dict, g.spelled);
+    this.resolved.set(g, { count, stats });
+    return stats;
+  }
+
+  /** What each person owns besides what they carry: creatures (oldest first) and things on the ground. */
+  private holdings(only?: string): Map<string, Holdings> {
+    const out = new Map<string, Holdings>();
+    for (const [id, w] of this.walkers) if (w.master === null && (!only || id === only)) out.set(id, { creatures: [], things: [] });
+    for (const [id, w] of this.walkers) if (w.master !== null) out.get(w.master)?.creatures.push([id, w]);
+    this.state.things.forEach((t, tid) => {
+      const h = t.owner ? out.get(t.owner) : undefined, g = this.grounded.get(tid);
+      if (h && g) h.things.push([tid, g]);
+    });
+    for (const h of out.values()) h.creatures.sort((a, b) => Number(a[0].slice(1)) - Number(b[0].slice(1)));
+    return out;
+  }
+
+  /** Everything that is someone's, as properties: their body, what they carry, their creatures and things. */
+  private sources(w: Walker, h: Holdings): Stats[] {
+    return [w.unit.body.stats, ...w.gear.map((g) => this.statsOf(g)), ...h.creatures.map(([, c]) => c.unit.body.stats), ...h.things.map(([, g]) => this.statsOf(g))];
+  }
+
+  /**
+   * Command: a person keeps as many creatures as their command limit (shared `commandLimit`:
+   * a handful, plus the `command_limit` of everything theirs, a KING's fifty, a CROWN's ten).
+   * The newest beyond it have nobody to command them and run wild. Returns how many did.
+   */
+  private command(id: string, held?: Holdings): number {
+    const w = this.walkers.get(id);
+    const h = held ?? this.holdings(id).get(id);
+    if (!w || w.master !== null || !h) return 0;
+    let released = 0, limit = 0;
+    for (;;) {
+      const sources = this.sources(w, h);
+      limit = commandLimit(sources);
+      w.authority = authorityOf(sources);
+      if (h.creatures.length <= limit) break;
+      const [cid, c] = h.creatures.pop()!;
+      this.setMaster(cid, c, "-");
+      released++;
+    }
+    w.upkeep.limit = limit;
+    w.upkeep.have = h.creatures.length;
+    if (released) {
+      this.clients.find((c) => c.sessionId === id)?.send("notice",
+        `You can command ${limit} creature${limit === 1 ? "" : "s"}: ${released} ran wild`);
+    }
+    return released;
+  }
+
+  /**
+   * Upkeep, for one person over `since` seconds: what they own supplies food, fuel and power
+   * into their stores, then everything with a need draws on them (shared `draw`): their own body
+   * first, then creatures, carried things and things on the ground. What goes short:
+   * - a person starves, losing STARVING of their integrity a minute;
+   * - a living thing goes hungry and loses HUNGER_LOYALTY a minute; at no loyalty left it turns
+   *   wild (a ridden DRAGON throws its rider and is a creature of its own);
+   * - a machine stalls: it makes nothing (no letters, food, fuel or power) and cannot strike.
+   */
+  private upkeep(id: string, w: Walker, h: Holdings, since: number) {
+    const make = noStores(), need = noStores(), short: string[] = [];
+    const client = this.clients.find((c) => c.sessionId === id);
+    const tellOwner = (text: string) => client?.send("notice", text);
+    const add = (to: Stores, from: Stores) => { for (const k of SUPPLIES) to[k] += from[k]; };
+    const missingText = (s: Supply[]) => `no ${s.join(" or ")}`;
+
+    // Supplies: whatever is working.
+    const supplying: Stores[] = [outputs(w.unit.body.stats), ...h.creatures.map(([, c]) => outputs(c.unit.body.stats, c.player.count))];
+    for (const g of [...w.gear, ...h.things.map(([, g]) => g)]) if (!g.stalled) supplying.push(outputs(this.statsOf(g), g.spelled.count ?? 1));
+    for (const out of supplying) { add(make, out); supply(w.stores, out, since); }
+
+    // A living thing's hunger: loyalty drains while it goes short and comes back while it is fed.
+    const hunger = (name: string, lacking: Supply[], loyalty: number, state: { hungry: boolean; hungerLost: number }): boolean => {
+      const hungry = lacking.length > 0;
+      if (hungry && !state.hungry) tellOwner(`Your ${name.toUpperCase()} is hungry`);
+      state.hungry = hungry;
+      state.hungerLost = Math.max(0, state.hungerLost + (hungry ? 1 : -1) * HUNGER_LOYALTY * (since / 60));
+      if (hungry) short.push(`${name}: ${missingText(lacking)}`);
+      return hungry && state.hungerLost >= loyalty;
+    };
+
+    // The person's own body.
+    const own = needs(w.unit.body.stats);
+    add(need, own);
+    const starving = draw(w.stores, own, since).includes("food");
+    if (starving !== w.hungry) {
+      w.hungry = starving;
+      this.showStatus(w);
+      if (starving) tellOwner("You are starving: eat something, or gather where things grow");
+    }
+    if (starving) {
+      short.push("you: no food");
+      w.unit.body.integrity -= w.unit.body.stats.num("integrity") * STARVING * (since / 60);
+      this.settle(id, w);
+      if (w.unit.dead) { tellOwner("You starved"); this.kill(id, ""); return; }
+    }
+
+    for (const [cid, c] of h.creatures) {
+      const n = needs(c.unit.body.stats, c.player.count);
+      if (!hasAny(n)) continue;
+      add(need, n);
+      const was = c.hungry;
+      if (hunger(c.player.name, draw(w.stores, n, since), c.unit.body.stats.num("loyalty"), c)) {
+        tellOwner(`Your ${c.player.name.toUpperCase()} went wild with hunger`);
+        this.setMaster(cid, c, "-");
+      } else if (was !== c.hungry) this.showStatus(c);
+    }
+
+    const things: [Gear, string | null][] = [...w.gear.map((g): [Gear, null] => [g, null]), ...h.things.map(([tid, g]): [Gear, string] => [g, tid])];
+    for (const [g, tid] of things) {
+      const stats = this.statsOf(g), n = needs(stats, g.spelled.count ?? 1);
+      if (!hasAny(n)) continue;
+      add(need, n);
+      const lacking = draw(w.stores, n, since);
+      const name = g.phrase;
+      if (stats.flag("alive")) {
+        const state = { hungry: !!g.hungry, hungerLost: g.hungerLost ?? 0 };
+        const wild = hunger(name, lacking, stats.num("loyalty"), state);
+        g.hungry = state.hungry; g.hungerLost = state.hungerLost;
+        if (!wild) continue;
+        tellOwner(`Your ${name.toUpperCase()} went wild with hunger`);
+        g.hungry = false; g.hungerLost = 0;
+        if (tid === null) {
+          // It throws its rider (or slips its leash) and is a creature of its own.
+          w.gear.splice(w.gear.indexOf(g), 1);
+          this.rebuild(w);
+          this.addCreature(g, "-", w.player.x, w.player.y, g.spelled.count ?? 1, g.integrity ?? undefined);
+          this.refreshViews();
+        } else {
+          const t = this.state.things.get(tid);
+          if (t) t.owner = "";
+          this.producers.delete(tid);
+        }
+        continue;
+      }
+      const stalled = lacking.length > 0;
+      if (stalled && !g.stalled) tellOwner(`Your ${name.toUpperCase()} has ${missingText(lacking)}: it stops working`);
+      else if (!stalled && g.stalled) tellOwner(`Your ${name.toUpperCase()} is working again`);
+      g.stalled = stalled;
+      if (stalled) short.push(`${name}: ${missingText(lacking)}`);
+    }
+    w.upkeep.need = need;
+    w.upkeep.make = make;
+    w.upkeep.short = short;
+  }
+
+  /**
+   * Recruiting: what a person owns draws `recruit_rate` wild creatures a minute to them, the
+   * nearest in their sight first, while they have command to spare.
+   */
+  private recruit(id: string, w: Walker, h: Holdings, since: number) {
+    const rate = recruitRate(this.sources(w, h));
+    if (!(rate > 0)) { w.recruiting = 0; return; }
+    w.recruiting += (rate * since) / 60;
+    while (w.recruiting >= 1) {
+      const wild = [...this.walkers].filter(([, c]) => c.master === "-" && Math.hypot(c.player.x - w.player.x, c.player.y - w.player.y) <= w.sight);
+      const pick = chooseTarget(0, wild.map(([cid, c]) => ({ id: cid, distance: Math.hypot(c.player.x - w.player.x, c.player.y - w.player.y), health: c.hp })));
+      if (!pick || w.upkeep.have >= w.upkeep.limit) { w.recruiting = Math.min(w.recruiting, 1); return; }
+      const c = this.walkers.get(pick)!;
+      this.setMaster(pick, c, id);
+      h.creatures.push([pick, c]);
+      w.upkeep.have++;
+      w.recruiting -= 1;
+      this.clients.find((cl) => cl.sessionId === id)?.send("notice", `A wild ${c.player.name.toUpperCase()} joins you`);
+    }
+  }
+
+  /** A wild creature: an aggressive one goes for whoever it sees (shared `chooseTarget`); the rest wander. */
+  private roam(id: string, w: Walker) {
+    if (w.fleeing) return;
+    if (aggressive(w.unit.body.stats)) {
+      // Prey it can get at: not what it gave up on, and nothing in the air unless it flies too.
+      const prey = this.enemiesNear(id, w, Math.max(1, w.sight)).filter((oid) => oid !== w.shunned && (w.flying || !this.walkers.get(oid)!.flying));
+      w.foe = this.choose(w, prey);
+      if (w.foe) return;
+    } else w.foe = null;
+    if (!w.target && w.hamper.moves && this.rng() < 0.3) {
+      const clamp = (v: number) => Math.min(this.map.size, Math.max(0, v));
+      const to = { x: clamp(w.player.x + (this.rng() * 2 - 1) * CONFUSED_TILES), y: clamp(w.player.y + (this.rng() * 2 - 1) * CONFUSED_TILES) };
+      if (w.flying || clearLine(this.map, w.player, to)) w.target = to; // ambling in plain view: no route to search
+    }
+  }
+
+  /**
+   * Once a second: morale climbs back toward where it is heading, the broken and the badly hurt
+   * run from their nearest enemy, every person's command, upkeep and recruiting is counted, and
+   * wild creatures choose what to do.
+   */
+  private beat(since: number) {
+    this.nearGrid = new Map();
+    for (const [id, w] of this.walkers) {
+      const k = Math.floor(w.player.x / NEAR_CELL) * 4096 + Math.floor(w.player.y / NEAR_CELL);
+      (this.nearGrid.get(k) ?? this.nearGrid.set(k, []).get(k)!).push({ id, x: w.player.x, y: w.player.y, side: this.side(id, w) });
+    }
+    for (const [id, w] of this.walkers) {
+      if (w.morale < w.moraleGoal) w.morale = nextMorale(w.morale, w.moraleGoal, since);
+      this.nerve(w);
+      // Keep running from the same enemy while it is still near; else find the nearest.
+      const from = w.fleeing && w.fleeFrom ? this.walkers.get(w.fleeFrom) : undefined;
+      if (from && Math.hypot(from.player.x - w.player.x, from.player.y - w.player.y) <= Math.max(w.sight, FLEE_TILES)) continue;
+      if (w.fleeing) w.fleeFrom = chooseTarget(0, this.enemiesNear(id, w, Math.max(w.sight, FLEE_TILES)).map((oid) => {
+        const o = this.walkers.get(oid)!;
+        return { id: oid, distance: Math.hypot(o.player.x - w.player.x, o.player.y - w.player.y), health: o.hp };
+      }));
+    }
+    for (const [id, h] of this.holdings()) {
+      const w = this.walkers.get(id);
+      if (!w) continue;
+      this.command(id, h);
+      this.upkeep(id, w, h, since);
+      if (!this.walkers.has(id)) continue;
+      this.recruit(id, w, h, since);
+      const round = (n: number) => Math.round(n * 10) / 10;
+      const shown = JSON.stringify([round(w.morale), SUPPLIES.map((k) => round(w.stores[k])), w.upkeep.short, w.upkeep.limit, w.upkeep.have,
+        h.creatures.map(([, c]) => `${c.hungry}${c.fleeing}`)]);
+      if (shown !== w.shown) { w.shown = shown; this.tell(w); }
+    }
+    for (const [id, w] of [...this.walkers]) if (w.master === "-") this.roam(id, w);
+    this.nearGrid = null; // walkers move between beats
   }
 
   get counts(): RoomCounts {
@@ -647,10 +1061,18 @@ export class WorldRoom extends Room {
     w.routeAge += seconds;
     // A chased target moves: work the route out again once it has moved two tiles, at most once a second.
     const drift = w.routeTo ? Math.hypot(w.routeTo.x - target.x, w.routeTo.y - target.y) : Infinity;
-    if ((drift === Infinity || (drift > 2 && w.routeAge > 1)) && this.routesLeft > 0) {
+    // A dim creature (shared `rerouteSeconds`) is slow to see that its quarry has moved.
+    const every = w.master === null ? 1 : rerouteSeconds(w.intelligence);
+    if ((drift === Infinity || (drift > 2 && w.routeAge > every)) && this.routesLeft > 0) {
       this.routesLeft--;
       // Aim for ground: asking for the sea should walk you to the shore, not search the whole map.
       w.route = findPath(this.map, w.player, nearestWalkable(this.map, target));
+      // A wild creature that cannot reach its prey gives it up rather than search again every tick.
+      const end = w.route.at(-1) ?? w.player;
+      if (w.master === "-" && w.foe && Math.hypot(end.x - target.x, end.y - target.y) > 2) {
+        w.shunned = w.foe; w.foe = null; w.target = null; w.route = []; w.routeTo = null;
+        return;
+      }
       w.routeTo = { ...target };
       w.routeAge = 0;
     }
@@ -704,7 +1126,9 @@ export class WorldRoom extends Room {
     // Living things that can move act on their own; ones you can ride are gear instead.
     if (phrase.stats.flag("alive") && !phrase.stats.flag("mountable") && Math.max(phrase.stats.num("speed_land"), phrase.stats.num("speed_air")) > 0) {
       for (let i = 0; i < copies; i++) { const p = at(i); this.addCreature(one(), owner, p.x, p.y, each); }
-      return "is with you";
+      const wild = this.command(owner);
+      if (wild >= copies) return "runs wild: you cannot command more";
+      return wild ? `is with you; ${wild} ran wild` : "is with you";
     }
     const here = { x: walker.player.x, y: walker.player.y }; // laying terrain may move the speller
     const tile = TILE_TYPES[String(phrase.stats.get("tile_type"))];
@@ -838,8 +1262,14 @@ export class WorldRoom extends Room {
     }
     const effect = useObject(this.dict, gear.spelled.noun, gear.spelled.adjectives);
     if (!effect || gear.terrain) throw new Error(`${gear.phrase.toUpperCase()} cannot be used: ${useObject(this.dict, gear.spelled.noun, []) === null && this.dict.base(gear.spelled.noun, "edible") === true ? "eating it does nothing yet" : "it heals, cures and changes nothing"}`);
-    const done = this.affect(walker, gear.phrase, effect.stats, effect)!;
-    if (effect.stats.flag("single_use")) {
+    const food = effect.stats.num("nutrition");
+    let done = this.affect(walker, gear.phrase, effect.stats, effect) ?? gear.phrase.toUpperCase();
+    if (food > 0) {
+      walker.stores.food += food; // one of it eaten: its nutrition goes into your food store
+      done += `; +${+food.toFixed(2)} food`;
+      this.tell(walker);
+    }
+    if (effect.stats.flag("single_use") || food > 0) {
       const left = (gear.spelled.count ?? 1) - 1;
       if (left > 0) {
         gear.spelled.count = left; // one of a stack at a time
@@ -1320,10 +1750,11 @@ export class WorldRoom extends Room {
   private statusChanged(w: Walker) {
     w.hamper = hampered(w.statuses);
     const key = [...new Set(w.statuses.map((a) => a.status))].join(" ");
-    if (key !== w.player.status) {
-      w.player.status = key;
+    if (key !== w.statusKey) {
+      w.statusKey = key;
       this.rebuild(w);
     }
+    this.showStatus(w);
     if (!w.hamper.moves) { w.target = null; w.route = []; w.routeTo = null; }
   }
 
@@ -1362,11 +1793,15 @@ export class WorldRoom extends Room {
         w.foe = null;
         w.gathering = 0;
         const o = h.flees.map((k) => (k === id ? undefined : this.walkers.get(k)?.player ?? this.areas.get(k))).find(Boolean);
-        if (!o || !h.moves) continue;
-        let dx = w.player.x - o.x, dy = w.player.y - o.y;
-        const d = Math.hypot(dx, dy);
-        if (d < 1e-6) { const t = this.rng() * Math.PI * 2; dx = Math.cos(t); dy = Math.sin(t); } else { dx /= d; dy /= d; }
-        w.target = { x: clamp(w.player.x + dx * FLEE_TILES), y: clamp(w.player.y + dy * FLEE_TILES) };
+        if (o && h.moves) this.runFrom(w, o);
+        continue;
+      }
+      if (w.fleeing) {
+        // Broken or badly hurt: away from the nearest enemy, striking nobody.
+        w.foe = null;
+        w.gathering = 0;
+        const o = w.fleeFrom ? this.walkers.get(w.fleeFrom)?.player : undefined;
+        if (o && h.moves) this.runFrom(w, o);
         continue;
       }
       if (h.random) {
@@ -1393,10 +1828,21 @@ export class WorldRoom extends Room {
     }
   }
 
+  /** Sets a walker running FLEE_TILES straight away from a point. */
+  private runFrom(w: Walker, o: Point) {
+    const clamp = (v: number) => Math.min(this.map.size, Math.max(0, v));
+    let dx = w.player.x - o.x, dy = w.player.y - o.y;
+    const d = Math.hypot(dx, dy);
+    if (d < 1e-6) { const t = this.rng() * Math.PI * 2; dx = Math.cos(t); dy = Math.sin(t); } else { dx /= d; dy /= d; }
+    w.target = { x: clamp(w.player.x + dx * FLEE_TILES), y: clamp(w.player.y + dy * FLEE_TILES) };
+  }
+
   /** THEFT: the selected thing becomes yours if your stealth meets its security. */
   private steal(id: string, walker: Walker, phrase: Phrase): string {
     const word = phrase.noun.toUpperCase();
     const targetId = walker.picked ?? walker.foe ?? "";
+    const creature = this.walkers.get(targetId);
+    if (creature && creature.master !== null) return this.stealCreature(id, walker, phrase, targetId, creature);
     const thing = this.state.things.get(targetId), gear = this.grounded.get(targetId);
     if (!thing || !gear || gear.terrain) throw new Error(`Select a thing for ${word} first: click it`);
     if (thing.owner === id) throw new Error("That is already yours");
@@ -1414,6 +1860,27 @@ export class WorldRoom extends Room {
     if (producer) producer.owner = id;
     walker.foe = null;
     return `${gear.phrase.toUpperCase()} is yours`;
+  }
+
+  /**
+   * THEFT on a creature, owned or wild: it becomes yours if your stealth meets the better of its
+   * security and its loyalty (shared `theftResistance`). It then counts against your command.
+   */
+  private stealCreature(id: string, walker: Walker, phrase: Phrase, targetId: string, creature: Walker): string {
+    const word = phrase.noun.toUpperCase(), name = creature.player.name.toUpperCase();
+    if (creature.master === id) throw new Error("That is already yours");
+    const reach = Math.max(1.5, phrase.stats.num("placement_range") / TILE_METERS);
+    if (Math.hypot(creature.player.x - walker.player.x, creature.player.y - walker.player.y) > reach) throw new Error(`Too far away for ${word}`);
+    const by = String(phrase.stats.get("contested_by")), wit = String(phrase.stats.get("contest_with"));
+    const mine = walker.unit.body.stats.num(wit);
+    const theirs = theftResistance(creature.unit.body.stats, by);
+    if (mine < theirs) throw new Error(`${name} will not leave its master (loyalty or ${by} ${theirs} against your ${wit} ${mine})`.replaceAll("_", " "));
+    const before = creature.master;
+    this.clients.find((c) => c.sessionId === before)?.send("notice", `Your ${name} was stolen`);
+    this.setMaster(targetId, creature, id);
+    walker.foe = null;
+    this.command(id);
+    return `${name} is yours`;
   }
 
   /** A word that acts on the sky or the weather over the whole map. */
@@ -1475,6 +1942,7 @@ export class WorldRoom extends Room {
       const bonus = Math.max(1, ...[...this.areas.values()]
         .filter((a) => Math.hypot(a.x - dead.player.x, a.y - dead.player.y) <= a.radius).map((a) => a.killBonus));
       addLetters(killer.letters, "k".repeat(Math.round(bonus)));
+      if (killer.master === null) for (const k of SUPPLIES) killer.stores[k] += dead.stores[k]; // and their stores
       kc?.send("letters", killer.letters);
       kc?.send("notice", `You killed ${dead.player.name} and took their letters`);
     }
@@ -1489,7 +1957,7 @@ export class WorldRoom extends Room {
     for (const w of this.walkers.values()) {
       if (w.foe === id) w.foe = null;
       if (w.picked === id) w.picked = null;
-      if (w.master === id) { w.master = "-"; w.player.owner = "-"; } // creatures outlive their master, ownerless
+      if (w.master === id) { w.master = "-"; w.player.owner = "-"; this.showStatus(w); } // creatures outlive their master, ownerless
     }
     if (dead.master === null && this.people.length === 1 && this.everJoined > 1) {
       const [winnerId] = this.people;
@@ -1593,6 +2061,12 @@ export class WorldRoom extends Room {
     }
     for (const [id, w] of [...this.walkers]) if (w.statuses.length && this.walkers.has(id)) this.sufferStatuses(id, w, seconds);
     for (const [key, a] of [...this.areas]) this.burn(key, a, seconds);
+    // Once a second (or for however long a tick ran): morale, command, upkeep and the wild.
+    if (this.elapsed - this.lastBeat >= 1) {
+      const since = this.elapsed - this.lastBeat;
+      this.lastBeat = this.elapsed;
+      this.beat(since);
+    }
     this.think();
     this.compel();
     // Combat: each attacker strikes its foe whenever the foe is in reach.
@@ -1604,7 +2078,7 @@ export class WorldRoom extends Room {
       const thing = foe ? undefined : this.state.things.get(foeId);
       const at = foe?.player ?? thing;
       if (!at) { w.foe = null; continue; }
-      if (!w.hamper.acts) continue; // stunned, frozen, asleep or afraid
+      if (!w.hamper.acts || w.fleeing) continue; // stunned, frozen, asleep, afraid or broken
       if (w.hamper.spares.includes(foeId)) { w.foe = null; continue; } // charmed: will not hurt the charmer
       const attack = w.unit.attack;
       const reach = Math.max(1, attack.num("attack_range") / TILE_METERS);
@@ -1614,10 +2088,12 @@ export class WorldRoom extends Room {
       }
       w.target = null;
       if (w.cooldown > 0) continue;
+      // A machine with no fuel or power cannot fire.
+      if (this.strikesWith(w)?.stalled) { w.cooldown = 1; continue; }
       const given = inflicts(attack, w.unit.body.stats);
       let landed = false;
       if (thing) this.strikeThing(id, w.unit.attack, foeId, thing);
-      else landed = strikeUnit(w.unit, foe!.unit, this.rng).hit;
+      else landed = strikeUnit(w.unit, foe!.unit, this.rng, moraleAim(w.morale)).hit;
       const rate = attack.num("attack_rate") * w.hamper.tempo;
       w.cooldown = rate > 0 ? 1 / rate : 1 / w.hamper.tempo;
       if (attack.flag("single_use") && w.unit.weapon) {
@@ -1638,6 +2114,7 @@ export class WorldRoom extends Room {
       w.gathering = 0;
       const letter = gatherLetter(this.map, w.player.x, w.player.y, this.rng);
       const client = this.clients.find((c) => c.sessionId === id);
+      w.stores.food += groundFood(tileAt(this.map, w.player.x, w.player.y)); // a little forage where things grow
       if (letter) {
         addLetters(w.letters, letter);
         changed.add(id);
@@ -1647,9 +2124,9 @@ export class WorldRoom extends Room {
       }
     }
     // Objects that produce letters pay their owner as each whole letter builds up.
-    for (const p of this.producers.values()) {
+    for (const [pid, p] of this.producers) {
       const owner = this.walkers.get(p.owner);
-      if (!owner) continue;
+      if (!owner || this.grounded.get(pid)?.stalled) continue; // a stalled machine makes nothing
       for (const [letter, perMinute] of Object.entries(p.rates)) {
         const built = (p.built[letter] ?? 0) + (perMinute * seconds) / 60;
         const whole = Math.floor(built);
@@ -1663,6 +2140,9 @@ export class WorldRoom extends Room {
     for (const id of changed) {
       this.clients.find((c) => c.sessionId === id)?.send("letters", this.walkers.get(id)!.letters);
     }
+    this.tellMoods();
+    for (const id of this.toTell) { const w = this.walkers.get(id); if (w) this.tell(w); }
+    this.toTell.clear();
     // Once a second: fields follow people about, so work out again who stands in which.
     if ((this.tickCount % TICK_HZ === 0 && this.areas.size) || this.fieldsDirty) this.applyFields();
     // Once a second, anyone with a verb in force is told how long it has left.

@@ -66,7 +66,7 @@ describe("using objects", () => {
     expect(med.set).toEqual({}); // its mass and potency describe the medicine, not you
     expect(useObject(dict, "bread")!.stats.num("restores")).toBe(15);
     expect(useObject(dict, "sword")).toBeNull();
-    expect(useObject(dict, "leaf")).toBeNull(); // nutrition alone: there is no hunger yet
+    expect(useObject(dict, "leaf")?.stats.num("nutrition")).toBeGreaterThan(0); // nutrition alone: it feeds your food store
   });
 });
 

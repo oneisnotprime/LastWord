@@ -82,6 +82,7 @@ it("CATS gives three cats that follow you and costs one more S than CAT", async 
 
 it("TEN WOLVES gives ten wolves; WOLF, BEE and ANT each give exactly one; WOLVES gives plural_count", async () => {
   const { a, said, mine } = await twoPlayers();
+  a.send("spell", "crown"); await wait(); // anyone commands twelve; a CROWN adds ten
   a.send("spell", "ten wolves"); await wait();
   expect(said.at(-1)).toBe("TEN WOLVES (10) are with you");
   expect(mine().length).toBe(10);
