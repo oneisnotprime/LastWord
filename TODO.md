@@ -62,6 +62,10 @@ by how many words set them (minds and upkeep took `sentient`, `intelligence`, `f
 
 ## High priority
 
+- [ ] Tiered winners' rounds (for later, high importance): a round winner goes into a round of
+      100 against 99 other winners; winners of those eventually join a round of 10,000 against
+      other winners of rounds of 100. Each tier won earns a distinct avatar look (gold,
+      diamond, and so on)
 - [x] Dedicated loadout and inventory screens (L and I)
 - [ ] Loadout and inventory on a controller; item details (what a thing does) on hover or select
 
