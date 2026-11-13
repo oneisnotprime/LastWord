@@ -100,3 +100,65 @@ it("spells a word into an object, spends the letters, and refuses what it cannot
   await new Promise((r) => setTimeout(r, 300));
   expect(inbox.refused.at(-1)).toMatch(/^You need /);
 });
+
+it("gathers letters from the ground, pays out production, and passes letters between players", async () => {
+  const room = (await colyseus.createRoom("world", {})) as unknown as WorldRoom;
+  const a: any = await colyseus.connectTo(room as never);
+  const b: any = await colyseus.connectTo(room as never);
+  const got = { a: [] as [string, unknown][], b: [] as [string, unknown][] };
+  for (const type of ["letters", "spelled", "refused", "gathered", "notice"]) {
+    a.onMessage(type, (m: unknown) => got.a.push([type, m]));
+    b.onMessage(type, (m: unknown) => got.b.push([type, m]));
+  }
+  const walkers = (room as any).walkers;
+  const wa = walkers.get(a.sessionId), wb = walkers.get(b.sessionId);
+  const city = room.map.cities[0]!;
+  wa.player.x = city.x + 0.5; wa.player.y = city.y + 0.5;
+  wb.player.x = city.x + 1.5; wb.player.y = city.y + 0.5;
+  const count = (w: any) => Object.values(w.letters as Record<string, number>).reduce((n, v) => n + v, 0);
+  const wait = () => new Promise((r) => setTimeout(r, 150));
+
+  // Gathering takes two seconds of standing still and yields a city letter.
+  const start = count(wa);
+  a.send("gather");
+  await wait();
+  room.update(1);
+  expect(count(wa)).toBe(start);
+  room.update(1.1);
+  await wait();
+  expect(count(wa)).toBe(start + 1);
+  expect(got.a.find(([t]) => t === "gathered")![1]).toMatch(/^[lnst]$/);
+
+  // Moving cancels a gathering.
+  a.send("gather");
+  await wait();
+  a.send("move", { x: wa.player.x, y: wa.player.y });
+  await wait();
+  room.update(3);
+  expect(count(wa)).toBe(start + 1);
+
+  // A farm pays its owner two A a minute.
+  wa.letters = { f: 1, a: 1, r: 1, m: 1 };
+  a.send("spell", "farm");
+  await wait();
+  expect(wa.letters.a).toBe(0);
+  room.update(60);
+  expect(wa.letters.a).toBe(2);
+
+  // Letters pass between players who stand close, and only then.
+  a.send("give", { to: wb.player.name, letters: "aa" });
+  await wait();
+  expect(wa.letters.a).toBe(0);
+  expect(wb.letters.a).toBeGreaterThanOrEqual(2);
+  expect(got.b.some(([t, m]) => t === "notice" && /gave you AA/.test(String(m)))).toBe(true);
+  a.send("give", { to: wb.player.name, letters: "zz" });
+  await wait();
+  wb.player.x += 50;
+  a.send("give", { to: wb.player.name, letters: "f" });
+  a.send("give", { to: "nobody", letters: "f" });
+  a.send("give", "nonsense");
+  await wait();
+  expect(got.a.filter(([t]) => t === "refused").map(([, m]) => m)).toEqual([
+    "You need Z Z", `${wb.player.name} is too far away`, "nobody is not here", "Give whom what? Try: give player2 abc",
+  ]);
+});

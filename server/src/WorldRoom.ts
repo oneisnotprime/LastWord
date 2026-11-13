@@ -1,7 +1,7 @@
 import { Room, type Client } from "colyseus";
 import { StateView } from "@colyseus/schema";
 import {
-  generateMap, missing, parsePhrase, randomWalkable, resolve, seeded, spend, stepToward, TILE_METERS,
+  addLetters, GATHER_SECONDS, gatherLetter, generateMap, GIVE_RANGE, missing, parsePhrase, production, randomWalkable, resolve, seeded, spend, stepToward, TILE_METERS,
   type Dictionary, type Letters, type Point, type WorldMap,
 } from "@lastword/shared";
 import { loadDictionary } from "./data.js";
@@ -22,7 +22,12 @@ interface Walker {
   seenThings: Set<string>;
   /** Held letters. Private: sent to their owner by message, never put in shared state. */
   letters: Letters;
+  /** Seconds left on a gathering action, or 0. Moving cancels it. */
+  gathering: number;
 }
+
+/** An object's letter output: rate per minute and the fraction built up so far. */
+interface Producer { owner: string; rates: Letters; built: Letters }
 
 /** Placeholder until letter sources exist (M4): enough to spell SWORD plus a random handful. */
 function starterLetters(rng: () => number): Letters {
@@ -59,6 +64,7 @@ export class WorldRoom extends Room {
   private tickCount = 0;
   private thingGrid = new Map<number, string[]>();
   private nextThing = 1;
+  private producers = new Map<string, Producer>();
 
   messages = {
     /** Walk toward a point on the map. */
@@ -68,6 +74,42 @@ export class WorldRoom extends Room {
       if (!walker || !p || !Number.isFinite(p.x) || !Number.isFinite(p.y)) return;
       const clamp = (v: number) => Math.min(this.map.size, Math.max(0, v));
       walker.target = { x: clamp(p.x!), y: clamp(p.y!) };
+      walker.gathering = 0;
+    },
+    /** Stand still and gather a letter from the ground. */
+    gather: (client: Client) => {
+      const walker = this.walkers.get(client.sessionId);
+      if (!walker || walker.gathering > 0) return;
+      walker.target = null;
+      walker.gathering = GATHER_SECONDS;
+    },
+    /** Hand letters to a player standing close by. */
+    give: (client: Client, offer: unknown) => {
+      const from = this.walkers.get(client.sessionId);
+      const o = offer as { to?: unknown; letters?: unknown } | null;
+      if (!from) return;
+      try {
+        if (!o || typeof o.to !== "string" || typeof o.letters !== "string" || !/^[a-z]{1,40}$/.test(o.letters)) {
+          throw new Error("Give whom what? Try: give player2 abc");
+        }
+        const entry = [...this.walkers].find(([id, w]) => id !== client.sessionId && w.player.name === o.to);
+        if (!entry) throw new Error(`${o.to} is not here`);
+        const [toId, to] = entry;
+        if (Math.hypot(to.player.x - from.player.x, to.player.y - from.player.y) > GIVE_RANGE) {
+          throw new Error(`${o.to} is too far away`);
+        }
+        const lacking = missing(from.letters, o.letters);
+        if (lacking) throw new Error(`You need ${lacking.toUpperCase().split("").join(" ")}`);
+        spend(from.letters, o.letters);
+        addLetters(to.letters, o.letters);
+        client.send("letters", from.letters);
+        client.send("notice", `Gave ${o.letters.toUpperCase()} to ${o.to}`);
+        const receiver = this.clients.find((c) => c.sessionId === toId);
+        receiver?.send("letters", to.letters);
+        receiver?.send("notice", `${from.player.name} gave you ${o.letters.toUpperCase()}`);
+      } catch (e) {
+        client.send("refused", (e as Error).message);
+      }
     },
     /** Spend letters to make an object where the player stands. */
     spell: (client: Client, text: unknown) => {
@@ -80,7 +122,9 @@ export class WorldRoom extends Room {
         if (lacking) throw new Error(`You need ${lacking.toUpperCase().split("").join(" ")}`);
         spend(walker.letters, phrase.letters);
         const name = [...phrase.adjectives, phrase.noun].join(" ");
-        this.addThing(name, client.sessionId, walker.player.x, walker.player.y);
+        const id = this.addThing(name, client.sessionId, walker.player.x, walker.player.y);
+        const rates = production(phrase.stats);
+        if (Object.keys(rates).length) this.producers.set(id, { owner: client.sessionId, rates, built: {} });
         client.send("letters", walker.letters);
         client.send("spelled", name);
         this.refreshViews();
@@ -125,6 +169,7 @@ export class WorldRoom extends Room {
       seen: new Set([client.sessionId]),
       seenThings: new Set(),
       letters: starterLetters(this.rng),
+      gathering: 0,
     });
     client.send("letters", this.walkers.get(client.sessionId)!.letters);
     client.view = new StateView();
@@ -153,6 +198,39 @@ export class WorldRoom extends Room {
     const started = performance.now();
     for (const w of this.walkers.values()) {
       if (w.target && stepToward(this.map, w.player, w.target, w.speed, seconds)) w.target = null;
+    }
+    const changed = new Set<string>();
+    for (const [id, w] of this.walkers) {
+      if (w.gathering <= 0) continue;
+      w.gathering -= seconds;
+      if (w.gathering > 0) continue;
+      w.gathering = 0;
+      const letter = gatherLetter(this.map, w.player.x, w.player.y, this.rng);
+      const client = this.clients.find((c) => c.sessionId === id);
+      if (letter) {
+        addLetters(w.letters, letter);
+        changed.add(id);
+        client?.send("gathered", letter);
+      } else {
+        client?.send("refused", "Nothing to gather here");
+      }
+    }
+    // Objects that produce letters pay their owner as each whole letter builds up.
+    for (const p of this.producers.values()) {
+      const owner = this.walkers.get(p.owner);
+      if (!owner) continue;
+      for (const [letter, perMinute] of Object.entries(p.rates)) {
+        const built = (p.built[letter] ?? 0) + (perMinute * seconds) / 60;
+        const whole = Math.floor(built);
+        p.built[letter] = built - whole;
+        if (whole > 0) {
+          addLetters(owner.letters, letter.repeat(whole));
+          changed.add(p.owner);
+        }
+      }
+    }
+    for (const id of changed) {
+      this.clients.find((c) => c.sessionId === id)?.send("letters", this.walkers.get(id)!.letters);
     }
     if (this.tickCount++ % VIEW_EVERY === 0) this.refreshViews();
     const ms = performance.now() - started;
