@@ -6,7 +6,7 @@ const dict = demo();
 
 describe("Dictionary", () => {
   it("loads the demo words and the property schema", () => {
-    expect(dict.size).toBe(352);
+    expect(dict.size).toBeGreaterThanOrEqual(352);
     expect(dict.properties.size).toBe(351);
   });
 

@@ -47,7 +47,10 @@
 - [ ] Review the scale of the demo numbers: real-world units and very large gaps between words
       (nuke 5,000,000 damage against sword 40); confirm or compress before the full pass
 - [ ] Plural rules, including irregular plurals; verb tenses
-- [ ] Full property pass over the lexicon with a cheap model, using the demo set as examples
+- [ ] Full property pass over the lexicon with a model, using the demo set as examples:
+      pipeline built (`tools/generate_words.py`); first 3,000 words waiting on an API key
+- [ ] Grammar words (are, have, not, but, the rest of `GRAMMAR` in generate_words.py) need a
+      deliberate ruling: inert, or something spectacular
 - [ ] Sanity checks on that pass: sibling ordering (pond < lake < sea < ocean), unit ranges
 - [ ] Map every property to one of the shared systems; drop or merge any that touch none
 - [ ] Tile-level quantities (temperature, moisture, fertility, light) so effects spread by adjacency

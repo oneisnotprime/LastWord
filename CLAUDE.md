@@ -25,7 +25,8 @@ inventory screens (M0 to M5). Not deployed yet.
   client changes) a headless browser check pass locally. Do not wait to be asked.
 
 - Files in `data/` are generated. Change `tools/` or `tools/demo_words.txt`, then rebuild.
-  The only hand-edited file in `data/` is `overrides.tsv`.
+  The only hand-edited file in `data/` is `overrides.tsv`. `tools/generated_words.txt` is
+  written by `tools/generate_words.py`; fix the prompt or the examples, not the file.
 - Rebuild data: `tools/build_all.sh <wordnet dict dir>` (needs `npm i wordnet-db`,
   `pip install wordfreq`). It fails if a demo word uses an unknown property or wrong type.
 - Do not name features after spelling bees. Names come from words, letters and combat.
