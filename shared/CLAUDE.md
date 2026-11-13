@@ -13,5 +13,6 @@ server and the client import this, so anything here must give the same answer on
 - `stats.ts` `resolve(dict, noun, adjectives)` builds an object's properties; tracks absolutes.
 - `combat.ts` `strike`, `tick`, `duel`. The absolute rules are documented on `strike`.
 - `world.ts` map generation from a seed, tile costs, `stepToward` movement. 1 tile = 4 m.
+- `phrase.ts` `parsePhrase` reads what a player typed; `missing` and `spend` handle letters.
 - `rng.ts` seeded generator. Pass an `Rng` in; never call `Math.random`.
 - `testdata.ts` loads the demo dictionary from disk, for tests only.

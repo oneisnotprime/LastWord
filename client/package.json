@@ -8,6 +8,12 @@
     "test": "vitest run",
     "typecheck": "tsc -p ."
   },
-  "dependencies": { "@lastword/shared": "*", "phaser": "^4.2.1" },
-  "devDependencies": { "vite": "^8.3.8" }
+  "dependencies": {
+    "@colyseus/sdk": "^0.18.10",
+    "@lastword/shared": "*",
+    "phaser": "^4.2.1"
+  },
+  "devDependencies": {
+    "vite": "^8.3.8"
+  }
 }
