@@ -2,6 +2,14 @@ import { missing, type Dictionary, type Letters, type LoadoutDetail } from "@las
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 
+/** A Use button for something carried that does something when used. */
+const useButton = (g: LoadoutDetail["gear"][number]) => (g.usable ? `<button data-use="${g.index}">Use</button>` : "");
+
+/** Things on the ground in reach that you can use, each with a Use button. */
+const nearby = (d: LoadoutDetail | null) =>
+  d?.nearby.map((t) => `<div class="row"><span class="what">${t.phrase}</span><span class="slot">ground</span><button data-use-thing="${t.id}">Use</button></div>`).join("") ||
+  `<div class="row"><span class="empty">Nothing to use</span></div>`;
+
 /** The overlay drawn in HTML on top of the game: status, letters held, spelling box. */
 export class Hud {
   private held: Letters = {};
@@ -14,6 +22,8 @@ export class Hud {
     onSpell: (text: string) => void,
     private readonly dict: Dictionary,
     private readonly onDrop: (index: number) => void,
+    /** Use something carried (its index) or on the ground (its thing id). */
+    private readonly onUse: (which: number | string) => void,
   ) {
     window.addEventListener("keydown", (e) => {
       if (this.typing || e.repeat) return;
@@ -26,6 +36,8 @@ export class Hud {
       const el = (e.target as HTMLElement).closest("button");
       if (!el) return;
       if (el.dataset.drop !== undefined) this.onDrop(Number(el.dataset.drop));
+      if (el.dataset.use !== undefined) this.onUse(Number(el.dataset.use));
+      if (el.dataset.useThing !== undefined) this.onUse(el.dataset.useThing);
       if (el.dataset.word) { this.show(null); this.input.value = el.dataset.word; this.input.focus(); this.drawLetters(); }
     });
     window.addEventListener("keydown", (e) => {
@@ -101,11 +113,12 @@ export class Hud {
       words.filter((w) => w.role === role).slice(0, 80).map((w) => `<button data-word="${w.word}">${w.word}</button>`).join("") ||
       `<span class="hint">Nothing yet</span>`;
     return `
-      <h2>INVENTORY</h2><div class="hint">I or Esc to close · click a word to put it in the spelling box</div>
+      <h2>INVENTORY</h2><div class="hint">I or Esc to close · click a word to put it in the spelling box · U uses the last thing you can eat, drink or take</div>
       <h3>Letters held (${total})</h3>
       <div class="bag">${letters.map(([ch, n]) => `<div class="tile">${ch.toUpperCase()}<small>${n}</small></div>`).join("") || `<span class="hint">None</span>`}</div>
       <div class="cols">
-        <div><h3>Carrying (${d?.gear.length ?? 0})</h3>${d?.gear.map((g) => `<div class="row"><span class="what">${g.phrase}</span><span class="slot">${g.slot}</span></div>`).join("") || `<div class="row"><span class="empty">Nothing</span></div>`}</div>
+        <div><h3>Carrying (${d?.gear.length ?? 0})</h3>${d?.gear.map((g) => `<div class="row"><span class="what">${g.phrase}</span><span class="slot">${g.slot}</span>${useButton(g)}</div>`).join("") || `<div class="row"><span class="empty">Nothing</span></div>`}
+          <h3>Within reach (${d?.nearby.length ?? 0})</h3>${nearby(d)}</div>
         <div><h3>Creatures (${d?.creatures.length ?? 0})</h3>${d?.creatures.map((c) => `<div class="row"><span class="what">${c.name}</span><div class="meter"><i style="width:${c.health}%"></i></div></div>`).join("") || `<div class="row"><span class="empty">None</span></div>`}</div>
       </div>
       <h3>Things you can spell now (${words.filter((w) => w.role === "noun").length})</h3><div class="words">${list("noun")}</div>
@@ -121,14 +134,15 @@ export class Hud {
       if (!items.length) return [`<div class="row"><span class="slot">${slot}</span><span class="empty">empty</span></div>`];
       return items.map((g) => `<div class="row"><span class="slot">${slot}</span><span class="what">${g.phrase}</span>${
         g.max ? `<div class="meter" title="${g.integrity} of ${g.max}"><i style="width:${(100 * (g.integrity ?? 0)) / g.max}%"></i></div>` : ""
-      }<button data-drop="${g.index}">Drop</button></div>`);
+      }${useButton(g)}<button data-drop="${g.index}">Drop</button></div>`);
     });
     const damage = Object.entries(d.attack.damage).map(([type, n]) => `${n} ${type}`).join(", ") || "none";
     const stat = (name: string, value: string) => `<div class="stat"><span>${name}</span><b>${value}</b></div>`;
     return `
       <h2>LOADOUT</h2><div class="hint">L or Esc to close · damage lands on what you ride, then armor and shield, then you</div>
       <div class="cols">
-        <div><h3>Worn, held and ridden</h3>${rows.join("")}</div>
+        <div><h3>Worn, held and ridden</h3>${rows.join("")}
+          <h3>Within reach</h3>${nearby(d)}</div>
         <div><h3>You</h3>
           ${stat("Health", `${d.health.now} of ${d.health.max}`)}
           ${stat("Speed", `${d.speed} m/s${d.flying ? " (flying)" : ""}`)}

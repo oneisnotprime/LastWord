@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { castVerb, parsePhrase, Stats, Unit } from "./index.js";
+import { auras, castVerb, parsePhrase, resolve, Stats, Unit, useObject } from "./index.js";
 import { demo } from "./testdata.js";
 
 const dict = demo();
@@ -54,5 +54,30 @@ describe("adverbs", () => {
       }
       new Unit(dict, { body: { noun: "human" }, effects: [castVerb(dict, v)] });
     }
+  });
+});
+
+describe("using objects", () => {
+  it("MEDICINE restores, cures and protects for its duration; BREAD only restores; a SWORD does nothing", () => {
+    const med = useObject(dict, "medicine")!;
+    expect(med.stats.num("restores")).toBe(150);
+    expect(med.stats.tags("effect_status")).toEqual(["poison", "bleed", "burn"]);
+    expect(med.ops).toEqual([["res_disease", "add", 0.5]]);
+    expect(med.set).toEqual({}); // its mass and potency describe the medicine, not you
+    expect(useObject(dict, "bread")!.stats.num("restores")).toBe(15);
+    expect(useObject(dict, "sword")).toBeNull();
+    expect(useObject(dict, "leaf")).toBeNull(); // nutrition alone: there is no hunger yet
+  });
+});
+
+describe("auras", () => {
+  it("a TORCH lights five tiles and frightens enemies in its holder's sight; a field reaches as far as its radius", () => {
+    const torch = auras(resolve(dict, "torch"), 60);
+    expect(torch.map((a) => [a.kind, a.radius, a.targets])).toEqual([["light", 20, "all"], ["fear", 60, "enemies"]]);
+    expect(torch[0]!.set).toEqual({ night_vision: true });
+    expect(torch[1]!.ops).toEqual([["morale", "add", -1]]);
+    // BEATS has a field of its own: its fear reaches the field's 50 m, not the holder's sight.
+    expect(auras(resolve(dict, "beats"), 60).find((a) => a.kind === "fear")!.radius).toBe(50);
+    expect(auras(resolve(dict, "sword"), 60)).toEqual([]);
   });
 });

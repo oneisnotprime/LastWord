@@ -16,8 +16,10 @@ export interface LoadoutDetail {
     /** Metres. */
     reach: number;
   };
-  /** Everything carried, in the order it was put on. `index` is what to send to drop it. */
-  gear: { index: number; phrase: string; slot: string; integrity: number | null; max: number | null }[];
+  /** Everything carried, in the order it was put on. `index` is what to send to drop or use it. */
+  gear: { index: number; phrase: string; slot: string; integrity: number | null; max: number | null; usable: boolean }[];
+  /** Things on the ground in reach that you may use (eat, drink, take), by thing id. */
+  nearby: { id: string; phrase: string }[];
   /** Verbs in force, with seconds left; fields you stand in, with -1. */
   effects: { word: string; left: number }[];
   /** Statuses on you (stun, poison...), with seconds left. */

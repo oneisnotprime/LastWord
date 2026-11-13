@@ -45,7 +45,7 @@ class World extends Phaser.Scene {
       const give = /^\s*give\s+(\S+)\s+([a-z]+)\s*$/i.exec(text);
       if (give) this.net?.give(give[1]!, give[2]!.toLowerCase());
       else this.net?.spell(text);
-    }, dictionary, (index) => this.net?.drop(index));
+    }, dictionary, (index) => this.net?.drop(index), (which) => this.net?.use(which));
     window.addEventListener("keydown", (e) => {
       if (e.repeat || this.hud.typing || !this.net || this.over) return;
       const key = e.key.toLowerCase();
@@ -54,6 +54,7 @@ class World extends Phaser.Scene {
         this.hud.toast("Gathering…", "good");
       } else if (key === "e") this.net.take();
       else if (key === "q") this.net.drop();
+      else if (key === "u") this.net.use();
     });
     try {
       this.net = await connect({

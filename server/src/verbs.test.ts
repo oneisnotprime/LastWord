@@ -80,14 +80,23 @@ it("CATS gives three cats that follow you and costs one more S than CAT", async 
   for (const cat of mine()) expect(Math.hypot(cat.player.x - wa.player.x, cat.player.y - wa.player.y)).toBeLessThanOrEqual(2.5);
 });
 
-it("TEN WOLVES gives ten wolves; a WOLF comes as its pack", async () => {
+it("TEN WOLVES gives ten wolves; WOLF, BEE and ANT each give exactly one; WOLVES gives plural_count", async () => {
   const { a, said, mine } = await twoPlayers();
   a.send("spell", "ten wolves"); await wait();
   expect(said.at(-1)).toBe("TEN WOLVES (10) are with you");
   expect(mine().length).toBe(10);
   expect(mine().every((w) => w.player.name === "wolf")).toBe(true);
   a.send("spell", "wolf"); await wait();
-  expect(mine().length).toBe(14);
+  expect(said.at(-1)).toBe("WOLF is with you");
+  expect(mine().length).toBe(11);
+  for (const one of ["bee", "ant"]) {
+    a.send("spell", one); await wait();
+    const made = mine().filter((w) => w.player.name === one);
+    expect(made.length).toBe(1);
+    expect(made[0].player.count).toBe(1);
+  }
+  a.send("spell", "wolves"); await wait();
+  expect(mine().filter((w) => w.player.name === "wolf").length).toBe(11 + Number(dict.base("wolf", "plural_count")));
 });
 
 it("THOUSAND ANTS is one swarm of a thousand, with a thousand ants' integrity and bite", async () => {

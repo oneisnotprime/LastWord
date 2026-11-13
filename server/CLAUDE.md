@@ -45,3 +45,8 @@ Node process that owns the game state. One room per map instance (from milestone
   with `count` (`Player.count`, `Thing.count`, `Spelled.count`; stats via shared `massed`).
 - `cast` applies a verb with its adverbs (shared `castVerb`); touched verbs with event properties
   go through `happen` on the picked target. A verb that would do nothing is refused.
+- `use` (U) applies an object to its user through `affect`, the same code as `cast`.
+- Objects radiate (`radiate`, `syncRadiation`): a `field_radius` gives the same `Area` a field
+  word makes (`fieldArea`), and shared `auras` adds light, fear and healing. Carried things and
+  bodies radiate around their walker (synced in `rebuild`), things on the ground around
+  themselves (`addThing`/`removeThing`).

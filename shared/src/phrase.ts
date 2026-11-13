@@ -21,8 +21,10 @@ export interface Phrase {
   /** Spelled as a plural: CATS, WOLVES, MICE. */
   plural: boolean;
   /**
-   * How many it makes: `plural_count` for a plural (3 by default), else `pack_size` (1 by
-   * default; a WOLF comes as a pack of four). Number words change both: TEN WOLVES is ten.
+   * How many it makes: `plural_count` for a plural (3 by default). A singular makes exactly one
+   * (WOLF is one wolf, ANT one ant), unless it is a collective (archetype group: an ARMY is its
+   * `pack_size`) or its adjectives change `pack_size` (TEN WOLF, ACCOMPANIED WOLF). Number words
+   * change both: TEN WOLVES is ten.
    */
   count: number;
   /** Every letter the phrase costs, in order, lower case: CATS costs the S. */
@@ -81,7 +83,9 @@ export function parsePhrase(dict: Dictionary, text: string): Phrase {
   if (def.role !== "noun") throw new Error(`${last.toUpperCase()} is not a thing; end with a noun`);
   const adverb = modifiers.find((w) => role(w) === "adverb");
   if (adverb) throw new Error(`${adverb.toUpperCase()} goes with a verb, not with ${last.toUpperCase()}`);
-  const stats = resolve(dict, head.word, modifiers);
+  // A singular is one of the thing: the noun's own pack_size counts only for a collective.
+  const solo = !head.plural && def.archetype !== "group" && def.set.pack_size !== undefined;
+  const stats = resolve(dict, head.word, modifiers, [], solo ? { pack_size: 1 } : {});
   const kind = def.class === "event" ? "event" : kindOf(stats, def.class);
   if (head.plural && kind !== "object") throw new Error(`${last.toUpperCase()}: only things come in plurals; spell ${head.word.toUpperCase()}`);
   const count = Math.round(stats.num(head.plural ? "plural_count" : "pack_size"));
