@@ -24,6 +24,9 @@ class World extends Phaser.Scene {
   private steering = false;
   private lastSteer = 0;
   private foe: string | null = null;
+  /** Right-click choice for events: an id, or a spot drawn as a cross. */
+  private picked: string | null = null;
+  private aimMark?: Phaser.GameObjects.Container;
   private over = false;
   private roundOver = false;
   private editsApplied = 0;
@@ -85,6 +88,7 @@ class World extends Phaser.Scene {
       if (this.over || this.hud.screen) return;
       const at = this.cameras.main.getWorldPoint(p.x, p.y);
       const x = at.x / PX, y = at.y / PX;
+      if (p.rightButtonDown()) return this.pickAt(x, y);
       // A click on another player or on a thing attacks it; a click anywhere else walks there and stops attacking.
       let hit: string | null = null;
       this.net.state.things.forEach((thing: any, id: string) => {
@@ -97,7 +101,33 @@ class World extends Phaser.Scene {
       this.net.attack(hit);
       if (!hit) this.net.move(x, y);
     });
+    this.input.mouse?.disableContextMenu();
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !this.hud.typing && !this.hud.screen) this.pickAt(null);
+    });
     (window as any).__lw = { net: this.net, map: this.map, dictionary, scene: this, PX }; // for browser checks
+  }
+
+  /** Right-click: pick out whoever or whatever is under the pointer, else that spot. Null clears. */
+  private pickAt(x: number | null, y = 0) {
+    this.aimMark?.destroy();
+    this.aimMark = undefined;
+    this.picked = null;
+    if (x === null) { this.net.pick(null); return; }
+    let hit: string | null = null;
+    this.net.state.things.forEach((t: any, id: string) => { if (Math.hypot(t.x - x, t.y - y) < 0.6) hit = id; });
+    this.net.state.players.forEach((o: any, id: string) => { if (id !== this.net.sessionId && Math.hypot(o.x - x, o.y - y) < 0.8) hit = id; });
+    if (hit) {
+      this.picked = hit;
+      this.net.pick({ id: hit });
+      this.hud.toast("Picked out: spell an event to use it on them", "good");
+      return;
+    }
+    const g = this.add.graphics().lineStyle(2, 0x5fd3f3, 1);
+    g.lineBetween(-5, -5, 5, 5).lineBetween(-5, 5, 5, -5).strokeCircle(0, 0, 8);
+    this.aimMark = this.add.container(x * PX, y * PX, [g]).setDepth(20);
+    this.net.pick({ x, y });
+    this.hud.toast("Spot marked: area events will land here", "good");
   }
 
   /** One pixel per tile on a canvas, scaled up without smoothing. */
@@ -162,7 +192,7 @@ class World extends Phaser.Scene {
     state.things.forEach((t: any, id: string) => {
       live.add(id);
       const m = this.marker(id, t.owner === mine ? 0xffd166 : t.owner ? 0xd98c5f : 0xb9b4a8, 8, t.phrase.toUpperCase(), 5, true);
-      m.box.setPosition(t.x * PX, t.y * PX).setStrokeStyle(id === this.foe ? 2 : 1, id === this.foe ? 0xffd166 : 0x14161a);
+      m.box.setPosition(t.x * PX, t.y * PX).setStrokeStyle(id === this.foe || id === this.picked ? 2 : 1, id === this.picked ? 0x5fd3f3 : id === this.foe ? 0xffd166 : 0x14161a);
       if (t.hp < 100) {
         m.bar ??= this.add.rectangle(0, 0, 12, 2, 0xff8a80).setOrigin(0, 0.5).setDepth(6);
         m.bar.setPosition(t.x * PX - 6, t.y * PX - 6).setSize(12 * (t.hp / 100), 2);
@@ -177,7 +207,7 @@ class World extends Phaser.Scene {
       const m = this.marker(id, colour, creature ? 7 : 10, p.name, 10);
       m.box.setFillStyle(colour);
       m.label.setText(creature ? p.name.toUpperCase() : p.gear ? `${p.name}\n${p.gear}` : p.name).setAlign("center");
-      m.box.setStrokeStyle(id === this.foe ? 2 : 1, id === this.foe ? 0xffd166 : 0x14161a);
+      m.box.setStrokeStyle(id === this.foe || id === this.picked ? 2 : 1, id === this.picked ? 0x5fd3f3 : id === this.foe ? 0xffd166 : 0x14161a);
       m.bar ??= this.add.rectangle(0, 0, 14, 2, 0x9be28f).setOrigin(0, 0.5).setDepth(12);
       // Ease toward the server's position so ten updates a second look smooth.
       const k = Math.min(1, delta / 100);

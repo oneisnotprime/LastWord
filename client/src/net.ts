@@ -14,6 +14,8 @@ export interface Connection {
   drop(index?: number): void;
   /** Attack a player by session id; null stops. */
   attack(target: string | null): void;
+  /** Pick a target or spot for events without attacking it; null clears. */
+  pick(what: { id: string } | { x: number; y: number } | null): void;
 }
 
 export interface Handlers {
@@ -66,5 +68,6 @@ export async function connect(on: Handlers): Promise<Connection> {
     take: () => room.send("take"),
     drop: (index) => room.send("drop", index),
     attack: (target) => room.send("attack", target),
+    pick: (what) => room.send("pick", what),
   };
 }
