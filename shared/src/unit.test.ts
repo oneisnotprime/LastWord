@@ -42,6 +42,20 @@ describe("what gear does for its wearer", () => {
   });
 });
 
+describe("passing effects", () => {
+  it("apply a cast verb to the body", () => {
+    const fly = dict.word("fly")!;
+    const u = new Unit(dict, { body: { noun: "human" }, effects: [{ ops: fly.ops }] });
+    expect(u.movement.num("speed_air")).toBe(20);
+  });
+
+  it("make a hidden character impossible to hit, armor or not", () => {
+    const hide = dict.word("hide")!;
+    const target = new Unit(dict, { body: { noun: "human" }, items: [{ noun: "armor" }], effects: [{ set: { untargetable: true }, ops: hide.ops }] });
+    expect(strikeUnit(human([{ noun: "gun" }]), target, hit)).toMatchObject({ hit: false, damage: 0 });
+  });
+});
+
 describe("where damage lands", () => {
   it("destroys armor before the body is hurt", () => {
     const target = human([{ noun: "armor" }]);

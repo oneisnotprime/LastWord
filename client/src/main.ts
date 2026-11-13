@@ -156,6 +156,7 @@ class World extends Phaser.Scene {
       if (!live.has(id)) { m.box.destroy(); m.label.destroy(); m.bar?.destroy(); this.markers.delete(id); }
     }
 
+    this.hud.sky(state.daylight, state.weather);
     const me = state.players.get(mine);
     if (!me) {
       if (this.over) this.hud.status("Knocked out");
@@ -174,7 +175,8 @@ class World extends Phaser.Scene {
     const others = state.players.size - 1;
     this.hud.status(
       `${Tile[tileAt(this.map, me.x, me.y)]} · ${Math.round(me.x * TILE_METERS)}, ${Math.round(me.y * TILE_METERS)} m · ` +
-      `${others} other${others === 1 ? "" : "s"} in sight · health ${me.hp}%${me.gear ? ` · ${me.gear}` : ""}`,
+      `${others} other${others === 1 ? "" : "s"} in sight · health ${me.hp}%${me.gear ? ` · ${me.gear}` : ""}` +
+      `${state.daylight === "night" ? " · night" : ""}${state.weather ? ` · ${state.weather}` : ""}`,
     );
   }
 }

@@ -42,6 +42,15 @@ export class Hud {
     this.drawLetters();
   }
 
+  /** Tints the whole view for the time of day and the weather. */
+  sky(daylight: string, weather: string) {
+    const tint: Record<string, string> = {
+      rain: "rgba(60, 80, 110, 0.25)", storm: "rgba(20, 25, 45, 0.45)", fog: "rgba(225, 228, 232, 0.6)",
+      snow: "rgba(240, 245, 250, 0.3)",
+    };
+    $("sky").style.backgroundColor = tint[weather] ?? (daylight === "night" ? "rgba(8, 12, 40, 0.55)" : "transparent");
+  }
+
   /** A message that stays up: death or victory. */
   banner(text: string) {
     const el = $("banner");

@@ -7,6 +7,7 @@
     <style>
       html, body { margin: 0; height: 100%; background: #14161a; overflow: hidden; }
       #game { width: 100%; height: 100%; }
+      #sky { position: fixed; inset: 0; pointer-events: none; transition: background-color 1.5s; }
       #hud { position: fixed; inset: 0; pointer-events: none; font: 14px/1.3 ui-monospace, Menlo, Consolas, monospace; color: #e8e6df; }
       #status { position: absolute; top: 12px; left: 12px; max-width: 46vw; background: #14161acc; padding: 6px 10px; border-radius: 4px; }
       #help { position: absolute; top: 12px; right: 12px; max-width: 46vw; text-align: right; font-size: 12px; background: #14161acc; padding: 6px 10px; border-radius: 4px; color: #a9a79f; }
@@ -32,6 +33,7 @@
   </head>
   <body>
     <div id="game"></div>
+    <div id="sky"></div>
     <div id="hud">
       <div id="status">Connecting…</div>
       <div id="help">Move: WASD, arrows, click · Attack: click a player or thing · Gather: G · Pick up: E · Drop: Q · Spell: Enter · Trade: give player2 abc</div>

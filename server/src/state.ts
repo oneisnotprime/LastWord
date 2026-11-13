@@ -41,6 +41,10 @@ export const WorldState = schema(
     players: t.map(Player).view(),
     things: t.map(Thing).view(),
     edits: t.array(Edit),
+    /** "day" or "night". */
+    daylight: t.string(),
+    /** The weather word in force, or "". */
+    weather: t.string(),
   },
   "WorldState",
 );

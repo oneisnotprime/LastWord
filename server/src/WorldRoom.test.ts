@@ -70,7 +70,9 @@ it("spells a word into an object, spends the letters, and refuses what it cannot
   for (const type of ["letters", "spelled", "refused"] as const) a.onMessage(type, (m: unknown) => inbox[type].push(m));
   for (const type of Object.keys(inbox)) b.onMessage(type, () => {});
   const pa = room.state.players.get(a.sessionId)!, pb = room.state.players.get(b.sessionId)!;
-  pa.x = 50; pa.y = 50; pb.x = 150; pb.y = 50;
+  // Stand in a city: equipping moves anyone standing on water to the shore.
+  const [here, far] = [room.map.cities[0]!, room.map.cities[1]!];
+  pa.x = here.x + 0.5; pa.y = here.y + 0.5; pb.x = far.x + 0.5; pb.y = far.y + 0.5;
   await new Promise((r) => setTimeout(r, 100));
   // The first hand is sent on join, before this test could listen; read it from the room.
   const before = { ...(room as any).walkers.get(a.sessionId).letters } as Record<string, number>;
@@ -101,7 +103,7 @@ it("spells a word into an object, spends the letters, and refuses what it cannot
   const things = [...a.state.things.values()];
   expect(things).toHaveLength(1);
   expect(things[0]).toMatchObject({ phrase: "sword", owner: a.sessionId });
-  expect(things[0].x).toBeCloseTo(50);
+  expect(things[0].x).toBeCloseTo(here.x + 0.5);
   expect(b.state.things.size).toBe(0); // out of sight
   a.send("take");
   await new Promise((r) => setTimeout(r, 200));
@@ -279,4 +281,107 @@ it("lays terrain, pushes players out of it, and lets things on the ground be des
   expect(room.state.things.has(chair)).toBe(false);
   expect(wa.letters).toEqual({ d: 1, v: 1 });
   expect(got.b.some(([t, m]) => t === "notice" && m === "Your CHAIR was destroyed")).toBe(true);
+});
+
+it("casts verbs, steals with THEFT once stealthy enough, and changes the sky", async () => {
+  const room = (await colyseus.createRoom("world", {})) as unknown as WorldRoom;
+  const a: any = await colyseus.connectTo(room as never);
+  const b: any = await colyseus.connectTo(room as never);
+  const got = { a: [] as [string, unknown][], b: [] as [string, unknown][] };
+  for (const type of ["letters", "spelled", "refused", "notice", "dead", "won"]) {
+    a.onMessage(type, (m: unknown) => got.a.push([type, m]));
+    b.onMessage(type, (m: unknown) => got.b.push([type, m]));
+  }
+  const last = (who: "a" | "b", type: string) => got[who].filter(([t]) => t === type).at(-1)?.[1];
+  const walkers = (room as any).walkers;
+  const wa = walkers.get(a.sessionId), wb = walkers.get(b.sessionId);
+  const city = room.map.cities[0]!;
+  wa.player.x = city.x + 0.5; wa.player.y = city.y + 0.5;
+  wb.player.x = city.x + 1.5; wb.player.y = city.y + 0.5;
+  const wait = () => new Promise((r) => setTimeout(r, 150));
+  const all = () => Object.fromEntries([..."abcdefghijklmnopqrstuvwxyz"].map((ch) => [ch, 9]));
+  wa.letters = all(); wb.letters = all();
+
+  // RUN doubles speed for thirty seconds, then wears off.
+  a.send("spell", "run");
+  await wait();
+  expect(last("a", "spelled")).toBe("RUN for 30 seconds");
+  expect(wa.speed).toBe(10);
+  expect(wa.player.gear).toBe("RUN");
+  room.update(31);
+  await wait();
+  expect(wa.speed).toBe(5);
+  expect(last("a", "notice")).toBe("RUN wore off");
+
+  // FLY crosses water; landing on water puts you ashore.
+  a.send("spell", "fly");
+  await wait();
+  expect(wa.flying).toBe(true);
+  wa.player.x = 2.5; wa.player.y = 2.5; // out over the sea
+  a.send("move", { x: 6.5, y: 2.5 });
+  await wait();
+  room.update(0.5);
+  expect(wa.player.x).toBeGreaterThan(2.5);
+  room.update(61);
+  expect(wa.flying).toBe(false);
+  expect(walkable(room.map, wa.player.x, wa.player.y)).toBe(true);
+
+  // HEAL restores integrity.
+  wa.hp = 20;
+  a.send("spell", "heal");
+  await wait();
+  expect(wa.hp).toBe(100);
+  expect(wa.player.hp).toBe(100);
+
+  // THEFT: B's chest is guarded (security 3). A has stealth 0, so it fails and costs nothing.
+  wa.player.x = wb.player.x; wa.player.y = wb.player.y;
+  b.send("spell", "chest");
+  await wait();
+  const chest = [...room.state.things.entries()].find(([, t]) => t.phrase === "chest")![0];
+  a.send("spell", "theft");
+  await wait();
+  expect(last("a", "refused")).toBe("Select a thing for THEFT first: click it");
+  a.send("attack", chest);
+  await wait();
+  const held = wa.letters.t;
+  a.send("spell", "theft");
+  await wait();
+  expect(last("a", "refused")).toBe("CHEST is too well guarded (3 against your 0)");
+  expect(wa.letters.t).toBe(held);
+  // SNEAK adds five stealth; now the theft works.
+  a.send("spell", "sneak");
+  await wait();
+  a.send("spell", "theft");
+  await wait();
+  expect(last("a", "spelled")).toBe("CHEST is yours");
+  expect(room.state.things.get(chest)!.owner).toBe(a.sessionId);
+  expect(last("b", "notice")).toBe("Your CHEST was stolen");
+  a.send("spell", "war");
+  await wait();
+  expect(last("a", "refused")).toBe("WAR does nothing yet");
+
+  // Sky: MOON brings night and halves sight; RAIN cuts it further; SUN brings day and clears the rain.
+  room.update(200); // let SNEAK wear off
+  expect(wb.sight).toBe(15);
+  b.send("spell", "moon");
+  await wait();
+  expect(room.state.daylight).toBe("night");
+  expect(wb.sight).toBe(7.5);
+  b.send("spell", "rain");
+  await wait();
+  expect(room.state.weather).toBe("rain");
+  expect(wb.sight).toBeCloseTo(7.5 * 0.7);
+  expect(wa.sight).toBeCloseTo(7.5 * 0.7);
+  a.send("spell", "sun");
+  await wait();
+  expect(room.state.daylight).toBe("day");
+  expect(room.state.weather).toBe("");
+  expect(wb.sight).toBe(15);
+  // Weather ends by itself too.
+  b.send("spell", "fog");
+  await wait();
+  expect(wb.sight).toBeCloseTo(1.5);
+  room.update(15 * 60 + 1);
+  expect(room.state.weather).toBe("");
+  expect(wb.sight).toBe(15);
 });

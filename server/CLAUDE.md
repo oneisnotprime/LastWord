@@ -19,6 +19,8 @@ Node process that owns the game state. One room per map instance (from milestone
   on the client. Older tutorials use a different API; check docs.colyseus.io.
 - Gear a player carries lives in the room (`Walker.gear`) and is shown to others only as the
   text in `Player.gear`; things on the ground are `Thing`s in the state.
+- A spelling is one of four kinds (`parsePhrase().kind`): object, verb (`cast`), event
+  (`happen`), sky (`sky`). Each of the last three throws before any letters are spent.
 - `LETTERS=9` gives every player nine of each letter and `CROWD=1` spawns everyone in one
   city; both are for local testing only.
 - Ignore options a client sends when joining. A message with no handler disconnects the sender.

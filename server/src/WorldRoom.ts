@@ -2,7 +2,7 @@ import { Room, type Client } from "colyseus";
 import { StateView } from "@colyseus/schema";
 import {
   addLetters, GATHER_SECONDS, gatherLetter, generateMap, GIVE_RANGE, missing, parsePhrase, production, nearestWalkable, randomWalkable, resolve, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit,
-  type Dictionary, type Entity, type Letters, type Point, type Spelled, type WorldMap,
+  type Dictionary, type Entity, type Letters, type Op, type Phrase, type Point, type Spelled, type Value, type WorldMap,
 } from "@lastword/shared";
 import { loadDictionary } from "./data.js";
 import { Edit, Player, Thing, WorldState } from "./state.js";
@@ -23,6 +23,12 @@ interface Gear {
   terrain?: boolean;
 }
 
+/** A passing effect on bodies: a verb someone cast, or weather over everyone. */
+interface Effect { word: string; set: Record<string, Value>; ops: Op[]; until: number }
+
+/** Sight is multiplied by this at night for anyone without night vision. */
+const NIGHT_SIGHT = 0.5;
+
 /** How close, in tiles, a thing on the ground must be to pick it up. */
 const TAKE_RANGE = 2;
 
@@ -36,6 +42,10 @@ interface Walker {
   foe: string | null;
   /** Seconds until the next strike. */
   cooldown: number;
+  /** Verbs in force on this player. */
+  buffs: Effect[];
+  /** In the air: ground does not block or slow. */
+  flying: boolean;
   target: Point | null;
   speed: number;
   /** Sight range in tiles. */
@@ -95,6 +105,10 @@ export class WorldRoom extends Room {
   private everJoined = 0;
   /** Things on the ground that have been attacked, with the damage they carry. */
   private thingEntities = new Map<string, Entity>();
+  /** Seconds this room has run. */
+  private elapsed = 0;
+  /** The weather in force over the whole map, if any. */
+  private weather: Effect | null = null;
 
   messages = {
     /** Walk toward a point on the map. */
@@ -188,8 +202,19 @@ export class WorldRoom extends Room {
         const phrase = parsePhrase(this.dict, text);
         const lacking = missing(walker.letters, phrase.letters);
         if (lacking) throw new Error(`You need ${lacking.toUpperCase().split("").join(" ")}`);
-        spend(walker.letters, phrase.letters);
         const name = [...phrase.adjectives, phrase.noun].join(" ");
+        if (phrase.kind !== "object") {
+          // These throw if they cannot happen, before any letters are spent.
+          const done =
+            phrase.kind === "verb" ? this.cast(walker, phrase)
+            : phrase.kind === "event" ? this.happen(client.sessionId, walker, phrase)
+            : this.sky(client.sessionId, phrase, name);
+          spend(walker.letters, phrase.letters);
+          client.send("letters", walker.letters);
+          client.send("spelled", done);
+          return;
+        }
+        spend(walker.letters, phrase.letters);
         const gear: Gear = {
           spelled: { noun: phrase.noun, adjectives: phrase.adjectives },
           phrase: name,
@@ -225,6 +250,8 @@ export class WorldRoom extends Room {
     this.dict = loadDictionary();
     this.map = generateMap(seed);
     this.state.seed = seed;
+    this.state.daylight = "day";
+    this.state.weather = "";
     this.state.size = this.map.size;
     this.setTimestep((ms) => this.update(ms / 1000), 1000 / TICK_HZ);
     liveRooms.add(this);
@@ -257,6 +284,8 @@ export class WorldRoom extends Room {
       hp: unit.body.integrity,
       foe: null,
       cooldown: 0,
+      buffs: [],
+      flying: false,
       target: null,
       speed: body.num("speed_land"),
       sight: body.num("sight_range") / TILE_METERS,
@@ -306,6 +335,7 @@ export class WorldRoom extends Room {
       body: { noun: "human" },
       items: walker.gear.filter((g) => !g.vehicle).map((g) => g.spelled),
       riding: walker.gear.find((g) => g.vehicle)?.spelled,
+      effects: [...(this.weather ? [this.weather] : []), ...walker.buffs],
     });
     unit.body.integrity = walker.hp;
     for (const g of walker.gear) {
@@ -315,9 +345,77 @@ export class WorldRoom extends Room {
       else layer.integrity = g.integrity;
     }
     walker.unit = unit;
-    walker.speed = unit.movement.num("speed_land");
-    walker.sight = unit.body.stats.num("sight_range") / TILE_METERS;
-    walker.player.gear = walker.gear.map((g) => g.phrase).join(", ");
+    const air = unit.movement.num("speed_air");
+    walker.flying = air > 0;
+    walker.speed = Math.max(unit.movement.num("speed_land"), air);
+    const dark = this.state.daylight === "night" && !unit.body.stats.flag("night_vision");
+    walker.sight = (unit.body.stats.num("sight_range") * (dark ? NIGHT_SIGHT : 1)) / TILE_METERS;
+    walker.player.gear = [...walker.gear.map((g) => g.phrase), ...walker.buffs.map((b) => b.word.toUpperCase())].join(", ");
+    if (!walker.flying) {
+      const ground = nearestWalkable(this.map, walker.player); // coming down over water puts you ashore
+      if (ground !== walker.player) { walker.player.x = ground.x; walker.player.y = ground.y; walker.target = null; }
+    }
+  }
+
+  /** A verb: a passing effect on the speller's own body. */
+  private cast(walker: Walker, phrase: Phrase): string {
+    const def = this.dict.word(phrase.noun)!;
+    const heal = phrase.stats.num("restores");
+    if (heal > 0) walker.hp = Math.min(walker.unit.body.stats.num("integrity"), walker.hp + heal);
+    const seconds = phrase.stats.num("duration");
+    if (seconds > 0) {
+      const { duration, restores, cast_time, effect_status, ...set } = def.set;
+      walker.buffs = walker.buffs.filter((b) => b.word !== phrase.noun); // casting again restarts it
+      walker.buffs.push({ word: phrase.noun, set, ops: def.ops, until: this.elapsed + seconds });
+    }
+    this.rebuild(walker);
+    walker.player.hp = Math.ceil((walker.hp / walker.unit.body.stats.num("integrity")) * 100);
+    return seconds > 0 && seconds < Infinity ? `${phrase.noun.toUpperCase()} for ${seconds} seconds` : phrase.noun.toUpperCase();
+  }
+
+  /** An event dropped on the thing the speller has selected. Only ownership changes exist so far. */
+  private happen(id: string, walker: Walker, phrase: Phrase): string {
+    const word = phrase.noun.toUpperCase();
+    if (!phrase.stats.flag("transfers_ownership")) throw new Error(`${word} does nothing yet`);
+    const targetId = walker.foe ?? "";
+    const thing = this.state.things.get(targetId), gear = this.grounded.get(targetId);
+    if (!thing || !gear || gear.terrain) throw new Error(`Select a thing for ${word} first: click it`);
+    if (thing.owner === id) throw new Error("That is already yours");
+    const reach = Math.max(1.5, phrase.stats.num("placement_range") / TILE_METERS);
+    if (Math.hypot(thing.x - walker.player.x, thing.y - walker.player.y) > reach) throw new Error(`Too far away for ${word}`);
+    // The speller's own stat against the thing's: stealth against security for a theft.
+    const mine = walker.unit.body.stats.num(String(phrase.stats.get("contest_with")));
+    const theirs = resolve(this.dict, gear.spelled.noun, gear.spelled.adjectives).num(String(phrase.stats.get("contested_by")));
+    if (mine < theirs) throw new Error(`${gear.phrase.toUpperCase()} is too well guarded (${theirs} against your ${mine})`);
+    this.clients.find((c) => c.sessionId === thing.owner)?.send("notice", `Your ${gear.phrase.toUpperCase()} was stolen`);
+    thing.owner = id;
+    const producer = this.producers.get(targetId);
+    if (producer) producer.owner = id;
+    walker.foe = null;
+    return `${gear.phrase.toUpperCase()} is yours`;
+  }
+
+  /** A word that acts on the sky or the weather over the whole map. */
+  private sky(id: string, phrase: Phrase, name: string): string {
+    const s = phrase.stats, def = this.dict.word(phrase.noun)!;
+    const daylight = String(s.get("sets_daylight"));
+    const clears = s.tags("clears_weather");
+    const weather = String(s.get("sets_weather"));
+    const minutes = s.num("field_duration") || s.num("persistence");
+    let did = "";
+    if (daylight !== "none") { this.state.daylight = daylight; did = `It is ${daylight}`; }
+    if (this.weather && clears.includes(this.weather.word)) { this.weather = null; this.state.weather = ""; did ||= "The sky clears"; }
+    if (weather) {
+      this.weather = { word: weather, set: {}, ops: def.ops, until: this.elapsed + (minutes > 0 ? minutes * 60 : Infinity) };
+      this.state.weather = weather;
+      did = `${name.toUpperCase()} for ${minutes} minutes`;
+    }
+    if (!did) throw new Error(`${name.toUpperCase()} does nothing yet`);
+    const rates = production(s);
+    if (Object.keys(rates).length) this.producers.set(`sky:${phrase.noun}:${id}`, { owner: id, rates, built: {} });
+    for (const w of this.walkers.values()) this.rebuild(w);
+    this.refreshViews();
+    return did;
   }
 
   /** Writes a struck unit's damage back to its walker; destroyed gear is gone for good. */
@@ -429,8 +527,20 @@ export class WorldRoom extends Room {
 
   update(seconds: number) {
     const started = performance.now();
-    for (const w of this.walkers.values()) {
-      if (w.target && stepToward(this.map, w.player, w.target, w.speed, seconds)) w.target = null;
+    this.elapsed += seconds;
+    if (this.weather && this.elapsed >= this.weather.until) {
+      this.weather = null;
+      this.state.weather = "";
+      for (const w of this.walkers.values()) this.rebuild(w);
+    }
+    for (const [id, w] of this.walkers) {
+      if (w.buffs.some((b) => this.elapsed >= b.until)) {
+        const over = w.buffs.filter((b) => this.elapsed >= b.until);
+        w.buffs = w.buffs.filter((b) => this.elapsed < b.until);
+        this.rebuild(w);
+        this.clients.find((c) => c.sessionId === id)?.send("notice", `${over.map((b) => b.word.toUpperCase()).join(", ")} wore off`);
+      }
+      if (w.target && stepToward(this.map, w.player, w.target, w.speed, seconds, w.flying)) w.target = null;
     }
     // Combat: each attacker strikes its foe whenever the foe is in reach.
     for (const [id, w] of [...this.walkers]) {

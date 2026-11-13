@@ -157,14 +157,17 @@ export function randomWalkable(map: WorldMap, rng: () => number): Point {
  * Moves a walker toward its target for `seconds` at `speed` metres a second. Terrain slows it,
  * and it stops at the edge of anything it cannot walk on. Returns true when it has arrived.
  */
-export function stepToward(map: WorldMap, pos: Point, target: Point, speed: number, seconds: number): boolean {
+export function stepToward(map: WorldMap, pos: Point, target: Point, speed: number, seconds: number, flying = false): boolean {
   const dx = target.x - pos.x, dy = target.y - pos.y;
   const distance = Math.hypot(dx, dy);
   if (distance < 1e-6) return true;
-  const reach = (speed / TILE_METERS / WALK_COST[tileAt(map, pos.x, pos.y)]) * seconds;
+  // In the air the ground below does not matter, but the map still has edges.
+  const cost = flying ? 1 : WALK_COST[tileAt(map, pos.x, pos.y)];
+  const reach = (speed / TILE_METERS / cost) * seconds;
   const step = Math.min(distance, reach);
   const nx = pos.x + (dx / distance) * step, ny = pos.y + (dy / distance) * step;
-  if (!walkable(map, nx, ny)) return true;
+  const inside = nx >= 0 && ny >= 0 && nx < map.size && ny < map.size;
+  if (flying ? !inside : !walkable(map, nx, ny)) return true;
   pos.x = nx;
   pos.y = ny;
   return step >= distance;

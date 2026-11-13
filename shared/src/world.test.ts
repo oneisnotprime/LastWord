@@ -71,3 +71,12 @@ describe("stampTerrain", () => {
     expect(tileAt(map, 100.5, 100.5)).toBe(Tile.Lava);
   });
 });
+
+it("flying crosses water at full speed but not the map edge", () => {
+  const map = generateMap(42);
+  const pos = { x: 1.5, y: 1.5 }; // deep water
+  stepToward(map, pos, { x: 5.5, y: 1.5 }, 20, 0.4, true);
+  expect(pos.x).toBeCloseTo(1.5 + (20 / TILE_METERS) * 0.4);
+  stepToward(map, pos, { x: -10, y: 1.5 }, 2000, 1, true);
+  expect(pos.x).toBeGreaterThanOrEqual(0);
+});
