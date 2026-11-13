@@ -7,3 +7,4 @@ export * from "./world.js";
 export * from "./phrase.js";
 export * from "./letters.js";
 export * from "./unit.js";
+export * from "./loadout.js";

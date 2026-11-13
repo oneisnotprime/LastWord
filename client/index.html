@@ -19,6 +19,26 @@
       #banner { position: absolute; top: 38%; left: 50%; transform: translate(-50%, -50%); padding: 18px 28px; border-radius: 6px;
         background: #14161af2; font-size: 22px; text-align: center; display: none; border: 1px solid #55524a; }
       #banner.show { display: block; }
+      #panel { position: absolute; inset: 78px 0 0 0; margin: 0 auto; width: min(860px, 94vw); height: fit-content; max-height: calc(100vh - 150px);
+        overflow: auto; pointer-events: auto; background: #14161af5; border: 1px solid #55524a; border-radius: 6px; padding: 16px 20px; display: none; }
+      #panel.show { display: block; }
+      #panel h2 { margin: 0 0 4px; font-size: 18px; color: #ffd166; letter-spacing: 1px; }
+      #panel h3 { margin: 16px 0 6px; font-size: 12px; color: #a9a79f; text-transform: uppercase; letter-spacing: 1px; }
+      #panel .hint { color: #a9a79f; font-size: 12px; margin-bottom: 8px; }
+      #panel .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 28px; }
+      #panel .row { display: flex; align-items: center; gap: 8px; padding: 4px 0; border-bottom: 1px solid #2a2c31; min-height: 24px; }
+      #panel .row .slot { width: 64px; color: #a9a79f; }
+      #panel .row .what { flex: 1; text-transform: uppercase; }
+      #panel .row .empty { flex: 1; color: #55524a; }
+      #panel .meter { width: 70px; height: 6px; background: #2a2c31; border-radius: 3px; overflow: hidden; }
+      #panel .meter i { display: block; height: 100%; background: #9be28f; }
+      #panel button { font: inherit; font-size: 12px; color: #e8e6df; background: #2a2c31; border: 1px solid #55524a; border-radius: 3px; padding: 2px 8px; cursor: pointer; }
+      #panel button:hover { border-color: #ffd166; }
+      #panel .stat { display: flex; justify-content: space-between; padding: 3px 0; border-bottom: 1px solid #2a2c31; }
+      #panel .stat b { color: #ffd166; font-weight: 400; }
+      #panel .bag { display: flex; flex-wrap: wrap; gap: 4px; }
+      #panel .words { display: flex; flex-wrap: wrap; gap: 4px; }
+      #panel .words button { text-transform: uppercase; }
       #spell { width: min(480px, 80vw); pointer-events: auto;
         font: inherit; font-size: 18px; text-transform: uppercase; letter-spacing: 2px; padding: 8px 12px; color: #ffd166;
         background: #14161aee; border: 1px solid #55524a; border-radius: 4px; outline: none; }
@@ -36,8 +56,9 @@
     <div id="sky"></div>
     <div id="hud">
       <div id="status">Connecting…</div>
-      <div id="help">Move: WASD, arrows, click · Attack: click a player or thing · Gather: G · Pick up: E · Drop: Q · Spell: Enter · Trade: give player2 abc</div>
+      <div id="help">Move: WASD, arrows, click · Attack: click a player or thing · Gather: G · Pick up: E · Drop: Q · Spell: Enter · Inventory: I · Loadout: L · Trade: give player2 abc</div>
       <div id="banner"></div>
+      <div id="panel"></div>
       <div id="bottom">
         <div id="toast"></div>
         <input id="spell" placeholder="Press Enter to spell" autocomplete="off" spellcheck="false" maxlength="80" />

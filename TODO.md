@@ -31,7 +31,8 @@
 
 ## High priority
 
-- [ ] Dedicated loadout and inventory screens
+- [x] Dedicated loadout and inventory screens (L and I)
+- [ ] Loadout and inventory on a controller; item details (what a thing does) on hover or select
 
 ## Data
 
@@ -91,8 +92,6 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
 
 - [ ] IRRESISTIBLE against other absolutes is an edge case; revisit only if it comes up in play
 - [ ] Damage a destroyed layer did not absorb is lost; decide whether it should carry through
-- [ ] Equipping is automatic on spelling and E picks up the nearest thing; Q drops the last thing
-      equipped. Needs a proper inventory view and a way to choose what to drop
 - [ ] A sword cannot hurt plate armor at all (40 slash, 60% resisted, 30 armor); confirm that is
       intended, since it makes armor a hard counter to most hand weapons
 - [ ] Behaviour for pets and drones acting on their own
