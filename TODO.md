@@ -69,7 +69,8 @@
 - [ ] Tile-level quantities (temperature, moisture, fertility, light) so effects spread by adjacency
 - [ ] Find a use for the inert bucket (states, communication, shapes, processes, days and months)
 - [ ] Words that are not in WordNet (slang, new words)
-- [ ] Sprite or icon per word; choose an asset pack or generation style
+- [ ] Art pass (M7): before choosing, prototype a few distinct, unusual graphic styles for the
+      user to pick from; then a sprite or icon per word in the chosen style
 
 ## Special objects: dictionary and related words
 
