@@ -9,6 +9,10 @@ export interface Connection {
   spell(text: string): void;
   gather(): void;
   give(to: string, letters: string): void;
+  take(): void;
+  drop(): void;
+  /** Attack a player by session id; null stops. */
+  attack(target: string | null): void;
 }
 
 export interface Handlers {
@@ -17,6 +21,8 @@ export interface Handlers {
   refused(reason: string): void;
   gathered(letter: string): void;
   notice(text: string): void;
+  dead(killer: string): void;
+  won(text: string): void;
   closed(): void;
 }
 
@@ -31,6 +37,8 @@ export async function connect(on: Handlers): Promise<Connection> {
   room.onMessage("refused", on.refused);
   room.onMessage("gathered", on.gathered);
   room.onMessage("notice", on.notice);
+  room.onMessage("dead", on.dead);
+  room.onMessage("won", on.won);
   room.onLeave(on.closed);
   await new Promise<void>((done) => {
     const ready = () => room.state?.seed && room.state.players?.get(room.sessionId);
@@ -44,5 +52,8 @@ export async function connect(on: Handlers): Promise<Connection> {
     spell: (text) => room.send("spell", text),
     gather: () => room.send("gather"),
     give: (to, letters) => room.send("give", { to, letters }),
+    take: () => room.send("take"),
+    drop: () => room.send("drop"),
+    attack: (target) => room.send("attack", target),
   };
 }

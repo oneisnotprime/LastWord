@@ -87,8 +87,10 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
 
 - [ ] IRRESISTIBLE against other absolutes is an edge case; revisit only if it comes up in play
 - [ ] Damage a destroyed layer did not absorb is lost; decide whether it should carry through
-- [ ] How a player picks up, equips, mounts and drops things in the world (rules exist in
-      `shared/unit.ts`; the server and client do not use them yet)
+- [ ] Equipping is automatic on spelling and E picks up the nearest thing; Q drops the last thing
+      equipped. Needs a proper inventory view and a way to choose what to drop
+- [ ] A sword cannot hurt plate armor at all (40 slash, 60% resisted, 30 armor); confirm that is
+      intended, since it makes armor a hard counter to most hand weapons
 - [ ] Behaviour for pets and drones acting on their own
 - [ ] Which layers an attack can reach (land, air, water, underground); `targets` is not enforced yet
 - [ ] Area damage, friendly fire and lingering damage; only one-on-one strikes exist so far
@@ -131,6 +133,12 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
 - [ ] Letter sources are a first pass: gathering depends only on the ground, and objects pay
       out without needing labour, water or fuel. D, F, H, K, V, J, Q, X, Z have no source yet
 - [ ] Trading is a typed command (give player2 abc); needs a real interface and two-way offers
-- [ ] M5 to M7 in PLAN.md
+- [x] M5 (part): equipping, picking up and dropping, attacking players, death and knockout,
+      last one alive wins
+- [ ] M5 (rest): placement rules (sky, target, region), terrain words, events such as THEFT,
+      attacking things on the ground, verbs, pets acting on their own
+- [ ] A round does not reset after someone wins; the dead stay connected as spectators
+- [ ] Labels of adjacent players overlap; fix in the art pass
+- [ ] M6 and M7 in PLAN.md
 - [ ] Map generator: cities, countryside, letter sources
 - [ ] Demo: one map, the 351-word dictionary, a handful of players

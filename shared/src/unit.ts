@@ -33,8 +33,11 @@ export class Unit {
   readonly body: Entity;
   /** Outermost first; the body is last. */
   readonly layers: Entity[];
+  /** The held item the unit strikes with on foot, if any. */
+  readonly weapon: Spelled | null = null;
   private vehicle: Entity | null;
   private readonly onFoot: Stats;
+  private readonly entities = new Map<Spelled, Entity>();
 
   constructor(dict: Dictionary, readonly loadout: Loadout) {
     const lent = loadout.body.adjectives ?? [];
@@ -51,8 +54,14 @@ export class Unit {
       if (stats.num("hands_required") > 0 && !body.flag("hands")) throw new Error(`${loadout.body.noun} has no hands`);
       // What an item does for its wearer: a hat's warmth, a wing's flight, a ladder's climb.
       body.apply(def?.ops ?? []);
-      if (def?.archetype === "protection") protection.push(spawn(item.noun, stats));
-      else if (!weapon && hasDamage(stats)) weapon = stats;
+      if (def?.archetype === "protection") {
+        const layer = spawn(item.noun, stats);
+        protection.push(layer);
+        this.entities.set(item, layer);
+      } else if (!weapon && hasDamage(stats)) {
+        weapon = stats;
+        this.weapon = item;
+      }
     }
 
     this.onFoot = armed(weapon, body);
@@ -61,7 +70,13 @@ export class Unit {
     this.vehicle = loadout.riding
       ? spawn(loadout.riding.noun, resolve(dict, loadout.riding.noun, loadout.riding.adjectives, lent))
       : null;
+    if (this.vehicle) this.entities.set(loadout.riding!, this.vehicle);
     this.layers = [...(this.vehicle ? [this.vehicle] : []), ...protection, this.body];
+  }
+
+  /** The damageable layer a carried item forms: protection and vehicles have one, a sword does not. */
+  entityFor(item: Spelled): Entity | undefined {
+    return this.entities.get(item);
   }
 
   get dead(): boolean {
