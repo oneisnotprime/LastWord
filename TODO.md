@@ -16,7 +16,7 @@
 - Plurals spawn several; S is a powerful letter.
 - All assets and word data are generated ahead of time; no model at runtime.
 - Every word feeds the same shared systems (PLAN.md); no private mechanics per word.
-- The game moves to its own repository before code starts.
+- The game lives in its own repository.
 
 ## Data
 
@@ -75,7 +75,7 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
 ## Build
 
 - [x] Choose stack, hosting, netcode and art approach (see PLAN.md)
-- [ ] Create the new repository and move `lastword/` into it
+- [x] Move to its own repository
 - [ ] Milestones M0 to M7 in PLAN.md
 - [ ] Map generator: cities, countryside, letter sources
 - [ ] Demo: one map, the 351-word dictionary, a handful of players
