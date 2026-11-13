@@ -23,6 +23,8 @@ export interface WordDef {
   ops: Op[];
 }
 
+export type Degree = "positive" | "comparative" | "superlative";
+
 export interface PropertyFile {
   properties: PropertyDef[];
 }

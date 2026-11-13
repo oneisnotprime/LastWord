@@ -1,9 +1,13 @@
-import { Dictionary, type PropertyFile, type WordDef } from "@lastword/shared";
+import { Dictionary, type DictionaryData } from "@lastword/shared";
 import properties from "../../data/properties.json";
 import words from "../../data/demo.json";
+import inflections from "../../data/demo_inflections.json";
+import operators from "../../data/operators.json";
 
 /** The dictionary bundled with the client. */
-export const dictionary = new Dictionary(
-  properties as unknown as PropertyFile,
-  words as unknown as Record<string, WordDef>,
-);
+export const dictionary = new Dictionary({
+  properties,
+  words,
+  inflections,
+  degrees: operators.degrees,
+} as unknown as DictionaryData);

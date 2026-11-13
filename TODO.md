@@ -59,6 +59,12 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
 
 ## Design still open
 
+- [ ] Confirm: an attack absolute cancels INDESTRUCTIBLE and absolute resistances, but things whose
+      own integrity is absolute (mountain, sun, god) still cannot be damaged
+- [ ] Equipment: how a held weapon, worn armor and grafts combine with the character's own stats
+- [ ] Which layers an attack can reach (land, air, water, underground); `targets` is not enforced yet
+- [ ] Area damage, friendly fire and lingering damage; only one-on-one strikes exist so far
+
 - [ ] How events are contested (theft: speller's stealth against target's security) and what
       range they reach
 - [ ] How long a round runs in practice; what to do about players who are offline if it is days
@@ -79,7 +85,7 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
 - [x] Choose stack, hosting, netcode and art approach (see PLAN.md)
 - [x] Move to its own repository
 - [x] M0: scaffold packages, test commands, CI
-- [ ] M1: rules engine (operators, degrees, absolutes, combat tick)
+- [x] M1: rules engine (operators, degrees, absolutes, combat tick)
 - [ ] M2 to M7 in PLAN.md
 - [ ] Map generator: cities, countryside, letter sources
 - [ ] Demo: one map, the 351-word dictionary, a handful of players

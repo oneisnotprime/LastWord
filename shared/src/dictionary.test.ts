@@ -1,10 +1,8 @@
-import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { Dictionary } from "./index.js";
+import { demo, rawProperties } from "./testdata.js";
 
-const read = (name: string) =>
-  JSON.parse(readFileSync(new URL(`../../data/${name}`, import.meta.url), "utf8"));
-const dict = new Dictionary(read("properties.json"), read("demo.json"));
+const dict = demo();
 
 describe("Dictionary", () => {
   it("loads the demo words and the property schema", () => {
@@ -19,12 +17,16 @@ describe("Dictionary", () => {
     expect(dict.base("god", "integrity")).toBe("ABS");
   });
 
-  it("keeps modifier operations", () => {
-    expect(dict.word("big")?.ops).toContainEqual(["mass", "mul", 8]);
+  it("finds inflected forms", () => {
+    expect(dict.lookup("BIGGEST")).toMatchObject({ word: "big", degree: "superlative" });
+    expect(dict.lookup("big")?.degree).toBe("positive");
+    expect(dict.lookup("zzz")).toBeUndefined();
   });
 
   it("rejects a word that uses an unknown property", () => {
-    const bad = { x: { role: "noun", class: "artifact", archetype: "tool", set: { nope: 1 }, ops: [] } };
-    expect(() => new Dictionary(read("properties.json"), bad as never)).toThrow("unknown property nope");
+    const words = { x: { role: "noun", class: "artifact", archetype: "tool", set: { nope: 1 }, ops: [] } };
+    expect(() => new Dictionary({ properties: rawProperties(), words: words as never })).toThrow(
+      "unknown property nope",
+    );
   });
 });
