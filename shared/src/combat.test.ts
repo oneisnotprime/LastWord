@@ -41,8 +41,8 @@ describe("strike", () => {
   it("lets an attack absolute beat a general defence absolute", () => {
     const wall = make("wall", ["indestructible"]);
     const hit = strike(resolve(dict, "cannon", ["irresistible"]), wall, () => 0.5);
-    expect(hit.damage).toBe(500);
-    expect(wall.integrity).toBe(7500);
+    expect(hit.damage).toBe(2000); // 300 blast + 200 crush, times 4 for siege against a structure
+    expect(wall.integrity).toBe(6000);
   });
 
   it("lets a specific defence absolute beat a general attack absolute", () => {
@@ -50,7 +50,7 @@ describe("strike", () => {
     const hit = strike(resolve(dict, "torch", ["irresistible"]), wall, () => 0.5);
     expect(hit.damage).toBe(0);
     const blast = strike(resolve(dict, "cannon", ["irresistible"]), wall, () => 0.5);
-    expect(blast.damage).toBe(500);
+    expect(blast.damage).toBe(2000);
   });
 
   it("never hits what cannot be targeted", () => {

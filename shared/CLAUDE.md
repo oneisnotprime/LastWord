@@ -15,5 +15,7 @@ server and the client import this, so anything here must give the same answer on
 - `world.ts` map generation from a seed, tile costs, `stepToward` movement. 1 tile = 4 m.
 - `phrase.ts` `parsePhrase` reads what a player typed; `missing` and `spend` handle letters.
 - `letters.ts` what gathering yields on each ground, and what an object produces a minute.
+- `unit.ts` a character with its gear: damage layers, held weapon scaled by strength and
+  training, riding. `strikeUnit` hits the outermost layer.
 - `rng.ts` seeded generator. Pass an `Rng` in; never call `Math.random`.
 - `testdata.ts` loads the demo dictionary from disk, for tests only.

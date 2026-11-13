@@ -14,6 +14,15 @@
 - Each word has one role, whichever is most useful. Verbs act on the caster.
 - Acts and events are their own class and make things happen in the world.
 - Plurals spawn several; S is a powerful letter.
+- Damage lands on the outermost thing first: vehicle, then armor and shield, then the character.
+  Each must be destroyed before the next is hurt.
+- A swung weapon scales with its wielder's strength; any weapon scales with training.
+- Riding: the unit fights and moves as the vehicle, and the rider's adjectives apply to it too.
+- Pets and drones act on their own, as separate units.
+- Nothing is indestructible by default. Mountain, sun and god have very high defences and can
+  be destroyed by the right thing (dynamite on a mountain, holy or magic damage on a god).
+  Only an adjective such as INDESTRUCTIBLE makes something so.
+- A god needs no food.
 - Desktop only: keyboard and mouse, or a controller. No touch or phone layout.
 - On a controller, spelling is done by picking from the letters you hold.
 - All assets and word data are generated ahead of time; no model at runtime.
@@ -76,9 +85,11 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
 
 ## Design still open
 
-- [ ] Confirm: an attack absolute cancels INDESTRUCTIBLE and absolute resistances, but things whose
-      own integrity is absolute (mountain, sun, god) still cannot be damaged
-- [ ] Equipment: how a held weapon, worn armor and grafts combine with the character's own stats
+- [ ] IRRESISTIBLE against other absolutes is an edge case; revisit only if it comes up in play
+- [ ] Damage a destroyed layer did not absorb is lost; decide whether it should carry through
+- [ ] How a player picks up, equips, mounts and drops things in the world (rules exist in
+      `shared/unit.ts`; the server and client do not use them yet)
+- [ ] Behaviour for pets and drones acting on their own
 - [ ] Which layers an attack can reach (land, air, water, underground); `targets` is not enforced yet
 - [ ] Area damage, friendly fire and lingering damage; only one-on-one strikes exist so far
 

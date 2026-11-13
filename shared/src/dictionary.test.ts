@@ -6,15 +6,15 @@ const dict = demo();
 
 describe("Dictionary", () => {
   it("loads the demo words and the property schema", () => {
-    expect(dict.size).toBe(351);
-    expect(dict.properties.size).toBe(349);
+    expect(dict.size).toBe(352);
+    expect(dict.properties.size).toBe(351);
   });
 
   it("returns a word's own value, else the default", () => {
     expect(dict.base("sword", "dmg_slash")).toBe(40);
     expect(dict.base("sword", "dmg_fire")).toBe(0);
     expect(dict.base("SUN", "placement")).toBe("sky");
-    expect(dict.base("god", "integrity")).toBe("ABS");
+    expect(dict.base("vanish", "stealth")).toBe("ABS");
   });
 
   it("finds inflected forms", () => {
