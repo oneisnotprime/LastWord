@@ -40,26 +40,25 @@
 Properties set by at least 20 words in `data/demo.json` that nothing in `shared/src` or
 `server/src` reads (searched for the id as a string, plus the `dmg_`, `res_`, `immune_`,
 `inflict_` and `produce_` prefixes). Not counted: `counters` (read as `set.counters`), `stealth`
-and `security` (read through THEFT's `contest_with` and `contested_by`). 82 properties,
-by how many words set them:
+and `security` (read through THEFT's `contest_with` and `contested_by`). 71 properties,
+by how many words set them (minds and upkeep took `sentient`, `intelligence`, `food_need`,
+`authority`, `recruit_rate`, `command_limit`, `food_output`, `nutrition`, `upkeep_power`,
+`upkeep_fuel` and `aggression` off this list):
 
-  `sentient` 246, `intelligence` 240, `speech` 229, `food_need` 205, `footprint` 143,
-  `loudness` 139, `authority` 124, `value` 118, `recruit_rate` 118, `faction` 115,
-  `flammability` 109, `diet` 108, `reputation` 107, `command_limit` 104, `hardness` 102,
-  `enterable` 102, `read_properties` 102, `occupants` 93, `claim_radius` 90,
-  `storage_letters` 86, `labor` 86, `alarm` 85, `bind_penalty` 80, `trade_bonus` 77,
-  `map_reveal` 77, `binds` 76, `beauty` 73, `blocks` 72, `movement_cost` 71, `cover` 69,
-  `storage_objects` 68, `needs_foundation` 61, `tax_rate` 60, `lockable` 59, `food_output` 59,
-  `nutrition` 57, `law` 55, `craft_slots` 53, `density` 53, `shape` 49, `targets` 48, `state` 48,
+  `speech` 229, `footprint` 143, `loudness` 139, `value` 118, `faction` 115, `flammability` 109,
+  `diet` 108, `reputation` 107, `hardness` 102, `enterable` 102, `read_properties` 102,
+  `occupants` 93, `claim_radius` 90, `storage_letters` 86, `labor` 86, `alarm` 85,
+  `bind_penalty` 80, `trade_bonus` 77, `map_reveal` 77, `binds` 76, `beauty` 73, `blocks` 72,
+  `movement_cost` 71, `cover` 69, `storage_objects` 68, `needs_foundation` 61, `tax_rate` 60,
+  `lockable` 59, `law` 55, `craft_slots` 53, `density` 53, `shape` 49, `targets` 48, `state` 48,
   `placeable_on` 47, `build_speed` 47, `read_inventory` 47, `survives_death` 46,
   `grants_adjective_slots` 43, `detect_letters` 43, `grants_slots_to` 41, `seats` 39, `odor` 38,
-  `color` 38, `attack_area` 37, `upkeep_power` 37, `self_propelled` 36, `depth` 36,
-  `upkeep_fuel` 35, `camouflage` 34, `moisture` 34, `aggression` 33, `carry_capacity` 32,
-  `temperature_delta` 32, `prevents_death` 31, `fertility` 30, `detect_stealth` 30,
-  `container_slots` 29, `terrain_ignored` 28, `knockback` 28, `negates` 27, `water_output` 26,
-  `copies` 24, `harvest_bonus` 23, `brittleness` 23, `reproduction` 23, `locks` 23,
-  `conductivity` 22, `harvest_sources` 22, `teleport_range` 22, `burn_time` 21, `tamable` 20,
-  `growth_time` 20, `elevation` 20
+  `color` 38, `attack_area` 37, `self_propelled` 36, `depth` 36, `camouflage` 34, `moisture` 34,
+  `carry_capacity` 32, `temperature_delta` 32, `prevents_death` 31, `fertility` 30,
+  `detect_stealth` 30, `container_slots` 29, `terrain_ignored` 28, `knockback` 28, `negates` 27,
+  `water_output` 26, `copies` 24, `harvest_bonus` 23, `brittleness` 23, `reproduction` 23,
+  `locks` 23, `conductivity` 22, `harvest_sources` 22, `teleport_range` 22, `burn_time` 21,
+  `tamable` 20, `growth_time` 20, `elevation` 20
 
 ## High priority
 
@@ -154,7 +153,10 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
 - [ ] How long a round runs in practice; what to do about players who are offline if it is days
 - [ ] Turtling and snowballing; revisit after playtests
 - [ ] How alliances are formed through words (treaty, clan) and how they break
-- [ ] Upkeep: food, fuel and power as the natural limit on large things
+- [x] Upkeep: food, fuel and power as the natural limit on large things (see Build)
+- [ ] Upkeep still to do: `diet` (what a creature eats), `water_output` and water as a fourth
+      store, `production_needs` (a FARM's labour and water), `fertility` beyond gathering; power
+      is counted per minute like the others, not as a load that must be balanced at each moment
 - [ ] Letter generation rates and map distribution of sources
 - [ ] NPC behaviour in cities and countryside
 - [ ] Trading interface: barter, market, pooled spelling
@@ -197,7 +199,7 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
       ride are mounts instead; they outlive their master, ownerless
 - [x] Events act through their properties: MURDER, RAID, REPAIR, RESCUE, TRADE, REVOLT, AMBUSH,
       and areas that damage or turn hostile (FIRE, WAR, EARTHQUAKE, FAMINE); WAR triples K
-- [ ] SIEGE does nothing yet (needs food and water upkeep to cut off)
+- [ ] SIEGE does nothing yet (food upkeep exists now; cutting supply off is the next step)
 - [x] Right-click picks out a target or marks a spot without attacking; targeted area events
       (FIRE) must be aimed and in reach; region events (WAR, EARTHQUAKE, FAMINE) cover the speller's
       surroundings
@@ -229,13 +231,27 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
       lights that many tiles (night vision), `fear_aura` lowers enemies' morale in sight, `heals`
       heals your side in reach. It ends when the thing is dropped (moves to the ground), destroyed
       or dies
-- [ ] `morale` is changed by FEAR, LOVE and `fear_aura` but nothing reads it yet: make low morale
-      do something (flee, miss, slower strikes)
-- [ ] Hunger: `nutrition` and `food_need` are ignored, so WHEAT, RICE, CORN, LEAF and SEED do
-      nothing when eaten. `toxicity` (eating ACID, DRUG) and `potency` are ignored too
+- [x] Minds (shared `mind.ts`): morale falls at once (a drop scaled by 5 / courage; immune_fear
+      is unshakeable) and climbs back half a point a second; below 3 aim is halved; at 0 a walker
+      runs from its nearest enemy and does not strike. Cunning creatures (intelligence 7+) go for
+      the weakest and pull back under a quarter of their health; dim ones (under 3) go for the
+      nearest and re-route slowly. Only sentient creatures take orders; obedience under 3 (plus
+      the master's authority) ignores some. Anyone commands 12 creatures, plus the
+      `command_limit` of what they own and wear (KING 50, CROWN 10); the newest beyond it run wild.
+      `recruit_rate` draws the nearest wild creature in sight. Wild creatures with aggression 5+
+      attack whoever they see; the rest wander. THEFT takes a creature past its loyalty
+- [x] Upkeep (shared `upkeep.ts`): each person has food, fuel and power stores (shown in the
+      loadout). What they own supplies (`*_output`) and draws (`food_need`, `upkeep_*`) each
+      minute; eating adds `nutrition`; gathering on grass, forest and swamp finds a little food.
+      Short of it: a person starves (5% of health a minute), a living thing goes hungry and loses
+      a loyalty a minute until it turns wild (a ridden DRAGON throws its rider), a machine stalls
+      (no letters, no supply, no strikes). Notices say when something goes hungry or stops
+- [ ] Minds still to do: morale shown only to its owner (others see "fleeing"); orders other
+      than "fight that" (stay, guard, go there); `tamable`; wild creatures do not defend themselves
+      when aggression is under 5; a pack's fear auras stack, so a big wild pack breaks a crowd
+- [ ] Hunger: `toxicity` (eating ACID, DRUG) and `potency` are ignored
 - [ ] Edible creatures (FISH, TURKEY, BASS) spawn as creatures that follow you, not food
-- [ ] Creatures: no hunger or upkeep, no orders (stay, guard, go
-      there), wild ones never act, and they do not gather or work
+- [ ] Creatures do not gather or work (`labor`)
 - [ ] A wolf kills an unarmoured person in three bites (about two seconds); review creature
       damage against the 100 integrity of a human
 - [ ] Weather and night cover the whole map; region-sized weather and per-tile quantities

@@ -145,10 +145,15 @@ function armed(weapon: Stats | null, body: Stats): Stats {
   return stats;
 }
 
-/** One strike from one unit on another's outermost layer. */
-export function strikeUnit(attacker: Unit, defender: Unit, rng: Rng): Strike & { on: string } {
+/** One strike from one unit on another's outermost layer. `aim` multiplies its accuracy (a shaken striker's is halved). */
+export function strikeUnit(attacker: Unit, defender: Unit, rng: Rng, aim = 1): Strike & { on: string } {
   // Someone who cannot be targeted cannot be hit through their armor either.
   if (defender.body.stats.flag("untargetable")) return { hit: false, critical: false, damage: 0, byType: {}, on: defender.body.name };
   const target = defender.outer;
-  return { ...strike(attacker.attack, target, rng), on: target.name };
+  let attack = attacker.attack;
+  if (aim !== 1) {
+    attack = attack.clone();
+    attack.apply([["accuracy", "mul", aim]]);
+  }
+  return { ...strike(attack, target, rng), on: target.name };
 }

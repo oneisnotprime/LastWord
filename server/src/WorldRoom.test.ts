@@ -611,6 +611,8 @@ it("events act through their properties: murder, raid, repair, rescue, trade, re
   a.send("spell", "murder"); await wait();
   expect(said("a")).toBe("dog sees you coming (detect stealth 5 against your stealth 0)");
   a.send("spell", "sneak"); await wait();
+  // Freed by REVOLT, the dog is wild and wanders: bring it back beside A.
+  walkers.get(dogId).player.x = wa.player.x + 0.5; walkers.get(dogId).player.y = wa.player.y; walkers.get(dogId).target = null;
   a.send("spell", "murder"); await wait();
   expect(said("a")).toBe("dog is dead");
   expect(walkers.has(dogId)).toBe(false);

@@ -10,6 +10,14 @@ const nearby = (d: LoadoutDetail | null) =>
   d?.nearby.map((t) => `<div class="row"><span class="what">${t.phrase}</span><span class="slot">ground</span><button data-use-thing="${t.id}">Use</button></div>`).join("") ||
   `<div class="row"><span class="empty">Nothing to use</span></div>`;
 
+/** How a creature is doing, if it is not well: hungry, fleeing. */
+const mood = (c: LoadoutDetail["creatures"][number]) =>
+  [c.hungry ? "hungry" : "", c.fleeing ? "fleeing" : ""].filter(Boolean).map((m) => `<span class="slot status">${m}</span>`).join("");
+
+/** A store as shown: what is held, and what is drawn and made a minute. */
+const store = (s: LoadoutDetail["stores"]["food"]) =>
+  `${s.have}${s.need || s.make ? ` <small>(${s.make ? `+${s.make}` : ""}${s.make && s.need ? " " : ""}${s.need ? `−${s.need}` : ""}/min)</small>` : ""}`;
+
 /** The overlay drawn in HTML on top of the game: status, letters held, spelling box. */
 export class Hud {
   private held: Letters = {};
@@ -119,7 +127,7 @@ export class Hud {
       <div class="cols">
         <div><h3>Carrying (${d?.gear.length ?? 0})</h3>${d?.gear.map((g) => `<div class="row"><span class="what">${g.phrase}</span><span class="slot">${g.slot}</span>${useButton(g)}</div>`).join("") || `<div class="row"><span class="empty">Nothing</span></div>`}
           <h3>Within reach (${d?.nearby.length ?? 0})</h3>${nearby(d)}</div>
-        <div><h3>Creatures (${d?.creatures.length ?? 0})</h3>${d?.creatures.map((c) => `<div class="row"><span class="what">${c.name}</span><div class="meter"><i style="width:${c.health}%"></i></div></div>`).join("") || `<div class="row"><span class="empty">None</span></div>`}</div>
+        <div><h3>Creatures (${d?.creatures.length ?? 0}${d ? ` of ${d.command.limit}` : ""})</h3>${d?.creatures.map((c) => `<div class="row"><span class="what">${c.name}</span>${mood(c)}<div class="meter"><i style="width:${c.health}%"></i></div></div>`).join("") || `<div class="row"><span class="empty">None</span></div>`}</div>
       </div>
       <h3>Things you can spell now (${words.filter((w) => w.role === "noun").length})</h3><div class="words">${list("noun")}</div>
       <h3>Verbs you can cast now (${words.filter((w) => w.role === "verb").length})</h3><div class="words">${list("verb")}</div>`;
@@ -147,6 +155,13 @@ export class Hud {
           ${stat("Health", `${d.health.now} of ${d.health.max}`)}
           ${stat("Speed", `${d.speed} m/s${d.flying ? " (flying)" : ""}`)}
           ${stat("Sight", `${d.sight} m`)}
+          ${stat("Morale", `${d.morale}${d.morale <= 0 ? " (fleeing)" : d.morale < 3 ? " (shaken: aim halved)" : ""}`)}
+          ${stat("Command", `${d.command.have} of ${d.command.limit} creatures`)}
+          <h3>Stores</h3>
+          ${stat("Food", store(d.stores.food))}
+          ${stat("Fuel", store(d.stores.fuel))}
+          ${stat("Power", store(d.stores.power))}
+          ${d.short.map((t) => stat("SHORT", t).replace('class="stat"', 'class="stat status"')).join("")}
           <h3>Attack</h3>
           ${stat("With", d.attack.with.toUpperCase())}
           ${stat("Damage a strike", damage)}

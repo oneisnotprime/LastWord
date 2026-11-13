@@ -24,5 +24,13 @@ export interface LoadoutDetail {
   effects: { word: string; left: number }[];
   /** Statuses on you (stun, poison...), with seconds left. */
   statuses: { status: string; left: number }[];
-  creatures: { name: string; health: number }[];
+  /** Morale, 0 to 10 and beyond: shaken below 3, fleeing at 0. */
+  morale: number;
+  /** Food, fuel and power in store, and what everything you own draws (need) and supplies (makes) a minute. */
+  stores: Record<"food" | "fuel" | "power", { have: number; need: number; make: number }>;
+  /** Things of yours that went short at the last count, by name: hungry creatures, stalled machines. */
+  short: string[];
+  /** Creatures you can command at once, and how many you have. */
+  command: { limit: number; have: number };
+  creatures: { name: string; health: number; hungry?: boolean; fleeing?: boolean }[];
 }

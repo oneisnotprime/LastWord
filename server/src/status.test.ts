@@ -82,10 +82,11 @@ it("poison from a SNAKE bite keeps hurting after the bite, and HEAL ends it", as
   a.send("spell", "snake"); await wait();
   const [, snake] = creature("snake");
   snake.player.x = wb.player.x; snake.player.y = wb.player.y;
-  a.send("attack", b.sessionId); await wait();
+  // A snake is not sentient: it takes no orders, but it defends its master. B attacks A.
+  b.send("attack", a.sessionId); await wait();
   for (let i = 0; i < 40 && !has(wb, "poison"); i++) room.update(0.1);
   expect(has(wb, "poison")).toBe(true);
-  wa.foe = null; snake.foe = null; snake.player.x += 30; // no more bites
+  wb.foe = null; snake.foe = null; snake.player.x += 30; // no more bites
   const hp = wb.hp;
   ticks(room, 30);
   expect(hp - wb.hp).toBeGreaterThanOrEqual(10); // five a second
@@ -131,6 +132,7 @@ it("SILENCE stops everyone inside it spelling", async () => {
 it("WAR turns creatures inside it on whoever is nearest and not its maker's, even their own master", async () => {
   const { room, a, b, wa, wb, creature } = await twoPlayers();
   b.send("spell", "wolf"); await wait();
+  wb.stores.food = 100; // a wolf left hungry through a thirty-minute war would turn wild
   const [wolfId, wolf] = creature("wolf");
   wolf.player.x = wa.player.x; wolf.player.y = wa.player.y; // right beside A, the war's maker
   a.send("spell", "war"); await wait();
@@ -148,6 +150,8 @@ it("WAR turns creatures inside it on whoever is nearest and not its maker's, eve
 
 it("DISEASE spreads person to person: a carrier takes it with them and passes it on", async () => {
   const { room, a, wa, wb } = await twoPlayers(4.5);
+  // Two diseases at once take 6 morale and break a body; this test is about contagion, so both stand firm.
+  for (const w of [wa, wb]) { w.buffs.push({ word: "courage", set: { immune_fear: true }, ops: [], until: Infinity }); room.rebuild(w); }
   a.send("pick", { x: wb.player.x, y: wb.player.y });
   a.send("spell", "disease"); await wait();
   const carried = (id: string) => [...(room as any).areas.values()].some((z: any) => z.word === "disease" && z.follows === id);
