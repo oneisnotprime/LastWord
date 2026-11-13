@@ -166,7 +166,10 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
       mid-round until it ends
 - [ ] Labels of adjacent players overlap; fix in the art pass
 - [x] M6 (part): bots that play (gather, spell, fight) in the load test
-- [ ] M6 (rest): public deploy; needs a host account from the user
+- [x] Deploy-ready: one container serves the page and the game; Dockerfile, fly.toml and
+      DEPLOY.md; image built and played locally
+- [ ] M6 (rest): deploy to Fly.io; needs the user's account
+- [ ] The image is 891 MB because it carries build tools and test dependencies; slim it
 - [x] Tick spikes: caused by many route searches in one tick; capped at 12 a tick, worst tick
       in a 5-minute playing run is now 44 ms
 - [ ] M7 in PLAN.md
