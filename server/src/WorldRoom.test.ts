@@ -385,3 +385,75 @@ it("casts verbs, steals with THEFT once stealthy enough, and changes the sky", a
   expect(room.state.weather).toBe("");
   expect(wb.sight).toBe(15);
 });
+
+it("creatures follow their master, defend them, join their fights and outlive them", async () => {
+  const room = (await colyseus.createRoom("world", {})) as unknown as WorldRoom;
+  const a: any = await colyseus.connectTo(room as never);
+  const b: any = await colyseus.connectTo(room as never);
+  const got = { a: [] as [string, unknown][], b: [] as [string, unknown][] };
+  for (const type of ["letters", "spelled", "refused", "notice", "dead", "won"]) {
+    a.onMessage(type, (m: unknown) => got.a.push([type, m]));
+    b.onMessage(type, (m: unknown) => got.b.push([type, m]));
+  }
+  const walkers = (room as any).walkers as Map<string, any>;
+  const wa = walkers.get(a.sessionId), wb = walkers.get(b.sessionId);
+  const city = room.map.cities[0]!;
+  wa.player.x = city.x + 0.5; wa.player.y = city.y + 0.5;
+  wb.player.x = city.x + 2.5; wb.player.y = city.y + 0.5;
+  const wait = () => new Promise((r) => setTimeout(r, 150));
+  const all = () => Object.fromEntries([..."abcdefghijklmnopqrstuvwxyz"].map((ch) => [ch, 9]));
+  wa.letters = all(); wb.letters = all();
+  const run = (seconds: number) => { for (let i = 0; i < seconds * 10; i++) room.update(0.1); };
+
+  a.send("spell", "wolf");
+  a.send("spell", "horse"); // a horse is ridden, not a follower
+  await wait();
+  expect(got.a.filter(([t]) => t === "spelled").map(([, m]) => m)).toEqual(["WOLF is with you", "HORSE equipped"]);
+  const [wolfId, wolf] = [...walkers].find(([, w]) => w.master === a.sessionId)!;
+  expect(room.state.players.get(wolfId)).toMatchObject({ name: "wolf", owner: a.sessionId });
+  expect(wa.speed).toBe(18);
+  a.send("attack", wolfId); // you cannot attack your own
+  await wait();
+  expect(wa.foe).toBeNull();
+
+  // It follows its master.
+  a.send("move", { x: wa.player.x, y: wa.player.y + 3 });
+  await wait();
+  run(3);
+  expect(Math.hypot(wolf.player.x - wa.player.x, wolf.player.y - wa.player.y)).toBeLessThanOrEqual(2.1);
+
+  // It defends its master: B attacks A, the wolf goes for B.
+  wb.player.x = wa.player.x + 1; wb.player.y = wa.player.y;
+  wb.hp = 1e6; room.rebuild(wb); // three wolf bites would kill an ordinary person
+  b.send("attack", a.sessionId);
+  await wait();
+  room.update(0.1);
+  expect(wolf.foe).toBe(b.sessionId);
+  run(2);
+  expect(wb.hp).toBeLessThan(1e6);
+
+  // B kills the wolf for a K; with no attacker left it has no foe.
+  b.send("attack", wolfId);
+  await wait();
+  wb.letters = {};
+  wolf.hp = 1; room.rebuild(wolf);
+  wb.cooldown = 0;
+  run(3);
+  expect(walkers.has(wolfId)).toBe(false);
+  expect(wb.letters.k).toBe(1);
+  expect(got.a.some(([t]) => t === "won")).toBe(false); // a creature dying ends nothing
+
+  // A creature whose master dies stays in the world with no owner.
+  wa.letters = all();
+  a.send("spell", "bear");
+  await wait();
+  const [bearId] = [...walkers].find(([, w]) => w.master === a.sessionId)!;
+  wa.gear = []; wa.hp = 1; room.rebuild(wa);
+  b.send("attack", a.sessionId);
+  await wait();
+  for (let i = 0; i < 100 && walkers.has(a.sessionId); i++) room.update(0.1);
+  expect(walkers.has(a.sessionId)).toBe(false);
+  expect(room.state.players.get(bearId)!.owner).toBe("-");
+  await wait(); // the win message has to arrive
+  expect(got.b.some(([t]) => t === "won")).toBe(true);
+});

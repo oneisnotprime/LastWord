@@ -143,7 +143,13 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
       D, K and V now have sources (destroying things, kills, beating another player's things)
 - [x] M5: verbs act on the caster for their duration (RUN, FLY, HEAL, SNEAK, HIDE); THEFT takes a
       selected thing if your stealth meets its security; sky words set day, night and weather
-- [ ] M5 (rest): pets acting on their own; other events (WAR, FIRE, MURDER, RAID) do nothing yet
+- [x] M5: creatures you spell follow you, defend you and fight what you fight; ones you can
+      ride are mounts instead; they outlive their master, ownerless
+- [ ] Other events (WAR, FIRE, MURDER, RAID) do nothing yet
+- [ ] Creatures: no pack sizes or plurals, no hunger or upkeep, no orders (stay, guard, go
+      there), wild ones never act, and they do not gather or work
+- [ ] A wolf kills an unarmoured person in three bites (about two seconds); review creature
+      damage against the 100 integrity of a human
 - [ ] Weather and night cover the whole map; region-sized weather and per-tile quantities
       (temperature, moisture, light) are not built
 - [ ] Sky and weather change only sight and speed so far; their other effects (wetness, growth,

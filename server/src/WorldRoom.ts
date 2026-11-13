@@ -34,6 +34,10 @@ const TAKE_RANGE = 2;
 
 interface Walker {
   player: Player;
+  /** What the body is: a human for a person, the spelled creature for a pet. */
+  body: Spelled;
+  /** For a creature: who it follows and fights for. Null for a person. */
+  master: string | null;
   unit: Unit;
   gear: Gear[];
   /** Body integrity. */
@@ -161,7 +165,7 @@ export class WorldRoom extends Room {
     attack: (client: Client, target: unknown) => {
       const walker = this.walkers.get(client.sessionId);
       if (!walker) return;
-      const ok = typeof target === "string" && target !== client.sessionId &&
+      const ok = typeof target === "string" && target !== client.sessionId && this.walkers.get(target)?.master !== client.sessionId &&
         (this.walkers.has(target) || (this.grounded.has(target) && !this.grounded.get(target)!.terrain));
       walker.foe = ok ? (target as string) : null;
     },
@@ -223,6 +227,14 @@ export class WorldRoom extends Room {
         };
         const wearable = gear.vehicle || phrase.stats.get("equip_slot") !== "none";
         // Things you can hold, wear or ride go straight onto you if there is room; the rest sit on the ground.
+        // Living things that can move act on their own; ones you can ride are gear instead.
+        if (phrase.stats.flag("alive") && !gear.vehicle && Math.max(phrase.stats.num("speed_land"), phrase.stats.num("speed_air")) > 0) {
+          this.addCreature(gear, client.sessionId, walker.player.x, walker.player.y);
+          client.send("letters", walker.letters);
+          client.send("spelled", `${name.toUpperCase()} is with you`);
+          this.refreshViews();
+          return;
+        }
         const here = { x: walker.player.x, y: walker.player.y }; // laying terrain may move the speller
         const worn = wearable && this.equip(walker, gear) === null;
         const tile = TILE_TYPES[String(phrase.stats.get("tile_type"))];
@@ -276,9 +288,12 @@ export class WorldRoom extends Room {
     player.y = spot.y;
     player.hp = 100;
     player.gear = "";
+    player.owner = "";
     this.state.players.set(client.sessionId, player);
     this.walkers.set(client.sessionId, {
       player,
+      body: { noun: "human" },
+      master: null,
       unit,
       gear: [],
       hp: unit.body.integrity,
@@ -300,7 +315,10 @@ export class WorldRoom extends Room {
   }
 
   onLeave(client: Client) {
-    for (const w of this.walkers.values()) if (w.foe === client.sessionId) w.foe = null;
+    for (const w of this.walkers.values()) {
+      if (w.foe === client.sessionId) w.foe = null;
+      if (w.master === client.sessionId) { w.master = "-"; w.player.owner = "-"; }
+    }
     this.walkers.delete(client.sessionId);
     this.state.players.delete(client.sessionId);
   }
@@ -332,7 +350,7 @@ export class WorldRoom extends Room {
   /** Rebuilds a walker's unit from its gear, keeping the damage each piece has taken. */
   rebuild(walker: Walker) {
     const unit = new Unit(this.dict, {
-      body: { noun: "human" },
+      body: walker.body,
       items: walker.gear.filter((g) => !g.vehicle).map((g) => g.spelled),
       riding: walker.gear.find((g) => g.vehicle)?.spelled,
       effects: [...(this.weather ? [this.weather] : []), ...walker.buffs],
@@ -357,6 +375,51 @@ export class WorldRoom extends Room {
     }
   }
 
+  /** Puts a creature in the world as a walker with no client, following its master. */
+  addCreature(gear: Gear, master: string, x: number, y: number): string {
+    const id = `c${this.nextThing++}`;
+    const unit = new Unit(this.dict, { body: gear.spelled });
+    const player = new Player();
+    player.name = gear.phrase;
+    player.x = x + (this.rng() - 0.5);
+    player.y = y + (this.rng() - 0.5);
+    player.hp = 100;
+    player.gear = "";
+    player.owner = master;
+    this.state.players.set(id, player);
+    const walker: Walker = {
+      player, body: gear.spelled, master, unit, gear: [], hp: unit.body.integrity, foe: null, cooldown: 0,
+      buffs: [], flying: false, target: null, speed: 0, sight: 0, seen: new Set(), seenThings: new Set(),
+      letters: {}, gathering: 0,
+    };
+    this.walkers.set(id, walker);
+    this.rebuild(walker);
+    return id;
+  }
+
+  /**
+   * What creatures do each tick: fight what their master fights, then whoever is attacking
+   * their master, and otherwise stay close.
+   */
+  private think() {
+    for (const [id, w] of this.walkers) {
+      if (w.master === null) continue;
+      const master = this.walkers.get(w.master);
+      if (!master) { w.foe = null; w.target = null; continue; }
+      const attacker = [...this.walkers].find(([other, o]) => o.foe === w.master && other !== id && o.master !== w.master)?.[0];
+      const foe = master.foe && master.foe !== id ? master.foe : attacker ?? null;
+      w.foe = foe && (this.walkers.has(foe) || this.grounded.has(foe)) ? foe : null;
+      if (w.foe) continue;
+      const apart = Math.hypot(master.player.x - w.player.x, master.player.y - w.player.y);
+      w.target = apart > 2 ? { x: master.player.x, y: master.player.y } : null;
+    }
+  }
+
+  /** People still in the round. */
+  private get people(): string[] {
+    return [...this.walkers].filter(([, w]) => w.master === null).map(([id]) => id);
+  }
+
   /** A verb: a passing effect on the speller's own body. */
   private cast(walker: Walker, phrase: Phrase): string {
     const def = this.dict.word(phrase.noun)!;
@@ -369,7 +432,7 @@ export class WorldRoom extends Room {
       walker.buffs.push({ word: phrase.noun, set, ops: def.ops, until: this.elapsed + seconds });
     }
     this.rebuild(walker);
-    walker.player.hp = Math.ceil((walker.hp / walker.unit.body.stats.num("integrity")) * 100);
+    walker.player.hp = Math.min(100, Math.ceil((walker.hp / walker.unit.body.stats.num("integrity")) * 100));
     return seconds > 0 && seconds < Infinity ? `${phrase.noun.toUpperCase()} for ${seconds} seconds` : phrase.noun.toUpperCase();
   }
 
@@ -423,7 +486,7 @@ export class WorldRoom extends Room {
     const client = this.clients.find((c) => c.sessionId === id);
     walker.hp = walker.unit.body.integrity;
     const max = walker.unit.body.stats.num("integrity");
-    walker.player.hp = Math.max(0, Math.ceil((walker.hp / max) * 100));
+    walker.player.hp = Math.min(100, Math.max(0, Math.ceil((walker.hp / max) * 100)));
     let lost = false;
     for (const g of [...walker.gear]) {
       const layer = walker.unit.entityFor(g.spelled);
@@ -455,9 +518,12 @@ export class WorldRoom extends Room {
     client?.send("dead", killer?.player.name ?? "something");
     this.walkers.delete(id);
     this.state.players.delete(id);
-    for (const w of this.walkers.values()) if (w.foe === id) w.foe = null;
-    if (this.walkers.size === 1 && this.everJoined > 1) {
-      const [winnerId] = this.walkers.keys();
+    for (const w of this.walkers.values()) {
+      if (w.foe === id) w.foe = null;
+      if (w.master === id) { w.master = "-"; w.player.owner = "-"; } // creatures outlive their master, ownerless
+    }
+    if (dead.master === null && this.people.length === 1 && this.everJoined > 1) {
+      const [winnerId] = this.people;
       this.clients.find((c) => c.sessionId === winnerId)?.send("won", "You are the last one alive");
     }
     this.refreshViews();
@@ -542,6 +608,7 @@ export class WorldRoom extends Room {
       }
       if (w.target && stepToward(this.map, w.player, w.target, w.speed, seconds, w.flying)) w.target = null;
     }
+    this.think();
     // Combat: each attacker strikes its foe whenever the foe is in reach.
     for (const [id, w] of [...this.walkers]) {
       w.cooldown = Math.max(0, w.cooldown - seconds);
