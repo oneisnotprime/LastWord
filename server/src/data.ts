@@ -6,5 +6,10 @@ const read = (name: string) =>
 
 /** Reads the generated word data from disk. */
 export function loadDictionary(): Dictionary {
-  return new Dictionary(read("properties.json"), read("demo.json"));
+  return new Dictionary({
+    properties: read("properties.json"),
+    words: read("demo.json"),
+    inflections: read("demo_inflections.json"),
+    degrees: read("operators.json").degrees,
+  });
 }

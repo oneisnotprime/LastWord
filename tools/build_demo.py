@@ -77,6 +77,13 @@ def main():
     if errors:
         print("\n".join(errors)); sys.exit(1)
     json.dump(out, open(os.path.join(D, "demo.json"), "w"), indent=0, separators=(",", ":"))
+    # Comparatives and superlatives of demo adjectives, unless the form is itself a demo word.
+    infl = {}
+    for line in list(open(os.path.join(D, "inflections.tsv")))[1:]:
+        form, base, degree, _ = line.rstrip("\n").split("\t")
+        if base in out and out[base]["role"] == "adjective" and form not in out:
+            infl[form] = [base, degree]
+    json.dump(infl, open(os.path.join(D, "demo_inflections.json"), "w"), indent=0, separators=(",", ":"))
     by = {}
     for v in out.values():
         by[v["class"]] = by.get(v["class"], 0) + 1
