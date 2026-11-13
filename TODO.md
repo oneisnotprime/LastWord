@@ -65,6 +65,28 @@ by how many words set them (minds and upkeep took `sentient`, `intelligence`, `f
 - [x] Dedicated loadout and inventory screens (L and I)
 - [ ] Loadout and inventory on a controller; item details (what a thing does) on hover or select
 
+## Later: words drive every system (user's notes; not started)
+
+Each word below is an example: build a whole dictionary around each concept, and search the
+lexicon so every related word is captured.
+
+- [ ] Brainstorm a few hundred cool systems, then search the dictionary for each one's words
+- [ ] Every system and power has an opposing system and power
+- [ ] Every mechanic is modifiable by words: player total HP, anything, maybe even graphics
+- [ ] Meta words: TYPO makes something break; DICTIONARY gives a full list of words
+- [ ] FAILED, BROKEN, PATHETIC, COWARDLY do what they say
+- [ ] INVISIBLE does what it says
+- [ ] Tiny things have uses (TINY and related adjectives, bugs, swirls): high stealth, slipping
+      through defences, higher speed
+- [ ] Decide what drives magic: intelligence, or something else
+- [ ] OPEN opens doors, locks and walls; GONE, DEAD, BROKEN act on targets
+- [ ] FAR moves something far away; abilities to place objects further than normal; teleporting
+- [ ] Water, air and land vehicles
+- [ ] THIRSTY and HUNGRY raise food needs, and fuel needs for vehicles
+- [ ] Technology has a purpose: COMPUTER, MONITOR, CAMERA and the like
+- [ ] Ways to see more of the map: wider sight, or a zoomed-out view of the map
+- [ ] Scales such as good and evil, smart and dumb, that words move players and things along
+
 ## Data
 
 - [x] Word lists by role, class and archetype (59,232 with a role, 5,385 inert)
