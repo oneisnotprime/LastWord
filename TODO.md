@@ -83,6 +83,9 @@ lexicon so every related word is captured.
 - [ ] FAR moves something far away; abilities to place objects further than normal; teleporting
 - [ ] Water, air and land vehicles
 - [ ] THIRSTY and HUNGRY raise food needs, and fuel needs for vehicles
+- [ ] Technology has a purpose: COMPUTER, MONITOR, CAMERA and the like
+- [ ] Ways to see more of the map: wider sight, or a zoomed-out view of the map
+- [ ] Scales such as good and evil, smart and dumb, that words move players and things along
 
 ## Data
 
