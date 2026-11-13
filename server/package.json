@@ -1,0 +1,12 @@
+{
+  "name": "@lastword/server",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/main.ts",
+    "start": "tsx src/main.ts",
+    "test": "vitest run",
+    "typecheck": "tsc -p ."
+  },
+  "dependencies": { "@lastword/shared": "*", "tsx": "^4.23.15" }
+}

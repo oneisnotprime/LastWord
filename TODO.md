@@ -14,6 +14,8 @@
 - Each word has one role, whichever is most useful. Verbs act on the caster.
 - Acts and events are their own class and make things happen in the world.
 - Plurals spawn several; S is a powerful letter.
+- Desktop only: keyboard and mouse, or a controller. No touch or phone layout.
+- On a controller, spelling is done by picking from the letters you hold.
 - All assets and word data are generated ahead of time; no model at runtime.
 - Every word feeds the same shared systems (PLAN.md); no private mechanics per word.
 - The game lives in its own repository.
@@ -76,6 +78,8 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
 
 - [x] Choose stack, hosting, netcode and art approach (see PLAN.md)
 - [x] Move to its own repository
-- [ ] Milestones M0 to M7 in PLAN.md
+- [x] M0: scaffold packages, test commands, CI
+- [ ] M1: rules engine (operators, degrees, absolutes, combat tick)
+- [ ] M2 to M7 in PLAN.md
 - [ ] Map generator: cities, countryside, letter sources
 - [ ] Demo: one map, the 351-word dictionary, a handful of players
