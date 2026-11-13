@@ -17,10 +17,21 @@ export type Player = SchemaType<typeof Player>;
 
 /** An object someone spelled into the world. */
 export const Thing = schema(
-  { phrase: t.string(), owner: t.string(), x: t.float32(), y: t.float32() },
+  {
+    phrase: t.string(),
+    owner: t.string(),
+    x: t.float32(),
+    y: t.float32(),
+    /** Integrity as a percentage. */
+    hp: t.uint8(),
+  },
   "Thing",
 );
 export type Thing = SchemaType<typeof Thing>;
+
+/** A disc of terrain a word laid down. Everyone gets these, in order, to keep maps in step. */
+export const Edit = schema({ x: t.float32(), y: t.float32(), radius: t.float32(), tile: t.uint8() }, "Edit");
+export type Edit = SchemaType<typeof Edit>;
 
 export const WorldState = schema(
   {
@@ -29,6 +40,7 @@ export const WorldState = schema(
     size: t.uint16(),
     players: t.map(Player).view(),
     things: t.map(Thing).view(),
+    edits: t.array(Edit),
   },
   "WorldState",
 );

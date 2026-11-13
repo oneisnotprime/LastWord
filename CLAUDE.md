@@ -16,6 +16,9 @@ modifiers, spells and events. Last player alive wins. Packages are scaffolded (m
 
 ## Rules
 
+- When the user gives an item for the to-do list, add it to `TODO.md` and carry on. Do not
+  discuss it unless asked.
+
 - Work on a branch, open a pull request, and merge it yourself once typecheck, tests and (for
   client changes) a headless browser check pass locally. Do not wait to be asked.
 

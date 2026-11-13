@@ -23,6 +23,11 @@ const GROUND: Record<Tile, string> = {
   [Tile.Mountain]: "",
   [Tile.Road]: "rrrt",
   [Tile.City]: "ssttnnl",
+  [Tile.Pit]: "",
+  [Tile.Snow]: "ee",
+  [Tile.Swamp]: "uuoe",
+  [Tile.Lava]: "",
+  [Tile.Wall]: "",
 };
 
 /** True if any of the eight tiles around a point is of the given kind. */
@@ -41,6 +46,7 @@ export function gatherLetter(map: WorldMap, x: number, y: number, rng: Rng): str
   if (!pool) return ""; // nothing where nobody can stand
   if (beside(map, x, y, Tile.Water) || beside(map, x, y, Tile.DeepWater)) pool += "ooo"; // fishing
   if (beside(map, x, y, Tile.Mountain)) pool += "uug"; // caves
+  if (beside(map, x, y, Tile.Lava)) pool += "fff"; // fire
   return pool[Math.floor(rng() * pool.length)]!;
 }
 

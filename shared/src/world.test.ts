@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { generateMap, randomWalkable, seeded, stepToward, Tile, tileAt, TILE_METERS, walkable } from "./index.js";
+import { generateMap, nearestWalkable, randomWalkable, seeded, stampTerrain, stepToward, Tile, tileAt, TILE_METERS, walkable } from "./index.js";
 
 describe("generateMap", () => {
   const map = generateMap(42);
@@ -45,5 +45,29 @@ describe("stepToward", () => {
       for (let t = 0; t < 100; t++) stepToward(map, pos, target, 50, 0.1);
       expect(walkable(map, pos.x, pos.y)).toBe(true);
     }
+  });
+});
+
+describe("stampTerrain", () => {
+  it("lays a disc of tiles and nearestWalkable finds the shore", () => {
+    const map = generateMap(42);
+    const c = map.cities[0]!;
+    const centre = { x: c.x + 0.5, y: c.y + 0.5 };
+    stampTerrain(map, { ...centre, radius: 3, tile: Tile.Water });
+    expect(tileAt(map, centre.x, centre.y)).toBe(Tile.Water);
+    expect(tileAt(map, centre.x + 3, centre.y)).toBe(Tile.Water);
+    expect(tileAt(map, centre.x + 5, centre.y)).not.toBe(Tile.Water);
+    const shore = nearestWalkable(map, centre);
+    expect(walkable(map, shore.x, shore.y)).toBe(true);
+    expect(Math.hypot(shore.x - centre.x, shore.y - centre.y)).toBeLessThan(6);
+    expect(nearestWalkable(map, shore)).toBe(shore);
+  });
+
+  it("with radius 0 changes one tile", () => {
+    const map = generateMap(42);
+    const before = map.tiles.slice();
+    stampTerrain(map, { x: 100.5, y: 100.5, radius: 0, tile: Tile.Lava });
+    expect(map.tiles.filter((t, i) => t !== before[i]).length).toBeLessThanOrEqual(1);
+    expect(tileAt(map, 100.5, 100.5)).toBe(Tile.Lava);
   });
 });
