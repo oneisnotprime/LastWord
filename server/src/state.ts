@@ -1,6 +1,9 @@
 import { schema, t, type SchemaType } from "@colyseus/schema";
 
-/** A player as other clients see it. Sent only to clients whose view holds it. */
+/**
+ * A player, or a creature acting on its own, as clients see it. Sent only to clients whose view
+ * holds it.
+ */
 export const Player = schema(
   {
     name: t.string(),
@@ -10,6 +13,8 @@ export const Player = schema(
     hp: t.uint8(),
     /** What the player carries, as text: "sword, armor, tank". */
     gear: t.string(),
+    /** For a creature someone spelled: its owner's session id, or "-" if it has none. "" for a person. */
+    owner: t.string(),
   },
   "Player",
 );
