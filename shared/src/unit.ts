@@ -2,6 +2,7 @@ import { destroyed, spawn, strike, type Entity, type Strike } from "./combat.js"
 import type { Dictionary } from "./dictionary.js";
 import type { Rng } from "./rng.js";
 import { resolve, type Stats } from "./stats.js";
+import type { Op, Value } from "./types.js";
 
 /** A noun with the adjectives on it. */
 export interface Spelled { noun: string; adjectives?: string[] }
@@ -13,6 +14,8 @@ export interface Loadout {
   items?: Spelled[];
   /** A vehicle or mount the character is in or on. */
   riding?: Spelled;
+  /** Passing effects on the body: verbs the character has cast, weather it stands in. */
+  effects?: { set?: Record<string, Value>; ops?: Op[] }[];
 }
 
 /** Reach, in metres, below which a weapon is swung and so scales with strength. */
@@ -64,6 +67,10 @@ export class Unit {
       }
     }
 
+    for (const effect of loadout.effects ?? []) {
+      for (const [id, value] of Object.entries(effect.set ?? {})) body.set(id, value);
+      body.apply(effect.ops ?? []);
+    }
     this.onFoot = armed(weapon, body);
     this.body = spawn(loadout.body.noun, body);
     // A rider's own adjectives carry over to what it rides: a FAST driver makes a fast tank.
@@ -130,6 +137,8 @@ function armed(weapon: Stats | null, body: Stats): Stats {
 
 /** One strike from one unit on another's outermost layer. */
 export function strikeUnit(attacker: Unit, defender: Unit, rng: Rng): Strike & { on: string } {
+  // Someone who cannot be targeted cannot be hit through their armor either.
+  if (defender.body.stats.flag("untargetable")) return { hit: false, critical: false, damage: 0, byType: {}, on: defender.body.name };
   const target = defender.outer;
   return { ...strike(attacker.attack, target, rng), on: target.name };
 }

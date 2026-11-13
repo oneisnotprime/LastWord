@@ -1,10 +1,15 @@
 import type { Dictionary } from "./dictionary.js";
-import { resolve, type Stats } from "./stats.js";
+import { resolve, Stats } from "./stats.js";
 
 /** Letters a player holds: letter -> count. */
 export type Letters = Record<string, number>;
 
 export interface Phrase {
+  /**
+   * What spelling it does: makes an object, casts a verb on the speller, sets off an event on a
+   * target, or changes the sky and weather.
+   */
+  kind: "object" | "verb" | "event" | "sky";
   noun: string;
   adjectives: string[];
   /** Every letter the phrase costs, in order, lower case. */
@@ -25,8 +30,18 @@ export function parsePhrase(dict: Dictionary, text: string): Phrase {
   }
   const noun = words[words.length - 1]!;
   const adjectives = words.slice(0, -1);
-  if (dict.lookup(noun)!.def.role !== "noun") throw new Error(`${noun.toUpperCase()} is not a thing; end with a noun`);
-  return { noun, adjectives, letters: words.join(""), stats: resolve(dict, noun, adjectives) };
+  const def = dict.lookup(noun)!.def;
+  if (def.role === "verb") {
+    if (adjectives.length) throw new Error(`${noun.toUpperCase()} is something you do; spell it on its own`);
+    const stats = new Stats(dict);
+    for (const [id, value] of Object.entries(def.set)) stats.set(id, value);
+    return { kind: "verb", noun, adjectives, letters: noun, stats };
+  }
+  if (def.role !== "noun") throw new Error(`${noun.toUpperCase()} is not a thing; end with a noun`);
+  const stats = resolve(dict, noun, adjectives);
+  const placement = stats.get("placement");
+  const kind = def.class === "event" ? "event" : placement === "sky" || placement === "region" || placement === "map" ? "sky" : "object";
+  return { kind, noun, adjectives, letters: words.join(""), stats };
 }
 
 /** Letters the player lacks for a spelling, as a string such as "ss" for two missing S. */

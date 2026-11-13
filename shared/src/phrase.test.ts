@@ -11,6 +11,17 @@ describe("parsePhrase", () => {
     expect(p.stats.num("mass")).toBeCloseTo(1.5 * 8 ** 1.5);
   });
 
+  it("tells objects, verbs, events and sky words apart", () => {
+    expect(parsePhrase(dict, "sword").kind).toBe("object");
+    expect(parsePhrase(dict, "lake").kind).toBe("object");
+    expect(parsePhrase(dict, "fly")).toMatchObject({ kind: "verb", letters: "fly" });
+    expect(parsePhrase(dict, "fly").stats.num("duration")).toBe(60);
+    expect(parsePhrase(dict, "theft").kind).toBe("event");
+    expect(parsePhrase(dict, "sun").kind).toBe("sky");
+    expect(parsePhrase(dict, "rain").kind).toBe("sky");
+    expect(() => parsePhrase(dict, "big fly")).toThrow("FLY is something you do");
+  });
+
   it("explains what is wrong", () => {
     expect(() => parsePhrase(dict, "")).toThrow("Spell something");
     expect(() => parsePhrase(dict, "sw0rd")).toThrow("sw0rd is not a word");

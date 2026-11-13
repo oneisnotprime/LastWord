@@ -141,8 +141,18 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
       last one alive wins
 - [x] M5: terrain words reshape the map; things on the ground can be attacked and destroyed;
       D, K and V now have sources (destroying things, kills, beating another player's things)
-- [ ] M5 (rest): sky and region words (SUN, RAIN), events such as THEFT, verbs, pets acting on
-      their own
+- [x] M5: verbs act on the caster for their duration (RUN, FLY, HEAL, SNEAK, HIDE); THEFT takes a
+      selected thing if your stealth meets its security; sky words set day, night and weather
+- [ ] M5 (rest): pets acting on their own; other events (WAR, FIRE, MURDER, RAID) do nothing yet
+- [ ] Weather and night cover the whole map; region-sized weather and per-tile quantities
+      (temperature, moisture, light) are not built
+- [ ] Sky and weather change only sight and speed so far; their other effects (wetness, growth,
+      crop output) wait on the tile systems
+- [ ] Auras, knowledge, institutions and measures still spell into inert markers on the ground
+- [ ] Hidden or invisible players are still drawn for others; stealth against detection is not
+      used for what a client is sent
+- [ ] Targeting: an event uses whatever you last clicked, which also starts an attack on it;
+      needs a select-without-attacking control
 - [ ] Terrain is laid where the speller stands and pushes everyone to the nearest ground; a
       destroyed lake or mountain marker cannot be removed, and terrain cannot be undone
 - [ ] A round does not reset after someone wins; the dead stay connected as spectators
