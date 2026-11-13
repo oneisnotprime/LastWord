@@ -1,8 +1,8 @@
 import { Room, type Client } from "colyseus";
 import { StateView } from "@colyseus/schema";
 import {
-  addLetters, GATHER_SECONDS, gatherLetter, generateMap, GIVE_RANGE, missing, parsePhrase, production, randomWalkable, resolve, seeded, spend, stepToward, TILE_METERS,
-  type Dictionary, type Letters, type Point, type WorldMap,
+  addLetters, GATHER_SECONDS, gatherLetter, generateMap, GIVE_RANGE, missing, parsePhrase, production, randomWalkable, seeded, spend, stepToward, strikeUnit, TILE_METERS, Unit,
+  type Dictionary, type Letters, type Point, type Spelled, type WorldMap,
 } from "@lastword/shared";
 import { loadDictionary } from "./data.js";
 import { Player, Thing, WorldState } from "./state.js";
@@ -12,8 +12,28 @@ export const TICK_HZ = 10;
 /** How often each client's view is recomputed, in ticks. */
 const VIEW_EVERY = 5;
 
+/** Something a player carries: held, worn, grafted on, or ridden. */
+interface Gear {
+  spelled: Spelled;
+  phrase: string;
+  vehicle: boolean;
+  /** Remaining integrity of protection and vehicles; null until first built into a unit. */
+  integrity: number | null;
+}
+
+/** How close, in tiles, a thing on the ground must be to pick it up. */
+const TAKE_RANGE = 2;
+
 interface Walker {
   player: Player;
+  unit: Unit;
+  gear: Gear[];
+  /** Body integrity. */
+  hp: number;
+  /** Who this player is attacking, by session id. */
+  foe: string | null;
+  /** Seconds until the next strike. */
+  cooldown: number;
   target: Point | null;
   speed: number;
   /** Sight range in tiles. */
@@ -65,6 +85,9 @@ export class WorldRoom extends Room {
   private thingGrid = new Map<number, string[]>();
   private nextThing = 1;
   private producers = new Map<string, Producer>();
+  /** What each thing on the ground is, so it can be picked up again. */
+  private grounded = new Map<string, Gear>();
+  private everJoined = 0;
 
   messages = {
     /** Walk toward a point on the map. */
@@ -75,6 +98,7 @@ export class WorldRoom extends Room {
       const clamp = (v: number) => Math.min(this.map.size, Math.max(0, v));
       walker.target = { x: clamp(p.x!), y: clamp(p.y!) };
       walker.gathering = 0;
+      walker.foe = null; // walking away breaks off an attack
     },
     /** Stand still and gather a letter from the ground. */
     gather: (client: Client) => {
@@ -82,6 +106,41 @@ export class WorldRoom extends Room {
       if (!walker || walker.gathering > 0) return;
       walker.target = null;
       walker.gathering = GATHER_SECONDS;
+    },
+    /** Pick up the nearest thing of your own, or nobody's, from the ground. */
+    take: (client: Client) => {
+      const walker = this.walkers.get(client.sessionId);
+      if (!walker) return;
+      let best: string | null = null, bestDistance = TAKE_RANGE;
+      this.state.things.forEach((t, id) => {
+        const d = Math.hypot(t.x - walker.player.x, t.y - walker.player.y);
+        const free = t.owner === client.sessionId || t.owner === "";
+        if (free && d <= bestDistance && this.grounded.has(id)) { best = id; bestDistance = d; }
+      });
+      if (!best) return void client.send("refused", "Nothing of yours to pick up here");
+      const gear = this.grounded.get(best)!;
+      const wearable = gear.vehicle || this.slotOf(gear) !== "none";
+      const problem = wearable ? this.equip(walker, gear) : `${gear.phrase.toUpperCase()} cannot be carried`;
+      if (problem) return void client.send("refused", problem);
+      this.removeThing(best);
+      client.send("notice", `${gear.phrase.toUpperCase()} equipped`);
+      this.refreshViews();
+    },
+    /** Put down the last thing you equipped. */
+    drop: (client: Client) => {
+      const walker = this.walkers.get(client.sessionId);
+      const gear = walker?.gear.pop();
+      if (!walker || !gear) return;
+      this.rebuild(walker);
+      this.addThing(gear, client.sessionId, walker.player.x, walker.player.y);
+      client.send("notice", `${gear.phrase.toUpperCase()} dropped`);
+      this.refreshViews();
+    },
+    /** Attack another player; the unit strikes whenever the target is in reach. Anything else stops. */
+    attack: (client: Client, target: unknown) => {
+      const walker = this.walkers.get(client.sessionId);
+      if (!walker) return;
+      walker.foe = typeof target === "string" && target !== client.sessionId && this.walkers.has(target) ? target : null;
     },
     /** Hand letters to a player standing close by. */
     give: (client: Client, offer: unknown) => {
@@ -122,11 +181,22 @@ export class WorldRoom extends Room {
         if (lacking) throw new Error(`You need ${lacking.toUpperCase().split("").join(" ")}`);
         spend(walker.letters, phrase.letters);
         const name = [...phrase.adjectives, phrase.noun].join(" ");
-        const id = this.addThing(name, client.sessionId, walker.player.x, walker.player.y);
-        const rates = production(phrase.stats);
-        if (Object.keys(rates).length) this.producers.set(id, { owner: client.sessionId, rates, built: {} });
+        const gear: Gear = {
+          spelled: { noun: phrase.noun, adjectives: phrase.adjectives },
+          phrase: name,
+          vehicle: phrase.stats.flag("mountable"),
+          integrity: null,
+        };
+        const wearable = gear.vehicle || phrase.stats.get("equip_slot") !== "none";
+        // Things you can hold, wear or ride go straight onto you if there is room; the rest sit on the ground.
+        const worn = wearable && this.equip(walker, gear) === null;
+        if (!worn) {
+          const id = this.addThing(gear, client.sessionId, walker.player.x, walker.player.y);
+          const rates = production(phrase.stats);
+          if (Object.keys(rates).length) this.producers.set(id, { owner: client.sessionId, rates, built: {} });
+        }
         client.send("letters", walker.letters);
-        client.send("spelled", name);
+        client.send("spelled", `${name.toUpperCase()} ${worn ? "equipped" : "made"}`);
         this.refreshViews();
       } catch (e) {
         client.send("refused", (e as Error).message);
@@ -150,7 +220,9 @@ export class WorldRoom extends Room {
   }
 
   onJoin(client: Client) {
-    const body = resolve(this.dict, "human");
+    this.everJoined++;
+    const unit = new Unit(this.dict, { body: { noun: "human" } });
+    const body = unit.body.stats;
     // CROWD=1 is for load tests: everyone starts in the first city, in sight of each other.
     const city = this.map.cities[0];
     const spot = process.env.CROWD && city
@@ -160,9 +232,16 @@ export class WorldRoom extends Room {
     player.name = `player${this.clients.length}`;
     player.x = spot.x;
     player.y = spot.y;
+    player.hp = 100;
+    player.gear = "";
     this.state.players.set(client.sessionId, player);
     this.walkers.set(client.sessionId, {
       player,
+      unit,
+      gear: [],
+      hp: unit.body.integrity,
+      foe: null,
+      cooldown: 0,
       target: null,
       speed: body.num("speed_land"),
       sight: body.num("sight_range") / TILE_METERS,
@@ -177,12 +256,113 @@ export class WorldRoom extends Room {
   }
 
   onLeave(client: Client) {
+    for (const w of this.walkers.values()) if (w.foe === client.sessionId) w.foe = null;
     this.walkers.delete(client.sessionId);
     this.state.players.delete(client.sessionId);
   }
 
-  addThing(phrase: string, owner: string, x: number, y: number): string {
+  private slotOf(g: Gear): string {
+    return g.vehicle ? "ride" : String(this.dict.base(g.spelled.noun, "equip_slot"));
+  }
+
+  /**
+   * Puts gear on a walker and rebuilds its unit. Returns null on success, or why it cannot be
+   * equipped (no free hand, slot taken, already riding).
+   */
+  equip(walker: Walker, gear: Gear): string | null {
+    const slot = this.slotOf(gear);
+    if (slot !== "held" && slot !== "graft" && walker.gear.some((g) => this.slotOf(g) === slot)) {
+      return slot === "ride" ? "You are already riding something" : `You already wear something on your ${slot}`;
+    }
+    walker.gear.push(gear);
+    try {
+      this.rebuild(walker);
+      return null;
+    } catch (e) {
+      walker.gear.pop();
+      this.rebuild(walker);
+      return (e as Error).message;
+    }
+  }
+
+  /** Rebuilds a walker's unit from its gear, keeping the damage each piece has taken. */
+  rebuild(walker: Walker) {
+    const unit = new Unit(this.dict, {
+      body: { noun: "human" },
+      items: walker.gear.filter((g) => !g.vehicle).map((g) => g.spelled),
+      riding: walker.gear.find((g) => g.vehicle)?.spelled,
+    });
+    unit.body.integrity = walker.hp;
+    for (const g of walker.gear) {
+      const layer = unit.entityFor(g.spelled);
+      if (!layer) continue;
+      if (g.integrity === null) g.integrity = layer.integrity;
+      else layer.integrity = g.integrity;
+    }
+    walker.unit = unit;
+    walker.speed = unit.movement.num("speed_land");
+    walker.sight = unit.body.stats.num("sight_range") / TILE_METERS;
+    walker.player.gear = walker.gear.map((g) => g.phrase).join(", ");
+  }
+
+  /** Writes a struck unit's damage back to its walker; destroyed gear is gone for good. */
+  private settle(id: string, walker: Walker) {
+    const client = this.clients.find((c) => c.sessionId === id);
+    walker.hp = walker.unit.body.integrity;
+    const max = walker.unit.body.stats.num("integrity");
+    walker.player.hp = Math.max(0, Math.ceil((walker.hp / max) * 100));
+    let lost = false;
+    for (const g of [...walker.gear]) {
+      const layer = walker.unit.entityFor(g.spelled);
+      if (!layer) continue;
+      g.integrity = layer.integrity;
+      if (layer.integrity <= 0) {
+        walker.gear.splice(walker.gear.indexOf(g), 1);
+        client?.send("notice", `Your ${g.phrase.toUpperCase()} was destroyed`);
+        lost = true;
+      }
+    }
+    if (lost) this.rebuild(walker);
+  }
+
+  /** Knocks a player out of the round. Their letters go to the killer; their gear falls. */
+  private kill(id: string, killerId: string) {
+    const dead = this.walkers.get(id), killer = this.walkers.get(killerId);
+    if (!dead) return;
+    const client = this.clients.find((c) => c.sessionId === id);
+    if (killer) {
+      for (const [ch, n] of Object.entries(dead.letters)) if (n > 0) addLetters(killer.letters, ch.repeat(n));
+      const kc = this.clients.find((c) => c.sessionId === killerId);
+      kc?.send("letters", killer.letters);
+      kc?.send("notice", `You killed ${dead.player.name} and took their letters`);
+    }
+    for (const g of dead.gear) this.addThing(g, "", dead.player.x, dead.player.y);
+    client?.send("letters", {});
+    client?.send("dead", killer?.player.name ?? "something");
+    this.walkers.delete(id);
+    this.state.players.delete(id);
+    for (const w of this.walkers.values()) if (w.foe === id) w.foe = null;
+    if (this.walkers.size === 1 && this.everJoined > 1) {
+      const [winnerId] = this.walkers.keys();
+      this.clients.find((c) => c.sessionId === winnerId)?.send("won", "You are the last one alive");
+    }
+    this.refreshViews();
+  }
+
+  removeThing(id: string) {
+    const t = this.state.things.get(id);
+    if (!t) return;
+    const cell = this.thingGrid.get(thingKey(t.x, t.y));
+    if (cell) cell.splice(cell.indexOf(id), 1);
+    this.state.things.delete(id);
+    this.grounded.delete(id);
+    this.producers.delete(id);
+  }
+
+  addThing(gear: Gear, owner: string, x: number, y: number): string {
     const id = `t${this.nextThing++}`;
+    this.grounded.set(id, gear);
+    const phrase = gear.phrase;
     const thing = new Thing();
     thing.phrase = phrase;
     thing.owner = owner;
@@ -198,6 +378,31 @@ export class WorldRoom extends Room {
     const started = performance.now();
     for (const w of this.walkers.values()) {
       if (w.target && stepToward(this.map, w.player, w.target, w.speed, seconds)) w.target = null;
+    }
+    // Combat: each attacker strikes its foe whenever the foe is in reach.
+    for (const [id, w] of [...this.walkers]) {
+      w.cooldown = Math.max(0, w.cooldown - seconds);
+      const foeId = w.foe;
+      const foe = foeId ? this.walkers.get(foeId) : undefined;
+      if (!foeId || !foe || !this.walkers.has(id)) continue;
+      const attack = w.unit.attack;
+      const reach = Math.max(1, attack.num("attack_range") / TILE_METERS);
+      if (Math.hypot(foe.player.x - w.player.x, foe.player.y - w.player.y) > reach) {
+        w.target = { x: foe.player.x, y: foe.player.y }; // close the distance
+        continue;
+      }
+      w.target = null;
+      if (w.cooldown > 0) continue;
+      strikeUnit(w.unit, foe.unit, this.rng);
+      const rate = attack.num("attack_rate");
+      w.cooldown = rate > 0 ? 1 / rate : 1;
+      if (attack.flag("single_use") && w.unit.weapon) {
+        const spent = w.unit.weapon; // a grenade is gone once thrown
+        w.gear = w.gear.filter((g) => g.spelled !== spent);
+        this.rebuild(w);
+      }
+      this.settle(foeId, foe);
+      if (foe.unit.dead) this.kill(foeId, id);
     }
     const changed = new Set<string>();
     for (const [id, w] of this.walkers) {

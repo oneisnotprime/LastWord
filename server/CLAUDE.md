@@ -17,4 +17,6 @@ Node process that owns the game state. One room per map instance (from milestone
   everyone). Run the server with `METRICS=1` to see CPU and tick time.
 - Colyseus 0.18: `defineServer`/`defineRoom`, `messages = {}`, `setTimestep`, `@colyseus/sdk`
   on the client. Older tutorials use a different API; check docs.colyseus.io.
+- Gear a player carries lives in the room (`Walker.gear`) and is shown to others only as the
+  text in `Player.gear`; things on the ground are `Thing`s in the state.
 - Ignore options a client sends when joining. A message with no handler disconnects the sender.

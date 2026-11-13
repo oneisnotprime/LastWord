@@ -12,7 +12,7 @@ const COLOURS: Record<Tile, number> = {
   [Tile.City]: 0xa9a39a,
 };
 
-interface Marker { box: Phaser.GameObjects.Rectangle; label: Phaser.GameObjects.Text }
+interface Marker { box: Phaser.GameObjects.Rectangle; label: Phaser.GameObjects.Text; bar?: Phaser.GameObjects.Rectangle }
 
 class World extends Phaser.Scene {
   private net!: Connection;
@@ -22,6 +22,8 @@ class World extends Phaser.Scene {
   private keys!: Record<"up" | "down" | "left" | "right" | "w" | "a" | "s" | "d", Phaser.Input.Keyboard.Key>;
   private steering = false;
   private lastSteer = 0;
+  private foe: string | null = null;
+  private over = false;
 
   async create() {
     this.hud = new Hud((text) => {
@@ -31,18 +33,23 @@ class World extends Phaser.Scene {
       else this.net?.spell(text);
     });
     window.addEventListener("keydown", (e) => {
-      if (e.key.toLowerCase() === "g" && !e.repeat && !this.hud.typing && this.net) {
+      if (e.repeat || this.hud.typing || !this.net || this.over) return;
+      const key = e.key.toLowerCase();
+      if (key === "g") {
         this.net.gather();
         this.hud.toast("Gathering…", "good");
-      }
+      } else if (key === "e") this.net.take();
+      else if (key === "q") this.net.drop();
     });
     try {
       this.net = await connect({
         letters: (held) => this.hud.setLetters(held),
-        spelled: (phrase) => this.hud.toast(`${phrase.toUpperCase()} made`, "good"),
+        spelled: (text) => this.hud.toast(text, "good"),
         refused: (reason) => this.hud.toast(reason, "bad"),
         gathered: (letter) => this.hud.toast(`+ ${letter.toUpperCase()}`, "good"),
         notice: (text) => this.hud.toast(text, "good"),
+        dead: (killer) => { this.over = true; this.hud.banner(`You were killed by ${killer}. Your letters are theirs. Reload to play again.`); },
+        won: (text) => this.hud.banner(`${text}. You win.`),
         closed: () => this.hud.status("Disconnected"),
       });
     } catch {
@@ -57,10 +64,19 @@ class World extends Phaser.Scene {
       { up: "UP", down: "DOWN", left: "LEFT", right: "RIGHT", w: "W", a: "A", s: "S", d: "D" }, false,
     ) as World["keys"];
     this.input.on("pointerdown", (p: Phaser.Input.Pointer) => {
+      if (this.over) return;
       const at = this.cameras.main.getWorldPoint(p.x, p.y);
-      this.net.move(at.x / PX, at.y / PX);
+      const x = at.x / PX, y = at.y / PX;
+      // A click on another player attacks them; a click anywhere else walks there and stops attacking.
+      let hit: string | null = null;
+      this.net.state.players.forEach((other: any, id: string) => {
+        if (id !== this.net.sessionId && Math.hypot(other.x - x, other.y - y) < 0.8) hit = id;
+      });
+      this.foe = hit;
+      this.net.attack(hit);
+      if (!hit) this.net.move(x, y);
     });
-    (window as any).__lw = { net: this.net, map: this.map, dictionary }; // for browser checks
+    (window as any).__lw = { net: this.net, map: this.map, dictionary, scene: this, PX }; // for browser checks
   }
 
   /** One pixel per tile on a canvas, scaled up without smoothing. */
@@ -106,19 +122,26 @@ class World extends Phaser.Scene {
     state.players.forEach((p: any, id: string) => {
       live.add(id);
       const m = this.marker(id, id === mine ? 0xffffff : 0xe05a5a, 10, p.name, 10);
+      m.label.setText(p.gear ? `${p.name}\n${p.gear}` : p.name).setAlign("center");
+      m.box.setStrokeStyle(id === this.foe ? 2 : 1, id === this.foe ? 0xffd166 : 0x14161a);
+      m.bar ??= this.add.rectangle(0, 0, 14, 2, 0x9be28f).setOrigin(0, 0.5).setDepth(12);
       // Ease toward the server's position so ten updates a second look smooth.
       const k = Math.min(1, delta / 100);
       const first = m.box.x === 0 && m.box.y === 0;
       m.box.setPosition(first ? p.x * PX : m.box.x + (p.x * PX - m.box.x) * k, first ? p.y * PX : m.box.y + (p.y * PX - m.box.y) * k);
-      m.label.setPosition(m.box.x, m.box.y - 7);
+      m.label.setPosition(m.box.x, m.box.y - 9);
+      m.bar.setPosition(m.box.x - 7, m.box.y - 7).setSize(14 * (p.hp / 100), 2).setFillStyle(p.hp > 50 ? 0x9be28f : p.hp > 25 ? 0xffd166 : 0xff8a80);
       if (id === mine) this.cameras.main.centerOn(m.box.x, m.box.y);
     });
     for (const [id, m] of this.markers) {
-      if (!live.has(id)) { m.box.destroy(); m.label.destroy(); this.markers.delete(id); }
+      if (!live.has(id)) { m.box.destroy(); m.label.destroy(); m.bar?.destroy(); this.markers.delete(id); }
     }
 
     const me = state.players.get(mine);
-    if (!me) return;
+    if (!me) {
+      if (this.over) this.hud.status("Knocked out");
+      return;
+    }
     const k = this.keys, typing = this.hud.typing;
     const dx = typing ? 0 : Number(k.right.isDown || k.d.isDown) - Number(k.left.isDown || k.a.isDown);
     const dy = typing ? 0 : Number(k.down.isDown || k.s.isDown) - Number(k.up.isDown || k.w.isDown);
@@ -132,7 +155,7 @@ class World extends Phaser.Scene {
     const others = state.players.size - 1;
     this.hud.status(
       `${Tile[tileAt(this.map, me.x, me.y)]} · ${Math.round(me.x * TILE_METERS)}, ${Math.round(me.y * TILE_METERS)} m · ` +
-      `${others} other${others === 1 ? "" : "s"} in sight`,
+      `${others} other${others === 1 ? "" : "s"} in sight · health ${me.hp}%${me.gear ? ` · ${me.gear}` : ""}`,
     );
   }
 }

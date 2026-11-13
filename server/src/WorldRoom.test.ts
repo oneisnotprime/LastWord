@@ -83,18 +83,31 @@ it("spells a word into an object, spends the letters, and refuses what it cannot
   await new Promise((r) => setTimeout(r, 300));
   await (room as any).waitForNextPatch();
 
-  expect(inbox.spelled).toEqual(["sword"]);
+  expect(inbox.spelled).toEqual(["SWORD equipped"]);
   expect(inbox.refused).toHaveLength(3);
   expect(inbox.refused[0]).toBe("ZZZ is not in the dictionary yet");
   const after = inbox.letters.at(-1) as Record<string, number>;
   expect(after.s).toBe(before.s! - 1);
   expect(after.w).toBe(before.w! - 1);
 
+  // A sword is held, so it goes into the hand, not onto the ground.
+  expect(a.state.players.get(a.sessionId).gear).toBe("sword");
+  expect(a.state.things.size).toBe(0);
+
+  // Dropping it puts it on the ground where others in sight can see it; taking picks it up.
+  a.send("drop");
+  await new Promise((r) => setTimeout(r, 200));
+  await (room as any).waitForNextPatch();
   const things = [...a.state.things.values()];
   expect(things).toHaveLength(1);
   expect(things[0]).toMatchObject({ phrase: "sword", owner: a.sessionId });
   expect(things[0].x).toBeCloseTo(50);
   expect(b.state.things.size).toBe(0); // out of sight
+  a.send("take");
+  await new Promise((r) => setTimeout(r, 200));
+  await (room as any).waitForNextPatch();
+  expect(a.state.players.get(a.sessionId).gear).toBe("sword");
+  expect(a.state.things.size).toBe(0);
 
   for (let i = 0; i < 6; i++) a.send("spell", "sword");
   await new Promise((r) => setTimeout(r, 300));
@@ -161,4 +174,61 @@ it("gathers letters from the ground, pays out production, and passes letters bet
   expect(got.a.filter(([t]) => t === "refused").map(([, m]) => m)).toEqual([
     "You need Z Z", `${wb.player.name} is too far away`, "nobody is not here", "Give whom what? Try: give player2 abc",
   ]);
+});
+
+it("fights: armor breaks before the body, the dead are knocked out and the last one alive wins", async () => {
+  const room = (await colyseus.createRoom("world", {})) as unknown as WorldRoom;
+  const a: any = await colyseus.connectTo(room as never);
+  const b: any = await colyseus.connectTo(room as never);
+  const got = { a: [] as [string, unknown][], b: [] as [string, unknown][] };
+  for (const type of ["letters", "spelled", "refused", "notice", "dead", "won"]) {
+    a.onMessage(type, (m: unknown) => got.a.push([type, m]));
+    b.onMessage(type, (m: unknown) => got.b.push([type, m]));
+  }
+  const walkers = (room as any).walkers;
+  const wa = walkers.get(a.sessionId), wb = walkers.get(b.sessionId);
+  const city = room.map.cities[0]!;
+  wa.player.x = city.x + 0.5; wa.player.y = city.y + 0.5;
+  wb.player.x = city.x + 3.5; wb.player.y = city.y + 0.5;
+  const wait = () => new Promise((r) => setTimeout(r, 150));
+
+  wa.letters = { g: 1, u: 1, n: 1, h: 1, a: 1, t: 1 };
+  wb.letters = { a: 1, r: 2, m: 1, o: 1, z: 3 };
+  a.send("spell", "gun");
+  b.send("spell", "armor");
+  await wait();
+  expect(wa.player.gear).toBe("gun");
+  expect(wb.player.gear).toBe("armor");
+  a.send("spell", "hat"); // a second thing for the head would be refused; one is fine
+  await wait();
+  expect(wa.player.gear).toBe("gun, hat");
+
+  // Out of reach the attacker walks toward its target and does not fire: a gun reaches 50 m, 12.5 tiles.
+  wb.player.x = city.x + 30.5;
+  a.send("attack", b.sessionId);
+  await wait();
+  const startX = wa.player.x;
+  for (let i = 0; i < 10; i++) room.update(0.1);
+  expect(wb.hp).toBe(100);
+  expect(wb.gear[0].integrity).toBe(400);
+  expect(wa.player.x).toBeGreaterThan(startX);
+
+  // In reach the armor takes every hit until it breaks; only then is the body hurt.
+  wb.player.x = wa.player.x + 3;
+  let armorBrokeAt = -1;
+  for (let i = 0; i < 2000 && walkers.has(b.sessionId); i++) {
+    room.update(0.1);
+    if (armorBrokeAt < 0 && wb.gear.length === 0) {
+      armorBrokeAt = i;
+      expect(wb.hp).toBe(100);
+    }
+  }
+  await wait();
+  expect(armorBrokeAt).toBeGreaterThan(0);
+  expect(walkers.has(b.sessionId)).toBe(false);
+  expect(room.state.players.has(b.sessionId)).toBe(false);
+  expect(got.b.some(([t, m]) => t === "notice" && m === "Your ARMOR was destroyed")).toBe(true);
+  expect(got.b.find(([t]) => t === "dead")![1]).toBe(wa.player.name);
+  expect(wa.letters.z).toBe(3); // the dead player's letters go to the killer
+  expect(got.a.some(([t]) => t === "won")).toBe(true);
 });

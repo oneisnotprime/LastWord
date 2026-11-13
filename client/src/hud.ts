@@ -42,6 +42,13 @@ export class Hud {
     this.drawLetters();
   }
 
+  /** A message that stays up: death or victory. */
+  banner(text: string) {
+    const el = $("banner");
+    el.textContent = text;
+    el.className = "show";
+  }
+
   toast(text: string, kind: "good" | "bad") {
     const el = $("toast");
     el.textContent = text;

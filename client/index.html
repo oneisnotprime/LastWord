@@ -8,12 +8,15 @@
       html, body { margin: 0; height: 100%; background: #14161a; overflow: hidden; }
       #game { width: 100%; height: 100%; }
       #hud { position: fixed; inset: 0; pointer-events: none; font: 14px/1.3 ui-monospace, Menlo, Consolas, monospace; color: #e8e6df; }
-      #status { position: absolute; top: 12px; left: 12px; background: #14161acc; padding: 6px 10px; border-radius: 4px; }
-      #help { position: absolute; top: 12px; right: 12px; background: #14161acc; padding: 6px 10px; border-radius: 4px; color: #a9a79f; }
+      #status { position: absolute; top: 12px; left: 12px; max-width: 46vw; background: #14161acc; padding: 6px 10px; border-radius: 4px; }
+      #help { position: absolute; top: 12px; right: 12px; max-width: 46vw; text-align: right; font-size: 12px; background: #14161acc; padding: 6px 10px; border-radius: 4px; color: #a9a79f; }
       #toast { position: absolute; bottom: 132px; left: 50%; transform: translateX(-50%); padding: 6px 12px; border-radius: 4px; background: #14161aee; opacity: 0; transition: opacity .2s; }
       #toast.show { opacity: 1; }
       #toast.bad { color: #ff8a80; }
       #toast.good { color: #9be28f; }
+      #banner { position: absolute; top: 38%; left: 50%; transform: translate(-50%, -50%); padding: 18px 28px; border-radius: 6px;
+        background: #14161af2; font-size: 22px; text-align: center; display: none; border: 1px solid #55524a; }
+      #banner.show { display: block; }
       #spell { position: absolute; bottom: 84px; left: 50%; transform: translateX(-50%); width: min(480px, 80vw); pointer-events: auto;
         font: inherit; font-size: 18px; text-transform: uppercase; letter-spacing: 2px; padding: 8px 12px; color: #ffd166;
         background: #14161aee; border: 1px solid #55524a; border-radius: 4px; outline: none; }
@@ -30,8 +33,9 @@
     <div id="game"></div>
     <div id="hud">
       <div id="status">Connecting…</div>
-      <div id="help">Move: WASD, arrows or click · Gather: G · Spell: Enter · Trade: give player2 abc</div>
+      <div id="help">Move: WASD, arrows, click · Attack: click a player · Gather: G · Pick up: E · Drop: Q · Spell: Enter · Trade: give player2 abc</div>
       <div id="toast"></div>
+      <div id="banner"></div>
       <input id="spell" placeholder="Press Enter to spell" autocomplete="off" spellcheck="false" maxlength="80" />
       <div id="letters"></div>
     </div>
