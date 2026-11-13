@@ -41,6 +41,23 @@
 - [ ] Words that are not in WordNet (slang, new words)
 - [ ] Sprite or icon per word; choose an asset pack or generation style
 
+## Special objects: dictionary and related words
+
+Words about words get hand-designed effects instead of generic ones, since they can act on the
+game's own material: letters, spellings and the dictionary.
+
+- [ ] DICTIONARY and its relatives (lexicon, thesaurus, glossary, encyclopedia, vocabulary,
+      library, book, scroll)
+- [ ] The currency itself (letter, alphabet, word, vowel, consonant, syllable, rune, glyph)
+- [ ] Writing tools and writers (pen, ink, font, typewriter, printer, scribe, author, poet)
+- [ ] Parts of speech and wordplay (noun, verb, adjective, synonym, antonym, anagram,
+      palindrome, rhyme, pun, riddle, crossword)
+- [ ] Decide each one's effect; ideas: DICTIONARY shows what any word would do before you spell
+      it, THESAURUS swaps a word for a synonym, ANAGRAM rearranges an object into another word
+      with the same letters, VOWEL and CONSONANT change which letters a source gives
+- [ ] These overlap the "words that mean the currency" entry on the watch list below; rule on
+      both together
+
 ## Overpowered word watch list
 
 Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
