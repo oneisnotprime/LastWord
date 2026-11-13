@@ -25,5 +25,6 @@ modifiers, spells and events. Last player alive wins. Packages are scaffolded (m
   `pip install wordfreq`). It fails if a demo word uses an unknown property or wrong type.
 - Do not name features after spelling bees. Names come from words, letters and combat.
 - No private mechanics: a word acts only through the shared systems in `PLAN.md`.
+- Aim for spectacle: when a word could have a modest effect or a dramatic one, choose dramatic.
 - Balance comes from what words mean and from counter-words, not from caps.
 - No model calls at runtime; all word data and art are generated ahead of time.

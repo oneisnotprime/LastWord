@@ -79,6 +79,12 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
 
 - [ ] Map conditions: five random adjectives applied to the whole map at the start
 - [ ] Family mode with a filtered word list
+- [ ] Map size scales with the number of players in the round
+- [ ] Winners' rounds: the winner of a round is matched against other winners
+- [ ] Track consecutive wins; reward streaks with appearance-only adjectives on the player
+      (GOLDEN, RADIANT and the like) that change how they look and nothing else
+- [ ] Rarity and chaos words (RANDOM, SPECIAL, MYTHIC, LEGENDARY, EPIC, RARE) change how letters
+      are generated and what nouns do, in large and showy ways
 
 ## Build
 
@@ -86,6 +92,9 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
 - [x] Move to its own repository
 - [x] M0: scaffold packages, test commands, CI
 - [x] M1: rules engine (operators, degrees, absolutes, combat tick)
-- [ ] M2 to M7 in PLAN.md
+- [x] M2: server, generated map, movement, sight-based views; 100-bot load test passed
+- [ ] Repeat the load test once objects exist (thousands of entities in the state)
+- [ ] Path-finding: walkers stop at water and mountains instead of going around
+- [ ] M3 to M7 in PLAN.md
 - [ ] Map generator: cities, countryside, letter sources
 - [ ] Demo: one map, the 351-word dictionary, a handful of players

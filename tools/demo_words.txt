@@ -144,7 +144,7 @@ bat: mass=0.03 length=0.1 integrity=2 alive=true diet=carnivore speed_air=10 nig
 whale: mass=100000 length=25 integrity=40000 alive=true intelligence=6 diet=carnivore food_need=20 speed_water=8 dive_depth=1000 breathes=air placeable_on=deep_water dmg_crush=3000 attack_rate=0.1 loudness=9 mountable=true seats=10
 camel: mass=500 length=3 integrity=450 alive=true diet=herbivore food_need=0.1 water_need=0.01 speed_land=10 mountable=true seats=2 carry_capacity=250 temp_max=55 terrain_ignored=sand habitat=desert equip_slot=mount tamable=true
 mole: mass=0.1 length=0.15 integrity=3 alive=true diet=carnivore speed_underground=0.5 detect_underground=true harvest_bonus=1.5 harvest_sources=cache equip_slot=companion
-human: mass=75 height=1.75 integrity=100 alive=true sentient=true intelligence=7 diet=omnivore food_need=0.03 speed_land=5 hands=true speech=true labor=1 produce_N=0.3
+human: mass=75 height=1.75 integrity=100 sight_range=60 alive=true sentient=true intelligence=7 diet=omnivore food_need=0.03 speed_land=5 hands=true speech=true labor=1 produce_N=0.3
 
 # noun bird
 eagle: mass=5 length=0.9 integrity=40 alive=true diet=carnivore food_need=0.01 speed_air=30 flight_ceiling=4000 sight_range=3000 dmg_slash=25 attack_rate=1 targets=land,air map_reveal=20 equip_slot=companion tamable=true

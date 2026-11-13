@@ -8,5 +8,14 @@
     "test": "vitest run",
     "typecheck": "tsc -p ."
   },
-  "dependencies": { "@lastword/shared": "*", "tsx": "^4.23.15" }
+  "dependencies": {
+    "@colyseus/schema": "^5.0.48",
+    "@colyseus/sdk": "^0.18.10",
+    "@lastword/shared": "*",
+    "colyseus": "^0.18.12",
+    "tsx": "^4.23.15"
+  },
+  "devDependencies": {
+    "@colyseus/testing": "^0.18.6"
+  }
 }
