@@ -457,3 +457,41 @@ it("creatures follow their master, defend them, join their fights and outlive th
   await wait(); // the win message has to arrive
   expect(got.b.some(([t]) => t === "won")).toBe(true);
 });
+
+it("tells a player the detail of their own character and drops what they choose", async () => {
+  const room = (await colyseus.createRoom("world", {})) as unknown as WorldRoom;
+  const a: any = await colyseus.connectTo(room as never);
+  const details: any[] = [];
+  a.onMessage("loadout", (d: unknown) => details.push(d));
+  for (const type of ["letters", "spelled", "refused", "notice"]) a.onMessage(type, () => {});
+  const wa = (room as any).walkers.get(a.sessionId);
+  const city = room.map.cities[0]!;
+  wa.player.x = city.x + 0.5; wa.player.y = city.y + 0.5;
+  wa.letters = Object.fromEntries([..."abcdefghijklmnopqrstuvwxyz"].map((ch) => [ch, 9]));
+  const wait = () => new Promise((r) => setTimeout(r, 150));
+
+  for (const word of ["sword", "armor", "hat", "tank", "dog", "run"]) a.send("spell", word);
+  await wait();
+  const d = details.at(-1);
+  expect(d.health).toEqual({ now: 100, max: 100 });
+  expect(d.gear.map((g: any) => [g.phrase, g.slot])).toEqual([["sword", "held"], ["armor", "body"], ["hat", "head"], ["tank", "ride"]]);
+  expect(d.gear[1]).toMatchObject({ integrity: 400, max: 400 });
+  expect(d.gear[0].integrity).toBeNull(); // a sword is not a layer
+  expect(d.attack).toMatchObject({ with: "tank", damage: { blast: 1200 }, reach: 3000 });
+  expect(d.speed).toBe(18); // the tank's speed: RUN acts on the body, not on what it rides
+  expect(d.effects).toEqual([{ word: "run", left: 30 }]);
+  expect(d.creatures).toEqual([{ name: "dog", health: 100 }]);
+
+  // Dropping by index takes that item, not the last one.
+  a.send("drop", 3);
+  await wait();
+  const on = details.at(-1);
+  expect(on.gear.map((g: any) => g.phrase)).toEqual(["sword", "armor", "hat"]);
+  expect(on.attack).toMatchObject({ with: "sword", damage: { slash: 40 } });
+  a.send("drop", 0);
+  await wait();
+  expect(details.at(-1).attack).toMatchObject({ with: "bare hands", damage: { blunt: 5 } });
+  a.send("drop", "nonsense"); // anything else drops the last thing
+  await wait();
+  expect(details.at(-1).gear.map((g: any) => g.phrase)).toEqual(["armor"]);
+});

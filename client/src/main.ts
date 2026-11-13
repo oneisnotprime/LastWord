@@ -34,7 +34,7 @@ class World extends Phaser.Scene {
       const give = /^\s*give\s+(\S+)\s+([a-z]+)\s*$/i.exec(text);
       if (give) this.net?.give(give[1]!, give[2]!.toLowerCase());
       else this.net?.spell(text);
-    });
+    }, dictionary, (index) => this.net?.drop(index));
     window.addEventListener("keydown", (e) => {
       if (e.repeat || this.hud.typing || !this.net || this.over) return;
       const key = e.key.toLowerCase();
@@ -53,6 +53,7 @@ class World extends Phaser.Scene {
         notice: (text) => this.hud.toast(text, "good"),
         dead: (killer) => { this.over = true; this.hud.banner(`You were killed by ${killer}. Your letters are theirs. Reload to play again.`); },
         won: (text) => this.hud.banner(`${text}. You win.`),
+        loadout: (detail) => this.hud.setLoadout(detail),
         closed: () => this.hud.status("Disconnected"),
       });
     } catch {
@@ -67,7 +68,7 @@ class World extends Phaser.Scene {
       { up: "UP", down: "DOWN", left: "LEFT", right: "RIGHT", w: "W", a: "A", s: "S", d: "D" }, false,
     ) as World["keys"];
     this.input.on("pointerdown", (p: Phaser.Input.Pointer) => {
-      if (this.over) return;
+      if (this.over || this.hud.screen) return;
       const at = this.cameras.main.getWorldPoint(p.x, p.y);
       const x = at.x / PX, y = at.y / PX;
       // A click on another player or on a thing attacks it; a click anywhere else walks there and stops attacking.

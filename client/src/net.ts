@@ -1,5 +1,5 @@
 import { Client } from "@colyseus/sdk";
-import type { Letters } from "@lastword/shared";
+import type { Letters, LoadoutDetail } from "@lastword/shared";
 
 export interface Connection {
   sessionId: string;
@@ -10,7 +10,8 @@ export interface Connection {
   gather(): void;
   give(to: string, letters: string): void;
   take(): void;
-  drop(): void;
+  /** Drop the item at `index` in the loadout, or the last thing equipped. */
+  drop(index?: number): void;
   /** Attack a player by session id; null stops. */
   attack(target: string | null): void;
 }
@@ -22,6 +23,7 @@ export interface Handlers {
   gathered(letter: string): void;
   notice(text: string): void;
   dead(killer: string): void;
+  loadout(detail: LoadoutDetail): void;
   won(text: string): void;
   closed(): void;
 }
@@ -38,6 +40,7 @@ export async function connect(on: Handlers): Promise<Connection> {
   room.onMessage("gathered", on.gathered);
   room.onMessage("notice", on.notice);
   room.onMessage("dead", on.dead);
+  room.onMessage("loadout", on.loadout);
   room.onMessage("won", on.won);
   room.onLeave(on.closed);
   await new Promise<void>((done) => {
@@ -53,7 +56,7 @@ export async function connect(on: Handlers): Promise<Connection> {
     gather: () => room.send("gather"),
     give: (to, letters) => room.send("give", { to, letters }),
     take: () => room.send("take"),
-    drop: () => room.send("drop"),
+    drop: (index) => room.send("drop", index),
     attack: (target) => room.send("attack", target),
   };
 }

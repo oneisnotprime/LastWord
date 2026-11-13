@@ -2,7 +2,7 @@ import { Room, type Client } from "colyseus";
 import { StateView } from "@colyseus/schema";
 import {
   addLetters, GATHER_SECONDS, gatherLetter, generateMap, GIVE_RANGE, missing, parsePhrase, production, nearestWalkable, randomWalkable, resolve, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit,
-  type Dictionary, type Entity, type Letters, type Op, type Phrase, type Point, type Spelled, type Value, type WorldMap,
+  type Dictionary, type Entity, type Letters, type LoadoutDetail, type Op, type Phrase, type Point, type Spelled, type Value, type WorldMap,
 } from "@lastword/shared";
 import { loadDictionary } from "./data.js";
 import { Edit, Player, Thing, WorldState } from "./state.js";
@@ -33,6 +33,8 @@ const NIGHT_SIGHT = 0.5;
 const TAKE_RANGE = 2;
 
 interface Walker {
+  /** Session id for a person, creature id for a creature. */
+  id: string;
   player: Player;
   /** What the body is: a human for a person, the spelled creature for a pet. */
   body: Spelled;
@@ -151,11 +153,13 @@ export class WorldRoom extends Room {
       client.send("notice", `${gear.phrase.toUpperCase()} equipped`);
       this.refreshViews();
     },
-    /** Put down the last thing you equipped. */
-    drop: (client: Client) => {
+    /** Put down something you carry: the one at `index`, or the last thing equipped. */
+    drop: (client: Client, index: unknown) => {
       const walker = this.walkers.get(client.sessionId);
-      const gear = walker?.gear.pop();
-      if (!walker || !gear) return;
+      if (!walker) return;
+      const at = Number.isInteger(index) && walker.gear[index as number] ? (index as number) : walker.gear.length - 1;
+      const [gear] = walker.gear.splice(at, 1);
+      if (!gear) return;
       this.rebuild(walker);
       this.addThing(gear, client.sessionId, walker.player.x, walker.player.y);
       client.send("notice", `${gear.phrase.toUpperCase()} dropped`);
@@ -291,6 +295,7 @@ export class WorldRoom extends Room {
     player.owner = "";
     this.state.players.set(client.sessionId, player);
     this.walkers.set(client.sessionId, {
+      id: client.sessionId,
       player,
       body: { noun: "human" },
       master: null,
@@ -310,6 +315,7 @@ export class WorldRoom extends Room {
       gathering: 0,
     });
     client.send("letters", this.walkers.get(client.sessionId)!.letters);
+    this.tell(this.walkers.get(client.sessionId)!);
     client.view = new StateView();
     client.view.add(player);
   }
@@ -373,6 +379,42 @@ export class WorldRoom extends Room {
       const ground = nearestWalkable(this.map, walker.player); // coming down over water puts you ashore
       if (ground !== walker.player) { walker.player.x = ground.x; walker.player.y = ground.y; walker.target = null; }
     }
+    this.tell(walker);
+    if (walker.master) { const m = this.walkers.get(walker.master); if (m) this.tell(m); }
+  }
+
+  /** Sends a person the private detail of their own character. */
+  private tell(walker: Walker) {
+    if (walker.master !== null) return;
+    const client = this.clients.find((c) => c.sessionId === walker.id);
+    if (!client) return;
+    const unit = walker.unit, attack = unit.attack, riding = walker.gear.find((g) => g.vehicle && unit.riding);
+    const held = walker.gear.find((g) => g.spelled === unit.weapon);
+    const detail: LoadoutDetail = {
+      health: { now: Math.max(0, Math.round(walker.hp)), max: unit.body.stats.num("integrity") },
+      speed: walker.speed,
+      sight: Math.round(walker.sight * TILE_METERS),
+      flying: walker.flying,
+      attack: {
+        with: riding && attack === unit.riding?.stats ? riding.phrase : held?.phrase ?? "bare hands",
+        damage: Object.fromEntries(
+          attack.entries().filter(([k, v]) => k.startsWith("dmg_") && typeof v === "number" && v > 0).map(([k, v]) => [k.slice(4), Math.round(v as number)]),
+        ),
+        rate: attack.num("attack_rate"),
+        reach: attack.num("attack_range"),
+      },
+      gear: walker.gear.map((g, index) => {
+        const layer = unit.entityFor(g.spelled);
+        return {
+          index, phrase: g.phrase, slot: this.slotOf(g),
+          integrity: layer ? Math.max(0, Math.round(layer.integrity)) : null,
+          max: layer ? layer.stats.num("integrity") : null,
+        };
+      }),
+      effects: walker.buffs.map((b) => ({ word: b.word, left: Math.round(b.until - this.elapsed) })),
+      creatures: [...this.walkers.values()].filter((w) => w.master === walker.id).map((w) => ({ name: w.player.name, health: w.player.hp })),
+    };
+    client.send("loadout", detail);
   }
 
   /** Puts a creature in the world as a walker with no client, following its master. */
@@ -388,7 +430,7 @@ export class WorldRoom extends Room {
     player.owner = master;
     this.state.players.set(id, player);
     const walker: Walker = {
-      player, body: gear.spelled, master, unit, gear: [], hp: unit.body.integrity, foe: null, cooldown: 0,
+      id, player, body: gear.spelled, master, unit, gear: [], hp: unit.body.integrity, foe: null, cooldown: 0,
       buffs: [], flying: false, target: null, speed: 0, sight: 0, seen: new Set(), seenThings: new Set(),
       letters: {}, gathering: 0,
     };
@@ -499,6 +541,8 @@ export class WorldRoom extends Room {
       }
     }
     if (lost) this.rebuild(walker);
+    else this.tell(walker);
+    if (walker.master) { const m = this.walkers.get(walker.master); if (m) this.tell(m); }
   }
 
   /** Knocks a player out of the round. Their letters go to the killer; their gear falls. */
@@ -518,6 +562,8 @@ export class WorldRoom extends Room {
     client?.send("dead", killer?.player.name ?? "something");
     this.walkers.delete(id);
     this.state.players.delete(id);
+    const owner = dead.master ? this.walkers.get(dead.master) : undefined;
+    if (owner) this.tell(owner);
     for (const w of this.walkers.values()) {
       if (w.foe === id) w.foe = null;
       if (w.master === id) { w.master = "-"; w.player.owner = "-"; } // creatures outlive their master, ownerless
@@ -672,6 +718,8 @@ export class WorldRoom extends Room {
     for (const id of changed) {
       this.clients.find((c) => c.sessionId === id)?.send("letters", this.walkers.get(id)!.letters);
     }
+    // Once a second, anyone with a verb in force is told how long it has left.
+    if (this.tickCount % TICK_HZ === 0) for (const w of this.walkers.values()) if (w.buffs.length) this.tell(w);
     if (this.tickCount++ % VIEW_EVERY === 0) this.refreshViews();
     const ms = performance.now() - started;
     this.metrics.ticks++;
