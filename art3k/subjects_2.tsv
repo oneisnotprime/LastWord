@@ -1,601 +1,601 @@
 word	subject	colours
-shoe	4.24	artifact	clothing	plural_count=2 mass=0.6 integrity=20 material=leather equip_slot=feet armor=1 res_pierce=0.1 terrain_ignored=sand	footwear shaped to fit the foot (below the ankle) with a flexible upper of leather or plastic and a sole and heel of heavier material	yes	(card games) a case from which playing cards are dealt one at a time 	
-terry	4.24	artifact	fabric	mass=0.4 integrity=10 material=cotton moisture=-3 res_water=0.4 elasticity=5	a pile fabric (usually cotton) with uncut loops on both sides	yes		
-tunnel	4.24	artifact	route	tile_type=road radius=1 length=500 depth=20 portable=False enterable=True occupants=40 cover=0.9 stealth=7 terrain_ignored=mountain,hill,water,wall res_blast=0.6 placement=region produce_U=0.3 production_needs=extract	a passageway through or under something, usually underground (especially one for trains or cars)	yes		
-warrant	4.24	artifact	document	placement=target placement_range=200 event_target=character read_inventory=True inflict_expose=120 inflict_root=10 contest_with=authority contested_by=stealth event_duration=1 counters=alibi,pardon	a writ from a court commanding police to perform specified acts	no		
-backing	4.23	artifact	fortification	mass=500 footprint=1 height=3 integrity=6000 hardness=7 material=steel,concrete portable=False cover=0.7 res_blast=0.5 blocks=projectiles	the act of providing approval and support	no	something forming a back that is added for strengthening	
-charter	4.23	artifact	document	placement=region field_radius=60 field_targets=owned field_duration=15 claim_radius=10	a document incorporating an institution and specifying its rights	no		
-essay	4.23	artifact	document	mass=0.05 integrity=1 material=paper read_properties=2	an analytic or interpretive literary composition	no		
-maker	4.23	person	worker	mass=75 integrity=100 alive=True sentient=True intelligence=8 hands=True speech=True speed_land=4 build_speed=2 craft_slots=2 crafts=tool,furniture,device labor=4 food_need=0.03 produce_N=0.3	a person who makes things	yes	terms referring to the Judeo-Christian God	
-photograph	4.23	artifact	document	mass=0.01 integrity=1 flammability=9 material=paper placement=target placement_range=150 event_target=character read_properties=4 inflict_expose=90 event_duration=1 counters=disguise,mask,camouflage	a representation of a person or scene in the form of a print or transparent slide or in digital format	yes		
-pole	4.23	artifact	tool	mass=4 length=4 integrity=80 material=wood equip_slot=held hands_required=2 dmg_blunt=20 attack_range=4 jump=4 knockback=2 harvest_bonus=1.5 harvest_sources=fishing,tree color=brown	a long (usually round) rod of wood or metal or plastic	yes		
-rubber	4.23	material	material	mass=1.1 density=1100 hardness=1 elasticity=9 conductivity=0 flammability=4 melting_point=180 integrity=60 value=2 color=black res_electric=0.9 res_blunt=0.5 knockback=3	an elastic material obtained from the latex sap of trees (especially trees of the genera Hevea and Ficus) that can be vulcanized and finished into a variety of products	yes	any of various synthetic elastic materials whose properties resemble natural rubber 	
-substance	4.23	artifact	medicine	mass=0.01 edible=True potency=7 duration=300 single_use=True toxicity=2	the real physical matter of which a person or thing consists	no		
-amateur	4.22	person	person	mass=75 integrity=90 alive=True sentient=True intelligence=5 hands=True speech=True speed_land=5 training=1 accuracy=0.6 trainable=8 labor=1 food_need=0.03	someone who pursues a study or sport as a pastime	yes	an athlete who does not play for pay	
-batman	4.22	person	worker	mass=75 integrity=120 alive=True sentient=True intelligence=6 loyalty=10 obedience=10 hands=True speech=True speed_land=5 labor=3 equip_slot=companion carry_capacity=60 heals=3 food_need=0.03	an orderly assigned to serve a British military officer	yes		
-bearing	4.22	artifact	device	mass=0.05 integrity=200 hardness=8 material=steel shape=round slipperiness=6 plural_count=50	a rotating support placed between moving parts to allow them to move easily	yes	heraldry consisting of a design or image depicted on a shield	
-beats	4.22	artifact	device	mass=0.3 integrity=10 material=plastic equip_slot=head loudness=2 res_sonic=0.6 immune_deaf=True	a United States youth subculture of the 1950s	no		
-bobby	4.22	person	person	mass=80 integrity=180 alive=True sentient=True intelligence=6 loyalty=8 courage=7 hands=True speech=True speed_land=6 authority=3 detect_stealth=5 alarm=True dmg_blunt=25 attack_rate=1 inflict_root=4 counters=thief,pickpocket,hooligan food_need=0.04	an informal term for a British policeman	yes		
-canal	4.22	artifact	route	mass=0 footprint=10 integrity=20000 portable=False tile_type=water radius=1 depth=3 placeable_on=land,field water_output=30	long and narrow strip of water made for boats or for irrigation	yes		
-charlotte	4.22	consumable	food	mass=1 integrity=1 edible=True nutrition=8 restores=35 single_use=True beauty=7 odor=3	a mold lined with cake or crumbs and filled with fruit or whipped cream or custard	yes		
-employer	4.22	person	leader	mass=80 integrity=100 alive=True sentient=True intelligence=7 hands=True speech=True speed_land=4 authority=5 command_limit=30 recruit_rate=2 food_need=0.03	a person or firm that employs workers	yes		
-fluid	4.22	material	liquid	state=liquid mass=1 density=1000 wetness=8 slipperiness=4 tile_type=water radius=1 depth=0.5 shape=pile	a substance that is fluid at room temperature and pressure	yes	continuous amorphous matter that tends to flow and to conform to the outline of its container: a liquid or a gas	
-leaf	4.22	flora	plant	mass=0.005 length=0.1 integrity=1 alive=True diet=photosynthesis shape=sheet flammability=8 stealth=2 camouflage=forest plural_count=50 edible=True nutrition=0.2 produce_P=0.05 production_needs=water,harvest	the main organ of photosynthesis and transpiration in higher plants	yes		
-outfit	4.22	artifact	clothing	mass=1.5 integrity=18 material=cloth equip_slot=body beauty=6 disguise=3	a set of clothing (with accessories)	yes	gear consisting of a set of articles or tools for a specified purpose	
-permit	4.22	artifact	document	mass=0.01 integrity=1 material=paper counters=ban,law,curfew,checkpoint,customs	a legal document giving official permission to do something	no		
-perry	4.22	consumable	drink	mass=0.5 state=liquid edible=True nutrition=2 potency=3 duration=300 single_use=True plural_count=6	a fermented and often effervescent beverage made from juice of pears	yes		
-portrait	4.22	artifact	artifact	mass=3 integrity=10 material=canvas,wood beauty=6 value=500 comfort=2 read_properties=2 inflict_expose=30	any likeness of a person, in any medium	yes		
-socialist	4.22	person	person	mass=75 integrity=100 alive=True sentient=True intelligence=7 hands=True speech=True speed_land=5 recruit_rate=1.5 tax_rate=0.3 labor=2 charm=4 faction=socialists food_need=0.03	a political advocate of socialism	yes		
-advocate	4.21	person	person	mass=75 integrity=90 alive=True sentient=True hands=True speech=True intelligence=7 speed_land=4 charm=6 counters=sentence,verdict,conviction food_need=0.03	a person who pleads for a cause or propounds an idea	yes	a lawyer who pleads cases in court	
-chips	4.21	flora	produce	mass=0.2 integrity=1 edible=True nutrition=5 restores=10 duration=60 single_use=True shelf_life=30 plural_count=1 color=yellow	strips of potato fried in deep fat	yes		
-creator	4.21	creature	supernatural	mass=0 integrity=250000 alive=True sentient=True intelligence=10 loyalty=0 placement=sky phase=True faith_cost=60 upkeep_faith=5 heals=30 authority=8 res_holy=1 res_unholy=1 field_radius=500 field_targets=all growth=4 fertility=8 build_speed=4 deposit_factor=3 lode=q,z,x lode_share=0.3	a person who grows or makes or invents things	yes	terms referring to the Judeo-Christian God	
-dish	4.21	consumable	food	mass=0.6 integrity=1 edible=True nutrition=10 restores=25 single_use=True shelf_life=480	a particular item of prepared food	yes		
-nail	4.21	artifact	weapon	mass=0.01 length=0.08 integrity=20 hardness=7 sharpness=6 material=iron shape=pointed dmg_pierce=10 plural_count=20 inflict_root=2	horny plate covering and protecting part of the dorsal surface of the digits	no	a thin pointed piece of metal that is hammered into materials as a fastener	
-phoenix	4.21	creature	supernatural	mass=60 length=4 integrity=30000 alive=True sentient=True intelligence=8 loyalty=7 aggression=4 diet=none speed_land=6 speed_air=55 flight_ceiling=8000 hover=True dmg_fire=1800 attack_rate=0.8 attack_range=30 attack_area=6 targets=land,air inflict_burn=6 res_fire=1 immune_burn=True luminosity=10 heals=40 fear_aura=6 beauty=10	a legendary Arabian bird said to periodically burn itself to death and emerge from the ashes as a new phoenix	yes		
-poet	4.21	person	worker	mass=65 integrity=80 alive=True sentient=True intelligence=8 loyalty=6 hands=True speech=True speed_land=4 charm=6 field_radius=10 field_targets=owned food_need=0.03	a writer of poems (the term is usually reserved for writers of good poetry)	yes		
-scientist	4.21	person	worker	mass=70 integrity=80 alive=True sentient=True intelligence=10 loyalty=6 hands=True speech=True speed_land=4 craft_slots=1 read_properties=5 food_need=0.03	a person with advanced knowledge of one or more sciences	yes		
-stole	4.21	artifact	clothing	mass=0.4 integrity=10 material=fur equip_slot=neck beauty=7 res_cold=0.3 value=200	a wide scarf worn about their shoulders by women	yes		
-veteran	4.21	person	fighter	mass=85 integrity=220 alive=True sentient=True intelligence=7 loyalty=8 hands=True speech=True speed_land=5 training=8 courage=9 immune_fear=True dmg_pierce=45 attack_rate=1.2 attack_range=40 armor=5 food_need=0.05	a serviceman who has seen considerable active service	yes	a person who has served in the armed forces 	
-bronze	4.20	material	metal	mass=8.8 density=8800 hardness=5 melting_point=950 conductivity=6 integrity=220 value=10 color=copper sharpness=6	an alloy of copper and tin and sometimes other elements	yes	a sculpture made of bronze	
-bug	4.20	creature	insect	mass=0.0005 length=0.01 integrity=1 alive=True diet=herbivore food_need=2e-05 speed_land=0.2 speed_air=2 stealth=6 pack_size=50 reproduction=50 counters=garden,crop habitat=meadow,forest,city color=black	general term for any insect or similar creeping or crawling invertebrate	yes	insects with sucking mouthparts and forewings thickened and leathery at the base 	
-dose	4.20	artifact	medicine	mass=0.01 edible=True single_use=True potency=5 restores=30 duration=300 effect_status=sick	a measured portion of medicine taken at any one time	yes	street name for lysergic acid diethylamide	
-flesh	4.20	bodypart	bodypart	equip_slot=graft mass=10 integrity=80 edible=True nutrition=6	the soft tissue of the body of a vertebrate: mainly muscle tissue and fat	yes	alternative names for the body of a human being	
-flip	4.20	consumable	drink	mass=0.3 state=liquid edible=True nutrition=3 potency=3 duration=240 single_use=True color=yellow	hot or cold alcoholic mixed drink containing a beaten egg	yes		
-implement	4.20	artifact	tool	mass=1 length=0.4 integrity=60 hardness=7 material=steel,wood equip_slot=held hands_required=1 dmg_blunt=10 build_speed=1.2 harvest_bonus=1.5 harvest_sources=field,dig color=gray	instrumentation (a piece of equipment or tool) used to effect an end	yes		
-laser	4.20	artifact	device	mass=2 integrity=30 material=steel,glass equip_slot=held hands_required=1 dmg_light=150 dmg_fire=50 inflict_blind=3 inflict_burn=2 attack_rate=3 attack_range=500 accuracy=0.99 armor_pierce=0.5 targets=land,air luminosity=6 upkeep_power=1 color=red	an acronym for light amplification by stimulated emission of radiation	yes		
-marijuana	4.20	flora	shrub	mass=1 height=2 integrity=3 alive=True diet=photosynthesis growth_time=6 edible=True potency=6 inflict_confuse=20 duration=600 odor=7 value=50 color=green produce_P=0.2 production_needs=water,harvest	a strong-smelling plant whose dried leaves can be smoked for a pleasant effect or pain reduction	yes		
-opponent	4.20	person	person	mass=75 integrity=100 alive=True sentient=True intelligence=6 loyalty=3 hands=True speech=True speed_land=6 aggression=6 strength=6 training=2 dmg_blunt=12 attack_rate=1 food_need=0.03	a contestant that you are matched against	yes	someone who offers opposition	
-prisoner	4.20	person	person	mass=70 integrity=100 alive=True sentient=True hands=True speech=True intelligence=5 loyalty=3 speed_land=0.5 morale=2 labor=2 food_need=0.02 produce_N=0.4	a person who is confined	yes		
-punk	4.20	person	person	mass=70 integrity=100 alive=True sentient=True intelligence=4 loyalty=2 aggression=6 hands=True speech=True speed_land=7 loudness=6 dmg_blunt=20 attack_rate=1.2 beauty=2 obedience=1 food_need=0.03 pack_size=3	a teenager or young adult who is a performer (or enthusiast) of punk rock and a member of the punk youth subculture	yes	an aggressive and violent young criminal	
-radar	4.20	artifact	device	mass=2000 footprint=1 integrity=500 portable=False sight_range=50000 sees_through=fog,walls,night detect_stealth=6 alarm=True upkeep_power=20 targets=air	measuring instrument in which the echo of a pulse of microwave radiation is used to detect and locate distant objects	yes		
-villa	4.20	artifact	building	mass=2000000 footprint=15 height=10 integrity=25000 material=stone,marble portable=False enterable=True occupants=25 lockable=True security=5 cover=0.7 claim_radius=8 comfort=12 storage_letters=700 water_output=20 beauty=9 value=2000000 needs_foundation=True color=white	detached or semidetached suburban house	yes	country house in ancient Rome consisting of residential quarters and farm buildings around a courtyard 	
-wrap	4.20	artifact	clothing	mass=0.3 integrity=8 material=wool equip_slot=neck res_cold=0.3 stealth=1	cloak that is folded or wrapped around a person	yes	the covering (usually paper or cellophane) in which something is wrapped	
-bacteria	4.19	creature	creature	mass=1e-09 length=2e-06 integrity=1 alive=True diet=omnivore plural_count=1000000 reproduction=6 stealth=10 dmg_disease=2 attack_rate=1 inflict_sick=20 contagion=0.5 food_need=0	(microbiology) single-celled or noncellular spherical or spiral or rod-shaped organisms lacking chlorophyll that reproduce by fission	yes		
-corn	4.19	flora	produce	mass=1 height=2 integrity=3 alive=True diet=photosynthesis growth_time=6 food_output=0.7 edible=True nutrition=5 placeable_on=field plural_count=20 tile_type=tilled blocks=sight produce_A=0.5 radius=1 production_needs=tilled,water	the dried grains or kernels or corn used as animal feed or ground for meal	yes	tall annual cereal grass bearing kernels on large ears: widely cultivated in America in many varieties 	
-dealer	4.19	person	worker	mass=75 integrity=90 alive=True sentient=True intelligence=7 loyalty=4 hands=True speech=True speed_land=5 trade_bonus=0.35 charm=5 storage_letters=120 food_need=0.03	someone who purchases and maintains an inventory of goods to be sold	yes	a seller of illicit goods 	
-filling	4.19	material	material	mass=1.2 density=1200 hardness=1 integrity=10 value=1 color=white	any material that fills a space or container	yes	the yarn woven across the warp yarn in weaving 	
-nerve	4.19	bodypart	bodypart	equip_slot=graft mass=0.05 integrity=5	any bundle of nerve fibers running to various organs and tissues of the body	yes		
-pie	4.19	consumable	food	mass=0.8 integrity=1 edible=True nutrition=12 restores=25 duration=120 single_use=True shelf_life=12 color=brown	dish baked in pastry-lined pan often with a pastry top	yes		
-poster	4.19	artifact	document	mass=0.05 integrity=1 flammability=9 material=paper portable=False placement=target placement_range=200 event_target=character inflict_expose=150 event_duration=1 counters=disguise	a sign posted in a public place as an advertisement	no		
-ram	4.19	artifact	weapon	mass=600 length=6 integrity=2000 hardness=7 material=wood,iron hands_required=2 dmg_blunt=300 dmg_crush=200 siege=10 attack_rate=0.2 knockback=5 counters=gate,door,wall,fort color=brown	a tool for driving or forcing something by impact	yes	the most common computer memory which can be used by programs to perform necessary tasks while the computer is on	
-taxi	4.19	artifact	vehicle_land	mass=1500 length=4.7 integrity=600 material=steel speed_land=38 self_propelled=True mountable=True seats=4 carry_capacity=300 range=600 upkeep_fuel=0.1 trade_bonus=0.1 loudness=5 color=yellow	a car driven by a person whose job is to take passengers where they want to go in exchange for money	yes		
-tobacco	4.19	artifact	artifact	mass=0.05 density=300 hardness=0 flammability=8 potency=3 toxicity=3 odor=6 integrity=1 value=20 color=brown duration=300	leaves of the tobacco plant dried and prepared for smoking or ingestion	yes		
-assignment	4.18	artifact	document	placement=target placement_range=60 event_target=creature event_duration=5	the instrument by which a claim or right or interest or property is transferred from one person to another	no		
-carpet	4.18	artifact	furniture	mass=20 integrity=25 material=wool comfort=1.5 beauty=6 loudness=0 stealth=1 flammability=6 color=red produce_B=0.15 production_needs=claim	floor covering consisting of a piece of thick heavy fabric (usually with nap or pile)	yes		
-cherry	4.18	material	material	mass=0.58 density=580 hardness=4 flammability=6 integrity=85 value=15 beauty=8 color=red	wood of any of various cherry trees especially the black cherry	no		
-cole	4.18	flora	herb	mass=1 height=0.5 integrity=3 alive=True diet=photosynthesis growth_time=5 edible=True raw=True nutrition=2 restores=6 temp_min=-10 single_use=True placeable_on=field color=green produce_A=0.4 tile_type=tilled radius=1 production_needs=tilled,water	a hardy cabbage with coarse curly leaves that do not form a head	yes	coarse curly-leafed cabbage	
-earl	4.18	person	leader	mass=80 integrity=140 alive=True sentient=True hands=True speech=True intelligence=6 speed_land=4 authority=5 command_limit=18 tax_rate=0.12 claim_radius=12 food_need=0.04	a British peer ranking below a marquess and above a viscount	yes		
-garbage	4.18	material	material	mass=0.5 density=500 hardness=1 flammability=6 odor=9 toxicity=3 integrity=10 value=0 color=brown dmg_disease=15 decay_rate=2	food that is discarded (as from a kitchen)	yes	a receptacle where waste can be discarded	
-grain	4.18	material	material	mass=0.75 density=750 hardness=3 brittleness=3 flammability=7 integrity=20 value=1 color=yellow edible=True nutrition=3 raw=True cooks_into=bread	the side of leather from which the hair has been removed	yes	a relatively small granular particle of a substance	
-grid	4.18	artifact	device	mass=100000 footprint=20 integrity=8000 material=steel,copper portable=False power_output=200 conductivity=10 dmg_electric=300 radius=10 color=gray	an electrode placed between the cathode and anode of a vacuum tube to control the flow of electrons through the tube	yes	a system of high tension cables by which electrical power is distributed throughout a region 	
-liver	4.18	bodypart	bodypart	equip_slot=graft mass=1.5 integrity=30 immune_poison=True	large and complicated reddish-brown glandular organ located in the upper right portion of the abdominal cavity	yes		
-mixture	4.18	material	material	mass=1.5 density=1500 hardness=2 integrity=30 value=2 color=brown	(chemistry) a substance consisting of two or more substances mixed together (not in fixed proportions and not with chemical bonding)	yes		
-patent	4.18	artifact	document	placement=self field_radius=4 field_targets=self field_duration=20 counters=plagiarism,forgery	a document granting an inventor sole rights to an invention	no		
-physician	4.18	person	worker	mass=75 integrity=90 alive=True sentient=True intelligence=9 loyalty=7 hands=True speech=True speed_land=4 heals=7 res_disease=0.8 read_properties=4 food_need=0.03 field_radius=10 field_targets=owned effect_status=sick,poison,confuse counters=disease,illness,plague,fever	a licensed medical practitioner	yes		
-rival	4.18	person	person	mass=75 integrity=110 alive=True sentient=True intelligence=6 loyalty=2 hands=True speech=True speed_land=6 aggression=7 courage=7 strength=6 training=3 dmg_blunt=15 attack_rate=1 inflict_rage=2 food_need=0.03	the contestant you hope to defeat	yes		
-runner	4.18	person	worker	mass=60 integrity=80 alive=True sentient=True intelligence=5 loyalty=6 hands=True speech=True speed_land=10 acceleration=7 range=40 carry_capacity=10 food_need=0.04	someone who imports or exports without paying duties	yes	someone who travels on foot by running 	
-spray	4.18	material	material	mass=0.3 state=liquid density=1000 hardness=0 wetness=4 integrity=1 value=1 color=white inflict_blind=2 attack_range=3	a pesticide in suspension or solution	yes	flower arrangement consisting of a single branch or shoot bearing flowers and foliage 	
-suite	4.18	artifact	building	mass=50000 footprint=3 height=4 integrity=1500 material=brick portable=False enterable=True occupants=4 lockable=True comfort=6 storage_objects=1000 needs_foundation=True	a musical composition of several movements only loosely connected	no	apartment consisting of a series of connected rooms used as a living unit (as in a hotel)	
-victor	4.18	person	fighter	mass=80 integrity=200 alive=True sentient=True intelligence=6 loyalty=6 hands=True speech=True speed_land=6 strength=8 courage=9 training=5 dmg_slash=45 attack_rate=1 reputation=5 food_need=0.04	a combatant who is able to defeat rivals	yes	the contestant who wins the contest	
-vintage	4.18	consumable	drink	mass=0.75 state=liquid edible=True nutrition=2 potency=5 duration=400 single_use=True shelf_life=0 value=60 color=red	a season's yield of wine from a vineyard	yes		
-chuck	4.17	flora	produce	mass=1.5 integrity=2 edible=True raw=True nutrition=12 restores=28 toxicity=1 duration=120 single_use=True shelf_life=6 color=red	informal terms for a meal	yes	the part of a forequarter from the neck to the ribs and including the shoulder blade	
-cinema	4.17	artifact	building	mass=2000000 footprint=15 height=12 integrity=20000 material=concrete portable=False enterable=True occupants=800 claim_radius=5 comfort=5 luminosity=0 sets_daylight=night field_radius=30 field_targets=all upkeep_power=6 needs_foundation=True color=black	a theater where films are shown	yes		
-dressing	4.17	flora	produce	mass=0.2 state=liquid edible=True nutrition=2 restores=3 single_use=True shelf_life=0 color=white	savory dressings for salads	yes	a mixture of seasoned ingredients used to stuff meats and vegetables	
-jam	4.17	consumable	food	mass=0.3 integrity=1 edible=True nutrition=5 restores=10 duration=60 single_use=True shelf_life=0 stickiness=6 color=red	preserve of crushed fruit	yes		
-lens	4.17	artifact	device	mass=0.05 integrity=3 brittleness=8 material=glass transparency=1	a transparent optical device used to converge or diverge transmitted light and to form images	yes	electronic equipment that uses a magnetic or electric field in order to focus a beam of electrons	
-ash	4.16	material	material	mass=0.6 density=600 hardness=0 flammability=0 integrity=2 value=0 color=gray inflict_blind=4 fertility=3 res_fire=1	the residue that remains when something is burned	yes		
-counsel	4.16	person	person	mass=75 integrity=80 alive=True sentient=True intelligence=9 loyalty=6 hands=True speech=True speed_land=4 charm=6 read_properties=5 counters=verdict,sentence,arrest,warrant,indictment,subpoena food_need=0.03	a lawyer who pleads cases in court	yes		
-creature	4.16	creature	creature	mass=80 length=1.6 integrity=150 alive=True aggression=4 diet=omnivore food_need=0.05 speed_land=8 dmg_slash=25 dmg_pierce=20 attack_rate=1 night_vision=True fear_aura=2 habitat=forest,marsh color=gray	a living organism characterized by voluntary movement	no	a human being 	
-manhattan	4.16	consumable	drink	mass=0.15 state=liquid edible=True nutrition=1 potency=6 duration=240 single_use=True shelf_life=0 color=red	a cocktail made with whiskey and sweet vermouth with a dash of bitters	yes		
-politician	4.16	person	person	mass=75 integrity=90 alive=True sentient=True hands=True speech=True intelligence=7 loyalty=2 speed_land=4 charm=7 authority=3 recruit_rate=0.5 trade_bonus=0.1 food_need=0.03	a schemer who tries to gain advantage in an organization in sly or underhanded ways	yes	a leader engaged in civil administration 	
-spirits	4.16	consumable	drink	mass=0.7 state=liquid edible=True nutrition=1 potency=7 immune_fear=True duration=240 single_use=True shelf_life=0 flammability=7 color=gold	an alcoholic beverage that is distilled rather than fermented	yes		
-bacon	4.15	consumable	food	mass=0.1 integrity=1 edible=True raw=True nutrition=6 restores=15 duration=90 single_use=True shelf_life=10 odor=6 plural_count=6	back and sides of a hog salted and dried or smoked	yes		
-cattle	4.15	creature	mammal	mass=650 length=2.5 integrity=400 alive=True diet=herbivore food_need=0.4 speed_land=7 dmg_blunt=50 attack_rate=0.4 pack_size=6 food_output=2 reproduction=0.5 tamable=True habitat=meadow color=brown produce_I=0.43	domesticated bovine animals as a group regardless of sex or age	yes		
-classroom	4.15	artifact	building	mass=20000 footprint=2 height=3 integrity=1200 material=brick,wood portable=False enterable=True occupants=30 claim_radius=1 field_radius=15 field_targets=owned color=yellow	a room in a school where lessons take place	yes		
-collins	4.15	consumable	drink	mass=0.3 state=liquid edible=True nutrition=1 potency=4 duration=240 single_use=True shelf_life=0 color=white	tall iced drink of liquor (usually gin) with fruit juice	yes		
-colours	4.15	artifact	artifact	mass=1 length=1.5 integrity=10 material=silk claim_radius=8 field_radius=50 field_targets=owned recruit_rate=0.2 color=red	a distinguishing emblem	yes	a flag that shows its nationality	
-crop	4.15	flora	produce	mass=0.5 height=1 integrity=2 alive=True diet=photosynthesis flammability=7 growth_time=5 food_output=0.6 edible=True raw=True nutrition=3 placeable_on=field plural_count=20 tile_type=tilled color=green produce_A=0.4 radius=1 production_needs=tilled,water	the yield from plants in a single growing season	yes	a cultivated plant that is grown commercially on a large scale	
-medication	4.15	artifact	medicine	mass=0.01 edible=True single_use=True potency=6 restores=50 duration=600 effect_status=sick,poison counters=illness,disease	(medicine) something that treats or prevents or alleviates the symptoms of disease	yes		
-portfolio	4.15	artifact	container	mass=1 integrity=10 material=leather storage_letters=30 storage_objects=2 trade_bonus=0.05 color=black	a large, flat, thin case for carrying loose papers or drawings or maps	yes		
-salad	4.15	consumable	food	mass=0.3 integrity=1 edible=True nutrition=4 restores=15 duration=120 single_use=True shelf_life=5 color=green	food mixtures either arranged on a plate or tossed and served with a moist dressing	yes		
-screening	4.15	artifact	fabric	mass=0.5 density=500 hardness=2 flammability=1 conductivity=5 transparency=0.7 integrity=15 value=2 color=gray counters=insect	fabric of metal or plastic mesh	yes		
-soup	4.15	consumable	food	mass=0.5 state=liquid edible=True nutrition=8 restores=40 duration=120 single_use=True shelf_life=10 effect_status=poison color=orange	liquid food especially of meat or fish or vegetable stock often containing pieces of solid food	yes	any composition having a consistency suggestive of soup	
-stake	4.15	artifact	weapon	mass=1 length=1 integrity=40 sharpness=6 material=wood dmg_pierce=30 build_speed=1.2 counters=vampire,undead,ghoul color=brown	(law) a right or legal share of something	no	instrument of execution consisting of a vertical post that a victim is tied to for burning 	
-tackle	4.15	artifact	tool	mass=5 integrity=30 material=fiber,steel equip_slot=held hands_required=2 harvest_bonus=2.5 harvest_sources=fishing color=green	the person who plays that position on a football team	no	gear consisting of ropes etc. supporting a ship's masts and sails 	
-beam	4.14	artifact	device	mass=0 integrity=1 luminosity=8 sight_range=300 inflict_blind=2 dmg_light=15 attack_range=300 state=energy inflict_expose=20	long thick piece of wood or metal or concrete, etc., used in construction	yes	the broad side of a ship	
-dining	4.14	artifact	structure	mass=10000 footprint=3 height=3 integrity=1000 material=wood portable=False enterable=True occupants=12 claim_radius=1 comfort=5 food_output=3 color=brown	the act of eating dinner	no		
-grandmother	4.14	person	person	mass=60 integrity=70 alive=True sentient=True hands=True speech=True speed_land=2 intelligence=8 loyalty=10 age=40000 heals=4 comfort=4 read_properties=4 grants_adjective_slots=1 grants_slots_to=person food_need=0.02	the mother of your father or mother	yes		
-missile	4.14	artifact	weapon	mass=1500 length=6 integrity=60 single_use=True speed_air=800 self_propelled=True requires_pilot=False dmg_blast=5000 dmg_fire=1000 attack_range=300000 attack_area=30 targets=land,air,water siege=4 friendly_fire=True	a rocket carrying a warhead of conventional or nuclear explosives	yes	a weapon that is forcibly thrown or projected at a targets but is not self-propelled	
-organ	4.14	bodypart	bodypart	equip_slot=graft mass=1 integrity=30	a fully differentiated structural and functional unit in an animal that is specialized for some particular function	yes		
-pearl	4.14	material	gem	mass=2.7 density=2700 hardness=3 brittleness=4 integrity=50 value=10000 beauty=9 color=white	a smooth lustrous round structure inside the shell of a clam or oyster	no		
-pepper	4.14	consumable	food	mass=0.05 integrity=1 edible=True nutrition=0 duration=30 single_use=True shelf_life=0 color=black	pungent seasoning from the berry of the common pepper plant of East India	yes	sweet and hot varieties of fruits of plants of the genus Capsicum	
-rod	4.14	artifact	tool	mass=0.5 length=2 integrity=15 material=wood equip_slot=held hands_required=1 dmg_blunt=4 harvest_bonus=2.5 harvest_sources=fishing	a long thin implement made of metal or wood	yes	a gangster's pistol	
-tattoo	4.14	artifact	artifact	equip_slot=graft fear_aura=1 intimidation=2 beauty=5 color=black	a design on the skin made by tattooing	yes		
-zoo	4.14	artifact	structure	mass=2000000 footprint=60 height=5 integrity=30000 material=stone,steel portable=False enterable=True occupants=300 claim_radius=20 lockable=True security=5 beauty=7 charm=4 trade_bonus=0.1 recruit_rate=0.3 summons=lion summon_count=2 summon_owned=True color=green	the facility where wild animals are housed for exhibition	yes		
-arrow	4.13	artifact	weapon	mass=0.03 length=0.8 integrity=3 sharpness=7 material=wood single_use=True plural_count=20	a projectile with a straight thin shaft and an arrowhead on one end and stabilizing vanes on the other	yes		
-chancellor	4.13	person	leader	mass=75 integrity=100 alive=True sentient=True intelligence=9 loyalty=6 hands=True speech=True speed_land=3 authority=7 command_limit=40 tax_rate=0.1 field_radius=12 field_targets=owned food_need=0.03	the person who is head of government (in several countries)	yes	the British cabinet minister responsible for finance 	
-closet	4.13	artifact	structure	mass=1000 footprint=1 height=2.5 integrity=300 material=wood portable=False enterable=True occupants=1 lockable=True claim_radius=1 storage_letters=25 storage_objects=200 stealth=6 color=brown	a small room (or recess) or cabinet used for storage space	yes	a toilet in Britain 	
-combine	4.13	artifact	machine	mass=15000 length=10 integrity=4000 material=steel speed_land=4 self_propelled=True mountable=True seats=1 labor=20 harvest_bonus=5 harvest_sources=field,wheat,grain dmg_slash=400 attack_area=4 upkeep_fuel=1 loudness=9 color=green produce_M=0.3 production_needs=vowel,vowel	harvester that heads and threshes and cleans grain while moving across the field	yes		
-controller	4.13	artifact	device	mass=0.3 integrity=10 material=plastic equip_slot=held hands_required=2 upkeep_power=0.01 color=black	a mechanism that controls the operation of a machine	yes		
-disc	4.13	artifact	document	mass=0.02 integrity=5 material=plastic storage_letters=40 read_properties=2 upkeep_power=0.01	sound recording consisting of a disk with a continuous groove	yes	(computer science) a memory device consisting of a flat disk covered with a magnetic coating on which information is stored 	
-embassy	4.13	artifact	building	mass=3000000 footprint=12 height=15 integrity=40000 material=stone,glass portable=False enterable=True occupants=80 lockable=True security=8 cover=0.7 claim_radius=5 law=attack,theft trade_bonus=0.2 alarm=True needs_foundation=True counters=war,invasion,siege color=white	a diplomatic building where ambassadors live or work	yes		
-haven	4.13	artifact	structure	mass=20000 footprint=4 integrity=8000 material=stone,wood portable=False field_radius=40 field_targets=owned law=attack,theft	a shelter serving as a place of safety or sanctuary	yes		
-lip	4.13	bodypart	bodypart	equip_slot=graft mass=0.02 integrity=5 speech=True plural_count=2	either of two fleshy folds of tissue that surround the mouth and play a role in speaking	yes	either the outer margin or the inner margin of the aperture of a gastropod's shell	
-mud	4.13	material	material	mass=1.7 density=1700 hardness=0 brittleness=1 flammability=0 wetness=6 stickiness=6 integrity=10 value=0 color=brown inflict_slow=4 res_fire=0.6 camouflage=swamp stealth=2 tile_type=swamp radius=1	water soaked soil	yes		
-publisher	4.13	person	person	mass=75 integrity=85 alive=True sentient=True intelligence=8 loyalty=5 hands=True speech=True speed_land=4 duplicates=1 trade_bonus=0.2 field_radius=ABS field_targets=owned food_need=0.03	the proprietor of a newspaper	yes	a person engaged in publishing periodicals or books or music	
-rookie	4.13	person	person	mass=70 integrity=90 alive=True sentient=True intelligence=4 loyalty=7 hands=True speech=True speed_land=6 training=1 trainable=8 courage=6 food_need=0.04	an awkward and inexperienced youth	yes		
-sandwich	4.13	consumable	food	mass=0.3 integrity=1 edible=True nutrition=8 restores=20 single_use=True shelf_life=8	two (or more) slices of bread with a filling between them	yes		
-ski	4.13	artifact	clothing	plural_count=2 mass=3 length=1.8 integrity=40 material=wood,fiberglass equip_slot=feet terrain_ignored=snow movement_cost=0.3 slipperiness=6 placeable_on=snow	narrow wood or metal or plastic runners used in pairs for gliding over snow	yes		
-sterling	4.13	artifact	currency	mass=0.1 integrity=5 material=silver equip_slot=held hands_required=0 value=150 trade_bonus=0.15 beauty=6 color=silver	British money	no		
-valve	4.13	artifact	device	mass=2 integrity=200 material=steel water_output=10 security=2 blocks=water produce_M=0.3 production_needs=vowel,vowel	device in a brass wind instrument for varying the length of the air column to alter the pitch of a tone	yes	control consisting of a mechanical device for controlling the flow of a fluid	
-ham	4.12	consumable	food	mass=2 integrity=3 edible=True nutrition=12 restores=30 duration=120 single_use=True shelf_life=0 odor=4 plural_count=1 color=pink	meat cut from the thigh of a hog (usually smoked)	yes		
-jewelry	4.12	artifact	adornment	mass=0.2 integrity=40 material=gold,gem equip_slot=neck beauty=9 value=1500 loudness=1	an adornment (as a bracelet or ring or necklace) made of precious metals and set with gems (or imitation gems)	yes		
-jungle	4.12	terrain	landform	tile_type=jungle radius=12 moisture=8 movement_cost=2.2 blocks=sight cover=0.5 stealth=4 flammability=4 portable=False fertility=8 spread_rate=0.03	a location marked by an intense competition and struggle for survival	yes		
-prof	4.12	person	worker	mass=70 integrity=85 alive=True sentient=True intelligence=9 loyalty=6 hands=True speech=True speed_land=4 field_radius=8 field_targets=owned food_need=0.03	someone who is a member of the faculty at a college or university	yes		
-provisions	4.12	consumable	food	mass=10 integrity=10 edible=True nutrition=15 restores=40 single_use=True shelf_life=0 storage_objects=10 plural_count=1 color=brown	a stock or supply of foods	yes		
-defender	4.11	person	fighter	mass=85 integrity=160 alive=True sentient=True intelligence=5 loyalty=7 hands=True speech=True speed_land=6 block=0.5 armor=5 strength=7 inflict_slow=2 attack_rate=1 food_need=0.05	a fighter who holds out against attack	yes	a person who cares for persons or property	
-generic	4.11	consumable	drink	mass=0.35 state=liquid edible=True nutrition=2 single_use=True shelf_life=0	wine that does not meet the minimum qualifications and standards for use of a designation by appellation of origin (where the grapes are grown) or by varietal content	yes		
-keyboard	4.11	artifact	device	mass=1 integrity=15 material=plastic equip_slot=held hands_required=2 read_properties=2 storage_letters=50 upkeep_power=0.01 color=black	device consisting of a set of keys on a piano or organ or typewriter or typesetting machine or computer or the like	yes	holder consisting of an arrangement of hooks on which keys or locks can be hung	
-potato	4.11	flora	produce	mass=0.3 height=0.5 integrity=2 alive=True diet=photosynthesis growth_time=5 food_output=0.6 edible=True raw=True cooks_into=chips nutrition=4 restores=6 single_use=True shelf_life=30 plural_count=20 color=brown produce_A=0.4 tile_type=tilled radius=1 production_needs=tilled,water	an edible tuber native to South America	yes	annual native to South America having underground stolons bearing edible starchy tubers	
-potter	4.11	person	worker	mass=70 integrity=90 alive=True sentient=True intelligence=6 loyalty=6 hands=True speech=True speed_land=4 labor=2 craft_slots=1 temperature=20 food_need=0.03 produce_N=0.4	a craftsman who shapes pottery on a potter's wheel and bakes them it a kiln	yes		
-sergeant	4.11	person	fighter	mass=90 integrity=200 alive=True sentient=True intelligence=6 loyalty=8 hands=True speech=True speed_land=6 training=7 courage=8 dmg_pierce=40 attack_rate=1 attack_range=40 command_limit=10 loudness=7 field_radius=10 field_targets=owned food_need=0.05	any of several noncommissioned officer ranks in the Army or Air Force or Marines ranking above a corporal	yes	a lawman with the rank of sergeant 	
-silk	4.11	artifact	fabric	mass=1.3 density=1300 hardness=1 flammability=6 integrity=30 value=300 beauty=8 color=white res_pierce=0.3 stealth=1	a fabric made from the fine threads produced by certain insect larvae	yes		
-stamp	4.11	artifact	weapon	mass=0.2 integrity=40 material=rubber,wood craft_slots=1 crafts=document color=red	the distinctive form in which a thing is made	no		
-voter	4.11	person	person	mass=75 integrity=90 alive=True sentient=True hands=True speech=True intelligence=5 speed_land=4 loyalty=5 morale=6 food_need=0.03	a citizen who has a legal right to vote	yes		
-witch	4.11	person	person	mass=60 integrity=90 alive=True sentient=True intelligence=8 loyalty=5 hands=True speech=True speed_land=4 speed_air=15 dmg_magic=40 attack_rate=0.7 attack_range=30 inflict_curse=60 inflict_shrink=10 faith_output=0.5 crafts=medicine,poison food_need=0.03	a female sorcerer or magician	yes	a being (usually female) imagined to have special powers derived from the devil 	
-belly	4.10	bodypart	bodypart	equip_slot=graft mass=15 integrity=100	the region of the body of a vertebrate between the thorax and the pelvis	yes	a protruding abdomen 	
-booth	4.10	artifact	building	mass=500 footprint=1 height=2.5 integrity=300 material=wood portable=False enterable=True occupants=1 cover=0.3 claim_radius=1 trade_bonus=0.1 stealth=2 color=red	a table (in a restaurant or bar) surrounded by two high-backed benches	yes	small area set off by walls for special use 	
-cam	4.10	artifact	device	mass=1 integrity=150 material=steel shape=round labor=1 color=gray produce_M=0.3 production_needs=vowel,vowel	a rotating disk shaped to convert circular into linear motion	yes		
-cliff	4.10	terrain	elevation	tile_type=wall radius=1 length=200 elevation=60 integrity=2000000 armor=1500 hardness=8 blocks=land movement_cost=10 portable=False	a steep high face of rock	yes		
-derby	4.10	artifact	clothing	mass=0.3 integrity=12 material=felt equip_slot=head armor=1 res_blunt=0.1	a felt hat that is round and hard with a narrow brim	yes		
-fig	4.10	flora	produce	mass=0.05 height=5 integrity=1 alive=True diet=photosynthesis growth_time=15 edible=True nutrition=2 restores=6 single_use=True shelf_life=8 plural_count=10 color=purple produce_A=0.4 tile_type=tilled radius=1 production_needs=tilled,water	fleshy sweet pear-shaped yellowish or purple multiple fruit eaten fresh or preserved or dried	yes	Mediterranean tree widely cultivated for its edible fruit	
-lemon	4.10	flora	produce	mass=0.1 integrity=1 edible=True nutrition=1 restores=5 effect_status=poison duration=120 single_use=True shelf_life=20 plural_count=6 color=yellow	yellow oval fruit with juicy acidic flesh	yes	a small evergreen tree that originated in Asia but is widely cultivated for its fruit	
-lung	4.10	bodypart	bodypart	equip_slot=graft mass=1 integrity=30 plural_count=2	either of two saclike respiratory organs in the chest of vertebrates	yes		
-nutrition	4.10	consumable	food	mass=0.2 integrity=1 edible=True nutrition=10 restores=20 duration=300 single_use=True shelf_life=0 color=green	a source of materials to nourish the body	yes		
-ore	4.10	material	mineral	mass=4 density=4000 hardness=6 brittleness=4 flammability=0 conductivity=4 magnetism=3 integrity=250 value=3 color=brown	a mineral that contains metal that is valuable enough to be mined	yes		
-cafe	4.09	artifact	building	mass=80000 footprint=3 height=4 integrity=2500 material=brick,glass portable=False enterable=True occupants=30 claim_radius=2 comfort=5 food_output=5 field_radius=15 field_targets=owned odor=3 color=brown	a small restaurant where drinks and snacks are sold	yes		
-dairy	4.09	artifact	structure	mass=10000 footprint=6 integrity=1500 material=wood portable=False enterable=True food_output=8 odor=4 color=white	a farm where dairy products are produced	yes		
-diary	4.09	artifact	document	mass=0.3 integrity=4 flammability=8 material=paper,leather storage_letters=20 immune_expose=True lockable=True color=red	a personal journal (as a physical object)	yes		
-euro	4.09	artifact	currency	plural_count=10 mass=0.0075 integrity=40 material=brass equip_slot=held hands_required=0 value=10 trade_bonus=0.05 color=gold	the basic monetary unit of most members of the European Union (introduced in 1999)	no		
-lighter	4.09	material	fuel	mass=0.05 integrity=10 material=plastic equip_slot=held hands_required=1 temperature=1000 dmg_fire=10 inflict_burn=3 luminosity=3 attack_range=0.3 counters=tinder,fuse	a substance used to ignite or kindle a fire	yes	a device for lighting or igniting fuel or charges or fires 	
-meter	4.09	artifact	device	mass=0.5 integrity=20 material=plastic,glass portable=False read_properties=2 detect_letters=50 upkeep_power=0.01 color=gray	any of various measuring instruments for measuring a quantity	yes		
-olive	4.09	material	material	mass=0.9 density=900 hardness=6 flammability=5 integrity=110 value=20 beauty=7 color=yellow res_holy=0.2 charm=1	small ovoid fruit of the European olive tree	no		
-receiver	4.09	artifact	device	mass=3 integrity=15 material=plastic,steel portable=False hearing_range=10000 map_reveal=40 upkeep_power=0.1 color=black	earphone that converts electrical signals into sounds	yes	set that receives radio or tv signals	
-servant	4.09	person	worker	mass=70 integrity=90 alive=True sentient=True intelligence=5 loyalty=8 hands=True speech=True speed_land=5 labor=3 food_need=0.03 produce_N=0.5	a person working in the service of another (especially in the household)	yes		
-skull	4.09	bodypart	bodypart	equip_slot=graft mass=1 integrity=200 hardness=7 immune_stun=True	the bony skeleton of the head of vertebrates	yes		
-statue	4.09	artifact	artifact	mass=20000 height=6 integrity=10000 hardness=8 material=stone,bronze portable=False beauty=9 field_radius=40 field_targets=owned produce_Y=0.4	a sculpture representing a human or animal	yes		
-vacuum	4.09	artifact	machine	mass=6 integrity=30 material=plastic portable=False loudness=8 dmg_wind=20 moves_target=5 labor=2 clears_weather=dust upkeep_power=1 color=red produce_M=0.3 production_needs=vowel,vowel	the absence of matter	no	an electrical home appliance that cleans by suction	
-architect	4.08	person	worker	mass=70 integrity=80 alive=True sentient=True intelligence=9 loyalty=6 hands=True speech=True speed_land=4 labor=1 build_speed=3 food_need=0.03 produce_N=0.25	someone who creates plans to be used in making something (such as buildings)	yes		
-basin	4.08	artifact	container	mass=4 integrity=40 material=porcelain volume=0.01 storage_objects=10 water_output=1 counters=dirt color=white	a bowl-shaped vessel	yes	a bathroom sink that is permanently installed and connected to a water supply and drainpipe	
-bud	4.08	flora	plant	mass=0.001 integrity=1 alive=True diet=photosynthesis growth_time=1 edible=True nutrition=0.2 plural_count=20 color=green produce_P=0.1 production_needs=water,harvest	a partially opened flower	yes	a swelling on a plant stem consisting of overlapping immature leaves or petals	
-butler	4.08	person	worker	mass=80 integrity=100 alive=True sentient=True intelligence=7 loyalty=9 hands=True speech=True speed_land=4 labor=1 security=5 alarm=True detect_stealth=4 storage_objects=100 food_need=0.03 produce_N=0.25	a manservant (usually the head servant of a household) who has charge of wines and the table	yes	English novelist who described a fictitious land he called Erewhon (1835-1902) 	
-chick	4.08	creature	bird	mass=0.05 length=0.08 integrity=1 alive=True diet=omnivore food_need=0.0005 speed_land=2 courage=0 comfort=2 charm=7 loudness=4 reproduction=0 growth_time=30 tamable=True habitat=meadow color=yellow produce_I=0.15	young bird especially of domestic fowl	yes	informal terms for a (young) woman	
-coke	4.08	material	fuel	mass=0.5 density=500 hardness=3 brittleness=5 flammability=6 burn_time=7200 integrity=20 value=1 color=gray fuel_output=2	carbon fuel produced by distillation of coal	yes	street names for cocaine	
-console	4.08	artifact	device	mass=4 integrity=20 material=plastic portable=False comfort=3 upkeep_power=0.15 color=black	a scientific instrument consisting of displays and an input device that an operator can use to monitor and control a system (especially a computer system)	yes	a small table fixed to a wall or designed to stand against a wall 	
-fabric	4.08	artifact	fabric	mass=1.4 density=1400 hardness=1 flammability=7 integrity=15 value=3 color=white	artifact made by weaving or felting or knitting or crocheting natural or synthetic fibers	yes		
-fairy	4.08	creature	supernatural	mass=0.05 length=0.15 integrity=10 alive=True sentient=True intelligence=7 loyalty=4 speed_air=8 hover=True luminosity=3 stealth=6 dmg_magic=10 attack_rate=1 attack_range=10 inflict_charm=5 heals=5 charm=5 beauty=8 equip_slot=companion upkeep_faith=0.2	a small being, human in form, playful and having magical powers	yes	offensive term for a homosexual man	
-lodge	4.08	artifact	building	mass=150000 footprint=6 height=8 integrity=4000 material=wood,stone portable=False enterable=True occupants=30 lockable=True cover=0.6 claim_radius=5 comfort=6 food_output=3 storage_letters=80 res_cold=0.5 flammability=6 color=brown	small house at the entrance to the grounds of a country mansion	yes	a small (rustic) house used as a temporary shelter 	
-pastor	4.08	person	worker	mass=75 integrity=90 alive=True sentient=True intelligence=7 loyalty=8 hands=True speech=True speed_land=4 faith_output=1.5 heals=3 recruit_rate=0.5 field_radius=20 field_targets=owned food_need=0.03	a person authorized to conduct religious worship	yes		
-poison	4.08	material	poison	state=liquid toxicity=10 dmg_poison=200 inflict_poison=60 single_use=True stealth=6 odor=0	any substance that causes injury or illness or death of a living organism	yes		
-rebel	4.08	person	person	mass=75 integrity=150 alive=True sentient=True hands=True speech=True intelligence=6 loyalty=6 courage=8 speed_land=6 stealth=4 dmg_pierce=45 attack_rate=1 attack_range=100 counters=tax,curfew,regime,tyranny,dictatorship food_need=0.03	a person who takes part in an armed rebellion against the constituted authority (especially in the hope of improving conditions)	yes	`Johnny' was applied as a nickname for Confederate soldiers by the Federal soldiers in the American Civil War 	
-trainer	4.08	person	person	mass=75 integrity=120 alive=True sentient=True intelligence=5 hands=True speech=True diet=omnivore food_need=0.03 strength=7 training=6 color=red	one who trains other persons or animals	yes		
-basket	4.07	artifact	tool	mass=0.5 integrity=8 flammability=6 material=fiber equip_slot=held hands_required=1 storage_objects=6 harvest_bonus=2.5 harvest_sources=forage	a container that is usually woven and has handles	yes	horizontal circular metal hoop supporting a net through which players try to throw the basketball	
-beard	4.07	bodypart	bodypart	equip_slot=graft mass=0.1 integrity=5 disguise=2	the hair growing on the lower part of a man's face	yes	hairy growth on or near the face of certain mammals 	
-blanket	4.07	artifact	furniture	mass=2 integrity=10 material=wool comfort=2 equip_slot=back res_cold=0.4 stealth=1 color=red	bedding that keeps a person warm in bed	yes	a layer of lead surrounding the highly reactive core of a nuclear reactor	
-burger	4.07	consumable	food	mass=0.25 integrity=1 edible=True nutrition=10 restores=30 duration=120 single_use=True shelf_life=6 odor=5 color=brown	a sandwich consisting of a fried cake of minced beef served on a bun, often with other ingredients	yes		
-concentrate	4.07	material	material	mass=2 density=2000 hardness=2 integrity=10 value=50 color=orange potency=8	the desired mineral that is left after impurities have been removed from mined ore	yes		
-cookie	4.07	consumable	food	mass=0.03 integrity=1 edible=True nutrition=2 restores=5 duration=60 single_use=True shelf_life=30 plural_count=12 color=brown	any of various small flat sweet cakes (`biscuit' is the British term)	yes		
-ink	4.07	material	liquid	state=liquid mass=0.05 color=black stickiness=2 inflict_blind=8 counters=sight	a liquid used for printing or writing or drawing	yes		
-motorcycle	4.07	artifact	vehicle_land	mass=200 length=2.1 integrity=200 material=steel speed_land=55 acceleration=9 agility=7 self_propelled=True mountable=True seats=2 equip_slot=mount upkeep_fuel=0.05 loudness=9 jump=3 color=black	a motor vehicle with two wheels and a strong frame	yes		
-nest	4.07	terrain	natural_object	mass=0.5 integrity=5 material=wood,fiber flammability=8 portable=False occupants=4 comfort=1 storage_letters=15 field_radius=3 field_targets=owned color=brown	a structure in which animals lay eggs or give birth to their young	yes	a cosy or secluded retreat	
-penny	4.07	artifact	currency	plural_count=100 mass=0.0036 integrity=20 material=copper equip_slot=held hands_required=0 value=0.1 trade_bonus=0.01 color=copper	a coin worth one-hundredth of the value of the basic unit	no		
-reed	4.07	flora	plant	mass=0.2 height=3 integrity=2 alive=True diet=photosynthesis growth_time=3 spread_rate=0.4 placeable_on=water,swamp blocks=sight stealth=4 camouflage=swamp,water movement_cost=2 plural_count=20 color=green produce_P=0.1 production_needs=water,harvest	tall woody perennial grasses with hollow slender stems especially of the genera Arundo and Phragmites	yes		
-shorts	4.07	artifact	clothing	mass=0.2 integrity=10 material=cotton equip_slot=body	(used in the plural) trousers that end at or above the knee	yes	underpants worn by men	
-testament	4.07	artifact	artifact	mass=0.1 integrity=5 material=paper flammability=8 survives_death=True on_owner_death=pass_to_heir storage_letters=200 faith_output=0.3	a profession of belief	no		
-toe	4.07	bodypart	bodypart	equip_slot=graft mass=0.03 integrity=10 plural_count=10	one of the digits of the foot	yes	forepart of a hoof	
-ambulance	4.06	artifact	vehicle_land	mass=4000 length=6 integrity=900 material=steel speed_land=40 self_propelled=True mountable=True seats=4 heals=15 loudness=9 alarm=True reputation=5 upkeep_fuel=0.2 color=white	a vehicle that takes people to and from hospitals	yes		
-ballot	4.06	artifact	document	placement=region field_radius=100 field_targets=all field_duration=3 takes_city=True contest_with=charm contested_by=authority counters=coup,tyranny,dictatorship	a document listing the alternatives that is used in voting	no		
-chile	4.06	flora	produce	mass=0.02 height=0.6 integrity=1 alive=True diet=photosynthesis growth_time=4 edible=True nutrition=0 duration=60 single_use=True shelf_life=20 placeable_on=field plural_count=10 color=red produce_A=0.4 tile_type=tilled radius=1 production_needs=tilled,water	very hot and finely tapering pepper of special pungency	yes		
-cigarette	4.06	artifact	artifact	mass=0.001 integrity=1 material=paper,tobacco flammability=9 temperature=700 single_use=True potency=3 odor=6 duration=300 toxicity=2 plural_count=20	finely ground tobacco wrapped in paper	yes		
-cooling	4.06	artifact	device	mass=50 integrity=60 material=steel,copper portable=False temperature=5 temperature_delta=-10 upkeep_power=1 color=white	a mechanism for keeping something cool	yes		
-elder	4.06	person	person	mass=60 integrity=70 alive=True sentient=True hands=True speech=True speed_land=2 intelligence=8 loyalty=8 age=40000 authority=3 heals=2 read_properties=3 food_need=0.02	a person who is older than you are	yes	any of various church officers	
-fiber	4.06	material	material	mass=1.3 density=1300 hardness=1 elasticity=4 flammability=6 integrity=40 value=2 color=white	a slender and greatly elongated substance capable of being spun into yarn	yes	a leatherlike material made by compressing layers of paper or cloth	
-grocery	4.06	artifact	building	mass=100000 footprint=4 height=5 integrity=3000 material=brick portable=False enterable=True occupants=30 storage_objects=3000 food_output=4 field_radius=20 field_targets=all trade_rate=0.9 needs_foundation=True	a marketplace where groceries are sold	yes	(usually plural) consumer goods sold by a grocer	
-guinea	4.06	artifact	currency	mass=0.0084 integrity=50 material=gold equip_slot=held hands_required=0 value=25 trade_bonus=0.08 beauty=7 color=gold	a former British gold coin worth 21 shillings	no		
-hull	4.06	artifact	device	mass=50000 length=30 integrity=8000 hardness=7 material=wood,steel buoyancy=9 portable=False cover=0.5 anchored=True color=brown	dry outer covering of a fruit or seed or nut	no	the frame or body of ship	
-laundry	4.06	artifact	building	mass=3000 footprint=4 height=4 integrity=300 material=brick enterable=True occupants=6 needs_foundation=True water_output=0 upkeep_power=10 crafts=clothing,cloth craft_slots=4 negates=stickiness,odor,wetness comfort=2 produce_C=0.4 production_needs=labor	garments or white goods that can be cleaned by laundering	yes	workplace where clothes are washed and ironed	
-packing	4.06	material	material	mass=0.1 density=100 hardness=0 elasticity=8 flammability=7 integrity=5 value=0.1 color=white res_blunt=0.5 res_crush=0.4	any material used especially to protect something	yes		
-brass	4.05	material	metal	mass=8.5 density=8500 hardness=4 melting_point=930 conductivity=6 integrity=180 value=8 color=gold loudness=4	an alloy of copper and zinc	yes	a wind instrument that consists of a brass tube (usually of variable length) that is blown by means of a cup-shaped or funnel-shaped mouthpiece 	
-cos	4.05	flora	produce	mass=0.5 height=0.3 integrity=1 alive=True diet=photosynthesis growth_time=3 edible=True nutrition=1 restores=5 single_use=True shelf_life=6 placeable_on=field color=green produce_A=0.4 tile_type=tilled radius=1 production_needs=tilled,water	lettuce with long dark-green leaves in a loosely packed elongated head	yes		
-diesel	4.05	artifact	machine	mass=900 integrity=1500 material=steel portable=False power_output=60 upkeep_fuel=0.4 loudness=9 odor=7 temperature=90 dmg_crush=60 color=black produce_M=0.3 production_needs=vowel,vowel	an internal-combustion engine that burns heavy oil	yes		
-oven	4.05	artifact	device	mass=80 footprint=1 integrity=300 material=iron temperature=250 food_output=4 upkeep_fuel=0.05 produce_C=0.3 production_needs=labor	kitchen appliance used for baking or roasting	yes		
-passport	4.05	artifact	document	mass=0.05 integrity=3 material=paper disguise=3 terrain_ignored=road counters=border,customs,checkpoint,exile	a document issued by a country to a citizen allowing that person to travel abroad and re-enter the home country	no		
-tablet	4.05	artifact	artifact	mass=0.3 length=0.25 integrity=20 material=glass,silicon equip_slot=held read_properties=3 map_reveal=10 upkeep_power=0.01 color=black	a slab of stone or wood suitable for bearing an inscription	yes	a small flat compressed cake of some substance 	
-collar	4.04	artifact	adornment	mass=0.1 integrity=15 material=leather equip_slot=neck res_slash=0.2	necklace that fits tightly around a woman's neck	yes	a band that fits around the neck and is usually folded over 	
-hart	4.04	creature	mammal	mass=150 length=2 integrity=250 alive=True courage=5 diet=herbivore food_need=0.06 speed_land=19 jump=2.5 dmg_pierce=45 attack_rate=0.6 habitat=forest,meadow color=brown	a male deer, especially an adult male red deer	yes	United States playwright who collaborated with George S. Kaufman (1904-1961) 	
-nut	4.04	flora	produce	mass=0.005 integrity=3 hardness=5 edible=True nutrition=1 restores=3 single_use=True plural_count=12 shelf_life=259200 color=brown	usually large hard-shelled seed	yes		
-soda	4.04	consumable	drink	mass=0.35 state=liquid edible=True nutrition=2 duration=60 single_use=True shelf_life=0 color=brown	a sweet drink containing carbonated water and flavoring	yes	a sodium salt of carbonic acid	
-sponsor	4.04	person	person	mass=75 integrity=90 alive=True sentient=True intelligence=7 loyalty=6 hands=True speech=True speed_land=4 storage_letters=400 charm=4 field_radius=12 field_targets=owned food_need=0.03	someone who supports or champions something	yes	an advocate who presents a person (as for an award or a degree or an introduction etc.)	
-analyst	4.03	person	person	mass=70 integrity=80 alive=True sentient=True intelligence=9 loyalty=6 hands=True speech=True speed_land=4 read_properties=8 detect_stealth=6 detect_letters=500 counters=decoy,misinformation,propaganda,fraud food_need=0.03	someone who is skilled at analyzing data	yes	an expert who studies financial data (on credit or securities or sales or financial patterns etc.) and recommends appropriate business actions 	
-buyer	4.03	person	person	mass=75 integrity=90 alive=True sentient=True intelligence=6 loyalty=5 hands=True speech=True speed_land=5 trade_bonus=0.2 charm=3 food_need=0.03	a person who buys	yes		
-cannabis	4.03	flora	shrub	mass=1 height=2 integrity=3 alive=True diet=photosynthesis growth_time=6 edible=True potency=6 inflict_confuse=20 duration=600 odor=7 value=50 material=fabric color=green produce_P=0.2 production_needs=water,harvest	any plant of the genus Cannabis	yes		
-cloth	4.03	artifact	fabric	mass=1.4 density=1400 hardness=1 flammability=7 integrity=15 value=2 color=white	artifact made by weaving or felting or knitting or crocheting natural or synthetic fibers	yes		
-container	4.03	artifact	container	mass=5 integrity=60 material=plastic storage_objects=40 container_slots=6 storage_letters=20 color=gray	any object that can be used to hold things (especially a large metal boxlike object of standardized dimensions that can be loaded from one form of transport to another)	yes		
-fork	4.03	artifact	weapon	mass=0.04 length=0.2 integrity=20 sharpness=5 material=steel equip_slot=held hands_required=1 dmg_pierce=5 plural_count=6 comfort=0.5 color=silver produce_B=0.12 production_needs=claim	cutlery used for serving and eating food	yes	an agricultural tool used for lifting or digging	
-fur	4.03	material	material	mass=1 density=1000 hardness=1 flammability=5 integrity=30 value=20 color=brown res_cold=0.6 stealth=1	the dressed hairy coat of a mammal	yes	a garment made of animal pelts or synthetic fur	
-junk	4.03	material	material	mass=30 integrity=40 brittleness=5 flammability=3 conductivity=4 material=scrap value=0.1 beauty=0 cover=0.3 movement_cost=1.5 crafts=repair craft_slots=1 color=brown	the remains of something that has been destroyed or broken up	yes	any of various Chinese boats with a high poop and lugsails	
-kidney	4.03	bodypart	bodypart	equip_slot=graft mass=0.15 integrity=20 plural_count=2	either of two bean-shaped excretory organs that filter wastes (especially urea) from the blood and excrete them and water in urine	yes		
-lobby	4.03	artifact	structure	mass=50000 footprint=4 height=6 integrity=4000 material=marble,glass portable=False enterable=True occupants=80 claim_radius=2 comfort=3 alarm=True detect_stealth=2 beauty=8 color=white	a large entrance or reception room or area	yes		
-marc	4.03	consumable	drink	mass=0.7 state=liquid edible=True nutrition=1 potency=7 immune_fear=True duration=240 single_use=True shelf_life=0 flammability=7 color=gold	made from residue of grapes or apples after pressing	yes		
-mineral	4.03	material	mineral	mass=2.7 density=2700 hardness=5 brittleness=5 flammability=0 integrity=150 value=5 color=gray	solid homogeneous inorganic substances occurring in nature having a definite chemical composition	yes		
-navigation	4.03	artifact	document	placement=self field_radius=20 field_targets=owned field_duration=5 map_reveal=150 terrain_ignored=water	the guidance of ships or airplanes from place to place	no		
-pork	4.03	consumable	food	mass=1 integrity=2 edible=True raw=True nutrition=10 restores=25 toxicity=2 duration=90 single_use=True shelf_life=6 odor=3 color=pink	meat from a domestic hog or pig	yes		
-ranch	4.03	artifact	building	mass=500000 footprint=200 height=6 integrity=8000 material=wood portable=False enterable=True occupants=30 claim_radius=30 comfort=4 food_output=20 storage_objects=200000 tile_type=meadow radius=12 placeable_on=field,meadow,savanna,land summons=cattle summon_count=6 summon_owned=True flammability=6 color=brown	farm consisting of a large tract of land along with facilities needed to raise livestock (especially cattle)	yes		
-tin	4.03	material	metal	mass=7.3 density=7300 hardness=2 melting_point=232 conductivity=5 integrity=40 value=4 color=silver	a silvery malleable metallic element that resists corrosion	yes	a vessel (box, can, pan, etc.) made of tinplate and used mainly in baking 	
-vampire	4.03	creature	supernatural	mass=70 integrity=600 alive=False sentient=True intelligence=8 loyalty=2 hands=True speech=True speed_land=10 speed_air=15 night_vision=True nocturnal=True dmg_pierce=50 dmg_unholy=40 attack_rate=1.2 lifesteal=0.8 inflict_charm=6 regeneration=5 res_unholy=1 res_holy=-1 res_light=-1 fear_aura=5 counters=priest,nun	(folklore) a corpse that rises at night to drink the blood of the living	yes		
-arch	4.02	artifact	structure	mass=50000 footprint=2 height=6 integrity=10000 hardness=7 material=stone portable=False enterable=True beauty=6 cover=0.4 occupants=4	(architecture) a masonry construction (usually curved) for spanning an opening and supporting the weight above it	yes	a passageway under a curved masonry construction	
-badge	4.02	artifact	tool	mass=0.05 material=steel equip_slot=body authority=3 detect_stealth=1 reputation=2 charm=1	an emblem (a small piece of plastic or cloth or metal) that signifies your status (rank or membership or affiliation etc.)	no		
-extract	4.02	material	material	mass=0.1 volume=0.0001 state=liquid potency=6 edible=True nutrition=1 odor=5 shelf_life=10000	a solution obtained by steeping or soaking a substance (usually in water)	yes		
-ferry	4.02	artifact	vehicle_water	mass=3000000 length=90 integrity=20000 material=steel buoyancy=10 speed_water=10 self_propelled=True mountable=True seats=800 carry_capacity=1500000 anchored=True upkeep_fuel=2 trade_bonus=0.1 placeable_on=water color=white	a boat that transports people or vehicles across a body of water and operates on a regular schedule	yes		
-fisher	4.02	person	worker	mass=75 integrity=100 alive=True sentient=True intelligence=5 hands=True speech=True speed_land=5 speed_water=1 labor=2 harvest_bonus=2.5 harvest_sources=fishing food_output=1 food_need=0.03 produce_N=0.4	someone whose occupation is catching fish	yes		
-gauge	4.02	artifact	device	mass=0.5 integrity=20 material=brass,glass read_properties=2 color=gold	a measuring instrument for measuring and indicating a quantity such as the thickness of wire or the amount of rain etc.	yes		
-gut	4.02	bodypart	bodypart	equip_slot=graft mass=3 integrity=50	the part of the alimentary canal between the stomach and the anus	yes		
-instructor	4.02	person	worker	mass=75 integrity=100 alive=True sentient=True intelligence=8 loyalty=7 hands=True speech=True speed_land=4 field_radius=8 field_targets=owned food_need=0.03	a person whose occupation is teaching	yes		
-liar	4.02	person	person	mass=70 integrity=80 alive=True sentient=True intelligence=6 loyalty=2 hands=True speech=True speed_land=5 charm=5 decoys=3 field_radius=60 field_targets=enemies inflict_confuse=3 food_need=0.03 counters=truth	a person who has lied or who lies repeatedly	yes		
-machinery	4.02	artifact	machine	mass=5000 footprint=4 integrity=3000 material=steel portable=False labor=12 build_speed=1.5 upkeep_power=6 loudness=7 dmg_crush=100 color=gray produce_M=0.3 production_needs=vowel,vowel	machines or machine systems collectively	yes		
-mercury	4.02	material	metal	mass=13.5 state=liquid density=13500 hardness=0 melting_point=-39 conductivity=7 toxicity=8 integrity=5 value=20 color=silver inflict_poison=10 slipperiness=6	a heavy silvery toxic univalent and bivalent metallic element	yes	the smallest planet and the nearest to the sun	
-platinum	4.02	material	metal	mass=21.5 density=21450 hardness=4 melting_point=1768 conductivity=5 integrity=150 value=30000 beauty=9 color=silver	a heavy precious metallic element	yes		
-starter	4.02	artifact	device	mass=8 integrity=150 material=steel,copper power_output=1 upkeep_power=0.5 color=gray	an electric motor for starting an engine	yes	a hand tool consisting of a rotating shaft with parallel handle	
-tire	4.02	artifact	machine	mass=10 integrity=120 material=rubber shape=round elasticity=7 terrain_ignored=sand,mud flammability=4 color=black produce_M=0.3 production_needs=vowel,vowel	hoop that covers a wheel	yes		
-aluminum	4.01	material	metal	mass=2.7 density=2700 hardness=3 melting_point=660 conductivity=9 integrity=100 value=2 color=silver	a silvery ductile metallic element found primarily in bauxite	yes		
-buck	4.01	artifact	currency	plural_count=100 mass=0.001 integrity=1 material=paper flammability=9 equip_slot=held hands_required=0 value=1 trade_bonus=0.05 color=green	a piece of paper money worth one dollar	no	a gymnastic horse without pommels and with one end elongated 	
-disk	4.01	artifact	device	mass=0.02 integrity=5 material=plastic,aluminum shape=flat storage_letters=100 color=silver	a flat circular plate	yes	sound recording consisting of a disk with a continuous groove 	
-goddess	4.01	creature	supernatural	mass=0 integrity=150000 alive=True sentient=True intelligence=10 loyalty=0 placement=sky phase=True speed_air=200 dmg_holy=15000 attack_rate=0.1 attack_range=2000 attack_area=20 heals=60 faith_cost=50 upkeep_faith=4 authority=8 charm=9 beauty=10 res_holy=1 res_unholy=1 field_radius=300 field_targets=owned	a female deity	yes		
-liquor	4.01	consumable	drink	mass=0.7 state=liquid edible=True nutrition=1 potency=7 immune_fear=True duration=240 single_use=True shelf_life=0 flammability=7 color=gold	an alcoholic beverage that is distilled rather than fermented	yes	a liquid substance that is a solution (or emulsion or suspension) used or obtained in an industrial process 	
-loser	4.01	person	person	mass=75 integrity=70 alive=True sentient=True intelligence=4 loyalty=4 hands=True speech=True speed_land=4 courage=3 luck=-3 morale=2 food_need=0.03	a contestant who loses the contest	yes	a person with a record of failing 	
-pad	4.01	material	material	mass=0.2 density=200 hardness=1 elasticity=8 flammability=5 integrity=20 value=1 color=white res_blunt=0.4	a number of sheets of paper fastened together along one edge	yes	a block of absorbent material saturated with ink 	
-seller	4.01	person	person	mass=75 integrity=90 alive=True sentient=True intelligence=6 loyalty=5 hands=True speech=True speed_land=5 trade_bonus=0.25 charm=4 storage_letters=80 food_need=0.03	someone who promotes or exchanges goods or services for money	yes		
-thumb	4.01	bodypart	bodypart	equip_slot=graft mass=0.05 integrity=15 hands=True grants_equip_slots=held plural_count=2	the thick short innermost digit of the forelimb	yes		
-timber	4.01	material	material	mass=0.6 density=600 hardness=4 brittleness=2 flammability=7 burn_time=1800 integrity=80 value=1 color=brown buoyancy=6	the wood of trees cut and prepared for use as building material	yes	a beam made of wood 	
-vitamin	4.01	artifact	medicine	mass=0.001 edible=True single_use=True potency=3 restores=15 duration=1800 counters=scurvy,rickets,malnutrition	any of a group of organic substances essential in small quantities to normal metabolism	no		
-voluntary	4.01	person	worker	mass=70 integrity=90 alive=True sentient=True intelligence=5 loyalty=8 hands=True speech=True speed_land=5 labor=2 obedience=7 food_need=0.03	(military) a person who freely enlists for service	yes		
-wheat	4.01	flora	produce	mass=0.5 height=1 integrity=2 alive=True diet=photosynthesis flammability=8 growth_time=5 food_output=0.5 edible=True nutrition=4 placeable_on=field plural_count=20 tile_type=tilled produce_A=0.5 radius=1 production_needs=tilled,water	annual or biennial grass having erect flower spikes and light brown grains	yes	grains of common wheat	
-wrist	4.01	bodypart	bodypart	equip_slot=graft mass=0.2 integrity=30 plural_count=2	a joint between the distal end of the radius and the proximal row of carpal bones	yes		
-banana	4.00	flora	produce	mass=0.12 integrity=1 edible=True nutrition=3 restores=8 duration=60 single_use=True shelf_life=10 slipperiness=8 plural_count=6 color=yellow	elongated crescent-shaped yellow fruit with soft sweet flesh	yes	any of several tropical and subtropical treelike herbs of the genus Musa having a terminal crown of large entire leaves and usually bearing hanging clusters of elongated fruits	
-capitol	4.00	artifact	building	mass=60000000 footprint=60 height=88 integrity=300000 material=marble,stone portable=False enterable=True occupants=2000 lockable=True security=8 cover=0.8 claim_radius=30 storage_letters=3000 authority=8 command_limit=30 tax_rate=0.1 law=attack,theft fine=50 beauty=9 recruit_rate=1 needs_foundation=True color=white	a building occupied by a state legislature	yes	the government building in Washington where the United States Senate and the House of Representatives meet	
-chin	4.00	bodypart	bodypart	equip_slot=graft mass=0.2 integrity=40	the protruding part of the lower jaw	yes		
-clerk	4.00	person	worker	mass=70 integrity=80 alive=True sentient=True intelligence=7 loyalty=6 hands=True speech=True speed_land=4 labor=1 storage_letters=60 food_need=0.03 produce_N=0.25	an employee who performs clerical work (e.g., keeps records or accounts)	yes	a salesperson in a store	
-flour	4.00	consumable	food	mass=1 integrity=1 edible=True raw=True cooks_into=bread nutrition=1 single_use=True shelf_life=0 color=white	fine powdery foodstuff obtained by grinding and sifting the meal of a cereal grain	yes		
-geneva	4.00	consumable	drink	mass=0.7 state=liquid edible=True nutrition=1 potency=7 immune_fear=True duration=240 single_use=True shelf_life=0 flammability=7 color=white	gin made in the Netherlands	yes		
-java	4.00	consumable	drink	mass=0.3 state=liquid edible=True nutrition=0 immune_sleep=True duration=300 single_use=True color=brown	a beverage consisting of an infusion of ground coffee beans	yes		
-organs	4.00	consumable	food	mass=1 integrity=1 edible=True raw=True nutrition=8 restores=20 toxicity=2 single_use=True shelf_life=4 odor=6 color=red	edible viscera of a butchered animal	yes		
-outlet	4.00	artifact	device	mass=0.2 integrity=20 material=plastic,copper conductivity=10 power_output=3 dmg_electric=20 inflict_stun=2 needs_foundation=True portable=False	a place of business for retailing goods	yes	receptacle providing a place in a wiring system where current can be taken to run electrical devices 	
-portal	4.00	artifact	device	mass=1 integrity=20 material=silicon portable=False map_reveal=80 trade_bonus=0.15 recruit_rate=1 upkeep_power=0.2 color=blue	a grand and imposing entrance (often extended metaphorically)	yes		
-prescription	4.00	artifact	medicine	mass=0.01 edible=True single_use=True potency=7 restores=60 duration=900 effect_status=sick,poison,confuse	a drug that is available only with written instructions from a doctor or dentist to a pharmacist	yes		
-silicon	4.00	material	material	mass=2.33 density=2330 hardness=7 brittleness=8 conductivity=5 flammability=0 melting_point=1414 reflectivity=6 integrity=50 value=10 color=gray read_properties=1	a tetravalent nonmetallic element	yes		
-vaccine	4.00	artifact	artifact	mass=0.05 edible=True single_use=True duration=1200 counters=plague,pox,epidemic,pandemic,pestilence	immunogen consisting of a suspension of weakened or dead pathogenic cells injected in order to stimulate the production of antibodies	yes		
-vinyl	4.00	material	material	mass=1.4 density=1400 hardness=3 elasticity=3 conductivity=0 flammability=4 melting_point=160 integrity=40 value=3 color=black res_water=0.9 res_electric=0.7 reflectivity=4	a univalent chemical radical derived from ethylene	yes	shiny and tough and flexible plastic	
-asylum	3.99	artifact	building	mass=3000000 footprint=20 height=12 integrity=30000 hardness=7 material=stone,brick portable=False enterable=True occupants=300 lockable=True security=7 cover=0.7 claim_radius=8 fear_aura=4 law=attack field_radius=50 field_targets=all needs_foundation=True counters=pursuit,manhunt,extradition color=gray	a hospital for mentally incompetent or unbalanced person	yes	a shelter from danger or hardship	
-dancer	3.99	person	worker	mass=60 integrity=90 alive=True sentient=True intelligence=6 loyalty=6 hands=True speech=True speed_land=6 agility=8 evasion=0.3 charm=6 field_radius=10 field_targets=owned food_need=0.03	a performer who dances professionally	yes	a person who participates in a social gathering arranged for dancing (as a ball)	
-entrepreneur	3.99	person	worker	mass=75 integrity=90 alive=True sentient=True intelligence=8 loyalty=5 hands=True speech=True speed_land=5 trade_bonus=0.3 labor=1 craft_slots=1 charm=5 food_need=0.03 produce_N=0.25	someone who organizes a business venture and assumes the risk for it	yes		
-fossil	3.99	terrain	natural_object	mass=5 integrity=200 hardness=7 material=stone age=6000000 value=150 color=gray	the remains (or an impression) of a plant or animal that existed in a past geological age and that has been excavated from the soil	yes		
-injection	3.99	artifact	medicine	mass=0.01 single_use=True potency=6 restores=50 dmg_pierce=2 effect_status=sick,poison duration=600	the forceful insertion of a substance under pressure	no		
-spark	3.99	artifact	device	mass=0.001 integrity=1 state=plasma dmg_fire=10 dmg_electric=20 inflict_burn=2 luminosity=4 temperature=1500 single_use=True attack_range=2 color=yellow	a momentary flash of light	no		
-straw	3.99	material	material	mass=0.2 density=200 hardness=1 flammability=10 integrity=5 value=0.1 color=yellow	plant fiber used e.g. for making baskets and hats or as fodder	yes	material consisting of seed coverings and small pieces of stem or leaves that have been separated from the seeds 	
-successor	3.99	person	leader	mass=75 integrity=110 alive=True sentient=True hands=True speech=True intelligence=6 speed_land=5 authority=4 survives_death=True on_owner_death=pass_to_heir food_need=0.03	a person who follows next in order	yes	a person who inherits some title or office	
-archive	3.98	artifact	structure	mass=2000000 footprint=12 height=10 integrity=50000 material=stone,concrete portable=False enterable=True occupants=30 lockable=True security=7 claim_radius=5 storage_letters=2500 read_properties=8 field_radius=40 field_targets=owned survives_death=True counters=forgetting,amnesia,erasure color=gray	a depository containing historical records and documents	yes		
-bean	3.98	flora	produce	mass=0.01 height=1.5 integrity=1 alive=True diet=photosynthesis growth_time=4 edible=True raw=True nutrition=2 fertility=2 single_use=True placeable_on=field plural_count=20 color=green produce_A=0.4 tile_type=tilled radius=1 production_needs=tilled,water	any of various edible seeds of plants of the family Leguminosae used for food	yes	any of various seeds or fruits that are beans or resemble beans 	
-bicycle	3.98	artifact	vehicle_land	mass=12 length=1.8 integrity=60 material=steel,rubber speed_land=8 agility=6 mountable=True seats=1 equip_slot=mount carry_capacity=20 stealth=2 color=blue	a wheeled vehicle that has two wheels and is moved by foot pedals	yes		
-cord	3.98	artifact	weapon	mass=0.2 length=20 integrity=30 material=nylon inflict_root=3 tow_capacity=200 color=gray	a line made of twisted fibers or threads	yes	a light insulated conductor for household use 	
-defendant	3.98	person	person	mass=75 integrity=90 alive=True sentient=True hands=True speech=True intelligence=6 speed_land=3 charm=3 courage=4 food_need=0.03	a person or institution against whom an action is brought in a court of law	yes		
-hydrogen	3.98	material	gas	mass=0.0001 state=gas density=0.09 hardness=0 flammability=10 buoyancy=10 integrity=1 value=5 color=white speed_air=5 flight_ceiling=10000 hover=True dmg_blast=200 dmg_fire=150 inflict_burn=4	a nonmetallic univalent element that is normally a colorless and odorless highly flammable diatomic gas	yes		
-jaw	3.98	bodypart	bodypart	equip_slot=graft mass=1.5 integrity=100 hardness=7	the part of the skull of a vertebrate that frames the mouth and holds the teeth	yes	the bones of the skull that frame the mouth and serve to open it	
-lawn	3.98	terrain	landform	tile_type=field radius=5 beauty=5 fertility=3 movement_cost=1 portable=False	a field of cultivated and mowed grass	yes		
-needle	3.98	artifact	weapon	mass=0.001 length=0.05 integrity=5 sharpness=9 hardness=7 material=steel equip_slot=held hands_required=1 dmg_pierce=4 craft_slots=1 crafts=clothing,fabric,leather restores=15 counters=balloon,bubble color=silver	the leaf of a conifer	no	a slender pointer for indicating the reading on the scale of a measuring instrument 	
-pond	3.98	terrain	water	tile_type=water radius=2 depth=3 moisture=4 blocks=land water_output=20 portable=False produce_O=0.4 production_needs=extract	a small lake	yes		
-porter	3.98	person	worker	mass=85 integrity=130 alive=True sentient=True intelligence=4 loyalty=6 hands=True speech=True speed_land=4 labor=1 carry_capacity=150 strength=7 food_need=0.04 produce_N=0.25	a person employed to carry luggage and supplies	yes	someone who guards an entrance 	
-prey	3.98	creature	creature	mass=40 length=1.2 integrity=40 alive=True courage=0 diet=herbivore food_need=0.02 speed_land=16 evasion=0.4 stealth=4 alarm=True reproduction=2 pack_size=4 habitat=meadow,savanna,forest color=brown	animal hunted or caught for food	yes	a person who is the aim of an attack (especially a victim of ridicule or exploitation) by some hostile person or influence	
-refugee	3.98	person	person	mass=60 integrity=70 alive=True sentient=True hands=True speech=True intelligence=5 loyalty=6 speed_land=4 morale=3 labor=2 recruit_rate=0.2 food_need=0.02 produce_N=0.4	an exile who flees for safety	yes		
-ruby	3.98	material	gem	mass=4 density=4000 hardness=9 brittleness=3 integrity=300 value=40000 beauty=10 color=red transparency=0.5 res_fire=0.4 luminosity=1	a transparent deep red variety of corundum	yes		
-amber	3.97	material	gem	mass=1.08 density=1080 hardness=2 brittleness=6 melting_point=250 flammability=6 transparency=0.6 conductivity=0 integrity=40 value=1500 beauty=9 color=orange res_electric=0.6 luminosity=1	a deep yellow color	no	a hard yellowish to brownish translucent fossil resin	
-ankle	3.97	bodypart	bodypart	equip_slot=graft mass=0.3 integrity=40 plural_count=2	a gliding joint between the distal ends of the tibia and fibula and the proximal end of the talus	yes		
-berry	3.97	flora	produce	mass=0.003 height=1 integrity=1 alive=True diet=photosynthesis growth_time=4 edible=True nutrition=1 restores=4 single_use=True shelf_life=6 plural_count=30 color=red produce_A=0.4 tile_type=tilled radius=1 production_needs=tilled,water	any of numerous small and pulpy edible fruits	yes	a small fruit having any of various structures, e.g., simple (grape or blueberry) or aggregate (blackberry or raspberry)	
-certification	3.97	artifact	document	mass=0.01 integrity=2 material=paper reputation=1 counters=fraud	a document attesting to the truth of certain stated facts	no		
-licence	3.97	artifact	document	mass=0.01 integrity=2 material=plastic counters=ban,fine,arrest,law	a legal document giving official permission to do something	no		
-mandate	3.97	artifact	document	placement=region field_radius=120 field_targets=all field_duration=10 counters=protest,veto	a document giving an official instruction or command	no		
-steak	3.97	consumable	food	mass=0.4 integrity=2 edible=True raw=True nutrition=12 restores=30 duration=120 single_use=True shelf_life=6 odor=4 color=red	a slice of meat cut from the fleshy part of an animal or large fish	yes		
-therapist	3.97	person	worker	mass=70 integrity=80 alive=True sentient=True intelligence=8 loyalty=7 hands=True speech=True speed_land=4 heals=3 res_psychic=0.4 field_radius=8 field_targets=owned food_need=0.03	a person skilled in a particular type of therapy	yes		
-canvas	3.96	artifact	fabric	mass=1.5 density=1500 hardness=2 flammability=6 integrity=40 value=3 color=yellow res_water=0.5 res_wind=0.4	a heavy, closely woven fabric (used for clothing or chairs or sails or tents)	yes	an oil painting on canvas fabric 	
-cheek	3.96	bodypart	bodypart	equip_slot=graft mass=0.1 integrity=15 plural_count=2	either side of the face below the eyes	yes	either of the two large fleshy masses of muscular tissue that form the human rump	
-comedian	3.96	person	worker	mass=70 integrity=80 alive=True sentient=True intelligence=7 loyalty=6 hands=True speech=True speed_land=4 charm=7 field_radius=12 field_targets=owned food_need=0.03	a professional performer who tells jokes and performs comical acts	yes	an actor in a comedy	
-cooler	3.96	artifact	machine	mass=5 integrity=40 material=plastic temperature=4 storage_objects=30 color=blue produce_M=0.3 production_needs=vowel,vowel	a refrigerator for cooling liquids	yes	a cell for violent prisoners	
-curry	3.96	consumable	food	mass=0.5 state=liquid edible=True nutrition=12 restores=40 duration=180 single_use=True shelf_life=10 odor=7 color=orange	(East Indian cookery) a pungent dish of vegetables or meats flavored with curry powder and usually eaten with rice	yes		
-drake	3.96	creature	bird	mass=1.3 length=0.55 integrity=5 alive=True diet=omnivore food_need=0.003 speed_land=2 speed_water=2 speed_air=20 beauty=6 reproduction=3 tamable=True habitat=marsh,meadow color=green produce_I=0.19	adult male of a wild or domestic duck	yes	English explorer and admiral who was the first Englishman to circumnavigate the globe and who helped to defeat the Spanish Armada (1540-1596)	
-investor	3.96	person	worker	mass=80 integrity=85 alive=True sentient=True intelligence=8 loyalty=4 hands=True speech=True speed_land=4 trade_bonus=0.2 storage_letters=300 food_need=0.03	someone who commits capital in order to gain financial returns	yes		
-marble	3.96	material	mineral	mass=2.7 density=2700 hardness=6 brittleness=4 flammability=0 integrity=250 value=20 beauty=8 color=white	a hard crystalline metamorphic rock that takes a high polish	yes	a small ball of glass that is used in various games 	
-nominee	3.96	person	leader	mass=75 integrity=90 alive=True sentient=True hands=True speech=True intelligence=6 speed_land=4 charm=4 authority=2 food_need=0.03	a politician who is running for public office	yes		
-pillow	3.96	artifact	furniture	mass=0.5 integrity=5 material=cloth comfort=1 equip_slot=held hands_required=1 dmg_blunt=1 inflict_sleep=1 res_blunt=0.1 plural_count=4 color=white	a cushion to support the head of a sleeping person	yes		
-rapper	3.96	person	worker	mass=75 integrity=90 alive=True sentient=True intelligence=7 loyalty=5 hands=True speech=True speed_land=5 loudness=8 charm=6 field_radius=25 field_targets=owned inflict_rage=2 food_need=0.03	someone who performs rap music	yes		
-scholar	3.96	person	worker	mass=65 integrity=80 alive=True sentient=True intelligence=9 loyalty=6 hands=True speech=True speed_land=4 storage_letters=50 field_radius=8 field_targets=owned food_need=0.03	a learned person (especially in the humanities)	yes	someone (especially a child) who learns (as from a teacher) or takes up knowledge or beliefs 	
-spa	3.96	artifact	building	mass=1000000 footprint=10 height=8 integrity=8000 material=stone,tile portable=False enterable=True occupants=80 claim_radius=5 comfort=10 water_output=40 temperature=38 heals=5 effect_status=poison,burn,slow,confuse field_radius=40 field_targets=owned beauty=8 needs_foundation=True color=white	a fashionable hotel usually in a resort area	yes	a place of business with equipment and facilities for exercising and improving physical fitness	
-spike	3.96	artifact	tool	mass=1 length=0.5 integrity=60 sharpness=8 material=iron portable=False stealth=6 trigger_radius=1 dmg_pierce=50 inflict_bleed=8 inflict_root=3 single_use=True	a long, thin sharp-pointed implement (wood or metal)	yes	sports equipment consisting of a sharp point on the sole of a shoe worn by athletes 	
-tab	3.96	artifact	document	placement=target placement_range=20 event_target=character inflict_debt=60 event_duration=1	the bill in a restaurant	no	the key on a typewriter or a word processor that causes a tabulation 	
-underwear	3.96	artifact	clothing	mass=0.1 integrity=5 material=cotton equip_slot=body	undergarment worn next to the skin and under the outer garments	yes		
-waist	3.96	bodypart	bodypart	equip_slot=graft mass=2 integrity=50	the narrowing of the body between the ribs and hips	yes		
-brake	3.95	artifact	machine	mass=8 integrity=200 material=steel,ceramic inflict_slow=3 temperature=200 color=gray produce_M=0.3 production_needs=vowel,vowel	a restraint used to slow or stop a vehicle	yes	anything that slows or hinders a process	
-critic	3.95	person	worker	mass=65 integrity=80 alive=True sentient=True intelligence=8 loyalty=4 hands=True speech=True speed_land=4 read_properties=5 field_radius=10 field_targets=enemies food_need=0.03	a person who is professionally engaged in the analysis and interpretation of works of art	yes	anyone who expresses a reasoned judgment of something 	
-depot	3.95	artifact	building	mass=1000000 footprint=20 height=8 integrity=15000 material=brick,steel portable=False enterable=True occupants=30 lockable=True security=4 claim_radius=5 storage_letters=1500 storage_objects=300000 fuel_output=2 placeable_on=road,land needs_foundation=True color=gray	station where transport vehicles load or unload passengers or goods	yes	a depository for goods	
-eats	3.95	consumable	food	mass=0.5 integrity=1 edible=True nutrition=8 restores=20 duration=60 single_use=True shelf_life=10	informal terms for a meal	yes		
-elevator	3.95	artifact	machine	mass=3000 height=50 integrity=1500 material=steel portable=False enterable=True occupants=12 carry_capacity=1500 climb=10 elevation=50 upkeep_power=10 needs_foundation=True color=silver produce_M=0.3 production_needs=vowel,vowel	lifting device consisting of a platform or cage that is raised and lowered mechanically in a vertical shaft in order to move people from one floor to another in a building	yes	the airfoil on the tailplane of an aircraft that makes it ascend or descend	
-herald	3.95	person	person	mass=70 integrity=90 alive=True sentient=True intelligence=6 loyalty=8 hands=True speech=True speed_land=7 loudness=8 authority=2 command_limit=10 field_radius=80 field_targets=owned food_need=0.03	(formal) a person who announces important news	yes		
-lily	3.95	flora	flower	mass=0.05 height=0.8 integrity=1 alive=True diet=photosynthesis growth_time=3 beauty=9 placeable_on=water,land plural_count=8 color=white produce_P=0.1 production_needs=water,harvest	any liliaceous plant of the genus Lilium having showy pendulous flowers	yes		
-messenger	3.95	person	worker	mass=65 integrity=80 alive=True sentient=True intelligence=6 loyalty=8 hands=True speech=True speed_land=10 sight_range=300 food_need=0.03	a person who carries a message	yes		
-pencil	3.95	artifact	tool	mass=0.01 length=0.18 integrity=3 sharpness=4 material=wood,graphite equip_slot=held hands_required=1 dmg_pierce=3 craft_slots=1 crafts=document color=yellow	a thin cylindrical pointed writing implement	yes	a cosmetic in a long thin stick	
-plasma	3.95	bodypart	bodypart	equip_slot=graft mass=3 state=liquid integrity=20 restores=40	the colorless watery fluid of the blood and lymph that contains no cells, but in which the blood cells (erythrocytes, leukocytes, and thrombocytes) are suspended	yes		
-quarterback	3.95	person	fighter	mass=95 integrity=180 alive=True sentient=True intelligence=7 loyalty=6 hands=True speech=True speed_land=7 strength=7 training=3 dmg_blunt=20 attack_rate=0.8 attack_range=50 accuracy=0.95 command_limit=10 food_need=0.05	(football) the person who plays quarterback	yes		
-ref	3.95	person	worker	mass=75 integrity=100 alive=True sentient=True intelligence=7 loyalty=6 hands=True speech=True speed_land=6 authority=6 peace=120 detect_stealth=6 counters=cheat,foul,brawl food_need=0.03	(sports) the chief official (as in boxing or American football) who is expected to ensure fair play	yes		
-sovereign	3.95	person	leader	mass=80 integrity=130 alive=True sentient=True hands=True speech=True intelligence=7 speed_land=4 authority=10 command_limit=60 tax_rate=0.2 claim_radius=30 immune_charm=True on_owner_death=pass_to_heir food_need=0.04	a nation's ruler or head of state usually by hereditary right	yes		
-supervisor	3.95	person	person	mass=80 integrity=90 alive=True sentient=True intelligence=7 loyalty=6 hands=True speech=True speed_land=4 authority=3 command_limit=12 field_radius=15 field_targets=owned food_need=0.03	one who supervises or has charge and direction of	yes		
-automobile	3.94	artifact	vehicle_land	mass=1500 length=4.5 integrity=600 material=steel speed_land=40 self_propelled=True mountable=True seats=4 carry_capacity=400 range=600 upkeep_fuel=0.1 dmg_crush=150 color=blue	a motor vehicle with four wheels	yes		
-cement	3.94	material	material	mass=1.5 density=1500 hardness=7 brittleness=4 flammability=0 integrity=450 value=0.5 color=gray inflict_root=6 res_fire=0.8	concrete pavement is sometimes referred to as cement	yes	a building material that is a powder made of a mixture of calcined limestone and clay 	
-cox	3.94	person	worker	mass=60 integrity=90 alive=True sentient=True intelligence=7 loyalty=7 hands=True speech=True speed_land=5 loudness=4 field_radius=20 field_targets=owned food_need=0.03	the helmsman of a ship's boat or a racing crew	yes		
-grove	3.94	terrain	landform	tile_type=forest radius=4 movement_cost=1.5 blocks=sight cover=0.4 stealth=3 flammability=6 portable=False fertility=5 beauty=6	a small growth of trees without underbrush	no		
-gum	3.94	consumable	food	mass=0.005 edible=True nutrition=0 stickiness=8 inflict_root=4 inflict_slow=10 shelf_life=0	a preparation (usually made of sweetened chicle) for chewing	yes	any of various substances (soluble in water) that exude from certain plants 	
-lance	3.94	artifact	weapon	mass=8 length=4 integrity=150 hardness=7 sharpness=8 material=wood,steel equip_slot=held hands_required=2 dmg_pierce=120 attack_rate=0.5 attack_range=4 knockback=6 counters=dragon,wyvern	a long pointed rod used as a tool or weapon	yes	an implement with a shaft and barbed point used for catching fish 	
-prosecutor	3.94	person	person	mass=80 integrity=100 alive=True sentient=True intelligence=8 loyalty=6 hands=True speech=True speed_land=4 authority=3 read_properties=5 counters=thief,smuggler,swindler,embezzler,criminal food_need=0.03	a government official who conducts criminal prosecutions on behalf of the state	yes		
-spice	3.94	consumable	food	mass=0.02 integrity=1 edible=True restores=4 odor=6 value=50 duration=120 single_use=True color=red	any of a variety of pungent aromatic vegetable substances used for flavoring food	yes	aromatic substances of vegetable origin used as a preservative	
-towel	3.94	artifact	artifact	mass=0.5 integrity=10 material=cotton equip_slot=held flammability=7 counters=wet color=white	a rectangular piece of absorbent cloth (or paper) for drying or wiping	yes		
-vegetable	3.94	flora	produce	mass=0.3 height=0.4 integrity=2 alive=True diet=photosynthesis growth_time=5 edible=True raw=True nutrition=3 restores=8 duration=120 single_use=True shelf_life=20 placeable_on=field plural_count=6 color=green produce_A=0.4 tile_type=tilled radius=1 production_needs=tilled,water	edible seeds or roots or stems or leaves or bulbs or tubers or nonsweet fruits of any of numerous herbaceous plant	yes	any of various herbaceous plants cultivated for an edible part such as the fruit or the root of the beet or the leaf of spinach or the seeds of bean plants or the flower buds of broccoli or cauliflower	
-bloom	3.93	flora	plant	mass=0.01 height=0.4 integrity=1 alive=True diet=photosynthesis growth_time=2 beauty=9 odor=4 plural_count=20 color=pink produce_P=0.1 production_needs=water,harvest	reproductive organ of angiosperm plants especially one having showy or colorful parts	yes		
-clown	3.93	person	person	mass=70 integrity=80 alive=True sentient=True hands=True speech=True speed_land=5 food_need=0.03 charm=6 dmg_blunt=5 attack_rate=1 inflict_confuse=3	a rude or vulgar fool	yes	a person who amuses others by ridiculous behavior	
-desktop	3.93	artifact	device	mass=10 integrity=30 material=plastic,steel portable=False upkeep_power=0.4 read_properties=6 detect_letters=700 storage_letters=400 color=black	(computer science) the area of the screen in graphical user interfaces against which icons and windows appear	yes		
-dial	3.93	artifact	device	mass=0.1 integrity=10 material=plastic color=black	the control on a radio or television set that is used for tuning	yes	the face of a timepiece 	
-directory	3.93	artifact	document	mass=1 integrity=5 material=paper detect_life=500 map_reveal=50 read_properties=2	an alphabetical list of names and addresses	no		
-ginger	3.93	flora	herb	mass=0.05 height=0.8 integrity=1 alive=True diet=photosynthesis growth_time=4 edible=True restores=15 effect_status=poison,confuse duration=120 single_use=True plural_count=6 color=yellow produce_P=0.1 production_needs=water,harvest	perennial plants having thick branching aromatic rhizomes and leafy reedlike stems	yes	dried ground gingerroot 	
-jar	3.93	artifact	container	mass=0.5 integrity=8 brittleness=8 material=glass volume=0.001 storage_objects=1 transparency=0.9 plural_count=4 color=clear	a vessel (usually cylindrical) with a wide mouth and without handles	yes		
-painter	3.93	person	worker	mass=70 integrity=90 alive=True sentient=True intelligence=7 loyalty=6 hands=True speech=True speed_land=4 labor=2 craft_slots=1 charm=4 field_radius=8 field_targets=owned food_need=0.03 produce_N=0.4	a worker who is employed to cover objects with paint	yes	an artist who paints	
-printer	3.93	artifact	device	mass=8 integrity=20 material=plastic portable=False duplicates=1 storage_letters=30 upkeep_power=0.1 loudness=4 color=gray produce_N=0.4	someone whose occupation is printing	no	(computer science) an output device that prints the results of data processing 	
-sanctuary	3.93	artifact	artifact	mass=50000 footprint=6 integrity=20000 material=stone portable=False field_radius=60 law=attack,theft heals=2	a consecrated place where sacred objects are kept	yes	a shelter from danger or hardship 	
-sleeve	3.93	artifact	clothing	mass=0.1 integrity=6 material=cloth equip_slot=hands res_cold=0.1 container_slots=1 stealth=1	the part of a garment that is attached at the armhole and that provides a cloth covering for the arm	yes	small case into which an object fits	
-spine	3.93	bodypart	bodypart	equip_slot=graft mass=2 integrity=120 hardness=6 plural_count=40	the series of vertebrae forming the axis of the skeleton and protecting the spinal cord	yes	a sharp rigid animal process or appendage	
-steering	3.93	artifact	device	mass=5 integrity=80 material=steel,plastic color=black	the act of guiding or showing the way	no		
-treasurer	3.93	person	person	mass=75 integrity=90 alive=True sentient=True hands=True speech=True intelligence=8 loyalty=7 speed_land=3 storage_letters=500 trade_bonus=0.15 food_need=0.03	an officer charged with receiving and disbursing funds	yes		
-triangle	3.93	artifact	instrument	mass=0.2 integrity=40 material=steel equip_slot=held hands_required=1 loudness=6 dmg_sonic=3 field_radius=25 field_targets=owned alarm=True	a percussion instrument consisting of a metal bar bent in the shape of an open triangle	yes	any of various triangular drafting instruments used to draw straight lines at specified angles	
-debris	3.92	material	material	mass=2 density=2000 hardness=4 brittleness=5 flammability=2 integrity=50 value=0 color=gray dmg_blunt=15	the remains of something that has been destroyed or broken up	yes		
-donor	3.92	person	person	mass=75 integrity=90 alive=True sentient=True intelligence=6 loyalty=7 hands=True speech=True speed_land=4 storage_letters=300 charm=5 reputation=3 field_radius=10 field_targets=owned food_need=0.03	person who makes a gift of property	yes	(medicine) someone who gives blood or tissue or an organ to be used in another person (the host)	
-garlic	3.92	consumable	food	mass=0.05 height=0.3 integrity=1 alive=True diet=photosynthesis growth_time=4 edible=True nutrition=1 restores=5 odor=8 duration=300 single_use=True counters=vampire,ghoul plural_count=6 color=white	aromatic bulb used as seasoning	yes		
-indicator	3.92	artifact	device	mass=0.1 integrity=5 material=plastic alarm=True luminosity=2 read_properties=2 upkeep_power=0.01	a device for showing the operating condition of some system	yes		
-lounge	3.92	artifact	building	mass=30000 footprint=3 height=4 integrity=1500 material=wood,leather portable=False enterable=True occupants=30 claim_radius=2 comfort=7 color=brown	an upholstered seat for more than one person	yes	a room (as in a hotel or airport) with seating where people can wait	
-mint	3.92	flora	herb	mass=0.02 height=0.3 integrity=1 alive=True diet=photosynthesis growth_time=2 edible=True restores=10 effect_status=confuse,sleep duration=60 spread_rate=0.3 single_use=True plural_count=6 color=green produce_P=0.1 production_needs=water,harvest	any north temperate plant of the genus Mentha with aromatic leaves and small mauve flowers	yes	any member of the mint family of plants 	
-nova	3.92	terrain	celestial	placement=map field_radius=ABS field_targets=all field_duration=2 inflict_blind=3 dmg_radiation=2 attack_rate=0.1 friendly_fire=True temperature_delta=6 lode=z,q lode_share=0.05 lode_stock=4 counters=eclipse,dome,shelter,magnetosphere	a star that ejects some of its material in the form of a cloud and becomes more luminous in the process	yes		
-pasta	3.92	consumable	food	mass=0.5 integrity=1 edible=True raw=True nutrition=4 restores=10 single_use=True shelf_life=0 color=yellow	a dish that contains pasta as its main ingredient	yes	shaped and dried dough made from flour and water and sometimes egg	
-showcase	3.92	artifact	container	mass=60 footprint=1 integrity=50 brittleness=8 material=glass,wood lockable=True security=3 storage_letters=60 storage_objects=40 transparency=0.9 beauty=8 color=clear	a glass container used to store and display items in a shop or museum or home	yes		
-wax	3.92	material	material	mass=0.9 density=900 hardness=1 melting_point=60 flammability=8 burn_time=3600 integrity=8 value=1 color=yellow luminosity=1	any of various substances of either mineral origin or plant or animal origin	yes		
-aerial	3.91	artifact	device	mass=10 height=12 integrity=40 material=aluminum portable=False hearing_range=8000 map_reveal=80 detect_life=300 conductivity=9 upkeep_power=0.2 color=silver	an electrical device that sends or receives radio or television signals	yes		
-ammunition	3.91	artifact	artifact	mass=1 integrity=10 material=lead,brass single_use=True plural_count=60	projectiles to be fired from a gun	yes		
-catalog	3.91	artifact	document	mass=1 integrity=5 material=paper detect_letters=400 trade_bonus=0.15	a book or pamphlet containing an enumeration of things	no		
-catalogue	3.91	artifact	document	mass=1 integrity=5 material=paper detect_letters=400 trade_bonus=0.15	a book or pamphlet containing an enumeration of things	no		
-collector	3.91	person	person	mass=80 integrity=110 alive=True sentient=True hands=True speech=True intelligence=6 speed_land=5 tax_rate=0.15 letter_steal=4 intimidation=3 food_need=0.03	a person who collects things	yes	a person who is employed to collect payments (as for rent or taxes)	
-danish	3.91	consumable	food	mass=0.1 integrity=1 edible=True nutrition=4 restores=8 duration=60 single_use=True shelf_life=15 color=yellow	light sweet yeast-raised roll usually filled with fruits or cheese	yes		
-fountain	3.91	artifact	structure	mass=8000 footprint=2 height=3 integrity=3000 material=stone portable=False water_output=15 beauty=8 field_radius=30 field_targets=owned produce_O=0.5 production_needs=extract	a structure from which an artificially produced jet of water arises	yes	an artificially produced flow of water 	
-hay	3.91	consumable	food	mass=20 integrity=5 flammability=10 burn_time=120 edible=True nutrition=3 food_output=1 elasticity=6 stealth=4 shape=pile color=yellow	grass mowed and cured for use as fodder	yes		
-paste	3.91	material	material	mass=1.2 density=1200 hardness=0 stickiness=6 integrity=5 value=0.5 color=white inflict_slow=3	any mixture of a soft and malleable consistency	yes	a hard, brilliant lead glass that is used in making artificial jewelry 	
-pioneer	3.91	person	worker	mass=80 integrity=140 alive=True sentient=True intelligence=7 loyalty=7 hands=True speech=True speed_land=6 labor=2 build_speed=1.5 sight_range=300 map_reveal=30 claim_radius=3 terrain_ignored=forest,swamp food_need=0.04 produce_N=0.4	someone who helps to open up a new line of research or technology or art	yes	one of the first colonists or settlers in a new territory	
-sack	3.91	artifact	container	mass=0.5 integrity=10 material=burlap storage_objects=40 container_slots=4 carry_capacity=40 inflict_blind=3 color=brown	a bag made of paper or plastic for holding customer's purchases	yes	a woman's full loose hiplength jacket 	
-wool	3.91	artifact	fabric	mass=1.3 density=1300 hardness=1 flammability=3 integrity=25 value=5 color=white res_cold=0.5	a fabric made from the hair of sheep	yes		
-cardinal	3.90	person	leader	mass=75 integrity=100 alive=True sentient=True intelligence=8 loyalty=8 hands=True speech=True speed_land=4 authority=6 command_limit=20 faith_output=2.5 recruit_rate=1 intimidation=3 res_unholy=0.7 color=red food_need=0.03	(Roman Catholic Church) one of a group of more than 100 prominent bishops in the Sacred College who advise the Pope and elect new Popes	yes		
-champ	3.90	person	fighter	mass=90 integrity=280 alive=True sentient=True intelligence=6 loyalty=7 hands=True speech=True speed_land=7 strength=9 training=6 courage=9 dmg_blunt=45 attack_rate=1.3 food_need=0.04	someone who has won first place in a competition	yes		
-champagne	3.90	consumable	drink	mass=0.75 state=liquid edible=True nutrition=2 potency=4 duration=300 single_use=True shelf_life=0 loudness=4 value=50 color=gold	a white sparkling wine either produced in Champagne or resembling that produced there	yes		
-chrome	3.90	material	metal	mass=7.2 density=7190 hardness=8 melting_point=1907 reflectivity=9 integrity=300 value=20 color=silver res_light=0.5	another word for chromium when it is used in dyes or pigments	yes		
-cleaner	3.90	artifact	artifact	mass=1 state=liquid integrity=1 corrosiveness=3 toxicity=2 odor=5 negates=stickiness,odor color=blue	a preparation used in cleaning something	yes		
-griffin	3.90	creature	supernatural	mass=500 length=4 integrity=25000 alive=True sentient=True intelligence=7 loyalty=8 aggression=5 diet=carnivore food_need=1 speed_land=14 speed_air=50 flight_ceiling=5000 mountable=True seats=2 dmg_slash=900 dmg_pierce=400 attack_rate=1 attack_range=4 targets=land,air armor=40 courage=10 fear_aura=5	winged monster with the head of an eagle and the body of a lion	yes		
-historian	3.90	person	worker	mass=65 integrity=80 alive=True sentient=True intelligence=9 loyalty=6 hands=True speech=True speed_land=4 read_properties=4 storage_letters=60 food_need=0.03	a person who is an authority on history and who studies it and writes about it	yes		
-hostage	3.90	person	person	mass=70 integrity=80 alive=True sentient=True hands=True speech=True intelligence=5 loyalty=4 speed_land=1 morale=1 value=200 food_need=0.02	a prisoner who is held by one party to insure that another party will meet specified terms	yes		
-monument	3.90	artifact	structure	mass=2000000 footprint=4 height=30 integrity=200000 hardness=8 material=stone,bronze portable=False claim_radius=10 field_radius=80 field_targets=owned authority=3 beauty=9 sight_range=400 color=white	a structure erected to commemorate persons or events	yes	a burial vault (usually for some famous person)	
-particle	3.90	material	material	mass=0.001 density=2000 hardness=5 integrity=1 value=0 color=gray stealth=8	(nontechnical usage) a tiny piece of anything	yes	a body having finite mass and internal structure but negligible dimensions	
-peanut	3.90	flora	produce	mass=0.001 height=0.4 integrity=1 alive=True diet=photosynthesis growth_time=5 edible=True nutrition=1 restores=2 single_use=True shelf_life=0 placeable_on=field plural_count=30 fertility=2 color=brown produce_A=0.4 tile_type=tilled radius=1 production_needs=tilled,water	underground pod of the peanut vine	yes	widely cultivated American plant cultivated in tropical and warm regions 	
-petroleum	3.90	material	fuel	mass=0.85 state=liquid density=850 hardness=0 flammability=8 toxicity=3 odor=6 slipperiness=6 integrity=1 value=5 color=black dmg_fire=80 fuel_output=2	a dark oil consisting mainly of hydrocarbons	yes		
-pharmaceutical	3.90	artifact	medicine	mass=0.01 edible=True single_use=True potency=7 restores=50 duration=600 effect_status=sick,poison value=20	drug or medicine that is prepared or dispensed in pharmacies and used in medical treatment	yes		
-rack	3.90	artifact	furniture	mass=20 integrity=80 material=steel storage_objects=60 container_slots=10 color=gray produce_B=0.1 production_needs=claim	framework for holding objects	yes	an instrument of torture that stretches or disjoints or mutilates victims 	
-scrap	3.90	material	material	mass=4 density=4000 hardness=5 brittleness=4 flammability=0 conductivity=6 integrity=100 value=1 color=brown sharpness=3 inflict_bleed=3 beauty=1	worthless material that is to be disposed of	yes	a small fragment of something broken off from the whole 	
-shuttle	3.90	artifact	weapon	mass=0.1 length=0.3 integrity=20 material=wood craft_slots=1 crafts=fabric,clothing build_speed=1.1 color=brown	badminton equipment consisting of a ball of cork or rubber with a crown of feathers	yes	public transport that consists of a bus or train or airplane that flies back and forth between two points 	
-snack	3.90	consumable	food	mass=0.1 integrity=1 edible=True nutrition=3 restores=5 duration=60 single_use=True shelf_life=30 plural_count=3	a light informal meal	yes		
-spotlight	3.90	artifact	device	mass=15 integrity=40 material=steel,glass portable=False luminosity=9 sight_range=250 detect_stealth=5 inflict_blind=2 map_reveal=30 upkeep_power=1 color=white	a focus of public attention	no	a lamp that produces a strong beam of light to illuminate a restricted area	
-striker	3.90	person	fighter	mass=75 integrity=130 alive=True sentient=True intelligence=6 loyalty=6 hands=True speech=True speed_land=9 agility=8 training=3 dmg_blunt=25 attack_rate=1 attack_range=30 critical=0.2 food_need=0.05	a forward on a soccer team	yes	someone receiving intensive training for a naval technical rating 	
-vet	3.90	person	worker	mass=75 integrity=100 alive=True sentient=True intelligence=8 loyalty=7 hands=True speech=True speed_land=5 heals=6 res_disease=0.6 recruit_rate=0.3 food_need=0.03 field_radius=10 field_targets=owned effect_status=sick,bleed,poison counters=rabies,mange,distemper	a doctor who practices veterinary medicine	yes	a person who has served in the armed forces	
-broker	3.89	person	worker	mass=80 integrity=90 alive=True sentient=True intelligence=8 loyalty=4 hands=True speech=True speed_land=4 trade_bonus=0.4 charm=5 food_need=0.03	a businessman who buys or sells for another in exchange for a commission	yes		
-cocktail	3.89	consumable	drink	mass=0.2 state=liquid edible=True nutrition=1 potency=5 duration=240 single_use=True shelf_life=0	a short mixed drink	yes	an appetizer served as a first course at a meal	
-fist	3.89	bodypart	bodypart	equip_slot=graft mass=0.5 integrity=60 hardness=5 plural_count=2	a hand with the fingers clenched in the palm (as for hitting)	yes		
-heir	3.89	person	worker	mass=50 integrity=70 alive=True sentient=True intelligence=6 loyalty=8 hands=True speech=True speed_land=5 prevents_death=1 survives_death=True food_need=0.03	a person who is entitled by law or by the terms of a will to inherit the estate of another	yes	a person who inherits some title or office	
-landlord	3.89	person	person	mass=85 integrity=90 alive=True sentient=True hands=True speech=True intelligence=6 speed_land=4 tax_rate=0.3 claim_radius=10 storage_letters=500 food_need=0.04	a landowner who leases to others	yes		
-mosque	3.89	artifact	building	mass=3000000 footprint=25 height=40 integrity=50000 material=stone portable=False enterable=True occupants=1000 needs_foundation=True comfort=3 heals=2 faith_output=5 recruit_rate=0.5 loudness=6 beauty=9 field_radius=60 field_targets=owned	(Islam) a Muslim place of worship that usually has a minaret	yes		
-moss	3.89	flora	plant	mass=0.01 height=0.02 integrity=2 alive=True diet=photosynthesis growth_time=2 spread_rate=0.2 moisture=2 slipperiness=3 stealth=2 color=green produce_P=0.1 production_needs=water,harvest	tiny leafy-stemmed flowerless plants	yes		
-nursery	3.89	artifact	structure	mass=6000 footprint=2 height=3 integrity=500 material=wood portable=False enterable=True occupants=6 comfort=3 heals=1 claim_radius=1 color=pink produce_B=0.3 production_needs=claim	a child's room for a baby	yes		
-onion	3.89	flora	produce	mass=0.15 height=0.4 integrity=2 alive=True diet=photosynthesis growth_time=5 edible=True raw=True nutrition=1 restores=4 odor=6 inflict_blind=3 single_use=True shelf_life=200 placeable_on=field plural_count=8 color=white produce_A=0.4 tile_type=tilled radius=1 production_needs=tilled,water	an aromatic flavorful vegetable	yes	the bulb of an onion plant 	
-recruit	3.89	person	fighter	mass=75 integrity=150 alive=True sentient=True intelligence=5 loyalty=6 hands=True speech=True speed_land=6 training=2 courage=5 dmg_slash=25 attack_rate=1 trainable=8 food_need=0.04	a recently enlisted soldier	yes	any new member or supporter (as in the armed forces)	
-rogue	3.89	person	person	mass=70 integrity=100 alive=True sentient=True intelligence=7 loyalty=3 hands=True speech=True speed_land=7 agility=8 stealth=7 charm=5 letter_steal=4 dmg_slash=25 attack_rate=1.5 critical=0.25 food_need=0.03	a deceitful and unreliable scoundrel	yes		
-tomb	3.89	artifact	structure	mass=300000 footprint=4 height=4 integrity=100000 hardness=8 material=stone portable=False enterable=True lockable=True security=8 claim_radius=3 storage_letters=1500 luminosity=0 fear_aura=3 survives_death=True summons=mummy summon_count=1 summon_owned=True color=gray	a place for the burial of a corpse (especially beneath the ground and marked by a tombstone)	yes		
-abbey	3.88	artifact	building	mass=10000000 footprint=40 height=25 integrity=100000 material=stone portable=False enterable=True occupants=150 needs_foundation=True comfort=4 heals=3 faith_output=4 food_output=4 storage_letters=500 security=4 claim_radius=10 field_radius=50 field_targets=owned law=attack produce_C=0.6 production_needs=labor	a church associated with a monastery or convent	yes	a convent ruled by an abbess 	
-baron	3.88	person	leader	mass=85 integrity=130 alive=True sentient=True intelligence=7 loyalty=6 hands=True speech=True speed_land=4 authority=5 command_limit=30 tax_rate=0.1 claim_radius=5 field_radius=12 food_need=0.04	a nobleman (in various countries) of varying rank	yes	a British peer of the lowest rank 	
-bunny	3.88	creature	mammal	mass=1.5 length=0.4 integrity=5 alive=True diet=herbivore food_need=0.002 speed_land=12 evasion=0.4 courage=0 comfort=3 charm=7 reproduction=12 tamable=True equip_slot=companion habitat=meadow color=white produce_I=0.19	(usually informal) especially a young rabbit	yes	a young waitress in a nightclub whose costume includes the tail and ears of a rabbit	
-clutch	3.88	artifact	machine	mass=10 integrity=200 material=steel color=gray produce_M=0.3 production_needs=vowel,vowel	the act of grasping	no	a woman's strapless purse that is carried in the hand 	
-coconut	3.88	consumable	food	mass=1.5 integrity=15 hardness=5 dmg_blunt=15 edible=True nutrition=5 restores=15 duration=300 single_use=True shelf_life=60 buoyancy=6 color=brown	the edible white meat of a coconut	yes	large hard-shelled oval nut with a fibrous husk containing thick white meat surrounding a central cavity filled (when fresh) with fluid or milk	
-corridor	3.88	artifact	structure	mass=10000 footprint=3 height=3 integrity=2000 material=stone portable=False enterable=True occupants=10 tile_type=floor radius=1 movement_cost=0.8 cover=0.4 color=gray	an enclosed passageway	yes		
-header	3.88	artifact	device	mass=0 integrity=1 read_properties=2	horizontal beam used as a finishing piece over a door or window	yes	brick that is laid sideways at the top of a wall 	
-holly	3.88	flora	tree	mass=300 height=6 integrity=500 alive=True diet=photosynthesis material=wood thorns=5 toxicity=4 beauty=6 growth_time=60 produce_P=0.3 production_needs=water,harvest	any tree or shrub of the genus Ilex having red berries and shiny evergreen leaves with prickly edges	yes		
-lining	3.88	artifact	artifact	mass=0.5 integrity=20 material=cloth	a protective covering that protects an inside surface	yes	a piece of cloth that is used as the inside surface of a garment	
-manila	3.88	material	material	mass=1.4 density=1400 hardness=2 elasticity=5 flammability=6 integrity=60 value=3 color=yellow res_water=0.6	a strong paper or thin cardboard with a smooth light brown finish made from e.g. Manila hemp	yes		
-opener	3.88	artifact	weapon	mass=0.05 integrity=40 material=steel equip_slot=held hands_required=1 dmg_pierce=3 counters=can,tin,bottle,lock color=silver	the first event in a series	no	a hand tool used for opening sealed containers (bottles or cans)	
-spoon	3.88	artifact	weapon	mass=0.04 length=0.18 integrity=20 material=steel equip_slot=held hands_required=1 dmg_blunt=2 plural_count=6 comfort=0.5 color=silver produce_B=0.12 production_needs=claim	a piece of cutlery with a shallow bowl-shaped container and a handle	yes	formerly a golfing wood with an elevated face	
-teddy	3.88	artifact	toy	mass=0.4 integrity=8 material=cloth,fur comfort=6 beauty=5 charm=4 inflict_charm=2	plaything consisting of a child's toy bear (usually plush and stuffed with soft materials)	yes	a woman's sleeveless undergarment	
-terrace	3.88	artifact	structure	mass=50000 footprint=4 height=1 integrity=8000 material=stone portable=False comfort=3 claim_radius=2 elevation=1 fertility=4 tile_type=floor radius=2 beauty=7 color=gray	usually paved outdoor area adjoining a residence	yes		
-villain	3.88	person	person	mass=80 integrity=150 alive=True sentient=True intelligence=8 loyalty=3 aggression=7 hands=True speech=True speed_land=5 authority=4 fear_aura=6 intimidation=7 dmg_slash=40 attack_rate=1 command_limit=6 food_need=0.04 counters=hero	a wicked or evil person	yes	the principal bad character in a film or work of fiction	
-billboard	3.87	artifact	structure	mass=3000 footprint=1 height=10 integrity=800 material=steel,paper portable=False blocks=sight luminosity=4 trade_bonus=0.05 recruit_rate=0.2 color=yellow	large outdoor signboard	yes		
-bully	3.87	person	person	mass=90 integrity=130 alive=True sentient=True intelligence=3 loyalty=3 aggression=6 courage=4 hands=True speech=True speed_land=5 strength=7 intimidation=5 letter_steal=2 dmg_blunt=20 attack_rate=1 inflict_fear=4 food_need=0.04	a cruel and brutal fellow	yes	a hired thug	
-economist	3.87	person	worker	mass=70 integrity=80 alive=True sentient=True intelligence=9 loyalty=5 hands=True speech=True speed_land=4 trade_bonus=0.2 read_properties=3 food_need=0.03	an expert in the science of economics	yes		
-forehead	3.87	bodypart	bodypart	equip_slot=graft mass=0.3 integrity=80 hardness=6	the part of the face above the eyes	yes	the large cranial bone forming the front part of the cranium: includes the upper part of the orbits	
-gem	3.87	material	gem	mass=3.5 density=3500 hardness=8 brittleness=5 flammability=0 transparency=0.6 integrity=200 value=20000 beauty=10 color=blue luminosity=1 charm=2	a crystalline rock that can be cut and polished for jewelry	yes	art highly prized for its beauty or perfection 	
-heather	3.87	flora	shrub	mass=0.5 height=0.6 integrity=2 alive=True diet=photosynthesis flammability=7 growth_time=10 beauty=6 spread_rate=0.3 temp_min=-25 movement_cost=1.3 plural_count=10 color=purple produce_P=0.2 production_needs=water,harvest	common Old World heath represented by many varieties	yes		
-marker	3.87	artifact	tool	mass=0.02 integrity=5 material=plastic map_reveal=20 inflict_expose=60 placement=target placement_range=40 event_target=character event_duration=1 color=red	a writing implement for making a mark	yes	some conspicuous object used to distinguish or mark something	
-marsh	3.87	terrain	landform	tile_type=marsh radius=8 moisture=9 movement_cost=2.2 stealth=3 portable=False fertility=6	low-lying wet land with grassy vegetation	yes		
-marshal	3.87	person	person	mass=85 integrity=210 alive=True sentient=True intelligence=7 loyalty=7 hands=True speech=True speed_land=6 authority=5 alarm=True detect_stealth=6 tracking=7 dmg_pierce=60 attack_rate=1 attack_range=40 inflict_root=4 courage=8 counters=outlaw,bandit,fugitive food_need=0.04	a law officer having duties similar to those of a sheriff in carrying out the judgments of a court of law	yes	(in some countries) a military officer of highest rank	
-ninja	3.87	person	fighter	mass=65 integrity=150 alive=True sentient=True intelligence=8 loyalty=8 hands=True speech=True speed_land=8 training=9 stealth=9 climb=8 evasion=0.4 dmg_slash=40 dmg_pierce=25 attack_rate=2 attack_range=10 critical=0.4 night_vision=True food_need=0.04	a member of the ninja who were trained in martial arts and hired for espionage or sabotage or assassinations	yes		
-pharmacy	3.87	artifact	building	mass=200000 footprint=4 height=5 integrity=4000 material=brick,glass portable=False enterable=True occupants=10 claim_radius=2 storage_letters=40 field_radius=16 field_targets=owned effect_status=sick,poison,burn crafts=medicine,pill,antibiotic,ointment needs_foundation=True counters=disease,fever,headache color=white produce_C=0.6 production_needs=labor	the art and science of preparing and dispensing drugs and medicines,	no	a retail shop where medicine and other articles are sold	
-processor	3.87	artifact	device	mass=0.05 integrity=5 material=silicon read_properties=3 temperature=70 upkeep_power=0.1 value=300 color=gray	a business engaged in processing agricultural products and preparing them for market	no	(computer science) the part of a computer (a microprocessor chip) that does most of the data processing	
-rubbish	3.87	material	material	mass=0.5 density=500 hardness=1 flammability=6 odor=8 toxicity=2 integrity=8 value=0 color=brown dmg_disease=10 beauty=0	worthless material that is to be disposed of	yes		
-salon	3.87	artifact	building	mass=50000 footprint=3 height=4 integrity=2500 material=wood,glass portable=False enterable=True occupants=30 claim_radius=2 comfort=5 beauty=9 field_radius=20 field_targets=owned color=gold	gallery where works of art can be displayed	yes	a shop where hairdressers and beauticians work 	
-sodium	3.87	material	metal	mass=0.97 density=970 hardness=0 melting_point=98 conductivity=8 flammability=9 corrosiveness=6 integrity=5 value=3 color=silver dmg_fire=60 dmg_blast=80 res_water=-1 inflict_burn=4	a silvery soft waxy metallic element of the alkali metal group	yes		
-swallow	3.87	creature	bird	mass=0.02 length=0.18 integrity=1 alive=True diet=carnivore food_need=0.0005 speed_air=20 agility=10 evasion=0.5 range=10000 pack_size=10 counters=mosquito,fly,gnat,midge habitat=meadow,marsh,city color=blue	small long-winged songbird noted for swift graceful flight and the regularity of its migrations	yes		
-congressman	3.86	person	person	mass=80 integrity=100 alive=True sentient=True intelligence=8 loyalty=5 hands=True speech=True speed_land=4 authority=4 charm=6 field_radius=12 field_targets=all law=theft fine=3 food_need=0.03	a member of the United States House of Representatives	yes		
-coral	3.86	material	gem	mass=2.6 density=2600 hardness=4 brittleness=7 flammability=0 integrity=60 value=600 beauty=8 color=pink sharpness=5 inflict_bleed=4 res_water=0.6	the hard stony skeleton of a Mediterranean coral that has a delicate red or pink color and is used for jewelry	yes		
-correspondent	3.86	person	person	mass=70 integrity=90 alive=True sentient=True intelligence=7 loyalty=6 hands=True speech=True speed_land=6 sight_range=300 map_reveal=80 detect_life=400 command_limit=5 food_need=0.03	someone who communicates by means of letters	yes	a journalist employed to provide news stories for newspapers or broadcast media	
-coupon	3.86	artifact	document	mass=0.002 integrity=1 material=paper single_use=True	a negotiable certificate that can be detached and redeemed as needed	no		
-curtain	3.86	artifact	furniture	mass=3 integrity=8 material=cloth comfort=0.5 blocks=sight stealth=3 flammability=8 color=red produce_B=0.1 production_needs=claim	hanging cloth used as a blind (especially for a window)	yes		
-dentist	3.86	person	worker	mass=75 integrity=90 alive=True sentient=True intelligence=8 loyalty=6 hands=True speech=True speed_land=4 heals=3 dmg_pierce=8 attack_rate=1 fear_aura=3 food_need=0.03 counters=toothache,cavity,decay	a person qualified to practice dentistry	yes		
-dough	3.86	consumable	food	mass=0.5 integrity=1 edible=True raw=True cooks_into=bread nutrition=2 single_use=True shelf_life=10 color=white	a flour mixture stiff enough to knead or roll	yes		
-envelope	3.86	artifact	container	mass=0.01 integrity=1 material=paper storage_letters=5 stealth=4 flammability=9 plural_count=5 color=white	a flat (usually rectangular) container for a letter, thin package, etc.	yes	any wrapper or covering 	
-granite	3.86	material	mineral	mass=2.75 density=2750 hardness=7 brittleness=3 flammability=0 integrity=400 value=5 color=gray	plutonic igneous rock having visibly crystalline texture	yes		
-greens	3.86	flora	produce	mass=0.3 height=0.3 integrity=1 alive=True diet=photosynthesis growth_time=3 edible=True nutrition=2 restores=10 duration=180 single_use=True shelf_life=6 placeable_on=field plural_count=1 color=green produce_A=0.4 tile_type=tilled radius=1 production_needs=tilled,water	any of various leafy plants or their leaves and stems eaten as vegetables	yes		
-handbook	3.86	artifact	document	mass=0.4 integrity=5 material=paper	a concise reference book providing specific information about a subject or location	no		
-lime	3.86	material	material	mass=2.2 density=2200 hardness=2 brittleness=6 flammability=0 corrosiveness=5 integrity=20 value=1 color=white dmg_acid=30 inflict_blind=4 fertility=3	a caustic substance produced by heating limestone	yes	a white crystalline oxide used in the production of calcium hydroxide 	
-maid	3.86	person	worker	mass=60 integrity=80 alive=True sentient=True intelligence=5 loyalty=7 hands=True speech=True speed_land=4 labor=2 res_disease=0.3 counters=dust,dirt food_need=0.03 produce_N=0.4	a female domestic	yes	an unmarried girl (especially a virgin)	
-maple	3.86	flora	tree	mass=4000 height=25 footprint=2 integrity=4000 alive=True diet=photosynthesis material=wood portable=False growth_time=40 blocks=sight cover=0.5 food_output=0.2 plural_count=4 color=red produce_P=0.3 production_needs=water,harvest	any of numerous trees or shrubs of the genus Acer bearing winged seeds in pairs	yes	wood of any of various maple trees	
-operative	3.86	person	criminal	mass=75 integrity=100 alive=True sentient=True intelligence=8 loyalty=6 hands=True speech=True speed_land=6 stealth=8 disguise=5 read_inventory=True dmg_pierce=40 attack_rate=1 attack_range=30 food_need=0.03	a person secretly employed in espionage for a government	yes	someone who can be employed as a detective to collect information	
-relay	3.86	artifact	device	mass=0.2 integrity=10 material=copper,plastic portable=False conductivity=9 alarm=True color=black	electrical device such that current flowing through it in one circuit can switch on and off a current in a second circuit	yes		
-taxpayer	3.86	person	person	mass=75 integrity=90 alive=True sentient=True intelligence=5 loyalty=7 obedience=8 hands=True speech=True speed_land=5 morale=4 food_need=0.03	someone who pays taxes	yes		
-wheelchair	3.86	artifact	furniture	mass=15 integrity=60 material=steel,cloth comfort=2 occupants=1 mountable=True seats=1 speed_land=2 requires_pilot=True color=gray produce_B=0.2 production_needs=claim	a movable chair mounted on large wheels	yes		
-atm	3.85	artifact	device	mass=500 height=1.8 integrity=3000 hardness=8 material=steel portable=False storage_letters=1000 security=8 upkeep_power=0.3 lockable=True alarm=True needs_foundation=True color=gray	a unit of pressure: the pressure that will support a column of mercury 760 mm high at sea level and 0 degrees centigrade	no	an unattended machine (outside some banks) that dispenses money when a personal coded card is used	
-bark	3.85	flora	plant	mass=2 integrity=40 material=wood hardness=5 flammability=6 equip_slot=body armor=8 res_slash=0.2 camouflage=forest stealth=2 color=brown	tough protective covering of the woody stems and roots of trees and other woody plants	yes		
-bra	3.85	artifact	clothing	mass=0.1 integrity=6 material=cotton,lace equip_slot=body	an undergarment worn by women to support their breasts	yes		
-composer	3.85	person	worker	mass=70 integrity=80 alive=True sentient=True intelligence=9 loyalty=6 hands=True speech=True speed_land=3 labor=1 craft_slots=1 charm=4 field_radius=15 field_targets=owned food_need=0.03	someone who composes music as a profession	yes		
-cowboy	3.85	person	worker	mass=80 integrity=140 alive=True sentient=True intelligence=5 loyalty=7 hands=True speech=True speed_land=6 recruit_rate=0.4 command_limit=12 dmg_pierce=40 attack_range=30 attack_rate=1 inflict_root=3 courage=7 food_need=0.04	a hired hand who tends cattle and performs other duties on horseback	yes	a performer who gives exhibitions of riding and roping and bulldogging 	
-gasoline	3.85	material	fuel	mass=0.74 state=liquid density=740 hardness=0 flammability=10 toxicity=4 odor=7 integrity=1 value=4 color=yellow dmg_fire=150 dmg_blast=100 inflict_burn=6 fuel_output=3	a volatile flammable mixture of hydrocarbons (hexane and heptane and octane etc.) derived from petroleum	yes		
-ivory	3.85	material	material	mass=1.85 density=1850 hardness=5 brittleness=4 integrity=150 value=2000 beauty=8 color=white	a hard smooth ivory colored dentine that makes up most of the tusks of elephants and walruses	yes		
-kirk	3.85	artifact	building	mass=800000 footprint=8 height=15 integrity=10000 material=stone portable=False enterable=True occupants=150 needs_foundation=True comfort=2 heals=2 faith_output=3 claim_radius=4 field_radius=30 field_targets=owned	a Scottish church	yes		
-necklace	3.85	artifact	adornment	mass=0.1 integrity=30 material=gold,gem equip_slot=neck beauty=9 value=1000	jewelry consisting of a cord or chain (often bearing gems) worn about the neck as an ornament (especially by women)	yes		
-porch	3.85	artifact	structure	mass=2000 footprint=2 height=3 integrity=300 material=wood portable=False comfort=2 cover=0.3 claim_radius=1 color=white produce_B=0.2 production_needs=claim	a structure attached to the exterior of a building often forming a covered entrance	yes		
-spit	3.85	artifact	weapon	mass=1 length=1 integrity=40 material=iron shape=long sharpness=6 dmg_pierce=25 equip_slot=held hands_required=2 crafts=food cooks_into=roast produce_C=0.4 production_needs=labor	a narrow strip of land that juts out into the sea	no	a skewer for holding meat over a fire	
-tomato	3.85	flora	produce	mass=0.15 height=1 integrity=2 alive=True diet=photosynthesis growth_time=5 edible=True nutrition=2 restores=8 duration=60 single_use=True shelf_life=12 placeable_on=field plural_count=10 color=red produce_A=0.4 tile_type=tilled radius=1 production_needs=tilled,water	mildly acid red or yellow pulpy fruit eaten as a vegetable	yes	native to South America	
-tub	3.85	artifact	container	mass=60 footprint=1 integrity=150 material=porcelain portable=False volume=0.2 water_output=2 temperature=38 comfort=2.5 effect_status=burn color=white produce_B=0.23 production_needs=claim	a relatively large open container that you fill with water and use to wash the body	yes	a large open vessel for holding or storing liquids	
-uranium	3.85	material	metal	mass=19 density=19000 hardness=6 melting_point=1132 radioactivity=8 integrity=150 value=1000 color=green dmg_radiation=50 luminosity=1	a heavy toxic silvery-white radioactive metallic element	yes		
-volleyball	3.85	artifact	toy	mass=0.27 length=0.21 integrity=20 elasticity=10 shape=round material=leather equip_slot=held hands_required=1 dmg_blunt=6 attack_range=30 knockback=2 targets=land,air color=white	a game in which two teams hit an inflated ball over a high net using their hands	no	an inflated ball used in playing volleyball	
-doe	3.84	creature	mammal	mass=70 length=1.6 integrity=110 alive=True courage=1 diet=herbivore food_need=0.04 speed_land=18 jump=2 evasion=0.3 stealth=4 camouflage=forest reproduction=0.5 habitat=forest,meadow color=brown	mature female of mammals of which the male is called `buck'	yes		
-elbow	3.84	bodypart	bodypart	equip_slot=graft mass=0.3 integrity=60 hardness=6 plural_count=2	hinge joint between the forearm and upper arm and the corresponding joint in the forelimb of a quadruped	yes	the joint of a mammal or bird that corresponds to the human elbow	
-gel	3.84	material	material	mass=1 density=1000 hardness=0 elasticity=6 stickiness=3 integrity=10 value=3 color=blue transparency=0.7 res_blunt=0.5 slipperiness=3	a colloid in a more solid form than a sol	yes	jellylike substance used in hair styling 	
-grill	3.84	artifact	device	mass=30 footprint=1 integrity=150 material=steel temperature=350 upkeep_fuel=0.05 dmg_fire=10 color=black	a restaurant where food is cooked on a grill	yes	a framework of metal bars used as a partition or a grate	
-heel	3.84	bodypart	bodypart	equip_slot=graft mass=0.3 integrity=60 plural_count=2	the back part of the human foot	yes		
-mat	3.84	artifact	artifact	mass=2 integrity=15 material=rubber comfort=0.5 color=gray produce_B=0.12 production_needs=claim	a thick flat pad used as a floor covering	yes	mounting consisting of a border or background for a picture 	
-spill	3.84	material	liquid	mass=1 state=liquid density=1000 hardness=0 wetness=5 slipperiness=7 integrity=1 value=0 color=black inflict_slow=2 tile_type=swamp radius=1	liquid that is spilled	yes	a channel that carries excess water over or around a dam or other obstruction	
-swamp	3.84	terrain	landform	tile_type=swamp radius=5 moisture=9 movement_cost=4 portable=False stealth=3 dmg_disease=1 fertility=5	low land that is seasonally flooded	yes		
-teammate	3.84	person	person	mass=75 integrity=110 alive=True sentient=True intelligence=6 loyalty=9 hands=True speech=True speed_land=6 strength=6 training=2 field_radius=10 field_targets=owned food_need=0.04	a fellow member of a team	yes		
-vanilla	3.84	flora	flower	mass=0.5 length=10 integrity=3 alive=True diet=photosynthesis growth_time=30 beauty=7 odor=8 value=400 temp_min=15 color=white produce_P=0.1 production_needs=water,harvest	any of numerous climbing plants of the genus Vanilla having fleshy leaves and clusters of large waxy highly fragrant white or green or topaz flowers	yes	a flavoring prepared from vanilla beans macerated in alcohol (or imitating vanilla beans)	
-violet	3.84	flora	herb	mass=0.005 height=0.15 integrity=1 alive=True diet=photosynthesis growth_time=2 beauty=7 stealth=3 edible=True restores=4 spread_rate=0.1 plural_count=12 color=purple produce_P=0.1 production_needs=water,harvest	any of numerous low-growing violas with small flowers	yes		
-afghan	3.83	artifact	artifact	mass=1.5 integrity=10 material=wool comfort=2 equip_slot=back res_cold=0.4 beauty=6 color=orange produce_B=0.2 production_needs=claim	a blanket knitted or crocheted in strips or squares	yes	a coat made of sheepskin	
-dessert	3.83	consumable	food	mass=0.3 integrity=1 edible=True nutrition=6 restores=12 duration=120 single_use=True shelf_life=10	a dish served as the last course of a meal	yes		
-investigator	3.83	person	person	mass=75 integrity=100 alive=True sentient=True intelligence=8 loyalty=7 hands=True speech=True speed_land=6 detect_stealth=9 read_properties=7 tracking=8 sight_range=60 counters=hoax,lie,ruse,fraud,forgery,decoy,landmine,tripwire,pitfall,trap food_need=0.03	a scientist who devotes himself to doing research	yes	someone who investigates 	
-ivy	3.83	flora	plant	mass=2 length=10 integrity=10 alive=True diet=photosynthesis growth_time=3 spread_rate=0.4 cover=0.3 inflict_root=2 color=green produce_P=0.1 production_needs=water,harvest	Old World vine with lobed evergreen leaves and black berrylike fruits	yes		
-livestock	3.83	creature	mammal	mass=400 length=2 integrity=200 alive=True diet=herbivore food_need=0.25 speed_land=6 pack_size=8 food_output=1.5 reproduction=0.8 tamable=True habitat=meadow color=brown produce_I=0.41	any animals kept for use or profit	yes		
-missionary	3.83	person	worker	mass=70 integrity=100 alive=True sentient=True intelligence=7 loyalty=9 courage=8 hands=True speech=True speed_land=5 range=3000 recruit_rate=1.5 charm=5 faith_output=1 heals=3 food_need=0.03	someone who attempts to convert others to a particular doctrine or program	yes	someone sent on a mission--especially a religious or charitable mission to a foreign country	
-pumpkin	3.83	flora	produce	mass=5 height=0.5 integrity=10 alive=True diet=photosynthesis growth_time=8 edible=True raw=True nutrition=10 restores=10 single_use=True shelf_life=40 placeable_on=field color=orange produce_A=0.4 tile_type=tilled radius=1 production_needs=tilled,water	usually large pulpy deep-yellow round fruit of the squash family maturing in late summer or early autumn	yes	a coarse vine widely cultivated for its large pulpy round orange fruit with firm orange skin and numerous seeds	
-ramp	3.83	artifact	device	mass=2000 footprint=3 integrity=1500 material=concrete portable=False elevation=3 tile_type=road movement_cost=0.8 color=gray	an inclined surface connecting two levels	yes	a movable staircase that passengers use to board or leave an aircraft	
-reef	3.83	terrain	water	tile_type=water radius=8 depth=2 portable=False placeable_on=water,deep_water hardness=7 dmg_crush=200 dmg_slash=80 attack_rate=0.2 targets=water beauty=8 harvest_bonus=2 harvest_sources=fishing counters=boat,ship,galleon,frigate,sloop,schooner	a submerged ridge of rock or coral near the surface of the water	yes	a rocky region in the southern Transvaal in northeastern South Africa	
-sage	3.83	flora	herb	mass=0.02 height=0.5 integrity=1 alive=True diet=photosynthesis growth_time=3 edible=True restores=15 duration=300 single_use=True plural_count=6 color=green produce_P=0.1 production_needs=water,harvest	any of various plants of the genus Salvia	yes	aromatic fresh or dried grey-green leaves used widely as seasoning for meats and fowl and game etc	
-vodka	3.83	consumable	drink	mass=0.7 state=liquid edible=True nutrition=1 potency=8 duration=240 single_use=True shelf_life=0 flammability=8 color=white	unaged colorless liquor originating in Russia	yes		
-archbishop	3.82	person	leader	mass=75 integrity=100 alive=True sentient=True intelligence=8 loyalty=8 hands=True speech=True speed_land=4 authority=6 command_limit=15 faith_output=3 recruit_rate=0.8 heals=3 res_unholy=0.7 food_need=0.03	a bishop of highest rank	yes		
-calcium	3.82	material	metal	mass=1.55 density=1550 hardness=2 brittleness=4 melting_point=842 conductivity=6 flammability=2 integrity=40 value=4 color=white res_disease=0.1	a white metallic element that burns with a brilliant light	yes		
-decoration	3.82	artifact	artifact	mass=0.5 integrity=5 material=paper,glass beauty=7 comfort=1 color=gold produce_B=0.15 production_needs=claim	something used to beautify	yes		
-dye	3.82	material	material	mass=1 state=liquid density=1000 hardness=0 integrity=1 value=10 color=purple stickiness=2	a usually soluble substance for staining or coloring e.g. fabrics or hair	yes		
-guru	3.82	person	leader	mass=60 integrity=90 alive=True sentient=True loyalty=6 hands=True speech=True speed_land=3 recruit_rate=1.5 charm=6 faith_output=1.5 field_radius=15 field_targets=owned food_need=0.01	a Hindu or Buddhist religious leader and spiritual teacher	yes	each of the first ten leaders of the Sikh religion 	
-hormone	3.82	bodypart	bodypart	equip_slot=graft mass=0 integrity=1	the secretion of an endocrine gland that is transmitted by the blood to the tissue on which it has a specific effect	yes		
-lace	3.82	artifact	fabric	mass=0.3 density=300 hardness=0 flammability=8 transparency=0.5 integrity=5 value=80 beauty=9 color=white charm=3	a delicate decorative fabric woven in an open web of symmetrical patterns	yes	a cord that is drawn through eyelets or around hooks in order to draw together two edges (as of a shoe or garment)	
-marketplace	3.82	artifact	building	mass=30000 footprint=14 integrity=4000 material=stone portable=False enterable=True occupants=300 trade_rate=0.75 loudness=5 claim_radius=5 needs_foundation=True color=brown	the world of commercial activity where goods and services are bought and sold	no	an area in a town where a public mercantile establishment is set up	
-membrane	3.82	bodypart	bodypart	equip_slot=graft mass=0.5 integrity=15 hover=True	a pliable sheet of tissue that covers or lines or connects the organs or cells of animals or plants	yes		
-murderer	3.82	person	criminal	mass=75 integrity=100 alive=True sentient=True intelligence=6 loyalty=2 aggression=8 hands=True speech=True speed_land=6 stealth=6 dmg_slash=50 attack_rate=1 critical=0.3 inflict_bleed=8 fear_aura=5 reputation=-4 food_need=0.03	a criminal who commits homicide (who performs the unlawful premeditated killing of another human being)	yes		
-nickel	3.82	artifact	currency	plural_count=20 mass=0.005 integrity=30 material=nickel equip_slot=held hands_required=0 value=0.5 trade_bonus=0.02 color=silver	a United States coin worth one twentieth of a dollar	no		
-remedy	3.82	artifact	medicine	mass=0.05 edible=True single_use=True potency=6 restores=50 duration=300 effect_status=sick,poison,bleed counters=illness,malady,ailment	a medicine or therapy that cures disease or relieve pain	yes		
-slate	3.82	artifact	artifact	mass=2.8 density=2800 integrity=200 hardness=5 brittleness=6 material=stone flammability=0 color=gray res_water=0.9 sharpness=4	(formerly) a writing tablet made of slate	yes		
-token	3.82	artifact	device	mass=0.005 integrity=10 material=metal counters=gate,turnstile,lock	a metal or plastic disk that can be redeemed or used in designated slot machines	yes	something of sentimental value	
-yacht	3.82	artifact	vehicle_water	mass=40000 length=25 integrity=3000 material=fiberglass,wood buoyancy=9 speed_water=12 self_propelled=True mountable=True seats=12 carry_capacity=8000 comfort=6 beauty=7 value=5000 storage_letters=60 upkeep_fuel=0.5 placeable_on=water color=white produce_B=0.35 production_needs=claim	an expensive vessel propelled by sail or power and used for cruising or racing	yes		
-archer	3.81	person	fighter	mass=70 integrity=140 alive=True sentient=True intelligence=6 loyalty=7 hands=True speech=True speed_land=6 training=6 dmg_pierce=35 attack_rate=0.8 attack_range=60 targets=land,air sight_range=200 food_need=0.04	a person who is expert in the use of a bow and arrow	yes	(astrology) a person who is born while the sun is in Sagittarius	
-barber	3.81	person	worker	mass=70 integrity=90 alive=True sentient=True intelligence=6 loyalty=6 hands=True speech=True speed_land=4 labor=1 sharpness=7 dmg_slash=15 attack_rate=1 strips_adjectives=1 food_need=0.03	a hairdresser who cuts hair and shaves beards as a trade	yes	United States composer (1910-1981)	
-competitor	3.81	person	person	mass=75 integrity=120 alive=True sentient=True intelligence=6 loyalty=5 hands=True speech=True speed_land=7 strength=6 training=3 agility=6 food_need=0.04	the contestant you hope to defeat	yes		
-cuisine	3.81	consumable	food	mass=1 integrity=1 edible=True nutrition=14 restores=40 duration=300 single_use=True shelf_life=10 value=20	the practice or manner of preparing food or the food so prepared	yes		
-dioxide	3.81	material	material	mass=0.002 state=gas density=1.98 hardness=0 flammability=0 integrity=1 value=1 color=white dmg_suffocation=60 counters=fire inflict_sleep=4	an oxide containing two atoms of oxygen in the molecule	yes		
-exhaust	3.81	artifact	machine	mass=15 integrity=100 material=steel odor=8 toxicity=4 dmg_poison=10 inflict_blind=1 temperature=300 loudness=6 color=gray produce_M=0.3 production_needs=vowel,vowel	gases ejected from an engine as waste products	no	system consisting of the parts of an engine through which burned gases or steam are discharged	
-fries	3.81	flora	produce	mass=0.2 integrity=1 edible=True nutrition=6 restores=12 duration=60 single_use=True shelf_life=6 plural_count=1 color=yellow	strips of potato fried in deep fat	yes		
-insulin	3.81	bodypart	bodypart	equip_slot=graft mass=0 integrity=1	hormone secreted by the isles of Langerhans in the pancreas	yes		
-lid	3.81	bodypart	bodypart	equip_slot=graft mass=0.01 integrity=5 immune_blind=True plural_count=2	either of two folds of skin that can be moved to cover or open the eye	yes		
-manor	3.81	artifact	building	mass=5000000 footprint=30 height=15 integrity=60000 material=stone,brick portable=False enterable=True occupants=60 lockable=True security=5 cover=0.7 claim_radius=15 comfort=12 storage_letters=1000 food_output=10 authority=3 tax_rate=0.05 command_limit=10 beauty=8 needs_foundation=True color=gray	the mansion of a lord or wealthy person	yes		
-mic	3.81	artifact	device	mass=0.3 integrity=6 material=steel,plastic equip_slot=held hands_required=1 loudness=7 field_radius=60 field_targets=owned upkeep_power=0.02 color=black	device for converting sound waves into electrical energy	yes		
-narrator	3.81	person	person	mass=70 integrity=80 alive=True sentient=True intelligence=7 loyalty=6 hands=True speech=True speed_land=4 loudness=4 read_properties=5 field_radius=30 field_targets=owned food_need=0.03	someone who tells a story	yes		
-partisan	3.81	person	person	mass=75 integrity=150 alive=True sentient=True hands=True speech=True intelligence=6 loyalty=9 courage=8 speed_land=6 stealth=6 camouflage=forest,hill dmg_pierce=45 attack_rate=1 attack_range=80 food_need=0.03	a fervent and even militant proponent of something	yes	an ardent and enthusiastic supporter of some person or activity	
-ribbon	3.81	artifact	artifact	mass=0.02 integrity=3 material=silk equip_slot=neck value=20 beauty=5 color=blue	a long strip of inked material for making characters on paper with a typewriter	yes	notion consisting of a narrow strip of fine material used for trimming	
-coffin	3.80	artifact	container	mass=60 length=2 integrity=200 material=oak lockable=True security=3 occupants=1 storage_letters=100 stealth=6 fear_aura=3 counters=vampire,zombie color=black	box in which a corpse is buried or cremated	yes		
-conductor	3.80	person	worker	mass=75 integrity=80 alive=True sentient=True intelligence=8 loyalty=6 hands=True speech=True speed_land=4 authority=4 command_limit=40 field_radius=30 field_targets=owned food_need=0.03	the person who collects fares on a public conveyance	yes	the person who leads a musical group	
-font	3.80	artifact	container	mass=600 integrity=1000 material=stone portable=False water_output=1 heals=2 counters=demon,curse,ghost beauty=7 color=white	bowl for baptismal water	yes		
-glue	3.80	material	material	mass=1.1 state=liquid density=1100 hardness=0 stickiness=10 flammability=4 integrity=5 value=2 color=white inflict_root=8 inflict_slow=6	cement consisting of a sticky substance that is used as an adhesive	yes		
-luggage	3.80	artifact	container	mass=20 integrity=50 material=leather,canvas storage_objects=60 container_slots=12 storage_letters=30 lockable=True security=1 color=black	cases used to carry belongings when traveling	yes		
-microwave	3.80	artifact	device	mass=15 integrity=40 material=steel temperature=150 upkeep_power=2 color=white	a short electromagnetic wave (longer than infrared but shorter than radio waves)	no	kitchen appliance that cooks food by passing an electromagnetic wave through it	
-morocco	3.80	material	material	mass=0.85 density=860 hardness=3 flammability=3 integrity=110 value=60 beauty=7 color=red res_slash=0.2	a soft pebble-grained leather made from goatskin	yes		
-peel	3.80	consumable	food	mass=0.02 integrity=1 edible=True nutrition=0 slipperiness=9 single_use=True shelf_life=20 color=yellow	the rind of a fruit or vegetable	yes		
-picnic	3.80	consumable	food	mass=5 integrity=5 edible=True nutrition=15 restores=60 field_radius=8 field_targets=allies field_property=regeneration field_delta=1 field_duration=5 single_use=True shelf_life=10 color=red	any informal meal eaten outside or on an excursion	yes		
-psychic	3.80	person	worker	mass=65 integrity=85 alive=True sentient=True intelligence=8 loyalty=6 hands=True speech=True speed_land=4 read_inventory=True read_properties=6 dmg_psychic=30 attack_rate=0.5 attack_range=20 detect_stealth=5 food_need=0.03	a person apparently sensitive to things beyond the natural range of perception	yes		
-psychologist	3.80	person	worker	mass=70 integrity=80 alive=True sentient=True intelligence=8 loyalty=6 hands=True speech=True speed_land=4 read_properties=4 res_psychic=0.5 field_radius=8 field_targets=owned food_need=0.03	a scientist trained in psychology	yes		
-puppet	3.80	artifact	toy	mass=0.3 integrity=5 material=wood,cloth equip_slot=held hands_required=1 charm=4 beauty=5 comfort=1 inflict_charm=2 color=red produce_B=0.15 production_needs=claim	a doll with a hollow head of a person or animal and a cloth body	yes	a small figure of a person operated from above with strings by a puppeteer	
-sausage	3.80	consumable	food	mass=0.1 integrity=1 edible=True raw=True nutrition=6 restores=12 single_use=True shelf_life=12 plural_count=6 color=brown	highly seasoned minced meat stuffed in casings	yes		
-skeleton	3.80	artifact	tool	mass=0.03 integrity=20 material=iron equip_slot=held counters=lock,padlock,lockable,deadbolt,latch	something reduced to its minimal form	no	the internal supporting structure that gives an artifact its shape	
-tick	3.80	creature	invertebrate	mass=1e-05 length=0.004 integrity=1 alive=True aggression=6 diet=carnivore speed_land=0.01 stealth=9 lifesteal=1 dmg_pierce=1 dmg_disease=8 contagion=0.2 attack_rate=0.2 pack_size=20 habitat=forest,meadow,taiga color=brown	any of two families of small parasitic arachnids with barbed proboscis	yes		
-capitalist	3.79	person	person	mass=85 integrity=90 alive=True sentient=True intelligence=8 loyalty=4 hands=True speech=True speed_land=4 storage_letters=1000 trade_bonus=0.3 command_limit=10 field_radius=30 field_targets=owned food_need=0.03	a conservative advocate of capitalism	yes	a person who invests capital in a business (especially a large business)	
-constable	3.79	person	person	mass=85 integrity=190 alive=True sentient=True intelligence=6 loyalty=7 hands=True speech=True speed_land=6 authority=3 alarm=True detect_stealth=6 dmg_blunt=30 attack_rate=1 inflict_root=3 counters=thief,burglar,vandal food_need=0.04	a lawman with less authority and jurisdiction than a sheriff	yes	English landscape painter (1776-1837) 	
-goalkeeper	3.79	person	fighter	mass=85 integrity=160 alive=True sentient=True intelligence=6 loyalty=7 hands=True speech=True speed_land=6 agility=8 block=0.5 jump=2 evasion=0.1 food_need=0.05	the soccer or hockey player assigned to protect the goal	yes		
-kindergarten	3.79	artifact	structure	mass=300000 footprint=6 height=5 integrity=4000 material=brick portable=False enterable=True occupants=60 claim_radius=3 comfort=4 loudness=7 field_radius=24 field_targets=owned beauty=6 color=yellow	a preschool for children age 4 to 6 to prepare them for primary school	no		
-mechanic	3.79	person	worker	mass=80 integrity=120 alive=True sentient=True intelligence=7 loyalty=6 hands=True speech=True speed_land=4 labor=2 craft_slots=1 build_speed=1.5 strength=6 counters=breakdown food_need=0.04 produce_N=0.4	a craftsman skilled in operating machine tools	yes	someone whose occupation is repairing and maintaining automobiles	
-pitcher	3.79	person	person	mass=90 integrity=130 alive=True sentient=True intelligence=6 loyalty=6 hands=True speech=True speed_land=5 strength=7 dmg_blunt=22 attack_rate=0.6 attack_range=40 accuracy=0.95 inflict_stun=1 food_need=0.04	(baseball) the person who does the pitching	yes		
-playground	3.79	artifact	building	mass=20000 footprint=12 height=3 integrity=3000 material=wood,steel portable=False claim_radius=6 comfort=3 field_radius=20 field_targets=all law=attack	an area where many people go for recreation	no	yard consisting of an outdoor area for children's play	
-receptor	3.79	bodypart	bodypart	equip_slot=graft mass=0 integrity=1	a cellular structure that is postulated to exist in order to mediate between a chemical agent that acts on nervous tissue and the physiological response	yes	an organ having nerve endings (in the skin or viscera or eye or ear or nose or mouth) that respond to stimulation	
-shrimp	3.79	flora	produce	mass=0.02 integrity=1 edible=True raw=True nutrition=1 restores=5 toxicity=1 single_use=True shelf_life=5 plural_count=12 color=pink	disparaging terms for small people	no	any of various edible decapod crustaceans	
-spokesman	3.79	person	person	mass=75 integrity=85 alive=True sentient=True intelligence=7 loyalty=8 hands=True speech=True speed_land=4 charm=6 loudness=6 field_radius=60 field_targets=owned reputation=2 counters=rumor,gossip,slander food_need=0.03	a male spokesperson	yes		
-stall	3.79	artifact	structure	mass=300 footprint=1 height=2 integrity=200 material=wood,cloth portable=False food_output=1 trade_bonus=0.15 flammability=6	a compartment in a stable where a single animal is confined and fed	yes	small area set off by walls for special use 	
-strap	3.79	artifact	tool	mass=0.2 length=1 integrity=40 material=leather equip_slot=held hands_required=1 dmg_slash=6 inflict_root=2 color=brown	an elongated leather strip (or a strip of similar material) for binding things together or holding something in position	yes	hanger consisting of a loop of leather suspended from the ceiling of a bus or train 	
-vendor	3.79	person	worker	mass=75 integrity=90 alive=True sentient=True intelligence=6 loyalty=5 hands=True speech=True speed_land=5 trade_bonus=0.25 charm=4 loudness=4 storage_letters=60 food_need=0.03	someone who promotes or exchanges goods or services for money	yes		
-backpack	3.78	artifact	container	mass=1.5 integrity=40 material=nylon equip_slot=back storage_objects=25 container_slots=10 carry_capacity=25 storage_letters=20 color=blue	a bag carried by a strap on your back or shoulder	yes		
-balcony	3.78	artifact	structure	mass=3000 footprint=1 height=6 integrity=500 material=stone portable=False comfort=1 sight_range=300 claim_radius=1 color=white	an upper floor projecting from the rear over the main floor in an auditorium	yes	a platform projecting from the wall of a building and surrounded by a balustrade or railing or parapet	
-buffer	3.78	material	material	mass=0.8 density=800 hardness=1 elasticity=7 integrity=40 value=1 color=gray res_blunt=0.5 res_crush=0.5	(chemistry) an ionic compound that resists changes in its pH	yes	an inclined metal frame at the front of a locomotive to clear the track 	
-daisy	3.78	flora	flower	mass=0.01 height=0.2 integrity=1 alive=True diet=photosynthesis growth_time=2 beauty=7 spread_rate=0.2 plural_count=12 color=white produce_P=0.1 production_needs=water,harvest	any of numerous composite plants having flower heads with well-developed ray flowers usually arranged in a single whorl	yes		
-disco	3.78	artifact	building	mass=200000 footprint=10 height=6 integrity=3000 material=brick,glass portable=False enterable=True occupants=300 loudness=10 luminosity=7 upkeep_power=10 field_radius=40 field_targets=all needs_foundation=True	popular dance music (especially in the late 1970s)	no	a public dance hall for dancing to recorded popular music	
-foam	3.78	material	material	mass=0.05 density=50 hardness=0 elasticity=9 buoyancy=9 flammability=6 integrity=8 value=0.5 color=white res_blunt=0.6 res_fire=0.2	a lightweight material in cellular form	yes	a mass of small bubbles formed in or on a liquid	
-invalid	3.78	person	person	mass=60 integrity=50 alive=True sentient=True intelligence=6 loyalty=6 hands=True speech=True speed_land=1 labor=0 res_disease=0 food_need=0.02 charm=3	someone who is incapacitated by a chronic illness or injury	yes		
-jade	3.78	material	gem	mass=3.3 density=3300 hardness=6 brittleness=3 integrity=200 value=3000 beauty=9 color=green	a semiprecious gemstone that takes a high polish	yes		
-participant	3.78	person	person	mass=75 integrity=100 alive=True sentient=True intelligence=5 loyalty=6 hands=True speech=True speed_land=5 training=1 food_need=0.03	someone who takes part in an activity	yes	a person who participates in or is skilled at some game	
-phantom	3.78	creature	supernatural	mass=0 integrity=120 alive=False sentient=True speed_land=4 speed_air=4 phase=True hover=True stealth=7 res_blunt=1 res_slash=1 res_pierce=1 res_holy=-1 dmg_psychic=25 inflict_fear=3 attack_rate=0.5 aggression=6 on_owner_death=vanish	a ghostly appearing figure	yes		
-stab	3.78	artifact	weapon	placement=target placement_range=1 event_target=character dmg_pierce=60 inflict_bleed=10 contest_with=stealth contested_by=detect_stealth event_duration=1	a sudden sharp feeling	no		
-supermarket	3.78	artifact	building	mass=3000000 footprint=20 height=8 integrity=20000 material=steel,concrete portable=False enterable=True occupants=500 storage_objects=200000 storage_letters=500 food_output=15 field_radius=60 field_targets=all trade_rate=0.7 upkeep_power=20 needs_foundation=True claim_radius=6	a large self-service grocery store selling groceries and dairy products and household goods	yes		
-tenant	3.78	person	person	mass=75 integrity=90 alive=True sentient=True hands=True speech=True intelligence=5 loyalty=5 speed_land=5 labor=2 food_need=0.03 produce_N=0.4	someone who pays rent to use land or a building or a car that is owned by someone else	yes	a holder of buildings or lands by any kind of title (as ownership or lease) 	
-tractor	3.78	artifact	machine	mass=5000 length=5 integrity=2500 material=steel speed_land=10 self_propelled=True mountable=True seats=1 tow_capacity=20000 labor=12 terrain_ignored=mud,field,tilled upkeep_fuel=0.5 loudness=8 color=green produce_M=0.3 production_needs=vowel,vowel	a wheeled vehicle with large wheels	yes	a truck that has a cab but no body	
-turnover	3.78	consumable	food	mass=0.15 integrity=1 edible=True nutrition=5 restores=10 duration=60 single_use=True shelf_life=12 color=brown	a dish made by folding a piece of pastry over a filling	yes		
-whiskey	3.78	consumable	drink	mass=0.7 state=liquid edible=True nutrition=1 potency=7 immune_fear=True duration=240 single_use=True shelf_life=0 flammability=7 color=brown	a liquor made from fermented mash of grain	yes		
-antenna	3.77	artifact	device	mass=10 height=12 integrity=40 material=aluminum portable=False hearing_range=8000 map_reveal=80 detect_life=300 conductivity=9 upkeep_power=0.2 color=silver	an electrical device that sends or receives radio or television signals	yes		
-chop	3.77	consumable	food	mass=0.25 integrity=1 edible=True raw=True nutrition=7 restores=18 toxicity=1 duration=90 single_use=True shelf_life=6 color=pink	a small cut of meat including part of a rib	yes		
-flats	3.77	artifact	clothing	plural_count=2 mass=0.4 integrity=12 material=leather equip_slot=feet loudness=0 stealth=1	footwear (shoes or slippers) with no heel (or a very low heel)	yes		
-flint	3.77	material	material	mass=2.6 density=2600 hardness=7 brittleness=7 sharpness=9 integrity=60 value=1 color=gray inflict_burn=2	a hard kind of stone	yes	a river in western Georgia that flows generally south to join the Chattahoochee River at the Florida border where they form the Apalachicola River	
-fortress	3.77	artifact	structure	mass=10000000 footprint=50 height=15 integrity=250000 hardness=8 material=stone portable=False enterable=True occupants=300 cover=0.85 security=7 claim_radius=14 blocks=land,sight,projectiles	a fortified defensive structure	yes		
-herb	3.77	flora	herb	mass=0.02 height=0.3 integrity=1 alive=True diet=photosynthesis growth_time=3 edible=True restores=20 effect_status=poison single_use=True spread_rate=0.1 plural_count=6 color=green produce_P=0.1 production_needs=water,harvest	a plant lacking a permanent woody stem	yes	aromatic potherb used in cookery for its savory qualities	
-incumbent	3.77	person	leader	mass=80 integrity=100 alive=True sentient=True hands=True speech=True intelligence=7 speed_land=4 authority=6 command_limit=20 charm=3 food_need=0.04	the official who holds an office	yes		
-jelly	3.77	consumable	food	mass=0.2 integrity=1 elasticity=8 edible=True nutrition=3 restores=8 duration=60 single_use=True shelf_life=0 stickiness=4 color=red	an edible jelly (sweet or pungent) made with gelatin and used as a dessert or salad base or a coating for foods	yes	a preserve made of the jelled juice of fruit 	
-mold	3.77	flora	fungus	mass=0.1 integrity=3 portable=False field_radius=20 produce_U=0.2 production_needs=harvest	a fungus that produces a superficial growth on various kinds of damp or decaying organic matter	yes	a dish or dessert that is formed in or on a mold	
-napoleon	3.77	consumable	food	mass=0.15 integrity=1 edible=True nutrition=5 restores=10 duration=120 single_use=True shelf_life=10 color=white	a rectangular piece of pastry with thin flaky layers and filled with custard cream	yes		
-peach	3.77	flora	produce	mass=0.15 height=4 integrity=1 alive=True diet=photosynthesis growth_time=15 edible=True nutrition=2 restores=10 duration=120 single_use=True shelf_life=10 plural_count=6 color=orange produce_A=0.4 tile_type=tilled radius=1 production_needs=tilled,water	downy juicy fruit with sweet yellowish or whitish flesh	yes	cultivated in temperate regions	
-scar	3.77	bodypart	bodypart	equip_slot=graft mass=0.001 integrity=10	a mark left (usually on the skin) by the healing of injured tissue	no		
-stereo	3.77	artifact	device	mass=10 integrity=20 material=plastic portable=False loudness=8 comfort=3 field_radius=40 field_targets=owned upkeep_power=0.2 color=black	reproducer in which two microphones feed two or more loudspeakers to give a three-dimensional effect to the sound	yes	two photographs taken from slightly different angles that appear three-dimensional when viewed together	
-textbook	3.77	artifact	document	mass=1.5 integrity=8 material=paper grants_adjective_slots=1 grants_slots_to=person	a book prepared for use in schools or colleges	no		
-vein	3.77	bodypart	bodypart	equip_slot=graft mass=0.2 integrity=20 restores=10 plural_count=6	a blood vessel that carries blood from the capillaries toward the heart	yes	one of the horny ribs that stiffen and support the wing of an insect	
-velvet	3.77	artifact	fabric	mass=1.4 density=1400 hardness=1 flammability=6 integrity=20 value=30 beauty=8 color=purple	a silky densely piled fabric with a plain back	yes		
-accountant	3.76	person	worker	mass=70 integrity=80 alive=True sentient=True intelligence=8 loyalty=6 hands=True speech=True speed_land=4 storage_letters=200 security=5 trade_bonus=0.1 food_need=0.03	someone who maintains and audits business accounts	yes		
-billionaire	3.76	person	person	mass=80 integrity=90 alive=True sentient=True intelligence=8 loyalty=9 hands=True speech=True speed_land=4 storage_letters=8000 security=7 trade_bonus=0.4 charm=7 authority=6 command_limit=20 recruit_rate=0.5 food_need=0.03 counters=bribe,payoff,kickback	a very rich person whose material wealth is valued at more than a billion dollars	yes		
-bypass	3.76	artifact	route	mass=100000 footprint=10 integrity=10000 material=stone portable=False tile_type=road movement_cost=0.4	a highway that encircles an urban area so that traffic does not have to pass through the center	yes	a conductor having low resistance in parallel with another device to divert a fraction of the current	
-cane	3.76	artifact	tool	mass=0.5 length=0.9 integrity=50 material=wood equip_slot=held hands_required=1 dmg_blunt=14 attack_rate=1.2 color=brown	a stick that people can lean on to help them walk	yes	a stiff switch used to hit students as punishment	
-cedar	3.76	material	material	mass=0.53 density=530 hardness=3 brittleness=3 flammability=7 burn_time=1800 buoyancy=6 integrity=70 value=8 odor=5 color=red counters=moth,insect res_disease=0.3	any of numerous trees of the family Cupressaceae that resemble cedars	no		
-corpse	3.76	bodypart	bodypart	mass=75 integrity=60 alive=False decay_rate=1 odor=7 dmg_disease=5 contagion=0.1 portable=True fear_aura=2 edible=True nutrition=10 material=flesh shelf_life=600	the dead body of a human being	yes		
-diploma	3.76	artifact	document	mass=0.02 integrity=2 material=paper reputation=2	a document certifying the successful completion of a course of study	no		
-duchess	3.76	person	leader	mass=65 integrity=110 alive=True sentient=True hands=True speech=True intelligence=7 speed_land=4 authority=6 command_limit=25 tax_rate=0.12 claim_radius=15 charm=5 food_need=0.03	the wife of a duke or a woman holding ducal title in her own right	yes		
-foil	3.76	material	material	mass=2.7 density=2700 hardness=1 conductivity=9 flammability=0 reflectivity=9 integrity=3 value=1 color=silver res_light=0.6 res_psychic=0.3	a piece of thin and flexible sheet metal	yes	a device consisting of a flat or curved piece (as a metal plate) so that its surface reacts to the water it is passing through 	
+shoe	a brown leather lace-up shoe, side view	brown, dark brown, tan
+terry	a folded fluffy terry cloth towel	white, pale blue
+tunnel	a stone arched tunnel entrance cut into a rocky hillside	gray, dark gray, black
+warrant	a rolled paper court writ tied with a red ribbon and wax seal	cream, red, brown
+backing	a thick steel-reinforced concrete barrier wall segment	gray, steel gray, dark gray
+charter	a large parchment scroll with a hanging red wax seal	cream, red, brown
+essay	a few handwritten paper pages clipped together	white, gray, blue
+maker	a craftsperson in a leather apron holding a hammer	brown, blue, gray
+photograph	a glossy printed photograph with a white border	white, blue, green
+pole	a long straight wooden pole	brown, dark brown
+rubber	a black rubber slab block	black, dark gray
+substance	a small glass vial of glowing green liquid	green, clear, gray
+amateur	a person in casual clothes holding a tennis racket	blue, white, tan
+batman	a soldier-servant in khaki uniform carrying a polished officer's boot	khaki, brown, black
+bearing	a steel ball bearing ring	steel gray, silver
+beats	a pair of black over-ear headphones	black, gray, red
+bobby	a policeman in a tall dark helmet holding a wooden truncheon	navy blue, black, silver
+canal	a narrow stone-lined canal lock with gates	blue, gray, brown
+charlotte	a charlotte dessert ringed with sponge fingers and topped with berries	cream, tan, red
+employer	a businessperson in a suit holding a clipboard	charcoal, white, blue
+fluid	a glass flask of clear blue fluid	blue, clear, gray
+leaf	a single green leaf with veins	green, light green
+outfit	a hanging set of clothes: jacket, shirt and trousers on a hanger	blue, white, brown
+permit	a paper permit card with an official stamp	white, red, gray
+perry	a glass of sparkling pale pear cider	pale gold, clear, green
+portrait	a framed painted portrait on canvas on a wooden easel	brown, gold, tan
+socialist	a person in a red shirt holding a red flag	red, blue, gray
+advocate	a person in a suit holding up a placard on a stick	navy, white, brown
+chips	a paper cone of golden fried potato chips	yellow, golden, white
+creator	a radiant bearded divine figure in white robes with a golden halo	white, gold, light blue
+dish	a plate of hot food with a steaming roast and vegetables	white, brown, green
+nail	an iron nail	gray, dark gray
+phoenix	a fiery phoenix bird with flaming wings	red, orange, gold
+poet	a person in a beret holding a quill pen	black, white, maroon
+scientist	a scientist in a white lab coat holding a test tube	white, green, blue
+stole	a fur stole wrap	brown, cream
+veteran	an old soldier in uniform with medals holding a cane	olive green, gold, brown
+bronze	a bronze ingot	copper, bronze brown
+bug	a black beetle bug, side view	black, dark brown
+dose	a measuring spoon holding a dose of red syrup	silver, red
+flesh	a cartoon slab of pink raw meat	pink, red, white
+flip	a frothy yellow eggnog drink in a goblet	yellow, cream, clear
+implement	a steel garden hoe with a wooden handle	gray, brown
+laser	a sleek laser pointer device emitting a red beam	steel gray, red, black
+marijuana	a cannabis plant with serrated green leaves	green, dark green
+opponent	an athlete in a red jersey in a ready stance holding a fencing foil	red, white, silver
+prisoner	a person in striped prison clothes holding a tin cup	white, black, gray
+punk	a punk with a spiked mohawk and leather jacket holding a guitar	black, pink, silver
+radar	a rotating radar dish antenna on a mast	gray, white, green
+villa	a white marble villa with red roof tiles	white, terracotta red, gray
+wrap	a soft wool shawl wrap	cream, beige, brown
+bacteria	a cluster of green rod-shaped cartoon bacteria	green, light green
+corn	an ear of yellow corn with husk	yellow, green
+dealer	a merchant in a vest holding a box of goods	brown, white, gold
+filling	a white plaster filling material in a tub	white, gray
+nerve	a cartoon nerve cell with branching fibers	yellow, pink
+pie	a golden-brown baked fruit pie	brown, tan, red
+poster	a rolled-up paper poster tube	white, red, blue
+ram	a wooden battering ram with an iron head	brown, gray
+taxi	a yellow taxi cab, side view	yellow, black
+tobacco	a bundle of dried brown tobacco leaves	brown, tan
+assignment	a manila folder with paper orders	tan, white
+carpet	a rolled red woolen carpet	red, gold
+cherry	a plank of cherry wood	reddish brown, red
+cole	a curly leaved head of kale	dark green, green
+earl	a nobleman in an ermine-trimmed robe holding a coronet	crimson, white, gold
+garbage	a pile of food scraps in a bin	brown, green, gray
+grain	a sack overflowing with yellow grain	yellow, tan, brown
+grid	a steel electricity pylon with copper cables	gray, copper
+liver	a cartoon reddish-brown liver	reddish brown, red
+mixture	a glass beaker of swirling brown mixture	brown, clear
+patent	a document with a blueprint drawing and a red seal	blue, white, red
+physician	a doctor in a white coat with a stethoscope holding a bag	white, black, blue
+rival	a runner in a red tracksuit ready to race holding a baton	red, white, gray
+runner	a smuggler in a dark coat carrying a crate	black, brown, gray
+spray	a spray bottle of white liquid	white, gray, blue
+suite	a brick apartment building block	red brick, white, gray
+victor	a warrior raising a sword aloft wearing a laurel wreath	silver, red, green
+vintage	a bottle of red wine	dark red, green, cream
+chuck	a raw red beef chuck steak cut	red, white
+cinema	a black concrete movie theater building with a marquee	black, gold, red
+dressing	a glass bottle of creamy white salad dressing	white, clear
+jam	a glass jar of red jam	red, clear, white
+lens	a round glass lens	clear, pale blue
+ash	a gray pile of ash	gray, dark gray
+counsel	a lawyer in a black robe and white wig holding papers	black, white, gray
+creature	a hulking gray shadowy beast with claws	gray, dark gray, yellow
+manhattan	a manhattan cocktail in a stemmed glass with a cherry	amber red, clear, red
+politician	a politician in a suit holding a rolled speech	navy, white, red
+spirits	a bottle of golden liquor	gold, clear, brown
+bacon	a few strips of crispy bacon	red brown, pink, cream
+cattle	a brown cow, side view	brown, white
+classroom	a small yellow brick schoolhouse	yellow, red brick, brown
+collins	a tall iced collins glass with a lemon slice	white, clear, yellow
+colours	a red silk regimental flag on a pole	red, gold, brown
+crop	a bundle of green wheat stalks	green, yellow
+medication	a white pill bottle with tablets	white, orange
+portfolio	a flat black leather portfolio case	black, silver
+salad	a bowl of green leafy salad	green, red, white
+screening	a roll of gray wire mesh screen	gray, steel
+soup	a bowl of orange soup with a spoon	orange, white
+stake	a sharpened wooden stake	brown, tan
+tackle	a fishing rod with reel and line	green, steel gray, black
+beam	a bright beam of white light from a lamp	white, yellow, gray
+dining	a wooden dining table with chairs	brown, dark brown
+grandmother	a grandmother with gray hair in a cardigan holding knitting needles	gray, purple, white
+missile	a missile rocket	white, gray, red
+organ	a cartoon anatomical heart	red, pink
+pearl	a lustrous white pearl in an open shell	white, cream, gray
+pepper	a pepper grinder full of black peppercorns	black, brown
+rod	a wooden rod	brown, tan
+tattoo	a black anchor tattoo design	black, red
+zoo	a zoo entrance gate with stone pillars and green iron bars	green, gray, stone
+arrow	a wooden arrow with feathered fletching	brown, white, gray
+chancellor	a stately official in a dark suit holding a leather dispatch box	black, red, gold
+closet	a wooden wardrobe cabinet	brown, dark brown
+combine	a green combine harvester, side view	green, yellow, black
+controller	a black game controller	black, gray, red
+disc	a shiny compact disc	silver, rainbow
+embassy	a white stone embassy building with columns and a flagpole	white, blue, gray
+haven	a sturdy stone and wood shelter hut	gray, brown
+lip	cartoon pink lips	pink, red
+mud	a brown mud puddle pile	brown, dark brown
+publisher	a newspaper owner in a waistcoat holding a newspaper	brown, white, gray
+rookie	a young recruit in an oversized cap holding a clipboard	blue, white, tan
+sandwich	a sandwich with lettuce, tomato and cheese	tan, green, red
+ski	a pair of wooden skis	brown, red
+sterling	a silver coin	silver, gray
+valve	a steel pipe valve with a round handwheel	steel gray, red
+ham	a pink glazed ham	pink, brown
+jewelry	a gold ring with a sparkling gem	gold, blue
+jungle	a cluster of jungle trees with hanging vines	green, dark green, brown
+prof	a professor in a tweed jacket holding a book	brown, white, tan
+provisions	a crate of bread loaves and canned food	brown, tan, gray
+defender	a soldier with a large shield and spear	silver, red, brown
+generic	a plain bottle of house wine	red, green, white
+keyboard	a black computer keyboard	black, gray
+potato	a brown potato	brown, tan
+potter	a potter in an apron holding a clay vase	brown, tan, blue
+sergeant	a soldier in uniform with chevrons on the sleeve holding a whistle	olive green, gold, brown
+silk	a folded bolt of white silk	white, cream
+stamp	a red rubber stamp with a wooden handle	red, brown
+voter	a person dropping a ballot paper into a ballot box	blue, white, gray
+witch	a witch in a pointed hat with a broomstick	black, purple, green
+belly	a cartoon round belly with a belly button	peach, pink
+booth	a red wooden kiosk booth	red, brown, white
+cam	a gray steel cam disc on a shaft	gray, steel
+cliff	a steep rocky cliff face	gray, brown
+derby	a black felt bowler hat	black, dark gray
+fig	a purple fig, one cut open	purple, pink, green
+lemon	a yellow lemon	yellow, green
+lung	a pair of cartoon pink lungs	pink, red
+nutrition	a bowl of green vegetables and fruit	green, red, orange
+ore	a brown rock lump with metal veins	brown, gray, gold
+cafe	a small brick cafe with an awning	brown, red brick, cream
+dairy	a white wooden dairy barn	white, red, gray
+diary	a red leather diary with a strap	red, cream
+euro	a gold euro coin	gold, silver
+lighter	a plastic lighter with a flame	red, silver, orange
+meter	a gray utility meter with a glass dial	gray, white, black
+olive	a block of yellow olive wood	yellow, brown
+receiver	a black telephone receiver	black, gray
+servant	a servant in a white apron holding a silver tray	black, white, silver
+skull	a cartoon white skull	white, gray
+statue	a stone statue of a figure on a pedestal	gray, bronze
+vacuum	a red vacuum cleaner	red, black, gray
+architect	an architect in a hard hat holding rolled blueprints	blue, white, yellow
+basin	a white porcelain wash basin	white, gray
+bud	a green flower bud	green, pink
+butler	a butler in a tailcoat holding a silver tray	black, white, silver
+chick	a fluffy yellow chick, side view	yellow, orange
+coke	a lump of gray coke fuel	gray, black
+console	a black control console with screens	black, gray, green
+fabric	a folded white fabric bolt	white, cream
+fairy	a tiny fairy with gossamer wings and a wand	pink, light blue, gold
+lodge	a wood and stone lodge cabin	brown, gray
+pastor	a pastor in a black shirt and white collar holding a bible	black, white, gold
+poison	a green bottle marked with a skull and crossbones	green, black, white
+rebel	a rebel fighter with a bandana and a rifle	olive green, red, brown
+trainer	a coach in a red tracksuit with a whistle	red, white, silver
+basket	a woven basket with a handle	tan, brown
+beard	a cartoon bushy brown beard	brown, dark brown
+blanket	a folded red wool blanket	red, cream
+burger	a hamburger with lettuce and cheese	brown, tan, green
+concentrate	a pile of orange mineral concentrate	orange, brown
+cookie	a round chocolate chip cookie	brown, dark brown
+ink	an ink bottle of black ink	black, clear
+motorcycle	a black motorcycle, side view	black, silver
+nest	a bird nest of twigs with eggs	brown, light blue
+penny	a copper penny coin	copper, brown
+reed	a clump of green reeds	green, tan
+shorts	a pair of cotton shorts	khaki, blue
+testament	a thick paper book bound in leather	brown, cream
+toe	a cartoon big toe	peach, pink
+ambulance	a white ambulance, side view	white, red
+ballot	a folded paper ballot slip	white, gray
+chile	a red chili pepper	red, green
+cigarette	a cigarette	white, orange
+cooling	a white steel air conditioning unit	white, gray, copper
+elder	an elderly person with a long gray beard leaning on a staff	gray, brown, white
+fiber	a coil of white fiber strands	white, cream
+grocery	a brick grocery store with crates of produce outside	red brick, green, brown
+guinea	a gold coin	gold, yellow
+hull	a wooden ship hull	brown, dark brown
+laundry	a brick laundry building with a chimney	red brick, white, gray
+packing	a pile of white packing peanuts in a box	white, tan
+brass	a brass ingot	gold, brass yellow
+cos	a head of romaine lettuce	green, light green
+diesel	a black diesel engine block	black, gray
+oven	an iron oven	black, gray, orange
+passport	a passport booklet	dark red, gold
+tablet	a black tablet computer showing a web page	black, gray, blue
+collar	a brown leather collar with a buckle	brown, silver
+hart	a red deer stag with antlers, side view	brown, tan
+nut	a brown walnut	brown, tan
+soda	a glass bottle of brown fizzy soda	brown, clear, red
+sponsor	a businessperson in a suit holding a large money bag	navy, green, white
+analyst	an analyst in glasses holding a chart board	gray, blue, white
+buyer	a shopper holding a shopping bag	blue, brown, white
+cannabis	a cannabis plant	green, dark green
+cloth	a folded white cloth	white, cream
+container	a gray plastic storage container with a lid	gray, white
+fork	a steel fork	silver, gray
+fur	a brown fur pelt	brown, tan
+junk	a pile of rusty scrap junk	brown, rust, gray
+kidney	a cartoon kidney	reddish brown, pink
+lobby	a marble entrance hall with glass doors	white, gray, gold
+marc	a small glass of golden brandy	gold, clear
+mineral	a gray crystalline mineral rock	gray, white
+navigation	a brass compass	brass gold, white, black
+pork	a raw pink pork chop	pink, white
+ranch	a wooden ranch house with a fence	brown, red
+tin	a tin ingot	silver, gray
+vampire	a pale vampire in a black cape with fangs	black, red, white
+arch	a stone arch	gray, tan
+badge	a steel police badge	silver, gray
+extract	a small dropper bottle of brown extract	brown, amber
+ferry	a white ferry boat, side view	white, blue, red
+fisher	a fisherman in waders holding a fishing rod	green, yellow, brown
+gauge	a brass pressure gauge with a glass dial	gold, white, black
+gut	a cartoon coiled intestine	pink, red
+instructor	a teacher holding a pointer stick	brown, white, blue
+liar	a person with a long pointy nose crossing their fingers	green, peach, brown
+machinery	a gray machine with gears and pistons	gray, steel, black
+mercury	a glass flask of silvery mercury	silver, clear
+platinum	a platinum ingot	silver, light gray
+starter	a gray electric starter motor	gray, copper
+tire	a black rubber tire	black, dark gray
+aluminum	an aluminum ingot	silver, light gray
+buck	a green dollar bill	green, white
+disk	a silver metal disk	silver, gray
+goddess	a goddess in a flowing white gown with a golden crown	white, gold
+liquor	a bottle of golden liquor	gold, brown, clear
+loser	a slumped athlete holding a broken trophy	blue, gray, brown
+pad	a white padded cushion pad	white, gray
+seller	a market trader holding a basket of goods	brown, green, white
+thumb	a cartoon thumbs-up hand	peach, pink
+timber	a stack of brown timber planks	brown, tan
+vitamin	a bottle of vitamin pills	orange, white
+voluntary	a volunteer soldier in uniform holding a rifle	olive green, brown, black
+wheat	a sheaf of golden wheat	golden yellow, tan
+wrist	a cartoon wrist and hand	peach, pink
+banana	a yellow banana	yellow, brown
+capitol	a white marble capitol building with a dome	white, gray
+chin	a cartoon chin with a jaw	peach, pink
+clerk	a clerk in a vest holding a ledger	brown, white, gray
+flour	a sack of white flour	white, tan
+geneva	a bottle of clear gin	clear, white, green
+java	a mug of hot black coffee	brown, white
+organs	a plate of red offal meat	red, white
+outlet	a plastic electrical wall socket	white, copper, gray
+portal	a glowing blue swirling portal gate	blue, white, purple
+prescription	a pill bottle with a paper prescription	orange, white
+silicon	a gray silicon wafer	gray, silver
+vaccine	a syringe with vaccine	clear, silver, blue
+vinyl	a black vinyl record	black, red
+asylum	a gray stone asylum building	gray, brown
+dancer	a dancer in a tutu holding a ribbon	pink, white
+entrepreneur	a businessperson in a blazer holding a briefcase	navy, brown
+fossil	a gray stone ammonite fossil	gray, tan
+injection	a syringe	clear, silver
+spark	a bright yellow electric spark	yellow, white
+straw	a bundle of yellow straw	yellow, tan
+successor	a young royal heir holding a scepter	purple, gold, white
+archive	a gray concrete archive building with filing shelves	gray, tan
+bean	a green bean pod	green, light green
+bicycle	a blue bicycle, side view	blue, black
+cord	a coil of gray nylon cord	gray, dark gray
+defendant	a nervous person in a suit holding a hat	gray, white, brown
+hydrogen	a glass flask of clear gas	white, clear
+jaw	a cartoon jawbone	white, gray
+lawn	a patch of green lawn	green, light green
+needle	a steel sewing needle with thread	silver, red
+pond	a small round pond with lily pads	blue, green
+porter	a porter in a cap carrying suitcases	red, brown, black
+prey	a brown antelope, side view	brown, white
+refugee	a person carrying a bundle on their back	brown, gray, blue
+ruby	a red ruby gem	red, dark red
+amber	a lump of orange amber	orange, golden
+ankle	a cartoon ankle and foot	peach, pink
+berry	a red berry cluster	red, green
+certification	a paper certificate with a ribbon seal	white, gold, red
+licence	a plastic license card	white, blue
+mandate	a scroll with an official seal	cream, red
+steak	a red beef steak	red, white
+therapist	a therapist in a cardigan holding a notepad	beige, blue, brown
+canvas	a roll of yellow canvas	yellow, tan
+cheek	a cartoon rosy cheek face	peach, pink
+comedian	a comedian holding a microphone	blue, black, red
+cooler	a blue plastic cooler box	blue, white
+curry	a bowl of orange curry	orange, white
+drake	a male mallard duck, side view	green, brown, white
+investor	an investor in a suit holding a money bag	gray, green, white
+marble	a block of white marble	white, gray
+nominee	a politician in a suit holding a rosette	navy, red, white
+pillow	a white pillow	white, gray
+rapper	a rapper in a hoodie holding a microphone	black, gold, red
+scholar	a scholar in a robe holding a book	black, brown, cream
+spa	a white stone spa building with a pool	white, blue
+spike	an iron spike	gray, dark gray
+tab	a restaurant bill on a small tray	white, black
+underwear	a pair of white cotton underpants	white, gray
+waist	a cartoon waist with a belt	peach, brown
+brake	a steel brake disc	gray, red
+critic	a critic with glasses holding a notepad	gray, white, black
+depot	a brick train depot	red brick, gray
+eats	a plate of hot food	white, brown, green
+elevator	a steel elevator cage	silver, gray
+herald	a herald in a tabard holding a trumpet	red, gold, blue
+lily	a white lily flower	white, green
+messenger	a messenger with a shoulder bag holding a letter	brown, white, blue
+pencil	a yellow pencil	yellow, pink, gray
+plasma	a blood bag of yellow plasma	yellow, clear
+quarterback	a football quarterback in a helmet holding a football	blue, white, brown
+ref	a referee in a striped shirt holding a whistle	black, white, silver
+sovereign	a king in a crown holding a scepter	gold, red, white
+supervisor	a supervisor in a hard hat holding a clipboard	yellow, blue, brown
+automobile	a blue car, side view	blue, black
+cement	a sack of gray cement	gray, tan
+cox	a coxswain in a cap holding a megaphone	blue, white, red
+grove	a small cluster of green trees	green, brown
+gum	a pink piece of bubble gum	pink, white
+lance	a long wooden lance with a steel tip	brown, silver
+prosecutor	a prosecutor in a black suit holding a file	black, white, tan
+spice	a small bowl of red spice powder	red, brown
+towel	a folded white towel	white, cream
+vegetable	a bunch of green vegetables	green, orange
+bloom	a pink flower bloom	pink, green
+clown	a clown with a red nose holding a balloon	red, yellow, white
+desktop	a black desktop computer	black, gray
+dial	a black control dial knob	black, silver
+directory	a thick paper telephone book	yellow, white
+ginger	a knobbly ginger root	yellow, tan
+jar	a clear glass jar	clear, gray
+painter	a painter in white overalls holding a paint roller	white, blue, yellow
+printer	a gray printer	gray, white
+sanctuary	a small stone shrine	gray, gold
+sleeve	a cloth shirt sleeve	blue, white
+spine	a cartoon spine	white, cream
+steering	a black steering wheel	black, gray
+treasurer	an official in a suit holding a cash box	gray, green, gold
+triangle	a steel triangle instrument with a striker	silver, gray
+debris	a pile of gray rubble debris	gray, brown
+donor	a person holding a gift box	blue, red, white
+garlic	a white garlic bulb	white, cream
+indicator	a plastic indicator light	orange, gray
+lounge	a brown leather sofa	brown, dark brown
+mint	a sprig of green mint	green, light green
+nova	an exploding bright star	white, yellow, orange
+pasta	a plate of pasta	yellow, red
+showcase	a glass display cabinet	clear, brown
+wax	a block of yellow wax	yellow, cream
+aerial	an aluminum TV aerial	silver, gray
+ammunition	a few brass bullets	brass gold, gray
+catalog	a paper catalog booklet	white, red
+catalogue	a paper catalogue booklet	white, blue
+collector	a collector holding a magnifying glass	brown, green, cream
+danish	a danish pastry with fruit filling	yellow, golden, red
+fountain	a stone fountain with water	gray, blue
+hay	a hay bale	yellow, tan
+paste	a pot of white paste	white, cream
+pioneer	a pioneer in a coonskin cap holding an axe	brown, tan, gray
+sack	a burlap sack	brown, tan
+wool	a ball of white wool	white, cream
+cardinal	a cardinal in red robes with a red cap holding a cross	red, white, gold
+champ	a champion holding a gold trophy	gold, red, white
+champagne	a glass of golden champagne	gold, clear
+chrome	a shiny chrome bar	silver, gray
+cleaner	a blue spray bottle of cleaner	blue, white
+griffin	a griffin with an eagle head and lion body	gold, brown, white
+historian	a historian holding an old scroll	brown, cream, green
+hostage	a person with hands tied	gray, brown
+monument	a white stone monument obelisk	white, gray
+particle	a tiny gray speck particle	gray, dark gray
+peanut	a peanut in its shell	brown, tan
+petroleum	a barrel of black oil	black, gray
+pharmaceutical	a pill bottle	white, orange
+rack	a gray steel shelving rack	gray, silver
+scrap	a pile of brown scrap metal	brown, rust, gray
+shuttle	a wooden weaving shuttle	brown, tan
+snack	a small bag of snacks	red, yellow
+spotlight	a white steel stage spotlight on a stand	white, black, yellow
+striker	a soccer player in a jersey kicking a ball	red, white, black
+vet	a veterinarian in green scrubs holding a puppy	green, white, brown
+broker	a broker in a suit holding a phone	navy, white, black
+cocktail	a cocktail glass with a fruit garnish	pink, clear, green
+fist	a cartoon clenched fist	peach, pink
+heir	a young aristocrat holding a key	blue, gold, white
+landlord	a landlord in a waistcoat holding a ring of keys	brown, gold, white
+mosque	a stone mosque with a dome and minaret	white, gold, gray
+moss	a clump of green moss	green, dark green
+nursery	a pink wooden baby crib	pink, white
+onion	a white onion	white, cream
+recruit	a young soldier in a helmet holding a rifle	olive green, brown
+rogue	a scoundrel in a hooded cloak holding a dagger	black, brown, silver
+tomb	a gray stone tomb	gray, dark gray
+abbey	a stone abbey church	gray, brown
+baron	a baron in a cloak holding a goblet	red, gold, white
+bunny	a white bunny rabbit, side view	white, pink
+clutch	a gray clutch plate	gray, steel
+coconut	a coconut, one half cracked open	brown, white
+corridor	a stone corridor archway	gray, dark gray
+header	a wooden header beam	brown, tan
+holly	a holly bush with red berries	green, red
+lining	a folded cloth lining	red, cream
+manila	a manila envelope	yellow, tan
+opener	a steel bottle opener	silver, gray
+spoon	a steel spoon	silver, gray
+teddy	a teddy bear	brown, tan
+terrace	a stone terrace with a balustrade	gray, tan
+villain	a villain in a black cape twirling a mustache	black, red, purple
+billboard	a large blank yellow billboard on steel legs	yellow, gray
+bully	a big person in a leather jacket cracking knuckles	black, blue, brown
+economist	an economist in glasses holding a chart	gray, green, white
+forehead	a cartoon forehead with eyebrows	peach, brown
+gem	a blue cut gem	blue, light blue
+heather	a sprig of purple heather	purple, green
+marker	a red marker pen	red, white
+marsh	a patch of marshland with reeds	green, brown, blue
+marshal	a marshal in a wide-brim hat with a star badge holding a revolver	brown, gold, black
+ninja	a ninja in black holding a sword	black, gray, silver
+pharmacy	a white brick pharmacy building with a green cross	white, green, gray
+processor	a gray computer chip	gray, gold
+rubbish	a bag of rubbish	black, brown
+salon	a gilded art gallery room	gold, cream
+sodium	a lump of soft silvery sodium	silver, gray
+swallow	a blue swallow bird in flight	blue, white, orange
+congressman	a politician in a suit with a flag pin holding a gavel	navy, red, white
+coral	a branch of pink coral	pink, coral red
+correspondent	a reporter in a trench coat holding a microphone	tan, black, gray
+coupon	a paper coupon with dotted edges	white, green
+curtain	a red cloth curtain	red, gold
+dentist	a dentist in a white coat holding a dental mirror	white, blue, silver
+dough	a ball of white dough	white, cream
+envelope	a white paper envelope	white, gray
+granite	a block of gray granite	gray, black
+greens	a bunch of leafy greens	green, dark green
+handbook	a small paper handbook	blue, white
+lime	a pile of white lime powder	white, gray
+maid	a maid in a black dress and white apron holding a feather duster	black, white
+maple	a maple tree with red leaves	red, brown
+operative	a spy in a trench coat and sunglasses holding a briefcase	tan, black
+relay	a black electrical relay switch	black, copper
+taxpayer	a person holding a wallet	blue, brown, white
+wheelchair	a gray wheelchair	gray, black
+atm	a gray steel cash machine	gray, black, green
+bark	a slab of tree bark	brown, dark brown
+bra	a cotton lace bra	white, pink
+composer	a composer holding sheet music and a pen	black, white, cream
+cowboy	a cowboy in a hat holding a lasso	brown, tan, blue
+gasoline	a yellow gasoline can	yellow, red
+ivory	a white ivory tusk	white, cream
+kirk	a stone church with a steeple	gray, brown
+necklace	a gold necklace with a gem pendant	gold, red
+porch	a white wooden porch	white, gray
+spit	an iron roasting spit	gray, black
+tomato	a red tomato	red, green
+tub	a white porcelain bathtub	white, silver
+uranium	a glowing green uranium rod	green, gray
+volleyball	a white volleyball	white, blue, yellow
+doe	a brown doe deer, side view	brown, tan
+elbow	a cartoon bent elbow arm	peach, pink
+gel	a blue tub of gel	blue, clear
+grill	a black barbecue grill	black, gray
+heel	a cartoon foot heel	peach, pink
+mat	a gray rubber mat	gray, black
+spill	a black liquid puddle spill	black, dark gray
+swamp	a murky swamp with dead trees	green, brown
+teammate	a player in a team jersey holding a ball	blue, white
+vanilla	a vanilla flower with pods	white, brown
+violet	a purple violet flower	purple, green
+afghan	an orange crocheted blanket	orange, brown, cream
+dessert	a slice of cake dessert	cream, brown, red
+investigator	a detective in a trench coat holding a magnifying glass	tan, brown, black
+ivy	a vine of green ivy	green, dark green
+livestock	a brown cow, side view	brown, white
+missionary	a missionary holding a bible	black, white, brown
+pumpkin	an orange pumpkin	orange, green
+ramp	a gray concrete ramp	gray, dark gray
+reef	a coral reef	pink, orange, blue
+sage	a sprig of sage	green, gray
+vodka	a bottle of clear vodka	clear, white
+archbishop	an archbishop in a mitre holding a crozier	white, gold, red
+calcium	a white chunk of calcium	white, gray
+decoration	a golden glass bauble	gold, red
+dye	a jar of purple dye	purple, clear
+guru	a guru in orange robes holding prayer beads	orange, brown
+hormone	a small vial of clear liquid	clear, pink
+lace	a piece of white lace	white, cream
+marketplace	a stone market hall with stalls	brown, gray
+membrane	a cartoon pink membrane sheet	pink, red
+murderer	a shadowy figure in a dark coat holding a knife	black, gray, silver
+nickel	a nickel coin	silver, gray
+remedy	a small bottle of herbal remedy	green, brown
+slate	a gray slate tablet	gray, dark gray
+token	a metal token coin	gold, gray
+yacht	a white yacht, side view	white, blue
+archer	an archer with a bow and arrow	green, brown
+barber	a barber in a smock holding scissors	white, black, silver
+competitor	an athlete in a numbered bib running	red, white
+cuisine	a fancy plated gourmet dish	white, brown, green
+dioxide	a glass flask of white gas	white, clear
+exhaust	a gray steel exhaust pipe with smoke	gray, black
+fries	a carton of french fries	yellow, red
+insulin	an insulin pen	white, orange
+lid	a cartoon closed eyelid	peach, pink
+manor	a gray stone manor house	gray, brown
+mic	a black microphone	black, silver
+narrator	a storyteller holding an open book	brown, cream, blue
+partisan	a resistance fighter with a rifle	olive green, brown
+ribbon	a blue silk ribbon bow	blue, light blue
+coffin	a black oak coffin	black, brown
+conductor	a bus conductor in a cap holding a ticket punch	navy, silver
+font	a white stone baptismal font	white, gray
+glue	a white glue bottle	white, orange
+luggage	a black suitcase	black, tan
+microwave	a white microwave oven	white, gray, black
+morocco	a red leather hide	red, brown
+peel	a yellow banana peel	yellow, brown
+picnic	a red checkered picnic basket	red, white, tan
+psychic	a psychic in a turban holding a crystal ball	purple, gold, blue
+psychologist	a psychologist with glasses holding a notepad	brown, white, gray
+puppet	a red wooden puppet on strings	red, brown, white
+sausage	a brown sausage	brown, red
+skeleton	an iron skeleton key	gray, black
+tick	a brown tick, side view	brown, black
+capitalist	a wealthy person in a top hat holding a money bag	black, gold, green
+constable	a police constable in a dark uniform holding a truncheon	navy, black, silver
+goalkeeper	a goalkeeper in gloves holding a ball	green, white, black
+kindergarten	a yellow brick kindergarten building	yellow, red brick, blue
+mechanic	a mechanic in overalls holding a wrench	blue, gray, silver
+pitcher	a baseball pitcher in a cap throwing a ball	white, blue, red
+playground	a wooden playground climbing frame with a slide	brown, red, steel
+receptor	a cartoon cell receptor	pink, purple
+shrimp	a pink shrimp	pink, orange
+spokesman	a spokesman at a podium holding a microphone	navy, white, black
+stall	a wooden market stall with a cloth awning	brown, red, white
+strap	a brown leather strap with a buckle	brown, silver
+vendor	a street vendor with a cart holding a pretzel	brown, red, white
+backpack	a blue nylon backpack	blue, black
+balcony	a white stone balcony	white, gray
+buffer	a gray rubber buffer bumper	gray, black
+daisy	a white daisy	white, yellow
+disco	a disco building with a mirror ball	silver, purple
+foam	a pile of white foam	white, cream
+invalid	a person in a dressing gown holding a hot water bottle	blue, red, white
+jade	a piece of green jade	green, light green
+participant	a person wearing a lanyard holding a flag	blue, white, red
+phantom	a white ghost phantom	white, gray
+stab	a dagger	silver, black
+supermarket	a large supermarket building	white, red, gray
+tenant	a person carrying a moving box	brown, blue, tan
+tractor	a green tractor, side view	green, yellow, black
+turnover	a golden-brown pastry turnover	brown, tan
+whiskey	a glass of whiskey with ice	brown, clear
+antenna	a silver aluminum antenna	silver, gray
+chop	a pink pork chop	pink, white
+flats	a pair of leather flat shoes	black, tan
+flint	a gray flint stone	gray, dark gray
+fortress	a stone fortress	gray, dark gray
+herb	a bunch of green herbs	green, dark green
+incumbent	an official in a suit at a desk holding a pen	navy, white, brown
+jelly	a red wobbly jelly	red, clear
+mold	a patch of fuzzy green mold	green, gray, white
+napoleon	a white napoleon pastry slice	white, cream, brown
+peach	an orange peach	orange, pink
+scar	a cartoon scar	pink, peach
+stereo	a black stereo system	black, gray
+textbook	a thick paper textbook	blue, white
+vein	a cartoon blue vein	blue, red
+velvet	a folded purple velvet cloth	purple, dark purple
+accountant	an accountant in glasses holding a calculator	gray, white, black
+billionaire	a wealthy person in a tuxedo holding a gold bar	black, gold, white
+bypass	a stone highway bypass road	gray, black
+cane	a brown wooden walking cane	brown, dark brown
+cedar	a plank of red cedar wood	red, brown
+corpse	a cartoon body under a white sheet	white, gray
+diploma	a rolled paper diploma with a ribbon	white, red
+duchess	a duchess in a gown and tiara holding a fan	purple, silver, white
+foil	a roll of silver foil	silver, gray
