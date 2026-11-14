@@ -36,6 +36,11 @@ server and the client import this, so anything here must give the same answer on
   ("needs tilled land", "no wind"); `windAt` (map wind), `moistureAt`, `Soil` (fertility per
   8-tile patch, worn by crops), `ageRate` (Y from age), `needsText`, `producingLine`.
   `Tile.Field` is tilled land; a `soil` stamp changes only `SOIL` tiles.
+- `territory.ts` land, roads, cities, trades and bosses: `landHeld` (tiles per owner, contested,
+  weighted by claim age `taper`), `roadRun` (a road word's run), `readOffer`, `readTransmute`,
+  `transmuteProblem`, `bossWords` (bosses from the data), and the rates (`LAND_RATE`,
+  `ROAD_RATE`, `CITIZEN_S`...). `stampTiles` in world.ts gives a stamp's tiles; a stamp with
+  `x2`, `y2` is a run between two points.
 - `economy.ts` `starterHand` (eight letters around a word that produces something, `starterWords`)
   and `reachability`/`reachTable`: the shortest chain from the action letters to every letter,
   through producers whose needs are reached (a crop needs a tilling word, furniture a claim);
@@ -92,7 +97,8 @@ server and the client import this, so anything here must give the same answer on
     `material` names one (WOODEN) remakes the thing out of it (`applyMaterial`, called by `resolve`):
     density, toughness, hardness, brittleness, flammability, conductivity, value, colour, and the
     material's own damage and resistances; `susceptibility` (brittle things shatter, flammable burn,
-    low melting points melt, conductors carry lightning) is read by every `strike`; `materialText`.
+    low melting points melt, conductors carry lightning) is read by every `strike`; `materialText`;
+    `alchemyRatio`: a carried precious material cuts what transmuting to Z costs, and is used up.
   - `food.ts` (food): `raw` things by heat (`cooks`: 150 C within COOK_RANGE) become their
     `cooks_into` or COOKED (`cooked`); past `shelf_life` they go ROTTEN (`rotted`); `toxin` is the
     poison eating gives. States sit on `Spelled.states` (adjectives that take no slot).

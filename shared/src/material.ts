@@ -155,3 +155,21 @@ export function materialText(dict: Dictionary, s: Stats): string[] {
   if (shock > 1.01) out.push(`conducts: takes lightning ${fmt(shock)}`);
   return out;
 }
+
+/** Value, per point of whose log10, a precious material takes off the letters transmuting costs. */
+export const ALCHEMY_PER_DECADE = 2;
+
+/**
+ * Materials are what transmutation starts from: transmuting while you carry something made of a
+ * known material (a GOLD CROWN, a lump of SILVER, a RUBY) costs `base` less ALCHEMY_PER_DECADE
+ * letters for each power of ten of its value, never under 2, and uses the thing up. Returns that
+ * ratio, or null if it is no help (worthless stuff, or not made of a material at all).
+ */
+export function alchemyRatio(dict: Dictionary, s: Stats, base: number, noun?: string): number | null {
+  const own = knownMaterial(dict, s.get("material")) ?? (noun && isMaterial(dict.word(noun)) ? noun : null);
+  if (!own) return null;
+  const value = s.num("value");
+  if (!(value > 1) || !Number.isFinite(value)) return null;
+  const ratio = Math.max(2, Math.round(base - ALCHEMY_PER_DECADE * Math.log10(value)));
+  return ratio < base ? ratio : null;
+}

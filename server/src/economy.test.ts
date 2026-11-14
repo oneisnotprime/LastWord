@@ -103,6 +103,8 @@ it("hunting a wild animal gives H; breaking a ruin gives D and X; a new region g
   const [rid, ruin] = fixtures("ruin")[0]!;
   me.player.x = ruin.x + 0.5; me.player.y = ruin.y;
   (room as any).grounded.get(rid).integrity = 1;
+  // Whether a ruin holds an X is a roll; every roll lands here (citizens and animals also draw on these numbers).
+  (room as any).rng = () => 0;
   a.send("attack", rid); await wait();
   second(room, 3);
   expect(room.state.things.has(rid)).toBe(false);

@@ -127,3 +127,16 @@ it("ARREST roots the person clicked unless they slip it; a PARDON frees them", a
   a.send("spell", "pardon"); await wait();
   expect(wb.statuses.map((s: any) => s.status)).not.toContain("root");
 });
+
+it("transmuting while carrying GOLD costs three letters for a Z, and uses the gold up", async () => {
+  const { a, wa, last } = await setup();
+  wa.gear = [];
+  a.send("spell", "gold"); await wait();
+  a.send("take"); await wait();
+  expect(wa.gear.map((g: any) => g.phrase)).toContain("gold");
+  const z = wa.letters.z;
+  a.send("spell", "transmute eee"); await wait();
+  expect(String(last("a", "spelled")), String(last("a", "refused"))).toMatch(/Transmuted EEE and GOLD into Z/);
+  expect(wa.letters.z).toBe(z + 1);
+  expect(wa.gear.map((g: any) => g.phrase)).not.toContain("gold");
+});

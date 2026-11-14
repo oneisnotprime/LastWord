@@ -76,6 +76,14 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
 - Themes batch 1 art: `ARCHETYPES` has `herb` and `gem`; `WORDS` has the common professions (chef,
   nurse, judge, scout, mason...). Materials, cooked and rotten things take their colour from the
   data (`color`), through `look.ts`.
+- The top-left HUD lists letters coming in a minute by letter and what makes them (loadout
+  `income`), and food, fuel and power in and out; the loadout screen's Producing lines say why a
+  producer is idle. The corner shows the wind and the city you stand in (ruler, citizens).
+- The trade screen (T, `Hud.trade`): the market you stand at (choose a letter; you pay with your
+  commonest), hiring, transmuting into Z, and offers to people within TRADE_RANGE. Offers made
+  and received are cards at the right (`#offers`: Accept, Counter, Decline, Withdraw). Inputs on a
+  screen count as typing (`Hud.typing`), so their letters are not commands.
+- A roaming boss (`Player.boss`) stands 1.6 times as tall with a red tag.
 - `src/tips.ts` teaching tips (shared `tips.ts`): rotating word cards on the start screen, one
   line (`#tip`) in the spell window while it is empty, and Word ideas with a reroll in the Esc
   menu, where Show tips turns them off (`lastword.tips` in localStorage).

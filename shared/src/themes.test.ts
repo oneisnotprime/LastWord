@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
-  breachText, builtBy, cardOf, cooked, cooks, foodText, grow, haggled, HAGGLE_FLOOR, inspectText, isMaterial, jobsOf, outputOf, pactOf,
+  alchemyRatio, breachText, builtBy, cardOf, cooked, cooks, foodText, grow, haggled, HAGGLE_FLOOR, inspectText, isMaterial, jobsOf, outputOf, pactOf,
   parsePhrase, placeRules, producerOf, resolve, resolveSpelled, rotted, rulesText, seeded, SEEDLING, spawn, spoils, strike, susceptibility,
   takeLetters, toxin, useObject, IDEAL,
 } from "./index.js";
@@ -40,6 +40,14 @@ describe("materials (theme 11)", () => {
     expect(wooden.tags("material")).toEqual(["wood"]);
     expect(make("sword", ["ice"]).num("dmg_cold")).toBeGreaterThan(0);
     expect(make("sword", ["silver"]).num("dmg_holy")).toBeGreaterThan(0);
+  });
+
+  it("precious materials are what transmuting starts from: the costlier, the fewer letters", () => {
+    expect(alchemyRatio(dict, make("gold"), 10, "gold")).toBe(3);
+    expect(alchemyRatio(dict, make("crown", ["silver"]), 10)).toBe(5); // a 500-a-kilo crown
+    expect(alchemyRatio(dict, make("iron"), 10, "iron")).toBe(9);
+    expect(alchemyRatio(dict, make("paper"), 10, "paper")).toBeNull(); // worthless
+    expect(alchemyRatio(dict, make("dog"), 10)).toBeNull(); // made of nothing known
   });
 
   it("what a body is made of decides what hurts it, in every strike", () => {

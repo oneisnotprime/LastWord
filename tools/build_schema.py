@@ -283,6 +283,7 @@ sets_weather|text|||weather it starts in its field
 clears_weather|tags|||weather it ends in its field
 """
 GROUPS["event"] = """
+takes_city|bool|false||makes its speller the ruler of a city it reaches (conquest, coup, election)
 event_target|enum|object|object,creature,character,structure,tile,region,faction,map|what the event is dropped on
 event_radius|num|0|m|area around the target it also affects
 event_duration|num|0|min|how long the event runs (0 = instant)

@@ -27,4 +27,5 @@ export * from "./material.js";
 export * from "./food.js";
 export * from "./work.js";
 export * from "./law.js";
+export * from "./territory.js";
 export * from "./tips.js";

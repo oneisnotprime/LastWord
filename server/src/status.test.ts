@@ -9,6 +9,8 @@ beforeAll(async () => { WorldRoom.testBare = true; colyseus = await boot(appConf
 afterAll(async () => { await colyseus.shutdown(); });
 
 const wait = (ms = 120) => new Promise((r) => setTimeout(r, ms));
+/** Waits until the server has acted on what was sent (a slow machine takes longer than `wait`), up to two seconds. */
+const until = async (done: () => boolean) => { for (let i = 0; i < 40 && !done(); i++) await wait(50); };
 const all = () => Object.fromEntries([..."abcdefghijklmnopqrstuvwxyz"].map((ch) => [ch, 99]));
 const ticks = (room: WorldRoom, n: number, step = 0.1) => { for (let i = 0; i < n; i++) room.update(step); };
 
@@ -105,6 +107,7 @@ it("an immune_* flag blocks its status: WAKE keeps a SLEEPING SWORD from sending
   expect(said.a.at(-1)).toBe("SLEEPING SWORD equipped");
   b.send("spell", "wake"); await wait();
   a.send("attack", b.sessionId); await wait();
+  await until(() => (room as any).walkers.get(a.sessionId).foe === b.sessionId);
   ticks(room, 30);
   expect(wb.hp).toBeLessThan(1e6);
   expect(has(wb, "sleep")).toBe(false);

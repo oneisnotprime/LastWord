@@ -87,9 +87,11 @@ it("something coming for you from beyond your sight is sent as a threat, with wh
   const { room, r, c, w, of } = await player();
   const wolf = r.addCreature({ spelled: { noun: "wolf" }, phrase: "wolf", vehicle: false, integrity: null }, "-", w.player.x + 30, w.player.y);
   const wv = (r.walkers as Map<string, any>).get(wolf);
-  wv.foe = c.sessionId;
-  ticks(room, 6); await wait();
-  const list = of("threats").at(-1);
+  // It keeps coming for you (a wild wolf otherwise gives up on prey it cannot see at its next look round).
+  for (let i = 0; i < 6; i++) { wv.foe = c.sessionId; room.update(0.1); }
+  await wait();
+  // The list sent while it came for you (the room's own clock may since have let it give up the chase).
+  const list = of("threats").find((l: any[]) => l.some((t) => t.id === wolf && t.targeting));
   expect(list).toEqual([expect.objectContaining({ id: wolf, name: "wolf", air: false, targeting: true })]);
 });
 

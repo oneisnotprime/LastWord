@@ -12,6 +12,8 @@ afterAll(async () => { await colyseus.shutdown(); });
 
 const dict = loadDictionary();
 const wait = (ms = 120) => new Promise((r) => setTimeout(r, ms));
+/** Waits until the server has acted on what was sent (a slow machine takes longer than `wait`), up to two seconds. */
+const until = async (done: () => boolean) => { for (let i = 0; i < 40 && !done(); i++) await wait(50); };
 const all = () => Object.fromEntries([..."abcdefghijklmnopqrstuvwxyz"].map((ch) => [ch, 99]));
 const second = (room: WorldRoom) => { for (let i = 0; i < 10; i++) room.update(0.1); };
 
@@ -200,6 +202,7 @@ it("a LAMP lights where it stands; a GYM's field strengthens its owner around it
   const morale = wb.unit.body.stats.num("morale");
   wa.player.x -= 6;
   a.send("spell", "wolf"); await wait();
+  await until(() => [...(room as any).walkers.values()].some((w: any) => w.master === a.sessionId));
   second(room);
   expect(wb.unit.body.stats.num("morale")).toBeLessThan(morale);
   const wolves = [...(room as any).walkers.entries()].filter(([, w]: any) => w.master === a.sessionId);

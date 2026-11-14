@@ -24,7 +24,7 @@ export function botSettings(options: unknown, capacity: number, env = process.en
 }
 
 /** What a word is good for to a bot, in the order a bot wants them. */
-export type Use = "weapon" | "armor" | "mount" | "creature" | "producer" | "heal" | "boost" | "field" | "event" | "food";
+export type Use = "weapon" | "armor" | "mount" | "creature" | "producer" | "claim" | "heal" | "boost" | "field" | "event" | "food";
 
 export interface BotWord {
   word: string;
@@ -141,6 +141,10 @@ export function wordBook(dict: Dictionary) {
     if (makes.length && (TILE_TYPES[tile] === undefined || tile === "tilled") && !s.flag("mountable")) {
       add("producer", makes.reduce((n, [ch, rate]) => n + rate * (ACTION_LETTERS.includes(ch) ? 1 : 2), 0) * p.count,
         { needs: [...spec.needs, ...spec.uses, ...(s.num("upkeep_fuel") > 0 ? ["fuel"] : []), ...(s.num("upkeep_power") > 0 ? ["power"] : [])] });
+    }
+    // Claims: ground that pays L (and S over a city's middle), the cheapest and widest first.
+    if (s.num("claim_radius") > 0 && becomes(s) !== "creature" && !s.flag("mountable") && !s.flag("alive")) {
+      add("claim", s.num("claim_radius") / Math.max(1, p.letters.length));
     }
     if (s.get("tile_type") !== "none") continue;
     const slot = String(s.get("equip_slot"));

@@ -1,3 +1,6 @@
+# The letter economy table: what every word that makes letters makes, and the words that hold
+# land, lay roads and take cities.
+#
 # What every word that makes letters makes, by PLAN.md "Letter economy". Hand-written.
 #
 # build_demo.py first takes every produce_* value off every word (demo_words.txt and
@@ -746,3 +749,33 @@ welder: produce_N=0.55
 winemaker: produce_N=0.4
 woodcutter: produce_N=0.55
 workman: produce_N=0.55
+# L: land held. A claim_radius claims ground (CLAIM_REACH times it); each tile you alone hold pays L.
+hedge: claim_radius=4
+fence: claim_radius=3
+flag: claim_radius=10
+post: claim_radius=2
+camp: claim_radius=5
+tent: claim_radius=2
+home: claim_radius=5
+farm: claim_radius=2
+
+# R: roads. A tile_type=road word lays a run of road the way you face (12 tiles, 8 more per radius);
+# each road tile you laid pays R while it lasts.
+lane: tile_type=road
+path: tile_type=road
+trail: tile_type=road
+track: tile_type=road
+road: tile_type=road radius=1
+street: tile_type=road radius=1
+route: tile_type=road radius=1
+avenue: tile_type=road radius=2
+highway: tile_type=road radius=3
+railway: tile_type=road radius=2
+railroad: tile_type=road radius=2
+
+# S: citizens of a city you rule. A claim over a city's middle takes a city nobody rules; these
+# take one from anyone, as they land on it.
+conquest: takes_city=true
+coup: takes_city=true
+election: takes_city=true
+revolution: takes_city=true
