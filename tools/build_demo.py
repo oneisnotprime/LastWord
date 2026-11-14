@@ -141,6 +141,10 @@ def main():
             if op != "=":
                 if not numeric:
                     err(f"{t}: {op} needs a numeric property"); continue
+                # Letters come from producers.txt alone: a generated word may scale what is earned
+                # (WAR's K*3) but never adds a letter of its own (a verb that "earns" T).
+                if not strict and op == "+" and pid.startswith("produce_"):
+                    err(f"{t}: letters come from producers.txt alone"); continue
                 try: ops.append([pid, "mul" if op == "*" else "add", float(val)])
                 except ValueError: err(f"{t}: not a number")
             elif val == "ABS" and numeric:

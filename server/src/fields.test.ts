@@ -113,3 +113,29 @@ it("fields follow their maker, wear off, and end when the maker dies", async () 
   for (let i = 0; i < 10; i++) room.update(0.1);
   expect([...room.state.zones.values()].map((z) => z.word)).not.toContain("fear");
 });
+
+it("a law covers an area's own harm: FIRE set inside someone's SANCTUARY, or under a TRUCE, does not burn them", async () => {
+  const { room, a, b, wa, wb, said } = await twoPlayers();
+  wb.player.x = wa.player.x + 1.5; wb.player.y = wa.player.y;
+  const burns = async () => {
+    const before = wb.hp;
+    a.send("pick", { x: wb.player.x, y: wb.player.y });
+    a.send("spell", "fire");
+    await wait();
+    for (let i = 0; i < 30; i++) room.update(0.1);
+    return before - wb.hp;
+  };
+  expect(await burns(), JSON.stringify(said)).toBeGreaterThan(0); // no law: it burns
+  for (const k of [...(room as any).areas.keys()]) (room as any).areas.delete(k);
+  wb.statuses = []; room.rebuild(wb);
+  b.send("spell", "sanctuary"); await wait();
+  for (let i = 0; i < 2; i++) room.update(0.1);
+  expect(await burns()).toBe(0);
+  expect(wb.statuses.some((s: any) => s.status === "burn")).toBe(false);
+  // An area's own law, too: a TRUCE someone spells covers fire dropped inside it afterwards.
+  for (const [tid] of [...room.state.things]) (room as any).removeThing(tid);
+  for (const k of [...(room as any).areas.keys()]) (room as any).areas.delete(k);
+  wb.statuses = []; room.rebuild(wb);
+  b.send("spell", "truce"); await wait();
+  expect(await burns()).toBe(0);
+});

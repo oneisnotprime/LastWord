@@ -202,6 +202,11 @@ def main(dict_dir):
             if lemma in over and over[lemma][0] == ROLE[pos]:
                 score = 1e9
             out.append((score, ROLE[pos], hit[0], hit[1], pos + s.offset))
+        # An override may give a role WordNet has no entry for: an inflected form players read as
+        # its verb (WON, SENT), which WordNet only lists as a noun (a currency).
+        if lemma in over and over[lemma][1] in ALL_CLASS and over[lemma][0] not in {o[1] for o in out}:
+            role, arch = over[lemma]
+            out.append((1e9, role, ALL_CLASS[arch], arch, "-"))
         return sorted(out, key=lambda o: -o[0])
 
     rows = {"lexicon": [], "inert": [], "proper": []}

@@ -638,7 +638,7 @@ infestation: placement=target placement_range=100 field_radius=40 field_duration
 vermin: placement=region field_radius=60 field_duration=5 summons=rat summon_count=30 produce_E*0.5
 windfall: placement=region field_radius=60 field_duration=2 lode=e,a,o,i,s,t,r,n lode_share=1 lode_stock=30
 serendipity: placement=self field_radius=4 field_targets=self field_duration=5 harvest_bonus*2 lode=j,q,z,x lode_share=0.15 lode_stock=5
-anarchy: placement=map field_radius=ABS field_targets=all field_duration=3 obedience+-5 authority*0 counters=tax,tithe,toll,tariff,levy,customs,duty,tribute,ransom,curfew,lockdown,crackdown,monopoly,embargo,truce,armistice,holiday,quarantine,patrol,siege,blockade,sanctuary,haven,refuge
+anarchy: placement=map field_radius=ABS field_targets=all field_duration=3 obedience+-5 authority*0 counters=tax,tithe,toll,tariff,levy,customs,duty,tribute,ransom,curfew,lockdown,crackdown,monopoly,embargo,truce,armistice,holiday,quarantine,patrol,siege,blockade,sanctuary,haven,refuge,zone
 comet: placement=map field_radius=ABS field_targets=all field_duration=3 lode=z,q lode_share=0.05 lode_stock=10 luminosity+3 morale+-2
 cataclysm: placement=map field_radius=ABS field_targets=all field_duration=3 dmg_earth=20 attack_rate=0.05 friendly_fire=true deposit_factor=0.5 produce_G*3 produce_X*3
 
@@ -1313,3 +1313,46 @@ federation: binds=8 bind_penalty=letters,loyalty,reputation event_duration=12
 # verb social
 legislate: duration=60 authority+3 command_limit+5
 govern: duration=120 authority+4 command_limit+10 tax_rate+0.05
+
+# ---------------------------------------------------------------------------------------------
+# Common words whose class missed their main sense (TODO.md "Data"): ACT, ISSUE and PROCESS
+# were paper documents, DATE a fruit, FALL a waterfall, WON and SENT coins, STORY a floor and
+# STUDY a room. Each now does what a player spelling it expects. LEAD stays the metal: the
+# materials theme builds on it (BULLET, LEADEN, BATTERY are made of it).
+
+# noun act
+act: placement=region placement_range=200 field_radius=80 field_targets=enemies field_duration=8 law=theft,attack fine=6 authority+2
+process: placement=self field_radius=20 field_targets=owned field_duration=10 build_speed*1.5 labor*1.5 accuracy+0.05
+
+# noun event
+issue: placement=target placement_range=60 field_radius=15 field_targets=enemies field_duration=4 inflict_confuse=4 morale+-3 build_speed*0.5 trade_rate=1.5
+
+# noun ceremony
+date: placement=target placement_range=20 event_target=character inflict_charm=20 contest_with=charm contested_by=courage morale+3 event_duration=1
+
+# noun building
+# GARAGE and HOSPITAL were generated healing their owner's side 20 and 50 a second, far beyond any
+# other building (TEMPLE 2, SHRINE 3). A garage mends machines, not people; a hospital is the best
+# healer among buildings, and cures.
+garage: mass=50000 footprint=6 height=4 integrity=3000 material=concrete,steel portable=false enterable=true lockable=true storage_objects=20000 craft_slots=2 build_speed=1.5 needs_foundation=true
+hospital: mass=20000000 footprint=40 height=25 integrity=60000 material=concrete,glass portable=false enterable=true occupants=500 heals=6 res_disease+0.8 effect_status=poison,bleed,burn,disease prevents_death=3 upkeep_power=500 needs_foundation=true counters=plague
+
+# noun place
+# ZONE was generated as a law against fighting over 200 m that never ended and nothing countered.
+zone: placement=region field_radius=100 field_targets=all field_duration=5 claim_radius=20 law=attack security+2
+
+# noun season
+fall: placement=map field_radius=ABS field_targets=all field_duration=8 temperature_delta=-8 growth=0.6 produce_A*3 produce_P*2 food_output*2 counters=summer,spring
+
+# noun document
+story: mass=0.5 integrity=5 flammability=8 material=paper field_radius=12 field_targets=owned morale+3 courage+2 loyalty+1
+study: mass=1 integrity=5 flammability=8 material=paper intelligence+3 training+2 accuracy+0.1 read_properties=4
+
+# adjective quality
+technical: accuracy+0.15 build_speed*1.3 critical+0.05
+
+# verb combat
+won: duration=60 morale+8 courage+5 critical+0.25 accuracy+0.1
+
+# verb movement
+sent: duration=5 teleport_range+500 moves_target=500 effect_target=touched
