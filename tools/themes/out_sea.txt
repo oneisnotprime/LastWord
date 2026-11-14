@@ -1,0 +1,306 @@
+# noun vehicle_water
+canoe: mass=30 length=5 integrity=60 material=wood buoyancy=7 speed_water=4 mountable=true seats=2 carry_capacity=200 stealth=3 agility=6 placeable_on=water harvest_bonus=1.3 harvest_sources=fishing color=brown
+kayak: mass=25 length=4 integrity=50 material=plastic buoyancy=7 speed_water=5 mountable=true seats=1 carry_capacity=120 stealth=3 agility=7 placeable_on=water color=yellow
+yacht: mass=40000 length=25 integrity=3000 material=fiberglass,wood buoyancy=9 speed_water=12 self_propelled=true mountable=true seats=12 carry_capacity=8000 comfort=6 beauty=7 value=5000 storage_letters=60 upkeep_fuel=0.5 placeable_on=water color=white
+ferry: mass=3000000 length=90 integrity=20000 material=steel buoyancy=10 speed_water=10 self_propelled=true mountable=true seats=800 carry_capacity=1500000 anchored=true upkeep_fuel=2 trade_bonus=0.1 placeable_on=water color=white
+ferryboat: mass=800000 length=50 integrity=10000 material=steel buoyancy=10 speed_water=9 self_propelled=true mountable=true seats=400 carry_capacity=600000 upkeep_fuel=1 placeable_on=water color=white
+tugboat: mass=300000 length=25 integrity=8000 hardness=8 material=steel buoyancy=9 speed_water=7 self_propelled=true mountable=true seats=6 tow_capacity=50000000 anchored=true upkeep_fuel=1 placeable_on=water color=red
+tug: mass=250000 length=22 integrity=7000 hardness=8 material=steel buoyancy=9 speed_water=7 self_propelled=true mountable=true seats=5 tow_capacity=40000000 anchored=true upkeep_fuel=1 placeable_on=water color=red
+towboat: mass=200000 length=20 integrity=6000 material=steel buoyancy=9 speed_water=5 self_propelled=true mountable=true seats=5 tow_capacity=30000000 upkeep_fuel=1 placeable_on=water color=red
+steamboat: mass=300000 length=60 integrity=8000 material=wood,iron buoyancy=9 speed_water=7 self_propelled=true mountable=true seats=200 carry_capacity=300000 loudness=6 upkeep_fuel=2 flammability=5 placeable_on=water color=white
+steamship: mass=8000000 length=130 integrity=40000 material=steel buoyancy=10 speed_water=11 self_propelled=true mountable=true seats=1500 carry_capacity=8000000 loudness=6 upkeep_fuel=4 placeable_on=deep_water color=black
+liner: mass=40000000 length=270 integrity=120000 material=steel buoyancy=10 speed_water=12 self_propelled=true mountable=true seats=3000 carry_capacity=10000000 comfort=7 beauty=6 storage_letters=200 upkeep_fuel=8 placeable_on=deep_water color=white
+schooner: mass=150000 length=35 integrity=6000 material=wood,cloth buoyancy=9 speed_water=10 mountable=true seats=20 carry_capacity=150000 agility=5 flammability=5 placeable_on=water color=white
+sloop: mass=40000 length=18 integrity=2500 material=wood,cloth buoyancy=8 speed_water=10 mountable=true seats=10 carry_capacity=30000 agility=6 dmg_blast=80 attack_rate=0.3 attack_range=300 attack_area=2 placeable_on=water color=brown
+ketch: mass=30000 length=16 integrity=2000 material=wood,cloth buoyancy=8 speed_water=9 mountable=true seats=8 carry_capacity=20000 placeable_on=water color=white
+yawl: mass=15000 length=12 integrity=1200 material=wood,cloth buoyancy=8 speed_water=8 mountable=true seats=6 carry_capacity=8000 placeable_on=water color=white
+clipper: mass=1000000 length=65 integrity=15000 material=wood,cloth buoyancy=9 speed_water=16 mountable=true seats=60 carry_capacity=1000000 trade_bonus=0.2 placeable_on=deep_water color=white
+catamaran: mass=8000 length=12 integrity=1500 material=fiberglass buoyancy=10 speed_water=13 mountable=true seats=10 carry_capacity=4000 anchored=true agility=5 placeable_on=water color=white
+galley: mass=200000 length=40 integrity=8000 material=wood buoyancy=8 speed_water=6 mountable=true seats=200 labor=4 dmg_crush=600 dmg_pierce=200 attack_rate=0.2 attack_range=5 siege=3 placeable_on=water color=brown
+trireme: mass=50000 length=37 integrity=6000 material=wood,bronze buoyancy=8 speed_water=5 acceleration=6 mountable=true seats=200 dmg_crush=800 dmg_pierce=300 attack_rate=0.2 attack_range=5 siege=4 placeable_on=water color=brown
+longboat: mass=4000 length=22 integrity=1500 material=wood buoyancy=8 speed_water=5 mountable=true seats=60 carry_capacity=8000 fear_aura=3 stealth=2 placeable_on=water color=brown
+dhow: mass=60000 length=25 integrity=3000 material=wood,cloth buoyancy=8 speed_water=8 mountable=true seats=30 carry_capacity=100000 trade_bonus=0.25 placeable_on=water color=brown
+gondola: mass=600 length=11 integrity=300 material=wood buoyancy=7 speed_water=2 mountable=true seats=6 comfort=4 beauty=8 charm+1 placeable_on=water color=black
+punt: mass=200 length=7 integrity=150 material=wood buoyancy=7 speed_water=2 mountable=true seats=4 carry_capacity=400 placeable_on=water color=brown
+skiff: mass=120 length=4 integrity=120 material=wood buoyancy=7 speed_water=4 mountable=true seats=3 carry_capacity=300 stealth=2 placeable_on=water harvest_bonus=1.4 harvest_sources=fishing color=brown
+dory: mass=150 length=5 integrity=140 material=wood buoyancy=8 speed_water=3 mountable=true seats=3 carry_capacity=500 placeable_on=water harvest_bonus=1.8 harvest_sources=fishing color=yellow
+keelboat: mass=8000 length=18 integrity=1500 material=wood buoyancy=8 speed_water=3 mountable=true seats=20 carry_capacity=30000 anchored=true placeable_on=water color=brown
+narrowboat: mass=15000 length=20 integrity=1200 material=steel buoyancy=8 speed_water=2 self_propelled=true mountable=true seats=6 comfort=5 occupants=6 upkeep_fuel=0.2 placeable_on=water color=green
+whaleboat: mass=500 length=9 integrity=250 material=wood buoyancy=8 speed_water=5 mountable=true seats=7 carry_capacity=1000 placeable_on=water harvest_bonus=2 harvest_sources=fishing counters=whale,kraken,leviathan color=white
+pontoon: mass=3000 length=10 integrity=1500 material=steel buoyancy=10 speed_water=2 mountable=true seats=12 carry_capacity=20000 anchored=true placeable_on=water color=gray
+houseboat: mass=20000 length=15 integrity=2000 material=wood buoyancy=8 speed_water=1.5 mountable=true seats=6 enterable=true occupants=6 comfort=7 storage_letters=40 placeable_on=water color=blue
+speedboat: mass=1500 length=7 integrity=500 material=fiberglass buoyancy=8 speed_water=25 acceleration=8 agility=7 self_propelled=true mountable=true seats=4 loudness=6 upkeep_fuel=0.5 placeable_on=water color=red
+motorboat: mass=2000 length=7 integrity=600 material=fiberglass buoyancy=8 speed_water=18 acceleration=7 self_propelled=true mountable=true seats=6 loudness=5 upkeep_fuel=0.4 placeable_on=water harvest_bonus=1.3 harvest_sources=fishing color=white
+powerboat: mass=3000 length=10 integrity=800 material=fiberglass buoyancy=8 speed_water=28 acceleration=9 agility=6 self_propelled=true mountable=true seats=4 loudness=7 upkeep_fuel=0.8 placeable_on=water color=red
+fireboat: mass=150000 length=30 integrity=6000 material=steel buoyancy=9 speed_water=10 self_propelled=true mountable=true seats=10 dmg_water=60 attack_rate=1 attack_range=100 attack_area=4 wetness=10 counters=fire,blaze,inferno,arson upkeep_fuel=1 placeable_on=water color=red
+icebreaker: mass=15000000 length=130 integrity=150000 hardness=9 material=steel buoyancy=10 speed_water=8 self_propelled=true mountable=true seats=150 dmg_crush=2000 siege=3 terrain_ignored=snow,tundra res_cold=0.8 anchored=true upkeep_fuel=6 counters=ice,glacier,iceberg,freeze,frost placeable_on=water color=red
+tanker: mass=150000000 length=330 integrity=200000 material=steel buoyancy=10 speed_water=7 self_propelled=true mountable=true seats=30 carry_capacity=300000000 fuel_output=50 flammability=8 upkeep_fuel=6 anchored=true placeable_on=deep_water color=black
+freighter: mass=80000000 length=250 integrity=150000 material=steel buoyancy=10 speed_water=10 self_propelled=true mountable=true seats=25 carry_capacity=100000000 storage_objects=50000000 storage_letters=300 trade_bonus=0.3 upkeep_fuel=6 anchored=true placeable_on=deep_water color=blue
+containership: mass=100000000 length=300 integrity=180000 material=steel buoyancy=10 speed_water=11 self_propelled=true mountable=true seats=25 carry_capacity=150000000 storage_letters=400 trade_bonus=0.35 upkeep_fuel=8 anchored=true placeable_on=deep_water color=red
+troopship: mass=15000000 length=150 integrity=60000 material=steel buoyancy=10 speed_water=10 self_propelled=true mountable=true seats=3000 occupants=3000 armor=40 upkeep_fuel=4 placeable_on=deep_water color=gray
+lightship: mass=500000 length=40 integrity=8000 material=steel buoyancy=10 anchored=true mountable=true seats=10 luminosity=9 sight_range+1500 map_reveal=50 counters=shipwreck,fog,mist placeable_on=water color=red
+hydrofoil: mass=100000 length=30 integrity=4000 material=aluminium buoyancy=8 speed_water=25 acceleration=7 self_propelled=true mountable=true seats=150 waves*0.5 upkeep_fuel=2 placeable_on=water color=white
+seaplane: mass=4000 length=12 integrity=700 material=aluminium speed_air=80 speed_water=20 flight_ceiling=5000 self_propelled=true mountable=true seats=6 upkeep_fuel=1 placeable_on=water color=white
+destroyer: mass=8000000 length=150 integrity=80000 hardness=8 material=steel buoyancy=10 speed_water=16 acceleration=6 self_propelled=true mountable=true seats=300 armor=80 dmg_blast=1500 attack_rate=0.5 attack_range=4000 attack_area=6 targets=water,air,land detect_underground=true upkeep_fuel=4 counters=submarine,sub,gunboat,torpedo placeable_on=deep_water color=gray
+battleship: mass=50000000 length=270 integrity=400000 hardness=10 material=steel buoyancy=10 speed_water=15 self_propelled=true mountable=true seats=2500 armor=400 dmg_blast=3000 attack_rate=0.2 attack_range=8000 attack_area=12 siege=4 loudness=10 fear_aura=6 upkeep_fuel=10 placeable_on=deep_water color=gray
+dreadnought: mass=20000000 length=160 integrity=300000 hardness=10 material=steel buoyancy=10 speed_water=11 self_propelled=true mountable=true seats=800 armor=350 dmg_blast=2500 attack_rate=0.2 attack_range=6000 attack_area=10 siege=4 loudness=10 fear_aura=7 upkeep_fuel=8 placeable_on=deep_water color=gray
+ironclad: mass=4000000 length=60 integrity=80000 hardness=9 material=iron,wood buoyancy=9 speed_water=5 self_propelled=true mountable=true seats=150 armor=250 res_pierce=0.6 res_fire=0.6 dmg_blast=600 dmg_crush=400 attack_rate=0.2 attack_range=1500 attack_area=4 upkeep_fuel=3 counters=frigate,galleon,sloop,cannon placeable_on=water color=black
+corvette: mass=1500000 length=80 integrity=25000 hardness=8 material=steel buoyancy=10 speed_water=15 agility=6 self_propelled=true mountable=true seats=90 armor=40 dmg_blast=400 attack_rate=0.5 attack_range=2000 attack_area=3 targets=water,air detect_underground=true upkeep_fuel=2 counters=submarine,sub,smuggler,pirate placeable_on=deep_water color=gray
+carrier: mass=100000000 length=330 integrity=500000 hardness=9 material=steel buoyancy=10 speed_water=15 self_propelled=true mountable=true seats=5000 armor=300 map_reveal=200 summons=jet summon_count=4 summon_owned=true command_limit=60 upkeep_fuel=12 placeable_on=deep_water color=gray
+sub: mass=3000000 length=80 integrity=15000 hardness=8 material=steel speed_water=12 dive_depth=300 self_propelled=true mountable=true seats=60 stealth=8 upkeep_fuel=2 placeable_on=deep_water dmg_blast=2000 attack_rate=0.05 attack_range=10000 targets=water
+minisubmarine: mass=20000 length=12 integrity=2000 material=steel speed_water=6 dive_depth=200 self_propelled=true mountable=true seats=3 stealth=9 sees_through=water upkeep_fuel=0.3 placeable_on=water color=yellow
+submersible: mass=15000 length=8 integrity=3000 hardness=8 material=titanium speed_water=2 dive_depth=6000 self_propelled=true mountable=true seats=3 sees_through=water detect_letters=200 luminosity=4 res_crush=0.8 upkeep_power=5 placeable_on=deep_water color=white
+ark: mass=10000000 length=140 integrity=150000 material=wood buoyancy=10 speed_water=1 mountable=true seats=1000 occupants=1000 anchored=true res_water=1 counters=flood,deluge,tsunami summons=animal summon_count=8 summon_owned=true placeable_on=water,land color=brown
+flagship: mass=30000000 length=200 integrity=250000 hardness=9 material=steel buoyancy=10 speed_water=14 self_propelled=true mountable=true seats=2000 armor=250 dmg_blast=2000 attack_rate=0.3 attack_range=5000 attack_area=8 authority=8 command_limit=40 field_radius=400 field_targets=owned accuracy+0.15 morale+3 upkeep_fuel=8 placeable_on=deep_water color=gray
+vessel: mass=500000 length=40 integrity=10000 material=wood,steel buoyancy=9 speed_water=8 mountable=true seats=50 carry_capacity=500000 placeable_on=water
+watercraft: mass=2000 length=8 integrity=500 material=fiberglass buoyancy=8 speed_water=8 mountable=true seats=4 carry_capacity=1000 placeable_on=water
+bumboat: mass=800 length=6 integrity=200 material=wood buoyancy=7 speed_water=3 mountable=true seats=3 carry_capacity=1000 trade_bonus=0.2 storage_letters=20 placeable_on=water color=green
+showboat: mass=400000 length=60 integrity=8000 material=wood buoyancy=9 speed_water=4 mountable=true seats=500 loudness=6 beauty=8 charm=4 recruit_rate=0.5 placeable_on=water color=white
+
+# noun device
+paddlewheel: mass=20000 length=8 integrity=2000 material=wood,iron portable=false speed_water*1.4 upkeep_fuel=0.5 color=red
+hull: mass=50000 length=30 integrity=8000 hardness=7 material=wood,steel buoyancy=9 portable=false cover=0.5 res_water+0.3 anchored=true color=brown
+porthole: mass=20 integrity=80 hardness=6 material=glass,brass transparency=0.9 portable=false sight_range+20 sees_through=water color=silver
+buoy: mass=200 length=2 integrity=300 material=steel,plastic buoyancy=10 anchored=true portable=false luminosity=4 loudness=3 map_reveal=15 alarm=true placeable_on=water counters=shipwreck,fog color=red
+rigging: mass=400 integrity=200 material=fiber speed_water*1.25 agility+1 climb+3 flammability=5 color=brown
+mainsail: mass=150 length=15 integrity=150 material=cloth speed_water*1.5 flammability=6 color=white
+foresail: mass=80 length=10 integrity=100 material=cloth speed_water*1.2 agility+1 flammability=6 color=white
+topsail: mass=60 length=8 integrity=80 material=cloth speed_water*1.25 flammability=6 color=white
+spinnaker: mass=40 length=14 integrity=60 material=nylon speed_water*1.6 agility+-1 flammability=5 color=red
+jib: mass=30 length=8 integrity=60 material=cloth speed_water*1.15 agility+2 flammability=5 color=white
+staysail: mass=40 length=8 integrity=70 material=cloth speed_water*1.15 agility+1 flammability=5 color=white
+sailcloth: mass=5 integrity=40 material=cloth shape=sheet flammability=5 speed_water*1.1 color=white
+mainmast: mass=5000 length=40 height=40 integrity=2000 material=wood portable=false sight_range+300 speed_water*1.3 color=brown
+foremast: mass=3000 length=30 height=30 integrity=1500 material=wood portable=false sight_range+200 speed_water*1.15 color=brown
+outboard: mass=60 integrity=150 material=steel,aluminium self_propelled=true speed_water*2 loudness=5 upkeep_fuel=0.2 color=black
+oarlock: mass=0.5 integrity=40 material=brass speed_water*1.15 strength+1 color=silver
+prow: mass=2000 length=6 integrity=3000 hardness=8 material=wood,bronze sharpness=5 dmg_crush=300 siege=2 knockback=10 color=brown
+bilge: mass=0 integrity=20 material=water wetness=8 odor=6 decay_rate=1 speed_water*0.9 color=green
+gangplank: mass=60 length=5 integrity=80 material=wood shape=flat portable=true placeable_on=water,land color=brown
+hawser: mass=200 length=100 integrity=300 material=fiber,steel tow_capacity=10000000 anchored=true color=brown
+cannonball: mass=10 integrity=200 hardness=9 material=iron shape=round dmg_blast=60 dmg_crush=120 attack_range=800 siege=3 single_use=true color=black
+watercannon: mass=2000 integrity=1000 material=steel portable=false dmg_water=40 knockback=8 attack_rate=1 attack_range=60 wetness=10 counters=fire,riot,mob upkeep_power=20 color=gray
+
+# noun tool
+tackle: mass=5 integrity=30 material=fiber,steel equip_slot=held hands_required=2 harvest_bonus=2.5 harvest_sources=fishing color=green
+seine: mass=60 length=200 integrity=80 material=fiber portable=false harvest_bonus=3.5 harvest_sources=fishing labor=1 inflict_root=8 targets=water color=gray
+snorkel: mass=0.2 integrity=10 material=plastic equip_slot=face breathes=both dive_depth+5 sees_through=water color=yellow
+aqualung: mass=15 integrity=60 material=steel equip_slot=back breathes=both dive_depth+40 speed_water+1 color=yellow
+scuba: mass=18 integrity=60 material=steel,rubber equip_slot=back breathes=both dive_depth+40 speed_water+1 sees_through=water color=black
+cutlass: mass=1.5 length=0.8 integrity=90 hardness=7 sharpness=7 material=steel equip_slot=held hands_required=1 dmg_slash=45 attack_rate=1.3 critical=0.1 intimidation=2 color=silver
+trident: mass=4 length=2 integrity=120 hardness=7 sharpness=7 material=bronze equip_slot=held hands_required=2 dmg_pierce=55 attack_rate=0.9 attack_range=3 multi_target=3 targets=land,water harvest_bonus=2 harvest_sources=fishing speed_water*1.2 counters=kraken,shark color=gold
+surfboard: mass=6 length=2.2 integrity=40 material=fiberglass buoyancy=8 equip_slot=held hands_required=2 speed_water*2.5 agility+3 waves*0.5 color=blue
+eyepatch: mass=0.02 integrity=5 material=cloth equip_slot=face intimidation=3 night_vision=true sight_range*0.8 color=black
+
+
+# noun structure
+drydock: mass=6000000 footprint=10 integrity=50000 material=concrete,steel portable=false docks=true crafts=vehicle_water craft_slots=1 claim_radius=6 labor=2 heals=20 color=gray
+seawall: mass=8000000 footprint=12 height=6 integrity=250000 material=concrete,stone portable=false anchored=true blocks=water,land claim_radius=10 cover=0.6 counters=waves,swell,surf,tsunami,flood,storm,tide color=gray
+boatyard: mass=2000000 footprint=8 integrity=20000 material=wood,steel portable=false docks=true crafts=vehicle_water craft_slots=1 claim_radius=5 labor=1 color=brown
+anchorage: mass=1000 footprint=10 integrity=5000 material=water portable=false placeable_on=water anchored=true docks=true claim_radius=6 waves*0.3 color=blue
+mooring: mass=500 integrity=600 material=steel,fiber portable=false placeable_on=water anchored=true docks=true claim_radius=2 color=gray
+berth: mass=20000 footprint=4 integrity=3000 material=wood,concrete portable=false placeable_on=water,land docks=true claim_radius=3 comfort=2 color=brown
+seaport: mass=25000000 footprint=14 height=10 integrity=90000 material=stone,concrete portable=false docks=true claim_radius=9 trade_bonus=0.25 storage_letters=350 produce_O*1.5 produce_T*1.5 color=gray
+outport: mass=3000000 footprint=8 integrity=20000 material=wood,stone portable=false docks=true claim_radius=5 trade_bonus=0.1 storage_letters=80 color=brown
+seafront: mass=5000000 footprint=10 integrity=30000 material=stone portable=false claim_radius=6 comfort=4 beauty=6 trade_bonus=0.1 color=white
+dockside: mass=200000 footprint=6 integrity=10000 material=wood,stone portable=false docks=true claim_radius=4 storage_letters=60 color=brown
+shipway: mass=1000000 footprint=8 integrity=15000 material=wood,concrete portable=false crafts=vehicle_water craft_slots=1 build_speed=2 color=brown
+
+# noun building
+fishery: mass=500000 footprint=6 integrity=8000 material=wood,steel portable=false placeable_on=land,water harvest_bonus=3 harvest_sources=fishing food_output=5 claim_radius=5 odor=5 docks=true color=blue
+aquarium: mass=2000000 footprint=6 integrity=10000 material=glass,concrete portable=false enterable=true occupants=100 beauty=8 comfort=3 sees_through=water charm=3 value=8000 color=blue
+
+# noun worker
+trawler: mass=80 integrity=100 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 speed_water=2 labor=2 harvest_bonus=3 harvest_sources=fishing food_output=3 food_need=0.03
+seaman: mass=75 integrity=110 alive=true sentient=true intelligence=5 loyalty=6 courage=6 hands=true speech=true speed_land=5 labor=1 harvest_bonus=1.4 harvest_sources=fishing field_radius=10 field_targets=owned speed_water*1.1 food_need=0.03
+mariner: mass=75 integrity=120 alive=true sentient=true intelligence=7 loyalty=6 courage=7 hands=true speech=true speed_land=5 map_reveal=60 field_radius=30 field_targets=owned speed_water*1.2 food_need=0.03
+seafarer: mass=75 integrity=115 alive=true sentient=true intelligence=6 loyalty=6 courage=7 hands=true speech=true speed_land=5 res_cold=0.2 field_radius=20 field_targets=owned speed_water*1.15 food_need=0.03
+helmsman: mass=75 integrity=100 alive=true sentient=true intelligence=7 loyalty=7 hands=true speech=true speed_land=5 field_radius=20 field_targets=owned agility+2 speed_water*1.2 waves*0.7 food_need=0.03
+coxswain: mass=60 integrity=90 alive=true sentient=true intelligence=7 loyalty=7 hands=true speech=true speed_land=5 loudness=4 field_radius=20 field_targets=owned speed_water*1.3 morale+2 food_need=0.03
+cox: mass=60 integrity=90 alive=true sentient=true intelligence=7 loyalty=7 hands=true speech=true speed_land=5 loudness=4 field_radius=20 field_targets=owned speed_water*1.3 morale+2 food_need=0.03
+skipper: mass=80 integrity=130 alive=true sentient=true intelligence=7 loyalty=7 courage=8 hands=true speech=true speed_land=5 authority=4 command_limit=12 field_radius=40 field_targets=owned speed_water*1.25 morale+2 food_need=0.03
+boatswain: mass=85 integrity=140 alive=true sentient=true intelligence=6 loyalty=7 courage=8 hands=true speech=true speed_land=5 speed_water=2 loudness=5 authority=3 command_limit=10 field_radius=30 field_targets=owned labor+1 obedience+2 food_need=0.03
+bosun: mass=85 integrity=140 alive=true sentient=true intelligence=6 loyalty=7 courage=8 hands=true speech=true speed_land=5 speed_water=2 loudness=5 authority=3 command_limit=10 field_radius=30 field_targets=owned labor+1 obedience+2 food_need=0.03
+deckhand: mass=75 integrity=100 alive=true sentient=true intelligence=4 loyalty=6 hands=true speech=true speed_land=5 speed_water=2 labor=2 carry_capacity=60 food_need=0.03
+crewman: mass=75 integrity=100 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=5 speed_water=2 labor=1.5 food_need=0.03
+shipmate: mass=75 integrity=100 alive=true sentient=true intelligence=5 loyalty=8 hands=true speech=true speed_land=5 speed_water=2 labor=1 morale+2 food_need=0.03
+midshipman: mass=65 integrity=90 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=5 speed_water=2 training=2 dmg_slash=25 attack_rate=1 food_need=0.03
+quartermaster: mass=75 integrity=110 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 storage_letters=40 carry_capacity=100 trade_bonus=0.2 field_radius=30 field_targets=owned speed_water*1.1 food_need=0.03
+purser: mass=75 integrity=90 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 storage_letters=50 trade_bonus=0.25 security=4 food_need=0.03
+oarsman: mass=85 integrity=120 alive=true sentient=true intelligence=4 loyalty=6 strength=7 hands=true speech=true speed_land=5 labor=2 field_radius=8 field_targets=owned speed_water*1.2 food_need=0.04
+rower: mass=85 integrity=120 alive=true sentient=true intelligence=4 loyalty=6 strength=7 hands=true speech=true speed_land=5 labor=2 field_radius=8 field_targets=owned speed_water*1.2 food_need=0.04
+paddler: mass=75 integrity=100 alive=true sentient=true intelligence=4 loyalty=6 hands=true speech=true speed_land=5 field_radius=6 field_targets=owned speed_water*1.15 food_need=0.03
+canoeist: mass=75 integrity=100 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=5 stealth=3 field_radius=6 field_targets=owned speed_water*1.2 food_need=0.03
+angler: mass=80 integrity=100 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 speed_water=2 labor=1 harvest_bonus=2.5 harvest_sources=fishing food_output=1.5 food_need=0.03
+whaler: mass=90 integrity=150 alive=true sentient=true intelligence=5 loyalty=6 courage=9 strength=7 hands=true speech=true speed_land=4 speed_water=2 dmg_pierce=60 attack_rate=0.6 attack_range=15 harvest_bonus=2.5 harvest_sources=fishing food_output=3 counters=whale,kraken,leviathan food_need=0.04
+stevedore: mass=90 integrity=120 alive=true sentient=true intelligence=4 loyalty=6 strength=8 hands=true speech=true speed_land=4 labor=3 carry_capacity=150 trade_bonus=0.1 food_need=0.04
+longshoreman: mass=90 integrity=120 alive=true sentient=true intelligence=4 loyalty=6 strength=8 hands=true speech=true speed_land=4 labor=3 carry_capacity=150 trade_bonus=0.1 food_need=0.04
+dockworker: mass=90 integrity=120 alive=true sentient=true intelligence=4 loyalty=6 strength=8 hands=true speech=true speed_land=4 labor=3 carry_capacity=150 food_need=0.04
+diver: mass=75 integrity=100 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 speed_water=3 dive_depth=60 breathes=both sees_through=water detect_letters=40 lode=x,z,j lode_share=0.1 food_need=0.03
+aquanaut: mass=75 integrity=110 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 speed_water=3 dive_depth=300 breathes=both sees_through=water detect_letters=80 food_need=0.03
+submariner: mass=75 integrity=100 alive=true sentient=true intelligence=7 loyalty=7 hands=true speech=true speed_land=4 speed_water=2 detect_underground=true field_radius=20 field_targets=owned dive_depth+50 stealth+1 food_need=0.03
+shipwright: mass=80 integrity=110 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 labor=3 crafts=vehicle_water craft_slots=1 build_speed=2 food_need=0.03
+yachtsman: mass=75 integrity=100 alive=true sentient=true intelligence=6 loyalty=5 hands=true speech=true speed_land=5 trade_bonus=0.1 field_radius=15 field_targets=owned speed_water*1.25 food_need=0.03
+boater: mass=75 integrity=100 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=5 field_radius=10 field_targets=owned speed_water*1.1 food_need=0.03
+surfer: mass=70 integrity=100 alive=true sentient=true intelligence=5 loyalty=5 courage=8 agility=7 hands=true speech=true speed_land=5 speed_water=4 food_need=0.03
+beachcomber: mass=70 integrity=90 alive=true sentient=true intelligence=5 loyalty=5 hands=true speech=true speed_land=4 detect_letters=60 harvest_bonus=1.8 harvest_sources=fishing,beach lode=x,z,q lode_share=0.1 food_need=0.03
+coastguardsman: mass=80 integrity=130 alive=true sentient=true intelligence=6 loyalty=8 courage=8 hands=true speech=true speed_land=5 speed_water=3 detect_stealth=5 heals=3 dmg_pierce=30 attack_rate=1 attack_range=100 counters=pirate,smuggler,buccaneer,corsair,piracy food_need=0.03
+
+# noun water
+lagoon: tile_type=water radius=10 depth=5 moisture=6 blocks=land portable=false placeable_on=land,sand,water waves*0 anchored=true beauty=7 harvest_bonus=1.5 harvest_sources=fishing
+cove: tile_type=water radius=6 depth=8 moisture=5 blocks=land portable=false placeable_on=land,sand,water stealth=4 waves*0.3 claim_radius=4
+bay: tile_type=water radius=25 depth=30 moisture=7 blocks=land portable=false placeable_on=land,sand,water waves*0.5 harvest_bonus=1.5 harvest_sources=fishing
+gulf: tile_type=deep_water radius=80 depth=1500 moisture=9 blocks=land portable=false temperature_delta=2 produce_O*1.5
+strait: tile_type=deep_water radius=8 depth=100 blocks=land portable=false pull=3 speed_water*1.3 waves=1
+inlet: tile_type=water radius=5 depth=10 moisture=5 blocks=land portable=false placeable_on=land,sand stealth=2
+estuary: tile_type=water radius=15 depth=8 moisture=8 fertility=5 blocks=land portable=false placeable_on=land,sand,water harvest_bonus=2 harvest_sources=fishing
+fjord: tile_type=deep_water radius=20 depth=1000 moisture=7 blocks=land portable=false elevation=0 cover=0.4 waves*0.3 temperature_delta=-5
+reef: tile_type=water radius=8 depth=2 portable=false placeable_on=water,deep_water hardness=7 dmg_crush=200 dmg_slash=80 attack_rate=0.2 targets=water beauty=8 harvest_bonus=2 harvest_sources=fishing counters=boat,ship,galleon,frigate,sloop,schooner
+atoll: tile_type=sand radius=8 elevation=3 placeable_on=water,deep_water portable=false claim_radius=6 fertility=2 beauty=8
+islet: tile_type=sand radius=2 elevation=4 placeable_on=water,deep_water portable=false claim_radius=2 fertility=2
+seabed: tile_type=sand radius=10 depth=200 portable=false placeable_on=deep_water lode=x,z,q lode_share=0.2 lode_stock=6
+abyss: tile_type=deep_water radius=20 depth=8000 portable=false light_delta=-8 temperature_delta=-10 dmg_crush=40 attack_rate=0.2 fear_aura=6 lode=x,z,q,j lode_share=0.3 lode_stock=5 visibility=0.3
+seaway: tile_type=deep_water radius=6 depth=20 blocks=land portable=false speed_water*1.4 trade_bonus=0.1
+tidewater: tile_type=water radius=12 depth=3 moisture=7 fertility=3 portable=false placeable_on=land,sand,water waves=0.5 produce_O*1.5
+seacoast: tile_type=sand radius=15 movement_cost=1.2 portable=false placeable_on=land,water moisture=5 harvest_bonus=1.3 harvest_sources=fishing
+seashore: tile_type=sand radius=8 movement_cost=1.2 portable=false placeable_on=land,water moisture=4 beauty=6 harvest_bonus=1.3 harvest_sources=fishing
+seaboard: tile_type=sand radius=30 movement_cost=1.2 portable=false placeable_on=land,water moisture=5 trade_bonus=0.1
+coastline: tile_type=sand radius=20 movement_cost=1.2 portable=false placeable_on=land,water moisture=5 map_reveal=20
+seaside: tile_type=sand radius=6 movement_cost=1.2 portable=false placeable_on=land,water comfort=4 beauty=6 morale+1
+shoal: tile_type=sand radius=4 depth=1 portable=false placeable_on=water,deep_water dmg_crush=150 attack_rate=0.2 targets=water speed_water*0.5 counters=ship,galleon,frigate,warship,tanker,liner
+
+# noun weather
+breakers: placement=region field_radius=150 field_targets=all field_duration=3 waves=3 dmg_water=15 attack_rate=0.2 friendly_fire=true speed_water*0.7 loudness=6 counters=calm,breakwater,seawall
+undertow: placement=target placement_range=200 field_radius=30 field_targets=all field_duration=2 waves=1 pull=5 dmg_suffocation=8 attack_rate=0.3 friendly_fire=true stealth=6 counters=calm,breakwater,anchor
+seaquake: placement=target placement_range=500 event_radius=100 event_duration=1 dmg_earth=400 dmg_crush=300 friendly_fire=true waves=6 field_radius=200 field_duration=2 siege=3 counters=breakwater,seawall
+springtide: placement=region field_radius=300 field_targets=all field_duration=5 waves=1.5 produce_O*3 deposit_factor=2 speed_water*1.2 speed_land*0.8 counters=seawall,levee
+spindrift: placement=region field_radius=200 field_targets=all field_duration=3 waves=2 visibility=0.5 dmg_cold=4 attack_rate=0.2 friendly_fire=true counters=calm
+wave: placement=target placement_range=200 event_radius=20 event_duration=1 dmg_water=80 knockback=12 friendly_fire=true waves=3 field_radius=40 field_duration=1 counters=calm,breakwater,seawall
+ripple: placement=target placement_range=100 field_radius=15 field_targets=all field_duration=1 waves=0.5 speed_water*0.9
+
+# noun disaster
+flotsam: mass=200 integrity=50 material=wood portable=false placeable_on=water buoyancy=6 lode=x,j,z lode_share=0.3 lode_stock=3 color=brown
+
+# noun conflict
+cannonade: placement=target placement_range=800 event_radius=20 event_duration=1 dmg_blast=600 dmg_crush=300 dmg_fire=80 attack_rate=1 friendly_fire=true siege=3 loudness=10 counters=breakwater,seawall,harbor
+boarding: placement=target placement_range=30 event_target=object transfers_ownership=true contest_with=strength contested_by=integrity letter_steal=20 dmg_slash=60 counters=navy,coastguard,cannon,broadside
+beachhead: placement=target placement_range=300 event_target=tile claim_radius=10 field_radius=60 field_targets=owned field_duration=5 courage+3 morale+3 accuracy+0.1 counters=seawall,breakwater,mine
+convoy: placement=self field_radius=150 field_targets=owned field_duration=6 armor+20 cover=0.3 speed_water*0.9 integrity*1.2 counters=piracy,pirate,submarine,sub,corsair,privateer,blockade
+
+# noun criminal
+corsair: mass=80 integrity=160 alive=true sentient=true intelligence=6 loyalty=3 aggression=7 courage=8 hands=true speech=true speed_land=5 speed_water=2 dmg_slash=45 attack_rate=1.1 letter_steal=5 trade_bonus=0.1 food_need=0.03
+privateer: mass=80 integrity=150 alive=true sentient=true intelligence=6 loyalty=6 aggression=6 courage=8 hands=true speech=true speed_land=5 speed_water=2 dmg_slash=40 dmg_pierce=30 attack_rate=1 attack_range=20 letter_steal=4 reputation=2 food_need=0.03
+castaway: mass=65 integrity=70 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 speed_water=2 res_hunger=0.5 harvest_bonus=1.8 harvest_sources=fishing,wood morale=3 food_need=0.02
+
+# noun group
+armada: placement=self field_radius=500 field_targets=owned field_duration=6 speed_water*1.2 dmg_blast*1.5 accuracy+0.1 courage+4 fear_aura=5 summons=galleon summon_count=3 summon_owned=true counters=piracy,pirate,corsair,blockade
+fleet: placement=self field_radius=400 field_targets=owned field_duration=5 speed_water*1.3 dmg_blast*1.3 armor+30 courage+3 summons=frigate summon_count=2 summon_owned=true counters=piracy,pirate,blockade
+flotilla: placement=self field_radius=200 field_targets=owned field_duration=5 speed_water*1.25 accuracy+0.1 summons=gunboat summon_count=3 summon_owned=true counters=pirate,smuggler
+
+# noun travel
+voyage: placement=self field_radius=50 field_targets=owned field_duration=8 speed_water*1.4 range*2 map_reveal=200 morale+2 waves*0.8
+cruise: placement=self field_radius=40 field_targets=owned field_duration=6 speed_water*1.2 comfort+4 morale+3 regeneration+1 heals=2
+expedition: placement=self field_radius=40 field_targets=owned field_duration=8 map_reveal=300 detect_letters=150 range*2 courage+2 res_cold+0.3
+circumnavigation: placement=map field_radius=ABS field_targets=owned field_duration=10 map_reveal=1000 speed_water*1.3 detect_letters=300
+yachting: placement=self field_radius=30 field_targets=owned field_duration=5 speed_water*1.3 comfort+3 charm+2 trade_bonus+0.1
+sailing: placement=self field_radius=30 field_targets=owned field_duration=5 speed_water*1.5 agility+1
+boating: placement=self field_radius=30 field_targets=owned field_duration=5 speed_water*1.2 morale+2
+rowing: placement=self field_radius=20 field_targets=owned field_duration=4 speed_water*1.3 strength+1 stealth+1
+surfing: placement=self field_radius=20 field_targets=owned field_duration=4 speed_water*2 agility+2 waves*0.3 morale+3
+
+# noun act
+fishing: placement=self field_radius=30 field_targets=owned field_duration=5 harvest_bonus*2 harvest_sources=fishing food_output+1
+angling: placement=self field_radius=20 field_targets=owned field_duration=5 harvest_bonus*1.8 harvest_sources=fishing stealth+1 morale+1
+sportfishing: placement=self field_radius=40 field_targets=owned field_duration=5 harvest_bonus*2 harvest_sources=fishing morale+2 speed_water*1.2
+trolling: placement=self field_radius=40 field_targets=owned field_duration=5 harvest_bonus*1.8 harvest_sources=fishing speed_water*0.6
+diving: placement=self field_radius=10 field_targets=owned field_duration=3 dive_depth+40 speed_water+3 sees_through=water
+snorkeling: placement=self field_radius=10 field_targets=owned field_duration=3 dive_depth+5 sees_through=water detect_letters+30
+seamanship: placement=self field_radius=40 field_targets=owned field_duration=6 speed_water*1.3 agility+2 waves*0.5 accuracy+0.05
+shipbuilding: placement=self field_radius=30 field_targets=owned field_duration=5 build_speed*2 crafts=vehicle_water
+salvage: placement=target placement_range=60 event_target=object transfers_ownership=true contest_with=strength contested_by=integrity reclaim_rate=0.5 reclaim_range=30 lode=x,j,z lode_share=0.2 counters=shipwreck,flotsam
+parasailing: placement=self field_radius=5 field_targets=self field_duration=2 flight_ceiling+100 speed_air+10 map_reveal=40
+
+# noun possession
+cargo: mass=5000 integrity=200 material=wood portable=true storage_letters=60 value=2000 trade_bonus=0.15 color=brown
+freight: mass=10000 integrity=300 material=wood,steel portable=false storage_letters=80 value=3000 trade_bonus=0.15 color=brown
+
+# noun supernatural
+triton: mass=150 integrity=400 alive=true sentient=true intelligence=8 loyalty=7 courage=9 hands=true speech=true speed_water=12 speed_land=3 breathes=both dive_depth=2000 dmg_pierce=80 attack_rate=1 attack_range=3 loudness=9 authority=5 field_radius=150 field_targets=all waves+3 habitat=water,deep_water food_need=0.04
+
+
+# verb movement
+navigate: effect_target=self speed_water*1.3 map_reveal+60 agility+1 waves*0.8 duration=60
+circumnavigate: effect_target=self speed_water*1.4 map_reveal+300 range*2 duration=120
+embark: effect_target=self speed_water*1.2 morale+2 duration=30
+outsail: effect_target=self speed_water*1.6 agility+2 duration=20
+undock: effect_target=self speed_water*1.3 acceleration+3 duration=15
+refloat: effect_target=mount restores=500 anchored=false buoyancy+3 duration=1
+windsurf: effect_target=self speed_water*2 agility+3 duration=30
+fishtail: effect_target=self agility+3 evasion+0.2 accuracy+-0.1 duration=10
+drift: effect_target=self speed_water*0.6 stealth+3 loudness+-3 duration=60
+
+# verb combat
+drown: effect_target=touched dmg_suffocation=60 dmg_water=20 inflict_stun=4 inflict_slow=6 contest_with=strength contested_by=strength counters=lifeguard,lifeboat,aqualung,scuba duration=1
+sink: effect_target=touched dmg_water=150 dmg_crush=100 siege=3 buoyancy*0 speed_water*0.2 contest_with=strength contested_by=integrity duration=10
+maroon: effect_target=touched inflict_root=30 speed_water*0 duration=60
+
+# adjective quality
+maritime: speed_water*1.2 trade_bonus+0.1 harvest_bonus*1.2
+aquatic: breathes=both speed_water*1.5 dive_depth+20 res_water+0.3
+oceanic: speed_water*1.2 length*1.5 integrity*1.3 waves*0.7
+coastal: speed_water*1.1 harvest_bonus*1.2 trade_bonus+0.05 movement_cost*0.8
+waterlogged: wetness+6 mass*1.5 speed_water*0.6 flammability*0.1 buoyancy*0.5 decay_rate+2
+sunken: buoyancy*0 stealth+4 speed_water*0 lode=x,z,j lode_share=0.1 dive_depth+50
+buoyant: buoyancy+5 density*0.5 speed_water*1.2 res_suffocation+0.5
+oceangoing: length*1.5 integrity*1.4 speed_water*1.2 range*3 waves*0.6
+seagoing: length*1.4 integrity*1.3 speed_water*1.2 range*2 waves*0.7
+seaborne: speed_water*1.2 placeable_on=water,deep_water buoyancy+3
+transoceanic: range*4 speed_water*1.25 integrity*1.3 trade_bonus+0.15
+offshore: placeable_on=water,deep_water stealth+2 speed_water*1.1 tax_rate*0 trade_bonus+0.1
+inshore: speed_water*1.1 harvest_bonus*1.3 waves*0.7
+undersea: dive_depth+200 sees_through=water stealth+3 breathes=both
+underwater: dive_depth+100 sees_through=water stealth+3 breathes=both speed_land*0.5
+subaquatic: dive_depth+80 sees_through=water stealth+2 breathes=both
+piratical: letter_steal+3 aggression+3 loyalty+-2 intimidation+2 dmg_slash*1.2
+seamanlike: speed_water*1.2 agility+1 waves*0.8
+shipshape: integrity*1.2 speed_water*1.15 morale+1 beauty+1
+unseaworthy: integrity*0.5 speed_water*0.6 buoyancy*0.5 waves*1.5
+navigable: speed_water*1.3 movement_cost*0.7
+amphibious: speed_water*1.5 speed_land*0.9 breathes=both
+seaward: speed_water*1.2 sight_range*1.2
+afloat: buoyancy+5 res_water+0.3 anchored=false
+adrift: speed_water*0.3 anchored=false stealth+2 morale+-2
+aground: speed_water*0 anchored=true integrity*0.8 evasion*0
+marooned: speed_water*0 speed_land*0.5 morale+-3 res_hunger+0.3
+inboard: cover+0.3 integrity*1.1
+shipboard: speed_water*1.1 harvest_bonus*1.2 labor+1
+tidal: waves+1 produce_O*1.5 speed_water*1.2 pull+1
+masted: speed_water*1.3 sight_range*1.5 height*2
+keeled: anchored=true agility+1 waves*0.6
+
+# adverb manner
+aboard: duration*1.3 effect_multiplier=1.2 speed_water*1.2
+ashore: duration*1.2 speed_land*1.2 speed_water*0
+overboard: effect_multiplier=2 duration*0.6 self_damage=0.1
+asea: duration*1.3 speed_water*1.3
+amidships: effect_multiplier=1.3 cover+0.2
+seawards: speed_water*1.2 duration*1.1
+coastward: speed_water*1.1 duration*1.1
+
+# verb social
+commandeer: effect_target=touched transfers_ownership=true contest_with=strength contested_by=security letter_steal=10 counters=navy,coastguard duration=1
+
+# noun crime
+buccaneering: placement=target placement_range=300 event_target=object transfers_ownership=true contest_with=strength contested_by=integrity letter_steal=25 dmg_slash=50 dmg_blast=150 counters=navy,coastguard,convoy,warship,frigate,admiral
+
+# noun destruction
+wreckage: mass=20000 integrity=300 material=wood,steel portable=false placeable_on=water,land buoyancy=5 storage_letters=20 lode=x,z,j lode_share=0.25 lode_stock=3 color=brown
+
+# noun worker
+ferryman: mass=75 integrity=100 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 field_radius=20 field_targets=owned speed_water*1.2 trade_bonus=0.1 food_need=0.03
+lighterman: mass=85 integrity=110 alive=true sentient=true intelligence=5 loyalty=6 strength=7 hands=true speech=true speed_land=4 labor=2 carry_capacity=150 field_radius=15 field_targets=owned speed_water*1.1 food_need=0.03
+bargeman: mass=85 integrity=110 alive=true sentient=true intelligence=5 loyalty=6 strength=7 hands=true speech=true speed_land=4 labor=2 carry_capacity=150 field_radius=15 field_targets=owned tow_capacity*1.3 food_need=0.03
+lockkeeper: mass=75 integrity=90 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=4 security=4 law=trade fine=2 field_radius=20 field_targets=all food_need=0.03
+frogman: mass=80 integrity=130 alive=true sentient=true intelligence=7 loyalty=8 courage=8 training=4 hands=true speech=true speed_land=4 speed_water=3 dive_depth=60 breathes=both stealth=7 sees_through=water dmg_blast=200 attack_rate=0.1 siege=3 targets=water,land food_need=0.03
+wrecker: mass=85 integrity=120 alive=true sentient=true intelligence=6 loyalty=4 hands=true speech=true speed_land=4 speed_water=2 reclaim_rate=0.4 reclaim_range=40 lode=x,z,j lode_share=0.15 counters=shipwreck,wreckage,flotsam food_need=0.03
+
