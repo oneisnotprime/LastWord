@@ -78,6 +78,7 @@ chain	noun	artifact	tool	4.65	core	n08392981	verb:contact
 chair	noun	artifact	furniture	4.69	core	n03005231	verb:social
 change	noun	artifact	currency	5.54	core	n13408862	verb:transform
 channel	noun	artifact	route	4.85	core	n03009709	verb:movement
+chapter	noun	artifact	document	4.65	core	n06407785	-
 check	noun	artifact	document	5.31	core	n13402907	verb:social
 chicken	noun	creature	bird	4.63	core	n01794266	adjective:quality
 chief	noun	person	leader	5.11	core	n10182584	adjective:quality
@@ -129,6 +130,7 @@ earth	noun	terrain	celestial	5.06	core	n09293800	verb:perceive
 easy	adjective	modifier	quality	5.29	core	a00752852	adverb:manner
 eat	verb	spell	consume	5.13	core	v01170802	-
 eating	noun	consumable	food	4.85	core	n00840028	-
+edition	noun	artifact	document	4.8	core	n06602727	-
 editor	noun	person	worker	4.62	core	n10064687	-
 engine	noun	artifact	machine	4.84	core	n03292644	-
 english	adjective	modifier	pertaining	5.19	core	a03014852	noun:communication
@@ -136,7 +138,7 @@ enough	adjective	modifier	quality	5.54	core	a02344113	adverb:manner,noun:quantit
 entry	noun	artifact	structure	4.67	core	n06515715	-
 every	adjective	modifier	quality	5.79	core	a02277553	-
 falls	noun	terrain	water	4.63	core	n09498422	-
-fan	noun	artifact	device	4.92	core	n03324991	verb:contact
+fan	noun	artifact	machine	4.92	core	n03324991	verb:contact
 farm	noun	artifact	structure	4.75	core	n03327044	verb:social
 fast	adjective	modifier	quality	5.13	core	a00979699	adverb:manner,noun:act,verb:consume
 fault	noun	terrain	depression	4.64	core	n00071785	verb:communication
@@ -222,7 +224,7 @@ john	noun	artifact	structure	5.38	core	n04453410	-
 journal	noun	artifact	document	4.77	core	n03607775	-
 judge	noun	person	worker	4.95	core	n10244889	verb:cognition
 justice	noun	person	worker	4.97	core	n10244889	-
-keep	verb	spell	transfer	5.66	core	v02207166	noun:possession
+keep	verb	spell	transfer	5.66	core	v02687605	noun:possession
 key	noun	artifact	tool	5.12	core	n03618801	adjective:quality,verb:transfer
 kind	adjective	modifier	quality	5.45	core	a01374976	noun:knowledge
 king	noun	person	leader	5.17	core	n10251212	-
@@ -260,7 +262,7 @@ lower	verb	spell	movement	5.11	core	v01977139	noun:furniture
 lunch	noun	consumable	food	4.66	core	n07590641	verb:consume
 machine	noun	artifact	machine	4.9	core	n03705309	verb:create
 made	adjective	modifier	quality	5.92	core	a00676050	-
-mail	noun	artifact	protection	4.72	core	n03003851	verb:contact
+mail	noun	artifact	document	4.72	core	n06286287	verb:contact
 main	adjective	modifier	quality	5.24	core	a01280536	noun:water
 major	noun	person	leader	5.3	core	n10302867	adjective:quality,verb:cognition
 make	verb	spell	social	6.08	core	v02566500	noun:knowledge
@@ -327,7 +329,6 @@ parts	noun	terrain	landform	5.07	core	n08633501	-
 past	adjective	modifier	quality	5.36	core	a01732158	adverb:manner,noun:time
 path	noun	artifact	route	4.71	core	n03905025	-
 pay	verb	spell	transfer	5.4	core	v02256551	noun:possession
-payment	noun	artifact	currency	4.66	core	n13299398	-
 perfect	adjective	modifier	quality	5.2	core	a01753804	verb:transform,noun:relation
 phone	noun	artifact	device	5.3	core	n03266479	verb:communication
 photo	noun	artifact	document	4.97	core	n03931348	-
@@ -388,6 +389,7 @@ see	verb	spell	perceive	6.1	core	v02133754	noun:place
 send	verb	spell	movement	5.11	core	v01955339	-
 sense	verb	spell	perceive	5.19	core	v02110460	noun:knowledge
 sent	verb	spell	movement	5.16	core	-	noun:quantity,adjective:quality
+series	noun	artifact	document	5.35	core	n08474987	-
 serious	adjective	modifier	quality	5.1	core	a02125659	-
 serving	noun	consumable	food	4.62	core	n07593928	-
 setting	noun	artifact	adornment	4.77	core	n08585785	-
@@ -398,7 +400,6 @@ shop	noun	artifact	building	4.88	core	n04209460	verb:transfer
 short	adjective	modifier	quality	5.33	core	a01445077	noun:artifact,verb:social,adverb:manner
 shot	noun	artifact	weapon	5.22	core	n04212826	adjective:quality
 show	verb	spell	perceive	5.68	core	v02153218	noun:act
-signal	noun	artifact	device	4.62	core	n06804229	adjective:quality,verb:communication
 silver	noun	material	metal	4.81	core	n14679133	adjective:quality,verb:contact
 similar	adjective	modifier	quality	5.21	core	a02078824	-
 single	adjective	modifier	quality	5.41	core	a00495505	noun:quantity,verb:contact
@@ -444,7 +445,7 @@ sure	adjective	modifier	quality	5.67	core	a00337729	adverb:manner
 switch	noun	artifact	device	4.6	core	n04379457	verb:transform
 system	noun	artifact	device	5.56	core	n04384144	-
 table	noun	artifact	furniture	5.05	core	n04386330	verb:create
-take	verb	spell	social	5.92	core	v02605633	noun:possession
+take	verb	spell	transfer	5.92	core	v02605633	noun:possession
 taken	adjective	modifier	quality	5.33	core	a01381597	-
 tea	noun	consumable	drink	4.73	core	n07949514	-
 teacher	noun	person	worker	4.88	core	n10713754	-
@@ -480,7 +481,6 @@ video	noun	artifact	device	5.43	core	n04541422	-
 vote	verb	spell	social	5.11	core	v02466737	noun:attribute
 wall	noun	artifact	structure	5.04	core	n04554141	verb:combat
 want	verb	spell	consume	6.04	core	v01191258	noun:natural_object
-wanted	adjective	modifier	quality	5.36	core	a02537084	-
 watch	noun	artifact	device	5.34	core	n04563183	verb:perceive
 water	noun	material	liquid	5.52	core	n14869913	verb:transform
 ways	noun	artifact	structure	5.06	core	n04572325	-
@@ -490,7 +490,7 @@ weight	noun	artifact	tool	5.02	core	n05034009	verb:contact
 well	noun	artifact	structure	6.03	core	n04579845	adverb:manner,adjective:quality,verb:movement
 white	adjective	modifier	quality	5.51	core	a00394166	noun:attribute,verb:transform
 whole	adjective	modifier	quality	5.46	core	a00516809	noun:knowledge,adverb:manner
-win	verb	spell	combat	5.39	core	v01102556	noun:event
+win	verb	spell	social	5.39	core	v01102556	noun:event
 window	noun	artifact	structure	4.8	core	n04594951	-
 wine	noun	consumable	drink	4.74	core	n07907701	verb:consume
 won	verb	spell	combat	5.2	core	-	noun:quantity,adjective:quality

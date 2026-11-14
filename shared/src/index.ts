@@ -39,3 +39,8 @@ export * from "./wear.js";
 export * from "./disease.js";
 export * from "./emotion.js";
 export * from "./sound.js";
+export * from "./money.js";
+export * from "./crime.js";
+export * from "./signal.js";
+export * from "./faith.js";
+export * from "./weather.js";

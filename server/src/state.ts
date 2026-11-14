@@ -64,7 +64,7 @@ export type City = SchemaType<typeof City>;
 
 /** A disc of terrain a word laid down. Everyone gets these, in order, to keep maps in step. */
 /** `x2`, `y2`: the far end of a run (a ROAD), 0 for a disc. `soil`: only soil is changed (tilling never turns water, roads, cities or rock to crop land). */
-export const Edit = schema({ x: t.float32(), y: t.float32(), radius: t.float32(), tile: t.uint8(), soil: t.boolean(), x2: t.float32(), y2: t.float32() }, "Edit");
+export const Edit = schema({ x: t.float32(), y: t.float32(), radius: t.float32(), tile: t.uint8(), soil: t.boolean(), x2: t.float32(), y2: t.float32(), only: t.uint32() }, "Edit");
 export type Edit = SchemaType<typeof Edit>;
 
 export const WorldState = schema(

@@ -210,7 +210,6 @@ aleph	noun	inert	communication	2.39	uncommon	n06849764	-
 alerting	noun	inert	state	2.98	uncommon	n14059525	-
 alexia	noun	inert	state	2.5	uncommon	n14122532	-
 algophobia	noun	inert	state	0.0	obscure	n14406276	-
-alibi	noun	inert	communication	3.1	common	n06753794	verb:communication
 alkalemia	noun	inert	state	0.0	obscure	n14044407	-
 alkalinuria	noun	inert	state	0.0	obscure	n14044589	-
 alkalosis	noun	inert	state	1.65	rare	n14044737	-
@@ -1259,7 +1258,6 @@ curdling	noun	inert	process	2.27	uncommon	n13475652	-
 curing	noun	inert	process	3.26	common	n13512263	-
 curlicue	noun	inert	shape	1.39	rare	n13898609	-
 curriculum	noun	inert	communication	4.12	core	n06689161	-
-curse	verb	inert	communication	4.07	core	v00867051	noun:communication
 cyanosis	noun	inert	state	1.91	rare	n14326529	-
 cyberphobia	noun	inert	state	0.0	obscure	n14406849	-
 cybersex	noun	inert	state	2.02	uncommon	n14061298	-
@@ -1322,7 +1320,6 @@ declamation	noun	inert	communication	1.89	rare	n07256984	-
 declaration	noun	inert	communication	4.1	core	n06738626	-
 declare	verb	inert	communication	4.05	core	v01012145	-
 decoction	noun	inert	process	2.1	uncommon	n13478838	-
-decode	verb	inert	communication	3.02	common	v00996499	-
 deconsecrate	verb	inert	communication	0.0	obscure	v00868726	-
 deconstruct	verb	inert	communication	2.53	uncommon	v00940779	-
 decrepitude	noun	inert	state	1.79	rare	n14586133	-
@@ -1732,7 +1729,6 @@ encomium	noun	inert	communication	1.82	rare	n06706894	-
 encompass	verb	inert	stative	3.27	common	v02635874	-
 encompassment	noun	inert	state	0.0	obscure	n14450941	-
 encopresis	noun	inert	state	1.01	rare	n14410882	-
-encrypt	verb	inert	communication	2.76	uncommon	v00996121	-
 endanger	verb	inert	stative	3.23	common	v02702962	-
 endangerment	noun	inert	state	2.67	uncommon	n14565454	-
 endarteritis	noun	inert	state	0.0	obscure	n14366043	-
@@ -2018,7 +2014,6 @@ follies	noun	inert	communication	2.9	uncommon	n07033131	-
 foolscap	noun	inert	communication	1.53	rare	n06270140	-
 footmark	noun	inert	communication	0.0	obscure	n06657802	-
 forebode	verb	inert	communication	1.12	rare	v00919743	-
-forecast	verb	inert	communication	4.09	core	v00928443	noun:communication
 forecasting	noun	inert	communication	3.47	common	n06761683	-
 foredoom	verb	inert	communication	0.0	obscure	v00909019	-
 foregrounding	noun	inert	process	1.62	rare	n13504534	-
@@ -2715,7 +2710,6 @@ invalidism	noun	inert	state	0.0	obscure	n14085972	-
 invective	noun	inert	communication	2.41	uncommon	n06734353	-
 inveigh	verb	inert	communication	1.38	rare	v00913214	-
 inveigle	verb	inert	communication	1.51	rare	v00770823	-
-investigate	verb	inert	communication	4.31	core	v00790800	-
 involve	verb	inert	stative	4.28	core	v02682907	-
 iodination	noun	inert	process	0.0	obscure	n13523759	-
 ionisation	noun	inert	state	2.0	uncommon	n14601014	-
@@ -3177,7 +3171,6 @@ misgauge	verb	inert	cognition	0.0	obscure	v00675260	-
 misgive	verb	inert	cognition	0.0	obscure	v00735477	-
 misidentify	verb	inert	cognition	1.43	rare	v00619957	-
 misinform	verb	inert	communication	1.8	rare	v00835688	-
-misinformation	noun	inert	communication	3.27	common	n06647485	-
 misinterpret	verb	inert	communication	2.6	uncommon	v00941213	-
 misinterpretation	noun	inert	communication	2.68	uncommon	n07189084	-
 misjudge	verb	inert	cognition	2.19	uncommon	v00673109	-
@@ -3373,7 +3366,6 @@ neurosis	noun	inert	state	2.57	uncommon	n14416566	-
 neuroticism	noun	inert	state	2.23	uncommon	n14416566	-
 neutralism	noun	inert	communication	1.34	rare	n06675457	-
 neutropenia	noun	inert	state	2.16	uncommon	n14220025	-
-news	noun	inert	communication	5.44	core	n06654787	-
 newsbreak	noun	inert	communication	1.48	rare	n06695239	-
 newscast	noun	inert	communication	2.66	uncommon	n06696104	-
 newsflash	noun	inert	communication	2.59	uncommon	n06695239	-
@@ -3914,7 +3906,6 @@ prairial	noun	inert	time	1.1	rare	n15202291	-
 praise	verb	inert	communication	4.31	core	v00858506	noun:communication
 prate	noun	inert	communication	1.52	rare	n07151837	verb:communication
 prattle	verb	inert	communication	2.18	uncommon	v01038676	noun:communication
-pray	verb	inert	communication	4.4	core	v00761989	-
 preach	verb	inert	communication	3.69	common	v00829664	-
 preachification	noun	inert	communication	0.0	obscure	n06755925	-
 preachify	verb	inert	communication	0.0	obscure	v00830035	-
@@ -4018,7 +4009,6 @@ pronouncement	noun	inert	communication	2.54	uncommon	n06740365	-
 pronunciamento	noun	inert	communication	0.0	obscure	n06739973	-
 pronunciation	noun	inert	communication	3.51	common	n07143654	-
 proofread	verb	inert	cognition	2.59	uncommon	v00629964	-
-propaganda	noun	inert	communication	4.17	core	n06687287	-
 propagandise	verb	inert	communication	0.0	obscure	v00972905	-
 propagandize	verb	inert	communication	1.71	rare	v00972905	-
 proparoxytone	noun	inert	communication	0.0	obscure	n06313259	-
@@ -4361,7 +4351,6 @@ rpm	noun	inert	time	3.49	common	n15307088	-
 rtlt	noun	inert	time	0.0	obscure	n15155878	-
 rubato	noun	inert	time	1.77	rare	n15290234	-
 rubor	noun	inert	state	0.0	obscure	n14359944	-
-rumor	noun	inert	communication	3.73	common	n07238110	verb:communication
 rumour	noun	inert	communication	3.38	common	n07238110	verb:communication
 rundown	noun	inert	communication	3.16	common	n06481545	-
 rune	noun	inert	communication	3.01	common	n06853237	-

@@ -11,7 +11,7 @@
  {
   "class": "artifact",
   "archetype": "artifact",
-  "words": 1405,
+  "words": 1393,
   "groups": [
    "physical",
    "mobility",
@@ -26,7 +26,7 @@
  {
   "class": "artifact",
   "archetype": "device",
-  "words": 977,
+  "words": 991,
   "groups": [
    "physical",
    "mobility",
@@ -71,7 +71,7 @@
  {
   "class": "artifact",
   "archetype": "clothing",
-  "words": 468,
+  "words": 471,
   "groups": [
    "physical",
    "mobility",
@@ -86,7 +86,7 @@
  {
   "class": "artifact",
   "archetype": "tool",
-  "words": 356,
+  "words": 362,
   "groups": [
    "physical",
    "mobility",
@@ -101,7 +101,7 @@
  {
   "class": "artifact",
   "archetype": "building",
-  "words": 345,
+  "words": 348,
   "groups": [
    "physical",
    "mobility",
@@ -116,7 +116,7 @@
  {
   "class": "artifact",
   "archetype": "container",
-  "words": 271,
+  "words": 273,
   "groups": [
    "physical",
    "mobility",
@@ -131,7 +131,7 @@
  {
   "class": "artifact",
   "archetype": "weapon",
-  "words": 218,
+  "words": 216,
   "groups": [
    "physical",
    "mobility",
@@ -146,7 +146,7 @@
  {
   "class": "artifact",
   "archetype": "document",
-  "words": 198,
+  "words": 212,
   "groups": [
    "physical",
    "mobility",
@@ -235,21 +235,6 @@
  },
  {
   "class": "artifact",
-  "archetype": "protection",
-  "words": 117,
-  "groups": [
-   "physical",
-   "mobility",
-   "offence",
-   "defence",
-   "perception",
-   "economy",
-   "spatial",
-   "slots"
-  ]
- },
- {
-  "class": "artifact",
   "archetype": "furniture",
   "words": 117,
   "groups": [
@@ -265,8 +250,23 @@
  },
  {
   "class": "artifact",
+  "archetype": "protection",
+  "words": 116,
+  "groups": [
+   "physical",
+   "mobility",
+   "offence",
+   "defence",
+   "perception",
+   "economy",
+   "spatial",
+   "slots"
+  ]
+ },
+ {
+  "class": "artifact",
   "archetype": "vehicle_water",
-  "words": 94,
+  "words": 93,
   "groups": [
    "physical",
    "mobility",
@@ -281,7 +281,7 @@
  {
   "class": "artifact",
   "archetype": "currency",
-  "words": 60,
+  "words": 82,
   "groups": [
    "physical",
    "mobility",
@@ -341,7 +341,7 @@
  {
   "class": "artifact",
   "archetype": "toy",
-  "words": 31,
+  "words": 32,
   "groups": [
    "physical",
    "mobility",
@@ -371,7 +371,7 @@
  {
   "class": "aura",
   "archetype": "attribute",
-  "words": 3050,
+  "words": 3042,
   "groups": [
    "field"
   ]
@@ -379,7 +379,7 @@
  {
   "class": "aura",
   "archetype": "feeling",
-  "words": 660,
+  "words": 652,
   "groups": [
    "field"
   ]
@@ -387,7 +387,7 @@
  {
   "class": "bodypart",
   "archetype": "bodypart",
-  "words": 1228,
+  "words": 1227,
   "groups": [
    "physical",
    "slots",
@@ -498,7 +498,7 @@
  {
   "class": "creature",
   "archetype": "invertebrate",
-  "words": 199,
+  "words": 198,
   "groups": [
    "physical",
    "life",
@@ -530,7 +530,7 @@
  {
   "class": "creature",
   "archetype": "supernatural",
-  "words": 131,
+  "words": 152,
   "groups": [
    "physical",
    "life",
@@ -562,7 +562,7 @@
  {
   "class": "event",
   "archetype": "act",
-  "words": 3236,
+  "words": 3226,
   "groups": [
    "event",
    "offence",
@@ -572,7 +572,7 @@
  {
   "class": "event",
   "archetype": "event",
-  "words": 753,
+  "words": 772,
   "groups": [
    "event",
    "offence",
@@ -582,7 +582,7 @@
  {
   "class": "event",
   "archetype": "exchange",
-  "words": 152,
+  "words": 173,
   "groups": [
    "event",
    "offence",
@@ -592,7 +592,7 @@
  {
   "class": "event",
   "archetype": "crime",
-  "words": 78,
+  "words": 90,
   "groups": [
    "event",
    "offence",
@@ -602,7 +602,17 @@
  {
   "class": "event",
   "archetype": "travel",
-  "words": 70,
+  "words": 69,
+  "groups": [
+   "event",
+   "offence",
+   "field"
+  ]
+ },
+ {
+  "class": "event",
+  "archetype": "ceremony",
+  "words": 65,
   "groups": [
    "event",
    "offence",
@@ -621,18 +631,8 @@
  },
  {
   "class": "event",
-  "archetype": "ceremony",
-  "words": 50,
-  "groups": [
-   "event",
-   "offence",
-   "field"
-  ]
- },
- {
-  "class": "event",
   "archetype": "attack",
-  "words": 46,
+  "words": 44,
   "groups": [
    "event",
    "offence",
@@ -662,7 +662,7 @@
  {
   "class": "event",
   "archetype": "destruction",
-  "words": 22,
+  "words": 19,
   "groups": [
    "event",
    "offence",
@@ -682,7 +682,7 @@
  {
   "class": "event",
   "archetype": "disaster",
-  "words": 14,
+  "words": 13,
   "groups": [
    "event",
    "offence",
@@ -692,7 +692,7 @@
  {
   "class": "event",
   "archetype": "rescue",
-  "words": 9,
+  "words": 8,
   "groups": [
    "event",
    "offence",
@@ -712,7 +712,7 @@
  {
   "class": "flora",
   "archetype": "plant",
-  "words": 783,
+  "words": 781,
   "groups": [
    "physical",
    "life",
@@ -723,7 +723,7 @@
  {
   "class": "flora",
   "archetype": "herb",
-  "words": 466,
+  "words": 465,
   "groups": [
    "physical",
    "life",
@@ -734,7 +734,7 @@
  {
   "class": "flora",
   "archetype": "shrub",
-  "words": 355,
+  "words": 354,
   "groups": [
    "physical",
    "life",
@@ -756,7 +756,7 @@
  {
   "class": "flora",
   "archetype": "produce",
-  "words": 241,
+  "words": 240,
   "groups": [
    "physical",
    "life",
@@ -789,7 +789,7 @@
  {
   "class": "institution",
   "archetype": "group",
-  "words": 735,
+  "words": 723,
   "groups": [
    "social",
    "economy",
@@ -799,7 +799,7 @@
  {
   "class": "institution",
   "archetype": "possession",
-  "words": 358,
+  "words": 347,
   "groups": [
    "social",
    "economy",
@@ -809,7 +809,7 @@
  {
   "class": "knowledge",
   "archetype": "knowledge",
-  "words": 1911,
+  "words": 1895,
   "groups": [
    "economy",
    "meta"
@@ -818,7 +818,7 @@
  {
   "class": "material",
   "archetype": "material",
-  "words": 1595,
+  "words": 1593,
   "groups": [
    "physical",
    "economy"
@@ -827,7 +827,7 @@
  {
   "class": "material",
   "archetype": "mineral",
-  "words": 328,
+  "words": 326,
   "groups": [
    "physical",
    "economy"
@@ -836,7 +836,7 @@
  {
   "class": "material",
   "archetype": "metal",
-  "words": 114,
+  "words": 113,
   "groups": [
    "physical",
    "economy"
@@ -845,7 +845,7 @@
  {
   "class": "material",
   "archetype": "gas",
-  "words": 62,
+  "words": 61,
   "groups": [
    "physical",
    "economy"
@@ -854,7 +854,7 @@
  {
   "class": "material",
   "archetype": "liquid",
-  "words": 49,
+  "words": 48,
   "groups": [
    "physical",
    "economy"
@@ -890,7 +890,7 @@
  {
   "class": "measure",
   "archetype": "quantity",
-  "words": 823,
+  "words": 800,
   "groups": [
    "meta"
   ]
@@ -906,7 +906,7 @@
  {
   "class": "modifier",
   "archetype": "quality",
-  "words": 12309,
+  "words": 12330,
   "groups": [
    "meta"
   ]
@@ -914,7 +914,7 @@
  {
   "class": "modifier",
   "archetype": "pertaining",
-  "words": 3672,
+  "words": 3664,
   "groups": [
    "meta"
   ]
@@ -922,7 +922,7 @@
  {
   "class": "modifier",
   "archetype": "participle",
-  "words": 220,
+  "words": 217,
   "groups": [
    "meta"
   ]
@@ -930,7 +930,7 @@
  {
   "class": "modifier",
   "archetype": "absolute",
-  "words": 19,
+  "words": 18,
   "groups": [
    "meta"
   ]
@@ -938,7 +938,7 @@
  {
   "class": "person",
   "archetype": "person",
-  "words": 4138,
+  "words": 4120,
   "groups": [
    "physical",
    "life",
@@ -954,7 +954,7 @@
  {
   "class": "person",
   "archetype": "worker",
-  "words": 1013,
+  "words": 1008,
   "groups": [
    "physical",
    "life",
@@ -970,7 +970,7 @@
  {
   "class": "person",
   "archetype": "leader",
-  "words": 293,
+  "words": 290,
   "groups": [
    "physical",
    "life",
@@ -986,7 +986,7 @@
  {
   "class": "person",
   "archetype": "criminal",
-  "words": 143,
+  "words": 141,
   "groups": [
    "physical",
    "life",
@@ -1018,7 +1018,7 @@
  {
   "class": "spell",
   "archetype": "transform",
-  "words": 1092,
+  "words": 1091,
   "groups": [
    "effect"
   ]
@@ -1026,7 +1026,7 @@
  {
   "class": "spell",
   "archetype": "contact",
-  "words": 599,
+  "words": 591,
   "groups": [
    "effect"
   ]
@@ -1034,7 +1034,7 @@
  {
   "class": "spell",
   "archetype": "social",
-  "words": 566,
+  "words": 581,
   "groups": [
    "effect"
   ]
@@ -1042,7 +1042,7 @@
  {
   "class": "spell",
   "archetype": "movement",
-  "words": 369,
+  "words": 367,
   "groups": [
    "effect"
   ]
@@ -1058,7 +1058,7 @@
  {
   "class": "spell",
   "archetype": "create",
-  "words": 304,
+  "words": 300,
   "groups": [
    "effect"
   ]
@@ -1066,7 +1066,7 @@
  {
   "class": "spell",
   "archetype": "body",
-  "words": 272,
+  "words": 268,
   "groups": [
    "effect"
   ]
@@ -1074,7 +1074,7 @@
  {
   "class": "spell",
   "archetype": "perceive",
-  "words": 186,
+  "words": 193,
   "groups": [
    "effect"
   ]
@@ -1082,7 +1082,7 @@
  {
   "class": "spell",
   "archetype": "combat",
-  "words": 117,
+  "words": 118,
   "groups": [
    "effect"
   ]
@@ -1090,7 +1090,7 @@
  {
   "class": "spell",
   "archetype": "consume",
-  "words": 95,
+  "words": 94,
   "groups": [
    "effect"
   ]
@@ -1098,7 +1098,7 @@
  {
   "class": "spell",
   "archetype": "weather",
-  "words": 21,
+  "words": 27,
   "groups": [
    "effect"
   ]
@@ -1106,7 +1106,7 @@
  {
   "class": "terrain",
   "archetype": "place",
-  "words": 458,
+  "words": 454,
   "groups": [
    "physical",
    "spatial",
@@ -1116,7 +1116,7 @@
  {
   "class": "terrain",
   "archetype": "natural_object",
-  "words": 237,
+  "words": 231,
   "groups": [
    "physical",
    "spatial",
@@ -1126,7 +1126,7 @@
  {
   "class": "terrain",
   "archetype": "landform",
-  "words": 123,
+  "words": 125,
   "groups": [
    "physical",
    "spatial",
@@ -1156,7 +1156,7 @@
  {
   "class": "terrain",
   "archetype": "elevation",
-  "words": 41,
+  "words": 40,
   "groups": [
    "physical",
    "spatial",
@@ -1194,7 +1194,7 @@
  {
   "class": "world_state",
   "archetype": "phenomenon",
-  "words": 264,
+  "words": 265,
   "groups": [
    "field"
   ]
@@ -1202,7 +1202,7 @@
  {
   "class": "world_state",
   "archetype": "weather",
-  "words": 135,
+  "words": 139,
   "groups": [
    "field"
   ]
@@ -1210,7 +1210,7 @@
  {
   "class": "world_state",
   "archetype": "season",
-  "words": 11,
+  "words": 15,
   "groups": [
    "field"
   ]

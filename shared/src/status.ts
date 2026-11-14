@@ -9,7 +9,7 @@ export const UNHEARD: readonly string[] = ["charm", "sleep"];
 /** Every status a word can inflict (`inflict_<status>`) or be immune to (`immune_<status>`). */
 export const STATUSES = [
   "stun", "slow", "blind", "fear", "burn", "freeze", "poison", "bleed", "sleep", "charm", "silence", "root", "confuse", "shrink",
-  "sick", "rage", "deaf",
+  "sick", "rage", "deaf", "debt", "curse", "bless", "expose",
 ] as const;
 export type Status = (typeof STATUSES)[number];
 
@@ -43,6 +43,14 @@ export interface StatusRule {
   berserk?: boolean;
   /** Hears nothing: no orders, no songs (shared sound.ts `UNHEARD`). */
   deaf?: boolean;
+  /** Pays whoever put it on them a letter every `DEBT_SECONDS` (shared money.ts). */
+  owes?: boolean;
+  /** Multiplies the letters it earns (shared faith.ts: blessed and cursed). */
+  earns?: number;
+  /** Shows on every enemy's threat arrows, wherever they are (shared signal.ts). */
+  exposed?: boolean;
+  /** A boon: areas give it to those they are aimed at (their side), not to those they harm. */
+  boon?: boolean;
 }
 
 /** The one table of what each status does. Words only say how long. */
@@ -67,6 +75,13 @@ export const STATUS_RULES: Record<Status, StatusRule> = {
   rage: { berserk: true, tempo: 1.5, living: true, ops: [["strength", "mul", 1.5], ["accuracy", "add", -0.15], ["armor", "add", -5], ["courage", "add", 5]] },
   // Sound (shared sound.ts).
   deaf: { deaf: true, ops: [["hearing_range", "mul", 0]] },
+  // Money (shared money.ts): a letter every DEBT_SECONDS to the creditor.
+  debt: { owes: true },
+  // Religion (shared faith.ts): fortune in letters, and the heart for a fight.
+  curse: { earns: 0.5, ops: [["accuracy", "add", -0.15], ["morale", "add", -2], ["regeneration", "mul", 0]] },
+  bless: { earns: 1.5, boon: true, ops: [["regeneration", "add", 1], ["morale", "add", 2], ["courage", "add", 2]] },
+  // Information (shared signal.ts): everyone knows where you are.
+  expose: { exposed: true, ops: [["stealth", "mul", 0], ["disguise", "mul", 0]] },
 };
 
 /**
@@ -81,6 +96,7 @@ export const STATUS_STRETCH: Record<Status, number> = {
   burn: 2, poison: 2, bleed: 2,
   slow: 12, blind: 8, fear: 8, charm: 8, confuse: 8, shrink: 12,
   sick: 6, rage: 6, deaf: 8,
+  debt: 3, curse: 6, bless: 6, expose: 6,
 };
 /** Seconds past which stretching bends toward a ceiling of about this much more. */
 export const STATUS_HORIZON = 120;
@@ -113,7 +129,22 @@ export interface Affliction {
   origin: string;
   /** For sickness: the chance a minute it passes to each body close by (shared disease.ts). */
   contagion?: number;
+  /** For debt: seconds run toward the next letter owed (shared money.ts `debtDue`). */
+  owing?: number;
 }
+
+/** What someone's statuses do to the letters they earn: blessed half again, cursed half (shared faith.ts). */
+export function earnFactor(list: readonly Affliction[]): number {
+  let k = 1;
+  for (const a of list) k *= STATUS_RULES[a.status].earns ?? 1;
+  return k;
+}
+
+/** True for a status an area gives to those it is aimed at (its side), not to those it harms. */
+export const isBoon = (status: Status): boolean => !!STATUS_RULES[status].boon;
+
+/** True if someone's statuses show them to every enemy (shared signal.ts). */
+export const isExposed = (list: readonly Affliction[]): boolean => list.some((a) => STATUS_RULES[a.status].exposed);
 
 /** Seconds of each status a strike carries, the most any of the striking stats gives. */
 export function inflicts(...attackers: Stats[]): [Status, number][] {

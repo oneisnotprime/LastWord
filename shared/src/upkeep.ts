@@ -3,21 +3,21 @@ import type { Tile } from "./world.js";
 import { BIOMES } from "./biome.js";
 
 /**
- * Upkeep: food, fuel and power. Each player has a store of each. What they own that has a need
+ * Upkeep: food, fuel, power and faith (shared faith.ts). Each player has a store of each. What they own that has a need
  * (`food_need`, `upkeep_food`, `upkeep_fuel`, `upkeep_power`) draws on it every minute; what
  * they own that supplies (`food_output`, `fuel_output`, `power_output`) fills it. Eating
  * something edible adds its `nutrition`, and gathering on fertile ground finds a little food.
  * Power is counted the same way as the others: `upkeep_power` drawn a minute against
  * `power_output` supplied a minute.
  */
-export const SUPPLIES = ["food", "fuel", "power"] as const;
+export const SUPPLIES = ["food", "fuel", "power", "faith"] as const;
 export type Supply = (typeof SUPPLIES)[number];
 export type Stores = Record<Supply, number>;
 
-export const noStores = (): Stores => ({ food: 0, fuel: 0, power: 0 });
+export const noStores = (): Stores => ({ food: 0, fuel: 0, power: 0, faith: 0 });
 
 /** What a person starts with: a little food, nothing else. */
-export const STARTING_STORES: Stores = { food: 2, fuel: 0, power: 0 };
+export const STARTING_STORES: Stores = { food: 2, fuel: 0, power: 0, faith: 0 };
 
 /** Minutes of running a newly made machine comes with: a car arrives with a full tank. */
 export const STARTING_SUPPLY_MINUTES = 30;
@@ -30,7 +30,7 @@ export const STARTING_SUPPLY_MINUTES = 30;
 export function startingSupply(stats: Stats, count = 1): Stores {
   if (stats.flag("alive")) return noStores();
   const n = needs(stats, count);
-  return { food: n.food * STARTING_SUPPLY_MINUTES, fuel: n.fuel * STARTING_SUPPLY_MINUTES, power: n.power * STARTING_SUPPLY_MINUTES };
+  return { food: n.food * STARTING_SUPPLY_MINUTES, fuel: n.fuel * STARTING_SUPPLY_MINUTES, power: n.power * STARTING_SUPPLY_MINUTES, faith: n.faith * STARTING_SUPPLY_MINUTES };
 }
 
 /** Loyalty a creature loses for each minute it goes hungry, and regains for each minute fed. */
@@ -44,6 +44,7 @@ export function needs(stats: Stats, count = 1): Stores {
     food: (Math.max(0, stats.num("food_need")) + Math.max(0, stats.num("upkeep_food"))) * count,
     fuel: Math.max(0, stats.num("upkeep_fuel")) * count,
     power: Math.max(0, stats.num("upkeep_power")) * count,
+    faith: Math.max(0, stats.num("upkeep_faith")) * count,
   };
 }
 
@@ -53,10 +54,11 @@ export function outputs(stats: Stats, count = 1): Stores {
     food: Math.max(0, stats.num("food_output")) * count,
     fuel: Math.max(0, stats.num("fuel_output")) * count,
     power: Math.max(0, stats.num("power_output")) * count,
+    faith: Math.max(0, stats.num("faith_output")) * count,
   };
 }
 
-export const hasAny = (s: Stores): boolean => s.food > 0 || s.fuel > 0 || s.power > 0;
+export const hasAny = (s: Stores): boolean => s.food > 0 || s.fuel > 0 || s.power > 0 || s.faith > 0;
 
 /**
  * Draws `seconds` worth of a need from the stores. Returns the supplies that fell short; what

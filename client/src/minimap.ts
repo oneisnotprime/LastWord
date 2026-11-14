@@ -82,6 +82,13 @@ export class Minimap {
     }
     const c = this.ctx, k = px / side;
     c.imageSmoothingEnabled = false;
+    if (this.sensed.jammed) {
+      // Jammed (shared signal.ts): static, nothing else.
+      c.fillStyle = "#3a3632"; c.fillRect(0, 0, px, px);
+      for (let i = 0; i < 400; i++) { c.fillStyle = (i * 7919 + Math.floor(now / 120)) % 3 ? "#5a544c" : "#8a8278"; c.fillRect(((i * 1597 + now) % px), ((i * 2711) % px), 2 * this.dpr, 2 * this.dpr); }
+      c.fillStyle = "#fbf6ea"; c.font = `${12 * this.dpr}px sans-serif`; c.textAlign = "center"; c.fillText("JAMMED", px / 2, px / 2);
+      return;
+    }
     c.drawImage(this.land.img, 0, 0, px, px);
     const at = (x: number, y: number): [number, number] => [(x - (cx - side / 2)) * k, (y - (cy - side / 2)) * k];
     const dot = (x: number, y: number, r: number, fill: string, stroke = "#fbf6ea") => {

@@ -14,7 +14,15 @@ OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data")
 DAMAGE = ("blunt slash pierce crush fire cold electric acid poison radiation blast sonic light dark "
           "water wind earth psychic holy unholy disease magic suffocation hunger").split()
 MEDIA = "land water air underground space".split()
-STATUS = "stun slow blind fear burn freeze poison bleed sleep charm silence root confuse shrink sick rage deaf".split()
+STATUS = "stun slow blind fear burn freeze poison bleed sleep charm silence root confuse shrink sick rage deaf debt curse bless expose".split()
+
+# What the newer statuses do, for the generator's prompt (the rest explain themselves).
+STATUS_MEANS = {
+    "debt": " (debt: pays whoever put it on them a letter every 10 s, commonest first; BANKRUPTCY ends it; a thing of a debtor's has no security against their creditor: shared money.ts)",
+    "curse": " (curse: earns half the letters, aims worse, glum; EXORCISM, BLESSING end it: shared faith.ts)",
+    "bless": " (bless: earns half again as many letters, heals a little, cheered: shared faith.ts)",
+    "expose": " (expose: shown on every enemy's threat arrows wherever they are, no stealth or disguise; immune_expose also keeps letters from being read: shared signal.ts)",
+}
 
 GROUPS = {}
 GROUPS["physical"] = """
@@ -89,7 +97,7 @@ portable|bool|true||can be picked up and carried
 """.strip().split("\n"))
 GROUPS["offence"] = "\n".join(
     [f"dmg_{d}|num|0|hp|{d} damage per hit" for d in DAMAGE] +
-    [f"inflict_{s}|num|0|s|seconds of {s} applied on hit" for s in STATUS] + """
+    [f"inflict_{s}|num|0|s|seconds of {s} applied on hit{STATUS_MEANS.get(s, '')}" for s in STATUS] + """
 attack_rate|num|0|hits/s|how often it strikes
 attack_range|num|1|m|reach of its attack
 attack_area|num|0|m|blast or sweep radius around the target
@@ -122,6 +130,7 @@ regeneration|num|0|hp/s|integrity restored per second
 reflect|frac|0||fraction of damage sent back
 thorns|num|0|hp|damage dealt to melee attackers
 stealth|scale|0||how hard it is to see
+trigger_radius|num|0|m|a trap: lying on the ground it is hidden from enemies whose detect_stealth is below its stealth, and springs on the first enemy body that comes this close: its blow and statuses land, then it is spent (shared crime.ts)
 disguise|scale|0||worn: passes its wearer off as one of another side: enemies' creatures, wild animals and bots leave them be until they strike; seen through by detect_stealth as high or a nose (smell_range) close by (shared wear.ts)
 camouflage|tags|||terrain types where stealth doubles
 cover|frac|0||damage reduction it gives things behind or inside it
@@ -139,7 +148,7 @@ detect_underground|bool|false||sees burrowed and buried things
 detect_letters|num|0|m|range at which it shows letter sources
 detect_life|num|0|m|range at which it shows living things
 read_properties|scale|0||how much of another player's stats it reveals
-read_inventory|bool|false||shows letters another player holds
+read_inventory|bool|false||an event passed on a person (SPY, AUDIT, ESPIONAGE): tells its speller every letter and thing they hold, unless immune_expose (shared signal.ts)
 map_reveal|num|0|tiles|radius of map uncovered around it; left on the ground, it watches that ground on its owner's minimap (shared tech.ts)
 tracking|scale|0||follows targets that left sight
 alarm|bool|false||warns its owner when enemies enter sight
@@ -191,6 +200,12 @@ upkeep_power|num|0|kW|power to keep it working
 food_output|num|0|food/min|food it supplies
 fuel_output|num|0|fuel/min|fuel it supplies
 power_output|num|0|kW|power it supplies
+faith_output|num|0|faith/min|faith it gathers into its owner's faith store: shrines, temples, priests, prayer (shared faith.ts)
+upkeep_faith|num|0|faith/min|faith it takes from its owner's faith store a minute (holy things that leave without belief; HERESY on enemies drains theirs)
+faith_cost|num|0|faith|a miracle: spelling it spends this much of its speller's faith, and it cannot be spelled without (shared faith.ts)
+sacrifice|scale|0||an altar: whatever dies or is destroyed within 4 tiles of it pays its owner this many times the offering in faith, and burning there pays its burner twice the F (shared faith.ts)
+interest|frac|0|/min|a bank: share of the letters it keeps safe that its owner earns a minute, as T (shared money.ts)
+pays|num|0|letters|letters handed over from its speller's commonest to whoever it lands on (a GIFT, a WAGE); a creature bought with it (a BRIBE: transfers_ownership, contest_with=pays) costs it against its loyalty (shared money.ts)
 water_output|num|0|l/min|water it supplies
 storage_letters|num|0||letters its owner keeps safe in it: thieves and fines cannot take them, and at its owner's death they stay inside for whoever takes it (shared home.ts)
 storage_objects|num|0|kg|objects it holds
@@ -284,7 +299,9 @@ growth|num|1|x|multiplier on flora and creature growth, and on how fast picked g
 contagion|frac|0||chance per minute it spreads to a neighbour; a word that inflicts sick makes its sickness this catching (shared disease.ts)
 sets_daylight|enum|none|none,day,night|forces day or night in its field
 sets_weather|text|||weather it starts in its field
-clears_weather|tags|||weather it ends in its field
+clears_weather|tags|||weather it ends in its field; a weather word with a tile_type lays it in patches over the land while it lasts (snow over grass and shallow water, floods beside water, drought dries shallow water to sand: shared weather.ts)
+decoys|num|0||false marks it puts on the threat arrows and minimaps of everyone its field reaches: that many made-up people closing in; seen through with detect_stealth 5 or more (shared signal.ts)
+jams|bool|false||its field blacks out the minimap and watching things (MAP, RADAR, CAMERA) of everyone it reaches (shared signal.ts)
 """
 GROUPS["event"] = """
 takes_city|bool|false||makes its speller the ruler of a city it reaches (conquest, coup, election)

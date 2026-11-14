@@ -1041,7 +1041,7 @@ class World extends Phaser.Scene {
       const stamps: { x: number; y: number; radius: number }[] = [];
       for (; this.editsApplied < state.edits.length; this.editsApplied++) {
         const e = state.edits[this.editsApplied];
-        stampTerrain(this.map, { x: e.x, y: e.y, radius: e.radius, tile: e.tile, soil: e.soil, x2: e.x2, y2: e.y2 });
+        stampTerrain(this.map, { x: e.x, y: e.y, radius: e.radius, tile: e.tile, soil: e.soil, x2: e.x2, y2: e.y2, only: e.only });
         stamps.push(e);
       }
       this.sendMap();

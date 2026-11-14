@@ -621,14 +621,14 @@ export class Hud {
         parts.push(`<div class="income">${income.slice(0, 8).map((l) =>
           `<div title="${esc(`${l.letter.toUpperCase()} from ${l.from}`)}"><b>${l.letter.toUpperCase()}</b><span>+${+l.rate.toFixed(2)}/min</span><small>${esc(l.from.toUpperCase())}</small></div>`).join("")}</div>`);
       }
-      const flow = (k: "food" | "fuel" | "power") => {
+      const flow = (k: "food" | "fuel" | "power" | "faith") => {
         const s = d!.stores[k], net = Math.round((s.make - s.need) * 100) / 100;
         return s.make || s.need ? ` <small>${s.make ? `+${+s.make.toFixed(2)}` : ""}${s.need ? ` −${+s.need.toFixed(2)}` : ""}/min</small>${net < 0 && s.have < -net * 5 ? " <small>!</small>" : ""}` : "";
       };
       const chips = [
         ...(d?.statuses ?? []).map((s) => chip(s.status, s.left)),
         ...(d?.effects ?? []).map((e) => `<span class="chip effect item" data-inspect="${esc(e.word)}" data-effect="1" title="${esc(effectText(this.dict, e.word))}">${esc(e.word.toUpperCase())}${e.left > 0 ? `<small>${e.left}s</small>` : ""}</span>`),
-        ...(["food", "fuel", "power"] as const).filter((k) => (d?.stores[k].have ?? 0) > 0 || (d?.stores[k].need ?? 0) > 0 || (d?.stores[k].make ?? 0) > 0).map((k) =>
+        ...(["food", "fuel", "power", "faith"] as const).filter((k) => (d?.stores[k].have ?? 0) > 0 || (d?.stores[k].need ?? 0) > 0 || (d?.stores[k].make ?? 0) > 0).map((k) =>
           `<span class="chip store">${k.toUpperCase()} ${Math.round(d!.stores[k].have * 10) / 10}${flow(k)}</span>`),
         ...(d?.short ?? []).map((t) => chip("hungry").replace("HUNGRY", esc(t.toUpperCase()))),
       ];
@@ -840,6 +840,7 @@ export class Hud {
           ${stat("Food", store(d.stores.food))}
           ${stat("Fuel", store(d.stores.fuel))}
           ${stat("Power", store(d.stores.power))}
+          ${stat("Faith", store(d.stores.faith))}
           ${d.short.map((t) => stat("SHORT", t).replace('class="stat"', 'class="stat status"')).join("")}
           <h3>Producing</h3>
           ${(d.producing ?? []).map((line) => {
