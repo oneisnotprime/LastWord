@@ -98,7 +98,9 @@ it("TITHE: a share of what others gather near its maker goes to the maker", asyn
   const g = grass(room);
   wa.player.x = g.x; wa.player.y = g.y; wb.player.x = g.x + 1; wb.player.y = g.y;
   a.send("spell", "tax"); await wait(); // 25% of letters others earn within 60 m
-  let r = 0; (room as any).rng = () => ((r += 0.37) % 1); // spread out, but the same every run
+  // Every roll under the tax's 25%: the room's other users of its random numbers (citizens and
+  // animals roaming between the hand-run ticks) would otherwise decide which rolls the tax sees.
+  (room as any).rng = () => 0.1;
   wa.letters = {}; wb.letters = {};
   for (let i = 0; i < 12; i++) { wb.player.x = g.x + 1 + (i % 2) * 8; await gather(b, wb); }
   expect(Object.values(wa.letters as Record<string, number>).reduce((n, v) => n + v, 0)).toBeGreaterThan(0);
