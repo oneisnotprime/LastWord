@@ -142,7 +142,7 @@ fast	adjective	modifier	quality	5.13	core	a00979699	adverb:manner,noun:act,verb:
 fault	noun	terrain	depression	4.64	core	n00071785	verb:communication
 federal	adjective	modifier	quality	5.13	core	a01109822	noun:person
 feed	noun	consumable	food	4.67	core	n07816067	verb:consume
-feel	verb	spell	perceive	5.67	core	v02110460	noun:knowledge
+feel	verb	spell	perceive	5.67	core	v01775456	noun:knowledge
 felt	noun	artifact	fabric	5.13	core	n03331740	verb:contact
 few	adjective	modifier	quality	5.6	core	a01557242	noun:group
 field	noun	terrain	landform	5.24	core	n09416498	verb:combat
@@ -224,6 +224,7 @@ judge	noun	person	worker	4.95	core	n10244889	verb:cognition
 justice	noun	person	worker	4.97	core	n10244889	-
 keep	verb	spell	transfer	5.66	core	v02207166	noun:possession
 key	noun	artifact	tool	5.12	core	n03618801	adjective:quality,verb:transfer
+kind	adjective	modifier	quality	5.45	core	a01374976	noun:knowledge
 king	noun	person	leader	5.17	core	n10251212	-
 kitchen	noun	artifact	structure	4.65	core	n03625099	-
 known	adjective	modifier	quality	5.39	core	a01378100	-
@@ -377,11 +378,12 @@ same	adjective	modifier	quality	5.8	core	a02075880	noun:person
 save	verb	spell	social	5.14	core	v02556565	noun:act
 saw	noun	artifact	tool	5.34	core	n04147147	verb:contact
 school	noun	artifact	building	5.71	core	n04153115	verb:social
+score	noun	artifact	document	4.83	core	n05745098	verb:combat
 screen	noun	artifact	protection	4.85	core	n02854358	verb:social
 sea	noun	terrain	water	5.06	core	n09449666	-
 seat	noun	artifact	furniture	4.82	core	n04169042	verb:contact
 second	adjective	modifier	quality	5.63	core	a02209815	noun:duration,adverb:manner,verb:social
-section	noun	terrain	landform	5.0	core	n06403644	verb:contact
+section	noun	artifact	route	5.0	core	n06403644	verb:contact
 see	verb	spell	perceive	6.1	core	v02133754	noun:place
 send	verb	spell	movement	5.11	core	v01955339	-
 sense	verb	spell	perceive	5.19	core	v02110460	noun:knowledge
@@ -410,7 +412,6 @@ soul	noun	creature	supernatural	4.81	core	n10646444	-
 source	noun	terrain	water	5.15	core	n08524579	verb:transfer
 space	noun	terrain	celestial	5.23	core	n00028950	verb:movement
 special	adjective	modifier	quality	5.34	core	a01107719	noun:food
-spirit	noun	creature	supernatural	4.79	core	n09568453	verb:transform
 spoke	noun	artifact	tool	4.61	core	n04290516	-
 stadium	noun	artifact	building	4.63	core	n04303019	-
 staff	noun	artifact	weapon	5.08	core	n08456947	verb:combat

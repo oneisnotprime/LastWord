@@ -211,6 +211,13 @@ export const RULE_TIPS: readonly RuleTip[] = [
   { text: "A CAMERA left on the ground shows its ground on your minimap.", words: ["camera"], properties: ["map_reveal"] },
   { text: "Two HAMSTERS of yours, fed, have young.", words: ["hamsters"], properties: ["reproduction"] },
   { text: "A PRISON holds an ARRESTed enemy in its ground ten times longer.", words: ["prison", "arrest"], properties: ["security"] },
+  { text: "Spell WINGS and click your WOLF: a wolf that flies. AMPUTATE cuts it off.", words: ["wings", "wolf", "amputate"], properties: ["severs"] },
+  { text: "In a BLIZZARD the cold bites: wear a PARKA or stand by a FIRE.", words: ["blizzard", "parka", "fire"], properties: ["temp_min"] },
+  { text: "A COSTUME fools wolves and bots until you strike; a HOUND smells through it.", words: ["costume", "hound"], properties: ["disguise"] },
+  { text: "The sick pass it to anyone close; a VACCINE keeps it off, QUARANTINE stops it.", words: ["vaccine", "quarantine"], properties: ["inflict_sick", "contagion"] },
+  { text: "RAGE on enemies sends them at whoever is nearest, friend or foe. CALM ends it.", words: ["rage", "calm"], properties: ["inflict_rage"] },
+  { text: "A FLUTE charms wild animals around you; charmed long enough, they are yours.", words: ["flute"], properties: ["inflict_charm"] },
+  { text: "A DRUM gives you away on others' threat arrows; SILENCE hushes it.", words: ["drum", "silence"], properties: ["loudness"] },
 ];
 
 /** One tip for the idle spell window: a word idea or a rule, alternating at random. */

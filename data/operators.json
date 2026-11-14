@@ -125,11 +125,6 @@
    "property": "res_pierce"
   },
   {
-   "word": "soundproof",
-   "side": "defence",
-   "property": "res_sonic"
-  },
-  {
    "word": "bombproof",
    "side": "defence",
    "property": "res_blast"

@@ -136,6 +136,8 @@ export class Unit {
       // a graft its capabilities, at a cost (shared body.ts).
       if (lends(stats, def?.archetype)) lend(body, stats, item.count ?? 1);
       if (isGraft(stats)) grafted.push(Math.max(0, stats.num("mass")));
+      // What is carried in the hand makes its noise too: a DRUM, a TRUMPET (shared sound.ts).
+      else if (!lends(stats, def?.archetype) && stats.num("loudness") > 0 && body.get("loudness") !== "ABS") body.set("loudness", body.num("loudness") + stats.num("loudness"));
       if (def?.archetype === "protection") {
         const layer = spawn(item.noun, stats);
         protection.push(layer);

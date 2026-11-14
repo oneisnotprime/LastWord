@@ -21,6 +21,8 @@ import type { Stats } from "./stats.js";
 export const CONTACT_TILES = 2;
 /** How catching sickness is a minute when what gave it says nothing. */
 export const SICK_CONTAGION = 0.3;
+/** Seconds (before stretching) of sickness caught from someone close. */
+export const CAUGHT_SECONDS = 15;
 /** Seconds a body that got over sickness cannot catch it again. */
 export const IMMUNE_SECONDS = 180;
 

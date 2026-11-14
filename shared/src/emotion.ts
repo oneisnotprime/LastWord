@@ -11,14 +11,17 @@ import type { Stats } from "./stats.js";
  * - love: a creature charmed for CONVERT_SECONDS or more (after its `loyalty` shortens it: a
  *   loyal DOG is hard to win) goes over to whoever charmed it, for good (`wonOver`). People are
  *   only spared. Bosses and citizens keep to themselves. Counter: LOYALTY, deafness to songs.
- * - temper: a creature of someone's with `aggression` AGGRESSIVE_FROM or more (ANGER, FURY on it)
+ * - temper: a creature of someone's with `aggression` TEMPER_FROM or more (ANGER, FURY on it)
  *   goes for enemies it sees without being told (`spoiling`).
  */
 
 /** Seconds of charm that win a creature over. */
 export const CONVERT_SECONDS = 10;
-/** Aggression from which a creature of someone's attacks enemies unbidden (same as a wild one). */
-export const TEMPER_FROM = 5;
+/**
+ * Aggression from which a creature of someone's attacks enemies unbidden: well past a wild
+ * beast's (a WOLF's 6), so only a temper raised by a word (ANGER, FURY, RAGE, FURIOUS) does it.
+ */
+export const TEMPER_FROM = 10;
 
 /** True if a creature charmed for `seconds` (already shortened by its loyalty) changes sides. */
 export const wonOver = (seconds: number): boolean => seconds >= CONVERT_SECONDS;

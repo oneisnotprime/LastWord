@@ -176,6 +176,10 @@ iver	iv	comparative	no
 juiciest	juicy	superlative	no
 keener	keen	comparative	no
 keenest	keen	superlative	no
+kinder	kind	comparative	no
+kindest	kind	superlative	no
+lamer	lame	comparative	no
+lamest	lame	superlative	no
 larger	large	comparative	yes
 largest	large	superlative	no
 lastest	last	superlative	no
@@ -371,6 +375,7 @@ toughest	tough	superlative	no
 trendiest	trendy	superlative	no
 trickier	tricky	comparative	no
 trickiest	tricky	superlative	no
+trimmer	trim	comparative	yes
 truer	true	comparative	no
 truest	true	superlative	no
 uglier	ugly	comparative	no
