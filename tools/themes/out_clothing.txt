@@ -1,0 +1,337 @@
+# noun clothing
+dress: mass=0.5 integrity=12 material=cloth equip_slot=body beauty=7 charm+3 temp_max+3 morale+1
+clothes: mass=2 integrity=20 material=cloth equip_slot=body armor=1 res_cold=0.2 temp_min+-8 charm+1 morale+1
+suit: mass=1.5 integrity=20 material=wool equip_slot=body beauty=7 disguise=2 charm+3 authority+1 trade_bonus+0.1
+jersey: mass=0.3 integrity=12 material=cotton equip_slot=body faction=team disguise=3 morale+2 loyalty+1 speed_land*1.03
+shirt: mass=0.25 integrity=10 material=cotton equip_slot=body res_cold=0.05 temp_max+2 charm+1
+cap: mass=0.1 integrity=8 material=cotton equip_slot=head res_light=0.2 temp_max+3 accuracy+0.02
+tie: mass=0.05 integrity=5 material=silk equip_slot=neck beauty=5 charm+2 authority+1 disguise=1
+pants: mass=0.6 integrity=20 material=cotton equip_slot=body armor=1 res_cold=0.15 temp_min+-5 res_slash=0.05
+clothing: mass=2 integrity=20 material=cloth equip_slot=body armor=1 res_cold=0.2 temp_min+-8 morale+1
+mac: mass=0.8 integrity=20 material=rubber,cloth equip_slot=body res_water=0.7 res_cold=0.2 temp_min+-6 wetness*0
+mini: mass=0.2 integrity=8 material=cloth equip_slot=body beauty=6 charm+3 temp_max+4 temp_min+4 speed_land*1.03
+belt: mass=0.3 integrity=25 material=leather equip_slot=body container_slots=2 dmg_blunt=4 carry_capacity+5
+oxford: plural_count=2 mass=0.8 integrity=25 material=leather equip_slot=feet beauty=6 charm+1 authority+1 loudness+1
+jacket: mass=1.2 integrity=30 material=cloth equip_slot=body armor=2 res_cold=0.4 container_slots=2 temp_min+-15
+cape: mass=1 integrity=15 material=cloth equip_slot=back beauty=6 intimidation+2 charm+2 res_wind=0.2 stealth=1 temp_min+-5
+stays: mass=0.5 integrity=20 material=cloth,bone equip_slot=body armor=1 res_blunt=0.1 beauty+2 agility+-1 speed_land*0.95
+habit: mass=1.5 integrity=15 material=wool equip_slot=body faction=church disguise=5 res_unholy=0.3 res_holy=0.2 charm+1 temp_min+-6
+shoe: plural_count=2 mass=0.6 integrity=20 material=leather equip_slot=feet armor=1 res_pierce=0.1 speed_land*1.1 terrain_ignored=sand
+outfit: mass=1.5 integrity=18 material=cloth equip_slot=body beauty=6 disguise=3 charm+2 morale+2
+stole: mass=0.4 integrity=10 material=fur equip_slot=neck beauty=7 res_cold=0.3 temp_min+-8 charm+2 value=200
+wrap: mass=0.3 integrity=8 material=wool equip_slot=neck res_cold=0.3 temp_min+-8 comfort+1 stealth=1
+derby: mass=0.3 integrity=12 material=felt equip_slot=head armor=1 res_blunt=0.1 charm+1 authority+1
+jeans: mass=0.7 integrity=40 material=denim equip_slot=body armor=2 res_slash=0.1 res_cold=0.1 temp_min+-4 morale+1
+shorts: mass=0.2 integrity=10 material=cotton equip_slot=body temp_max+6 temp_min+4 speed_land*1.05
+underwear: mass=0.1 integrity=5 material=cotton equip_slot=body comfort+1 temp_min+-2 morale+1
+bra: mass=0.1 integrity=6 material=cotton,lace equip_slot=body comfort+1 agility+1 morale+1
+threads: mass=1.2 integrity=15 material=cloth equip_slot=body beauty=7 charm+3 morale+2
+flats: plural_count=2 mass=0.4 integrity=12 material=leather equip_slot=feet speed_land*1.05 agility+1 loudness=0 stealth=1
+gown: mass=1.5 integrity=15 material=silk equip_slot=body beauty=9 charm+5 morale+1 speed_land*0.9 value=300
+vest: mass=0.4 integrity=20 material=cloth equip_slot=body armor=1 res_cold=0.2 temp_min+-6 container_slots=4
+apparel: mass=1.5 integrity=18 material=cloth equip_slot=body armor=1 res_cold=0.2 temp_min+-6 charm+1
+bikini: mass=0.1 integrity=4 material=nylon equip_slot=body beauty=7 charm+3 temp_max+8 temp_min+8 speed_water*1.15
+mack: mass=0.8 integrity=20 material=rubber,cloth equip_slot=body res_water=0.7 res_cold=0.2 temp_min+-6
+trousers: mass=0.6 integrity=22 material=wool equip_slot=body armor=1 res_cold=0.2 temp_min+-6 authority+1
+tails: mass=1.4 integrity=18 material=wool equip_slot=body beauty=8 disguise=3 charm+4 authority+2
+accessory: mass=0.1 integrity=6 material=leather equip_slot=neck beauty=6 charm+2
+sock: plural_count=2 mass=0.05 integrity=4 material=cotton equip_slot=feet res_cold=0.1 temp_min+-3 loudness*0.5 stealth=1 comfort+1
+garment: mass=1 integrity=15 material=cloth equip_slot=body armor=1 res_cold=0.15 temp_min+-5
+ulster: mass=3 integrity=50 material=wool equip_slot=body armor=3 res_cold=0.7 res_water=0.3 temp_min+-30 speed_land*0.95
+lingerie: mass=0.1 integrity=3 material=silk,lace equip_slot=body beauty=9 charm+5 temp_min+6
+attire: mass=1.5 integrity=18 material=cloth equip_slot=body beauty=6 charm+2 authority+1
+diaper: mass=0.1 integrity=4 material=cotton equip_slot=body res_water=0.3 comfort+1 charm+-3 odor=2
+stocking: plural_count=2 mass=0.05 integrity=3 material=nylon equip_slot=feet beauty=6 charm+2 temp_min+-2 container_slots=1
+trunks: mass=0.15 integrity=8 material=nylon equip_slot=body temp_max+6 speed_water*1.15 res_water=0.3
+footwear: plural_count=2 mass=0.7 integrity=20 material=leather equip_slot=feet armor=1 res_pierce=0.1 speed_land*1.08
+boxers: mass=0.1 integrity=5 material=cotton equip_slot=body comfort+1 temp_max+2 morale+1
+blouse: mass=0.2 integrity=8 material=silk equip_slot=body beauty=6 charm+2 temp_max+3
+apron: mass=0.3 integrity=15 material=cloth equip_slot=body res_fire=0.2 res_acid=0.2 container_slots=2 build_speed*1.1 labor*1.1
+bonnet: mass=0.15 integrity=8 material=cloth equip_slot=head res_light=0.3 temp_max+5 res_cold=0.1 beauty=5 charm+1
+cords: mass=0.7 integrity=30 material=cotton equip_slot=body armor=1 res_cold=0.25 temp_min+-7
+briefs: mass=0.08 integrity=5 material=cotton equip_slot=body comfort+1 agility+1
+tights: mass=0.08 integrity=5 material=nylon equip_slot=body agility+2 speed_land*1.05 temp_min+-3 beauty=5
+swimsuit: mass=0.2 integrity=6 material=nylon equip_slot=body speed_water*1.2 res_water=0.4 temp_max+6 dive_depth+2
+tam: mass=0.15 integrity=8 material=wool equip_slot=head res_cold=0.15 temp_min+-4 charm+1
+blazer: mass=1 integrity=22 material=wool equip_slot=body beauty=6 armor=1 disguise=2 charm+2 authority+1 temp_min+-6
+maxi: mass=0.7 integrity=12 material=cotton equip_slot=body beauty=7 charm+2 temp_max+3 speed_land*0.95
+domino: mass=0.8 integrity=10 material=silk equip_slot=body disguise=6 stealth=2 charm+2 beauty=6
+scrubs: mass=0.4 integrity=10 material=cotton equip_slot=body faction=hospital disguise=4 res_disease=0.3 heals+1 labor*1.1
+cardigan: mass=0.5 integrity=18 material=wool equip_slot=body res_cold=0.35 temp_min+-10 comfort+2 morale+1
+sweatshirt: mass=0.6 integrity=18 material=cotton equip_slot=body res_cold=0.3 temp_min+-10 comfort+1
+shawl: mass=0.4 integrity=10 material=wool equip_slot=neck res_cold=0.3 temp_min+-9 comfort+1 beauty=5
+hijab: mass=0.15 integrity=8 material=cloth equip_slot=head res_light=0.3 res_wind=0.2 temp_max+4 disguise=1 beauty=6
+gauntlet: plural_count=2 mass=1.5 integrity=60 material=steel,leather equip_slot=hands armor=4 res_slash=0.3 dmg_blunt=8 thorns=2 loudness=2
+sweats: mass=0.7 integrity=15 material=cotton equip_slot=body comfort+3 temp_min+-8 speed_land*1.05 charm+-1
+tunic: mass=0.6 integrity=15 material=linen equip_slot=body temp_max+4 res_cold=0.1 agility+1
+slipper: plural_count=2 mass=0.2 integrity=6 material=wool equip_slot=feet comfort+2 stealth=2 loudness*0.3 temp_min+-3 speed_land*0.9
+ascot: mass=0.05 integrity=4 material=silk equip_slot=neck beauty=6 charm+3 authority+1
+fedora: mass=0.2 integrity=10 material=felt equip_slot=head disguise=2 stealth=1 charm+2 res_water=0.1
+sari: mass=0.7 integrity=12 material=silk equip_slot=body beauty=9 charm+4 temp_max+4 color=red
+corset: mass=0.6 integrity=25 material=cloth,steel equip_slot=body armor=1 res_blunt=0.1 beauty=7 charm+2 agility+-2 water_need*1.1
+jumpsuit: mass=0.9 integrity=25 material=cotton equip_slot=body armor=1 container_slots=4 labor*1.1 disguise=2
+tutu: mass=0.2 integrity=5 material=tulle equip_slot=body beauty=7 charm+3 agility+2 jump+0.3
+garb: mass=1.5 integrity=18 material=cloth equip_slot=body disguise=3 res_cold=0.15 temp_min+-5
+sneaker: plural_count=2 mass=0.5 integrity=15 material=rubber,cloth equip_slot=feet speed_land*1.15 agility+1 jump+0.2 stealth=1 res_electric=0.3
+swimwear: mass=0.2 integrity=6 material=nylon equip_slot=body speed_water*1.2 res_water=0.4 temp_max+6
+beanie: mass=0.1 integrity=8 material=wool equip_slot=head res_cold=0.25 temp_min+-8 stealth=1
+tiara: mass=0.2 integrity=30 material=silver,diamond equip_slot=head beauty=9 charm+4 authority+2 value=2000 luminosity=1
+fez: mass=0.2 integrity=8 material=felt equip_slot=head color=red beauty=5 charm+2 disguise=1
+panty: mass=0.03 integrity=3 material=cotton equip_slot=body comfort+1
+knickers: mass=0.05 integrity=4 material=cotton equip_slot=body comfort+1 morale+1
+turban: mass=0.5 integrity=15 material=cotton equip_slot=head armor=1 res_light=0.4 res_slash=0.1 temp_max+8 res_wind=0.2
+beret: mass=0.1 integrity=8 material=wool equip_slot=head faction=army disguise=2 charm+2 morale+1 res_cold=0.1
+underpants: mass=0.06 integrity=4 material=cotton equip_slot=body comfort+1 temp_min+-1
+sportswear: mass=0.4 integrity=12 material=nylon equip_slot=body speed_land*1.1 agility+1 temp_max+4
+slacks: mass=0.5 integrity=18 material=wool equip_slot=body armor=1 comfort+1 temp_min+-5 charm+1
+trappings: mass=2 integrity=20 material=cloth,gold equip_slot=body beauty=8 authority+2 charm+2 value=150
+undies: mass=0.05 integrity=4 material=cotton equip_slot=body comfort+1
+cleats: plural_count=2 mass=0.6 integrity=20 material=rubber,leather equip_slot=feet speed_land*1.1 agility+2 slipperiness*0 dmg_pierce=6 terrain_ignored=snow,marsh,meadow
+frock: mass=0.5 integrity=10 material=cotton equip_slot=body beauty=6 charm+2 temp_max+3
+kilt: mass=1.2 integrity=25 material=wool equip_slot=body color=tartan intimidation+2 morale+2 courage+2 temp_min+-4 temp_max+3 speed_land*1.05
+nappy: mass=0.1 integrity=4 material=cotton equip_slot=body res_water=0.3 odor=2 charm+-3
+cowl: mass=0.4 integrity=12 material=wool equip_slot=head stealth=3 disguise=2 res_cold=0.2 temp_min+-6 intimidation+1
+headgear: mass=0.4 integrity=15 material=cloth equip_slot=head armor=1 res_light=0.2 res_cold=0.1 temp_min+-3
+trouser: mass=0.6 integrity=22 material=wool equip_slot=body armor=1 res_cold=0.2 temp_min+-6
+pantyhose: mass=0.05 integrity=3 material=nylon equip_slot=body temp_min+-3 beauty=5 disguise=3 stealth=1
+tux: mass=1.5 integrity=20 material=wool equip_slot=body beauty=8 disguise=3 charm+4 authority+1
+sweatpants: mass=0.6 integrity=15 material=cotton equip_slot=body comfort+3 temp_min+-6 speed_land*1.05
+pajama: mass=0.4 integrity=8 material=cotton equip_slot=body comfort+4 regeneration+1 sleep_need*0.8 temp_min+-4 charm+-1
+flipper: plural_count=2 mass=0.8 integrity=15 material=rubber equip_slot=feet speed_water*1.8 dive_depth+5 speed_land*0.5 agility+-2
+poncho: mass=0.6 integrity=15 material=wool,rubber equip_slot=body res_water=0.6 res_cold=0.3 temp_min+-10 stealth=1
+silks: mass=0.4 integrity=8 material=silk equip_slot=body color=bright beauty=7 charm+2 speed_land*1.05 faction=jockey
+duds: mass=1.2 integrity=15 material=cloth equip_slot=body res_cold=0.15 temp_min+-5 charm+-1
+toga: mass=2 integrity=15 material=wool equip_slot=body color=white authority+3 charm+2 temp_max+4 speed_land*0.9
+muff: mass=0.4 integrity=10 material=fur equip_slot=hands res_cold=0.5 temp_min+-8 accuracy+-0.3 beauty=6
+muffler: mass=0.25 integrity=10 material=wool equip_slot=neck res_cold=0.25 temp_min+-7 loudness*0.5 disguise=1
+regalia: mass=5 integrity=40 material=gold,velvet equip_slot=body beauty=10 authority+5 charm+3 intimidation+3 value=5000 morale+3
+bathrobe: mass=1.2 integrity=15 material=cotton equip_slot=body comfort+4 res_water=0.3 temp_min+-6 regeneration+0.5 charm+-1
+busby: mass=0.8 integrity=20 material=fur equip_slot=head faction=guard disguise=4 intimidation+3 res_cold=0.3 height+0.4 temp_min+-5
+raincoat: mass=0.9 integrity=20 material=rubber,cloth equip_slot=body res_water=0.8 res_cold=0.2 temp_min+-6 color=yellow
+breeches: mass=0.6 integrity=25 material=leather equip_slot=body armor=1 res_slash=0.1 speed_land*1.02 agility+1
+singlet: mass=0.1 integrity=6 material=cotton equip_slot=body temp_max+5 agility+1
+headdress: mass=1 integrity=15 material=feather,bead equip_slot=head beauty=9 authority+3 charm+3 intimidation+2 height+0.4
+waistcoat: mass=0.4 integrity=18 material=wool equip_slot=body armor=1 res_cold=0.15 temp_min+-5 container_slots=2 charm+2
+headscarf: mass=0.1 integrity=6 material=cotton equip_slot=head res_light=0.2 res_wind=0.2 temp_max+3 disguise=2
+petticoat: mass=0.4 integrity=8 material=cotton equip_slot=body temp_min+-3 beauty=5 speed_land*0.95
+saree: mass=0.7 integrity=12 material=silk equip_slot=body beauty=9 charm+4 temp_max+4
+bodice: mass=0.3 integrity=12 material=cloth equip_slot=body beauty=6 charm+2 armor=1
+turtleneck: mass=0.5 integrity=15 material=wool equip_slot=body res_cold=0.35 temp_min+-10 disguise=1 charm+1
+pullover: mass=0.6 integrity=18 material=wool equip_slot=body res_cold=0.4 temp_min+-12 comfort+1
+levis: mass=0.7 integrity=40 material=denim equip_slot=body armor=2 res_slash=0.1 temp_min+-4 color=blue
+burka: mass=1.2 integrity=15 material=cloth equip_slot=body disguise=6 stealth=3 res_light=0.6 temp_max+4 sight_range*0.8
+burqa: mass=1.2 integrity=15 material=cloth equip_slot=body disguise=6 stealth=3 res_light=0.6 temp_max+4 sight_range*0.8
+jodhpur: plural_count=2 mass=0.7 integrity=25 material=cotton,leather equip_slot=body armor=1 agility+1 speed_land*1.02 res_slash=0.1
+outerwear: mass=2 integrity=35 material=wool,nylon equip_slot=body armor=2 res_cold=0.5 res_water=0.4 temp_min+-20
+smock: mass=0.5 integrity=12 material=cotton equip_slot=body res_acid=0.2 res_fire=0.1 labor*1.1 container_slots=2
+sombrero: mass=0.6 integrity=15 material=straw equip_slot=head res_light=0.6 res_fire=0.1 temp_max+12 cover=0.1 stealth=1
+knitwear: mass=0.6 integrity=18 material=wool equip_slot=body res_cold=0.4 temp_min+-12 comfort+2
+necktie: mass=0.05 integrity=5 material=silk equip_slot=neck beauty=5 charm+2 authority+1 disguise=1
+nightgown: mass=0.3 integrity=6 material=cotton equip_slot=body comfort+4 regeneration+1 temp_min+-3 charm+-1
+coronet: mass=0.3 integrity=30 material=gold,gem equip_slot=head beauty=9 authority+3 charm+3 value=1500
+leotard: mass=0.15 integrity=8 material=lycra equip_slot=body agility+3 jump+0.3 speed_land*1.05 beauty=5
+fatigues: mass=1.3 integrity=30 material=cotton equip_slot=body faction=army armor=1 disguise=5 stealth=3 camouflage=forest,jungle,marsh,savanna loyalty+1
+tallis: mass=0.4 integrity=10 material=wool equip_slot=back res_unholy=0.3 morale+2 courage+1
+hosiery: mass=0.05 integrity=3 material=nylon equip_slot=feet beauty=5 temp_min+-2 charm+1
+niqab: mass=0.15 integrity=8 material=cloth equip_slot=face disguise=5 stealth=2 res_light=0.4 temp_max+3
+getup: mass=1.2 integrity=12 material=cloth equip_slot=body disguise=5 stealth=1 charm+1 beauty=5
+khakis: mass=0.6 integrity=25 material=cotton equip_slot=body armor=1 camouflage=desert,savanna,sand stealth=2 temp_max+4
+bolero: mass=0.3 integrity=10 material=silk equip_slot=body beauty=7 charm+2 agility+1
+romper: mass=0.25 integrity=8 material=cotton equip_slot=body temp_max+5 comfort+2 charm+1
+finery: mass=2 integrity=15 material=silk,gold equip_slot=body beauty=10 charm+5 authority+2 value=800 speed_land*0.95
+headpiece: mass=0.4 integrity=12 material=cloth,feather equip_slot=head beauty=7 charm+2 authority+1
+slicker: mass=0.9 integrity=20 material=rubber,oilcloth equip_slot=body res_water=0.8 temp_min+-6 slipperiness=3 evasion+0.05
+nylons: plural_count=2 mass=0.05 integrity=3 material=nylon equip_slot=feet beauty=6 charm+2 temp_min+-2
+bowtie: mass=0.03 integrity=4 material=silk equip_slot=neck beauty=6 charm+3 disguise=1
+loafer: plural_count=2 mass=0.6 integrity=20 material=leather equip_slot=feet comfort+2 charm+1 speed_land*1.05
+waders: mass=2.5 integrity=30 material=rubber equip_slot=body res_water=0.95 temp_min+-8 terrain_ignored=water,swamp,marsh speed_land*0.85
+clog: plural_count=2 mass=1 integrity=40 material=wood equip_slot=feet armor=1 res_pierce=0.3 loudness=4 dmg_blunt=6 speed_land*0.9
+mitt: plural_count=2 mass=0.4 integrity=20 material=leather equip_slot=hands res_cold=0.3 temp_min+-5 res_fire=0.3 block+0.1
+jumper: mass=0.6 integrity=18 material=wool equip_slot=body res_cold=0.4 temp_min+-12 comfort+1
+anorak: mass=1.5 integrity=40 material=nylon,fur equip_slot=body armor=2 res_cold=0.7 res_water=0.5 res_wind=0.5 temp_min+-35
+moccasin: plural_count=2 mass=0.3 integrity=15 material=leather equip_slot=feet stealth=3 loudness*0.2 speed_land*1.05 tracking+1
+stiletto: plural_count=2 mass=0.4 integrity=10 material=leather,steel equip_slot=feet beauty=8 charm+3 height+0.1 speed_land*0.7 agility+-2 dmg_pierce=10 sharpness=7
+toque: mass=0.15 integrity=8 material=wool equip_slot=head res_cold=0.3 temp_min+-8
+bowler: mass=0.3 integrity=15 material=felt equip_slot=head armor=1 res_blunt=0.15 authority+1 disguise=1 charm+1
+trilby: mass=0.2 integrity=10 material=felt equip_slot=head disguise=2 stealth=1 charm+2
+sunhat: mass=0.2 integrity=8 material=straw equip_slot=head res_light=0.5 temp_max+10 beauty=5
+pinafore: mass=0.3 integrity=12 material=cotton equip_slot=body res_acid=0.1 container_slots=1 labor*1.05 charm+1
+negligee: mass=0.1 integrity=3 material=silk equip_slot=body beauty=9 charm+5 temp_min+5 comfort+2
+nightie: mass=0.2 integrity=4 material=cotton equip_slot=body comfort+3 regeneration+0.5 temp_min+2
+chemise: mass=0.2 integrity=5 material=linen equip_slot=body temp_max+4 comfort+1 beauty=5
+camisole: mass=0.1 integrity=4 material=silk equip_slot=body temp_max+5 beauty=6 charm+1
+kaftan: mass=0.6 integrity=12 material=cotton equip_slot=body temp_max+8 res_light=0.2 beauty=6 comfort+2
+caftan: mass=0.6 integrity=12 material=cotton equip_slot=body temp_max+8 res_light=0.2 beauty=6 comfort+2
+sarong: mass=0.4 integrity=10 material=cotton equip_slot=body temp_max+7 beauty=6 speed_water*1.05
+cravat: mass=0.05 integrity=4 material=silk equip_slot=neck beauty=7 charm+3 authority+1
+cummerbund: mass=0.15 integrity=8 material=silk equip_slot=body beauty=6 charm+2
+garter: mass=0.03 integrity=4 material=lace equip_slot=feet beauty=6 charm+2 container_slots=1
+girdle: mass=0.3 integrity=15 material=cloth equip_slot=body armor=1 res_blunt=0.05 beauty+1 agility+-1
+bustle: mass=0.8 integrity=10 material=cloth equip_slot=body beauty=6 charm+2 speed_land*0.9 res_blunt=0.1
+crinoline: mass=2 integrity=15 material=steel,cloth equip_slot=body beauty=8 charm+3 footprint+1 speed_land*0.75 agility+-3 cover=0.2
+wimple: mass=0.2 integrity=8 material=linen equip_slot=head faction=church disguise=4 res_unholy=0.2 temp_max+2
+mantle: mass=2 integrity=25 material=velvet,fur equip_slot=back beauty=8 authority+3 res_cold=0.4 temp_min+-12 charm+2
+cassock: mass=1.5 integrity=15 material=wool equip_slot=body faction=church disguise=5 res_unholy=0.4 authority+1
+surplice: mass=0.5 integrity=8 material=linen equip_slot=body color=white faction=church res_unholy=0.3 res_holy=0.2 disguise=3
+vestment: mass=1.5 integrity=15 material=silk equip_slot=body faction=church res_unholy=0.5 res_holy=0.3 authority+2 beauty=8 disguise=3
+mitre: mass=0.5 integrity=12 material=silk,gold equip_slot=head faction=church authority+4 res_unholy=0.4 height+0.4 beauty=8 disguise=4
+miter: mass=0.5 integrity=12 material=silk,gold equip_slot=head faction=church authority+4 res_unholy=0.4 height+0.4 beauty=8 disguise=4
+yarmulke: mass=0.03 integrity=4 material=cloth equip_slot=head res_unholy=0.2 morale+1
+skullcap: mass=0.1 integrity=6 material=cloth equip_slot=head res_cold=0.1 temp_min+-3 stealth=1
+tricorn: mass=0.3 integrity=12 material=felt equip_slot=head intimidation+3 authority+2 disguise=2 res_water=0.2
+shako: mass=0.6 integrity=20 material=felt,leather equip_slot=head faction=army armor=1 disguise=4 intimidation+2 height+0.25 authority+1
+bearskin: mass=1 integrity=25 material=fur equip_slot=head faction=guard disguise=4 intimidation+4 res_cold=0.4 height+0.45 temp_min+-6 sight_range*0.9
+kepi: mass=0.25 integrity=10 material=cloth equip_slot=head faction=army disguise=4 authority+1 res_light=0.2
+snood: mass=0.15 integrity=8 material=wool equip_slot=neck res_cold=0.25 temp_min+-7 disguise=2 stealth=1
+hairnet: mass=0.01 integrity=2 material=nylon equip_slot=head faction=kitchen disguise=2 res_disease=0.1 charm+-1
+visor: mass=0.1 integrity=6 material=plastic equip_slot=head res_light=0.5 accuracy+0.05 sight_range*1.1 temp_max+4
+headband: mass=0.03 integrity=4 material=cotton equip_slot=head accuracy+0.03 temp_max+2 morale+1
+bandana: mass=0.05 integrity=5 material=cotton equip_slot=face disguise=3 stealth=1 res_poison=0.1 res_light=0.1 intimidation+1
+kerchief: mass=0.05 integrity=5 material=cotton equip_slot=neck res_light=0.1 disguise=1 temp_max+2
+goggles: mass=0.2 integrity=10 material=glass,rubber equip_slot=face res_light=0.4 res_acid=0.3 immune_blind=true detect_stealth=2 dive_depth+5 sight_range*1.1
+sunglasses: mass=0.05 integrity=4 material=glass,plastic equip_slot=face res_light=0.6 immune_blind=true disguise=2 charm+2 intimidation+1 sight_range*0.9
+monocle: mass=0.02 integrity=3 material=glass,gold equip_slot=face detect_stealth=5 read_properties+2 authority+1 charm+1 counters=disguise,costume,mask
+spectacles: mass=0.03 integrity=4 material=glass,steel equip_slot=face sight_range*1.3 accuracy+0.1 detect_stealth=2 intelligence+1 disguise=1
+umbrella: mass=0.5 integrity=12 material=nylon,steel equip_slot=held hands_required=1 res_water=0.9 res_light=0.4 cover=0.2 dmg_pierce=5 temp_max+5 clears_weather=rain
+parasol: mass=0.4 integrity=8 material=silk,wood equip_slot=held hands_required=1 res_light=0.7 temp_max+10 beauty=7 charm+2
+sleeve: mass=0.1 integrity=6 material=cloth equip_slot=hands res_cold=0.1 temp_min+-2 container_slots=1 stealth=1
+cuff: mass=0.05 integrity=8 material=cloth equip_slot=hands beauty=4 charm+1
+cufflink: plural_count=2 mass=0.02 integrity=20 material=gold equip_slot=hands beauty=7 charm+2 authority+1 value=150
+
+# noun adornment
+setting: mass=0.01 integrity=30 material=gold equip_slot=finger beauty=6 value=100 adjective_slots+1
+makeup: mass=0.05 integrity=1 equip_slot=face beauty=8 charm+4 disguise=3 morale+1
+pin: mass=0.005 integrity=5 material=steel sharpness=9 dmg_pierce=2 equip_slot=body inflict_root=2 value=1
+jewelry: mass=0.2 integrity=40 material=gold,gem equip_slot=neck beauty=9 charm+4 value=1500 trade_bonus+0.1 loudness=1
+collar: mass=0.1 integrity=15 material=leather equip_slot=neck res_slash=0.2 loyalty+3 obedience+3 charm+1
+necklace: mass=0.1 integrity=30 material=gold,gem equip_slot=neck beauty=9 charm+3 value=1000
+jewellery: mass=0.2 integrity=40 material=gold,gem equip_slot=neck beauty=9 charm+4 value=1500 trade_bonus+0.1 loudness=1
+bracelet: mass=0.05 integrity=30 material=silver equip_slot=hands beauty=7 charm+2 value=300 loudness=1
+jewel: mass=0.02 integrity=100 material=gem hardness=9 beauty=10 luminosity=1 value=3000 charm+3 trade_bonus+0.15
+bead: mass=0.005 integrity=10 material=glass shape=round beauty=5 value=2 charm+1 plural_count=20 slipperiness=2
+pendant: mass=0.05 integrity=30 material=silver,gem equip_slot=neck beauty=8 charm+2 morale+1 value=400
+bling: mass=0.5 integrity=40 material=gold,gem equip_slot=neck beauty=7 charm+3 intimidation+2 luminosity=2 reflectivity=6 loudness=2 stealth+-3 value=2000
+lei: mass=0.2 integrity=4 material=flower equip_slot=neck beauty=8 odor=3 charm+3 morale+2 decay_rate=0.2
+earring: plural_count=2 mass=0.01 integrity=20 material=gold equip_slot=head beauty=7 charm+2 value=200
+brooch: mass=0.03 integrity=25 material=silver,gem equip_slot=body beauty=7 charm+2 value=300 dmg_pierce=2
+broach: mass=0.03 integrity=25 material=silver,gem equip_slot=body beauty=7 charm+2 value=300
+solitaire: mass=0.01 integrity=100 material=diamond,platinum equip_slot=finger hardness=10 beauty=10 luminosity=2 charm+5 value=8000 loyalty+2
+bangle: mass=0.06 integrity=30 material=gold equip_slot=hands beauty=7 charm+2 loudness=2 value=300
+bijou: mass=0.02 integrity=30 material=gem,gold equip_slot=neck beauty=9 charm+3 value=1200
+choker: mass=0.05 integrity=15 material=velvet,silver equip_slot=neck beauty=7 charm+2 res_slash=0.1 intimidation+1
+anklet: mass=0.02 integrity=15 material=silver equip_slot=feet beauty=6 charm+1 loudness=2
+amulet: mass=0.05 integrity=40 material=silver,gem equip_slot=neck res_magic=0.4 res_unholy=0.4 res_dark=0.3 immune_charm=true morale+2 prevents_death=1
+talisman: mass=0.05 integrity=40 material=stone,silver equip_slot=neck res_magic=0.5 res_unholy=0.3 res_psychic=0.3 morale+3 courage+2 critical+0.1
+cameo: mass=0.03 integrity=20 material=shell,gold equip_slot=neck beauty=8 charm+2 value=500 morale+1
+diadem: mass=0.3 integrity=40 material=gold,gem equip_slot=head beauty=10 authority+5 charm+3 value=6000 luminosity=1
+circlet: mass=0.2 integrity=30 material=silver equip_slot=head beauty=8 authority+2 res_psychic=0.2 res_magic=0.2 value=800
+epaulet: plural_count=2 mass=0.1 integrity=15 material=gold,cloth equip_slot=body faction=army authority+3 disguise=3 intimidation+1
+lanyard: mass=0.03 integrity=8 material=nylon equip_slot=neck disguise=4 faction=staff container_slots=1 read_properties+1
+stud: mass=0.005 integrity=20 material=steel equip_slot=head intimidation+1 beauty=5 charm+1
+lipstick: mass=0.02 integrity=2 material=wax color=red equip_slot=face beauty=7 charm+4 single_use=false
+mascara: mass=0.01 integrity=1 material=wax color=black equip_slot=face beauty=6 charm+2 intimidation+1
+rouge: mass=0.01 integrity=1 color=red equip_slot=face beauty=6 charm+3 disguise=1
+cologne: mass=0.1 state=liquid integrity=2 equip_slot=neck odor=6 charm+3 beauty=5 disguise=2 smell_range*0.5 counters=bloodhound,hound
+fob: mass=0.03 integrity=20 material=gold equip_slot=body beauty=5 charm+1 value=200 security+2 lockable=true
+plume: mass=0.02 integrity=3 material=feather equip_slot=head beauty=8 charm+3 authority+2 height+0.3 intimidation+1
+rosette: mass=0.02 integrity=4 material=silk equip_slot=body beauty=6 morale+3 charm+2 reputation=2 faction=winners
+tassel: mass=0.02 integrity=4 material=silk equip_slot=head beauty=5 charm+1 morale+1
+trimming: mass=0.05 integrity=4 material=lace,gold equip_slot=body beauty=6 charm+1 value=20
+trimmings: mass=0.1 integrity=4 material=lace,gold equip_slot=body beauty=6 charm+1 value=30
+ruffle: mass=0.05 integrity=4 material=lace equip_slot=neck beauty=6 charm+2 res_slash=0.05
+trinket: mass=0.05 integrity=10 material=brass,glass equip_slot=neck beauty=5 charm+1 value=15 trade_bonus+0.05
+adornment: mass=0.1 integrity=20 material=gold,gem equip_slot=neck beauty=8 charm+3 value=500
+ribbon: mass=0.01 integrity=3 material=silk equip_slot=head beauty=6 charm+2 morale+1 color=red
+sash: mass=0.2 integrity=10 material=silk equip_slot=body faction=order beauty=7 authority+2 charm+2 disguise=2
+buckle: mass=0.1 integrity=40 material=brass equip_slot=body armor=1 beauty=5 loudness=1 dmg_blunt=3
+zipper: mass=0.02 integrity=15 material=steel equip_slot=body security+1 res_cold=0.05 container_slots=1
+hem: mass=0.02 integrity=5 material=cloth equip_slot=body beauty+1 integrity+5
+
+# noun fabric
+denim: mass=0.5 density=1200 integrity=40 material=cotton,denim color=blue hardness=3 flammability=4 value=6 res_slash=0.1 armor+1
+tweed: mass=0.6 density=1100 integrity=35 material=wool color=brown flammability=3 value=10 res_cold=0.3 res_water=0.2 temp_min+-6 authority+1
+macintosh: mass=0.8 integrity=20 material=rubber,cloth equip_slot=body res_water=0.8 res_cold=0.2 temp_min+-6 wetness*0
+mackintosh: mass=0.8 integrity=20 material=rubber,cloth equip_slot=body res_water=0.8 res_cold=0.2 temp_min+-6 wetness*0
+hessian: mass=0.6 density=900 integrity=25 material=jute color=brown flammability=5 value=2 beauty=2 stickiness=1 charm+-1
+tammy: mass=0.3 integrity=10 material=wool color=brown value=3 flammability=4
+
+# noun material
+sequin: mass=0.001 integrity=1 material=plastic shape=flat reflectivity=9 luminosity=1 beauty=7 plural_count=50 charm+2 stealth+-2 dmg_light=1
+
+# noun person
+henchman: mass=90 integrity=110 alive=true sentient=true intelligence=3 loyalty=8 obedience=9 aggression=6 courage=6 hands=true speech=true speed_land=5 strength=7 training=3 dmg_blunt=15 attack_rate=1 food_need=0.03 intimidation=4 equip_slot=companion
+
+# noun reptile
+boa: mass=30 length=3 integrity=90 alive=true diet=carnivore food_need=0.005 speed_land=1.5 speed_water=1 climb=5 stealth=6 dmg_crush=30 inflict_root=6 attack_rate=0.5 camouflage=jungle,forest habitat=jungle,swamp temp_min=15 tamable=true
+
+# noun tree
+banyan: mass=50000 height=25 footprint=12 integrity=4000 material=wood alive=true diet=photosynthesis growth_time=600 cover=0.6 blocks=sight occupants=8 enterable=true habitat=jungle climb=8 spread_rate=0.05 comfort=3
+
+# noun device
+seatbelt: mass=0.5 integrity=40 material=nylon,steel equip_slot=body res_blunt=0.4 res_crush=0.3 immune_stun=true knockback*0 prevents_death=1 speed_land*0.8
+outlet: mass=0.2 integrity=20 material=plastic,copper conductivity=10 power_output=3 dmg_electric=20 inflict_stun=2 needs_foundation=true portable=false
+holster: mass=0.4 integrity=25 material=leather equip_slot=body container_slots=1 attack_windup*0.5 accuracy+0.05 intimidation+1
+
+# noun tool
+hose: mass=5 length=20 integrity=40 material=rubber equip_slot=held hands_required=2 state=solid dmg_water=10 attack_range=12 knockback=3 wetness=8 attack_rate=4 clears_weather=heat counters=fire,blaze,wildfire
+duster: mass=0.3 integrity=6 material=feather,wood equip_slot=held hands_required=1 dmg_blunt=1 inflict_blind=1 clears_weather=dust negates=stickiness
+napkin: mass=0.01 integrity=1 material=paper flammability=8 wetness*0.5 single_use=true charm+1
+thong: plural_count=2 mass=0.15 integrity=8 material=rubber equip_slot=feet temp_max+6 speed_land*0.95 loudness=2
+
+# noun weapon
+bolo: mass=1 length=0.6 integrity=60 material=steel,wood equip_slot=held hands_required=1 sharpness=7 dmg_slash=35 attack_rate=1.2 build_speed*1.2 counters=jungle,vine
+bola: mass=0.8 integrity=20 material=leather,stone equip_slot=held hands_required=1 single_use=true dmg_blunt=8 inflict_root=6 inflict_slow=10 attack_range=25 targets=land,air counters=horse,deer,ostrich
+
+# noun toy
+teddy: mass=0.4 integrity=8 material=cloth,fur comfort=6 beauty=5 morale+3 courage+2 charm=4 regeneration+0.5 inflict_charm=2
+
+# noun building
+laundry: mass=3000 footprint=4 height=4 integrity=300 material=brick enterable=true occupants=6 needs_foundation=true water_output=0 upkeep_power=10 crafts=clothing,cloth craft_slots=4 negates=stickiness,odor,wetness comfort=2
+
+# noun drink
+nightcap: mass=0.1 state=liquid edible=true nutrition=1 potency=4 inflict_sleep=60 regeneration+2 morale+2 courage+2 accuracy+-0.1 single_use=true
+
+# noun attribute
+panache: charm+4 beauty+3 courage+3 morale+3 intimidation+1 critical+0.05
+
+# noun clothing
+motley: mass=1 integrity=12 material=cloth equip_slot=body color=patchwork disguise=4 charm+3 morale+2 inflict_confuse=1 stealth+-2
+
+# noun ceremony
+masquerade: placement=region placement_range=60 field_radius=30 field_targets=all field_duration=5 disguise+6 stealth+2 charm+2 aggression+-3 morale+2 counters=unmask,detective
+
+# verb body
+wear: duration=600 temp_min+-8 armor+1 charm+1 disguise+1
+undress: duration=120 armor*0 temp_min+15 stealth+-3 speed_land*1.1 charm+-2 agility+1
+clothe: effect_target=touched duration=900 temp_min+-15 res_cold+0.3 armor+1 morale+2 charm+1
+
+# verb contact
+separate: effect_target=touched duration=30 knockback=15 moves_target=-10 counters=pact,alliance,marriage,union,embrace
+
+# verb create
+braid: effect_target=held duration=300 integrity*1.5 tow_capacity*2 beauty+2 charm+1
+
+# adjective quality
+blue: color=blue camouflage=water,deep_water morale+-1 temperature+-3 stealth+1
+gray: color=gray camouflage=ash,badlands,mountain stealth+2 beauty+-1 charm+-1
+formal: charm+3 authority+2 beauty+2 disguise+1 speed_land*0.95 comfort+-1
+overall: field_radius*1.5 attack_area*1.5 event_radius*1.5 multi_target+1
+fitting: charm+2 agility+1 beauty+1 comfort+1
+trim: mass*0.85 speed_land*1.08 agility+1 beauty+1
+stylish: charm+4 beauty+3 morale+2 trade_bonus+0.05
+elegant: charm+4 beauty+4 authority+1 value*1.5
+woollen: material=wool res_cold+0.3 temp_min+-10 flammability*0.7 comfort+1
+woolen: material=wool res_cold+0.3 temp_min+-10 flammability*0.7 comfort+1
+padded: armor+3 res_blunt+0.25 res_cold+0.2 temp_min+-6 mass*1.2 agility+-1
+flashy: charm+3 beauty+2 luminosity+2 reflectivity+4 stealth+-5 intimidation+1
+drab: beauty+-3 charm+-2 stealth+3 disguise+2 camouflage=ash,badlands,marsh
+threadbare: integrity*0.4 armor*0.3 res_cold*0.3 temp_min+5 charm+-2 value*0.2
+chic: charm+4 beauty+4 morale+1 value*1.5
+dapper: charm+4 beauty+3 authority+1 morale+2
+shabby: integrity*0.6 beauty+-3 charm+-3 value*0.3 disguise+2 stealth+1
+tattered: integrity*0.5 armor*0.5 res_cold*0.5 beauty+-3 charm+-2 disguise+1
+frumpy: beauty+-3 charm+-2 stealth+2 comfort+2
+trendy: charm+4 beauty+3 value*2 morale+2 recruit_rate+0.2
+glamorous: charm+6 beauty+6 luminosity+1 stealth+-3 morale+2 value*2
+gaudy: beauty+-1 charm+-1 luminosity+2 reflectivity+5 stealth+-6 intimidation+1 value*1.2
+baggy: container_slots+2 agility+-1 speed_land*0.95 stealth+1 comfort+2 disguise+1
