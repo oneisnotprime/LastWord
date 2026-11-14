@@ -35,6 +35,64 @@ Rules that follow:
 - Every tile and every object carries the same quantities, so effects spread by adjacency
   (fire, flood, plague, locusts) without special cases.
 
+## Letter economy
+
+This is the plan for where letters come from; build it as written. Each letter has one source,
+and a letter's scarcity matches how often words use it. Only D, F, H, V and K come from
+violence (about 9% of letters in use); everything else comes from farming, holding land,
+building, trading and exploring, so most of a round is spent on the economy.
+
+| Letter | Source |
+|---|---|
+| E | Foraged anywhere; the baseline currency |
+| A | Crop fields on tilled land |
+| I | Livestock and pets |
+| O | Water: wells, lakes, fishing |
+| U | Caves and fungus; the scarce vowel |
+| Y | Age: objects yield it the longer they survive |
+| L | Per tile of land held |
+| S | Per NPC citizen in cities you control |
+| T | Per trade completed with players or NPC markets |
+| R | Road and route segments held |
+| N | Hired NPC labour |
+| B | Base furniture |
+| C | Crafting stations |
+| M | Machines that convert vowels |
+| G | Quarries and digging |
+| D | Destroying objects and structures |
+| F | Burning objects as sacrifice |
+| H | Hunting wild creatures |
+| P | Planted flora, harvested on a cycle |
+| W | Windmills and watermills, varying with the weather |
+| V | Winning fights against player-owned objects |
+| K | Kills of NPCs or players |
+| J | Exploring undiscovered tiles; this depletes |
+| X | Buried caches and ruins; finite |
+| Q | One unique site per map |
+| Z | Roaming boss drops, and transmuting commons at a steep ratio |
+
+Sources deplete over a round, so the map slowly starves and the last sources become
+flashpoints. That is how a round converges without caps.
+
+### Starting small
+
+Players start with about 8 letters. That works only if every letter can be reached from
+nothing:
+
+- Letters from actions need no letters and no property: E (forage), O (fish), U (caves),
+  G (dig), H (hunt), D (destroy), K (kill), J (explore), X (caches), Q (the site), and T
+  (trade with NPC markets).
+- Those spell the first producers: HOE tills land (A), DOG, HOG or OX are livestock (I),
+  HEDGE holds land and is planted (L, P), AIDE or HELP is hired labour (N), LANE is a route (R),
+  KILN is a crafting station (C), a PRESS or ENGINE converts vowels (M), a MILL makes W, and
+  furniture follows once C, H and R are in hand (B).
+- The starting hand is drawn so it can spell at least one producer.
+- A tool walks the dictionary from the action letters, checks that all 26 letters are
+  reachable, and records the shortest chain to each. It runs with the tests, so a data change
+  cannot cut off a letter.
+- A word's `produce_*` values come from this table and the word's meaning (a farm makes A, a
+  mill makes W), and production needs the right conditions (crops need tilled land and water).
+
 ## Map conditions
 
 Each map can start with five random adjectives applied to the whole map (FROZEN, FERTILE,
