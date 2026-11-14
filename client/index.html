@@ -5,60 +5,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Last Word</title>
     <style>
-      html, body { margin: 0; height: 100%; background: #14161a; overflow: hidden; }
+      /* Paper diorama: cream card stock, craft-brown ink, cut tiles, soft drop shadows. */
+      :root { --paper: #fbf6ea; --card: #f3ead6; --ink: #4a3f33; --soft: #8a7a60; --line: #d9cbb0; --gold: #e9b949; --red: #c9453f; --green: #4f8a3a; --blue: #2f5a8e;
+        --hand: 'Kalam', 'Comic Sans MS', cursive; --round: 'Fredoka', 'Trebuchet MS', sans-serif; --shadow: 0 2px 0 #cfc3a6, 0 6px 14px rgba(40, 28, 16, .35); }
+      html, body { margin: 0; height: 100%; background: #4d7b8c; overflow: hidden; }
       #game { width: 100%; height: 100%; }
-      #sky { position: fixed; inset: 0; pointer-events: none; transition: background-color 1.5s; }
-      #hud { position: fixed; inset: 0; pointer-events: none; font: 14px/1.3 ui-monospace, Menlo, Consolas, monospace; color: #e8e6df; }
-      #status { position: absolute; top: 12px; left: 12px; max-width: 46vw; background: #14161acc; padding: 6px 10px; border-radius: 4px; }
-      #help { position: absolute; top: 12px; right: 12px; max-width: 46vw; text-align: right; font-size: 12px; background: #14161acc; padding: 6px 10px; border-radius: 4px; color: #a9a79f; }
-      #bottom { position: absolute; bottom: 12px; left: 0; right: 0; display: flex; flex-direction: column; align-items: center; gap: 8px; }
-      #toast { padding: 6px 12px; border-radius: 4px; background: #14161aee; opacity: 0; transition: opacity .2s; }
-      #toast.show { opacity: 1; }
-      #toast.bad { color: #ff8a80; }
-      #toast.good { color: #9be28f; }
-      #banner { position: absolute; top: 38%; left: 50%; transform: translate(-50%, -50%); padding: 18px 28px; border-radius: 6px;
-        background: #14161af2; font-size: 22px; text-align: center; display: none; border: 1px solid #55524a; white-space: pre-line; }
+      #game canvas { display: block; }
+      #hud { position: fixed; inset: 0; pointer-events: none; font: 500 14px/1.35 var(--round); color: var(--ink); }
+      .paper { background: var(--paper); border-radius: 3px; box-shadow: var(--shadow); }
+      #status { position: absolute; top: 12px; left: 12px; max-width: 46vw; padding: 6px 12px 5px; background: var(--paper); border-radius: 3px;
+        box-shadow: var(--shadow); transform: rotate(-0.6deg); font: 700 15px/1.3 var(--hand); }
+      #help { position: absolute; top: 12px; right: 12px; max-width: 40vw; text-align: right; font: 500 11.5px/1.45 var(--round); padding: 6px 10px; border-radius: 3px;
+        background: #f3ead6e8; color: var(--soft); box-shadow: 0 1px 0 #cfc3a6, 0 3px 8px rgba(40, 28, 16, .25); transform: rotate(0.4deg); }
+      #overmap { position: absolute; top: 58px; left: 50%; transform: translateX(-50%) rotate(-1deg); display: none; padding: 4px 26px 6px;
+        background: var(--paper); box-shadow: var(--shadow); font: 700 22px var(--hand); letter-spacing: 3px; color: #8a5a1a; text-align: center;
+        clip-path: polygon(0 0, 100% 0, 96% 50%, 100% 100%, 0 100%, 4% 50%); }
+      #overmap.show { display: block; }
+      #overmap small { display: block; font: 600 10px var(--round); letter-spacing: 2px; color: var(--soft); text-transform: uppercase; margin-bottom: -4px; }
+      #bottom { position: absolute; bottom: 14px; left: 0; right: 0; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+      #toast { position: relative; padding: 5px 16px 5px 24px; background: var(--paper); box-shadow: var(--shadow); font: 700 16px var(--hand);
+        opacity: 0; transform: translateY(6px) rotate(-1deg); transition: opacity .2s, transform .2s; border-radius: 2px;
+        clip-path: polygon(10px 0, 100% 0, 100% 100%, 10px 100%, 0 50%); }
+      #toast::before { content: ""; position: absolute; left: 9px; top: 50%; width: 5px; height: 5px; margin-top: -2.5px; border-radius: 50%; background: #c9b99a; }
+      #toast.show { opacity: 1; transform: translateY(0) rotate(-1deg); }
+      #toast.bad { color: var(--red); }
+      #toast.good { color: var(--green); }
+      #banner { position: absolute; top: 38%; left: 50%; transform: translate(-50%, -50%) rotate(-1deg); padding: 22px 34px; border-radius: 3px;
+        background: var(--paper); box-shadow: 0 3px 0 #cfc3a6, 0 14px 30px rgba(40, 28, 16, .45); font: 700 26px/1.35 var(--hand); text-align: center; display: none; white-space: pre-line; }
       #banner.show { display: block; }
-      #panel { position: absolute; inset: 78px 0 0 0; margin: 0 auto; width: min(860px, 94vw); height: fit-content; max-height: calc(100vh - 150px);
-        overflow: auto; pointer-events: auto; background: #14161af5; border: 1px solid #55524a; border-radius: 6px; padding: 16px 20px; display: none; }
+      #panel { position: absolute; inset: 78px 0 0 0; margin: 0 auto; width: min(880px, 94vw); height: fit-content; max-height: calc(100vh - 250px);
+        overflow: auto; pointer-events: auto; background: var(--card); border-radius: 4px; padding: 18px 24px 20px; display: none;
+        box-shadow: 0 0 0 6px var(--paper), 0 3px 0 6px #cfc3a6, 0 18px 40px rgba(30, 20, 10, .5);
+        background-image: repeating-linear-gradient(0deg, transparent 0 27px, rgba(150, 120, 80, .08) 27px 28px); }
       #panel.show { display: block; }
-      #panel h2 { margin: 0 0 4px; font-size: 18px; color: #ffd166; letter-spacing: 1px; }
-      #panel h3 { margin: 16px 0 6px; font-size: 12px; color: #a9a79f; text-transform: uppercase; letter-spacing: 1px; }
-      #panel .hint { color: #a9a79f; font-size: 12px; margin-bottom: 8px; }
-      #panel .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 28px; }
-      #panel .row { display: flex; align-items: center; gap: 8px; padding: 4px 0; border-bottom: 1px solid #2a2c31; min-height: 24px; }
-      #panel .row .slot { width: 64px; color: #a9a79f; }
-      #panel .row .what { flex: 1; text-transform: uppercase; }
-      #panel .row .empty { flex: 1; color: #55524a; }
-      #panel .meter { width: 70px; height: 6px; background: #2a2c31; border-radius: 3px; overflow: hidden; }
-      #panel .meter i { display: block; height: 100%; background: #9be28f; }
-      #panel button { font: inherit; font-size: 12px; color: #e8e6df; background: #2a2c31; border: 1px solid #55524a; border-radius: 3px; padding: 2px 8px; cursor: pointer; }
-      #panel button:hover { border-color: #ffd166; }
-      #panel .stat { display: flex; justify-content: space-between; padding: 3px 0; border-bottom: 1px solid #2a2c31; }
-      #panel .stat b { color: #ffd166; font-weight: 400; }
-      #panel .stat.status b, #panel .stat.status span { color: #ff8a80; }
-      #panel .slot.status { color: #ff8a80; }
-      #panel .bag { display: flex; flex-wrap: wrap; gap: 4px; }
-      #panel .words { display: flex; flex-wrap: wrap; gap: 4px; }
-      #panel .words button { text-transform: uppercase; }
-      #spell { width: min(480px, 80vw); pointer-events: auto;
-        font: inherit; font-size: 18px; text-transform: uppercase; letter-spacing: 2px; padding: 8px 12px; color: #ffd166;
-        background: #14161aee; border: 1px solid #55524a; border-radius: 4px; outline: none; }
-      #spell:focus { border-color: #ffd166; }
-      #letters { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; max-width: 96vw; }
-      .tile { width: 30px; height: 40px; background: #e9dfc3; color: #26221a; border-radius: 3px; display: flex; flex-direction: column;
-        align-items: center; justify-content: center; font-weight: 700; font-size: 16px; box-shadow: 0 2px 0 #9c9274; }
-      .tile small { font-weight: 400; font-size: 10px; color: #6b6450; }
-      .tile.used { background: #ffd166; }
-      .tile.short { background: #ff8a80; }
+      #panel h2 { margin: 0 0 2px; font: 700 26px var(--hand); color: var(--ink); letter-spacing: 2px; }
+      #panel h3 { margin: 16px 0 6px; font: 600 12px var(--round); color: var(--soft); text-transform: uppercase; letter-spacing: 1.5px; }
+      #panel .hint { color: var(--soft); font-size: 12px; margin-bottom: 8px; }
+      #panel .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 30px; }
+      #panel .row { display: flex; align-items: center; gap: 8px; padding: 4px 0; border-bottom: 1px dashed var(--line); min-height: 26px; }
+      #panel .row .slot { width: 64px; color: var(--soft); font-size: 12px; }
+      #panel .row .what { flex: 1; text-transform: uppercase; font: 700 15px var(--hand); }
+      #panel .row .empty { flex: 1; color: #b9ab90; font-style: italic; }
+      #panel .meter { width: 70px; height: 7px; background: #e6dcc6; border-radius: 4px; overflow: hidden; box-shadow: inset 0 1px 1px rgba(0, 0, 0, .15); }
+      #panel .meter i { display: block; height: 100%; background: #7fbf6a; }
+      #panel button { font: 600 12px var(--round); color: var(--ink); background: var(--paper); border: 0; border-radius: 3px; padding: 3px 9px; cursor: pointer;
+        box-shadow: 0 1px 0 #cfc3a6, 0 2px 4px rgba(40, 28, 16, .25); }
+      #panel button:hover { background: var(--gold); transform: translateY(-1px) rotate(-1deg); }
+      #panel .stat { display: flex; justify-content: space-between; padding: 3px 0; border-bottom: 1px dashed var(--line); }
+      #panel .stat b { color: #8a5a1a; font: 700 15px var(--hand); }
+      #panel .stat.status b, #panel .stat.status span { color: var(--red); }
+      #panel .slot.status { color: var(--red); }
+      #panel .bag { display: flex; flex-wrap: wrap; gap: 5px; }
+      #panel .words { display: flex; flex-wrap: wrap; gap: 5px; }
+      #panel .words button { text-transform: uppercase; font: 700 13px var(--hand); }
+      #panel .words button:nth-child(3n) { transform: rotate(-1.5deg); }
+      #panel .words button:nth-child(4n+1) { transform: rotate(1deg); }
+      #spell { width: min(480px, 80vw); pointer-events: auto; box-sizing: border-box; text-align: center;
+        font: 700 22px var(--hand); text-transform: uppercase; letter-spacing: 3px; padding: 6px 14px 4px; color: var(--ink);
+        background: var(--paper); border: 0; border-radius: 3px; outline: none; box-shadow: 0 3px 0 #d9cfb6, 0 6px 14px rgba(40, 28, 16, .35); transform: rotate(-0.6deg); }
+      #spell::placeholder { color: #b9ab90; letter-spacing: 1px; text-transform: none; font-weight: 400; }
+      #spell:focus { box-shadow: 0 3px 0 #d9cfb6, 0 6px 14px rgba(40, 28, 16, .35), 0 0 0 3px var(--gold); }
+      #letters { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; max-width: 96vw; }
+      .tile { width: 30px; height: 40px; background: var(--paper); color: var(--ink); border-radius: 3px; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; font: 700 19px/1 var(--round); box-shadow: 0 2px 0 #cfc3a6, 0 4px 8px rgba(40, 28, 16, .4); }
+      .tile:nth-child(odd) { transform: rotate(-3deg); }
+      .tile:nth-child(3n) { transform: rotate(2.5deg) translateY(1px); }
+      .tile small { font: 500 10px var(--round); color: #a39780; margin-top: 2px; }
+      .tile.used { background: var(--gold); color: #4a3510; }
+      .tile.used small { color: #7a5a20; }
+      .tile.short { background: #e88a80; color: #5a1a14; }
+      .tile.short small { color: #7a2a24; }
     </style>
   </head>
   <body>
     <div id="game"></div>
-    <div id="sky"></div>
     <div id="hud">
       <div id="status">Connecting…</div>
       <div id="help">Move: WASD, arrows, click · Attack: click · Pick or aim: right-click · Gather: G · Pick up: E · Drop: Q · Use: U · Spell: Enter · Inventory: I · Loadout: L · Trade: give player2 abc</div>
+      <div id="overmap"></div>
       <div id="banner"></div>
       <div id="panel"></div>
       <div id="bottom">

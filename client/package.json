@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@colyseus/sdk": "^0.18.10",
+    "@fontsource/fredoka": "^5.3.0",
+    "@fontsource/kalam": "^5.3.0",
     "@lastword/shared": "*",
     "phaser": "^4.2.1"
   },

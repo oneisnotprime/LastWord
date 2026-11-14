@@ -142,7 +142,9 @@ lexicon so every related word is captured.
 - [ ] Words that are not in WordNet (slang, new words)
 - [ ] Art pass (M7): before choosing, prototype a few distinct, unusual graphic styles for the
       user to pick from; then a sprite or icon per word in the chosen style
-- [ ] Pick an art style from the prototypes (client/styles.html)
+- [x] Pick an art style from the prototypes (client/styles.html): 4, Paper Diorama, now drawn
+      in the game (client/src/art: terrain sheets, standees, per-word shapes in shapes.ts)
+- [ ] Expand per-word art beyond the most common words, toward a shape for every word
 
 ## Special objects: dictionary and related words
 

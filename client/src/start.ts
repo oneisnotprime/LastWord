@@ -20,16 +20,21 @@ function remembered(): Choice {
 
 const CSS = `
 #start { position: fixed; inset: 0; z-index: 10; display: flex; align-items: center; justify-content: center;
-  background: #14161af0; font: 14px/1.4 ui-monospace, Menlo, Consolas, monospace; color: #e8e6df; }
-#start .box { background: #1c1e23; border: 1px solid #55524a; border-radius: 6px; padding: 24px 28px; width: min(420px, 90vw); }
-#start h1 { margin: 0 0 4px; font-size: 26px; letter-spacing: 4px; color: #ffd166; }
-#start p { margin: 0 0 18px; color: #a9a79f; font-size: 12px; }
-#start label { display: flex; justify-content: space-between; align-items: center; margin: 10px 0; }
-#start input, #start select { font: inherit; color: #e8e6df; background: #14161a; border: 1px solid #55524a; border-radius: 3px; padding: 4px 6px; width: 110px; }
-#start button { font: inherit; width: 100%; margin-top: 12px; padding: 10px; cursor: pointer; border-radius: 4px;
-  border: 1px solid #55524a; background: #2a2c31; color: #e8e6df; letter-spacing: 1px; }
-#start button.main { background: #ffd166; color: #26221a; border-color: #ffd166; font-weight: 700; }
-#start button:hover { border-color: #ffd166; }`;
+  background: radial-gradient(ellipse at center, rgba(77, 123, 140, .55), rgba(30, 50, 60, .85));
+  font: 500 14px/1.4 'Fredoka', 'Trebuchet MS', sans-serif; color: #4a3f33; }
+#start .box { position: relative; background: #fbf6ea; border-radius: 4px; padding: 26px 30px 24px; width: min(420px, 90vw); transform: rotate(-1deg);
+  box-shadow: 0 0 0 7px #fffdf6, 0 3px 0 7px #d9cfb6, 0 22px 50px rgba(20, 14, 8, .55);
+  background-image: repeating-linear-gradient(0deg, transparent 0 27px, rgba(150, 120, 80, .08) 27px 28px); }
+#start h1 { margin: 0 0 2px; font: 700 40px/1.1 'Kalam', cursive; letter-spacing: 3px; color: #4a3f33; }
+#start h1 span { display: inline-block; background: #e9b949; padding: 0 8px; border-radius: 3px; transform: rotate(2deg); box-shadow: 0 2px 0 #c9a23a; }
+#start p { margin: 0 0 18px; color: #8a7a60; font: 400 17px 'Kalam', cursive; }
+#start label { display: flex; justify-content: space-between; align-items: center; margin: 10px 0; padding-bottom: 6px; border-bottom: 1px dashed #d9cbb0; }
+#start input, #start select { font: 700 16px 'Kalam', cursive; color: #4a3f33; background: #fffdf6; border: 0; border-radius: 3px; padding: 3px 8px; width: 110px;
+  box-shadow: inset 0 1px 2px rgba(60, 40, 20, .25); }
+#start button { font: 700 18px 'Kalam', cursive; width: 100%; margin-top: 12px; padding: 8px; cursor: pointer; border-radius: 3px; border: 0;
+  background: #fffdf6; color: #4a3f33; letter-spacing: 1px; box-shadow: 0 2px 0 #cfc3a6, 0 5px 10px rgba(40, 28, 16, .3); }
+#start button.main { background: #e9b949; color: #4a3510; box-shadow: 0 2px 0 #b8902a, 0 5px 10px rgba(40, 28, 16, .3); font-size: 22px; }
+#start button:hover { transform: translateY(-1px) rotate(-0.6deg); }`;
 
 /** Shows the start screen and resolves with the choice once the player clicks. */
 export function chooseGame(): Promise<Choice> {
@@ -39,7 +44,7 @@ export function chooseGame(): Promise<Choice> {
   const root = document.createElement("div");
   root.id = "start";
   root.innerHTML = `<div class="box">
-    <h1>LAST WORD</h1>
+    <h1>LAST <span>WORD</span></h1>
     <p>Spell to survive. The last one alive wins.</p>
     <label>Bots <input id="start-bots" type="number" min="1" max="99" value="${Math.max(1, last.bots)}"></label>
     <label>Difficulty <select id="start-difficulty">

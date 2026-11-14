@@ -12,7 +12,7 @@
 import { areas, COLS, H, inset, ROWS, S, things, tile, Tile, W, type Thing } from "./scene.js";
 import * as shape from "./shapes.js";
 import type { Style } from "./style.js";
-import { circle, contour, fbm, grainCanvas, hash, layer, makeField, maskCanvas, place, smooth, strokeSegments, tracePoly, type Ctx, type Pt } from "./util.js";
+import { circle, contour, fbm, grainCanvas, hash, layer, makeField, maskCanvas, place, smooth, strokeSegments, tracePoly, type Ctx, type Pt } from "../art/util.js";
 
 const INK = "#2b1d14";
 const VERMILION = "#b8321e";

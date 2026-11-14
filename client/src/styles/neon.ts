@@ -11,7 +11,7 @@
 import { areas, COLS, H, inset, ROWS, S, things, tile, Tile, W, type Thing } from "./scene.js";
 import * as shape from "./shapes.js";
 import type { Style } from "./style.js";
-import { contour, hash, layer, makeField, place, smooth, type Ctx, type Pt } from "./util.js";
+import { contour, hash, layer, makeField, place, smooth, type Ctx, type Pt } from "../art/util.js";
 
 const ORB = "'Orbitron', system-ui, sans-serif";
 const MONO = "'Share Tech Mono', ui-monospace, monospace";

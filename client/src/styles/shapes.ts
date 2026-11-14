@@ -1,5 +1,5 @@
-import type { Pt } from "./util.js";
-import { circle } from "./util.js";
+import type { Pt } from "../art/util.js";
+import { circle } from "../art/util.js";
 
 /**
  * Archetype silhouettes in scene pixels, facing right, origin at the feet (y up is negative).
