@@ -1,0 +1,337 @@
+# noun affliction
+virus: placement=target placement_range=30 field_radius=8 field_targets=living field_duration=3 inflict_sick=25 contagion=0.6 stealth=9 friendly_fire=true res_disease+-0.2
+influenza: placement=target placement_range=40 field_radius=12 field_targets=living field_duration=3 inflict_sick=30 inflict_slow=8 contagion=0.6 friendly_fire=true strength*0.7 labor*0.5 temperature+2
+cancer: placement=target placement_range=20 field_radius=3 field_targets=living field_duration=4 inflict_sick=45 dmg_disease=15 attack_rate=0.3 contagion=0 friendly_fire=true regeneration*0 strength*0.6 integrity*0.7
+tumor: placement=target placement_range=20 field_radius=3 field_targets=living field_duration=4 inflict_sick=35 dmg_disease=10 attack_rate=0.25 contagion=0 friendly_fire=true mass*1.1 speed_land*0.8
+tumour: placement=target placement_range=20 field_radius=3 field_targets=living field_duration=4 inflict_sick=35 dmg_disease=10 attack_rate=0.25 contagion=0 friendly_fire=true mass*1.1 speed_land*0.8
+leukemia: placement=target placement_range=20 field_radius=3 field_targets=living field_duration=4 inflict_sick=45 dmg_disease=12 attack_rate=0.3 contagion=0 friendly_fire=true regeneration*0 res_disease+-0.5 strength*0.6
+leukaemia: placement=target placement_range=20 field_radius=3 field_targets=living field_duration=4 inflict_sick=45 dmg_disease=12 attack_rate=0.3 contagion=0 friendly_fire=true regeneration*0 res_disease+-0.5 strength*0.6
+lymphoma: placement=target placement_range=20 field_radius=3 field_targets=living field_duration=4 inflict_sick=40 dmg_disease=10 attack_rate=0.3 contagion=0 friendly_fire=true res_disease+-0.4 strength*0.7
+melanoma: placement=target placement_range=20 field_radius=3 field_targets=living field_duration=4 inflict_sick=40 dmg_disease=12 attack_rate=0.3 contagion=0 friendly_fire=true charm+-3 res_light+-0.3
+carcinoma: placement=target placement_range=20 field_radius=3 field_targets=living field_duration=4 inflict_sick=40 dmg_disease=12 attack_rate=0.3 contagion=0 friendly_fire=true strength*0.7 regeneration*0.3
+injury: placement=target placement_range=20 field_radius=3 field_targets=living field_duration=1 dmg_blunt=40 inflict_bleed=6 inflict_slow=8 friendly_fire=true speed_land*0.7 labor*0.6
+wound: placement=target placement_range=10 field_radius=2 field_targets=living field_duration=1 dmg_slash=50 inflict_bleed=12 friendly_fire=true regeneration*0.5 integrity*0.85
+suffering: placement=target placement_range=40 field_radius=10 field_targets=living field_duration=3 dmg_psychic=8 attack_rate=0.3 inflict_slow=6 friendly_fire=true morale+-5 courage+-2
+exposure: placement=target placement_range=60 field_radius=15 field_targets=living field_duration=3 dmg_cold=10 attack_rate=0.3 inflict_sick=15 inflict_slow=6 friendly_fire=true temperature+-10 res_cold+-0.4
+syndrome: placement=target placement_range=30 field_radius=6 field_targets=living field_duration=3 inflict_sick=25 inflict_confuse=4 contagion=0.1 friendly_fire=true labor*0.7 morale+-2
+collapse: placement=target placement_range=30 field_radius=4 field_targets=living field_duration=1 inflict_stun=8 inflict_sick=10 friendly_fire=true speed_land*0 strength*0.5
+diabetes: placement=target placement_range=20 field_radius=4 field_targets=living field_duration=4 inflict_sick=30 inflict_slow=8 contagion=0 friendly_fire=true food_need*1.5 water_need*2 regeneration*0.5 counters=sugar,candy,cake
+breakdown: placement=target placement_range=40 field_radius=6 field_targets=living field_duration=2 inflict_confuse=10 inflict_stun=3 friendly_fire=true labor*0.3 morale+-5 obedience+-3
+pneumonia: placement=target placement_range=30 field_radius=8 field_targets=living field_duration=3 inflict_sick=35 inflict_slow=10 contagion=0.4 dmg_suffocation=6 attack_rate=0.3 friendly_fire=true speed_land*0.6
+asthma: placement=target placement_range=20 field_radius=5 field_targets=living field_duration=2 dmg_suffocation=10 attack_rate=0.4 inflict_slow=8 contagion=0 friendly_fire=true speed_land*0.6 counters=dust,smoke,pollen
+inflammation: placement=target placement_range=20 field_radius=4 field_targets=living field_duration=2 inflict_sick=15 dmg_fire=5 attack_rate=0.3 friendly_fire=true temperature+3 agility*0.7 morale+-1
+fracture: placement=target placement_range=20 field_radius=2 field_targets=living field_duration=2 dmg_crush=40 inflict_root=6 inflict_slow=20 friendly_fire=true speed_land*0.4 climb*0 hands_required+1
+rash: placement=target placement_range=20 field_radius=5 field_targets=living field_duration=2 inflict_sick=10 inflict_confuse=2 contagion=0.3 friendly_fire=true charm+-3 accuracy+-0.1 color=red
+acne: placement=target placement_range=20 field_radius=5 field_targets=living field_duration=3 inflict_sick=5 contagion=0.1 friendly_fire=true charm+-4 beauty+-3 morale+-2
+arthritis: placement=target placement_range=20 field_radius=4 field_targets=living field_duration=4 inflict_slow=15 contagion=0 friendly_fire=true agility*0.5 hands_required+1 craft_slots+-1 speed_land*0.7 climb*0.3
+tuberculosis: placement=target placement_range=40 field_radius=10 field_targets=living field_duration=4 inflict_sick=45 dmg_disease=8 attack_rate=0.3 dmg_suffocation=4 contagion=0.5 friendly_fire=true mass*0.8 strength*0.6
+hepatitis: placement=target placement_range=30 field_radius=6 field_targets=living field_duration=4 inflict_sick=40 inflict_slow=10 contagion=0.3 dmg_disease=6 attack_rate=0.2 friendly_fire=true color=yellow res_poison+-0.5
+herpes: placement=target placement_range=10 field_radius=3 field_targets=living field_duration=4 inflict_sick=20 contagion=0.5 friendly_fire=true charm+-3 morale+-2 lingering=10
+endemic: placement=region placement_range=200 field_radius=20 field_targets=living field_duration=4 inflict_sick=20 contagion=0.3 friendly_fire=true lingering=20 res_disease+-0.2
+bends: placement=target placement_range=20 field_radius=4 field_targets=living field_duration=2 dmg_disease=15 attack_rate=0.5 inflict_stun=4 inflict_confuse=5 friendly_fire=true dive_depth*0.2 counters=submarine,diver
+polio: placement=target placement_range=40 field_radius=10 field_targets=living field_duration=4 inflict_sick=40 inflict_root=15 contagion=0.6 friendly_fire=true speed_land*0.2 climb*0 jump*0
+lupus: placement=target placement_range=20 field_radius=4 field_targets=living field_duration=4 inflict_sick=35 inflict_slow=10 contagion=0 dmg_disease=6 attack_rate=0.2 friendly_fire=true res_light+-0.4 charm+-2
+meningitis: placement=target placement_range=30 field_radius=8 field_targets=living field_duration=3 inflict_sick=40 inflict_confuse=12 dmg_disease=15 attack_rate=0.3 contagion=0.4 friendly_fire=true intelligence*0.6 sight_range*0.6
+malnutrition: placement=region placement_range=100 field_radius=20 field_targets=living field_duration=4 inflict_sick=30 inflict_slow=15 dmg_hunger=6 attack_rate=0.3 friendly_fire=true strength*0.5 mass*0.8 food_need*1.5 counters=feast,banquet
+anthrax: placement=target placement_range=60 field_radius=10 field_targets=living field_duration=4 inflict_sick=45 dmg_disease=20 attack_rate=0.4 contagion=0.1 friendly_fire=true lingering=30 fear_aura=6 res_disease+-0.3
+syphilis: placement=target placement_range=10 field_radius=3 field_targets=living field_duration=4 inflict_sick=40 inflict_confuse=10 contagion=0.4 dmg_disease=6 attack_rate=0.2 friendly_fire=true charm+-4 intelligence*0.7
+shingles: placement=target placement_range=20 field_radius=4 field_targets=living field_duration=3 inflict_sick=25 dmg_fire=4 attack_rate=0.3 contagion=0.2 friendly_fire=true morale+-3 armor*0.8
+eczema: placement=target placement_range=20 field_radius=4 field_targets=living field_duration=3 inflict_sick=8 contagion=0 friendly_fire=true charm+-2 accuracy+-0.1 res_acid+-0.3 color=red
+gout: placement=target placement_range=20 field_radius=4 field_targets=living field_duration=3 inflict_slow=20 contagion=0 friendly_fire=true speed_land*0.4 morale+-3 aggression+2 counters=feast,banquet
+contagion: placement=target placement_range=50 field_radius=14 field_targets=living field_duration=4 inflict_sick=30 contagion=0.9 friendly_fire=true spread_rate=2 res_disease+-0.3
+glaucoma: placement=target placement_range=20 field_radius=4 field_targets=living field_duration=3 inflict_blind=15 contagion=0 friendly_fire=true sight_range*0.3 accuracy+-0.3
+cataract: placement=target placement_range=20 field_radius=4 field_targets=living field_duration=3 inflict_blind=20 contagion=0 friendly_fire=true sight_range*0.2 accuracy+-0.4 night_vision=false
+sunburn: placement=target placement_range=40 field_radius=10 field_targets=living field_duration=2 dmg_fire=8 attack_rate=0.3 inflict_burn=6 friendly_fire=true res_light+-0.3 charm+-1 color=red counters=shade,parasol,sunscreen
+dengue: placement=target placement_range=40 field_radius=12 field_targets=living field_duration=3 inflict_sick=35 inflict_slow=12 inflict_bleed=6 contagion=0.4 dmg_disease=8 attack_rate=0.3 friendly_fire=true temperature+4 summons=mosquito summon_count=1
+bronchitis: placement=target placement_range=30 field_radius=6 field_targets=living field_duration=3 inflict_sick=25 dmg_suffocation=4 attack_rate=0.3 contagion=0.3 friendly_fire=true loudness+2 stealth+-3 speed_land*0.8
+dermatitis: placement=target placement_range=20 field_radius=4 field_targets=living field_duration=2 inflict_sick=8 dmg_acid=3 attack_rate=0.3 contagion=0 friendly_fire=true charm+-2 color=red
+psoriasis: placement=target placement_range=20 field_radius=4 field_targets=living field_duration=3 inflict_sick=8 contagion=0 friendly_fire=true charm+-3 armor+2 morale+-2
+cirrhosis: placement=target placement_range=20 field_radius=3 field_targets=living field_duration=4 inflict_sick=40 inflict_poison=10 dmg_disease=8 attack_rate=0.2 contagion=0 friendly_fire=true res_poison+-0.6 color=yellow
+pimple: placement=target placement_range=10 field_radius=1 field_targets=living field_duration=2 contagion=0 friendly_fire=true charm+-2 beauty+-2 morale+-1
+zit: placement=target placement_range=10 field_radius=1 field_targets=living field_duration=2 contagion=0 friendly_fire=true charm+-2 beauty+-2 morale+-1
+mumps: placement=target placement_range=30 field_radius=8 field_targets=living field_duration=3 inflict_sick=25 contagion=0.7 friendly_fire=true charm+-3 food_need*0.5 speech=false
+dysentery: placement=target placement_range=40 field_radius=10 field_targets=living field_duration=4 inflict_sick=40 dmg_disease=10 attack_rate=0.3 contagion=0.5 friendly_fire=true water_need*3 strength*0.6 odor+6 lingering=10
+angina: placement=target placement_range=20 field_radius=3 field_targets=living field_duration=2 dmg_disease=12 attack_rate=0.3 inflict_stun=3 contagion=0 friendly_fire=true speed_land*0.6 courage+-2
+wart: placement=target placement_range=10 field_radius=2 field_targets=living field_duration=3 inflict_sick=5 contagion=0.3 friendly_fire=true charm+-3 beauty+-3 counters=frog,toad
+scurvy: placement=region placement_range=100 field_radius=15 field_targets=living field_duration=4 inflict_sick=35 inflict_bleed=6 dmg_disease=6 attack_rate=0.2 friendly_fire=true regeneration*0 strength*0.6 counters=lemon,lime,orange,citrus
+emphysema: placement=target placement_range=20 field_radius=4 field_targets=living field_duration=4 dmg_suffocation=12 attack_rate=0.3 inflict_slow=15 contagion=0 friendly_fire=true speed_land*0.5 stealth+-2
+dandruff: placement=target placement_range=10 field_radius=2 field_targets=living field_duration=2 contagion=0.1 friendly_fire=true charm+-2 beauty+-1 color=white
+diphtheria: placement=target placement_range=40 field_radius=10 field_targets=living field_duration=4 inflict_sick=40 dmg_suffocation=12 attack_rate=0.3 inflict_silence=10 contagion=0.6 friendly_fire=true
+rheumatism: placement=target placement_range=20 field_radius=4 field_targets=living field_duration=4 inflict_slow=15 contagion=0 friendly_fire=true agility*0.5 speed_land*0.7 morale+-2 counters=sauna
+malady: placement=target placement_range=30 field_radius=6 field_targets=living field_duration=3 inflict_sick=25 contagion=0.3 friendly_fire=true labor*0.6 morale+-2
+pertussis: placement=target placement_range=30 field_radius=8 field_targets=living field_duration=3 inflict_sick=35 dmg_suffocation=5 attack_rate=0.4 contagion=0.8 friendly_fire=true loudness+4 stealth+-4
+rubella: placement=target placement_range=30 field_radius=10 field_targets=living field_duration=3 inflict_sick=25 contagion=0.7 friendly_fire=true charm+-2 reproduction*0.3 color=red
+mange: placement=target placement_range=20 field_radius=5 field_targets=living field_duration=3 inflict_sick=20 contagion=0.6 friendly_fire=true res_cold+-0.5 charm+-4 beauty+-4 counters=dog,wolf,fox
+chickenpox: placement=target placement_range=30 field_radius=10 field_targets=living field_duration=3 inflict_sick=25 inflict_confuse=2 contagion=0.9 friendly_fire=true charm+-3 accuracy+-0.1
+botulism: placement=target placement_range=30 field_radius=5 field_targets=living field_duration=3 inflict_sick=40 inflict_poison=20 inflict_root=10 dmg_poison=20 attack_rate=0.3 contagion=0 friendly_fire=true speech=false
+rickets: placement=region placement_range=100 field_radius=15 field_targets=living field_duration=4 inflict_sick=30 inflict_slow=15 friendly_fire=true brittleness+4 height*0.9 strength*0.7 counters=sunshine,milk
+affliction: placement=target placement_range=40 field_radius=8 field_targets=living field_duration=3 inflict_sick=25 inflict_slow=6 contagion=0.2 friendly_fire=true morale+-3 labor*0.6
+jaundice: placement=target placement_range=30 field_radius=6 field_targets=living field_duration=3 inflict_sick=25 contagion=0.2 friendly_fire=true color=yellow res_poison+-0.4 morale+-2
+palsy: placement=target placement_range=20 field_radius=4 field_targets=living field_duration=3 inflict_slow=20 inflict_stun=2 contagion=0 friendly_fire=true accuracy+-0.4 agility*0.4 speed_land*0.6
+ague: placement=target placement_range=40 field_radius=10 field_targets=living field_duration=3 inflict_sick=30 inflict_confuse=4 inflict_freeze=2 contagion=0.3 friendly_fire=true temperature+3 accuracy+-0.2
+croup: placement=target placement_range=20 field_radius=6 field_targets=living field_duration=2 inflict_sick=20 dmg_suffocation=4 attack_rate=0.3 contagion=0.5 friendly_fire=true loudness+4 stealth+-4
+outbreak: placement=target placement_range=100 field_radius=20 field_targets=living field_duration=3 inflict_sick=30 contagion=0.7 friendly_fire=true spread_rate=3 morale+-3 labor*0.6
+
+# noun creature
+bacteria: mass=0.000000001 length=0.000002 integrity=1 alive=true diet=omnivore plural_count=1000000 reproduction=1000 stealth=10 dmg_disease=2 attack_rate=1 inflict_sick=20 contagion=0.5 food_need=0
+bacterium: mass=0.000000001 length=0.000002 integrity=1 alive=true diet=omnivore reproduction=1000 stealth=10 dmg_disease=1 attack_rate=1 inflict_sick=15 contagion=0.4 food_need=0
+microbe: mass=0.000000001 length=0.000002 integrity=1 alive=true diet=omnivore plural_count=100000 reproduction=600 stealth=10 dmg_disease=1 attack_rate=1 inflict_sick=12 contagion=0.4 food_need=0
+pathogen: mass=0.000000001 length=0.000001 integrity=1 alive=true plural_count=100000 reproduction=800 stealth=10 dmg_disease=4 attack_rate=1 inflict_sick=30 contagion=0.6 food_need=0 res_disease+-0.2
+salmonella: mass=0.000000001 length=0.000002 integrity=1 alive=true plural_count=100000 reproduction=600 stealth=10 dmg_disease=3 attack_rate=1 inflict_sick=30 inflict_poison=10 contagion=0.3 food_need=0 toxicity+5 counters=egg,chicken,meat
+listeria: mass=0.000000001 length=0.000002 integrity=1 alive=true plural_count=100000 reproduction=500 stealth=10 dmg_disease=3 attack_rate=1 inflict_sick=30 inflict_confuse=4 contagion=0.2 food_need=0 temp_min=-5 toxicity+4 counters=cheese,milk
+strep: mass=0.000000001 length=0.000001 integrity=1 alive=true plural_count=100000 reproduction=600 stealth=10 dmg_disease=2 attack_rate=1 inflict_sick=20 inflict_silence=6 contagion=0.6 food_need=0
+staph: mass=0.000000001 length=0.000001 integrity=1 alive=true plural_count=100000 reproduction=600 stealth=10 dmg_disease=3 attack_rate=1 inflict_sick=25 contagion=0.5 food_need=0 regeneration*0.5
+bacillus: mass=0.000000001 length=0.000005 integrity=1 alive=true plural_count=100000 reproduction=500 stealth=10 dmg_disease=2 attack_rate=1 inflict_sick=20 contagion=0.4 food_need=0 shape=long
+phage: mass=0.0000000001 length=0.0000002 integrity=1 alive=false plural_count=1000000 reproduction=2000 stealth=10 food_need=0 counters=bacteria,bacterium,microbe,salmonella,listeria,strep,staph,bacillus,superbug
+amoeba: mass=0.000000005 length=0.0005 integrity=1 alive=true diet=omnivore plural_count=10000 reproduction=200 stealth=9 speed_water=0.00001 dmg_disease=3 attack_rate=1 inflict_sick=25 contagion=0.3 habitat=water,swamp food_need=0
+plasmodium: mass=0.000000001 length=0.00001 integrity=1 alive=true plural_count=100000 reproduction=300 stealth=10 dmg_disease=4 attack_rate=1 inflict_sick=40 inflict_confuse=6 contagion=0.4 food_need=0 temperature+4
+probiotic: mass=0.000000001 length=0.000002 integrity=1 alive=true plural_count=1000000 edible=true single_use=true restores=10 duration=600 res_disease+0.3 food_need=0 counters=salmonella,listeria,germ
+parasite: mass=0.001 length=0.01 integrity=1 alive=true diet=carnivore stealth=8 lifesteal=0.5 dmg_disease=2 attack_rate=1 inflict_sick=20 contagion=0.3 food_need=0
+mouse: mass=0.02 length=0.08 integrity=3 alive=true diet=omnivore speed_land=3 climb=6 stealth=7 pack_size=10 reproduction=4 dmg_disease=1 attack_rate=1 inflict_sick=8 contagion=0.3 food_need=0.001 letter_steal=1 habitat=meadow,field,forest color=gray counters=cheese,grain
+
+# noun insect
+grasshopper: mass=0.002 length=0.05 integrity=1 alive=true diet=herbivore food_need=0.0001 speed_land=1 jump=1 speed_air=3 pack_size=50 habitat=meadow,field,savanna color=green produce_A*0.8
+
+# noun feeling
+pain: placement=target placement_range=30 field_radius=4 field_targets=living field_duration=1 dmg_psychic=15 inflict_slow=6 inflict_stun=1 friendly_fire=true morale+-3 accuracy+-0.2 counters=painkiller,morphine,aspirin
+agony: placement=target placement_range=30 field_radius=5 field_targets=living field_duration=1 dmg_psychic=40 inflict_stun=4 inflict_slow=10 friendly_fire=true morale+-6 courage+-3 accuracy+-0.4 counters=painkiller,morphine
+nausea: placement=target placement_range=30 field_radius=6 field_targets=living field_duration=2 inflict_sick=12 inflict_confuse=4 friendly_fire=true food_need*0 accuracy+-0.2 morale+-2 counters=ginger,mint
+headache: placement=target placement_range=30 field_radius=4 field_targets=living field_duration=2 dmg_psychic=6 attack_rate=0.3 inflict_confuse=4 friendly_fire=true intelligence*0.7 accuracy+-0.15 counters=aspirin,painkiller,ibuprofen
+pang: placement=target placement_range=20 field_radius=2 field_targets=living field_duration=1 dmg_psychic=10 inflict_stun=1 friendly_fire=true morale+-1
+soreness: placement=target placement_range=20 field_radius=3 field_targets=living field_duration=2 inflict_slow=8 friendly_fire=true agility*0.7 attack_rate*0.8 counters=massage,balm
+fatigue: placement=target placement_range=40 field_radius=8 field_targets=living field_duration=3 inflict_slow=15 inflict_sleep=3 friendly_fire=true speed_land*0.6 labor*0.5 attack_rate*0.7 counters=coffee,rest,sleep
+numbness: placement=target placement_range=20 field_radius=3 field_targets=living field_duration=2 inflict_slow=8 friendly_fire=true agility*0.5 accuracy+-0.2 res_psychic+0.3 immune_fear=true
+chafe: placement=target placement_range=10 field_radius=2 field_targets=living field_duration=2 dmg_slash=2 attack_rate=0.5 friendly_fire=true speed_land*0.85 morale+-1
+chafing: placement=target placement_range=10 field_radius=2 field_targets=living field_duration=2 dmg_slash=2 attack_rate=0.5 friendly_fire=true speed_land*0.85 morale+-1
+
+# noun phenomenon
+gangrene: placement=target placement_range=20 field_radius=3 field_targets=living field_duration=4 inflict_sick=45 dmg_disease=20 attack_rate=0.4 contagion=0.1 friendly_fire=true odor+8 color=black regeneration*0 severs=1
+necrosis: placement=target placement_range=20 field_radius=3 field_targets=living field_duration=3 dmg_disease=25 attack_rate=0.4 friendly_fire=true regeneration*0 decay_rate+5 color=black
+abrasion: placement=target placement_range=10 field_radius=2 field_targets=living field_duration=1 dmg_slash=10 inflict_bleed=3 friendly_fire=true armor*0.9
+
+# noun event
+harm: placement=target placement_range=30 event_target=creature event_duration=1 dmg_blunt=40 inflict_bleed=4 morale+-1
+bump: placement=target placement_range=10 event_target=creature event_duration=1 dmg_blunt=8 inflict_stun=1 knockback=1
+scrape: placement=target placement_range=10 event_target=creature event_duration=1 dmg_slash=8 inflict_bleed=2
+rupture: placement=target placement_range=20 event_target=creature event_duration=1 dmg_disease=60 inflict_bleed=15 inflict_stun=4 integrity*0.8
+atrophy: placement=target placement_range=30 field_radius=5 field_targets=living field_duration=4 inflict_slow=15 strength*0.5 mass*0.8 speed_land*0.7
+reflux: placement=target placement_range=20 event_target=creature event_duration=1 dmg_acid=10 inflict_sick=6 food_need*0.5
+relapse: placement=target placement_range=40 field_radius=8 field_targets=living field_duration=2 inflict_sick=30 contagion=0.3 friendly_fire=true counters=cure,recovery,remission
+remission: placement=self field_radius=10 field_targets=owned field_duration=3 effect_status=sick restores=40 regeneration+2 morale+2 counters=cancer,tumor,leukemia,lymphoma,carcinoma,melanoma
+
+
+# noun medicine
+drug: mass=0.01 edible=true single_use=true potency=6 restores=40 duration=300 effect_status=sick,poison res_disease+0.3
+aid: mass=1 single_use=true restores=80 effect_status=bleed,burn,sick regeneration+2 duration=120
+therapy: single_use=true restores=60 duration=900 effect_status=sick,confuse,fear regeneration+2 morale+3
+healthcare: placement=self field_radius=30 field_targets=owned field_duration=5 heals=3 effect_status=sick,bleed,poison res_disease+0.4 counters=disease,illness,sickness
+dose: mass=0.01 edible=true single_use=true potency=5 restores=30 duration=300 effect_status=sick res_disease+0.2
+medication: mass=0.01 edible=true single_use=true potency=6 restores=50 duration=600 effect_status=sick,poison res_disease+0.3 counters=illness,disease
+prescription: mass=0.01 edible=true single_use=true potency=7 restores=60 duration=900 effect_status=sick,poison,confuse res_disease+0.4
+remedy: mass=0.05 edible=true single_use=true potency=6 restores=50 duration=300 effect_status=sick,poison,bleed counters=illness,malady,ailment
+pharmaceutical: mass=0.01 edible=true single_use=true potency=7 restores=50 duration=600 effect_status=sick,poison res_disease+0.4 value=20
+capsule: mass=0.001 edible=true single_use=true potency=5 restores=40 duration=300 effect_status=sick res_disease+0.2
+placebo: mass=0.005 edible=true single_use=true potency=0 restores=5 duration=300 morale+3 courage+1
+aspirin: mass=0.0005 edible=true single_use=true potency=4 restores=20 duration=600 effect_status=confuse temperature+-2 inflict_bleed*1.2 counters=headache,fever,pain
+morphine: mass=0.01 edible=true single_use=true potency=9 restores=60 duration=900 immune_fear=true immune_stun=true res_psychic+0.6 inflict_sleep=10 speed_land*0.7 counters=pain,agony
+antidote: mass=0.05 edible=true single_use=true potency=9 restores=60 duration=600 effect_status=poison,sick res_poison+1 counters=poison,venom,toxin,arsenic,cyanide
+palliative: mass=0.01 edible=true single_use=true potency=5 restores=30 duration=1200 res_psychic+0.5 morale+3 immune_fear=true counters=pain,agony,suffering
+hypnotic: mass=0.01 edible=true single_use=true potency=6 inflict_sleep=30 duration=1 counters=insomnia
+anesthetic: mass=0.05 edible=false single_use=true potency=8 inflict_sleep=40 res_psychic+0.8 immune_stun=true duration=300 counters=pain,agony
+anaesthetic: mass=0.05 edible=false single_use=true potency=8 inflict_sleep=40 res_psychic+0.8 immune_stun=true duration=300 counters=pain,agony
+narcotic: mass=0.01 edible=true single_use=true potency=8 inflict_sleep=20 res_psychic+0.6 immune_fear=true speed_land*0.6 accuracy+-0.2 duration=600
+sedative: mass=0.01 edible=true single_use=true potency=6 inflict_sleep=20 effect_status=rage,fear aggression+-6 duration=300 counters=rage,fury,panic,frenzy
+ointment: mass=0.05 single_use=true restores=40 effect_status=burn,bleed,sick regeneration+2 duration=300 counters=rash,eczema,sunburn,itch
+restorative: mass=0.05 edible=true single_use=true potency=6 restores=80 regeneration+3 morale+2 duration=300 effect_status=sick,sleep
+antidepressant: mass=0.005 edible=true single_use=true potency=5 duration=1800 morale+5 courage+2 effect_status=fear counters=despair,gloom,misery,sorrow,grief
+ibuprofen: mass=0.0004 edible=true single_use=true potency=4 restores=25 duration=600 effect_status=burn temperature+-2 counters=headache,fever,pain,inflammation,soreness
+antibacterial: mass=0.05 single_use=true potency=6 effect_status=sick res_disease+0.5 duration=600 counters=bacteria,bacterium,germ,microbe,staph,strep,salmonella
+codeine: mass=0.005 edible=true single_use=true potency=6 restores=30 duration=600 inflict_sleep=5 counters=cough,pain,headache
+antiviral: mass=0.005 edible=true single_use=true potency=7 restores=40 effect_status=sick duration=900 res_disease+0.6 counters=virus,influenza,flu,herpes,hepatitis,shingles
+salve: mass=0.05 single_use=true restores=40 effect_status=burn,bleed regeneration+2 duration=300 counters=burn,wound,rash,sunburn
+chloroform: mass=0.2 state=liquid single_use=true potency=8 inflict_sleep=40 odor=6 toxicity=4 duration=1
+panacea: mass=0.05 edible=true single_use=true potency=10 restores=ABS effect_status=sick,poison,bleed,burn,confuse,blind,sleep,slow,freeze,fear res_disease+1 duration=600 counters=plague,pestilence,disease,illness,sickness,cancer,epidemic,pandemic
+painkiller: mass=0.001 edible=true single_use=true potency=6 restores=30 duration=900 res_psychic+0.5 immune_stun=true counters=pain,agony,headache,ache
+acetaminophen: mass=0.0005 edible=true single_use=true potency=4 restores=20 duration=600 temperature+-2 counters=headache,fever,pain
+analgesic: mass=0.001 edible=true single_use=true potency=5 restores=25 duration=900 res_psychic+0.4 counters=pain,agony,ache,headache
+laxative: mass=0.005 edible=true single_use=true potency=4 duration=60 effect_status=poison food_need*1.5 inflict_slow=5 counters=constipation
+quinine: mass=0.001 edible=true single_use=true potency=7 restores=40 effect_status=sick res_disease+0.5 duration=1200 counters=malaria,plasmodium,ague,fever
+naloxone: mass=0.002 single_use=true potency=9 restores=50 effect_status=sleep,poison,stun duration=300 counters=morphine,opium,narcotic,codeine,heroin
+tetracycline: mass=0.0005 edible=true single_use=true potency=7 restores=50 effect_status=sick res_disease+0.5 duration=600 counters=anthrax,bacteria,cholera,plague,syphilis
+serum: mass=0.01 state=liquid single_use=true potency=8 restores=40 effect_status=sick,poison res_disease+0.7 res_poison+0.5 duration=900 counters=venom,diphtheria,tetanus,snakebite
+vitamin: mass=0.001 edible=true single_use=true potency=3 restores=15 regeneration+1 res_disease+0.2 duration=1800 counters=scurvy,rickets,malnutrition
+insulin: mass=0.01 state=liquid single_use=true potency=7 restores=40 duration=1800 food_need*0.8 counters=diabetes
+poultice: mass=0.2 single_use=true restores=40 effect_status=bleed,burn,poison regeneration+2 duration=300 temperature+20 counters=boil,wound,abscess
+compress: mass=0.3 single_use=true restores=20 effect_status=burn,bleed temperature+-10 duration=300 counters=fever,headache,sprain,bruise
+laudanum: mass=0.05 state=liquid edible=true single_use=true potency=8 restores=40 inflict_sleep=15 res_psychic+0.5 duration=900 counters=pain,cough
+antitoxin: mass=0.01 state=liquid single_use=true potency=8 effect_status=poison,sick res_poison+0.8 duration=900 counters=toxin,venom,botulism,diphtheria,tetanus
+inoculation: single_use=true potency=7 duration=900 res_disease+1 effect_status=sick counters=smallpox,polio,measles,chickenpox,flu,influenza
+vaccination: single_use=true potency=8 duration=900 res_disease+1 counters=plague,smallpox,polio,measles,mumps,rubella,diphtheria,pertussis,tetanus,flu,influenza
+injection: mass=0.01 single_use=true potency=6 restores=50 dmg_pierce=2 effect_status=sick,poison res_disease+0.4 duration=600
+transfusion: single_use=true restores=150 effect_status=bleed regeneration+3 duration=300 counters=hemorrhage,bleeding,leukemia
+mouthwash: mass=0.3 state=liquid single_use=true effect_status=sick res_disease+0.2 odor+-4 charm+1 duration=600 counters=germ,bacteria
+gargle: mass=0.1 state=liquid single_use=true effect_status=sick res_disease+0.2 duration=300 counters=strep,croup,cough
+chemotherapy: single_use=true potency=10 effect_status=sick dmg_poison=30 res_disease+0.4 strength*0.6 charm+-2 duration=1800 counters=cancer,tumor,tumour,leukemia,leukaemia,lymphoma,melanoma,carcinoma
+radiotherapy: single_use=true potency=9 effect_status=sick dmg_radiation=25 radioactivity+2 strength*0.7 duration=1200 counters=cancer,tumor,tumour,carcinoma,lymphoma,melanoma
+psychotherapy: single_use=true restores=20 duration=1800 effect_status=confuse,fear,rage morale+4 courage+3 counters=breakdown,despair,madness,insanity,trauma
+physiotherapy: single_use=true restores=40 duration=1200 effect_status=slow,root agility*1.3 speed_land*1.2 counters=fracture,sprain,arthritis,palsy,atrophy,whiplash
+homeopathy: single_use=true potency=0 restores=2 duration=300 morale+1
+aromatherapy: placement=self field_radius=6 field_targets=owned field_duration=2 odor=5 morale+3 aggression+-2 regeneration+1 counters=stress,anxiety
+bloodletting: single_use=true dmg_slash=20 inflict_bleed=5 effect_status=sick temperature+-2 counters=fever,ague
+amputation: single_use=true severs=1 inflict_bleed=15 dmg_slash=40 effect_status=sick counters=gangrene,frostbite,necrosis
+
+# noun worker
+doc: mass=75 integrity=90 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=4 heals=6 res_disease=0.7 food_need=0.03 field_radius=8 field_targets=owned effect_status=sick,bleed,poison counters=disease,illness,fever
+physician: mass=75 integrity=90 alive=true sentient=true intelligence=9 loyalty=7 hands=true speech=true speed_land=4 heals=7 res_disease=0.8 read_properties=4 food_need=0.03 field_radius=10 field_targets=owned effect_status=sick,poison,confuse counters=disease,illness,plague,fever
+specialist: mass=75 integrity=90 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 heals=10 res_disease=0.7 read_properties=6 food_need=0.03 field_radius=4 field_targets=owned effect_status=sick
+vet: mass=75 integrity=100 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=5 heals=6 res_disease=0.6 recruit_rate=0.3 food_need=0.03 field_radius=10 field_targets=owned effect_status=sick,bleed,poison counters=rabies,mange,distemper
+veterinarian: mass=75 integrity=100 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=5 heals=6 res_disease=0.6 recruit_rate=0.3 food_need=0.03 field_radius=10 field_targets=owned effect_status=sick,bleed,poison counters=rabies,mange
+dentist: mass=75 integrity=90 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 heals=3 dmg_pierce=8 attack_rate=1 fear_aura=3 food_need=0.03 counters=toothache,cavity,decay
+psychiatrist: mass=72 integrity=90 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 heals=2 read_properties=5 field_radius=10 field_targets=owned effect_status=confuse,fear,rage morale+3 food_need=0.03 counters=breakdown,madness,insanity,panic
+intern: mass=70 integrity=90 alive=true sentient=true intelligence=7 loyalty=7 hands=true speech=true speed_land=5 labor=2 heals=3 res_disease=0.5 food_need=0.03 sleep_need=0.1
+chemist: mass=70 integrity=85 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 craft_slots=1 crafts=medicine,pill,potion,antidote,poison res_poison=0.5 food_need=0.03
+pharmacist: mass=70 integrity=85 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=4 craft_slots=1 crafts=medicine,pill,antibiotic,antidote,ointment trade_bonus=0.15 res_disease=0.5 food_need=0.03 counters=poison
+midwife: mass=70 integrity=90 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=4 heals=4 reproduction+1 res_disease=0.5 food_need=0.03 field_radius=6 field_targets=owned effect_status=bleed,sick
+pathologist: mass=72 integrity=85 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 read_properties=8 detect_life=50 res_disease=0.8 food_need=0.03
+caregiver: mass=68 integrity=90 alive=true sentient=true intelligence=6 loyalty=9 hands=true speech=true speed_land=4 heals=4 comfort=3 field_radius=5 field_targets=owned regeneration+1 morale+2 food_need=0.03
+pediatrician: mass=70 integrity=90 alive=true sentient=true intelligence=8 loyalty=8 hands=true speech=true speed_land=4 heals=6 res_disease=0.7 charm=5 food_need=0.03 field_radius=8 field_targets=owned effect_status=sick counters=measles,mumps,chickenpox,croup,rubella
+dermatologist: mass=70 integrity=90 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 heals=4 food_need=0.03 field_radius=6 field_targets=owned effect_status=burn,sick counters=acne,eczema,rash,psoriasis,wart,melanoma,sunburn
+quack: mass=80 integrity=90 alive=true sentient=true intelligence=4 loyalty=3 hands=true speech=true speed_land=4 heals=0.5 charm=6 disguise=5 letter_steal=2 trade_bonus=0.3 food_need=0.03 inflict_sick=5
+neurologist: mass=72 integrity=90 alive=true sentient=true intelligence=10 loyalty=6 hands=true speech=true speed_land=4 heals=5 read_properties=5 food_need=0.03 field_radius=6 field_targets=owned effect_status=confuse,stun,sleep counters=meningitis,palsy,seizure,stroke
+cardiologist: mass=75 integrity=90 alive=true sentient=true intelligence=10 loyalty=6 hands=true speech=true speed_land=4 heals=6 food_need=0.03 field_radius=6 field_targets=owned effect_status=stun counters=angina,heartbreak,stroke
+neurosurgeon: mass=72 integrity=90 alive=true sentient=true intelligence=10 loyalty=6 hands=true speech=true speed_land=4 heals=15 sharpness=10 dmg_slash=15 accuracy=0.98 food_need=0.03 counters=tumor,tumour,meningitis
+oncologist: mass=72 integrity=90 alive=true sentient=true intelligence=10 loyalty=6 hands=true speech=true speed_land=4 heals=6 food_need=0.03 field_radius=8 field_targets=owned effect_status=sick counters=cancer,tumor,tumour,leukemia,leukaemia,lymphoma,melanoma,carcinoma
+apothecary: mass=75 integrity=85 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 craft_slots=1 crafts=medicine,potion,elixir,tonic,salve,ointment,poultice trade_bonus=0.2 heals=2 food_need=0.03
+radiologist: mass=72 integrity=85 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 sees_through=walls read_properties=7 detect_life=100 res_radiation=0.4 food_need=0.03
+medico: mass=75 integrity=90 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=5 heals=5 res_disease=0.6 food_need=0.03 field_radius=8 field_targets=owned effect_status=sick,bleed
+
+# noun criminal
+felon: mass=80 integrity=130 alive=true sentient=true intelligence=5 loyalty=2 hands=true speech=true speed_land=6 stealth=5 aggression=6 dmg_blunt=25 attack_rate=1 letter_steal=3 food_need=0.04
+
+# noun person
+invalid: mass=60 integrity=50 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=1 labor=0 res_disease=0 food_need=0.02 charm=3
+convalescent: mass=65 integrity=70 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=2 regeneration=2 immune_sick=true food_need=0.03
+outpatient: mass=70 integrity=80 alive=true sentient=true intelligence=6 loyalty=5 hands=true speech=true speed_land=4 regeneration=1 inflict_sick=5 contagion=0.1 food_need=0.03
+hypochondriac: mass=70 integrity=90 alive=true sentient=true intelligence=6 loyalty=5 hands=true speech=true speed_land=3 courage=1 res_disease=0.6 food_need=0.03 morale+-2
+
+# noun building
+pharmacy: mass=200000 footprint=4 height=5 integrity=4000 material=brick,glass portable=false enterable=true occupants=10 claim_radius=2 storage_letters=40 field_radius=16 field_targets=owned effect_status=sick,poison,burn res_disease+0.3 crafts=medicine,pill,antibiotic,ointment needs_foundation=true counters=disease,fever,headache color=white
+hospice: mass=400000 footprint=6 height=6 integrity=5000 material=brick portable=false enterable=true occupants=30 claim_radius=3 comfort=8 field_radius=20 field_targets=owned heals=2 res_psychic+0.5 morale+3 immune_fear=true needs_foundation=true counters=pain,agony,suffering,despair color=white
+
+# noun tool
+lancet: mass=0.02 length=0.1 integrity=5 sharpness=10 material=steel equip_slot=held hands_required=1 dmg_pierce=6 dmg_slash=6 attack_rate=2 severs=1 effect_status=sick counters=boil,abscess,blister
+
+# noun device
+stethoscope: mass=0.2 integrity=10 material=rubber,steel equip_slot=neck hearing_range+80 read_properties+4 detect_life+30 heals+1
+hypodermic: mass=0.02 integrity=2 sharpness=10 equip_slot=held hands_required=1 dmg_pierce=3 single_use=true restores=50 effect_status=sick,poison res_disease+0.4
+ventilator: mass=40 integrity=40 material=plastic,steel portable=false res_suffocation=1 heals=2 upkeep_power=0.5 counters=pneumonia,suffocation,asthma,emphysema,drowning
+respirator: mass=0.5 integrity=10 material=rubber,plastic equip_slot=face res_disease+0.6 res_suffocation+0.8 res_poison+0.5 counters=smoke,gas,spore,miasma,virus
+speculum: mass=0.1 integrity=20 material=steel equip_slot=held hands_required=1 read_properties=5 sight_range+2
+splint: mass=0.3 length=0.4 integrity=20 material=wood equip_slot=graft restores=20 effect_status=root speed_land+1 counters=fracture,sprain
+tourniquet: mass=0.1 integrity=10 material=cloth,rubber single_use=true effect_status=bleed inflict_slow=10 counters=hemorrhage,bleeding,wound,gash,laceration
+stretcher: mass=8 length=2 integrity=60 material=canvas,wood equip_slot=held hands_required=2 carry_capacity=150 restores=20 effect_status=root,stun
+gurney: mass=40 length=2 integrity=120 material=steel portable=true carry_capacity=200 speed_land=3 restores=20 effect_status=root,stun requires_road=true
+suture: mass=0.001 length=0.5 integrity=2 material=silk single_use=true restores=40 effect_status=bleed regeneration+2 counters=wound,gash,laceration,cut
+
+# noun material
+rust: state=solid density=5000 color=brown brittleness=7 corrosiveness=3 integrity*0.7 hardness+-2 inflict_sick=10 counters=iron,steel,armor,sword,chain
+vomit: state=liquid mass=0.5 density=1100 odor=9 toxicity=2 slipperiness=6 corrosiveness=2 inflict_sick=8 contagion=0.3 charm+-4 color=yellow
+iodine: state=liquid mass=0.05 density=4900 color=brown toxicity=3 single_use=true effect_status=sick restores=15 res_disease+0.4 res_radiation+0.5 counters=germ,goiter
+balm: mass=0.05 state=liquid density=900 odor=3 single_use=true restores=30 effect_status=burn,bleed regeneration+1 morale+1 counters=burn,sunburn,rash,soreness
+lotion: mass=0.2 state=liquid density=1000 single_use=true restores=15 effect_status=burn res_light+0.2 charm+1 counters=sunburn,rash,eczema,chafe
+menthol: mass=0.01 state=solid density=900 odor=6 temperature=-5 single_use=true effect_status=confuse res_cold+-0.1 counters=cough,headache,nausea
+pus: state=liquid mass=0.05 density=1050 odor=7 toxicity=2 inflict_sick=10 contagion=0.3 color=yellow
+mucus: state=liquid mass=0.05 density=1000 stickiness=6 slipperiness=4 inflict_sick=6 contagion=0.4 res_disease+0.1 color=green
+phlegm: state=liquid mass=0.05 density=1000 stickiness=6 inflict_sick=8 contagion=0.4 aggression+-2 color=green
+plasma: state=liquid mass=0.5 density=1025 single_use=true restores=60 effect_status=bleed regeneration+2 color=yellow counters=hemorrhage,bleeding
+
+# noun bodypart
+cyst: equip_slot=graft mass=0.05 integrity=5 inflict_sick=5 charm+-1 speed_land*0.95
+blister: equip_slot=graft mass=0.005 integrity=1 state=liquid speed_land*0.85 morale+-1 agility*0.9
+scar: equip_slot=graft mass=0.001 integrity=10 armor+3 intimidation+2 charm+-1 courage+1
+callus: equip_slot=graft mass=0.005 integrity=10 hardness=5 armor+2 res_slash+0.1 res_fire+0.05 labor*1.1
+
+# verb contact
+hurt: effect_target=touched dmg_blunt=30 inflict_bleed=3 duration=1 morale+-1
+bite: effect_target=touched dmg_pierce=25 inflict_bleed=4 inflict_sick=5 contagion=0.2 duration=1
+scratch: effect_target=touched dmg_slash=10 inflict_bleed=2 inflict_sick=3 duration=1
+sting: effect_target=touched dmg_pierce=5 dmg_poison=10 inflict_poison=6 inflict_slow=2 duration=1
+pinch: effect_target=touched dmg_crush=5 inflict_stun=0.5 duration=1
+slash: effect_target=touched dmg_slash=50 inflict_bleed=8 duration=1
+bruise: effect_target=touched dmg_blunt=20 inflict_slow=3 duration=1 charm+-1
+probe: effect_target=touched read_properties+6 read_inventory=true detect_stealth+3 duration=30
+sanitize: effect_target=touched effect_status=sick res_disease+0.5 duration=600 counters=germ,bacteria,virus,microbe,salmonella
+
+# verb body
+ache: duration=60 inflict_slow=5 morale+-2 speed_land*0.8 attack_rate*0.8
+itch: duration=30 inflict_confuse=3 accuracy+-0.2 stealth+-2 morale+-1
+twitch: duration=5 accuracy+-0.2 stealth+-3 agility+1
+hemorrhage: effect_target=touched inflict_bleed=30 dmg_disease=40 inflict_stun=3 duration=1
+hiccup: duration=20 loudness+2 stealth+-4 accuracy+-0.1
+sprain: effect_target=touched inflict_slow=20 dmg_blunt=10 speed_land*0.5 duration=120
+fester: effect_target=touched inflict_sick=25 dmg_disease=10 regeneration*0 odor+4 duration=300
+bloat: duration=120 mass*1.3 speed_land*0.7 buoyancy+3 food_need*0
+disinfect: effect_target=touched effect_status=sick res_disease+0.6 duration=600 counters=germ,bacteria,virus,superbug,microbe,staph,strep,plague
+cleanse: duration=10 effect_status=sick,poison restores=30 res_disease+0.3 odor+-4 counters=curse,germ,filth
+purify: effect_target=touched effect_status=sick,poison,confuse restores=40 toxicity*0 res_unholy+0.3 counters=poison,toxin,venom,miasma,contamination
+sterilize: effect_target=touched effect_status=sick res_disease+1 inflict_sick*0 reproduction*0 duration=600 counters=germ,bacteria,microbe,virus,superbug
+inoculate: effect_target=touched duration=900 res_disease+1 counters=smallpox,polio,measles,chickenpox,influenza,flu,plague
+inject: effect_target=touched dmg_pierce=2 restores=40 effect_status=sick,poison duration=600 res_disease+0.3
+convalesce: duration=180 regeneration+5 effect_status=sick,bleed restores=100 speed_land*0.3 morale+2
+medicate: effect_target=touched effect_status=sick,poison restores=50 res_disease+0.3 duration=600
+overdose: effect_target=touched dmg_poison=80 inflict_poison=30 inflict_sleep=20 inflict_confuse=10 duration=1
+contaminate: effect_target=touched inflict_sick=20 contagion=0.4 toxicity+4 edible=false duration=600
+fumigate: duration=10 effect_status=sick res_disease+0.4 dmg_poison=5 odor+6 counters=flea,lice,louse,tick,cockroach,termite,mosquito,bedbug,rat
+rot: effect_target=touched decay_rate+20 integrity*0.5 inflict_sick=10 odor+6 nutrition*0 edible=false duration=300
+
+# adjective quality
+sore: speed_land*0.85 attack_rate*0.85 morale+-1 agility*0.8
+therapeutic: restores*1.5 heals+2 regeneration+1 effect_status=sick morale+1
+aching: speed_land*0.85 attack_rate*0.8 morale+-2
+shivering: temperature+-3 accuracy+-0.2 res_cold+-0.2 stealth+-2
+stinging: dmg_poison+10 inflict_poison+3 inflict_slow+1
+smart: intelligence+3 training+1 read_properties+2
+sickly: integrity*0.7 res_disease+-0.4 strength*0.8 regeneration*0.7 charm+-1
+frail: integrity*0.5 strength*0.6 brittleness+4 speed_land*0.8 mass*0.8
+feeble: strength*0.5 dmg_blunt*0.5 dmg_slash*0.5 attack_rate*0.8 courage+-2
+diseased: inflict_sick+20 contagion+0.4 dmg_disease+5 integrity*0.8 charm+-3 edible=false
+infectious: inflict_sick+20 contagion+0.5
+germy: inflict_sick+8 contagion+0.2 charm+-1
+ailing: integrity*0.8 strength*0.75 labor*0.6 morale+-2 speed_land*0.8
+
+# adjective pertaining
+bubonic: inflict_sick+25 contagion+0.6 dmg_disease+10 summons=rat summon_count=3 fear_aura+3
+
+# noun knowledge
+hygiene: placement=self field_radius=40 field_targets=owned field_duration=10 res_disease+0.4 odor+-3 charm+1 counters=germ,lice,flea,dysentery,cholera
+pathology: placement=self field_radius=20 field_targets=owned field_duration=5 read_properties+5 res_disease+0.2 counters=disease,syndrome,malady
+immunology: placement=self field_radius=30 field_targets=owned field_duration=5 res_disease+0.6 counters=virus,influenza,epidemic,pandemic,contagion
+epidemiology: placement=region placement_range=200 field_radius=60 field_targets=owned field_duration=5 res_disease+0.3 detect_life+100 counters=epidemic,pandemic,outbreak,endemic,contagion
+pharmacology: craft_slots+1 crafts=medicine,pill,antibiotic,antidote,painkiller,vaccine potency*1.5 restores*1.3
+toxicology: placement=self field_radius=20 field_targets=owned field_duration=5 res_poison+0.6 detect_stealth+2 counters=poison,toxin,venom,arsenic,cyanide
+virology: placement=self field_radius=20 field_targets=owned field_duration=5 res_disease+0.4 counters=virus,influenza,herpes,hepatitis,dengue,polio
+
+# noun affliction
+cramp: placement=target placement_range=20 field_radius=3 field_targets=living field_duration=1 inflict_root=4 inflict_slow=8 friendly_fire=true speed_land*0.5 speed_water*0.3
+spasm: placement=target placement_range=20 field_radius=3 field_targets=living field_duration=1 inflict_stun=3 friendly_fire=true accuracy+-0.4
+whiplash: placement=target placement_range=20 field_radius=3 field_targets=living field_duration=2 dmg_blunt=15 inflict_slow=10 inflict_stun=2 friendly_fire=true sight_range*0.8 agility*0.6
+laceration: placement=target placement_range=10 field_radius=2 field_targets=living field_duration=1 dmg_slash=45 inflict_bleed=15 friendly_fire=true
+gash: placement=target placement_range=10 field_radius=2 field_targets=living field_duration=1 dmg_slash=40 inflict_bleed=12 friendly_fire=true
+welt: placement=target placement_range=10 field_radius=1 field_targets=living field_duration=1 dmg_blunt=10 inflict_slow=2 friendly_fire=true charm+-1
+tetanus: placement=target placement_range=20 field_radius=3 field_targets=living field_duration=3 inflict_sick=40 inflict_root=12 inflict_stun=4 dmg_disease=12 attack_rate=0.3 contagion=0 friendly_fire=true speech=false counters=rust,nail
+constipation: placement=target placement_range=20 field_radius=4 field_targets=living field_duration=2 inflict_slow=10 friendly_fire=true mass*1.1 morale+-2 food_need*0.3
+sniffle: placement=target placement_range=20 field_radius=4 field_targets=living field_duration=2 inflict_sick=8 contagion=0.4 friendly_fire=true stealth+-2 smell_range*0.3
+sedation: placement=target placement_range=20 field_radius=3 field_targets=living field_duration=1 inflict_sleep=30 friendly_fire=true aggression+-6
+
+# noun act
+disinfection: placement=region placement_range=100 event_radius=30 event_duration=3 effect_status=sick res_disease+0.5 counters=germ,bacteria,virus,plague,epidemic,outbreak,superbug,contagion
+detoxification: placement=self event_duration=1 effect_status=poison,sick,confuse restores=60 toxicity*0 counters=poison,toxin,overdose
+
+# noun herb
+belladonna: mass=0.05 height=1.2 integrity=2 alive=true diet=photosynthesis growth_time=10 edible=true toxicity=9 dmg_poison=100 inflict_poison=30 inflict_confuse=20 single_use=true plural_count=3 color=purple
+
+# noun poison
+atropine: state=liquid toxicity=8 dmg_poison=80 inflict_poison=20 inflict_confuse=10 single_use=true effect_status=sleep counters=nerve,sarin
+
+# noun bird
+nightingale: mass=0.02 length=0.16 integrity=2 alive=true diet=omnivore speed_air=10 nocturnal=true loudness=6 charm=4 field_radius=20 field_targets=living morale+2 habitat=forest,meadow color=brown
