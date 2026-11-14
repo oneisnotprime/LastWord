@@ -1,3 +1,4 @@
+import { exposed } from "./home.js";
 import type { Letters } from "./phrase.js";
 import type { Rng } from "./rng.js";
 import type { Stats } from "./stats.js";
@@ -50,9 +51,11 @@ export function breachText(penalty: readonly string[]): string {
  * Takes `n` letters from a hand to pay a fine or a breach, the commonest first so a fine never
  * strips someone's one rare letter while they hold plenty of E. Returns what was taken.
  */
-export function takeLetters(held: Letters, n: number, rng: Rng): string {
+export function takeLetters(held: Letters, n: number, rng: Rng, stored = 0): string {
   let out = "";
-  for (let i = 0; i < n; i++) {
+  // What is stored (shared home.ts `storageOf`) is out of reach: only the rest can be taken.
+  const reach = Math.min(n, exposed(held, stored));
+  for (let i = 0; i < reach; i++) {
     const most = Math.max(0, ...Object.values(held));
     if (!(most > 0)) break;
     const top = Object.keys(held).filter((k) => held[k] === most).sort();

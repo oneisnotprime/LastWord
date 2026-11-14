@@ -1,3 +1,4 @@
+import { HELD } from "./home.js";
 import type { Dictionary } from "./dictionary.js";
 import { Stats } from "./stats.js";
 import type { Op, Value } from "./types.js";
@@ -153,8 +154,9 @@ function remove(list: Affliction[], drop: (a: Affliction) => boolean): Status[] 
 }
 
 /** Counts statuses down; removes and returns those that ran out. */
-export function tickStatuses(list: Affliction[], seconds: number): Status[] {
-  for (const a of list) a.left -= seconds;
+export function tickStatuses(list: Affliction[], seconds: number, held = 1): Status[] {
+  // In a lockup's ground (shared home.ts `holdFactor`), root and silence wear off `held` times slower.
+  for (const a of list) a.left -= held > 1 && HELD.includes(a.status) ? seconds / held : seconds;
   return remove(list, (a) => a.left <= 0);
 }
 

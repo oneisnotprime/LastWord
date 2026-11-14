@@ -1,0 +1,646 @@
+head	5.51	noun	bodypart	REGENERATE	a single domestic animal
+entire	5.09	adjective	quality	REGENERATE	uncastrated adult male horse
+ass	5.0	noun	mammal	REGENERATE	the fleshy part of the human body that you sit on
+female	5.0	noun	person	REGENERATE	an animal that produces gametes (ova) that can be fertilized by male gametes (spermatozoa)
+male	4.89	adjective	quality	REGENERATE	an animal that produces gametes (spermatozoa) that can fertilize female gametes (ova)
+royal	4.85	adjective	quality	REGENERATE	stag with antlers of 12 or more branches
+tom	4.83	noun	mammal	REGENERATE	male cat
+adult	4.8	noun	person	REGENERATE	any mature animal
+bitch	4.76	noun	mammal	REGENERATE	an unpleasant difficulty
+martin	4.74	noun	bird	REGENERATE	French bishop who is a patron saint of France (died in 397)
+bird	4.63	noun	bird	REGENERATE	warm-blooded egg-laying vertebrates characterized by feathers and forelimbs modified as wi
+humans	4.61	noun	mammal	REGENERATE	all of the living human inhabitants of the earth
+chat	4.57	noun	bird	REGENERATE	birds having a chattering call
+pet	4.45	noun	creature	REGENERATE	a domesticated animal kept for companionship or amusement
+cricket	4.39	noun	insect	REGENERATE	leaping insect
+jay	4.38	noun	bird	REGENERATE	crested largely blue bird
+bull	4.34	noun	mammal	REGENERATE	uncastrated adult male of domestic cattle
+billy	4.33	noun	weapon	REGENERATE	male goat
+robin	4.33	noun	bird	REGENERATE	small Old World songbird with a reddish breast
+mouse	4.31	noun	mammal	REGENERATE	any of numerous small rodents typically resembling diminutive rats having pointed snouts a
+beef	4.29	noun	food	REGENERATE	cattle that are reared for their meat
+sole	4.29	noun	fish	REGENERATE	the underside of footwear or a golf club
+bass	4.28	noun	fish	REGENERATE	the lowest part of the musical range
+pussy	4.24	noun	mammal	REGENERATE	informal terms referring to a domestic cat
+cock	4.23	noun	bird	REGENERATE	obscene terms for penis
+bug	4.2	noun	insect	new	general term for any insect or similar creeping or crawling invertebrate
+cattle	4.15	noun	mammal	new	domesticated bovine animals as a group regardless of sex or age
+chick	4.08	noun	bird	new	young bird especially of domestic fowl
+sierra	4.06	noun	landform	new	a Spanish mackerel of western North America
+hart	4.04	noun	mammal	new	United States playwright who collaborated with George S. Kaufman (1904-1961)
+fisher	4.02	noun	worker	REGENERATE	large dark brown North American arboreal carnivorous mammal
+admiral	4.0	noun	leader	REGENERATE	any of several brightly colored butterflies
+prey	3.98	noun	person	new	animal hunted or caught for food
+drake	3.96	noun	bird	new	adult male of a wild or domestic duck
+cows	3.93	noun	mammal	new	domesticated bovine animals as a group regardless of sex or age
+homer	3.89	noun	bird	new	a base hit on which the batter scores a run
+jenny	3.89	noun	mammal	new	female donkey
+bunny	3.88	noun	worker	new	(usually informal) especially a young rabbit
+mankind	3.88	noun	mammal	new	all of the living human inhabitants of the earth
+molly	3.87	noun	fish	new	popular aquarium fish
+swallow	3.87	noun	bird	new	a small amount of liquid food
+stunt	3.86	noun	creature	new	a creature (especially a whale) that has been prevented from attaining full growth
+doe	3.84	noun	mammal	new	mature female of mammals of which the male is called `buck'
+livestock	3.83	noun	mammal	new	any animals kept for use or profit
+bot	3.82	noun	creature	new	botfly larva
+tick	3.8	noun	event	new	any of two families of small parasitic arachnids with barbed proboscis
+insect	3.76	noun	insect	new	small air-breathing arthropod
+skate	3.74	noun	artifact	new	large edible rays having a long snout and thick tail with pectoral fins continuous with th
+stray	3.74	noun	creature	new	an animal that has strayed (especially a domestic animal)
+das	3.73	noun	mammal	new	any of several small ungulate mammals of Africa and Asia with rodent-like incisors and fee
+steer	3.72	verb	movement	new	castrated bull
+predator	3.71	noun	person	new	any animal that lives by preying on other animals
+brent	3.69	noun	bird	new	small dark geese that breed in the north and migrate southward
+monarch	3.69	noun	leader	REGENERATE	large migratory American butterfly having deep orange wings with black and white markings
+charger	3.64	noun	mammal	new	formerly a strong swift horse ridden into battle
+mutant	3.64	noun	person	new	an animal that has undergone mutation
+pup	3.64	noun	creature	new	young of any of various canines such as a dog or wolf
+argentine	3.62	noun	fish	new	any of various small silver-scaled salmon-like marine fishes
+homo	3.61	noun	person	new	any living or extinct member of the family Hominidae characterized by superior intelligenc
+stint	3.61	noun	bird	new	smallest American sandpiper
+fetus	3.6	noun	creature	new	an unborn or unhatched vertebrate in the later stages of development showing the main reco
+mare	3.6	noun	mammal	new	female equine animal
+barker	3.59	noun	person	new	informal terms for dogs
+brit	3.59	noun	fish	new	the young of a herring or sprat or similar fish
+nanny	3.59	noun	worker	REGENERATE	female goat
+mustang	3.58	noun	mammal	new	small hardy range horse of the western plains descended from horses brought by the Spanish
+colt	3.57	noun	creature	new	a young male horse under the age of four
+hog	3.57	noun	person	new	a sheep up to the age of one year
+springer	3.57	noun	artifact	new	a cow about to give birth
+finch	3.55	noun	bird	new	any of numerous small songbirds with short stout bills adapted for crushing seeds
+oyster	3.54	noun	produce	REGENERATE	marine mollusks having a rough irregular shell
+poultry	3.54	noun	produce	REGENERATE	a domesticated gallinaceous bird thought to be descended from the red jungle fowl
+sawyer	3.54	noun	worker	REGENERATE	any of several beetles whose larvae bore holes in dead or dying trees especially conifers
+arabian	3.53	adjective	pertaining	new	a spirited graceful and intelligent riding horse native to Arabia
+hind	3.5	noun	fish	new	any of several mostly spotted fishes that resemble groupers
+cisco	3.49	noun	food	REGENERATE	important food fish of cold deep lakes of North America
+ape	3.48	noun	mammal	new	any of various primates with short tails or no tail at all
+herring	3.48	noun	food	REGENERATE	commercially important food fish of northern waters of both Atlantic and Pacific
+sparrow	3.48	noun	bird	new	any of several small dull-colored singing birds feeding on seeds or insects
+shire	3.47	noun	place	REGENERATE	British breed of large heavy draft horse
+feeder	3.46	noun	creature	new	an animal being fattened or suitable for fattening
+serpent	3.46	noun	reptile	new	limbless scaly elongate reptile
+slater	3.46	noun	invertebrate	new	any of various small terrestrial isopods having a flat elliptical segmented body
+swine	3.46	noun	mammal	new	stout-bodied short-legged omnivorous animals
+mara	3.45	noun	mammal	new	hare-like rodent of the pampas of Argentina
+secretariat	3.45	noun	group	new	thoroughbred that won the triple crown in 1973
+hound	3.43	noun	mammal	new	any of several breeds of dog used for hunting typically having large drooping ears
+merlin	3.42	noun	bird	new	small falcon of Europe and America having dark plumage with black-barred tail
+bullock	3.41	noun	mammal	new	young bull
+bulldog	3.38	noun	mammal	new	a sturdy thickset short-haired breed with a large head and strong undershot lower jaw
+cougar	3.38	noun	mammal	new	large American feline resembling a lion
+phoebe	3.38	noun	bird	new	the cardinal number that is the sum of four and one
+sow	3.38	verb	create	REGENERATE	an adult female hog
+catfish	3.35	noun	food	REGENERATE	large ferocious northern deep-sea food fishes with strong teeth and no pelvic fins
+mina	3.35	noun	bird	new	tropical Asian starlings
+cornish	3.34	adjective	pertaining	new	English breed of compact domestic fowl
+embryo	3.34	noun	plant	new	an animal organism in the early stages of growth and differentiation that in higher forms 
+ridley	3.34	noun	reptile	new	a marine turtle
+sturgeon	3.34	noun	fish	new	large primitive fishes valued for their flesh and roe
+canine	3.33	noun	bodypart	new	any of various fissiped mammals with nonretractile claws and typically long muzzles
+doggy	3.33	noun	mammal	new	informal terms for dogs
+dun	3.33	noun	mammal	new	horse of a dull brownish grey color
+jackass	3.33	noun	person	new	male donkey
+maverick	3.33	noun	person	new	an unbranded range animal (especially a stray calf)
+alligator	3.32	noun	material	REGENERATE	either of two amphibious reptiles related to crocodiles but with shorter broader snouts
+mammal	3.31	noun	mammal	new	any warm-blooded vertebrate having the skin more or less covered with hair
+rooster	3.31	noun	bird	new	adult male chicken
+piggy	3.3	noun	creature	new	a young pig
+husky	3.29	adjective	quality	new	breed of heavy-coated Arctic sled dog
+nightingale	3.29	noun	bird	new	European songbird noted for its melodious nocturnal song
+grizzly	3.28	noun	mammal	new	powerful brownish-yellow bear of the uplands of western North America
+liza	3.28	noun	fish	new	similar to the striped mullet and takes its place in the Caribbean region
+comma	3.27	noun	insect	new	anglewing butterfly with a comma-shaped mark on the underside of each hind wing
+fitch	3.26	noun	mammal	new	dark brown mustelid of woodlands of Eurasia that gives off an unpleasant odor when threate
+reptile	3.25	noun	reptile	new	any cold-blooded vertebrate of the class Reptilia including tortoises, turtles, snakes, li
+snowflake	3.25	noun	phenomenon	new	white Arctic bunting
+stag	3.25	noun	mammal	new	a male deer, especially an adult male red deer
+teal	3.25	noun	attribute	new	any of various small short-necked dabbling river ducks of Europe and America
+terrier	3.24	noun	mammal	new	any of several usually small short-bodied breeds originally trained to hunt animals living
+clegg	3.23	noun	insect	new	large swift fly the female of which sucks blood of various animals
+pollard	3.23	noun	tree	new	a usually horned animal that has either shed its horns or had them removed
+redhead	3.23	noun	person	new	North American diving duck with a grey-and-black body and reddish-brown head
+rudd	3.23	noun	fish	new	European freshwater fish resembling the roach
+clam	3.22	noun	produce	REGENERATE	burrowing marine mollusk living on sand or mud
+puma	3.22	noun	mammal	new	large American feline resembling a lion
+whiff	3.22	noun	weather	new	a lefteye flounder found in coastal waters from New England to Brazil
+cardigan	3.21	noun	clothing	new	slightly bowlegged variety of corgi having rounded ears and a long tail
+takin	3.21	noun	mammal	new	large heavily built goat antelope of eastern Himalayan area
+ani	3.2	noun	bird	new	black tropical American cuckoo
+partridge	3.2	noun	food	REGENERATE	heavy-bodied small-winged South American game bird resembling a gallinaceous bird but rela
+rodent	3.2	noun	mammal	new	relatively small placental mammals having a single pair of constantly growing incisor teet
+cayman	3.19	noun	reptile	new	a semiaquatic reptile of Central and South America that resembles an alligator but has a m
+gator	3.19	noun	reptile	new	either of two amphibious reptiles related to crocodiles but with shorter broader snouts
+mammalian	3.19	noun	mammal	new	any warm-blooded vertebrate having the skin more or less covered with hair
+watchdog	3.19	noun	person	new	a dog trained to guard property
+boa	3.18	noun	clothing	new	any of several chiefly tropical constrictors with vestigial hind limbs
+britt	3.18	noun	fish	new	the young of a herring or sprat or similar fish
+nag	3.18	noun	person	new	an old or over-worked horse
+greyhound	3.17	noun	mammal	new	a tall slender dog of an ancient breed noted for swiftness and keen sight
+hackney	3.16	noun	vehicle_land	new	a compact breed of harness horse
+filly	3.15	noun	creature	new	a young female horse under the age of four
+hogg	3.15	noun	creature	new	a sheep up to the age of one year
+raptor	3.15	noun	bird	new	any of numerous carnivorous birds that hunt and kill other animals
+shellfish	3.15	noun	food	REGENERATE	invertebrate having a soft unsegmented body usually enclosed in a shell
+cuckoo	3.14	noun	person	new	any of numerous European and North American birds having pointed wings and a long tail
+grouse	3.14	noun	food	REGENERATE	popular game bird having a plump body and feathered legs and feet
+lark	3.14	noun	bird	new	North American songbirds having a yellow breast
+primate	3.14	noun	leader	new	any placental mammal of the order Primates
+adjutant	3.12	noun	worker	new	large Indian stork with a military gait
+dobson	3.12	noun	creature	new	large brown aquatic larva of the dobsonfly
+feline	3.12	noun	mammal	new	any of various lithe-bodied roundheaded fissiped mammals, many with retractile claws
+grub	3.12	noun	food	REGENERATE	a soft thick wormlike larva of certain beetles and other insects
+pinto	3.12	noun	mammal	new	a spotted or calico horse or pony
+cyclops	3.11	noun	invertebrate	new	minute free-swimming freshwater copepod having a large median eye and pear-shaped body and
+daw	3.11	noun	bird	new	common black-and-grey Eurasian bird noted for thievery
+humankind	3.11	noun	mammal	new	all of the living human inhabitants of the earth
+mantis	3.11	noun	insect	new	predacious long-bodied large-eyed insect of warm regions
+pug	3.11	noun	mammal	new	small compact smooth-coated breed of Asiatic origin having a tightly curled tail and broad
+dory	3.1	noun	vehicle_water	new	pike-like freshwater perches
+fledgling	3.1	noun	person	new	young bird that has just fledged or become capable of flying
+flicker	3.1	noun	event	new	North American woodpecker
+medusa	3.1	noun	invertebrate	new	one of two forms that coelenterates take: it is the free-swimming sexual phase in the life
+rook	3.1	noun	artifact	new	common gregarious Old World bird about the size and color of the American crow
+wren	3.09	noun	bird	new	any of several small active brown birds of the northern hemisphere with short upright tail
+mackerel	3.08	noun	food	REGENERATE	any of various fishes of the family Scombridae
+mite	3.08	noun	quantity	new	any of numerous very small to minute arachnids often infesting animals or plants or stored
+viceroy	3.08	noun	leader	REGENERATE	showy American butterfly resembling the monarch but smaller
+coon	3.07	noun	person	new	North American raccoon
+equine	3.07	noun	mammal	new	hoofed mammals having slender legs and a flat coat with a narrow mane along the back of th
+beagle	3.06	noun	mammal	new	a small short-legged smooth-coated breed of hound
+brill	3.06	noun	fish	new	European food fish
+coney	3.06	noun	fish	new	black-spotted usually dusky-colored fish with reddish fins
+impala	3.06	noun	mammal	new	African antelope with ridged curved horns
+argus	3.05	noun	bird	new	large brilliantly patterned East Indian pheasant
+asp	3.05	noun	reptile	new	of southern Europe
+emu	3.05	noun	quantity	new	large Australian flightless bird similar to the ostrich but smaller
+bunting	3.04	noun	fabric	REGENERATE	any of numerous seed-eating songbirds of Europe or North America
+cob	3.04	noun	produce	REGENERATE	stocky short-legged harness horse
+gnu	3.04	noun	mammal	new	large African antelope having a head with horns like an ox and a long tufted tail
+merle	3.04	noun	bird	new	common black European thrush
+snipe	3.04	noun	bird	new	Old or New World straight-billed game bird of the sandpiper family
+gosling	3.03	noun	bird	new	young goose
+grasshopper	3.03	noun	insect	new	terrestrial plant-eating insect with hind legs adapted for leaping
+puss	3.03	noun	bodypart	new	informal terms referring to a domestic cat
+starling	3.03	noun	bird	new	gregarious birds native to the Old World
+fawn	3.02	noun	attribute	new	a young deer
+moray	3.02	noun	fish	new	family of brightly colored voracious eels of warm coastal waters
+poodle	3.02	noun	mammal	new	an intelligent dog with a heavy curly solid-colored coat that is usually clipped
+seagull	3.02	noun	bird	new	mostly white aquatic bird having long pointed wings and short legs
+bovine	3.01	noun	mammal	new	any of various members of the genus Bos
+marlin	3.01	noun	fish	new	large long-jawed oceanic sport fishes
+parr	3.01	noun	fish	new	a young salmon up to 2 years old
+rhea	3.01	noun	bird	new	smaller of two tall fast-running flightless birds similar to ostriches but three-toed
+solitaire	3.01	noun	adornment	new	extinct flightless bird related to the dodo
+doggie	3.0	noun	mammal	new	informal terms for dogs
+fowl	3.0	noun	produce	REGENERATE	a domesticated gallinaceous bird thought to be descended from the red jungle fowl
+mew	3.0	noun	event	new	the common gull of Eurasia and northeastern North America
+starfish	3.0	noun	invertebrate	new	echinoderms characterized by five arms extending from a central disk
+bronco	2.99	noun	mammal	new	an unbroken or imperfectly broken mustang
+ephemeral	2.99	noun	insect	new	anything short-lived, as an insect that lives only for a day in its winged form
+gar	2.99	noun	fish	new	primitive predaceous North American fish covered with hard scales and having long jaws wit
+larva	2.99	noun	creature	new	the immature free-living form of most invertebrates and amphibians and fish which at hatch
+loon	2.99	noun	person	new	large somewhat primitive fish-eating diving bird of the northern hemisphere having webbed 
+lotte	2.99	noun	fish	new	fishes having large mouths with a wormlike filament attached for luring prey
+retriever	2.99	noun	mammal	new	a dog with heavy water-resistant coat that can be trained to retrieve game
+setter	2.99	noun	worker	new	a long-haired dog formerly trained to crouch on finding game but now to point
+smelt	2.99	noun	food	REGENERATE	small trout-like silvery marine or freshwater food fishes of cold northern waters
+booby	2.98	noun	person	new	small tropical gannet having a bright bill or bright feet or both
+collie	2.98	noun	mammal	new	a silky-coated sheepdog with a long ruff and long narrow head developed in Scotland
+mademoiselle	2.98	noun	fish	new	small silvery drumfish often mistaken for white perch
+moa	2.98	noun	bird	new	extinct flightless bird of New Zealand
+mockingbird	2.98	noun	bird	new	long-tailed grey-and-white songbird of the southern United States able to mimic songs of o
+thoroughbred	2.98	noun	person	new	a racehorse belonging to a breed that originated from a cross between Arabian stallions an
+anaconda	2.97	noun	reptile	new	large arboreal boa of tropical South America
+hag	2.97	noun	person	new	eellike cyclostome having a tongue with horny teeth in a round mouth surrounded by eight t
+mako	2.97	noun	fish	new	powerful mackerel shark of the Atlantic and Pacific
+mullet	2.97	noun	food	REGENERATE	freshwater or coastal food fishes a spindle-shaped body
+pooch	2.97	noun	mammal	new	informal terms for dogs
+vertebrate	2.97	noun	creature	new	animals having a bony or cartilaginous skeleton with a segmented spinal column and a large
+chimp	2.95	noun	mammal	new	intelligent somewhat arboreal ape of equatorial African forests
+neanderthal	2.95	adjective	quality	new	extinct robust human of Middle Paleolithic in Europe and western Asia
+steed	2.95	noun	mammal	new	(literary) a spirited horse for state of war
+triton	2.95	noun	invertebrate	new	(Greek mythology) a sea god
+possum	2.94	noun	mammal	new	nocturnal arboreal marsupial having a naked prehensile tail found from southern North Amer
+vixen	2.94	noun	person	new	a female fox
+mutt	2.93	noun	mammal	new	an inferior dog or one of mixed breed
+stingray	2.93	noun	fish	new	large venomous ray with large barbed spines near the base of a thin whiplike tail capable 
+bumblebee	2.92	noun	insect	new	robust hairy social bee of temperate regions
+cur	2.92	noun	mammal	new	an inferior dog or one of mixed breed
+trotter	2.92	noun	bodypart	new	a horse trained to trot
+blackbird	2.91	noun	bird	new	any bird of the family Icteridae whose male is black or predominantly black
+bluebird	2.91	noun	bird	new	fruit-eating mostly brilliant blue songbird of the East Indies
+reeve	2.91	noun	bird	new	female ruff
+brant	2.9	noun	bird	new	small dark geese that breed in the north and migrate southward
+groundhog	2.9	noun	mammal	new	reddish brown North American marmot
+magpie	2.9	noun	bird	new	long-tailed black-and-white crow that utters a raucous chattering call
+oxen	2.9	noun	mammal	new	domesticated bovine animals as a group regardless of sex or age
+gander	2.89	noun	bird	new	mature male goose
+osprey	2.89	noun	bird	new	large harmless hawk found worldwide that feeds on fish and builds a bulky nest often occup
+dodo	2.88	noun	person	new	extinct heavy flightless bird of Mauritius related to pigeons
+drosophila	2.88	noun	insect	new	small fruit fly used by Thomas Hunt Morgan in studying basic mechanisms of inheritance
+stork	2.88	noun	bird	new	large mostly Old World wading birds typically having white-and-black plumage
+waterfowl	2.88	noun	bird	new	freshwater aquatic bird
+bongo	2.87	noun	instrument	new	large forest antelope of central Africa having a reddish-brown coat with white stripes and
+cairn	2.87	noun	mammal	new	small rough-haired breed of terrier from Scotland
+emmet	2.87	noun	insect	new	social insect living in organized colonies
+jaeger	2.87	noun	bird	new	rapacious seabird that pursues weaker birds to make them drop their prey
+kingfisher	2.87	noun	bird	new	nonpasserine large-headed bird with a short tail and long sharp bill
+mavis	2.87	noun	bird	new	common Old World thrush noted for its song
+merino	2.87	noun	mammal	new	white sheep originating in Spain and producing a heavy fleece of exceptional quality
+nautilus	2.87	noun	vehicle_water	new	cephalopod mollusk of warm seas whose females have delicate papery spiral shells
+nymph	2.87	noun	supernatural	new	a larva of an insect with incomplete metamorphosis (as the dragonfly or mayfly)
+prawn	2.87	noun	food	REGENERATE	shrimp-like decapod crustacean having two pairs of pincers
+nutcracker	2.86	noun	tool	new	any of various small short-tailed songbirds with strong feet and a sharp beak that feed on
+racehorse	2.86	noun	mammal	new	a horse bred for racing
+rhinoceros	2.85	noun	mammal	new	massive powerful herbivorous odd-toed ungulate of southeast Asia and Africa having very th
+shad	2.84	noun	food	REGENERATE	herring-like food fishes that migrate from the sea to fresh water to spawn
+buzzard	2.83	noun	bird	new	a New World vulture that is common in South America and Central America and the southern U
+corgi	2.83	noun	mammal	new	either of two Welsh breeds of long-bodied short-legged dogs with erect ears and a fox-like
+foal	2.83	noun	creature	new	a young horse
+haddock	2.83	noun	food	REGENERATE	important food fish on both sides of the Atlantic
+ibis	2.83	noun	bird	new	wading birds of warm regions having long slender down-curved bills
+pout	2.83	noun	fish	new	marine eellike mostly bottom-dwelling fishes of northern seas
+manta	2.82	noun	artifact	new	extremely large pelagic tropical ray that feeds on plankton and small fishes
+mollie	2.82	noun	fish	new	popular aquarium fish
+peregrine	2.82	noun	bird	new	a widely distributed falcon formerly used in falconry
+piglet	2.82	noun	creature	new	a young pig
+spaniel	2.82	noun	mammal	new	any of several breeds of small to medium-sized gun dogs with a long silky coat and long fr
+cocker	2.81	noun	mammal	new	a small breed with wavy silky hair
+mallard	2.81	noun	bird	new	wild dabbling duck from which domestic ducks are descended
+bobcat	2.8	noun	mammal	new	small lynx of North America
+gibbon	2.8	noun	mammal	new	smallest and most perfectly anthropoid arboreal ape having long arms and no tail
+bantam	2.79	noun	bird	new	any of various small breeds of fowl
+centipede	2.79	noun	invertebrate	new	chiefly nocturnal predacious arthropod having a flattened body of 15 to 173 segments each 
+conch	2.79	noun	invertebrate	new	any of various edible tropical marine gastropods of the genus Strombus having a brightly-c
+ewe	2.79	noun	mammal	new	a member of a people living in southern Benin and Togo and southeastern Ghana
+tabby	2.79	noun	mammal	new	a cat with a grey or tawny coat mottled with black
+woodcock	2.79	noun	bird	new	game bird of the sandpiper family that resembles a snipe
+barracuda	2.78	noun	fish	new	any voracious marine fish of the genus Sphyraena having an elongated cylindrical body and 
+flounder	2.78	verb	movement	new	any of various European and non-European marine flatfish
+foetus	2.78	noun	creature	new	an unborn or unhatched vertebrate in the later stages of development showing the main reco
+grubby	2.78	noun	fish	new	small sculpin of the coast of New England
+guan	2.78	noun	bird	new	any of several large turkey-like game birds of the family Cracidae
+maggot	2.78	noun	creature	new	the larva of the housefly and blowfly commonly found in decaying organic matter
+scarab	2.78	noun	insect	new	scarabaeid beetle considered divine by ancient Egyptians
+wether	2.78	noun	mammal	new	male sheep especially a castrated one
+critter	2.77	noun	creature	new	a regional term for `creature' (especially for domestic animals)
+warbler	2.77	noun	person	new	a small active songbird
+agua	2.76	noun	amphibian	new	largest known toad species
+midge	2.76	noun	insect	new	minute two-winged mosquito-like fly lacking biting mouthparts
+dingo	2.75	noun	mammal	new	wolflike yellowish-brown wild dog of Australia
+lioness	2.75	noun	mammal	new	a female lion
+margate	2.75	noun	fish	new	a grunt with a red mouth that is found from Florida to Brazil
+pussycat	2.75	noun	person	new	informal terms referring to a domestic cat
+reptilian	2.75	noun	reptile	new	any cold-blooded vertebrate of the class Reptilia including tortoises, turtles, snakes, li
+shrew	2.75	noun	person	new	small mouselike mammal with a long snout
+chipmunk	2.74	noun	mammal	new	a burrowing ground squirrel of western America and Asia
+cochin	2.74	noun	bird	new	Asian breed of large fowl with dense plumage and feathered legs
+invertebrate	2.74	noun	invertebrate	new	any animal lacking a backbone or notochord
+mussel	2.74	noun	food	REGENERATE	marine or freshwater bivalve mollusk that lives attached to rocks etc.
+gelding	2.73	noun	mammal	new	castrated male horse
+weevil	2.73	noun	insect	new	any of several families of mostly small beetles that feed on plants and plant products
+roan	2.72	noun	material	new	a horse having a brownish coat thickly sprinkled with white or gray
+tern	2.72	noun	bird	new	small slender gull having narrow wings and a forked tail
+tetra	2.72	noun	fish	new	brightly colored tropical freshwater fishes
+workhorse	2.72	noun	machine	new	a horse used for plowing and hauling and other heavy labor
+halibut	2.71	noun	food	REGENERATE	marine food fish of the northern Atlantic or northern Pacific
+pacer	2.71	noun	mammal	new	a horse used to set the pace in racing
+winkle	2.71	noun	food	REGENERATE	edible marine gastropod
+bloodhound	2.7	noun	mammal	new	a breed of large powerful hound of European origin having very acute smell and used in tra
+chub	2.7	noun	fish	new	European freshwater game fish with a thick spindle-shaped body
+harrier	2.7	noun	person	new	a hound that resembles a foxhound but is smaller
+beluga	2.69	noun	fish	new	valuable source of caviar and isinglass
+flathead	2.69	noun	fish	new	food fish of the Indonesian region of the Pacific
+hanuman	2.69	noun	mammal	new	langur of southern Asia
+orang	2.69	noun	mammal	new	large long-armed ape of Borneo and Sumatra having arboreal habits
+platypus	2.69	noun	mammal	new	small densely furred aquatic monotreme of Australia and Tasmania having a broad bill and t
+carnivore	2.68	noun	mammal	new	a terrestrial or aquatic flesh-eating mammal
+songbird	2.68	noun	bird	new	any bird having a musical call
+yearling	2.68	noun	person	new	a racehorse considered one year old until the second Jan. 1 following its birth
+ladybug	2.67	noun	insect	new	small round bright-colored and spotted beetle that usually feeds on aphids and other insec
+longhorn	2.67	noun	mammal	new	long-horned beef cattle formerly common in southwestern United States
+abalone	2.66	noun	invertebrate	new	any of various large edible marine gastropods of the genus Haliotis having an ear-shaped s
+dalmatian	2.66	noun	mammal	new	a large breed having a smooth white coat with black or brown spots
+duckling	2.66	noun	food	REGENERATE	young duck
+firebird	2.66	noun	bird	new	the male is bright red with black wings and tail
+marten	2.66	noun	mammal	new	agile slender-bodied arboreal mustelids somewhat larger than weasels
+puffin	2.66	noun	bird	new	any of two genera of northern seabirds having short necks and brightly colored compressed 
+purebred	2.66	noun	creature	new	a pedigreed animal of unmixed lineage
+sardine	2.66	noun	food	REGENERATE	any of various small edible herring or related food fishes frequently canned
+crawfish	2.65	noun	food	REGENERATE	small freshwater decapod crustacean that resembles a lobster
+mongrel	2.65	noun	artifact	new	an inferior dog or one of mixed breed
+roebuck	2.65	noun	mammal	new	male roe deer
+thrasher	2.65	noun	machine	new	thrush-like American songbird able to mimic other birdsongs
+dachshund	2.64	noun	mammal	new	small long-bodied short-legged German breed of dog having a short sleek coat and long droo
+mamba	2.64	noun	reptile	new	arboreal snake of central and southern Africa whose bite is often fatal
+puffer	2.64	noun	food	REGENERATE	any of numerous marine fishes whose elongated spiny body can inflate itself with water or 
+vole	2.64	noun	mammal	new	any of various small mouselike rodents of the family Cricetidae (especially of genus Micro
+wallaby	2.64	noun	mammal	new	any of various small or medium-sized kangaroos
+bighorn	2.63	noun	mammal	new	wild sheep of mountainous regions of western North America having massive curled horns
+krill	2.63	noun	invertebrate	new	shrimp-like planktonic crustaceans
+basset	2.62	noun	mammal	new	smooth-haired breed of hound with short legs and long ears
+goldeneye	2.62	noun	insect	new	a variety of green lacewing
+minnow	2.62	noun	fish	new	very small European freshwater fish common in gravelly streams
+placental	2.61	noun	mammal	new	mammals having a placenta
+chrysalis	2.6	noun	insect	new	pupa of a moth or butterfly enclosed in a cocoon
+heifer	2.6	noun	mammal	new	young cow
+louse	2.6	noun	insect	new	wingless usually flattened bloodsucking insect parasitic on warm-blooded animals
+blackfish	2.59	noun	fish	new	large dark-colored food fish of the Atlantic coast of North America
+tyrannosaurus	2.59	noun	reptile	new	large carnivorous bipedal dinosaur having enormous teeth with knifelike serrations
+anchovy	2.58	noun	food	REGENERATE	small herring-like plankton-eating fishes often canned whole or as paste
+gib	2.58	noun	mammal	new	a castrated tomcat
+mastiff	2.58	noun	mammal	new	an old breed of powerful deep-chested smooth-coated dog used chiefly as a watchdog and gua
+tomcat	2.58	noun	mammal	new	male cat
+wombat	2.58	noun	mammal	new	burrowing herbivorous Australian marsupials about the size of a badger
+lemur	2.57	noun	mammal	new	large-eyed arboreal prosimian having foxy faces and long furry tails
+nematode	2.57	noun	invertebrate	new	unsegmented worms with elongated rounded body pointed at both ends
+pika	2.57	noun	mammal	new	small short-eared burrowing mammal of rocky uplands of Asia and western North America
+rhesus	2.57	noun	mammal	new	of southern Asia
+anemone	2.56	noun	flower	REGENERATE	marine polyps that resemble flowers but have oral rings of tentacles
+crustacean	2.56	noun	invertebrate	new	any mainly aquatic arthropod usually having a segmented body and chitinous exoskeleton
+porpoise	2.56	noun	mammal	new	any of several small gregarious cetacean mammals having a blunt snout and many teeth
+springbok	2.56	noun	mammal	new	a South African gazelle noted for springing lightly into the air
+walleye	2.56	noun	fish	new	pike-like freshwater perches
+barnacle	2.55	noun	invertebrate	new	marine crustaceans with feathery food-catching appendages
+eft	2.55	noun	amphibian	new	a newt in its terrestrial stage of development
+mastodon	2.55	noun	mammal	new	extinct elephant-like mammal that flourished worldwide from Miocene through Pleistocene ti
+murine	2.55	noun	mammal	new	a rodent that is a member of the family Muridae
+nightcrawler	2.55	noun	invertebrate	new	terrestrial worm that burrows into and helps aerate soil
+conger	2.54	noun	fish	new	large dark-colored scaleless marine eel found in temperate and tropical coastal waters
+grenadier	2.54	noun	fighter	REGENERATE	deep-sea fish with a large head and body and long tapering tail
+grouper	2.54	noun	food	REGENERATE	usually solitary bottom sea basses of warm seas
+honeybee	2.54	noun	insect	new	social bee often domesticated for the honey it produces
+kea	2.54	noun	bird	new	large brownish-green New Zealand parrot
+ladybird	2.54	noun	insect	new	small round bright-colored and spotted beetle that usually feeds on aphids and other insec
+plover	2.54	noun	bird	new	any of numerous chiefly shorebirds of relatively compact build having straight bills and l
+spitz	2.54	noun	mammal	new	any of various stocky heavy-coated breeds of dogs native to northern regions having pointe
+borer	2.53	noun	tool	new	any of various insects or larvae or mollusks that bore into wood
+cuttlefish	2.53	noun	invertebrate	new	ten-armed oval-bodied cephalopod with narrow fins as long as the body and a large calcareo
+nighthawk	2.53	noun	person	new	mainly nocturnal North American goatsucker
+simian	2.53	noun	mammal	new	an ape or monkey
+bruin	2.52	noun	mammal	new	a conventional name for a bear used in tales following usage in the old epic `Reynard the 
+cockatoo	2.52	noun	bird	new	white or light-colored crested parrot of the Australian region
+manx	2.52	adjective	pertaining	new	a short-haired tailless breed of cat believed to originate on the Isle of Man
+papillon	2.52	noun	mammal	new	small slender toy spaniel with erect ears and a black-spotted brown to white coat
+pecker	2.52	noun	bodypart	new	bird with strong claws and a stiff tail adapted for climbing and a hard chisel-like bill f
+tapeworm	2.52	noun	invertebrate	new	ribbonlike flatworms that are parasitic in the intestines of humans and other vertebrates
+bandicoot	2.51	noun	mammal	new	any of various agile ratlike terrestrial marsupials of Australia and adjacent islands
+howler	2.51	noun	mammal	new	monkey of tropical South American forests having a loud howling cry
+oryx	2.51	noun	mammal	new	large African antelope with long straight nearly upright horns
+pupa	2.51	noun	insect	new	an insect in the inactive stage of development (when it is not feeding) intermediate betwe
+bonito	2.5	noun	food	new	fish whose flesh is dried and flaked for Japanese cookery
+coot	2.5	noun	bird	new	slate-black slow-flying birds somewhat resembling ducks
+looper	2.5	noun	creature	new	small hairless caterpillar having legs on only its front and rear segments
+seahorse	2.5	noun	mammal	new	either of two large northern marine mammals having ivory tusks and tough hide over thick b
+budgie	2.49	noun	bird	new	small Australian parakeet usually light green with black and yellow markings in the wild b
+cicada	2.49	noun	insect	new	stout-bodied insect with large membranous wings
+guppy	2.49	noun	fish	new	small freshwater fish of South America and the West Indies
+meerkat	2.49	noun	mammal	new	a mongoose-like viverrine of South Africa having a face like a lemur and only four toes
+whelp	2.49	noun	creature	new	young of any of various canines such as a dog or wolf
+parakeet	2.48	noun	bird	new	any of numerous small slender long-tailed parrots
+snook	2.48	noun	fish	new	large tropical American food and game fishes of coastal and brackish waters
+chamois	2.47	noun	material	REGENERATE	hoofed mammal of mountains of Eurasia having upright horns with backward-hooked tips
+kestrel	2.47	noun	bird	new	small North American falcon
+opossum	2.47	noun	mammal	new	small furry Australian arboreal marsupials having long usually prehensile tails
+sidewinder	2.47	noun	reptile	new	small pale-colored desert rattlesnake of southwestern United States
+skylark	2.47	noun	bird	new	brown-speckled European lark noted for singing while hovering at a great height
+ermine	2.46	noun	material	REGENERATE	mustelid of northern hemisphere in its white winter coat
+gnat	2.46	noun	insect	new	any of various small biting flies: midges
+sandpiper	2.46	noun	bird	new	any of numerous usually small wading birds having a slender bill and piping call
+stocker	2.46	noun	creature	new	a domestic animal (especially a young steer or heifer) kept as stock until fattened or mat
+allis	2.45	noun	fish	new	European shad
+glutton	2.45	noun	person	new	musteline mammal of northern Eurasia
+sheepdog	2.45	noun	mammal	new	any of various usually long-haired breeds of dog reared to herd and guard sheep
+loach	2.44	noun	fish	new	slender freshwater fishes of Eurasia and Africa resembling catfishes
+goldfinch	2.43	noun	bird	new	American finch whose male has yellow body plumage in summer
+macaque	2.43	noun	mammal	new	short-tailed monkey of rocky regions of Asia and Africa
+earthworm	2.42	noun	invertebrate	new	terrestrial worm that burrows into and helps aerate soil
+genet	2.42	noun	mammal	new	French diplomat who in 1793 tried to draw the United States into the war between France an
+hake	2.42	noun	food	new	any of several marine food fishes related to cod
+moloch	2.42	noun	reptile	new	a tyrannical power to be propitiated by human subservience or sacrifice
+nestling	2.42	noun	creature	new	young bird not yet fledged
+pitta	2.42	noun	bird	new	any bird of the genus Pitta
+tigress	2.42	noun	mammal	new	a female tiger
+ibex	2.41	noun	mammal	new	wild goat of mountain areas of Eurasia and northern Africa having large recurved horns
+marsupial	2.41	noun	mammal	new	mammals of which the females have a pouch (the marsupium) containing the teats where the y
+muskrat	2.41	noun	material	new	beaver-like aquatic rodent of North America with dark glossy brown fur
+zooplankton	2.41	noun	creature	new	animal constituent of plankton
+marmot	2.4	noun	mammal	new	stocky coarse-furred burrowing rodent with a short bushy tail found throughout the norther
+mola	2.4	noun	fish	new	among the largest bony fish
+peewee	2.4	noun	person	new	small olive-colored woodland flycatchers of eastern North America
+roadrunner	2.4	noun	bird	new	speedy largely terrestrial bird found from California and Mexico to Texas
+aardvark	2.39	noun	mammal	new	nocturnal burrowing mammal of the grasslands of Africa that feeds on termites
+aphid	2.39	noun	insect	new	any of various small plant-sucking insects
+biddy	2.39	noun	bird	new	adult female chicken
+bluefin	2.39	noun	food	new	largest tuna
+constrictor	2.39	noun	reptile	new	any of various large nonvenomous snakes that kill their prey by crushing it in its coils
+diamondback	2.39	noun	reptile	new	large deadly rattlesnake with diamond-shaped markings
+herbivore	2.39	noun	creature	new	any animal that feeds chiefly on grass and other plants
+polyp	2.39	noun	affliction	new	one of two forms that coelenterates take (e.g. a hydra or coral): usually sedentary with a
+pompano	2.39	noun	food	new	any of several deep-bodied food fishes of western Atlantic and Gulf of Mexico
+shrike	2.39	noun	bird	new	any of numerous Old World birds having a strong hooked bill that feed on smaller animals
+bonobo	2.38	noun	mammal	new	small chimpanzee of swamp forests in Zaire
+seabird	2.38	noun	bird	new	a bird that frequents coastal waters and the open ocean: gulls
+triceratops	2.38	noun	reptile	new	huge ceratopsian dinosaur having three horns and the neck heavily armored with a very soli
+bottlenose	2.37	noun	mammal	new	any of several dolphins with rounded forehead and well-developed beak
+capuchin	2.37	noun	clothing	new	monkey of Central America and South America having thick hair on the head that resembles a
+griffon	2.37	noun	supernatural	new	breed of various very small compact wiry-coated dogs of Belgian origin having a short bear
+cockerel	2.36	noun	bird	new	a young domestic cock
+pangolin	2.36	noun	mammal	new	toothless mammal of southern Africa and Asia having a body covered with horny scales and a
+razorback	2.36	noun	mammal	new	a mongrel hog with a thin body and long legs and a ridged back
+tarpon	2.36	noun	fish	new	large silvery game fish of warm Atlantic coastal waters especially off Florida
+tortoiseshell	2.36	noun	material	REGENERATE	brilliantly colored
+burro	2.35	noun	mammal	new	small donkey used as a pack animal
+coho	2.35	noun	food	new	small salmon of northern Pacific coasts and the Great Lakes
+flycatcher	2.35	noun	bird	new	any of a large group of small songbirds that feed on insects taken on the wing
+oriole	2.35	noun	bird	new	mostly tropical songbird
+sunfish	2.35	noun	food	new	among the largest bony fish
+bullfrog	2.34	noun	amphibian	new	largest North American frog
+cockle	2.34	noun	food	new	common edible, burrowing European bivalve mollusk that has a strong, rounded shell with ra
+cormorant	2.34	noun	bird	new	large voracious dark-colored long-necked seabird with a distensible pouch for holding fish
+instar	2.34	noun	invertebrate	new	an insect or other arthropod between molts
+ocelot	2.34	noun	mammal	new	nocturnal wildcat of Central America and South America having a dark-spotted buff-brown co
+pollinator	2.34	noun	insect	new	an insect that carries pollen from one flower to another
+punky	2.34	noun	insect	new	minute two-winged insect that sucks the blood of mammals and birds and other insects
+silverback	2.34	noun	mammal	new	an adult male gorilla with grey hairs across the back
+thresher	2.34	noun	machine	new	large pelagic shark of warm seas with a whiplike tail used to round up small fish on which
+arthropod	2.33	noun	invertebrate	new	invertebrate having jointed limbs and a segmented body with an exoskeleton made of chitin
+hominid	2.33	noun	mammal	new	a primate of the family Hominidae
+imago	2.33	noun	knowledge	new	an adult insect produced after metamorphosis
+macaw	2.33	noun	bird	new	long-tailed brilliantly colored parrot of Central America and South America
+velociraptor	2.33	noun	reptile	new	small active carnivore that probably fed on protoceratops
+bellwether	2.32	noun	leader	new	sheep that leads the herd often wearing a bell
+cooter	2.32	noun	reptile	new	large river turtle of the southern United States and northern Mexico
+crappie	2.32	noun	food	new	small sunfishes of central United States rivers
+dogfish	2.32	noun	fish	new	primitive long-bodied carnivorous freshwater fish with a very long dorsal fin
+egret	2.32	noun	bird	new	any of various usually white herons having long plumes during breeding season
+ern	2.32	noun	bird	new	bulky greyish-brown eagle with a short wedge-shaped white tail
+rattler	2.32	noun	reptile	new	pit viper with horny segments at the end of the tail that rattle when shaken
+alsatian	2.31	noun	mammal	new	breed of large shepherd dogs used in police work and as a guide for the blind
+arachnid	2.31	noun	invertebrate	new	air-breathing arthropods characterized by simple eyes and four pairs of legs
+dobbin	2.31	noun	mammal	new	a quiet plodding workhorse
+sockeye	2.3	noun	food	new	small salmon with red flesh
+woodchuck	2.3	noun	mammal	new	reddish brown North American marmot
+blowfish	2.29	noun	food	new	any of numerous marine fishes whose elongated spiny body can inflate itself with water or 
+largemouth	2.29	noun	fish	new	a large black bass
+mudder	2.29	noun	mammal	new	a racehorse that runs well on a muddy racetrack
+palomino	2.29	noun	mammal	new	a horse of light tan or golden color with cream-colored or white mane and tail
+pterodactyl	2.29	noun	reptile	new	extinct flying reptile
+tapir	2.29	noun	mammal	new	large inoffensive chiefly nocturnal ungulate of tropical America and southeast Asia having
+copperhead	2.28	noun	reptile	new	common coppery brown pit viper of upland eastern United States
+curlew	2.28	noun	bird	new	large migratory shorebirds of the sandpiper family
+lamprey	2.28	noun	creature	new	primitive eellike freshwater or anadromous cyclostome having round sucking mouth with a ra
+mollusk	2.28	noun	invertebrate	new	invertebrate having a soft unsegmented body usually enclosed in a shell
+narwhal	2.28	noun	mammal	new	small Arctic whale the male having a long spiral ivory tusk
+terrapin	2.28	noun	reptile	new	any of various edible North American web-footed turtles living in fresh or brackish water
+auk	2.27	noun	bird	new	black-and-white short-necked web-footed diving bird of northern seas
+buckskin	2.27	noun	mammal	new	horse of a light yellowish dun color with dark mane and tail
+echidna	2.27	noun	mammal	new	a burrowing monotreme mammal covered with spines and having a long snout and claws for hun
+lapdog	2.27	noun	mammal	new	a dog small and tame enough to be held in the lap
+schnauzer	2.27	noun	mammal	new	old German breed of sturdy black or greyish wire-haired terriers having a blunt muzzle ran
+tsetse	2.26	noun	insect	new	bloodsucking African fly
+jackrabbit	2.25	noun	mammal	new	large hare of western North America
+limpet	2.25	noun	food	new	any of various usually marine gastropods with low conical shells
+pomfret	2.25	noun	fish	new	deep-bodied sooty-black pelagic spiny-finned fish of the northern Atlantic and northern Pa
+porgy	2.25	noun	food	new	important deep-bodied food and sport fish of warm and tropical coastal waters
+thrips	2.25	noun	insect	new	any of various small to minute sucking insects with narrow feathery wings if any
+whippet	2.25	noun	mammal	new	small slender dog of greyhound type developed in England
+broody	2.24	noun	bird	new	a domestic hen ready to brood
+cimarron	2.24	noun	mammal	new	wild sheep of mountainous regions of western North America having massive curled horns
+racoon	2.24	noun	mammal	new	an omnivorous nocturnal mammal native to North America and Central America
+sailfish	2.24	noun	food	new	large pelagic game fish having an elongated upper jaw and long dorsal fin that resembles a
+albacore	2.23	noun	food	new	large pelagic tuna the source of most canned tuna
+bycatch	2.23	noun	creature	new	unwanted marine creatures that are caught in the nets while fishing for another species
+capsid	2.23	noun	insect	new	a variety of leaf bug
+cinnabar	2.23	noun	mineral	REGENERATE	large red-and-black European moth
+liger	2.23	noun	mammal	new	offspring of a male lion and a female tiger
+omnivore	2.23	noun	person	new	an animal that feeds on both animal and vegetable substances
+rockfish	2.23	noun	food	new	marine food fish found among rocks along the northern coasts of Europe and America
+tench	2.23	noun	fish	new	freshwater dace-like game fish of Europe and western Asia noted for ability to survive out
+yellowfin	2.23	noun	fish	new	may reach 400 pounds
+chickadee	2.22	noun	bird	new	any of various small grey-and-black songbirds of North America
+feist	2.22	noun	mammal	new	a nervous belligerent little mongrel dog
+willet	2.22	noun	bird	new	large North American shorebird of eastern and Gulf Coasts
+yellowtail	2.22	noun	fish	new	superior food fish of the tropical Atlantic and Caribbean with broad yellow stripe along t
+caiman	2.21	noun	reptile	new	a semiaquatic reptile of Central and South America that resembles an alligator but has a m
+gannet	2.21	noun	bird	new	large heavily built seabird with a long stout bill noted for its plunging dives for fish
+grebe	2.21	noun	bird	new	small compact-bodied almost completely aquatic bird that builds floating nests
+kookaburra	2.21	noun	bird	new	Australian kingfisher having a loud cackling cry
+lionfish	2.21	noun	fish	new	brightly striped fish of the tropical Pacific having elongated spiny fins
+petrel	2.21	noun	bird	new	relatively small long-winged tube-nosed bird that flies far from land
+palfrey	2.2	noun	mammal	new	especially a light saddle horse for a woman
+smallmouth	2.2	noun	fish	new	a variety of black bass
+capon	2.19	noun	food	new	castrated male chicken
+caribe	2.19	noun	fish	new	small voraciously carnivorous freshwater fishes of South America that attack and destroy l
+cetacean	2.19	noun	mammal	new	large aquatic carnivorous mammal with fin-like forelimbs no hind limbs, including: whales
+mamo	2.19	noun	bird	new	black honeycreepers with yellow feathers around the tail
+turbot	2.19	noun	food	new	a large brownish European flatfish
+bearcat	2.18	noun	mammal	new	arboreal civet of Asia having a long prehensile tail and shaggy black hair
+bivalve	2.18	noun	invertebrate	new	marine or freshwater mollusks having a soft body with platelike gills enclosed within two 
+bedbug	2.17	noun	insect	new	bug of temperate regions that infests especially beds and feeds on human blood
+hatchling	2.17	noun	creature	new	any recently hatched animal (especially birds)
+kaki	2.17	noun	tree	new	blackish stilt of New Zealand sometimes considered a color phase of the white-headed stilt
+loggerhead	2.17	noun	person	new	very large carnivorous sea turtle
+snowbird	2.17	noun	bird	new	medium-sized Eurasian thrush seen chiefly in winter
+bluegill	2.16	noun	fish	new	important edible sunfish of eastern and central United States
+brontosaurus	2.16	noun	reptile	new	huge quadrupedal herbivorous dinosaur common in North America in the late Jurassic
+codfish	2.16	noun	food	new	major food fish of Arctic and cold-temperate waters
+plaice	2.16	noun	food	new	large European food fish
+bullhead	2.15	noun	fish	new	freshwater sculpin with a large flattened bony-plated head with hornlike spines
+capybara	2.15	noun	mammal	new	pig-sized tailless South American amphibious rodent with partly webbed feet
+cero	2.15	noun	fish	new	large edible mackerel of temperate United States coastal Atlantic waters
+cottontail	2.15	noun	mammal	new	common small rabbit of North America having greyish or brownish fur and a tail with a whit
+eland	2.15	noun	mammal	new	either of two large African antelopes of the genus Taurotragus having short spirally twist
+jackdaw	2.15	noun	bird	new	common black-and-grey Eurasian bird noted for thievery
+mollusc	2.15	noun	invertebrate	new	invertebrate having a soft unsegmented body usually enclosed in a shell
+varmint	2.15	noun	person	new	any usually predatory wild animal considered undesirable
+skink	2.14	noun	reptile	new	alert agile lizard with reduced limbs and an elongated body covered with shiny scales
+kudu	2.13	noun	mammal	new	either of two spiral-horned antelopes of the African bush
+paca	2.13	noun	mammal	new	large burrowing rodent of South America and Central America
+stablemate	2.13	noun	mammal	new	a horse stabled with another or one of several horses owned by the same person
+bluefish	2.12	noun	fish	new	bluish warm-water marine food and game fish that follow schools of small fishes into shall
+civet	2.12	noun	mammal	new	cat-like mammal typically secreting musk used in perfumes
+dace	2.12	noun	fish	new	small European freshwater fish with a slender bluish-green body
+erne	2.12	noun	bird	new	bulky greyish-brown eagle with a short wedge-shaped white tail
+gadfly	2.12	noun	person	new	any of various large flies that annoy livestock
+goby	2.12	noun	fish	new	small spiny-finned fish of coastal or brackish waters having a large head and elongated ta
+kingfish	2.12	noun	food	new	large edible mackerel of temperate United States coastal Atlantic waters
+linnet	2.12	noun	bird	new	small finch originally of the western United States and Mexico
+monkfish	2.12	noun	food	new	fishes having large mouths with a wormlike filament attached for luring prey
+stegosaurus	2.12	noun	reptile	new	herbivorous ornithischian dinosaur with a row of bony plates along its back and a spiked t
+whitetail	2.12	noun	mammal	new	common North American deer
+anthropoid	2.11	noun	person	new	any member of the suborder Anthropoidea including monkeys and apes and hominids
+eider	2.11	noun	bird	new	duck of the northern hemisphere much valued for the fine soft down of the females
+kine	2.11	noun	mammal	new	domesticated bovine animals as a group regardless of sex or age
+mouser	2.11	noun	mammal	new	a cat proficient at mousing
+cottonmouth	2.1	noun	reptile	new	venomous semiaquatic snake of swamps in southern United States
+goshawk	2.1	noun	bird	new	large hawk of Eurasia and North America used in falconry
+bittern	2.09	noun	bird	new	relatively small compact tawny-brown heron with nocturnal habits and a booming cry
+croaker	2.09	noun	food	new	any of several fishes that make a croaking noise
+gaur	2.09	noun	mammal	new	wild ox of mountainous areas of eastern India
+ruminant	2.09	noun	mammal	new	any of various cud-chewing hoofed mammals having a stomach divided into four (occasionally
+scad	2.09	noun	fish	new	any of a number of fishes of the family Carangidae
+sika	2.09	noun	mammal	new	small deer of Japan with slightly forked antlers
+sumpter	2.09	noun	creature	new	an animal (such as a mule or burro or horse) used to carry loads
+banting	2.08	noun	mammal	new	wild ox of the Malay Archipelago
+cephalopod	2.08	noun	invertebrate	new	marine mollusk characterized by well-developed head and eyes and sucker-bearing tentacles
+sambar	2.08	noun	mammal	new	a deer of southern Asia with antlers that have three tines
+sheldrake	2.08	noun	bird	new	large crested fish-eating diving duck having a slender hooked bill with serrated edges
+earwig	2.07	noun	insect	new	any of numerous insects of the order Dermaptera having elongate bodies and slender many-jo
+gobbler	2.07	noun	person	new	male turkey
+meadowlark	2.07	noun	bird	new	North American songbirds having a yellow breast
+pickerel	2.07	noun	food	new	any of several North American species of small pike
+redfish	2.07	noun	food	new	large edible fish found off coast of United States from Massachusetts to Mexico
+silverfish	2.07	noun	insect	new	silver-grey wingless insect found in houses feeding on book bindings and starched clothing
+tup	2.07	noun	mammal	new	uncastrated adult male sheep
+unai	2.07	noun	mammal	new	a sloth of Central America that has two long claws on each forefoot and three long claws o
+dromedary	2.06	noun	mammal	new	one-humped camel of the hot deserts of northern Africa and southwestern Asia
+firebug	2.06	noun	criminal	new	a true bug: brightly colored bug that can exude a stain
+leatherback	2.06	noun	reptile	new	wide-ranging marine turtle with flexible leathery carapace
+remount	2.06	noun	mammal	new	a fresh horse especially (formerly) to replace one killed or injured in battle
+teg	2.06	noun	creature	new	two-year-old sheep
+wrasse	2.06	noun	fish	new	chiefly tropical marine fishes with fleshy lips and powerful teeth
+marmoset	2.05	noun	mammal	new	small soft-furred South American and Central American monkey with claws instead of nails
+pinche	2.05	noun	mammal	new	South American tamarin with a tufted head
+ptarmigan	2.05	noun	bird	new	large Arctic and subarctic grouse with feathered feet and usually white winter plumage
+bronc	2.04	noun	mammal	new	an unbroken or imperfectly broken mustang
+butterball	2.04	noun	person	new	small North American diving duck
+darter	2.04	noun	bird	new	fish-eating bird of warm inland waters having a long flexible neck and slender sharp-point
+egger	2.04	noun	insect	new	moth having nonfunctional mouthparts as adults
+hookworm	2.04	noun	invertebrate	new	parasitic bloodsucking roundworms having hooked mouth parts to fasten to the intestinal wa
+serval	2.04	noun	mammal	new	slender long-legged African wildcat having large untufted ears and tawny black-spotted coa
+sheepshead	2.04	noun	fish	new	large (up to 20 lbs) food fish of the eastern coast of the United States and Mexico
+skipjack	2.04	noun	fish	new	oceanic schooling tuna of considerable value in Pacific but less in Atlantic
+stoat	2.04	noun	mammal	new	the ermine in its brown summer coat with black-tipped tail
+trilobite	2.04	noun	invertebrate	new	an extinct arthropod that was abundant in Paleozoic times
+windowpane	2.04	noun	artifact	new	very thin translucent flounder of the Atlantic coast of North America
+lory	2.03	noun	bird	new	small brightly colored Australasian parrots having a brush-tipped tongue for feeding on ne
+mayfly	2.03	noun	insect	new	slender insect with delicate membranous wings having an aquatic larval stage and terrestri
+nester	2.03	noun	person	new	a bird that has built (or is building) a nest
+shearwater	2.03	noun	bird	new	long-winged oceanic bird that in flight skims close to the waves
+axolotl	2.02	noun	amphibian	new	larval salamander of mountain lakes of Mexico that usually lives without metamorphosing
+carabao	2.02	noun	mammal	new	water buffalo of the Philippines
+daphnia	2.02	noun	invertebrate	new	minute freshwater crustacean having a round body enclosed in a transparent shell
+moke	2.02	noun	mammal	new	British informal for donkey
+nightjar	2.02	noun	bird	new	mainly crepuscular or nocturnal nonpasserine birds with mottled greyish-brown plumage and 
+wagtail	2.02	noun	bird	new	Old World bird having a very long tail that jerks up and down as it walks
+biped	2.01	noun	creature	new	an animal with two feet
+blastocyst	2.01	noun	creature	new	the blastula of a placental mammal in which some differentiation of cells has occurred
+cassowary	2.01	noun	bird	new	large black flightless bird of Australia and New Guinea having a horny head crest
+cichlid	2.01	noun	fish	new	freshwater fishes of tropical America and Africa and Asia similar to American sunfishes
+kob	2.01	noun	mammal	new	an orange-brown antelope of southeast Africa
+parrotfish	2.01	noun	fish	new	gaudy tropical fishes with parrotlike beaks formed by fusion of teeth
+polecat	2.01	noun	mammal	new	American musteline mammal typically ejecting an intensely malodorous fluid when startled
+quadruped	2.01	noun	creature	new	an animal especially a mammal having four limbs specialized for walking
+quetzal	2.01	noun	quantity	new	large trogon of Central America and South America having golden-green and scarlet plumage
+redwing	2.01	noun	bird	new	North American blackbird with scarlet patches on the wings
+saiga	2.01	noun	mammal	new	goat-like antelope of central Eurasia having a stubby nose like a proboscis
+superbug	2.01	noun	creature	new	a strain of pest accidentally imported into Florida from the Middle East then spread to Ca
+archaeopteryx	2.0	noun	bird	new	extinct primitive toothed bird of the Jurassic period having a long feathered tail and hol
+courser	2.0	noun	worker	new	formerly a strong swift horse ridden into battle
+gastropod	2.0	noun	invertebrate	new	a class of mollusks typically having a one-piece coiled shell and flattened muscular foot 
+lapin	2.0	noun	material	new	castrated male rabbit
+nandu	2.0	noun	bird	new	smaller of two tall fast-running flightless birds similar to ostriches but three-toed
+nuthatch	2.0	noun	bird	new	any of various small short-tailed songbirds with strong feet and a sharp beak that feed on
+pronghorn	2.0	noun	mammal	new	fleet antelope-like ruminant of western North American plains with small branched horns

@@ -108,7 +108,7 @@ debt	economy	4	11.2	2.8	-	noun:possession
 gold	economy	4	11.3	2.8	-	noun:metal
 farm	economy	4	14.7	3.7	-	noun:structure
 bank	economy	4	20.8	5.2	K	noun:building
-factory	economy	7	21.5	3.1	-	noun:building
+factory	economy	7	21.5	3.1	-	noun:machine
 tax	economy	3	34.9	11.6	X	noun:possession
 pen	letter and word meta	3	6.2	2.1	-	noun:tool
 rune	letter and word meta	4	7.0	1.8	-	noun:inert

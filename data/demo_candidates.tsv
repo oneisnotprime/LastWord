@@ -72,7 +72,7 @@ cash	noun	artifact	currency	4.92	core	n13407787	verb:transfer
 cast	noun	artifact	medicine	4.79	core	n08254784	verb:create
 cat	noun	creature	mammal	4.78	core	n02124272	verb:contact
 cause	verb	spell	create	5.35	core	v01649143	noun:event
-cell	noun	artifact	building	4.87	core	n02995166	-
+cell	noun	artifact	structure	4.87	core	n02995010	-
 cent	noun	artifact	currency	4.83	core	n13411799	-
 central	adjective	modifier	quality	5.12	core	a01280207	noun:artifact
 certain	adjective	modifier	quality	5.16	core	a00704329	-

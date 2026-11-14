@@ -1,6 +1,7 @@
 import type { Dictionary } from "./dictionary.js";
 import type { Stats } from "./stats.js";
 import { TILE_METERS } from "./world.js";
+import { holdFactor } from "./home.js";
 
 /**
  * Senses: what a word tells its owner and nothing more. A MAP, a COMPASS or a CHART only shows
@@ -76,6 +77,8 @@ export interface Claim {
   shelter: number;
   /** Added to the security of what lies inside against theft. */
   security: number;
+  /** How many times slower enemies' root and silence wear off inside (shared home.ts `holdFactor`); 1 for none. */
+  holds: number;
 }
 
 /** The least a claim shelters. */
@@ -88,5 +91,5 @@ export function claimOf(stats: Stats): Claim | null {
   if (!(radius > 0)) return null;
   const security = Math.max(0, stats.num("security"));
   const shelter = Math.min(1, Math.max(HOME_GROUND, stats.num("cover"), security / 10));
-  return { radius: radius * CLAIM_REACH, shelter, security: Math.max(security, shelter * 10) };
+  return { radius: radius * CLAIM_REACH, shelter, security: Math.max(security, shelter * 10), holds: holdFactor(stats) };
 }

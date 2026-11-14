@@ -749,6 +749,66 @@ welder: produce_N=0.55
 winemaker: produce_N=0.4
 woodcutter: produce_N=0.55
 workman: produce_N=0.55
+# Dictionary themes, batch 2 (TODO.md): furniture and rooms pay B inside your claimed ground,
+# crafting stations C while someone works them, machines M from vowels, kept animals I.
+armchair: produce_B=0.3
+recliner: produce_B=0.3
+wardrobe: produce_B=0.3
+dresser: produce_B=0.25
+cupboard: produce_B=0.2
+bookcase: produce_B=0.25
+hammock: produce_B=0.15
+mattress: produce_B=0.3
+carpet: produce_B=0.15
+curtain: produce_B=0.1
+chandelier: produce_B=0.3
+crib: produce_B=0.15
+bunk: produce_B=0.25
+quilt: produce_B=0.1
+parlor: produce_B=0.4
+nursery: produce_B=0.3
+porch: produce_B=0.2
+pavilion: produce_B=0.2
+television: produce_B=0.2
+fridge: produce_B=0.2
+refrigerator: produce_B=0.2
+vase: produce_B=0.1
+teapot: produce_B=0.1
+workshop: produce_C=0.8
+smithy: produce_C=1 production_needs=labor,g
+armory: produce_C=0.4
+foundry: produce_C=1.5 production_needs=labor,g
+grindstone: produce_C=0.4
+crucible: produce_C=0.4 production_needs=labor,g
+automaton: produce_M=0.4
+conveyor: produce_M=0.4
+drone: produce_M=0.2
+crane: produce_M=0.3
+bulldozer: produce_M=0.3
+donkey: produce_I=0.3
+mule: produce_I=0.3
+pony: produce_I=0.3
+stallion: produce_I=0.3
+llama: produce_I=0.4
+alpaca: produce_I=0.4
+lamb: produce_I=0.4
+calf: produce_I=0.5
+puppy: produce_I=0.3
+kitten: produce_I=0.2
+hamster: produce_I=0.15
+gerbil: produce_I=0.15
+ferret: produce_I=0.2
+pigeon: produce_I=0.15
+dove: produce_I=0.15
+quail: produce_I=0.2
+canary: produce_I=0.15
+peacock: produce_I=0.2
+goldfish: produce_I=0.15
+carp: produce_I=0.2
+silkworm: produce_I=0.2
+hedgehog: produce_I=0.15
+falcon: produce_I=0.2
+raven: produce_I=0.15
 # L: land held. A claim_radius claims ground (CLAIM_REACH times it); each tile you alone hold pays L.
 hedge: claim_radius=4
 fence: claim_radius=3
