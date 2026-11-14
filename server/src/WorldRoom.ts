@@ -1,7 +1,7 @@
 import { Room, type Client } from "colyseus";
 import { StateView } from "@colyseus/schema";
 import {
-  addLetters, afflict, cannotRide, claimOf, senseOf, combineSenses, type Sense, type Sensed, aggressive, clearLine, courageOf, pluralize, auras, authorityOf, chooseTarget, commandLimit, draw, groundFood, hasAny, ignoresOrder, moraleAim, moraleGoal, needs, nextMorale, noStores, outputs, recruitRate, rerouteSeconds, startingSupply, becomes, retreats, routed, supply, theftResistance, HUNGER_LOYALTY, NORMAL, STARTING_STORES, STARVING, SUPPLIES, bodyFlags, cure, useObject, findPath, hampered, inflicts, statusDamage, statusEffects, tickStatuses, wake, GATHER_SECONDS, gatherLetter, generateMap, GIVE_RANGE, missing, parsePhrase, applyAdjectives, cannotCarry, improvisable, readDescription, production, resolveSpelled, SEPARATE_UP_TO, nearestWalkable, randomWalkable, resolve, Tile, tileAt, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit,
+  addLetters, afflict, aggressive, clearLine, courageOf, pluralize, auras, authorityOf, chooseTarget, commandLimit, draw, groundFood, hasAny, ignoresOrder, moraleAim, moraleGoal, needs, nextMorale, noStores, outputs, recruitRate, rerouteSeconds, startingSupply, becomes, retreats, routed, supply, theftResistance, HUNGER_LOYALTY, NORMAL, STARTING_STORES, STARVING, SUPPLIES, bodyFlags, cure, useObject, findPath, hampered, inflicts, statusDamage, statusEffects, tickStatuses, wake, GATHER_SECONDS, Deposits, destroyLetters, killLetters, mainland, MARKET, pickAnimal, placeSources, readTrade, regionOf, RUIN_INTEGRITY, CACHE_X, SITE_RADIUS, spawnPoint, starterHand, TEMPLE_Q, tradeProblem, generateMap, GIVE_RANGE, missing, parsePhrase, applyAdjectives, cannotCarry, improvisable, readDescription, production, resolveSpelled, SEPARATE_UP_TO, nearestWalkable, randomWalkable, resolve, Tile, tileAt, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit, cannotRide, claimOf, senseOf, combineSenses, type Sense, type Sensed,
   type Affliction, type Candidate, type Dictionary, type Stores, type Supply, type Entity, type Hampered, type Status, type Stats, type Letters, type LoadoutDetail, type Op, type Phrase, type Point, type Spelled, type Value, type WordDef, type WorldMap,
 } from "@lastword/shared";
 import { affords, botSettings, chooseWord, held, wordBook, type BotWord, type Difficulty, type Use } from "./bots.js";
@@ -20,8 +20,10 @@ interface Gear {
   vehicle: boolean;
   /** Remaining integrity of protection and vehicles; null until first built into a unit. */
   integrity: number | null;
-  /** Part of the land (a lake, a mountain): cannot be picked up or attacked. */
+  /** Part of the land (a lake, a mountain, a market, the temple): cannot be picked up or attacked. */
   terrain?: boolean;
+  /** One of the map's own letter sources, placed when the round starts. */
+  fixture?: "market" | "temple" | "cache" | "ruin";
   /** A machine whose fuel, power or food ran short at the last count: it makes nothing and cannot strike. */
   stalled?: boolean;
   /** A living thing (a ridden DRAGON, a HORSE) that went hungry at the last count. */
@@ -170,6 +172,8 @@ interface Walker {
   seenThings: Set<string>;
   /** Held letters. Private: sent to their owner by message, never put in shared state. */
   letters: Letters;
+  /** For a person: the exploration regions (shared `regionOf`) they have been to; each new one gives a J. */
+  explored?: Set<number>;
   /** Seconds left on a gathering action, or 0. Moving cancels it. */
   gathering: number;
   /** Statuses on it: stunned, poisoned, afraid... */
@@ -224,19 +228,14 @@ interface Holdings { creatures: [string, Walker][]; things: [string, Gear][] }
 /** An object's letter output: rate per minute and the fraction built up so far. */
 interface Producer { owner: string; rates: Letters; built: Letters }
 
-/** Placeholder until letter sources exist (M4): enough to spell SWORD plus a random handful. */
-function starterLetters(rng: () => number): Letters {
-  const common = "eeeeeeeeeeeiiiiiiiiaaaaaaaarrrrrrrnnnnnnnttttttoooooosssssslllllccccuuuudddpppmmmhhggyybb";
-  const hand: Letters = {};
-  // LETTERS=9 is for trying things out: that many of every letter.
+/**
+ * A starting hand: eight letters around one word that produces something (shared `starterHand`).
+ * LETTERS=9 is for trying things out: that many of every letter.
+ */
+function starterLetters(dict: Dictionary, rng: () => number): Letters {
   const plenty = Number(process.env.LETTERS);
   if (plenty > 0) return Object.fromEntries([..."abcdefghijklmnopqrstuvwxyz"].map((ch) => [ch, plenty]));
-  for (const ch of "sword") hand[ch] = (hand[ch] ?? 0) + 1;
-  for (let i = 0; i < 20; i++) {
-    const ch = common[Math.floor(rng() * common.length)]!;
-    hand[ch] = (hand[ch] ?? 0) + 1;
-  }
-  return hand;
+  return starterHand(dict, rng);
 }
 
 /** Cell width, in tiles, of the grid that things are bucketed into. */
@@ -258,10 +257,18 @@ interface BotMind {
   /** For tests and metrics: gathers started and words spelled. */
   gathered: number;
   spelled: number;
+  /** Room time until which it only gathers, hunts and builds (it still defends itself). */
+  peaceUntil: number;
+  /** Room time before which it spells nothing more. */
+  nextSpell: number;
+  /** Producers it has spelled. */
+  producers: number;
 }
 
-/** Ground that gives letters when gathered. */
-const GOOD_GROUND = new Set<Tile>([Tile.Grass, Tile.Forest, Tile.Sand, Tile.Hill, Tile.Road, Tile.City, Tile.Snow, Tile.Swamp]);
+/** Seconds a bot keeps the peace at the start: between these two. */
+const BOT_PEACE: [number, number] = [60, 90];
+/** Seconds between a bot's spellings: between these two. */
+const BOT_SPELL_GAP: [number, number] = [5, 10];
 
 /** Every live room in this process, for metrics. */
 export const liveRooms = new Set<WorldRoom>();
@@ -280,6 +287,9 @@ export class WorldRoom extends Room {
   map!: WorldMap;
   /** For tests: rooms created while this is set use it as their random seed. */
   static testSeed: number | null = null;
+  /** For tests of other systems: rooms created while this is set get no markets, temple, caches, ruins, animals or exploring. */
+  static testBare = false;
+  private bare = false;
   /** Bot players by id, and how many have been made. */
   private bots = new Map<string, BotMind>();
   private botCount = 0;
@@ -291,6 +301,12 @@ export class WorldRoom extends Room {
   private thingGrid = new Map<number, string[]>();
   private nextThing = 1;
   private producers = new Map<string, Producer>();
+  /** What gathering finds where, and how much is left (shared `Deposits`); caches and the temple are its sites. */
+  deposits!: Deposits;
+  /** The tiles everyone can reach each other on, for placing people and sources. */
+  private land!: Uint8Array;
+  /** Each market's trades in hand and when that was last counted. */
+  private markets = new Map<string, { stock: number; at: number }>();
   /** What each thing on the ground is, so it can be picked up again. */
   private grounded = new Map<string, Gear>();
   private everJoined = 0;
@@ -532,6 +548,8 @@ export class WorldRoom extends Room {
   private spellWord(id: string, walker: Walker, text: unknown): string {
     if (typeof text !== "string" || text.length > 80) throw new Error("Spell something");
     if (!walker.hamper.spells) throw new Error(`You cannot spell while you are ${STATE_WORDS[walker.hamper.muteBy!] ?? walker.hamper.muteBy}`);
+    const deal = readTrade(text);
+    if (deal) return this.trade(id, walker, deal.give, deal.get);
     const phrase = parsePhrase(this.dict, text);
     const lacking = missing(walker.letters, phrase.letters);
     if (lacking) throw new Error(`You need ${lacking.toUpperCase().split("").join(" ")}`);
@@ -665,6 +683,7 @@ export class WorldRoom extends Room {
     const seed = Math.floor(this.rng() * 2 ** 32);
     this.dict = loadDictionary();
     this.map = generateMap(seed);
+    this.placeSources();
     this.state.seed = seed;
     this.state.daylight = "day";
     this.state.phase = "playing";
@@ -686,18 +705,39 @@ export class WorldRoom extends Room {
   }
 
   /**
-   * Where a bot starts: somewhere in plain line of a city, so it can walk to the others (a
-   * random spot may be an island nobody can reach, and the round would never end).
+   * The map's own letter sources (shared `placeSources`): a market in every city (T, and letters
+   * at MARKET.ratio to one), the temple (Q), buried caches (X), broken ruins (D and X) and wild
+   * animals to hunt (H). Ground deposits (E, O, G, U) are counted by `deposits`.
    */
-  private botSpot(): Point {
-    for (let tries = 0; tries < 20; tries++) {
-      const c = this.map.cities[Math.floor(this.rng() * this.map.cities.length)];
-      if (!c) break;
-      const angle = this.rng() * Math.PI * 2, far = c.radius + this.rng() * 30;
-      const spot = nearestWalkable(this.map, { x: c.x + Math.cos(angle) * far, y: c.y + Math.sin(angle) * far });
-      if (clearLine(this.map, c, spot)) return spot;
+  private placeSources() {
+    this.deposits = new Deposits(this.map);
+    this.land = mainland(this.map);
+    this.bare = WorldRoom.testBare;
+    if (this.bare) return;
+    const places = placeSources(this.map, this.rng, this.land);
+    const fixture = (noun: string, kind: NonNullable<Gear["fixture"]>, p: Point, integrity: number | null = null) =>
+      this.addThing({ spelled: { noun }, phrase: noun, vehicle: false, integrity, terrain: kind !== "ruin", fixture: kind }, "", p.x, p.y);
+    for (const p of places.markets) this.markets.set(fixture("market", "market", p), { stock: MARKET.stock, at: 0 });
+    const temple = fixture("temple", "temple", places.temple);
+    this.deposits.addSite({ id: temple, x: places.temple.x, y: places.temple.y, letter: "q", stock: TEMPLE_Q.stock, regen: TEMPLE_Q.regen, radius: SITE_RADIUS + 1 });
+    for (const p of places.caches) {
+      const id = fixture("chest", "cache", p);
+      this.deposits.addSite({ id, x: p.x, y: p.y, letter: "x", stock: CACHE_X, regen: 0, radius: SITE_RADIUS });
     }
-    return randomWalkable(this.map, this.rng);
+    for (const p of places.ruins) {
+      const id = fixture("ruin", "ruin", p, RUIN_INTEGRITY);
+      this.state.things.get(id)!.hp = Math.ceil((RUIN_INTEGRITY / Number(this.dict.base("ruin", "integrity"))) * 100);
+    }
+    for (const p of places.animals) {
+      const noun = pickAnimal(this.rng);
+      this.addCreature({ spelled: { noun }, phrase: noun, vehicle: false, integrity: null }, "-", p.x, p.y);
+    }
+  }
+
+  /** Where a person starts: far from everyone else (shared `spawnPoint`), on ground that reaches them. */
+  private spawnSpot(): Point {
+    const taken = [...this.walkers.values()].filter((w) => w.master === null).map((w) => w.player);
+    return spawnPoint(this.map, this.land, taken, this.rng);
   }
 
   /** Adds bot players: people with no client, playing at the given difficulty. */
@@ -706,8 +746,11 @@ export class WorldRoom extends Room {
     wordBook(this.dict); // worked out once, before the first tick that needs it
     for (let i = 0; i < n; i++) {
       const id = `bot${++this.botCount}`;
-      this.addPerson(id, id, this.botSpot());
-      this.bots.set(id, { difficulty, phase: this.botCount, stay: 3 + Math.floor(this.rng() * 6), tried: new Set(), gathered: 0, spelled: 0, at: { x: 0, y: 0 }, stuck: 0 });
+      this.addPerson(id, id, this.spawnSpot());
+      this.bots.set(id, {
+        difficulty, phase: this.botCount, stay: 3 + Math.floor(this.rng() * 6), tried: new Set(), gathered: 0, spelled: 0, at: { x: 0, y: 0 }, stuck: 0,
+        peaceUntil: this.elapsed + BOT_PEACE[0] + this.rng() * (BOT_PEACE[1] - BOT_PEACE[0]), nextSpell: this.elapsed + this.rng() * BOT_SPELL_GAP[1], producers: 0,
+      });
     }
     this.maxClients = Math.max(1, this.maxClients - n);
   }
@@ -733,7 +776,7 @@ export class WorldRoom extends Room {
     const city = this.map.cities[0];
     const spot = at ?? (process.env.CROWD && city
       ? { x: city.x + (this.rng() - 0.5) * 6, y: city.y + (this.rng() - 0.5) * 6 }
-      : randomWalkable(this.map, this.rng));
+      : this.spawnSpot());
     const player = new Player();
     player.name = name;
     player.x = spot.x;
@@ -767,7 +810,8 @@ export class WorldRoom extends Room {
       sight: body.num("sight_range") / TILE_METERS,
       seen: new Set([id]),
       seenThings: new Set(),
-      letters: starterLetters(this.rng),
+      letters: starterLetters(this.dict, this.rng),
+      ...(this.bare ? {} : { explored: new Set([regionOf(spot.x, spot.y)]) }),
       gathering: 0,
       statuses: [],
       hamper: hampered([]),
@@ -989,45 +1033,59 @@ export class WorldRoom extends Room {
   }
 
   /**
-   * One bot's thought: eat if hungry, choose a foe (whoever attacks it; else, when armed, the
-   * nearest enemy in sight, or the weakest for a hard bot), spell one useful word, and
-   * otherwise gather on good ground or walk to a city. Fleeing and statuses are left to minds.
+   * One bot's thought. It eats if hungry and always defends itself. For its first minute or so
+   * (`peaceUntil`) it only builds: gathers, hunts wild animals, breaks ruins, digs caches and
+   * trades at markets. After that it also goes for a person in sight, or within twice its sight
+   * (easy bots only when armed and close). It spells at most one word every 5 to 10 seconds,
+   * producers first while at peace. Fleeing and statuses are left to minds.
    */
   private thinkBot(id: string, w: Walker, mind: BotMind) {
     if (this.state.phase === "over" || w.fleeing || w.hamper.flees.length || w.hamper.random) return;
     const hard = mind.difficulty === "hard", easy = mind.difficulty === "easy";
     const have = held(w.letters);
-    if (w.hungry || w.stores.food < 0.5) this.botEat(id, w, mind, have);
+    const canSpell = this.elapsed >= mind.nextSpell;
+    const spelled = () => { mind.spelled++; mind.nextSpell = this.elapsed + BOT_SPELL_GAP[0] + this.rng() * (BOT_SPELL_GAP[1] - BOT_SPELL_GAP[0]); };
+    if (canSpell && (w.hungry || w.stores.food < 0.5) && this.botEat(id, w, mind, have)) spelled();
+    const peaceful = this.elapsed < mind.peaceUntil;
 
-    // Who is about.
+    // Who is about: people (and their creatures) who attack it, people to hunt down, wild game.
     type Seen = { id: string; d: number; hp: number; person: boolean };
-    const seen: Seen[] = [], attackers: Seen[] = [];
+    const people: Seen[] = [], attackers: Seen[] = [], game: Seen[] = [];
     let mine = 0;
     for (const [oid, o] of this.walkers) {
       if (oid === id) continue;
       if (o.master === id) { mine++; continue; }
       const d = Math.hypot(o.player.x - w.player.x, o.player.y - w.player.y);
+      if (d > w.sight * 2 || (o.flying && !w.flying)) continue;
       const e = { id: oid, d, hp: o.hp, person: o.master === null };
-      if (o.foe === id && d <= w.sight * 2) attackers.push(e);
-      else if (d <= w.sight && o.master !== "-" && (w.flying || !o.flying)) seen.push(e);
+      if (o.foe === id) attackers.push(e);
+      else if (o.master === null) people.push(e);
+      else if (o.master === "-" && d <= w.sight && !aggressive(o.unit.body.stats)) game.push(e);
     }
     const pick = (list: Seen[]) => list.reduce<Seen | null>((best, e) => !best ? e
       : hard ? (e.person !== best.person ? (e.person ? e : best) : e.hp < best.hp ? e : best)
       : e.d < best.d ? e : best, null)?.id ?? null;
     const armed = !!w.unit.weapon || (!!w.unit.riding && w.unit.attack === w.unit.riding.stats);
-    const current = w.foe ? this.walkers.get(w.foe) : undefined;
-    const keep = !hard && current && Math.hypot(current.player.x - w.player.x, current.player.y - w.player.y) <= w.sight * 1.5;
+    const current = w.foe ? this.walkers.get(w.foe) ?? this.state.things.get(w.foe) : undefined;
+    const at = current ? ("player" in current ? current.player : current) : undefined;
+    const keep = !hard && at && Math.hypot(at.x - w.player.x, at.y - w.player.y) <= w.sight * 2;
     let foe = keep ? w.foe : null;
     if (!foe && attackers.length) foe = pick(attackers);
-    else if (!foe && armed) foe = pick(seen.filter((e) => e.d <= (easy ? 5 : w.sight)));
+    else if (!foe && !peaceful && (!easy || armed)) foe = pick(people.filter((e) => e.d <= (easy ? 5 : w.sight * 2)));
+    // Hunting (H) and breaking ruins (D, X) when nobody needs fighting.
+    if (!foe && game.length && (armed || w.unit.attack.num("dmg_blunt") > 0)) foe = pick(game.filter((e) => e.hp <= 100 || armed));
+    if (!foe) foe = this.nearFixture(w, "ruin", w.sight);
     if (foe !== w.foe) { w.foe = foe; if (foe) w.gathering = 0; }
 
-    // One word a think, the most useful it can afford.
-    const word = this.botWord(id, w, mind, have, armed, mine);
-    if (word) {
-      if (word.use === "event") w.picked = foe;
-      try { this.spellWord(id, w, word.word); mind.spelled++; } catch { if (word.use !== "event") mind.tried.add(word.word); }
-      if (word.use === "event") w.picked = null;
+    // One word every few seconds, the most useful it can afford; or a trade at a market.
+    if (canSpell && this.elapsed >= mind.nextSpell) {
+      const word = this.botWord(id, w, mind, have, armed, mine, peaceful);
+      if (word) {
+        if (word.use === "event") w.picked = foe;
+        try { this.spellWord(id, w, word.word); spelled(); if (word.use === "producer") mind.producers++; }
+        catch { if (word.use !== "event") mind.tried.add(word.word); }
+        if (word.use === "event") w.picked = null;
+      } else if (this.botTrade(id, w, mind, have)) spelled();
     }
 
     // Not getting anywhere for two seconds (a speed of nothing, a crowd): choose somewhere else.
@@ -1038,38 +1096,72 @@ export class WorldRoom extends Room {
     } else mind.stuck = 0;
 
     if (w.foe || w.gathering > 0 || w.target) return;
-    if (mind.stay > 0 && GOOD_GROUND.has(tileAt(this.map, w.player.x, w.player.y))) {
+    // A cache in sight is worth the walk; otherwise gather here while there is something to find.
+    const cache = this.nearFixture(w, "cache", w.sight);
+    if (cache) {
+      const t = this.state.things.get(cache)!;
+      if (Math.hypot(t.x - w.player.x, t.y - w.player.y) > SITE_RADIUS - 0.5) { w.target = { x: t.x, y: t.y }; return; }
+    }
+    const here = this.deposits.available(w.player.x, w.player.y, this.elapsed);
+    if (mind.stay > 0 && Object.keys(here).length) {
       mind.stay--;
       mind.gathered++;
       w.gathering = GATHER_SECONDS;
       return;
     }
     mind.stay = 4 + Math.floor(this.rng() * 8);
-    // Armed (and not easy), it sometimes goes looking for someone: the nearest person, or a hard
-    // bot's weakest. So bots that wander apart still meet, and a round of bots ends.
-    if (armed && !easy && this.rng() < 0.5) {
-      let prey: Walker | null = null, best = Infinity;
-      for (const [oid, o] of this.walkers) {
-        if (oid === id || o.master !== null) continue;
-        const score = hard ? o.hp : Math.hypot(o.player.x - w.player.x, o.player.y - w.player.y);
-        if (score < best) { best = score; prey = o; }
-      }
-      if (prey) { w.target = { x: prey.player.x, y: prey.player.y }; return; }
-    }
-    // Off to a city: good ground, and where the others go.
-    const c = this.map.cities[Math.floor(this.rng() * this.map.cities.length)];
+    // Move on: sometimes to a city's market with letters to trade, else somewhere new (exploring gives J).
     const clamp = (v: number) => Math.min(this.map.size - 1, Math.max(0, v));
-    const to = c ? { x: clamp(c.x + (this.rng() - 0.5) * c.radius * 2), y: clamp(c.y + (this.rng() - 0.5) * c.radius * 2) } : randomWalkable(this.map, this.rng);
-    w.target = to;
+    const c = this.map.cities[Math.floor(this.rng() * this.map.cities.length)];
+    if (c && (w.letters.e ?? 0) >= MARKET.ratio * 2 && this.rng() < 0.4) {
+      w.target = { x: c.x + 0.5 + (this.rng() - 0.5) * 2, y: c.y + 0.5 + (this.rng() - 0.5) * 2 };
+      return;
+    }
+    const angle = this.rng() * Math.PI * 2, far = 10 + this.rng() * 20;
+    w.target = nearestWalkable(this.map, { x: clamp(w.player.x + Math.cos(angle) * far), y: clamp(w.player.y + Math.sin(angle) * far) });
+  }
+
+  /** The nearest of the map's fixtures of a kind within `tiles` of a walker, by thing id. */
+  private nearFixture(w: Walker, kind: NonNullable<Gear["fixture"]>, tiles: number): string | null {
+    let best: string | null = null, bestD = tiles;
+    for (const [tid, g] of this.grounded) {
+      if (g.fixture !== kind) continue;
+      const t = this.state.things.get(tid);
+      const d = t ? Math.hypot(t.x - w.player.x, t.y - w.player.y) : Infinity;
+      if (d <= bestD) { best = tid; bestD = d; }
+    }
+    return best;
+  }
+
+  /**
+   * At a market, a bot trades its commonest letters for one it lacks for the best word it wants
+   * (a producer, a weapon, a creature) that it is one letter short of. Returns true if it traded.
+   */
+  private botTrade(id: string, w: Walker, mind: BotMind, have: Uint8Array): boolean {
+    if (!this.nearFixture(w, "market", MARKET.range)) return false;
+    const book = wordBook(this.dict);
+    const spare = Object.entries(w.letters).filter(([, n]) => n > 0).sort((a, b) => b[1] - a[1])[0];
+    if (!spare || spare[1] < MARKET.ratio + 1) return false;
+    for (const use of ["producer", "weapon", "armor", "creature"] as Use[]) {
+      for (const word of book.byUse.get(use) ?? []) {
+        if (mind.tried.has(word.word)) continue;
+        let short = -1, count = 0;
+        for (let i = 0; i < 26; i++) if (word.cost[i]! > have[i]!) { count += word.cost[i]! - have[i]!; short = i; }
+        const ch = String.fromCharCode(97 + short);
+        if (count !== 1 || MARKET.refuses.includes(ch) || ch === spare[0]) continue;
+        try { this.spellWord(id, w, `trade ${spare[0].repeat(MARKET.ratio)} for ${ch}`); return true; } catch { return false; }
+      }
+    }
+    return false;
   }
 
   /**
    * The word a bot most wants and can afford, in this order: a counter to an enemy area it
-   * stands near (hard), a weapon, armour for a free slot, a mount, creatures, healing when
-   * hurt, and in a fight (not easy) a verb that helps, a field against its enemies, or an
-   * event at its foe when in reach.
+   * stands near (hard); at peace, producers first; then a weapon, armour for a free slot, a
+   * mount, creatures, producers, healing when hurt, and in a fight (not easy) a verb that helps,
+   * a field against its enemies, or an event at its foe when in reach.
    */
-  private botWord(id: string, w: Walker, mind: BotMind, have: Uint8Array, armed: boolean, mine: number): BotWord | null {
+  private botWord(id: string, w: Walker, mind: BotMind, have: Uint8Array, armed: boolean, mine: number, peaceful: boolean): BotWord | null {
     const book = wordBook(this.dict);
     const ok = (x: BotWord) => !mind.tried.has(x.word);
     const choose = (use: Use, also: (x: BotWord) => boolean = () => true) =>
@@ -1085,28 +1177,31 @@ export class WorldRoom extends Room {
     const foe = w.foe ? this.walkers.get(w.foe) : undefined;
     const fighting = mind.difficulty !== "easy" && !!foe;
     const owns = (x: BotWord) => { for (const a of this.areas.values()) if (a.owner === id && a.word === x.word) return true; return false; };
-    return (!armed ? choose("weapon") : null)
+    const build = mind.producers < (peaceful ? 6 : 3) ? () => choose("producer") : () => null;
+    return (peaceful ? build() : null)
+      ?? (!armed ? choose("weapon") : null)
       ?? choose("armor", (x) => !slots.has(x.slot))
       ?? (!slots.has("ride") ? choose("mount") : null)
       ?? (mine < (mind.difficulty === "hard" ? 6 : 3) ? choose("creature") : null)
+      ?? build()
       ?? (w.hp < w.unit.body.stats.num("integrity") * 0.6 ? choose("heal") : null)
       ?? (fighting ? choose("boost", (x) => !w.buffs.some((b) => b.word === x.word)) : null)
       ?? (fighting ? choose("field", (x) => !owns(x)) : null)
-      ?? (fighting ? choose("event", (x) => Math.hypot(foe!.player.x - w.player.x, foe!.player.y - w.player.y) <= x.reach) : null);
+      ?? (fighting && foe ? choose("event", (x) => Math.hypot(foe.player.x - w.player.x, foe.player.y - w.player.y) <= x.reach) : null);
   }
 
-  /** A hungry bot eats what it carries or what lies at its feet, else spells something to eat. */
-  private botEat(id: string, w: Walker, mind: BotMind, have: Uint8Array) {
+  /** A hungry bot eats what it carries or what lies at its feet, else spells something to eat. True if it spelled. */
+  private botEat(id: string, w: Walker, mind: BotMind, have: Uint8Array): boolean {
     const food = (g: Gear) => !g.terrain && this.statsOf(g).num("nutrition") > 0;
     try {
       const carried = w.gear.findIndex(food);
-      if (carried >= 0) return void this.use(w, carried);
+      if (carried >= 0) return void this.use(w, carried), false;
       const near = this.usableNear(w).find(([, g]) => food(g));
-      if (near) return void this.use(w, near[0]);
+      if (near) return void this.use(w, near[0]), false;
     } catch { /* cannot eat it after all: spell something else */ }
     const word = chooseWord(wordBook(this.dict).byUse.get("food"), have, mind.difficulty, this.rng, (x) => !mind.tried.has(x.word));
-    if (!word) return;
-    try { this.spellWord(id, w, word.word); mind.spelled++; } catch { mind.tried.add(word.word); }
+    if (!word) return false;
+    try { this.spellWord(id, w, word.word); return true; } catch { mind.tried.add(word.word); return false; }
   }
 
   /** Whom a creature goes for among walkers by id: shared `chooseTarget` by its intelligence. */
@@ -1592,7 +1687,9 @@ export class WorldRoom extends Room {
       this.sendSensed(owner, walker);
       return "is on your screen: a minimap";
     }
-    // Living things that can move act on their own; ones you can ride are gear instead.
+    // A machine arrives ready to run: its owner's stores get half an hour of what it draws.
+    supply(walker.stores, startingSupply(phrase.stats, n), 60);
+    // Things that move of themselves act on their own; ones you can ride are gear instead.
     if (becomes(phrase.stats) === "creature") {
       for (let i = 0; i < copies; i++) { const p = at(i); this.addCreature(one(), owner, p.x, p.y, each); }
       const wild = this.command(owner);
@@ -1602,8 +1699,6 @@ export class WorldRoom extends Room {
     const here = { x: walker.player.x, y: walker.player.y }; // laying terrain may move the speller
     const tile = TILE_TYPES[String(phrase.stats.get("tile_type"))];
     if (tile !== undefined) this.reshape(walker.player.x, walker.player.y, phrase.stats.num("radius") * Math.sqrt(n), tile);
-    // A machine arrives ready to run: its owner's stores get half an hour of what it draws.
-    supply(walker.stores, startingSupply(phrase.stats, n), 60);
     let worn = 0;
     for (let i = 0; i < copies; i++) {
       const gear = one();
@@ -2435,19 +2530,30 @@ export class WorldRoom extends Room {
 
   /** Knocks a player out of the round. Their letters go to the killer; their gear falls. */
   private kill(id: string, killerId: string) {
-    const dead = this.walkers.get(id), killer = this.walkers.get(killerId);
+    const dead = this.walkers.get(id);
     if (!dead) return;
+    // A creature's kill is its master's.
+    const [payId, killer] = this.payee(killerId) ?? ["", undefined];
     const client = this.clients.find((c) => c.sessionId === id);
-    if (killer) {
+    if (killer && payId !== id) {
       for (const [ch, n] of Object.entries(dead.letters)) if (n > 0) addLetters(killer.letters, ch.repeat(n));
-      const kc = this.clients.find((c) => c.sessionId === killerId);
-      // K comes from kills; a war over the place multiplies it.
+      const kc = this.clients.find((c) => c.sessionId === payId);
+      // K comes from kills of people, V from beating someone's creature, H from hunting the wild;
+      // a war over the place multiplies K.
       const bonus = Math.max(1, ...[...this.areas.values()]
         .filter((a) => Math.hypot(a.x - dead.player.x, a.y - dead.player.y) <= a.radius).map((a) => a.killBonus));
-      addLetters(killer.letters, "k".repeat(Math.round(bonus)));
-      if (killer.master === null) for (const k of SUPPLIES) killer.stores[k] += dead.stores[k]; // and their stores
-      kc?.send("letters", killer.letters);
-      kc?.send("notice", `You killed ${dead.player.name} and took their letters`);
+      const kind = dead.master === null ? "person" : dead.master === "-" ? "wild" : "owned";
+      const spoils = killLetters(kind, dead.unit.body.stats.flag("sentient")).replace("k", "k".repeat(Math.round(bonus)));
+      addLetters(killer.letters, spoils);
+      if (kind === "wild") {
+        kc?.send("letters", killer.letters);
+        kc?.send("notice", `You hunted ${dead.player.name.toUpperCase()}: + ${spoils.toUpperCase()}`);
+      }
+      for (const k of SUPPLIES) killer.stores[k] += dead.stores[k]; // and their stores
+      if (kind !== "wild") {
+        kc?.send("letters", killer.letters);
+        kc?.send("notice", `You killed ${dead.player.name} and took their letters`);
+      }
     }
     this.unradiateAll(id); // what it carried radiates where it falls instead
     for (const g of dead.gear) this.addThing(g, "", dead.player.x, dead.player.y);
@@ -2506,13 +2612,16 @@ export class WorldRoom extends Room {
     gear.integrity = entity.integrity;
     thing.hp = Math.max(0, Math.ceil((entity.integrity / entity.stats.num("integrity")) * 100));
     if (entity.integrity > 0) return;
-    const client = this.clients.find((c) => c.sessionId === attackerId);
-    const w = this.walkers.get(attackerId);
-    const theirs = thing.owner !== "" && thing.owner !== attackerId;
+    // Pays whoever struck it, or the master of the creature that did.
+    const [payId, w] = this.payee(attackerId) ?? ["", undefined];
+    const client = this.clients.find((c) => c.sessionId === payId);
+    const theirs = thing.owner !== "" && thing.owner !== payId;
     if (w) {
-      addLetters(w.letters, theirs ? "dv" : "d"); // V comes from beating another player's things
+      // D for destroying; V for another player's thing; F if it burnt; X from a ruin.
+      const spoils = destroyLetters(theirs, attack.num("dmg_fire") > 0, gear.fixture === "ruin");
+      addLetters(w.letters, spoils);
       client?.send("letters", w.letters);
-      client?.send("notice", `${gear.phrase.toUpperCase()} destroyed`);
+      client?.send("notice", `${gear.phrase.toUpperCase()} destroyed: + ${spoils.toUpperCase()}`);
     }
     if (theirs) this.clients.find((c) => c.sessionId === thing.owner)?.send("notice", `Your ${gear.phrase.toUpperCase()} was destroyed`);
     this.removeThing(id);
@@ -2521,6 +2630,46 @@ export class WorldRoom extends Room {
       if (other.picked === id) other.picked = null;
     }
     this.refreshViews();
+  }
+
+  /** Who is paid for what a walker does: a person themself, a creature's master; nobody for the wild. */
+  private payee(id: string): [string, Walker] | null {
+    const w = this.walkers.get(id);
+    if (!w || w.master === "-") return null;
+    if (w.master === null) return [id, w];
+    const m = this.walkers.get(w.master);
+    return m ? [w.master, m] : null;
+  }
+
+  /**
+   * "trade eee for o" at a market within MARKET.range: MARKET.ratio letters for each one asked
+   * for (not the rare ones), and a T for every trade. A market has MARKET.stock trades in hand
+   * and takes on one more every MARKET.regen seconds.
+   */
+  private trade(id: string, walker: Walker, give: string, get: string): string {
+    const problem = tradeProblem(give, get);
+    if (problem) throw new Error(problem);
+    let best: string | null = null, bestD = MARKET.range;
+    for (const mid of this.markets.keys()) {
+      const t = this.state.things.get(mid);
+      const d = t ? Math.hypot(t.x - walker.player.x, t.y - walker.player.y) : Infinity;
+      if (d <= bestD) { best = mid; bestD = d; }
+    }
+    if (!best) throw new Error("Trade at a MARKET: there is one in the middle of every city");
+    const m = this.markets.get(best)!;
+    m.stock = Math.min(MARKET.stock, m.stock + (this.elapsed - m.at) / MARKET.regen);
+    m.at = this.elapsed;
+    if (m.stock < get.length) throw new Error(`This market has traded all it can for now: ${Math.ceil((get.length - m.stock) * MARKET.regen)} s`);
+    const lacking = missing(walker.letters, give);
+    if (lacking) throw new Error(`You need ${lacking.toUpperCase().split("").join(" ")}`);
+    m.stock -= get.length;
+    spend(walker.letters, give);
+    const got = get + "t".repeat(get.length);
+    addLetters(walker.letters, got);
+    this.sendTo(id, "letters", walker.letters);
+    const done = `Traded ${give.toUpperCase()} for ${get.toUpperCase()}, and ${"T".repeat(get.length)} for the trade`;
+    this.sendTo(id, "spelled", done);
+    return done;
   }
 
   /** Lays terrain and moves anyone now standing where they cannot onto the nearest ground. */
@@ -2639,16 +2788,27 @@ export class WorldRoom extends Room {
       w.gathering -= seconds;
       if (w.gathering > 0) continue;
       w.gathering = 0;
-      const letter = gatherLetter(this.map, w.player.x, w.player.y, this.rng);
+      const got = this.deposits.gather(w.player.x, w.player.y, this.elapsed, this.rng);
       const client = this.clients.find((c) => c.sessionId === id);
       w.stores.food += groundFood(tileAt(this.map, w.player.x, w.player.y)); // a little forage where things grow
-      if (letter) {
-        addLetters(w.letters, letter);
+      if (got.letter) {
+        addLetters(w.letters, got.letter);
         changed.add(id);
-        client?.send("gathered", letter);
-      } else {
-        client?.send("refused", "Nothing to gather here");
+        client?.send("gathered", got.letter);
+        if ("emptied" in got && got.emptied) { this.removeThing(got.emptied); this.refreshViews(); } // a cache dug out
+      } else if ("why" in got) {
+        client?.send("refused", got.why);
       }
+    }
+    // The first visit to each region gives a person one J.
+    for (const [id, w] of this.walkers) {
+      if (!w.explored) continue;
+      const region = regionOf(w.player.x, w.player.y);
+      if (w.explored.has(region)) continue;
+      w.explored.add(region);
+      addLetters(w.letters, "j");
+      changed.add(id);
+      this.sendTo(id, "gathered", "j");
     }
     // Objects that produce letters pay their owner as each whole letter builds up.
     for (const [pid, p] of this.producers) {

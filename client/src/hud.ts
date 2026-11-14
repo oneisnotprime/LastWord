@@ -156,14 +156,17 @@ export class Hud {
   }
 
   /**
-   * The letters a spelling spends: all of it, or for "give player2 abc" only the letters given
-   * (the name and the word "give" cost nothing).
+   * The letters a spelling spends: all of it, or for "give player2 abc" and "trade eee for o"
+   * only the letters handed over (the name, "give", "trade" and what you ask for cost nothing).
    */
   private spends(text: string): string {
     const t = text.toLowerCase().trimStart();
     const give = /^give\s+\S+\s+(.*)$/.exec(t);
     if (give) return give[1]!.replace(/[^a-z]/g, "");
-    if (/^give(\s+\S*)?\s*$/.test(t) || (t && "give".startsWith(t))) return "";
+    if (/^give(\s+\S*)?\s*$/.test(t) || (t && ("give".startsWith(t) || "trade".startsWith(t)))) return "";
+    // "trade eee for o" at a market: only the letters handed over.
+    const trade = /^trade\s+(\S*)/.exec(t);
+    if (trade) return trade[1]!.replace(/[^a-z]/g, "");
     return t.replace(/[^a-z]/g, "");
   }
 

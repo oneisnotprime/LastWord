@@ -11,8 +11,8 @@ import { TILE_TYPES } from "./world.js";
 
 /**
  * How a spelled object enters the world (the server's `make` follows this):
- * - `creature`: alive, able to move and not something you ride: a walker of its own that follows
- *   its master and fights for them;
+ * - `creature`: able to move, not something you ride, and alive, sentient or self-propelled (a
+ *   WOLF, a GHOST, a ZOMBIE, a ROBOT): a walker of its own that follows its master and fights for them;
  * - `terrain`: it has a `tile_type` and reshapes the land;
  * - `worn`: it has an `equip_slot` or is `mountable`, so it goes onto the speller if there is room;
  * - `ground`: anything else lies where it was spelled (pick it up with E if it is light enough).
@@ -20,7 +20,9 @@ import { TILE_TYPES } from "./world.js";
 export type Becomes = "creature" | "terrain" | "worn" | "ground";
 
 export function becomes(stats: Stats): Becomes {
-  if (stats.flag("alive") && !stats.flag("mountable") && Math.max(stats.num("speed_land"), stats.num("speed_air")) > 0) return "creature";
+  const moves = Math.max(stats.num("speed_land"), stats.num("speed_air")) > 0;
+  const acts = stats.flag("alive") || stats.flag("sentient") || stats.flag("self_propelled");
+  if (moves && acts && !stats.flag("mountable")) return "creature";
   if (TILE_TYPES[String(stats.get("tile_type"))] !== undefined) return "terrain";
   if (stats.flag("mountable") || stats.get("equip_slot") !== "none") return "worn";
   return "ground";
@@ -127,6 +129,7 @@ export function behaviours(s: Stats, count = 1): string[] {
     case "creature":
       out.push("walks with you and defends you");
       out.push(s.flag("sentient") ? "attacks what you attack" : "takes no orders (not sentient)");
+      if (!s.flag("alive")) out.push("not alive: needs no food");
       break;
     case "terrain":
       out.push(`reshapes the land into ${words(String(s.get("tile_type")))}${s.num("radius") > 0 ? `, radius ${num(s.num("radius"))} tile${s.num("radius") === 1 ? "" : "s"}` : ""}`);
@@ -137,7 +140,7 @@ export function behaviours(s: Stats, count = 1): string[] {
       break;
     case "ground":
       out.push(Math.max(s.num("speed_land"), s.num("speed_air")) > 0 && !s.flag("alive")
-        ? "stays where it is made (not alive, so it does not follow you)"
+        ? "stays where it is made (not alive, sentient or self-propelled, so it does not follow you)"
         : "lies where it is made");
       if (improvisable(s) && s.flag("portable")) out.push("pick it up (E) to swing it");
       break;

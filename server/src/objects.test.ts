@@ -3,10 +3,11 @@ import { afterAll, beforeAll, expect, it } from "vitest";
 import { nearestWalkable, parsePhrase, useObject } from "@lastword/shared";
 import appConfig from "./app.config.js";
 import { loadDictionary } from "./data.js";
-import type { WorldRoom } from "./WorldRoom.js";
+import { WorldRoom } from "./WorldRoom.js";
 
 let colyseus: ColyseusTestServer;
-beforeAll(async () => { colyseus = await boot(appConfig); });
+// These rooms test other systems: no markets, ruins, animals or exploring to get in the way.
+beforeAll(async () => { WorldRoom.testBare = true; colyseus = await boot(appConfig); });
 afterAll(async () => { await colyseus.shutdown(); });
 
 const dict = loadDictionary();

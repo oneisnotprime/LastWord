@@ -59,6 +59,7 @@ it("a bot attacks a player who comes near", async () => {
   // Only a SWORD's letters: with a random hand it may also spell a creature (a GOD) that kills
   // the player first, which ends the round and leaves the bot no foe.
   bot.letters = { s: 1, w: 1, o: 1, r: 1, d: 1 };
+  Object.assign(bots(room)[0]![1], { peaceUntil: 0, nextSpell: 0 }); // past its peaceful start
   for (let i = 0; i < 10; i++) room.update(0.1); // it spells its weapon
   expect(bot.unit.weapon).toBeTruthy();
   me.player.x = bot.player.x + 1; me.player.y = bot.player.y;
@@ -77,6 +78,7 @@ it("a hard bot puts out a fire set on it with a counter-word", async () => {
   me.player.x = bot.player.x + 1; me.player.y = bot.player.y;
   me.letters = { f: 1, i: 1, r: 1, e: 1 };
   bot.letters = { r: 1, a: 1, i: 1, n: 1 };
+  Object.assign(bots(room)[0]![1], { nextSpell: 0 });
   bot.hp = 1e6; room.rebuild(bot);
   a.send("pick", { x: bot.player.x, y: bot.player.y });
   a.send("spell", "fire");

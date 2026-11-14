@@ -31,7 +31,8 @@ async function players(n = 2) {
   const city = room.map.cities[0]!;
   ws.forEach((w, i) => { w.player.x = city.x + 0.5 + i * 2; w.player.y = city.y + 0.5; w.letters = all(); room.rebuild(w); });
   const last = (i: number, t: string) => got[i]!.filter(([k]) => k === t).at(-1)?.[1];
-  const things = () => [...room.state.things.entries()].map(([id, t]) => ({ id, ...t.toJSON() }));
+  // Things players made (the map's own letter sources, markets and ruins belong to nobody).
+  const things = () => [...room.state.things.entries()].map(([id, t]) => ({ id, ...t.toJSON() })).filter((t) => t.owner !== "");
   return { room, clients, said, got, walkers, ws, city, last, things };
 }
 
@@ -46,8 +47,9 @@ it("MAP goes on your screen as a minimap, not on the ground; the senses show let
   a.send("spell", "farm"); await wait(); // a farm makes letters: a letter source
   ticks(room, 12); await wait();
   const sensed = last(0, "sensed") as Sensed;
-  expect(sensed.letters.length).toBe(1);
-  expect(sensed.letters[0]!.letters.length).toBeGreaterThan(0);
+  const farm = sensed.letters.find((l) => Math.hypot(l.x - wa.player.x, l.y - wa.player.y) < 1)!;
+  expect(farm.letters.length).toBeGreaterThan(0);
+  for (const l of sensed.letters) expect(Math.hypot(l.x - wa.player.x, l.y - wa.player.y)).toBeLessThanOrEqual(125);
   expect(sensed.life).toEqual([]); // a MAP shows no one: it has no detect_life
 });
 

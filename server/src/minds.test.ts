@@ -2,10 +2,11 @@ import { boot, type ColyseusTestServer } from "@colyseus/testing";
 import { afterAll, beforeAll, expect, it } from "vitest";
 import { seeded, type LoadoutDetail } from "@lastword/shared";
 import appConfig from "./app.config.js";
-import type { WorldRoom } from "./WorldRoom.js";
+import { WorldRoom } from "./WorldRoom.js";
 
 let colyseus: ColyseusTestServer;
-beforeAll(async () => { colyseus = await boot(appConfig); });
+// These rooms test other systems: no markets, ruins, animals or exploring to get in the way.
+beforeAll(async () => { WorldRoom.testBare = true; colyseus = await boot(appConfig); });
 afterAll(async () => { await colyseus.shutdown(); });
 
 const wait = (ms = 120) => new Promise((r) => setTimeout(r, ms));

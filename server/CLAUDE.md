@@ -49,6 +49,15 @@ Node process that owns the game state. One room per map instance (from milestone
   wander and creatures in `sets_hostile` areas attack. Areas `pulse` once a second (statuses
   from harmless areas, cures, `contagion`).
 - `make` sorts a spelling with shared `becomes`, and adds shared `startingSupply` to the owner's stores.
+- Letter sources (`placeSources`): a `market` Thing in every city, one `temple`, `chest` caches and
+  broken `ruin`s, all ownerless with `Gear.fixture` set (markets, temple and caches are also
+  `terrain`, so they cannot be taken or attacked), and wild animals (`master` "-"). Gathering goes
+  through `deposits` (shared `Deposits`); a dug-out cache is removed. `trade eee for o` typed as a
+  spelling is a market trade (`trade`). Kills and destroyed things pay through `payee` (a creature's
+  master). `WorldRoom.testBare` gives tests of other systems a map without any of this.
+- People start far apart (`spawnSpot`). Bots keep the peace for 60 to 90 s (`peaceUntil`), spell
+  at most once every 5 to 10 s (`nextSpell`), build producers first, hunt, break ruins, dig caches,
+  trade at markets, explore, and only go for people within twice their sight.
 - Objects are made by `make`: up to `SEPARATE_UP_TO` (12) creatures or things each, more as one
   with `count` (`Player.count`, `Thing.count`, `Spelled.count`; stats via shared `massed`).
 - `cast` applies a verb with its adverbs (shared `castVerb`); touched verbs with event properties
