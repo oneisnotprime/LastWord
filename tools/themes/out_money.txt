@@ -1,0 +1,307 @@
+# Generated money and trade words (theme 16). See tools/demo_words.txt "Theme 16".
+
+# noun currency
+change: plural_count=10 mass=0.005 integrity=30 material=nickel equip_slot=held hands_required=0 value=1 trade_bonus=0.02 loudness=1 color=silver
+cent: plural_count=100 mass=0.0025 integrity=20 material=copper equip_slot=held hands_required=0 value=0.1 trade_bonus=0.01 color=copper
+penny: plural_count=100 mass=0.0036 integrity=20 material=copper equip_slot=held hands_required=0 value=0.1 trade_bonus=0.01 charm+0.5 color=copper
+nickel: plural_count=20 mass=0.005 integrity=30 material=nickel equip_slot=held hands_required=0 value=0.5 trade_bonus=0.02 color=silver
+dime: plural_count=10 mass=0.0023 integrity=30 material=silver equip_slot=held hands_required=0 value=1 trade_bonus=0.02 color=silver
+pound: plural_count=10 mass=0.009 integrity=40 material=brass equip_slot=held hands_required=0 value=12 trade_bonus=0.05 charm+1 loudness=1 color=gold
+euro: plural_count=10 mass=0.0075 integrity=40 material=brass equip_slot=held hands_required=0 value=10 trade_bonus=0.05 charm+1 color=gold
+quid: plural_count=10 mass=0.009 integrity=40 material=brass equip_slot=held hands_required=0 value=12 trade_bonus=0.05 charm+1 color=gold
+buck: plural_count=100 mass=0.001 integrity=1 material=paper flammability=9 equip_slot=held hands_required=0 value=1 trade_bonus=0.05 charm+1 color=green
+fiver: mass=0.001 integrity=1 material=paper flammability=9 equip_slot=held hands_required=0 value=6 trade_bonus=0.05 charm+1 color=blue
+tenner: mass=0.001 integrity=1 material=paper flammability=9 equip_slot=held hands_required=0 value=12 trade_bonus=0.06 charm+1 color=brown
+banknote: plural_count=10 mass=0.001 integrity=1 material=paper flammability=9 equip_slot=held hands_required=0 value=50 trade_bonus=0.08 charm+1 color=green
+currency: mass=0.1 integrity=2 material=paper flammability=9 equip_slot=held hands_required=0 value=100 trade_bonus=0.1 charm+2 color=green
+fund: mass=0.5 integrity=5 material=paper flammability=9 equip_slot=held hands_required=0 value=500 trade_bonus=0.15 charm+3 storage_letters=40 color=green
+sterling: mass=0.1 integrity=5 material=silver equip_slot=held hands_required=0 value=150 trade_bonus=0.15 charm+2 beauty=6 color=silver
+guinea: mass=0.0084 integrity=50 material=gold equip_slot=held hands_required=0 value=25 trade_bonus=0.08 charm+2 beauty=7 color=gold
+sixpence: mass=0.003 integrity=30 material=silver equip_slot=held hands_required=0 value=0.5 trade_bonus=0.01 charm+1 color=silver
+farthing: plural_count=100 mass=0.003 integrity=20 material=copper equip_slot=held hands_required=0 value=0.02 color=copper
+shilling: plural_count=10 mass=0.006 integrity=30 material=silver equip_slot=held hands_required=0 value=1 trade_bonus=0.02 color=silver
+yen: plural_count=100 mass=0.001 integrity=20 material=aluminum equip_slot=held hands_required=0 value=0.1 trade_bonus=0.01 color=silver
+yuan: plural_count=10 mass=0.001 integrity=1 material=paper flammability=9 equip_slot=held hands_required=0 value=1.5 trade_bonus=0.02 color=red
+rupee: plural_count=100 mass=0.004 integrity=30 material=steel equip_slot=held hands_required=0 value=0.1 trade_bonus=0.01 color=silver
+peso: plural_count=100 mass=0.005 integrity=30 material=brass equip_slot=held hands_required=0 value=0.1 trade_bonus=0.01 color=gold
+lira: plural_count=100 mass=0.005 integrity=30 material=brass equip_slot=held hands_required=0 value=0.1 trade_bonus=0.01 color=gold
+franc: plural_count=10 mass=0.006 integrity=30 material=nickel equip_slot=held hands_required=0 value=1 trade_bonus=0.02 color=silver
+ruble: plural_count=100 mass=0.004 integrity=30 material=nickel equip_slot=held hands_required=0 value=0.1 trade_bonus=0.01 color=silver
+krone: plural_count=10 mass=0.005 integrity=30 material=nickel equip_slot=held hands_required=0 value=1 trade_bonus=0.02 color=silver
+shekel: plural_count=10 mass=0.004 integrity=30 material=silver equip_slot=held hands_required=0 value=3 trade_bonus=0.03 color=silver
+drachma: plural_count=10 mass=0.004 integrity=30 material=silver equip_slot=held hands_required=0 value=5 trade_bonus=0.03 beauty=5 color=silver
+florin: plural_count=10 mass=0.0035 integrity=50 material=gold equip_slot=held hands_required=0 value=20 trade_bonus=0.06 charm+1 beauty=6 color=gold
+ducat: plural_count=10 mass=0.0035 integrity=50 material=gold equip_slot=held hands_required=0 value=20 trade_bonus=0.06 charm+1 beauty=6 color=gold
+guilder: plural_count=10 mass=0.006 integrity=40 material=silver equip_slot=held hands_required=0 value=8 trade_bonus=0.04 color=silver
+doubloon: plural_count=10 mass=0.027 integrity=60 material=gold equip_slot=held hands_required=0 value=80 trade_bonus=0.1 charm+2 beauty=8 loudness=1 color=gold
+wampum: plural_count=20 mass=0.05 integrity=10 material=shell equip_slot=held hands_required=0 value=2 trade_bonus=0.03 beauty=6 charm+1 color=white
+ingot: mass=1 length=0.12 integrity=200 hardness=3 material=silver equip_slot=held hands_required=1 value=800 trade_bonus=0.15 charm+2 dmg_blunt=8 color=silver
+bullion: mass=12.4 length=0.25 integrity=300 hardness=3 material=gold equip_slot=held hands_required=2 value=60000 trade_bonus=0.35 charm+5 speed_land*0.85 security+-3 dmg_blunt=20 color=gold
+riches: mass=30 integrity=80 material=gold equip_slot=held hands_required=1 value=50000 trade_bonus=0.35 charm+5 speed_land*0.85 security+-3 loudness=2 color=gold
+lucre: mass=0.2 integrity=2 material=paper flammability=9 equip_slot=held hands_required=0 value=200 trade_bonus=0.12 charm+2 loyalty+-1 color=green
+savings: mass=1 integrity=10 material=paper flammability=8 equip_slot=held hands_required=0 value=1000 storage_letters=150 security+2 trade_bonus=0.1 color=green
+
+# noun adornment
+medallion: mass=0.1 integrity=60 material=gold equip_slot=neck value=800 beauty=8 charm=3 reputation=1 color=gold
+
+# noun container
+till: mass=8 integrity=80 material=steel portable=false lockable=true storage_letters=120 security=4 loudness=2 color=gray
+moneybag: mass=0.5 integrity=15 material=cloth equip_slot=held hands_required=0 storage_letters=60 trade_bonus=0.05 stealth+-1 color=brown
+pocketbook: mass=0.3 integrity=10 material=leather equip_slot=held hands_required=0 storage_letters=30 trade_bonus=0.05 color=black
+stash: mass=5 integrity=20 portable=false stealth=7 storage_letters=150 security=2 color=brown
+cache: mass=50 footprint=1 integrity=200 portable=false stealth=8 storage_letters=300 security=3 placeable_on=land,forest,hill color=brown
+stockpile: mass=5000 footprint=3 integrity=1000 portable=false storage_letters=400 storage_objects=5000 security=2 food_output=1
+
+# noun device
+atm: mass=500 height=1.8 integrity=3000 hardness=8 material=steel portable=false storage_letters=1000 security=8 upkeep_power=0.3 lockable=true alarm=true needs_foundation=true color=gray
+roulette: mass=60 integrity=100 material=wood portable=false placement=self field_radius=8 field_targets=all field_duration=2 lode=z,q,x,j,k lode_share=0.4 lode_stock=4 loudness=3 morale+1 color=red
+
+# noun document
+ledger: mass=1 integrity=10 material=paper flammability=8 equip_slot=held hands_required=1 read_properties=4 storage_letters=40 intelligence+1 counters=fraud,embezzlement,forgery
+budget: mass=0.1 integrity=3 material=paper flammability=8 placement=self field_radius=4 field_targets=self field_duration=10 trade_bonus+0.2 storage_letters=60 counters=splurge,squander
+
+# noun building
+market: mass=20000 footprint=10 integrity=3000 material=wood,stone portable=false enterable=true occupants=200 field_radius=40 field_targets=all trade_rate=0.8 produce_T*1.5 loudness=5 claim_radius=4 needs_foundation=true color=brown
+marketplace: mass=30000 footprint=14 integrity=4000 material=stone portable=false enterable=true occupants=300 field_radius=50 field_targets=all trade_rate=0.75 produce_T*1.6 loudness=5 claim_radius=5 needs_foundation=true color=brown
+agora: mass=50000 footprint=20 integrity=8000 material=marble,stone portable=false enterable=true occupants=500 field_radius=50 field_targets=all trade_rate=0.8 produce_T*1.5 morale+1 intelligence+1 claim_radius=6 beauty=7 color=white
+store: mass=100000 footprint=4 height=5 integrity=3000 material=brick portable=false enterable=true occupants=30 lockable=true storage_letters=200 storage_objects=3000 field_radius=20 field_targets=all trade_rate=0.9 produce_T*1.3 needs_foundation=true claim_radius=2
+mart: mass=80000 footprint=4 height=5 integrity=2500 material=brick portable=false enterable=true occupants=30 storage_letters=150 field_radius=20 field_targets=all trade_rate=0.85 produce_T*1.3 needs_foundation=true claim_radius=2
+grocery: mass=100000 footprint=4 height=5 integrity=3000 material=brick portable=false enterable=true occupants=30 storage_objects=3000 food_output=4 field_radius=20 field_targets=all trade_rate=0.9 produce_T*1.2 needs_foundation=true
+supermarket: mass=3000000 footprint=20 height=8 integrity=20000 material=steel,concrete portable=false enterable=true occupants=500 storage_objects=200000 storage_letters=500 food_output=15 field_radius=60 field_targets=all trade_rate=0.7 produce_T*1.8 upkeep_power=20 needs_foundation=true claim_radius=6
+pawnshop: mass=100000 footprint=3 height=5 integrity=4000 material=brick,steel portable=false enterable=true lockable=true security=6 storage_letters=400 storage_objects=2000 field_radius=20 field_targets=all trade_rate=0.6 inflict_debt=60 needs_foundation=true
+exchequer: mass=2000000 footprint=10 height=12 integrity=50000 material=stone,steel portable=false enterable=true lockable=true security=9 storage_letters=7000 interest=0.03 authority+2 tax_rate=0.05 needs_foundation=true
+
+# noun person
+debtor: mass=70 integrity=80 alive=true sentient=true intelligence=5 loyalty=2 hands=true speech=true speed_land=5 morale=3 security=0 food_need=0.03
+miser: mass=60 integrity=80 alive=true sentient=true intelligence=7 loyalty=7 hands=true speech=true speed_land=3 storage_letters=800 security=8 charm=-3 trade_bonus=0.3 morale=4 food_need=0.01 counters=charity,donation
+scrooge: mass=60 integrity=80 alive=true sentient=true intelligence=7 loyalty=7 hands=true speech=true speed_land=3 storage_letters=1000 security=8 charm=-4 trade_bonus=0.3 fear_aura=1 food_need=0.01 counters=charity,gift,donation
+cheapskate: mass=70 integrity=85 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 storage_letters=200 trade_bonus=0.35 charm=-2 food_need=0.02
+skinflint: mass=60 integrity=80 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 storage_letters=300 security=5 trade_bonus=0.3 charm=-3 food_need=0.02
+tightwad: mass=70 integrity=85 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 storage_letters=250 security=4 trade_bonus=0.3 charm=-2 food_need=0.02
+hoarder: mass=80 integrity=90 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=3 storage_letters=500 storage_objects=2000 security=5 charm=-2 food_need=0.03
+spendthrift: mass=75 integrity=85 alive=true sentient=true intelligence=4 loyalty=3 hands=true speech=true speed_land=5 charm=5 trade_bonus=-0.2 morale=8 food_need=0.04
+millionaire: mass=80 integrity=90 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=4 storage_letters=2000 trade_bonus=0.3 charm=5 authority=3 food_need=0.03
+billionaire: mass=80 integrity=90 alive=true sentient=true intelligence=8 loyalty=9 hands=true speech=true speed_land=4 storage_letters=8000 security=7 trade_bonus=0.4 charm=7 authority=6 command_limit=20 recruit_rate=0.5 food_need=0.03 counters=bribe,payoff,kickback
+plutocrat: mass=85 integrity=90 alive=true sentient=true intelligence=8 loyalty=8 hands=true speech=true speed_land=4 storage_letters=5000 trade_bonus=0.3 authority=6 command_limit=15 field_radius=40 field_targets=enemies tax_rate=0.1 food_need=0.03
+oligarch: mass=85 integrity=90 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 storage_letters=5000 authority=6 command_limit=20 intimidation=6 field_radius=60 field_targets=enemies law=trade fine=3 food_need=0.03
+heiress: mass=60 integrity=80 alive=true sentient=true intelligence=6 loyalty=5 hands=true speech=true speed_land=4 storage_letters=1500 charm=6 beauty=7 survives_death=true food_need=0.03
+pauper: mass=55 integrity=70 alive=true sentient=true intelligence=5 loyalty=1 hands=true speech=true speed_land=5 stealth=3 morale=2 food_need=0.02
+moneylender: mass=75 integrity=90 alive=true sentient=true intelligence=8 loyalty=4 hands=true speech=true speed_land=4 storage_letters=600 security=5 authority=3 inflict_debt=90 attack_rate=0.2 food_need=0.03
+usurer: mass=75 integrity=90 alive=true sentient=true intelligence=8 loyalty=3 hands=true speech=true speed_land=4 storage_letters=600 authority=3 intimidation=4 inflict_debt=150 attack_rate=0.2 reputation=-3 food_need=0.03
+pawnbroker: mass=80 integrity=90 alive=true sentient=true intelligence=7 loyalty=4 hands=true speech=true speed_land=4 storage_letters=400 storage_objects=500 security=6 trade_bonus=0.3 read_properties=4 inflict_debt=60 attack_rate=0.2 food_need=0.03
+appraiser: mass=70 integrity=80 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 read_properties=7 trade_bonus=0.2 detect_stealth=4 food_need=0.03 counters=forgery,counterfeit
+gambler: mass=75 integrity=90 alive=true sentient=true intelligence=6 loyalty=3 hands=true speech=true speed_land=5 critical=0.3 courage=8 charm=3 field_radius=4 field_targets=self lode=z,q,x,j lode_share=0.2 food_need=0.03
+speculator: mass=75 integrity=85 alive=true sentient=true intelligence=8 loyalty=3 hands=true speech=true speed_land=5 trade_bonus=0.3 field_radius=4 field_targets=self produce_T*2 critical=0.2 food_need=0.03
+capitalist: mass=85 integrity=90 alive=true sentient=true intelligence=8 loyalty=4 hands=true speech=true speed_land=4 storage_letters=1000 trade_bonus=0.3 command_limit=10 field_radius=30 field_targets=owned labor*1.3 produce_T*1.5 food_need=0.03
+shareholder: mass=75 integrity=85 alive=true sentient=true intelligence=7 loyalty=5 hands=true speech=true speed_land=4 storage_letters=300 field_radius=4 field_targets=self produce_T*1.5 food_need=0.03
+stockholder: mass=75 integrity=85 alive=true sentient=true intelligence=7 loyalty=5 hands=true speech=true speed_land=4 storage_letters=300 field_radius=4 field_targets=self produce_T*1.5 food_need=0.03
+buyer: mass=75 integrity=90 alive=true sentient=true intelligence=6 loyalty=5 hands=true speech=true speed_land=5 trade_bonus=0.2 charm=3 food_need=0.03
+seller: mass=75 integrity=90 alive=true sentient=true intelligence=6 loyalty=5 hands=true speech=true speed_land=5 trade_bonus=0.25 charm=4 storage_letters=80 food_need=0.03
+shopper: mass=70 integrity=85 alive=true sentient=true intelligence=5 loyalty=5 hands=true speech=true speed_land=5 trade_bonus=0.15 carry_capacity=30 food_need=0.03
+shopaholic: mass=70 integrity=85 alive=true sentient=true intelligence=4 loyalty=3 hands=true speech=true speed_land=6 trade_bonus=-0.2 carry_capacity=40 charm=3 morale=8 food_need=0.03
+haggler: mass=75 integrity=90 alive=true sentient=true intelligence=7 loyalty=5 hands=true speech=true speed_land=5 trade_bonus=0.45 charm=4 loudness=4 food_need=0.03
+bidder: mass=75 integrity=90 alive=true sentient=true intelligence=6 loyalty=5 hands=true speech=true speed_land=5 trade_bonus=0.2 storage_letters=150 food_need=0.03
+renter: mass=70 integrity=85 alive=true sentient=true intelligence=5 loyalty=5 hands=true speech=true speed_land=5 morale=4 food_need=0.03
+taxpayer: mass=75 integrity=90 alive=true sentient=true intelligence=5 loyalty=7 obedience=8 hands=true speech=true speed_land=5 morale=4 food_need=0.03
+breadwinner: mass=80 integrity=110 alive=true sentient=true intelligence=6 loyalty=8 hands=true speech=true speed_land=5 labor=3 strength=6 field_radius=10 field_targets=owned morale+1 food_need=0.04
+patron: mass=80 integrity=90 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 storage_letters=500 charm=5 authority=3 field_radius=12 field_targets=owned training+2 morale+2 food_need=0.03
+sponsor: mass=75 integrity=90 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 storage_letters=400 charm=4 field_radius=12 field_targets=owned morale+2 harvest_bonus*1.2 food_need=0.03
+benefactor: mass=75 integrity=90 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=4 storage_letters=500 charm=6 reputation=4 field_radius=15 field_targets=owned morale+3 heals=1 food_need=0.03
+philanthropist: mass=75 integrity=90 alive=true sentient=true intelligence=8 loyalty=8 hands=true speech=true speed_land=4 storage_letters=2000 charm=7 reputation=6 recruit_rate=0.6 field_radius=30 field_targets=allies morale+3 harvest_bonus*1.2 food_need=0.03 counters=poverty,greed
+donor: mass=75 integrity=90 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=4 storage_letters=300 charm=5 reputation=3 field_radius=10 field_targets=owned morale+2 food_need=0.03
+scalper: mass=75 integrity=90 alive=true sentient=true intelligence=6 loyalty=2 hands=true speech=true speed_land=6 stealth=3 field_radius=20 field_targets=enemies trade_rate=1.8 reputation=-2 food_need=0.03
+payer: mass=75 integrity=90 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=5 storage_letters=100 charm=2 food_need=0.03
+
+# noun worker
+dealer: mass=75 integrity=90 alive=true sentient=true intelligence=7 loyalty=4 hands=true speech=true speed_land=5 trade_bonus=0.35 charm=5 storage_letters=120 food_need=0.03
+retailer: mass=75 integrity=90 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 trade_bonus=0.25 storage_letters=150 storage_objects=500 food_need=0.03
+vendor: mass=75 integrity=90 alive=true sentient=true intelligence=6 loyalty=5 hands=true speech=true speed_land=5 trade_bonus=0.25 charm=4 loudness=4 storage_letters=60 food_need=0.03
+hawker: mass=70 integrity=90 alive=true sentient=true intelligence=6 loyalty=5 hands=true speech=true speed_land=6 trade_bonus=0.25 charm=4 loudness=6 carry_capacity=40 food_need=0.03
+peddler: mass=70 integrity=90 alive=true sentient=true intelligence=6 loyalty=4 hands=true speech=true speed_land=6 trade_bonus=0.3 charm=4 carry_capacity=50 range=40 storage_letters=40 food_need=0.03
+cashier: mass=70 integrity=80 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 labor=1 storage_letters=100 security=3 trade_bonus=0.1 food_need=0.03
+financier: mass=80 integrity=80 alive=true sentient=true intelligence=9 loyalty=4 hands=true speech=true speed_land=4 trade_bonus=0.35 storage_letters=1000 security=6 authority=3 inflict_debt=60 attack_rate=0.2 food_need=0.03
+grocer: mass=80 integrity=90 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 trade_bonus=0.2 storage_letters=100 food_output=3 food_need=0.03
+jeweller: mass=65 integrity=80 alive=true sentient=true intelligence=7 loyalty=5 hands=true speech=true speed_land=4 labor=1 craft_slots=1 crafts=adornment,gold,silver trade_bonus=0.2 read_properties=4 food_need=0.03
+tradesman: mass=85 integrity=120 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 labor=3 build_speed=1.5 craft_slots=1 trade_bonus=0.15 food_need=0.04
+
+# noun possession
+payment: placement=target placement_range=30 event_target=character pays=5 inflict_charm=10 event_duration=1
+salary: placement=target placement_range=30 event_target=character pays=6 inflict_charm=12 loyalty+2 event_duration=1
+pension: placement=target placement_range=40 event_target=character pays=5 morale+2 loyalty+2 event_duration=1
+allowance: placement=target placement_range=30 event_target=character pays=3 inflict_charm=8 loyalty+1 event_duration=1
+stipend: placement=target placement_range=30 event_target=character pays=4 training+1 inflict_charm=8 event_duration=1
+bonus: placement=target placement_range=30 event_target=character pays=4 morale+3 inflict_charm=15 event_duration=1
+reward: placement=target placement_range=40 event_target=character pays=7 morale+3 inflict_charm=15 event_duration=1
+commission: placement=target placement_range=30 event_target=character pays=3 loyalty+3 inflict_charm=10 event_duration=1
+compensation: placement=target placement_range=30 event_target=character pays=6 restores=20 inflict_charm=10 event_duration=1
+remuneration: placement=target placement_range=30 event_target=character pays=6 loyalty+2 inflict_charm=10 event_duration=1
+reimbursement: placement=target placement_range=30 event_target=character pays=5 inflict_charm=8 event_duration=1
+recompense: placement=target placement_range=30 event_target=character pays=6 restores=10 inflict_charm=12 event_duration=1
+restitution: placement=target placement_range=40 event_target=character pays=8 inflict_charm=15 reputation=2 event_duration=1 counters=theft,fraud,embezzlement
+reparation: placement=target placement_range=60 event_target=character pays=10 restores=30 inflict_charm=20 reputation=2 event_duration=1 counters=feud,vendetta
+amends: placement=target placement_range=30 event_target=character pays=4 inflict_charm=30 effect_status=rage event_duration=1 counters=feud,grudge
+remittance: placement=target placement_range=500 event_target=character pays=5 inflict_charm=10 event_duration=1
+disbursement: placement=target placement_range=40 event_target=character pays=6 event_duration=1
+gratuity: placement=target placement_range=20 event_target=character pays=2 inflict_charm=10 event_duration=1
+perk: placement=target placement_range=20 event_target=character pays=2 morale+2 inflict_charm=8 event_duration=1
+pittance: placement=target placement_range=20 event_target=character pays=1 morale+-1 inflict_charm=2 event_duration=1
+incentive: placement=target placement_range=30 event_target=character pays=3 morale+2 labor*1.3 inflict_charm=10 event_duration=1
+handout: placement=target placement_range=30 event_target=character pays=3 morale+1 inflict_charm=8 event_duration=1
+dole: placement=target placement_range=30 event_target=character pays=2 food_need*0.5 inflict_charm=5 event_duration=1
+alms: placement=target placement_range=20 event_target=character pays=3 morale+2 inflict_charm=15 reputation=2 event_duration=1
+charity: placement=target placement_range=50 event_target=character pays=6 morale+3 heals=2 inflict_charm=20 reputation=3 event_duration=1 counters=greed,poverty
+benefit: placement=target placement_range=30 event_target=character pays=3 morale+2 inflict_charm=8 event_duration=1
+funding: placement=target placement_range=60 event_target=character pays=8 build_speed*1.3 inflict_charm=10 event_duration=1
+endowment: placement=target placement_range=60 event_target=character pays=12 inflict_charm=20 training+2 event_duration=1
+scholarship: placement=target placement_range=60 event_target=character pays=5 training+3 intelligence+1 inflict_charm=15 event_duration=1
+bequest: placement=target placement_range=100 event_target=character pays=12 inflict_charm=20 event_duration=1
+dowry: placement=target placement_range=30 event_target=character pays=10 inflict_charm=60 loyalty+3 event_duration=1
+retainer: placement=target placement_range=30 event_target=character pays=5 loyalty+4 obedience+2 inflict_charm=30 event_duration=1
+bankroll: placement=target placement_range=60 event_target=character pays=14 loyalty+3 inflict_charm=30 event_duration=1
+payroll: placement=self field_radius=40 field_targets=owned field_duration=1 pays=3 loyalty+3 morale+2 labor*1.2
+giving: placement=target placement_range=30 event_target=character pays=4 inflict_charm=12 event_duration=1
+pledge: binds=2 bind_penalty=letters,reputation event_duration=6 pays=3
+credit: placement=target placement_range=30 event_target=character pays=8 inflict_debt=240 contest_with=authority contested_by=security
+overdraft: placement=target placement_range=30 event_target=character pays=4 inflict_debt=150 morale+-1 contest_with=authority contested_by=security
+installment: placement=target placement_range=60 event_target=character inflict_debt=60 contest_with=authority contested_by=security
+arrears: placement=target placement_range=60 event_target=character inflict_debt=200 morale+-2 contest_with=authority contested_by=security counters=bankruptcy
+collateral: placement=target placement_range=30 event_target=character pays=10 inflict_debt=300 security+-3 contest_with=authority contested_by=security
+alimony: placement=target placement_range=100 event_target=character inflict_debt=300 morale+-2 contest_with=authority contested_by=charm
+rent: placement=target placement_range=40 event_target=character inflict_debt=120 contest_with=authority contested_by=security
+fine: placement=target placement_range=30 event_target=character letter_steal=5 contest_with=authority contested_by=charm event_duration=1
+damages: placement=target placement_range=40 event_target=character letter_steal=10 contest_with=authority contested_by=charm event_duration=1
+fee: placement=target placement_range=30 event_target=character letter_steal=3 contest_with=authority contested_by=security event_duration=1
+expense: placement=target placement_range=30 event_target=character letter_steal=4 contest_with=authority contested_by=security event_duration=1
+cost: placement=target placement_range=30 event_target=character letter_steal=4 contest_with=authority contested_by=security event_duration=1
+deduction: placement=target placement_range=30 event_target=character letter_steal=2 contest_with=authority contested_by=security event_duration=1
+repayment: placement=target placement_range=30 event_target=character pays=6 effect_status=debt inflict_charm=10 event_duration=1
+exemption: placement=self field_radius=4 field_targets=self field_duration=10 immune_debt=true counters=tax,tithe,toll,tariff,levy,customs,duty,fine,excise,taxation
+insurance: placement=self field_radius=30 field_targets=owned field_duration=15 reclaim_rate=0.6 reclaim_range=30 letter_refund+0.5 counters=disaster,fire,flood,theft
+deposit: placement=self field_radius=4 field_targets=self field_duration=20 storage_letters=100 security+2 interest=0.01
+withdrawal: placement=self field_radius=4 field_targets=self field_duration=3 trade_bonus+0.2 security+-2
+profit: placement=self field_radius=4 field_targets=self field_duration=5 produce_T*2 morale+1
+revenue: placement=self field_radius=4 field_targets=self field_duration=6 produce_T*2
+income: placement=self field_radius=4 field_targets=self field_duration=10 produce_T*1.8
+earnings: placement=self field_radius=4 field_targets=self field_duration=6 produce_T*2 harvest_bonus*1.1
+share: placement=self field_radius=4 field_targets=self field_duration=6 produce_T*1.5 harvest_bonus*1.1
+stock: placement=self field_radius=4 field_targets=self field_duration=8 produce_T*2
+equity: placement=self field_radius=4 field_targets=self field_duration=10 produce_T*1.5 security+1
+capital: placement=self field_radius=4 field_targets=self field_duration=10 produce_T*2 build_speed*1.3 trade_bonus+0.2 counters=recession,crash
+wealth: placement=self field_radius=4 field_targets=self field_duration=10 produce_T*2 trade_bonus+0.3 charm+3 security+-3 counters=poverty
+luxury: placement=self field_radius=10 field_targets=owned field_duration=10 comfort+5 morale+2 beauty+2 value*3 speed_land*0.9
+venture: placement=self field_radius=4 field_targets=self field_duration=10 produce_T*3 lode=z,q,x lode_share=0.1 counters=recession,crash
+winnings: placement=self field_radius=4 field_targets=self field_duration=2 lode=z,q,x,j lode_share=1 lode_stock=4 morale+2
+goodwill: placement=self field_radius=30 field_targets=all field_duration=10 charm+3 reputation=4 aggression+-2 trade_rate=0.85
+
+# noun exchange
+deal: binds=2 bind_penalty=letters,reputation event_duration=6 trade_bonus+0.2 trade_rate=0.8
+sales: placement=self field_radius=30 field_targets=all field_duration=5 trade_rate=0.7 produce_T*2
+exchange: placement=self field_radius=50 field_targets=all field_duration=8 trade_rate=0.6 produce_T*2 loudness=5 counters=embargo,sanction
+economy: placement=map field_radius=ABS field_targets=all field_duration=6 trade_rate=0.9 produce_T*1.5 labor*1.1
+commerce: placement=region placement_range=200 field_radius=120 field_targets=all field_duration=8 trade_rate=0.8 produce_T*2 counters=embargo,blockade
+trading: placement=self field_radius=30 field_targets=all field_duration=6 trade_rate=0.8 produce_T*1.6
+retail: placement=self field_radius=25 field_targets=all field_duration=8 trade_rate=0.9 produce_T*1.4
+wholesale: placement=self field_radius=40 field_targets=owned field_duration=6 trade_rate=0.5 produce_T*1.5
+discount: placement=self field_radius=20 field_targets=all field_duration=5 trade_rate=0.6 charm+1
+barter: placement=self field_radius=20 field_targets=all field_duration=5 trade_rate=0.6 law=theft counters=embargo,inflation
+swap: placement=target placement_range=20 event_target=object transfers_ownership=true pays=4 contest_with=pays contested_by=loyalty
+purchase: placement=target placement_range=30 event_target=object transfers_ownership=true pays=6 contest_with=pays contested_by=loyalty
+acquisition: placement=target placement_range=60 event_target=structure transfers_ownership=true pays=12 contest_with=pays contested_by=security
+transfer: placement=target placement_range=100 event_target=character pays=6 event_duration=1
+transaction: placement=target placement_range=30 event_target=character pays=3 trade_bonus+0.1 event_duration=1
+business: placement=self field_radius=20 field_targets=owned field_duration=10 produce_T*1.8 labor*1.2 trade_bonus+0.15
+industry: placement=region placement_range=100 field_radius=60 field_targets=owned field_duration=10 labor*1.5 build_speed*1.3 produce_T*1.5 odor+2 loudness=4
+advertising: placement=region placement_range=200 field_radius=80 field_targets=all field_duration=5 charm+3 recruit_rate+0.5 trade_rate=0.9 produce_T*1.3 loudness=5
+markup: placement=self field_radius=25 field_targets=enemies field_duration=6 trade_rate=1.5 produce_T*1.5
+surcharge: placement=region placement_range=100 field_radius=40 field_targets=enemies field_duration=6 trade_rate=1.5 fine=2 law=trade
+taxation: placement=region placement_range=100 field_radius=80 field_targets=enemies field_duration=10 tax_rate=0.25 reputation=-3 morale+-1
+excise: placement=region placement_range=100 field_radius=60 field_targets=enemies field_duration=8 tax_rate=0.15 trade_rate=1.3
+fare: placement=target placement_range=40 field_radius=12 field_targets=enemies field_duration=15 tax_rate=0.3
+price: placement=self field_radius=20 field_targets=all field_duration=5 trade_rate=1.3 produce_T*1.5
+speculation: placement=map field_radius=ABS field_targets=all field_duration=4 trade_rate=1.3 produce_T*2 counters=crash
+bubble: placement=map field_radius=ABS field_targets=all field_duration=3 trade_rate=1.6 produce_T*2.5 morale+2 counters=crash,recession
+slump: placement=region placement_range=300 field_radius=300 field_targets=all field_duration=6 trade_rate=1.4 produce_T*0.3 morale+-2 counters=boom,bubble
+downturn: placement=region placement_range=300 field_radius=300 field_targets=all field_duration=6 trade_rate=1.3 produce_T*0.5 morale+-1 counters=boom,upturn
+upturn: placement=region placement_range=300 field_radius=300 field_targets=all field_duration=6 trade_rate=0.9 produce_T*1.8 morale+1 counters=slump,downturn,recession
+capitalism: placement=map field_radius=ABS field_targets=all field_duration=10 trade_rate=0.8 produce_T*2 morale+1 counters=communism,socialism
+socialism: placement=region placement_range=200 field_radius=200 field_targets=all field_duration=10 tax_rate=0.3 harvest_bonus*1.2 morale+1 trade_rate=1.2 counters=capitalism
+communism: placement=region placement_range=200 field_radius=250 field_targets=all field_duration=10 law=trade tax_rate=0.5 labor*1.3 authority+3 produce_T*0 counters=capitalism,democracy
+lottery: placement=map field_radius=ABS field_targets=all field_duration=1 lode=z,q,x,j,k lode_share=0.5 lode_stock=10 morale+1
+bet: placement=self field_radius=4 field_targets=self field_duration=1 lode=z,q,x,j lode_share=0.5 lode_stock=2 morale+1
+wager: placement=self field_radius=4 field_targets=self field_duration=1 lode=z,q,x,j,k lode_share=0.6 lode_stock=3 courage+1
+gamble: placement=self field_radius=4 field_targets=self field_duration=2 lode=z,q,x,j,k,v lode_share=0.7 lode_stock=4 courage+2 critical+0.1
+ante: placement=self field_radius=4 field_targets=self field_duration=1 lode=z,q lode_share=0.3 lode_stock=2
+
+# noun act
+liquidation: placement=target placement_range=60 event_target=structure destroys_target=true reclaim_rate=1 reclaim_range=20 contest_with=authority contested_by=security
+repossession: placement=target placement_range=40 event_target=object transfers_ownership=true contest_with=authority contested_by=security
+forfeiture: placement=target placement_range=40 event_target=object transfers_ownership=true contest_with=authority contested_by=charm
+eviction: placement=target placement_range=60 event_target=structure frees_target=true contest_with=authority contested_by=security
+deficit: placement=target placement_range=100 field_radius=20 field_targets=enemies field_duration=8 produce_T*0.5 trade_rate=1.3 morale+-1
+spree: placement=self field_radius=4 field_targets=self field_duration=3 trade_bonus+-0.3 morale+3 speed_land*1.2 carry_capacity*1.5
+
+# adjective quality
+valuable: value*10 beauty+1 security+-1 charm+1
+costly: value*6 trade_rate*1.5 beauty+1
+pricey: value*4 trade_rate*1.4
+pricy: value*4 trade_rate*1.4
+overpriced: value*0.8 trade_rate*2 charm+-1
+priceless: value*100 beauty+3 charm+3 security+-4 integrity*1.5
+worthless: value*0 trade_rate*0.2 charm+-2 beauty+-2
+premium: value*3 integrity*1.3 beauty+1 trade_rate*1.3
+gross: odor+4 beauty+-4 charm+-3 value*0.5 inflict_sick+5
+real: decoys*0 value*2 negates=disguise
+boring: charm+-3 beauty+-2 inflict_sleep+3 loudness+-1
+due: inflict_debt+40
+overdue: inflict_debt+90 morale+-1
+unpaid: inflict_debt+60 loyalty+-2 morale+-2
+payable: inflict_debt+30
+frugal: food_need*0.7 upkeep_fuel*0.7 storage_letters*1.5 trade_bonus+0.1 charm+-1
+thrifty: food_need*0.8 upkeep_fuel*0.8 storage_letters*1.4 trade_bonus+0.15
+stingy: storage_letters*1.5 security+2 charm+-3 loyalty+-1
+miserly: storage_letters*2 security+3 charm+-4 morale+-1
+generous: charm+4 loyalty+2 reputation+2 storage_letters*0.7
+lavish: value*5 beauty+3 comfort+3 charm+3 storage_letters*0.5
+affluent: value*8 trade_bonus+0.25 charm+2 comfort+2 security+-2
+opulent: value*15 beauty+4 comfort+4 charm+3 security+-3
+moneyed: value*10 trade_bonus+0.3 authority+1 security+-2
+prosperous: value*5 produce_T*1.5 morale+2 trade_bonus+0.2
+flush: value*4 trade_bonus+0.2 charm+2 morale+1
+destitute: value*0.05 morale+-3 loyalty+-3 food_need*1.2 stealth+2
+impoverished: value*0.1 morale+-2 loyalty+-2 trade_bonus+-0.2
+needy: loyalty+-3 morale+-1 charm+1 food_need*1.2
+penniless: value*0 trade_bonus+-0.3 loyalty+-3 stealth+2 morale+-2
+insolvent: value*0.1 trade_bonus+-0.4 security+-3 reputation+-2
+profitable: produce_T*2 value*2
+unprofitable: produce_T*0.5 value*0.5 morale+-1
+avaricious: loyalty+-4 letter_steal+1 charm+-2 trade_bonus+0.2
+covetous: loyalty+-3 letter_steal+1 aggression+1
+
+# verb transfer
+buy: effect_target=touched transfers_ownership=true pays=6 contest_with=pays contested_by=loyalty duration=1
+sell: duration=60 trade_bonus+0.3 charm+2 produce_T*2
+borrow: effect_target=touched pays=6 inflict_debt=200 duration=1
+owe: effect_target=touched inflict_debt=120 loyalty+2 duration=1
+keep: duration=120 security+4 storage_letters*1.5 locks=true
+take: effect_target=touched transfers_ownership=true contest_with=strength contested_by=security duration=1
+reserve: duration=120 storage_letters+100 security+2
+finance: effect_target=touched pays=10 inflict_debt=180 duration=1
+donate: effect_target=touched pays=5 reputation+2 inflict_charm=15 duration=1
+endow: effect_target=touched pays=10 training+2 inflict_charm=20 duration=1
+subsidize: effect_target=touched pays=6 build_speed*1.3 duration=1
+subsidise: effect_target=touched pays=6 build_speed*1.3 duration=1
+reimburse: effect_target=touched pays=5 inflict_charm=8 duration=1
+compensate: effect_target=touched pays=6 restores=15 duration=1
+repay: effect_target=touched pays=5 effect_status=debt duration=1
+withdraw: duration=60 trade_bonus+0.2 security+-2 storage_letters*0.5
+resell: duration=60 trade_bonus+0.25 produce_T*1.5
+peddle: duration=120 trade_bonus+0.2 speed_land*1.1 loudness+3 produce_T*1.5
+vend: duration=120 trade_bonus+0.2 produce_T*1.5
+
+# verb social
+splurge: duration=60 trade_bonus+-0.4 morale+4 charm+3 comfort+2
+squander: duration=60 trade_bonus+-0.5 morale+2 storage_letters*0.5
+extort: effect_target=touched letter_steal=8 inflict_fear=10 contest_with=intimidation contested_by=courage duration=1
+outbid: duration=30 trade_bonus+0.4 charm+1
+overcharge: duration=60 trade_rate*1.5 produce_T*2 reputation+-2 charm+-1
+win: duration=30 morale+4 courage+3 critical+0.2 charm+2
