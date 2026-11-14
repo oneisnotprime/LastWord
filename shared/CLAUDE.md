@@ -30,12 +30,28 @@ server and the client import this, so anything here must give the same answer on
   `Deposits.problem` says why gathering would find nothing; `GATHER_REASONS` names each deposit
   for the letter popup; `cachePrize` is the prize at a cache's bottom; `LETTER_GUIDE` is the
   alphabet guide under the spell box (test-checked against the data).
+- `produce.ts` things you own that make letters (PLAN.md table): `producerOf` reads `produce_*`
+  and `production_needs` (tilled, water, labor, wind, flow, claim, harvest, extract, vowel or a
+  letter used up); `outputOf` gives letters a minute in measured `Conditions` and why not
+  ("needs tilled land", "no wind"); `windAt` (map wind), `moistureAt`, `Soil` (fertility per
+  8-tile patch, worn by crops), `ageRate` (Y from age), `needsText`, `producingLine`.
+  `Tile.Field` is tilled land; a `soil` stamp changes only `SOIL` tiles.
 - `economy.ts` `starterHand` (eight letters around a word that produces something, `starterWords`)
-  and `reachability`/`reachTable`: the shortest chain from the action letters to every letter;
-  its test prints the table.
+  and `reachability`/`reachTable`: the shortest chain from the action letters to every letter,
+  through producers whose needs are reached (a crop needs a tilling word, furniture a claim);
+  its test prints the table. `PENDING_SOURCES` lists letters no source reaches yet.
 - `unit.ts` a character with its gear: damage layers, held weapon scaled by strength and
   training, riding. `strikeUnit` hits the outermost layer.
+- `biome.ts` biomes (`BIOMES`, one per walkable `Tile`; `generateMap` lays large regions from
+  ranked temperature and moisture): each has a name, a `habitat` tag, a forage chance (12-35%:
+  most tries find nothing) and the letters it finds. `toolHelp`: things whose `harvest_sources`
+  name a kind of gathering add 10 points a point of `harvest_bonus` (SHOVEL dig, NET fish, BASKET
+  forage); `roll`/`rollText` ("JUNGLE 35% · +10% SHOVEL"); `wildlife` (creatures by `habitat`,
+  the big and fierce rarer); `huntYield` (H, the animal's first letter, more for big bodies,
+  blades, bows on birds, hunting gear, a rare letter from far-off animals).
 - `status.ts` `STATUS_RULES`: the one table of what each status (stun, fear, poison...) does;
+  `statusSeconds` stretches a word's seconds (`STATUS_STRETCH`, bent back past `STATUS_HORIZON`),
+  `effectSeconds` a verb's or a use's `duration` (about twenty times);
   `afflict` gives a struck body its attacker's `inflict_*` unless `immune_*`, `hampered` says
   what it may still do, `statusDamage` is a second of burn, poison or bleed.
 - `path.ts` `findPath`: A* over tiles around anything that cannot be walked, preferring roads;
@@ -58,7 +74,8 @@ server and the client import this, so anything here must give the same answer on
 - `inspect.ts` `eventCard` and `countersOf`: what an event, field or weather in force does, and the
   words that end it (event chips).
 - `inspect.ts` cards telling what something is (spell preview, right-click inspect): `inspectText`,
-  `cardOf`, `keyStats`, `behaviours`; `becomes` (creature, worn, terrain or ground: the rule the
+  `cardOf`, `keyStats`, `behaviours`; `heldText` (one line: what carrying it does, or "no effect
+  held"), `effectText` (what something in force on you does); `becomes` (creature, worn, terrain or ground: the rule the
   server's `make` uses) and `aimOf` (whether a spelling is clicked onto someone, anywhere, or neither).
 - `sense.ts` `senseOf`: a noun that only shows things (`map_reveal`, `detect_letters`,
   `detect_life`, nothing else but make-up) is part of its owner's screen, a minimap, not an object;

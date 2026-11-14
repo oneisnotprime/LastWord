@@ -35,6 +35,14 @@ export interface LoadoutDetail {
   creatures: { name: string; health: number; hungry?: boolean; fleeing?: boolean }[];
   /** Words that are part of your screen (shared `senseOf`): a MAP's minimap. Empty: no minimap. */
   senses: { word: string; reveal: number; letters: number; life: number }[];
+  /** What each of your producers is making a minute, or why it is not (shared `producingLine`). */
+  producing?: string[];
+  /**
+   * Letters coming in a minute from what you own, by letter, with what makes them ("HOE, FARM";
+   * Y: "age of 5 things"). Whatever belongs to you produces: on the ground, as a creature, or
+   * carried, worn and ridden.
+   */
+  income?: { letter: string; rate: number; from: string }[];
 }
 
 /** What a player's senses pick up, sent about once a second while they have any: map positions in tiles. */

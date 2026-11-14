@@ -4,11 +4,12 @@ import { seeded } from "./rng.js";
 export const TILE_METERS = 4;
 
 /**
- * Kinds of ground. Numbers are sent and stamped by both sides, so new kinds go at the end. The
- * kinds after Wall are biomes laid by `generateMap` (and by terrain words): see shared `biome.ts`.
+ * Kinds of ground. Numbers are sent and stamped by both sides, so new kinds go at the end. Field
+ * is tilled land; the kinds after it are biomes laid by `generateMap` (and by terrain words): see
+ * shared `biome.ts`.
  */
 export enum Tile {
-  DeepWater, Water, Sand, Grass, Forest, Hill, Mountain, Road, City, Pit, Snow, Swamp, Lava, Wall,
+  DeepWater, Water, Sand, Grass, Forest, Hill, Mountain, Road, City, Pit, Snow, Swamp, Lava, Wall, Field,
   Jungle, Desert, Tundra, Savanna, Badlands, Ash, Meadow, Taiga, Marsh,
 }
 
@@ -28,6 +29,7 @@ export const WALK_COST: Record<Tile, number> = {
   [Tile.Swamp]: 4,
   [Tile.Lava]: Infinity,
   [Tile.Wall]: Infinity,
+  [Tile.Field]: 1.2,
   [Tile.Jungle]: 2.2,
   [Tile.Desert]: 1.4,
   [Tile.Tundra]: 1.4,
@@ -42,14 +44,20 @@ export const WALK_COST: Record<Tile, number> = {
 /** The `tile_type` property's values, as map tiles. */
 export const TILE_TYPES: Record<string, Tile> = {
   water: Tile.Water, deep_water: Tile.DeepWater, hill: Tile.Hill, mountain: Tile.Mountain, pit: Tile.Pit,
-  forest: Tile.Forest, field: Tile.Grass, sand: Tile.Sand, snow: Tile.Snow, swamp: Tile.Swamp,
+  forest: Tile.Forest, field: Tile.Grass, tilled: Tile.Field, sand: Tile.Sand, snow: Tile.Snow, swamp: Tile.Swamp,
   lava: Tile.Lava, road: Tile.Road, floor: Tile.City, wall: Tile.Wall,
   jungle: Tile.Jungle, desert: Tile.Desert, tundra: Tile.Tundra, savanna: Tile.Savanna, badlands: Tile.Badlands,
   ash: Tile.Ash, meadow: Tile.Meadow, taiga: Tile.Taiga, marsh: Tile.Marsh,
 };
 
 /** A change a word made to the map: a disc of one kind of tile. */
-export interface Stamp { x: number; y: number; radius: number; tile: Tile }
+export interface Stamp { x: number; y: number; radius: number; tile: Tile; soil?: boolean }
+
+/** Ground that can be tilled into crop land: a `soil` stamp changes only these. */
+export const SOIL: readonly Tile[] = [
+  Tile.Grass, Tile.Forest, Tile.Sand, Tile.Snow, Tile.Swamp, Tile.Hill, Tile.Field,
+  Tile.Jungle, Tile.Desert, Tile.Tundra, Tile.Savanna, Tile.Badlands, Tile.Ash, Tile.Meadow, Tile.Taiga, Tile.Marsh,
+];
 
 /** Applies a stamp. Server and client both do this, in the same order, so their maps agree. */
 export function stampTerrain(map: WorldMap, s: Stamp): void {
@@ -57,7 +65,9 @@ export function stampTerrain(map: WorldMap, s: Stamp): void {
   // Only tiles on the map are visited, so a stamp far larger than the map costs no more than the map.
   for (let y = Math.max(0, Math.floor(s.y - r)); y <= Math.min(map.size - 1, Math.floor(s.y + r)); y++) {
     for (let x = Math.max(0, Math.floor(s.x - r)); x <= Math.min(map.size - 1, Math.floor(s.x + r)); x++) {
-      if (Math.hypot(x + 0.5 - s.x, y + 0.5 - s.y) <= r + 0.5) map.tiles[y * map.size + x] = s.tile;
+      if (Math.hypot(x + 0.5 - s.x, y + 0.5 - s.y) > r + 0.5) continue;
+      if (s.soil && !SOIL.includes(map.tiles[y * map.size + x]! as Tile)) continue;
+      map.tiles[y * map.size + x] = s.tile;
     }
   }
 }

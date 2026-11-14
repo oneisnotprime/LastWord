@@ -115,7 +115,7 @@ rune	letter and word meta	4	7.0	1.8	-	noun:inert
 name	letter and word meta	4	7.5	1.9	-	noun:attribute
 noun	letter and word meta	4	7.6	1.9	-	noun:inert
 letter	letter and word meta	6	8.5	1.4	-	noun:document
-press	letter and word meta	5	9.6	1.9	-	verb:contact
+press	letter and word meta	5	9.6	1.9	-	noun:machine
 spell	letter and word meta	5	10.0	2.0	-	verb:create
 type	letter and word meta	4	11.1	2.8	-	noun:knowledge
 printer	letter and word meta	7	12.0	1.7	-	noun:worker

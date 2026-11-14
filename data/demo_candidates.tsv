@@ -346,7 +346,7 @@ pool	noun	terrain	water	4.67	core	n09420266	verb:transfer
 pop	noun	consumable	drink	4.87	core	n07943752	verb:movement,adjective:quality,adverb:manner
 port	noun	artifact	building	4.73	core	n08651532	adjective:quality,verb:movement
 post	noun	artifact	structure	5.43	core	n08641960	verb:contact
-press	verb	spell	contact	5.16	core	v01449876	noun:machine
+press	noun	artifact	machine	5.16	core	n04006669	verb:contact
 pretty	adjective	modifier	quality	5.38	core	a00221674	adverb:manner
 prince	noun	person	leader	4.72	core	n10492384	-
 prison	noun	artifact	building	4.8	core	n04012006	-

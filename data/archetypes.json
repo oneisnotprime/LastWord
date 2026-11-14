@@ -11,7 +11,7 @@
  {
   "class": "artifact",
   "archetype": "artifact",
-  "words": 1591,
+  "words": 1589,
   "groups": [
    "physical",
    "mobility",
@@ -41,7 +41,7 @@
  {
   "class": "artifact",
   "archetype": "structure",
-  "words": 628,
+  "words": 631,
   "groups": [
    "physical",
    "mobility",
@@ -266,7 +266,7 @@
  {
   "class": "artifact",
   "archetype": "machine",
-  "words": 92,
+  "words": 93,
   "groups": [
    "physical",
    "mobility",
@@ -938,7 +938,7 @@
  {
   "class": "person",
   "archetype": "person",
-  "words": 4400,
+  "words": 4398,
   "groups": [
    "physical",
    "life",
@@ -954,7 +954,7 @@
  {
   "class": "person",
   "archetype": "worker",
-  "words": 905,
+  "words": 906,
   "groups": [
    "physical",
    "life",
@@ -1026,7 +1026,7 @@
  {
   "class": "spell",
   "archetype": "contact",
-  "words": 614,
+  "words": 613,
   "groups": [
    "effect"
   ]

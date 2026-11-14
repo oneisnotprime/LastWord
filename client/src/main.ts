@@ -853,7 +853,7 @@ class World extends Phaser.Scene {
       const stamps: { x: number; y: number; radius: number }[] = [];
       for (; this.editsApplied < state.edits.length; this.editsApplied++) {
         const e = state.edits[this.editsApplied];
-        stampTerrain(this.map, { x: e.x, y: e.y, radius: e.radius, tile: e.tile });
+        stampTerrain(this.map, { x: e.x, y: e.y, radius: e.radius, tile: e.tile, soil: e.soil });
         stamps.push(e);
       }
       this.sendMap();
@@ -946,7 +946,7 @@ class World extends Phaser.Scene {
     state.players.forEach((p: any, id: string) => { if (id !== mine && p.owner === "") others++; });
     this.myName = String(me.name);
     this.hud.hud({ name: this.myName, hp: me.hp, alive: state.alive || others + 1, clock: state.clock ?? 0 });
-    this.hud.corner(Tile[tileAt(this.map, me.x, me.y)] ?? "", Math.floor(me.x), Math.floor(me.y));
+    this.hud.corner(Tile[tileAt(this.map, me.x, me.y)] ?? "", Math.floor(me.x), Math.floor(me.y), state.wind ?? 0);
     this.hud.where(
       `${Tile[tileAt(this.map, me.x, me.y)]} · ${Math.round(me.x * TILE_METERS)}, ${Math.round(me.y * TILE_METERS)} m · ` +
       `${others} other${others === 1 ? "" : "s"} in sight${state.daylight === "night" ? " · night" : ""}${state.weather ? ` · ${state.weather}` : ""}`,

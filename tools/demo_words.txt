@@ -141,7 +141,6 @@ seal: mass=150 length=2 integrity=200 alive=true diet=carnivore food_need=0.05 s
 tiger: mass=220 length=2.8 integrity=550 alive=true aggression=8 diet=carnivore food_need=0.2 speed_land=18 speed_water=2 jump=5 stealth=7 camouflage=forest night_vision=true dmg_slash=100 dmg_pierce=80 attack_rate=1 inflict_bleed=8 fear_aura=6 habitat=jungle
 rabbit: mass=2 length=0.4 integrity=6 alive=true diet=herbivore food_need=0.002 speed_land=14 evasion=0.4 stealth=4 reproduction=12 pack_size=4 courage=0 edible=true nutrition=4 habitat=meadow,forest
 hare: mass=4 length=0.6 integrity=8 alive=true diet=herbivore food_need=0.003 speed_land=18 evasion=0.5 courage=0 res_cold=0.4 edible=true nutrition=5 habitat=meadow,tundra,hills
-goat: mass=50 length=1.3 integrity=60 alive=true diet=herbivore food_need=0.03 speed_land=10 climb=8 jump=2 dmg_blunt=15 attack_rate=0.8 courage=4 produce_I=0.4 tamable=true habitat=hills,badlands
 boar: mass=100 length=1.5 integrity=180 alive=true aggression=4 courage=7 diet=omnivore food_need=0.1 speed_land=14 dmg_pierce=35 attack_rate=1 armor=2 smell_range=300 edible=true nutrition=20 habitat=forest,taiga
 squirrel: mass=0.5 length=0.4 integrity=3 alive=true diet=herbivore speed_land=8 climb=10 agility=9 evasion=0.5 stealth=5 courage=0 storage_letters=10 habitat=forest,taiga
 badger: mass=12 length=0.8 integrity=50 alive=true aggression=3 courage=8 diet=omnivore speed_land=7 speed_underground=0.3 dmg_slash=15 attack_rate=1.2 habitat=forest,meadow
@@ -863,3 +862,60 @@ robbery: placement=region event_radius=30 event_duration=2 produce_V*2 produce_X
 burglary: placement=region event_radius=20 event_duration=2 produce_D*2 produce_X*2 stealth+5
 piracy: placement=region event_radius=200 event_duration=5 field_targets=enemies law=trade produce_O*0 produce_X*2
 smuggling: placement=region event_radius=10 event_duration=5 trade_rate=0.5 stealth+3 counters=customs,tariff,embargo,blockade
+
+# Producers: the words PLAN.md "Letter economy" names, and their kin. What each makes and needs
+# is in tools/producers.txt.
+# noun tool
+hoe: mass=1.5 length=1.5 integrity=60 material=steel,wood portable=false fertility=5 food_output=1
+plough: mass=200 length=2 integrity=200 material=steel portable=false fertility=6 food_output=2
+
+# noun produce
+potato: mass=0.3 height=0.5 integrity=2 alive=true diet=photosynthesis growth_time=5 food_output=0.6 edible=true nutrition=4 plural_count=20
+
+# noun mammal
+ox: mass=800 length=2.6 integrity=600 alive=true diet=herbivore food_need=0.3 speed_land=6 tow_capacity=4000 labor=6 dmg_blunt=60 attack_rate=0.4 tamable=true courage=6
+goat: mass=60 length=1.2 integrity=40 alive=true diet=herbivore food_need=0.05 speed_land=9 climb=8 food_output=0.5 dmg_blunt=12 attack_rate=0.8 reproduction=1 tamable=true habitat=hills,badlands
+
+# noun bird
+hen: mass=2 length=0.4 integrity=4 alive=true diet=omnivore food_need=0.003 speed_land=4 food_output=0.4 reproduction=6 courage=0
+
+# noun structure
+hedge: mass=500 footprint=1 height=2 integrity=300 alive=true diet=photosynthesis material=wood portable=false blocks=land cover=0.3 claim_radius=4 flammability=5 counters=stampede,herd
+kiln: mass=4000 footprint=2 height=3 integrity=4000 material=brick,clay portable=false temperature=1000 craft_slots=2 upkeep_fuel=0.1 luminosity=3
+furnace: mass=5000 footprint=2 height=3 integrity=5000 material=brick,iron portable=false temperature=1400 craft_slots=2 upkeep_fuel=0.3 luminosity=4
+quarry: mass=100000 footprint=6 depth=20 integrity=8000 material=stone portable=false placeable_on=hill,mountain,land
+orchard: mass=30000 footprint=16 height=6 integrity=3000 material=wood portable=false alive=true diet=photosynthesis food_output=4 beauty=6 flammability=5 cover=0.3
+vineyard: mass=20000 footprint=12 height=2 integrity=2000 material=wood portable=false alive=true diet=photosynthesis food_output=2 beauty=6 flammability=5
+
+# noun artifact
+anvil: mass=100 integrity=5000 hardness=9 material=iron portable=false craft_slots=1
+generator: mass=800 footprint=1 integrity=1500 material=steel portable=false power_output=40 upkeep_fuel=0.2 loudness=6
+
+# noun machine
+windmill: mass=30000 footprint=3 height=18 integrity=2500 material=wood,stone portable=false power_output=10 flammability=4
+lathe: mass=900 footprint=1 integrity=2000 material=steel portable=false upkeep_power=3 craft_slots=1 loudness=5
+loom: mass=300 footprint=1 integrity=500 material=wood portable=false upkeep_power=1 craft_slots=1
+turbine: mass=20000 footprint=2 height=30 integrity=3000 material=steel portable=false power_output=60 loudness=6
+sawmill: mass=20000 footprint=4 height=6 integrity=3000 material=wood,steel portable=false upkeep_power=2 loudness=7
+press: mass=2000 footprint=1 integrity=3000 material=iron portable=false upkeep_power=4 dmg_crush=150 loudness=6
+
+# noun furniture
+sofa: mass=60 footprint=1 integrity=80 material=wood,cloth occupants=3 regeneration+0.5
+couch: mass=55 footprint=1 integrity=80 material=wood,cloth occupants=3 regeneration+0.5
+rug: mass=10 integrity=20 material=cloth beauty=6 flammability=6
+stool: mass=3 integrity=30 material=wood plural_count=4
+cradle: mass=15 integrity=40 material=wood occupants=1
+workbench: mass=80 footprint=1 integrity=300 material=wood craft_slots=2 build_speed=1.5
+
+# noun material
+compost: mass=20 integrity=5 fertility=8 odor=6 single_use=true
+manure: mass=20 integrity=5 fertility=9 odor=9 single_use=true
+
+# noun worker
+aide: mass=70 integrity=90 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=5 labor=2 food_need=0.03
+servant: mass=70 integrity=90 alive=true sentient=true intelligence=5 loyalty=8 hands=true speech=true speed_land=5 labor=3 food_need=0.03
+labourer: mass=80 integrity=110 alive=true sentient=true intelligence=4 loyalty=5 hands=true speech=true speed_land=5 labor=5 carry_capacity=40 food_need=0.04
+laborer: mass=80 integrity=110 alive=true sentient=true intelligence=4 loyalty=5 hands=true speech=true speed_land=5 labor=5 carry_capacity=40 food_need=0.04
+farmhand: mass=75 integrity=100 alive=true sentient=true intelligence=4 loyalty=6 hands=true speech=true speed_land=5 labor=4 harvest_bonus=1.5 harvest_sources=field food_need=0.03
+peasant: mass=65 integrity=80 alive=true sentient=true intelligence=4 loyalty=4 hands=true speech=true speed_land=5 labor=3 food_need=0.02
+hireling: mass=75 integrity=100 alive=true sentient=true intelligence=5 loyalty=3 hands=true speech=true speed_land=5 labor=4 food_need=0.03

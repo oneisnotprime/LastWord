@@ -39,6 +39,9 @@ export const DEED_SOURCES: Readonly<Record<string, string>> = {
   v: "beating another player's things and creatures",
 };
 
+/** Common letters a transmutation takes for one Z, unless something you own (`transmute_in`, a LAB) does it for fewer. */
+export const TRANSMUTE_RATIO = 10;
+
 /** One kind of ground deposit: the letter, how many a patch holds, and seconds to grow one back (0: never). */
 export interface DepositKind { letter: string; stock: number; regen: number; weight: number }
 
@@ -438,30 +441,30 @@ export const GATHER_REASONS: Readonly<Record<Deposit, string>> = { forage: "fora
  */
 export interface LetterHow { how: string; words?: string[]; later?: string }
 export const LETTER_GUIDE: Readonly<Record<string, LetterHow>> = {
-  a: { how: "crops", words: ["farm", "corn"] },
-  b: { how: "furniture", words: ["bed", "home"] },
-  c: { how: "crafting", words: ["forge", "lab"] },
+  a: { how: "crops on tilled land", words: ["hoe", "farm"] },
+  b: { how: "furniture, claimed", words: ["bed", "chair"] },
+  c: { how: "crafting, worked", words: ["kiln", "forge"] },
   d: { how: "destroy things" },
   e: { how: "forage (G), most biomes" },
   f: { how: "burn things" },
   g: { how: "dig hills (G)" },
   h: { how: "hunt animals" },
-  i: { how: "livestock", words: ["dog", "cow"] },
+  i: { how: "livestock, pets", words: ["dog", "cow"] },
   j: { how: "first into new land" },
   k: { how: "kill people" },
-  l: { how: "land", words: ["land", "lord"], later: "land held" },
-  m: { how: "machines", words: ["robot", "maker"] },
-  n: { how: "labour", words: ["man", "guy"] },
-  o: { how: "fish by water (G)" },
-  p: { how: "plants", words: ["oak", "bush"] },
+  l: { how: "land held", later: "land held" },
+  m: { how: "machines eat vowels", words: ["press", "engine"] },
+  n: { how: "hired labour", words: ["aide", "worker"] },
+  o: { how: "fish by water (G)", words: ["well"] },
+  p: { how: "plants, harvested", words: ["hedge", "oak"] },
   q: { how: "the temple (G)" },
-  r: { how: "roads", words: ["road", "lane"] },
-  s: { how: "citizens", words: ["king", "shop"], later: "cities held" },
+  r: { how: "roads", later: "roads held" },
+  s: { how: "citizens", later: "cities held" },
   t: { how: "trade at a market" },
-  u: { how: "caves by mountains (G)" },
+  u: { how: "caves by mountains (G)", words: ["mushroom"] },
   v: { how: "beat others' things" },
-  w: { how: "mills", words: ["mill", "dam"] },
+  w: { how: "mills, with the wind", words: ["mill", "windmill"] },
   x: { how: "caches (G), some ruins" },
-  y: { how: "age", words: ["tree", "clock"], later: "old things" },
-  z: { how: "rare", words: ["wizard", "genius"], later: "bosses" },
+  y: { how: "age: things kept", words: ["clock", "oak"] },
+  z: { how: "rare", later: "bosses, transmuting" },
 };

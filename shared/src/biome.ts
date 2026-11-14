@@ -45,6 +45,7 @@ export const BIOMES: Partial<Record<Tile, BiomeInfo>> = {
   [Tile.Snow]: B("snow", "tundra", 0.08, "eu", 0),
   [Tile.City]: B("city", "city", 0.2, "eeee", 0),
   [Tile.Road]: B("road", "meadow", 0.2, "eeee", 0),
+  [Tile.Field]: B("tilled land", "meadow", 0.3, "eeeea", 0.2),
 };
 
 /** The biome of a point on the map, or undefined where nobody can stand. */

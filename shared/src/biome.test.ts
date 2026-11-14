@@ -22,7 +22,7 @@ describe("biomes", () => {
     const map = generateMap(7);
     // Neighbours agree most of the time: regions, not speckle.
     let same = 0, land = 0;
-    for (let i = 0; i < map.tiles.length - 1; i++) if (map.tiles[i]! > Tile.Wall) { land++; if (map.tiles[i + 1] === map.tiles[i]) same++; }
+    for (let i = 0; i < map.tiles.length - 1; i++) if (map.tiles[i]! > Tile.Field) { land++; if (map.tiles[i + 1] === map.tiles[i]) same++; }
     expect(same / land).toBeGreaterThan(0.85);
   });
 

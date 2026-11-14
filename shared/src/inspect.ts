@@ -1,5 +1,5 @@
 import type { Dictionary } from "./dictionary.js";
-import { production } from "./letters.js";
+import { needsText, producerOf } from "./produce.js";
 import { parsePhrase, type Phrase } from "./phrase.js";
 import type { Stats } from "./stats.js";
 import type { Op, Value } from "./types.js";
@@ -166,8 +166,13 @@ export function behaviours(s: Stats, count = 1): string[] {
     if (need[k] > 0) out.push(`draws ${num(need[k])} ${k} a minute${s.flag("alive") ? "" : ` (comes with ${STARTING_SUPPLY_MINUTES} min)`}`);
   }
   for (const k of SUPPLIES) if (make[k] > 0) out.push(`makes ${num(make[k])} ${k} a minute`);
-  const letters = Object.entries(production(s));
-  if (letters.length) out.push(`makes letters: ${letters.map(([ch, n]) => `${ch.toUpperCase()} ${num(n * count)}`).join(", ")} a minute`);
+  const spec = producerOf(s, count);
+  const letters = Object.entries(spec.rates);
+  if (letters.length) {
+    const needs = needsText(spec);
+    out.push(`makes ${letters.map(([ch, n]) => `${ch.toUpperCase()} +${num(n)}/min`).join(", ")} while yours${needs ? `, ${needs}` : ""}`);
+  }
+  if (spec.age > 0) out.push(`ages into Y faster than most (+${num(spec.age)})`);
   if (s.flag("phase")) out.push("passes through walls");
   if (s.flag("hover") || s.num("speed_air") > 0) out.push("flies");
   if (s.flag("edible") || s.num("nutrition") > 0) out.push(`edible (${num(s.num("nutrition"))} food)`);
@@ -364,8 +369,8 @@ export function heldText(dict: Dictionary, phrase: string): string {
   if (s.num("fear_aura") > 0) out.push("frightens foes");
   if (s.num("heals") > 0) out.push(`heals ${num(s.num("heals"))}/s around you`);
   if (s.num("sight_range") > 10 && s.get("equip_slot") !== "none") out.push(`sight ${num(s.num("sight_range"))} m`);
-  const letters = Object.entries(production(s));
-  if (letters.length) out.push(`makes ${letters.map(([ch, n]) => `${ch.toUpperCase()} ${num(n * p.count)}`).join(", ")}/min`);
+  const letters = Object.entries(producerOf(s, p.count).rates);
+  if (letters.length) out.push(`makes ${letters.map(([ch, n]) => `${ch.toUpperCase()} ${num(n)}`).join(", ")}/min`);
   const claim = claimOf(s);
   if (claim) out.push(`claims ${num(claim.radius)} tiles`);
   for (const [id, op, amount] of dict.word(p.noun)?.ops ?? []) {

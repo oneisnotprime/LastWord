@@ -57,7 +57,8 @@ export const Zone = schema({
 export type Zone = SchemaType<typeof Zone>;
 
 /** A disc of terrain a word laid down. Everyone gets these, in order, to keep maps in step. */
-export const Edit = schema({ x: t.float32(), y: t.float32(), radius: t.float32(), tile: t.uint8() }, "Edit");
+/** `soil`: only soil is changed (tilling never turns water, roads, cities or rock to crop land). */
+export const Edit = schema({ x: t.float32(), y: t.float32(), radius: t.float32(), tile: t.uint8(), soil: t.boolean() }, "Edit");
 export type Edit = SchemaType<typeof Edit>;
 
 export const WorldState = schema(
@@ -89,6 +90,8 @@ export const WorldState = schema(
     alive: t.uint16(),
     /** Whole seconds since the round began. */
     clock: t.uint32(),
+    /** The wind over the map as a percentage (shared `windAt`): windmills turn with it. */
+    wind: t.uint8(),
   },
   "WorldState",
 );

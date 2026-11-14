@@ -94,13 +94,34 @@ Node process that owns the game state. One room per map instance (from milestone
   give the old daylight back (`daylightEnds`); weather rules are `weatherRules`; a sky word with a
   `field_radius` that sets no weather (DROUGHT, ECLIPSE) also lays its field. Zones carry `until`
   (round clock) and `by`; the state carries `weatherWord/By/Until` and `daylightWord/By/Until`.
+- Production (`produce`, once a second; shared `produce.ts`): every thing on the ground and every
+  creature that makes letters is a `Producer`; its owner is read afresh (thing owner, creature
+  master). Conditions are measured where it stands (tilled `Tile.Field`, moisture with
+  `waterers`, `soil`, workers' `labor` of the owner's side, `state.wind`, water beside it, the
+  owner's claim, hunger, `stalled`, `fights` within PEACE_RADIUS). Flora pays once a
+  CYCLE_SECONDS to its owner's side close by; machines take the letters they convert from their
+  owner. The rule: whatever belongs to you produces, on the ground, as a creature, or carried,
+  worn and ridden (`carried`, at its owner's spot); ageing (Y) counts from `Gear.born` wherever it
+  is kept. The loadout's `producing` lines say what each makes or why not, and `income` (letters a
+  minute by letter, with their producers) feeds the top-left HUD; told when it changes. Bots go `home` to their
+  first producer half the time they move on.
 - Letters gained go through `award`, which sends `got` { letters, why, x, y } for the client's
   letter popup ("E · forage", "H · hunted COW (+12 food)", "D · broke RUIN", "A · FARM").
   `gathered` is still sent for a gathered letter. `gather` refuses at once where nothing is left
   (shared `Deposits.problem`) and sends `gathering` (seconds) when it starts.
 - Blows are noted by `blow` and sent once a tick by `flushHits` as `hits`: [{ by, on, amount,
   layer, kind, ranged, x?, y? }], merged per attacker and target, only to clients that see either.
-- Hunting: a killed living, non-sentient body adds shared `carcassFood` to the killer's food.
+- Hunting: a killed living, non-sentient body adds shared `carcassFood` to the killer's food;
+  a wild kill pays shared `huntYield` (H, its first letter, bonuses) with the reasons as `detail`.
+- Gathering rolls (shared `biome.ts`): a miss sends `missed` { x, y, text } ("nothing · DESERT
+  12%"); a find's `got` carries `detail` (the odds and the tools that helped, `helpOf`).
+- J: the first person into each 64-tile region (`discovered`), once a map. Ruins have their X one
+  time in four. Wild animals are drawn from the biome they stand in (`wild`, shared `wildlife`).
+- Nobody strikes past their sight: reach is the weapon's `attack_range` up to the striker's sight.
+- `sendThreats` (twice a second): `threats` [{ id, x, y, name, air, targeting, reach }] to each
+  person, what is coming for them, seen or not, sent only on change.
+- `take` { id } claims or picks up that thing if in reach (a click on a RUIN walks there, then sends it).
+- `CHEAT` ("xxx") fills every letter on any server, for playtesting (TODO: a real debug server).
   A wandering wild creature ambles at `AMBLE_PACE`; it runs only to chase or flee.
 - `take` (E) by a thing nobody owns that cannot be carried (a RUIN) `claim`s it: it becomes yours
   where it stands, radiates for you and makes its letters for you.

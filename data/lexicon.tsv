@@ -36123,7 +36123,7 @@ orbitale	noun	bodypart	bodypart	0.0	obscure	n05241923	-
 orbiter	noun	artifact	artifact	2.94	uncommon	n04144527	-
 orbitual	adjective	modifier	quality	0.0	obscure	a00679539	-
 orca	noun	creature	mammal	2.93	uncommon	n02073946	-
-orchard	noun	artifact	artifact	3.57	common	n03468764	-
+orchard	noun	artifact	structure	3.57	common	n03468764	-
 orchestra	noun	institution	group	4.01	core	n08265078	-
 orchestral	adjective	modifier	pertaining	3.26	common	a02967683	-
 orchestrate	verb	spell	create	2.66	uncommon	v01711596	-
@@ -37814,7 +37814,7 @@ pearlite	noun	material	material	1.36	rare	n15002404	-
 pearlweed	noun	flora	plant	0.0	obscure	n11834707	-
 pearlwort	noun	flora	plant	0.0	obscure	n11834707	-
 pearly	noun	bodypart	bodypart	2.87	uncommon	n05290997	adjective:quality
-peasant	noun	person	person	3.62	common	n10430413	-
+peasant	noun	person	worker	3.62	common	n10430741	-
 peasanthood	noun	event	act	0.0	obscure	n00597009	-
 peasantry	noun	institution	group	2.7	uncommon	n08199201	-
 peasecod	noun	flora	plant	0.0	obscure	n13161019	-
@@ -40537,7 +40537,7 @@ presidentship	noun	event	act	0.0	obscure	n00597922	-
 presidio	noun	artifact	structure	2.6	uncommon	n04006121	-
 presidium	noun	institution	group	2.41	uncommon	n08344320	-
 presocratic	adjective	modifier	pertaining	1.2	rare	a02773176	-
-press	verb	spell	contact	5.16	core	v01449876	noun:machine
+press	noun	artifact	machine	5.16	core	n04006669	verb:contact
 pressed	adjective	modifier	quality	4.12	core	a01362613	-
 pressing	noun	artifact	artifact	4.08	core	n04007225	adjective:quality
 pressingly	adverb	verb_modifier	manner	1.4	rare	r00432599	-
@@ -41887,7 +41887,7 @@ quarreller	noun	person	person	0.0	obscure	n10518007	-
 quarrelsome	adjective	modifier	quality	2.22	uncommon	a00606304	-
 quarrelsomeness	noun	aura	attribute	0.0	obscure	n04651336	-
 quarrier	noun	person	worker	1.28	rare	n10518136	-
-quarry	noun	person	person	3.6	common	n10490045	verb:consume
+quarry	noun	artifact	structure	3.6	common	n10490045	verb:consume
 quarrying	noun	event	exchange	2.72	uncommon	n00924782	-
 quarryman	noun	person	worker	1.32	rare	n10518136	-
 quart	noun	measure	quantity	3.01	common	n13640873	-
@@ -57341,7 +57341,7 @@ vinegarroon	noun	creature	invertebrate	0.0	obscure	n01774407	-
 vinegarweed	noun	flora	shrub	0.0	obscure	n12892456	-
 vinegary	adjective	modifier	quality	1.75	rare	a02377747	-
 vinery	noun	artifact	artifact	1.53	rare	n04543333	-
-vineyard	noun	artifact	artifact	3.54	common	n04543333	-
+vineyard	noun	artifact	structure	3.54	common	n04543333	-
 viniculture	noun	event	exchange	1.29	rare	n01129030	-
 vinifera	noun	flora	plant	2.0	uncommon	n13166221	-
 vinify	verb	spell	transform	0.0	obscure	v00460069	-

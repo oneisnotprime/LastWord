@@ -184,13 +184,26 @@ it("gathers letters from the ground, pays out production, and passes letters bet
   room.update(3);
   expect(count(wa)).toBe(start + 1);
 
-  // A farm pays its owner two A a minute.
+  // A farm tills the ground around it and pays its owner A, as moisture, soil and its owner's work allow.
   wa.letters = { f: 1, a: 1, r: 1, m: 1 };
+  const home = { x: wa.player.x, y: wa.player.y };
+  const grass = (() => {
+    for (let r = 1; r < 60; r++) for (let dx = -r; dx <= r; dx++) for (const dy of [-r, r]) {
+      const x = Math.floor(home.x) + dx + 0.5, y = Math.floor(home.y) + dy + 0.5;
+      if (tileAt(room.map, x, y) === Tile.Grass) return { x, y };
+    }
+    throw new Error("no grass");
+  })();
+  wa.player.x = grass.x; wa.player.y = grass.y;
   a.send("spell", "farm");
   await wait();
   expect(wa.letters.a).toBe(0);
+  expect(tileAt(room.map, wa.player.x, wa.player.y)).toBe(Tile.Field);
   room.update(60);
-  expect(wa.letters.a).toBe(2);
+  expect(wa.letters.a).toBeGreaterThanOrEqual(1);
+  wa.player.x = home.x; wa.player.y = home.y;
+  wa.letters.a = 2;
+  for (const [id, t] of [...room.state.things]) if (t.phrase === "farm") room.removeThing(id);
 
   // Letters pass between players who stand close, and only then.
   a.send("give", { to: wb.player.name, letters: "aa" });
@@ -595,12 +608,12 @@ it("events act through their properties: murder, raid, repair, rescue, trade, re
   const select = async (id: string) => { wa.foe = id; };
   const thingNamed = (name: string) => [...room.state.things.entries()].find(([, t]) => t.phrase === name)![0];
 
-  // TRADE: both sides gain three T.
+  // TRADE: both sides gain a T.
   await select(b.sessionId);
   const t0 = wa.letters.t, tb = wb.letters.t;
   a.send("spell", "trade"); await wait();
   expect(said("a")).toMatch(/^Traded with/);
-  expect([wa.letters.t, wb.letters.t]).toEqual([t0 - 1 + 3, tb + 3]); // spelling TRADE spends one T
+  expect([wa.letters.t, wb.letters.t]).toEqual([t0 - 1 + 1, tb + 1]); // spelling TRADE spends one T; a trade pays each side one
 
   // RAID on B's chest takes up to fifty of B's letters, once A is faster than its security.
   b.send("spell", "chest"); await wait();
