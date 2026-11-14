@@ -55,7 +55,20 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
     cut-outs; `src/sky.ts` night, weather and fields over the whole map.
   - Canvas textures are never resized or destroyed mid-game, and `maxTextures` is 1: Phaser 4.2
     otherwise drew some standees with another texture's pixels.
-- Controller support is not built yet. Spelling on a controller will pick from held letters.
+- `src/pad.ts` controller input (Gamepad API, standard mapping), polled each animation frame.
+  The last input sets `body.pad` (controller prompts) or not; `body.ps` swaps Xbox labels for
+  PlayStation ones. Write prompts with `keyGlyph("G")` (key and button, CSS shows one),
+  `padGlyph("a")`, or `only(keys, controller)`; `KEY_BUTTON` maps keys to buttons.
+  - Screens register a `Scope` (`pad.add`, lowest rank wins): D-pad or left stick move a focus
+    ring (`.padfocus`) over buttons, items and inputs, A clicks, B sends Esc. Hud's scopes: the
+    letter picker (`#picker` in the spell window: A add, B delete, X clear, RB space, Y cast),
+    the field picker for an offer's letters (`#fieldpick`), the inventory, loadout and trade
+    screens (focus on an item opens its card, `focusDetails`), and the offer cards (D-pad left).
+    `pad.ts` adds the Esc menu, the start screen and any `[data-pad-scope]` element.
+  - With no screen open, `World.padFrame` has the frame: left stick walks (`pad.walk`), the
+    right stick moves a cursor that snaps to targets, RT attacks, LT inspects (LB/RB cycle), and
+    aiming takes LB/RB, A, B. Other buttons press the keys they stand for (`pad.key`).
+  - Browser checks stub `navigator.getGamepads` with a mutable pad object.
 - `src/fx.ts` HTML effects: letter popups from `got` (a big tile with its reason tag that flies to
   the letter bar, which bounces), damage numbers from `hits`, the red screen edge when you are hit,
   and the red note when gathering finds nothing. In `main.ts`: `onHits` (flash, shake, lunge,
