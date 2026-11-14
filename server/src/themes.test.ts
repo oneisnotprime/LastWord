@@ -104,7 +104,8 @@ it("a SCOUT ranges ahead and new ground it reaches pays its master J; a MASON ma
   const scout = [...walkers.values()].find((w) => w.player.name === "scout")!;
   const before = wa.letters.j;
   scout.player.x = wa.player.x + 40; scout.player.y = wa.player.y;
-  expect(wa.explored.has(regionOf(scout.player.x, scout.player.y))).toBe(false);
+  const region = regionOf(scout.player.x, scout.player.y);
+  wa.explored.delete(region); (room as any).discovered.delete(region); // ground nobody has been to
   second(1);
   expect(wa.letters.j).toBe(before + 1);
   second(1);

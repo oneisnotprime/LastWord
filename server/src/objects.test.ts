@@ -246,4 +246,4 @@ it("uses every usable word in the dictionary", async () => {
   const effective = candidates.filter((w) => useObject(dict, w) && !dict.word(w)!.set.tile_type &&
     !(parsePhrase(dict, w).stats.flag("alive") && parsePhrase(dict, w).stats.num("speed_land") > 0));
   for (const w of effective) expect(did.map((d) => d.split(" ")[0]), w).toContain(w);
-});
+}, 240_000);

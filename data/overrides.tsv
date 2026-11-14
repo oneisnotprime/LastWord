@@ -239,6 +239,8 @@ backed	adjective	participle
 background	noun	attribute
 backing	noun	fortification
 bacon	noun	food
+badger	noun	mammal
+badlands	noun	landform
 badly	adverb	manner
 bag	noun	container
 bake	verb	create
@@ -258,7 +260,7 @@ banker	noun	worker
 banking	noun	exchange
 banned	adjective	quality
 banshee	noun	supernatural
-bar	noun	structure
+bar	noun	weapon
 barely	adverb	manner
 bargain	noun	attribute
 barn	noun	building
@@ -271,6 +273,7 @@ basic	adjective	quality
 basically	adverb	manner
 basil	noun	herb
 basis	noun	knowledge
+basket	noun	tool
 basketball	noun	toy
 bass	noun	fish
 bat	noun	mammal
@@ -292,6 +295,7 @@ beating	noun	attack
 beats	noun	instrument
 beautiful	adjective	quality
 beauty	noun	attribute
+beaver	noun	mammal
 becoming	adjective	quality
 bed	noun	furniture
 bedroom	noun	structure
@@ -356,6 +360,7 @@ blood	noun	bodypart
 bloody	adjective	quality
 blow	noun	attack
 blue	adjective	quality
+boar	noun	mammal
 board	noun	material
 boards	noun	material
 boat	noun	vehicle_water
@@ -498,6 +503,7 @@ care	noun	repair
 career	noun	act
 careful	adjective	quality
 carefully	adverb	manner
+caribou	noun	mammal
 carnival	noun	act
 carpenter	noun	worker
 carrier	noun	vehicle_water
@@ -780,6 +786,8 @@ coverage	noun	place
 covered	adjective	quality
 covering	noun	protection
 cow	noun	mammal
+coyote	noun	mammal
+crab	noun	invertebrate
 crack	noun	depression
 crackdown	noun	attribute
 cradle	noun	furniture
@@ -800,9 +808,11 @@ criminal	noun	criminal
 crisis	noun	disaster
 critical	adjective	quality
 criticism	noun	act
+crocodile	noun	reptile
 cross	verb	movement
 crossed	adjective	quality
 crossing	noun	travel
+crowbar	noun	weapon
 crowd	noun	group
 crown	noun	clothing
 crucial	adjective	quality
@@ -1333,6 +1343,7 @@ five	noun	quantity
 fix	verb	transform
 fixed	adjective	quality
 flag	noun	artifact
+flamingo	noun	bird
 flash	noun	light
 flat	adjective	quality
 flea	noun	insect
@@ -1406,6 +1417,7 @@ fresh	adjective	quality
 fried	adjective	participle
 friend	noun	person
 friendly	adjective	quality
+frog	noun	reptile
 front	noun	weather
 frozen	adjective	participle
 fruit	noun	produce
@@ -1468,6 +1480,7 @@ gift	noun	possession
 gill	noun	bodypart
 ginger	noun	herb
 ginseng	noun	herb
+giraffe	noun	mammal
 girl	noun	person
 girlfriend	noun	person
 giving	noun	exchange
@@ -1490,7 +1503,9 @@ gold	noun	metal
 golden	adjective	quality
 goldmine	noun	artifact
 golf	noun	contest
+goose	noun	bird
 gorgeous	adjective	quality
+gorilla	noun	mammal
 govern	verb	social
 government	noun	group
 governor	noun	leader
@@ -1536,6 +1551,7 @@ guide	noun	worker
 guilty	adjective	quality
 guitar	noun	instrument
 gulf	noun	water
+gull	noun	bird
 gun	noun	weapon
 gust	noun	weather
 guy	noun	person
@@ -1563,6 +1579,7 @@ hard	adjective	quality
 harden	verb	transform
 hardly	adverb	manner
 hardware	noun	weapon
+hare	noun	mammal
 harm	noun	event
 harry	verb	combat
 harvest	noun	act
@@ -1608,6 +1625,7 @@ herd	noun	phenomenon
 heresy	noun	attribute
 heritage	noun	knowledge
 hero	noun	leader
+heron	noun	bird
 hidden	adjective	participle
 hide	verb	body
 hiding	noun	act
@@ -1670,6 +1688,7 @@ hunting	noun	killing
 hurricane	noun	weather
 hurt	verb	contact
 husband	noun	person
+hyena	noun	mammal
 ice	noun	mineral
 icy	adjective	quality
 idea	noun	knowledge
@@ -1679,6 +1698,7 @@ identity	noun	attribute
 idiot	noun	person
 ignore	verb	perceive
 ignored	adjective	participle
+iguana	noun	reptile
 iii	adjective	quality
 ill	adjective	quality
 illegal	adjective	quality
@@ -1794,9 +1814,11 @@ item	noun	artifact
 ivory	noun	material
 ivy	noun	plant
 jack	noun	tool
+jackal	noun	mammal
 jacket	noun	clothing
 jackpot	noun	possession
 jade	noun	gem
+jaguar	noun	mammal
 jail	noun	building
 jam	noun	food
 japan	noun	artifact
@@ -1826,6 +1848,7 @@ judgment	noun	act
 juice	noun	drink
 jump	verb	movement
 jumping	adjective	participle
+jungle	noun	landform
 junior	noun	person
 jury	noun	group
 justice	noun	worker
@@ -1909,6 +1932,7 @@ legislation	noun	document
 legislative	adjective	pertaining
 legitimate	adjective	quality
 legs	noun	bodypart
+lemming	noun	mammal
 lemon	noun	produce
 length	noun	quantity
 leprosy	noun	affliction
@@ -1952,6 +1976,7 @@ literally	adverb	manner
 literary	adjective	pertaining
 literature	noun	knowledge
 living	noun	attribute
+lizard	noun	reptile
 load	noun	quantity
 loaded	adjective	participle
 loads	noun	quantity
@@ -1996,6 +2021,7 @@ lumberjack	noun	worker
 lunch	noun	food
 luxury	noun	attribute
 lying	noun	act
+lynx	noun	mammal
 mac	noun	clothing
 machine	noun	machine
 mad	adjective	quality
@@ -2043,6 +2069,7 @@ marketing	noun	exchange
 marriage	noun	ceremony
 married	adjective	participle
 marry	verb	social
+marsh	noun	landform
 marshall	noun	leader
 martin	noun	bird
 mask	noun	protection
@@ -2061,6 +2088,7 @@ mature	adjective	quality
 max	noun	medicine
 maximum	adjective	quality
 mayor	noun	leader
+meadow	noun	landform
 meal	noun	food
 meaning	noun	knowledge
 means	noun	possession
@@ -2145,6 +2173,7 @@ money	noun	currency
 monitor	verb	perceive
 monitoring	noun	act
 monk	noun	worker
+monkey	noun	mammal
 monopoly	noun	possession
 monsoon	noun	weather
 monster	noun	supernatural
@@ -2309,7 +2338,9 @@ organized	adjective	participle
 origin	noun	place
 original	adjective	quality
 originally	adverb	manner
+ostrich	noun	bird
 otherwise	adverb	manner
+otter	noun	mammal
 outcome	noun	event
 outdoor	adjective	quality
 outer	adjective	quality
@@ -2358,6 +2389,7 @@ parent	noun	person
 park	noun	landform
 parking	noun	structure
 parliament	noun	group
+parrot	noun	bird
 participate	verb	social
 participation	noun	act
 particular	adjective	quality
@@ -2387,8 +2419,10 @@ peaceful	adjective	quality
 peak	noun	elevation
 pearl	noun	gem
 peasant	noun	worker
+pelican	noun	bird
 pen	noun	tool
 penalty	noun	act
+penguin	noun	bird
 pension	noun	possession
 people	noun	group
 peoples	noun	group
@@ -2414,6 +2448,7 @@ pesticide	noun	material
 pestilence	noun	affliction
 pet	noun	creature
 phantom	noun	supernatural
+pheasant	noun	bird
 philosophy	noun	knowledge
 phone	noun	device
 photo	noun	document
@@ -2644,6 +2679,7 @@ quickly	adverb	manner
 quiet	adjective	quality
 quietly	adverb	manner
 quit	verb	social
+rabbit	noun	mammal
 race	noun	contest
 racial	adjective	pertaining
 racing	noun	contest
@@ -2809,6 +2845,7 @@ review	noun	knowledge
 revolt	noun	act
 revolution	noun	conflict
 reward	noun	possession
+rhino	noun	mammal
 rice	noun	food
 rich	adjective	quality
 rick	noun	material
@@ -2837,6 +2874,7 @@ robot	noun	device
 rock	noun	rock
 rocket	noun	vehicle_air
 rockslide	noun	event
+rod	noun	tool
 role	noun	knowledge
 roll	verb	movement
 rolling	adjective	participle
@@ -2883,6 +2921,7 @@ sage	noun	herb
 saint	noun	supernatural
 sake	noun	drink
 salad	noun	food
+salamander	noun	reptile
 salary	noun	possession
 sale	noun	exchange
 sales	noun	possession
@@ -2900,6 +2939,7 @@ satisfied	adjective	quality
 sauce	noun	food
 saudi	adjective	pertaining
 sausage	noun	food
+savanna	noun	landform
 save	verb	social
 saved	adjective	quality
 saving	noun	rescue
@@ -2921,6 +2961,7 @@ scope	noun	device
 score	noun	quantity
 scores	noun	quantity
 scoring	noun	contest
+scorpion	noun	invertebrate
 scottish	adjective	pertaining
 scout	noun	worker
 screaming	noun	event
@@ -3038,6 +3079,7 @@ shrine	noun	building
 shrink	verb	transform
 shut	adjective	quality
 sick	adjective	quality
+sickle	noun	tool
 side	noun	place
 siege	noun	conflict
 sight	noun	attribute
@@ -3083,6 +3125,7 @@ slide	verb	movement
 slight	adjective	quality
 slightly	adverb	manner
 slip	verb	movement
+sloth	noun	mammal
 slow	adjective	quality
 slowly	adverb	manner
 small	adjective	quality
@@ -3132,6 +3175,7 @@ south	noun	place
 southern	adjective	quality
 soviet	adjective	pertaining
 space	noun	celestial
+spade	noun	tool
 spare	adjective	quality
 speaker	noun	device
 speaking	adjective	quality
@@ -3164,6 +3208,7 @@ spy	noun	worker
 squad	noun	group
 squall	noun	weather
 square	noun	place
+squirrel	noun	mammal
 stability	noun	attribute
 stable	noun	building
 stadium	noun	structure
@@ -3405,6 +3450,7 @@ tissue	noun	bodypart
 titanium	noun	metal
 tithe	noun	possession
 title	noun	possession
+toad	noun	reptile
 toadstool	noun	fungus
 toast	verb	create
 today	noun	duration
@@ -3427,6 +3473,7 @@ tornado	noun	weather
 torrent	noun	weather
 total	adjective	quality
 totally	adverb	manner
+toucan	noun	bird
 touch	verb	contact
 touched	adjective	participle
 touching	adjective	quality
@@ -3490,6 +3537,7 @@ trying	adjective	quality
 tsunami	noun	disaster
 tube	noun	route
 tulip	noun	flower
+tundra	noun	landform
 tune	noun	instrument
 tungsten	noun	metal
 tunnel	noun	route
@@ -3499,6 +3547,7 @@ turkish	adjective	pertaining
 turn	verb	movement
 turned	adjective	participle
 turning	noun	material
+turtle	noun	reptile
 twelve	adjective	quality
 twenty	adjective	quality
 twice	adverb	manner
@@ -3605,6 +3654,7 @@ volume	noun	quantity
 volunteer	noun	fighter
 vote	verb	social
 voting	noun	act
+vulture	noun	bird
 wage	noun	currency
 wages	noun	possession
 wagon	noun	vehicle_land
@@ -3614,6 +3664,7 @@ walk	verb	movement
 walker	noun	person
 walking	adjective	participle
 wall	noun	structure
+walrus	noun	mammal
 wanting	adjective	quality
 war	noun	conflict
 ward	noun	protection
@@ -3719,6 +3770,7 @@ writer	noun	worker
 writing	noun	act
 written	adjective	participle
 wrong	adjective	quality
+yak	noun	mammal
 yard	noun	place
 yea	adverb	manner
 yellow	adjective	quality
@@ -3726,6 +3778,7 @@ yesterday	noun	duration
 young	adjective	quality
 younger	adjective	quality
 youth	noun	person
+zebra	noun	mammal
 zero	noun	quantity
 zombie	noun	supernatural
 zone	noun	place

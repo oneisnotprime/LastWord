@@ -54,6 +54,39 @@ export const STATUS_RULES: Record<Status, StatusRule> = {
   shrink: { ops: [["mass", "mul", 0.1], ["height", "mul", 0.25], ["length", "mul", 0.25], ["strength", "mul", 0.3], ["speed_land", "mul", 0.6]] },
 };
 
+/**
+ * How much longer than a word's own seconds each status runs. Word data was written for blink-long
+ * statuses that wore off before anyone noticed; playtests asked for about twenty times longer.
+ * Not twenty everywhere: a stun or freeze leaves you helpless, and burn, poison and bleed hurt
+ * every second (their damage a second is unchanged), so those stretch less. `STATUS_HORIZON`
+ * bends long ones back (a 600 s JAIL is not made 6000 s), and nothing ever gets shorter.
+ */
+export const STATUS_STRETCH: Record<Status, number> = {
+  stun: 3, freeze: 3, sleep: 4, root: 5, silence: 5,
+  burn: 2, poison: 2, bleed: 2,
+  slow: 12, blind: 8, fear: 8, charm: 8, confuse: 8, shrink: 12,
+};
+/** Seconds past which stretching bends toward a ceiling of about this much more. */
+export const STATUS_HORIZON = 120;
+
+/** Seconds a status runs, from the seconds a word gives it (`STATUS_STRETCH`). */
+export function statusSeconds(status: Status, base: number): number {
+  if (!(base > 0) || !Number.isFinite(base)) return base;
+  const k = STATUS_STRETCH[status] ?? 1;
+  return Math.max(base, (k * base) / (1 + ((k - 1) * base) / STATUS_HORIZON));
+}
+
+/** How much longer a temporary effect (a verb cast, something eaten or drunk) lasts than its word's `duration`. */
+export const EFFECT_STRETCH = 20;
+/**
+ * Seconds a temporary effect lasts: PUNCH's 1 s becomes 19 s, RUN's 10 s two minutes, and long
+ * ones bend toward five minutes; what already lasts longer than that is left as it is.
+ */
+export function effectSeconds(duration: number): number {
+  if (!(duration > 0) || !Number.isFinite(duration)) return duration;
+  return Math.max(duration, (EFFECT_STRETCH * duration) / (1 + duration / 15));
+}
+
 /** A status on someone: seconds left, who is to blame, and where it came from (a walker or an area). */
 export interface Affliction {
   status: Status;
@@ -91,7 +124,8 @@ export function afflict(
   for (const [status, base] of given) {
     if (!susceptible(target, status)) continue;
     const by = STATUS_RULES[status].resistedBy;
-    const seconds = by ? base * (5 / Math.max(1e-3, target.num(by))) : base;
+    const stretched = statusSeconds(status, base);
+    const seconds = by ? stretched * (5 / Math.max(1e-3, target.num(by))) : stretched;
     if (!(seconds > 0)) continue;
     const had = list.find((a) => a.status === status);
     if (had) {

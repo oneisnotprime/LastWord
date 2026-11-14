@@ -4,13 +4,15 @@
 #   modifies (adjective -> its noun, verb -> the caster, aura/weather/event -> things in reach).
 
 # noun weapon
+bar: mass=4 length=1 integrity=250 hardness=8 material=iron equip_slot=held hands_required=1 dmg_blunt=35 attack_rate=0.9 attack_range=1.2 siege=2 knockback=1
+crowbar: mass=3 length=0.9 integrity=200 hardness=8 material=iron equip_slot=held hands_required=1 dmg_blunt=30 dmg_pierce=10 attack_rate=1 attack_range=1 siege=2.5
 sword: mass=1.5 length=1 integrity=80 hardness=7 sharpness=8 material=steel equip_slot=held hands_required=1 dmg_slash=40 attack_rate=1 attack_range=1.5
-axe: mass=2 length=0.8 integrity=70 hardness=7 sharpness=7 material=steel,wood equip_slot=held hands_required=1 dmg_slash=50 attack_rate=0.7 attack_range=1.2 siege=2
+axe: mass=2 length=0.8 integrity=70 hardness=7 sharpness=7 material=steel,wood equip_slot=held hands_required=1 dmg_slash=50 attack_rate=0.7 attack_range=1.2 siege=2 harvest_bonus=2 harvest_sources=tree
 spear: mass=2 length=2.2 integrity=50 sharpness=7 material=wood,steel equip_slot=held hands_required=2 dmg_pierce=45 attack_rate=0.8 attack_range=3
-knife: mass=0.2 length=0.2 integrity=30 sharpness=8 material=steel equip_slot=held hands_required=1 dmg_slash=15 dmg_pierce=10 attack_rate=2 attack_range=0.8 stealth=1
+knife: mass=0.2 length=0.2 integrity=30 sharpness=8 material=steel equip_slot=held hands_required=1 dmg_slash=15 dmg_pierce=10 attack_rate=2 attack_range=0.8 stealth=1 harvest_bonus=1.5 harvest_sources=hunting
 club: mass=3 length=0.8 integrity=60 material=wood equip_slot=held hands_required=1 dmg_blunt=35 attack_rate=0.8 attack_range=1.2 inflict_stun=0.5
 whip: mass=0.5 length=3 integrity=20 material=leather equip_slot=held hands_required=1 dmg_slash=12 attack_rate=1.2 attack_range=3 inflict_slow=1
-bow: mass=1 length=1.5 integrity=25 material=wood equip_slot=held hands_required=2 dmg_pierce=35 attack_rate=0.6 attack_range=60 targets=land,air ammo_per_hit=1 ammo_type=arrow
+bow: mass=1 length=1.5 integrity=25 material=wood equip_slot=held hands_required=2 dmg_pierce=35 attack_rate=0.6 attack_range=60 targets=land,air ammo_per_hit=1 ammo_type=arrow harvest_bonus=2 harvest_sources=hunting
 gun: mass=1 length=0.2 integrity=40 material=steel equip_slot=held hands_required=1 dmg_pierce=60 attack_rate=1.5 attack_range=50 targets=land,air loudness=9 ammo_per_hit=1 ammo_type=bullet armor_pierce=0.3
 rifle: mass=4 length=1.1 integrity=50 material=steel,wood equip_slot=held hands_required=2 dmg_pierce=110 attack_rate=0.5 attack_range=400 targets=land,air loudness=9 ammo_per_hit=1 ammo_type=bullet armor_pierce=0.5 accuracy=0.95
 cannon: mass=1200 length=3 integrity=400 hardness=8 material=iron portable=false dmg_blast=300 dmg_crush=200 attack_rate=0.1 attack_range=800 attack_area=4 siege=4 loudness=10 ammo_per_hit=1 ammo_type=ball
@@ -103,6 +105,10 @@ bag: mass=0.5 integrity=10 material=cloth equip_slot=back storage_letters=60 sto
 barrel: mass=30 integrity=80 material=wood storage_objects=200 volume=0.2
 
 # noun tool
+spade: mass=1.5 length=1 integrity=50 material=steel,wood equip_slot=held hands_required=2 dmg_blunt=15 harvest_bonus=2 harvest_sources=dig,cache
+rod: mass=0.5 length=2 integrity=15 material=wood equip_slot=held hands_required=1 dmg_blunt=4 harvest_bonus=2.5 harvest_sources=fishing
+basket: mass=0.5 integrity=8 flammability=6 material=fiber equip_slot=held hands_required=1 storage_objects=6 harvest_bonus=2.5 harvest_sources=forage
+sickle: mass=0.5 length=0.5 integrity=40 sharpness=6 material=steel equip_slot=held hands_required=1 dmg_slash=18 attack_rate=1.2 harvest_bonus=2 harvest_sources=field,forage
 hammer: mass=1 length=0.3 integrity=120 hardness=8 material=steel,wood equip_slot=held hands_required=1 dmg_blunt=25 attack_rate=1 build_speed=2 siege=1.5
 saw: mass=0.8 length=0.6 integrity=40 sharpness=6 material=steel equip_slot=held hands_required=1 dmg_slash=15 harvest_bonus=2 harvest_sources=tree
 shovel: mass=2 length=1.2 integrity=60 material=steel,wood equip_slot=held hands_required=2 dmg_blunt=18 speed_underground=0.2 harvest_bonus=2 harvest_sources=dig,cache
@@ -130,39 +136,85 @@ map: mass=0.1 integrity=3 flammability=9 material=paper map_reveal=200 detect_le
 book: mass=1 integrity=5 flammability=8 material=paper intelligence+2 grants_adjective_slots=1 grants_slots_to=person
 
 # noun mammal
+fox: mass=6 length=0.9 integrity=30 alive=true sentient=true intelligence=7 loyalty=3 aggression=3 diet=omnivore food_need=0.01 speed_land=14 agility=9 jump=2 dmg_pierce=12 attack_rate=1.5 stealth=7 night_vision=true nocturnal=true smell_range=300 hearing_range=400 speed_underground=0.1 letter_steal=2 camouflage=forest,snow,field equip_slot=companion tamable=true counters=chicken,duck,rat habitat=meadow,forest,tundra
+seal: mass=150 length=2 integrity=200 alive=true diet=carnivore food_need=0.05 speed_land=2 speed_water=10 dive_depth=300 res_cold=0.6 temp_min=-40 habitat=shore,tundra dmg_pierce=20 attack_rate=1 placeable_on=water,land pack_size=3 tamable=true
+tiger: mass=220 length=2.8 integrity=550 alive=true aggression=8 diet=carnivore food_need=0.2 speed_land=18 speed_water=2 jump=5 stealth=7 camouflage=forest night_vision=true dmg_slash=100 dmg_pierce=80 attack_rate=1 inflict_bleed=8 fear_aura=6 habitat=jungle
+rabbit: mass=2 length=0.4 integrity=6 alive=true diet=herbivore food_need=0.002 speed_land=14 evasion=0.4 stealth=4 reproduction=12 pack_size=4 courage=0 edible=true nutrition=4 habitat=meadow,forest
+hare: mass=4 length=0.6 integrity=8 alive=true diet=herbivore food_need=0.003 speed_land=18 evasion=0.5 courage=0 res_cold=0.4 edible=true nutrition=5 habitat=meadow,tundra,hills
+boar: mass=100 length=1.5 integrity=180 alive=true aggression=4 courage=7 diet=omnivore food_need=0.1 speed_land=14 dmg_pierce=35 attack_rate=1 armor=2 smell_range=300 edible=true nutrition=20 habitat=forest,taiga
+squirrel: mass=0.5 length=0.4 integrity=3 alive=true diet=herbivore speed_land=8 climb=10 agility=9 evasion=0.5 stealth=5 courage=0 storage_letters=10 habitat=forest,taiga
+badger: mass=12 length=0.8 integrity=50 alive=true aggression=3 courage=8 diet=omnivore speed_land=7 speed_underground=0.3 dmg_slash=15 attack_rate=1.2 habitat=forest,meadow
+lynx: mass=20 length=1 integrity=60 alive=true aggression=4 diet=carnivore food_need=0.02 speed_land=16 jump=4 stealth=8 night_vision=true camouflage=snow,forest dmg_slash=20 attack_rate=1.3 habitat=taiga
+monkey: mass=8 length=0.6 integrity=20 alive=true sentient=true intelligence=7 diet=omnivore food_need=0.01 speed_land=8 climb=10 agility=9 hands=true letter_steal=2 loudness=7 pack_size=5 tamable=true equip_slot=companion habitat=jungle
+jaguar: mass=90 length=1.8 integrity=300 alive=true aggression=5 diet=carnivore food_need=0.1 speed_land=18 speed_water=3 climb=7 stealth=8 camouflage=forest night_vision=true dmg_pierce=70 dmg_crush=40 attack_rate=1 fear_aura=4 habitat=jungle
+gorilla: mass=160 length=1.7 integrity=450 alive=true sentient=true intelligence=6 aggression=3 courage=8 diet=herbivore food_need=0.1 speed_land=10 climb=6 strength=9 dmg_blunt=80 attack_rate=0.7 knockback=4 fear_aura=3 habitat=jungle
+sloth: mass=6 length=0.6 integrity=30 alive=true diet=herbivore food_need=0.002 speed_land=0.3 climb=8 stealth=7 camouflage=forest courage=3 habitat=jungle
+zebra: mass=350 length=2.4 integrity=350 alive=true diet=herbivore food_need=0.12 speed_land=18 dmg_blunt=40 attack_rate=0.5 evasion=0.2 camouflage=field pack_size=4 habitat=savanna
+giraffe: mass=1000 length=4 height=5 integrity=900 alive=true diet=herbivore food_need=0.3 speed_land=15 sight_range=1000 dmg_blunt=80 attack_rate=0.3 knockback=5 habitat=savanna
+hyena: mass=60 length=1.4 integrity=120 alive=true aggression=5 diet=scavenger food_need=0.05 speed_land=16 dmg_pierce=40 attack_rate=1.2 pack_size=4 loudness=8 habitat=savanna,badlands
+rhino: mass=2300 length=3.8 integrity=3000 alive=true aggression=4 courage=8 diet=herbivore food_need=0.6 speed_land=14 armor=15 dmg_pierce=250 dmg_crush=150 attack_rate=0.4 knockback=7 habitat=savanna
+coyote: mass=14 length=1.1 integrity=50 alive=true intelligence=6 aggression=3 diet=omnivore food_need=0.02 speed_land=17 stealth=5 dmg_pierce=18 attack_rate=1.2 loudness=6 habitat=desert,badlands,meadow
+jackal: mass=10 length=0.9 integrity=40 alive=true aggression=3 diet=scavenger food_need=0.015 speed_land=16 dmg_pierce=15 attack_rate=1.3 pack_size=3 habitat=desert,savanna
+walrus: mass=1200 length=3.2 integrity=1200 alive=true aggression=3 courage=7 diet=carnivore food_need=0.4 speed_land=2 speed_water=9 res_cold=0.9 armor=6 dmg_pierce=120 attack_rate=0.5 habitat=tundra,shore
+caribou: mass=180 length=2 integrity=260 alive=true diet=herbivore food_need=0.06 speed_land=16 res_cold=0.8 dmg_pierce=20 attack_rate=0.5 pack_size=4 habitat=tundra
+lemming: mass=0.05 length=0.12 integrity=1 alive=true diet=herbivore speed_land=4 reproduction=30 pack_size=10 courage=0 res_cold=0.6 habitat=tundra
+yak: mass=500 length=2.8 integrity=500 alive=true diet=herbivore food_need=0.15 speed_land=9 res_cold=0.9 mountable=true seats=1 carry_capacity=150 dmg_pierce=40 attack_rate=0.4 tamable=true equip_slot=mount produce_I=0.4 habitat=tundra,hills
+beaver: mass=20 length=1 integrity=40 alive=true diet=herbivore food_need=0.01 speed_land=3 speed_water=6 build_speed=3 dmg_slash=15 attack_rate=1 habitat=marsh,taiga
+otter: mass=10 length=1 integrity=30 alive=true diet=carnivore food_need=0.01 speed_land=6 speed_water=10 agility=8 habitat=marsh,shore
 dog: mass=30 length=1 integrity=80 alive=true sentient=true intelligence=4 loyalty=9 aggression=3 diet=carnivore food_need=0.02 speed_land=12 dmg_pierce=20 attack_rate=1.2 smell_range=300 tracking=8 detect_stealth=5 alarm=true tamable=true trainable=7 equip_slot=companion produce_I=0.3
 cat: mass=4 length=0.5 integrity=25 alive=true sentient=true intelligence=4 loyalty=4 diet=carnivore food_need=0.005 speed_land=13 agility=9 climb=8 dmg_slash=6 attack_rate=2 night_vision=true stealth=6 evasion=0.4 equip_slot=companion produce_I=0.2 counters=rat
-horse: mass=500 length=2.4 height=1.6 integrity=400 alive=true sentient=true intelligence=3 loyalty=6 diet=herbivore food_need=0.2 speed_land=18 jump=2 mountable=true seats=1 carry_capacity=150 tow_capacity=1500 dmg_blunt=60 attack_rate=0.5 tamable=true equip_slot=mount produce_I=0.4
-cow: mass=700 length=2.5 integrity=80 alive=true diet=herbivore food_need=0.4 speed_land=7 food_output=3 produce_I=1 reproduction=0.5 tamable=true
-pig: mass=150 length=1.5 integrity=30 alive=true intelligence=4 diet=omnivore food_need=0.15 speed_land=5 food_output=2 produce_I=0.7 reproduction=2 smell_range=200 detect_underground=true
-sheep: mass=70 length=1.2 integrity=25 alive=true diet=herbivore food_need=0.08 speed_land=8 produce_I=0.6 reproduction=1 pack_size=3 courage=1
-wolf: mass=45 length=1.5 integrity=140 alive=true sentient=true intelligence=5 loyalty=3 aggression=7 diet=carnivore food_need=0.06 speed_land=16 dmg_pierce=35 attack_rate=1.2 pack_size=4 tracking=8 night_vision=true fear_aura=2
-bear: mass=400 length=2.5 height=1.5 integrity=900 alive=true aggression=6 diet=omnivore food_need=0.3 speed_land=13 speed_water=2 climb=5 dmg_slash=90 dmg_crush=60 attack_rate=0.8 armor=5 res_cold=0.5 fear_aura=4
-lion: mass=190 length=2 integrity=500 alive=true aggression=7 diet=carnivore food_need=0.25 speed_land=20 jump=3 dmg_slash=70 dmg_pierce=60 attack_rate=1 pack_size=3 stealth=4 fear_aura=5 loudness=8
-elephant: mass=5000 length=6 height=3.2 integrity=6000 alive=true sentient=true intelligence=6 loyalty=6 diet=herbivore food_need=3 water_need=3 speed_land=10 mountable=true seats=4 carry_capacity=1000 tow_capacity=8000 dmg_crush=500 dmg_pierce=200 attack_rate=0.4 knockback=5 siege=3 armor=20 fear_aura=4 tamable=true equip_slot=mount
-rat: mass=0.3 length=0.2 integrity=4 alive=true diet=scavenger food_need=0.001 speed_land=3 stealth=6 reproduction=20 pack_size=5 letter_steal=1 dmg_disease=2 attack_rate=1 contagion=0.1
+horse: mass=500 length=2.4 height=1.6 integrity=400 alive=true sentient=true intelligence=3 loyalty=6 diet=herbivore food_need=0.2 speed_land=18 jump=2 mountable=true seats=1 carry_capacity=150 tow_capacity=1500 dmg_blunt=60 attack_rate=0.5 tamable=true equip_slot=mount produce_I=0.4 habitat=meadow
+cow: mass=700 length=2.5 integrity=80 alive=true diet=herbivore food_need=0.4 speed_land=7 food_output=3 produce_I=1 reproduction=0.5 tamable=true habitat=meadow
+pig: mass=150 length=1.5 integrity=30 alive=true intelligence=4 diet=omnivore food_need=0.15 speed_land=5 food_output=2 produce_I=0.7 reproduction=2 smell_range=200 detect_underground=true habitat=meadow,forest
+sheep: mass=70 length=1.2 integrity=25 alive=true diet=herbivore food_need=0.08 speed_land=8 produce_I=0.6 reproduction=1 pack_size=3 courage=1 habitat=meadow,hills
+wolf: mass=45 length=1.5 integrity=140 alive=true sentient=true intelligence=5 loyalty=3 aggression=7 diet=carnivore food_need=0.06 speed_land=16 dmg_pierce=35 attack_rate=1.2 pack_size=4 tracking=8 night_vision=true fear_aura=2 habitat=forest,taiga,tundra
+bear: mass=400 length=2.5 height=1.5 integrity=900 alive=true aggression=6 diet=omnivore food_need=0.3 speed_land=13 speed_water=2 climb=5 dmg_slash=90 dmg_crush=60 attack_rate=0.8 armor=5 res_cold=0.5 fear_aura=4 habitat=forest,taiga,tundra
+lion: mass=190 length=2 integrity=500 alive=true aggression=7 diet=carnivore food_need=0.25 speed_land=20 jump=3 dmg_slash=70 dmg_pierce=60 attack_rate=1 pack_size=3 stealth=4 fear_aura=5 loudness=8 habitat=savanna
+elephant: mass=5000 length=6 height=3.2 integrity=6000 alive=true sentient=true intelligence=6 loyalty=6 diet=herbivore food_need=3 water_need=3 speed_land=10 mountable=true seats=4 carry_capacity=1000 tow_capacity=8000 dmg_crush=500 dmg_pierce=200 attack_rate=0.4 knockback=5 siege=3 armor=20 fear_aura=4 tamable=true equip_slot=mount habitat=savanna,jungle
+rat: mass=0.3 length=0.2 integrity=4 alive=true diet=scavenger food_need=0.001 speed_land=3 stealth=6 reproduction=20 pack_size=5 letter_steal=1 dmg_disease=2 attack_rate=1 contagion=0.1 habitat=city,marsh
 bat: mass=0.03 length=0.1 integrity=2 alive=true diet=carnivore speed_air=10 night_vision=true nocturnal=true sees_through=night,fog detect_stealth=4 pack_size=10 equip_slot=companion
 whale: mass=100000 length=25 integrity=40000 alive=true intelligence=6 diet=carnivore food_need=20 speed_water=8 dive_depth=1000 breathes=air placeable_on=deep_water dmg_crush=3000 attack_rate=0.1 loudness=9 mountable=true seats=10
-camel: mass=500 length=3 integrity=450 alive=true diet=herbivore food_need=0.1 water_need=0.01 speed_land=10 mountable=true seats=2 carry_capacity=250 temp_max=55 terrain_ignored=sand habitat=desert equip_slot=mount tamable=true
+camel: mass=500 length=3 integrity=450 alive=true diet=herbivore food_need=0.1 water_need=0.01 speed_land=10 mountable=true seats=2 carry_capacity=250 temp_max=55 terrain_ignored=sand habitat=desert,badlands equip_slot=mount tamable=true
 mole: mass=0.1 length=0.15 integrity=3 alive=true diet=carnivore speed_underground=0.5 detect_underground=true harvest_bonus=1.5 harvest_sources=cache equip_slot=companion
 mount: mass=450 length=2.3 height=1.6 integrity=360 alive=true sentient=true intelligence=3 loyalty=7 diet=herbivore food_need=0.2 speed_land=17 jump=2 mountable=true seats=1 carry_capacity=150 dmg_blunt=50 attack_rate=0.5 tamable=true equip_slot=mount
 human: mass=75 height=1.75 integrity=100 sight_range=60 alive=true sentient=true intelligence=7 diet=omnivore food_need=0.03 speed_land=5 hands=true speech=true labor=1 produce_N=0.3
 
 # noun bird
-eagle: mass=5 length=0.9 integrity=40 alive=true diet=carnivore food_need=0.01 speed_air=30 flight_ceiling=4000 sight_range=3000 dmg_slash=25 attack_rate=1 targets=land,air map_reveal=20 equip_slot=companion tamable=true
-hawk: mass=1 length=0.5 integrity=15 alive=true diet=carnivore speed_air=35 sight_range=2000 dmg_slash=10 attack_rate=1.5 targets=land,air tracking=7 equip_slot=companion tamable=true counters=rat,bat
-owl: mass=1.5 length=0.5 integrity=15 alive=true diet=carnivore speed_air=15 night_vision=true nocturnal=true stealth=7 detect_stealth=7 sight_range=500 equip_slot=companion
-chicken: mass=2 length=0.4 integrity=4 alive=true diet=omnivore food_need=0.003 speed_land=4 food_output=0.3 produce_I=0.2 reproduction=6 pack_size=3 courage=0
-duck: mass=1.2 length=0.5 integrity=4 alive=true diet=omnivore food_need=0.003 speed_land=2 speed_water=2 speed_air=20 food_output=0.2 produce_I=0.2 produce_O=0.1 pack_size=3
+turkey: mass=9 length=1.2 integrity=25 alive=true diet=omnivore food_need=0.005 speed_land=11 speed_air=15 flight_ceiling=50 food_output=1 produce_I=0.3 edible=true nutrition=40 pack_size=3 loudness=5 courage=2 habitat=meadow,forest
+parrot: mass=1 length=0.4 integrity=6 alive=true intelligence=6 diet=herbivore speed_air=15 loudness=8 speech=true beauty=7 equip_slot=companion tamable=true habitat=jungle
+toucan: mass=0.6 length=0.5 integrity=5 alive=true diet=omnivore speed_air=12 beauty=7 loudness=6 habitat=jungle
+ostrich: mass=110 length=2 height=2.5 integrity=180 alive=true diet=omnivore food_need=0.05 speed_land=25 dmg_blunt=45 attack_rate=0.8 mountable=true seats=1 habitat=savanna,desert
+vulture: mass=8 length=1 integrity=20 alive=true diet=scavenger speed_air=20 sight_range=3000 dmg_slash=10 attack_rate=1 habitat=desert,savanna,badlands,volcanic
+heron: mass=2 length=1 integrity=10 alive=true diet=carnivore speed_land=3 speed_air=15 stealth=4 dmg_pierce=10 attack_rate=1 habitat=marsh,shore
+goose: mass=4 length=0.9 integrity=15 alive=true aggression=4 courage=8 diet=herbivore speed_land=4 speed_water=2 speed_air=20 loudness=8 alarm=true dmg_blunt=6 attack_rate=1.5 pack_size=3 produce_I=0.2 habitat=marsh,meadow
+gull: mass=1 length=0.6 integrity=5 alive=true diet=scavenger speed_air=18 speed_water=2 loudness=7 letter_steal=1 pack_size=4 habitat=shore
+pelican: mass=7 length=1.6 integrity=20 alive=true diet=carnivore speed_air=16 speed_water=3 storage_objects=2 habitat=shore,marsh
+penguin: mass=25 length=1 integrity=40 alive=true diet=carnivore speed_land=2 speed_water=10 res_cold=0.9 pack_size=6 courage=2 habitat=tundra,shore
+pheasant: mass=1.2 length=0.8 integrity=5 alive=true diet=omnivore speed_land=6 speed_air=14 beauty=6 edible=true nutrition=6 courage=1 habitat=meadow,forest
+flamingo: mass=3 length=1.2 integrity=8 alive=true diet=omnivore speed_land=3 speed_air=15 beauty=8 color=pink pack_size=6 habitat=marsh,shore
+eagle: mass=5 length=0.9 integrity=40 alive=true diet=carnivore food_need=0.01 speed_air=30 flight_ceiling=4000 sight_range=3000 dmg_slash=25 attack_rate=1 targets=land,air map_reveal=20 equip_slot=companion tamable=true habitat=hills,badlands
+hawk: mass=1 length=0.5 integrity=15 alive=true diet=carnivore speed_air=35 sight_range=2000 dmg_slash=10 attack_rate=1.5 targets=land,air tracking=7 equip_slot=companion tamable=true counters=rat,bat habitat=meadow,savanna
+owl: mass=1.5 length=0.5 integrity=15 alive=true diet=carnivore speed_air=15 night_vision=true nocturnal=true stealth=7 detect_stealth=7 sight_range=500 equip_slot=companion habitat=forest,taiga
+chicken: mass=2 length=0.4 integrity=4 alive=true diet=omnivore food_need=0.003 speed_land=4 food_output=0.3 produce_I=0.2 reproduction=6 pack_size=3 courage=0 habitat=meadow
+duck: mass=1.2 length=0.5 integrity=4 alive=true diet=omnivore food_need=0.003 speed_land=2 speed_water=2 speed_air=20 food_output=0.2 produce_I=0.2 produce_O=0.1 pack_size=3 habitat=marsh,meadow
 
 # noun fish
 fish: mass=2 length=0.4 integrity=6 alive=true diet=omnivore speed_water=3 breathes=water placeable_on=water food_output=0.2 produce_O=0.3 reproduction=10 pack_size=6 edible=true nutrition=3
 shark: mass=900 length=5 integrity=1200 alive=true aggression=8 diet=carnivore food_need=0.3 speed_water=15 breathes=water placeable_on=deep_water dmg_pierce=250 dmg_slash=150 attack_rate=0.8 smell_range=1000 tracking=8 inflict_bleed=10 fear_aura=6
 
 # noun reptile
-snake: mass=3 length=2 integrity=20 alive=true aggression=4 diet=carnivore speed_land=3 speed_water=1 stealth=7 venomous=true dmg_pierce=5 dmg_poison=60 inflict_poison=30 attack_rate=1 camouflage=forest,swamp
+lizard: mass=0.2 length=0.3 integrity=3 alive=true diet=carnivore speed_land=5 climb=6 stealth=6 res_fire=0.3 camouflage=sand,hill courage=1 habitat=desert,badlands,volcanic
+iguana: mass=4 length=1.5 integrity=15 alive=true diet=herbivore speed_land=4 climb=6 speed_water=2 stealth=5 habitat=jungle
+crocodile: mass=500 length=4.5 integrity=1200 alive=true aggression=6 diet=carnivore food_need=0.1 speed_land=8 speed_water=10 stealth=7 armor=12 dmg_crush=180 dmg_pierce=120 attack_rate=0.5 inflict_bleed=6 camouflage=swamp,water fear_aura=5 habitat=marsh
+turtle: mass=20 length=0.6 integrity=80 alive=true diet=omnivore speed_land=0.5 speed_water=4 armor=20 courage=2 edible=true nutrition=8 habitat=shore,marsh
+frog: mass=0.1 length=0.1 integrity=2 alive=true diet=carnivore speed_land=2 speed_water=3 jump=3 loudness=5 camouflage=swamp courage=1 habitat=marsh,jungle
+toad: mass=0.15 length=0.12 integrity=3 alive=true diet=carnivore speed_land=1 jump=2 venomous=true dmg_poison=5 inflict_poison=4 attack_rate=0.5 camouflage=swamp habitat=marsh
+salamander: mass=0.1 length=0.2 integrity=4 alive=true diet=carnivore speed_land=2 res_fire=0.8 immune_burn=true stealth=5 habitat=volcanic,marsh
+snake: mass=3 length=2 integrity=20 alive=true aggression=4 diet=carnivore speed_land=3 speed_water=1 stealth=7 venomous=true dmg_pierce=5 dmg_poison=60 inflict_poison=30 attack_rate=1 camouflage=forest,swamp habitat=jungle,desert,marsh
 
 # noun invertebrate
+scorpion: mass=0.05 length=0.15 integrity=3 alive=true aggression=4 diet=carnivore speed_land=2 stealth=7 venomous=true dmg_poison=25 inflict_poison=10 attack_rate=1 camouflage=sand habitat=desert,badlands
+crab: mass=1 length=0.2 integrity=10 alive=true diet=scavenger speed_land=3 speed_water=2 armor=8 dmg_slash=6 attack_rate=1 edible=true nutrition=5 habitat=shore
 spider: mass=0.02 length=0.05 integrity=1 alive=true diet=carnivore speed_land=0.5 climb=10 stealth=7 venomous=true dmg_poison=20 inflict_poison=20 inflict_root=5 attack_rate=0.5 pack_size=4 fear_aura=2
 
 # noun insect
@@ -240,9 +292,15 @@ canyon: tile_type=pit radius=3 length=3000 depth=300 blocks=land portable=false 
 cave: tile_type=pit radius=2 depth=30 enterable=true occupants=30 cover=0.8 stealth=5 portable=false produce_U=1 luminosity=0 res_blast=0.6 placeable_on=hill,mountain
 
 # noun landform
+jungle: tile_type=jungle radius=12 moisture=8 movement_cost=2.2 blocks=sight cover=0.5 stealth=4 flammability=4 portable=false produce_P=3 fertility=8 spread_rate=0.03
+tundra: tile_type=tundra radius=20 moisture=-2 movement_cost=1.4 fertility=1 temperature_delta=-25 portable=false
+savanna: tile_type=savanna radius=20 moisture=-3 fertility=4 flammability=7 temperature_delta=8 portable=false
+marsh: tile_type=marsh radius=8 moisture=9 movement_cost=2.2 stealth=3 portable=false produce_O=0.5 produce_U=0.3 fertility=6
+meadow: tile_type=meadow radius=10 fertility=7 beauty=6 portable=false produce_P=1 produce_E=0.3
+badlands: tile_type=badlands radius=20 moisture=-6 fertility=0 movement_cost=1.5 portable=false
 island: tile_type=sand radius=5 elevation=10 placeable_on=water,deep_water portable=false claim_radius=5 fertility=4
 swamp: tile_type=swamp radius=5 moisture=9 movement_cost=4 portable=false stealth=3 dmg_disease=1 produce_U=0.5 produce_O=0.5 fertility=5
-desert: tile_type=sand radius=30 moisture=-8 movement_cost=1.5 fertility=0 temperature_delta=15 portable=false water_need*3
+desert: tile_type=desert radius=30 moisture=-8 movement_cost=1.5 fertility=0 temperature_delta=15 portable=false water_need*3
 forest: tile_type=forest radius=10 movement_cost=2 blocks=sight cover=0.4 stealth=3 flammability=6 portable=false produce_P=3 produce_H=0.5 fertility=6 spread_rate=0.02
 beach: tile_type=sand radius=4 movement_cost=1.3 portable=false placeable_on=land,water produce_O=0.3
 
@@ -641,12 +699,12 @@ haven: mass=20000 footprint=4 integrity=8000 material=stone,wood portable=false 
 refuge: mass=10000 footprint=4 integrity=5000 portable=false field_radius=30 law=attack regeneration+3
 
 # noun mammal
-deer: mass=90 length=1.8 integrity=150 alive=true diet=herbivore food_need=0.05 speed_land=18 edible=true nutrition=10 courage=1
-buffalo: mass=900 length=3 integrity=1200 alive=true diet=herbivore food_need=0.2 speed_land=14 dmg_blunt=60 dmg_crush=40 attack_rate=0.5 knockback=5 aggression=3 courage=6 edible=true nutrition=30
-bison: mass=800 length=3 integrity=1100 alive=true diet=herbivore food_need=0.2 speed_land=14 dmg_blunt=55 dmg_crush=35 attack_rate=0.5 knockback=5 aggression=3 courage=6 res_cold=0.6
-antelope: mass=50 length=1.5 integrity=100 alive=true diet=herbivore food_need=0.03 speed_land=24 evasion=0.3 edible=true nutrition=8 courage=1
-reindeer: mass=150 length=2 integrity=250 alive=true diet=herbivore food_need=0.06 speed_land=14 res_cold=0.8 dmg_pierce=20 attack_rate=0.5 tamable=true
-gazelle: mass=25 length=1.2 integrity=60 alive=true diet=herbivore food_need=0.02 speed_land=25 evasion=0.4 courage=1
+deer: mass=90 length=1.8 integrity=150 alive=true diet=herbivore food_need=0.05 speed_land=18 edible=true nutrition=10 courage=1 habitat=forest,meadow
+buffalo: mass=900 length=3 integrity=1200 alive=true diet=herbivore food_need=0.2 speed_land=14 dmg_blunt=60 dmg_crush=40 attack_rate=0.5 knockback=5 aggression=3 courage=6 edible=true nutrition=30 habitat=savanna
+bison: mass=800 length=3 integrity=1100 alive=true diet=herbivore food_need=0.2 speed_land=14 dmg_blunt=55 dmg_crush=35 attack_rate=0.5 knockback=5 aggression=3 courage=6 res_cold=0.6 habitat=meadow,badlands
+antelope: mass=50 length=1.5 integrity=100 alive=true diet=herbivore food_need=0.03 speed_land=24 evasion=0.3 edible=true nutrition=8 courage=1 habitat=savanna,badlands
+reindeer: mass=150 length=2 integrity=250 alive=true diet=herbivore food_need=0.06 speed_land=14 res_cold=0.8 dmg_pierce=20 attack_rate=0.5 tamable=true habitat=tundra,taiga
+gazelle: mass=25 length=1.2 integrity=60 alive=true diet=herbivore food_need=0.02 speed_land=25 evasion=0.4 courage=1 habitat=savanna,desert
 
 # noun insect
 locust: mass=0.002 length=0.05 integrity=1 alive=true diet=herbivore food_need=0.0001 speed_land=1 speed_air=5 plural_count=500 field_radius=20 growth=0 produce_A*0 produce_P*0
@@ -761,9 +819,9 @@ bazaar: mass=20000 footprint=8 integrity=4000 portable=false produce_T=0.5 field
 monastery: mass=500000 footprint=20 integrity=40000 material=stone portable=false field_radius=60 law=attack heals=2 produce_Q=0.1 produce_Q*2
 
 # noun mammal
-elk: mass=350 length=2.4 integrity=500 alive=true diet=herbivore food_need=0.1 speed_land=16 dmg_pierce=30 attack_rate=0.5 courage=4 edible=true nutrition=20
-moose: mass=500 length=3 integrity=700 alive=true diet=herbivore food_need=0.15 speed_land=14 dmg_blunt=40 knockback=4 attack_rate=0.5 courage=6 edible=true nutrition=25
-mammoth: mass=6000 length=5 height=3.5 integrity=8000 alive=true diet=herbivore food_need=0.8 speed_land=10 dmg_crush=200 dmg_pierce=120 attack_rate=0.3 knockback=8 aggression=4 courage=8 res_cold=0.9 fear_aura=4 edible=true nutrition=200
+elk: mass=350 length=2.4 integrity=500 alive=true diet=herbivore food_need=0.1 speed_land=16 dmg_pierce=30 attack_rate=0.5 courage=4 edible=true nutrition=20 habitat=taiga,forest
+moose: mass=500 length=3 integrity=700 alive=true diet=herbivore food_need=0.15 speed_land=14 dmg_blunt=40 knockback=4 attack_rate=0.5 courage=6 edible=true nutrition=25 habitat=taiga,marsh
+mammoth: mass=6000 length=5 height=3.5 integrity=8000 alive=true diet=herbivore food_need=0.8 speed_land=10 dmg_crush=200 dmg_pierce=120 attack_rate=0.3 knockback=8 aggression=4 courage=8 res_cold=0.9 fear_aura=4 edible=true nutrition=200 habitat=tundra
 
 # noun insect
 mosquito: mass=0.000002 length=0.005 integrity=1 alive=true food_need=0.00001 speed_air=2 plural_count=1000 dmg_disease=1 attack_rate=1 aggression=6 contagion=0.2 inflict_poison=1
@@ -816,7 +874,7 @@ potato: mass=0.3 height=0.5 integrity=2 alive=true diet=photosynthesis growth_ti
 
 # noun mammal
 ox: mass=800 length=2.6 integrity=600 alive=true diet=herbivore food_need=0.3 speed_land=6 tow_capacity=4000 labor=6 dmg_blunt=60 attack_rate=0.4 tamable=true courage=6
-goat: mass=60 length=1.2 integrity=40 alive=true diet=herbivore food_need=0.05 speed_land=9 climb=8 food_output=0.5 dmg_blunt=12 attack_rate=0.8 reproduction=1 tamable=true
+goat: mass=60 length=1.2 integrity=40 alive=true diet=herbivore food_need=0.05 speed_land=9 climb=8 food_output=0.5 dmg_blunt=12 attack_rate=0.8 reproduction=1 tamable=true habitat=hills,badlands
 
 # noun bird
 hen: mass=2 length=0.4 integrity=4 alive=true diet=omnivore food_need=0.003 speed_land=4 food_output=0.4 reproduction=6 courage=0
@@ -1003,7 +1061,7 @@ jerky: mass=0.1 integrity=2 edible=true nutrition=6 restores=8 single_use=true s
 # noun drink
 coffee: mass=0.3 state=liquid edible=true nutrition=0 attack_rate*1.3 speed_land*1.2 immune_sleep=true duration=300 single_use=true color=brown
 tea: mass=0.3 state=liquid edible=true nutrition=0 restores=10 morale+2 regeneration+1 effect_status=confuse duration=300 single_use=true color=brown
-wine: mass=0.75 state=liquid edible=true nutrition=2 potency=4 courage+4 morale+2 accuracy+-0.1 duration=300 single_use=true shelf_life=0 color=red
+wine: mass=0.75 state=liquid edible=true nutrition=2 potency=4 courage+4 morale+2 accuracy+-0.1 duration=600 single_use=true shelf_life=0 color=red
 whiskey: mass=0.7 state=liquid edible=true nutrition=1 potency=7 courage+6 immune_fear=true accuracy+-0.25 duration=240 single_use=true shelf_life=0 flammability=7 color=brown
 vodka: mass=0.7 state=liquid edible=true nutrition=1 potency=8 courage+6 res_cold+0.6 accuracy+-0.3 inflict_confuse+1 duration=240 single_use=true shelf_life=0 flammability=8 color=white
 juice: mass=0.3 state=liquid edible=true nutrition=3 restores=15 regeneration+1 duration=60 single_use=true shelf_life=10 color=orange

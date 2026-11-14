@@ -7,7 +7,7 @@
  * and colour. See build.ts for the units and the builders.
  */
 import {
-  band, behind, biped, bird, boat, brickWall, bug, car, dot, dragon, E, eye, fish, flower, glue, house, icon, P, part, plane, quad, R,
+  band, behind, biped, bird, boat, brickWall, bug, car, dot, dragon, E, eye, fish, flower, glue, house, icon, moved, P, part, plane, quad, R,
   rosette, sign, snake, sym, tank, train, tree, wheel, type Piece, type Pt, type Silhouette,
 } from "./build.js";
 
@@ -171,6 +171,33 @@ const robin = bird({ size: 0.9, beak: 3, breast: "#d9733b", colour: "#7a6a5a" })
 const turkey = bird({ size: 1.4, beak: 3, wattle: true, tail: 8, colour: "#6b4a32" });
 const parrot = bird({ size: 1.1, beak: 3.5, hooked: true, crest: true, tail: 7, colour: "#3f9a5a" });
 
+// Animals of the biomes.
+const jaguar = quad({ len: 42, h: 12, leg: 11, neck: 4, head: 6.5, snout: 4, ear: "round", tail: "long", spots: true, colour: "#d9a24a", belly: "#f3e6c8" });
+const zebra = quad({ len: 42, h: 14, leg: 18, legW: 4, neck: 13, head: 6, snout: 8, snoutH: 5, ear: "point", tail: "tuft", stripes: true, colour: "#f3f1ea" });
+const giraffe = quad({ len: 40, h: 14, leg: 26, legW: 3.6, neck: 34, head: 5.5, snout: 7, ear: "point", tail: "tuft", spots: true, colour: "#e0aa5a" });
+const hyena = quad({ len: 36, h: 13, leg: 12, neck: 4, head: 6.5, snout: 5, ear: "round", tail: "bushy", spots: true, low: true, colour: "#b59a6a" });
+const rhino = quad({ len: 52, h: 22, leg: 12, legW: 7, neck: 1, head: 9, snout: 6, snoutH: 7, ear: "point", tail: "thin", horns: "spike", low: true, colour: "#8e8b86" });
+const coyote = quad({ len: 32, h: 10, leg: 10, neck: 6, head: 6, snout: 7, ear: "point", tail: "bushy", colour: "#a8906a", belly: "#e3d6bc" });
+const walrus = s([part(P(-22, 0, -24, -10, -14, -18, 4, -20, 14, -16, 18, -8, 20, 0), "body", 2), part(E(14, -14, 8, 7, 12)), glue(band([[14, -9], [13, 2]], 2, 1), "#f3ece0"), glue(band([[18, -9], [18, 2]], 2, 1), "#f3ece0"), dot(E(16, -12, 3, 2, 8), "dark"), eye(16, -17, 1.2)], "#8a6450", { living: true });
+const seal = s([part(P(-26, 0, -20, -6, -6, -12, 8, -14, 16, -12, 20, -6, 16, 0), "body", 2), part(E(16, -12, 6, 5, 12)), glue(P(-26, 0, -32, -6, -30, 2), "body"), eye(18, -14, 1.2), dot(E(-2, -4, 12, 2, 12), "light")], "#6a6e78", { living: true });
+const crab = s([part(E(0, -8, 11, 6, 16)), ...[-1, 1].flatMap((d) => [behind(band([[d * 8, -6], [d * 14, -3], [d * 16, 0]], 1.4, 1), "deep"), behind(band([[d * 6, -5], [d * 11, -1], [d * 12, 0]], 1.4, 1), "deep"), glue(band([[d * 9, -11], [d * 16, -16]], 2), "body"), glue(P(d * 15, -20, d * 21, -18, d * 19, -14, d * 15, -15), "body")]), eye(-3, -14, 1), eye(3, -14, 1)], "#d9573b", { living: true });
+const scorpion = s([part(E(0, -5, 10, 4, 14)), part(band([[-8, -6], [-14, -14], [-10, -22], [-4, -20]], 2.6, 1.4)), glue(P(-4, -20, 0, -18, -3, -16), "#3d2a1e"), ...[-1, 1].map((d) => glue(band([[8, -6], [14, -8 + d * 3], [17, -6 + d * 4]], 1.6), "body")), ...[-4, 0, 4].map((x) => behind(band([[x, -3], [x - 2, 0]], 1, 0.8), "deep"))], "#8a5a2e", { living: true, speck: true });
+const lizard = s([part(E(0, -4, 10, 3, 12)), part(E(11, -5, 4.5, 3, 10)), part(band([[-9, -4], [-18, -2], [-26, -4]], 3, 0.8)), ...[-5, 5].flatMap((x) => [behind(band([[x, -3], [x - 2, 0]], 1.2), "deep"), behind(band([[x + 1, -3], [x + 3, 0]], 1.2), "deep")]), eye(13, -6, 0.9)], "#8a9a4a", { living: true });
+const crocodile = s([part(E(0, -6, 22, 5, 16)), part(P(20, -9, 40, -7, 40, -3, 20, -2)), part(band([[-20, -6], [-34, -4], [-44, -6]], 5, 1)), ...[-12, 12].map((x) => part(R(x - 2, -4, x + 2, 0))), ...[-14, -6, 2, 10].map((x) => dot(P(x, -11, x + 2, -14, x + 4, -11), "dark")), eye(22, -11, 1.2), dot(band([[24, -5], [39, -5]], 0.6), "#f3ece0")], "#5f7a3a", { living: true });
+const turtle = s([part([...E(0, -6, 13, 9, 16, Math.PI, Math.PI * 2), [13, -4], [-13, -4]] as Pt[], "body", 1), part(E(15, -6, 4, 3.4, 10), "#9ab06a"), ...[-8, 8].map((x) => part(R(x - 2.5, -4, x + 2.5, 0), "#9ab06a")), dot(P(-6, -8, 0, -13, 6, -8, 0, -5), "dark"), eye(16, -7, 0.9)], "#6b7a3a", { living: true });
+const frog = s([part(E(0, -7, 9, 6.5, 14)), part(E(-4, -13, 3, 3, 8)), part(E(4, -13, 3, 3, 8)), dot(E(-4, -13.5, 1.4, 1.4, 6), "#2b2a28"), dot(E(4, -13.5, 1.4, 1.4, 6), "#2b2a28"), ...[-1, 1].map((d) => part(band([[d * 7, -4], [d * 13, -2], [d * 12, 0]], 2.4, 1.6))), dot(band([[-4, -6], [4, -6]], 0.6), "dark")], "#5f9a4a", { living: true });
+const penguin = s([part(E(0, -14, 8, 14, 16)), dot(E(2, -12, 5.5, 10, 14), "#f3f1ea"), glue(P(6, -24, 12, -22, 6, -20), "#e7a43c"), glue(band([[-7, -18], [-11, -8]], 2.4, 1), "body"), ...[-3, 3].map((x) => glue(R(x - 2.5, -1.5, x + 2.5, 0), "#e7a43c")), eye(3, -23, 1)], "#2f2c33", { living: true });
+const flamingo = bird({ size: 1, beak: 4, hooked: true, neck: 10, legs: 16, tail: 2, colour: "#e98aa0" });
+const heron = bird({ size: 1.1, beak: 8, neck: 9, legs: 13, tail: 2, colour: "#9aa3b0", breast: "#e9eef0" });
+const ostrich = bird({ size: 1.6, beak: 3, neck: 14, legs: 16, tail: 4, colour: "#3d3a33", breast: "#f3ece0" });
+const vulture = bird({ size: 1.3, beak: 4, hooked: true, flies: true, colour: "#4a3f3a", breast: "#c9a88a" });
+const gull = bird({ size: 1, beak: 4, flies: true, colour: "#f3f1ea", breast: "#c9d1d6" });
+const pelican = bird({ size: 1.3, beak: 10, legs: 4, colour: "#f3f1ea" });
+const goose = bird({ size: 1.3, beak: 4, neck: 6, legs: 4, colour: "#e9e6dc" });
+const toucan = bird({ size: 1, beak: 9, colour: "#2f2c33", breast: "#f4c95d" });
+const pheasant = bird({ size: 1.1, beak: 3, wattle: true, tail: 12, colour: "#a8603a", breast: "#3f7f6a" });
+const gorilla = biped({ h: 40, w: 13, skin: "#3d3a40", hair: "#2b2a28", hat: "none", colour: "#3d3a40", legs: "body", arms: "down" });
+
 const ghost = biped({ ghost: true, hat: "none", arms: "forward", colour: "#f3f1ea" });
 const zombie = biped({ arms: "forward", skin: "#9ab88a", hair: "#3d4a33", colour: "#6b7a5a", legs: "#4a4a5a" });
 const angel = biped({ robe: true, hat: "halo", wings: "feather", skin: "#f3d9be", hair: "#e3b341", colour: "#fbf7ec" });
@@ -201,6 +228,28 @@ const girl = biped({ h: 30, hat: "bun", colour: "#d4476a", legs: "#3f6fa8", robe
 const woman = biped({ hat: "bun", robe: true, colour: "#8a5ac9" });
 const pirate = biped({ hat: "tophat", colour: "#7a2a2a", beard: "#2b2a28", legs: "#2b2a28" });
 
+/** Several of one figure standing together, the back ones smaller: MEN, PEOPLE, an ARMY. */
+export function crowd(one: Silhouette, n = 3): Silhouette {
+  const spots: [number, number, number][] = [[-11, -4, 0.72], [11, -4, 0.72], [0, 0, 0.82], [-20, 0, 0.66], [20, 0, 0.66]];
+  const order = spots.slice(0, n).sort((a, b) => a[1] - b[1]);
+  return { ...one, pieces: order.flatMap(([x, y, k]) => moved(one, x, y, k).pieces), hand: undefined, living: true };
+}
+export const men = crowd(biped({ colour: "#3f6fa8", legs: "#4a4a52" }), 3);
+const folk = crowd(biped({ colour: "#c9775a", legs: "#5a4636", hat: "cap" }), 4);
+const troops = crowd(soldier, 4);
+const police = crowd(biped({ hat: "cap", colour: "#2f4a7a", legs: "#2f3a5a" }), 3);
+const band_ = crowd(biped({ colour: "#8a5ac9", held: "staff" }), 3);
+const family = s([...moved(biped({ colour: "#3f6fa8" }), -10, 0, 0.85).pieces, ...moved(woman, 8, 0, 0.82).pieces, ...moved(boy, 0, 2, 0.6).pieces], "#3f6fa8", { living: true });
+
+// A JOHN (a toilet), a BAR of iron, a prison CELL, a STAGE, a FLOOR.
+const toilet = s([part(P(-9, -34, 9, -34, 9, -20, -9, -20), "#f3f1ea", 1), part([...E(0, -14, 12, 6, 14, Math.PI, Math.PI * 2), [12, -14], [8, -6], [6, 0], [-6, 0], [-8, -6], [-12, -14]] as Pt[], "#f3f1ea", 1),
+  dot(E(0, -14, 9, 3, 12), "#9cc6d2"), glue(R(-6, -31, 6, -28), "#c9d1d6")], "#f3f1ea");
+const crowbar = s([part(band([[0, 0], [0, -34], [4, -40], [10, -40]], 2.6), "body"), glue(band([[-1, 0], [-4, 3], [-7, 2]], 2, 1.4), "body"), dot(band([[1, -6], [1, -30]], 0.7), "light")], "#5a6670");
+const cell = s([part(R(-18, -38, 18, 0), "#9a948a", 1), dot(R(-12, -32, 12, -8), "#2e2a26"), ...[-8, -3, 2, 7].map((x) => glue(R(x, -32, x + 1.6, -8), "#c9d1d6"))], "#9a948a");
+const stage = s([part(R(-30, -14, 30, -6), "#a8703c"), part(R(-30, -6, -26, 0), "#8a6440"), part(R(26, -6, 30, 0), "#8a6440"), glue(P(-30, -40, -22, -40, -24, -14, -30, -14), "#b5354a"), glue(P(30, -40, 22, -40, 24, -14, 30, -14), "#b5354a"), glue(R(-30, -43, 30, -39), "#e3b341")]);
+const floor = s([part(P(-28, 0, -20, -10, 20, -10, 28, 0), "#c9a77a"), ...[-12, 0, 12].map((x) => dot(band([[x - 4, 0], [x * 0.8, -10]], 0.8), "dark")), dot(band([[-24, -5], [24, -5]], 0.8), "dark")], undefined, { flat: true });
+const post = s([part(R(-2.5, -40, 2.5, 0), "#8a6440"), glue(R(-10, -38, 10, -28), "#efe4cf"), dot(band([[-7, -33], [7, -33]], 1), "#8a7a60")]);
+
 // ---------------------------------------------------------------------------------------------
 // Archetypes: one shape for every archetype a word can have.
 
@@ -216,10 +265,11 @@ export const ARCHETYPES: Record<string, Silhouette> = {
   supernatural: ghost, person: human, worker: farmer, leader: king, criminal: thief, fighter: soldier,
   tree: tree(), plant: s([part(band([[0, 0], [0, -18]], 2), "#5f8a4a"), glue(P(0, -8, -10, -14, -12, -22, -2, -16), "body"), glue(P(0, -12, 10, -18, 12, -26, 2, -20), "body"), glue(P(0, -18, -3, -26, 0, -30, 3, -26), "body")], "#6f9a50", { flat: true }),
   shrub: tree({ kind: "bush" }), produce: apple, flower: flower(), fungus: mushroom,
+  herb: s([part(band([[0, 0], [0, -14]], 1.6), "#5f8a4a"), glue(P(0, -6, -8, -10, -9, -16, -1, -11), "body"), glue(P(0, -9, 8, -13, 9, -19, 1, -14), "body"), glue(P(0, -13, -3, -20, 0, -23, 3, -20), "body")], "#7fae5a", { flat: true }),
   bodypart: s([part(band([[-12, -4], [12, -16]], 5)), glue(E(-14, -2, 4, 4, 8), "body"), glue(E(-12, -7, 4, 4, 8), "body"), glue(E(14, -15, 4, 4, 8), "body"), glue(E(12, -20, 4, 4, 8), "body")], "#f3ece0"),
   food: bread, drink: s([part(P(-8, -20, 8, -20, 7, 0, -7, 0), "body", 1), glue(band(E(8, -10, 4.5, 5, 10, -Math.PI / 2, Math.PI / 2), 2), "body"), glue([...E(0, -20, 9, 4, 12, Math.PI, Math.PI * 2)] as Pt[], "#fbf7ec")], "#c9955a"),
   // Stuff.
-  material: pile, mineral: crystal, metal: ingot, gas, liquid: puddle, fuel: barrel, poison: s([...potion.pieces, dot(icon.skull().map((p) => p.pts)[0]!.map(([x, y]) => [x * 0.4, -9 + y * 0.4] as Pt), "#f3ece0")], "#7fbf6a"),
+  material: pile, mineral: crystal, gem: crystal, metal: ingot, gas, liquid: puddle, fuel: barrel, poison: s([...potion.pieces, dot(icon.skull().map((p) => p.pts)[0]!.map(([x, y]) => [x * 0.4, -9 + y * 0.4] as Pt), "#f3ece0")], "#7fbf6a"),
   // Land, sky and weather, when spelled as a thing.
   place: sign(icon.house()), natural_object: rock, landform: sign(icon.island()), water: puddle, depression: sign(icon.hole()), elevation: sign(icon.mountain()), rock,
   celestial: s([part(Array.from({ length: 10 }, (_, i) => { const a = -Math.PI / 2 + (i / 10) * Math.PI * 2, r = i % 2 ? 7 : 16; return [Math.cos(a) * r, -26 + Math.sin(a) * r] as Pt; }), "body", 0), dot(E(0, -26, 4, 4, 8), "light")], "#f4d35e", { flies: true }),
@@ -255,6 +305,14 @@ export const WORDS: Record<string, Silhouette> = {
   // Animals.
   wolf, dog, fox, cat, lion, tiger, bear, horse, cow, bull, pig, sheep, goat, deer, elephant, camel, rat, mouse: rat, rabbit, monkey, boar, donkey, ass: donkey, bat, whale,
   pet: dog, beast: monster, human, mule: donkey, ox: bull, lamb: sheep, puppy: dog, calf: cow,
+  jaguar, leopard: jaguar, cheetah: jaguar, zebra, giraffe, hyena, rhino, coyote, jackal: coyote, walrus, seal, crab, scorpion, lizard, iguana: s(lizard.pieces, "#5f9a5a", { living: true }),
+  salamander: s(lizard.pieces, "#d9773b", { living: true }), crocodile, alligator: crocodile, turtle, tortoise: turtle, frog, toad: s(frog.pieces, "#8a7a4a", { living: true }), penguin,
+  flamingo, heron, ostrich, vulture, gull, pelican, goose, toucan, pheasant, gorilla, sloth: s(monkey.pieces, "#8a7a5a", { living: true }),
+  hare: rabbit, squirrel: quad({ len: 14, h: 7, leg: 4, neck: 3, head: 4, snout: 2, ear: "point", tail: "bushy", colour: "#a8603a" }), badger: quad({ len: 26, h: 9, leg: 5, neck: 1, head: 5.5, snout: 4, ear: "round", tail: "stub", low: true, stripes: true, colour: "#6a6a70" }),
+  lynx: quad({ len: 30, h: 11, leg: 11, neck: 5, head: 6, snout: 2, ear: "point", tail: "stub", spots: true, colour: "#b59a7a" }), beaver: quad({ len: 24, h: 9, leg: 4, neck: 2, head: 5.5, snout: 3, ear: "round", tail: "stub", low: true, colour: "#7a5a3a" }),
+  otter: quad({ len: 28, h: 7, leg: 4, neck: 3, head: 4.5, snout: 3, ear: "round", tail: "long", low: true, colour: "#6a4a32" }), lemming: rat, caribou: deer, reindeer: deer, elk: deer, moose: deer,
+  yak: quad({ len: 44, h: 18, leg: 11, legW: 5, neck: 2, head: 7, snout: 4, snoutH: 6, ear: "flop", tail: "tuft", horns: "bull", wool: true, colour: "#4a3a2e" }),
+  buffalo: bull, bison: bull, antelope: deer, gazelle: deer, mammoth: elephant,
   eagle, hawk, owl, chicken, cock: chicken, duck, crow, robin, turkey, parrot, jay: bird({ size: 1, crest: true, colour: "#3f6fa8" }), martin: bird({ size: 0.9, colour: "#3f4a6a", tail: 6 }), chat: robin,
   fish: fish(), shark: fish({ shark: true, len: 40, colour: "#7d8a99" }), bass: fish({ colour: "#6f8a5a" }), sole: fish({ colour: "#c9a77a", len: 22 }),
   ant: bug({ kind: "ant", colour: "#4a2e22" }), bee: bug({ kind: "bee", colour: "#e3b341" }), cricket: bug({ kind: "cricket", colour: "#6f8a4a" }), spider: bug({ kind: "spider" }),
@@ -262,7 +320,13 @@ export const WORDS: Record<string, Silhouette> = {
   dragon: dragon(), ghost, zombie, angel, demon, devil: demon, god, alien, giant, monster, saint, soul,
   // People.
   knight, soldier, king, queen, wizard, farmer, thief, doctor, guard, smith, baby, priest, spy, captain, boy, girl, woman, pirate,
-  man: human, person: human, people: human, child: boy, prince: biped({ hat: "crown", colour: "#3f6fa8", cloak: "#c9553f" }), princess: biped({ hat: "crown", robe: true, colour: "#e0708f" }),
+  man: human, person: human, people: folk, child: boy,
+  // Groups of people: several of them, not a flag.
+  men, folk, crowd: folk, mob: folk, gang: crowd(thief, 3), crew: crowd(captain, 3), team: men, staff: men,
+  family, army: troops, troops, troop: troops, unit: troops, platoon: troops, squad: troops, militia: troops, police, band: band_, community: folk, population: folk, tribe: folk,
+  // Structures that are not walls.
+  john: toilet, toilet, bar: crowbar, crowbar, cell, jail: cell, prison: cell, stage, floor, post, room: house({ windows: 1 }), station: house({ w: 48, h: 24, roof: "flat", sign: "#3f6fa8" }),
+  base: fort, story: book, study: book, block: brickWall(24, 2), prince: biped({ hat: "crown", colour: "#3f6fa8", cloak: "#c9553f" }), princess: biped({ hat: "crown", robe: true, colour: "#e0708f" }),
   warrior: soldier, fighter: soldier, champion: knight, cop: biped({ hat: "cap", colour: "#2f4a7a", legs: "#2f3a5a" }), marine: soldier, killer: thief, criminal: thief, miner: biped({ hat: "helmet", colour: "#7a6a4a", held: "spear" }),
   merchant: biped({ hat: "tophat", colour: "#7a5a3a", belt: "#e3b341" }), boss: biped({ hat: "tophat", colour: "#2f2c33" }), bishop: priest, coach: captain, commander: captain, colonel: captain,
   // Weapons and armour.

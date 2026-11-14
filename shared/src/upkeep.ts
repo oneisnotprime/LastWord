@@ -1,5 +1,6 @@
 import type { Stats } from "./stats.js";
-import { Tile } from "./world.js";
+import type { Tile } from "./world.js";
+import { BIOMES } from "./biome.js";
 
 /**
  * Upkeep: food, fuel and power. Each player has a store of each. What they own that has a need
@@ -77,13 +78,8 @@ export function supply(stores: Stores, out: Stores, seconds: number): void {
   for (const k of SUPPLIES) if (out[k] > 0) stores[k] += (out[k] * seconds) / 60;
 }
 
-/** Food one gathering action finds on each kind of ground: foraging where things grow. */
-const GROUND_FOOD: Partial<Record<Tile, number>> = {
-  [Tile.Grass]: 0.1, [Tile.Forest]: 0.15, [Tile.Swamp]: 0.05, [Tile.Field]: 0.2,
-};
-
-/** Food a gathering action finds where the player stands. */
-export const groundFood = (tile: Tile): number => GROUND_FOOD[tile] ?? 0;
+/** Food a gathering action finds where the player stands: its biome's (shared `biome.ts`), most in jungle and forest. */
+export const groundFood = (tile: Tile): number => BIOMES[tile]?.food ?? 0;
 
 /** Meat a hunted body gives, for each kilogram of its mass raised to MEAT_POWER. */
 export const MEAT_PER_KG = 0.3;

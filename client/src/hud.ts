@@ -1,10 +1,19 @@
-import { LETTER_GUIDE, missing, parsePhrase, type Card, type Dictionary, type Letters, type LoadoutDetail } from "@lastword/shared";
+import { effectText, heldText, inspectText, LETTER_GUIDE, missing, parsePhrase, readTrade, type Card, type Dictionary, type Letters, type LoadoutDetail } from "@lastword/shared";
 import { BADGE } from "./art/paper.js";
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 
 /** A Use button for something carried that does something when used. */
 const useButton = (g: LoadoutDetail["gear"][number]) => (g.usable ? `<button data-use="${g.index}">Use</button>` : "");
+
+/**
+ * Something you have, by name, with what it does held in a short line under it ("damage 40
+ * slash", "material · burns · builds: no effect held"); a click opens its card.
+ */
+const itemHtml = (dict: Dictionary, phrase: string) => {
+  const does = heldText(dict, phrase);
+  return `<span class="what item" data-inspect="${esc(phrase)}" title="${esc(does)}">${esc(phrase)}${does ? `<small class="does">${esc(does)}</small>` : ""}</span>`;
+};
 
 /** Things on the ground in reach that you can use, each with a Use button. */
 const nearby = (d: LoadoutDetail | null) =>
@@ -95,7 +104,11 @@ export class Hud {
   ) {
     $("abc").innerHTML = alphabet();
     // The knocked out card's button (pointer events are off on the rest of the HUD).
-    $("status").addEventListener("click", (e) => { if ((e.target as HTMLElement).closest("button.again")) this.onAgain(); });
+    $("status").addEventListener("click", (e) => {
+      if ((e.target as HTMLElement).closest("button.again")) this.onAgain();
+      const item = (e.target as HTMLElement).closest<HTMLElement>("[data-inspect]");
+      if (item) this.inspectWord(item.dataset.inspect!, e.clientX, e.clientY, !!item.dataset.effect);
+    });
     window.addEventListener("keydown", (e) => {
       if (this.typing || e.repeat) return;
       const key = e.key.toLowerCase();
@@ -110,6 +123,8 @@ export class Hud {
     });
     $("resume").addEventListener("click", () => this.menu(false));
     $("panel").addEventListener("click", (e) => {
+      const item = (e.target as HTMLElement).closest<HTMLElement>("[data-inspect]");
+      if (item) return this.inspectWord(item.dataset.inspect!, e.clientX, e.clientY, !!item.dataset.effect);
       const el = (e.target as HTMLElement).closest("button");
       if (!el) return;
       if (el.dataset.drop !== undefined) this.onDrop(Number(el.dataset.drop));
@@ -190,6 +205,24 @@ export class Hud {
     }
     this.lastText = text;
     this.drawLetters();
+    this.drawPreview();
+  }
+
+  /**
+   * A compact preview under the input: what the spelling makes and two or three things it does
+   * ("WOLF · creature · mammal" / "walks with you and defends you · integrity 140 · damage 35
+   * pierce"). Nothing for trades, gifts, the playtest shortcut, or what is not a word yet.
+   */
+  private drawPreview() {
+    const el = $("preview"), t = this.input.value.trim().toLowerCase();
+    const hide = () => { el.className = ""; el.innerHTML = ""; };
+    if (!t || readTrade(t) || /^(give|trade)\b/.test(t) || "xxx".startsWith(t)) return hide();
+    const read = inspectText(this.dict, t);
+    if (!("card" in read)) return hide();
+    const c = read.card;
+    const key = [...c.does.filter((d) => !/^equip slot|^lies where/.test(d)).slice(0, 2), ...c.stats.slice(0, 2)].slice(0, 3);
+    el.innerHTML = `<div><b>${esc(c.title)}</b>${c.kind ? ` <span class="kind">${esc(c.kind)}</span>` : ""}</div>${key.length ? `<div class="key">${esc(key.join(" · "))}</div>` : ""}`;
+    el.className = "show";
   }
 
   private reject() {
@@ -218,6 +251,7 @@ export class Hud {
     this.lastText = text;
     this.input.focus();
     this.drawLetters();
+    this.drawPreview();
   }
 
   closeSpell() {
@@ -227,6 +261,7 @@ export class Hud {
     this.target = null;
     this.input.blur();
     this.drawLetters();
+    this.drawPreview();
   }
 
   /** Stops all spelling for good (dead, spectating, round over), closing the window if open. */
@@ -248,6 +283,23 @@ export class Hud {
     el.style.top = `${Math.max(8, Math.min(window.innerHeight - h - 8, y - 10))}px`;
   }
 
+  /**
+   * The card for something you have or that is in force on you (a click on it in the HUD,
+   * loadout or inventory): what it is, its numbers, and what it does held or in force.
+   */
+  inspectWord(phrase: string, x: number, y: number, effect = false) {
+    const read = inspectText(this.dict, phrase);
+    const card: Card = "card" in read ? read.card : { title: phrase.toUpperCase(), kind: "", stats: [], does: [], letters: "" };
+    const line = effect ? effectText(this.dict, phrase) : heldText(this.dict, phrase);
+    const el = $("inspect");
+    this.inspected = { id: "", name: phrase };
+    el.innerHTML = cardHtml(card, line ? [`${effect ? "On you" : "Held"}: ${line}`] : []) + `<button data-close>Close</button>`;
+    el.className = "show";
+    const w = el.offsetWidth, h = el.offsetHeight;
+    el.style.left = `${Math.max(8, Math.min(window.innerWidth - w - 8, x + 14))}px`;
+    el.style.top = `${Math.max(8, Math.min(window.innerHeight - h - 8, y - 10))}px`;
+  }
+
   closeInspect() {
     this.inspected = null;
     $("inspect").className = "";
@@ -255,7 +307,7 @@ export class Hud {
 
   /** The id being inspected, to ring it. */
   get inspecting(): string | null {
-    return this.inspected?.id ?? null;
+    return this.inspected?.id || null;
   }
 
   /** Bottom-left: the ground under you and your tile. */
@@ -322,7 +374,10 @@ export class Hud {
       const gear = d?.gear ?? [];
       for (const g of gear) if (g.max && g.slot !== "ride") parts.push(bar("Armor", g.integrity ?? 0, g.max, "armor"));
       for (const g of gear) if (g.max && g.slot === "ride") parts.push(bar("Ride", g.integrity ?? 0, g.max, "ride"));
-      const list = (slots: string[]) => gear.filter((g) => slots.includes(g.slot)).map((g) => esc(g.phrase)).join(", ");
+      // Each item names itself and, on hover, what it does; a click opens its card.
+      const list = (slots: string[]) => gear.filter((g) => slots.includes(g.slot))
+        .map((g) => `<i class="item" data-inspect="${esc(g.phrase)}" title="${esc(heldText(this.dict, g.phrase))}">${esc(g.phrase)}</i>`).join(", ");
+      const handsDoes = gear.filter((g) => g.slot === "held").map((g) => heldText(this.dict, g.phrase)).filter(Boolean).join("; ");
       const rides = gear.filter((g) => g.slot === "ride");
       // A mount that lives (a HORSE, an ASS) is one of your animals too, ridden.
       const animals = rides.filter((g) => this.alive(g.phrase)).map((g) => `${esc(g.phrase)} (ridden)`);
@@ -335,6 +390,7 @@ export class Hud {
       ];
       const shown = rows.filter(([, text]) => text).map(([label, text]) => `<span>${label}</span><b>${text}</b>`).join("");
       if (shown) parts.push(`<div class="gear">${shown}</div>`);
+      if (handsDoes) parts.push(`<div class="does">${esc(handsDoes)}</div>`);
       // Letters coming in from what you own, a line each: "A +1.2/min HOE, FARM".
       const income = (d?.income ?? []).filter((l) => l.rate >= 0.01);
       if (income.length) {
@@ -347,6 +403,7 @@ export class Hud {
       };
       const chips = [
         ...(d?.statuses ?? []).map((s) => chip(s.status, s.left)),
+        ...(d?.effects ?? []).map((e) => `<span class="chip effect item" data-inspect="${esc(e.word)}" data-effect="1" title="${esc(effectText(this.dict, e.word))}">${esc(e.word.toUpperCase())}${e.left > 0 ? `<small>${e.left}s</small>` : ""}</span>`),
         ...(["food", "fuel", "power"] as const).filter((k) => (d?.stores[k].have ?? 0) > 0 || (d?.stores[k].need ?? 0) > 0 || (d?.stores[k].make ?? 0) > 0).map((k) =>
           `<span class="chip store">${k.toUpperCase()} ${Math.round(d!.stores[k].have * 10) / 10}${flow(k)}</span>`),
         ...(d?.short ?? []).map((t) => chip("hungry").replace("HUNGRY", esc(t.toUpperCase()))),
@@ -427,7 +484,7 @@ export class Hud {
       <h3>Letters held (${total})</h3>
       <div class="bag">${letters.map(([ch, n]) => `<div class="tile">${ch.toUpperCase()}<small>${n}</small></div>`).join("") || `<span class="hint">None</span>`}</div>
       <div class="cols">
-        <div><h3>Carrying (${d?.gear.length ?? 0})</h3>${d?.gear.map((g) => `<div class="row"><span class="what">${g.phrase}</span><span class="slot">${g.slot}</span>${useButton(g)}</div>`).join("") || `<div class="row"><span class="empty">Nothing</span></div>`}
+        <div><h3>Carrying (${d?.gear.length ?? 0})</h3>${d?.gear.map((g) => `<div class="row">${itemHtml(this.dict, g.phrase)}<span class="slot">${g.slot}</span>${useButton(g)}</div>`).join("") || `<div class="row"><span class="empty">Nothing</span></div>`}
           <h3>Within reach (${d?.nearby.length ?? 0})</h3>${nearby(d)}</div>
         <div><h3>Creatures (${d?.creatures.length ?? 0}${d ? ` of ${d.command.limit}` : ""})</h3>${d?.creatures.map((c) => `<div class="row"><span class="what">${c.name}</span>${mood(c)}<div class="meter"><i style="width:${c.health}%"></i></div></div>`).join("") || `<div class="row"><span class="empty">None</span></div>`}</div>
       </div>
@@ -442,7 +499,7 @@ export class Hud {
     const rows = slots.flatMap((slot) => {
       const items = d.gear.filter((g) => g.slot === slot);
       if (!items.length) return [`<div class="row"><span class="slot">${slot}</span><span class="empty">empty</span></div>`];
-      return items.map((g) => `<div class="row"><span class="slot">${slot}</span><span class="what">${g.phrase}</span>${
+      return items.map((g) => `<div class="row"><span class="slot">${slot}</span>${itemHtml(this.dict, g.phrase)}${
         g.max ? `<div class="meter" title="${g.integrity} of ${g.max}"><i style="width:${(100 * (g.integrity ?? 0)) / g.max}%"></i></div>` : ""
       }${this.aiming ? `<button class="aim" data-aim-gear="${g.index}">${esc(this.aiming.toUpperCase())} here</button>` : ""}${useButton(g)}<button data-drop="${g.index}">Drop</button></div>`);
     });
@@ -479,7 +536,8 @@ export class Hud {
           <h3>In force</h3>
           ${[
             ...(d.statuses ?? []).map((s) => stat(s.status.toUpperCase(), `${s.left} s left`).replace('class="stat"', 'class="stat status"')),
-            ...d.effects.map((e) => stat(e.word.toUpperCase(), e.left < 0 ? "while you stand in it" : `${e.left} s left`)),
+            ...d.effects.map((e) => stat(`<i class="item" data-inspect="${esc(e.word)}" data-effect="1">${esc(e.word.toUpperCase())}</i>`, e.left < 0 ? "while you stand in it" : `${e.left} s left`) +
+              `<div class="does">${esc(effectText(this.dict, e.word))}</div>`),
           ].join("") || `<div class="hint">Nothing</div>`}
         </div>
       </div>`;
