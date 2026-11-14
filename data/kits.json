@@ -1384,79 +1384,6 @@
    "core": false
   },
   {
-   "word": "chemist",
-   "set": {},
-   "ops": [
-    [
-     "produce_C",
-     "mul",
-     1.25
-    ],
-    [
-     "produce_Y",
-     "mul",
-     1.5
-    ],
-    [
-     "armor",
-     "add",
-     6
-    ],
-    [
-     "integrity",
-     "mul",
-     1.15
-    ],
-    [
-     "res_acid",
-     "add",
-     0.5
-    ],
-    [
-     "res_poison",
-     "add",
-     0.4
-    ]
-   ],
-   "letters": "cyk",
-   "core": false
-  },
-  {
-   "word": "pharmacist",
-   "set": {
-    "trade_rate": 0.9
-   },
-   "ops": [
-    [
-     "produce_C",
-     "mul",
-     1.25
-    ],
-    [
-     "produce_T",
-     "mul",
-     1.5
-    ],
-    [
-     "integrity",
-     "mul",
-     1.15
-    ],
-    [
-     "res_poison",
-     "add",
-     0.3
-    ],
-    [
-     "produce_Y",
-     "mul",
-     1.5
-    ]
-   ],
-   "letters": "cty",
-   "core": false
-  },
-  {
    "word": "shaman",
    "set": {
     "recruit_rate": 0.3
@@ -1558,6 +1485,41 @@
    "core": false
   },
   {
+   "word": "apothecary",
+   "set": {
+    "trade_rate": 0.8
+   },
+   "ops": [
+    [
+     "produce_C",
+     "mul",
+     1.25
+    ],
+    [
+     "produce_T",
+     "mul",
+     1.5
+    ],
+    [
+     "integrity",
+     "mul",
+     1.15
+    ],
+    [
+     "res_poison",
+     "add",
+     0.3
+    ],
+    [
+     "produce_Y",
+     "mul",
+     1.5
+    ]
+   ],
+   "letters": "cty",
+   "core": false
+  },
+  {
    "word": "officer",
    "set": {
     "command_limit": 8.0
@@ -1650,7 +1612,7 @@
   {
    "word": "vet",
    "set": {
-    "recruit_rate": 0.2
+    "recruit_rate": 0.3
    },
    "ops": [
     [
@@ -1992,6 +1954,36 @@
     ]
    ],
    "letters": "yk",
+   "core": false
+  },
+  {
+   "word": "pharmacist",
+   "set": {
+    "trade_rate": 0.85
+   },
+   "ops": [
+    [
+     "produce_C",
+     "mul",
+     1.25
+    ],
+    [
+     "produce_T",
+     "mul",
+     1.5
+    ],
+    [
+     "produce_Y",
+     "mul",
+     1.5
+    ],
+    [
+     "res_disease",
+     "add",
+     0.5
+    ]
+   ],
+   "letters": "cty",
    "core": false
   },
   {

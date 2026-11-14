@@ -108,3 +108,6 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
 - `src/tips.ts` teaching tips (shared `tips.ts`): rotating word cards on the start screen, one
   line (`#tip`) in the spell window while it is empty, and Word ideas with a reroll in the Esc
   menu, where Show tips turns them off (`lastword.tips` in localStorage).
+- Themes batch 3: a body part is aimed like an event ("someone"; you can click yourself); threat
+  arrows show a note (♪, `heard`) for someone only heard; `WORDS` has the core body parts,
+  clothes, medicines, instruments, songs and feelings, drawn with the existing builders.

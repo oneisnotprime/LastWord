@@ -1,9 +1,10 @@
 /**
  * Incoming threats: anything coming for you that you cannot see on screen (a PLANE, a rider, a
  * long reach) gets an arrow at the screen's edge pointing at it, with what it is, a plane or a
- * sword for air or ground, and how far. The server sends them (`threats`) twice a second.
+ * sword for air or ground (a note for something only heard: noise gives its maker away, shared
+ * sound.ts), and how far. The server sends them (`threats`) twice a second.
  */
-export interface Threat { id: string; x: number; y: number; name: string; air: boolean; targeting: boolean; reach: number }
+export interface Threat { id: string; x: number; y: number; name: string; air: boolean; targeting: boolean; reach: number; heard?: boolean }
 
 const esc = (t: string) => t.replace(/[&<>"]/g, (c) => `&#${c.charCodeAt(0)};`);
 
@@ -52,9 +53,9 @@ export class Threats {
       const k = Math.min((W / 2 - side) / Math.max(1e-6, Math.abs(dx)), ((H - bottom - top) / 2) / Math.max(1e-6, Math.abs(dy)));
       const ex = cx + dx * k, ey = cy + dy * k, angle = Math.atan2(dy, dx);
       const metres = Math.round(Math.hypot(t.x - me!.x, t.y - me!.y) * metresPerTile);
-      const html = `<b>${t.air ? "✈" : "⚔"}</b><span>${esc(t.name.toUpperCase())}<small>${metres} m${t.targeting ? " · on you" : ""}</small></span>`;
+      const html = `<b>${t.heard ? "♪" : t.air ? "✈" : "⚔"}</b><span>${esc(t.name.toUpperCase())}<small>${metres} m${t.targeting ? " · on you" : t.heard ? " · heard" : ""}</small></span>`;
       if (a.label.dataset.html !== html) { a.label.dataset.html = html; a.label.innerHTML = html; }
-      a.label.className = `threat${t.targeting ? " aimed" : ""}${t.air ? " air" : ""}`;
+      a.label.className = `threat${t.targeting ? " aimed" : ""}${t.air ? " air" : ""}${t.heard ? " heard" : ""}`;
       a.tip.className = `tip${t.air ? " air" : ""}`;
       // The arrow on the edge pointing out at it; the label just inside, kept wholly on screen.
       a.tip.style.left = `${ex}px`; a.tip.style.top = `${ey}px`; a.tip.style.transform = `translate(-50%, -50%) rotate(${angle}rad)`;

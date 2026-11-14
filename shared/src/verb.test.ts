@@ -76,8 +76,8 @@ describe("auras", () => {
     expect(torch.map((a) => [a.kind, a.radius, a.targets])).toEqual([["light", 20, "all"], ["fear", 60, "enemies"]]);
     expect(torch[0]!.set).toEqual({ night_vision: true });
     expect(torch[1]!.ops).toEqual([["morale", "add", -1]]);
-    // BEATS has a field of its own: its fear reaches the field's 50 m, not the holder's sight.
-    expect(auras(resolve(dict, "beats"), 60).find((a) => a.kind === "fear")!.radius).toBe(50);
+    // TERROR has a field of its own: its fear reaches the field's 30 m, not the holder's sight.
+    expect(auras(resolve(dict, "terror"), 60).find((a) => a.kind === "fear")!.radius).toBe(30);
     expect(auras(resolve(dict, "sword"), 60)).toEqual([]);
   });
 });

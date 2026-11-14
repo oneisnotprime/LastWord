@@ -159,19 +159,20 @@ it("WAR turns creatures inside it on whoever is nearest and not its maker's, eve
   expect(wolfId).toMatch(/^c/);
 });
 
-it("DISEASE spreads person to person: a carrier takes it with them and passes it on", async () => {
+it("DISEASE makes people sick, and the sick pass it on person to person (shared disease.ts)", async () => {
   const { room, a, wa, wb } = await twoPlayers(4.5);
-  // Two diseases at once take 6 morale and break a body; this test is about contagion, so both stand firm.
+  // Sickness takes morale; this test is about contagion, so both stand firm.
   for (const w of [wa, wb]) { w.buffs.push({ word: "courage", set: { immune_fear: true }, ops: [], until: Infinity }); room.rebuild(w); }
   a.send("pick", { x: wb.player.x, y: wb.player.y });
   a.send("spell", "disease"); await wait();
-  const carried = (id: string) => [...(room as any).areas.values()].some((z: any) => z.word === "disease" && z.follows === id);
-  for (let i = 0; i < 120 && !carried(wb.id); i++) room.update(10); // half a chance a minute
-  expect(carried(wb.id)).toBe(true);
-  // B walks off and carries it; A, outside the first one, catches it from B.
-  wb.player.x = wa.player.x + 0.5; wb.player.y = wa.player.y;
-  wa.player.x -= 8; wb.player.x -= 8;
-  for (let i = 0; i < 120 && !carried(a.sessionId); i++) room.update(10);
-  expect(carried(a.sessionId)).toBe(true);
-  expect([...room.state.zones.values()].filter((z) => z.word === "disease").length).toBeGreaterThanOrEqual(3);
+  const sick = (w: any) => w.statuses.some((x: any) => x.status === "sick");
+  for (let i = 0; i < 60 && !sick(wb); i++) room.update(1);
+  expect(sick(wb)).toBe(true);
+  expect(wb.statuses.find((x: any) => x.status === "sick").contagion).toBeCloseTo(0.4);
+  // B walks off and carries it; A, well away from the field, catches it from B.
+  wa.player.x -= 30; wb.player.x = wa.player.x + 0.5; wb.player.y = wa.player.y;
+  wa.statuses = wa.statuses.filter((x: any) => x.status !== "sick"); wa.recovered = undefined;
+  wb.statuses.find((x: any) => x.status === "sick").left = 1000; // still sick throughout
+  for (let i = 0; i < 900 && !sick(wa); i++) { wb.player.x = wa.player.x + 0.5; wb.player.y = wa.player.y; room.update(1); }
+  expect(sick(wa)).toBe(true);
 });

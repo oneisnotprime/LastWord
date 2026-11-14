@@ -60,20 +60,21 @@ it("spells every field word without error, and nearly all of them do something",
   expect(idle.length).toBeLessThan(fields.length * 0.1);
 }, 120_000);
 
-it("LOVE helps you and yours, FEAR hurts the others, HEAVEN blesses your side map-wide", async () => {
+it("LOVE warms everyone near (and charms them), FEAR hurts the others, HEAVEN blesses your side map-wide", async () => {
   const { a, wa, wb } = await twoPlayers();
   const morale = (w: any) => w.unit.body.stats.num("morale");
   const [ma, mb] = [morale(wa), morale(wb)];
   a.send("spell", "love"); await wait();
   expect(morale(wa)).toBe(ma + 3);
-  expect(morale(wb)).toBe(mb); // B is not A's
+  expect(morale(wb)).toBe(mb + 3); // love reaches the living, B too (shared emotion.ts)
+  expect(wb.statuses.some((x: any) => x.status === "charm")).toBe(true); // and B spares A
   a.send("spell", "fear"); await wait();
-  expect(morale(wb)).toBe(mb - 4);
+  expect(morale(wb)).toBe(mb + 3 - 4);
   expect(morale(wa)).toBe(ma + 3); // fear targets enemies only
   // HEAVEN covers the whole map but blesses only its maker's side.
   a.send("spell", "heaven"); await wait();
   expect(morale(wa)).toBe(ma + 3 + 6);
-  expect(morale(wb)).toBe(mb - 4);
+  expect(morale(wb)).toBe(mb + 3 - 4);
 });
 
 it("fields follow their maker, wear off, and end when the maker dies", async () => {

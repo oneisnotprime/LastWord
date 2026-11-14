@@ -14,6 +14,8 @@ import {
   LAWS, takeLetters, pactOf, breachText, BREACH_LETTERS, BREACH_LOYALTY, BREACH_MINUTES, cooked, rotted, cooks, cookable, spoils, toxin,
   COOK_RANGE, COOK_SECONDS, alchemyRatio, jobsOf, haggled, builtBy, WORK_RANGE, SCOUT_RANGE, grow, SEEDLING, type PactSpec,
   comfortOf, homeComfort, storageOf, keepSafe, exposed, hoards, eyeOf, automates, breedRate, HERD_RANGE, craftPlan, craftsOf, CRAFT_RANGE, CRAFTED,
+  isGraft, severing, airAt, exposure, disguised, UNMASKED_SECONDS, WARM_FROM, WARM_RANGE, catchChance, recovered, CONTACT_TILES, SICK_CONTAGION, IMMUNE_SECONDS,
+  wonOver, spoiling, earshot, HEARD_FROM, CAUGHT_SECONDS, Stats as Sheet,
 } from "@lastword/shared";
 import { affords, botSettings, chooseWord, held, phraseFor, SKILL, wordBook, type BotWord, type Difficulty, type Use } from "./bots.js";
 import { loadDictionary, loadKits } from "./data.js";
@@ -282,6 +284,12 @@ interface Walker {
   breeding?: Map<string, number>;
   /** For a person: letters their storage keeps safe (shared `storageOf`), counted each second. */
   stored?: number;
+  /** Room time until which its disguise is off: it struck someone (shared wear.ts). */
+  unmasked?: number;
+  /** Room time it got over sickness: immune for a while (shared disease.ts). */
+  recovered?: number;
+  /** What the air does to it this second ("cold 12", "heat 5"), or "" (shared wear.ts). */
+  exposed?: string;
   /** For a person choosing a starting kit: the kits offered and the room time it is picked for them. */
   picking?: { kits: Kit[]; until: number };
   /** For a person: the starting kit they picked (PLAN.md "Starting kits"). */
@@ -350,7 +358,7 @@ interface Producer {
 }
 
 /** Something coming for a person, for the incoming-threat arrows: where, what, by air, aimed at them, its reach in tiles. */
-interface Threat { id: string; x: number; y: number; name: string; air: boolean; targeting: boolean; reach: number }
+interface Threat { id: string; x: number; y: number; name: string; air: boolean; targeting: boolean; reach: number; heard?: boolean }
 /** Speed in m/s from which something hostile is shown coming before it is seen (a horse is 18, a PLANE 60). */
 const THREAT_SPEED = 15;
 
@@ -1606,7 +1614,8 @@ export class WorldRoom extends Room {
       const master = this.walkers.get(w.master);
       if (!master) { w.foe = null; w.target = null; continue; }
       // Only a sentient creature can follow an order; any creature defends its master.
-      let order = w.unit.body.stats.flag("sentient") && master.foe && master.foe !== id ? master.foe : null;
+      // The deaf hear no orders (shared sound.ts).
+      let order = w.unit.body.stats.flag("sentient") && !w.hamper.deaf && master.foe && master.foe !== id ? master.foe : null;
       if (order !== w.order) {
         w.order = order;
         w.defiant = order !== null && ignoresOrder(w.unit.body.stats.num("obedience"), master.authority, this.rng);
@@ -1614,7 +1623,9 @@ export class WorldRoom extends Room {
       }
       if (w.defiant) order = null;
       const threats = (attackers.get(w.master) ?? []).filter((a) => a !== id && this.walkers.get(a)?.master !== w.master);
-      const foe = order ?? this.choose(w, threats);
+      // A creature with its temper up (shared emotion.ts) keeps on at the enemy it went for.
+      const kept = w.foe && !w.defiant && spoiling(w.unit.body.stats) ? this.walkers.get(w.foe) : undefined;
+      const foe = order ?? this.choose(w, threats) ?? (kept && this.side(w.foe!, kept) !== this.side(id, w) ? w.foe : null);
       w.foe = foe && (this.walkers.has(foe) || this.grounded.has(foe)) ? foe : null;
       if (w.foe) continue;
       // A worker goes to work: the producer of its master's that most needs hands, and stays by it.
@@ -1724,7 +1735,7 @@ export class WorldRoom extends Room {
       if (d > w.sight * 2 || (o.flying && !w.flying)) continue;
       const e = { id: oid, d, hp: o.hp, person: o.master === null };
       if (o.foe === id) attackers.push(e);
-      else if (o.master === null) people.push(e);
+      else if (o.master === null) { if (!this.fooled(w, o, d)) people.push(e); } // a disguise passes (shared wear.ts)
       else if (o.master === "-" && o.citizenOf === undefined && d <= w.sight * (quest === "hunts" ? 2 : 1) && !aggressive(o.unit.body.stats)) game.push(e);
     }
 
@@ -2308,8 +2319,11 @@ export class WorldRoom extends Room {
         const reach = Math.max(1, Math.min(w.unit.attack.num("attack_range") / TILE_METERS, Math.max(1.5, w.sight)));
         const targeting = w.foe === c.sessionId;
         const fast = w.speed >= THREAT_SPEED && (w.master !== "-" || aggressive(w.unit.body.stats));
-        if (!(targeting && d <= p.sight * 4 + reach) && !(fast && d <= Math.max(p.sight * 3, reach))) continue;
-        out.push({ id, x: Math.round(w.player.x * 10) / 10, y: Math.round(w.player.y * 10) / 10, name: w.player.name, air: w.flying, targeting, reach: Math.round(reach) });
+        // Noise gives its maker away to whoever is in earshot, wherever they look (shared sound.ts).
+        const loud = w.unit.body.stats.num("loudness");
+        const heard = loud >= HEARD_FROM && d <= earshot(loud, p.unit.body.stats.num("hearing_range"));
+        if (!(targeting && d <= p.sight * 4 + reach) && !(fast && d <= Math.max(p.sight * 3, reach)) && !heard) continue;
+        out.push({ id, x: Math.round(w.player.x * 10) / 10, y: Math.round(w.player.y * 10) / 10, name: w.player.name, air: w.flying, targeting, reach: Math.round(reach), ...(heard && !targeting && !fast ? { heard: true } : {}) });
         if (out.length >= 8) break;
       }
       const key = JSON.stringify(out);
@@ -2789,12 +2803,118 @@ export class WorldRoom extends Room {
     }
   }
 
+  /**
+   * True if an observer takes a walker for one of its own: the walker wears a disguise it has not
+   * given away by striking lately, and the observer cannot see through it (shared wear.ts `disguised`).
+   */
+  private fooled(observer: Walker, target: Walker, tiles?: number): boolean {
+    const t = target.unit.body.stats;
+    if (!(t.num("disguise") > 0) || (target.unmasked ?? -Infinity) > this.elapsed) return false;
+    return disguised(t, observer.unit.body.stats, tiles ?? Math.hypot(target.player.x - observer.player.x, target.player.y - observer.player.y));
+  }
+
+  /**
+   * Temper (shared emotion.ts): a creature of someone's with aggression enough (ANGER, FURY on it)
+   * goes for the nearest enemy it sees that is not fooling it, unbidden. Once a second.
+   */
+  private temper(id: string, w: Walker) {
+    if (w.foe || w.fleeing || !w.hamper.acts || !spoiling(w.unit.body.stats)) return;
+    const foes = this.enemiesNear(id, w, Math.max(1, w.sight)).filter((oid) => {
+      const o = this.walkers.get(oid)!;
+      return o.master !== "-" && (w.flying || !o.flying) && !this.fooled(w, o);
+    });
+    w.foe = this.choose(w, foes);
+  }
+
+  /**
+   * The air, once a second (shared wear.ts): its temperature where each living walker stands (the
+   * biome, night, the weather and fields' temperature_delta, a fire near by), and cold or heat
+   * damage past what its body bears. Told when it starts and stops.
+   */
+  private air() {
+    const night = this.state.daylight === "night";
+    const weatherWord = this.state.weatherWord ?? "";
+    const weather = weatherWord ? Number(this.dict.base(weatherWord, "temperature_delta")) || 0 : 0;
+    const fields: { a: Area; d: number }[] = [];
+    for (const a of this.areas.values()) {
+      if (a.word === weatherWord) continue;
+      const d = Number(this.dict.base(a.word, "temperature_delta")) || 0;
+      if (d) fields.push({ a, d });
+    }
+    let fires: Point[] | null = null;
+    const fireNear = (p: Point) => {
+      if (!fires) {
+        fires = [];
+        for (const [tid, g] of this.grounded) { const t = this.state.things.get(tid); if (t && !g.terrain && this.statsOf(g).num("temperature") >= WARM_FROM) fires.push(t); }
+        for (const w of this.walkers.values()) if (w.unit.body.stats.num("temperature") >= WARM_FROM) fires.push(w.player);
+        for (const a of this.areas.values()) if (Number(this.dict.base(a.word, "temperature")) >= WARM_FROM) fires.push(a);
+      }
+      return fires.some((f) => Math.hypot(f.x - p.x, f.y - p.y) <= WARM_RANGE + ((f as { radius?: number }).radius ?? 0));
+    };
+    for (const [id, w] of [...this.walkers]) {
+      const body = w.unit.body.stats;
+      if (!body.flag("alive") || !this.walkers.has(id)) continue;
+      let deltas = weather;
+      for (const f of fields) if (Math.hypot(w.player.x - f.a.x, w.player.y - f.a.y) <= f.a.radius) deltas += f.d;
+      const tile = tileAt(this.map, w.player.x, w.player.y);
+      let air = airAt(tile, night, deltas, false);
+      let hurt = exposure(body, air);
+      if (hurt?.type === "cold" && fireNear(w.player)) { air = airAt(tile, night, deltas, true); hurt = exposure(body, air); }
+      const shown = hurt ? hurt.type : "";
+      if (shown !== (w.exposed ?? "")) {
+        w.exposed = shown;
+        if (w.master === null) {
+          this.sendTo(id, "notice", hurt?.type === "cold" ? `Freezing: the air is ${Math.round(air)} C, ${hurt.by} below what you bear. Wear something warm (COAT, PARKA) or find a FIRE`
+            : hurt ? `Scorching: the air is ${Math.round(air)} C, ${hurt.by} above what you bear` : "The air is bearable again");
+        }
+      }
+      if (!hurt) continue;
+      const attack = new Sheet(this.dict);
+      attack.set("accuracy", "ABS");
+      attack.set("armor_pierce", 1);
+      attack.set(`dmg_${hurt.type}`, hurt.amount);
+      strike(attack, w.unit.body, this.rng);
+      if (w.unit.body.integrity !== w.hp) {
+        this.settle(id, w);
+        if (w.unit.dead) this.kill(id, "");
+      }
+    }
+  }
+
+  /**
+   * Sickness passes on, once a second (shared disease.ts): each sick walker to every living body
+   * within CONTACT_TILES at its contagion, unless a quarantine (a law naming contact) covers it.
+   */
+  private contagion(since: number) {
+    const grid = this.nearGrid;
+    if (!grid || !(since > 0)) return;
+    for (const [id, w] of [...this.walkers]) {
+      const a = w.statuses.find((x) => x.status === "sick");
+      if (!a) continue;
+      if (this.rulesAt(w.player, id, w).areas.some((r) => r.rules!.law.includes("contact"))) continue;
+      const c = a.contagion ?? SICK_CONTAGION;
+      const cx = Math.floor(w.player.x / NEAR_CELL), cy = Math.floor(w.player.y / NEAR_CELL);
+      for (let dx = -1; dx <= 1; dx++) {
+        for (let dy = -1; dy <= 1; dy++) {
+          for (const e of grid.get((cx + dx) * 4096 + cy + dy) ?? []) {
+            if (e.id === id || (e.x - w.player.x) ** 2 + (e.y - w.player.y) ** 2 > CONTACT_TILES ** 2) continue;
+            const o = this.walkers.get(e.id);
+            if (!o || o.statuses.some((x) => x.status === "sick")) continue;
+            if (!(this.rng() < catchChance(c, o.unit.body.stats, since))) continue;
+            this.hurtWith(o, [["sick", CAUGHT_SECONDS]], a.from, a.origin, false, c);
+            if (o.master === null && o.statuses.some((x) => x.status === "sick")) this.sendTo(e.id, "notice", `You caught it from ${w.player.name.toUpperCase()}: sick`);
+          }
+        }
+      }
+    }
+  }
+
   /** A wild creature: an aggressive one goes for whoever it sees (shared `chooseTarget`); the rest wander. */
   private roam(id: string, w: Walker) {
     if (w.fleeing) return;
     if (aggressive(w.unit.body.stats)) {
       // Prey it can get at: not what it gave up on, and nothing in the air unless it flies too.
-      const prey = this.enemiesNear(id, w, Math.max(1, w.sight)).filter((oid) => oid !== w.shunned && (w.flying || !this.walkers.get(oid)!.flying));
+      const prey = this.enemiesNear(id, w, Math.max(1, w.sight)).filter((oid) => oid !== w.shunned && (w.flying || !this.walkers.get(oid)!.flying) && !this.fooled(w, this.walkers.get(oid)!));
       w.foe = this.choose(w, prey);
       if (w.foe) return;
     } else w.foe = null;
@@ -2858,7 +2978,9 @@ export class WorldRoom extends Room {
         h.creatures.map(([, c]) => `${c.hungry}${c.fleeing}`)]);
       if (shown !== w.shown) { w.shown = shown; this.tell(w); }
     }
-    for (const [id, w] of [...this.walkers]) if (w.master === "-") this.roam(id, w);
+    for (const [id, w] of [...this.walkers]) if (w.master === "-") this.roam(id, w); else if (w.master !== null) this.temper(id, w);
+    this.air();
+    this.contagion(since);
     for (const [id, w] of [...this.walkers]) {
       if (w.master !== null) continue;
       if (w.picking && this.elapsed >= w.picking.until) this.chooseKit(id, w, this.bestKit(w.picking.kits));
@@ -3080,6 +3202,8 @@ export class WorldRoom extends Room {
     // Anything fertile put down (COMPOST, MANURE, a FARM) enriches the soil it lies on.
     if (phrase.stats.num("fertility") > 0) this.soil.enrich(here.x, here.y, this.elapsed, phrase.stats.num("fertility") * n);
     let worn = 0;
+    // A body part grows on whoever its speller picked (shared body.ts): themselves, a creature, anyone in sight.
+    const host = isGraft(phrase.stats) ? this.graftHost(walker) : walker;
     // Builders of the speller's within WORK_RANGE make a structure sturdier (shared work.ts).
     const built = builtBy([...this.walkers.values()].filter((o) => o.master === owner && jobsOf(o.unit.body.stats).includes("build") &&
       Math.hypot(o.player.x - here.x, o.player.y - here.y) <= WORK_RANGE).map((o) => o.unit.body.stats.num("build_speed")));
@@ -3088,7 +3212,7 @@ export class WorldRoom extends Room {
       if (tile !== undefined) gear.terrain = true;
       // Things you can hold, wear or ride go straight onto you if there is room; the rest sit on the ground.
       const wearable = gear.vehicle || phrase.stats.get("equip_slot") !== "none";
-      const problem = wearable ? this.equip(walker, gear) : "";
+      const problem = wearable ? this.equip(host, gear) : "";
       if (problem === null) { worn++; continue; }
       if (problem && gear.vehicle) this.sendTo(owner, "notice", problem);
       const p = i === 0 ? here : at(i);
@@ -3103,6 +3227,11 @@ export class WorldRoom extends Room {
     }
     if (built > 1 && !phrase.stats.flag("portable") && worn < copies) return `made, ×${+built.toFixed(2)} sturdier for your builders${crafted}`;
     if (crafted) return (worn === copies ? "equipped" : worn ? `made; ${worn} equipped` : "made") + crafted;
+    if (host !== walker && worn) {
+      if (host.master === null) this.sendTo(host.id, "notice", `${walker.player.name} grafted ${phrase.noun.toUpperCase()} onto you`);
+      return `grafted onto ${host.player.name.toUpperCase()}`;
+    }
+    if (isGraft(phrase.stats) && worn) return "grafted onto you";
     return worn === copies ? "equipped" : worn ? `made; ${worn} equipped` : "made";
   }
 
@@ -3147,6 +3276,58 @@ export class WorldRoom extends Room {
     return g.spelled.noun;
   }
 
+  /** Whom a body part a person spells grows on: the walker they picked, if within their sight, else themselves. */
+  private graftHost(walker: Walker): Walker {
+    const picked = walker.master === null && walker.picked ? this.walkers.get(walker.picked) : undefined;
+    if (!picked || picked === walker) return walker;
+    if (Math.hypot(picked.player.x - walker.player.x, picked.player.y - walker.player.y) > Math.max(1.5, walker.sight)) throw new Error(`${picked.player.name.toUpperCase()} is out of sight`);
+    return picked;
+  }
+
+  /**
+   * Cuts grafts off a walker (shared body.ts `severing`), newest first: each falls to the ground,
+   * nobody's, to be picked up or grafted again. Returns what was cut off.
+   */
+  private sever(w: Walker, severs: number): string[] {
+    const grafts = w.gear.filter((g) => !g.vehicle && isGraft(this.statsOf(g)));
+    const n = severing(severs, grafts.length);
+    if (!n) return [];
+    const cut = grafts.slice(-n);
+    w.gear = w.gear.filter((g) => !cut.includes(g));
+    this.rebuild(w);
+    for (const g of cut) this.addThing(g, "", w.player.x + (this.rng() - 0.5), w.player.y + (this.rng() - 0.5));
+    const names = cut.map((g) => g.phrase.toUpperCase());
+    if (w.master === null) this.sendTo(w.id, "notice", `Cut off: ${names.join(", ")}`);
+    return names;
+  }
+
+  /**
+   * A touched verb (shared verb.ts) that gives statuses or cuts grafts lands on whoever its speller
+   * picked within sight (BEFRIEND, PROVOKE, INFECT, AMPUTATE). Null if it does neither.
+   */
+  private touch(id: string, walker: Walker, phrase: Phrase): string | null {
+    const s = phrase.stats, given = inflicts(s), word = phrase.noun.toUpperCase();
+    if (!given.length && !(s.num("severs") > 0)) return null;
+    const selected = walker.picked ?? walker.foe ?? "";
+    const victim = this.walkers.get(selected);
+    if (!victim) throw new Error(`Select someone for ${word} first: click them`);
+    if (Math.hypot(victim.player.x - walker.player.x, victim.player.y - walker.player.y) > Math.max(1.5, walker.sight)) throw new Error(`Too far away for ${word}`);
+    if (selected !== id) {
+      const barred = this.lawAgainst("attack", selected, victim, victim.player, id);
+      if (barred) throw new Error(`${barred}: ${LAWS.attack} there`);
+    }
+    const said: string[] = [];
+    const cut = s.num("severs") > 0 ? this.sever(victim, s.num("severs")) : [];
+    if (s.num("severs") > 0) said.push(cut.length ? `cut off ${cut.join(", ")}` : "no grafts to cut");
+    if (given.length) {
+      // What makes someone sick says how catching it is (shared disease.ts).
+      this.hurtWith(victim, given, id, id, false, s.num("contagion"));
+      said.push(given.map(([st]) => st).join(", "));
+    }
+    if (victim.id !== id && victim.master === null) this.sendTo(victim.id, "notice", `${walker.player.name} used ${word} on you: ${said.join("; ")}`);
+    return `${word} on ${victim.player.name}: ${said.join("; ")}`;
+  }
+
   /** True for a modifier that only says how many: TEN, THOUSAND, DOZEN. */
   private onlyCounts(word: string): boolean {
     const def = this.dict.lookup(word)?.def;
@@ -3168,6 +3349,7 @@ export class WorldRoom extends Room {
     const said: string[] = [];
     const eventful = s.flag("destroys_target") || s.flag("transfers_ownership") || s.num("moves_target") > 0;
     if (s.get("effect_target") === "touched" && eventful) said.push(this.happen(id, walker, phrase));
+    else if (s.get("effect_target") === "touched") { const t = this.touch(id, walker, phrase); if (t) said.push(t); }
     const done = this.affect(walker, name, s, effect);
     const counters = this.dict.word(phrase.noun)?.set.counters;
     if (!said.length && !done && !(Array.isArray(counters) && counters.length)) throw new Error(`${name.toUpperCase()} does nothing yet`);
@@ -3302,6 +3484,7 @@ export class WorldRoom extends Room {
     const pact = pactOf(s);
     if (pact) return this.makePact(id, walker, phrase, pact);
     if (s.flag("transfers_ownership")) return this.steal(id, walker, phrase);
+    if (s.num("severs") > 0 && !(s.num("event_radius") > 0)) return this.touch(id, walker, phrase)!;
     const reach = Math.max(1.5, s.num("placement_range") / TILE_METERS);
     // A target clicked after spelling the event wins over what you are attacking.
     const selected = walker.picked ?? walker.foe ?? "";
@@ -3349,7 +3532,7 @@ export class WorldRoom extends Room {
       if (s.num("letter_steal") > 0) lawful(victim, "theft");
       if (given.length || s.num("letter_steal") > 0) contest(victim.unit.body.stats, victim.player.name, true);
       const said: string[] = [];
-      if (given.length) { this.hurtWith(victim, given, id, id, false); said.push(given.map(([st]) => st).join(", ")); }
+      if (given.length) { this.hurtWith(victim, given, id, id, false, s.num("contagion")); said.push(given.map(([st]) => st).join(", ")); }
       const ended = cure(victim.statuses, s.tags("effect_status"));
       if (ended.length) { this.statusChanged(victim); said.push(`no longer ${ended.join(", ")}`); }
       if (s.num("restores") > 0) { this.restore(victim, s.num("restores")); said.push("restored"); }
@@ -3865,7 +4048,7 @@ export class WorldRoom extends Room {
       this.blow(key, wid, r, outer === w.unit.body ? "" : outer.name, false, a);
       this.settle(wid, w);
       if (w.unit.dead) this.kill(wid, a.owner);
-      else if (r.hit) this.hurtWith(w, a.inflicts, a.owner, key, true);
+      else if (r.hit) this.hurtWith(w, a.inflicts, a.owner, key, true, a.contagion);
     }
     this.state.things.forEach((t, tid) => {
       const g = this.grounded.get(tid);
@@ -3905,7 +4088,7 @@ export class WorldRoom extends Room {
    */
   private pulse(key: string, a: Area, since: number) {
     for (const [wid, w] of [...this.walkers]) {
-      if (!a.attack && a.inflicts.length && this.harms(a, wid, w) && !this.areaLaw(a, w.player, wid, w)) this.hurtWith(w, a.inflicts, a.owner, key, false);
+      if (!a.attack && a.inflicts.length && this.harms(a, wid, w) && !this.areaLaw(a, w.player, wid, w)) this.hurtWith(w, a.inflicts, a.owner, key, false, a.contagion);
       const reached = a.effect ? this.reaches(a, wid, w) : Math.hypot(w.player.x - a.x, w.player.y - a.y) <= a.radius;
       if (a.cures.length && reached && cure(w.statuses, a.cures).length) this.statusChanged(w);
       if (a.heals > 0 && since > 0 && reached && (wid === a.owner || w.master === a.owner)) this.restore(w, a.heals * since);
@@ -3938,10 +4121,36 @@ export class WorldRoom extends Room {
    * Statuses reach a walker: from a blow that landed (which also wakes a sleeper) or from an
    * area it stands in. `from` is to blame; `origin` is what a frightened walker runs from.
    */
-  private hurtWith(w: Walker, given: [Status, number][], from: string, origin: string, blow: boolean) {
+  private hurtWith(w: Walker, given: [Status, number][], from: string, origin: string, blow: boolean, contagion = 0) {
     const woke = blow ? wake(w.statuses).length : 0;
-    const done = given.length ? afflict(w.statuses, given, w.unit.body.stats, from, origin).length : 0;
-    if (woke || done) this.statusChanged(w);
+    // Sickness does not take where the body is guarded (a VACCINE) or got over it lately (shared disease.ts).
+    if (given.some(([st]) => st === "sick") && (recovered(w.recovered, this.elapsed) || w.unit.body.stats.num("res_disease") >= 1)) given = given.filter(([st]) => st !== "sick");
+    const done = given.length ? afflict(w.statuses, given, w.unit.body.stats, from, origin) : [];
+    if (done.includes("sick")) {
+      const a = w.statuses.find((x) => x.status === "sick")!;
+      a.contagion = contagion > 0 ? contagion : a.contagion ?? SICK_CONTAGION;
+    }
+    if (woke || done.length) this.statusChanged(w);
+    if (done.includes("charm")) this.winOver(w, from);
+  }
+
+  /**
+   * Love (shared emotion.ts): a creature charmed for long enough (`wonOver`, after its loyalty
+   * shortened it) goes over to whoever charmed it, or their master, for good. People are only
+   * spared; bosses and citizens keep to themselves.
+   */
+  private winOver(w: Walker, from: string) {
+    if (w.master === null || w.boss || w.citizenOf !== undefined) return;
+    const charmer = this.walkers.get(from);
+    if (!charmer) return;
+    const side = charmer.master === null ? from : charmer.master;
+    if (side === "-" || side === w.master || side === w.id) return;
+    const left = w.statuses.find((a) => a.status === "charm")?.left ?? 0;
+    if (!wonOver(left)) return;
+    const was = w.master;
+    this.setMaster(w.id, w, side);
+    this.sendTo(side, "notice", `${w.player.name.toUpperCase()} is charmed and comes over to you`);
+    if (was && was !== "-") this.sendTo(was, "notice", `Your ${w.player.name.toUpperCase()} was charmed away`);
   }
 
   /** Statuses came or went: work out again what the walker may do, and rebuild it if the set changed. */
@@ -3984,6 +4193,7 @@ export class WorldRoom extends Room {
       }
     } else w.dot = 0;
     const over = tickStatuses(w.statuses, seconds, w.statuses.length ? this.heldAt(id, w) : 1);
+    if (over.includes("sick")) w.recovered = this.elapsed; // got over it: immune a while (shared disease.ts)
     if (over.length) {
       this.statusChanged(w);
       this.clients.find((c) => c.sessionId === id)?.send("notice", `No longer ${over.join(", ")}`);
@@ -4028,6 +4238,18 @@ export class WorldRoom extends Room {
           w.foe = null;
           if (h.moves) w.target = { x: clamp(w.player.x + (this.rng() * 2 - 1) * CONFUSED_TILES), y: clamp(w.player.y + (this.rng() * 2 - 1) * CONFUSED_TILES) };
         }
+        continue;
+      }
+      if (h.berserk) {
+        // Enraged (shared emotion.ts): at whoever is nearest in sight, friend or foe.
+        if (!second) continue;
+        let best: string | null = null, bestD = Math.max(CONFUSED_TILES, w.sight);
+        for (const [oid, o] of this.walkers) {
+          if (oid === id || (!w.flying && o.flying)) continue;
+          const d = Math.hypot(o.player.x - w.player.x, o.player.y - w.player.y);
+          if (d <= bestD) { best = oid; bestD = d; }
+        }
+        w.foe = best;
         continue;
       }
       if (w.master === null) continue;
@@ -5192,6 +5414,7 @@ export class WorldRoom extends Room {
       }
       const rate = attack.num("attack_rate") * w.hamper.tempo;
       w.cooldown = rate > 0 ? 1 / rate : 1 / w.hamper.tempo;
+      w.unmasked = this.elapsed + UNMASKED_SECONDS; // whoever strikes shows who they are (shared wear.ts)
       if (attack.flag("single_use") && w.unit.weapon) {
         const spent = w.unit.weapon; // a grenade is gone once thrown
         w.gear = w.gear.filter((g) => g.spelled !== spent);
@@ -5200,7 +5423,11 @@ export class WorldRoom extends Room {
       if (!foe) continue;
       this.settle(foeId, foe);
       if (foe.unit.dead) this.kill(foeId, id);
-      else if (landed) this.hurtWith(foe, given, id, id, true);
+      else if (landed) {
+        this.hurtWith(foe, given, id, id, true, attack.num("contagion"));
+        // A blade that severs (a SCALPEL, a SURGEON's hand) cuts a graft off with each blow (shared body.ts).
+        if (attack.num("severs") > 0) this.sever(foe, attack.num("severs"));
+      }
     }
     const changed = new Set<string>();
     for (const [id, w] of this.walkers) {

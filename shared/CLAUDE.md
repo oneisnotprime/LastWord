@@ -124,6 +124,23 @@ server and the client import this, so anything here must give the same answer on
     minimap), `automates` (a machine's `labor` works producers near it), `techText`.
   - `herd.ts` (animals): `breedRate` (two or more of a kind, fed, near: young at `reproduction`
     × BREED_PACE a game hour per pair), `herdText`.
+  - `body.ts` (body parts): a bodypart (`equip_slot` graft) is grafted on whoever is picked
+    (`aimOf` "someone"); `GRAFT_CAPABILITIES` become the body's, `handsOf` (each graft granting
+    `held` is a hand; `Unit` takes 2 + that), `graftCosts` (food a kg, land speed by weight, a
+    seam to sickness), `severing` (`severs`: grafts cut off), `bodyText`.
+  - `wear.ts` (clothing): `lends`/`lend` (a thing worn in a body slot, not protection, adds its
+    `LENT_ADD`, `res_*`, `immune_*`, camouflage; `Unit` calls it), `airAt` (biome `BIOME_AIR`,
+    night, weather and fields' `temperature_delta`, a fire near by), `exposure` (cold or fire
+    damage past `temp_min`/`temp_max`), `disguised` (`disguise` against `detect_stealth` and a
+    nose), `wearText`. `Unit` also adds held things' `loudness` to the body.
+  - `disease.ts` (disease): the `sick` status (status.ts); `catchChance` (contagion a minute cut
+    by `res_disease`), `recovered` (IMMUNE_SECONDS), CONTACT_TILES, `law` contact (place.ts
+    `LAWS`), `diseaseText`. `Affliction.contagion` carries how catching it is.
+  - `emotion.ts` (emotions): the `rage` status (`berserk`), `wonOver` (CONVERT_SECONDS of charm
+    wins a creature), `spoiling` (TEMPER_FROM aggression), `emotionText`.
+  - `sound.ts` (music): `earshot` (HEARD_FROM loudness, EARSHOT tiles a point, plus
+    `hearing_range`), the `deaf` status (`UNHEARD` in status.ts: charm and sleep do not reach the
+    deaf), `soundText`.
 - `tips.ts` teaching tips: `wordTip` (one line of what a word does in numbers, plus its shortest
   counter-word), `wordIdeas` (one word per `TIP_KINDS` kind, weighted by `tipWeight` toward words
   the held letters nearly spell), `RULE_TIPS` (short "did you know" lines, test-checked against the

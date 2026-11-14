@@ -115,6 +115,14 @@ by how many words set them (minds and upkeep took `sentient`, `intelligence`, `f
       (breeding). Still to do for batch 2: food stored cold (a FRIDGE or CELLAR slowing rot), a
       power grid with reach (wires, pylons) instead of one pooled store, weather shelter indoors,
       per-word art for the generated buildings and animals.
+      Batch 3 is done (9, 10, 12, 13, 14): about 1,900 words through shared `body.ts` (grafts:
+      capabilities, extra hands, costs, severing), `wear.ts` (worn things lend, air temperature
+      and cold or heat, disguise), `disease.ts` (the sick status, contagion between bodies,
+      immunity, quarantine), `emotion.ts` (rage, charm wins creatures over, temper) and
+      `sound.ts` (noise on threat arrows, deafness). Still to do for batch 3: bots dressing for
+      the cold and using disguises, a disguised person's name tag showing their disguise to
+      others, stealth hiding people from view (only theft reads it), shelter from cold indoors,
+      per-word art for the generated body parts, clothes and instruments.
       1. [x] Professions: hired NPC workers producing N; farm, guard, build, scout
       2. [x] Plants and botany: crops, trees, herbs, fungi; P and A; medicine and poison
       3. [x] Buildings and rooms: claims, shelter, storage, production
@@ -123,13 +131,13 @@ by how many words set them (minds and upkeep took `sentient`, `intelligence`, `f
       6. [x] Machines and technology: power, M, map reveal, automation
       7. [x] Animals by family: livestock, pets, predators, birds, fish; hunting, I, mounts, food
       8. [x] Food and cooking: food store, temporary boosts, cures, poisons
-      9. Body parts: graft wings, claws, eyes, horns onto yourself or creatures
-      10. Clothing: warmth, disguise, stealth, faction look
+      9. [x] Body parts: graft wings, claws, eyes, horns onto yourself or creatures
+      10. [x] Clothing: warmth, disguise, stealth, faction look
       11. [x] Materials and elements: adjectives that rewrite any object (GLASS SWORD, IRON DOG);
           inputs to transmutation for Z
-      12. Disease and medicine: spreading plagues, cures, hospitals
-      13. Emotions and mental states: fields that move morale, loyalty, aggression
-      14. Music and sound: morale, charm animals, give away position, deafen
+      12. [x] Disease and medicine: spreading plagues, cures, hospitals
+      13. [x] Emotions and mental states: fields that move morale, loyalty, aggression
+      14. [x] Music and sound: morale, charm animals, give away position, deafen
       15. [x] Law and government: tax, ban, curfew, election, treaty; map or regional rules
       16. Money and trade: prices, T, bribes, debt, auctions
       17. Crime and deception: theft, disguise, traps, false information

@@ -177,3 +177,14 @@ Node process that owns the game state. One room per map instance (from milestone
   silence in an enemy lockup's claim. `make` crafts through `craftAt` (stations within CRAFT_RANGE,
   a material carried or lying by, used up). `produce` counts machines' `labor` as workers. `breed`
   adds young to fed herds within command.
+- Themes batch 3: `make` grafts a bodypart onto `graftHost` (the picked walker in sight, else the
+  speller); `sever` cuts grafts off (to the ground, nobody's) for `touch` (touched verbs that
+  inflict or sever land on the picked walker in sight; `happen` sends severing events there) and
+  for blows whose attack `severs`. `hurtWith` takes a `contagion` (sickness keeps it; the
+  vaccinated and the lately `recovered` do not catch it) and calls `winOver` (charm wins a
+  creature over, `setMaster`). In `beat`: `temper` (creatures with their temper up go for
+  enemies; `think` keeps that foe), `air` (cold and heat damage, `Walker.exposed`, told on
+  change), `contagion` (the sick pass it on through `nearGrid`, not inside a `contact` law).
+  `fooled` (a disguise: `Walker.unmasked` after a strike) keeps wild animals, angry creatures and
+  bots off a disguised walker. `compel` sends the enraged (`hampered.berserk`) at the nearest
+  walker; deaf creatures take no orders. `sendThreats` adds walkers heard (`earshot`, `heard`).

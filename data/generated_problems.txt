@@ -20,7 +20,6 @@ innovation: produce_Z+0.05: letters come from producers.txt alone
 generate: produce_E+2: letters come from producers.txt alone
 generate: produce_N+1: letters come from producers.txt alone
 generate: produce_G+1: letters come from producers.txt alone
-jazz: produce_J+0.5: letters come from producers.txt alone
 write: produce_W+1: letters come from producers.txt alone
 write: produce_E+1: letters come from producers.txt alone
 bid: produce_T+1: letters come from producers.txt alone

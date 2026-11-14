@@ -39,6 +39,7 @@ export const LAWS: Readonly<Record<string, string>> = {
   trade: "markets closed",
   theft: "no stealing",
   hunt: "no hunting wild animals",
+  contact: "quarantine: sickness does not pass",
 };
 
 /** The rules a word's area carries, or null if it changes nothing about letters or acts. */
