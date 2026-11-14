@@ -12,7 +12,7 @@
 import { areas, COLS, H, inset, ROWS, S, things, tile, Tile, W, type Thing } from "./scene.js";
 import * as shape from "./shapes.js";
 import type { Style } from "./style.js";
-import { clamp, hash, place, type Ctx, type Pt } from "./util.js";
+import { clamp, hash, place, type Ctx, type Pt } from "../art/util.js";
 
 /** Sweetie 16 plus three browns and a pink. */
 const P = {

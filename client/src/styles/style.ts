@@ -1,4 +1,4 @@
-import type { Ctx } from "./util.js";
+import type { Ctx } from "../art/util.js";
 
 /** One art style: how it draws the shared scene, and what it says about itself. */
 export interface Style {

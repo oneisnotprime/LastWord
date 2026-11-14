@@ -11,7 +11,7 @@
 import { areas, COLS, H, inset, ROWS, S, things, tile, Tile, W, type Thing } from "./scene.js";
 import * as shape from "./shapes.js";
 import type { Style } from "./style.js";
-import { circle, grainCanvas, hash, layer, makeField, maskCanvas, place, smooth, tracePoly, vnoise, type Ctx, type Pt } from "./util.js";
+import { circle, grainCanvas, hash, layer, makeField, maskCanvas, place, smooth, tracePoly, vnoise, type Ctx, type Pt } from "../art/util.js";
 
 const HAND = "'Kalam', 'Comic Sans MS', cursive";
 const RIM: [number, number, number] = [250, 245, 232];

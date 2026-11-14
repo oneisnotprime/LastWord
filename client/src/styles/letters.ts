@@ -10,7 +10,7 @@
  */
 import { areas, COLS, H, inset, ROWS, S, things, tile, Tile, W, type Thing } from "./scene.js";
 import type { Style } from "./style.js";
-import { clamp, hash, layer, makeField, maskCanvas, type Ctx } from "./util.js";
+import { clamp, hash, layer, makeField, maskCanvas, type Ctx } from "../art/util.js";
 
 const FONT = "'Bricolage Grotesque', system-ui, sans-serif";
 const BONE = "#f4f1ea";
