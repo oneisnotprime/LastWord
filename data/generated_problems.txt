@@ -1,10 +1,7 @@
 # Words skipped and tokens dropped from generated_words.txt by build_demo.py
 ## skipped words
-jumping: lexicon has ['noun', 'event', 'act']
-stopping: lexicon has ['noun', 'artifact', 'device']
 bigger: a degree of BIG, which it follows
 closer: a degree of CLOSE, which it follows
-gourmet: lexicon has ['noun', 'person', 'person']
 larger: a degree of LARGE, which it follows
 latest: a degree of LATE, which it follows
 older: a degree of OLD, which it follows
@@ -12,3 +9,24 @@ smaller: a degree of SMALL, which it follows
 younger: a degree of YOUNG, which it follows
 
 ## dropped tokens
+employed: produce_T+0.2: letters come from producers.txt alone
+moldy: produce_U+0.1: letters come from producers.txt alone
+paying: produce_T+1: letters come from producers.txt alone
+rare: produce_X+0.05: letters come from producers.txt alone
+rare: produce_Q+0.05: letters come from producers.txt alone
+mining: produce_X+0.05: letters come from producers.txt alone
+wealth: produce_T+2: letters come from producers.txt alone
+innovation: produce_Z+0.05: letters come from producers.txt alone
+generate: produce_E+2: letters come from producers.txt alone
+generate: produce_N+1: letters come from producers.txt alone
+generate: produce_G+1: letters come from producers.txt alone
+jazz: produce_J+0.5: letters come from producers.txt alone
+write: produce_W+1: letters come from producers.txt alone
+write: produce_E+1: letters come from producers.txt alone
+bid: produce_T+1: letters come from producers.txt alone
+contribute: produce_T+1: letters come from producers.txt alone
+earn: produce_T+2: letters come from producers.txt alone
+gain: produce_T+1: letters come from producers.txt alone
+realise: produce_T+3: letters come from producers.txt alone
+sell: produce_S+2: letters come from producers.txt alone
+sell: produce_T+2: letters come from producers.txt alone

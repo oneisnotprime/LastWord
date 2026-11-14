@@ -591,7 +591,7 @@ acrylamide	noun	material	material	2.01	uncommon	n14735525	-
 acrylate	noun	material	material	2.08	uncommon	n15022988	-
 acrylic	noun	material	material	3.42	common	n14990133	-
 acrylonitrile	noun	material	material	2.01	uncommon	n15023244	-
-act	noun	artifact	document	5.3	core	n06544086	verb:social
+act	noun	event	act	5.3	core	n06544086	verb:social
 actable	adjective	modifier	quality	0.0	obscure	a00799340	-
 actin	noun	material	material	3.14	common	n14755513	-
 actinal	adjective	modifier	quality	0.0	obscure	a01670069	-
@@ -10225,7 +10225,7 @@ closely	adverb	verb_modifier	manner	4.53	core	r00161639	-
 closemouthed	adjective	modifier	quality	0.0	obscure	a00502916	-
 closeness	noun	aura	feeling	3.14	common	n07545512	-
 closeout	noun	event	act	2.12	uncommon	n01121211	-
-closer	noun	person	person	4.73	core	n09949922	adverb:manner
+closer	adjective	modifier	quality	4.73	core	-	noun:person,adverb:manner
 closest	adverb	verb_modifier	manner	4.21	core	r00409931	-
 closet	noun	artifact	structure	4.13	core	n03152990	verb:contact
 closeup	noun	artifact	artifact	2.63	uncommon	n03053680	-
@@ -13607,7 +13607,7 @@ dasyure	noun	creature	mammal	0.0	obscure	n01886561	-
 dasyurid	noun	creature	mammal	0.0	obscure	n01886154	-
 data	noun	knowledge	knowledge	5.34	core	n08479331	-
 datable	adjective	modifier	quality	1.94	rare	a00684686	-
-date	noun	consumable	food	5.22	core	n15184543	verb:social
+date	noun	event	ceremony	5.22	core	n15184543	verb:social
 dateable	adjective	modifier	quality	1.65	rare	a00684686	-
 dated	adjective	modifier	quality	4.29	core	a00977595	-
 dateless	adjective	modifier	quality	1.8	rare	a01011536	-
@@ -19232,7 +19232,7 @@ falconer	noun	person	worker	2.81	uncommon	n10096384	-
 falconine	adjective	modifier	pertaining	0.0	obscure	a03004109	-
 falconry	noun	knowledge	knowledge	2.29	uncommon	n05643293	-
 falderol	noun	artifact	artifact	0.0	obscure	n03381284	-
-fall	noun	terrain	water	5.13	core	n15261656	verb:movement
+fall	noun	world_state	season	5.13	core	n15261656	verb:movement
 fallacious	adjective	modifier	quality	2.64	uncommon	a02510010	-
 fallaciousness	noun	aura	attribute	0.0	obscure	n04817979	-
 fallacy	noun	knowledge	knowledge	3.21	common	n05902523	-
@@ -22585,7 +22585,7 @@ gourmand	noun	person	person	2.16	uncommon	n10152508	-
 gourmandism	noun	aura	attribute	0.0	obscure	n05219532	-
 gourmandize	verb	spell	consume	0.0	obscure	v01195632	-
 gourmandizer	noun	person	person	0.0	obscure	n10152508	-
-gourmet	noun	person	person	3.36	common	n10081464	-
+gourmet	adjective	modifier	quality	3.36	common	-	noun:person
 gout	noun	affliction	affliction	3.06	common	n14212286	-
 gouty	adjective	modifier	quality	1.77	rare	a02555938	-
 govern	verb	spell	social	3.67	common	v02517217	-
@@ -27889,7 +27889,7 @@ isotropous	adjective	modifier	quality	0.0	obscure	a01363720	-
 isotropy	noun	aura	attribute	1.56	rare	n04924616	-
 israeli	adjective	modifier	pertaining	4.4	core	a02984470	noun:person
 issuance	noun	event	act	3.34	common	n01062158	-
-issue	noun	artifact	document	5.23	core	n05822776	verb:social
+issue	noun	event	event	5.23	core	n07334509	verb:social
 issuer	noun	institution	group	3.07	common	n08071902	-
 issuing	noun	event	act	3.76	common	n01062158	-
 isthmian	adjective	modifier	pertaining	2.12	uncommon	a02762894	-
@@ -28321,7 +28321,7 @@ jumentous	adjective	modifier	pertaining	0.0	obscure	a02764117	-
 jump	verb	spell	movement	4.69	core	v01967949	noun:event
 jumper	noun	person	person	3.7	common	n10246663	-
 jumpiness	noun	aura	feeling	1.14	rare	n07540999	-
-jumping	noun	event	act	4.23	core	n00441158	-
+jumping	adjective	modifier	participle	4.23	core	-	noun:act
 jumpstart	noun	event	act	2.59	uncommon	n01268414	verb:movement
 jumpsuit	noun	artifact	clothing	3.02	common	n03610811	-
 jumpy	adjective	modifier	quality	2.67	uncommon	a02415166	-
@@ -40765,7 +40765,7 @@ proceed	verb	spell	movement	4.18	core	v01999581	-
 proceeding	noun	event	act	3.66	common	n01187304	-
 proceedings	noun	event	act	4.18	core	n01187304	-
 proceeds	noun	institution	possession	4.05	core	n13281089	-
-process	noun	artifact	document	5.26	core	n06568683	verb:transform
+process	noun	event	act	5.26	core	n01025762	verb:transform
 processed	adjective	modifier	quality	3.96	common	a01850509	-
 procession	noun	event	event	3.57	common	n07341888	-
 processional	adjective	modifier	pertaining	2.37	uncommon	a03114977	noun:communication
@@ -46213,7 +46213,7 @@ sensualness	noun	aura	feeling	0.0	obscure	n07504015	-
 sensuous	adjective	modifier	quality	2.79	uncommon	a00071036	-
 sensuously	adverb	verb_modifier	manner	1.55	rare	r00451059	-
 sensuousness	noun	aura	feeling	1.47	rare	n07528652	-
-sent	noun	artifact	currency	5.16	core	n13722553	adjective:quality
+sent	verb	spell	movement	5.16	core	-	noun:quantity,adjective:quality
 sente	noun	measure	quantity	1.74	rare	n13709861	-
 sentence	noun	event	event	4.58	core	n06295743	verb:communication
 sentential	adjective	modifier	pertaining	1.47	rare	a03003198	-
@@ -49741,7 +49741,7 @@ stoppage	noun	artifact	structure	3.22	common	n02856708	-
 stopped	adjective	modifier	quality	4.84	core	a01626075	-
 stopper	noun	artifact	artifact	3.09	common	n04334963	verb:contact
 stoppered	adjective	modifier	quality	1.32	rare	a01658588	-
-stopping	noun	artifact	device	4.29	core	n03343088	-
+stopping	adjective	modifier	participle	4.29	core	-	noun:device
 stopple	noun	artifact	structure	0.0	obscure	n03974274	verb:contact
 stops	noun	event	contest	4.4	core	n00494319	-
 stopwatch	noun	artifact	device	2.59	uncommon	n04335324	-
@@ -49763,7 +49763,7 @@ stormily	adverb	verb_modifier	manner	0.0	obscure	r00035332	-
 storminess	noun	world_state	weather	1.14	rare	n14547038	-
 stormproof	adjective	modifier	quality	1.13	rare	a01892238	-
 stormy	adjective	modifier	quality	3.46	common	a00304526	-
-story	noun	artifact	structure	5.45	core	n03370837	-
+story	noun	artifact	document	5.45	core	n07235754	-
 storybook	noun	artifact	document	2.79	uncommon	n06425102	-
 storyteller	noun	person	person	3.08	common	n10365535	-
 stotinka	noun	measure	quantity	0.0	obscure	n13708018	-
@@ -50026,7 +50026,7 @@ studio	noun	artifact	building	4.66	core	n04351324	-
 studious	adjective	modifier	quality	2.54	uncommon	a00312152	-
 studiously	adverb	verb_modifier	manner	2.35	uncommon	r00188854	-
 studiousness	noun	aura	attribute	1.04	rare	n04873469	-
-study	noun	artifact	structure	5.26	core	n04352106	verb:perceive
+study	noun	artifact	document	5.26	core	n07233130	verb:perceive
 stuff	noun	material	material	5.14	core	n14604877	verb:contact
 stuffed	adjective	modifier	participle	3.96	common	a01089807	-
 stuffer	noun	person	worker	2.15	uncommon	n10712955	-
@@ -51698,7 +51698,7 @@ tec	noun	person	person	3.01	common	n10028930	-
 tech	noun	person	worker	4.69	core	n08302167	-
 techie	noun	person	worker	2.5	uncommon	n10715413	-
 technetium	noun	material	metal	2.06	uncommon	n14681226	-
-technical	noun	artifact	vehicle_land	4.75	core	n04406404	adjective:pertaining
+technical	adjective	modifier	quality	4.75	core	a02820043	noun:vehicle_land
 technicality	noun	knowledge	knowledge	2.83	uncommon	n05828731	-
 technically	adverb	verb_modifier	manner	4.1	core	r00127856	-
 technician	noun	person	worker	3.7	common	n10715747	-
@@ -58634,7 +58634,7 @@ womanliness	noun	aura	attribute	1.19	rare	n04675017	-
 womanly	adjective	modifier	quality	2.51	uncommon	a01488294	-
 womb	noun	bodypart	bodypart	3.63	common	n05526736	-
 wombat	noun	creature	mammal	2.58	uncommon	n01885711	-
-won	noun	artifact	currency	5.2	core	n13731465	adjective:quality
+won	verb	spell	combat	5.2	core	-	noun:quantity,adjective:quality
 wonder	noun	aura	feeling	4.93	core	n07525235	verb:cognition
 wonderberry	noun	flora	plant	0.0	obscure	n12917375	-
 wonderer	noun	person	person	0.0	obscure	n10809349	-

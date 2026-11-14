@@ -2513,6 +2513,11 @@ export class WorldRoom extends Room {
       if (!near(other.player)) throw new Error(`Too far away for ${word}`);
       return other;
     };
+    // A law where the victim stands (a SANCTUARY, a TRUCE) covers an event landing on them as it covers a blow.
+    const lawful = (victim: Walker, act: "attack" | "theft") => {
+      const barred = this.lawAgainst(act, selected, victim, victim.player, id);
+      if (barred) throw new Error(`${barred}: ${LAWS[act]} there`);
+    };
     const needThing = () => {
       if (!thing || !gear || gear.terrain) throw new Error(`Select a thing for ${word} first: click it`);
       if (!near(thing)) throw new Error(`Too far away for ${word}`);
@@ -2521,6 +2526,7 @@ export class WorldRoom extends Room {
 
     if (s.flag("destroys_target")) {
       const victim = needCreature();
+      lawful(victim, "attack");
       contest(victim.unit.body.stats, victim.player.name, true);
       walker.foe = null;
       this.kill(selected, id);
@@ -2532,6 +2538,8 @@ export class WorldRoom extends Room {
     if (onPerson && (inflicts(s).length || s.tags("effect_status").length || s.num("letter_steal") > 0 || s.num("restores") > 0)) {
       const victim = needCreature();
       const given = inflicts(s);
+      if (given.length) lawful(victim, "attack");
+      if (s.num("letter_steal") > 0) lawful(victim, "theft");
       if (given.length || s.num("letter_steal") > 0) contest(victim.unit.body.stats, victim.player.name, true);
       const said: string[] = [];
       if (given.length) { this.hurtWith(victim, given, id, id, false); said.push(given.map(([st]) => st).join(", ")); }
@@ -2611,6 +2619,7 @@ export class WorldRoom extends Room {
     }
     if (s.num("inflict_stun") > 0 && s.get("event_target") === "character") {
       const victim = needCreature();
+      lawful(victim, "attack");
       contest(victim.unit.body.stats, victim.player.name, true);
       const blow = walker.unit.attack.clone();
       blow.set("critical", "ABS");
@@ -3043,7 +3052,7 @@ export class WorldRoom extends Room {
     a.cooldown = rate > 0 ? 1 / rate : Infinity; // no rate: it strikes once
     const inside = (p: { x: number; y: number }) => Math.hypot(p.x - a.x, p.y - a.y) <= a.radius;
     for (const [wid, w] of [...this.walkers]) {
-      if (!this.walkers.has(wid) || !this.harms(a, wid, w)) continue;
+      if (!this.walkers.has(wid) || !this.harms(a, wid, w) || this.areaLaw(a, w.player, wid, w)) continue;
       const outer = w.unit.outer, r = strike(a.attack, outer, this.rng);
       this.blow(key, wid, r, outer === w.unit.body ? "" : outer.name, false, a);
       this.settle(wid, w);
@@ -3052,9 +3061,27 @@ export class WorldRoom extends Room {
     }
     this.state.things.forEach((t, tid) => {
       const g = this.grounded.get(tid);
-      if (!g || g.terrain || !inside(t) || (!a.friendlyFire && t.owner === a.owner)) return;
+      if (!g || g.terrain || !inside(t) || (!a.friendlyFire && t.owner === a.owner) || this.areaLaw(a, t)) return;
       this.strikeThing(a.owner, a.attack!, tid, t);
     });
+  }
+
+  /**
+   * The law that stops an area's harm where it would land, if any: an area harms as its maker
+   * would, so a law against attacking (a SANCTUARY, a TRUCE; a hunting ban for wild animals)
+   * covers its damage and statuses as it covers a blow, whether the law is another area's or the
+   * area's own. A walker is checked as the one struck (`lawAgainst` with the maker paying any
+   * fine) and the maker as the one striking there; a thing only the second way.
+   */
+  private areaLaw(a: Area, at: Point, wid?: string, w?: Walker): string | null {
+    const wild = !!w && w.master === "-" && w.unit.body.stats.flag("alive");
+    if (wid && w) {
+      const struck = this.lawAgainst("attack", wid, w, at, a.owner) ?? (wild ? this.lawAgainst("hunt", wid, w, at, a.owner) : null);
+      if (struck) return struck;
+    }
+    const maker = this.walkers.get(a.owner);
+    if (!maker) return null;
+    return this.lawAgainst("attack", a.owner, maker, at) ?? (wild ? this.lawAgainst("hunt", a.owner, maker, at) : null);
   }
 
   /** True if an area's harm (damage, statuses) lands on a walker: inside it, and among whom it targets. */
@@ -3070,7 +3097,7 @@ export class WorldRoom extends Room {
    */
   private pulse(key: string, a: Area, since: number) {
     for (const [wid, w] of [...this.walkers]) {
-      if (!a.attack && a.inflicts.length && this.harms(a, wid, w)) this.hurtWith(w, a.inflicts, a.owner, key, false);
+      if (!a.attack && a.inflicts.length && this.harms(a, wid, w) && !this.areaLaw(a, w.player, wid, w)) this.hurtWith(w, a.inflicts, a.owner, key, false);
       const reached = a.effect ? this.reaches(a, wid, w) : Math.hypot(w.player.x - a.x, w.player.y - a.y) <= a.radius;
       if (a.cures.length && reached && cure(w.statuses, a.cures).length) this.statusChanged(w);
       if (a.heals > 0 && since > 0 && reached && (wid === a.owner || w.master === a.owner)) this.restore(w, a.heals * since);
@@ -3088,6 +3115,7 @@ export class WorldRoom extends Room {
       !carriers.has(wid) && w.unit.body.stats.flag("alive") && this.harms(a, wid, w));
     if (!hosts.length) return;
     const [hid, host] = hosts[Math.floor(this.rng() * hosts.length)]!;
+    if (this.areaLaw(a, host.player, hid, host)) return; // a QUARANTINE-like law where they stand: it does not pass
     const copy: Area = {
       ...a, x: host.player.x, y: host.player.y, radius: a.baseRadius, until: this.elapsed + a.lasts,
       cooldown: 0, pulsed: this.elapsed, follows: hid,
