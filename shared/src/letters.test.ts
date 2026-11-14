@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
-  ACTION_LETTERS, addLetters, CACHE_X, Deposits, DEPOSITS, depositsAt, destroyLetters, generateMap, killLetters, mainland, MAP_SOURCES,
+  ACTION_LETTERS, addLetters, CACHE_CHANCE, RUIN_X_CHANCE, toolHelp, Deposits, DEPOSITS, depositsAt, destroyLetters, generateMap, killLetters, mainland, MAP_SOURCES,
   LETTER_GUIDE, makesLetter, parsePhrase, PATCH_TILES, PENDING_SOURCES, placeSources, production, readTrade, regionOf, resolve, seeded, SPAWN_APART, spawnPoint, Tile, tileAt, tradeProblem, walkable,
 } from "./index.js";
 import { demo } from "./testdata.js";
@@ -28,7 +28,7 @@ describe("deposits", () => {
   });
 
   it("a patch runs out, then grows back slowly; the next patch is fresh", () => {
-    const d = new Deposits(map), rng = seeded(3);
+    const d = new Deposits(map), rng = () => 0; // every try finds something, and the biome's first find (E)
     const grass = find((x, y) => depositsAt(map, x, y).length === 1 && depositsAt(map, x + PATCH_TILES, y).length >= 1);
     const got: string[] = [];
     for (let i = 0; i < DEPOSITS.forage.stock; i++) got.push(d.gather(grass.x, grass.y, 0, rng).letter);
@@ -45,18 +45,22 @@ describe("deposits", () => {
     const d = new Deposits(map), rng = seeded(9);
     const foot = find(near(Tile.Mountain));
     const seen: Record<string, number> = {};
-    for (let i = 0; i < 30; i++) { const g = d.gather(foot.x, foot.y, 0, rng); if (g.letter) seen[g.letter] = (seen[g.letter] ?? 0) + 1; }
+    const sure = () => [{ by: "test", chance: 1 }];
+    for (let i = 0; i < 60; i++) { const g = d.gather(foot.x, foot.y, 0, rng, 1, sure); if (g.letter) seen[g.letter] = (seen[g.letter] ?? 0) + 1; }
     expect(seen.u).toBe(DEPOSITS.cave.stock);
-    expect(seen.g).toBe(DEPOSITS.dig.stock);
+    expect(seen.g).toBeGreaterThanOrEqual(DEPOSITS.dig.stock); // hills foraging finds G too
   });
 
-  it("a cache gives its X to whoever digs beside it and is then gone; the temple grows Q back", () => {
-    const d = new Deposits(map), rng = seeded(1);
+  it("a cache gives its X to whoever digs beside it, often only at the third or fourth dig, and is then gone; the temple grows Q back", () => {
+    const d = new Deposits(map), rng = () => 0;
     const at = find((x, y) => tileAt(map, x, y) === Tile.Grass);
-    d.addSite({ id: "t1", x: at.x, y: at.y, letter: "x", stock: CACHE_X, regen: 0, radius: 2 });
-    expect(d.available(at.x + 1, at.y, 0).x).toBe(CACHE_X);
-    expect(d.gather(at.x + 1, at.y, 0, rng)).toEqual({ letter: "x", from: "t1" });
-    expect(d.gather(at.x, at.y, 0, rng)).toEqual({ letter: "x", from: "t1", emptied: "t1" });
+    d.addSite({ id: "t1", x: at.x, y: at.y, letter: "x", stock: 2, regen: 0, radius: 2 });
+    expect(d.available(at.x + 1, at.y, 0).x).toBe(2);
+    expect(d.gather(at.x + 1, at.y, 0, () => 0.99)).toMatchObject({ letter: "", why: "nothing", roll: { chance: CACHE_CHANCE, place: "cache" } });
+    expect(d.gather(at.x + 1, at.y, 0, rng)).toMatchObject({ letter: "x", from: "t1" });
+    // A SHOVEL (harvest_bonus 2 for dig and cache) adds ten points.
+    const shovel = (kind: string) => toolHelp(kind, [{ name: "shovel", stats: resolve(demo(), "shovel") }]);
+    expect(d.gather(at.x, at.y, 0, rng, 1, shovel)).toMatchObject({ letter: "x", from: "t1", emptied: "t1", roll: { chance: CACHE_CHANCE + 0.1 } });
     expect(d.gather(at.x, at.y, 0, rng).letter).toBe("e"); // only the ground is left
     d.addSite({ id: "q", x: at.x, y: at.y, letter: "q", stock: 1, regen: 100, radius: 2 }, 0);
     expect(d.gather(at.x, at.y, 0, rng).letter).toBe("q");
@@ -86,9 +90,9 @@ describe("the map's sources", () => {
     expect(closest).toBeGreaterThanOrEqual(SPAWN_APART);
     for (const p of taken) expect(tileAt(map, p.x, p.y)).not.toBe(Tile.City);
   });
-  it("regions for exploring are 32 tiles across", () => {
-    expect(regionOf(1, 1)).toBe(regionOf(31, 31));
-    expect(regionOf(1, 1)).not.toBe(regionOf(33, 1));
+  it("regions for exploring are 64 tiles across", () => {
+    expect(regionOf(1, 1)).toBe(regionOf(63, 63));
+    expect(regionOf(1, 1)).not.toBe(regionOf(65, 1));
   });
 });
 
@@ -104,6 +108,7 @@ describe("deeds", () => {
     expect(destroyLetters(true, true, false)).toBe("dvf");
     expect(destroyLetters(false, false, true)).toBe("dx");
   });
+  it("a ruin has its X only one time in four", () => expect(RUIN_X_CHANCE).toBe(0.25));
 });
 
 describe("markets", () => {
@@ -157,7 +162,7 @@ describe("the alphabet guide", () => {
     expect(d.problem(0.5, 0.5, 0)).toBe("Nothing to gather here");
     const grass = find((x, y) => depositsAt(map, x, y).length === 1 && tileAt(map, x, y) === Tile.Grass);
     expect(d.problem(grass.x, grass.y, 0)).toBeNull();
-    for (let i = 0; i < DEPOSITS.forage.stock; i++) d.gather(grass.x, grass.y, 0, rng);
+    for (let i = 0; i < DEPOSITS.forage.stock; i++) d.gather(grass.x, grass.y, 0, () => 0);
     expect(d.problem(grass.x, grass.y, 0)).toMatch(/picked clean/);
   });
 });

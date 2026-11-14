@@ -119,7 +119,17 @@ Node process that owns the game state. One room per map instance (from milestone
   (shared `Deposits.problem`) and sends `gathering` (seconds) when it starts.
 - Blows are noted by `blow` and sent once a tick by `flushHits` as `hits`: [{ by, on, amount,
   layer, kind, ranged, x?, y? }], merged per attacker and target, only to clients that see either.
-- Hunting: a killed living, non-sentient body adds shared `carcassFood` to the killer's food.
+- Hunting: a killed living, non-sentient body adds shared `carcassFood` to the killer's food;
+  a wild kill pays shared `huntYield` (H, its first letter, bonuses) with the reasons as `detail`.
+- Gathering rolls (shared `biome.ts`): a miss sends `missed` { x, y, text } ("nothing · DESERT
+  12%"); a find's `got` carries `detail` (the odds and the tools that helped, `helpOf`).
+- J: the first person into each 64-tile region (`discovered`), once a map. Ruins have their X one
+  time in four. Wild animals are drawn from the biome they stand in (`wild`, shared `wildlife`).
+- Nobody strikes past their sight: reach is the weapon's `attack_range` up to the striker's sight.
+- `sendThreats` (twice a second): `threats` [{ id, x, y, name, air, targeting, reach }] to each
+  person, what is coming for them, seen or not, sent only on change.
+- `take` { id } claims or picks up that thing if in reach (a click on a RUIN walks there, then sends it).
+- `CHEAT` ("xxx") fills every letter on any server, for playtesting (TODO: a real debug server).
   A wandering wild creature ambles at `AMBLE_PACE`; it runs only to chase or flee.
 - `take` (E) by a thing nobody owns that cannot be carried (a RUIN) `claim`s it: it becomes yours
   where it stands, radiates for you and makes its letters for you.

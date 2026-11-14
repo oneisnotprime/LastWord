@@ -4,7 +4,7 @@
  */
 import { parsePhrase, type Dictionary, type Stats } from "@lastword/shared";
 import { COLOUR, MATERIAL } from "./palette.js";
-import { ARCHETYPES, CLASSES, FALLBACK, WORDS } from "./shapes.js";
+import { ARCHETYPES, CLASSES, FALLBACK, men, WORDS } from "./shapes.js";
 import type { Silhouette } from "./build.js";
 
 export interface Look {
@@ -36,6 +36,8 @@ const memo = new Map<string, Omit<Look, "count">>();
 /** The silhouette for a word: its own, else its archetype's, else its class's. */
 export function shapeOf(dict: Dictionary, word: string): Silhouette {
   const def = dict.word(word);
+  // A group of living people (a CREW, a TRIBE) is several of them, not a flag.
+  if (!WORDS[word] && def?.archetype === "group" && def.set.alive === true) return men;
   return WORDS[word] ?? (def && (ARCHETYPES[def.archetype] ?? CLASSES[def.class])) ?? FALLBACK;
 }
 

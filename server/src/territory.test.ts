@@ -29,6 +29,8 @@ async function world(people = 1) {
   const minutes = async (n: number) => { for (let i = 0; i < n * 60; i++) room.update(1); await wait(); };
   const got = (i: number, why: RegExp) => of(i, "got").filter((g) => why.test(g.why)).map((g) => g.letters).join("");
   for (let i = 0; i < people; i++) me(i).letters = all();
+  // No wild animals: these tests are about land, cities and trade, and a wolf about would start fights (no work near a fight).
+  for (const [id, w] of [...r.walkers]) if (w.master === "-" && w.citizenOf === undefined) r.removeWalker(id);
   return { room, r, clients, me, of, minutes, got };
 }
 
@@ -93,7 +95,7 @@ it("claiming a city's middle rules it: its citizens pay S, and leave one by one;
 });
 
 it("hiring at a market takes a citizen into your service as a worker, who goes to work your KILN", async () => {
-  const { room, r, clients, me, minutes, got } = await world();
+  const { room, r, clients, me, minutes, got, of } = await world();
   const [mid, market] = [...room.state.things].find(([, t]) => t.fixture === "market")!;
   const city = r.cityAt(market);
   Object.assign(me().player, { x: market.x + 1, y: market.y });
@@ -107,6 +109,7 @@ it("hiring at a market takes a citizen into your service as a worker, who goes t
   Object.assign(me().player, { x: market.x + 5, y: market.y + 3 });
   clients[0].send("spell", "kiln"); await wait();
   Object.assign(me().player, { x: market.x + 30, y: market.y });
+  me().stores.food = 100; // a worker must be fed
   for (let i = 0; i < 300; i++) room.update(0.1);
   expect(worker.job).toBe([...room.state.things].find(([, t]) => t.phrase === "kiln")![0]);
   await minutes(3);

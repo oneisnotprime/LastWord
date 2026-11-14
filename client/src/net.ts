@@ -1,3 +1,4 @@
+import type { Threat } from "./threats.js";
 import { Client } from "@colyseus/sdk";
 import type { Letters, LoadoutDetail, Offer, Sensed } from "@lastword/shared";
 import { chooseGame } from "./start.js";
@@ -12,7 +13,8 @@ export interface Connection {
   spell(text: string): void;
   gather(): void;
   give(to: string, letters: string): void;
-  take(): void;
+  /** E: pick up or claim what is nearest, or the thing named (a click on something nobody owns). */
+  take(id?: string): void;
   /** Get off what you ride; it stays yours. */
   dismount(): void;
   /** Drop the item at `index` in the loadout, or the last thing equipped. */
@@ -32,7 +34,8 @@ export interface Connection {
 }
 
 /** Letters gained and why ("forage", "hunted COW (+12 food)"), and where they came from. */
-export interface Got { letters: string; why: string; x: number; y: number }
+/** Letters gained: what, why ("forage"), where, and the small print under the popup ("JUNGLE 35% · +10% SHOVEL"). */
+export interface Got { letters: string; why: string; x: number; y: number; detail?: string }
 
 /** Adjectives put on something, as everyone in sight of it is told. */
 export interface Described { target: string; x: number; y: number; words: string; what: string; changes: string[] }
@@ -45,6 +48,8 @@ export interface Handlers {
   /** A gathering action began: it takes this many seconds unless you move. */
   gathering(seconds: number): void;
   got(what: Got): void;
+  /** A gathering try found nothing: where, and the odds it had ("nothing · DESERT 12%"). */
+  missed(what: { x: number; y: number; text: string }): void;
   notice(text: string): void;
   dead(killer: string): void;
   loadout(detail: LoadoutDetail): void;
@@ -65,6 +70,8 @@ export interface Handlers {
   hits(list: Hit[]): void;
   /** Trade offers you have made and been made. */
   offers(list: Offer[]): void;
+  /** What is coming for us, seen or not (incoming-threat arrows). */
+  threats(list: Threat[]): void;
 }
 
 /** One blow, as the server tells it (server `Hit`). */
@@ -95,6 +102,7 @@ export async function connect(on: Handlers): Promise<Connection> {
   room.onMessage("gathered", on.gathered);
   room.onMessage("gathering", on.gathering);
   room.onMessage("got", on.got);
+  room.onMessage("missed", on.missed);
   room.onMessage("notice", on.notice);
   room.onMessage("dead", on.dead);
   room.onMessage("loadout", on.loadout);
@@ -105,6 +113,7 @@ export async function connect(on: Handlers): Promise<Connection> {
   room.onMessage("sensed", on.sensed);
   room.onMessage("hits", on.hits);
   room.onMessage("offers", on.offers);
+  room.onMessage("threats", on.threats);
   room.onLeave(on.closed);
   room.onDrop(on.dropped);
   room.onReconnect(on.reconnected);
@@ -121,7 +130,7 @@ export async function connect(on: Handlers): Promise<Connection> {
     spell: (text) => room.send("spell", text),
     gather: () => room.send("gather"),
     give: (to, letters) => room.send("give", { to, letters }),
-    take: () => room.send("take"),
+    take: (id) => room.send("take", id ? { id } : undefined),
     dismount: () => room.send("dismount"),
     drop: (index) => room.send("drop", index),
     use: (which) => room.send("use", which),

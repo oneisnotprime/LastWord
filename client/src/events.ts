@@ -8,7 +8,7 @@ import { eventCard, type Dictionary } from "@lastword/shared";
 import { zoneStyle } from "./zones.js";
 
 /** One thing in force: its word, when it ends on the round clock (0: lasts), and who brought it. */
-export interface InForce { word: string; until: number; by: string; kind: "weather" | "night" | "zone" }
+export interface InForce { word: string; until: number; by: string; kind: "weather" | "night" | "zone"; extra?: string[] }
 
 const esc = (t: string) => t.replace(/[&<>"]/g, (c) => `&#${c.charCodeAt(0)};`);
 const left = (s: number) => (s >= 60 ? `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}` : `${s}s`);
@@ -80,12 +80,19 @@ export class Events {
     this.drawCard();
   }
 
+  /** Opens the card for something in force that is not among the chips (a click on an area's tag, claimed ground). */
+  show(f: InForce) {
+    this.open = f;
+    this.drawCard();
+  }
+
   private drawCard() {
     const f = this.open ? this.list.find((x) => x.word === this.open!.word) ?? this.open : null;
     if (!f) { this.card.className = ""; this.card.innerHTML = ""; return; }
     const card = eventCard(this.dict, f.word);
     const meta = [card.kind || f.kind, f.by ? `by ${f.by}` : "", f.until ? `${left(Math.max(0, f.until - this.now))} left` : ""].filter(Boolean).join(" · ");
-    const lines = card.lines.length ? card.lines : ["changes nothing yet"];
+    const lines = [...(f.extra ?? this.open?.extra ?? []), ...card.lines];
+    if (!lines.length) lines.push("changes nothing yet");
     const ends = card.counters.slice(0, 8).map((w) => w.toUpperCase()).join(", ");
     this.card.innerHTML = `<div class="title">${esc(card.title)}</div><div class="kind">${esc(meta)}</div>` +
       `<ul>${lines.map((l) => `<li>${esc(l)}</li>`).join("")}</ul>` +

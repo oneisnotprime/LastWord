@@ -62,7 +62,7 @@ it("a stunned or rooted walker cannot move, and a NET roots whoever it hits", as
   expect(wb.player.y).toBeCloseTo(at.y);
   wb.statuses = []; (room as any).statusChanged(wb);
 
-  // A NET does no damage but roots for six seconds.
+  // A NET does no damage but roots (six seconds in the word, 25 stretched).
   a.send("spell", "net"); await wait();
   expect(said.a.at(-1)).toBe("NET equipped");
   a.send("attack", b.sessionId); await wait();
@@ -73,7 +73,7 @@ it("a stunned or rooted walker cannot move, and a NET roots whoever it hits", as
   b.send("move", { x: at.x, y: at.y + 3 }); await wait();
   ticks(room, 20);
   expect(wb.player.y).toBeCloseTo(at.y);
-  ticks(room, 70); // the root wears off and B walks on
+  ticks(room, 260); // the root (six seconds in the word, stretched to 25) wears off and B walks on
   b.send("move", { x: at.x, y: at.y + 3 }); await wait();
   ticks(room, 20);
   expect(has(wb, "root")).toBe(false);

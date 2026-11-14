@@ -21,5 +21,6 @@ export * from "./sense.js";
 export * from "./ride.js";
 export * from "./economy.js";
 export * from "./place.js";
+export * from "./biome.js";
 export * from "./produce.js";
 export * from "./territory.js";

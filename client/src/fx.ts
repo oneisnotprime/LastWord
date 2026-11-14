@@ -60,7 +60,7 @@ export class Effects {
     const from = this.toScreen(g.x, g.y);
     const el = document.createElement("div");
     el.className = "pop";
-    el.innerHTML = `<div class="big">${esc(tileText(g.letters))}</div><div class="why">${esc(reasonTag(g))}</div>`;
+    el.innerHTML = `<div class="big">${esc(tileText(g.letters))}</div><div class="why">${esc(reasonTag(g))}</div>${g.detail ? `<div class="detail">${esc(g.detail)}</div>` : ""}`;
     el.style.left = `${from.x}px`;
     el.style.top = `${from.y}px`;
     this.layer.append(el);
@@ -80,6 +80,7 @@ export class Effects {
       const box = big.getBoundingClientRect();
       const dx = to.x - (box.left + box.width / 2), dy = to.y - (box.top + box.height / 2);
       why.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 200, fill: "forwards" });
+      el.querySelector<HTMLElement>(".detail")?.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 200, fill: "forwards" });
       big.animate([{ transform: "rotate(-3deg)" }, { transform: "rotate(357deg)" }], { duration: 560, fill: "forwards" });
       el.animate([
         { transform: "translate(-50%, -140%) scale(1)" },
@@ -115,9 +116,9 @@ export class Effects {
   }
 
   /** A short red note over a world point: "✕ picked clean". */
-  fail(x: number, y: number, text: string) {
+  fail(x: number, y: number, text: string, small = false) {
     const el = document.createElement("div");
-    el.className = "fail";
+    el.className = small ? "fail small" : "fail";
     el.textContent = `✕ ${text}`;
     this.layer.append(el);
     this.numbers.push({ el, x, y, born: performance.now(), life: 1800, rise: 26 });

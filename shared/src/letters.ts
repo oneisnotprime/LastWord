@@ -2,6 +2,7 @@ import type { Rng } from "./rng.js";
 import type { Stats } from "./stats.js";
 import type { Letters } from "./phrase.js";
 import { Tile, tileAt, walkable, type Point, type WorldMap } from "./world.js";
+import { BIOMES, forageLetter, GATHER_CHANCE, roll, type Help, type Roll } from "./biome.js";
 
 /** Seconds one gathering action takes. */
 export const GATHER_SECONDS = 2;
@@ -14,15 +15,15 @@ export const GIVE_RANGE = 3;
  * words make (`produce_*`), or, for F and V, from what you do with words.
  */
 export const ACTION_SOURCES: Readonly<Record<string, string>> = {
-  e: "foraging, anywhere on land",
+  e: "foraging, anywhere on land (each biome finds its own letters, and often nothing)",
   o: "fishing beside water",
   u: "caves beside mountains (scarce)",
   g: "digging in hills and at the foot of mountains",
   h: "hunting wild creatures",
   d: "destroying objects and structures, ruins included",
   k: "killing people and the people who follow them",
-  j: "exploring regions you have not been to",
-  x: "digging up buried caches, breaking ruins",
+  j: "being first into a region nobody has explored",
+  x: "digging up buried caches, sometimes breaking ruins",
   q: "the map's one temple",
   t: "trading at a city market",
 };
@@ -74,10 +75,11 @@ function beside(map: WorldMap, x: number, y: number, kinds: Tile[]): boolean {
 /** The deposits within reach of someone standing at a point: foraging anywhere on land, fishing by water... */
 export function depositsAt(map: WorldMap, x: number, y: number): Deposit[] {
   if (!walkable(map, x, y)) return [];
-  const out: Deposit[] = ["forage"];
+  const out: Deposit[] = BIOMES[tileAt(map, x, y)] ? ["forage"] : [];
   if (beside(map, x, y, [Tile.Water, Tile.DeepWater])) out.push("fish");
   const mountain = beside(map, x, y, [Tile.Mountain]);
-  if (mountain || tileAt(map, x, y) === Tile.Hill) out.push("dig");
+  const ground = tileAt(map, x, y);
+  if (mountain || ground === Tile.Hill || ground === Tile.Badlands) out.push("dig");
   if (mountain) out.push("cave");
   return out;
 }
@@ -98,8 +100,17 @@ export interface Site {
   at: number;
 }
 
-/** What one gathering found: a letter, or why not. `emptied` names a site that has nothing left for good. */
-export type Gathered = { letter: string; from: string; emptied?: string } | { letter: ""; why: string };
+/**
+ * What one gathering found: a letter, or why not. `emptied` names a site that has nothing left
+ * for good. `roll` is the chance it had and what made it (missing where nothing was rolled).
+ */
+export type Gathered = { letter: string; from: string; emptied?: string; roll?: Roll } | { letter: ""; why: string; roll?: Roll };
+
+/** A cache's X does not come at every dig: this chance, before a SHOVEL helps. */
+export const CACHE_CHANCE = 0.35;
+
+/** What helps a person gather each kind ("forage", "fish", "dig", "cave", "cache"): their tools. */
+export type GatherHelp = (kind: string) => Help[];
 
 /**
  * The map's deposits and sites, and how much each has left. Stock grows back lazily: worked
@@ -195,14 +206,20 @@ export class Deposits {
     return depositsAt(this.map, x, y).length ? "This ground is picked clean for now: move on" : "Nothing to gather here";
   }
 
-  /** One gathering action at a point: a site in reach first, else a deposit here, weighted, that has stock left. */
-  gather(x: number, y: number, now: number, rng: Rng, growth = 1): Gathered {
+  /**
+   * One gathering action at a point: a site in reach first, else a deposit here, weighted, that
+   * has stock left. Most tries find nothing (shared `biome.ts`: the biome's forage chance, or
+   * `GATHER_CHANCE`, plus what `help` says the gatherer's tools add); a miss takes nothing.
+   */
+  gather(x: number, y: number, now: number, rng: Rng, growth = 1, help: GatherHelp = () => []): Gathered {
     const site = this.siteAt(x, y, now);
     if (site) {
+      const r = site.letter === "x" ? roll(CACHE_CHANCE, "cache", help("cache"), rng) : undefined;
+      if (r && !r.ok) return { letter: "", why: "nothing", roll: r };
       site.stock -= 1;
       const gone = site.regen === 0 && site.stock < 1;
       if (gone) this.sites.delete(site.id);
-      return { letter: site.letter, from: site.id, ...(gone ? { emptied: site.id } : {}) };
+      return { letter: site.letter, from: site.id, ...(gone ? { emptied: site.id } : {}), ...(r ? { roll: r } : {}) };
     }
     const here = depositsAt(this.map, x, y);
     if (!here.length) return { letter: "", why: "Nothing to gather here" };
@@ -210,21 +227,30 @@ export class Deposits {
     const open = here.filter((k) => p.stock[KINDS.indexOf(k)]! >= 1);
     if (!open.length) return { letter: "", why: "This ground is picked clean for now: move on" };
     const total = open.reduce((n, k) => n + DEPOSITS[k].weight, 0);
-    let roll = rng() * total;
-    const kind = open.find((k) => (roll -= DEPOSITS[k].weight) < 0) ?? open.at(-1)!;
+    let pick = rng() * total;
+    const kind = open.find((k) => (pick -= DEPOSITS[k].weight) < 0) ?? open.at(-1)!;
+    const biome = BIOMES[tileAt(this.map, x, y)];
+    const r = kind === "forage"
+      ? roll(biome?.forage ?? 0.2, biome?.name ?? "ground", help("forage"), rng)
+      : roll(GATHER_CHANCE[kind], kind === "fish" ? "water" : kind === "dig" ? "digging" : "cave", help(kind), rng);
+    if (!r.ok) return { letter: "", why: "nothing", roll: r };
     p.stock[KINDS.indexOf(kind)]! -= 1;
-    return { letter: DEPOSITS[kind].letter, from: kind };
+    const letter = kind === "forage" && biome ? forageLetter(biome, rng) : DEPOSITS[kind].letter;
+    return { letter, from: kind, roll: r };
   }
 }
 
-/** Width in tiles of an exploration region: the first visit to each gives one J. */
-export const REGION_TILES = 32;
+/**
+ * Width in tiles of an exploration region: the first person into each gives one J (PLAN.md:
+ * "exploring undiscovered tiles; this depletes"), so a map holds only so many.
+ */
+export const REGION_TILES = 64;
 export const regionOf = (x: number, y: number): number => Math.floor(y / REGION_TILES) * 4096 + Math.floor(x / REGION_TILES);
 
 /** How many of each source a map gets, besides a market in every city. */
-export const MAP_SOURCES = { caches: 12, ruins: 10, animals: 30 };
+export const MAP_SOURCES = { caches: 8, ruins: 10, animals: 40 };
 /** X a buried cache holds; it never refills. */
-export const CACHE_X = 2;
+export const CACHE_X = 1;
 /** Letters a cache's last dig turns up besides its X: the prize for finding it. */
 export const CACHE_PRIZE = 3;
 /** What a cache's prize is drawn from: everyday letters, so the prize is always useful. */
@@ -236,8 +262,9 @@ export function cachePrize(rng: Rng): string {
   for (let i = 0; i < CACHE_PRIZE; i++) out += PRIZE_LETTERS[Math.floor(rng() * PRIZE_LETTERS.length)];
   return out;
 }
-/** X a ruin gives when it is broken, besides the D for breaking it. */
+/** X a ruin gives when it is broken, besides the D for breaking it, one time in RUIN_X_CHANCE. */
 export const RUIN_X = 1;
+export const RUIN_X_CHANCE = 0.25;
 /** What a ruin has left standing: it starts badly broken, so bare hands can finish it. */
 export const RUIN_INTEGRITY = 250;
 /** The temple's Q: how many it holds and seconds to grow one back. */
@@ -383,7 +410,7 @@ export function killLetters(victim: "person" | "owned" | "wild", sentient: boole
   return sentient ? "vk" : "v";
 }
 
-/** What destroying a thing pays: D, V if it was another player's, F if fire did it, X for a ruin. */
+/** What destroying a thing pays: D, V if it was another player's, F if fire did it, X for a ruin that had one (`RUIN_X_CHANCE`). */
 export function destroyLetters(theirs: boolean, fire: boolean, ruin: boolean): string {
   return `d${theirs ? "v" : ""}${fire ? "f" : ""}${ruin ? "x".repeat(RUIN_X) : ""}`;
 }
@@ -418,12 +445,12 @@ export const LETTER_GUIDE: Readonly<Record<string, LetterHow>> = {
   b: { how: "furniture, claimed", words: ["bed", "chair"] },
   c: { how: "crafting, worked", words: ["kiln", "forge"] },
   d: { how: "destroy things" },
-  e: { how: "forage (G)" },
+  e: { how: "forage (G), most biomes" },
   f: { how: "burn things" },
   g: { how: "dig hills (G)" },
   h: { how: "hunt animals" },
   i: { how: "livestock, pets", words: ["dog", "cow"] },
-  j: { how: "explore" },
+  j: { how: "first into new land" },
   k: { how: "kill people" },
   l: { how: "land held: claims", words: ["hedge", "fence"] },
   m: { how: "machines eat vowels", words: ["press", "engine"] },
@@ -437,7 +464,7 @@ export const LETTER_GUIDE: Readonly<Record<string, LetterHow>> = {
   u: { how: "caves by mountains (G)", words: ["mushroom"] },
   v: { how: "beat others' things" },
   w: { how: "mills, with the wind", words: ["mill", "windmill"] },
-  x: { how: "caches (G), ruins" },
+  x: { how: "caches (G), some ruins" },
   y: { how: "age: things kept", words: ["clock", "oak"] },
   z: { how: "bosses, transmute 10" },
 };

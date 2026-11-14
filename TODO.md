@@ -34,6 +34,17 @@
 - All assets and word data are generated ahead of time; no model at runtime.
 - Every word feeds the same shared systems (PLAN.md); no private mechanics per word.
 - The game lives in its own repository.
+- Maps have biomes (jungle, desert, tundra, savanna, badlands, volcanic ash, meadow, taiga,
+  marsh, shore) in large regions; each forages its own letters, and most forage tries find
+  nothing (12 to 35%, more with tools whose `harvest_sources` fit). Wild animals suit their biome.
+- A hunt pays H and the animal's first letter (FOX: H F), plus bonuses from the body and the tools.
+- J comes once per 64-tile region, to whoever is first there; X from eight one-X caches (dug at
+  35% a try) and one ruin in four.
+- Statuses and temporary effects last several times their word's seconds (`statusSeconds`,
+  `effectSeconds`): stuns about three times, most twenty, damage over time twice.
+- Nobody strikes past their sight: a weapon's reach is cut to its wielder's sight (TELESCOPE,
+  RADAR and night change it). Threats coming from beyond sight are shown at the screen's edge.
+- A click on something nobody owns claims it (walk there, take); Shift-click attacks it.
 
 ## Properties words use that the engine ignores
 
@@ -155,6 +166,13 @@ lexicon so every related word is captured.
       words do the same for their own length or kind
 
 ## Data
+
+- [ ] Odd producers in generated data: JOHN (a toilet) makes J, ARMY-like collectives make K.
+      Review `produce_J/K/X/Q/Z` across `tools/generated_words.txt` (fix the prompt/examples).
+- [ ] Common nouns whose main sense the class misses (from the playtest-5 scan of the 500 most
+      common): STORY and STUDY are structures, ACT/ISSUE/PROCESS documents, DATE food, FALL
+      water, LEAD metal, WON/SENT currency. Art now draws STORY/STUDY as books; the data still
+      needs overrides with fitting properties.
 
 - [x] Word lists by role, class and archetype (59,232 with a role, 5,385 inert)
 - [x] Property schema (349 properties, 14 groups)
