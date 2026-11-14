@@ -1,0 +1,513 @@
+# noun instrument
+guitar: mass=2.5 length=1 integrity=30 material=wood,steel equip_slot=held hands_required=2 loudness=6 field_radius=30 field_targets=all morale+3 charm+2 aggression+-2 dmg_blunt=15 value=400 beauty=6
+cello: mass=4 length=1.2 integrity=40 material=wood equip_slot=held hands_required=2 loudness=6 inflict_sleep=2 field_radius=35 field_targets=all morale+3 aggression+-3 regeneration+0.5 value=3000 beauty=8
+viola: mass=0.6 length=0.7 integrity=20 material=wood equip_slot=held hands_required=2 loudness=5 inflict_charm=2 field_radius=30 field_targets=all morale+2 aggression+-2 value=1500 beauty=7
+saxophone: mass=2.5 length=0.8 integrity=50 material=brass equip_slot=held hands_required=2 loudness=8 inflict_charm=3 field_radius=40 field_targets=all morale+4 charm+3 value=1500 beauty=7
+sax: mass=2.5 length=0.8 integrity=50 material=brass equip_slot=held hands_required=2 loudness=8 inflict_charm=3 field_radius=40 field_targets=all morale+4 charm+3 value=1500 beauty=7
+clarinet: mass=0.8 length=0.7 integrity=25 material=wood equip_slot=held hands_required=2 loudness=6 inflict_charm=2 field_radius=30 field_targets=living morale+2 aggression+-2 value=800
+oboe: mass=0.7 length=0.65 integrity=20 material=wood equip_slot=held hands_required=2 loudness=6 inflict_charm=3 field_radius=30 field_targets=living morale+2 aggression+-3 value=2000 beauty=6
+bassoon: mass=3.5 length=1.3 integrity=35 material=wood equip_slot=held hands_required=2 loudness=6 inflict_sleep=2 field_radius=30 field_targets=enemies speed_land*0.9 aggression+-2 value=3000
+piccolo: mass=0.2 length=0.32 integrity=15 material=wood,silver equip_slot=held hands_required=2 loudness=8 dmg_sonic=4 inflict_confuse=1 field_radius=40 field_targets=owned speed_land*1.1 courage+2 value=600
+fife: mass=0.1 length=0.4 integrity=12 material=wood equip_slot=held hands_required=2 loudness=8 field_radius=50 field_targets=owned speed_land*1.15 courage+3 morale+2 value=40
+trombone: mass=1.5 length=1.2 integrity=40 material=brass equip_slot=held hands_required=2 loudness=9 dmg_sonic=6 inflict_fear=1 field_radius=50 field_targets=owned courage+3 morale+2 value=900
+tuba: mass=11 length=1 integrity=60 material=brass equip_slot=held hands_required=2 loudness=9 dmg_sonic=8 knockback=1 field_radius=50 field_targets=owned courage+3 strength*1.1 morale+2 value=4000
+cornet: mass=1.1 length=0.4 integrity=35 material=brass equip_slot=held hands_required=1 loudness=8 field_radius=50 field_targets=owned courage+3 morale+3 value=700
+clarion: mass=1 length=0.6 integrity=30 material=brass equip_slot=held hands_required=1 loudness=10 inflict_fear=3 dmg_sonic=6 field_radius=80 field_targets=owned courage+5 morale+3 command_limit+3 counters=lullaby,silence
+bombard: mass=2 length=0.7 integrity=30 material=wood equip_slot=held hands_required=2 loudness=10 dmg_sonic=8 inflict_deaf=2 field_radius=50 field_targets=owned courage+4
+mandolin: mass=0.7 length=0.65 integrity=20 material=wood,steel equip_slot=held hands_required=2 loudness=5 inflict_charm=3 field_radius=25 field_targets=all charm+3 morale+2 value=500 beauty=6
+ukulele: mass=0.5 length=0.55 integrity=15 material=wood equip_slot=held hands_required=2 loudness=4 field_radius=20 field_targets=owned morale+4 aggression+-2 comfort+1 value=80
+uke: mass=0.5 length=0.55 integrity=15 material=wood equip_slot=held hands_required=2 loudness=4 field_radius=20 field_targets=owned morale+4 aggression+-2 comfort+1 value=80
+lyre: mass=1.5 length=0.6 integrity=20 material=wood,gut equip_slot=held hands_required=2 loudness=4 inflict_charm=4 inflict_sleep=2 field_radius=30 field_targets=living morale+3 aggression+-4 value=800 beauty=8
+sitar: mass=4 length=1.2 integrity=25 material=wood,steel equip_slot=held hands_required=2 loudness=5 inflict_charm=3 field_radius=30 field_targets=all morale+2 aggression+-3 accuracy+0.05 value=900 beauty=7
+koto: mass=6 length=1.8 integrity=30 material=wood,silk equip_slot=held hands_required=2 loudness=4 inflict_sleep=2 field_radius=30 field_targets=all aggression+-4 accuracy+0.1 value=1500 beauty=8
+zither: mass=3 length=0.6 integrity=20 material=wood,steel equip_slot=held hands_required=2 loudness=4 inflict_sleep=2 field_radius=25 field_targets=all morale+2 aggression+-3 value=600
+dulcimer: mass=3 length=0.9 integrity=25 material=wood,steel equip_slot=held hands_required=2 loudness=5 inflict_charm=2 field_radius=25 field_targets=all morale+3 comfort+1 value=500
+harpsichord: mass=80 length=2.2 integrity=120 material=wood portable=false loudness=6 field_radius=30 field_targets=all morale+3 charm+3 intelligence+1 comfort=3 value=20000 beauty=8
+virginal: mass=30 length=1.5 integrity=80 material=wood portable=false loudness=4 field_radius=20 field_targets=all morale+2 comfort=2 value=8000 beauty=7
+organ: mass=20000 height=10 integrity=5000 material=wood,tin portable=false loudness=10 dmg_sonic=10 field_radius=100 field_targets=owned morale+5 courage+4 res_unholy+0.4 inflict_fear=2 value=500000 beauty=9 counters=ghost,demon
+calliope: mass=600 integrity=300 material=brass,steel portable=false loudness=10 upkeep_fuel=0.1 dmg_sonic=8 inflict_deaf=2 field_radius=150 field_targets=all morale+3 charm+2
+xylophone: mass=15 length=1.2 integrity=60 material=wood equip_slot=held hands_required=2 loudness=7 field_radius=30 field_targets=owned morale+3 speed_land*1.05 dmg_blunt=8
+glockenspiel: mass=8 length=0.8 integrity=60 material=steel equip_slot=held hands_required=2 loudness=7 inflict_charm=1 field_radius=30 field_targets=all morale+3 aggression+-2
+marimba: mass=50 length=2 integrity=80 material=wood portable=false loudness=6 field_radius=30 field_targets=all morale+3 aggression+-3 comfort=2
+vibes: mass=60 length=1.5 integrity=80 material=aluminum portable=false loudness=5 upkeep_power=0.05 inflict_sleep=1 field_radius=30 field_targets=all morale+2 aggression+-4
+triangle: mass=0.2 integrity=40 material=steel equip_slot=held hands_required=1 loudness=6 dmg_sonic=3 field_radius=25 field_targets=owned alarm=true morale+1 food_need*0.9
+maraca: plural_count=2 mass=0.2 integrity=10 material=wood equip_slot=held hands_required=1 loudness=5 field_radius=20 field_targets=owned morale+2 speed_land*1.05 agility+1
+rattle: mass=0.2 integrity=8 material=wood equip_slot=held hands_required=1 loudness=5 inflict_fear=1 field_radius=15 field_targets=living aggression+-1 morale+1 counters=snake
+bongo: plural_count=2 mass=3 integrity=30 material=wood,leather equip_slot=held hands_required=2 loudness=7 field_radius=30 field_targets=owned morale+3 speed_land*1.1 agility+1
+tabor: mass=2 integrity=25 material=wood,leather equip_slot=held hands_required=1 loudness=7 field_radius=40 field_targets=owned courage+2 speed_land*1.1
+timpani: mass=60 integrity=120 material=copper,leather portable=false loudness=10 dmg_sonic=15 inflict_deaf=3 inflict_fear=2 field_radius=60 field_targets=owned courage+4 aggression+2
+kettledrum: mass=40 integrity=100 material=copper,leather portable=false loudness=10 dmg_sonic=12 inflict_deaf=3 inflict_fear=2 field_radius=60 field_targets=owned courage+4 aggression+2
+kazoo: mass=0.02 length=0.12 integrity=5 material=plastic equip_slot=held hands_required=1 loudness=5 inflict_confuse=2 field_radius=15 field_targets=all aggression+-2 morale+1 value=1
+ocarina: mass=0.2 integrity=10 material=clay brittleness=7 equip_slot=held hands_required=2 loudness=5 inflict_charm=4 field_radius=30 field_targets=living morale+2 aggression+-3 value=40 beauty=6
+shofar: mass=0.5 length=0.6 integrity=20 material=horn equip_slot=held hands_required=1 loudness=10 inflict_fear=4 dmg_sonic=8 res_unholy+0.4 field_radius=100 field_targets=owned courage+5 morale+3 counters=wall,demon
+theremin: mass=5 integrity=20 material=wood,steel equip_slot=held hands_required=2 upkeep_power=0.02 loudness=6 inflict_confuse=3 inflict_fear=2 field_radius=30 field_targets=enemies morale+-2
+synthesizer: mass=10 integrity=40 material=plastic,steel equip_slot=held hands_required=2 upkeep_power=0.05 loudness=8 dmg_sonic=6 inflict_confuse=2 field_radius=50 field_targets=all morale+4 speed_land*1.1
+woodwind: mass=0.8 length=0.7 integrity=20 material=wood equip_slot=held hands_required=2 loudness=5 inflict_charm=2 field_radius=30 field_targets=living morale+2 aggression+-2
+chime: plural_count=5 mass=1 integrity=30 material=brass loudness=4 field_radius=20 field_targets=all alarm=true morale+1 aggression+-1 beauty=6 comfort=1 counters=ghost
+carillon: mass=40000 height=30 integrity=20000 material=bronze portable=false loudness=10 dmg_sonic=10 field_radius=400 field_targets=owned morale+4 courage+3 alarm=true map_reveal=10
+instrument: mass=2 integrity=30 material=wood equip_slot=held hands_required=2 loudness=5 field_radius=25 field_targets=owned morale+3 charm+1
+string: mass=0.01 length=1 integrity=3 material=gut,steel tow_capacity=20 inflict_root=1 plural_count=6
+
+# noun worker
+singer: mass=65 integrity=80 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 loudness=7 charm=7 inflict_charm=3 field_radius=20 field_targets=all morale+3 aggression+-2 food_need=0.03
+rapper: mass=75 integrity=90 alive=true sentient=true intelligence=7 loyalty=5 hands=true speech=true speed_land=5 loudness=8 charm=6 field_radius=25 field_targets=owned morale+3 aggression+2 courage+2 inflict_rage=2 food_need=0.03
+composer: mass=70 integrity=80 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=3 labor=1 craft_slots=1 charm=4 field_radius=15 field_targets=owned morale+3 training+1 food_need=0.03
+conductor: mass=75 integrity=80 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 authority=4 command_limit=40 field_radius=30 field_targets=owned obedience+3 morale+3 accuracy+0.05 food_need=0.03
+drummer: mass=80 integrity=110 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=5 loudness=9 dmg_blunt=15 attack_rate=2 field_radius=40 field_targets=owned courage+3 aggression+2 speed_land*1.15 food_need=0.04
+piper: mass=70 integrity=100 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=5 loudness=10 inflict_charm=4 field_radius=60 field_targets=living courage+4 morale+2 recruit_rate=0.5 food_need=0.03 counters=rat,mouse
+guitarist: mass=70 integrity=90 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 loudness=7 charm=5 field_radius=25 field_targets=owned morale+3 dmg_blunt=15 food_need=0.03
+pianist: mass=65 integrity=80 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 loudness=6 charm=5 field_radius=25 field_targets=all morale+3 aggression+-2 comfort=2 food_need=0.03
+vocalist: mass=65 integrity=80 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 loudness=7 charm=6 inflict_charm=2 field_radius=20 field_targets=all morale+3 food_need=0.03
+soprano: mass=70 integrity=80 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 loudness=9 dmg_sonic=15 brittleness+2 inflict_charm=3 field_radius=30 field_targets=all morale+3 counters=glass,window food_need=0.03
+baritone: mass=85 integrity=100 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 loudness=8 charm=6 field_radius=30 field_targets=owned courage+3 morale+3 food_need=0.03
+fiddler: mass=70 integrity=90 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=5 loudness=6 field_radius=30 field_targets=all morale+3 speed_land*1.15 charm+2 food_need=0.03
+minstrel: mass=65 integrity=90 alive=true sentient=true intelligence=7 loyalty=5 hands=true speech=true speed_land=5 loudness=6 charm=7 inflict_charm=3 trade_bonus=0.1 field_radius=25 field_targets=all morale+3 sight_range=200 map_reveal=10 food_need=0.03
+troubadour: mass=65 integrity=90 alive=true sentient=true intelligence=7 loyalty=5 hands=true speech=true speed_land=5 loudness=6 charm=8 inflict_charm=5 field_radius=20 field_targets=living morale+3 reputation=2 food_need=0.03
+trumpeter: mass=75 integrity=100 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=5 loudness=9 alarm=true dmg_sonic=5 field_radius=60 field_targets=owned courage+4 morale+3 command_limit+3 food_need=0.03
+violinist: mass=65 integrity=80 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 loudness=5 charm=6 inflict_charm=2 field_radius=30 field_targets=all morale+3 aggression+-2 food_need=0.03
+busker: mass=65 integrity=80 alive=true sentient=true intelligence=6 loyalty=4 hands=true speech=true speed_land=4 loudness=6 charm=5 field_radius=15 field_targets=all morale+2 trade_bonus=0.1 letter_steal=1 food_need=0.03
+miller: mass=85 integrity=120 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 labor=3 food_output=4 strength=7 food_need=0.04
+barber: mass=70 integrity=90 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 labor=1 sharpness=7 dmg_slash=15 attack_rate=1 strips_adjectives=1 charm+2 food_need=0.03
+voluntary: mass=70 integrity=90 alive=true sentient=true intelligence=5 loyalty=8 hands=true speech=true speed_land=5 labor=2 obedience=7 food_need=0.03
+
+# noun person
+player: mass=75 integrity=100 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=5 agility=5 training=2 loudness=4 field_radius=20 field_targets=owned morale+2 food_need=0.03
+songwriter: mass=70 integrity=80 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 charm=5 craft_slots=1 field_radius=15 field_targets=owned morale+3 food_need=0.03
+diva: mass=70 integrity=90 alive=true sentient=true intelligence=6 loyalty=3 obedience=2 hands=true speech=true speed_land=4 loudness=10 dmg_sonic=20 inflict_deaf=2 charm=8 inflict_charm=4 field_radius=40 field_targets=all morale+3 food_need=0.05
+alto: mass=70 integrity=80 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 loudness=7 charm=5 field_radius=25 field_targets=owned morale+3 aggression+-2 food_need=0.03
+soloist: mass=70 integrity=80 alive=true sentient=true intelligence=7 loyalty=5 hands=true speech=true speed_land=4 loudness=8 charm=7 inflict_charm=3 field_radius=30 field_targets=all morale+3 food_need=0.03
+virtuoso: mass=70 integrity=90 alive=true sentient=true intelligence=9 loyalty=5 hands=true speech=true speed_land=4 training=9 accuracy=0.99 critical=0.3 loudness=7 charm=8 inflict_charm=5 field_radius=40 field_targets=all morale+5 food_need=0.03
+bassist: mass=80 integrity=100 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=4 loudness=8 dmg_sonic=5 field_radius=30 field_targets=owned courage+2 speed_land*1.1 food_need=0.03
+cellist: mass=70 integrity=80 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 loudness=6 inflict_sleep=2 field_radius=30 field_targets=all morale+3 aggression+-3 food_need=0.03
+organist: mass=70 integrity=80 alive=true sentient=true intelligence=7 loyalty=7 hands=true speech=true speed_land=4 loudness=8 field_radius=40 field_targets=owned morale+3 res_unholy+0.2 food_need=0.03
+saxophonist: mass=75 integrity=90 alive=true sentient=true intelligence=6 loyalty=5 hands=true speech=true speed_land=4 loudness=8 charm=6 inflict_charm=3 field_radius=30 field_targets=all morale+3 food_need=0.03
+cantor: mass=75 integrity=90 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=4 loudness=8 recruit_rate=0.3 field_radius=40 field_targets=owned morale+4 res_unholy+0.3 food_need=0.03
+arranger: mass=70 integrity=80 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 labor=1 command_limit=10 field_radius=20 field_targets=owned obedience+2 morale+2 food_need=0.03
+mezzo: mass=70 integrity=80 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 loudness=8 charm=6 inflict_charm=3 field_radius=30 field_targets=all morale+3 food_need=0.03
+basso: mass=95 integrity=110 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 loudness=9 dmg_sonic=8 field_radius=40 field_targets=enemies inflict_fear=2 courage+-2 food_need=0.04
+instrumentalist: mass=70 integrity=80 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 loudness=6 charm=5 field_radius=25 field_targets=owned morale+3 food_need=0.03
+keyboardist: mass=70 integrity=80 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 loudness=7 upkeep_power=0.02 field_radius=30 field_targets=owned morale+3 food_need=0.03
+bandleader: mass=80 integrity=90 alive=true sentient=true intelligence=7 loyalty=7 hands=true speech=true speed_land=4 loudness=7 authority=4 command_limit=20 field_radius=40 field_targets=owned morale+4 obedience+3 food_need=0.03
+percussionist: mass=80 integrity=100 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=5 loudness=9 dmg_blunt=12 attack_rate=2 field_radius=40 field_targets=owned courage+3 speed_land*1.1 food_need=0.04
+maestro: mass=75 integrity=90 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 authority=6 command_limit=60 training=8 field_radius=50 field_targets=owned obedience+4 morale+5 accuracy+0.1 food_need=0.03
+choirmaster: mass=75 integrity=90 alive=true sentient=true intelligence=7 loyalty=7 hands=true speech=true speed_land=4 authority=4 command_limit=30 loudness=7 field_radius=40 field_targets=owned morale+4 res_unholy+0.3 food_need=0.03
+crooner: mass=80 integrity=90 alive=true sentient=true intelligence=6 loyalty=5 hands=true speech=true speed_land=4 loudness=5 charm=8 inflict_charm=5 inflict_sleep=1 field_radius=20 field_targets=living aggression+-3 food_need=0.03
+contralto: mass=75 integrity=80 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 loudness=8 charm=6 field_radius=30 field_targets=all morale+3 inflict_sleep=1 food_need=0.03
+rocker: mass=75 integrity=110 alive=true sentient=true intelligence=5 loyalty=5 obedience=3 hands=true speech=true speed_land=5 loudness=10 dmg_sonic=10 inflict_deaf=2 field_radius=40 field_targets=owned aggression+3 courage+4 morale+3 food_need=0.04
+coward: mass=70 integrity=80 alive=true sentient=true intelligence=5 loyalty=2 courage=0 hands=true speech=true speed_land=8 stealth=4 morale=2 food_need=0.03
+whiz: mass=60 integrity=70 alive=true sentient=true intelligence=10 loyalty=6 hands=true speech=true speed_land=6 labor=2 training=4 craft_slots=2 read_properties=3 food_need=0.03
+vamp: mass=60 integrity=90 alive=true sentient=true intelligence=7 loyalty=3 hands=true speech=true speed_land=5 charm=9 inflict_charm=8 beauty=9 disguise=3 food_need=0.03
+hummer: mass=70 integrity=80 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 loudness=3 field_radius=10 field_targets=owned morale+1 aggression+-1 food_need=0.03
+
+# noun leader
+chevalier: mass=85 integrity=250 alive=true sentient=true intelligence=6 loyalty=9 courage=9 hands=true speech=true speed_land=6 mountable=false armor=20 dmg_slash=45 attack_rate=1 training=7 authority=3 charm=4 food_need=0.04
+
+# noun group
+band: mass=300 integrity=450 alive=true sentient=true pack_size=4 hands=true speech=true speed_land=4 loudness=10 dmg_sonic=8 food_need=0.12 field_radius=60 field_targets=owned morale+5 courage+3 speed_land*1.1
+quartet: mass=280 integrity=320 alive=true sentient=true pack_size=4 hands=true speech=true speed_land=4 loudness=6 food_need=0.12 field_radius=40 field_targets=all morale+4 aggression+-3 charm+3
+quintet: mass=350 integrity=400 alive=true sentient=true pack_size=5 hands=true speech=true speed_land=4 loudness=7 food_need=0.15 field_radius=45 field_targets=all morale+4 aggression+-3 charm+3
+trio: mass=210 integrity=240 alive=true sentient=true pack_size=3 hands=true speech=true speed_land=4 loudness=6 food_need=0.09 field_radius=35 field_targets=all morale+3 charm+2
+duet: mass=140 integrity=160 alive=true sentient=true pack_size=2 hands=true speech=true speed_land=4 loudness=5 food_need=0.06 inflict_charm=4 field_radius=25 field_targets=living morale+3 loyalty+2
+ensemble: mass=900 integrity=1000 alive=true sentient=true pack_size=12 hands=true speech=true speed_land=4 loudness=8 food_need=0.36 field_radius=60 field_targets=owned morale+4 courage+2 accuracy+0.05
+percussion: mass=400 integrity=500 alive=true sentient=true pack_size=5 hands=true speed_land=4 loudness=10 dmg_sonic=15 inflict_deaf=3 food_need=0.15 field_radius=60 field_targets=owned courage+4 aggression+3 speed_land*1.15
+symphony: mass=5000 integrity=5000 alive=true sentient=true pack_size=70 speed_land=3 loudness=10 dmg_sonic=10 food_need=2 field_radius=100 field_targets=all morale+7 aggression+-5 charm+5 inflict_charm=3
+chorus: mass=1000 integrity=1300 alive=true sentient=true pack_size=15 speech=true speed_land=4 loudness=8 food_need=0.45 field_radius=60 field_targets=owned morale+5 courage+3
+
+# noun bird
+warbler: mass=0.01 integrity=2 alive=true diet=herbivore speed_air=10 flight_ceiling=1000 loudness=5 inflict_charm=1 field_radius=15 field_targets=living morale+1 habitat=forest food_need=0.001 plural_count=6
+
+# noun event
+boom: placement=target event_target=tile event_duration=1 placement_range=300 event_radius=60 loudness=10 dmg_sonic=60 dmg_blast=40 inflict_deaf=8 inflict_stun=2 knockback=3 counters=silence,earplug
+bang: placement=target event_target=tile event_duration=1 placement_range=200 event_radius=30 loudness=10 dmg_sonic=35 inflict_deaf=5 inflict_stun=1 inflict_fear=2 counters=silence,hush
+blast: placement=target event_target=tile event_duration=1 placement_range=200 event_radius=30 loudness=10 dmg_blast=300 dmg_sonic=40 knockback=6 inflict_deaf=6 friendly_fire=true siege=2
+click: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=2 loudness=2 alarm=true inflict_confuse=0.5
+screaming: placement=target event_target=tile event_duration=1 placement_range=80 event_radius=30 loudness=10 dmg_sonic=20 inflict_fear=5 inflict_deaf=2 stealth+-6 counters=silence,hush
+thunder: placement=target event_target=tile event_duration=1 placement_range=500 event_radius=100 loudness=10 dmg_sonic=40 inflict_fear=6 inflict_deaf=6 inflict_stun=1 sets_weather=storm counters=silence,earplug
+thunderclap: placement=target event_target=tile event_duration=1 placement_range=400 event_radius=60 loudness=10 dmg_sonic=70 dmg_electric=40 inflict_deaf=10 inflict_stun=3 inflict_fear=5
+buzz: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=15 loudness=4 inflict_confuse=2 accuracy+-0.1 counters=silence
+static: placement=target event_target=tile event_duration=1 placement_range=100 event_radius=30 loudness=4 dmg_electric=15 inflict_confuse=3 inflict_silence=3 sight_range*0.8 counters=silence
+clash: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=10 loudness=9 dmg_sonic=15 dmg_slash=20 inflict_stun=1 inflict_rage=3
+cracking: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=6 loudness=7 dmg_blunt=30 brittleness+3 inflict_fear=1
+knocking: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=8 loudness=5 alarm=true dmg_blunt=5 inflict_confuse=1
+splash: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=5 loudness=5 dmg_water=10 wetness+5 clears_weather=fire counters=fire,dust
+popping: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=8 loudness=7 dmg_sonic=8 inflict_confuse=2 inflict_fear=1
+ping: placement=target event_target=tile event_duration=1 placement_range=500 event_radius=50 loudness=3 map_reveal=20 detect_stealth=4 detect_underground=true
+tapping: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=6 loudness=3 inflict_confuse=1 alarm=true
+banging: placement=target event_target=tile event_duration=1 placement_range=80 event_radius=20 loudness=10 dmg_sonic=20 dmg_blunt=10 inflict_deaf=4 inflict_confuse=3 counters=lullaby,silence
+ringing: placement=target event_target=tile event_duration=1 placement_range=80 event_radius=20 loudness=7 inflict_deaf=4 inflict_confuse=2 alarm=true
+crunch: placement=target event_target=tile event_duration=1 placement_range=30 event_radius=4 loudness=6 dmg_crush=40 brittleness+2
+bam: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=6 loudness=9 dmg_blunt=40 dmg_sonic=10 inflict_stun=2 knockback=2
+ding: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=15 loudness=5 alarm=true morale+1 inflict_confuse=1
+din: placement=target event_target=tile event_duration=1 placement_range=150 event_radius=40 loudness=9 dmg_sonic=15 inflict_deaf=4 inflict_confuse=4 command_limit*0.5 counters=silence,hush,lullaby
+scratching: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=8 loudness=4 dmg_slash=5 inflict_confuse=2 morale+-1
+clap: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=10 loudness=7 dmg_sonic=5 inflict_stun=1 inflict_confuse=1 counters=bat,ghost
+roaring: placement=target event_target=tile event_duration=1 placement_range=100 event_radius=40 loudness=10 dmg_sonic=25 inflict_fear=6 inflict_deaf=3 courage+-4 counters=silence
+bong: placement=target event_target=tile event_duration=1 placement_range=100 event_radius=30 loudness=8 dmg_sonic=12 inflict_deaf=3 inflict_stun=1
+dripping: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=4 event_duration=10 loudness=2 wetness+3 inflict_confuse=1 morale+-1
+ticking: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=6 event_duration=5 loudness=2 inflict_fear=2 morale+-1
+beep: placement=target event_target=tile event_duration=1 placement_range=100 event_radius=20 loudness=6 alarm=true inflict_confuse=1
+rumble: placement=target event_target=tile event_duration=1 placement_range=200 event_radius=40 loudness=8 dmg_earth=30 dmg_sonic=10 inflict_fear=3 inflict_stun=1 movement_cost=1.5
+whack: placement=target event_duration=1 placement_range=10 event_target=character event_radius=0 loudness=7 dmg_blunt=50 inflict_stun=2 knockback=2
+whispering: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=15 event_duration=2 loudness=1 inflict_fear=2 inflict_confuse=2 loyalty+-2 stealth+2
+scrape: placement=target event_target=tile event_duration=1 placement_range=20 event_radius=3 loudness=5 dmg_slash=10 inflict_bleed=3 morale+-1
+peep: placement=target event_target=tile event_duration=1 placement_range=30 event_radius=5 loudness=2 inflict_charm=1
+chatter: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=20 event_duration=2 loudness=5 inflict_confuse=2 accuracy+-0.1 stealth+-2
+ting: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=10 loudness=4 alarm=true
+rattling: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=15 loudness=6 inflict_fear=2 inflict_confuse=1 counters=snake
+bray: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=25 loudness=9 dmg_sonic=10 inflict_deaf=2 inflict_confuse=2
+coo: placement=target event_target=tile event_duration=1 placement_range=30 event_radius=10 loudness=2 inflict_charm=2 inflict_sleep=1 aggression+-2
+meow: placement=target event_target=tile event_duration=1 placement_range=30 event_radius=10 loudness=3 inflict_charm=2 counters=mouse
+yelp: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=15 loudness=7 inflict_fear=1 alarm=true
+humming: placement=target event_target=tile event_duration=1 placement_range=30 event_radius=10 event_duration=2 loudness=2 morale+1 aggression+-1 inflict_sleep=1
+jingle: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=12 loudness=5 morale+2 charm+1 inflict_charm=1
+whistling: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=25 loudness=6 command_limit+2 obedience+2
+thumping: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=15 loudness=8 dmg_blunt=20 inflict_fear=2 inflict_stun=1
+grunt: placement=target event_target=tile event_duration=1 placement_range=20 event_radius=6 loudness=5 inflict_fear=1 strength+1
+moo: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=20 loudness=7 inflict_confuse=1 inflict_charm=1
+throbbing: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=15 event_duration=3 loudness=7 dmg_sonic=10 inflict_confuse=3 morale+-2
+screeching: placement=target event_target=tile event_duration=1 placement_range=80 event_radius=25 loudness=10 dmg_sonic=25 inflict_deaf=4 inflict_fear=3 inflict_confuse=2 counters=silence,earplug
+bleep: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=10 loudness=5 alarm=true inflict_silence=2
+toot: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=20 loudness=7 alarm=true inflict_confuse=1
+mew: placement=target event_target=tile event_duration=1 placement_range=20 event_radius=6 loudness=2 inflict_charm=2
+growling: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=15 loudness=7 inflict_fear=4 courage+-2 aggression+2
+rumbling: placement=target event_target=tile event_duration=1 placement_range=200 event_radius=40 event_duration=2 loudness=8 dmg_earth=20 inflict_fear=3 movement_cost=1.3
+blaring: placement=target event_target=tile event_duration=1 placement_range=150 event_radius=40 event_duration=2 loudness=10 dmg_sonic=25 inflict_deaf=5 inflict_confuse=3 counters=silence,earplug
+honk: placement=target event_target=tile event_duration=1 placement_range=80 event_radius=20 loudness=9 dmg_sonic=8 inflict_fear=2 inflict_stun=1 alarm=true
+muttering: placement=target event_target=tile event_duration=1 placement_range=30 event_radius=10 event_duration=2 loudness=2 loyalty+-2 obedience+-2 morale+-1
+baa: placement=target event_target=tile event_duration=1 placement_range=30 event_radius=15 loudness=5 inflict_charm=1 aggression+-1
+chug: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=10 event_duration=2 loudness=7 speed_land*1.1
+murmur: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=15 event_duration=2 loudness=2 inflict_sleep=1 aggression+-2 stealth+2
+squeak: placement=target event_target=tile event_duration=1 placement_range=30 event_radius=8 loudness=4 alarm=true inflict_confuse=1 stealth+-3
+thud: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=8 loudness=7 dmg_blunt=30 inflict_stun=1
+grumbling: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=15 event_duration=2 loudness=3 morale+-2 obedience+-2
+swish: placement=target event_target=tile event_duration=1 placement_range=20 event_radius=4 loudness=3 dmg_slash=15 dmg_wind=5
+hissing: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=10 loudness=5 inflict_fear=3 aggression+-2 counters=mouse
+screech: placement=target event_target=tile event_duration=1 placement_range=80 event_radius=25 loudness=10 dmg_sonic=25 inflict_deaf=4 inflict_fear=3 counters=silence,earplug
+shrieking: placement=target event_target=tile event_duration=1 placement_range=80 event_radius=25 loudness=10 dmg_sonic=25 inflict_fear=5 inflict_deaf=3 counters=silence,earplug
+shriek: placement=target event_target=tile event_duration=1 placement_range=80 event_radius=25 loudness=10 dmg_sonic=25 inflict_fear=5 inflict_deaf=3 counters=silence,earplug
+sputtering: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=8 loudness=5 speed_land*0.7 inflict_confuse=1
+chattering: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=15 event_duration=2 loudness=4 temp_min+-3 inflict_confuse=1
+squeal: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=20 loudness=9 dmg_sonic=12 inflict_deaf=2 inflict_fear=1
+squish: placement=target event_target=tile event_duration=1 placement_range=20 event_radius=3 loudness=3 dmg_crush=15 stickiness+3
+yip: placement=target event_target=tile event_duration=1 placement_range=30 event_radius=10 loudness=6 alarm=true
+creaking: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=10 event_duration=2 loudness=4 inflict_fear=3 morale+-1 alarm=true
+grumble: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=15 event_duration=2 loudness=3 morale+-2 obedience+-2
+sizzle: placement=target event_target=tile event_duration=1 placement_range=20 event_radius=4 loudness=4 dmg_fire=25 inflict_burn=3 temperature=200
+crackle: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=8 loudness=5 dmg_electric=15 dmg_fire=10 inflict_burn=2
+zing: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=4 loudness=5 dmg_pierce=20 speed_land*1.2
+mutter: placement=target event_target=tile event_duration=1 placement_range=30 event_radius=10 loudness=2 loyalty+-2 morale+-1
+patter: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=20 event_duration=3 loudness=3 wetness+2 inflict_sleep=1 aggression+-1
+splatter: placement=target event_target=tile event_duration=1 placement_range=30 event_radius=6 loudness=5 dmg_water=10 stickiness+3 inflict_blind=2
+murmuring: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=15 event_duration=2 loudness=2 inflict_sleep=1 aggression+-2 stealth+2
+snore: placement=target event_target=tile event_duration=1 placement_range=20 event_radius=10 event_duration=5 loudness=6 inflict_sleep=3 stealth+-4
+whoosh: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=10 loudness=6 dmg_wind=20 knockback=3
+trampling: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=15 loudness=9 dmg_crush=100 inflict_stun=2 friendly_fire=true
+vroom: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=10 loudness=9 speed_land*1.5 acceleration+3 dmg_sonic=5
+splat: placement=target event_target=tile event_duration=1 placement_range=30 event_radius=4 loudness=5 dmg_blunt=20 stickiness+4 inflict_slow=2
+clank: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=15 loudness=8 dmg_sonic=8 alarm=true inflict_confuse=1
+clatter: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=15 loudness=8 dmg_sonic=8 alarm=true inflict_confuse=2
+clang: placement=target event_target=tile event_duration=1 placement_range=80 event_radius=20 loudness=9 dmg_sonic=15 inflict_deaf=3 inflict_stun=1
+clamor: placement=target event_target=tile event_duration=1 placement_range=150 event_radius=40 event_duration=2 loudness=9 dmg_sonic=15 inflict_deaf=4 inflict_rage=3 inflict_confuse=3 counters=silence,hush
+clack: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=10 loudness=6 inflict_confuse=1
+plop: placement=target event_target=tile event_duration=1 placement_range=30 event_radius=3 loudness=3 wetness+2
+thunk: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=6 loudness=6 dmg_blunt=25 inflict_stun=1
+knell: placement=target event_target=tile event_duration=1 placement_range=300 event_radius=80 event_duration=2 loudness=9 inflict_fear=6 morale+-6 courage+-4 counters=hymn,hope
+peal: placement=target event_target=tile event_duration=1 placement_range=300 event_radius=80 event_duration=2 loudness=10 dmg_sonic=10 morale+4 courage+3 alarm=true counters=knell,despair
+caw: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=20 loudness=7 inflict_fear=2 morale+-1 alarm=true
+twang: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=10 loudness=6 dmg_pierce=10 inflict_confuse=1
+hubbub: placement=target event_target=tile event_duration=1 placement_range=100 event_radius=40 event_duration=2 loudness=8 inflict_confuse=4 accuracy+-0.15 stealth+3 counters=silence
+fizzle: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=10 loudness=2 dmg_fire*0.3 morale+-2
+cheep: placement=target event_target=tile event_duration=1 placement_range=30 event_radius=8 loudness=3 inflict_charm=1
+swoosh: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=10 loudness=6 dmg_wind=20 knockback=3
+whirring: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=10 event_duration=3 loudness=5 inflict_confuse=2
+squawk: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=20 loudness=8 dmg_sonic=6 inflict_confuse=2 alarm=true
+cackle: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=20 loudness=7 inflict_fear=4 morale+-2
+spatter: placement=target event_target=tile event_duration=1 placement_range=30 event_radius=6 loudness=4 dmg_water=10 inflict_blind=2
+jitter: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=10 loudness=2 accuracy+-0.2 inflict_confuse=2
+echo: placement=target event_target=tile event_duration=1 placement_range=200 event_radius=50 event_duration=2 loudness=6 inflict_confuse=4 duplicates=1 counters=silence
+hum: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=15 event_duration=3 loudness=2 inflict_sleep=1 aggression+-1 morale+1
+tinkle: placement=target event_target=tile event_duration=1 placement_range=30 event_radius=10 loudness=3 morale+1 inflict_charm=1
+dong: placement=target event_target=tile event_duration=1 placement_range=100 event_radius=30 loudness=8 dmg_sonic=10 inflict_deaf=2 alarm=true
+whir: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=10 event_duration=3 loudness=5 inflict_confuse=2
+whine: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=15 event_duration=2 loudness=6 morale+-2 inflict_confuse=1
+babble: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=15 event_duration=2 loudness=4 inflict_confuse=4 inflict_silence=2 command_limit*0.7
+rustle: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=10 loudness=2 stealth+-2 inflict_confuse=1 alarm=true
+holler: placement=target event_target=tile event_duration=1 placement_range=100 event_radius=40 loudness=9 command_limit+3 obedience+2 alarm=true
+wail: placement=target event_target=tile event_duration=1 placement_range=100 event_radius=40 event_duration=2 loudness=9 dmg_sonic=10 inflict_fear=5 morale+-3
+sob: placement=target event_target=tile event_duration=1 placement_range=30 event_radius=10 loudness=4 morale+-2 aggression+-2 inflict_charm=1
+snap: placement=target event_target=tile event_duration=1 placement_range=30 event_radius=4 loudness=6 dmg_slash=20 inflict_stun=1 brittleness+2
+thump: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=8 loudness=7 dmg_blunt=35 inflict_stun=1 knockback=1
+
+# noun knowledge
+genre: field_radius=30 field_targets=owned field_duration=2 loudness=4 morale+3 charm+1
+harmony: field_radius=50 field_targets=all field_duration=3 loudness=3 morale+4 aggression+-5 loyalty+2 effect_status=rage,confuse counters=cacophony,dissonance,discord,uproar
+dissonance: placement=target placement_range=80 field_radius=30 field_targets=enemies field_duration=2 loudness=6 inflict_confuse=5 morale+-3 accuracy+-0.2 counters=harmony,melody
+jazz: field_radius=40 field_targets=owned field_duration=2 loudness=6 morale+4 agility+2 charm+2 inflict_confuse=1
+rap: field_radius=30 field_targets=owned field_duration=2 loudness=7 courage+3 aggression+2 charm+2 morale+3
+rhythm: field_radius=40 field_targets=owned field_duration=3 loudness=4 speed_land*1.15 attack_rate*1.1 labor*1.2 accuracy+0.05
+chord: field_radius=25 field_targets=all field_duration=1 loudness=4 morale+2 inflict_charm=1
+lyric: field_radius=20 field_targets=living field_duration=2 loudness=3 inflict_charm=2 charm+2 morale+2
+psalm: field_radius=40 field_targets=owned field_duration=2 loudness=4 morale+3 res_unholy+0.4 courage+2 counters=curse,demon
+cadence: field_radius=40 field_targets=owned field_duration=3 loudness=4 speed_land*1.1 obedience+2 accuracy+0.05
+metre: field_radius=30 field_targets=owned field_duration=2 speed_land*1.05 accuracy+0.05
+funk: field_radius=40 field_targets=owned field_duration=2 loudness=7 morale+4 agility+2 speed_land*1.1
+punk: field_radius=40 field_targets=owned field_duration=2 loudness=10 dmg_sonic=8 aggression+4 obedience+-3 courage+4 inflict_rage=2
+trance: placement=target placement_range=60 field_radius=25 field_targets=enemies field_duration=2 loudness=5 inflict_sleep=4 inflict_confuse=3 aggression+-4 counters=noise,alarm
+verse: field_radius=20 field_targets=living field_duration=1 loudness=3 charm+2 inflict_charm=2 morale+2
+motif: field_radius=25 field_targets=owned field_duration=2 loudness=3 morale+2 loyalty+1
+modernism: field_radius=30 field_targets=owned field_duration=3 build_speed*1.2 intelligence+1
+realisation: duration=60 intelligence+2 read_properties+3 detect_stealth+3
+
+# noun act
+playing: field_radius=25 field_targets=owned field_duration=2 loudness=5 morale+3 charm+1
+singing: field_radius=30 field_targets=living field_duration=2 loudness=6 inflict_charm=3 morale+3 charm+2 stealth+-4
+carol: field_radius=40 field_targets=all field_duration=2 loudness=5 morale+4 aggression+-4 temp_min+-3 law=attack counters=war,rage
+ballet: field_radius=20 field_targets=owned field_duration=2 agility+4 evasion+0.15 beauty+2 jump+1
+tango: placement=target placement_range=10 field_radius=5 field_targets=living field_duration=1 inflict_charm=6 agility+3 loyalty+2
+chanting: field_radius=40 field_targets=owned field_duration=3 loudness=6 morale+3 courage+3 immune_fear=true
+karaoke: field_radius=20 field_targets=all field_duration=2 loudness=7 morale+3 accuracy+-0.1 inflict_confuse=1
+polka: field_radius=30 field_targets=all field_duration=2 loudness=6 morale+4 speed_land*1.2 agility+2
+waltz: placement=target placement_range=20 field_radius=10 field_targets=living field_duration=2 loudness=4 inflict_charm=4 aggression+-3 evasion+0.1
+flamenco: field_radius=20 field_targets=owned field_duration=2 loudness=7 agility+3 courage+3 aggression+2 charm+3
+scat: field_radius=20 field_targets=all field_duration=1 loudness=5 inflict_confuse=3 morale+2
+conga: field_radius=25 field_targets=all field_duration=2 loudness=7 morale+4 inflict_charm=2 obedience+-2 speed_land*0.9
+rumba: placement=target placement_range=20 field_radius=10 field_targets=living field_duration=2 loudness=5 inflict_charm=4 agility+2
+samba: field_radius=30 field_targets=owned field_duration=2 loudness=7 morale+4 speed_land*1.2 agility+3
+drumming: field_radius=50 field_targets=owned field_duration=3 loudness=9 courage+4 aggression+3 speed_land*1.15 attack_rate*1.1
+orchestration: field_radius=40 field_targets=owned field_duration=3 command_limit+10 obedience+3 accuracy+0.1
+adagio: placement=target placement_range=60 field_radius=25 field_targets=enemies field_duration=2 loudness=3 speed_land*0.7 attack_rate*0.7 inflict_sleep=2
+harmonization: field_radius=40 field_targets=owned field_duration=3 loyalty+3 morale+3 effect_status=confuse
+intonation: field_radius=20 field_targets=owned field_duration=2 accuracy+0.1 charm+1
+bowing: field_radius=10 field_targets=all field_duration=1 charm+3 aggression+-3 reputation=1
+finale: field_radius=60 field_targets=owned field_duration=1 loudness=9 morale+8 courage+6 attack_rate*1.5 strength*1.3
+mazurka: field_radius=25 field_targets=all field_duration=2 loudness=6 morale+3 speed_land*1.15 agility+2
+minuet: placement=target placement_range=20 field_radius=10 field_targets=living field_duration=2 loudness=4 inflict_charm=3 aggression+-3 charm+2
+gavotte: field_radius=20 field_targets=all field_duration=2 loudness=4 morale+2 agility+2 charm+2
+hornpipe: field_radius=30 field_targets=owned field_duration=2 loudness=6 morale+3 agility+3 speed_water*1.2
+tarantella: placement=target placement_range=40 field_radius=15 field_targets=enemies field_duration=1 loudness=6 inflict_rage=3 speed_land*1.5 effect_status=poison counters=tarantula,spider,poison
+mambo: field_radius=25 field_targets=all field_duration=2 loudness=7 morale+4 agility+3
+bolero: placement=target placement_range=20 field_radius=10 field_targets=living field_duration=3 loudness=5 inflict_charm=5 aggression+-2
+reveille: field_radius=200 field_targets=owned field_duration=1 loudness=10 effect_status=sleep morale+3 speed_land*1.2 immune_sleep=true counters=lullaby,sleep,trance
+encore: duplicates=1 loudness=6 morale+3
+gig: field_radius=40 field_targets=all field_duration=3 loudness=9 morale+4 trade_bonus+0.1 charm+2
+rave: placement=target placement_range=100 field_radius=50 field_targets=all field_duration=5 loudness=10 dmg_sonic=5 morale+5 inflict_confuse=3 sleep_need*0 obedience+-3 luminosity+3
+
+# noun event
+episode: placement=target placement_range=60 event_target=character event_duration=2 inflict_confuse=5 inflict_stun=2
+genesis: placement=region event_radius=100 event_duration=5 growth=3 fertility+3 summons=bird summon_count=6
+flashback: placement=target placement_range=60 event_target=character event_duration=1 inflict_stun=3 inflict_confuse=4
+prelude: field_radius=40 field_targets=owned field_duration=1 cast_time*0.5 morale+2 courage+2
+overture: field_radius=50 field_targets=owned field_duration=1 loudness=8 morale+4 courage+3 speed_land*1.2 cast_time*0.5
+accompaniment: field_radius=20 field_targets=owned field_duration=3 loudness=4 effect_multiplier*1.2 morale+2
+vibrato: field_radius=20 field_targets=all field_duration=1 loudness=5 inflict_charm=2 accuracy+-0.1
+tremolo: field_radius=20 field_targets=all field_duration=1 loudness=5 inflict_fear=2 accuracy+-0.1
+strum: field_radius=20 field_targets=owned field_duration=1 loudness=5 morale+2
+idyll: placement=region event_radius=60 event_duration=5 aggression+-6 morale+4 comfort+2 law=attack counters=war,battle
+angelus: placement=region event_radius=200 event_duration=1 loudness=9 morale+3 res_unholy+0.5 counters=demon,ghost
+tragedy: placement=target placement_range=100 event_target=character event_duration=1 morale+-8 courage+-5 inflict_stun=3 counters=comedy,joy
+ravel: placement=target placement_range=40 event_target=object event_duration=1 inflict_confuse=4 strips_adjectives=1
+
+
+# noun device
+phone: mass=0.2 integrity=10 material=glass,plastic equip_slot=held hands_required=1 upkeep_power=0.005 loudness=4 hearing_range+500 map_reveal=5 command_limit+5 alarm=true value=600
+audio: mass=5 integrity=20 material=plastic upkeep_power=0.05 loudness=7 field_radius=40 field_targets=owned morale+3
+earphone: plural_count=2 mass=0.01 integrity=3 material=plastic equip_slot=face loudness=1 hearing_range*0.3 immune_charm=true res_sonic=0.5 morale+2 counters=siren,lullaby
+silencer: mass=0.3 integrity=40 material=steel loudness*0.1 stealth+4 dmg_pierce*0.9 counters=gun,rifle,pistol
+ultrasound: mass=20 integrity=30 material=plastic portable=false upkeep_power=0.2 sees_through=walls,flesh detect_life=30 detect_underground=true read_properties=3 heals=1
+tap: mass=1 integrity=50 material=steel portable=false water_output=10 wetness=2
+piston: mass=3 integrity=200 hardness=8 material=steel dmg_crush=60 dmg_blunt=30 attack_rate=2 loudness=6 labor=1 upkeep_power=0.5
+beats: mass=0.3 integrity=10 material=plastic equip_slot=head loudness=2 hearing_range*0.2 res_sonic=0.6 morale+3 speed_land*1.1 immune_deaf=true
+adapter: mass=0.05 integrity=5 material=plastic conductivity=8 upkeep_power*0.9 craft_slots=1
+slapstick: mass=0.5 length=0.6 integrity=20 material=wood equip_slot=held hands_required=1 loudness=8 dmg_blunt=5 inflict_confuse=3 inflict_stun=1 charm+2
+soundproof: mass=500 integrity=500 material=foam loudness*0 hearing_range*0 res_sonic=ABS immune_deaf=true counters=noise,din,racket,cacophony
+
+# noun phenomenon
+sound: placement=target placement_range=100 event_target=tile event_radius=20 event_duration=1 loudness=6 inflict_confuse=1 alarm=true
+twitter: placement=target placement_range=40 event_target=tile event_radius=15 event_duration=1 loudness=3 inflict_charm=1 morale+1
+
+# noun attribute
+voice: loudness=5 speech=true charm+2 command_limit+3 obedience+1
+forte: loudness+4 strength*1.2 morale+2
+randomness: inflict_confuse=3 accuracy+-0.15 critical+0.15
+
+# noun disaster
+crash: placement=target placement_range=150 event_target=tile event_radius=20 event_duration=1 loudness=10 dmg_crush=300 dmg_sonic=20 inflict_stun=3 friendly_fire=true
+
+# noun building
+opera: mass=20000000 footprint=40 height=30 integrity=80000 material=stone portable=false enterable=true occupants=2000 loudness=9 field_radius=150 field_targets=all morale+6 charm+5 aggression+-4 beauty=9 comfort=4 value=5000000 needs_foundation=true
+disco: mass=200000 footprint=10 height=6 integrity=3000 material=brick,glass portable=false enterable=true occupants=300 loudness=10 luminosity=7 upkeep_power=10 field_radius=40 field_targets=all morale+5 agility+2 obedience+-2 sleep_need*0.5 needs_foundation=true
+suite: mass=50000 footprint=3 height=4 integrity=1500 material=brick portable=false enterable=true occupants=4 lockable=true comfort=6 regeneration+2 storage_objects=1000 needs_foundation=true
+shanty: mass=2000 footprint=2 height=2.5 integrity=150 material=wood,tin portable=false enterable=true occupants=4 flammability=6 comfort=1 claim_radius=2
+
+# noun structure
+flue: mass=2000 height=10 integrity=1500 material=brick portable=false temperature=300 moisture=-1 odor=3 dmg_fire*0.7
+passage: mass=10000 footprint=4 integrity=5000 material=stone portable=false tile_type=road movement_cost=0.6 stealth=2 enterable=true
+
+# noun route
+section: mass=1000 footprint=4 integrity=500 portable=false tile_type=road movement_cost=0.8
+
+# noun water
+bay: tile_type=water radius=10 depth=30 moisture=6 blocks=land portable=false placement=region water_output=50 cover=0.2
+waters: tile_type=water radius=4 depth=6 moisture=5 blocks=land portable=false water_output=60
+strait: tile_type=deep_water radius=3 length=5000 depth=60 moisture=5 blocks=land portable=false movement_cost=2
+
+# noun landform
+berg: mass=1000000000 footprint=30 height=60 integrity=200000 material=ice temperature=-10 buoyancy=9 dmg_crush=5000 temperature_delta=-5 tile_type=snow radius=6 placeable_on=deep_water,water
+
+# noun document
+text: mass=0.01 integrity=1 material=paper read_properties=2 intelligence+1 flammability=8
+score: mass=0.1 integrity=2 material=paper read_properties=3 command_limit+10 obedience+2 accuracy+0.05 flammability=8
+
+# noun material
+bones: mass=5 integrity=40 hardness=6 material=bone brittleness=5 odor=2 inflict_fear=2 value=2
+extract: mass=0.1 volume=0.0001 state=liquid potency=6 edible=true nutrition=1 odor=5 shelf_life=10000
+crackling: mass=0.1 integrity=1 edible=true nutrition=6 loudness=3 shelf_life=2000 flammability=6
+rime: mass=1 integrity=1 material=ice temperature=-5 slipperiness=4 brittleness=8 temperature_delta=-1 inflict_freeze=2
+
+# noun tree
+holly: mass=300 height=6 integrity=500 alive=true diet=photosynthesis material=wood thorns=5 toxicity=4 beauty=6 growth_time=60
+
+
+# adjective quality
+noisy: loudness+5 stealth+-4 inflict_confuse+1
+muffled: loudness+-5 stealth+2 dmg_sonic*0.3
+rhythmic: speed_land*1.1 attack_rate*1.1 accuracy+0.05 loudness+1
+harmonious: morale+3 aggression+-3 loyalty+2 charm+2
+tuneful: charm+3 morale+2 inflict_charm+1 loudness+1
+tuneless: charm+-3 inflict_confuse+1 morale+-1
+discordant: inflict_confuse+3 morale+-2 loyalty+-2 accuracy+-0.1
+cacophonous: loudness+7 dmg_sonic+15 inflict_deaf+3 inflict_confuse+3
+sonorous: loudness+4 charm+2 dmg_sonic+5 morale+1
+resonant: loudness+3 dmg_sonic*1.5 field_radius*1.3
+reverberant: loudness+3 field_radius*1.5 inflict_confuse+1
+booming: loudness+7 dmg_sonic+15 knockback+1 inflict_deaf+2
+thunderous: loudness+9 dmg_sonic+30 inflict_deaf+4 inflict_fear+3 knockback+2
+strident: loudness+6 dmg_sonic+10 courage+2 inflict_confuse+1
+piercing: loudness+6 dmg_sonic+15 dmg_pierce*1.3 armor_pierce+0.2
+hoarse: loudness+-3 charm+-1 dmg_sonic*0.5
+raspy: loudness+-1 charm+-1 inflict_fear+1
+mellow: loudness+-2 aggression+-3 morale+2 inflict_sleep+1
+dulcet: charm+4 inflict_charm+2 aggression+-2 loudness+-1
+soothing: aggression+-4 morale+2 regeneration+1 inflict_sleep+1 loudness+-2
+hushed: loudness+-6 stealth+3
+inaudible: loudness*0 stealth+5
+audible: loudness+2 stealth+-2
+guttural: loudness+3 inflict_fear+2 charm+-2
+consonant: morale+2 loyalty+2 aggression+-2
+largo: speed_land*0.6 attack_rate*0.7 duration*2 inflict_sleep+1
+allegro: speed_land*1.4 attack_rate*1.3 agility+2 duration*0.7
+impromptu: cast_time*0.2 accuracy+-0.05
+primo: value*3 beauty+2 training+2
+grand: mass*3 integrity*2 value*5 beauty+3 authority+2
+close: attack_range*0.5 accuracy+0.15 stealth+-1
+above: elevation+10 sight_range*1.5 attack_range*1.2 cover+0.2
+personal: loyalty+5 security+3 obedience+2
+solo: morale+-1 courage+3 stealth+2 loudness+-1 critical+0.1
+spiritual: res_unholy+0.4 dmg_holy+15 morale+2 res_psychic+0.3
+narrow: footprint*0.5 length*0.5 movement_cost*1.5 cover+0.1
+fundamental: integrity*1.5 hardness+2
+classical: beauty+3 value*2 charm+2 intelligence+1 aggression+-1
+keen: sharpness+3 sight_range*1.3 accuracy+0.1 detect_stealth+2 critical+0.1
+handy: craft_slots+1 labor*1.3 build_speed*1.3
+stern: authority+2 obedience+2 charm+-2 courage+2
+upright: loyalty+3 obedience+2 courage+2 height*1.1
+gradual: duration*2 speed_land*0.8 effect_multiplier*0.8
+partial: effect_multiplier*0.5 integrity*0.6 armor*0.5
+plump: mass*1.4 nutrition*1.5 speed_land*0.85 res_cold+0.2
+deductible: value*0.8 trade_bonus+0.1
+
+# adjective pertaining
+vocal: loudness+3 speech=true charm+2 command_limit+2
+choral: loudness+4 morale+3 res_unholy+0.2 courage+2
+harmonic: loudness+2 morale+2 dmg_sonic*1.3 loyalty+1
+pastoral: fertility+2 aggression+-3 comfort+2 morale+2 growth*1.3
+nasal: loudness+2 charm+-2 smell_range*1.5
+acoustic: loudness+2 upkeep_power*0 charm+2 hearing_range*1.3
+sonic: dmg_sonic+20 loudness+5 inflict_deaf+2
+ultrasonic: dmg_sonic+15 inflict_confuse+3 detect_stealth+4 loudness+-2 stealth+2
+subsonic: dmg_sonic+10 inflict_fear+3 loudness+-3 inflict_stun+1
+
+# adjective participle
+rolling: speed_land*1.3 knockback+2 dmg_crush*1.3
+stopping: speed_land*0 inflict_root+3 acceleration*0.5
+whispered: loudness*0 stealth+4 inflict_charm+1
+echoing: loudness+3 field_radius*1.4 inflict_confuse+1
+
+
+# verb perceive
+hear: duration=60 hearing_range*3 detect_stealth+3 alarm=true
+eavesdrop: duration=60 hearing_range*4 read_inventory=true read_properties+3 stealth+3
+overhear: duration=30 hearing_range*3 read_inventory=true
+spot: duration=30 detect_stealth+5 sight_range*1.5 tracking+3
+riff: duration=20 loudness+6 morale+3 charm+2 attack_rate*1.2
+creak: duration=5 loudness+3 inflict_fear+1 stealth+-2
+resound: duration=20 loudness+6 field_radius*1.5 dmg_sonic+10
+reverberate: duration=20 loudness+5 dmg_sonic+10 inflict_confuse+2
+
+# verb social
+vocalize: duration=20 loudness+5 charm+2 command_limit+2 stealth+-3
+foster: effect_target=touched duration=600 loyalty+4 morale+3 growth*1.5
+pat: effect_target=touched inflict_charm=3 duration=1 aggression+-2 loyalty+1
+dub: effect_target=touched duration=600 authority+2 reputation+2 loyalty+3
+mute: effect_target=touched inflict_silence=20 inflict_deaf=10 loudness*0 duration=20
+muffle: duration=60 loudness+-6 stealth+3 dmg_sonic*0.3
+whisper: duration=30 loudness*0 stealth+4 inflict_charm+1
+
+# verb create
+compose: duration=120 charm+3 morale+3 intelligence+1 craft_slots+1
+improvise: duration=60 cast_time*0.5 agility+2 accuracy+-0.05 craft_slots+1
+harmonize: duration=120 loyalty+3 morale+3 aggression+-3 charm+2
+rehearse: duration=300 training+2 accuracy+0.1 obedience+2
+rhyme: duration=30 charm+3 inflict_charm+1 intelligence+1
+counterpoint: duration=60 inflict_confuse+2 accuracy+0.05 intelligence+1
+jive: duration=60 agility+3 morale+3 evasion+0.1 loudness+3
+madrigal: duration=60 loudness+4 charm+3 morale+2 inflict_charm+1
+reprint: duplicates=1 duration=1
+travesty: effect_target=touched duration=60 charm+-4 reputation+-3 morale+-3
+
+# verb contact
+pluck: effect_target=touched duration=1 dmg_slash+5 strips_adjectives=1 loudness+2
+blare: duration=10 loudness+10 dmg_sonic+20 inflict_deaf+3 stealth+-6
+cut: effect_target=touched duration=1 dmg_slash+30 inflict_bleed+5 severs=1
+separate: effect_target=touched duration=30 moves_target=-20 effect_status=charm loyalty+-3
+lay: effect_target=touched duration=1 inflict_root+3
+knock: effect_target=touched duration=1 dmg_blunt+15 inflict_stun+1 knockback+1 loudness+5
+slam: effect_target=touched duration=1 dmg_blunt+40 dmg_crush+20 inflict_stun+2 knockback+3 loudness+9
+insert: effect_target=held duration=1 container_slots+1 stealth+1
+howl: duration=10 loudness+10 inflict_fear+4 morale+2 courage+2 command_limit+5 stealth+-6
+growl: duration=10 loudness+6 inflict_fear+3 aggression+3 intimidation+3
+hiss: duration=5 loudness+4 inflict_fear+2 intimidation+2
+chirp: duration=10 loudness+3 inflict_charm+1 morale+1
+purr: duration=30 loudness+1 inflict_charm+3 regeneration+1 aggression+-3
+neigh: duration=5 loudness+8 command_limit+2 speed_land*1.1
+
+# verb body
+sigh: duration=10 morale+-1 aggression+-2 effect_status=rage
+pant: duration=30 regeneration+1 temperature+-3 loudness+2
+gobble: duration=10 food_need*0 restores=30 loudness+3
+
+# verb movement
+boogie: duration=60 agility+4 evasion+0.2 morale+3 speed_land*1.2 loudness+3
+bop: duration=60 agility+2 morale+2 speed_land*1.1
+bebop: duration=60 agility+4 speed_land*1.3 attack_rate*1.2 inflict_confuse+1
+drip: duration=60 wetness+3 slipperiness+2 stealth+-1
+glide: duration=60 speed_air+10 flight_ceiling+200 loudness*0 stealth+3 agility+2
+swoop: duration=5 speed_air*2 dmg_slash+20 knockback+2 accuracy+0.1
+trample: duration=10 dmg_crush+60 inflict_stun+1 speed_land*1.2 terrain_ignored=forest,field
+
+# verb consume
+refrain: duration=120 aggression+-5 food_need*0.5 stealth+2 loudness*0.5
+
+# verb transform
+dissolve: effect_target=touched duration=10 corrosiveness+6 dmg_acid+40 integrity*0.5
+clutter: duration=60 movement_cost*2 stealth+2 speed_land*0.8
+
+# adverb manner
+loudly: loudness+6 effect_multiplier=1.3 stealth+-5
+softly: loudness+-5 stealth+3 effect_multiplier=0.8
+silently: loudness*0 stealth+6
+noisily: loudness+7 stealth+-6 inflict_confuse+1
+musically: charm+3 inflict_charm+2 morale+2 loudness+2
+rhythmically: attack_rate*1.2 accuracy+0.1 duration*1.2
+melodiously: charm+4 inflict_charm+2 aggression+-2 loudness+1
+
