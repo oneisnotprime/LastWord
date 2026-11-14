@@ -124,10 +124,13 @@ by how many words set them (minds and upkeep took `sentient`, `intelligence`, `f
       24. Sports and games: duels, races, wagers; low-risk challenges with stakes
       25. Abstract ideas: truth, chaos, luck, fate, nothing; meta words that bend rules
 
-- [ ] Before the next art pass: research external tools that make per-word art faster and
+- [x] Before the next art pass: research external tools that make per-word art faster and
       cheaper than writing it with Claude (image generation pipelines, pixel/paper-style
       generators, local models, asset packs). Art must scale to a few hundred thousand words,
       each with its own look; not base shapes per kind with modifiers on top
+      (`docs/ART_TOOLS.md`: self-hosted Z-Image-Turbo + style LoRA, cut-out, palette snap,
+      optional trace to `Silhouette`; ~$10-20 for 3,000 words, ~$300-450 for 300,000)
+- [ ] Run the 50-word art pilot in `docs/ART_TOOLS.md` and pick the route and raster vs vector
 - [x] Tooltips that show random words and how each one changes properties, to teach the game
       (shared `tips.ts`: word cards on the start screen, one tip in the idle spell window, word
       ideas in the Esc menu with a reroll; tips can be turned off in the menu)
