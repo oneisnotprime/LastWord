@@ -150,3 +150,11 @@ Node process that owns the game state. One room per map instance (from milestone
   producers keep `Producer.grown`. `alchemy` picks the transmuting ratio, a carried precious
   material (shared `alchemyRatio`) included, which `transmute` uses up. An event reads `field_radius`/`field_duration` if it has no
   `event_radius`/`event_duration`.
+- Themes batch 2: `home` (once a second per person) sums comfort inside their claims into
+  `Walker.home` (an effect `applyFields` adds), counts `Walker.stored` (fines, breaches and
+  pickpocketing take only the rest) and `Walker.eyes` (things that watch, sent in `sensed` and the
+  loadout for the minimap). `kill` leaves the stored letters as `Gear.hoard` in the dead's stores,
+  now nobody's; `payHoard` pays them to whoever claims or breaks one. `heldAt` slows root and
+  silence in an enemy lockup's claim. `make` crafts through `craftAt` (stations within CRAFT_RANGE,
+  a material carried or lying by, used up). `produce` counts machines' `labor` as workers. `breed`
+  adds young to fed herds within command.

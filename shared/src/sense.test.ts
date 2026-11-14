@@ -29,10 +29,10 @@ describe("senses", () => {
 
 describe("claims", () => {
   it("HOME shelters 10 tiles (twice its claim) at its cover; a CASTLE 60 tiles at 90%; a FLAG at least home ground", () => {
-    expect(claimOf(resolve(dict, "home"))).toEqual({ radius: 10, shelter: 0.5, security: 5 });
+    expect(claimOf(resolve(dict, "home"))).toEqual({ radius: 10, shelter: 0.5, security: 5, holds: 1 });
     expect(claimOf(resolve(dict, "castle"))).toMatchObject({ radius: 60, shelter: 0.9 });
     expect(claimOf(resolve(dict, "base"))).toMatchObject({ radius: 40, shelter: 0.8, security: 8 });
-    expect(claimOf(resolve(dict, "flag"))).toEqual({ radius: 20, shelter: HOME_GROUND, security: 2.5 });
+    expect(claimOf(resolve(dict, "flag"))).toEqual({ radius: 20, shelter: HOME_GROUND, security: 2.5, holds: 1 });
     expect(claimOf(resolve(dict, "sword"))).toBeNull();
   });
 });

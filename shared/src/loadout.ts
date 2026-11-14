@@ -35,6 +35,8 @@ export interface LoadoutDetail {
   creatures: { name: string; health: number; hungry?: boolean; fleeing?: boolean }[];
   /** Words that are part of your screen (shared `senseOf`): a MAP's minimap. Empty: no minimap. */
   senses: { word: string; reveal: number; letters: number; life: number }[];
+  /** Things of yours on the ground that watch (shared tech.ts `eyeOf`): where, how far in tiles, and what. */
+  eyes?: { x: number; y: number; r: number; word: string }[];
   /** What each of your producers is making a minute, or why it is not (shared `producingLine`). */
   producing?: string[];
   /**
@@ -75,4 +77,6 @@ export interface Sensed {
   life: { x: number; y: number; mine: boolean; person: boolean }[];
   /** Letter sources in `letters` range: things that make letters, with the letters they make. */
   letters: { x: number; y: number; letters: string }[];
+  /** Things of yours on the ground that watch, and the land around each they show (tiles). */
+  eyes?: { x: number; y: number; r: number; word: string }[];
 }

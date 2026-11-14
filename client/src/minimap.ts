@@ -1,7 +1,9 @@
 /**
  * The minimap a sense gives you (a MAP, a COMPASS, a CHART: shared `senseOf`). There is none by
  * default. It shows the land within the farthest `map_reveal` you have, letter sources within
- * `detect_letters` and living things within `detect_life`, with you in the middle.
+ * `detect_letters` and living things within `detect_life`, with you in the middle; and the ground
+ * around anything of yours on the ground that watches (a CAMERA, a TOWER: shared `eyeOf`), with
+ * whoever is in it.
  */
 import { combineSenses, Tile, tileAt, type LoadoutDetail, type Sensed, type WorldMap } from "@lastword/shared";
 
@@ -21,6 +23,7 @@ export class Minimap {
   private readonly ctx: CanvasRenderingContext2D;
   private sensed: Sensed = { life: [], letters: [] };
   private range = { reveal: 0, letters: 0, life: 0 };
+  private eyes: NonNullable<LoadoutDetail["eyes"]> = [];
   private drawnAt = 0;
   private land: { key: string; img: HTMLCanvasElement } | null = null;
 
@@ -31,13 +34,15 @@ export class Minimap {
   /** What your senses reach, from the loadout. No senses: no minimap. */
   senses(d: LoadoutDetail) {
     this.range = combineSenses(d.senses ?? []);
-    const on = (d.senses ?? []).length > 0;
+    this.eyes = d.eyes ?? [];
+    const on = (d.senses ?? []).length > 0 || this.eyes.length > 0;
     this.canvas.classList.toggle("show", on);
-    if (on) this.canvas.title = `MINIMAP: ${(d.senses ?? []).map((s) => s.word.toUpperCase()).join(", ")}`;
+    if (on) this.canvas.title = `MINIMAP: ${[...(d.senses ?? []).map((s) => s.word), ...new Set(this.eyes.map((e) => e.word))].map((w) => w.toUpperCase()).join(", ")}`;
   }
 
   picked(s: Sensed) {
     this.sensed = s;
+    if (s.eyes) this.eyes = s.eyes;
   }
 
   get shown(): boolean {
@@ -52,11 +57,12 @@ export class Minimap {
     if (this.canvas.width !== px) { this.canvas.width = px; this.canvas.height = px; }
     const { reveal, letters, life } = this.range;
     // The window: wide enough for the farthest reading, at most the map.
-    const R = Math.max(8, Math.min(map.size / 2, Math.max(reveal, letters, life)));
+    const eyes = this.eyes;
+    const R = Math.max(8, Math.min(map.size / 2, Math.max(reveal, letters, life, ...eyes.map((e) => Math.hypot(e.x - me.x, e.y - me.y) + e.r))));
     // Centred on you, but kept on the map near its edges.
     const side = Math.min(map.size, Math.ceil(R * 2));
     const cx = Math.max(side / 2, Math.min(map.size - side / 2, Math.round(me.x))), cy = Math.max(side / 2, Math.min(map.size - side / 2, Math.round(me.y)));
-    const key = `${cx},${cy},${side},${reveal},${edits}`;
+    const key = `${cx},${cy},${side},${reveal},${edits},${eyes.map((e) => `${e.x}:${e.y}:${e.r}`).join(";")}`;
     if (this.land?.key !== key) {
       const img = this.land?.img ?? document.createElement("canvas");
       img.width = side; img.height = side;
@@ -64,7 +70,8 @@ export class Minimap {
       for (let y = 0; y < side; y++) {
         for (let x = 0; x < side; x++) {
           const tx = cx - side / 2 + x + 0.5, ty = cy - side / 2 + y + 0.5;
-          const inside = tx >= 0 && ty >= 0 && tx < map.size && ty < map.size && Math.hypot(tx - me.x, ty - me.y) <= reveal;
+          const inside = tx >= 0 && ty >= 0 && tx < map.size && ty < map.size &&
+            (Math.hypot(tx - me.x, ty - me.y) <= reveal || eyes.some((e) => Math.hypot(tx - e.x, ty - e.y) <= e.r));
           const [r, gg, b] = inside ? COLOURS[tileAt(map, tx, ty)] : FOG;
           const i = (y * side + x) * 4;
           data.data[i] = r; data.data[i + 1] = gg; data.data[i + 2] = b; data.data[i + 3] = 255;
@@ -93,6 +100,11 @@ export class Minimap {
       const [sx, sy] = at(s.x, s.y);
       c.fillStyle = "#e9b949"; c.strokeStyle = "#4a3510"; c.lineWidth = this.dpr;
       c.fillRect(sx - 3 * this.dpr, sy - 3 * this.dpr, 6 * this.dpr, 6 * this.dpr); c.strokeRect(sx - 3 * this.dpr, sy - 3 * this.dpr, 6 * this.dpr, 6 * this.dpr);
+    }
+    for (const e of eyes) {
+      const [sx, sy] = at(e.x, e.y);
+      c.beginPath(); c.arc(sx, sy, e.r * k, 0, Math.PI * 2); c.lineWidth = 1 * this.dpr; c.strokeStyle = "rgba(63,111,168,.7)"; c.stroke();
+      c.fillStyle = "#3f6fa8"; c.fillRect(sx - 2.5 * this.dpr, sy - 2.5 * this.dpr, 5 * this.dpr, 5 * this.dpr);
     }
     for (const l of this.sensed.life) dot(l.x, l.y, l.person ? 3.2 : 2.2, l.mine ? "#4f8a3a" : l.person ? "#c9453f" : "#8a6a4a");
     dot(me.x, me.y, 3.6, "#2f5a8e");
