@@ -2321,7 +2321,9 @@ export class WorldRoom extends Room {
       else if (r.hit) this.hurtWith(victim, inflicts(s, blow), id, id, true);
       return `Ambushed ${victim.player.name}`;
     }
-    const minutes = s.num("event_duration");
+    // An event's area: its event_radius and event_duration, or else its field_radius and field_duration.
+    const minutes = s.num("event_duration") || s.num("field_duration");
+    const reachM = s.num("event_radius") || s.num("field_radius");
     const def = this.dict.word(phrase.noun)!;
     const given = inflicts(s), cures = s.tags("effect_status");
     const rules = placeRules(def, s);
@@ -2338,8 +2340,8 @@ export class WorldRoom extends Room {
     if (!regional && !aimed) throw new Error(`Aim ${word}: spell it, then click where it should go`);
     if (!regional && !near(aimed!)) throw new Error(`Too far away for ${word}`);
     const at = regional ? walker.player : aimed!;
-    const whole = s.get("placement") === "map" || s.num("event_radius") === Infinity;
-    const radius = whole ? this.map.size * 2 : Math.max(1, s.num("event_radius") / TILE_METERS);
+    const whole = s.get("placement") === "map" || reachM === Infinity;
+    const radius = whole ? this.map.size * 2 : Math.max(1, reachM / TILE_METERS);
     const lasts = Math.max(1, minutes * 60);
     const area: Area = {
       word: phrase.noun, owner: id, x: at.x, y: at.y,

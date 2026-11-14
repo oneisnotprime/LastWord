@@ -132,7 +132,8 @@ export function susceptibility(target: Stats, type: string): number {
       const f = target.num("flammability");
       const kindle = f >= 1 ? 1 + (f - 1) * KINDLE : 0.5 + 0.5 * Math.max(0, f);
       const mp = target.num("melting_point");
-      return Math.max(0, kindle * (mp < MELTS_BELOW ? 1 + (MELTS_BELOW - Math.max(-100, mp)) / 100 : 1));
+      // What melts (ice, wax, butter) goes in fire however little it burns.
+      return mp < MELTS_BELOW ? Math.max(1, kindle) * (1 + (MELTS_BELOW - Math.max(-100, mp)) / 100) : Math.max(0, kindle);
     }
     case "electric":
       return 1 + Math.max(0, target.num("conductivity") - 1) * CONDUCT;
