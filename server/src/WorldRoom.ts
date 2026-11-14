@@ -2318,6 +2318,32 @@ export class WorldRoom extends Room {
       this.kill(selected, id);
       return `${victim.player.name} is dead`;
     }
+    // Passed on a person (ARREST, SENTENCE, EXILE, VERDICT, PARDON: law theme): its statuses given or
+    // ended, health restored, letters taken as a fine; no blow is struck. Resisted by its contest.
+    const onPerson = s.get("event_target") === "character" && !hasDamage(s) && !(s.num("event_radius") > 0) && !(s.num("inflict_stun") > 0); // a stun is an AMBUSH: a blow
+    if (onPerson && (inflicts(s).length || s.tags("effect_status").length || s.num("letter_steal") > 0 || s.num("restores") > 0)) {
+      const victim = needCreature();
+      const given = inflicts(s);
+      if (given.length || s.num("letter_steal") > 0) contest(victim.unit.body.stats, victim.player.name, true);
+      const said: string[] = [];
+      if (given.length) { this.hurtWith(victim, given, id, id, false); said.push(given.map(([st]) => st).join(", ")); }
+      const ended = cure(victim.statuses, s.tags("effect_status"));
+      if (ended.length) { this.statusChanged(victim); said.push(`no longer ${ended.join(", ")}`); }
+      if (s.num("restores") > 0) { this.restore(victim, s.num("restores")); said.push("restored"); }
+      const payer = this.walkers.get(victim.master && victim.master !== "-" ? victim.master : victim.id);
+      if (s.num("letter_steal") > 0 && payer && payer.id !== id) {
+        const taken = takeLetters(payer.letters, Math.ceil(s.num("letter_steal")), this.rng);
+        if (taken) {
+          this.award(id, walker, taken, `${word} on ${victim.player.name}`, victim.player);
+          this.lettersChanged.add(payer.id);
+          this.sendTo(payer.id, "letters", payer.letters);
+          this.sendTo(payer.id, "notice", `${walker.player.name}'s ${word} took ${taken.toUpperCase()} from you`);
+          said.push(`fined ${taken.toUpperCase()}`);
+        }
+      }
+      if (victim.id !== id) this.sendTo(victim.id, "notice", `${walker.player.name} passed ${word} on you${said.length ? `: ${said.join("; ")}` : ""}`);
+      return `${word} on ${victim.player.name}${said.length ? `: ${said.join("; ")}` : ""}`;
+    }
     if (s.num("letter_steal") > 0) {
       const t = needThing();
       if (t.thing.owner === id || t.thing.owner === "") throw new Error(`${word} needs a thing someone else owns`);
@@ -2401,7 +2427,7 @@ export class WorldRoom extends Room {
     if (!hasDamage(s) && !rules && !effect && !given.length && !s.flag("sets_hostile") && !summons && tile === undefined && !s.tags("counters").length) throw new Error(`${word} does nothing yet`);
     // A region event covers the speller's surroundings. Anything else lands where it was aimed:
     // a picked spot, else the picked or attacked target. It must be in reach.
-    const regional = s.get("placement") === "region" || s.get("placement") === "map";
+    const regional = s.get("placement") === "region" || s.get("placement") === "map" || s.get("placement") === "self";
     const aimed = walker.aim ?? (other ? other.player : thing ?? null);
     if (!regional && !aimed) throw new Error(`Aim ${word}: spell it, then click where it should go`);
     if (!regional && !near(aimed!)) throw new Error(`Too far away for ${word}`);

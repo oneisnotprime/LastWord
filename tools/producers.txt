@@ -235,3 +235,514 @@ acquisition: produce_T=1
 commerce: produce_T=2
 auction: produce_T=2
 venture: produce_T=2
+
+# Dictionary themes, batch 1 (TODO.md): planted crops pay A on tilled land, other planted flora P,
+# fungi U, and working people (labor) N, the same way as the words above.
+acorn: produce_A=0.4 tile_type=tilled radius=1
+alfalfa: produce_A=0.4 tile_type=tilled radius=1
+almond: produce_A=0.4 tile_type=tilled radius=1
+amaranth: produce_A=0.4 tile_type=tilled radius=1
+apricot: produce_A=0.4 tile_type=tilled radius=1
+artichoke: produce_A=0.4 tile_type=tilled radius=1
+asparagus: produce_A=0.4 tile_type=tilled radius=1
+aubergine: produce_A=0.4 tile_type=tilled radius=1
+avocado: produce_A=0.4 tile_type=tilled radius=1
+bean: produce_A=0.4 tile_type=tilled radius=1
+beet: produce_A=0.4 tile_type=tilled radius=1
+beetroot: produce_A=0.4 tile_type=tilled radius=1
+berry: produce_A=0.4 tile_type=tilled radius=1
+blackberry: produce_A=0.4 tile_type=tilled radius=1
+blueberry: produce_A=0.4 tile_type=tilled radius=1
+boll: produce_A=0.4 tile_type=tilled radius=1
+broccoli: produce_A=0.4 tile_type=tilled radius=1
+buckwheat: produce_A=0.4 tile_type=tilled radius=1
+bulb: produce_A=0.4 tile_type=tilled radius=1
+cabbage: produce_A=0.4 tile_type=tilled radius=1
+cantaloupe: produce_A=0.4 tile_type=tilled radius=1
+capsicum: produce_A=0.4 tile_type=tilled radius=1
+carrot: produce_A=0.4 tile_type=tilled radius=1
+cauliflower: produce_A=0.4 tile_type=tilled radius=1
+celery: produce_A=0.4 tile_type=tilled radius=1
+cereal: produce_A=0.4 tile_type=tilled radius=1
+chard: produce_A=0.4 tile_type=tilled radius=1
+chickpea: produce_A=0.4 tile_type=tilled radius=1
+chile: produce_A=0.4 tile_type=tilled radius=1
+chilli: produce_A=0.4 tile_type=tilled radius=1
+citrus: produce_A=0.4 tile_type=tilled radius=1
+clementine: produce_A=0.4 tile_type=tilled radius=1
+cole: produce_A=0.4 tile_type=tilled radius=1
+collard: produce_A=0.4 tile_type=tilled radius=1
+cos: produce_A=0.4 tile_type=tilled radius=1
+cranberry: produce_A=0.4 tile_type=tilled radius=1
+crop: produce_A=0.4 tile_type=tilled radius=1
+cucumber: produce_A=0.4 tile_type=tilled radius=1
+durian: produce_A=0.4 tile_type=tilled radius=1
+eggplant: produce_A=0.4 tile_type=tilled radius=1
+fig: produce_A=0.4 tile_type=tilled radius=1
+gooseberry: produce_A=0.4 tile_type=tilled radius=1
+grape: produce_A=0.4 tile_type=tilled radius=1
+grapefruit: produce_A=0.4 tile_type=tilled radius=1
+greens: produce_A=0.4 tile_type=tilled radius=1
+guava: produce_A=0.4 tile_type=tilled radius=1
+horseradish: produce_A=0.4 tile_type=tilled radius=1
+huckleberry: produce_A=0.4 tile_type=tilled radius=1
+kale: produce_A=0.4 tile_type=tilled radius=1
+kernel: produce_A=0.4 tile_type=tilled radius=1
+kiwi: produce_A=0.4 tile_type=tilled radius=1
+leek: produce_A=0.4 tile_type=tilled radius=1
+legume: produce_A=0.4 tile_type=tilled radius=1
+lentil: produce_A=0.4 tile_type=tilled radius=1
+lettuce: produce_A=0.4 tile_type=tilled radius=1
+lucerne: produce_A=0.4 tile_type=tilled radius=1
+mandarin: produce_A=0.4 tile_type=tilled radius=1
+mango: produce_A=0.4 tile_type=tilled radius=1
+mangold: produce_A=0.4 tile_type=tilled radius=1
+melon: produce_A=0.4 tile_type=tilled radius=1
+millet: produce_A=0.4 tile_type=tilled radius=1
+mulberry: produce_A=0.4 tile_type=tilled radius=1
+mung: produce_A=0.4 tile_type=tilled radius=1
+muscat: produce_A=0.4 tile_type=tilled radius=1
+oat: produce_A=0.4 tile_type=tilled radius=1
+okra: produce_A=0.4 tile_type=tilled radius=1
+onion: produce_A=0.4 tile_type=tilled radius=1
+papaya: produce_A=0.4 tile_type=tilled radius=1
+parsnip: produce_A=0.4 tile_type=tilled radius=1
+pea: produce_A=0.4 tile_type=tilled radius=1
+peach: produce_A=0.4 tile_type=tilled radius=1
+peanut: produce_A=0.4 tile_type=tilled radius=1
+pear: produce_A=0.4 tile_type=tilled radius=1
+persimmon: produce_A=0.4 tile_type=tilled radius=1
+pineapple: produce_A=0.4 tile_type=tilled radius=1
+pip: produce_A=0.4 tile_type=tilled radius=1
+plum: produce_A=0.4 tile_type=tilled radius=1
+pomegranate: produce_A=0.4 tile_type=tilled radius=1
+pumpkin: produce_A=0.4 tile_type=tilled radius=1
+quince: produce_A=0.4 tile_type=tilled radius=1
+radish: produce_A=0.4 tile_type=tilled radius=1
+rapeseed: produce_A=0.4 tile_type=tilled radius=1
+raspberry: produce_A=0.4 tile_type=tilled radius=1
+rhubarb: produce_A=0.4 tile_type=tilled radius=1
+romaine: produce_A=0.4 tile_type=tilled radius=1
+rye: produce_A=0.4 tile_type=tilled radius=1
+sapling: produce_A=0.4 tile_type=tilled radius=1
+satsuma: produce_A=0.4 tile_type=tilled radius=1
+savoy: produce_A=0.4 tile_type=tilled radius=1
+seedling: produce_A=0.4 tile_type=tilled radius=1
+sesame: produce_A=0.4 tile_type=tilled radius=1
+shallot: produce_A=0.4 tile_type=tilled radius=1
+sorghum: produce_A=0.4 tile_type=tilled radius=1
+soy: produce_A=0.4 tile_type=tilled radius=1
+soybean: produce_A=0.4 tile_type=tilled radius=1
+spelt: produce_A=0.4 tile_type=tilled radius=1
+spinach: produce_A=0.4 tile_type=tilled radius=1
+spud: produce_A=0.4 tile_type=tilled radius=1
+squash: produce_A=0.4 tile_type=tilled radius=1
+strawberry: produce_A=0.4 tile_type=tilled radius=1
+sugarcane: produce_A=0.4 tile_type=tilled radius=1
+swede: produce_A=0.4 tile_type=tilled radius=1
+tangerine: produce_A=0.4 tile_type=tilled radius=1
+taro: produce_A=0.4 tile_type=tilled radius=1
+tater: produce_A=0.4 tile_type=tilled radius=1
+tiller: produce_A=0.4 tile_type=tilled radius=1
+tomato: produce_A=0.4 tile_type=tilled radius=1
+tuber: produce_A=0.4 tile_type=tilled radius=1
+turnip: produce_A=0.4 tile_type=tilled radius=1
+veg: produce_A=0.4 tile_type=tilled radius=1
+vegetable: produce_A=0.4 tile_type=tilled radius=1
+veggie: produce_A=0.4 tile_type=tilled radius=1
+watermelon: produce_A=0.4 tile_type=tilled radius=1
+yam: produce_A=0.4 tile_type=tilled radius=1
+zucchini: produce_A=0.4 tile_type=tilled radius=1
+absinthe: produce_P=0.2
+acacia: produce_P=0.3
+agave: produce_P=0.1
+algae: produce_P=0.1
+aloe: produce_P=0.1
+althea: produce_P=0.2
+anemone: produce_P=0.1
+angelica: produce_P=0.1
+anise: produce_P=0.1
+artemisia: produce_P=0.2
+arugula: produce_P=0.1
+arum: produce_P=0.1
+aspen: produce_P=0.3
+aster: produce_P=0.1
+azalea: produce_P=0.2
+bamboo: produce_P=0.1
+banyan: produce_P=0.5
+basil: produce_P=0.1
+beanstalk: produce_P=0.1
+belladonna: produce_P=0.1
+bergamot: produce_P=0.3
+birch: produce_P=0.3
+bittersweet: produce_P=0.1
+bloom: produce_P=0.1
+bloomer: produce_P=0.1
+blossom: produce_P=0.1
+bluebell: produce_P=0.1
+bonsai: produce_P=0.3
+bracken: produce_P=0.1
+bramble: produce_P=0.1
+briar: produce_P=0.2
+bryony: produce_P=0.1
+bud: produce_P=0.1
+bur: produce_P=0.1
+burr: produce_P=0.1
+buttercup: produce_P=0.1
+butternut: produce_P=0.3
+cacao: produce_P=0.3
+calla: produce_P=0.1
+calypso: produce_P=0.1
+camellia: produce_P=0.2
+campion: produce_P=0.1
+canna: produce_P=0.1
+cannabis: produce_P=0.2
+caper: produce_P=0.2
+caraway: produce_P=0.1
+cardamom: produce_P=0.1
+carnation: produce_P=0.1
+cassia: produce_P=0.3
+catnip: produce_P=0.1
+cayenne: produce_P=0.2
+chamomile: produce_P=0.1
+chicory: produce_P=0.1
+chives: produce_P=0.1
+chrysanthemum: produce_P=0.1
+cilantro: produce_P=0.1
+clary: produce_P=0.1
+clematis: produce_P=0.1
+climber: produce_P=0.1
+coca: produce_P=0.2
+columbine: produce_P=0.1
+conifer: produce_P=0.3
+coriander: produce_P=0.1
+cottonwood: produce_P=0.3
+creeper: produce_P=0.1
+cress: produce_P=0.1
+crocus: produce_P=0.1
+croton: produce_P=0.2
+cumin: produce_P=0.1
+daffodil: produce_P=0.1
+dahlia: produce_P=0.1
+daisy: produce_P=0.1
+dandelion: produce_P=0.1
+daphne: produce_P=0.2
+dill: produce_P=0.1
+dogwood: produce_P=0.3
+edelweiss: produce_P=0.1
+evergreen: produce_P=0.3
+fennel: produce_P=0.1
+fern: produce_P=0.1
+foliage: produce_P=0.1
+frond: produce_P=0.1
+fuchsia: produce_P=0.2
+ganja: produce_P=0.2
+gardenia: produce_P=0.2
+geranium: produce_P=0.1
+ginger: produce_P=0.1
+ginkgo: produce_P=0.3
+ginseng: produce_P=0.1
+gorse: produce_P=0.2
+greenbrier: produce_P=0.1
+greenery: produce_P=0.1
+hawthorn: produce_P=0.2
+heath: produce_P=0.2
+heather: produce_P=0.2
+hemlock: produce_P=0.1
+herb: produce_P=0.1
+hibiscus: produce_P=0.2
+holly: produce_P=0.3
+honeysuckle: produce_P=0.2
+hydrangea: produce_P=0.2
+iris: produce_P=0.1
+ivy: produce_P=0.1
+jalapeno: produce_P=0.2
+japonica: produce_P=0.2
+jasmine: produce_P=0.2
+kelp: produce_P=0.1
+kola: produce_P=0.3
+kudzu: produce_P=0.1
+larch: produce_P=0.3
+laurel: produce_P=0.3
+liana: produce_P=0.1
+lichen: produce_P=0.1
+licorice: produce_P=0.1
+lilac: produce_P=0.2
+lily: produce_P=0.1
+liquorice: produce_P=0.1
+lotus: produce_P=0.1
+lupin: produce_P=0.1
+madder: produce_P=0.1
+magnolia: produce_P=0.3
+mallow: produce_P=0.2
+mandrake: produce_P=0.1
+mangrove: produce_P=0.3
+maple: produce_P=0.3
+marguerite: produce_P=0.1
+marigold: produce_P=0.1
+marijuana: produce_P=0.2
+mariposa: produce_P=0.1
+mesquite: produce_P=0.2
+milkweed: produce_P=0.1
+mimosa: produce_P=0.3
+mint: produce_P=0.1
+mistletoe: produce_P=0.1
+moss: produce_P=0.1
+mustard: produce_P=0.1
+mycelium: produce_P=0.1
+myrtle: produce_P=0.2
+narcissus: produce_P=0.1
+neem: produce_P=0.3
+nettle: produce_P=0.1
+nightshade: produce_P=0.1
+orchid: produce_P=0.1
+oregano: produce_P=0.1
+palmetto: produce_P=0.3
+palmyra: produce_P=0.3
+pansy: produce_P=0.1
+parsley: produce_P=0.1
+patchouli: produce_P=0.2
+peony: produce_P=0.1
+peppermint: produce_P=0.1
+perennial: produce_P=0.1
+periwinkle: produce_P=0.2
+petunia: produce_P=0.1
+peyote: produce_P=0.1
+phlox: produce_P=0.1
+pine: produce_P=0.3
+plantain: produce_P=0.1
+pod: produce_P=0.1
+ponderosa: produce_P=0.3
+poppy: produce_P=0.1
+primrose: produce_P=0.1
+rattan: produce_P=0.3
+redwood: produce_P=0.5
+reed: produce_P=0.1
+rhizome: produce_P=0.1
+rhododendron: produce_P=0.2
+rosebud: produce_P=0.1
+rosemary: produce_P=0.1
+rowan: produce_P=0.3
+rue: produce_P=0.1
+saffron: produce_P=0.1
+sage: produce_P=0.1
+sagebrush: produce_P=0.2
+salvia: produce_P=0.1
+sandalwood: produce_P=0.1
+sassafras: produce_P=0.3
+seaweed: produce_P=0.1
+sedge: produce_P=0.1
+senna: produce_P=0.2
+sequoia: produce_P=0.5
+shamrock: produce_P=0.1
+shrub: produce_P=0.2
+snapdragon: produce_P=0.1
+sorrel: produce_P=0.1
+spearmint: produce_P=0.1
+sprig: produce_P=0.1
+sprout: produce_P=0.1
+stevia: produce_P=0.1
+strangler: produce_P=0.1
+succulent: produce_P=0.1
+sumac: produce_P=0.1
+sunflower: produce_P=0.1
+tamarind: produce_P=0.3
+tarragon: produce_P=0.2
+thistle: produce_P=0.1
+thrift: produce_P=0.2
+thyme: produce_P=0.1
+trillium: produce_P=0.1
+tulip: produce_P=0.1
+turmeric: produce_P=0.1
+valerian: produce_P=0.1
+vanda: produce_P=0.1
+vanilla: produce_P=0.1
+verbena: produce_P=0.1
+veronica: produce_P=0.1
+violet: produce_P=0.1
+wallflower: produce_P=0.1
+wasabi: produce_P=0.1
+watercress: produce_P=0.1
+weed: produce_P=0.1
+wheatgrass: produce_P=0.1
+wildflower: produce_P=0.1
+willow: produce_P=0.3
+wintergreen: produce_P=0.1
+wisteria: produce_P=0.1
+woodbine: produce_P=0.1
+woodruff: produce_P=0.1
+wormwood: produce_P=0.2
+wort: produce_P=0.1
+yarrow: produce_P=0.1
+yucca: produce_P=0.2
+chanterelle: produce_U=0.3 production_needs=harvest
+morel: produce_U=0.3 production_needs=harvest
+puffball: produce_U=0.3 production_needs=harvest
+shiitake: produce_U=0.3 production_needs=harvest
+toadstool: produce_U=0.3 production_needs=harvest
+truffle: produce_U=0.3 production_needs=harvest
+yeast: produce_U=0.3 production_needs=harvest
+abbot: produce_N=0.25
+accomplice: produce_N=0.25
+acolyte: produce_N=0.25
+architect: produce_N=0.25
+artisan: produce_N=0.4
+attendant: produce_N=0.25
+bagger: produce_N=0.25
+beekeeper: produce_N=0.4
+bellhop: produce_N=0.25
+bellman: produce_N=0.25
+blacksmith: produce_N=0.55
+boatman: produce_N=0.25
+botanist: produce_N=0.4
+brewer: produce_N=0.6
+bricklayer: produce_N=0.55
+builder: produce_N=0.55
+butcher: produce_N=0.4
+butler: produce_N=0.25
+caddie: produce_N=0.25
+caregiver: produce_N=0.25
+caretaker: produce_N=0.25
+carpenter: produce_N=0.55
+cartwright: produce_N=0.4
+carver: produce_N=0.4
+caterer: produce_N=0.4
+chandler: produce_N=0.4
+chemist: produce_N=0.25
+clerk: produce_N=0.25
+cobbler: produce_N=0.4
+collier: produce_N=0.55
+commoner: produce_N=0.55
+confectioner: produce_N=0.4
+cowherd: produce_N=0.25
+craftsman: produce_N=0.4
+crewman: produce_N=0.4
+custodian: produce_N=0.4
+dairyman: produce_N=0.4
+deacon: produce_N=0.25
+deaconess: produce_N=0.25
+decorator: produce_N=0.4
+digger: produce_N=0.55
+disciple: produce_N=0.25
+distiller: produce_N=0.4
+docker: produce_N=0.55
+draftsman: produce_N=0.25
+draughtsman: produce_N=0.25
+dressmaker: produce_N=0.4
+dyer: produce_N=0.4
+electrician: produce_N=0.4
+engraver: produce_N=0.25
+entrepreneur: produce_N=0.25
+farrier: produce_N=0.4
+feller: produce_N=0.55
+fisher: produce_N=0.4
+fisherman: produce_N=0.4
+footman: produce_N=0.25
+foreman: produce_N=0.4
+forester: produce_N=0.55
+friar: produce_N=0.25
+functionary: produce_N=0.25
+furrier: produce_N=0.4
+gardener: produce_N=0.55
+glassblower: produce_N=0.4
+glazier: produce_N=0.4
+goatherd: produce_N=0.25
+goldsmith: produce_N=0.25
+gravedigger: produce_N=0.4
+groundskeeper: produce_N=0.4
+gunsmith: produce_N=0.4
+handyman: produce_N=0.55
+hatter: produce_N=0.4
+helper: produce_N=0.4
+herbalist: produce_N=0.25
+herder: produce_N=0.25
+herdsman: produce_N=0.25
+housekeeper: produce_N=0.4
+housemaid: produce_N=0.4
+illustrator: produce_N=0.25
+inmate: produce_N=0.55
+intern: produce_N=0.25
+inventor: produce_N=0.25
+janitor: produce_N=0.4
+jeweler: produce_N=0.25
+journeyman: produce_N=0.4
+loader: produce_N=0.4
+locksmith: produce_N=0.25
+logger: produce_N=0.55
+lumberjack: produce_N=0.55
+machinist: produce_N=0.55
+maid: produce_N=0.4
+mason: produce_N=0.55
+mechanic: produce_N=0.4
+milkmaid: produce_N=0.4
+milliner: produce_N=0.4
+mover: produce_N=0.4
+novice: produce_N=0.25
+orderly: produce_N=0.25
+packer: produce_N=0.4
+painter: produce_N=0.4
+paralegal: produce_N=0.25
+pioneer: produce_N=0.4
+planter: produce_N=0.4
+plasterer: produce_N=0.4
+plebeian: produce_N=0.55
+ploughman: produce_N=0.55
+plumber: produce_N=0.4
+porter: produce_N=0.25
+potter: produce_N=0.4
+pressman: produce_N=0.4
+printer: produce_N=0.4
+prisoner: produce_N=0.4
+programmer: produce_N=0.25
+quarryman: produce_N=0.55
+rancher: produce_N=0.4
+reaper: produce_N=0.55
+receptionist: produce_N=0.25
+refugee: produce_N=0.4
+repairman: produce_N=0.4
+roofer: produce_N=0.4
+roughneck: produce_N=0.55
+saddler: produce_N=0.4
+sailor: produce_N=0.4
+sapper: produce_N=0.4
+sawyer: produce_N=0.55
+scribe: produce_N=0.25
+scrivener: produce_N=0.25
+scullion: produce_N=0.4
+sculptor: produce_N=0.4
+seaman: produce_N=0.4
+seamstress: produce_N=0.4
+serf: produce_N=0.6
+settler: produce_N=0.4
+sexton: produce_N=0.25
+shepherd: produce_N=0.25
+shipbuilder: produce_N=0.55
+shoemaker: produce_N=0.4
+silversmith: produce_N=0.25
+spinner: produce_N=0.4
+squire: produce_N=0.25
+stacker: produce_N=0.4
+staffer: produce_N=0.25
+stenographer: produce_N=0.25
+stonecutter: produce_N=0.55
+sweeper: produce_N=0.4
+tailor: produce_N=0.4
+tanner: produce_N=0.4
+techie: produce_N=0.25
+technician: produce_N=0.4
+tenant: produce_N=0.4
+tiler: produce_N=0.4
+tinsmith: produce_N=0.4
+typist: produce_N=0.25
+usher: produce_N=0.25
+valet: produce_N=0.25
+vassal: produce_N=0.4
+vintner: produce_N=0.55
+wainwright: produce_N=0.4
+waitress: produce_N=0.25
+waterman: produce_N=0.25
+weaver: produce_N=0.4
+welder: produce_N=0.55
+winemaker: produce_N=0.4
+woodcutter: produce_N=0.55
+workman: produce_N=0.55

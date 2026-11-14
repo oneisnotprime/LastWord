@@ -88,23 +88,27 @@ by how many words set them (minds and upkeep took `sentient`, `intelligence`, `f
       real debug server (its own app or a password), then take the shortcut off the live game.
 
 - [ ] Dictionary themes: broad concepts of a few hundred words each, built through shared
-      systems. Start with materials, food, professions, plants and law.
-      1. Professions: hired NPC workers producing N; farm, guard, build, scout
-      2. Plants and botany: crops, trees, herbs, fungi; P and A; medicine and poison
+      systems. Batch 1 is done (1, 2, 8, 11, 15; README "Dictionary themes"): about 2,200 words,
+      the core of each hand-written in demo_words.txt, the rest generated from it
+      (`tools/themes/check.py` checks a generated theme file). Still to do for batch 1: materials
+      as inputs to transmutation for Z (once part 3's transmuting is in), worker art beyond the
+      commonest, plants spreading on their own (`spread_rate`), cover from trees.
+      1. [x] Professions: hired NPC workers producing N; farm, guard, build, scout
+      2. [x] Plants and botany: crops, trees, herbs, fungi; P and A; medicine and poison
       3. Buildings and rooms: claims, shelter, storage, production
       4. Furniture and household: B, comfort, base morale
       5. Tools and crafting: crafting stations for C; turn materials into objects
       6. Machines and technology: power, M, map reveal, automation
       7. Animals by family: livestock, pets, predators, birds, fish; hunting, I, mounts, food
-      8. Food and cooking: food store, temporary boosts, cures, poisons
+      8. [x] Food and cooking: food store, temporary boosts, cures, poisons
       9. Body parts: graft wings, claws, eyes, horns onto yourself or creatures
       10. Clothing: warmth, disguise, stealth, faction look
-      11. Materials and elements: adjectives that rewrite any object (GLASS SWORD, IRON DOG);
+      11. [x] Materials and elements: adjectives that rewrite any object (GLASS SWORD, IRON DOG);
           inputs to transmutation for Z
       12. Disease and medicine: spreading plagues, cures, hospitals
       13. Emotions and mental states: fields that move morale, loyalty, aggression
       14. Music and sound: morale, charm animals, give away position, deafen
-      15. Law and government: tax, ban, curfew, election, treaty; map or regional rules
+      15. [x] Law and government: tax, ban, curfew, election, treaty; map or regional rules
       16. Money and trade: prices, T, bribes, debt, auctions
       17. Crime and deception: theft, disguise, traps, false information
       18. Communication and information: see and fake what others know

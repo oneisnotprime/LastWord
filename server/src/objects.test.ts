@@ -233,6 +233,7 @@ it("uses every usable word in the dictionary", async () => {
     await wait(20);
     const reply = String(said.at(-1));
     expect(said.length, word).toBe(before + 2);
+    wa.statuses = []; (room as any).statusChanged(wa); // a poisonous one (HEMLOCK) would kill the next try
     (reply.startsWith("Used ") ? did : not).push(`${word}${reply.startsWith("Used ") ? "" : ` (${reply})`}`);
     // Clear the ground and the hands for the next word; creatures it made leave too.
     for (const id of [...room.state.things.keys()]) room.removeThing(id);

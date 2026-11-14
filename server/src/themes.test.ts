@@ -115,3 +115,15 @@ it("a SCOUT ranges ahead and new ground it reaches pays its master J; a MASON ma
   const wall = [...(room as any).grounded.values()].find((g: any) => g.phrase === "wall");
   expect(wall.built).toBe(2.5);
 });
+
+it("ARREST roots the person clicked unless they slip it; a PARDON frees them", async () => {
+  const { a, b, wa, wb, last } = await setup();
+  wa.unit.body.stats.set("authority", 9);
+  a.send("pick", { id: b.sessionId }); await wait();
+  a.send("spell", "arrest"); await wait();
+  expect(String(last("a", "spelled")), String(last("a", "refused"))).toMatch(/ARREST on/);
+  expect(wb.statuses.map((s: any) => s.status)).toContain("root");
+  a.send("pick", { id: b.sessionId }); await wait();
+  a.send("spell", "pardon"); await wait();
+  expect(wb.statuses.map((s: any) => s.status)).not.toContain("root");
+});

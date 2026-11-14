@@ -1219,7 +1219,7 @@ arrest: placement=target placement_range=20 event_target=character inflict_root=
 verdict: placement=target placement_range=30 event_target=character inflict_root=10 letter_steal=8 contest_with=authority contested_by=charm event_duration=1
 sentence: placement=target placement_range=30 event_target=character inflict_root=40 inflict_silence=20 contest_with=authority contested_by=charm event_duration=1
 exile: placement=target placement_range=30 event_target=character inflict_fear=40 contest_with=authority contested_by=courage event_duration=1
-pardon: placement=target placement_range=50 event_target=creature effect_status=root,stun,silence,fear,sleep restores=50 event_duration=1 counters=sentence,arrest,verdict
+pardon: placement=target placement_range=50 event_target=character effect_status=root,stun,silence,fear,sleep restores=50 event_duration=1 counters=sentence,arrest,verdict
 confiscation: placement=target placement_range=10 event_target=object transfers_ownership=true contest_with=authority contested_by=security
 
 # noun possession

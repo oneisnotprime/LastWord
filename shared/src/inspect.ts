@@ -1,5 +1,5 @@
 import type { Dictionary } from "./dictionary.js";
-import { needsText, producerOf } from "./produce.js";
+import { GROW_PACE, needsText, producerOf, SEEDLING } from "./produce.js";
 import { parsePhrase, type Phrase } from "./phrase.js";
 import type { Stats } from "./stats.js";
 import type { Op, Value } from "./types.js";
@@ -53,10 +53,14 @@ export function aimOf(p: Phrase): "someone" | "anywhere" | null {
   if (p.kind !== "event") return null;
   if (pactOf(s) || s.flag("transfers_ownership") || s.flag("destroys_target") || s.num("letter_steal") > 0 || s.num("moves_target") > 0 ||
     s.num("restores") > 0 || s.num("produce_T") > 0 || (s.num("inflict_stun") > 0 && s.get("event_target") === "character")) return "someone";
+  // Passed on a person (ARREST, EXILE, PARDON): its statuses or cures land on whoever is clicked.
+  if (s.get("event_target") === "character" && !(s.num("event_radius") > 0) && (inflictsAny(s) || s.tags("effect_status").length)) return "someone";
   if (s.flag("frees_target")) return null;
-  const regional = s.get("placement") === "region" || s.get("placement") === "map";
+  const regional = s.get("placement") === "region" || s.get("placement") === "map" || s.get("placement") === "self";
   return regional ? null : "anywhere";
 }
+
+const inflictsAny = (s: Stats) => s.entries().some(([id, v]) => id.startsWith("inflict_") && typeof v === "number" && v > 0);
 
 /** A card telling what something is: shown as you spell it, and when you right-click it in the world. */
 export interface Card {
@@ -178,6 +182,7 @@ export function behaviours(s: Stats, count = 1): string[] {
     out.push(`makes ${letters.map(([ch, n]) => `${ch.toUpperCase()} +${num(n)}/min`).join(", ")} while yours${needs ? `, ${needs}` : ""}`);
   }
   if (spec.age > 0) out.push(`ages into Y faster than most (+${num(spec.age)})`);
+  if (spec.grows > 0) out.push(`planted where it is made: grows to full yield in ${num(spec.grows * GROW_PACE * (1 - SEEDLING))} min, faster in rain and rich soil`);
   if (s.flag("phase")) out.push("passes through walls");
   if (s.flag("hover") || s.num("speed_air") > 0) out.push("flies");
   if (s.flag("edible") || s.num("nutrition") > 0) out.push(`edible (${num(s.num("nutrition"))} food)`);
