@@ -187,8 +187,9 @@ it("gathers letters from the ground, pays out production, and passes letters bet
   // A farm tills the ground around it and pays its owner A, as moisture, soil and its owner's work allow.
   wa.letters = { f: 1, a: 1, r: 1, m: 1 };
   const home = { x: wa.player.x, y: wa.player.y };
+  // The nearest grass, however far: a random map can spawn someone deep in a desert or tundra.
   const grass = (() => {
-    for (let r = 1; r < 60; r++) for (let dx = -r; dx <= r; dx++) for (const dy of [-r, r]) {
+    for (let r = 1; r < room.map.size; r++) for (let dx = -r; dx <= r; dx++) for (const dy of [-r, r]) {
       const x = Math.floor(home.x) + dx + 0.5, y = Math.floor(home.y) + dy + 0.5;
       if (tileAt(room.map, x, y) === Tile.Grass) return { x, y };
     }
