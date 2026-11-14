@@ -62,6 +62,10 @@ by how many words set them (minds and upkeep took `sentient`, `intelligence`, `f
 
 ## High priority
 
+- [ ] Before the next art pass: research external tools that make per-word art faster and
+      cheaper than writing it with Claude (image generation pipelines, pixel/paper-style
+      generators, local models, asset packs). Art must scale to a few hundred thousand words,
+      each with its own look; not base shapes per kind with modifiers on top
 - [ ] Tooltips that show random words and how each one changes properties, to teach the game
 - [ ] Tiered winners' rounds (for later, high importance): a round winner goes into a round of
       100 against 99 other winners; winners of those eventually join a round of 10,000 against
