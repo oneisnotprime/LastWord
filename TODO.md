@@ -62,6 +62,9 @@ by how many words set them (minds and upkeep took `sentient`, `intelligence`, `f
 
 ## High priority
 
+- [ ] Replace the live "xxx" shortcut (999 of every letter, `CHEAT` in `WorldRoom.ts`) with a
+      real debug server (its own app or a password), then take the shortcut off the live game.
+
 - [ ] Dictionary themes: broad concepts of a few hundred words each, built through shared
       systems. Start with materials, food, professions, plants and law.
       1. Professions: hired NPC workers producing N; farm, guard, build, scout

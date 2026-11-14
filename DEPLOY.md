@@ -57,6 +57,9 @@ Then open `http://<host>:8080`. Put HTTPS in front of it for public play.
 
 | `DEBUG` | off | `1`: spelling DEBUG fills every letter (999 of each). Local development only |
 
+For playtesting, every server (the live one too) treats the spelling `xxx` as a shortcut: 999 of
+every letter, no letters needed. TODO.md has replacing it with a real debug server.
+
 `LETTERS`, `CROWD`, `SEED_THINGS` and `DEBUG` are for local testing only; do not set them in
 production, where DEBUG is just a word (it wipes out the insects around you).
 
