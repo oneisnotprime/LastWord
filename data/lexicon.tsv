@@ -4659,7 +4659,7 @@ baptistery	noun	artifact	container	1.93	rare	n02791595	-
 baptistic	adjective	modifier	pertaining	0.0	obscure	a02966179	-
 baptistry	noun	artifact	container	1.54	rare	n02791595	-
 baptized	adjective	modifier	quality	3.46	common	a02604644	-
-bar	noun	artifact	structure	4.94	core	n02800154	verb:contact
+bar	noun	artifact	weapon	4.94	core	n02800154	verb:contact
 baranduki	noun	creature	mammal	0.0	obscure	n02363132	-
 barb	noun	artifact	artifact	3.31	common	n02793573	verb:contact
 barbacan	noun	artifact	structure	0.0	obscure	n02794688	-
@@ -12846,7 +12846,7 @@ croupy	adjective	modifier	pertaining	0.0	obscure	a02716428	-
 crouton	noun	consumable	food	1.94	rare	n07697942	-
 crow	noun	creature	bird	3.8	common	n01581669	verb:communication
 crowbait	noun	creature	mammal	0.0	obscure	n02383771	-
-crowbar	noun	artifact	tool	2.72	uncommon	n03142995	-
+crowbar	noun	artifact	weapon	2.72	uncommon	n03142995	-
 crowberry	noun	flora	shrub	1.18	rare	n12772435	-
 crowd	noun	institution	group	4.7	core	n08199297	verb:movement
 crowded	adjective	modifier	quality	3.98	common	a00561916	-

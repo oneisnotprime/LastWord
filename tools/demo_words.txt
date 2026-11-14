@@ -4,6 +4,8 @@
 #   modifies (adjective -> its noun, verb -> the caster, aura/weather/event -> things in reach).
 
 # noun weapon
+bar: mass=4 length=1 integrity=250 hardness=8 material=iron equip_slot=held hands_required=1 dmg_blunt=35 attack_rate=0.9 attack_range=1.2 siege=2 knockback=1
+crowbar: mass=3 length=0.9 integrity=200 hardness=8 material=iron equip_slot=held hands_required=1 dmg_blunt=30 dmg_pierce=10 attack_rate=1 attack_range=1 siege=2.5
 sword: mass=1.5 length=1 integrity=80 hardness=7 sharpness=8 material=steel equip_slot=held hands_required=1 dmg_slash=40 attack_rate=1 attack_range=1.5
 axe: mass=2 length=0.8 integrity=70 hardness=7 sharpness=7 material=steel,wood equip_slot=held hands_required=1 dmg_slash=50 attack_rate=0.7 attack_range=1.2 siege=2 harvest_bonus=2 harvest_sources=tree
 spear: mass=2 length=2.2 integrity=50 sharpness=7 material=wood,steel equip_slot=held hands_required=2 dmg_pierce=45 attack_rate=0.8 attack_range=3

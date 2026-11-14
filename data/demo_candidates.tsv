@@ -25,7 +25,7 @@ bad	adjective	modifier	quality	5.53	core	a01129296	noun:attribute,adverb:manner
 bag	noun	artifact	container	4.79	core	n02776042	verb:contact
 ball	noun	artifact	toy	5.04	core	n02782458	verb:contact
 bank	noun	artifact	building	5.16	core	n09236472	verb:movement
-bar	noun	artifact	structure	4.94	core	n02800154	verb:contact
+bar	noun	artifact	weapon	4.94	core	n02800154	verb:contact
 base	noun	artifact	structure	5.05	core	n03391862	verb:consume,adjective:quality
 based	adjective	modifier	participle	5.51	core	a02359603	-
 bay	noun	terrain	water	4.73	core	n09238571	adjective:quality,verb:communication

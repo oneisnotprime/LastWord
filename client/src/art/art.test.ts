@@ -32,3 +32,15 @@ it("reads size, fire, cold, colour and stealth from the word data", () => {
   expect(lookOf(dictionary, "invisible dog").invisible).toBe(true);
   expect(lookOf(dictionary, "thousand ants", 1000).count).toBe(1000);
 });
+
+it("draws JOHN as a toilet, BAR as an iron bar, MEN and other living groups as several people", () => {
+  expect(lookOf(dictionary, "john").shape).toBe(WORDS.toilet);
+  expect(lookOf(dictionary, "bar").shape).toBe(WORDS.crowbar);
+  expect(lookOf(dictionary, "men").shape).toBe(WORDS.men);
+  expect(lookOf(dictionary, "folk").shape.pieces.length).toBeGreaterThan(WORDS.man!.pieces.length * 2);
+  expect(dictionary.word("bar")!.archetype).toBe("weapon");
+});
+
+it("gives the animals of every biome a shape of their own", () => {
+  for (const w of ["camel", "scorpion", "monkey", "jaguar", "parrot", "seal", "walrus", "penguin", "crab", "frog", "heron", "zebra", "lizard"]) expect(WORDS[w], w).toBeDefined();
+});

@@ -41,7 +41,7 @@
  {
   "class": "artifact",
   "archetype": "structure",
-  "words": 629,
+  "words": 628,
   "groups": [
    "physical",
    "mobility",
@@ -86,7 +86,7 @@
  {
   "class": "artifact",
   "archetype": "tool",
-  "words": 330,
+  "words": 329,
   "groups": [
    "physical",
    "mobility",
@@ -191,7 +191,7 @@
  {
   "class": "artifact",
   "archetype": "weapon",
-  "words": 135,
+  "words": 137,
   "groups": [
    "physical",
    "mobility",
