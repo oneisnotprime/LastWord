@@ -1,0 +1,249 @@
+# Weather theme (generated). Map-wide sky words, gear, seasons, adjectives and verbs.
+
+# noun weather
+sleet: placement=map field_radius=ABS field_targets=all sets_weather=snow field_duration=5 temperature_delta=-10 wetness+4 dmg_cold=2 attack_rate=0.1 friendly_fire=true slipperiness+4 speed_land*0.7 sight_range*0.7 growth=0.5 produce_O*1.5 tile_type=snow counters=fire,thaw,summer,heatwave
+dew: placement=map field_radius=ABS field_targets=all field_duration=8 wetness+1 growth=1.3 produce_O*1.3 produce_P*1.3 flammability+-1 counters=drought,heatwave,thirst
+overcast: placement=map field_radius=ABS field_targets=all sets_weather=fog field_duration=12 light_delta=-3 temperature_delta=-3 visibility=0.8 sight_range*0.8 stealth+1 morale+-1 growth=0.8 clears_weather=clear counters=sun,sunshine,heatwave
+breeze: placement=map field_radius=ABS field_targets=all field_duration=10 dmg_wind=1 temperature_delta=-3 speed_air*1.2 speed_water*1.2 spread_rate+0.1 morale+1 produce_W*1.5 clears_weather=fog counters=fog,mist,haze,smog,doldrums
+tempest: placement=map field_radius=ABS field_targets=all sets_weather=storm field_duration=4 dmg_wind=25 dmg_electric=500 attack_rate=0.05 friendly_fire=true wetness+6 speed_land*0.5 speed_air*0.2 speed_water*0.3 accuracy+-0.4 sight_range*0.5 loudness=9 produce_W*5 produce_O*3 clears_weather=fog,clear counters=fire,wildfire,calm,lull
+front: placement=map field_radius=ABS field_targets=all sets_weather=storm field_duration=6 temperature_delta=-12 dmg_wind=6 attack_rate=0.05 friendly_fire=true wetness+3 accuracy+-0.15 produce_W*2 produce_O*2 clears_weather=clear,fog counters=heatwave,drought,calm
+weather: placement=map field_radius=ABS field_targets=all sets_weather=rain field_duration=8 wetness+3 dmg_wind=2 attack_rate=0.05 friendly_fire=true sight_range*0.8 growth=1.3 produce_O*1.5 produce_W*1.5 clears_weather=clear counters=sun,shelter,forecast
+elements: placement=map field_radius=ABS field_targets=all sets_weather=storm field_duration=5 temperature_delta=-15 dmg_wind=10 dmg_cold=3 dmg_water=3 attack_rate=0.1 friendly_fire=true wetness+5 speed_land*0.7 morale+-2 produce_W*3 produce_O*3 counters=shelter,hut,tent,igloo,umbrella
+shower: placement=map field_radius=ABS field_targets=all sets_weather=rain field_duration=3 wetness+3 flammability+-2 growth=1.5 produce_O*1.8 produce_P*1.3 counters=fire,dust,thirst
+cloud: placement=map field_radius=ABS field_targets=all sets_weather=fog field_duration=10 light_delta=-2 temperature_delta=-2 visibility=0.7 sight_range*0.7 stealth+2 produce_O*1.2 clears_weather=clear counters=sun,sunshine,heatwave,drought
+rainfall: placement=map field_radius=ABS field_targets=all sets_weather=rain field_duration=10 wetness+4 flammability+-3 sight_range*0.8 growth=1.8 produce_O*2 produce_A*1.3 produce_P*1.3 counters=fire,drought,thirst,dearth
+snowfall: placement=map field_radius=ABS field_targets=all sets_weather=snow field_duration=15 temperature_delta=-15 visibility=0.7 movement_cost=2 growth=0.3 speed_land*0.7 produce_O*0.8 tile_type=snow counters=fire,thaw,summer,heatwave
+precipitation: placement=map field_radius=ABS field_targets=all sets_weather=rain field_duration=12 wetness+4 growth=1.6 produce_O*2 produce_P*1.4 flammability+-3 counters=drought,thirst,fire
+flurry: placement=map field_radius=ABS field_targets=all sets_weather=snow field_duration=2 temperature_delta=-8 dmg_wind=2 attack_rate=0.1 friendly_fire=true visibility=0.6 sight_range*0.6 speed_land*0.85 produce_W*1.5 tile_type=snow counters=thaw,sun,summer
+lull: placement=map field_radius=ABS field_targets=all sets_weather=clear field_duration=6 clears_weather=storm,rain,snow,fog morale+2 regeneration+1 loudness+-2 accuracy+0.1 produce_W*0.3 counters=storm,tempest,gale,hurricane,typhoon,squall,cyclone,tornado
+twister: placement=target placement_range=300 field_radius=24 field_duration=2 dmg_wind=60 dmg_crush=30 attack_rate=1 friendly_fire=true inflict_stun=1 inflict_confuse=2 knockback+10 deposit_factor=0 produce_W*4 loudness=9 counters=shelter,cellar,bunker,lull,calm
+westerly: placement=map field_radius=ABS field_targets=all field_duration=10 dmg_wind=3 speed_air*1.4 speed_water*1.3 temperature_delta=-2 wetness+1 produce_W*2 produce_O*1.3 clears_weather=fog counters=easterly,doldrums,fog
+easterly: placement=map field_radius=ABS field_targets=all field_duration=10 dmg_wind=3 speed_air*1.4 speed_water*1.3 temperature_delta=-4 produce_W*2 clears_weather=fog counters=westerly,doldrums,fog
+southerly: placement=map field_radius=ABS field_targets=all field_duration=10 dmg_wind=2 temperature_delta=8 speed_air*1.3 growth=1.3 produce_W*1.5 produce_P*1.3 clears_weather=snow,fog counters=northerly,frost,snow
+thunderbolt: placement=target placement_range=300 single_use=true dmg_electric=6000 dmg_fire=600 attack_area=4 inflict_stun=4 knockback+8 luminosity=10 loudness=10 targets=land,air,water friendly_fire=true counters=rod,shelter,bunker
+bolt: placement=target placement_range=250 single_use=true dmg_electric=3000 dmg_fire=300 attack_area=2 inflict_stun=3 luminosity=10 loudness=9 targets=land,air,water friendly_fire=true counters=rod,shelter
+firestorm: placement=map field_radius=ABS field_targets=all sets_weather=storm field_duration=3 temperature_delta=40 dmg_fire=30 dmg_wind=15 attack_rate=0.1 friendly_fire=true inflict_burn=3 flammability+5 growth=0 produce_F*4 produce_A*0 produce_P*0 tile_type=ash clears_weather=snow,rain,fog counters=rain,monsoon,deluge,flood,downpour,torrent,snow
+chinook: placement=map field_radius=ABS field_targets=all field_duration=4 temperature_delta=20 dmg_wind=6 speed_air*1.3 wetness+-3 growth=1.2 produce_W*2 tile_type=meadow clears_weather=snow,fog counters=snow,frost,blizzard,winter
+snowstorm: placement=map field_radius=ABS field_targets=all sets_weather=snow field_duration=5 temperature_delta=-30 dmg_cold=3 dmg_wind=4 attack_rate=0.1 friendly_fire=true inflict_slow=2 speed_land*0.5 sight_range*0.4 growth=0.1 produce_W*2 produce_A*0.3 produce_P*0.3 tile_type=snow counters=fire,heat,summer,thaw,heatwave,chinook
+zephyr: placement=map field_radius=ABS field_targets=all sets_weather=clear field_duration=10 temperature_delta=3 speed_air*1.2 morale+2 growth=1.3 produce_W*1.5 produce_P*1.5 clears_weather=fog counters=fog,smog,haze,doldrums
+mistral: placement=map field_radius=ABS field_targets=all sets_weather=clear field_duration=5 temperature_delta=-12 dmg_wind=10 attack_rate=0.1 friendly_fire=true speed_air*0.6 accuracy+-0.2 produce_W*4 clears_weather=fog,rain counters=fog,smog,haze,calm
+nimbus: placement=map field_radius=ABS field_targets=all sets_weather=rain field_duration=8 light_delta=-3 sight_range*0.7 wetness+4 growth=1.6 produce_O*2 clears_weather=clear counters=sun,sunshine,drought
+cumulus: placement=map field_radius=ABS field_targets=all field_duration=8 light_delta=-1 temperature_delta=-2 stealth+1 growth=1.2 produce_O*1.3 counters=sun,drought
+stratus: placement=map field_radius=ABS field_targets=all sets_weather=fog field_duration=12 light_delta=-3 visibility=0.6 sight_range*0.6 stealth+2 produce_O*1.2 clears_weather=clear counters=sun,wind,breeze
+cirrus: placement=map field_radius=ABS field_targets=all field_duration=10 temperature_delta=-1 speed_air*1.1 produce_W*1.3 counters=sun
+doldrums: placement=map field_radius=ABS field_targets=all sets_weather=clear field_duration=10 temperature_delta=8 speed_air*0.5 speed_water*0.3 morale+-3 produce_W*0 water_need*1.5 clears_weather=storm,fog counters=wind,breeze,gale,westerly,easterly,tailwind
+airstream: placement=map field_radius=ABS field_targets=all field_duration=10 speed_air*1.5 flight_ceiling+500 produce_W*2 clears_weather=fog counters=doldrums,headwind
+tailwind: placement=self field_radius=40 field_targets=owned field_duration=5 speed_land*1.3 speed_air*1.6 speed_water*1.5 attack_range*1.2 produce_W*1.5 counters=headwind,doldrums
+headwind: placement=target placement_range=100 field_radius=40 field_targets=enemies field_duration=5 dmg_wind=2 speed_land*0.6 speed_air*0.4 speed_water*0.5 attack_range*0.7 accuracy+-0.15 counters=tailwind
+windstorm: placement=map field_radius=ABS field_targets=all sets_weather=storm field_duration=4 dmg_wind=15 attack_rate=0.1 friendly_fire=true knockback+3 speed_land*0.6 speed_air*0.3 accuracy+-0.3 spread_rate+0.5 produce_W*5 clears_weather=fog counters=calm,lull,shelter
+hailstorm: placement=map field_radius=ABS field_targets=all sets_weather=storm field_duration=3 dmg_blunt=12 attack_rate=0.2 friendly_fire=true temperature_delta=-10 speed_land*0.7 produce_A*0.2 produce_P*0.2 produce_O*1.5 counters=shelter,umbrella,roof,helmet
+whiteout: placement=map field_radius=ABS field_targets=all sets_weather=snow field_duration=3 temperature_delta=-25 visibility=0.05 sight_range*0.05 inflict_blind=2 inflict_confuse=2 stealth+6 accuracy+-0.5 speed_land*0.5 tile_type=snow counters=sun,thaw,heatwave,compass,map
+scorcher: placement=map field_radius=ABS field_targets=all sets_weather=clear field_duration=5 temperature_delta=20 water_need*2.5 flammability+3 growth=0.6 produce_O*0.4 produce_F*1.5 clears_weather=snow,rain,fog counters=snow,frost,rain,shade
+thawing: placement=map field_radius=ABS field_targets=all field_duration=6 temperature_delta=8 growth=1.4 produce_O*1.8 wetness+2 tile_type=meadow clears_weather=snow counters=snow,frost,blizzard,winter
+downdraft: placement=target placement_range=200 field_radius=40 field_duration=1 dmg_wind=20 attack_rate=1 friendly_fire=true speed_air*0.2 flight_ceiling*0.1 knockback+4 produce_W*2 counters=updraft
+updraft: placement=target placement_range=200 field_radius=30 field_duration=2 speed_air*1.5 flight_ceiling+1500 jump+10 produce_W*2 counters=downdraft
+sirocco: placement=map field_radius=ABS field_targets=all sets_weather=fog field_duration=5 temperature_delta=22 dmg_wind=4 attack_rate=0.1 friendly_fire=true wetness+-4 water_need*2.5 sight_range*0.5 produce_G*2 produce_O*0.4 tile_type=sand clears_weather=rain,snow counters=rain,monsoon,oasis
+aurora: placement=sky field_radius=ABS field_targets=all field_duration=5 luminosity=4 light_delta=3 morale+3 produce_U*2 produce_X*1.5 beauty=10 sight_range*1.3 counters=eclipse,blackout,overcast
+inversion: placement=map field_radius=ABS field_targets=all sets_weather=fog field_duration=10 temperature_delta=-6 visibility=0.5 sight_range*0.5 produce_W*0.3 counters=wind,breeze,gale
+bluster: placement=map field_radius=ABS field_targets=all field_duration=3 dmg_wind=6 attack_rate=0.1 friendly_fire=true loudness=6 accuracy+-0.15 produce_W*2.5 counters=calm,lull
+
+# noun phenomenon
+heat: placement=map field_radius=ABS field_targets=all sets_weather=clear field_duration=8 temperature_delta=15 water_need*2 flammability+2 food_need*0.8 produce_O*0.6 counters=snow,frost,winter,cold,shade,ice
+sunshine: placement=sky field_radius=ABS field_targets=all sets_weather=clear field_duration=8 sets_daylight=day light_delta=4 temperature_delta=6 morale+3 growth=1.8 produce_A*1.5 produce_P*1.5 clears_weather=rain,fog,storm,snow counters=fog,rain,overcast,cloud,gloom
+mist: placement=map field_radius=ABS field_targets=all sets_weather=fog field_duration=10 visibility=0.4 sight_range*0.4 stealth+3 wetness+1 accuracy+-0.15 growth=1.2 counters=sun,wind,breeze
+haze: placement=map field_radius=ABS field_targets=all sets_weather=fog field_duration=10 visibility=0.5 sight_range*0.5 stealth+2 accuracy+-0.1 temperature_delta=4 counters=wind,breeze,rain
+smoke: placement=target placement_range=60 field_radius=20 field_duration=2 visibility=0.1 sight_range*0.1 stealth+6 inflict_blind=1 dmg_suffocation=3 attack_rate=0.5 friendly_fire=true accuracy+-0.4 counters=wind,breeze,gust,rain
+turbulence: placement=map field_radius=ABS field_targets=all field_duration=3 dmg_wind=5 attack_rate=0.1 friendly_fire=true speed_air*0.6 accuracy+-0.3 inflict_confuse=1 produce_W*2 counters=calm,lull
+fume: placement=target placement_range=60 field_radius=15 field_duration=2 dmg_poison=4 attack_rate=0.5 friendly_fire=true inflict_sick=2 sight_range*0.5 odor=8 counters=wind,breeze,mask
+afterglow: placement=sky field_radius=ABS field_targets=all field_duration=4 light_delta=2 morale+2 regeneration+1 beauty=8 produce_U*1.3 counters=night,darkness,eclipse
+mirage: placement=target placement_range=200 field_radius=40 field_targets=enemies field_duration=3 decoys=4 inflict_confuse=2 accuracy+-0.3 water_need*1.5 counters=compass,map,rain
+vortex: placement=target placement_range=150 field_radius=16 field_duration=2 dmg_wind=50 attack_rate=1 friendly_fire=true moves_target=10 inflict_confuse=3 knockback+6 produce_W*3 counters=calm,lull,anchor
+halo: placement=self field_radius=4 field_targets=self field_duration=10 luminosity+4 res_unholy+0.4 morale+3 charm+2 res_light+0.3
+
+# noun season
+season: placement=map field_radius=ABS field_targets=all field_duration=15 growth=1.5 harvest_bonus*1.3 produce_A*1.3 produce_P*1.3 counters=winter,drought
+summertime: placement=map field_radius=ABS field_targets=all field_duration=15 temperature_delta=10 growth=1.8 produce_A*1.8 produce_P*1.8 water_need*1.4 morale+2 clears_weather=snow tile_type=meadow counters=winter,frost,blizzard,wintertime
+springtime: placement=map field_radius=ABS field_targets=all field_duration=8 temperature_delta=4 growth=2.5 produce_A*1.4 produce_P*2.5 fertility+3 reproduction*2 clears_weather=snow counters=winter,blizzard,drought,wintertime
+wintertime: placement=map field_radius=ABS field_targets=all field_duration=15 temperature_delta=-20 sets_weather=snow growth=0.15 food_need*1.4 produce_A*0.3 produce_P*0.3 speed_land*0.85 tile_type=snow counters=summer,summertime,thaw,springtime
+advent: placement=map field_radius=ABS field_targets=all field_duration=10 temperature_delta=-10 sets_weather=snow morale+2 faith_output+1 produce_Q*1.5 counters=summer
+equator: placement=map field_radius=ABS field_targets=all field_duration=8 temperature_delta=15 sets_weather=rain growth=2.5 produce_P*2 produce_O*1.5 water_need*1.5 clears_weather=snow counters=polar,arctic,winter
+tropics: placement=map field_radius=ABS field_targets=all field_duration=10 temperature_delta=12 sets_weather=rain growth=2.5 wetness+3 produce_P*2.5 produce_O*1.5 tile_type=jungle clears_weather=snow counters=winter,frost,blizzard
+stratosphere: placement=sky field_radius=ABS field_targets=all field_duration=3 flight_ceiling+20000 speed_air*1.3 temperature_delta=-40 res_radiation+-0.3 counters=ozone
+
+# noun attribute
+temperature: placement=self field_radius=6 field_targets=owned field_duration=10 temp_min+-12 temp_max+12 res_cold+0.2 res_fire+0.2
+chill: placement=map field_radius=ABS field_targets=all field_duration=6 temperature_delta=-12 dmg_cold=1 attack_rate=0.05 friendly_fire=true speed_land*0.9 morale+-1 growth=0.6 counters=fire,heat,warmth,blanket,coat
+warmth: placement=self field_radius=10 field_targets=owned field_duration=10 temp_min+-15 regeneration+2 morale+3 res_cold+0.4 counters=chill,frost,cold,winter
+hotness: placement=map field_radius=ABS field_targets=all field_duration=5 temperature_delta=12 water_need*1.8 flammability+2 counters=cold,snow,shade
+coldness: placement=map field_radius=ABS field_targets=all field_duration=5 temperature_delta=-12 speed_land*0.9 growth=0.5 counters=heat,fire,warmth
+stillness: placement=map field_radius=ABS field_targets=all sets_weather=clear field_duration=6 clears_weather=storm,wind produce_W*0.2 speed_air*0.7 loudness+-4 stealth+2 accuracy+0.15 counters=wind,gale,storm,breeze
+calmness: placement=self field_radius=40 field_targets=all field_duration=5 clears_weather=storm,wind morale+3 aggression+-4 immune_fear=true accuracy+0.1 counters=storm,tempest,rage
+coolness: placement=self field_radius=10 field_targets=owned field_duration=10 temp_max+12 res_fire+0.2 water_need*0.7 counters=heat,heatwave,scorcher
+haste: duration=20 speed_land*1.8 attack_rate*1.3 cast_time*0.6 accuracy+-0.15
+pressure: placement=map field_radius=ABS field_targets=all field_duration=5 dmg_crush=2 attack_rate=0.05 friendly_fire=true sets_weather=storm morale+-1 produce_W*2 counters=calm
+
+# noun affliction
+heatstroke: placement=target placement_range=40 field_radius=6 field_targets=enemies field_duration=2 dmg_fire=5 attack_rate=0.5 inflict_confuse=3 inflict_slow=2 water_need*3 temp_max+-15 counters=shade,water,fan,ice
+sunburn: placement=target placement_range=40 field_radius=6 field_targets=enemies field_duration=3 dmg_light=3 attack_rate=0.5 inflict_burn=2 res_light+-0.3 morale+-1 counters=sunscreen,shade,parasol,hat
+scorch: placement=target placement_range=50 event_target=tile event_radius=6 event_duration=2 dmg_fire=60 inflict_burn=4 temperature=500 friendly_fire=true tile_type=ash counters=rain,water,ice
+
+# noun clothing
+windbreaker: mass=0.4 integrity=18 material=nylon equip_slot=body res_wind=0.7 res_water=0.3 res_cold=0.2 temp_min+-6 speed_land*1.05
+parasol: mass=0.4 integrity=8 material=silk,wood equip_slot=held hands_required=1 res_light=0.7 res_fire=0.1 temp_max+12 beauty=7 charm+2 immune_blind=true
+raincoat: mass=0.9 integrity=20 material=rubber,cloth equip_slot=body res_water=0.85 res_cold=0.2 res_wind=0.3 temp_min+-6 immune_slow=true color=yellow
+slicker: mass=0.9 integrity=20 material=rubber,oilcloth equip_slot=body res_water=0.8 res_wind=0.3 temp_min+-6 slipperiness=3 evasion+0.05
+poncho: mass=0.6 integrity=15 material=wool,rubber equip_slot=body res_water=0.6 res_cold=0.3 res_wind=0.2 temp_min+-10 stealth=1
+anorak: mass=1.2 integrity=30 material=nylon,down equip_slot=body res_cold=0.6 res_wind=0.6 res_water=0.5 temp_min+-25 armor=1
+beanie: mass=0.1 integrity=6 material=wool equip_slot=head res_cold=0.3 temp_min+-8 disguise=1
+sunhat: mass=0.2 integrity=6 material=straw equip_slot=head res_light=0.5 temp_max+10 immune_blind=true charm+1
+sunglasses: mass=0.03 integrity=3 material=plastic,glass equip_slot=face res_light=0.7 immune_blind=true disguise=2 charm+2 intimidation+1 sight_range*0.9
+sunscreen: mass=0.2 integrity=2 material=plastic equip_slot=face res_light=0.6 res_radiation=0.2 temp_max+5 immune_burn=true
+ski: plural_count=2 mass=3 length=1.8 integrity=40 material=wood,fiberglass equip_slot=feet speed_land+8 terrain_ignored=snow movement_cost=0.3 slipperiness=6 placeable_on=snow
+snowshoe: plural_count=2 mass=1.5 integrity=30 material=wood,leather equip_slot=feet terrain_ignored=snow immune_slow=true speed_land*1.1
+
+# noun structure
+awning: mass=40 footprint=2 height=3 integrity=60 material=canvas,steel portable=false cover=0.4 claim_radius=1 field_radius=4 field_targets=owned res_water+0.6 res_light+0.5 temp_max+8
+gazebo: mass=2000 footprint=3 height=4 integrity=600 material=wood portable=false enterable=true occupants=8 cover=0.4 comfort=2 beauty=6 claim_radius=3 field_radius=5 field_targets=owned res_water+0.5 temp_max+6 morale+1
+canopy: mass=60 footprint=3 height=3 integrity=80 material=canvas,aluminum portable=true cover=0.5 claim_radius=2 field_radius=5 field_targets=owned res_water+0.6 res_light+0.6 temp_max+8 stealth+1
+snowbank: mass=8000 footprint=3 height=2 integrity=300 material=snow portable=false cover=0.6 blocks=true temperature=-5 movement_cost=4 tile_type=snow color=white
+snowman: mass=150 height=1.8 integrity=60 material=snow temperature=-5 portable=false decoys=1 beauty=4 morale+1 melting_point=0 color=white
+sandbag: mass=18 integrity=120 material=burlap,sand stackable=true portable=true cover=0.7 blocks=true res_water=0.9 res_pierce=0.6 res_blast=0.4 counters=flood,deluge,monsoon,torrent
+
+# noun device
+weathervane: mass=8 integrity=60 material=iron portable=false height=2 read_properties=1 detect_stealth+1 field_radius=200 field_targets=owned accuracy+0.1 res_wind+0.2 counters=whiteout,fog
+thermometer: mass=0.05 integrity=3 brittleness=8 material=glass,mercury read_properties=2 toxicity=3 color=red field_radius=10 field_targets=owned temp_min+-3 temp_max+3
+barometer: mass=2 integrity=20 material=brass,glass,mercury read_properties=2 field_radius=60 field_targets=owned res_wind+0.2 res_electric+0.2 res_water+0.2 counters=storm,tempest,hurricane
+anemometer: mass=3 integrity=30 material=aluminum portable=false read_properties=1 field_radius=60 field_targets=owned res_wind+0.3 accuracy+0.1 produce_W*1.3
+thermostat: mass=0.3 integrity=10 material=plastic portable=false upkeep_power=1 field_radius=10 field_targets=owned temp_min+-10 temp_max+10 comfort+1
+humidifier: mass=4 integrity=20 material=plastic upkeep_power=1 water_output=2 field_radius=8 field_targets=all wetness+2 flammability+-2 growth=1.3 comfort+1 counters=drought,dust
+dehumidifier: mass=15 integrity=40 material=steel,plastic upkeep_power=3 field_radius=8 field_targets=all wetness+-3 decay_rate*0.5 temp_max+3 counters=mist,fog,dew,mold
+kite: mass=0.3 integrity=6 material=paper,wood speed_air=10 flight_ceiling=150 sight_range=200 hover=true portable=true morale+2 res_wind+-1
+
+# noun vehicle_land
+snowplow: mass=12000 seats=1 integrity=3000 armor=20 material=steel speed_land=15 self_propelled=true requires_pilot=true upkeep_fuel=4 terrain_ignored=snow dmg_blunt=60 knockback+8 immune_slow=true loudness=7 counters=snow,blizzard,snowstorm,snowdrift,avalanche
+snowmobile: mass=250 seats=2 integrity=400 material=steel,plastic speed_land=25 self_propelled=true requires_pilot=true upkeep_fuel=2 terrain_ignored=snow,tundra immune_slow=true loudness=8
+sled: mass=10 seats=1 integrity=60 material=wood speed_land=8 terrain_ignored=snow carry_capacity=100 slipperiness=7 placeable_on=snow
+sleigh: mass=150 seats=4 integrity=250 material=wood,iron speed_land=12 terrain_ignored=snow carry_capacity=500 tow_capacity=500 beauty=6 morale+2 placeable_on=snow
+
+# noun landform
+glacier: mass=1e12 footprint=40 height=100 integrity=10000000 material=ice temperature=-10 tile_type=snow slipperiness=8 movement_cost=4 field_radius=200 field_targets=all temperature_delta=-15 water_output=20 dmg_cold=2 counters=heatwave,summer,thaw,fire
+iceberg: mass=1e9 footprint=20 height=60 integrity=1000000 material=ice temperature=-10 buoyancy=9 placeable_on=water,deep_water blocks=true dmg_crush=1000 knockback+10 field_radius=60 field_targets=all temperature_delta=-10 counters=ship,boat,heatwave,thaw
+snowfield: tile_type=snow radius=40 temperature=-5 movement_cost=2 field_radius=40 field_targets=all temperature_delta=-10 reflectivity=9 sight_range*1.2 stealth+-2
+permafrost: tile_type=tundra radius=50 temperature=-10 hardness=6 fertility=-5 decay_rate=0 field_radius=50 field_targets=all temperature_delta=-8 growth=0.2 speed_underground*0.2
+snowdrift: tile_type=snow radius=6 height=2 temperature=-5 movement_cost=5 cover=0.5 blocks=true field_radius=6 field_targets=all inflict_slow=2 speed_land*0.4
+
+# noun material
+icicle: mass=0.5 length=0.4 sharpness=8 brittleness=9 hardness=2 material=ice temperature=-10 melting_point=0 dmg_pierce=25 dmg_cold=10 single_use=true color=white
+hailstone: mass=0.1 hardness=4 material=ice temperature=-5 melting_point=0 dmg_blunt=15 dmg_cold=5 single_use=true attack_range=40 color=white
+puddle: tile_type=water radius=2 depth=0.05 wetness=8 slipperiness=4 reflectivity=6 conductivity=6 temperature=10 counters=drought,sun,heatwave
+slush: tile_type=snow radius=4 temperature=0 wetness=7 slipperiness=6 movement_cost=3 field_radius=4 field_targets=all speed_land*0.6 inflict_slow=1 temp_min+3
+hoarfrost: placement=map field_radius=ABS field_targets=all sets_weather=snow field_duration=4 temperature_delta=-12 growth=0.4 slipperiness+3 beauty=6 produce_A*0.6 produce_P*0.6 tile_type=snow counters=sun,thaw,fire
+rime: placement=map field_radius=ABS field_targets=all sets_weather=fog field_duration=4 temperature_delta=-10 slipperiness+3 armor+5 speed_air*0.7 produce_P*0.6 tile_type=snow counters=sun,thaw,fire
+
+# noun phenomenon
+snowflake: placement=map field_radius=ABS field_targets=all sets_weather=snow field_duration=3 temperature_delta=-5 beauty=8 morale+1 growth=0.8 produce_O*1.2 counters=sun,thaw
+raindrop: placement=map field_radius=ABS field_targets=all sets_weather=rain field_duration=2 wetness+1 growth=1.2 produce_O*1.2 counters=sun,drought
+ozone: placement=sky field_radius=ABS field_targets=all field_duration=10 res_radiation+0.5 res_light+0.4 temp_max+3 odor=3 counters=sunburn,radiation,smog
+atmosphere: placement=sky field_radius=ABS field_targets=all field_duration=10 res_suffocation+0.5 res_radiation+0.3 temp_min+-5 temp_max+5 morale+1 counters=vacuum,space,suffocation
+
+# noun toy
+snowball: mass=0.3 material=snow temperature=-3 dmg_blunt=5 dmg_cold=5 inflict_slow=1 attack_range=25 single_use=true stackable=true placeable_on=snow color=white
+
+# noun worker
+weatherman: alive=true sentient=true mass=75 integrity=100 speed_land=1.5 intelligence=6 speech=true read_properties=2 field_radius=100 field_targets=owned res_cold+0.2 res_water+0.2 res_electric+0.3 res_wind+0.2 temp_min+-5 temp_max+5 counters=storm,fog,whiteout
+meteorologist: alive=true sentient=true mass=75 integrity=100 speed_land=1.4 intelligence=8 speech=true read_properties=3 map_reveal=1 field_radius=200 field_targets=owned res_cold+0.3 res_water+0.3 res_electric+0.4 res_wind+0.3 temp_min+-8 temp_max+8 counters=storm,hurricane,tornado,blizzard
+
+# noun machine
+heater: mass=10 integrity=40 material=steel upkeep_power=2 temperature=200 field_radius=8 field_targets=all temp_min+-20 res_cold+0.4 flammability+1 counters=cold,frost,winter,chill,blizzard
+radiator: mass=40 integrity=200 material=iron portable=false upkeep_fuel=1 temperature=70 field_radius=6 field_targets=all temp_min+-15 res_cold+0.3 counters=cold,frost,winter,chill
+fan: mass=3 integrity=20 material=plastic,steel upkeep_power=1 field_radius=6 field_targets=all dmg_wind+1 temp_max+8 clears_weather=fog spread_rate+0.2 counters=heat,heatwave,smoke,fume,heatstroke
+
+# adjective quality
+rainy: wetness+5 flammability+-4 res_fire+0.3 conductivity+2 growth*1.5 produce_O*1.5 sight_range*0.8
+snowy: temperature+-15 res_cold+0.3 speed_land*0.8 stealth+1 tile_type=snow color=white
+cloudy: luminosity+-2 stealth+2 sight_range*0.8 transparency*0.5 temp_max+3
+foggy: stealth+4 sight_range*0.4 accuracy+-0.2 visibility=0.3
+misty: stealth+3 sight_range*0.6 wetness+1 accuracy+-0.1 beauty+1
+humid: wetness+3 water_need*0.8 regeneration+1 decay_rate*2 flammability+-2 temp_max+-4
+chilly: temperature+-10 dmg_cold+5 temp_min+5 morale+-1 speed_land*0.95
+tropical: temperature+10 temp_max+10 wetness+2 growth*2 produce_P*1.5 res_cold+-0.3
+polar: temperature+-40 temp_min+-35 res_cold+0.7 dmg_cold+20 mass*1.3 res_fire+-0.2
+temperate: temp_min+-5 temp_max+5 comfort+1 growth*1.2 morale+1
+seasonal: growth*1.3 harvest_bonus*1.2 food_output*1.3 lifespan*0.5
+wintry: temperature+-25 dmg_cold+20 inflict_slow+1 res_cold+0.4 temp_min+-10 decay_rate*0.5
+balmy: temperature+5 temp_min+-5 temp_max+5 comfort+2 morale+2 regeneration+1
+squally: dmg_wind+15 dmg_water+5 accuracy+-0.15 loudness+3
+gusty: dmg_wind+8 knockback+2 speed_air*1.2 accuracy+-0.15
+breezy: dmg_wind+2 speed_air*1.1 temp_max+4 morale+1
+blustery: dmg_wind+12 loudness+4 knockback+3 accuracy+-0.2 intimidation+1
+muggy: wetness+3 water_need*1.5 regeneration+-1 speed_land*0.9 temp_max+-6
+sweltering: temperature+30 dmg_fire+10 water_need*2 speed_land*0.8 temp_max+-10
+scorching: temperature+300 dmg_fire+50 inflict_burn+3 luminosity+3 res_cold+0.5
+sultry: temperature+10 charm+3 wetness+2 water_need*1.4 speed_land*0.9
+torrid: temperature+200 dmg_fire+35 inflict_burn+2 wetness+-5 water_need*2
+frigid: temperature+-60 dmg_cold+40 inflict_freeze+2 speed_land*0.6 charm+-2
+arctic: temperature+-50 dmg_cold+35 inflict_freeze+2 res_cold+0.8 temp_min+-40 speed_land*0.7
+brisk: temperature+-5 speed_land*1.2 attack_rate*1.1 temp_min+3 morale+1
+mild: temperature+3 temp_min+-3 temp_max+3 aggression+-2 dmg_fire*0.8 dmg_cold*0.8
+inclement: dmg_wind+10 dmg_water+10 dmg_cold+10 accuracy+-0.15 morale+-2 sight_range*0.8
+cloudless: luminosity+3 sight_range*1.5 stealth+-2 temp_max+-3
+drizzly: wetness+2 flammability+-2 growth*1.2 morale+-1
+showery: wetness+3 flammability+-3 growth*1.3 produce_O*1.3
+damp: wetness+3 flammability+-3 decay_rate*1.5 conductivity+1 temp_min+3
+soaked: wetness+8 flammability+-6 mass*1.2 conductivity+4 res_fire+0.5 res_electric+-0.5 temp_min+8 speed_land*0.9
+sodden: wetness+8 flammability+-6 mass*1.3 speed_land*0.8 decay_rate*2 res_fire+0.5
+drenched: wetness+9 flammability+-7 mass*1.2 conductivity+4 res_fire+0.6 res_electric+-0.5 temp_min+8
+parched: wetness+-8 water_need*3 flammability+4 regeneration+-2 morale+-1
+frostbitten: temperature+-20 dmg_cold+10 accuracy+-0.2 agility*0.6 regeneration+-2
+soggy: wetness+7 hardness*0.5 flammability+-5 integrity*0.8 speed_land*0.85
+thirsty: water_need*2 aggression+2 speed_land*0.9
+frosty: material=frost temperature+-20 dmg_cold+20 inflict_slow+2 temp_min+-8 res_cold+0.3
+vernal: growth*2 fertility+3 regeneration+2 morale+2 produce_P*1.5
+autumnal: growth*0.6 harvest_bonus*1.5 food_output*1.5 color=orange
+summery: temperature+8 temp_max+8 luminosity+2 morale+2 growth*1.5
+thunderous: loudness+9 dmg_sonic+30 dmg_electric+30 inflict_deaf+2 fear_aura+3 knockback+2
+charged: dmg_electric+80 conductivity+5 inflict_stun+1 attack_rate*1.2
+high: height*2 flight_ceiling+1000 sight_range*1.5 temperature+-6 temp_min+-5
+low: height*0.5 stealth+3 sight_range*0.7 cover+0.2
+cool: temperature+-8 temp_max+10 res_fire+0.2 charm+2 courage+1
+obscure: stealth+5 detect_stealth+-2 disguise+2 reputation+-1
+warming: temperature+10 temp_min+-10 res_cold+0.3 regeneration+1
+
+# adjective pertaining
+glacial: material=ice temperature+-40 dmg_cold+30 speed_land*0.2 inflict_freeze+2 persistence+5 res_fire+0.3
+torrential: wetness+9 dmg_water+40 knockback+4 produce_O*2 flammability+-6 speed_land*0.7
+thermal: res_cold+0.6 temp_min+-20 comfort+1
+northerly: temperature+-10 dmg_cold+10 dmg_wind+5 temp_min+3 speed_air*1.2
+
+# verb weather
+pour: duration=10 wetness+6 dmg_water+30 knockback+3 flammability+-5 res_fire+0.4 produce_O*2 counters=fire,drought
+drench: duration=20 wetness+9 flammability+-8 res_fire+0.7 res_electric+-0.5 conductivity+4 temp_min+8 effect_status=burn mass*1.2
+douse: duration=10 wetness+8 flammability+-8 res_fire+0.8 temperature+-50 effect_status=burn counters=fire,flame,blaze,inferno,wildfire
+blow: duration=5 dmg_wind+20 knockback+6 clears_weather=fog speed_air*1.3 spread_rate+0.5 produce_W*2 counters=fog,smoke,mist,haze
+shine: duration=60 luminosity+7 light_delta+3 stealth+-3 dmg_light+15 inflict_blind+1 morale+2 counters=fog,darkness,night
+radiate: duration=30 temperature+200 luminosity+5 dmg_fire+20 dmg_radiation+10 temp_min+-15 stealth+-3
+outshine: duration=30 luminosity+9 charm+5 reputation+3 inflict_blind+2 stealth+-5
+kindle: duration=10 temperature+300 dmg_fire+20 inflict_burn+2 luminosity+3 spread_rate+0.3 clears_weather=snow
+ignite: duration=10 temperature+600 dmg_fire+50 inflict_burn+4 luminosity+5 spread_rate+0.6 clears_weather=snow,fog
+rekindle: duration=30 temperature+300 dmg_fire+25 inflict_burn+2 luminosity+3 morale+3 regeneration+2
+reignite: duration=20 temperature+500 dmg_fire+40 inflict_burn+3 luminosity+4 spread_rate+0.5 morale+2
+combust: duration=3 temperature+1000 dmg_fire+120 dmg_blast+60 inflict_burn+6 luminosity+8 self_damage=0.3
+flame: duration=15 temperature+800 dmg_fire+60 inflict_burn+4 luminosity+6 stealth+-4 fear_aura+2
+
+# verb transform
+melt: duration=20 temperature+500 dmg_fire+20 luminosity+2 clears_weather=snow armor+-10 counters=ice,snow,frost,glacier,iceberg,icicle,snowman
+evaporate: duration=10 state=gas wetness+-9 stealth+6 untargetable=true hover=true speed_air+5 mass*0.01
+condense: duration=60 wetness+5 mass*2 density*3 hardness*2 armor+15 speed_land*0.6
+dampen: duration=30 wetness+5 flammability+-5 loudness+-4 res_fire+0.4 dmg_fire*0.5
+moisten: duration=30 wetness+3 flammability+-3 regeneration+1 res_fire+0.2
+humidify: duration=60 wetness+3 flammability+-3 regeneration+1 growth*1.3
+swelter: duration=30 temperature+30 temp_max+-15 water_need*3 speed_land*0.7 morale+-2
+
+# verb body
+suntan: duration=300 res_light+0.5 temp_max+5 charm+2 immune_burn=true
+shiver: duration=10 temp_min+-8 res_cold+0.2 accuracy+-0.1 courage+-1 regeneration+1
+
+# verb contact
+sprinkle: duration=5 wetness+2 flammability+-2 growth*1.3 produce_P*1.3
+soak: duration=30 wetness+8 flammability+-7 res_fire+0.6 mass*1.3 speed_land*0.8 conductivity+4 effect_status=burn
+smother: duration=5 dmg_suffocation+30 inflict_silence+3 inflict_root+2 effect_status=burn counters=fire,flame,blaze
