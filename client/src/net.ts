@@ -25,7 +25,12 @@ export interface Connection {
   describe(text: string, target: string, gear?: number): void;
   /** Pick a target or spot for events without attacking it; null clears. */
   pick(what: { id: string } | { x: number; y: number } | null): void;
+  /** Leaves the room for good (a new round elsewhere). */
+  leave(): void;
 }
+
+/** Letters gained and why ("forage", "hunted COW (+12 food)"), and where they came from. */
+export interface Got { letters: string; why: string; x: number; y: number }
 
 /** Adjectives put on something, as everyone in sight of it is told. */
 export interface Described { target: string; x: number; y: number; words: string; what: string; changes: string[] }
@@ -35,6 +40,9 @@ export interface Handlers {
   spelled(phrase: string): void;
   refused(reason: string): void;
   gathered(letter: string): void;
+  /** A gathering action began: it takes this many seconds unless you move. */
+  gathering(seconds: number): void;
+  got(what: Got): void;
   notice(text: string): void;
   dead(killer: string): void;
   loadout(detail: LoadoutDetail): void;
@@ -46,8 +54,17 @@ export interface Handlers {
   watching(who: { id: string; name: string }): void;
   /** What your senses (a MAP) pick up, for the minimap. */
   sensed(what: Sensed): void;
+  /** The room ended for us: `consented` if we left it ourselves. */
   closed(): void;
+  /** The connection dropped; the client is trying to get back in. */
+  dropped(): void;
+  reconnected(): void;
+  /** Blows struck where we can see them. */
+  hits(list: Hit[]): void;
 }
+
+/** One blow, as the server tells it (server `Hit`). */
+export interface Hit { by: string; on: string; amount: number; layer: string; kind: "hit" | "crit" | "miss" | "blocked"; ranged: boolean; x?: number; y?: number }
 
 /**
  * Where the game server is: VITE_SERVER if set at build time; otherwise port 2567 on this host
@@ -72,6 +89,8 @@ export async function connect(on: Handlers): Promise<Connection> {
   room.onMessage("spelled", on.spelled);
   room.onMessage("refused", on.refused);
   room.onMessage("gathered", on.gathered);
+  room.onMessage("gathering", on.gathering);
+  room.onMessage("got", on.got);
   room.onMessage("notice", on.notice);
   room.onMessage("dead", on.dead);
   room.onMessage("loadout", on.loadout);
@@ -80,7 +99,10 @@ export async function connect(on: Handlers): Promise<Connection> {
   room.onMessage("described", on.described);
   room.onMessage("watching", on.watching);
   room.onMessage("sensed", on.sensed);
+  room.onMessage("hits", on.hits);
   room.onLeave(on.closed);
+  room.onDrop(on.dropped);
+  room.onReconnect(on.reconnected);
   await new Promise<void>((done) => {
     const ready = () => room.state?.seed && room.state.players?.get(room.sessionId);
     if (ready()) return done();
@@ -100,6 +122,7 @@ export async function connect(on: Handlers): Promise<Connection> {
     use: (which) => room.send("use", which),
     attack: (target) => room.send("attack", target),
     pick: (what) => room.send("pick", what),
+    leave: () => { room.onLeave.clear?.(); void room.leave(true); },
     describe: (text, target, gear) => room.send("describe", { text, target, ...(gear !== undefined ? { gear } : {}) }),
   };
 }

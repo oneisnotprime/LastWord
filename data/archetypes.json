@@ -418,7 +418,7 @@
  {
   "class": "creature",
   "archetype": "mammal",
-  "words": 594,
+  "words": 595,
   "groups": [
    "physical",
    "life",
@@ -789,7 +789,7 @@
  {
   "class": "institution",
   "archetype": "group",
-  "words": 762,
+  "words": 763,
   "groups": [
    "social",
    "economy",
@@ -890,7 +890,7 @@
  {
   "class": "measure",
   "archetype": "quantity",
-  "words": 850,
+  "words": 849,
   "groups": [
    "meta"
   ]
@@ -1156,7 +1156,7 @@
  {
   "class": "terrain",
   "archetype": "elevation",
-  "words": 44,
+  "words": 43,
   "groups": [
    "physical",
    "spatial",

@@ -55,3 +55,12 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
   - Canvas textures are never resized or destroyed mid-game, and `maxTextures` is 1: Phaser 4.2
     otherwise drew some standees with another texture's pixels.
 - Controller support is not built yet. Spelling on a controller will pick from held letters.
+- `src/fx.ts` HTML effects: letter popups from `got` (a big tile with its reason tag that flies to
+  the letter bar, which bounces), damage numbers from `hits`, the red screen edge when you are hit,
+  and the red note when gathering finds nothing. In `main.ts`: `onHits` (flash, shake, lunge,
+  tracer, health bar for a few seconds, a mark over whoever hit you), `overlays` (the camera zoomed
+  so the screen holds your sight, fog past it, the gathering ring, `promptAt` hints over the
+  letters: G: dig, E: claim).
+- The spell window shows the alphabet guide (shared `LETTER_GUIDE`), lighting letters you hold.
+- Knocked out, the HUD card has Start new round: `playAgain` (start.ts) reloads into a fresh room
+  with the same choice, past the start screen. A room lost for good (server restart) does the same.

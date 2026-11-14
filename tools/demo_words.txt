@@ -133,9 +133,9 @@ book: mass=1 integrity=5 flammability=8 material=paper intelligence+2 grants_adj
 dog: mass=30 length=1 integrity=80 alive=true sentient=true intelligence=4 loyalty=9 aggression=3 diet=carnivore food_need=0.02 speed_land=12 dmg_pierce=20 attack_rate=1.2 smell_range=300 tracking=8 detect_stealth=5 alarm=true tamable=true trainable=7 equip_slot=companion produce_I=0.3
 cat: mass=4 length=0.5 integrity=25 alive=true sentient=true intelligence=4 loyalty=4 diet=carnivore food_need=0.005 speed_land=13 agility=9 climb=8 dmg_slash=6 attack_rate=2 night_vision=true stealth=6 evasion=0.4 equip_slot=companion produce_I=0.2 counters=rat
 horse: mass=500 length=2.4 height=1.6 integrity=400 alive=true sentient=true intelligence=3 loyalty=6 diet=herbivore food_need=0.2 speed_land=18 jump=2 mountable=true seats=1 carry_capacity=150 tow_capacity=1500 dmg_blunt=60 attack_rate=0.5 tamable=true equip_slot=mount produce_I=0.4
-cow: mass=700 length=2.5 integrity=450 alive=true diet=herbivore food_need=0.4 speed_land=7 food_output=3 produce_I=1 reproduction=0.5 tamable=true
-pig: mass=150 length=1.5 integrity=180 alive=true intelligence=4 diet=omnivore food_need=0.15 speed_land=5 food_output=2 produce_I=0.7 reproduction=2 smell_range=200 detect_underground=true
-sheep: mass=70 length=1.2 integrity=90 alive=true diet=herbivore food_need=0.08 speed_land=8 produce_I=0.6 reproduction=1 pack_size=3 courage=1
+cow: mass=700 length=2.5 integrity=80 alive=true diet=herbivore food_need=0.4 speed_land=7 food_output=3 produce_I=1 reproduction=0.5 tamable=true
+pig: mass=150 length=1.5 integrity=30 alive=true intelligence=4 diet=omnivore food_need=0.15 speed_land=5 food_output=2 produce_I=0.7 reproduction=2 smell_range=200 detect_underground=true
+sheep: mass=70 length=1.2 integrity=25 alive=true diet=herbivore food_need=0.08 speed_land=8 produce_I=0.6 reproduction=1 pack_size=3 courage=1
 wolf: mass=45 length=1.5 integrity=140 alive=true sentient=true intelligence=5 loyalty=3 aggression=7 diet=carnivore food_need=0.06 speed_land=16 dmg_pierce=35 attack_rate=1.2 pack_size=4 tracking=8 night_vision=true fear_aura=2
 bear: mass=400 length=2.5 height=1.5 integrity=900 alive=true aggression=6 diet=omnivore food_need=0.3 speed_land=13 speed_water=2 climb=5 dmg_slash=90 dmg_crush=60 attack_rate=0.8 armor=5 res_cold=0.5 fear_aura=4
 lion: mass=190 length=2 integrity=500 alive=true aggression=7 diet=carnivore food_need=0.25 speed_land=20 jump=3 dmg_slash=70 dmg_pierce=60 attack_rate=1 pack_size=3 stealth=4 fear_aura=5 loudness=8
@@ -145,14 +145,15 @@ bat: mass=0.03 length=0.1 integrity=2 alive=true diet=carnivore speed_air=10 nig
 whale: mass=100000 length=25 integrity=40000 alive=true intelligence=6 diet=carnivore food_need=20 speed_water=8 dive_depth=1000 breathes=air placeable_on=deep_water dmg_crush=3000 attack_rate=0.1 loudness=9 mountable=true seats=10
 camel: mass=500 length=3 integrity=450 alive=true diet=herbivore food_need=0.1 water_need=0.01 speed_land=10 mountable=true seats=2 carry_capacity=250 temp_max=55 terrain_ignored=sand habitat=desert equip_slot=mount tamable=true
 mole: mass=0.1 length=0.15 integrity=3 alive=true diet=carnivore speed_underground=0.5 detect_underground=true harvest_bonus=1.5 harvest_sources=cache equip_slot=companion
+mount: mass=450 length=2.3 height=1.6 integrity=360 alive=true sentient=true intelligence=3 loyalty=7 diet=herbivore food_need=0.2 speed_land=17 jump=2 mountable=true seats=1 carry_capacity=150 dmg_blunt=50 attack_rate=0.5 tamable=true equip_slot=mount
 human: mass=75 height=1.75 integrity=100 sight_range=60 alive=true sentient=true intelligence=7 diet=omnivore food_need=0.03 speed_land=5 hands=true speech=true labor=1 produce_N=0.3
 
 # noun bird
 eagle: mass=5 length=0.9 integrity=40 alive=true diet=carnivore food_need=0.01 speed_air=30 flight_ceiling=4000 sight_range=3000 dmg_slash=25 attack_rate=1 targets=land,air map_reveal=20 equip_slot=companion tamable=true
 hawk: mass=1 length=0.5 integrity=15 alive=true diet=carnivore speed_air=35 sight_range=2000 dmg_slash=10 attack_rate=1.5 targets=land,air tracking=7 equip_slot=companion tamable=true counters=rat,bat
 owl: mass=1.5 length=0.5 integrity=15 alive=true diet=carnivore speed_air=15 night_vision=true nocturnal=true stealth=7 detect_stealth=7 sight_range=500 equip_slot=companion
-chicken: mass=2 length=0.4 integrity=10 alive=true diet=omnivore food_need=0.003 speed_land=4 food_output=0.3 produce_I=0.2 reproduction=6 pack_size=3 courage=0
-duck: mass=1.2 length=0.5 integrity=10 alive=true diet=omnivore food_need=0.003 speed_land=2 speed_water=2 speed_air=20 food_output=0.2 produce_I=0.2 produce_O=0.1 pack_size=3
+chicken: mass=2 length=0.4 integrity=4 alive=true diet=omnivore food_need=0.003 speed_land=4 food_output=0.3 produce_I=0.2 reproduction=6 pack_size=3 courage=0
+duck: mass=1.2 length=0.5 integrity=4 alive=true diet=omnivore food_need=0.003 speed_land=2 speed_water=2 speed_air=20 food_output=0.2 produce_I=0.2 produce_O=0.1 pack_size=3
 
 # noun fish
 fish: mass=2 length=0.4 integrity=6 alive=true diet=omnivore speed_water=3 breathes=water placeable_on=water food_output=0.2 produce_O=0.3 reproduction=10 pack_size=6 edible=true nutrition=3
@@ -359,6 +360,7 @@ earthquake: placement=region placement_range=1000 event_target=region event_radi
 famine: placement=region placement_range=1000 event_target=region event_radius=800 event_duration=10 dmg_hunger=5 attack_rate=0.1 friendly_fire=true deposit_factor=0.5 food_output*0 produce_A*0 produce_E*0.3 produce_H*0.5 morale+-4 counters=feast,plenty,harvest
 
 # noun group
+unit: pack_size=6 mass=90 integrity=180 alive=true sentient=true intelligence=5 loyalty=7 courage=6 hands=true speech=true speed_land=5 dmg_pierce=40 attack_rate=1.2 attack_range=100 targets=land,air food_need=0.04 training=3 faction=army
 army: pack_size=100 command_limit=100 authority=4 upkeep_food=5 produce_K=0.5 morale+2 fear_aura=6 faction=army
 clan: binds=8 bind_penalty=loyalty,reputation faction=clan morale+1 command_limit=20
 
@@ -474,6 +476,7 @@ rest: duration=30 regeneration+3 morale+1
 hide: duration=120 stealth+7 speed_land*0 untargetable=true
 
 # verb transform
+debug: counters=insect,invertebrate event_radius=80
 grow: duration=120 mass*8 height*2 integrity*3 dmg_blunt*2 stealth+-3 food_need*4
 shrink: duration=120 mass*0.01 height*0.2 integrity*0.3 stealth+5 evasion+0.3
 burn: duration=20 temperature+500 dmg_fire+40 inflict_burn+3 luminosity+5 self_damage=0.2

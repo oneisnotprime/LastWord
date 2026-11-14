@@ -62,6 +62,35 @@ by how many words set them (minds and upkeep took `sentient`, `intelligence`, `f
 
 ## High priority
 
+- [ ] Dictionary themes: broad concepts of a few hundred words each, built through shared
+      systems. Start with materials, food, professions, plants and law.
+      1. Professions: hired NPC workers producing N; farm, guard, build, scout
+      2. Plants and botany: crops, trees, herbs, fungi; P and A; medicine and poison
+      3. Buildings and rooms: claims, shelter, storage, production
+      4. Furniture and household: B, comfort, base morale
+      5. Tools and crafting: crafting stations for C; turn materials into objects
+      6. Machines and technology: power, M, map reveal, automation
+      7. Animals by family: livestock, pets, predators, birds, fish; hunting, I, mounts, food
+      8. Food and cooking: food store, temporary boosts, cures, poisons
+      9. Body parts: graft wings, claws, eyes, horns onto yourself or creatures
+      10. Clothing: warmth, disguise, stealth, faction look
+      11. Materials and elements: adjectives that rewrite any object (GLASS SWORD, IRON DOG);
+          inputs to transmutation for Z
+      12. Disease and medicine: spreading plagues, cures, hospitals
+      13. Emotions and mental states: fields that move morale, loyalty, aggression
+      14. Music and sound: morale, charm animals, give away position, deafen
+      15. Law and government: tax, ban, curfew, election, treaty; map or regional rules
+      16. Money and trade: prices, T, bribes, debt, auctions
+      17. Crime and deception: theft, disguise, traps, false information
+      18. Communication and information: see and fake what others know
+      19. Religion and myth: sacrifice for F, blessings, curses, faith as a store
+      20. Weather, climate and seasons: drive letter yields and terrain
+      21. Time: speed up or slow things, ageing gives Y
+      22. Space and astronomy: eclipses, comets, gravity; map-wide events
+      23. Sea and ships: naval travel, fishing for O, storms, ports
+      24. Sports and games: duels, races, wagers; low-risk challenges with stakes
+      25. Abstract ideas: truth, chaos, luck, fate, nothing; meta words that bend rules
+
 - [ ] Before the next art pass: research external tools that make per-word art faster and
       cheaper than writing it with Claude (image generation pipelines, pixel/paper-style
       generators, local models, asset packs). Art must scale to a few hundred thousand words,

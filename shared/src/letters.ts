@@ -186,6 +186,12 @@ export class Deposits {
     return out;
   }
 
+  /** Why gathering at a point would find nothing right now, or null if it would find a letter. */
+  problem(x: number, y: number, now: number): string | null {
+    if (Object.keys(this.available(x, y, now)).length) return null;
+    return depositsAt(this.map, x, y).length ? "This ground is picked clean for now: move on" : "Nothing to gather here";
+  }
+
   /** One gathering action at a point: a site in reach first, else a deposit here, weighted, that has stock left. */
   gather(x: number, y: number, now: number, rng: Rng, growth = 1): Gathered {
     const site = this.siteAt(x, y, now);
@@ -216,6 +222,17 @@ export const regionOf = (x: number, y: number): number => Math.floor(y / REGION_
 export const MAP_SOURCES = { caches: 12, ruins: 10, animals: 30 };
 /** X a buried cache holds; it never refills. */
 export const CACHE_X = 2;
+/** Letters a cache's last dig turns up besides its X: the prize for finding it. */
+export const CACHE_PRIZE = 3;
+/** What a cache's prize is drawn from: everyday letters, so the prize is always useful. */
+const PRIZE_LETTERS = "eeeaaaiioonnrrsstthldcmpbgwy";
+
+/** The prize at the bottom of a cache: CACHE_PRIZE everyday letters. */
+export function cachePrize(rng: Rng): string {
+  let out = "";
+  for (let i = 0; i < CACHE_PRIZE; i++) out += PRIZE_LETTERS[Math.floor(rng() * PRIZE_LETTERS.length)];
+  return out;
+}
 /** X a ruin gives when it is broken, besides the D for breaking it. */
 export const RUIN_X = 1;
 /** What a ruin has left standing: it starts badly broken, so bare hands can finish it. */
@@ -383,3 +400,41 @@ export function production(stats: Stats): Letters {
 export function addLetters(held: Letters, letters: string): void {
   for (const ch of letters) held[ch] = (held[ch] ?? 0) + 1;
 }
+
+/** The few words a letter popup says about where a gathered letter came from: "E · forage". */
+export const GATHER_REASONS: Readonly<Record<Deposit, string>> = { forage: "forage", fish: "fishing", dig: "digging", cave: "cave" };
+
+/**
+ * The alphabet guide under the spell window: how to get each letter in this build, in a few
+ * words. `words` are things that make the letter (each test-checked to have its `produce_*`);
+ * `later` names a source PLAN.md plans that is not built yet.
+ */
+export interface LetterHow { how: string; words?: string[]; later?: string }
+export const LETTER_GUIDE: Readonly<Record<string, LetterHow>> = {
+  a: { how: "crops", words: ["farm", "corn"] },
+  b: { how: "furniture", words: ["bed", "home"] },
+  c: { how: "crafting", words: ["forge", "lab"] },
+  d: { how: "destroy things" },
+  e: { how: "forage (G)" },
+  f: { how: "burn things" },
+  g: { how: "dig hills (G)" },
+  h: { how: "hunt animals" },
+  i: { how: "livestock", words: ["dog", "cow"] },
+  j: { how: "explore" },
+  k: { how: "kill people" },
+  l: { how: "land", words: ["land", "lord"], later: "land held" },
+  m: { how: "machines", words: ["robot", "maker"] },
+  n: { how: "labour", words: ["man", "guy"] },
+  o: { how: "fish by water (G)" },
+  p: { how: "plants", words: ["oak", "bush"] },
+  q: { how: "the temple (G)" },
+  r: { how: "roads", words: ["road", "lane"] },
+  s: { how: "citizens", words: ["king", "shop"], later: "cities held" },
+  t: { how: "trade at a market" },
+  u: { how: "caves by mountains (G)" },
+  v: { how: "beat others' things" },
+  w: { how: "mills", words: ["mill", "dam"] },
+  x: { how: "caches (G), ruins" },
+  y: { how: "age", words: ["tree", "clock"], later: "old things" },
+  z: { how: "rare", words: ["wizard", "genius"], later: "bosses" },
+};

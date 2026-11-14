@@ -94,3 +94,19 @@ Node process that owns the game state. One room per map instance (from milestone
   give the old daylight back (`daylightEnds`); weather rules are `weatherRules`; a sky word with a
   `field_radius` that sets no weather (DROUGHT, ECLIPSE) also lays its field. Zones carry `until`
   (round clock) and `by`; the state carries `weatherWord/By/Until` and `daylightWord/By/Until`.
+- Letters gained go through `award`, which sends `got` { letters, why, x, y } for the client's
+  letter popup ("E · forage", "H · hunted COW (+12 food)", "D · broke RUIN", "A · FARM").
+  `gathered` is still sent for a gathered letter. `gather` refuses at once where nothing is left
+  (shared `Deposits.problem`) and sends `gathering` (seconds) when it starts.
+- Blows are noted by `blow` and sent once a tick by `flushHits` as `hits`: [{ by, on, amount,
+  layer, kind, ranged, x?, y? }], merged per attacker and target, only to clients that see either.
+- Hunting: a killed living, non-sentient body adds shared `carcassFood` to the killer's food.
+  A wandering wild creature ambles at `AMBLE_PACE`; it runs only to chase or flee.
+- `take` (E) by a thing nobody owns that cannot be carried (a RUIN) `claim`s it: it becomes yours
+  where it stands, radiates for you and makes its letters for you.
+- `exterminate`: a word kills the creatures its `counters` names (by noun or archetype) near the
+  speller; DEBUG counters insects. With `DEBUG=1` (the `dev` script; never the live server)
+  spelling DEBUG fills every letter instead.
+- Ticks run through `safeUpdate`: a throw is logged and the room goes on; a tick over
+  `SLOW_TICK_MS` is logged with what the room held. A dropped connection keeps its place for
+  `RECONNECT_SECONDS` (`onDrop`/`onReconnect`); the client reconnects on its own.

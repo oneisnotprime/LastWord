@@ -127,7 +127,7 @@ export function rulesText(r: PlaceRules): string[] {
   if (r.lode.length && r.lodeShare > 0) {
     out.push(`gathering here finds ${r.lode.map((l) => l.toUpperCase()).join("/")} ${Math.round(r.lodeShare * 100)}% of the time${r.lodeStock > 0 && Number.isFinite(r.lodeStock) ? ` (${r.lodeStock} in all)` : ""}`);
   }
-  if (r.tradeRate !== 1) out.push(`markets ask ${fmt(3 * r.tradeRate)} letters for 1`);
+  if (r.tradeRate !== 1) { const n = Math.max(1, Math.round(3 * r.tradeRate)); out.push(`markets ask ${n} letter${n === 1 ? "" : "s"} for 1`); }
   for (const l of r.law) out.push(LAWS[l]!);
   return out;
 }

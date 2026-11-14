@@ -33519,7 +33519,7 @@ moulin	noun	artifact	route	2.72	uncommon	n03033532	-
 moult	verb	spell	body	2.25	uncommon	v00009140	noun:process
 moulter	noun	creature	creature	0.0	obscure	n01321151	-
 mound	noun	artifact	artifact	3.6	common	n03797867	verb:create
-mount	noun	terrain	elevation	4.47	core	n09382700	verb:contact
+mount	noun	creature	mammal	4.47	core	n02380355	verb:contact
 mountain	noun	terrain	elevation	4.73	core	n09382700	-
 mountaineer	noun	person	person	2.76	uncommon	n10354280	verb:movement
 mountaineering	noun	event	act	2.84	uncommon	n00326611	-
@@ -55463,7 +55463,7 @@ unironed	adjective	modifier	quality	0.0	obscure	a01362777	-
 unisex	adjective	modifier	quality	3.0	common	a01483022	-
 unisexual	adjective	modifier	quality	1.68	rare	a02143185	-
 unison	noun	aura	attribute	3.27	common	n05056288	-
-unit	noun	measure	quantity	4.95	core	n13604927	-
+unit	noun	institution	group	4.95	core	n08206589	-
 unitard	noun	artifact	clothing	1.66	rare	n03662837	-
 unitarian	adjective	modifier	pertaining	2.9	uncommon	a02967542	noun:person
 unitary	adjective	modifier	pertaining	3.06	common	a02831747	-

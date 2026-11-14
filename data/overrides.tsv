@@ -819,6 +819,7 @@ dear	adjective	quality
 dearth	noun	attribute
 death	noun	killing
 debt	noun	possession
+debug	verb	transform
 debut	noun	event
 dec	noun	knowledge
 decade	noun	quantity
@@ -2049,7 +2050,7 @@ mother	noun	person
 motion	noun	event
 motivation	noun	feeling
 motor	noun	machine
-mount	noun	elevation
+mount	noun	mammal
 mountain	noun	elevation
 mounted	adjective	participle
 mourning	noun	ceremony
@@ -3331,7 +3332,7 @@ unfortunately	adverb	manner
 uniform	noun	clothing
 union	noun	group
 unique	adjective	quality
-unit	noun	quantity
+unit	noun	group
 united	adjective	quality
 unity	noun	feeling
 universal	adjective	absolute

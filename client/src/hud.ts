@@ -1,4 +1,4 @@
-import { missing, parsePhrase, type Card, type Dictionary, type Letters, type LoadoutDetail } from "@lastword/shared";
+import { LETTER_GUIDE, missing, parsePhrase, type Card, type Dictionary, type Letters, type LoadoutDetail } from "@lastword/shared";
 import { BADGE } from "./art/paper.js";
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
@@ -90,7 +90,12 @@ export class Hud {
     private readonly onUse: (which: number | string) => void,
     /** Put the adjectives being aimed on a piece of your own gear, by index. */
     private readonly onAimGear: (index: number) => void = () => {},
+    /** Knocked out: start a new round in a fresh room. */
+    private readonly onAgain: () => void = () => {},
   ) {
+    $("abc").innerHTML = alphabet();
+    // The knocked out card's button (pointer events are off on the rest of the HUD).
+    $("status").addEventListener("click", (e) => { if ((e.target as HTMLElement).closest("button.again")) this.onAgain(); });
     window.addEventListener("keydown", (e) => {
       if (this.typing || e.repeat) return;
       const key = e.key.toLowerCase();
@@ -307,7 +312,8 @@ export class Hud {
     const parts = [`<div class="top"><span class="me">${esc(f.name.toUpperCase())}</span><span class="round"><b>${f.alive}</b> alive · <b>${clock(f.clock)}</b></span></div>`];
     if (this.out !== null) {
       // Knocked out: no bars, no gear; just that, and whom the camera follows.
-      parts.push(`<div class="out">KNOCKED OUT</div>${this.out ? `<div class="watch">watching ${esc(this.out.toUpperCase())}</div>` : ""}`);
+      parts.push(`<div class="out">KNOCKED OUT</div>${this.out ? `<div class="watch">watching ${esc(this.out.toUpperCase())}</div>` : ""}` +
+        `<button class="again">Start new round</button>`);
     } else {
       const max = d?.health.max ?? 100;
       parts.push(bar("Health", (f.hp / 100) * max, max));
@@ -462,6 +468,13 @@ export class Hud {
   }
 
 
+  /** What you can do where you stand, over the letters ("G: dig the cache"), or nothing. */
+  prompt(key: string, text: string) {
+    const el = $("prompt");
+    const html = text ? `<kbd>${esc(key)}</kbd>${esc(text)}` : "";
+    if (el.innerHTML !== html) el.innerHTML = html;
+  }
+
   /** A message that stays up: death or victory. */
   banner(text: string) {
     const el = $("banner");
@@ -499,8 +512,20 @@ export class Hud {
       else for (let i = 0; i < n; i++) tile(ch, i < used ? "used" : "");
     }
     $("letters").replaceChildren(...tiles);
+    // The alphabet guide lights the letters you hold.
+    for (const el of $("abc").children) el.classList.toggle("have", (this.held[(el as HTMLElement).dataset.letter!] ?? 0) > 0);
   }
 }
 
 /** A letter held more often than this shows as one tile with a count. */
 const COPIES_SHOWN = 4;
+
+/**
+ * The alphabet under the spell box: each letter and how to get it now (shared `LETTER_GUIDE`),
+ * words that make it in capitals, and a source still to come, small, as "later".
+ */
+function alphabet(): string {
+  return Object.entries(LETTER_GUIDE).map(([ch, g]) =>
+    `<div data-letter="${ch}" title="${esc(`${ch.toUpperCase()}: ${g.how}${g.words ? ` (${g.words.join(", ").toUpperCase()})` : ""}${g.later ? `; ${g.later} later` : ""}`)}"><b>${ch.toUpperCase()}</b>${esc(g.how)}` +
+    `${g.words ? ` <em>${esc(g.words[0]!.toUpperCase())}</em>` : ""}${g.later ? ` <small>· later</small>` : ""}</div>`).join("");
+}

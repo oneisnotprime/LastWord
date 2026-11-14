@@ -26,7 +26,10 @@ server and the client import this, so anything here must give the same answer on
   8-tile patch, running out and growing back slowly; sites: caches give X, the temple Q),
   `placeSources` (markets, temple, caches, ruins, wild animals on the `mainland`), `spawnPoint`
   (people far apart), `regionOf` (exploring gives J), `MARKET` and `readTrade` ("trade eee for o"),
-  `killLetters` (K, V, H) and `destroyLetters` (D, V, F, X); `production` reads `produce_*`.
+  `killLetters` (K, V, H) and `destroyLetters` (D, V, F, X); `production` reads `produce_*`;
+  `Deposits.problem` says why gathering would find nothing; `GATHER_REASONS` names each deposit
+  for the letter popup; `cachePrize` is the prize at a cache's bottom; `LETTER_GUIDE` is the
+  alphabet guide under the spell box (test-checked against the data).
 - `economy.ts` `starterHand` (eight letters around a word that produces something, `starterWords`)
   and `reachability`/`reachTable`: the shortest chain from the action letters to every letter;
   its test prints the table.
@@ -36,12 +39,17 @@ server and the client import this, so anything here must give the same answer on
   `afflict` gives a struck body its attacker's `inflict_*` unless `immune_*`, `hampered` says
   what it may still do, `statusDamage` is a second of burn, poison or bleed.
 - `path.ts` `findPath`: A* over tiles around anything that cannot be walked, preferring roads;
-  search buffers are shared, so it is not safe to call from two threads.
+  search buffers are shared, so it is not safe to call from two threads. `clearLine` checks every
+  tile a line touches (sampling missed corners a walker then ran into).
+- `world.ts` `stepToward` slides along an edge instead of stopping dead, and walks out of ground
+  nobody can stand on; `openGround`/`roomAround`: where to put someone the land changed around, so
+  they are never boxed into a pocket of a tile or two.
 - `rng.ts` seeded generator. Pass an `Rng` in; never call `Math.random`.
 - `testdata.ts` loads the demo dictionary from disk, for tests only.
 - `mind.ts` morale (`moraleGoal`, `nextMorale`, `routed`, `moraleAim`), how creatures choose
   (`chooseTarget`, `retreats`, `ignoresOrder`) and command (`commandLimit`, `recruitRate`).
-- `upkeep.ts` food, fuel and power: `needs`, `outputs`, `draw`, `supply`, `groundFood`;
+- `upkeep.ts` food, fuel and power: `needs`, `outputs`, `draw`, `supply`, `groundFood`,
+  `carcassFood` (what a hunted body feeds, by its mass);
   `startingSupply`: a newly made machine brings `STARTING_SUPPLY_MINUTES` (30) of what it draws.
 - `place.ts` what an area does to letters and acts (`placeRules`): yields from `produce_*` and
   `harvest_bonus` ops, `growth`, `deposit_factor`, `tax_rate`, `lode`, `trade_rate`, `law`; `harvest`
