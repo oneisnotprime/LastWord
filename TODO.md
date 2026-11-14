@@ -451,6 +451,9 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
       areas, weather and creatures, running when badly hurt; kits picked by difficulty, working
       toward their legendary's unlock, spelling it, countering enemies' legendaries. `loadtest/tournament.ts` reports it
 - [ ] Bots still to do: use terrain words on purpose, form pacts
+- [ ] Carried or following things whose field forbids fighting (GAVEL, JUDGE, REFEREE, PEACEKEEPER:
+      a law with no fine and no end) make their holder untouchable and unable to strike; rule on
+      fines or durations for them, or a counter-word. Bots put such a thing down to fight
 - [x] Deploy-ready: one container serves the page and the game; Dockerfile, fly.toml and
       DEPLOY.md; image built and played locally
 - [ ] M6 (rest): deploy to Fly.io; needs the user's account

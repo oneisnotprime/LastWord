@@ -396,6 +396,8 @@ interface BotMind {
 
 /** Round seconds after which bots hunt roaming bosses. */
 const BOT_BOSS_AFTER = 600;
+/** Round seconds after which (or once three or fewer are left) armed bots seek out the others, however far. */
+const BOT_HUNT_AFTER = 1200;
 
 /** Seconds a bot keeps the peace at the start: between these two. */
 const BOT_PEACE: [number, number] = [60, 90];
@@ -1735,6 +1737,18 @@ export class WorldRoom extends Room {
       const o = this.walkers.get(e.id)!;
       const law = this.lawBars("attack", id, w, w.player) ?? this.lawBars("attack", e.id, o, o.player);
       if (law && law.owner !== id) mind.blocked = law.word;
+      // Its own carried thing keeps the peace around it (a GAVEL): once its peaceful start is over
+      // (not easy), it puts the thing down to fight.
+      if (law && law.owner === id && law.follows === id && !peaceful && !easy) {
+        const i = w.gear.findIndex((g) => g.spelled.noun === law.word);
+        if (i >= 0) {
+          const [g] = w.gear.splice(i, 1);
+          this.rebuild(w);
+          this.addThing(g!, id, w.player.x, w.player.y);
+          mind.tried.add(`#gear:${law.word}`);
+          this.botUsed(mind, "drop peace");
+        }
+      }
       return !law;
     };
     let foe = keep && (!current || !("player" in current) || strikable({ id: w.foe!, d: 0, hp: 0, person: true })) ? w.foe : null;
@@ -1789,6 +1803,16 @@ export class WorldRoom extends Room {
     if (mind.goal) {
       if (Math.hypot(mind.goal.x - w.player.x, mind.goal.y - w.player.y) > 1.5) { w.target = { ...mind.goal }; return; }
       mind.goal = undefined;
+    }
+    // Late in a round with few left (not easy, armed): go and find the nearest of them, wherever they are.
+    if (!easy && armed && !peaceful && (this.elapsed > BOT_HUNT_AFTER || this.state.alive <= 3)) {
+      let near: Walker | null = null, best = Infinity;
+      for (const [oid, o] of this.walkers) {
+        if (oid === id || o.master !== null) continue;
+        const d = Math.hypot(o.player.x - w.player.x, o.player.y - w.player.y);
+        if (d < best) { best = d; near = o; }
+      }
+      if (near && best > w.sight) { w.target = nearestWalkable(this.map, { x: near.player.x, y: near.player.y }); return; }
     }
     // A cache in sight is worth the walk; otherwise gather here while there is something to find.
     const cache = this.nearFixture(w, "cache", w.sight);
@@ -1891,7 +1915,7 @@ export class WorldRoom extends Room {
       const t = this.state.things.get(tid), g = this.grounded.get(tid);
       if (!t || !g || g.terrain || (t.owner !== "" && t.owner !== id) || mind.tried.has(`#${tid}`)) return false;
       if (mind.fetch === tid) return true;
-      if (g.fixture) return false; // ruins are chosen with care in thinkBot
+      if (g.fixture || mind.tried.has(`#gear:${g.spelled.noun}`)) return false; // ruins are chosen with care in thinkBot
       const s = this.statsOf(g), slot = this.slotOf(g);
       if (t.owner === "" && (!s.flag("portable") || g.vehicle)) return true; // nobody's: claim it or ride it
       if (s.get("equip_slot") === "held") return !armed && s.entries().some(([k, v]) => k.startsWith("dmg_") && Number(v) > 0);

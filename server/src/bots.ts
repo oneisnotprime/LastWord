@@ -223,7 +223,8 @@ export function wordBook(dict: Dictionary) {
     // Heat that cooks raw food laid beside it (shared food.ts), and is safe to stand by.
     if (cooks(s) && becomes(s) === "ground" && damage(s) === 0) add("cook", 10 / p.letters.length);
     // A thing whose own field holds a law against fighting (a SANCTUARY): a refuge where it stands.
-    if (s.num("field_radius") > 0 && placeRules(def, s)?.law.includes("attack")) add("refuge", 1, { placement: "object" });
+    // Nothing else for such a thing: carried, ridden or following, it would keep its owner from fighting too.
+    if (s.num("field_radius") > 0 && placeRules(def, s)?.law.includes("attack")) { add("refuge", 1, { placement: "object" }); continue; }
     // Producers, scored by what they make a minute; letters no action gives count double.
     // Terrain only if it is crop land it tills (HOE, FARM); nothing ridden.
     const spec = producerOf(s);
