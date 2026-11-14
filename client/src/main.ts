@@ -9,6 +9,7 @@ import { CHUNK } from "./art/terrain.js";
 import type { FromWorker, ToWorker } from "./art/terrain.worker.js";
 import { dictionary } from "./data.js";
 import { Hud, type Aimed } from "./hud.js";
+import { Minimap } from "./minimap.js";
 import { connect, type Connection, type Described } from "./net.js";
 import { Painter, PX, useMade, useStandee, ZOOM } from "./paint.js";
 import { Sky } from "./sky.js";
@@ -21,6 +22,16 @@ const DPR = Math.min(2, Math.max(1, window.devicePixelRatio || 1));
 function counted(name: string, count: number | undefined): string {
   const n = count ?? 1;
   return n > 1 ? `${name.toUpperCase()} ×${n.toLocaleString("en-US")}` : name.toUpperCase();
+}
+
+/**
+ * Messages, short: "+E", "No Z", and nothing for routine success the world already shows (a
+ * SWORD in your hand, a WOLF at your side). Null: say nothing.
+ */
+function terse(kind: "spelled" | "refused" | "notice", text: string): string | null {
+  if (kind === "spelled") return /wild/.test(text) ? text.replace(/^.*?(\d+ ran wild|runs wild).*$/, "$1") : null;
+  if (kind === "notice" && / (equipped|in hand|dropped)$/.test(text)) return null;
+  return text.replace(/^You need /, "No ").replace(/^You cannot spell while you are /, "Cannot spell: ");
 }
 
 /** Ink for a name tag: you, other people, yours, someone else's, nobody's. */
@@ -64,6 +75,12 @@ class World extends Phaser.Scene {
   private hover: string | null = null;
   private over = false;
   private roundOver = false;
+  /** Knocked out: the one the camera follows (your killer, then theirs), by id. */
+  private watching: string | null = null;
+  private myName = "";
+  private minimap!: Minimap;
+  /** Whether the spell window was open last frame: opening or closing it forgets held keys. */
+  private wasTyping = false;
   private editsApplied = 0;
   private chunks = new Map<string, { img: Phaser.GameObjects.Image; tex: Phaser.Textures.CanvasTexture; cx: number; cy: number; ticket: number }>();
   private chunkMs: number[] = [];
@@ -87,7 +104,7 @@ class World extends Phaser.Scene {
       const how = alone ? "describe" : phrase ? aimOf(phrase) : null;
       if (!how) return this.net?.spell(text);
       const lacking = missing(this.hud.letters, alone ? alone.letters : phrase!.letters);
-      if (lacking) return this.hud.toast(`You need ${lacking.toUpperCase().split("").join(" ")}`, "bad");
+      if (lacking) return this.hud.toast(`No ${lacking.toUpperCase().split("").join(" ")}`, "bad");
       const words = alone ? alone.adjectives.join(" ") : text.trim().toLowerCase();
       if (target) this.release(words, how, target.id);
       else this.startAim(words, how);
@@ -99,23 +116,25 @@ class World extends Phaser.Scene {
     window.addEventListener("keydown", (e) => {
       if (e.repeat || this.hud.typing || !this.net || this.over) return;
       const key = e.key.toLowerCase();
-      if (key === "g") {
-        this.net.gather();
-        this.hud.toast("Gathering…", "good");
-      } else if (key === "e") this.net.take();
+      if (key === "g") this.net.gather();
+      else if (key === "e") this.net.take();
+      else if (key === "r") this.net.dismount();
       else if (key === "q") this.net.drop();
       else if (key === "u") this.net.use();
     });
     await Promise.all(["700 13px Kalam", "400 13px Kalam", "600 9px Fredoka", "500 13px Fredoka"].map((f) => document.fonts.load(f).catch(() => [])));
     this.paint = new Painter(this, dictionary, DPR);
+    this.minimap = new Minimap(document.getElementById("minimap") as HTMLCanvasElement, DPR);
     try {
       this.net = await connect({
         letters: (held) => this.hud.setLetters(held),
-        spelled: (text) => this.hud.toast(text, "good"),
-        refused: (reason) => this.hud.toast(reason, "bad"),
-        gathered: (letter) => this.hud.toast(`+ ${letter.toUpperCase()}`, "good"),
-        notice: (text) => this.hud.toast(text, "good"),
-        dead: (killer) => { this.over = true; this.endAim(); this.hud.lock(); this.hud.banner(`You were killed by ${killer}. Your letters are theirs.\nYou can watch until the round ends.`); },
+        spelled: (text) => { const t = terse("spelled", text); if (t) this.hud.toast(t, "good"); },
+        refused: (reason) => { const t = terse("refused", reason); if (t) this.hud.toast(t, "bad"); },
+        gathered: (letter) => this.hud.toast(`+${letter.toUpperCase()}`, "good"),
+        notice: (text) => { const t = terse("notice", text); if (t) this.hud.toast(t, "good"); },
+        dead: () => { this.over = true; this.endAim(); this.hud.lock(); this.hud.knockedOut(null); },
+        watching: (who) => { this.watching = who.id; this.hud.knockedOut(who.name); },
+        sensed: (what) => this.minimap.picked(what),
         won: () => {},
         roundover: ({ winner, seconds }) => {
           this.roundOver = true;
@@ -125,12 +144,12 @@ class World extends Phaser.Scene {
           const end = Date.now() + seconds * 1000;
           const tick = () => {
             const left = Math.max(0, Math.ceil((end - Date.now()) / 1000));
-            this.hud.banner(`${mine ? "You are the last one alive. You win." : `${winner} wins the round.`}\nNew map in ${left} s`);
+            this.hud.banner(`${mine ? "YOU WIN" : `${winner.toUpperCase()} WINS`}\nnew map in ${left}`);
             if (left > 0) setTimeout(tick, 250);
           };
           tick();
         },
-        loadout: (detail) => this.hud.setLoadout(detail),
+        loadout: (detail) => { this.hud.setLoadout(detail); this.minimap.senses(detail); },
         described: (e) => this.burst(e),
         // When a finished round closes, start the next one on a fresh map.
         closed: () => (this.roundOver ? location.reload() : this.hud.status("Disconnected")),
@@ -165,12 +184,16 @@ class World extends Phaser.Scene {
       if (p.rightButtonDown()) return this.inspectAt(x, y, p);
       this.hud.closeInspect();
       // A click on another player or on a thing attacks it; a click anywhere else walks there and stops attacking.
+      // Your own things and creatures, and the land itself (a LAKE), are walked over, not attacked:
+      // the server refuses those, and a click that did neither left you standing.
       let hit: string | null = null;
+      const mine = this.net.sessionId;
       this.net.state.things.forEach((thing: any, id: string) => {
-        if (Math.hypot(thing.x - x, thing.y - y) < 0.6) hit = id;
+        const land = dictionary.word(lookOf(dictionary, thing.phrase).noun)?.set.tile_type;
+        if (thing.owner !== mine && !land && Math.hypot(thing.x - x, thing.y - y) < 0.6) hit = id;
       });
       this.net.state.players.forEach((other: any, id: string) => {
-        if (id !== this.net.sessionId && Math.hypot(other.x - x, other.y - y) < 0.8) hit = id;
+        if (id !== mine && other.owner !== mine && Math.hypot(other.x - x, other.y - y) < 0.8) hit = id;
       });
       this.foe = hit;
       this.net.attack(hit);
@@ -183,6 +206,10 @@ class World extends Phaser.Scene {
       else this.hud.closeInspect();
     });
     window.addEventListener("mousemove", (e) => { if (this.aiming) this.hud.pointer(e.clientX, e.clientY); });
+    // Keys held when the page loses focus never send their release: forget them, and stop.
+    const forget = () => { this.input.keyboard?.resetKeys(); if (this.steering) { this.net.stop(); this.steering = false; } };
+    window.addEventListener("blur", forget);
+    document.addEventListener("visibilitychange", () => { if (document.hidden) forget(); });
     (window as any).__lw = { net: this.net, map: this.map, dictionary, scene: this, PX, game: this.game, chunkMs: this.chunkMs }; // for browser checks
   }
 
@@ -547,7 +574,7 @@ class World extends Phaser.Scene {
     }
     this.updateChunks();
 
-    const overMap = this.zoneView.update(state.zones, time);
+    const overMap = this.zoneView.update(state.zones, time, mine);
 
     const k = Math.min(1, delta / 100);
     state.things.forEach((t: any, id: string) => {
@@ -584,7 +611,7 @@ class World extends Phaser.Scene {
       v.moving = Math.hypot(dx, dy) > 0.3 ? 0.3 : Math.max(0, v.moving - delta / 1000);
       v.x += dx * k; v.y += dy * k;
       this.place(v, id, time, p.hp, true);
-      if (id === mine) this.cameras.main.centerOn(v.x, v.y);
+      if (id === mine || (id === this.watching && !state.players.get(mine))) this.cameras.main.centerOn(v.x, v.y);
     });
     for (const [id, v] of this.views) if (!live.has(id)) this.drop(id, v);
     this.unstackTags();
@@ -601,10 +628,15 @@ class World extends Phaser.Scene {
     const me = state.players.get(mine);
     if (!me) {
       this.hud.lock(); // dead or spectating: no spelling
-      if (this.over) this.hud.status("Knocked out");
+      if (this.over) {
+        this.hud.hud({ name: this.myName, hp: 0, alive: state.alive, clock: state.clock ?? 0 }); // the round goes on
+        this.hud.knockedOut(this.watching ? String(state.players.get(this.watching)?.name ?? "") || null : null);
+      }
       return;
     }
     const keys = this.keys, typing = this.hud.typing;
+    // Opening or closing the spell window (or any key it swallowed) must not leave an arrow held down.
+    if (typing !== this.wasTyping) { this.input.keyboard?.resetKeys(); this.wasTyping = typing; }
     const dx = typing ? 0 : Number(keys.right.isDown || keys.d.isDown) - Number(keys.left.isDown || keys.a.isDown);
     const dy = typing ? 0 : Number(keys.down.isDown || keys.s.isDown) - Number(keys.up.isDown || keys.w.isDown);
     if (dx || dy) {
@@ -616,7 +648,8 @@ class World extends Phaser.Scene {
     }
     let others = 0;
     state.players.forEach((p: any, id: string) => { if (id !== mine && p.owner === "") others++; });
-    this.hud.hud({ name: String(me.name), hp: me.hp, alive: state.alive || others + 1, clock: state.clock ?? 0 });
+    this.myName = String(me.name);
+    this.hud.hud({ name: this.myName, hp: me.hp, alive: state.alive || others + 1, clock: state.clock ?? 0 });
     this.hud.corner(Tile[tileAt(this.map, me.x, me.y)] ?? "", Math.floor(me.x), Math.floor(me.y));
     this.hud.where(
       `${Tile[tileAt(this.map, me.x, me.y)]} · ${Math.round(me.x * TILE_METERS)}, ${Math.round(me.y * TILE_METERS)} m · ` +
@@ -628,6 +661,7 @@ class World extends Phaser.Scene {
       this.hover = this.hitAt(at.x / PX, at.y / PX, this.aimHow === "describe");
     }
     this.hud.overMap(overMap);
+    this.minimap.draw(this.map, me, this.editsApplied, time);
   }
 }
 

@@ -54,7 +54,18 @@ Node process that owns the game state. One room per map instance (from milestone
 - `cast` applies a verb with its adverbs (shared `castVerb`); touched verbs with event properties
   go through `happen` on the picked target. A verb that would do nothing is refused.
 - `use` (U) applies an object to its user through `affect`, the same code as `cast`.
-- `take` (E) picks up wearables, and anything light enough (shared `cannotCarry`) into a hand.
+- `take` (E) picks up wearables, and anything light enough (shared `cannotCarry`) into a hand, or
+  gets back on a mount of yours walking with you. `dismount` (R) gets off: a machine stays on the
+  ground as yours, a living mount walks with you as a creature. A vehicle that cannot move on land
+  is never ridden (shared `cannotRide`); a ridden machine out of fuel or power has speed 0.
+- `make` puts a sense (shared `senseOf`: MAP, COMPASS) in `Walker.senses`, not the world;
+  `sendSensed` sends `sensed` (living things, letter makers in range) once a second for the minimap.
+- Claims (shared `claimOf`) are `Area`s with `claim` set, radiated like fields: `res_*` up by
+  `shelter` for the owner's side, `claimAt` scales blows on their things and adds theft security.
+  Zones carry `owner` and `shelter` (0 unless a claim).
+- The knocked out keep their client: `watchers` says whom they watch (their killer, or its
+  master; then that one's killer) and `refreshViews` sends them what that one sees (`watching`).
+- A client-steered person's route searches skip the per-tick budget (`steered`).
 - `describe` { text, target, gear? }: adjectives spelled alone put on a thing, creature, person
   (`Player.traits`) or your own gear, within your sight (`describeWord`); everyone in sight of the
   target gets `described` with what changed. `state.alive` and `state.clock` feed the HUD.

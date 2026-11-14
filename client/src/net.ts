@@ -1,5 +1,5 @@
 import { Client } from "@colyseus/sdk";
-import type { Letters, LoadoutDetail } from "@lastword/shared";
+import type { Letters, LoadoutDetail, Sensed } from "@lastword/shared";
 import { chooseGame } from "./start.js";
 
 export interface Connection {
@@ -13,6 +13,8 @@ export interface Connection {
   gather(): void;
   give(to: string, letters: string): void;
   take(): void;
+  /** Get off what you ride; it stays yours. */
+  dismount(): void;
   /** Drop the item at `index` in the loadout, or the last thing equipped. */
   drop(index?: number): void;
   /** Use (eat, drink, take) something carried, by index, or on the ground, by thing id; nothing for the last usable thing carried, else the nearest. */
@@ -40,6 +42,10 @@ export interface Handlers {
   roundover(info: { winner: string; seconds: number }): void;
   /** Adjectives were put on something in sight: show what changed. */
   described(effect: Described): void;
+  /** Knocked out: whom the camera follows now (your killer, then theirs). */
+  watching(who: { id: string; name: string }): void;
+  /** What your senses (a MAP) pick up, for the minimap. */
+  sensed(what: Sensed): void;
   closed(): void;
 }
 
@@ -72,6 +78,8 @@ export async function connect(on: Handlers): Promise<Connection> {
   room.onMessage("won", on.won);
   room.onMessage("roundover", on.roundover);
   room.onMessage("described", on.described);
+  room.onMessage("watching", on.watching);
+  room.onMessage("sensed", on.sensed);
   room.onLeave(on.closed);
   await new Promise<void>((done) => {
     const ready = () => room.state?.seed && room.state.players?.get(room.sessionId);
@@ -87,6 +95,7 @@ export async function connect(on: Handlers): Promise<Connection> {
     gather: () => room.send("gather"),
     give: (to, letters) => room.send("give", { to, letters }),
     take: () => room.send("take"),
+    dismount: () => room.send("dismount"),
     drop: (index) => room.send("drop", index),
     use: (which) => room.send("use", which),
     attack: (target) => room.send("attack", target),

@@ -38,6 +38,10 @@ server and the client import this, so anything here must give the same answer on
 - `inspect.ts` cards telling what something is (spell preview, right-click inspect): `inspectText`,
   `cardOf`, `keyStats`, `behaviours`; `becomes` (creature, worn, terrain or ground: the rule the
   server's `make` uses) and `aimOf` (whether a spelling is clicked onto someone, anywhere, or neither).
+- `sense.ts` `senseOf`: a noun that only shows things (`map_reveal`, `detect_letters`,
+  `detect_life`, nothing else but make-up) is part of its owner's screen, a minimap, not an object;
+  `claimOf`: a `claim_radius` claims ground (`CLAIM_REACH` times it) where the owner's things take
+  `shelter` less damage and are harder to steal. `ride.ts` `cannotRide`: no speed on land or in the air.
 - `describe.ts` adjectives spelled alone: `readDescription` reads them, `applyAdjectives` puts
   them on something already made (same as spelling it with them; refuses past `adjective_slots`),
   `changes` says what changed in plain words ("integrity ×0.2", "accuracy −0.4").

@@ -25,9 +25,17 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
   `main.ts` into aiming: a click on a thing, creature, person or yourself sends `describe`, or
   `pick` + `spell` + `pick(null)` for an event; Esc or right-click cancels.
 - Right-click is only inspect: `inspectAt` shows the inspect card (shared `cardOf`) with Add
-  adjective, which opens the spell window aimed at that target. The spell window shows a live
-  preview (shared `inspectText`) and whether you hold the letters. `Hud.lock` stops spelling once
+  adjective, which opens the spell window aimed at that target. `Hud.lock` stops spelling once
   you are dead, spectating or the round is over. Bottom left (`#corner`): ground and tile.
+- Messages are terse (`terse` in `main.ts`): routine success is not toasted. The top-left HUD
+  shows only rows you have; knocked out, it says KNOCKED OUT and whom the camera follows.
+- Esc closes what is open (screen, aim, inspect), else opens the menu (`#menu`) with the controls.
+- The spell window is only the input: a letter you do not hold (counting copies; for
+  `give name abc` only the given letters) is not added, and the window shakes red.
+- Letter tiles: one per copy, or one with a count above `COPIES_SHOWN` (4).
+- `src/minimap.ts` the minimap, only while the loadout lists `senses` (a MAP); `sensed` fills it.
+- Opening or closing the spell window, and window blur, reset Phaser's keys: a key released
+  while the window had focus was never seen, and the player walked on or stopped answering.
 - `burst` draws the `described` effect: a gold burst and a rising tag listing what changed.
 - `window.__lw` exposes the connection and map for browser checks.
 - To check in a browser: start the server (`npm start -w server`), build and

@@ -34,7 +34,7 @@
       #status .gear { margin-top: 6px; display: grid; grid-template-columns: 62px 1fr; gap: 2px 6px; }
       #status .gear > span { font: 600 10px/18px var(--round); color: var(--soft); text-transform: uppercase; letter-spacing: 1px; }
       #status .gear > b { font: 700 14px/18px var(--hand); text-transform: uppercase; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-      #status .gear > b.none { color: #b9ab90; font-weight: 400; }
+      #status .gear > b small { font: 600 9.5px var(--round); color: var(--soft); letter-spacing: .5px; margin-left: 4px; }
       #status .chips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
       #status .chip { font: 600 10.5px/1 var(--round); padding: 3px 6px 3px; border-radius: 3px; box-shadow: 0 1px 0 rgba(0, 0, 0, .15); letter-spacing: .5px; }
       #status .chip:nth-child(odd) { transform: rotate(-2deg); }
@@ -85,8 +85,34 @@
         font: 700 14px var(--hand); color: #8a5a1a; letter-spacing: 1px; transform: translate(14px, 10px) rotate(-2deg); box-shadow: 0 3px 8px rgba(40, 28, 16, .35); z-index: 5; }
       #aimcursor.show { display: block; }
       body.aiming #game canvas { cursor: crosshair; }
-      #help { position: absolute; top: 12px; right: 12px; max-width: 40vw; text-align: right; font: 500 11.5px/1.45 var(--round); padding: 6px 10px; border-radius: 3px;
-        background: #f3ead6e8; color: var(--soft); box-shadow: 0 1px 0 #cfc3a6, 0 3px 8px rgba(40, 28, 16, .25); transform: rotate(0.4deg); }
+      /* Top right: the minimap a MAP (or any sense) gives you. None by default. */
+      #minimap { position: absolute; top: 12px; right: 12px; width: 190px; height: 190px; display: none; border-radius: 3px; background: #2a3f48;
+        box-shadow: 0 0 0 4px var(--paper), 0 3px 0 4px #cfc3a6, 0 10px 20px rgba(40, 28, 16, .45); transform: rotate(0.6deg); }
+      #minimap.show { display: block; }
+      /* Esc: a small menu with the controls. */
+      #menu { position: fixed; z-index: 6; inset: 0; display: none; pointer-events: auto; background: rgba(28, 22, 16, .45); }
+      #menu.show { display: block; }
+      #menu .card { position: absolute; left: 50%; top: 45%; transform: translate(-50%, -50%) rotate(-0.5deg); width: min(440px, 90vw); padding: 14px 22px 16px;
+        background: var(--paper); border-radius: 4px; box-shadow: 0 3px 0 #cfc3a6, 0 22px 50px rgba(20, 14, 8, .6); }
+      #menu h2 { margin: 0 0 8px; font: 700 24px var(--hand); letter-spacing: 4px; color: var(--ink); text-align: center; }
+      #menu dl { display: grid; grid-template-columns: 120px 1fr; gap: 3px 10px; margin: 0; font: 500 12.5px/1.4 var(--round); }
+      #menu dt { color: var(--soft); font-weight: 600; text-transform: uppercase; font-size: 10.5px; letter-spacing: 1px; padding-top: 2px; }
+      #menu dd { margin: 0; color: var(--ink); }
+      #menu kbd { font: 600 11px var(--round); background: var(--card); border-radius: 3px; padding: 0 5px; box-shadow: 0 1px 0 #cfc3a6; }
+      #menu button { display: block; margin: 12px auto 0; font: 600 14px var(--round); color: var(--ink); background: var(--gold); border: 0; border-radius: 3px;
+        padding: 5px 18px; cursor: pointer; box-shadow: 0 1px 0 #b8902a, 0 2px 4px rgba(40, 28, 16, .25); }
+      /* A letter you do not hold: the spell window flashes red and shakes. */
+      #spellwin .card.reject { animation: reject .38s; }
+      @keyframes reject {
+        0% { transform: translate(-50%, -50%) rotate(-0.8deg); box-shadow: 0 0 0 5px var(--red), 0 3px 0 5px #8a2a2a, 0 22px 50px rgba(20, 14, 8, .6); background: #f6c9c2; }
+        20% { transform: translate(calc(-50% - 12px), -50%) rotate(-1.6deg); }
+        40% { transform: translate(calc(-50% + 10px), -50%) rotate(0.4deg); }
+        60% { transform: translate(calc(-50% - 7px), -50%) rotate(-1.2deg); }
+        80% { transform: translate(calc(-50% + 4px), -50%) rotate(-0.6deg); background: #f6c9c2; }
+        100% { transform: translate(-50%, -50%) rotate(-0.8deg); }
+      }
+      #status .out { font: 700 22px/1.1 var(--hand); letter-spacing: 2px; color: var(--red); margin-top: 4px; }
+      #status .watch { font: 600 11px var(--round); color: var(--soft); margin-top: 2px; }
       #overmap { position: absolute; top: 58px; left: 50%; transform: translateX(-50%) rotate(-1deg); display: none; padding: 4px 26px 6px;
         background: var(--paper); box-shadow: var(--shadow); font: 700 22px var(--hand); letter-spacing: 3px; color: #8a5a1a; text-align: center;
         clip-path: polygon(0 0, 100% 0, 96% 50%, 100% 100%, 0 100%, 4% 50%); }
@@ -151,7 +177,7 @@
     <div id="game"></div>
     <div id="hud">
       <div id="status">Connecting…</div>
-      <div id="help">Move: WASD, arrows, click · Attack: click · Inspect: right-click · Gather: G · Pick up: E · Drop: Q · Use: U · Inventory: I · Loadout: L<br><b>Enter</b>: spell window · adjectives alone (WORST) and events (FIRE, THEFT): spell, then click a target · Trade: give player2 abc</div>
+      <canvas id="minimap"></canvas>
       <div id="overmap"></div>
       <div id="aim"></div>
       <div id="banner"></div>
@@ -165,9 +191,25 @@
     <div id="spellwin"><div class="card">
       <h2>SPELL</h2>
       <div id="spellfor"></div>
-      <input id="spell" placeholder="type a word: SWORD, BIG WOLF, WORST…" autocomplete="off" spellcheck="false" maxlength="80" />
-      <div class="hint"><kbd>Enter</kbd> casts · <kbd>Esc</kbd> cancels · adjectives alone (WORST) and events (FIRE) are aimed with a click · <kbd>give player2 abc</kbd> trades letters</div>
-      <div id="preview"></div>
+      <input id="spell" autocomplete="off" spellcheck="false" maxlength="80" />
+    </div></div>
+    <div id="menu"><div class="card">
+      <h2>MENU</h2>
+      <dl>
+        <dt>Move</dt><dd>WASD, arrows, or click the ground</dd>
+        <dt>Attack</dt><dd>click someone or something</dd>
+        <dt>Inspect</dt><dd>right-click</dd>
+        <dt>Spell</dt><dd><kbd>Enter</kbd>, type, <kbd>Enter</kbd> · adjectives alone (WORST) and events (FIRE) then take a click</dd>
+        <dt>Trade</dt><dd><kbd>Enter</kbd> give player2 abc</dd>
+        <dt>Gather</dt><dd><kbd>G</kbd></dd>
+        <dt>Pick up / get on</dt><dd><kbd>E</kbd></dd>
+        <dt>Get off</dt><dd><kbd>R</kbd></dd>
+        <dt>Drop</dt><dd><kbd>Q</kbd></dd>
+        <dt>Use</dt><dd><kbd>U</kbd></dd>
+        <dt>Inventory</dt><dd><kbd>I</kbd></dd>
+        <dt>Loadout</dt><dd><kbd>L</kbd></dd>
+      </dl>
+      <button id="resume">Resume</button>
     </div></div>
     <div id="aimcursor"></div>
     <div id="inspect"></div>

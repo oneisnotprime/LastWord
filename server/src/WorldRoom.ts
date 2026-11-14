@@ -1,7 +1,7 @@
 import { Room, type Client } from "colyseus";
 import { StateView } from "@colyseus/schema";
 import {
-  addLetters, afflict, aggressive, clearLine, courageOf, pluralize, auras, authorityOf, chooseTarget, commandLimit, draw, groundFood, hasAny, ignoresOrder, moraleAim, moraleGoal, needs, nextMorale, noStores, outputs, recruitRate, rerouteSeconds, startingSupply, becomes, retreats, routed, supply, theftResistance, HUNGER_LOYALTY, NORMAL, STARTING_STORES, STARVING, SUPPLIES, bodyFlags, cure, useObject, findPath, hampered, inflicts, statusDamage, statusEffects, tickStatuses, wake, GATHER_SECONDS, gatherLetter, generateMap, GIVE_RANGE, missing, parsePhrase, applyAdjectives, cannotCarry, improvisable, readDescription, production, resolveSpelled, SEPARATE_UP_TO, nearestWalkable, randomWalkable, resolve, Tile, tileAt, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit,
+  addLetters, afflict, cannotRide, claimOf, senseOf, combineSenses, type Sense, type Sensed, aggressive, clearLine, courageOf, pluralize, auras, authorityOf, chooseTarget, commandLimit, draw, groundFood, hasAny, ignoresOrder, moraleAim, moraleGoal, needs, nextMorale, noStores, outputs, recruitRate, rerouteSeconds, startingSupply, becomes, retreats, routed, supply, theftResistance, HUNGER_LOYALTY, NORMAL, STARTING_STORES, STARVING, SUPPLIES, bodyFlags, cure, useObject, findPath, hampered, inflicts, statusDamage, statusEffects, tickStatuses, wake, GATHER_SECONDS, gatherLetter, generateMap, GIVE_RANGE, missing, parsePhrase, applyAdjectives, cannotCarry, improvisable, readDescription, production, resolveSpelled, SEPARATE_UP_TO, nearestWalkable, randomWalkable, resolve, Tile, tileAt, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit,
   type Affliction, type Candidate, type Dictionary, type Stores, type Supply, type Entity, type Hampered, type Status, type Stats, type Letters, type LoadoutDetail, type Op, type Phrase, type Point, type Spelled, type Value, type WordDef, type WorldMap,
 } from "@lastword/shared";
 import { affords, botSettings, chooseWord, held, wordBook, type BotWord, type Difficulty, type Use } from "./bots.js";
@@ -77,6 +77,12 @@ interface Area {
   lasts: number;
   /** Integrity a second it restores to its owner's side among whoever it reaches. */
   heals: number;
+  /**
+   * Claimed ground (shared `claimOf`): the owner's things inside take `shelter` less damage and
+   * are `security` harder to steal; `source` is the thing on the ground that claims it, which is
+   * not sheltered itself (its walls take the blows), or "" for a claim someone carries.
+   */
+  claim?: { shelter: number; security: number; source: string };
 }
 
 /** What areas start with before a word's own properties say otherwise. */
@@ -199,6 +205,8 @@ interface Walker {
   shunned?: string;
   /** What the loadout last showed of morale, stores and command, to tell only when it changes. */
   shown: string;
+  /** For a person: words that became part of their screen (shared `senseOf`): a MAP's minimap. */
+  senses?: Sense[];
 }
 
 /** What a new walker's mind and stores start as. */
@@ -310,6 +318,10 @@ export class WorldRoom extends Room {
   private lastBeat = 0;
   /** What each carried or grounded thing is, resolved once, for upkeep and command. */
   private resolved = new WeakMap<Gear, { count: number; stats: Stats }>();
+  /** People knocked out, by session id: whom they watch (their killer, then their killer's killer) and what of it they were sent. */
+  private watchers = new Map<string, { watch: string; seen: Set<string>; seenThings: Set<string> }>();
+  /** The shortest words that make each supply, for "out of fuel" hints. */
+  private suppliers = new Map<Supply, string[]>();
 
   messages = {
     /** Walk toward a point on the map. */
@@ -355,6 +367,21 @@ export class WorldRoom extends Room {
         const free = t.owner === client.sessionId || t.owner === "";
         if (free && d <= bestDistance && this.grounded.has(id) && !this.grounded.get(id)!.terrain) { best = id; bestDistance = d; }
       });
+      // A mount of your own walking with you: get back on it.
+      const mount = [...this.walkers].find(([, c]) => c.master === client.sessionId && c.unit.body.stats.flag("mountable") &&
+        Math.hypot(c.player.x - walker.player.x, c.player.y - walker.player.y) <= TAKE_RANGE);
+      if (mount && !walker.gear.some((g) => g.vehicle)) {
+        const [cid, c] = mount;
+        const ride: Gear = { spelled: { ...c.body, ...(c.player.count > 1 ? { count: c.player.count } : {}) }, phrase: c.player.name, vehicle: true, integrity: c.hp };
+        const problem = this.equip(walker, ride);
+        if (problem) return void client.send("refused", problem);
+        this.unradiateAll(cid);
+        this.walkers.delete(cid);
+        this.state.players.delete(cid);
+        for (const o of this.walkers.values()) { if (o.foe === cid) o.foe = null; if (o.picked === cid) o.picked = null; }
+        this.tell(walker);
+        return void this.refreshViews();
+      }
       if (!best) return void client.send("refused", "Nothing of yours to pick up here");
       const gear = this.grounded.get(best)!;
       // Anything light enough is carried in a free hand as an improvised weapon (shared `improvised`).
@@ -365,6 +392,26 @@ export class WorldRoom extends Room {
       this.removeThing(best);
       this.tell(walker);
       client.send("notice", `${gear.phrase.toUpperCase()} ${loose ? "in hand" : "equipped"}`);
+      this.refreshViews();
+    },
+    /**
+     * Get off what you ride. It stays yours: a machine (a CAR, a TRAIN) stays on the ground where
+     * you got off, a living mount (a HORSE, an ASS) walks with you as a creature. E gets back on.
+     */
+    dismount: (client: Client) => {
+      const walker = this.walkers.get(client.sessionId);
+      if (!walker) return;
+      const at = walker.gear.findIndex((g) => g.vehicle);
+      if (at < 0) return void client.send("refused", "You are not riding anything");
+      const [ride] = walker.gear.splice(at, 1);
+      this.rebuild(walker);
+      const { x, y } = walker.player;
+      if (this.statsOf(ride!).flag("alive")) {
+        this.addCreature(ride!, client.sessionId, x + 0.6, y, ride!.spelled.count ?? 1, ride!.integrity ?? undefined);
+        this.command(client.sessionId);
+      } else this.addThing(ride!, client.sessionId, x + 0.6, y);
+      this.tell(walker);
+      client.send("notice", `Off ${ride!.phrase.toUpperCase()} (E: back on)`);
       this.refreshViews();
     },
     /** Put down something you carry: the one at `index`, or the last thing equipped. */
@@ -736,6 +783,7 @@ export class WorldRoom extends Room {
       if (w.master === client.sessionId) { w.master = "-"; w.player.owner = "-"; this.showStatus(w); }
     }
     this.walkers.delete(client.sessionId);
+    this.watchers.delete(client.sessionId);
     this.state.players.delete(client.sessionId);
     this.unradiateAll(client.sessionId);
   }
@@ -753,6 +801,10 @@ export class WorldRoom extends Room {
    */
   equip(walker: Walker, gear: Gear): string | null {
     const slot = this.slotOf(gear);
+    if (gear.vehicle) {
+      const why = cannotRide(this.statsOf(gear), gear.phrase);
+      if (why) return why;
+    }
     if (slot !== "held" && slot !== "graft" && walker.gear.some((g) => this.slotOf(g) === slot)) {
       return slot === "ride" ? "You are already riding something" : `You already wear something on your ${slot}`;
     }
@@ -791,6 +843,8 @@ export class WorldRoom extends Room {
     const air = unit.movement.num("speed_air");
     walker.flying = air > 0;
     walker.speed = Math.max(unit.movement.num("speed_land"), air);
+    // A ridden machine out of fuel or power goes nowhere (and comes down) until it is fed again.
+    if (unit.riding && walker.gear.find((g) => g.vehicle)?.stalled) { walker.flying = false; walker.speed = 0; }
     const dark = this.state.daylight === "night" && !unit.body.stats.flag("night_vision");
     walker.sight = (unit.body.stats.num("sight_range") * (dark ? NIGHT_SIGHT : 1)) / TILE_METERS;
     walker.player.gear = [...walker.gear.map((g) => g.phrase), ...walker.buffs.map((b) => b.word.toUpperCase())].join(", ");
@@ -855,6 +909,7 @@ export class WorldRoom extends Room {
       creatures: [...this.walkers.values()].filter((w) => w.master === walker.id).map((w) => ({
         name: w.player.name, health: w.player.hp, ...(w.hungry ? { hungry: true } : {}), ...(w.fleeing ? { fleeing: true } : {}),
       })),
+      senses: (walker.senses ?? []).map((x) => ({ ...x })),
     };
     client.send("loadout", detail);
   }
@@ -1230,7 +1285,7 @@ export class WorldRoom extends Room {
       if (hungry && !state.hungry) tellOwner(`Your ${name.toUpperCase()} is hungry`);
       state.hungry = hungry;
       state.hungerLost = Math.max(0, state.hungerLost + (hungry ? 1 : -1) * HUNGER_LOYALTY * (since / 60));
-      if (hungry) short.push(`${name}: ${missingText(lacking)}`);
+      if (hungry) short.push(`${name} is hungry (${missingText(lacking)})`);
       return hungry && state.hungerLost >= loyalty;
     };
 
@@ -1244,7 +1299,7 @@ export class WorldRoom extends Room {
       if (starving) tellOwner("You are starving: eat something, or gather where things grow");
     }
     if (starving) {
-      short.push("you: no food");
+      short.push("you are starving (no food)");
       w.unit.body.integrity -= w.unit.body.stats.num("integrity") * STARVING * (since / 60);
       this.settle(id, w);
       if (w.unit.dead) { tellOwner("You starved"); this.kill(id, ""); return; }
@@ -1289,14 +1344,32 @@ export class WorldRoom extends Room {
         continue;
       }
       const stalled = lacking.length > 0;
-      if (stalled && !g.stalled) tellOwner(`Your ${name.toUpperCase()} has ${missingText(lacking)}: it stops working`);
-      else if (!stalled && g.stalled) tellOwner(`Your ${name.toUpperCase()} is working again`);
+      const until = lacking.map((k) => ({ fuel: "refuelled", power: "powered again", food: "fed" })[k]).join(" and ");
+      if (stalled && !g.stalled) {
+        tellOwner(`${name.toUpperCase()} out of ${lacking.join(" and ")}: stopped until ${until}.${this.supplierHint(lacking)}`);
+      } else if (!stalled && g.stalled) tellOwner(`Your ${name.toUpperCase()} is working again`);
+      const changed = g.stalled !== stalled;
       g.stalled = stalled;
-      if (stalled) short.push(`${name}: ${missingText(lacking)}`);
+      if (changed && tid === null) this.rebuild(w); // a ridden machine stops (or goes again)
+      if (stalled) short.push(`${name} out of ${lacking.join(" and ")}: stopped`);
     }
     w.upkeep.need = need;
     w.upkeep.make = make;
     w.upkeep.short = short;
+  }
+
+  /** " Spell COAL or OIL for fuel." The shortest words that supply what ran short, from the dictionary. */
+  private supplierHint(lacking: Supply[]): string {
+    const hints = lacking.map((k) => {
+      let words = this.suppliers.get(k);
+      if (!words) {
+        words = [...this.dict.words].filter(([, d]) => d.role === "noun" && Number(d.set[`${k}_output`] ?? 0) > 0).map(([w]) => w)
+          .sort((a, b) => a.length - b.length || a.localeCompare(b)).slice(0, 2);
+        this.suppliers.set(k, words);
+      }
+      return words.length ? ` ${words.map((w) => w.toUpperCase()).join(" or ")} makes ${k}.` : "";
+    });
+    return hints.join("");
   }
 
   /**
@@ -1373,7 +1446,35 @@ export class WorldRoom extends Room {
       if (shown !== w.shown) { w.shown = shown; this.tell(w); }
     }
     for (const [id, w] of [...this.walkers]) if (w.master === "-") this.roam(id, w);
+    for (const [id, w] of this.walkers) if (w.senses?.length) this.sendSensed(id, w);
     this.nearGrid = null; // walkers move between beats
+  }
+
+  /**
+   * What a person's senses (a MAP, a COMPASS) pick up around them, for their minimap: living things
+   * within `detect_life`, and things that make letters within `detect_letters`.
+   */
+  private sendSensed(id: string, w: Walker) {
+    const client = this.clients.find((c) => c.sessionId === id);
+    if (!client || !w.senses?.length) return;
+    const { letters, life } = combineSenses(w.senses);
+    const near = (p: Point, r: number) => Math.hypot(p.x - w.player.x, p.y - w.player.y) <= r;
+    const at = (v: number) => Math.round(v * 10) / 10;
+    const out: Sensed = { life: [], letters: [] };
+    if (life > 0) {
+      for (const [oid, o] of this.walkers) {
+        if (oid !== id && o.unit.body.stats.flag("alive") && near(o.player, life)) {
+          out.life.push({ x: at(o.player.x), y: at(o.player.y), mine: o.master === id, person: o.master === null });
+        }
+      }
+    }
+    if (letters > 0) {
+      for (const [pid, p] of this.producers) {
+        const t = this.state.things.get(pid);
+        if (t && near(t, letters)) out.letters.push({ x: at(t.x), y: at(t.y), letters: Object.keys(p.rates).join("") });
+      }
+    }
+    client.send("sensed", out);
   }
 
   get counts(): RoomCounts {
@@ -1394,6 +1495,15 @@ export class WorldRoom extends Room {
     this.clock.setTimeout(() => void this.disconnect(), ROUND_END_SECONDS * 1000);
   }
 
+  /**
+   * True for a person steered by a client. Their route searches never wait on the per-tick budget:
+   * with many bots and creatures searching first, a person's search could wait tick after tick,
+   * and steering (which asks for a new route ten times a second) went nowhere.
+   */
+  private steered(w: Walker): boolean {
+    return w.master === null && !this.bots.has(w.id);
+  }
+
   /** Moves a walker along a route to its target, going around anything it cannot cross. */
   private walk(w: Walker, seconds: number) {
     const target = w.target!;
@@ -1406,7 +1516,7 @@ export class WorldRoom extends Room {
     const drift = w.routeTo ? Math.hypot(w.routeTo.x - target.x, w.routeTo.y - target.y) : Infinity;
     // A dim creature (shared `rerouteSeconds`) is slow to see that its quarry has moved.
     const every = w.master === null ? 1 : rerouteSeconds(w.intelligence);
-    if ((drift === Infinity || (drift > 2 && w.routeAge > every)) && this.routesLeft > 0) {
+    if ((drift === Infinity || (drift > 2 && w.routeAge > every)) && (this.routesLeft > 0 || this.steered(w))) {
       this.routesLeft--;
       // Aim for ground: asking for the sea should walk you to the shore, not search the whole map.
       w.route = findPath(this.map, w.player, nearestWalkable(this.map, target));
@@ -1475,6 +1585,13 @@ export class WorldRoom extends Room {
       vehicle: phrase.stats.flag("mountable"),
       integrity: null,
     });
+    // A word that only shows things (a MAP) becomes part of its owner's screen, not an object.
+    const sense = walker.master === null ? senseOf(this.dict, phrase.noun, phrase.stats) : null;
+    if (sense) {
+      (walker.senses ??= []).push(sense);
+      this.sendSensed(owner, walker);
+      return "is on your screen: a minimap";
+    }
     // Living things that can move act on their own; ones you can ride are gear instead.
     if (becomes(phrase.stats) === "creature") {
       for (let i = 0; i < copies; i++) { const p = at(i); this.addCreature(one(), owner, p.x, p.y, each); }
@@ -1493,7 +1610,9 @@ export class WorldRoom extends Room {
       if (tile !== undefined) gear.terrain = true;
       // Things you can hold, wear or ride go straight onto you if there is room; the rest sit on the ground.
       const wearable = gear.vehicle || phrase.stats.get("equip_slot") !== "none";
-      if (wearable && this.equip(walker, gear) === null) { worn++; continue; }
+      const problem = wearable ? this.equip(walker, gear) : "";
+      if (problem === null) { worn++; continue; }
+      if (problem && gear.vehicle) this.sendTo(owner, "notice", problem);
       const p = i === 0 ? here : at(i);
       const id = this.addThing(gear, owner, p.x, p.y);
       const rates = production(phrase.stats);
@@ -1785,7 +1904,7 @@ export class WorldRoom extends Room {
     }
     const key = `z${this.nextThing++}`;
     this.areas.set(key, area);
-    this.state.zones.set(key, Object.assign(new Zone(), { word: area.word, x: area.x, y: area.y, radius: area.radius }));
+    this.state.zones.set(key, Object.assign(new Zone(), { word: area.word, x: area.x, y: area.y, radius: area.radius, owner: "", shelter: 0 }));
     this.burn(key, area, 0);
     return `${word} for ${minutes >= 1 ? `${minutes} minute${minutes === 1 ? "" : "s"}` : "a moment"}`;
   }
@@ -1876,7 +1995,12 @@ export class WorldRoom extends Room {
   private addArea(area: Area, shown: boolean): string {
     const key = `z${this.nextThing++}`;
     this.areas.set(key, area);
-    if (shown) this.state.zones.set(key, Object.assign(new Zone(), { word: area.word, x: area.x, y: area.y, radius: area.radius >= this.map.size * 2 ? 0 : area.radius }));
+    if (shown) {
+      this.state.zones.set(key, Object.assign(new Zone(), {
+        word: area.word, x: area.x, y: area.y, radius: area.radius >= this.map.size * 2 ? 0 : area.radius,
+        owner: area.claim ? area.owner : "", shelter: area.claim ? Math.round(area.claim.shelter * 100) : 0,
+      }));
+    }
     this.fieldsDirty = true;
     return key;
   }
@@ -1896,6 +2020,17 @@ export class WorldRoom extends Room {
     if (s.num("field_radius") > 0) {
       const area = this.fieldArea(spelled.noun, s, def, owner, at, follows);
       if (acts(area)) made.push([area, true]);
+    }
+    const claim = claimOf(s);
+    if (claim) {
+      // Claimed ground: everything of the owner's inside is sheltered (shared `claimOf`).
+      const radius = Math.max(1, claim.radius);
+      const ops: Op[] = [...this.dict.properties.keys()].filter((k) => k.startsWith("res_")).map((k) => [k, "add", claim.shelter]);
+      made.push([{
+        word: spelled.noun, owner, x: at.x, y: at.y, radius, until: Infinity, attack: null, cooldown: 0, friendlyFire: false, killBonus: 1,
+        spread: 0, effect: { word: spelled.noun, set: {}, ops, until: Infinity }, targets: "owned", follows, ...AREA_DEFAULTS,
+        baseRadius: radius, lasts: Infinity, claim: { shelter: claim.shelter, security: claim.security, source: follows ? "" : holder },
+      }, true]);
     }
     for (const aura of auras(s, sightM)) {
       const radius = Math.max(1, aura.radius / TILE_METERS);
@@ -1957,6 +2092,7 @@ export class WorldRoom extends Room {
   /** True if a field reaches a walker, by its targets and its position. */
   private reaches(a: Area, wid: string, w: Walker): boolean {
     if (Math.hypot(w.player.x - a.x, w.player.y - a.y) > a.radius) return false;
+    if (a.claim?.source === wid) return false; // a claim's own walls take the blows
     const mine = wid === a.owner || w.master === a.owner;
     switch (a.targets) {
       case "self": return wid === a.owner;
@@ -1965,6 +2101,18 @@ export class WorldRoom extends Room {
       case "living": return w.unit.body.stats.flag("alive");
       default: return true;
     }
+  }
+
+  /** The best claim of `owner`'s covering a point, not counting the one `source` makes: its shelter and security. */
+  private claimAt(owner: string, p: Point, source: string): { shelter: number; security: number } {
+    let best = { shelter: 0, security: 0 };
+    if (!owner || owner === "-") return best;
+    for (const a of this.areas.values()) {
+      if (!a.claim || a.owner !== owner || a.claim.source === source || Math.hypot(p.x - a.x, p.y - a.y) > a.radius) continue;
+      if (a.claim.shelter > best.shelter) best = { shelter: a.claim.shelter, security: Math.max(best.security, a.claim.security) };
+      else best.security = Math.max(best.security, a.claim.security);
+    }
+    return best;
   }
 
   /** Gives every walker the effects of the fields it stands in; rebuilds only those that changed. */
@@ -2086,7 +2234,7 @@ export class WorldRoom extends Room {
     };
     const key = `z${this.nextThing++}`;
     this.areas.set(key, copy);
-    this.state.zones.set(key, Object.assign(new Zone(), { word: copy.word, x: copy.x, y: copy.y, radius: copy.radius }));
+    this.state.zones.set(key, Object.assign(new Zone(), { word: copy.word, x: copy.x, y: copy.y, radius: copy.radius, owner: "", shelter: 0 }));
     this.clients.find((c) => c.sessionId === hid)?.send("notice", `You caught ${a.word.toUpperCase()}`);
   }
 
@@ -2204,7 +2352,8 @@ export class WorldRoom extends Room {
     if (Math.hypot(thing.x - walker.player.x, thing.y - walker.player.y) > reach) throw new Error(`Too far away for ${word}`);
     // The speller's own stat against the thing's: stealth against security for a theft.
     const mine = walker.unit.body.stats.num(String(phrase.stats.get("contest_with")));
-    const theirs = resolveSpelled(this.dict, gear.spelled).num(String(phrase.stats.get("contested_by")));
+    // Claimed ground (HOME, CASTLE) adds its security to what lies on it.
+    const theirs = resolveSpelled(this.dict, gear.spelled).num(String(phrase.stats.get("contested_by"))) + this.claimAt(thing.owner, thing, targetId).security;
     const [by, against] = [phrase.stats.get("contested_by"), phrase.stats.get("contest_with")].map((p) => String(p).replaceAll("_", " "));
     if (mine < theirs) throw new Error(`${gear.phrase.toUpperCase()} is too well guarded (${by} ${theirs} against your ${against} ${mine})`);
     this.clients.find((c) => c.sessionId === thing.owner)?.send("notice", `Your ${gear.phrase.toUpperCase()} was stolen`);
@@ -2227,7 +2376,7 @@ export class WorldRoom extends Room {
     if (Math.hypot(creature.player.x - walker.player.x, creature.player.y - walker.player.y) > reach) throw new Error(`Too far away for ${word}`);
     const by = String(phrase.stats.get("contested_by")), wit = String(phrase.stats.get("contest_with"));
     const mine = walker.unit.body.stats.num(wit);
-    const theirs = theftResistance(creature.unit.body.stats, by);
+    const theirs = theftResistance(creature.unit.body.stats, by) + this.claimAt(creature.master ?? "", creature.player, targetId).security;
     if (mine < theirs) throw new Error(`${name} will not leave its master (loyalty or ${by} ${theirs} against your ${wit} ${mine})`.replaceAll("_", " "));
     const before = creature.master;
     this.clients.find((c) => c.sessionId === before)?.send("notice", `Your ${name} was stolen`);
@@ -2306,6 +2455,14 @@ export class WorldRoom extends Room {
     client?.send("dead", killer?.player.name ?? "something");
     this.walkers.delete(id);
     this.state.players.delete(id);
+    // The knocked out watch whoever knocked them out (a creature's master), and when that one falls, their killer.
+    const next = this.blame(killerId);
+    if (client) this.watchers.set(id, { watch: id, seen: dead.seen, seenThings: dead.seenThings });
+    for (const [cid, v] of this.watchers) {
+      if (v.watch !== id || !next) continue;
+      v.watch = next;
+      this.sendTo(cid, "watching", { id: next, name: this.walkers.get(next)!.player.name });
+    }
     const owner = dead.master ? this.walkers.get(dead.master) : undefined;
     if (owner) this.tell(owner);
     for (const w of this.walkers.values()) {
@@ -2321,6 +2478,17 @@ export class WorldRoom extends Room {
     this.refreshViews();
   }
 
+  /**
+   * Whom to watch after `killerId` knocks someone out: its master if it is someone's creature, else
+   * itself; if it is gone (an area whose maker left), whoever is still in the round.
+   */
+  private blame(killerId: string): string | null {
+    const k = this.walkers.get(killerId);
+    if (k?.master && k.master !== "-" && this.walkers.has(k.master)) return k.master;
+    if (k) return killerId;
+    return this.people[0] ?? null;
+  }
+
   /** One strike on a thing lying on the ground. Destroying things is where D comes from. */
   private strikeThing(attackerId: string, attack: Stats, id: string, thing: Thing) {
     const gear = this.grounded.get(id)!;
@@ -2330,7 +2498,11 @@ export class WorldRoom extends Room {
       if (gear.integrity !== null) entity.integrity = gear.integrity;
       this.thingEntities.set(id, entity);
     }
+    const before = entity.integrity;
     strike(attack, entity, this.rng);
+    // On its owner's claimed ground a thing takes only part of the blow.
+    const { shelter } = this.claimAt(thing.owner, thing, id);
+    if (shelter > 0 && entity.integrity < before) entity.integrity = before - (before - entity.integrity) * (1 - Math.min(1, shelter));
     gear.integrity = entity.integrity;
     thing.hp = Math.max(0, Math.ceil((entity.integrity / entity.stats.num("integrity")) * 100));
     if (entity.integrity > 0) return;
@@ -2411,7 +2583,7 @@ export class WorldRoom extends Room {
         this.rebuild(w);
         this.clients.find((c) => c.sessionId === id)?.send("notice", `${over.map((b) => b.word.toUpperCase()).join(", ")} wore off`);
       }
-      if (w.target && w.hamper.moves && (w.route.length || w.flying || this.routesLeft > 0)) this.walk(w, seconds);
+      if (w.target && w.hamper.moves && (w.route.length || w.flying || this.routesLeft > 0 || this.steered(w))) this.walk(w, seconds);
     }
     for (const [id, w] of [...this.walkers]) if (w.statuses.length && this.walkers.has(id)) this.sufferStatuses(id, w, seconds);
     for (const [key, a] of [...this.areas]) this.burn(key, a, seconds);
@@ -2521,9 +2693,12 @@ export class WorldRoom extends Room {
       (grid.get(k) ?? grid.set(k, []).get(k)!).push(id);
     }
     for (const client of this.clients) {
-      const me = this.walkers.get(client.sessionId);
+      // The knocked out see what their killer sees (`watchers`), with their own record of what is in view.
+      const own = this.walkers.get(client.sessionId), watching = own ? undefined : this.watchers.get(client.sessionId);
+      const me = own ?? (watching && this.walkers.get(watching.watch));
       if (!me || !client.view) continue;
-      const now = new Set([client.sessionId]);
+      const seenBy = own ?? watching!;
+      const now = new Set([own ? client.sessionId : watching!.watch]);
       for (let dx = -1; dx <= 1; dx++) {
         for (let dy = -1; dy <= 1; dy++) {
           for (const id of grid.get(key(me.player.x + dx * cell, me.player.y + dy * cell)) ?? []) {
@@ -2532,14 +2707,14 @@ export class WorldRoom extends Room {
           }
         }
       }
-      for (const id of now) if (!me.seen.has(id)) client.view.add(this.walkers.get(id)!.player);
-      for (const id of me.seen) {
+      for (const id of now) if (!seenBy.seen.has(id)) client.view.add(this.walkers.get(id)!.player);
+      for (const id of seenBy.seen) {
         if (!now.has(id)) {
           const gone = this.walkers.get(id)?.player;
           if (gone) client.view.remove(gone);
         }
       }
-      me.seen = now;
+      seenBy.seen = now;
 
       const things = new Set<string>();
       const reach = Math.ceil(me.sight / THING_CELL);
@@ -2551,12 +2726,12 @@ export class WorldRoom extends Room {
           }
         }
       }
-      for (const id of things) if (!me.seenThings.has(id)) client.view.add(this.state.things.get(id)!);
-      for (const id of me.seenThings) {
+      for (const id of things) if (!seenBy.seenThings.has(id)) client.view.add(this.state.things.get(id)!);
+      for (const id of seenBy.seenThings) {
         const gone = this.state.things.get(id);
         if (!things.has(id) && gone) client.view.remove(gone);
       }
-      me.seenThings = things;
+      seenBy.seenThings = things;
     }
   }
 }
