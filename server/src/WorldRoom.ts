@@ -1368,7 +1368,8 @@ export class WorldRoom extends Room {
   /** What shows under a walker's name: its statuses, and whether it is fleeing, hungry or wild. */
   private showStatus(w: Walker) {
     const words: string[] = [...new Set(w.statuses.map((a) => a.status))];
-    if (w.fleeing && !words.includes("fear")) words.push("fleeing");
+    // Running from someone: "fleeing" when broken, "retreating" when badly hurt. Nobody near to run from, no label.
+    if (w.fleeing && !words.includes("fear") && (w.fleeFrom || w.master === null)) words.push(routed(w.morale) ? "fleeing" : "retreating");
     if (w.hungry) words.push(w.master === null ? "starving" : "hungry");
     if (w.master === "-") words.push("wild");
     const text = words.join(" ");
@@ -1380,6 +1381,12 @@ export class WorldRoom extends Room {
     const before = w.master;
     w.master = master; w.player.owner = master;
     w.foe = null; w.target = null; w.order = null; w.defiant = false; w.hungerLost = 0; w.hungry = false;
+    // A fresh mind on a new side: no longer running, nerve back, and no fear or charm left over
+    // from the side it was on (it would run from, or spare, its new master's enemies' foes).
+    w.fleeing = false; w.fleeFrom = null;
+    w.morale = Math.max(w.morale, w.moraleBase); w.moraleGoal = Math.max(w.moraleGoal, w.moraleBase);
+    const kept = w.statuses.filter((a) => a.status !== "fear" && a.status !== "charm");
+    if (kept.length !== w.statuses.length) { w.statuses = kept; this.statusChanged(w); }
     this.unradiateAll(id);
     this.syncRadiation(w);
     this.showStatus(w);
@@ -1610,12 +1617,15 @@ export class WorldRoom extends Room {
       if (w.morale < w.moraleGoal) w.morale = nextMorale(w.morale, w.moraleGoal, since);
       this.nerve(w);
       // Keep running from the same enemy while it is still near; else find the nearest.
+      // (Only while it is still an enemy: a creature that changed sides stops running from its new master.)
       const from = w.fleeing && w.fleeFrom ? this.walkers.get(w.fleeFrom) : undefined;
-      if (from && Math.hypot(from.player.x - w.player.x, from.player.y - w.player.y) <= Math.max(w.sight, FLEE_TILES)) continue;
-      if (w.fleeing) w.fleeFrom = chooseTarget(0, this.enemiesNear(id, w, Math.max(w.sight, FLEE_TILES)).map((oid) => {
+      if (from && this.side(w.fleeFrom!, from) !== this.side(id, w) && Math.hypot(from.player.x - w.player.x, from.player.y - w.player.y) <= Math.max(w.sight, FLEE_TILES)) continue;
+      const was = w.fleeFrom;
+      w.fleeFrom = !w.fleeing ? null : chooseTarget(0, this.enemiesNear(id, w, Math.max(w.sight, FLEE_TILES)).map((oid) => {
         const o = this.walkers.get(oid)!;
         return { id: oid, distance: Math.hypot(o.player.x - w.player.x, o.player.y - w.player.y), health: o.hp };
       }));
+      if (!was !== !w.fleeFrom) this.showStatus(w);
     }
     for (const [id, h] of this.holdings()) {
       const w = this.walkers.get(id);
@@ -2595,8 +2605,11 @@ export class WorldRoom extends Room {
         w.foe = null;
         w.gathering = 0;
         const o = w.fleeFrom ? this.walkers.get(w.fleeFrom)?.player : undefined;
-        if (o && h.moves) this.runFrom(w, o);
-        continue;
+        // Nobody to run from: a creature keeps with its master (minds give it no foe while it is shaken).
+        if (o || w.master === null || w.master === "-") {
+          if (o && h.moves) this.runFrom(w, o);
+          continue;
+        }
       }
       if (h.random) {
         if (!second) continue;
