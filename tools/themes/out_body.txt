@@ -1,0 +1,402 @@
+# noun bodypart
+back: equip_slot=graft mass=10 integrity=150 carry_capacity+40 res_slash+0.1 strength+1 container_slots+1
+head: equip_slot=graft mass=5 integrity=80 sight_range+40 hearing_range+40 intelligence+2 immune_confuse=true dmg_blunt+15 inflict_stun+1 plural_count=1
+face: equip_slot=graft mass=1 integrity=30 charm+3 beauty+2 disguise=4 speech=true intimidation+1
+body: equip_slot=graft mass=60 integrity=300 strength+3 carry_capacity+60 dmg_blunt+20 knockback+2 speed_land*0.85 plural_count=1
+eyes: equip_slot=graft mass=0.015 integrity=5 sight_range+150 detect_stealth+3 accuracy+0.1 critical+0.05 plural_count=2
+blood: equip_slot=graft mass=5 integrity=40 state=liquid color=red regeneration+3 morale+1 courage+1 immune_bleed=true res_disease+0.1
+hair: equip_slot=graft mass=0.3 integrity=5 res_cold+0.2 temp_min+-6 beauty+2 charm+1 plural_count=1
+skin: equip_slot=graft mass=4 integrity=60 armor+4 res_fire+0.1 res_acid+0.15 res_disease+0.2 regeneration+0.5 plural_count=1
+foot: equip_slot=graft mass=1.2 integrity=70 speed_land+2 jump+0.5 dmg_blunt+15 knockback+1 plural_count=2
+mouth: equip_slot=graft mass=0.3 integrity=30 speech=true charm+1 dmg_pierce+8 food_need*1.2 loudness+2 plural_count=1
+joint: equip_slot=graft mass=0.3 integrity=40 agility+2 climb+1 attack_rate*1.1 jump+0.5 plural_count=2
+legs: equip_slot=graft mass=24 integrity=240 speed_land+6 jump+3 dmg_blunt+30 knockback+3 carry_capacity+20 plural_count=2
+neck: equip_slot=graft mass=2 integrity=60 sight_range+30 agility+1 attack_range+0.5 res_slash+0.1
+teeth: equip_slot=graft mass=0.3 integrity=60 hardness=9 sharpness=6 dmg_pierce+25 dmg_crush+10 inflict_bleed+2 plural_count=32
+nose: equip_slot=graft mass=0.05 integrity=10 smell_range+300 tracking+4 detect_stealth+2 counters=disguise
+shoulder: equip_slot=graft mass=4 integrity=100 carry_capacity+30 knockback+2 dmg_blunt+15 block+0.05 plural_count=2
+finger: equip_slot=graft mass=0.05 integrity=10 accuracy+0.05 craft_slots+1 dmg_pierce+3 letter_steal+1 plural_count=10
+hip: equip_slot=graft mass=3 integrity=90 speed_land+1 agility+1 carry_capacity+15 knockback+1 plural_count=2
+hearts: equip_slot=graft mass=0.6 integrity=30 regeneration+4 morale+3 courage+3 immune_fear=true food_need*1.2 plural_count=2
+muscle: equip_slot=graft mass=8 integrity=90 strength+3 carry_capacity+40 dmg_blunt+20 knockback+2 food_need*1.3 plural_count=3
+wings: equip_slot=graft mass=10 integrity=60 speed_air+20 flight_ceiling+3000 hover=true agility+1 speed_land*0.9 plural_count=2
+stomach: equip_slot=graft mass=1 integrity=40 res_poison+0.3 res_hunger+0.5 food_need*0.7 immune_sick=true
+tongue: equip_slot=graft mass=0.1 integrity=15 speech=true charm+2 smell_range+20 attack_range+1 inflict_root+1 dmg_slash+2
+gene: equip_slot=graft mass=0 integrity=1 regeneration+1 integrity*1.2 strength+1 intelligence+1 res_disease+0.2 res_radiation+0.2
+knee: equip_slot=graft mass=0.5 integrity=60 jump+1 dmg_blunt+20 inflict_stun+1 climb+1 plural_count=2
+tissue: equip_slot=graft mass=1 integrity=20 regeneration+2 integrity*1.1 res_blunt+0.05
+throat: equip_slot=graft mass=0.5 integrity=20 loudness+4 dmg_sonic+10 speech=true inflict_deaf+1 res_suffocation+0.2
+flesh: equip_slot=graft mass=10 integrity=80 regeneration+1 integrity*1.2 res_blunt+0.1 edible=true nutrition=6 speed_land*0.95
+nerve: equip_slot=graft mass=0.05 integrity=5 agility+2 acceleration+2 evasion+0.05 courage+2 attack_rate*1.1
+liver: equip_slot=graft mass=1.5 integrity=30 res_poison+0.6 immune_poison=true regeneration+1 potency*0.5
+organ: equip_slot=graft mass=1 integrity=30 regeneration+1 res_disease+0.2 integrity*1.1
+lip: equip_slot=graft mass=0.02 integrity=5 charm+2 beauty+1 speech=true plural_count=2
+belly: equip_slot=graft mass=15 integrity=100 food_need*0.8 res_hunger+0.4 res_blunt+0.1 speed_land*0.9 comfort+1
+beard: equip_slot=graft mass=0.1 integrity=5 res_cold+0.15 temp_min+-4 authority+1 intimidation+1 disguise=2
+toe: equip_slot=graft mass=0.03 integrity=10 agility+0.5 climb+0.5 jump+0.2 plural_count=10
+kidney: equip_slot=graft mass=0.15 integrity=20 res_poison+0.3 res_acid+0.1 water_need*0.6 plural_count=2
+gut: equip_slot=graft mass=3 integrity=50 res_poison+0.3 res_hunger+0.3 courage+2 food_need*0.8 res_disease+0.1
+thumb: equip_slot=graft mass=0.05 integrity=15 hands=true grants_equip_slots=held accuracy+0.05 craft_slots+1 plural_count=2
+wrist: equip_slot=graft mass=0.2 integrity=30 agility+1 attack_rate*1.1 accuracy+0.03 plural_count=2
+chin: equip_slot=graft mass=0.2 integrity=40 res_blunt+0.05 courage+1 authority+1
+ankle: equip_slot=graft mass=0.3 integrity=40 agility+1 jump+0.5 speed_land+0.5 plural_count=2
+cheek: equip_slot=graft mass=0.1 integrity=15 charm+1 beauty+1 food_need*0.9 plural_count=2
+waist: equip_slot=graft mass=2 integrity=50 agility+1 evasion+0.05 beauty+1 container_slots+1
+plasma: equip_slot=graft mass=3 state=liquid integrity=20 regeneration+3 res_disease+0.2 restores=40
+fist: equip_slot=graft mass=0.5 integrity=60 hardness=5 dmg_blunt+25 knockback+1 inflict_stun+1 attack_rate*1.2 plural_count=2
+forehead: equip_slot=graft mass=0.3 integrity=80 hardness=6 dmg_blunt+15 inflict_stun+2 res_blunt+0.05 intelligence+1
+elbow: equip_slot=graft mass=0.3 integrity=60 hardness=6 dmg_blunt+20 inflict_stun+1 attack_range*0.8 plural_count=2
+heel: equip_slot=graft mass=0.3 integrity=60 dmg_blunt+15 dmg_crush+10 speed_land+0.5 plural_count=2
+hormone: equip_slot=graft mass=0 integrity=1 growth*1.5 strength+1 aggression+2 morale+1 acceleration+1
+membrane: equip_slot=graft mass=0.5 integrity=15 res_disease+0.3 res_acid+0.2 res_water+0.2 speed_air+3 hover=true
+insulin: equip_slot=graft mass=0 integrity=1 food_need*0.8 res_hunger+0.3 regeneration+0.5
+lid: equip_slot=graft mass=0.01 integrity=5 res_light+0.4 immune_blind=true plural_count=2
+receptor: equip_slot=graft mass=0 integrity=1 detect_stealth+2 hearing_range+20 smell_range+50 detect_life+30
+vein: equip_slot=graft mass=0.2 integrity=20 regeneration+1 strength+1 restores=10 plural_count=6
+corpse: mass=75 integrity=60 alive=false decay_rate=1 odor=7 dmg_disease=5 contagion=0.1 portable=true fear_aura=2 edible=true nutrition=10 material=flesh shelf_life=600
+gore: mass=5 state=liquid color=red odor=6 slipperiness=4 fear_aura=4 inflict_fear=4 intimidation+3 tile_type=marsh radius=1 persistence=10
+serum: mass=0.05 state=liquid potency=7 restores=60 res_disease+0.6 res_poison+0.5 effect_status=sick,poison single_use=true duration=600
+thigh: equip_slot=graft mass=8 integrity=100 speed_land+2 jump+1 dmg_blunt+20 knockback+2 carry_capacity+20 plural_count=2
+limb: equip_slot=graft mass=6 integrity=80 hands=true grants_equip_slots=held speed_land+1 climb+1 dmg_blunt+15 carry_capacity+15 plural_count=4
+plaque: equip_slot=graft mass=0.05 integrity=30 hardness=6 armor+2 speed_land*0.9 regeneration*0.8 dmg_disease=2
+shin: equip_slot=graft mass=1 integrity=80 hardness=6 dmg_blunt+20 inflict_stun+1 res_blunt+0.05 plural_count=2
+artery: equip_slot=graft mass=0.2 integrity=25 regeneration+2 acceleration+1 strength+1 speed_land+0.5
+bladder: equip_slot=graft mass=0.3 integrity=15 buoyancy=4 dive_depth+20 speed_water+1 water_need*0.8
+colon: equip_slot=graft mass=1 integrity=25 res_hunger+0.2 res_disease+0.1 odor=3
+cortex: equip_slot=graft mass=0.5 integrity=8 intelligence+3 read_properties+2 training+1 res_psychic+0.3
+nucleus: equip_slot=graft mass=0 integrity=1 regeneration+1 res_radiation+0.2 intelligence+1
+rib: equip_slot=graft mass=0.2 integrity=80 hardness=6 armor+3 res_pierce+0.1 res_crush+0.1 plural_count=24
+duct: equip_slot=graft mass=0.01 integrity=5 regeneration+0.5 water_need*0.9 res_poison+0.1
+abdomen: equip_slot=graft mass=10 integrity=90 res_hunger+0.3 carry_capacity+15 res_blunt+0.1 strength+1
+bowel: equip_slot=graft mass=2 integrity=30 res_hunger+0.3 food_need*0.9 odor=3
+brow: equip_slot=graft mass=0.1 integrity=30 intimidation+2 res_light+0.1 fear_aura+1 plural_count=1
+marrow: equip_slot=graft mass=1 integrity=30 regeneration+3 res_disease+0.3 res_radiation+0.2 edible=true nutrition=8
+thyroid: equip_slot=graft mass=0.02 integrity=5 acceleration+2 attack_rate*1.1 food_need*1.3 temp_min+-5 growth*1.2
+adrenaline: equip_slot=graft mass=0 integrity=1 speed_land*1.3 strength+3 courage+4 immune_fear=true attack_rate*1.3 immune_sleep=true food_need*1.5
+socket: equip_slot=graft mass=0.1 integrity=40 grants_equip_slots=held hands=true agility+1 plural_count=2
+appendix: equip_slot=graft mass=0.01 integrity=3 res_disease+0.1 dmg_disease=0
+chromosome: equip_slot=graft mass=0 integrity=1 integrity*1.2 regeneration+1 strength+1 res_radiation+0.1 plural_count=46
+scalp: equip_slot=graft mass=0.3 integrity=20 res_cold+0.1 res_light+0.1 res_blunt+0.05 charm+1
+tummy: equip_slot=graft mass=3 integrity=40 food_need*0.9 res_hunger+0.2 comfort+1 charm+1
+mustache: equip_slot=graft mass=0.03 integrity=3 disguise=3 charm+1 authority+1
+torso: equip_slot=graft mass=30 integrity=250 armor+5 strength+2 carry_capacity+40 res_blunt+0.1 speed_land*0.9
+retina: equip_slot=graft mass=0.001 integrity=2 sight_range+80 night_vision=true accuracy+0.05 detect_stealth+1 plural_count=2
+gland: equip_slot=graft mass=0.05 integrity=5 venomous=true toxicity=4 inflict_poison+6 odor=3 regeneration+0.5
+lash: equip_slot=graft mass=0.001 integrity=1 res_light+0.1 immune_blind=true beauty+1 charm+1 plural_count=100
+eyebrow: equip_slot=graft mass=0.002 integrity=2 intimidation+1 charm+1 disguise=1 res_light+0.05 plural_count=2
+palate: equip_slot=graft mass=0.05 integrity=20 smell_range+30 res_poison+0.2 speech=true
+saliva: mass=0.01 state=liquid wetness=2 regeneration+0.5 dmg_disease=2 inflict_sick+5 contagion=0.1 res_poison+0.1
+ligament: equip_slot=graft mass=0.1 integrity=40 elasticity=6 jump+1 agility+1 res_crush+0.05
+hairstyle: equip_slot=graft mass=0.2 integrity=3 beauty+3 charm+2 disguise=3 morale+1
+tendon: equip_slot=graft mass=0.1 integrity=60 elasticity=6 jump+1.5 speed_land+1 strength+1
+lobe: equip_slot=graft mass=0.3 integrity=5 intelligence+1 hearing_range+20 res_psychic+0.1 plural_count=2
+physique: equip_slot=graft mass=10 integrity=120 strength+3 carry_capacity+30 beauty+2 intimidation+2 food_need*1.2
+forearm: equip_slot=graft mass=2 integrity=60 hands=true grants_equip_slots=held dmg_blunt+12 block+0.05 strength+1 plural_count=2
+pore: equip_slot=graft mass=0 integrity=1 temp_max+5 regeneration+0.2 odor=1 res_suffocation+0.1 plural_count=50
+sinus: equip_slot=graft mass=0.02 integrity=5 smell_range+40 res_suffocation+0.1 loudness+1 plural_count=4
+cartilage: equip_slot=graft mass=0.5 integrity=60 elasticity=5 res_blunt+0.15 res_crush+0.1 agility+1
+pelvis: equip_slot=graft mass=1 integrity=150 hardness=6 carry_capacity+25 speed_land+1 res_crush+0.1
+intestine: equip_slot=graft mass=2 integrity=30 res_hunger+0.4 food_need*0.75 res_poison+0.1 plural_count=2
+knuckle: equip_slot=graft mass=0.05 integrity=40 hardness=7 dmg_blunt+15 critical+0.05 inflict_stun+1 plural_count=8
+bile: mass=0.05 state=liquid color=green corrosiveness=4 dmg_acid=15 toxicity=3 odor=5 res_poison+0.2 single_use=true
+lymph: equip_slot=graft mass=1 state=liquid integrity=10 res_disease+0.5 regeneration+1 immune_sick=true
+clot: mass=0.01 integrity=5 immune_bleed=true regeneration+1 speed_land*0.9 inflict_stun=2
+keel: equip_slot=graft mass=0.5 integrity=80 hardness=6 speed_air+5 agility+1 speed_water+2
+bloodstream: equip_slot=graft mass=5 state=liquid integrity=30 regeneration+3 res_disease+0.2 speed_land*1.05 restores=20
+hamstring: equip_slot=graft mass=1 integrity=50 speed_land+3 jump+1 acceleration+2 plural_count=2
+neuron: equip_slot=graft mass=0 integrity=1 intelligence+1 attack_rate*1.05 evasion+0.03 plural_count=100
+mucus: mass=0.05 state=liquid stickiness=6 slipperiness=4 inflict_slow=3 res_disease+0.2 odor=2 dmg_disease=2
+mohawk: equip_slot=graft mass=0.1 integrity=3 intimidation+3 charm+1 aggression+1 morale+2 beauty+2
+pancreas: equip_slot=graft mass=0.1 integrity=10 food_need*0.8 res_hunger+0.3 regeneration+0.5
+spleen: equip_slot=graft mass=0.2 integrity=15 res_disease+0.4 regeneration+1 aggression+2 inflict_rage+2
+cyst: equip_slot=graft mass=0.1 integrity=5 dmg_disease=5 inflict_sick+10 speed_land*0.95 charm+-1
+eyeball: equip_slot=graft mass=0.008 integrity=5 sight_range+100 accuracy+0.05 detect_stealth+2 fear_aura+1 plural_count=2
+snout: equip_slot=graft mass=0.5 integrity=40 smell_range+500 tracking+6 detect_underground=true harvest_bonus+0.5 counters=disguise
+hairline: equip_slot=graft mass=0.05 integrity=2 beauty+1 authority+1 intelligence+1
+ponytail: equip_slot=graft mass=0.2 integrity=4 beauty+2 agility+0.5 charm+1 res_cold+0.05
+biceps: equip_slot=graft mass=2 integrity=60 strength+3 carry_capacity+30 dmg_blunt+15 intimidation+1 plural_count=2
+ruff: equip_slot=graft mass=0.3 integrity=10 beauty+3 intimidation+2 res_cold+0.2 charm+1
+rump: equip_slot=graft mass=8 integrity=80 res_blunt+0.1 dmg_crush+10 carry_capacity+10 speed_land*0.95
+drool: mass=0.01 state=liquid wetness=1 slipperiness=2 charm+-2 dmg_disease=1 inflict_sick+2
+ticker: equip_slot=graft mass=0.3 integrity=25 regeneration+3 morale+2 courage+2 acceleration+1
+pus: mass=0.02 state=liquid color=yellow odor=6 dmg_disease=8 inflict_sick+15 contagion=0.2 charm+-3
+suture: mass=0.01 integrity=10 single_use=true restores=60 effect_status=bleed regeneration+1 immune_bleed=true duration=60
+eyelid: equip_slot=graft mass=0.002 integrity=3 res_light+0.5 immune_blind=true sleep_need*0.8 plural_count=2
+armpit: equip_slot=graft mass=0.1 integrity=10 odor=6 temp_max+3 charm+-1 container_slots+1 plural_count=2
+blister: mass=0.005 integrity=2 speed_land*0.8 dmg_fire=3 inflict_slow=5 charm+-1
+extremity: equip_slot=graft mass=1 integrity=30 hands=true grants_equip_slots=held attack_range+0.5 climb+1 plural_count=4
+femur: equip_slot=graft mass=0.5 integrity=200 hardness=7 dmg_blunt+30 speed_land+1 carry_capacity+20 plural_count=2
+hippocampus: equip_slot=graft mass=0.008 integrity=3 intelligence+2 tracking+3 map_reveal+5 training+1 plural_count=2
+molar: equip_slot=graft mass=0.005 integrity=60 hardness=9 dmg_crush+15 food_need*0.9 plural_count=12
+whiskers: equip_slot=graft mass=0.002 integrity=2 night_vision=true detect_stealth+3 agility+1 evasion+0.05 hearing_range+20 plural_count=24
+withers: equip_slot=graft mass=5 integrity=80 carry_capacity+40 mountable=true seats=1 strength+1
+maw: equip_slot=graft mass=4 integrity=120 hardness=7 dmg_crush+50 dmg_pierce+25 inflict_fear+3 fear_aura+3 lifesteal+0.1
+melatonin: mass=0 potency=4 inflict_sleep=20 effect_status=sleep night_vision=true sleep_need*1.3 duration=300
+navel: equip_slot=graft mass=0.01 integrity=5 beauty+1 charm+1 regeneration+0.2
+pituitary: equip_slot=graft mass=0.0005 integrity=2 growth*2 mass*1.3 strength+2 integrity*1.3 food_need*1.5
+cornea: equip_slot=graft mass=0.001 integrity=5 transparency=0.95 sight_range+50 res_light+0.2 immune_blind=true plural_count=2
+aorta: equip_slot=graft mass=0.3 integrity=40 regeneration+3 speed_land+1 strength+2 acceleration+1
+trotter: equip_slot=graft mass=0.5 integrity=60 hardness=6 dmg_blunt+15 speed_land+2 terrain_ignored=marsh,swamp edible=true nutrition=4 plural_count=4
+esophagus: equip_slot=graft mass=0.1 integrity=20 food_need*0.95 res_poison+0.1 speech=true
+pectoral: equip_slot=graft mass=2 integrity=70 strength+2 speed_air+5 res_blunt+0.1 plural_count=2
+snot: mass=0.01 state=liquid stickiness=4 slipperiness=3 dmg_disease=2 inflict_sick+5 contagion=0.15 charm+-3
+septum: equip_slot=graft mass=0.005 integrity=10 smell_range+30 res_suffocation+0.1
+tibia: equip_slot=graft mass=0.3 integrity=180 hardness=7 dmg_blunt+25 speed_land+1 jump+0.5 plural_count=2
+capillary: equip_slot=graft mass=0 integrity=1 regeneration+1 temp_min+-3 plural_count=100
+thorax: equip_slot=graft mass=8 integrity=150 armor+6 res_pierce+0.15 res_suffocation+0.2 carry_capacity+20
+stubble: equip_slot=graft mass=0.01 integrity=2 intimidation+1 disguise=1 res_cold+0.05 charm+-1
+pinkie: equip_slot=graft mass=0.01 integrity=5 accuracy+0.02 charm+1 plural_count=2
+phalanx: equip_slot=graft mass=0.01 integrity=30 climb+1 accuracy+0.03 dmg_slash+3 plural_count=14
+amygdala: equip_slot=graft mass=0.002 integrity=2 fear_aura+3 alarm=true aggression+3 courage+-2 detect_stealth+2 plural_count=2
+eyelash: equip_slot=graft mass=0.0001 integrity=1 res_light+0.1 beauty+2 charm+1 plural_count=100
+oxytocin: mass=0 potency=5 charm+5 morale+3 loyalty+3 inflict_charm=15 aggression*0.5 duration=300
+gallbladder: equip_slot=graft mass=0.05 integrity=10 res_poison+0.2 food_need*0.9 courage+1
+follicle: equip_slot=graft mass=0 integrity=1 res_cold+0.05 regeneration+0.2 plural_count=100
+collarbone: equip_slot=graft mass=0.05 integrity=90 hardness=6 res_crush+0.1 carry_capacity+10 plural_count=2
+jugular: equip_slot=graft mass=0.05 integrity=10 regeneration+2 critical+0.1 courage+-1 aggression+2
+visage: equip_slot=graft mass=1 integrity=30 charm+2 intimidation+3 fear_aura+2 disguise=4 authority+1
+nostril: equip_slot=graft mass=0.002 integrity=3 smell_range+150 tracking+2 res_suffocation+0.1 plural_count=2
+vertebra: equip_slot=graft mass=0.1 integrity=80 hardness=6 res_crush+0.05 agility+0.5 carry_capacity+5 plural_count=33
+appendage: equip_slot=graft mass=3 integrity=50 hands=true grants_equip_slots=held climb+1 attack_range+1 dmg_blunt+10 plural_count=4
+sternum: equip_slot=graft mass=0.2 integrity=150 hardness=7 armor+4 res_pierce+0.15 res_crush+0.1
+synapse: equip_slot=graft mass=0 integrity=1 intelligence+2 attack_rate*1.1 acceleration+1 evasion+0.03
+mandible: equip_slot=graft mass=0.5 integrity=120 hardness=7 dmg_crush+35 dmg_pierce+10 dmg_slash+10 inflict_root+2 plural_count=2
+ventricle: equip_slot=graft mass=0.1 integrity=20 regeneration+2 acceleration+1 courage+1 plural_count=4
+fingernail: equip_slot=graft mass=0.001 integrity=15 hardness=6 sharpness=4 dmg_slash+5 climb+0.5 inflict_bleed+1 plural_count=10
+teardrop: mass=0.0001 state=liquid wetness=1 charm+3 morale+-1 inflict_charm=3 res_light+0.05
+humerus: equip_slot=graft mass=0.3 integrity=180 hardness=7 dmg_blunt+20 carry_capacity+15 strength+1 plural_count=2
+epidermis: equip_slot=graft mass=3 integrity=50 armor+3 res_acid+0.15 res_disease+0.2 res_fire+0.1 regeneration+0.5
+larynx: equip_slot=graft mass=0.03 integrity=10 loudness+5 dmg_sonic+20 speech=true inflict_deaf+2 charm+1
+cadaver: mass=70 integrity=50 alive=false decay_rate=0.5 odor=6 dmg_disease=4 contagion=0.1 fear_aura=2 material=flesh value=20 shelf_life=1440
+goatee: equip_slot=graft mass=0.01 integrity=2 disguise=2 intimidation+1 charm+1 intelligence+1
+jawbone: equip_slot=graft mass=0.8 integrity=200 hardness=8 dmg_crush+35 dmg_blunt+20 knockback+2
+perspiration: mass=0.3 state=liquid wetness=2 temp_max+12 res_fire+0.15 odor=4 water_need*1.4 slipperiness=2
+trachea: equip_slot=graft mass=0.05 integrity=15 res_suffocation+0.3 dive_depth+10 loudness+1
+axon: equip_slot=graft mass=0 integrity=1 acceleration+1 attack_rate*1.05 accuracy+0.03 plural_count=50
+cerebellum: equip_slot=graft mass=0.15 integrity=5 agility+3 accuracy+0.1 evasion+0.05 climb+1 immune_confuse=true
+fingertip: equip_slot=graft mass=0.005 integrity=5 accuracy+0.05 detect_stealth+1 craft_slots+1 letter_steal+1 plural_count=10
+cranium: equip_slot=graft mass=0.9 integrity=220 hardness=7 res_blunt+0.35 res_psychic+0.2 immune_stun=true dmg_blunt+15
+exoskeleton: equip_slot=graft mass=25 integrity=400 hardness=8 armor+20 res_slash+0.35 res_pierce+0.3 res_crush+0.2 carry_capacity+50 speed_land*0.85
+histamine: mass=0 potency=4 res_disease+0.2 inflict_blind=4 regeneration+1 charm+-1 duration=120
+nape: equip_slot=graft mass=0.2 integrity=20 detect_stealth+2 alarm=true hearing_range+15
+triceps: equip_slot=graft mass=1.5 integrity=50 strength+2 dmg_blunt+12 knockback+1 carry_capacity+15 plural_count=2
+vitals: equip_slot=graft mass=8 integrity=60 regeneration+3 courage+1 integrity*1.2 critical+-0.05
+callus: equip_slot=graft mass=0.01 integrity=30 hardness=5 armor+1 res_fire+0.05 res_slash+0.05 temp_max+5 plural_count=4
+fibula: equip_slot=graft mass=0.1 integrity=120 hardness=6 speed_land+0.5 jump+0.5 plural_count=2
+toenail: equip_slot=graft mass=0.001 integrity=10 hardness=5 sharpness=3 dmg_slash+3 climb+0.3 plural_count=10
+phlegm: mass=0.01 state=liquid stickiness=5 dmg_disease=3 inflict_sick+8 contagion=0.2 charm+-2 res_suffocation+-0.1
+thymus: equip_slot=graft mass=0.03 integrity=5 res_disease+0.4 immune_sick=true regeneration+0.5
+pecs: equip_slot=graft mass=3 integrity=80 strength+2 armor+2 beauty+2 intimidation+2 charm+1 plural_count=2
+entrails: mass=5 integrity=10 odor=7 fear_aura=4 inflict_fear=4 edible=true nutrition=5 decay_rate=2 shelf_life=120 slipperiness=4 dmg_disease=3
+innards: mass=4 integrity=10 odor=6 fear_aura=3 edible=true nutrition=5 decay_rate=2 shelf_life=120 slipperiness=3
+musculature: equip_slot=graft mass=30 integrity=200 strength+5 carry_capacity+80 dmg_blunt+30 knockback+3 intimidation+3 food_need*1.6
+noggin: equip_slot=graft mass=5 integrity=90 hardness=6 dmg_blunt+20 inflict_stun+2 intelligence+1
+brainstem: equip_slot=graft mass=0.03 integrity=5 immune_sleep=true immune_stun=true courage+2 res_suffocation+0.2
+wattle: equip_slot=graft mass=0.05 integrity=5 beauty+1 intimidation+1 charm+1 alarm=true
+clavicle: equip_slot=graft mass=0.05 integrity=90 hardness=6 res_crush+0.1 carry_capacity+10 plural_count=2
+kneecap: equip_slot=graft mass=0.03 integrity=100 hardness=7 res_blunt+0.1 dmg_blunt+15 inflict_stun+1 plural_count=2
+wishbone: mass=0.01 integrity=3 brittleness=8 critical+0.2 morale+3 charm+2 single_use=true duration=600
+lymphocyte: equip_slot=graft mass=0 integrity=1 res_disease+0.4 immune_sick=true regeneration+0.5 counters=sickness,plague,virus plural_count=100
+patella: equip_slot=graft mass=0.03 integrity=100 hardness=7 res_blunt+0.1 jump+0.5 plural_count=2
+scapula: equip_slot=graft mass=0.2 integrity=120 hardness=6 res_pierce+0.1 carry_capacity+15 block+0.05 plural_count=2
+macrophage: equip_slot=graft mass=0 integrity=1 res_disease+0.5 regeneration+1 lifesteal+0.05 counters=sickness,infection,virus,germ
+eardrum: equip_slot=graft mass=0.0001 integrity=2 hearing_range+60 alarm=true detect_stealth+1 res_sonic+-0.2 plural_count=2
+windpipe: equip_slot=graft mass=0.05 integrity=15 res_suffocation+0.3 loudness+2 dive_depth+10
+plait: equip_slot=graft mass=0.2 integrity=10 beauty+2 charm+1 res_slash+0.02 attack_range+0.5
+proboscis: equip_slot=graft mass=0.01 integrity=10 sharpness=8 dmg_pierce+8 lifesteal+0.3 inflict_sick+5 smell_range+100
+gizzard: equip_slot=graft mass=0.1 integrity=40 res_poison+0.3 food_need*0.7 dmg_crush+5 res_hunger+0.2
+craw: equip_slot=graft mass=0.1 integrity=20 food_need*0.8 res_hunger+0.3 container_slots+1
+forefinger: equip_slot=graft mass=0.02 integrity=10 accuracy+0.05 authority+1 dmg_pierce+3 plural_count=2
+quadriceps: equip_slot=graft mass=4 integrity=100 speed_land+3 jump+2 dmg_blunt+25 knockback+2 strength+1 plural_count=2
+freckle: equip_slot=graft mass=0 integrity=1 beauty+1 charm+1 res_light+0.05 plural_count=50
+tonsil: equip_slot=graft mass=0.005 integrity=5 res_disease+0.2 res_suffocation+-0.05 plural_count=2
+ulna: equip_slot=graft mass=0.1 integrity=110 hardness=6 dmg_blunt+10 block+0.03 plural_count=2
+viscera: mass=6 integrity=10 odor=7 fear_aura=4 inflict_fear=5 edible=true nutrition=6 decay_rate=2 shelf_life=120 dmg_disease=3
+cheekbone: equip_slot=graft mass=0.05 integrity=80 hardness=6 beauty+3 res_blunt+0.05 charm+1 plural_count=2
+pharynx: equip_slot=graft mass=0.03 integrity=10 res_suffocation+0.1 loudness+1 speech=true
+sinew: equip_slot=graft mass=0.5 integrity=80 elasticity=7 strength+2 jump+1 res_slash+0.05 material=flesh
+nodule: equip_slot=graft mass=0.01 integrity=5 hardness=4 armor+1 speed_land*0.98 charm+-1
+frill: equip_slot=graft mass=0.5 integrity=15 fear_aura+3 intimidation+3 beauty+3 inflict_fear+2
+rumen: equip_slot=graft mass=8 integrity=60 food_need*0.5 res_hunger+0.5 res_poison+0.3 speed_land*0.9
+gullet: equip_slot=graft mass=0.2 integrity=20 food_need*0.9 res_hunger+0.1 dmg_crush+5
+dentition: equip_slot=graft mass=0.3 integrity=70 hardness=9 dmg_pierce+20 dmg_crush+15 plural_count=32
+dermis: equip_slot=graft mass=4 integrity=60 armor+3 res_fire+0.1 res_cold+0.1 regeneration+0.5
+whisker: equip_slot=graft mass=0.0001 integrity=1 night_vision=true detect_stealth+2 agility+0.5 evasion+0.03 plural_count=24
+carapace: equip_slot=graft mass=30 integrity=500 hardness=8 armor+25 res_slash+0.4 res_pierce+0.4 res_crush+0.3 cover=0.5 speed_land*0.7 agility+-1
+udder: equip_slot=graft mass=15 integrity=40 food_output=3 water_output=1 speed_land*0.9 edible=true nutrition=6
+crest: equip_slot=graft mass=0.3 integrity=15 beauty+3 intimidation+2 charm+2 fear_aura+1 authority+1
+backbone: equip_slot=graft mass=1.5 integrity=250 hardness=7 courage+4 immune_fear=true carry_capacity+30 res_crush+0.15 strength+1
+forelimb: equip_slot=graft mass=5 integrity=70 hands=true grants_equip_slots=held climb+2 dmg_slash+10 speed_land+1 plural_count=2
+
+# noun plant
+stump: mass=50 height=0.5 integrity=200 material=wood portable=false cover=0.3 movement_cost=1.5 fertility=1
+
+# noun person
+person: mass=75 integrity=100 alive=true sentient=true intelligence=5 hands=true speech=true speed_land=5 food_need=0.03 diet=omnivore pack_size=1
+figure: mass=75 integrity=100 alive=true sentient=true intelligence=5 hands=true speech=true speed_land=5 stealth=3 disguise=3 food_need=0.03 nocturnal=true
+hunchback: mass=70 integrity=120 alive=true sentient=true intelligence=6 loyalty=9 hands=true speech=true speed_land=3 carry_capacity=80 climb=6 stealth=3 food_need=0.03 detect_stealth=3
+cyclops: mass=600 height=5 integrity=1500 alive=true sentient=true intelligence=3 aggression=7 hands=true speed_land=6 dmg_crush=150 dmg_blunt=120 attack_rate=0.5 attack_range=3 knockback=8 siege=3 sight_range=60 accuracy=0.6 fear_aura=6 food_need=0.3 diet=carnivore habitat=hill,mountain
+mummy: mass=40 integrity=300 alive=false sentient=true aggression=7 hands=true speed_land=2 dmg_blunt=30 dmg_disease=25 inflict_sick=20 contagion=0.2 fear_aura=5 res_fire=-0.5 flammability=8 immune_fear=true immune_poison=true immune_sleep=true res_disease=ABS habitat=desert material=cloth,flesh nocturnal=true
+quadruped: mass=100 integrity=150 alive=true diet=herbivore speed_land=12 jump=2 carry_capacity=100 mountable=true seats=1 tamable=true food_need=0.05 habitat=meadow,savanna
+biped: mass=75 integrity=100 alive=true speed_land=6 hands=true climb=2 jump=1 food_need=0.03 diet=omnivore
+antagonist: mass=75 integrity=150 alive=true sentient=true intelligence=7 aggression=8 hands=true speech=true speed_land=5 intimidation=4 fear_aura=3 dmg_slash=25 attack_rate=1 food_need=0.03 sets_hostile=true
+
+# noun mammal
+canine: mass=30 length=1 integrity=80 alive=true sentient=true intelligence=5 loyalty=8 diet=carnivore food_need=0.02 speed_land=13 smell_range=400 tracking=7 dmg_pierce=25 attack_rate=1.2 tamable=true equip_slot=companion hearing_range=150 alarm=true
+
+# noun bird
+cock: mass=3 integrity=15 alive=true diet=omnivore speed_land=4 speed_air=4 flight_ceiling=5 loudness=7 alarm=true dmg_pierce=6 dmg_slash=6 aggression=6 courage=8 food_need=0.005 tamable=true reproduction=2 habitat=field,meadow sets_daylight=day
+
+# noun weapon
+chopper: mass=1.2 length=0.4 integrity=60 hardness=7 sharpness=8 material=steel equip_slot=held hands_required=1 dmg_slash=45 attack_rate=0.9 severs=1 inflict_bleed=4 harvest_bonus=1.5 harvest_sources=forest
+nail: mass=0.01 length=0.08 integrity=20 hardness=7 sharpness=6 material=iron shape=pointed dmg_pierce=10 build_speed+0.2 plural_count=20 inflict_root=2
+spit: mass=1 length=1 integrity=40 material=iron shape=long sharpness=6 dmg_pierce=25 equip_slot=held hands_required=2 crafts=food cooks_into=roast
+spindle: mass=0.2 length=0.3 integrity=15 material=wood sharpness=5 shape=long dmg_pierce=8 inflict_sleep=60 crafts=fabric,cloth
+
+# verb contact
+behead: effect_target=touched severs=1 dmg_slash=300 inflict_bleed=15 fear_aura=6 duration=1 counters=head,skull,neck
+decapitate: effect_target=touched severs=1 dmg_slash=400 inflict_bleed=20 inflict_fear=10 duration=1 counters=head,skull,neck
+dismember: effect_target=touched severs=ABS dmg_slash=150 inflict_bleed=30 inflict_fear=15 duration=1
+tear: effect_target=touched severs=1 dmg_slash=40 inflict_bleed=8 duration=1
+snatch: effect_target=touched letter_steal=8 transfers_ownership=true moves_target=5 duration=1
+slap: effect_target=touched dmg_blunt=8 inflict_stun=1 inflict_rage=5 charm+-1 duration=1
+scratch: effect_target=touched dmg_slash=10 inflict_bleed=4 inflict_sick=3 duration=1
+grasp: effect_target=touched inflict_root=5 moves_target=1 duration=5
+grip: duration=60 strength+2 block+0.1 climb+2 accuracy+0.1 immune_root=false
+stomp: effect_target=touched dmg_crush=40 dmg_blunt=20 inflict_stun=2 knockback=1 loudness=5 duration=1
+clench: duration=30 strength+2 dmg_blunt+15 courage+2 res_blunt+0.1 agility+-1
+graft: effect_target=touched restores=40 regeneration+1 effect_status=bleed duration=1
+
+# verb body
+flex: duration=60 strength+3 intimidation+3 dmg_blunt+20 fear_aura+1 carry_capacity+30
+regenerate: duration=120 regeneration+15 effect_status=bleed,burn,poison restores=100 food_need*2
+blink: duration=1 teleport_range=15 evasion+0.5 res_light+0.5
+wink: effect_target=touched inflict_charm=8 charm+3 duration=10
+grin: duration=60 charm+3 morale+2 intimidation+1 inflict_fear=1
+frown: duration=60 intimidation+2 charm+-2 morale+-1 authority+1
+nod: duration=30 charm+2 obedience+2 loyalty+1 trade_bonus+0.05
+kneel: duration=60 cover+0.3 stealth+2 accuracy+0.15 speed_land*0.2 charm+2 authority+-1
+limp: duration=60 speed_land*0.5 evasion*0.5 stealth+1 disguise+2
+shrug: duration=10 res_psychic+0.5 immune_fear=true immune_charm=true morale+1
+sweat: duration=120 temp_max+15 res_fire+0.2 odor+4 slipperiness+3 water_need*1.5
+bob: duration=10 evasion+0.3 agility+2 buoyancy+3
+
+# verb movement
+come: duration=1 moves_target=30 effect_target=companion
+
+# noun attribute
+feature: beauty=4 charm+2 disguise+1 adjective_slots+1
+
+# adjective quality
+muscular: strength+3 carry_capacity*1.5 dmg_blunt*1.4 integrity*1.2 food_need*1.3 intimidation+2
+limbless: hands=false speed_land*0.2 climb*0 carry_capacity*0.2 stealth+2 speed_water*1.2
+toothless: dmg_pierce*0 dmg_crush*0.5 intimidation+-3 fear_aura*0 charm+1
+armless: hands=false carry_capacity*0.1 dmg_blunt*0.3 accuracy*0.5 speed_land*1.05
+legless: speed_land*0.1 jump*0 climb*0.3 speed_water*1.1
+headless: sight_range*0.2 hearing_range*0.2 intelligence*0 speech=false immune_confuse=true immune_fear=true immune_charm=true fear_aura+4
+brawny: strength+3 carry_capacity*1.5 dmg_blunt*1.4 knockback*1.5 intimidation+1 agility+-1
+burly: strength+2 integrity*1.3 mass*1.3 knockback*1.5 res_blunt+0.1 intimidation+2 speed_land*0.9
+skinny: mass*0.7 integrity*0.8 strength+-1 agility+1 evasion+0.05 temp_min+5 stealth+1
+scrawny: mass*0.6 integrity*0.7 strength+-2 carry_capacity*0.6 agility+1 intimidation+-2 food_need*0.7
+lanky: height*1.2 attack_range*1.3 speed_land*1.1 agility+-1 stealth+-1 jump*1.3
+bald: res_cold+-0.1 temp_min+3 disguise+-2 intimidation+1 beauty+-1 res_light+-0.05
+bearded: res_cold+0.2 temp_min+-5 authority+1 intimidation+1 disguise+2 intelligence+1
+tusked: dmg_pierce+40 knockback+3 intimidation+3 mass*1.05
+hooved: speed_land*1.3 dmg_blunt+25 hands=false terrain_ignored=snow,sand knockback+2
+spiny: thorns+20 res_slash+0.1 inflict_bleed+2 charm+-1 stealth+-1
+tentacled: hands=true grants_equip_slots=held inflict_root+3 climb+3 speed_water+4 dmg_blunt+15 fear_aura+2
+beaked: dmg_pierce+25 harvest_bonus*1.3 speech=false
+webbed: speed_water*2 speed_water+3 dive_depth+10 speed_land*0.9
+bloodshot: sight_range*0.8 intimidation+2 fear_aura+1 aggression+2 sleep_need*1.3
+nimble: agility+3 evasion+0.15 climb+2 acceleration+2 attack_rate*1.1
+agile: agility+3 evasion+0.15 acceleration+2 jump*1.3 climb+1
+dexterous: accuracy+0.1 craft_slots+1 critical+0.05 attack_rate*1.15 build_speed*1.2 letter_steal+1
+ambidextrous: hands=true grants_equip_slots=held attack_rate*1.3 accuracy+0.05 multi_target+1
+sinewy: strength+2 agility+1 jump*1.2 elasticity+2 mass*0.95 res_slash+0.05
+gnarled: hardness+2 integrity*1.3 agility+-2 beauty+-2 res_slash+0.1
+lame: speed_land*0.4 jump*0.2 agility+-2 evasion*0.5
+crippled: speed_land*0.3 jump*0 agility+-3 evasion*0.3 strength+-1 carry_capacity*0.5
+quick: speed_land*1.6 acceleration+3 attack_rate*1.3 evasion+0.1 cast_time*0.6 agility+2
+fat: mass*1.6 integrity*1.3 res_cold+0.3 temp_min+-10 speed_land*0.7 agility+-2 res_hunger+0.4 food_need*1.3 buoyancy+2
+permanent: duration*10 field_duration*10 persistence*10 decay_rate*0 lifespan*10 extends_duration*5
+dominant: authority+3 intimidation+3 aggression+2 command_limit+2 courage+2
+imperial: authority+4 value*3 beauty+3 charm+2 command_limit+3 intimidation+2 faction=empire
+posterior: stealth+1 cover+0.1 accuracy*0.9
+
+# adjective pertaining
+abdominal: res_hunger+0.2 strength+1 res_blunt+0.1 carry_capacity+10
+facial: charm+2 beauty+2 disguise+2
+nasal: smell_range+100 tracking+2 loudness+1 speech=true
+optic: sight_range+100 accuracy+0.05 detect_stealth+1 res_light+0.1
+endocrine: growth*1.3 acceleration+1 morale+1 strength+1
+umbilical: regeneration+2 loyalty+3 heals+1 food_need*0.8
+recessive: stealth+2 charm+-1 integrity*0.95
+pearly: beauty+3 value*1.5 reflectivity+3 color=white charm+1
+afferent: hearing_range+20 detect_stealth+1 alarm=true
+
+# adverb manner
+behind: stealth+3 cover+0.2 critical+0.15 accuracy+0.05 evasion+0.05
+
+# noun structure
+arch: mass=50000 footprint=2 height=6 integrity=10000 hardness=7 material=stone portable=false enterable=true beauty=6 cover=0.4 occupants=4
+dome: mass=200000 footprint=6 height=15 integrity=25000 hardness=7 material=stone portable=false enterable=true occupants=40 cover=0.9 blocks=air,projectiles beauty=7 comfort=3
+atrium: mass=80000 footprint=6 height=8 integrity=8000 material=stone,glass portable=false enterable=true occupants=30 comfort=4 beauty=6 light_delta=2
+passageway: mass=30000 footprint=4 height=3 integrity=6000 material=stone portable=false enterable=true tile_type=floor movement_cost=0.8 stealth=3
+vestibule: mass=20000 footprint=2 height=3 integrity=4000 material=stone portable=false enterable=true occupants=6 comfort=2 security=2
+cistern: mass=50000 footprint=3 height=3 integrity=8000 material=stone portable=false volume=200 water_output=20 storage_objects=200000 placeable_on=land
+labyrinth: mass=1000000 footprint=20 integrity=50000 material=stone portable=false enterable=true tile_type=wall radius=6 movement_cost=4 stealth=8 inflict_confuse=30 blocks=sight
+
+# noun route
+canal: mass=0 footprint=10 integrity=20000 portable=false tile_type=water radius=1 depth=3 speed_water+3 placeable_on=land,field water_output=30
+bypass: mass=100000 footprint=10 integrity=10000 material=stone portable=false tile_type=road movement_cost=0.4 speed_land*1.2
+tract: mass=0 footprint=50 portable=false tile_type=field radius=6 claim_radius=6 fertility=4
+
+# noun water
+waters: state=liquid mass=1000 wetness=10 tile_type=deep_water radius=4 depth=6 water_output=40 counters=fire,lava dmg_water=5
+
+# noun landform
+region: mass=0 portable=false placement=region radius=15 claim_radius=10 map_reveal=15
+isthmus: mass=0 portable=false tile_type=field radius=2 elevation=2 placeable_on=water,deep_water blocks=water
+
+# noun vehicle_water
+vessel: mass=20000 length=30 integrity=3000 material=wood,steel portable=false self_propelled=true speed_water=8 seats=20 carry_capacity=10000 storage_objects=10000 placeable_on=water,deep_water range=2000 buoyancy=9 mountable=true
+
+# noun device
+lock: mass=0.5 integrity=200 hardness=8 material=steel locks=true security=6 lockable=true
+valve: mass=2 integrity=200 material=steel water_output=10 security=2 blocks=water
+nozzle: mass=0.3 integrity=60 material=steel water_output=8 attack_range+5 dmg_water+5 accuracy+0.1
+diaphragm: mass=0.2 integrity=40 material=rubber res_suffocation+0.3 loudness+2 elasticity=7
+pacemaker: equip_slot=graft mass=0.03 integrity=100 material=steel regeneration+2 prevents_death=1 immune_stun=true upkeep_power=0.001 courage+1
+stirrup: mass=0.5 integrity=150 material=iron equip_slot=feet accuracy+0.1 dmg_pierce+10 seats=1
+sheath: mass=0.5 integrity=60 material=leather equip_slot=back container_slots=1 stealth+1 attack_windup*0.5
+
+# noun tool
+toothbrush: mass=0.02 integrity=10 material=plastic res_disease+0.2 charm+1 beauty+1
+grinder: mass=5 integrity=200 material=steel portable=true crafts=food,metal sharpness=6 dmg_slash=20 harvest_bonus=1.5 loudness=6
+
+# noun furniture
+seat: mass=8 integrity=60 material=wood comfort=3 seats=1 morale+1 regeneration+0.5
+
+# noun liquid
+ink: state=liquid mass=0.05 color=black stickiness=2 inflict_blind=8 stealth+3 counters=sight
+
+# noun food
+gum: mass=0.005 edible=true nutrition=0 stickiness=8 inflict_root=4 inflict_slow=10 charm+1 shelf_life=0
+noodle: mass=0.2 edible=true nutrition=6 raw=true shelf_life=2880 cooks_into=pasta
+shank: mass=1.5 edible=true nutrition=12 raw=true shelf_life=1440 material=flesh cooks_into=roast
+pate: mass=0.2 edible=true nutrition=6 shelf_life=2880 value=15 charm+1
+
+# noun material
+fibre: mass=0.1 integrity=15 material=fibre elasticity=4 flammability=5 crafts=fabric value=2
+enamel: mass=0.1 hardness=9 brittleness=5 reflectivity=6 armor+2 res_acid+0.3 material=enamel beauty=5
+collagen: mass=0.1 edible=true nutrition=2 elasticity=6 regeneration+1 beauty+2 res_slash+0.05
+
+# noun group
+corporation: mass=0 portable=false faction=corporation authority=4 trade_bonus=0.2 tax_rate=0.1 recruit_rate=2 claim_radius=5 value=500
+
+# noun flower
+iris: mass=0.05 alive=true integrity=3 beauty=8 color=purple growth_time=60 habitat=marsh,meadow odor=3
+aster: mass=0.03 alive=true integrity=3 beauty=7 color=purple growth_time=45 habitat=meadow,field
+
+# noun shrub
+haw: mass=10 alive=true integrity=60 material=wood thorns=8 edible=true nutrition=2 growth_time=300 habitat=forest,meadow blocks=land
