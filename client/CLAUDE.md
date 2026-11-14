@@ -35,7 +35,8 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
 - Letter tiles: one per copy, or one with a count above `COPIES_SHOWN` (4).
 - `src/events.ts` event chips at the top middle (`#events`): weather, night and zones you stand in,
   with time left; a click opens `#eventcard` (shared `eventCard`: what it changes, who, what ends it).
-- `src/minimap.ts` the minimap, only while the loadout lists `senses` (a MAP); `sensed` fills it.
+- `src/minimap.ts` the minimap, only while the loadout lists `senses` (a MAP) or `eyes` (a CAMERA
+  of yours on the ground: its ground is revealed and ringed); `sensed` fills it.
 - Opening or closing the spell window, and window blur, reset Phaser's keys: a key released
   while the window had focus was never seen, and the player walked on or stopped answering.
 - `burst` draws the `described` effect: a gold burst and a rising tag listing what changed.
@@ -89,6 +90,9 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
 - Themes batch 1 art: `ARCHETYPES` has `herb` and `gem`; `WORDS` has the common professions (chef,
   nurse, judge, scout, mason...). Materials, cooked and rotten things take their colour from the
   data (`color`), through `look.ts`.
+- Themes batch 2 art: `ARCHETYPES` has `amphibian`; `WORDS` has the core buildings, furniture,
+  tools, machines and animals of batch 2, drawn with the existing builders (house, quad, bird,
+  fish, bug, snake).
 - The top-left HUD lists letters coming in a minute by letter and what makes them (loadout
   `income`), and food, fuel and power in and out; the loadout screen's Producing lines say why a
   producer is idle. The corner shows the wind and the city you stand in (ruler, citizens).

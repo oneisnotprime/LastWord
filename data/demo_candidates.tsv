@@ -61,7 +61,6 @@ budget	noun	artifact	document	4.82	core	n13443005	verb:cognition
 bus	noun	artifact	vehicle_land	4.83	core	n02927500	verb:movement
 buy	verb	spell	transfer	5.32	core	v02211988	noun:possession
 camera	noun	artifact	device	4.87	core	n02946154	-
-camp	noun	artifact	structure	4.79	core	n02948281	verb:contact,adjective:quality
 can	noun	artifact	container	6.46	core	n02950393	verb:transform
 captain	noun	person	leader	4.89	core	n09912796	verb:social
 car	noun	artifact	vehicle_land	5.45	core	n02961779	-
@@ -71,7 +70,7 @@ cash	noun	artifact	currency	4.92	core	n13407787	verb:transfer
 cast	noun	artifact	medicine	4.79	core	n08254784	verb:create
 cat	noun	creature	mammal	4.78	core	n02124272	verb:contact
 cause	verb	spell	create	5.35	core	v01649143	noun:event
-cell	noun	artifact	building	4.87	core	n02995166	-
+cell	noun	artifact	structure	4.87	core	n02995010	-
 cent	noun	artifact	currency	4.83	core	n13411799	-
 central	adjective	modifier	quality	5.12	core	a01280207	noun:artifact
 certain	adjective	modifier	quality	5.16	core	a00704329	-
@@ -83,6 +82,7 @@ check	noun	artifact	document	5.31	core	n13402907	verb:social
 chicken	noun	creature	bird	4.63	core	n01794266	adjective:quality
 chief	noun	person	leader	5.11	core	n10182584	adjective:quality
 china	noun	artifact	container	5.1	core	n03021863	-
+church	noun	artifact	building	5.16	core	n03031762	verb:movement
 clear	adjective	modifier	quality	5.25	core	a00429900	verb:transform,noun:place,adverb:manner
 close	adjective	modifier	quality	5.36	core	a00448955	verb:contact,noun:act,adverb:manner
 clothes	noun	artifact	clothing	4.72	core	n02731365	-
@@ -339,7 +339,6 @@ played	adjective	modifier	participle	5.23	core	a03164026	-
 police	noun	person	worker	5.33	core	n08226608	verb:social
 pool	noun	terrain	water	4.67	core	n09420266	verb:transfer
 pop	noun	consumable	drink	4.87	core	n07943752	verb:movement,adjective:quality,adverb:manner
-port	noun	artifact	building	4.73	core	n08651532	adjective:quality,verb:movement
 post	noun	artifact	structure	5.43	core	n08641960	verb:contact
 press	noun	artifact	machine	5.16	core	n04006669	verb:contact
 pretty	adjective	modifier	quality	5.38	core	a00221674	adverb:manner
@@ -413,8 +412,8 @@ space	noun	terrain	celestial	5.23	core	n00028950	verb:movement
 special	adjective	modifier	quality	5.34	core	a01107719	noun:food
 spirit	noun	creature	supernatural	4.79	core	n09568453	verb:transform
 spoke	noun	artifact	tool	4.61	core	n04290516	-
-stadium	noun	artifact	structure	4.63	core	n04303019	-
-staff	noun	person	worker	5.08	core	n08456947	verb:combat
+stadium	noun	artifact	building	4.63	core	n04303019	-
+staff	noun	artifact	weapon	5.08	core	n08456947	verb:combat
 stage	noun	artifact	structure	5.1	core	n15315573	verb:create
 stand	verb	spell	contact	5.14	core	v01548893	noun:device
 star	noun	terrain	celestial	5.19	core	n09467004	adjective:quality,verb:create
@@ -426,7 +425,7 @@ steps	noun	artifact	structure	4.73	core	n04305309	-
 stick	noun	artifact	weapon	4.76	core	n04324558	verb:contact
 stone	noun	material	mineral	4.8	core	n14720954	adjective:quality,verb:contact
 stop	verb	spell	movement	5.52	core	v01864781	noun:event
-store	noun	artifact	structure	5.02	core	n04209460	verb:transfer
+store	noun	artifact	building	5.02	core	n04209460	verb:transfer
 story	noun	artifact	document	5.45	core	n07235754	-
 stream	noun	terrain	water	4.62	core	n09471510	verb:movement
 street	noun	artifact	route	5.28	core	n04341737	-
@@ -477,7 +476,6 @@ various	adjective	modifier	quality	5.12	core	a02073069	-
 vehicle	noun	artifact	vehicle_land	4.76	core	n04531608	-
 vice	noun	artifact	tool	4.71	core	n04861104	-
 video	noun	artifact	device	5.43	core	n04541422	-
-village	noun	artifact	building	4.82	core	n08243620	-
 vote	verb	spell	social	5.11	core	v02466737	noun:attribute
 wall	noun	artifact	structure	5.04	core	n04554141	verb:combat
 want	verb	spell	consume	6.04	core	v01191258	noun:natural_object
@@ -485,7 +483,8 @@ wanted	adjective	modifier	quality	5.36	core	a02537084	-
 watch	noun	artifact	device	5.34	core	n04563183	verb:perceive
 water	noun	material	liquid	5.52	core	n14869913	verb:transform
 ways	noun	artifact	structure	5.06	core	n04572325	-
-website	noun	artifact	machine	5.09	core	n06370600	-
+web	noun	artifact	tool	4.74	core	n09500167	verb:create
+website	noun	artifact	device	5.09	core	n06370600	-
 weight	noun	artifact	tool	5.02	core	n05034009	verb:contact
 well	noun	artifact	structure	6.03	core	n04579845	adverb:manner,adjective:quality,verb:movement
 white	adjective	modifier	quality	5.51	core	a00394166	noun:attribute,verb:transform

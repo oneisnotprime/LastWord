@@ -61,6 +61,7 @@ cooks_into|text|||the noun heat turns it into (dough into bread); without one it
 shelf_life|num|0|min|minutes after it is made that it rots (0 keeps for ever)
 age|num|0|min|time since it was spelled
 beauty|scale|3||attracts and pleases; raises NPC attitude
+comfort|scale|0||how homely and restful it is: inside its owner's claimed ground it lifts their side's morale and healing (shared home.ts)
 value|num|1|coins|price NPC markets pay
 """
 GROUPS["mobility"] = "\n".join(
@@ -138,7 +139,7 @@ detect_letters|num|0|m|range at which it shows letter sources
 detect_life|num|0|m|range at which it shows living things
 read_properties|scale|0||how much of another player's stats it reveals
 read_inventory|bool|false||shows letters another player holds
-map_reveal|num|0|tiles|radius of map uncovered around it
+map_reveal|num|0|tiles|radius of map uncovered around it; left on the ground, it watches that ground on its owner's minimap (shared tech.ts)
 tracking|scale|0||follows targets that left sight
 alarm|bool|false||warns its owner when enemies enter sight
 """
@@ -156,7 +157,7 @@ water_need|num|0|l/min|water it drinks
 sleep_need|frac|0||fraction of time it must rest
 lifespan|num|0|min|dies of age after this (0 = never)
 growth_time|num|0|min|time to reach full size
-reproduction|num|0|/hour|copies of itself it makes when fed
+reproduction|num|0|/hour|young it has when fed: two or more of one kind kept together breed (shared herd.ts)
 tamable|bool|false||a wild one can be claimed
 trainable|scale|0||gains ability from use
 pack_size|num|1||how many arrive when one is spelled without a plural
@@ -190,16 +191,17 @@ food_output|num|0|food/min|food it supplies
 fuel_output|num|0|fuel/min|fuel it supplies
 power_output|num|0|kW|power it supplies
 water_output|num|0|l/min|water it supplies
-storage_letters|num|0||letters it holds safely
+storage_letters|num|0||letters its owner keeps safe in it: thieves and fines cannot take them, and at its owner's death they stay inside for whoever takes it (shared home.ts)
 storage_objects|num|0|kg|objects it holds
-security|scale|0||resists theft and raiding of its contents
+security|scale|0||resists theft and raiding of its contents; something lockable holds enemies rooted in its claimed ground that many times longer (shared home.ts)
 reclaim_rate|frac|0||fraction of letters returned from objects destroyed in reach
 reclaim_range|num|0|m|reach of reclaim_rate
 transmute_in|num|0||common letters consumed per rare letter made
 trade_bonus|frac|0||better prices at NPC markets
-labor|num|0|work/min|work it performs for stations and fields
+labor|num|0|work/min|work it performs for stations and fields; a machine with labor left on the ground works the producers near it (shared tech.ts)
 build_speed|num|1|x|multiplier on placing structures
 craft_slots|num|0||stations or processes it can run at once
+crafts|tags|||as a crafting station: the kinds of thing made at it and the materials it works (weapon, tool, furniture; metal, wood): what its owner spells near it is crafted, out of a material they carry (shared craft.ts)
 """.strip().split("\n"))
 GROUPS["spatial"] = """
 tile_type|enum|none|none,water,deep_water,hill,mountain,pit,forest,field,tilled,sand,snow,swamp,lava,road,floor,wall,jungle,desert,tundra,savanna,badlands,ash,meadow,taiga,marsh|terrain it creates (tilled: crop land)

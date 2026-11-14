@@ -20,7 +20,7 @@ super	absolute and scaling modifiers	5	10.9	2.2	-	adjective:quality
 big	absolute and scaling modifiers	3	11.1	3.7	-	adjective:quality
 prime	absolute and scaling modifiers	5	11.1	2.2	-	adjective:quality
 many	absolute and scaling modifiers	4	11.4	2.9	-	adjective:quality
-atomic	absolute and scaling modifiers	6	11.7	1.9	-	adjective:pertaining
+atomic	absolute and scaling modifiers	6	11.7	1.9	-	adjective:quality
 free	absolute and scaling modifiers	4	11.8	3.0	-	adjective:quality
 lethal	absolute and scaling modifiers	6	11.9	2.0	-	adjective:absolute
 safe	absolute and scaling modifiers	4	12.3	3.1	-	adjective:quality
@@ -109,7 +109,7 @@ debt	economy	4	11.2	2.8	-	noun:possession
 gold	economy	4	11.3	2.8	-	noun:metal
 farm	economy	4	14.7	3.7	-	noun:structure
 bank	economy	4	20.8	5.2	K	noun:building
-factory	economy	7	21.5	3.1	-	noun:building
+factory	economy	7	21.5	3.1	-	noun:machine
 tax	economy	3	34.9	11.6	X	noun:possession
 pen	letter and word meta	3	6.2	2.1	-	noun:tool
 rune	letter and word meta	4	7.0	1.8	-	noun:inert
@@ -119,7 +119,7 @@ letter	letter and word meta	6	8.5	1.4	-	noun:document
 press	letter and word meta	5	9.6	1.9	-	noun:machine
 spell	letter and word meta	5	10.0	2.0	-	verb:create
 type	letter and word meta	4	11.1	2.8	-	noun:knowledge
-printer	letter and word meta	7	12.0	1.7	-	noun:worker
+printer	letter and word meta	7	12.0	1.7	-	noun:device
 font	letter and word meta	4	12.9	3.2	-	noun:container
 scribe	letter and word meta	6	13.2	2.2	-	noun:worker
 consonant	letter and word meta	9	14.8	1.6	-	adjective:quality
@@ -224,7 +224,7 @@ die	verbs that end things	3	5.5	1.8	-	verb:transform
 end	verbs that end things	3	5.8	1.9	-	noun:destruction
 erase	verbs that end things	5	6.5	1.3	-	verb:transform
 reset	verbs that end things	5	6.8	1.4	-	noun:device
-ruin	verbs that end things	4	7.3	1.8	-	noun:building
+ruin	verbs that end things	4	7.3	1.8	-	noun:structure
 rule	verbs that end things	4	7.3	1.8	-	noun:knowledge
 steal	verbs that end things	5	7.4	1.5	-	verb:transfer
 ban	verbs that end things	3	8.2	2.7	-	noun:act
@@ -238,7 +238,7 @@ undo	verbs that end things	4	9.4	2.4	-	verb:contact
 delete	verbs that end things	6	9.7	1.6	-	verb:contact
 slay	verbs that end things	4	9.8	2.5	-	verb:social
 reign	verbs that end things	5	9.9	2.0	-	verb:social
-bind	verbs that end things	4	11.4	2.9	-	verb:contact
+bind	verbs that end things	4	11.4	2.9	-	verb:create
 banish	verbs that end things	6	15.5	2.6	-	verb:social
 destroy	verbs that end things	7	15.6	2.2	-	verb:combat
 take	verbs that end things	4	16.5	4.1	K	verb:social
@@ -255,7 +255,7 @@ cure	verbs that escape or multiply	4	7.9	2.0	-	noun:medicine
 clone	verbs that escape or multiply	5	8.3	1.7	-	noun:person
 heal	verbs that escape or multiply	4	8.5	2.1	-	verb:body
 hide	verbs that escape or multiply	4	9.9	2.5	-	verb:body
-breed	verbs that escape or multiply	5	12.2	2.4	-	noun:group
+breed	verbs that escape or multiply	5	12.2	2.4	-	verb:body
 copy	verbs that escape or multiply	4	12.5	3.1	-	noun:artifact
 teleport	verbs that escape or multiply	8	13.7	1.7	-	verb:movement
 fly	verbs that escape or multiply	3	15.0	5.0	-	verb:movement

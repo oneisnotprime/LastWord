@@ -1,13 +1,13 @@
 {
- "count": 364,
+ "count": 366,
  "groups": {
-  "physical": 44,
+  "physical": 45,
   "mobility": 25,
   "offence": 57,
   "defence": 51,
   "perception": 14,
   "life": 29,
-  "economy": 51,
+  "economy": 52,
   "spatial": 19,
   "social": 13,
   "slots": 9,
@@ -399,6 +399,13 @@
    "type": "scale",
    "desc": "attracts and pleases; raises NPC attitude",
    "default": 3
+  },
+  {
+   "id": "comfort",
+   "group": "physical",
+   "type": "scale",
+   "desc": "how homely and restful it is: inside its owner's claimed ground it lifts their side's morale and healing (shared home.ts)",
+   "default": 0
   },
   {
    "id": "value",
@@ -1489,7 +1496,7 @@
    "id": "map_reveal",
    "group": "perception",
    "type": "num",
-   "desc": "radius of map uncovered around it",
+   "desc": "radius of map uncovered around it; left on the ground, it watches that ground on its owner's minimap (shared tech.ts)",
    "unit": "tiles",
    "default": 0
   },
@@ -1616,7 +1623,7 @@
    "id": "reproduction",
    "group": "life",
    "type": "num",
-   "desc": "copies of itself it makes when fed",
+   "desc": "young it has when fed: two or more of one kind kept together breed (shared herd.ts)",
    "unit": "/hour",
    "default": 0
   },
@@ -2061,7 +2068,7 @@
    "id": "storage_letters",
    "group": "economy",
    "type": "num",
-   "desc": "letters it holds safely",
+   "desc": "letters its owner keeps safe in it: thieves and fines cannot take them, and at its owner's death they stay inside for whoever takes it (shared home.ts)",
    "default": 0
   },
   {
@@ -2076,7 +2083,7 @@
    "id": "security",
    "group": "economy",
    "type": "scale",
-   "desc": "resists theft and raiding of its contents",
+   "desc": "resists theft and raiding of its contents; something lockable holds enemies rooted in its claimed ground that many times longer (shared home.ts)",
    "default": 0
   },
   {
@@ -2112,7 +2119,7 @@
    "id": "labor",
    "group": "economy",
    "type": "num",
-   "desc": "work it performs for stations and fields",
+   "desc": "work it performs for stations and fields; a machine with labor left on the ground works the producers near it (shared tech.ts)",
    "unit": "work/min",
    "default": 0
   },
@@ -2130,6 +2137,13 @@
    "type": "num",
    "desc": "stations or processes it can run at once",
    "default": 0
+  },
+  {
+   "id": "crafts",
+   "group": "economy",
+   "type": "tags",
+   "desc": "as a crafting station: the kinds of thing made at it and the materials it works (weapon, tool, furniture; metal, wood): what its owner spells near it is crafted, out of a material they carry (shared craft.ts)",
+   "default": []
   },
   {
    "id": "tile_type",

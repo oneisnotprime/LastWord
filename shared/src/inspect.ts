@@ -1,3 +1,7 @@
+import { homeText } from "./home.js";
+import { craftText } from "./craft.js";
+import { techText } from "./tech.js";
+import { herdText } from "./herd.js";
 import type { Dictionary } from "./dictionary.js";
 import { GROW_PACE, needsText, producerOf, SEEDLING } from "./produce.js";
 import { parsePhrase, type Phrase } from "./phrase.js";
@@ -170,6 +174,7 @@ export function behaviours(s: Stats, count = 1): string[] {
   if (s.num("luminosity") > 0) out.push("gives off light");
   if (s.num("fear_aura") > 0) out.push(`frightens enemies (fear ${num(s.num("fear_aura"))})`);
   if (s.num("heals") > 0) out.push(`heals allies ${num(s.num("heals"))} a second`);
+  out.push(...homeText(s), ...craftText(s), ...techText(s), ...herdText(s));
   const need = needs(s, count), make = outputs(s, count);
   for (const k of SUPPLIES) {
     if (need[k] > 0) out.push(`draws ${num(need[k])} ${k} a minute${s.flag("alive") ? "" : ` (comes with ${STARTING_SUPPLY_MINUTES} min)`}`);

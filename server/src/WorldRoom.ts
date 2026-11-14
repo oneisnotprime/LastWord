@@ -13,6 +13,7 @@ import {
 import {
   LAWS, takeLetters, pactOf, breachText, BREACH_LETTERS, BREACH_LOYALTY, BREACH_MINUTES, cooked, rotted, cooks, cookable, spoils, toxin,
   COOK_RANGE, COOK_SECONDS, alchemyRatio, jobsOf, haggled, builtBy, WORK_RANGE, SCOUT_RANGE, grow, SEEDLING, type PactSpec,
+  comfortOf, homeComfort, storageOf, keepSafe, exposed, hoards, eyeOf, automates, breedRate, HERD_RANGE, craftPlan, craftsOf, CRAFT_RANGE, CRAFTED,
 } from "@lastword/shared";
 import { affords, botSettings, chooseWord, held, phraseFor, SKILL, wordBook, type BotWord, type Difficulty, type Use } from "./bots.js";
 import { loadDictionary, loadKits } from "./data.js";
@@ -43,6 +44,8 @@ interface Gear {
   hungry?: boolean;
   /** Loyalty it has lost to hunger. */
   hungerLost?: number;
+  /** Letters left inside it when its owner died (shared home.ts `hoards`): paid to whoever takes or breaks it. */
+  hoard?: string;
   /** Room time it was made: it ages into Y for its owner from then, wherever it is kept. */
   born?: number;
   /** Seconds it has spent by heat while raw (shared food.ts): it cooks at COOK_SECONDS. */
@@ -114,7 +117,7 @@ interface Area {
    * are `security` harder to steal; `source` is the thing on the ground that claims it, which is
    * not sheltered itself (its walls take the blows), or "" for a claim someone carries.
    */
-  claim?: { shelter: number; security: number; source: string; born: number };
+  claim?: { shelter: number; security: number; source: string; born: number; holds: number };
 }
 
 /** What areas start with before a word's own properties say otherwise. */
@@ -271,6 +274,14 @@ interface Walker {
   shown: string;
   /** For a person: words that became part of their screen (shared `senseOf`): a MAP's minimap. */
   senses?: Sense[];
+  /** At home: its side's comfort inside their claimed ground (shared `homeComfort`), as an effect, or null away. */
+  home?: Effect | null;
+  /** For a person: things of theirs on the ground that watch (shared `eyeOf`), shown on their minimap. */
+  eyes?: { x: number; y: number; r: number; word: string }[];
+  /** For a person: young each herd of theirs has built up toward the next (shared `breedRate`), by noun. */
+  breeding?: Map<string, number>;
+  /** For a person: letters their storage keeps safe (shared `storageOf`), counted each second. */
+  stored?: number;
   /** For a person choosing a starting kit: the kits offered and the room time it is picked for them. */
   picking?: { kits: Kit[]; until: number };
   /** For a person: the starting kit they picked (PLAN.md "Starting kits"). */
@@ -360,6 +371,8 @@ const thingKey = (x: number, y: number) => Math.floor(x / THING_CELL) * 4096 + M
 /** What a bot remembers between thoughts. */
 interface BotMind {
   difficulty: Difficulty;
+  /** The words of each use its letters afford, kept until its letters change (the book holds thousands). */
+  affordable?: { key: string; byUse: Map<Use, BotWord[]> };
   /** Spreads bots' thinking over the ticks. */
   phase: number;
   /** Gathers left before it moves on. */
@@ -1534,6 +1547,7 @@ export class WorldRoom extends Room {
         name: w.player.name, health: w.player.hp, ...(w.hungry ? { hungry: true } : {}), ...(w.fleeing ? { fleeing: true } : {}),
       })),
       senses: (walker.senses ?? []).map((x) => ({ ...x })),
+      ...(walker.eyes?.length ? { eyes: walker.eyes.map((e) => ({ ...e })) } : {}),
       producing: this.producing(walker.id),
       income: this.income.get(walker.id)?.letters ?? [],
       market: this.marketInfo(walker.id, walker),
@@ -2186,8 +2200,12 @@ export class WorldRoom extends Room {
   private botWord(id: string, w: Walker, mind: BotMind, have: Uint8Array, armed: boolean, mine: number, peaceful: boolean): BotWord | null {
     const book = wordBook(this.dict);
     const ok = (x: BotWord) => !mind.tried.has(x.word);
+    const key = have.join(",");
+    if (mind.affordable?.key !== key) mind.affordable = { key, byUse: new Map() };
+    const cache = mind.affordable.byUse;
+    const listOf = (use: Use) => cache.get(use) ?? cache.set(use, (book.byUse.get(use) ?? []).filter((x) => affords(have, x))).get(use)!;
     const choose = (use: Use, also: (x: BotWord) => boolean = () => true) =>
-      chooseWord(book.byUse.get(use), have, mind.difficulty, this.rng, (x) => ok(x) && also(x));
+      chooseWord(listOf(use), have, mind.difficulty, this.rng, (x) => ok(x) && also(x));
     const slots = new Set(w.gear.map((g) => this.slotOf(g)));
     const foe = w.foe ? this.walkers.get(w.foe) : undefined;
     const fighting = mind.difficulty !== "easy" && !!foe;
@@ -2195,10 +2213,12 @@ export class WorldRoom extends Room {
     // A producer it can run where it stands: furniture inside its own claim, a watermill by water,
     // a machine with fuel or power to hand, a crop where land can be tilled.
     const claimed = [...this.areas.values()].some((a) => a.claim && a.owner === id && Math.hypot(a.x - w.player.x, a.y - w.player.y) <= a.radius);
+    // Where it stands, worked out once (not once a candidate word: the book holds hundreds of producers).
+    let flow: boolean | undefined, soil: boolean | undefined;
     const runs = (x: BotWord) => (x.needs ?? []).every((n) =>
-      n === "claim" ? claimed : n === "flow" ? waterNear(this.map, w.player.x, w.player.y, 2)
+      n === "claim" ? claimed : n === "flow" ? (flow ??= waterNear(this.map, w.player.x, w.player.y, 2))
       : n === "fuel" || n === "power" ? w.stores[n] > 1 || !mind.producers
-      : n === "tilled" ? SOIL.includes(tileAt(this.map, w.player.x, w.player.y)) : true);
+      : n === "tilled" ? (soil ??= SOIL.includes(tileAt(this.map, w.player.x, w.player.y))) : true);
     const quest = this.botQuest(w, mind);
     const wanted = Math.max(peaceful ? 6 : 3, quest === "producers" && w.kit ? unlockNeed(w.kit.legend) : 0);
     const build = mind.producers < wanted ? () => choose("producer", runs) : () => null;
@@ -2408,7 +2428,7 @@ export class WorldRoom extends Room {
     const paid: string[] = [];
     for (const p of pact.penalty) {
       if (p === "letters" && betrayed.length) {
-        const taken = takeLetters(w.letters, BREACH_LETTERS, this.rng);
+        const taken = takeLetters(w.letters, BREACH_LETTERS, this.rng, w.stored ?? 0);
         [...taken].forEach((ch, i) => { const to = betrayed[i % betrayed.length]!; addLetters(this.walkers.get(to)!.letters, ch); this.lettersChanged.add(to); this.sendTo(to, "letters", this.walkers.get(to)!.letters); });
         if (taken) paid.push(`${taken.toUpperCase()} to those betrayed`);
         this.lettersChanged.add(id);
@@ -2694,6 +2714,81 @@ export class WorldRoom extends Room {
     }
   }
 
+  /**
+   * A person's home, once a second (shared home.ts, tech.ts): the comfort of what they keep inside
+   * their claimed ground lifts their side there (`homeComfort`, as an effect on whoever of theirs
+   * stands in it), what they store keeps letters out of thieves' reach (`storageOf`), and what of
+   * theirs on the ground watches shows on their minimap (`eyeOf`).
+   */
+  private home(id: string, w: Walker, h: Holdings) {
+    const claims = [...this.areas.values()].filter((a) => a.claim && a.owner === id);
+    const inside = (p: Point) => claims.some((a) => Math.hypot(p.x - a.x, p.y - a.y) <= a.radius);
+    let comfort = 0, stored = 0;
+    const eyes: NonNullable<Walker["eyes"]> = [];
+    for (const [tid, g] of h.things) {
+      const t = this.state.things.get(tid);
+      if (!t || g.terrain || g.fixture) continue;
+      const s = this.statsOf(g);
+      if (claims.length && inside(t)) comfort += comfortOf(s, t.count);
+      if (!g.stalled) stored += storageOf(s, t.count);
+      const r = g.stalled ? 0 : eyeOf(s);
+      if (r > 0) eyes.push({ x: Math.round(t.x * 10) / 10, y: Math.round(t.y * 10) / 10, r: Number.isFinite(r) ? r : this.map.size * 2, word: g.spelled.noun });
+    }
+    for (const [, c] of h.creatures) if (claims.length && inside(c.player)) comfort += comfortOf(c.unit.body.stats, c.player.count);
+    w.stored = stored;
+    const hadEyes = JSON.stringify(w.eyes ?? []);
+    w.eyes = eyes;
+    if (hadEyes !== JSON.stringify(eyes)) this.toTell.add(id); // the minimap comes or goes
+    const { morale, regeneration } = homeComfort(comfort);
+    const ops: Op[] = [...(morale > 0 ? [["morale", "add", morale] as Op] : []), ...(regeneration > 0 ? [["regeneration", "add", regeneration] as Op] : [])];
+    const key = `${morale}/${regeneration}`;
+    for (const [wid, o] of this.walkers) {
+      if (wid !== id && o.master !== id) continue;
+      const home = ops.length && inside(o.player) ? { word: "home", set: {}, ops, until: Infinity, key } : null;
+      if ((home?.key ?? "") === ((o.home as { key?: string } | null | undefined)?.key ?? "")) continue;
+      o.home = home;
+      o.fieldKey = undefined; // its comfort changed: work its fields out again
+      this.fieldsDirty = true;
+    }
+  }
+
+  /**
+   * Breeding (shared herd.ts): two or more of one kind of a person's creatures, fed and within
+   * HERD_RANGE of the oldest of them, have young at `breedRate`; each is theirs while they have
+   * command to spare.
+   */
+  private breed(id: string, w: Walker, h: Holdings, since: number) {
+    const herds = new Map<string, [string, Walker][]>();
+    for (const [cid, c] of h.creatures) {
+      const s = c.unit.body.stats;
+      if (c.hungry || !s.flag("alive") || !(s.num("reproduction") > 0)) continue;
+      const k = c.body.noun;
+      (herds.get(k) ?? herds.set(k, []).get(k)!).push([cid, c]);
+    }
+    if (!herds.size) { w.breeding?.clear(); return; }
+    w.breeding ??= new Map();
+    for (const [noun, herd] of herds) {
+      const [, first] = herd[0]!;
+      const near = herd.filter(([, c]) => Math.hypot(c.player.x - first.player.x, c.player.y - first.player.y) <= HERD_RANGE);
+      // Bodies, not heads: a massed swarm (MILLION ANTS) is one body and does not breed by itself.
+      const n = near.length;
+      const rate = breedRate(first.unit.body.stats.num("reproduction"), n);
+      if (!(rate > 0)) { w.breeding.delete(noun); continue; }
+      let due = (w.breeding.get(noun) ?? 0) + (rate * since) / 60;
+      while (due >= 1) {
+        if (w.upkeep.have >= w.upkeep.limit) { due = Math.min(due, 1); break; }
+        due -= 1;
+        const parent = near[Math.floor(this.rng() * near.length)]![1];
+        const young: Gear = { spelled: { noun, ...(parent.body.adjectives?.length ? { adjectives: [...parent.body.adjectives] } : {}) }, phrase: parent.player.name, vehicle: false, integrity: null };
+        const cid = this.addCreature(young, id, parent.player.x, parent.player.y);
+        h.creatures.push([cid, this.walkers.get(cid)!]);
+        w.upkeep.have++;
+        this.sendTo(id, "notice", `Your ${noun.toUpperCase()}s had young: one more ${parent.player.name.toUpperCase()}`);
+      }
+      w.breeding.set(noun, due);
+    }
+  }
+
   /** A wild creature: an aggressive one goes for whoever it sees (shared `chooseTarget`); the rest wander. */
   private roam(id: string, w: Walker) {
     if (w.fleeing) return;
@@ -2756,6 +2851,8 @@ export class WorldRoom extends Room {
       this.upkeep(id, w, h, since);
       if (!this.walkers.has(id)) continue;
       this.recruit(id, w, h, since);
+      this.home(id, w, h);
+      this.breed(id, w, h, since);
       const round = (n: number) => Math.round(n * 10) / 10;
       const shown = JSON.stringify([round(w.morale), SUPPLIES.map((k) => round(w.stores[k])), w.upkeep.short, w.upkeep.limit, w.upkeep.have,
         h.creatures.map(([, c]) => `${c.hungry}${c.fleeing}`)]);
@@ -2767,7 +2864,7 @@ export class WorldRoom extends Room {
       if (w.picking && this.elapsed >= w.picking.until) this.chooseKit(id, w, this.bestKit(w.picking.kits));
       if (w.kit) this.legendProgress(id, w);
     }
-    for (const [id, w] of this.walkers) if (w.senses?.length) this.sendSensed(id, w);
+    for (const [id, w] of this.walkers) if (w.senses?.length || w.eyes?.length) this.sendSensed(id, w);
     this.nearGrid = null; // walkers move between beats
     // Offers lapse, or fall through when either side is gone or walks off.
     for (const o of [...this.offers.values()]) {
@@ -2814,14 +2911,16 @@ export class WorldRoom extends Room {
    */
   private sendSensed(id: string, w: Walker) {
     const client = this.clients.find((c) => c.sessionId === id);
-    if (!client || !w.senses?.length) return;
-    const { letters, life } = combineSenses(w.senses);
+    if (!client || !(w.senses?.length || w.eyes?.length)) return;
+    const { letters, life } = combineSenses(w.senses ?? []);
     const near = (p: Point, r: number) => Math.hypot(p.x - w.player.x, p.y - w.player.y) <= r;
+    // What watches for them on the ground (a CAMERA, a TOWER: shared `eyeOf`) shows who is around it too.
+    const seen = (p: Point) => (life > 0 && near(p, life)) || (w.eyes ?? []).some((e) => Math.hypot(p.x - e.x, p.y - e.y) <= e.r);
     const at = (v: number) => Math.round(v * 10) / 10;
-    const out: Sensed = { life: [], letters: [] };
-    if (life > 0) {
+    const out: Sensed = { life: [], letters: [], ...(w.eyes?.length ? { eyes: w.eyes } : {}) };
+    if (life > 0 || w.eyes?.length) {
       for (const [oid, o] of this.walkers) {
-        if (oid !== id && o.unit.body.stats.flag("alive") && near(o.player, life)) {
+        if (oid !== id && o.unit.body.stats.flag("alive") && seen(o.player)) {
           out.life.push({ x: at(o.player.x), y: at(o.player.y), mine: o.master === id, person: o.master === null });
         }
       }
@@ -2940,9 +3039,13 @@ export class WorldRoom extends Room {
       const t = (i / copies) * Math.PI * 2;
       return { x: walker.player.x + Math.cos(t) * 0.8, y: walker.player.y + Math.sin(t) * 0.8 };
     };
+    // Crafted (shared craft.ts): near a station of the speller's that makes this kind of thing it
+    // comes out HANDMADE, made of a material they carry that the station works, which is used up.
+    const plan = walker.master === null ? this.craftAt(walker, phrase) : null;
     const one = (): Gear => ({
-      spelled: { noun: phrase.noun, adjectives: phrase.adjectives, ...(each > 1 ? { count: each } : {}) },
-      phrase: [...shown, phrase.noun].join(" "),
+      spelled: { noun: phrase.noun, adjectives: phrase.adjectives, ...(each > 1 ? { count: each } : {}), ...(plan?.states.length ? { states: [...plan.states] } : {}) },
+      // Its name says what it was crafted out of (IRON SWORD); HANDMADE stays in its states.
+      phrase: [...(plan?.states ?? []).filter((x) => x !== CRAFTED), ...shown, phrase.noun].join(" "),
       vehicle: phrase.stats.flag("mountable"),
       integrity: null,
     });
@@ -2992,8 +3095,56 @@ export class WorldRoom extends Room {
       if (!phrase.stats.flag("portable") && built > 1) gear.built = built; // raised by builders: sturdier
       this.addThing(gear, owner, p.x, p.y); // a stack of a thousand makes a thousand's worth
     }
-    if (built > 1 && !phrase.stats.flag("portable") && worn < copies) return `made, ×${+built.toFixed(2)} sturdier for your builders`;
+    let crafted = "";
+    if (plan) {
+      const used = plan.use();
+      crafted = `, handmade at your ${plan.station.toUpperCase()}${used ? ` out of your ${used.toUpperCase()}` : ""}`;
+      this.tell(walker);
+    }
+    if (built > 1 && !phrase.stats.flag("portable") && worn < copies) return `made, ×${+built.toFixed(2)} sturdier for your builders${crafted}`;
+    if (crafted) return (worn === copies ? "equipped" : worn ? `made; ${worn} equipped` : "made") + crafted;
     return worn === copies ? "equipped" : worn ? `made; ${worn} equipped` : "made";
+  }
+
+  /**
+   * How what a person spells is crafted (shared `craftPlan`): their stations on the ground within
+   * CRAFT_RANGE, nearest first, and any they carry; the materials they carry, then their own lying
+   * within CRAFT_RANGE. Null if no station makes it. `use` uses up the material the plan names.
+   */
+  private craftAt(walker: Walker, phrase: Phrase): (NonNullable<ReturnType<typeof craftPlan>> & { use: () => string | null }) | null {
+    const stations: { word: string; crafts: string[]; d: number }[] = [];
+    const stock: { noun: string; use: () => string | null }[] = walker.gear.map((g) => ({ noun: g.spelled.noun, use: () => this.useMaterial(walker, g) }));
+    for (const g of walker.gear) { const c = craftsOf(this.statsOf(g)); if (c.length) stations.push({ word: g.spelled.noun, crafts: c, d: 0 }); }
+    this.state.things.forEach((t, tid) => {
+      if (t.owner !== walker.id) return;
+      const d = Math.hypot(t.x - walker.player.x, t.y - walker.player.y);
+      const g = this.grounded.get(tid);
+      if (!g || d > CRAFT_RANGE || g.stalled || g.terrain) return;
+      stock.push({ noun: g.spelled.noun, use: () => {
+        const n = g.spelled.count ?? 1;
+        if (n > 1) { g.spelled = { ...g.spelled, count: n - 1 }; t.count = n - 1; this.resolved.delete(g); } else this.removeThing(tid);
+        return g.spelled.noun;
+      } });
+      const c = craftsOf(this.statsOf(g));
+      if (c.length) stations.push({ word: g.spelled.noun, crafts: c, d });
+    });
+    if (!stations.length) return null;
+    stations.sort((a, b) => a.d - b.d);
+    const plan = craftPlan(this.dict, phrase.noun, phrase.adjectives, stations, stock.map((m) => m.noun));
+    if (!plan) return null;
+    return { ...plan, use: () => (plan.used !== null ? stock[plan.used]!.use() : null) };
+  }
+
+  /** Uses up one of a carried thing (a material worked at a station). Returns its name. */
+  private useMaterial(walker: Walker, g: Gear): string | null {
+    const index = walker.gear.indexOf(g);
+    if (index < 0) return null;
+    const n = g.spelled.count ?? 1;
+    if (n > 1) { g.spelled = { ...g.spelled, count: n - 1 }; this.carried.delete(g); }
+    else walker.gear.splice(index, 1);
+    this.resolved.delete(g);
+    this.rebuild(walker);
+    return g.spelled.noun;
   }
 
   /** True for a modifier that only says how many: TEN, THOUSAND, DOZEN. */
@@ -3204,7 +3355,7 @@ export class WorldRoom extends Room {
       if (s.num("restores") > 0) { this.restore(victim, s.num("restores")); said.push("restored"); }
       const payer = this.walkers.get(victim.master && victim.master !== "-" ? victim.master : victim.id);
       if (s.num("letter_steal") > 0 && payer && payer.id !== id) {
-        const taken = takeLetters(payer.letters, Math.ceil(s.num("letter_steal")), this.rng);
+        const taken = takeLetters(payer.letters, Math.ceil(s.num("letter_steal")), this.rng, payer.stored ?? 0);
         if (taken) {
           this.award(id, walker, taken, `${word} on ${victim.player.name}`, victim.player);
           this.lettersChanged.add(payer.id);
@@ -3548,7 +3699,7 @@ export class WorldRoom extends Room {
       const ops: Op[] = [...this.dict.properties.keys()].filter((k) => k.startsWith("res_")).map((k) => [k, "add", claim.shelter]);
       made.push([{
         word: spelled.noun, owner, x: at.x, y: at.y, radius, until: Infinity, attack: null, cooldown: 0, friendlyFire: false,         spread: 0, effect: { word: spelled.noun, set: {}, ops, until: Infinity }, targets: "owned", follows, ...AREA_DEFAULTS,
-        baseRadius: radius, lasts: Infinity, claim: { shelter: claim.shelter, security: claim.security, source: follows ? "" : holder, born: this.claimBorn.get(source) ?? (this.claimBorn.set(source, this.elapsed), this.elapsed) },
+        baseRadius: radius, lasts: Infinity, claim: { shelter: claim.shelter, security: claim.security, holds: claim.holds, source: follows ? "" : holder, born: this.claimBorn.get(source) ?? (this.claimBorn.set(source, this.elapsed), this.elapsed) },
       }, true]);
     }
     for (const aura of auras(s, sightM)) {
@@ -3644,6 +3795,7 @@ export class WorldRoom extends Room {
     for (const [wid, w] of this.walkers) {
       const now: Effect[] = [];
       for (const a of this.areas.values()) if (a.effect && this.reaches(a, wid, w)) now.push(a.effect);
+      if (w.home) now.push(w.home);
       const key = now.map((e) => e.word).sort().join(",");
       if (key === (w.fieldKey ?? "")) continue;
       w.fieldKey = key;
@@ -3804,6 +3956,20 @@ export class WorldRoom extends Room {
     if (!w.hamper.moves) { w.target = null; w.route = []; w.routeTo = null; }
   }
 
+  /**
+   * How many times slower a walker's root and silence wear off where it stands: the strongest
+   * lockup (shared `holdFactor`) among the claims of its enemies covering it, or 1.
+   */
+  private heldAt(id: string, w: Walker): number {
+    let held = 1;
+    const side = this.side(id, w);
+    for (const a of this.areas.values()) {
+      if (!a.claim || !(a.claim.holds > 1) || a.owner === side || Math.hypot(w.player.x - a.x, w.player.y - a.y) > a.radius) continue;
+      held = Math.max(held, a.claim.holds);
+    }
+    return held;
+  }
+
   /** Burn, poison and bleeding hurt once a second, and statuses run down. */
   private sufferStatuses(id: string, w: Walker, seconds: number) {
     const hurt = statusDamage(this.dict, w.statuses);
@@ -3817,7 +3983,7 @@ export class WorldRoom extends Room {
         if (w.unit.dead) return void this.kill(id, hurt.from);
       }
     } else w.dot = 0;
-    const over = tickStatuses(w.statuses, seconds);
+    const over = tickStatuses(w.statuses, seconds, w.statuses.length ? this.heldAt(id, w) : 1);
     if (over.length) {
       this.statusChanged(w);
       this.clients.find((c) => c.sessionId === id)?.send("notice", `No longer ${over.join(", ")}`);
@@ -4031,8 +4197,24 @@ export class WorldRoom extends Room {
     // A creature's kill is its master's.
     const [payId, killer] = this.payee(killerId) ?? ["", undefined];
     const client = this.clients.find((c) => c.sessionId === id);
+    // A person's stores keep their letters (shared home.ts): the rarest, up to what they store, stay
+    // inside their storing things, now nobody's, for whoever takes or breaks them; the killer gets the rest.
+    let hand: Letters = dead.letters;
+    if (dead.master === null && (dead.stored ?? 0) > 0) {
+      const stores = [...this.state.things].filter(([tid, t]) => t.owner === id && this.grounded.has(tid) && storageOf(this.statsOf(this.grounded.get(tid)!), t.count) > 0);
+      const { kept, loose } = keepSafe(dead.letters, dead.stored ?? 0);
+      const shares = hoards(kept, stores.map(([tid, t]) => storageOf(this.statsOf(this.grounded.get(tid)!), t.count)));
+      stores.forEach(([tid, t], i) => {
+        const g = this.grounded.get(tid)!;
+        g.hoard = (g.hoard ?? "") + shares[i];
+        t.owner = "";
+        this.producers.delete(tid);
+        this.unradiateAll(tid);
+      });
+      hand = loose;
+    }
     if (killer && payId !== id) {
-      const loot = Object.entries(dead.letters).map(([ch, n]) => (n > 0 ? ch.repeat(n) : "")).join("");
+      const loot = Object.entries(hand).map(([ch, n]) => (n > 0 ? ch.repeat(n) : "")).join("");
       this.award(payId, killer, loot, `${dead.player.name.toUpperCase()}'s letters`, dead.player);
       const kc = this.clients.find((c) => c.sessionId === payId);
       // K comes from kills of people, V from beating someone's creature, H from hunting the wild;
@@ -4152,6 +4334,7 @@ export class WorldRoom extends Room {
       client?.send("notice", `${gear.phrase.toUpperCase()} destroyed: + ${spoils.toUpperCase()}`);
     }
     if (theirs) this.clients.find((c) => c.sessionId === thing.owner)?.send("notice", `Your ${gear.phrase.toUpperCase()} was destroyed`);
+    if (w) this.payHoard(payId, w, gear, thing);
     this.removeThing(id);
     for (const other of this.walkers.values()) {
       if (other.foe === id) other.foe = null;
@@ -4203,8 +4386,8 @@ export class WorldRoom extends Room {
       const key = `${pid}|${a.word}|${a.owner}|${act}`;
       if ((this.fined.get(key) ?? -Infinity) > this.elapsed) continue; // paid lately: let it go
       const owe = Math.ceil(fine);
-      if (Object.values(p.letters).reduce((n, k) => n + k, 0) < owe) return a.word.toUpperCase();
-      const paid = takeLetters(p.letters, owe, this.rng);
+      if (exposed(p.letters, p.stored ?? 0) < owe) return a.word.toUpperCase(); // what is stored is out of reach
+      const paid = takeLetters(p.letters, owe, this.rng, p.stored ?? 0);
       this.fined.set(key, this.elapsed + FINE_SECONDS);
       this.lettersChanged.add(pid);
       this.sendTo(pid, "letters", p.letters);
@@ -4261,8 +4444,17 @@ export class WorldRoom extends Room {
     this.radiate(gear, gear.spelled, thingId, id, { x: thing.x, y: thing.y }, null, Number(this.dict.base(gear.spelled.noun, "sight_range")));
     const makes = Object.keys(rates).map((l) => l.toUpperCase()).join(" ");
     this.sendTo(id, "spelled", `${gear.phrase.toUpperCase()} is yours: ${makes ? `it makes ${makes}` : "it ages into Y"}`);
+    this.payHoard(id, walker, gear, thing);
     this.tell(walker);
     this.refreshViews();
+  }
+
+  /** Letters a dead owner left inside a store (shared home.ts `hoards`), to whoever takes or breaks it. */
+  private payHoard(id: string, w: Walker, gear: Gear, at: Point) {
+    if (!gear.hoard) return;
+    this.award(id, w, gear.hoard, `${gear.phrase.toUpperCase()}'s hoard`, at);
+    this.sendTo(id, "letters", w.letters);
+    gear.hoard = "";
   }
 
   /**
@@ -4722,6 +4914,13 @@ export class WorldRoom extends Room {
       const labor = w.unit.body.stats.num("labor") * (w.player.count || 1);
       if (labor > 0) (workers.get(side) ?? workers.set(side, []).get(side)!).push({ x: w.player.x, y: w.player.y, labor });
     }
+    // Machines that work (shared tech.ts `automates`): on the ground and running, they work like hands.
+    this.state.things.forEach((t, tid) => {
+      const g = this.grounded.get(tid);
+      if (!t.owner || !g || g.stalled || g.terrain) return;
+      const labor = automates(this.statsOf(g), t.count);
+      if (labor > 0) (workers.get(t.owner) ?? workers.set(t.owner, []).get(t.owner)!).push({ x: t.x, y: t.y, labor });
+    });
     const labourAt = (owner: string, x: number, y: number) =>
       (workers.get(owner) ?? []).reduce((n, k) => n + (Math.hypot(k.x - x, k.y - y) <= LABOUR_RANGE ? k.labor : 0), 0);
     const claimedBy = (owner: string, x: number, y: number) => {

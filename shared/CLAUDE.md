@@ -113,6 +113,17 @@ server and the client import this, so anything here must give the same answer on
   - `law.ts` (law): `pactOf` (`binds`: a pact with people you pick, `bind_penalty` for breaking
     it), `breachText`, `takeLetters` (fines, commonest letters first). `place.ts` adds `fine` and
     the `hunt` law.
+  - `home.ts` (buildings, furniture): `comfortOf`/`homeComfort` (comfort at home: morale and
+    healing by the square root of the sum), `storageOf`/`exposed` (stored letters are out of
+    thieves' and fines' reach; `takeLetters` takes a `stored` floor), `keepSafe`/`hoards` (at death
+    the rarest stay in the stores), `holdFactor` (a lockable thing's claim slows enemies' root and
+    silence: `tickStatuses` takes it; `Claim.holds`), `homeText`.
+  - `craft.ts` (tools and crafting): `crafts` on a station names what it makes and works;
+    `craftPlan` (HANDMADE, made of a carried material it works), `makesAt`, `worksAt`, `craftText`.
+  - `tech.ts` (machines): `eyeOf` (a thing on the ground that watches: its tiles on its owner's
+    minimap), `automates` (a machine's `labor` works producers near it), `techText`.
+  - `herd.ts` (animals): `breedRate` (two or more of a kind, fed, near: young at `reproduction`
+    × BREED_PACE a game hour per pair), `herdText`.
 - `tips.ts` teaching tips: `wordTip` (one line of what a word does in numbers, plus its shortest
   counter-word), `wordIdeas` (one word per `TIP_KINDS` kind, weighted by `tipWeight` toward words
   the held letters nearly spell), `RULE_TIPS` (short "did you know" lines, test-checked against the

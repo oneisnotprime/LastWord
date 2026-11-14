@@ -194,8 +194,8 @@ it("a LAMP lights where it stands; a GYM's field strengthens its owner around it
   expect(wa.unit.body.stats.num("strength")).toBe(strength + 2);
   expect(wb.unit.body.stats.num("strength")).toBe(strength); // field_targets owned
   expect([...room.state.zones.values()].map((z) => z.word)).toContain("gym");
-  // When the owner leaves the gym's 15 m, it no longer works on them.
-  wa.player.x += 6;
+  // When the owner leaves the gym's 30 m, it no longer works on them.
+  wa.player.x += 10;
   second(room);
   expect(wa.unit.body.stats.num("strength")).toBe(strength);
   // A WOLF (fear_aura) frightens its master's enemies wherever it goes.
@@ -250,6 +250,6 @@ it("uses every usable word in the dictionary", async () => {
   // Every word the data gives an effect (shared useObject) was used, wherever spelling put it,
   // unless spelling made it a creature that walks off on its own, or land (a WHEAT field).
   const effective = candidates.filter((w) => useObject(dict, w) && !dict.word(w)!.set.tile_type &&
-    !(parsePhrase(dict, w).stats.flag("alive") && parsePhrase(dict, w).stats.num("speed_land") > 0));
+    !(parsePhrase(dict, w).stats.flag("alive") && Math.max(...["speed_land", "speed_air", "speed_water"].map((k) => parsePhrase(dict, w).stats.num(k))) > 0));
   for (const w of effective) expect(did.map((d) => d.split(" ")[0]), w).toContain(w);
 }, 240_000);
