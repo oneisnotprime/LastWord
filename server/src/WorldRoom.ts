@@ -1642,12 +1642,20 @@ export class WorldRoom extends Room {
     };
     let best: string | null = null, bestD = reach;
     if (mind.fetch && wanted(mind.fetch)) best = mind.fetch;
-    else {
-      for (const [tid, t] of this.state.things) {
-        const d = Math.hypot(t.x - w.player.x, t.y - w.player.y);
-        if (d <= bestD && wanted(tid)) { best = tid; bestD = d; }
+    else if (mind.fetch || (this.tickCount + mind.phase) % (TICK_HZ * 2) < TICK_HZ / 2) {
+      // Looks around every two seconds or so, through the grid of things near it.
+      const cells = Math.ceil(reach / THING_CELL);
+      for (let dx = -cells; dx <= cells; dx++) {
+        for (let dy = -cells; dy <= cells; dy++) {
+          for (const tid of this.thingGrid.get(thingKey(w.player.x + dx * THING_CELL, w.player.y + dy * THING_CELL)) ?? []) {
+            const t = this.state.things.get(tid);
+            if (!t) continue;
+            const d = Math.hypot(t.x - w.player.x, t.y - w.player.y);
+            if (d <= bestD && wanted(tid)) { best = tid; bestD = d; }
+          }
+        }
       }
-    }
+    } else return;
     if (!best) { mind.fetch = undefined; return; }
     const t = this.state.things.get(best)!;
     if (Math.hypot(t.x - w.player.x, t.y - w.player.y) > TAKE_RANGE) {

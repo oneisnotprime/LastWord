@@ -111,4 +111,4 @@ it("tick time stays healthy with 99 bots", async () => {
   for (let i = 0; i < 600; i++) room.update(0.1);
   console.log(`99 bots: worst tick ${room.metrics.tickMsMax.toFixed(1)} ms, average ${(room.metrics.tickMsTotal / room.metrics.ticks).toFixed(2)} ms`);
   expect(room.metrics.tickMsMax).toBeLessThan(100);
-});
+}, 30_000); // a minute of 99 bots; the limit that matters is the tick time above
