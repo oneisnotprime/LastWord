@@ -8,7 +8,8 @@ import { WorldRoom } from "./WorldRoom.js";
 const CLIENT = fileURLToPath(new URL("../../client/dist", import.meta.url));
 
 const server = defineServer({
-  rooms: { world: defineRoom(WorldRoom) },
+  // Friends ("mode": "friends") never land in a room someone started with bots ("mode": "bots").
+  rooms: { world: defineRoom(WorldRoom).filterBy(["mode"]) },
   express: (app) => {
     app.get("/health", (_req, res) => { res.json({ ok: true }); });
     if (existsSync(CLIENT)) app.use(express.static(CLIENT));
