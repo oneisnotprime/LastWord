@@ -1,0 +1,237 @@
+# What every word that makes letters makes, by PLAN.md "Letter economy". Hand-written.
+#
+# build_demo.py first takes every produce_* value off every word (demo_words.txt and
+# generated_words.txt alike; area operations such as DROUGHT's produce_A*0 are kept), then sets
+# what this file says. A word not listed here makes no letters by itself. Each line is
+#   word: property tokens        (the same tokens as demo_words.txt; they win over the word's own)
+#
+# Only the letters PLAN.md gives to things you own may be produced: A crops, I livestock and pets,
+# P planted flora, W mills, M machines, C crafting stations, B furniture, N hired labour, Y age,
+# and O (wells, lakes), G (quarries, mines) and U (caves, fungus) besides the hand actions.
+# L, R, S, T and Z come from land, roads, cities, trades and bosses, never from a word's value.
+#
+# production_needs says what it takes (shared produce.ts reads these the same for every word):
+#   tilled  stands on tilled land (tile_type=tilled tills its own)    water    yield follows moisture
+#   labor   someone of its owner's side who works stands within reach  wind     yield follows the wind
+#   flow    beside running water                                        claim    inside its owner's claimed ground
+#   harvest pays once a cycle, to its owner's side standing within reach
+#   extract runs down: halves every EXTRACT_HALF letters it gives
+#   vowel / a letter: one used up from its owner for each letter made
+# When a line gives no production_needs, the letter's own default applies (build_demo.py NEEDS).
+# Living producers (livestock, workers) also need feeding, and nothing makes letters near a fight.
+
+# A: crop fields on tilled land. tile_type=tilled lays the field (radius in tiles) and stands in it.
+hoe: produce_A=0.6 tile_type=tilled radius=2
+plow: produce_A=1 tile_type=tilled radius=3 equip_slot=none portable=false
+plough: produce_A=1 tile_type=tilled radius=3
+farm: produce_A=1.6 tile_type=tilled radius=4 claim_radius=2
+field: produce_A=1.4 tile_type=tilled radius=6
+wheat: produce_A=0.5 tile_type=tilled radius=1
+corn: produce_A=0.5 tile_type=tilled radius=1
+rice: produce_A=0.6 tile_type=tilled radius=1 production_needs=tilled,flow
+potato: produce_A=0.4 tile_type=tilled radius=1
+annual: produce_A=0.3
+produce: produce_A=0.3
+farmer: produce_N=0.4
+harvester: produce_A=1.2 production_needs=tilled,labor
+
+# I: livestock and pets you own, each by kind. They must be fed.
+cow: produce_I=1
+ox: produce_I=0.8
+bull: produce_I=0.6
+pig: produce_I=0.6
+sheep: produce_I=0.6
+goat: produce_I=0.5
+horse: produce_I=0.4
+camel: produce_I=0.4
+elephant: produce_I=0.5
+buffalo: produce_I=0.6
+bison: produce_I=0.5
+reindeer: produce_I=0.4
+ass: produce_I=0.3
+mount: produce_I=0.3
+dog: produce_I=0.3
+bitch: produce_I=0.3
+cat: produce_I=0.2
+pussy: produce_I=0.2
+tom: produce_I=0.2
+pet: produce_I=0.3
+chicken: produce_I=0.3
+hen: produce_I=0.3
+turkey: produce_I=0.3
+cock: produce_I=0.2
+duck: produce_I=0.2
+mouse: produce_I=0.05
+barn: produce_I=0.3 production_needs=labor
+stable: produce_I=0.3 production_needs=labor
+
+# P: planted flora, harvested on a cycle by its owner's side close by.
+tree: produce_P=0.3
+oak: produce_P=0.5
+palm: produce_P=0.4
+bush: produce_P=0.3
+hedge: produce_P=0.2
+vine: produce_P=0.4
+rose: produce_P=0.2
+flower: produce_P=0.2
+plant: produce_P=0.3
+seed: produce_P=0.2
+cutting: produce_P=0.15
+stem: produce_P=0.1
+leaf: produce_P=0.05
+fruit: produce_P=0.2
+cactus: produce_P=0.2
+garden: produce_P=0.8
+orchard: produce_P=1.2
+vineyard: produce_P=1
+forest: produce_P=1
+woods: produce_P=0.8
+
+# U: fungus grows on a cycle like flora; caves run down.
+mushroom: produce_U=0.4 production_needs=harvest
+fungus: produce_U=0.4 production_needs=harvest
+mold: produce_U=0.2 production_needs=harvest
+mildew: produce_U=0.2 production_needs=harvest
+cave: produce_U=0.6 production_needs=extract
+tunnel: produce_U=0.3 production_needs=extract
+
+# O: water. Wells and pumps draw it; lakes and rivers give it up slowly.
+well: produce_O=1 production_needs=extract
+pump: produce_O=0.8 production_needs=extract
+tap: produce_O=0.3 production_needs=extract
+pond: produce_O=0.4 production_needs=extract
+lake: produce_O=0.8 production_needs=extract
+river: produce_O=0.8 production_needs=extract
+sea: produce_O=1.2 production_needs=extract
+ocean: produce_O=1.6 production_needs=extract
+
+# G: quarries and mines; they run down.
+mine: produce_G=1 production_needs=extract
+quarry: produce_G=1.2 production_needs=extract
+goldmine: produce_G=1.2 production_needs=extract
+deposit: produce_G=1.2 production_needs=extract
+mountain: produce_G=0.5 production_needs=extract
+miner: produce_N=0.4
+
+# W: windmills and watermills. Wind rises and falls over the round; storms drive it harder.
+mill: produce_W=1.2 production_needs=wind
+windmill: produce_W=1.4 production_needs=wind
+dam: produce_W=1.2 production_needs=flow
+wheel: produce_W=0.3 production_needs=flow
+turbine: produce_W=1 production_needs=wind
+fan: produce_W=0.1 production_needs=wind
+sawmill: produce_W=0.8 production_needs=flow
+
+# M: machines turn vowels into M (two for one), and need fuel or power to run.
+machine: produce_M=0.8
+engine: produce_M=0.8
+press: produce_M=0.6
+factory: produce_M=1.5
+industry: produce_M=1.2
+works: produce_M=1
+motor: produce_M=0.5
+mechanism: produce_M=0.4
+robot: produce_M=0.4
+android: produce_M=0.3
+lathe: produce_M=0.6
+loom: produce_M=0.5
+computer: produce_M=0.3
+laptop: produce_M=0.2
+technology: produce_M=0.5
+
+# C: crafting stations, worked by someone close by; kilns and forges use up what is dug (G).
+forge: produce_C=1 production_needs=labor,g
+kiln: produce_C=0.8 production_needs=labor,g
+furnace: produce_C=0.6 production_needs=labor,g
+anvil: produce_C=0.6
+workbench: produce_C=0.6
+lab: produce_C=0.6
+laboratory: produce_C=0.8
+facility: produce_C=0.6
+studio: produce_C=0.4
+garage: produce_C=0.4
+kitchen: produce_C=0.3
+oven: produce_C=0.3
+smith: produce_N=0.4
+
+# B: furniture inside your claimed ground.
+bed: produce_B=0.4
+chair: produce_B=0.2
+table: produce_B=0.3
+desk: produce_B=0.3
+shelf: produce_B=0.2
+bench: produce_B=0.3
+bureau: produce_B=0.3
+cabinet: produce_B=0.3
+counter: produce_B=0.2
+seat: produce_B=0.2
+seats: produce_B=0.4
+throne: produce_B=0.8
+furniture: produce_B=0.6
+sofa: produce_B=0.4
+couch: produce_B=0.4
+rug: produce_B=0.2
+stool: produce_B=0.15
+cradle: produce_B=0.2
+lamp: produce_B=0.15
+mirror: produce_B=0.15
+bath: produce_B=0.2
+bedroom: produce_B=0.4
+
+# N: hired NPC labour. Workers must be fed; each also works fields, stations and harvests near it.
+aide: produce_N=0.5
+worker: produce_N=0.6
+servant: produce_N=0.5
+labourer: produce_N=0.6
+laborer: produce_N=0.6
+farmhand: produce_N=0.5
+peasant: produce_N=0.4
+hireling: produce_N=0.5
+assistant: produce_N=0.4
+employee: produce_N=0.4
+staff: produce_N=1
+hands: produce_N=0.8
+crew: produce_N=0.8
+labor: produce_N=1.2
+labour: produce_N=1.2
+men: produce_N=1
+people: produce_N=1.5
+folk: produce_N=1.5
+baker: produce_N=0.3
+chef: produce_N=0.3
+cook: produce_N=0.3
+miller: produce_N=0.3
+maker: produce_N=0.3
+engineer: produce_N=0.3
+operator: produce_N=0.3
+tech: produce_N=0.3
+human: produce_N=0.3
+citizen: produce_N=0.3
+
+# Y: age. Every thing you own on the ground yields Y the longer it stands (shared AGE_Y); these
+# old or time-keeping things age faster.
+clock: produce_Y=0.15
+watch: produce_Y=0.1
+calendar: produce_Y=0.1
+oak: produce_Y=0.15
+tree: produce_Y=0.05
+relic: produce_Y=0.3
+museum: produce_Y=0.3
+memorial: produce_Y=0.2
+ruin: produce_Y=0.2
+castle: produce_Y=0.1
+
+# T: a trade completed. An exchange event aimed at another player (TRADE, DEAL) is a trade, and
+# pays each side this many T; markets and offers pay one T a trade (shared letters.ts).
+trade: produce_T=1
+deal: produce_T=1
+exchange: produce_T=1
+sale: produce_T=1
+selling: produce_T=1
+trading: produce_T=1
+retail: produce_T=1
+export: produce_T=1
+acquisition: produce_T=1
+commerce: produce_T=2
+auction: produce_T=2
+venture: produce_T=2

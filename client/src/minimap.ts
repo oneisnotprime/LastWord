@@ -9,7 +9,7 @@ const COLOURS: Record<Tile, [number, number, number]> = {
   [Tile.DeepWater]: [61, 103, 120], [Tile.Water]: [109, 158, 170], [Tile.Sand]: [230, 211, 163], [Tile.Grass]: [163, 184, 111],
   [Tile.Forest]: [111, 139, 80], [Tile.Hill]: [185, 176, 119], [Tile.Mountain]: [163, 155, 140], [Tile.Road]: [201, 167, 122],
   [Tile.City]: [221, 208, 182], [Tile.Pit]: [59, 47, 38], [Tile.Snow]: [244, 241, 234], [Tile.Swamp]: [127, 138, 85],
-  [Tile.Lava]: [236, 122, 58], [Tile.Wall]: [179, 166, 143],
+  [Tile.Lava]: [236, 122, 58], [Tile.Wall]: [179, 166, 143], [Tile.Field]: [138, 106, 69],
 };
 /** The fog beyond what you can see. */
 const FOG: [number, number, number] = [42, 63, 72];

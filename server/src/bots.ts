@@ -1,4 +1,4 @@
-import { ACTION_LETTERS, becomes, parsePhrase, production, TILE_METERS, TILE_TYPES, type Dictionary, type Letters, type Op, type Stats } from "@lastword/shared";
+import { ACTION_LETTERS, becomes, parsePhrase, producerOf, TILE_METERS, TILE_TYPES, type Dictionary, type Letters, type Op, type Stats } from "@lastword/shared";
 
 /**
  * Server-side bot players: what a bot knows about words, and how hard it plays. The room
@@ -37,6 +37,8 @@ export interface BotWord {
   slot: string;
   /** For events: tiles from the speller it can land. */
   reach: number;
+  /** For producers: what it needs to work (shared `produce.ts`). */
+  needs?: string[];
 }
 
 const A = "a".charCodeAt(0);
@@ -131,11 +133,14 @@ export function wordBook(dict: Dictionary) {
       continue;
     }
     if (p.kind !== "object" || p.plural) continue;
-    // Producers that run by themselves (no fuel or power), scored by what they make a minute;
-    // letters no action gives count double.
-    const makes = Object.entries(production(s));
-    if (makes.length && TILE_TYPES[String(s.get("tile_type"))] === undefined && !(s.num("upkeep_fuel") > 0) && !(s.num("upkeep_power") > 0) && !s.flag("mountable")) {
-      add("producer", makes.reduce((n, [ch, rate]) => n + rate * (ACTION_LETTERS.includes(ch) ? 1 : 2), 0) * p.count);
+    // Producers, scored by what they make a minute; letters no action gives count double.
+    // Terrain only if it is crop land it tills (HOE, FARM); nothing ridden.
+    const spec = producerOf(s);
+    const makes = Object.entries(spec.rates);
+    const tile = String(s.get("tile_type"));
+    if (makes.length && (TILE_TYPES[tile] === undefined || tile === "tilled") && !s.flag("mountable")) {
+      add("producer", makes.reduce((n, [ch, rate]) => n + rate * (ACTION_LETTERS.includes(ch) ? 1 : 2), 0) * p.count,
+        { needs: [...spec.needs, ...spec.uses, ...(s.num("upkeep_fuel") > 0 ? ["fuel"] : []), ...(s.num("upkeep_power") > 0 ? ["power"] : [])] });
     }
     if (s.get("tile_type") !== "none") continue;
     const slot = String(s.get("equip_slot"));

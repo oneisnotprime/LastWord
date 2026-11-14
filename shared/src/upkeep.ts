@@ -79,7 +79,7 @@ export function supply(stores: Stores, out: Stores, seconds: number): void {
 
 /** Food one gathering action finds on each kind of ground: foraging where things grow. */
 const GROUND_FOOD: Partial<Record<Tile, number>> = {
-  [Tile.Grass]: 0.1, [Tile.Forest]: 0.15, [Tile.Swamp]: 0.05,
+  [Tile.Grass]: 0.1, [Tile.Forest]: 0.15, [Tile.Swamp]: 0.05, [Tile.Field]: 0.2,
 };
 
 /** Food a gathering action finds where the player stands. */

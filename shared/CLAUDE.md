@@ -30,9 +30,16 @@ server and the client import this, so anything here must give the same answer on
   `Deposits.problem` says why gathering would find nothing; `GATHER_REASONS` names each deposit
   for the letter popup; `cachePrize` is the prize at a cache's bottom; `LETTER_GUIDE` is the
   alphabet guide under the spell box (test-checked against the data).
+- `produce.ts` things you own that make letters (PLAN.md table): `producerOf` reads `produce_*`
+  and `production_needs` (tilled, water, labor, wind, flow, claim, harvest, extract, vowel or a
+  letter used up); `outputOf` gives letters a minute in measured `Conditions` and why not
+  ("needs tilled land", "no wind"); `windAt` (map wind), `moistureAt`, `Soil` (fertility per
+  8-tile patch, worn by crops), `ageRate` (Y from age), `needsText`, `producingLine`.
+  `Tile.Field` is tilled land; a `soil` stamp changes only `SOIL` tiles.
 - `economy.ts` `starterHand` (eight letters around a word that produces something, `starterWords`)
-  and `reachability`/`reachTable`: the shortest chain from the action letters to every letter;
-  its test prints the table.
+  and `reachability`/`reachTable`: the shortest chain from the action letters to every letter,
+  through producers whose needs are reached (a crop needs a tilling word, furniture a claim);
+  its test prints the table. `PENDING_SOURCES` lists letters no source reaches yet.
 - `unit.ts` a character with its gear: damage layers, held weapon scaled by strength and
   training, riding. `strikeUnit` hits the outermost layer.
 - `status.ts` `STATUS_RULES`: the one table of what each status (stun, fear, poison...) does;

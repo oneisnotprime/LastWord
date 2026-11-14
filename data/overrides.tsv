@@ -76,6 +76,7 @@ agricultural	adjective	pertaining
 agriculture	noun	knowledge
 ahead	adverb	manner
 aid	noun	medicine
+aide	noun	worker
 aim	verb	combat
 air	noun	gas
 aircraft	noun	vehicle_air
@@ -121,6 +122,7 @@ another	adjective	quality
 ant	noun	insect
 antelope	noun	mammal
 anti	adjective	quality
+anvil	noun	artifact
 anxiety	noun	feeling
 anymore	adverb	manner
 anyway	adverb	manner
@@ -639,6 +641,7 @@ complicated	adjective	quality
 component	noun	device
 composed	adjective	quality
 composition	noun	knowledge
+compost	noun	material
 comprehensive	adjective	quality
 computer	noun	device
 con	noun	criminal
@@ -722,6 +725,7 @@ corruption	noun	attribute
 cost	noun	possession
 costs	noun	possession
 cotton	noun	fabric
+couch	noun	furniture
 council	noun	group
 count	noun	leader
 counter	noun	furniture
@@ -741,6 +745,7 @@ covering	noun	protection
 cow	noun	mammal
 crack	noun	depression
 crackdown	noun	attribute
+cradle	noun	furniture
 craft	noun	vehicle_air
 crap	noun	material
 crash	noun	disaster
@@ -1204,6 +1209,7 @@ fantasy	noun	knowledge
 far	adverb	manner
 farm	noun	structure
 farmer	noun	worker
+farmhand	noun	worker
 fashion	noun	attribute
 fast	adjective	quality
 faster	adverb	manner
@@ -1366,6 +1372,7 @@ funds	noun	currency
 funeral	noun	ceremony
 fungus	noun	fungus
 funny	adjective	quality
+furnace	noun	structure
 furniture	noun	furniture
 further	adverb	manner
 furthermore	adverb	manner
@@ -1394,6 +1401,7 @@ general	noun	leader
 generally	adverb	manner
 generate	verb	create
 generation	noun	group
+generator	noun	artifact
 genetic	adjective	quality
 genius	noun	person
 genuine	adjective	quality
@@ -1414,6 +1422,7 @@ glove	noun	clothing
 glow	verb	transform
 glut	noun	attribute
 goal	noun	knowledge
+goat	noun	mammal
 god	noun	supernatural
 godsend	noun	event
 going	adjective	participle
@@ -1514,6 +1523,7 @@ heat	noun	phenomenon
 heaven	noun	place
 heavily	adverb	manner
 heavy	adjective	quality
+hedge	noun	structure
 height	noun	attribute
 heir	noun	worker
 heist	noun	crime
@@ -1524,6 +1534,7 @@ helmet	noun	protection
 help	verb	social
 helpful	adjective	quality
 helping	noun	food
+hen	noun	bird
 henry	noun	quantity
 herd	noun	phenomenon
 heresy	noun	attribute
@@ -1540,6 +1551,7 @@ hill	noun	elevation
 hip	noun	bodypart
 hire	verb	social
 hired	adjective	quality
+hireling	noun	worker
 historic	adjective	quality
 historical	adjective	pertaining
 history	noun	knowledge
@@ -1547,6 +1559,7 @@ hit	verb	contact
 hitting	noun	attack
 hoard	noun	possession
 hockey	noun	contest
+hoe	noun	tool
 hold	verb	contact
 holding	noun	possession
 hole	noun	depression
@@ -1749,6 +1762,7 @@ kid	noun	person
 kill	verb	contact
 killer	noun	criminal
 killing	noun	killing
+kiln	noun	structure
 kinda	adverb	manner
 king	noun	leader
 kingdom	noun	place
@@ -1764,7 +1778,9 @@ lab	noun	building
 label	noun	document
 labor	noun	group
 laboratory	noun	building
+laborer	noun	worker
 labour	noun	group
+labourer	noun	worker
 ladder	noun	tool
 lady	noun	person
 laid	adjective	participle
@@ -1784,6 +1800,7 @@ late	adjective	quality
 lately	adverb	manner
 later	adverb	manner
 latest	adjective	quality
+lathe	noun	machine
 latin	adjective	pertaining
 latter	adjective	quality
 laugh	verb	body
@@ -1873,6 +1890,7 @@ long	adjective	quality
 longer	adverb	manner
 longest	adverb	manner
 looking	adjective	participle
+loom	noun	machine
 loop	noun	tool
 loose	adjective	quality
 loot	noun	attribute
@@ -1927,6 +1945,7 @@ manager	noun	leader
 manner	noun	attribute
 manual	noun	document
 manufacturing	noun	act
+manure	noun	material
 map	noun	document
 march	verb	movement
 margin	noun	attribute
@@ -2182,6 +2201,7 @@ opposition	noun	conflict
 option	noun	document
 oral	adjective	pertaining
 orange	noun	produce
+orchard	noun	structure
 order	noun	attribute
 ordered	adjective	quality
 ordinary	adjective	quality
@@ -2208,6 +2228,7 @@ owl	noun	bird
 owned	adjective	quality
 owner	noun	person
 ownership	noun	possession
+ox	noun	mammal
 oxford	noun	clothing
 oxygen	noun	gas
 pace	noun	quantity
@@ -2264,6 +2285,7 @@ payment	noun	currency
 peace	noun	feeling
 peaceful	adjective	quality
 peak	noun	elevation
+peasant	noun	worker
 pen	noun	tool
 penalty	noun	possession
 pension	noun	possession
@@ -2339,6 +2361,7 @@ pleased	adjective	quality
 pleasure	noun	feeling
 plenty	noun	attribute
 plot	noun	crime
+plough	noun	tool
 plow	noun	tool
 plunder	noun	attribute
 plus	adjective	quality
@@ -2375,6 +2398,7 @@ post	noun	structure
 posted	adjective	participle
 posting	noun	act
 pot	noun	container
+potato	noun	produce
 potential	adjective	quality
 potentially	adverb	manner
 potion	noun	medicine
@@ -2401,7 +2425,7 @@ present	noun	possession
 presentation	noun	ceremony
 president	noun	leader
 presidential	adjective	pertaining
-press	verb	contact
+press	noun	machine
 pressure	noun	phenomenon
 pretend	verb	transform
 pretty	adjective	quality
@@ -2497,6 +2521,7 @@ quake	noun	event
 qualified	adjective	quality
 quality	noun	attribute
 quarantine	noun	act
+quarry	noun	structure
 quarter	noun	quantity
 quarters	noun	building
 queen	noun	leader
@@ -2715,6 +2740,7 @@ row	verb	movement
 royal	adjective	pertaining
 rubber	noun	material
 rude	adjective	quality
+rug	noun	furniture
 rugby	noun	contest
 ruin	noun	building
 ruined	adjective	participle
@@ -2750,6 +2776,7 @@ saved	adjective	quality
 saving	noun	rescue
 savings	noun	currency
 saw	noun	tool
+sawmill	noun	machine
 scale	verb	movement
 scarcity	noun	attribute
 scared	adjective	quality
@@ -2817,6 +2844,7 @@ serial	adjective	quality
 series	noun	quantity
 serious	adjective	quality
 seriously	adverb	manner
+servant	noun	worker
 serve	verb	combat
 server	noun	worker
 service	noun	act
@@ -2938,6 +2966,7 @@ soccer	noun	contest
 social	adjective	pertaining
 socialist	noun	person
 society	noun	group
+sofa	noun	furniture
 soft	adjective	quality
 soil	noun	material
 solar	adjective	pertaining
@@ -3026,6 +3055,7 @@ stock	noun	possession
 stocks	noun	structure
 stomach	noun	bodypart
 stone	noun	mineral
+stool	noun	furniture
 stop	verb	movement
 stopped	adjective	quality
 stopping	adjective	participle
@@ -3300,6 +3330,7 @@ tsunami	noun	disaster
 tube	noun	route
 tune	noun	instrument
 tunnel	noun	route
+turbine	noun	machine
 turkey	noun	bird
 turkish	adjective	pertaining
 turn	verb	movement
@@ -3386,6 +3417,7 @@ view	noun	knowledge
 viewers	noun	group
 village	noun	building
 vine	noun	plant
+vineyard	noun	structure
 violence	noun	feeling
 violent	adjective	quality
 virgin	noun	person
@@ -3466,6 +3498,7 @@ willing	adjective	quality
 win	verb	combat
 wind	noun	weather
 windfall	noun	phenomenon
+windmill	noun	machine
 window	noun	structure
 wine	noun	drink
 wing	noun	bodypart
@@ -3490,6 +3523,7 @@ wood	noun	material
 wooden	adjective	quality
 woods	noun	landform
 work	noun	knowledge
+workbench	noun	furniture
 worker	noun	worker
 working	adjective	participle
 works	noun	building

@@ -1,6 +1,7 @@
 import { Room, type Client } from "colyseus";
 import { StateView } from "@colyseus/schema";
 import {
+  producerOf, outputOf, ageRate, SOIL, windAt, moistureAt, waterNear, wateringReach, wetWeather, producingLine, Soil, LABOUR_RANGE, CYCLE_SECONDS, PEACE_RADIUS, PEACE_SECONDS, VOWELS, type ProducerSpec, type Conditions,
   addLetters, afflict, placeRules, harvest, growthOf, tradeRateOf, marketRatio, type PlaceRules, aggressive, clearLine, courageOf, pluralize, auras, authorityOf, chooseTarget, commandLimit, draw, groundFood, hasAny, ignoresOrder, moraleAim, moraleGoal, needs, nextMorale, noStores, outputs, recruitRate, rerouteSeconds, startingSupply, becomes, retreats, routed, supply, theftResistance, HUNGER_LOYALTY, NORMAL, STARTING_STORES, STARVING, SUPPLIES, bodyFlags, cure, useObject, findPath, hampered, inflicts, statusDamage, statusEffects, tickStatuses, wake, GATHER_SECONDS, GATHER_REASONS, cachePrize, carcassFood, Deposits, destroyLetters, killLetters, mainland, MARKET, pickAnimal, placeSources, readTrade, regionOf, RUIN_INTEGRITY, CACHE_X, SITE_RADIUS, spawnPoint, starterHand, TEMPLE_Q, tradeProblem, generateMap, GIVE_RANGE, missing, parsePhrase, applyAdjectives, cannotCarry, improvisable, readDescription, production, resolveSpelled, SEPARATE_UP_TO, nearestWalkable, openGround, randomWalkable, resolve, Tile, tileAt, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit, cannotRide, claimOf, senseOf, combineSenses, type Sense, type Sensed,
   type Affliction, type Candidate, type Dictionary, type Stores, type Supply, type Entity, type Hampered, type Status, type Stats, type Letters, type LoadoutDetail, type Op, type Phrase, type Point, type Spelled, type Value, type WordDef, type WorldMap,
 } from "@lastword/shared";
@@ -30,6 +31,8 @@ interface Gear {
   hungry?: boolean;
   /** Loyalty it has lost to hunger. */
   hungerLost?: number;
+  /** Room time it was made: it ages into Y for its owner from then, wherever it is kept. */
+  born?: number;
 }
 
 /** A passing effect on bodies: a verb someone cast, or weather over everyone. */
@@ -245,7 +248,31 @@ function freshMind(moraleBase: number, person: boolean) {
 interface Holdings { creatures: [string, Walker][]; things: [string, Gear][] }
 
 /** An object's letter output: rate per minute and the fraction built up so far. */
-interface Producer { owner: string; rates: Letters; built: Letters }
+/**
+ * Something that makes letters for its owner (shared `produce.ts`): a thing on the ground, a
+ * creature (livestock, workers), or a field or sky word's own output. Every thing on the ground
+ * is one, for Y as it ages, even if it makes nothing else. Its owner is read afresh each second
+ * (a thing's `owner`, a creature's `master`), so claiming and stealing carry it over.
+ */
+interface Producer {
+  /** For a field or sky word: its maker. Things and creatures read theirs. */
+  owner: string;
+  spec: ProducerSpec;
+  /** Fractions of letters built up. */
+  built: Letters;
+  /** Letters it has given, for `extract`. */
+  made: number;
+  /** For `harvest`: letters grown this cycle, and seconds into it. */
+  ripe: Letters;
+  cycle: number;
+  /** Room time it came to be its owner's, for age (Y). */
+  born: number;
+  /** What it made a minute at the last count, and why not if nothing. */
+  now: Letters;
+  idle: string | null;
+  /** What it is called in popups and the loadout. */
+  name: string;
+}
 
 /**
  * A starting hand: eight letters around one word that produces something (shared `starterHand`).
@@ -280,8 +307,9 @@ interface BotMind {
   peaceUntil: number;
   /** Room time before which it spells nothing more. */
   nextSpell: number;
-  /** Producers it has spelled. */
+  /** Producers it has spelled, and where it spelled its first: home, where it comes back to work them. */
   producers: number;
+  home?: Point;
 }
 
 /** Seconds a bot keeps the peace at the start: between these two. */
@@ -330,6 +358,18 @@ export class WorldRoom extends Room {
   private thingGrid = new Map<number, string[]>();
   private nextThing = 1;
   private producers = new Map<string, Producer>();
+  /** The soil's fertility, worn by crops and flora (shared `Soil`). */
+  private soil!: Soil;
+  /** Blows struck lately, where and when: producers near one make nothing (shared PEACE_RADIUS). */
+  private fights: { x: number; y: number; t: number }[] = [];
+  /** Producers carried, worn or ridden, by the gear (it makes letters for whoever has it). */
+  private carried = new WeakMap<Gear, Producer>();
+  /** What each person's producers made a minute at the last count (`producing`), and what was last told. */
+  private income = new Map<string, { lines: string[]; letters: { letter: string; rate: number; from: string }[]; shown: string }>();
+  /** Seconds toward the next second of production. */
+  private produceClock = 0;
+  /** Things that water the ground around them (`water_output`): thing id -> tiles they reach. */
+  private waterers = new Map<string, number>();
   /** What gathering finds where, and how much is left (shared `Deposits`); caches and the temple are its sites. */
   deposits!: Deposits;
   /** The tiles everyone can reach each other on, for placing people and sources. */
@@ -585,6 +625,16 @@ export class WorldRoom extends Room {
   }
 
   /**
+   * Makes `id` a producer (a thing, a creature, or `field:`/`sky:` output) from its properties,
+   * `count` of it. Things always are (they age into Y); creatures and words only if they make letters.
+   */
+  private addProducer(id: string, owner: string, stats: Stats, count: number, name: string, always = false) {
+    const spec = producerOf(stats, count);
+    if (!always && !Object.keys(spec.rates).length) { this.producers.delete(id); return; }
+    this.producers.set(id, { owner, spec, built: {}, made: 0, ripe: {}, cycle: 0, born: this.elapsed, now: {}, idle: null, name: name.toUpperCase() });
+  }
+
+  /**
    * Gives letters and tells their new holder why, for the letter popup ("E · forage",
    * "H · hunted COW (+12 food)"), with where they came from. The caller sends `letters`.
    */
@@ -679,6 +729,7 @@ export class WorldRoom extends Room {
       const old = { spelled: ownGear.spelled, phrase: ownGear.phrase };
       ownGear.spelled = done.spelled;
       this.resolved.delete(ownGear);
+      this.carried.delete(ownGear);
       ownGear.phrase = shown(done.spelled.adjectives!, done.spelled.noun);
       ownGear.integrity = null;
       try { this.rebuild(walker); } catch (e) { Object.assign(ownGear, old); this.resolved.delete(ownGear); this.rebuild(walker); throw e; }
@@ -712,11 +763,9 @@ export class WorldRoom extends Room {
       if (kept !== null) gear.integrity = kept * stats.num("integrity");
       this.thingEntities.delete(target);
       thing.phrase = gear.phrase;
-      if (this.producers.has(target)) {
-        const rates = production(stats);
-        for (const k of Object.keys(rates)) rates[k]! *= gear.spelled.count ?? 1;
-        this.producers.set(target, { owner: thing.owner, rates, built: {} });
-      }
+      const was = this.producers.get(target);
+      this.addProducer(target, thing.owner, stats, gear.spelled.count ?? 1, gear.phrase, true);
+      if (was) Object.assign(this.producers.get(target)!, { born: was.born, made: was.made });
       this.radiate(gear, gear.spelled, target, thing.owner, { x: thing.x, y: thing.y }, null, Number(this.dict.base(gear.spelled.noun, "sight_range")));
       return this.described(id, walker, read, target, at, what, done.changes, thing.owner);
     }
@@ -777,6 +826,7 @@ export class WorldRoom extends Room {
    */
   private placeSources() {
     this.deposits = new Deposits(this.map);
+    this.soil = new Soil(this.map);
     this.land = mainland(this.map);
     this.bare = WorldRoom.testBare;
     if (this.bare) return;
@@ -1043,6 +1093,8 @@ export class WorldRoom extends Room {
         name: w.player.name, health: w.player.hp, ...(w.hungry ? { hungry: true } : {}), ...(w.fleeing ? { fleeing: true } : {}),
       })),
       senses: (walker.senses ?? []).map((x) => ({ ...x })),
+      producing: this.producing(walker.id),
+      income: this.income.get(walker.id)?.letters ?? [],
     };
     client.send("loadout", detail);
   }
@@ -1071,6 +1123,8 @@ export class WorldRoom extends Room {
     this.walkers.set(id, walker);
     this.rebuild(walker);
     if (hp !== undefined) walker.player.hp = Math.min(100, Math.ceil((hp / walker.unit.body.stats.num("integrity")) * 100));
+    // Livestock and workers make letters for whoever is their master (none while wild).
+    this.addProducer(id, master, walker.unit.body.stats, count, gear.phrase);
     return id;
   }
 
@@ -1171,7 +1225,7 @@ export class WorldRoom extends Room {
       const word = this.botWord(id, w, mind, have, armed, mine, peaceful);
       if (word) {
         if (word.use === "event") w.picked = foe;
-        try { this.spellWord(id, w, word.word); spelled(); if (word.use === "producer") mind.producers++; }
+        try { this.spellWord(id, w, word.word); spelled(); if (word.use === "producer") { mind.producers++; mind.home ??= { x: w.player.x, y: w.player.y }; } }
         catch { if (word.use !== "event") mind.tried.add(word.word); }
         if (word.use === "event") w.picked = null;
       } else if (this.botTrade(id, w, mind, have)) spelled();
@@ -1204,6 +1258,11 @@ export class WorldRoom extends Room {
     const c = this.map.cities[Math.floor(this.rng() * this.map.cities.length)];
     if (c && (w.letters.e ?? 0) >= MARKET.ratio * 2 && this.rng() < 0.4) {
       w.target = { x: c.x + 0.5 + (this.rng() - 0.5) * 2, y: c.y + 0.5 + (this.rng() - 0.5) * 2 };
+      return;
+    }
+    // Often back home to its producers: to work them and bring in their harvest.
+    if (mind.home && this.rng() < 0.5) {
+      w.target = nearestWalkable(this.map, { x: clamp(mind.home.x + (this.rng() - 0.5) * 6), y: clamp(mind.home.y + (this.rng() - 0.5) * 6) });
       return;
     }
     const angle = this.rng() * Math.PI * 2, far = 10 + this.rng() * 20;
@@ -1266,7 +1325,14 @@ export class WorldRoom extends Room {
     const foe = w.foe ? this.walkers.get(w.foe) : undefined;
     const fighting = mind.difficulty !== "easy" && !!foe;
     const owns = (x: BotWord) => { for (const a of this.areas.values()) if (a.owner === id && a.word === x.word) return true; return false; };
-    const build = mind.producers < (peaceful ? 6 : 3) ? () => choose("producer") : () => null;
+    // A producer it can run where it stands: furniture inside its own claim, a watermill by water,
+    // a machine with fuel or power to hand, a crop where land can be tilled.
+    const claimed = [...this.areas.values()].some((a) => a.claim && a.owner === id && Math.hypot(a.x - w.player.x, a.y - w.player.y) <= a.radius);
+    const runs = (x: BotWord) => (x.needs ?? []).every((n) =>
+      n === "claim" ? claimed : n === "flow" ? waterNear(this.map, w.player.x, w.player.y, 2)
+      : n === "fuel" || n === "power" ? w.stores[n] > 1 || !mind.producers
+      : n === "tilled" ? SOIL.includes(tileAt(this.map, w.player.x, w.player.y)) : true);
+    const build = mind.producers < (peaceful ? 6 : 3) ? () => choose("producer", runs) : () => null;
     return (peaceful ? build() : null)
       ?? (!armed ? choose("weapon") : null)
       ?? choose("armor", (x) => !slots.has(x.slot))
@@ -1523,7 +1589,6 @@ export class WorldRoom extends Room {
         } else {
           const t = this.state.things.get(tid);
           if (t) t.owner = "";
-          this.producers.delete(tid);
         }
         continue;
       }
@@ -1655,7 +1720,7 @@ export class WorldRoom extends Room {
     if (letters > 0) {
       for (const [pid, p] of this.producers) {
         const t = this.state.things.get(pid);
-        if (t && near(t, letters)) out.letters.push({ x: at(t.x), y: at(t.y), letters: Object.keys(p.rates).join("") });
+        if (t && near(t, letters)) out.letters.push({ x: at(t.x), y: at(t.y), letters: Object.keys(p.spec.rates).join("") });
       }
     }
     client.send("sensed", out);
@@ -1790,7 +1855,10 @@ export class WorldRoom extends Room {
     }
     const here = { x: walker.player.x, y: walker.player.y }; // laying terrain may move the speller
     const tile = TILE_TYPES[String(phrase.stats.get("tile_type"))];
-    if (tile !== undefined) this.reshape(walker.player.x, walker.player.y, phrase.stats.num("radius") * Math.sqrt(n), tile);
+    // Tilling (HOE, FARM) turns only soil to crop land: never water, roads, cities or rock.
+    if (tile !== undefined) this.reshape(walker.player.x, walker.player.y, phrase.stats.num("radius") * Math.sqrt(n), tile, tile === Tile.Field);
+    // Anything fertile put down (COMPOST, MANURE, a FARM) enriches the soil it lies on.
+    if (phrase.stats.num("fertility") > 0) this.soil.enrich(here.x, here.y, this.elapsed, phrase.stats.num("fertility") * n);
     let worn = 0;
     for (let i = 0; i < copies; i++) {
       const gear = one();
@@ -1801,10 +1869,7 @@ export class WorldRoom extends Room {
       if (problem === null) { worn++; continue; }
       if (problem && gear.vehicle) this.sendTo(owner, "notice", problem);
       const p = i === 0 ? here : at(i);
-      const id = this.addThing(gear, owner, p.x, p.y);
-      const rates = production(phrase.stats);
-      for (const k of Object.keys(rates)) rates[k]! *= each; // a stack of a thousand makes a thousand's worth
-      if (Object.keys(rates).length) this.producers.set(id, { owner, rates, built: {} });
+      this.addThing(gear, owner, p.x, p.y); // a stack of a thousand makes a thousand's worth
     }
     return worn === copies ? "equipped" : worn ? `made; ${worn} equipped` : "made";
   }
@@ -2217,7 +2282,7 @@ export class WorldRoom extends Room {
     // Casting it again replaces your earlier one.
     for (const [k, a] of this.areas) if (a.owner === id && a.word === phrase.noun) { this.areas.delete(k); this.state.zones.delete(k); }
     const key = this.addArea(area, true);
-    if (Object.keys(rates).length) this.producers.set(`field:${key}`, { owner: id, rates, built: {} });
+    this.addProducer(`field:${key}`, id, s, 1, phrase.noun);
     this.applyFields();
     const began = this.begin(area, s);
     const minutes = s.num("field_duration") || s.num("persistence");
@@ -2729,8 +2794,7 @@ export class WorldRoom extends Room {
     const out = this.counter(phrase.noun);
     if (out) did = did ? `${did}; ${out} area${out === 1 ? "" : "s"} ended` : `${out} area${out === 1 ? "" : "s"} ended`;
     if (!did) throw new Error(`${word} does nothing yet`);
-    const rates = production(s);
-    if (Object.keys(rates).length) this.producers.set(`sky:${phrase.noun}:${id}`, { owner: id, rates, built: {} });
+    this.addProducer(`sky:${phrase.noun}:${id}`, id, s, 1, phrase.noun);
     for (const [wid, w] of this.walkers) if (wid !== id && w.master === null) this.sendTo(wid, "notice", `${by || "Someone"} brought ${word}`);
     for (const w of this.walkers.values()) this.rebuild(w);
     this.refreshViews();
@@ -2941,11 +3005,11 @@ export class WorldRoom extends Room {
     const thing = this.state.things.get(thingId)!;
     thing.owner = id;
     const stats = this.statsOf(gear);
-    const rates = production(stats);
-    if (Object.keys(rates).length) this.producers.set(thingId, { owner: id, rates, built: {} });
+    this.addProducer(thingId, id, stats, gear.spelled.count ?? 1, gear.phrase, true);
+    const rates = this.producers.get(thingId)!.spec.rates;
     this.radiate(gear, gear.spelled, thingId, id, { x: thing.x, y: thing.y }, null, Number(this.dict.base(gear.spelled.noun, "sight_range")));
     const makes = Object.keys(rates).map((l) => l.toUpperCase()).join(" ");
-    this.sendTo(id, "spelled", `${gear.phrase.toUpperCase()} is yours${makes ? `: it makes ${makes}` : ""}`);
+    this.sendTo(id, "spelled", `${gear.phrase.toUpperCase()} is yours: ${makes ? `it makes ${makes}` : "it ages into Y"}`);
     this.tell(walker);
     this.refreshViews();
   }
@@ -2957,6 +3021,9 @@ export class WorldRoom extends Room {
    */
   private blow(by: string, on: string, r: { hit: boolean; critical: boolean; damage: number }, layer: string, ranged: boolean, area?: Area) {
     const kind: Hit["kind"] = !r.hit ? "miss" : r.damage <= 0 ? "blocked" : r.critical ? "crit" : "hit";
+    // Fighting stops the work around it (shared PEACE_RADIUS): noted where the blow landed.
+    const struck = this.walkers.get(on)?.player ?? this.state.things.get(on);
+    if (struck && r.hit && this.walkers.get(on)?.master !== "-") this.fights.push({ x: struck.x, y: struck.y, t: this.elapsed });
     this.hits.push({ by, on, amount: Math.round(r.damage), layer, kind, ranged, ...(area ? { x: area.x, y: area.y } : {}) });
   }
 
@@ -3030,8 +3097,8 @@ export class WorldRoom extends Room {
   }
 
   /** Lays terrain and moves anyone now standing where they cannot onto the nearest ground. */
-  reshape(x: number, y: number, radius: number, tile: number) {
-    const stamp = { x, y, radius, tile };
+  reshape(x: number, y: number, radius: number, tile: number, soil = false) {
+    const stamp = { x, y, radius, tile, soil };
     stampTerrain(this.map, stamp);
     this.state.edits.push(Object.assign(new Edit(), stamp));
     for (const w of this.walkers.values()) {
@@ -3051,7 +3118,176 @@ export class WorldRoom extends Room {
     this.state.things.delete(id);
     this.grounded.delete(id);
     this.producers.delete(id);
+    this.waterers.delete(id);
     this.thingEntities.delete(id);
+  }
+
+  /**
+   * One second of production (shared `produce.ts`): each producer's conditions are measured where
+   * it stands (tilled land, moisture, soil, workers, wind, running water, its owner's claim,
+   * feeding, power, peace), its output builds up, and whole letters are earned there by its owner
+   * (so the place's rules act on them: DROUGHT, a STORM's W). Flora pays at the end of each
+   * harvest cycle to its owner's side close by; machines use up what they convert; crops and flora
+   * wear out the soil; everything owned on the ground ages into Y.
+   */
+  private produce(seconds: number) {
+    this.fights = this.fights.filter((f) => this.elapsed - f.t <= PEACE_SECONDS);
+    const wind = windAt(this.state.seed, this.elapsed);
+    this.state.wind = Math.round(wind * 100);
+    const raining = wetWeather(this.state.weather);
+    // Who works where: every walker that works (`labor`), by the side it works for.
+    const workers = new Map<string, { x: number; y: number; labor: number }[]>();
+    for (const [id, w] of this.walkers) {
+      const side = w.master === null ? id : w.master;
+      if (side === "-" || w.fleeing || w.hungry) continue;
+      const labor = w.unit.body.stats.num("labor") * (w.player.count || 1);
+      if (labor > 0) (workers.get(side) ?? workers.set(side, []).get(side)!).push({ x: w.player.x, y: w.player.y, labor });
+    }
+    const labourAt = (owner: string, x: number, y: number) =>
+      (workers.get(owner) ?? []).reduce((n, k) => n + (Math.hypot(k.x - x, k.y - y) <= LABOUR_RANGE ? k.labor : 0), 0);
+    const claimedBy = (owner: string, x: number, y: number) => {
+      for (const a of this.areas.values()) if (a.claim && a.owner === owner && Math.hypot(a.x - x, a.y - y) <= a.radius) return true;
+      return false;
+    };
+    const watered = (x: number, y: number) => {
+      for (const [tid, reach] of this.waterers) { const t = this.state.things.get(tid); if (t && Math.hypot(t.x - x, t.y - y) <= reach) return true; }
+      return false;
+    };
+    // Everything that belongs to someone makes its letters for them: on the ground, as a creature,
+    // or carried, worn and ridden (where its owner stands).
+    type Job = { p: Producer; ownerId: string; owner: Walker; at: Point; gear?: Gear; creature?: Walker; ages: boolean };
+    const jobs: Job[] = [];
+    for (const [pid, p] of this.producers) {
+      const thing = this.state.things.get(pid), creature = thing ? undefined : this.walkers.get(pid);
+      if (!thing && !creature && !/^(field|sky):/.test(pid)) { this.producers.delete(pid); continue; }
+      const ownerId = thing ? thing.owner : creature ? creature.master ?? "" : p.owner;
+      const owner = this.walkers.get(ownerId);
+      if (!owner || owner.master !== null) { p.idle = null; p.now = {}; continue; }
+      jobs.push({ p, ownerId, owner, at: thing ?? creature?.player ?? owner.player, gear: this.grounded.get(pid), creature, ages: !!thing });
+    }
+    for (const [ownerId, owner] of this.walkers) {
+      if (owner.master !== null) continue;
+      for (const gear of owner.gear) {
+        let p = this.carried.get(gear);
+        if (!p) {
+          p = { owner: ownerId, spec: producerOf(this.statsOf(gear), gear.spelled.count ?? 1), built: {}, made: 0, ripe: {}, cycle: 0,
+            born: gear.born ?? this.elapsed, now: {}, idle: null, name: gear.phrase.toUpperCase() };
+          gear.born ??= this.elapsed;
+          this.carried.set(gear, p);
+        }
+        jobs.push({ p, ownerId, owner, at: owner.player, gear, ages: true });
+      }
+    }
+    const tally = new Map<string, { lines: string[]; letters: Map<string, { rate: number; from: string[] }>; age: number; aged: number }>();
+    for (const { p, ownerId, owner, at, gear, creature, ages } of jobs) {
+      let rates: Letters = {};
+      p.idle = null;
+      if (Object.keys(p.spec.rates).length) {
+        const needs = p.spec.needs;
+        const c: Conditions = {
+          tilled: tileAt(this.map, at.x, at.y) === Tile.Field,
+          moisture: needs.includes("water") ? moistureAt(this.map, at.x, at.y, watered(at.x, at.y), raining) : 1,
+          fertility: needs.includes("tilled") || needs.includes("harvest") ? this.soil.fertility(at.x, at.y, this.elapsed) : 1,
+          labour: labourAt(ownerId, at.x, at.y),
+          wind,
+          flow: needs.includes("flow") ? waterNear(this.map, at.x, at.y, 2) : true,
+          claimed: needs.includes("claim") ? claimedBy(ownerId, at.x, at.y) : true,
+          fed: !(creature?.hungry ?? gear?.hungry ?? false),
+          peace: !this.fights.some((f) => Math.hypot(f.x - at.x, f.y - at.y) <= PEACE_RADIUS),
+          powered: !gear?.stalled,
+          made: p.made,
+        };
+        const out = outputOf(p.spec, c);
+        rates = out.rates;
+        p.idle = out.idle;
+      }
+      // Age: what its owner keeps standing on the ground yields Y.
+      if (ages) rates = { ...rates, y: (rates.y ?? 0) + ageRate(p.spec.age, (this.elapsed - p.born) / 60) };
+      p.now = rates;
+      const mine = tally.get(ownerId) ?? tally.set(ownerId, { lines: [], letters: new Map(), age: 0, aged: 0 }).get(ownerId)!;
+      if (rates.y) { mine.age += rates.y; mine.aged++; }
+      if (Object.keys(p.spec.rates).length) {
+        const made = Object.fromEntries(Object.entries(rates).filter(([ch]) => ch !== "y" || p.spec.age > 0));
+        for (const [ch, r] of Object.entries(made)) {
+          if (ch === "y" || !(r > 0)) continue;
+          const l = mine.letters.get(ch) ?? mine.letters.set(ch, { rate: 0, from: [] }).get(ch)!;
+          l.rate += r;
+          if (!l.from.includes(p.name)) l.from.push(p.name);
+        }
+      }
+      const harvested = p.spec.needs.includes("harvest");
+      let pay = "";
+      for (const [letter, perMinute] of Object.entries(rates)) {
+        const grown = (perMinute * seconds) / 60;
+        if (harvested && letter !== "y") { p.ripe[letter] = (p.ripe[letter] ?? 0) + grown; continue; }
+        const built = (p.built[letter] ?? 0) + grown;
+        const whole = Math.floor(built);
+        p.built[letter] = built - whole;
+        pay += letter.repeat(whole);
+      }
+      if (harvested) {
+        const near = labourAt(ownerId, at.x, at.y) > 0;
+        if ((p.cycle += seconds) >= CYCLE_SECONDS) {
+          p.cycle = 0;
+          // Ripe: someone of its owner's side close by brings it in, else it waits a cycle and then rots.
+          if (near) {
+            for (const [letter, n] of Object.entries(p.ripe)) { const whole = Math.floor(n); pay += letter.repeat(whole); p.ripe[letter] = n - whole; }
+          } else for (const [letter, n] of Object.entries(p.ripe)) p.ripe[letter] = Math.min(n, ((p.spec.rates[letter] ?? 0) * CYCLE_SECONDS) / 60);
+        }
+        if (!near && !p.idle && Object.values(p.ripe).some((n) => n >= 1)) p.idle = "ripe: nobody near to harvest it";
+      }
+      if (!pay) continue;
+      // What it converts is used up first: two vowels for an M, a G for a KILN's C.
+      if (p.spec.uses.length) {
+        let kept = "";
+        for (const ch of pay) {
+          if (ch === "y") { kept += ch; continue; }
+          const taken: string[] = [];
+          for (const use of p.spec.uses) {
+            const pick = use === "vowel" ? [...VOWELS].filter((v) => (owner.letters[v] ?? 0) > 0).sort((a, b) => (owner.letters[b] ?? 0) - (owner.letters[a] ?? 0))[0] : use;
+            if (!pick || !(owner.letters[pick]! > 0)) break;
+            owner.letters[pick]!--;
+            taken.push(pick);
+          }
+          if (taken.length === p.spec.uses.length) kept += ch;
+          else { for (const t of taken) owner.letters[t]!++; p.idle = `needs ${[...new Set(p.spec.uses)].map((u) => (u === "vowel" ? "vowels" : u.toUpperCase())).join(" and ")}`; p.built[ch] = 1; }
+        }
+        pay = kept;
+        this.lettersChanged.add(ownerId);
+        if (!pay) continue;
+      }
+      const grownHere = [...pay].filter((ch) => ch !== "y").length;
+      if (grownHere && (p.spec.needs.includes("tilled") || harvested)) this.soil.drain(at.x, at.y, this.elapsed, grownHere);
+      p.made += grownHere;
+      this.earn(ownerId, pay, at, p.name);
+    }
+    // Lines once every producer has run (what it converts may have left it idle).
+    for (const { p, ownerId } of jobs) {
+      if (!Object.keys(p.spec.rates).length) continue;
+      tally.get(ownerId)?.lines.push(producingLine(p.name, Object.fromEntries(Object.entries(p.now).filter(([ch]) => ch !== "y")), p.idle));
+    }
+    // Each person's income, told when it changes (to a tenth of a letter a minute).
+    for (const [id, w] of this.walkers) {
+      if (w.master !== null) continue;
+      const t = tally.get(id);
+      const letters = t ? [...t.letters].map(([letter, l]) => ({ letter, rate: Math.round(l.rate * 100) / 100, from: l.from.join(", ") })) : [];
+      if (t?.aged) letters.push({ letter: "y", rate: Math.round(t.age * 100) / 100, from: `age of ${t.aged} thing${t.aged === 1 ? "" : "s"}` });
+      letters.sort((a, b) => b.rate - a.rate);
+      const lines = [...(t?.lines ?? []), ...(t?.aged ? [producingLine(`AGE (${t.aged} thing${t.aged === 1 ? "" : "s"})`, { y: t.age }, null)] : [])];
+      const shown = JSON.stringify([letters.map((l) => [l.letter, Math.round(l.rate * 10), l.from]), lines.map((l) => l.replace(/[\d.]+\/min/g, ""))]);
+      const was = this.income.get(id);
+      this.income.set(id, { lines, letters, shown });
+      if (was?.shown !== shown) this.toTell.add(id);
+    }
+  }
+
+  /**
+   * What a person's things are making a minute, from the last second of production: a line each
+   * for the loadout ("HOE: A 0.75/min", "MILL: no wind"), and for the HUD each letter coming in
+   * with the producers it comes from (`income`), Y from age as one.
+   */
+  private producing(id: string): string[] {
+    return this.income.get(id)?.lines ?? [];
   }
 
   addThing(gear: Gear, owner: string, x: number, y: number): string {
@@ -3072,6 +3308,13 @@ export class WorldRoom extends Room {
     // A thing on the ground radiates around itself, by its own sight, while it lies there.
     const sight = Number(this.dict.base(gear.spelled.noun, "sight_range"));
     this.radiate(gear, gear.spelled, id, owner, { x, y }, null, sight);
+    if (!gear.fixture) {
+      const stats = this.statsOf(gear);
+      this.addProducer(id, owner, stats, thing.count, phrase, true);
+      this.producers.get(id)!.born = gear.born ??= this.elapsed; // it keeps its age, picked up and put down
+      const water = wateringReach(stats.num("water_output"));
+      if (water > 0) this.waterers.set(id, water);
+    }
     return id;
   }
 
@@ -3216,22 +3459,8 @@ export class WorldRoom extends Room {
       changed.add(id);
       if (j) this.sendTo(id, "gathered", j);
     }
-    // Objects that produce letters pay their owner as each whole letter builds up.
-    for (const [pid, p] of this.producers) {
-      const owner = this.walkers.get(p.owner);
-      if (!owner || this.grounded.get(pid)?.stalled) continue; // a stalled machine makes nothing
-      for (const [letter, perMinute] of Object.entries(p.rates)) {
-        const built = (p.built[letter] ?? 0) + (perMinute * seconds) / 60;
-        const whole = Math.floor(built);
-        p.built[letter] = built - whole;
-        // What it makes is earned where it stands (a thing) or where its owner is (a field, the sky).
-        if (whole > 0) {
-          const t = this.state.things.get(pid);
-          this.earn(p.owner, letter.repeat(whole), t ?? owner.player, (this.grounded.get(pid)?.phrase ?? t?.phrase ?? pid.replace(/^field:.*/, "field")).toUpperCase());
-          changed.add(p.owner);
-        }
-      }
-    }
+    // Once a second, everything that makes letters pays its owner (shared `produce.ts`).
+    for (this.produceClock += seconds; this.produceClock >= 1; this.produceClock--) this.produce(1);
     for (const id of this.lettersChanged) changed.add(id);
     this.lettersChanged.clear();
     for (const id of changed) {

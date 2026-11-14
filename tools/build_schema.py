@@ -172,7 +172,7 @@ training|scale|0||skill at arms; each point adds a tenth to the damage of any we
 """
 GROUPS["economy"] = "\n".join(
     [f"produce_{chr(c)}|num|0|/min|letter {chr(c)} it generates" for c in range(65, 91)] + """
-production_needs|tags|||inputs it must be supplied to produce
+production_needs|tags|||what it needs to produce: tilled, water, labor, wind, flow, claim, harvest, extract, vowel or a letter it uses up
 harvest_bonus|num|1|x|multiplier on letters gathered by hand nearby
 deposit_factor|num|1|x|ground deposits in its area are multiplied by this as it begins (0 strips them)
 lode|tags|||letters gathering inside its area turns up
@@ -199,7 +199,7 @@ build_speed|num|1|x|multiplier on placing structures
 craft_slots|num|0||stations or processes it can run at once
 """.strip().split("\n"))
 GROUPS["spatial"] = """
-tile_type|enum|none|none,water,deep_water,hill,mountain,pit,forest,field,sand,snow,swamp,lava,road,floor,wall|terrain it creates
+tile_type|enum|none|none,water,deep_water,hill,mountain,pit,forest,field,tilled,sand,snow,swamp,lava,road,floor,wall|terrain it creates (tilled: crop land)
 radius|num|0|tiles|size of the terrain or area it creates
 elevation|num|0|m|height it raises the ground
 depth|num|0|m|depth it lowers the ground or holds water

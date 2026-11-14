@@ -62,6 +62,17 @@ by how many words set them (minds and upkeep took `sentient`, `intelligence`, `f
 
 ## High priority
 
+- [x] Letter economy part 2 (PLAN.md): producers need their conditions (shared `produce.ts`).
+      Every `produce_*` value now comes from `tools/producers.txt` by the plan's table (A crops,
+      I livestock, P flora, W mills, M machines, C stations, B furniture, N labour, Y age; O, G, U
+      wells, mines, fungus); `production_needs` says what each needs: tilled land (HOE, PLOUGH,
+      FARM till it: `tile_type=tilled`), moisture, someone working it, wind, running water, a
+      claim, a harvest cycle, running down, vowels or a letter used up. Nothing works near a fight;
+      the hungry and the unpowered make nothing; crops and flora wear out the soil. Plan words
+      added: HOE, PLOUGH, OX, GOAT, HEN, HEDGE, AIDE, KILN, PRESS, WINDMILL, ANVIL, WORKBENCH...
+- [ ] Letter economy part 3: land held (L), roads and routes (R), citizens in cities you control
+      (S), hired NPC labour (N), Z from roaming bosses and transmuting commons; a real trading
+      interface for markets and players
 - [ ] Replace the live "xxx" shortcut (999 of every letter, `CHEAT` in `WorldRoom.ts`) with a
       real debug server (its own app or a password), then take the shortcut off the live game.
 
@@ -269,17 +280,11 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
       trading at a market in every city (`trade eee for o`: 3 for 1, plus a T); F when fire
       destroys a thing, V from beating another player's things. A reachability check (shared
       `reachTable`) runs with the tests and prints the shortest chain to every letter
-- [ ] Letter economy part 2: producers need their conditions (A from crops on tilled land, I from
-      livestock, P from planted flora on a cycle, W varying with weather, M machines converting
-      vowels, C crafting stations, B base furniture, Y age of surviving objects); HOE, OX, HEDGE
-      and the other plan words are not in the dictionary yet
-- [ ] Letter economy part 3: land held (L), roads and routes (R), citizens in cities you control
-      (S), hired NPC labour (N), Z from roaming bosses and transmuting commons; a real trading
-      interface for markets and players
 - [x] Spawns: people start at least 60 tiles apart where the map allows, out of cities
 - [x] Bots keep the peace for 60 to 90 s, spell at most once every 5 to 10 s, build producers
       first, use the action sources, and only go for people within twice their sight
 - [ ] Trading is a typed command (give player2 abc); needs a real interface and two-way offers
+      (part of letter economy part 3)
 - [x] M5 (part): equipping, picking up and dropping, attacking players, death and knockout,
       last one alive wins
 - [x] M5: terrain words reshape the map; things on the ground can be attacked and destroyed;

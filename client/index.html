@@ -36,6 +36,12 @@
       #status .gear > b { font: 700 14px/18px var(--hand); text-transform: uppercase; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
       #status .gear > b small { font: 600 9.5px var(--round); color: var(--soft); letter-spacing: .5px; margin-left: 4px; }
       #status .chips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+      #status .income { margin-top: 6px; display: grid; gap: 1px; }
+      #status .income > div { display: grid; grid-template-columns: 16px 64px 1fr; align-items: baseline; gap: 4px; }
+      #status .income b { font: 700 14px/17px var(--hand); color: var(--ink, #3b2f26); }
+      #status .income span { font: 700 12px/17px var(--round); color: #4f7a3a; }
+      #status .income small { font: 600 9.5px/17px var(--round); color: var(--soft); letter-spacing: .5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      #status .chip.store small { font-size: 9px; opacity: .8; margin-left: 2px; }
       #status .chip { font: 600 10.5px/1 var(--round); padding: 3px 6px 3px; border-radius: 3px; box-shadow: 0 1px 0 rgba(0, 0, 0, .15); letter-spacing: .5px; }
       #status .chip:nth-child(odd) { transform: rotate(-2deg); }
       #status .chip small { font-size: 9px; opacity: .8; margin-left: 3px; }
