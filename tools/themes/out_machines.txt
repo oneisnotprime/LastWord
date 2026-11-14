@@ -1,0 +1,338 @@
+# Theme 6, machines and technology: generated from the hand-written examples in demo_words.txt.
+
+# noun device
+phone: mass=0.2 integrity=8 brittleness=6 material=plastic,glass equip_slot=held hands_required=1 speech=true command_limit+5 hearing_range+2000 read_properties=2 upkeep_power=0.05 color=black
+cellphone: mass=0.2 integrity=8 brittleness=6 material=plastic,glass equip_slot=held hands_required=1 speech=true command_limit+5 hearing_range+2000 map_reveal=10 upkeep_power=0.05 color=black
+handset: mass=0.3 integrity=8 material=plastic equip_slot=held hands_required=1 speech=true command_limit+4 upkeep_power=0.02 color=black
+mike: mass=0.3 integrity=6 material=steel,plastic equip_slot=held hands_required=1 hearing_range+300 loudness=7 field_radius=60 field_targets=owned morale+1 upkeep_power=0.02 color=black
+mic: mass=0.3 integrity=6 material=steel,plastic equip_slot=held hands_required=1 hearing_range+300 loudness=7 field_radius=60 field_targets=owned morale+1 upkeep_power=0.02 color=black
+microphone: mass=0.4 integrity=6 material=steel,plastic portable=false hearing_range=400 detect_life=150 detect_stealth=3 alarm=true upkeep_power=0.02 color=black
+switch: mass=0.1 integrity=10 material=plastic,copper portable=false conductivity=8 alarm=true upkeep_power=0.01 color=white
+button: mass=0.02 integrity=5 material=plastic portable=false alarm=true conductivity=4 upkeep_power=0.01 color=red
+bell: mass=5 integrity=60 material=bronze portable=false loudness=9 alarm=true hearing_range=400 dmg_sonic=5 fear_aura=1 color=gold
+doorbell: mass=0.2 integrity=5 material=plastic portable=false loudness=6 alarm=true detect_life=20 upkeep_power=0.01 color=white
+buzzer: mass=0.1 integrity=5 material=plastic portable=false loudness=7 alarm=true detect_life=30 upkeep_power=0.01 color=black
+circuit: mass=0.1 integrity=5 material=copper,silicon conductivity=10 dmg_electric=30 inflict_stun=1 upkeep_power=0.05 intelligence+1 color=green
+circuitry: mass=1 integrity=10 material=copper,silicon conductivity=10 dmg_electric=40 inflict_stun=1 intelligence+2 read_properties=2 upkeep_power=0.1 color=green
+wiring: mass=5 integrity=20 material=copper,plastic portable=false conductivity=10 dmg_electric=60 inflict_stun=2 thorns=20 upkeep_power=0.05 color=red
+fuse: mass=0.02 integrity=2 material=glass,copper single_use=true res_electric=0.8 prevents_death=1 conductivity=3 color=white
+cutout: mass=0.2 integrity=5 material=plastic,copper res_electric=0.9 negates=dmg_electric single_use=true color=black
+transformer: mass=600 integrity=400 material=steel,copper portable=false power_output=10 conductivity=10 dmg_electric=300 inflict_stun=4 loudness=3 temperature=60 color=gray
+capacitor: mass=0.5 integrity=10 material=aluminum conductivity=9 power_output=1 dmg_electric=150 inflict_stun=2 single_use=true color=blue
+condenser: mass=0.5 integrity=10 material=aluminum conductivity=9 power_output=1 dmg_electric=150 inflict_stun=2 single_use=true color=blue
+resistor: mass=0.01 integrity=5 material=ceramic,carbon res_electric=0.6 temperature=60 conductivity=2 color=brown
+diode: mass=0.01 integrity=3 material=silicon,glass res_electric=0.5 luminosity=2 conductivity=5 color=red
+transistor: mass=0.01 integrity=3 material=silicon conductivity=6 intelligence+1 read_properties=1 upkeep_power=0.01 color=black
+microchip: mass=0.005 integrity=2 material=silicon,gold intelligence+3 read_properties=3 storage_letters=100 upkeep_power=0.01 value=200 color=black
+gear: mass=2 integrity=200 hardness=7 material=steel shape=round labor=1 dmg_crush=20 tow_capacity+500 color=gray
+gearing: mass=30 integrity=400 hardness=7 material=steel labor=2 tow_capacity+2000 speed_land*1.2 dmg_crush=40 loudness=3 color=gray
+cam: mass=1 integrity=150 material=steel shape=round labor=1 color=gray
+wheel: mass=10 integrity=150 material=rubber,steel shape=round speed_land+2 carry_capacity+200 elasticity=5 color=black
+rotor: mass=50 length=6 integrity=200 material=steel,aluminum dmg_slash=120 attack_area=6 attack_rate=4 loudness=8 speed_air+10 color=gray
+propeller: mass=30 length=3 integrity=150 material=aluminum dmg_slash=100 attack_area=3 attack_rate=5 speed_water+4 speed_air+10 loudness=7 color=gray
+piston: mass=5 integrity=300 hardness=8 material=steel dmg_crush=80 knockback=2 attack_rate=3 labor=2 temperature=150 color=gray
+throttle: mass=0.5 integrity=40 material=steel speed_land*1.5 speed_air*1.3 speed_water*1.3 upkeep_fuel*1.5 color=black
+accelerator: mass=0.5 integrity=40 material=steel speed_land*1.6 acceleration+4 upkeep_fuel*1.5 color=black
+ignition: mass=0.5 integrity=20 material=steel,copper dmg_fire=20 inflict_burn=2 temperature=600 luminosity=2 color=black
+carburetor: mass=3 integrity=60 material=aluminum speed_land*1.2 upkeep_fuel*1.3 flammability=6 odor=4 color=silver
+injector: mass=0.3 integrity=40 material=steel speed_land*1.3 upkeep_fuel*0.8 acceleration+2 color=silver
+supercharger: mass=20 integrity=150 material=steel,aluminum speed_land*1.5 acceleration+4 upkeep_fuel*1.6 loudness=8 temperature=120 color=silver
+compressor: mass=80 integrity=300 material=steel portable=false dmg_wind=60 knockback=6 attack_range=8 upkeep_power=2 loudness=8 labor=2 color=gray
+regulator: mass=1 integrity=50 material=brass,steel res_blast=0.3 upkeep_power=0.01 color=gold
+thermostat: mass=0.3 integrity=10 material=plastic portable=false res_cold=0.3 res_fire=0.3 comfort=2 upkeep_power=0.01 color=white
+dimmer: mass=0.2 integrity=10 material=plastic portable=false light_delta=-3 stealth+2 upkeep_power=0.01 color=white
+toggle: mass=0.05 integrity=10 material=plastic,steel portable=false conductivity=8 alarm=true color=black
+selector: mass=0.2 integrity=10 material=plastic portable=false conductivity=6 read_properties=2 color=black
+ratchet: mass=1 integrity=200 hardness=7 material=steel tow_capacity+1500 inflict_root=2 labor=1 color=gray
+pulley: mass=3 integrity=150 material=steel,rope portable=false tow_capacity=2000 carry_capacity=500 build_speed=1.5 labor=1 color=gray
+flywheel: mass=200 integrity=600 material=steel shape=round power_output=5 dmg_crush=200 knockback=4 color=gray
+pinion: mass=1 integrity=150 hardness=7 material=steel shape=round labor=1 dmg_crush=20 color=gray
+solenoid: mass=1 integrity=30 material=copper,iron magnetism=7 conductivity=9 knockback=3 upkeep_power=0.1 counters=steel,iron color=copper
+actuator: mass=10 integrity=150 material=steel labor=3 requires_pilot=false self_propelled=true upkeep_power=0.5 color=gray
+transducer: mass=0.5 integrity=10 material=ceramic,copper hearing_range=500 detect_life=150 upkeep_power=0.05 color=gray
+transponder: mass=1 integrity=20 material=plastic,steel portable=false map_reveal=30 tracking=6 command_limit+3 upkeep_power=0.1 color=gray
+antenna: mass=10 height=12 integrity=40 material=aluminum portable=false hearing_range=8000 map_reveal=80 detect_life=300 command_limit+10 conductivity=9 upkeep_power=0.2 color=silver
+aerial: mass=10 height=12 integrity=40 material=aluminum portable=false hearing_range=8000 map_reveal=80 detect_life=300 command_limit+10 conductivity=9 upkeep_power=0.2 color=silver
+headset: mass=0.3 integrity=8 material=plastic equip_slot=head hearing_range+500 command_limit+5 detect_stealth+2 upkeep_power=0.02 color=black
+headphone: mass=0.3 integrity=8 material=plastic equip_slot=head res_sonic=0.6 hearing_range+50 morale+1 upkeep_power=0.01 color=black
+earpiece: mass=0.02 integrity=3 material=plastic equip_slot=head hearing_range+300 command_limit+3 stealth=2 upkeep_power=0.01 color=black
+loudspeaker: mass=10 integrity=20 material=plastic,steel portable=false loudness=10 field_radius=80 field_targets=owned morale+2 dmg_sonic=10 upkeep_power=0.4 color=black
+tweeter: mass=1 integrity=8 material=plastic portable=false loudness=7 dmg_sonic=15 inflict_confuse=1 upkeep_power=0.05 color=black
+detector: mass=1 integrity=15 material=plastic equip_slot=held hands_required=1 detect_letters=200 detect_underground=true detect_stealth=3 alarm=true upkeep_power=0.05 color=gray
+touchscreen: mass=0.5 integrity=6 brittleness=7 material=glass,plastic portable=false read_properties=3 intelligence+1 upkeep_power=0.1 color=black
+keypad: mass=0.3 integrity=10 material=plastic portable=false security=6 lockable=true upkeep_power=0.01 color=gray
+shutter: mass=2 integrity=60 material=steel portable=false cover=0.5 blocks=sight stealth=2 color=gray
+aperture: mass=0.2 integrity=10 material=steel,glass sight_range*1.3 detect_stealth+1 color=black
+diaphragm: mass=0.1 integrity=5 material=steel,glass sight_range*1.2 color=black
+helm: mass=20 integrity=150 material=wood,brass portable=false speed_water*1.3 agility+3 command_limit+5 color=brown
+rudder: mass=40 integrity=200 material=wood,steel agility+3 speed_water*1.1 color=brown
+anchor: mass=500 integrity=800 hardness=8 material=iron dmg_blunt=120 dmg_crush=200 inflict_root=10 knockback=-5 density=7800 color=black
+spool: mass=1 integrity=20 material=wood,plastic storage_letters=20 color=brown
+vane: mass=5 height=3 integrity=30 material=steel portable=false sight_range=150 alarm=true color=black
+swivel: mass=0.5 integrity=60 material=steel agility+2 attack_range+0.5 color=gray
+coupler: mass=40 integrity=400 material=steel tow_capacity+10000 color=gray
+pager: mass=0.1 integrity=5 material=plastic equip_slot=held hands_required=1 alarm=true command_limit+2 hearing_range+5000 upkeep_power=0.01 color=black
+dongle: mass=0.02 integrity=3 material=plastic read_properties=2 security=3 upkeep_power=0.01 color=black
+gadget: mass=0.5 integrity=10 material=plastic,steel equip_slot=held hands_required=1 read_properties=2 detect_letters=100 alarm=true upkeep_power=0.05 color=gray
+contraption: mass=50 integrity=60 material=wood,steel portable=false labor=3 loudness=6 build_speed=1.5 upkeep_fuel=0.1 color=brown
+appliance: mass=30 integrity=40 material=steel,plastic portable=false comfort=2 labor=1 upkeep_power=0.8 color=white
+clockwork: mass=2 integrity=40 material=brass,steel labor=1 self_propelled=true requires_pilot=false upkeep_power=0 loudness=2 color=gold
+oscillator: mass=2 integrity=20 material=copper,plastic portable=false dmg_sonic=20 inflict_confuse=2 loudness=6 upkeep_power=0.1 color=gray
+sprinkler: mass=2 integrity=20 material=plastic,brass portable=false water_output=20 moisture=4 wetness=6 radius=3 upkeep_power=0.05 color=green
+faucet: mass=1 integrity=50 material=brass,steel portable=false water_output=10 color=silver
+hydrant: mass=100 integrity=400 material=iron portable=false water_output=1000 dmg_water=60 knockback=4 attack_range=20 color=red
+cooling: mass=50 integrity=60 material=steel,copper portable=false temperature=5 temperature_delta=-10 res_fire+0.3 upkeep_power=1 color=white
+ramp: mass=2000 footprint=3 integrity=1500 material=concrete portable=false elevation=3 tile_type=road movement_cost=0.8 jump+3 color=gray
+treadmill: mass=80 integrity=200 material=steel,rubber portable=false power_output=0.2 labor=2 speed_land*1.1 color=black
+dynamo: mass=200 integrity=500 material=steel,copper portable=false power_output=15 loudness=5 conductivity=9 color=gray
+alternator: mass=10 integrity=200 material=steel,copper power_output=3 conductivity=9 loudness=3 color=silver
+magneto: mass=5 integrity=150 material=steel,copper power_output=1 magnetism=5 dmg_electric=40 inflict_stun=1 color=gray
+accumulator: mass=25 integrity=60 material=lead,acid power_output=5 conductivity=8 corrosiveness=3 dmg_electric=60 color=black
+stator: mass=60 integrity=400 material=steel,copper portable=false magnetism=4 conductivity=8 color=gray
+starter: mass=8 integrity=150 material=steel,copper power_output=1 acceleration+5 upkeep_power=0.5 color=gray
+electromagnet: mass=500 integrity=800 material=iron,copper portable=false magnetism=10 tow_capacity=30000 knockback=-20 attack_range=30 counters=steel,iron,car,robot upkeep_power=10 letter_steal=2 color=gray
+inverter: mass=5 integrity=40 material=steel,copper portable=false power_output=1 conductivity=8 upkeep_power=0.05 color=black
+rectifier: mass=3 integrity=40 material=silicon,copper portable=false conductivity=7 res_electric=0.4 color=black
+relay: mass=0.2 integrity=10 material=copper,plastic portable=false conductivity=9 command_limit+3 alarm=true color=black
+breaker: mass=1 integrity=20 material=plastic,copper portable=false res_electric=0.9 negates=dmg_electric conductivity=1 color=black
+switchboard: mass=200 integrity=150 material=steel,copper portable=false command_limit+15 speech=true upkeep_power=0.5 conductivity=8 color=gray
+pylon: mass=10000 height=40 integrity=3000 material=steel portable=false conductivity=10 dmg_electric=500 inflict_stun=5 sight_range=200 needs_foundation=true color=gray
+grid: mass=100000 footprint=20 integrity=8000 material=steel,copper portable=false power_output=200 conductivity=10 dmg_electric=300 radius=10 color=gray
+substation: mass=50000 footprint=6 integrity=6000 material=steel,concrete portable=false power_output=500 dmg_electric=800 inflict_stun=6 loudness=4 security=4 color=gray
+powerhouse: mass=2000000 footprint=12 height=20 integrity=40000 material=concrete,steel portable=false enterable=true occupants=30 power_output=1500 upkeep_fuel=5 loudness=8 temperature=60 color=gray
+spark: mass=0.001 integrity=1 state=plasma dmg_fire=10 dmg_electric=20 inflict_burn=2 luminosity=4 temperature=1500 single_use=true attack_range=2 color=yellow
+lightbulb: mass=0.05 integrity=2 brittleness=9 material=glass portable=false luminosity=6 sight_range=40 upkeep_power=0.06 color=white
+flashlight: mass=0.4 integrity=20 material=aluminum equip_slot=held hands_required=1 luminosity=7 sight_range=80 detect_stealth=3 inflict_blind=1 night_vision=true upkeep_power=0.01 color=black
+spotlight: mass=15 integrity=40 material=steel,glass portable=false luminosity=9 sight_range=250 detect_stealth=5 inflict_blind=2 map_reveal=30 upkeep_power=1 color=white
+searchlight: mass=200 integrity=150 material=steel,glass portable=false luminosity=10 sight_range=2000 detect_stealth=6 sees_through=night,fog inflict_blind=4 map_reveal=120 upkeep_power=5 color=white
+headlight: mass=2 integrity=15 material=glass,plastic luminosity=8 sight_range=150 inflict_blind=2 night_vision=true upkeep_power=0.06 color=white
+beacon: mass=20 height=4 integrity=60 material=steel,glass portable=false luminosity=9 sight_range=3000 map_reveal=100 alarm=true command_limit+5 upkeep_power=0.5 color=red
+projector: mass=5 integrity=15 material=plastic,glass portable=false luminosity=6 comfort=2 inflict_confuse=2 map_reveal=20 upkeep_power=0.3 color=gray
+microscope: mass=4 integrity=30 material=steel,glass portable=false read_properties=8 detect_stealth=4 counters=virus,bacteria,germ color=white
+periscope: mass=20 length=4 integrity=60 material=steel,glass portable=false sight_range=4000 map_reveal=150 sees_through=water detect_life=500 stealth=6 color=gray
+sonar: mass=200 integrity=150 material=steel portable=false sees_through=water,fog,night detect_life=5000 detect_underground=true map_reveal=200 loudness=5 upkeep_power=2 color=gray
+thermometer: mass=0.05 integrity=3 brittleness=8 material=glass,mercury read_properties=1 toxicity=3 color=red
+barometer: mass=1 integrity=10 material=brass,glass portable=false alarm=true read_properties=1 color=gold
+gauge: mass=0.5 integrity=20 material=brass,glass read_properties=2 color=gold
+meter: mass=0.5 integrity=20 material=plastic,glass portable=false read_properties=2 detect_letters=50 upkeep_power=0.01 color=gray
+speedometer: mass=0.5 integrity=15 material=plastic,glass read_properties=1 accuracy+0.05 color=black
+stopwatch: mass=0.1 integrity=10 material=steel,glass equip_slot=held hands_required=1 attack_windup*0.5 cast_time*0.8 color=silver
+timer: mass=0.1 integrity=10 material=plastic portable=false alarm=true attack_windup=10 extends_duration=1.5 upkeep_power=0.01 color=white
+dashboard: mass=15 integrity=40 material=plastic portable=false read_properties=2 sight_range+20 alarm=true color=black
+cockpit: mass=300 integrity=600 material=aluminum,glass portable=false enterable=true occupants=2 seats=2 cover=0.5 read_properties=3 command_limit+5 color=gray
+steering: mass=5 integrity=80 material=steel,plastic agility+4 speed_land*1.1 color=black
+joystick: mass=0.3 integrity=10 material=plastic equip_slot=held hands_required=1 agility+3 command_limit+3 requires_pilot=false upkeep_power=0.01 color=black
+controller: mass=0.3 integrity=10 material=plastic equip_slot=held hands_required=2 command_limit+6 agility+2 upkeep_power=0.01 color=black
+autopilot: mass=10 integrity=40 material=plastic,steel requires_pilot=false self_propelled=true intelligence+3 accuracy+0.1 upkeep_power=0.2 color=gray
+keyboard: mass=1 integrity=15 material=plastic equip_slot=held hands_required=2 intelligence+1 read_properties=2 storage_letters=50 upkeep_power=0.01 color=black
+console: mass=4 integrity=20 material=plastic portable=false comfort=3 morale+2 command_limit+4 upkeep_power=0.15 color=black
+arcade: mass=200000 footprint=6 integrity=3000 material=brick,plastic portable=false enterable=true occupants=40 comfort=4 loudness=7 luminosity=6 trade_bonus=0.1 morale+3 upkeep_power=10 color=purple
+pinball: mass=120 integrity=150 material=wood,glass,steel portable=false comfort=3 loudness=7 luminosity=5 morale+2 upkeep_power=0.3 color=red
+jukebox: mass=120 integrity=150 material=wood,glass,steel portable=false loudness=8 comfort=3 field_radius=30 field_targets=owned morale+2 upkeep_power=0.3 color=red
+gramophone: mass=10 integrity=30 material=wood,brass portable=false loudness=6 comfort=3 beauty=6 field_radius=20 field_targets=owned morale+1 value=300 color=brown
+phonograph: mass=10 integrity=30 material=wood,brass portable=false loudness=6 comfort=3 beauty=6 field_radius=20 field_targets=owned morale+1 value=300 color=brown
+stereo: mass=10 integrity=20 material=plastic portable=false loudness=8 comfort=3 field_radius=40 field_targets=owned morale+2 upkeep_power=0.2 color=black
+amplifier: mass=15 integrity=30 material=steel,plastic portable=false loudness=10 dmg_sonic=20 field_radius=50 field_targets=owned morale+2 upkeep_power=0.5 color=black
+equalizer: mass=3 integrity=15 material=plastic portable=false loudness=5 comfort=1 res_sonic=0.4 upkeep_power=0.05 color=black
+equaliser: mass=3 integrity=15 material=plastic portable=false loudness=5 comfort=1 res_sonic=0.4 upkeep_power=0.05 color=black
+megaphone: mass=1 integrity=15 material=plastic equip_slot=held hands_required=1 loudness=10 command_limit+10 fear_aura=1 dmg_sonic=10 hearing_range+100 color=white
+intercom: mass=1 integrity=10 material=plastic portable=false speech=true command_limit+5 hearing_range=200 alarm=true upkeep_power=0.02 color=white
+synthesizer: mass=8 integrity=20 material=plastic,steel portable=false loudness=8 beauty=6 comfort=2 dmg_sonic=15 inflict_charm=2 upkeep_power=0.1 color=black
+recorder: mass=1 integrity=10 material=plastic portable=false hearing_range=200 detect_life=50 read_properties=2 storage_letters=40 upkeep_power=0.02 color=black
+playback: mass=1 integrity=10 material=plastic portable=false loudness=6 copies=true upkeep_power=0.02 color=black
+cassette: mass=0.05 integrity=3 material=plastic storage_letters=30 color=black
+cartridge: mass=0.05 integrity=5 material=plastic,steel storage_letters=40 plural_count=10 color=black
+disk: mass=0.02 integrity=5 material=plastic,aluminum shape=flat storage_letters=100 color=silver
+receiver: mass=3 integrity=15 material=plastic,steel portable=false hearing_range=10000 map_reveal=40 command_limit+5 upkeep_power=0.1 color=black
+tuner: mass=2 integrity=15 material=plastic portable=false hearing_range=5000 detect_stealth=2 upkeep_power=0.05 color=black
+sender: mass=30 integrity=60 material=steel portable=false hearing_range=6000 command_limit+15 upkeep_power=1 color=gray
+jammer: mass=10 integrity=40 material=steel,plastic portable=false silences=200 field_radius=300 field_targets=enemies command_limit+-10 map_reveal*0 alarm=false negates=map_reveal,alarm,detect_life upkeep_power=1 color=black
+modem: mass=0.5 integrity=10 material=plastic portable=false command_limit+3 read_properties=2 upkeep_power=0.02 color=black
+router: mass=0.5 integrity=10 material=plastic portable=false command_limit+5 map_reveal=15 upkeep_power=0.02 color=black
+processor: mass=0.05 integrity=5 material=silicon intelligence+4 read_properties=3 temperature=70 upkeep_power=0.1 value=300 color=gray
+calculator: mass=0.2 integrity=10 material=plastic equip_slot=held hands_required=1 intelligence+2 accuracy+0.1 trade_bonus=0.1 upkeep_power=0.001 color=gray
+abacus: mass=1 integrity=20 material=wood intelligence+1 trade_bonus=0.1 color=brown
+typewriter: mass=8 integrity=60 material=steel portable=false loudness=5 storage_letters=60 intelligence+1 color=black
+photocopier: mass=60 integrity=50 material=plastic,steel portable=false duplicates=1 upkeep_power=1 loudness=4 color=gray
+copier: mass=60 integrity=50 material=plastic,steel portable=false duplicates=1 upkeep_power=1 loudness=4 color=gray
+fax: mass=5 integrity=15 material=plastic portable=false command_limit+3 storage_letters=20 upkeep_power=0.05 loudness=4 color=gray
+printer: mass=8 integrity=20 material=plastic portable=false duplicates=1 storage_letters=30 upkeep_power=0.1 loudness=4 color=gray
+scanner: mass=5 integrity=20 material=plastic,glass portable=false read_properties=7 read_inventory=true detect_letters=300 detect_stealth=4 alarm=true upkeep_power=0.1 color=gray
+notebook: mass=2 integrity=15 material=plastic,aluminum equip_slot=held hands_required=2 upkeep_power=0.15 intelligence+2 read_properties=4 detect_letters=300 storage_letters=150 color=silver
+desktop: mass=10 integrity=30 material=plastic,steel portable=false upkeep_power=0.4 intelligence+3 read_properties=6 detect_letters=700 storage_letters=400 color=black
+workstation: mass=15 integrity=40 material=plastic,steel portable=false upkeep_power=0.8 intelligence+4 read_properties=7 detect_letters=900 storage_letters=800 color=gray
+mainframe: mass=5000 footprint=4 integrity=200 material=steel portable=false upkeep_power=20 intelligence+6 read_properties=9 read_inventory=true detect_letters=5000 storage_letters=5000 temperature=40 loudness=5 color=gray
+supercomputer: mass=50000 footprint=10 integrity=400 material=steel portable=false upkeep_power=500 intelligence+10 read_properties=10 read_inventory=true detect_letters=20000 storage_letters=20000 map_reveal=300 temperature=50 color=black
+website: mass=1 integrity=20 material=silicon portable=false map_reveal=50 charm=3 recruit_rate=1 trade_bonus=0.1 storage_letters=100 upkeep_power=0.2 color=blue
+portal: mass=1 integrity=20 material=silicon portable=false map_reveal=80 trade_bonus=0.15 recruit_rate=1 upkeep_power=0.2 color=blue
+widget: mass=0.3 integrity=10 material=plastic,steel equip_slot=held hands_required=1 read_properties=2 detect_letters=80 upkeep_power=0.02 color=gray
+gizmo: mass=0.5 integrity=10 material=plastic,steel equip_slot=held hands_required=1 read_properties=2 detect_letters=100 alarm=true upkeep_power=0.05 color=gray
+gadgetry: mass=5 integrity=30 material=plastic,steel read_properties=3 detect_letters=200 alarm=true intelligence+1 upkeep_power=0.2 color=gray
+dial: mass=0.1 integrity=10 material=plastic hearing_range+500 accuracy+0.05 color=black
+telly: mass=15 integrity=20 brittleness=7 material=plastic,glass portable=false comfort=2 map_reveal=30 upkeep_power=0.3 color=black
+camcorder: mass=1 integrity=12 material=plastic,glass equip_slot=held hands_required=1 sight_range=150 map_reveal=30 detect_life=150 storage_letters=30 upkeep_power=0.05 color=black
+defibrillator: mass=3 integrity=20 material=plastic,copper equip_slot=held hands_required=2 dmg_electric=80 inflict_stun=3 heals=50 prevents_death=1 upkeep_power=0.1 color=yellow
+laser: mass=2 integrity=30 material=steel,glass equip_slot=held hands_required=1 dmg_light=150 dmg_fire=50 inflict_blind=3 inflict_burn=2 attack_rate=3 attack_range=500 accuracy=0.99 armor_pierce=0.5 targets=land,air luminosity=6 upkeep_power=1 color=red
+turret: mass=800 integrity=1500 hardness=8 material=steel portable=false dmg_pierce=90 attack_rate=6 attack_range=400 targets=land,air sight_range=400 detect_life=400 alarm=true aggression=10 requires_pilot=false armor=40 loudness=9 ammo_per_hit=1 ammo_type=bullet upkeep_power=1 color=gray
+
+# noun machine
+machine: mass=500 integrity=800 material=steel portable=false labor=6 upkeep_power=2 loudness=6 dmg_crush=60 color=gray
+machinery: mass=5000 footprint=4 integrity=3000 material=steel portable=false labor=12 build_speed=1.5 upkeep_power=6 loudness=7 dmg_crush=100 color=gray
+mechanism: mass=20 integrity=150 material=steel,brass labor=2 upkeep_power=0.2 color=gray
+workings: mass=20 integrity=150 material=steel,brass labor=2 color=gray
+simulator: mass=3000 integrity=300 material=steel,plastic portable=false enterable=true occupants=2 trainable=6 training+2 upkeep_power=5 color=white
+transmission: mass=80 integrity=400 material=steel speed_land*1.3 tow_capacity*1.5 upkeep_fuel*0.9 loudness=3 color=gray
+gearbox: mass=60 integrity=400 material=steel speed_land*1.3 tow_capacity*1.5 upkeep_fuel*0.9 loudness=3 color=gray
+overdrive: speed_land*1.6 speed_water*1.4 upkeep_fuel*0.8 acceleration+-1
+diesel: mass=900 integrity=1500 material=steel portable=false power_output=60 upkeep_fuel=0.4 loudness=9 odor=7 temperature=90 dmg_crush=60 color=black
+outboard: mass=60 integrity=300 material=steel,aluminum speed_water+12 upkeep_fuel=0.2 loudness=8 dmg_slash=60 color=gray
+thruster: mass=100 integrity=300 material=steel,titanium speed_space+50 speed_air+30 hover=true dmg_fire=200 inflict_burn=4 temperature=1500 upkeep_fuel=1 loudness=9 color=silver
+crankshaft: mass=25 integrity=600 hardness=8 material=steel labor=1 dmg_blunt=50 color=gray
+axle: mass=30 integrity=600 hardness=7 material=steel carry_capacity+500 tow_capacity+1000 dmg_blunt=45 color=gray
+clutch: mass=10 integrity=200 material=steel acceleration+2 agility+1 color=gray
+brake: mass=8 integrity=200 material=steel,ceramic speed_land*0.6 agility+3 inflict_slow=3 temperature=200 color=gray
+wiper: mass=0.5 integrity=10 material=rubber,steel sight_range*1.3 clears_weather=rain,snow color=black
+tire: mass=10 integrity=120 material=rubber shape=round elasticity=7 speed_land+3 terrain_ignored=sand,mud flammability=4 color=black
+tyre: mass=10 integrity=120 material=rubber shape=round elasticity=7 speed_land+3 terrain_ignored=sand,mud flammability=4 color=black
+exhaust: mass=15 integrity=100 material=steel odor=8 toxicity=4 dmg_poison=10 inflict_blind=1 temperature=300 loudness=6 color=gray
+muffler: mass=10 integrity=100 material=steel loudness+-6 stealth+3 color=gray
+radiator: mass=12 integrity=80 material=aluminum,copper res_fire+0.3 temperature=80 comfort=1 color=silver
+bumper: mass=20 integrity=400 material=steel,plastic armor+20 res_blunt+0.3 res_crush+0.3 knockback+3 color=black
+boiler: mass=3000 integrity=1500 material=iron portable=false power_output=30 upkeep_fuel=0.5 temperature=200 dmg_fire=80 dmg_blast=400 attack_area=5 loudness=5 color=black
+winch: mass=100 integrity=600 material=steel portable=false tow_capacity=15000 moves_target=50 upkeep_power=1 labor=2 color=gray
+hoist: mass=400 integrity=800 material=steel portable=false tow_capacity=10000 carry_capacity=5000 build_speed=2 upkeep_power=2 color=yellow
+crank: mass=3 integrity=150 material=steel labor=1 power_output=0.1 dmg_blunt=25 color=gray
+valve: mass=2 integrity=150 material=brass,steel portable=false water_output=5 security=2 color=gold
+lever: mass=3 length=1.5 integrity=200 material=steel,wood equip_slot=held hands_required=2 tow_capacity=2000 dmg_blunt=30 knockback=3 build_speed=1.3 color=gray
+fulcrum: mass=50 integrity=500 material=steel portable=false tow_capacity=5000 color=gray
+coupling: mass=40 integrity=400 material=steel tow_capacity+10000 color=gray
+shifter: mass=1 integrity=80 material=steel,plastic acceleration+2 speed_land*1.1 color=black
+excavator: mass=30000 length=10 integrity=6000 material=steel speed_land=3 self_propelled=true mountable=true seats=1 upkeep_fuel=1.2 speed_underground=0.5 dmg_crush=400 siege=4 build_speed=3 labor=15 harvest_bonus=3 harvest_sources=mine,quarry loudness=9 color=yellow
+digger: mass=20000 length=8 integrity=5000 material=steel speed_land=3 self_propelled=true mountable=true seats=1 upkeep_fuel=1 speed_underground=0.4 dmg_crush=300 siege=3 build_speed=2.5 labor=12 harvest_bonus=2.5 harvest_sources=mine,quarry loudness=9 color=yellow
+dredge: mass=50000 integrity=6000 material=steel portable=false placeable_on=water speed_water=2 labor=12 depth=8 harvest_bonus=2 harvest_sources=river upkeep_fuel=1 loudness=8 color=orange
+jackhammer: mass=30 integrity=200 material=steel equip_slot=held hands_required=2 dmg_crush=150 dmg_pierce=60 attack_rate=10 siege=6 loudness=10 harvest_bonus=3 harvest_sources=quarry,mine upkeep_power=1.5 self_damage=0.02 color=gray
+chainsaw: mass=6 integrity=60 material=steel,plastic equip_slot=held hands_required=2 sharpness=8 dmg_slash=180 inflict_bleed=5 attack_rate=3 siege=3 fear_aura=4 loudness=10 harvest_bonus=4 harvest_sources=tree upkeep_fuel=0.05 color=orange
+jigsaw: mass=3 integrity=40 material=steel,plastic equip_slot=held hands_required=1 sharpness=7 dmg_slash=60 attack_rate=5 build_speed=1.5 crafts=furniture,wood upkeep_power=0.4 loudness=7 color=yellow
+sander: mass=2 integrity=40 material=steel,plastic equip_slot=held hands_required=1 dmg_slash=20 beauty+2 build_speed=1.3 crafts=furniture,wood upkeep_power=0.3 loudness=7 color=yellow
+trimmer: mass=4 integrity=40 material=steel,plastic equip_slot=held hands_required=2 sharpness=6 dmg_slash=40 attack_rate=6 harvest_bonus=2 harvest_sources=bush,grass upkeep_fuel=0.02 loudness=8 color=green
+mower: mass=40 integrity=150 material=steel speed_land=1.5 self_propelled=true dmg_slash=150 attack_area=1 harvest_bonus=3 harvest_sources=grass,field labor=4 upkeep_fuel=0.05 loudness=8 color=green
+harrow: mass=600 integrity=800 material=steel,iron portable=false labor=6 fertility=2 tile_type=tilled radius=2 dmg_pierce=40 color=red
+spreader: mass=300 integrity=400 material=steel portable=false labor=5 fertility=3 growth=1.5 radius=3 color=red
+thresher: mass=3000 integrity=1500 material=steel portable=false labor=12 harvest_bonus=3 harvest_sources=field,wheat,grain dmg_slash=200 upkeep_fuel=0.5 loudness=8 color=red
+combine: mass=15000 length=10 integrity=4000 material=steel speed_land=4 self_propelled=true mountable=true seats=1 labor=20 harvest_bonus=5 harvest_sources=field,wheat,grain dmg_slash=400 attack_area=4 upkeep_fuel=1 loudness=9 color=green
+tractor: mass=5000 length=5 integrity=2500 material=steel speed_land=10 self_propelled=true mountable=true seats=1 tow_capacity=20000 labor=12 terrain_ignored=mud,field,tilled upkeep_fuel=0.5 loudness=8 color=green
+forklift: mass=4000 integrity=2000 material=steel speed_land=5 self_propelled=true mountable=true seats=1 carry_capacity=3000 build_speed=2 labor=6 upkeep_power=3 color=yellow
+elevator: mass=3000 height=50 integrity=1500 material=steel portable=false enterable=true occupants=12 carry_capacity=1500 climb=10 elevation=50 upkeep_power=10 needs_foundation=true color=silver
+escalator: mass=10000 integrity=2000 material=steel portable=false climb=6 elevation=8 speed_land+1 occupants=40 upkeep_power=8 loudness=3 needs_foundation=true color=silver
+vacuum: mass=6 integrity=30 material=plastic portable=false loudness=8 dmg_wind=20 moves_target=5 labor=2 clears_weather=dust upkeep_power=1 color=red
+washer: mass=70 integrity=150 material=steel,plastic portable=false wetness=6 comfort=2 labor=2 upkeep_power=2 loudness=6 color=white
+dishwasher: mass=50 integrity=120 material=steel,plastic portable=false wetness=5 comfort=2 labor=2 upkeep_power=1.5 loudness=4 color=white
+dryer: mass=60 integrity=150 material=steel portable=false temperature=60 wetness=-6 comfort=2 labor=1 upkeep_power=3 loudness=5 color=white
+drier: mass=60 integrity=150 material=steel portable=false temperature=60 wetness=-6 comfort=2 labor=1 upkeep_power=3 loudness=5 color=white
+heater: mass=10 integrity=50 material=steel portable=false temperature=150 temperature_delta=15 comfort=3 res_cold+0.3 upkeep_power=2 color=gray
+conditioner: mass=50 integrity=100 material=steel portable=false temperature_delta=-12 comfort=3 res_fire+0.2 upkeep_power=3 loudness=4 color=white
+freezer: mass=80 integrity=150 material=steel portable=false temperature=-18 storage_objects=200 decay_rate*0 dmg_cold=40 inflict_freeze=3 upkeep_power=0.2 color=white
+cooler: mass=5 integrity=40 material=plastic temperature=4 storage_objects=30 decay_rate*0.2 color=blue
+toaster: mass=2 integrity=30 material=steel portable=false temperature=250 dmg_fire=40 inflict_burn=2 comfort=1 upkeep_power=1 color=silver
+broiler: mass=40 integrity=150 material=steel portable=false temperature=300 dmg_fire=60 inflict_burn=3 upkeep_power=3 color=black
+blender: mass=3 integrity=30 material=glass,steel portable=false sharpness=8 dmg_slash=80 inflict_bleed=4 attack_rate=50 upkeep_power=1 loudness=8 color=white
+mixer: mass=5 integrity=40 material=steel portable=false labor=2 dmg_blunt=20 attack_rate=10 upkeep_power=0.5 loudness=6 color=white
+cyborg: mass=120 height=1.8 integrity=700 hardness=6 material=steel,flesh alive=true sentient=true intelligence=6 obedience=7 loyalty=7 hands=true speech=true speed_land=8 strength=12 diet=power upkeep_power=0.5 food_need=0.01 immune_fear=true res_poison=0.5 dmg_blunt=60 attack_rate=1.2 sight_range=300 night_vision=true color=silver
+humanoid: mass=90 height=1.8 integrity=500 material=steel,plastic sentient=true intelligence=7 obedience=8 loyalty=8 hands=true speech=true speed_land=6 labor=4 diet=power upkeep_power=1 strength=7 immune_fear=true immune_poison=true res_poison=1 dmg_blunt=30 attack_rate=1 color=white
+golem: mass=2000 height=3 integrity=4000 hardness=8 material=clay,stone sentient=true intelligence=2 obedience=10 loyalty=10 hands=true speed_land=2 labor=8 strength=15 immune_fear=true immune_poison=true immune_charm=true res_poison=1 res_pierce=0.6 res_slash=0.6 dmg_crush=150 attack_rate=0.5 siege=3 color=brown
+
+# noun vehicle_land
+auto: mass=1400 length=4.5 integrity=600 material=steel speed_land=40 self_propelled=true mountable=true seats=4 carry_capacity=400 range=600 upkeep_fuel=0.1 dmg_crush=150 color=red
+automobile: mass=1500 length=4.5 integrity=600 material=steel speed_land=40 self_propelled=true mountable=true seats=4 carry_capacity=400 range=600 upkeep_fuel=0.1 dmg_crush=150 color=blue
+taxi: mass=1500 length=4.7 integrity=600 material=steel speed_land=38 self_propelled=true mountable=true seats=4 carry_capacity=300 range=600 upkeep_fuel=0.1 trade_bonus=0.1 loudness=5 color=yellow
+taxicab: mass=1500 length=4.7 integrity=600 material=steel speed_land=38 self_propelled=true mountable=true seats=4 carry_capacity=300 range=600 upkeep_fuel=0.1 trade_bonus=0.1 loudness=5 color=yellow
+sedan: mass=1500 length=4.8 integrity=650 material=steel speed_land=42 self_propelled=true mountable=true seats=5 carry_capacity=450 range=700 upkeep_fuel=0.1 comfort=2 color=silver
+coupe: mass=1300 length=4.3 integrity=550 material=steel speed_land=55 acceleration=7 self_propelled=true mountable=true seats=2 carry_capacity=200 range=500 upkeep_fuel=0.12 beauty=6 color=red
+convertible: mass=1400 length=4.5 integrity=500 material=steel speed_land=50 self_propelled=true mountable=true seats=4 carry_capacity=250 range=550 upkeep_fuel=0.12 beauty=7 charm=2 cover=0.1 color=red
+roadster: mass=1100 length=4 integrity=450 material=steel speed_land=60 acceleration=8 self_propelled=true mountable=true seats=2 carry_capacity=100 upkeep_fuel=0.15 beauty=8 color=red
+racer: mass=700 length=4.5 integrity=400 material=carbon,aluminum speed_land=90 acceleration=10 agility=7 self_propelled=true mountable=true seats=1 upkeep_fuel=0.5 loudness=10 requires_road=false color=red
+cruiser: mass=1800 length=5 integrity=900 material=steel speed_land=55 self_propelled=true mountable=true seats=4 armor=10 loudness=8 alarm=true luminosity=4 authority=3 command_limit+4 upkeep_fuel=0.15 color=white
+limousine: mass=3000 length=8 integrity=900 material=steel speed_land=35 self_propelled=true mountable=true seats=8 comfort=5 charm=4 value=50000 beauty=7 reputation=5 upkeep_fuel=0.2 color=black
+limo: mass=3000 length=8 integrity=900 material=steel speed_land=35 self_propelled=true mountable=true seats=8 comfort=5 charm=4 value=50000 beauty=7 reputation=5 upkeep_fuel=0.2 color=black
+jeep: mass=1800 length=4.2 integrity=900 material=steel speed_land=35 self_propelled=true mountable=true seats=4 carry_capacity=500 range=500 terrain_ignored=sand,mud,snow,hill,swamp upkeep_fuel=0.15 color=green
+buggy: mass=600 length=3 integrity=300 material=steel speed_land=30 agility=7 jump=2 self_propelled=true mountable=true seats=2 terrain_ignored=sand,desert,hill upkeep_fuel=0.08 color=orange
+minivan: mass=2000 length=5 integrity=700 material=steel speed_land=35 self_propelled=true mountable=true seats=7 carry_capacity=700 storage_objects=500 upkeep_fuel=0.12 color=blue
+lorry: mass=8000 length=8 integrity=1500 material=steel speed_land=26 self_propelled=true mountable=true seats=2 carry_capacity=10000 tow_capacity=20000 range=800 storage_objects=10000 upkeep_fuel=0.3 dmg_crush=400 loudness=8 color=white
+ambulance: mass=4000 length=6 integrity=900 material=steel speed_land=40 self_propelled=true mountable=true seats=4 heals=15 regeneration+5 loudness=9 alarm=true reputation=5 upkeep_fuel=0.2 color=white
+motorcycle: mass=200 length=2.1 integrity=200 material=steel speed_land=55 acceleration=9 agility=7 self_propelled=true mountable=true seats=2 equip_slot=mount upkeep_fuel=0.05 loudness=9 jump=3 color=black
+motorbike: mass=200 length=2.1 integrity=200 material=steel speed_land=55 acceleration=9 agility=7 self_propelled=true mountable=true seats=2 equip_slot=mount upkeep_fuel=0.05 loudness=9 jump=3 color=black
+scooter: mass=100 length=1.8 integrity=120 material=steel,plastic speed_land=20 agility=6 self_propelled=true mountable=true seats=1 equip_slot=mount upkeep_power=0.3 color=white
+bicycle: mass=12 length=1.8 integrity=60 material=steel,rubber speed_land=8 agility=6 mountable=true seats=1 equip_slot=mount carry_capacity=20 stealth=2 color=blue
+snowmobile: mass=250 length=3 integrity=250 material=steel speed_land=30 self_propelled=true mountable=true seats=2 equip_slot=mount terrain_ignored=snow,tundra,ice upkeep_fuel=0.08 loudness=9 color=yellow
+hovercraft: mass=10000 length=20 integrity=1500 material=aluminum speed_land=25 speed_water=25 self_propelled=true mountable=true seats=50 carry_capacity=5000 terrain_ignored=water,swamp,marsh,sand,snow upkeep_fuel=1 loudness=10 color=gray
+locomotive: mass=120000 length=20 integrity=15000 material=steel speed_land=45 self_propelled=true mountable=true seats=3 tow_capacity=5000000 requires_road=true upkeep_fuel=2 dmg_crush=3000 knockback=20 loudness=10 color=black
+tram: mass=30000 length=25 integrity=4000 material=steel speed_land=20 self_propelled=true mountable=true seats=150 requires_road=true upkeep_power=150 dmg_crush=800 loudness=6 color=red
+trolley: mass=12000 length=12 integrity=2500 material=steel speed_land=18 self_propelled=true mountable=true seats=60 requires_road=true upkeep_power=80 dmg_crush=500 color=red
+
+# noun vehicle_air
+spaceship: mass=100000 length=50 integrity=20000 material=titanium,aluminum speed_space=8000 speed_air=1000 flight_ceiling=1000000 self_propelled=true mountable=true seats=8 carry_capacity=20000 enterable=true occupants=8 sight_range=50000 map_reveal=500 upkeep_fuel=50 dmg_fire=2000 loudness=10 color=white
+
+# noun person
+author: mass=70 integrity=100 alive=true sentient=true intelligence=7 hands=true speech=true diet=omnivore food_need=0.02 storage_letters=100 charm=3 color=brown
+governor: mass=75 integrity=100 alive=true sentient=true intelligence=6 hands=true speech=true diet=omnivore food_need=0.02 authority=6 command_limit=20 tax_rate=0.1 claim_radius=20 reputation=3 color=blue
+trainer: mass=75 integrity=120 alive=true sentient=true intelligence=5 hands=true speech=true diet=omnivore food_need=0.03 strength=7 training=6 trainable+3 morale+2 color=red
+surveyor: mass=75 integrity=100 alive=true sentient=true intelligence=6 hands=true speech=true diet=omnivore food_need=0.02 sight_range=500 map_reveal=120 detect_letters=200 build_speed=1.3 color=orange
+broadcaster: mass=75 integrity=100 alive=true sentient=true intelligence=5 hands=true speech=true diet=omnivore food_need=0.02 loudness=8 charm=4 recruit_rate=2 command_limit+5 color=blue
+
+# noun food
+gyro: mass=0.4 integrity=3 edible=true nutrition=8 material=meat,bread odor=4 temperature=60 shelf_life=240 value=8 color=brown
+
+# noun container
+tube: mass=0.5 length=1 integrity=20 material=glass,steel shape=hollow volume=0.002 storage_objects=2 luminosity=2 color=gray
+
+# noun protection
+filter: mass=0.3 integrity=15 material=paper,carbon equip_slot=face res_poison=0.8 res_disease=0.6 res_suffocation=0.5 res_radiation=0.3 color=white
+
+# noun weapon
+clip: mass=0.3 integrity=20 material=steel single_use=true plural_count=5 ammo_type=bullet attack_rate*1.5 color=black
+
+# noun tool
+screw: mass=0.01 length=0.05 integrity=30 hardness=7 sharpness=5 material=steel plural_count=20 build_speed=1.2 security+1 color=gray
+
+# noun structure
+carousel: mass=10000 footprint=6 integrity=2000 material=steel,wood portable=false comfort=4 beauty=7 morale+2 loudness=6 luminosity=4 upkeep_power=5 inflict_confuse=2 color=gold
+
+# adjective quality
+wireless: hearing_range*3 command_limit+5 map_reveal+20 attack_range*1.5 conductivity+-3 upkeep_power+0.1
+portable: portable=true mass*0.2 integrity*0.6 equip_slot=held hands_required=1 power_output*0.5 speed_land*1.1
+peripheral: sight_range*1.5 detect_stealth+2 field_radius*1.5 attack_area*1.3 accuracy+-0.1
+spare: prevents_death+1 letter_refund+0.3 integrity*1.2 plural_count+1
+secondary: integrity*0.8 dmg_blunt*0.7 dmg_slash*0.7 dmg_pierce*0.7 prevents_death+1
+hydraulic: dmg_crush*2 strength+5 tow_capacity*3 carry_capacity*2 labor*1.5 speed_land*0.9 wetness+1
+pneumatic: dmg_pierce*1.5 dmg_blunt*1.5 attack_rate*2 loudness+4 labor*1.3 elasticity+3
+motorized: self_propelled=true speed_land+15 speed_water+8 labor+3 upkeep_fuel+0.1 loudness+5 stealth+-2 requires_pilot=true
+motorised: self_propelled=true speed_land+15 speed_water+8 labor+3 upkeep_fuel+0.1 loudness+5 stealth+-2 requires_pilot=true
+analog: upkeep_power*0.5 res_electric+0.3 intelligence+-1 read_properties+-1 integrity*1.3 beauty+1
+analogue: upkeep_power*0.5 res_electric+0.3 intelligence+-1 read_properties+-1 integrity*1.3 beauty+1
+atomic: dmg_blast*20 dmg_radiation+300 radioactivity+6 power_output*50 attack_area*5 friendly_fire=true luminosity+6 fear_aura+5 lingering+60
+supersonic: speed_air*5 speed_land*3 speed_water*2 dmg_sonic+80 knockback+5 loudness+10 stealth+-5 upkeep_fuel*3
+
+# verb movement
+drive: duration=300 speed_land*3 acceleration+3 upkeep_fuel+0.1 knockback+3 dmg_crush+80 loudness+4
+ride: duration=300 speed_land*2.5 mountable=true agility+2 carry_capacity*1.5 food_need*0.5
+
+# verb transform
+reverse: duration=10 reflect+0.5 speed_land*0.8 effect_status=stun,slow,root,confuse
+
+# verb combat
+swing: duration=3 dmg_blunt+40 dmg_slash+20 attack_area+2 knockback+3 attack_rate*0.8
+
+# verb contact
+grab: duration=2 letter_steal+3 inflict_root+3 moves_target=3 hands=true
+
+# adverb manner
+electrically: dmg_electric+60 inflict_stun+1 upkeep_power+1 cast_time*0.5
+mechanically: labor*2 effect_multiplier=1.3 intelligence+-2 immune_fear=true
+digitally: accuracy+0.2 read_properties+3 cast_time*0.5 effect_multiplier=1.2
+remotely: placement_range*5 attack_range*3 stealth+3 effect_target=companion
+electronically: cast_time*0.3 read_properties+2 effect_multiplier=1.2 upkeep_power+0.5
+
+# noun knowledge
+technology: placement=self field_radius=60 field_targets=owned field_duration=10 labor*1.5 build_speed=1.5 intelligence+2 read_properties+2 upkeep_power*0.7 counters=superstition,magic
+robotics: placement=self field_radius=40 field_targets=owned field_duration=10 labor*2 build_speed=2 immune_fear=true upkeep_power+0.5
+mechanics: placement=self field_radius=40 field_targets=owned field_duration=10 build_speed=1.5 labor*1.5 regeneration+5 restores=200
