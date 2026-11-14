@@ -13,7 +13,7 @@ import { pluralize } from "./plural.js";
 import { effectSeconds, statusSeconds, type Status } from "./status.js";
 import { toolHelp } from "./biome.js";
 import { TILE_TYPES } from "./world.js";
-import { materialText } from "./material.js";
+import { isMaterial, materialText } from "./material.js";
 import { foodText } from "./food.js";
 import { jobText } from "./work.js";
 import { breachText, pactOf } from "./law.js";
@@ -268,10 +268,12 @@ export function cardOf(dict: Dictionary, p: Phrase): Card {
     return card;
   }
   card.stats = becomes(s) === "terrain" ? [] : keyStats(s);
-  card.does = behaviours(s, p.count);
+  // What heat, time or a new material do to it come first: they are why it was spelled so.
+  const remade = p.adjectives.some((a) => isMaterial(dict.lookup(a)?.def) || dict.lookup(a)?.def.set.material !== undefined);
+  card.does = [...(remade ? materialText(dict, s) : []), ...foodText(dict, s), ...behaviours(s, p.count)];
   const use = useText(dict, p.noun, p.adjectives);
   if (use) card.does.push(use);
-  card.does.push(...foodText(dict, s), ...materialText(dict, s));
+  if (!remade) card.does.push(...materialText(dict, s));
   return card;
 }
 
