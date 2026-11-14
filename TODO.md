@@ -62,6 +62,11 @@ by how many words set them (minds and upkeep took `sentient`, `intelligence`, `f
 
 ## High priority
 
+- [ ] Tooltips that show random words and how each one changes properties, to teach the game
+- [ ] Tiered winners' rounds (for later, high importance): a round winner goes into a round of
+      100 against 99 other winners; winners of those eventually join a round of 10,000 against
+      other winners of rounds of 100. Each tier won earns a distinct avatar look (gold,
+      diamond, and so on)
 - [x] Dedicated loadout and inventory screens (L and I)
 - [ ] Loadout and inventory on a controller; item details (what a thing does) on hover or select
 
@@ -83,6 +88,13 @@ lexicon so every related word is captured.
 - [ ] FAR moves something far away; abilities to place objects further than normal; teleporting
 - [ ] Water, air and land vehicles
 - [ ] THIRSTY and HUNGRY raise food needs, and fuel needs for vehicles
+- [ ] Technology has a purpose: COMPUTER, MONITOR, CAMERA and the like
+- [ ] Ways to see more of the map: wider sight, or a zoomed-out view of the map
+- [ ] Scales such as good and evil, smart and dumb, that words move players and things along
+- [ ] Name idea: a new word for war
+- [ ] Word idea: AI
+- [ ] WORD lets you substitute it into any other four-letter word; LETTER, BOOK and similar
+      words do the same for their own length or kind
 
 ## Data
 
@@ -123,6 +135,7 @@ lexicon so every related word is captured.
 - [ ] Words that are not in WordNet (slang, new words)
 - [ ] Art pass (M7): before choosing, prototype a few distinct, unusual graphic styles for the
       user to pick from; then a sprite or icon per word in the chosen style
+- [ ] Pick an art style from the prototypes (client/styles.html)
 
 ## Special objects: dictionary and related words
 

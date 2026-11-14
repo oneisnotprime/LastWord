@@ -10,6 +10,7 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
 
 ## Map
 
+- `styles.html` + `src/styles/` art style prototypes (keys 1-5, N for night); not used by the game.
 - `src/main.ts` the Phaser scene: draws the map from the seed, markers for players and things,
   camera, movement input.
 - `src/start.ts` the start screen shown before joining (Play with bots, or join friends); `net.ts` calls it.

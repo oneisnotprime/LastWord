@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Last Word · art styles</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=UnifrakturMaguntia&family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&family=Kalam:wght@400;700&family=Fredoka:wght@500;700&family=Silkscreen:wght@400;700&display=block" rel="stylesheet" />
+    <style>
+      :root { --bar: 46px; --side: 300px; }
+      html, body { margin: 0; height: 100%; overflow: hidden; background: #14161a; color: #e8e6df; font: 13px/1.45 system-ui, sans-serif; }
+      #bar { position: fixed; top: 0; left: 0; right: 0; height: var(--bar); display: flex; align-items: center; gap: 6px; padding: 0 12px;
+        background: #0e0f12; border-bottom: 1px solid #2a2c31; box-sizing: border-box; }
+      #bar h1 { font-size: 13px; font-weight: 600; margin: 0 12px 0 0; letter-spacing: .5px; white-space: nowrap; color: #a9a79f; }
+      #styles { display: flex; gap: 6px; }
+      #styles button { font: inherit; font-size: 12px; color: #d8d6cf; background: #1d1f24; border: 1px solid #34363c; border-radius: 4px; padding: 5px 9px; cursor: pointer; white-space: nowrap; }
+      #styles button b { color: #ffd166; margin-right: 3px; }
+      #styles button.on { background: #ffd166; color: #14161a; border-color: #ffd166; }
+      #styles button.on b { color: #14161a; }
+      #stage { position: fixed; top: var(--bar); left: 0; right: var(--side); bottom: 0; overflow: hidden; }
+      #map { width: 100%; height: 100%; display: block; }
+      #side { position: fixed; top: var(--bar); right: 0; width: var(--side); bottom: 0; box-sizing: border-box; padding: 14px 10px 14px 10px;
+        background: #0e0f12; border-left: 1px solid #2a2c31; overflow: auto; }
+      #side h2 { margin: 0 0 4px; font-size: 17px; color: #ffd166; }
+      #side h3 { margin: 14px 0 4px; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #8d8b84; }
+      #side p { margin: 0; color: #cfcdc6; }
+      #inset { display: block; margin-top: 6px; border-radius: 4px; border: 1px solid #2a2c31; }
+      #hud { position: absolute; left: 0; right: 0; bottom: 14px; display: flex; flex-direction: column; align-items: center; gap: 8px; pointer-events: none; }
+      #spell { width: 400px; font: 18px ui-monospace, Menlo, monospace; letter-spacing: 2px; text-transform: uppercase; padding: 7px 12px; outline: none; box-sizing: border-box; }
+      #letters { display: flex; gap: 4px; }
+      .tile { width: 28px; height: 38px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; box-sizing: border-box; }
+      .tile small { font-weight: 400; font-size: 10px; }
+
+      /* 1 Living letters: big type, ink on bone. */
+      [data-style="letters"] #spell { font: 800 22px 'Bricolage Grotesque', sans-serif; letter-spacing: 6px; color: #111; background: #f4f1eaee; border: 0; border-bottom: 3px solid #111; border-radius: 0; text-align: center; }
+      [data-style="letters"] .tile { font: 800 22px 'Bricolage Grotesque', sans-serif; width: 30px; color: #1b1b1b; background: transparent; text-shadow: 0 0 6px #f4f1ea, 0 0 2px #f4f1ea; }
+      [data-style="letters"] .tile small { font: 600 10px 'Bricolage Grotesque', sans-serif; color: #e4572e; text-shadow: none; }
+      [data-style="letters"] .tile.used { color: #e4572e; transform: translateY(-4px); }
+      [data-style="letters"] #letters { background: #f4f1eaee; padding: 2px 10px 4px; }
+
+      /* 2 Ink and parchment: rubricated capitals on vellum. */
+      [data-style="ink"] #spell { font: 22px 'IM Fell English SC', serif; color: #2b1d14; background: #ecdcb4f2; border: 2px solid #3a2a1c; border-radius: 2px;
+        box-shadow: inset 0 0 0 3px #ecdcb4, inset 0 0 0 4px #8a2b1a; text-align: center; letter-spacing: 4px; }
+      [data-style="ink"] .tile { font: 24px 'UnifrakturMaguntia', serif; color: #8a2b1a; background: #efe0bb; border: 1.5px solid #3a2a1c; border-radius: 1px; box-shadow: 1px 2px 0 #3a2a1c55; }
+      [data-style="ink"] .tile small { font: italic 10px 'IM Fell English', serif; color: #3a2a1c; margin-top: -3px; }
+      [data-style="ink"] .tile.used { background: #2f4f86; color: #f3e6c4; }
+      [data-style="ink"] .tile.used small { color: #f3e6c4; }
+
+      /* 3 Neon vector. */
+      [data-style="neon"] #spell { font: 700 18px 'Orbitron', sans-serif; letter-spacing: 5px; color: #ff4fd8; background: #07040fdd; border: 1px solid #ff4fd8; border-radius: 0;
+        box-shadow: 0 0 10px #ff4fd8aa, inset 0 0 10px #ff4fd855; text-shadow: 0 0 8px #ff4fd8; text-align: center; }
+      [data-style="neon"] .tile { font: 700 17px 'Orbitron', sans-serif; color: #7ff9ff; background: #050a12dd; border: 1px solid #39e6ff; text-shadow: 0 0 6px #39e6ff; box-shadow: 0 0 6px #39e6ff88, inset 0 0 6px #39e6ff44; }
+      [data-style="neon"] .tile small { font: 10px 'Share Tech Mono', monospace; color: #39e6ffaa; text-shadow: none; }
+      [data-style="neon"] .tile.used { color: #fff; border-color: #ff4fd8; box-shadow: 0 0 10px #ff4fd8, inset 0 0 8px #ff4fd888; text-shadow: 0 0 8px #ff4fd8; }
+
+      /* 4 Paper diorama: scrabble-ish card tiles. */
+      [data-style="paper"] #spell { font: 700 22px 'Kalam', cursive; color: #3d3a33; background: #fbf6ea; border: 0; border-radius: 3px; letter-spacing: 3px; text-align: center;
+        box-shadow: 0 3px 0 #d9cfb6, 0 6px 12px #0004; transform: rotate(-0.6deg); }
+      [data-style="paper"] .tile { font: 700 19px 'Fredoka', sans-serif; color: #4a4338; background: #fbf6ea; border-radius: 3px; box-shadow: 0 2px 0 #cfc3a6, 0 4px 8px #0005; }
+      [data-style="paper"] .tile:nth-child(odd) { transform: rotate(-3deg); }
+      [data-style="paper"] .tile:nth-child(3n) { transform: rotate(2.5deg) translateY(1px); }
+      [data-style="paper"] .tile small { font: 500 10px 'Fredoka', sans-serif; color: #a39780; }
+      [data-style="paper"] .tile.used { background: #e9b949; color: #4a3510; }
+
+      /* 5 Pixel classic. */
+      [data-style="pixel"] #spell { font: 16px 'Silkscreen', monospace; letter-spacing: 3px; color: #ffcd75; background: #1a1c2c; border: 4px solid #f4f4f4; border-radius: 0;
+        box-shadow: 0 0 0 4px #1a1c2c, 4px 8px 0 4px #0008; text-align: center; image-rendering: pixelated; }
+      [data-style="pixel"] .tile { font: 16px 'Silkscreen', monospace; color: #1a1c2c; background: #f4f4f4; border: 0; box-shadow: inset -3px -3px 0 #94b0c2, 0 0 0 3px #1a1c2c; border-radius: 0; width: 28px; margin: 0 2px; }
+      [data-style="pixel"] .tile small { font: 8px 'Silkscreen', monospace; color: #566c86; }
+      [data-style="pixel"] .tile.used { background: #ffcd75; box-shadow: inset -3px -3px 0 #ef7d57, 0 0 0 3px #1a1c2c; }
+    </style>
+  </head>
+  <body>
+    <div id="bar"><h1>LAST WORD · art style prototypes</h1><div id="styles"></div></div>
+    <div id="stage">
+      <canvas id="map"></canvas>
+      <div id="hud">
+        <input id="spell" autocomplete="off" spellcheck="false" readonly />
+        <div id="letters"></div>
+      </div>
+    </div>
+    <div id="side">
+      <h2 id="name"></h2>
+      <p id="tagline"></p>
+      <h3>Adjectives: BURNING SWORD, GIANT WOLF</h3>
+      <canvas id="inset"></canvas>
+      <p id="adjectives" style="margin-top:6px"></p>
+      <h3>Scaling to thousands of words</h3>
+      <p id="scaling"></p>
+      <h3>Keys</h3>
+      <p>1-5 switch style · N night</p>
+    </div>
+    <script type="module" src="/src/styles/main.ts"></script>
+  </body>
+</html>
