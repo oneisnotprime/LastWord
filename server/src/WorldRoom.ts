@@ -145,6 +145,8 @@ const SLOW_TICK_MS = 80;
 /** DEBUG=1 (local development only): spelling DEBUG fills every letter to DEBUG_LETTERS. On the live server DEBUG is just a word. */
 const debugging = () => !!process.env.DEBUG && process.env.DEBUG !== "0";
 const DEBUG_LETTERS = 999;
+/** Playtest shortcut on every server for now: spelling this fills every letter (no letters needed). */
+export const CHEAT = "xxx";
 /** Tiles around the speller in which a word kills the creatures it counters, unless its event_radius reaches further. */
 const COUNTER_TILES = 12;
 
@@ -599,12 +601,14 @@ export class WorldRoom extends Room {
   private spellWord(id: string, walker: Walker, text: unknown): string {
     if (typeof text !== "string" || text.length > 80) throw new Error("Spell something");
     if (!walker.hamper.spells) throw new Error(`You cannot spell while you are ${STATE_WORDS[walker.hamper.muteBy!] ?? walker.hamper.muteBy}`);
-    // A server started with DEBUG=1 (local development, never the live game) gives letters without end for "debug".
-    if (debugging() && text.trim().toLowerCase() === "debug") {
+    // Playtest shortcut, live for now (TODO.md: replace with a real debug server): "xxx" fills
+    // every letter, whatever you hold. A server started with DEBUG=1 does the same for "debug".
+    const typed = text.trim().toLowerCase();
+    if (typed === CHEAT || (debugging() && typed === "debug")) {
       for (const ch of "abcdefghijklmnopqrstuvwxyz") walker.letters[ch] = DEBUG_LETTERS;
       this.sendTo(id, "letters", walker.letters);
       this.sendTo(id, "spelled", `DEBUG: ${DEBUG_LETTERS} of every letter`);
-      return "debug";
+      return typed;
     }
     const deal = readTrade(text);
     if (deal) return this.trade(id, walker, deal.give, deal.get);

@@ -166,6 +166,8 @@ export class Hud {
    */
   private spends(text: string): string {
     const t = text.toLowerCase().trimStart();
+    // "xxx" is the playtest shortcut (999 of every letter): typing it needs no letters.
+    if (t.trim() && "xxx".startsWith(t.trim())) return "";
     const give = /^give\s+\S+\s+(.*)$/.exec(t);
     if (give) return give[1]!.replace(/[^a-z]/g, "");
     if (/^give(\s+\S*)?\s*$/.test(t) || (t && ("give".startsWith(t) || "trade".startsWith(t)))) return "";
