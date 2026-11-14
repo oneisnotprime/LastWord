@@ -151,7 +151,7 @@ by how many words set them (minds and upkeep took `sentient`, `intelligence`, `f
       other winners of rounds of 100. Each tier won earns a distinct avatar look (gold,
       diamond, and so on)
 - [x] Dedicated loadout and inventory screens (L and I)
-- [ ] Loadout and inventory on a controller; item details (what a thing does) on hover or select
+- [x] Loadout and inventory on a controller; item details (what a thing does) on hover or select
 
 ## Later: words drive every system (user's notes; not started)
 
@@ -310,7 +310,7 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
 - [x] Load test with objects, creatures and playing bots (results in PLAN.md)
 - [x] Path-finding: walkers go around water, mountains and walls, and prefer roads
 - [x] M3: client connects, draws the map, walks, and spells words into objects
-- [ ] Controller input: movement, and spelling by picking from held letters
+- [x] Controller input: movement, and spelling by picking from held letters
 - [ ] Spelled objects only sit on the ground; no equipping, placement rules or effects yet
 - [x] Starting hand: eight letters drawn around a word that produces a letter the actions do not
       give (DOG, FARM, MILL, LANE...); no free SWORD
@@ -423,7 +423,7 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
       over time is a flat amount a second, not scaled by what inflicted it
 - [ ] Hidden or invisible players are still drawn for others; stealth against detection is not
       used for what a client is sent
-- [ ] Right-click picking on a controller
+- [x] Right-click picking on a controller (LT inspects, LB/RB cycle)
 - [ ] Terrain is laid where the speller stands and pushes everyone to the nearest ground; a
       destroyed lake or mountain marker cannot be removed, and terrain cannot be undone
 - [x] Rounds end: the room locks, everyone sees who won with a countdown, then all clients
