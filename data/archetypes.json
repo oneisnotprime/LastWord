@@ -11,7 +11,7 @@
  {
   "class": "artifact",
   "archetype": "artifact",
-  "words": 1590,
+  "words": 1592,
   "groups": [
    "physical",
    "mobility",
@@ -41,7 +41,7 @@
  {
   "class": "artifact",
   "archetype": "structure",
-  "words": 630,
+  "words": 629,
   "groups": [
    "physical",
    "mobility",
@@ -116,7 +116,7 @@
  {
   "class": "artifact",
   "archetype": "building",
-  "words": 247,
+  "words": 246,
   "groups": [
    "physical",
    "mobility",
@@ -131,7 +131,7 @@
  {
   "class": "artifact",
   "archetype": "document",
-  "words": 215,
+  "words": 214,
   "groups": [
    "physical",
    "mobility",
@@ -582,7 +582,7 @@
  {
   "class": "event",
   "archetype": "exchange",
-  "words": 154,
+  "words": 153,
   "groups": [
    "event",
    "offence",
@@ -592,7 +592,7 @@
  {
   "class": "event",
   "archetype": "crime",
-  "words": 75,
+  "words": 76,
   "groups": [
    "event",
    "offence",
@@ -622,7 +622,7 @@
  {
   "class": "event",
   "archetype": "ceremony",
-  "words": 49,
+  "words": 50,
   "groups": [
    "event",
    "offence",
@@ -672,7 +672,7 @@
  {
   "class": "event",
   "archetype": "escape",
-  "words": 17,
+  "words": 16,
   "groups": [
    "event",
    "offence",
@@ -799,7 +799,7 @@
  {
   "class": "institution",
   "archetype": "possession",
-  "words": 354,
+  "words": 355,
   "groups": [
    "social",
    "economy",
@@ -938,7 +938,7 @@
  {
   "class": "person",
   "archetype": "person",
-  "words": 4401,
+  "words": 4402,
   "groups": [
    "physical",
    "life",
@@ -954,7 +954,7 @@
  {
   "class": "person",
   "archetype": "worker",
-  "words": 906,
+  "words": 905,
   "groups": [
    "physical",
    "life",
@@ -1202,7 +1202,7 @@
  {
   "class": "world_state",
   "archetype": "weather",
-  "words": 140,
+  "words": 139,
   "groups": [
    "field"
   ]
@@ -1210,7 +1210,7 @@
  {
   "class": "world_state",
   "archetype": "season",
-  "words": 9,
+  "words": 10,
   "groups": [
    "field"
   ]

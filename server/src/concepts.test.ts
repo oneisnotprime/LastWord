@@ -174,3 +174,26 @@ it("ECLIPSE brings night for three minutes, then the day comes back; MONSOON's r
   expect(room.state.weatherWord).toBe("monsoon");
   expect((room as any).weatherRules.yields.o.mul).toBe(3);
 });
+
+it("every concept word can be spelled and does something", async () => {
+  const { readFileSync } = await import("node:fs");
+  const txt = readFileSync(new URL("../../tools/demo_words.txt", import.meta.url), "utf8");
+  const words = txt.slice(txt.indexOf("# Concepts")).split("\n").filter((l) => /^[a-z]+:/.test(l)).map((l) => l.split(":")[0]!);
+  expect(words.length).toBeGreaterThan(200);
+  const { room, a, wa, last, inbox } = await setup();
+  const failed: string[] = [];
+  for (const w of words) {
+    wa.letters = all(); wa.hp = 1e9;
+    a.send("pick", { x: wa.player.x + 3, y: wa.player.y });
+    a.send("spell", w);
+    a.send("pick", null);
+    await wait(30);
+    const said = inbox.a!.filter(([t]) => t === "refused").at(-1)?.[1];
+    if (typeof said === "string" && /does nothing|not a thing|unknown/i.test(said)) failed.push(`${w}: ${said}`);
+    inbox.a!.length = 0;
+    // Clear the map now and then so laws laid by earlier words do not stop later ones.
+    for (const [k, z] of (room as any).areas) { (room as any).areas.delete(k); room.state.zones.delete(k); void z; }
+  }
+  void last;
+  expect(failed).toEqual([]);
+}, 60000);

@@ -1948,7 +1948,7 @@ amnesia	noun	knowledge	knowledge	3.34	common	n05680235	-
 amnesiac	noun	person	person	2.33	uncommon	n09808052	adjective:quality
 amnesic	noun	person	person	1.78	rare	n09808052	adjective:pertaining
 amnestic	adjective	modifier	pertaining	1.47	rare	a02628350	-
-amnesty	noun	artifact	document	3.63	common	n06564630	verb:communication
+amnesty	noun	institution	possession	3.63	common	n14552684	verb:communication
 amnic	adjective	modifier	pertaining	0.0	obscure	a02628525	-
 amnio	noun	event	act	1.49	rare	n00945416	-
 amniocentesis	noun	event	act	1.92	rare	n00945416	-
@@ -4987,7 +4987,7 @@ bayberry	noun	flora	tree	1.71	rare	n12351408	-
 bayesian	adjective	modifier	pertaining	2.95	uncommon	a02635847	-
 bayonet	noun	artifact	weapon	3.15	common	n02816084	verb:contact
 bayou	noun	terrain	water	3.14	common	n09239993	-
-bazaar	noun	artifact	structure	3.37	common	n02816679	-
+bazaar	noun	artifact	artifact	3.37	common	n02816679	-
 bazar	noun	artifact	structure	2.57	uncommon	n02816780	-
 bazillion	noun	measure	quantity	2.1	uncommon	n13798632	-
 bazooka	noun	artifact	artifact	2.63	uncommon	n02816887	-
@@ -18762,7 +18762,7 @@ exodontia	noun	knowledge	knowledge	0.0	obscure	n06057904	-
 exodontic	adjective	modifier	pertaining	0.0	obscure	a02927716	-
 exodontics	noun	knowledge	knowledge	0.0	obscure	n06057904	-
 exodontist	noun	person	worker	0.0	obscure	n10091700	-
-exodus	noun	event	escape	3.69	common	n00061234	-
+exodus	noun	event	act	3.69	common	n00061234	-
 exoergic	adjective	modifier	quality	0.0	obscure	a00875655	-
 exogamic	adjective	modifier	quality	0.0	obscure	a00875318	-
 exogamous	adjective	modifier	quality	1.47	rare	a00875318	-
@@ -33131,7 +33131,7 @@ monarchist	noun	person	person	2.42	uncommon	n10347490	-
 monarchy	noun	institution	group	3.67	common	n08380739	-
 monarda	noun	flora	herb	1.33	rare	n12878910	-
 monas	noun	measure	quantity	1.64	rare	n13764980	-
-monastery	noun	artifact	building	3.65	common	n03786777	-
+monastery	noun	artifact	artifact	3.65	common	n03786777	-
 monastic	adjective	modifier	quality	3.1	common	a02589332	noun:person
 monastical	adjective	modifier	quality	0.0	obscure	a02589332	-
 monasticism	noun	aura	attribute	2.3	uncommon	n04889409	-
@@ -33533,7 +33533,7 @@ mourner	noun	person	person	2.25	uncommon	n10354959	-
 mournful	adjective	modifier	quality	2.73	uncommon	a01369073	-
 mournfully	adverb	verb_modifier	manner	1.96	rare	r00406532	-
 mournfulness	noun	aura	feeling	0.0	obscure	n07550597	-
-mourning	noun	event	act	3.69	common	n01074160	adjective:quality
+mourning	noun	event	ceremony	3.69	common	n14012765	adjective:quality
 mouse	noun	creature	mammal	4.31	core	n02332897	verb:movement
 mouselike	adjective	modifier	quality	0.0	obscure	a00379342	-
 mousepad	noun	artifact	artifact	2.05	uncommon	n03800177	-
@@ -41081,7 +41081,7 @@ prosodic	adjective	modifier	pertaining	2.02	uncommon	a03008837	-
 prosody	noun	knowledge	knowledge	2.29	uncommon	n06179741	-
 prospect	noun	world_state	phenomenon	4.13	core	n14506552	verb:perceive
 prospective	adjective	modifier	quality	3.87	common	a01889997	-
-prospector	noun	person	worker	2.63	uncommon	n10504883	-
+prospector	noun	person	person	2.63	uncommon	n10504883	-
 prospectus	noun	artifact	document	3.22	common	n06687692	-
 prosper	verb	spell	transfer	3.45	common	v02347796	-
 prospering	adjective	modifier	quality	2.5	uncommon	a02339849	-
@@ -47824,7 +47824,7 @@ smug	adjective	modifier	quality	3.31	common	a00592141	-
 smuggle	verb	spell	transfer	3.11	common	v02350852	-
 smuggled	adjective	modifier	quality	3.22	common	a01405584	-
 smuggler	noun	person	criminal	2.96	uncommon	n10634850	-
-smuggling	noun	event	exchange	3.54	common	n01114037	-
+smuggling	noun	event	crime	3.54	common	n01114037	-
 smugly	adverb	verb_modifier	manner	2.39	uncommon	r00461643	-
 smugness	noun	aura	feeling	2.31	uncommon	n07547386	-
 smut	noun	material	material	2.87	uncommon	n14817703	verb:transform
@@ -50566,7 +50566,7 @@ sunroof	noun	artifact	protection	2.75	uncommon	n04364208	-
 sunroom	noun	artifact	structure	2.04	uncommon	n04364012	-
 sunrose	noun	flora	shrub	0.0	obscure	n12396035	-
 sunscreen	noun	artifact	artifact	3.29	common	n04364401	-
-sunset	noun	world_state	weather	4.04	core	n11538209	adjective:quality
+sunset	noun	world_state	season	4.04	core	n15194295	adjective:quality
 sunshade	noun	artifact	protection	1.98	rare	n02766906	-
 sunshine	noun	world_state	phenomenon	4.16	core	n11505767	-
 sunspot	noun	world_state	phenomenon	2.55	uncommon	n11531422	-

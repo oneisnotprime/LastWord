@@ -102,6 +102,7 @@ amazon	noun	fighter
 ambassador	noun	worker
 ambush	noun	attack
 amendment	noun	act
+amnesty	noun	possession
 amount	noun	possession
 analysis	noun	knowledge
 anarchy	noun	phenomenon
@@ -205,6 +206,7 @@ auction	noun	exchange
 audience	noun	group
 audio	noun	phenomenon
 august	adjective	quality
+austerity	noun	attribute
 australian	adjective	pertaining
 author	noun	person
 authorities	noun	group
@@ -242,6 +244,7 @@ bang	noun	event
 bank	noun	building
 banking	noun	exchange
 banned	adjective	quality
+banshee	noun	supernatural
 bar	noun	structure
 barely	adverb	manner
 bargain	noun	attribute
@@ -263,6 +266,7 @@ batman	noun	worker
 battery	noun	device
 battle	noun	conflict
 bay	noun	water
+bazaar	noun	artifact
 beach	noun	landform
 bear	noun	mammal
 bearing	noun	device
@@ -367,6 +371,7 @@ bow	noun	weapon
 bowl	noun	container
 box	noun	container
 boy	noun	person
+boycott	noun	act
 boyfriend	noun	person
 brain	noun	bodypart
 branch	noun	weapon
@@ -382,6 +387,7 @@ breast	noun	bodypart
 breath	noun	gas
 breathe	verb	body
 breathing	noun	act
+bribe	noun	possession
 brick	noun	mineral
 bridge	noun	structure
 brief	adjective	quality
@@ -410,6 +416,7 @@ bunch	noun	group
 bunker	noun	fortification
 burden	noun	quantity
 bureau	noun	furniture
+burglary	noun	crime
 buried	adjective	quality
 burn	verb	transform
 burned	adjective	participle
@@ -528,6 +535,7 @@ china	noun	container
 chip	noun	device
 chocolate	noun	food
 choice	noun	knowledge
+cholera	noun	affliction
 chosen	noun	person
 church	noun	group
 circle	noun	group
@@ -566,6 +574,7 @@ closing	noun	act
 clothes	noun	clothing
 clothing	noun	clothing
 cloud	noun	weather
+cloudburst	noun	weather
 clown	noun	person
 club	noun	weapon
 coach	noun	leader
@@ -575,6 +584,7 @@ coalition	noun	group
 coast	noun	landform
 coat	noun	clothing
 cock	noun	bird
+cockroach	noun	insect
 code	verb	contact
 coffee	noun	drink
 cold	adjective	quality
@@ -718,6 +728,7 @@ counter	noun	furniture
 counting	noun	act
 country	noun	place
 county	noun	place
+coup	noun	act
 couple	noun	quantity
 courage	noun	feeling
 course	noun	place
@@ -941,6 +952,7 @@ double	adjective	quality
 doubt	noun	feeling
 down	adverb	manner
 download	verb	transfer
+downpour	noun	weather
 downtown	noun	place
 dozen	noun	quantity
 draft	noun	act
@@ -1031,6 +1043,7 @@ elements	noun	weather
 elephant	noun	mammal
 eligible	adjective	quality
 elite	noun	group
+elk	noun	mammal
 elsewhere	adverb	manner
 embargo	noun	conflict
 emergency	noun	event
@@ -1126,6 +1139,7 @@ exhibition	noun	event
 existence	noun	natural_object
 existing	adjective	quality
 exit	noun	escape
+exodus	noun	act
 exorcism	noun	act
 expand	verb	transform
 expanded	adjective	quality
@@ -1151,6 +1165,7 @@ extension	noun	act
 extensive	adjective	quality
 extent	noun	attribute
 external	adjective	quality
+extortion	noun	possession
 extra	adjective	quality
 extraordinary	adjective	quality
 extreme	adjective	quality
@@ -1247,6 +1262,7 @@ finish	verb	transform
 finished	adjective	participle
 finishing	noun	material
 fire	noun	event
+fireball	noun	phenomenon
 fired	adjective	quality
 fireproof	adjective	absolute
 firing	noun	attack
@@ -1262,6 +1278,7 @@ fixed	adjective	quality
 flag	noun	artifact
 flash	noun	light
 flat	adjective	quality
+flea	noun	insect
 fleet	noun	group
 flight	noun	escape
 float	verb	movement
@@ -1270,7 +1287,9 @@ flood	noun	phenomenon
 floor	noun	structure
 flow	verb	movement
 flower	noun	flower
+flu	noun	affliction
 fluid	noun	liquid
+fluke	noun	phenomenon
 fly	verb	movement
 flying	adjective	participle
 focus	noun	feeling
@@ -1395,6 +1414,7 @@ glow	verb	transform
 glut	noun	attribute
 goal	noun	knowledge
 god	noun	supernatural
+godsend	noun	event
 going	adjective	participle
 gold	noun	metal
 golden	adjective	quality
@@ -1408,6 +1428,7 @@ grace	noun	attribute
 grade	noun	attribute
 graduate	noun	person
 graham	noun	food
+granary	noun	artifact
 grand	adjective	quality
 grandfather	noun	person
 grant	verb	transfer
@@ -1442,6 +1463,7 @@ guilty	adjective	quality
 guitar	noun	instrument
 gulf	noun	water
 gun	noun	weapon
+gust	noun	weather
 guy	noun	person
 gym	noun	building
 habit	noun	clothing
@@ -1493,6 +1515,7 @@ heavily	adverb	manner
 heavy	adjective	quality
 height	noun	attribute
 heir	noun	worker
+heist	noun	crime
 held	adjective	participle
 helicopter	noun	vehicle_air
 hell	noun	place
@@ -1645,6 +1668,7 @@ institution	noun	building
 instructions	noun	document
 instrument	noun	instrument
 insurance	noun	possession
+insurrection	noun	act
 integrated	adjective	quality
 integration	noun	act
 integrity	noun	attribute
@@ -1678,6 +1702,7 @@ involved	adjective	participle
 involvement	noun	feeling
 iron	noun	metal
 irresistible	adjective	absolute
+irrigation	noun	act
 island	noun	landform
 isolated	adjective	quality
 israeli	adjective	pertaining
@@ -1790,6 +1815,7 @@ legislative	adjective	pertaining
 legitimate	adjective	quality
 legs	noun	bodypart
 length	noun	quantity
+leprosy	noun	affliction
 lesson	noun	act
 lethal	adjective	absolute
 letter	noun	document
@@ -1892,6 +1918,7 @@ making	noun	knowledge
 male	adjective	quality
 mall	noun	building
 mama	noun	person
+mammoth	noun	mammal
 man	noun	person
 manage	verb	social
 management	noun	group
@@ -1915,6 +1942,7 @@ marshall	noun	leader
 martin	noun	bird
 mask	noun	protection
 mass	noun	quantity
+massacre	noun	act
 massive	adjective	quality
 master	noun	person
 match	noun	tool
@@ -2001,6 +2029,7 @@ modified	adjective	participle
 mold	noun	fungus
 mole	noun	mammal
 mom	noun	person
+monastery	noun	artifact
 money	noun	currency
 monitor	verb	perceive
 monitoring	noun	act
@@ -2011,8 +2040,10 @@ month	noun	duration
 monthly	adjective	quality
 mood	noun	feeling
 moon	noun	celestial
+moose	noun	mammal
 moral	adjective	quality
 mortgage	noun	possession
+mosquito	noun	insect
 mostly	adverb	manner
 mother	noun	person
 motion	noun	event
@@ -2021,12 +2052,14 @@ motor	noun	machine
 mount	noun	elevation
 mountain	noun	elevation
 mounted	adjective	participle
+mourning	noun	ceremony
 mouse	noun	mammal
 mouth	noun	bodypart
 move	verb	movement
 moved	adjective	participle
 movement	noun	act
 moving	adjective	participle
+mudslide	noun	event
 multiple	adjective	quality
 mum	noun	person
 municipal	adjective	pertaining
@@ -2077,6 +2110,7 @@ nine	adjective	quality
 noble	adjective	quality
 nobody	noun	person
 noise	noun	event
+nomad	noun	person
 non	adverb	manner
 none	adjective	quality
 normal	adjective	quality
@@ -2130,6 +2164,7 @@ older	adjective	quality
 olympic	adjective	pertaining
 ongoing	adjective	quality
 online	adjective	quality
+onslaught	noun	event
 open	adjective	quality
 opened	adjective	participle
 opening	noun	route
@@ -2276,6 +2311,7 @@ pilot	noun	worker
 pin	noun	adornment
 pink	adjective	quality
 pipe	noun	route
+piracy	noun	crime
 pissed	adjective	quality
 pit	noun	depression
 pitch	noun	material
@@ -2421,6 +2457,7 @@ proper	adjective	quality
 properly	adverb	manner
 property	noun	possession
 prospect	noun	phenomenon
+prospector	noun	person
 protect	verb	combat
 protected	adjective	participle
 protecting	adjective	participle
@@ -2447,6 +2484,7 @@ punch	verb	contact
 punishment	noun	act
 purchase	noun	exchange
 pure	adjective	quality
+purge	noun	act
 purple	adjective	quality
 purpose	noun	knowledge
 pursue	verb	movement
@@ -2480,10 +2518,12 @@ rail	noun	route
 railroad	noun	route
 railway	noun	route
 rain	noun	weather
+rainstorm	noun	weather
 raise	verb	transform
 raised	adjective	participle
 raising	noun	event
 rally	noun	ceremony
+rampage	noun	act
 random	adjective	quality
 range	noun	attribute
 rank	noun	group
@@ -2497,6 +2537,7 @@ rat	noun	mammal
 rate	noun	possession
 rates	noun	possession
 rating	noun	knowledge
+rationing	noun	act
 raw	adjective	quality
 ray	noun	light
 reach	verb	movement
@@ -2646,10 +2687,12 @@ road	noun	route
 roads	noun	route
 roar	verb	contact
 rob	verb	transfer
+robbery	noun	crime
 robin	noun	bird
 robot	noun	device
 rock	noun	rock
 rocket	noun	vehicle_air
+rockslide	noun	event
 role	noun	knowledge
 roll	verb	movement
 rolling	adjective	participle
@@ -2886,6 +2929,7 @@ smith	noun	worker
 smoke	noun	phenomenon
 smoking	adjective	participle
 smooth	adjective	quality
+smuggling	noun	crime
 snake	noun	reptile
 sneak	verb	movement
 snow	noun	weather
@@ -2947,6 +2991,7 @@ spread	verb	transform
 spring	noun	season
 spy	noun	worker
 squad	noun	group
+squall	noun	weather
 square	noun	place
 stability	noun	attribute
 stable	noun	building
@@ -3047,6 +3092,7 @@ summer	noun	season
 summit	noun	elevation
 sun	noun	celestial
 sunrise	noun	weather
+sunset	noun	season
 super	adjective	quality
 superior	adjective	quality
 supply	noun	container
@@ -3159,6 +3205,7 @@ throw	verb	contact
 thrown	adjective	quality
 thunderstorm	noun	weather
 ticket	noun	document
+tide	noun	event
 tie	noun	clothing
 tied	adjective	participle
 tiger	noun	mammal
@@ -3267,6 +3314,7 @@ twitter	noun	phenomenon
 two	noun	quantity
 type	noun	knowledge
 typhoon	noun	weather
+typhus	noun	affliction
 typical	adjective	quality
 typically	adverb	manner
 ugly	adjective	quality
@@ -3406,6 +3454,7 @@ wheat	noun	produce
 wheel	noun	device
 wherever	adverb	manner
 whip	noun	weapon
+whirlwind	noun	weather
 white	adjective	quality
 wide	adjective	quality
 widely	adverb	manner
