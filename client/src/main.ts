@@ -279,24 +279,26 @@ class World extends Phaser.Scene {
   }
 
   /** Redraws a standee when what it is changes: its look, what it holds, its statuses. */
-  private dress(v: View, look: Look, held: string | undefined, statuses: string[]) {
+  private dress(v: View, look: Look, held: string | undefined, statuses: string[], ride?: string) {
     const shrink = statuses.includes("shrink");
-    const key = `${look.noun}|${look.colour}|${look.scale}|${look.count}|${held ?? ""}|${shrink}|${look.burning}|${look.frozen}|${look.invisible}`;
+    const key = `${look.noun}|${look.colour}|${look.scale}|${look.count}|${held ?? ""}|${ride ?? ""}|${statuses.includes("burn")}|${shrink}|${look.burning}|${look.frozen}|${look.invisible}`;
     if (key !== v.drawn) {
       v.drawn = key;
       const shown: Look = shrink ? { ...look, scale: look.scale * 0.55 } : look;
-      const st = this.paint.standee(shown, held);
+      const st = this.paint.standee(shown, held, ride);
       useStandee(v.body, st);
-      v.top = st.top; v.half = st.half; v.flies = st.flies; v.living = st.living; v.spots = st.flames;
+      v.top = st.top; v.half = st.half; v.flies = st.flies; v.living = st.living;
+      // Flames go on the body when it burns, and on the tip of a burning thing it holds.
+      v.spots = look.burning || statuses.includes("burn") ? st.flames : [];
+      if (held && st.tip && lookOf(dictionary, held).burning) v.spots = [...v.spots, st.tip, [st.tip[0] - 3, st.tip[1] + 7]];
       v.look = shown;
     }
     // Flames for a burning thing or a BURN status.
-    const burning = look.burning || statuses.includes("burn");
-    const want = burning ? v.spots.length : 0;
+    const want = v.spots.length;
     while (v.flames.length < want) {
       const i = v.flames.length;
       const f = this.add.image(0, 0, "__WHITE");
-      useMade(f, this.paint.flame(Math.round(10 + Math.min(14, v.half * 0.35) + (i % 2) * 4), i % 3), DPR);
+      useMade(f, this.paint.flame(Math.round(14 + Math.min(16, v.half * 0.4) + (i % 2) * 5), i % 3), DPR);
       f.setData("s", f.scaleX);
       v.flames.push(f);
     }
@@ -362,12 +364,30 @@ class World extends Phaser.Scene {
     this.views.delete(id);
   }
 
-  /** The first thing a person carries that goes in the hand. */
-  private heldOf(gear: string): string | undefined {
+  /** Tags that would overlap slide down under each other, nearest the top first. */
+  private unstackTags() {
+    const tags = [...this.views.values()].map((v) => v.tag).sort((a, b) => a.y - b.y);
+    const placed: { x0: number; x1: number; y0: number; y1: number }[] = [];
+    for (const t of tags) {
+      const w = t.displayWidth * 0.86, h = t.displayHeight * 0.62;
+      let y = t.y;
+      for (let pass = 0; pass < 8; pass++) {
+        const hit = placed.find((r) => t.x + w / 2 > r.x0 && t.x - w / 2 < r.x1 && y + h / 2 > r.y0 && y - h / 2 < r.y1);
+        if (!hit) break;
+        y = hit.y1 + h / 2;
+      }
+      t.y = y;
+      placed.push({ x0: t.x - w / 2, x1: t.x + w / 2, y0: y - h / 2, y1: y + h / 2 });
+    }
+  }
+
+  /** The first thing a person carries in a slot: "held" in the hand, "ride" under them. */
+  private slotOf(gear: string, slot: string): string | undefined {
     if (!gear) return undefined;
     for (const g of gear.split(",").map((s) => s.trim()).filter(Boolean)) {
       const look = lookOf(dictionary, g);
-      if (dictionary.word(look.noun)?.set.equip_slot === "held") return g;
+      const set = dictionary.word(look.noun)?.set;
+      if (slot === "ride" ? set?.mountable === true : set?.equip_slot === slot && set?.mountable !== true) return g;
     }
     return undefined;
   }
@@ -412,7 +432,7 @@ class World extends Phaser.Scene {
         this.label(v, [counted(p.name, p.count)], p.owner === mine ? TAG_INK.mine : p.owner === "-" ? TAG_INK.wild : TAG_INK.theirs);
       } else {
         const colour = id === mine ? "#3f6fa8" : PEOPLE[[...String(p.name)].reduce((n, c) => n + c.charCodeAt(0), 0) % PEOPLE.length]!;
-        this.dress(v, { ...lookOf(dictionary, "human"), colour }, this.heldOf(p.gear), statuses);
+        this.dress(v, { ...lookOf(dictionary, "human"), colour }, this.slotOf(p.gear, "held"), statuses, this.slotOf(p.gear, "ride"));
         this.label(v, p.gear ? [String(p.name).toUpperCase(), `+ ${p.gear}`] : [String(p.name).toUpperCase()], id === mine ? TAG_INK.me : TAG_INK.person);
       }
       // Ease toward the server's position so ten updates a second look smooth.
@@ -426,6 +446,7 @@ class World extends Phaser.Scene {
       if (id === mine) this.cameras.main.centerOn(v.x, v.y);
     });
     for (const [id, v] of this.views) if (!live.has(id)) this.drop(id, v);
+    this.unstackTags();
 
     // Light at night: fires, burning and glowing things, and a lantern for you.
     const lights: { x: number; y: number; r: number; warm: boolean }[] = [];

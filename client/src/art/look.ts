@@ -25,6 +25,12 @@ export interface Look {
   count: number;
 }
 
+/** Drawn bigger than life where small would be unreadable, or bigger to read as big. */
+const DISPLAY: Record<string, number> = {
+  building: 1.5, fortification: 1.5, structure: 1.3, vehicle_land: 1.25, vehicle_water: 1.3, vehicle_air: 1.3,
+  weapon: 1.3, tool: 1.25, container: 1.2, protection: 1.2, clothing: 1.2, adornment: 1.3, device: 1.2, document: 1.2, toy: 1.2,
+};
+
 const memo = new Map<string, Omit<Look, "count">>();
 
 /** The silhouette for a word: its own, else its archetype's, else its class's. */
@@ -71,7 +77,8 @@ export function lookOf(dict: Dictionary, phrase: string, count = 1): Look {
     // Size: the cube root of the mass it gained or lost, else its height.
     const m1 = num(stats, "mass"), m0 = num(plain, "mass"), h1 = num(stats, "height"), h0 = num(plain, "height");
     const ratio = m0 > 0 && m1 > 0 ? Math.cbrt(m1 / m0) : h0 > 0 && h1 > 0 ? h1 / h0 : 1;
-    const scale = Math.max(0.45, Math.min(2.6, Math.pow(ratio, 0.6)));
+    const display = DISPLAY[dict.word(noun)?.archetype ?? ""] ?? 1;
+    const scale = display * Math.max(0.45, Math.min(2.6, Math.pow(ratio, 0.6)));
     const dt = num(stats, "temperature") - num(plain, "temperature");
     const stealth = num(stats, "stealth");
     let untargetable = false;

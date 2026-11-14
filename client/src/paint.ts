@@ -32,8 +32,8 @@ export class Painter {
   }
 
   /** The standee for a look, with what a person holds. */
-  standee(look: Look, held?: string): Standee & { key: string } {
-    const id = lookKey(look, held ?? "");
+  standee(look: Look, held?: string, ride?: string): Standee & { key: string } {
+    const id = lookKey(look, `${held ?? ""}|${ride ?? ""}`);
     let st = this.standees.get(id);
     if (!st) {
       let heldArt: { sil: Silhouette; colour: string } | undefined;
@@ -41,7 +41,12 @@ export class Painter {
         const h = lookOf(this.dict, held);
         heldArt = { sil: h.shape, colour: h.colour };
       }
-      const s = renderStandee(look, { k: this.k, held: heldArt });
+      let rideArt: { sil: Silhouette; colour: string } | undefined;
+      if (ride) {
+        const r = lookOf(this.dict, ride);
+        rideArt = { sil: r.shape, colour: r.colour };
+      }
+      const s = renderStandee(look, { k: this.k, held: heldArt, ride: rideArt });
       st = { ...s, key: this.add(s.canvas) };
       this.standees.set(id, st);
     }
@@ -133,25 +138,27 @@ export class Painter {
   /** A torn tissue-paper disc, white, 256 units across; tint and scale it. */
   tissue(seed: number): Made {
     return this.once(`tissue|${seed}`, 268, 268, 134, 134, (ctx) => {
-      const n = 64;
-      ctx.beginPath();
+      const n = 64, edge = new Path2D();
       for (let i = 0; i < n; i++) {
         const a = (i / n) * Math.PI * 2;
         const r = 124 * (0.95 + 0.05 * Math.sin(a * 5 + seed) + 0.025 * Math.sin(a * 13 + seed * 2));
-        if (i) ctx.lineTo(Math.cos(a) * r, Math.sin(a) * r); else ctx.moveTo(Math.cos(a) * r, Math.sin(a) * r);
+        if (i) edge.lineTo(Math.cos(a) * r, Math.sin(a) * r); else edge.moveTo(Math.cos(a) * r, Math.sin(a) * r);
       }
-      ctx.closePath();
+      edge.closePath();
       ctx.fillStyle = "#ffffff";
       ctx.shadowColor = "rgba(50,35,20,0.35)"; ctx.shadowBlur = 6 * this.k; ctx.shadowOffsetY = 2 * this.k;
-      ctx.fill();
+      ctx.fill(edge);
       ctx.shadowColor = "transparent";
       // Where the tissue folds over itself it is darker.
-      ctx.fillStyle = "rgba(0,0,0,0.08)";
-      for (let i = 0; i < 5; i++) {
-        const a = seed + i * 1.3;
-        ctx.beginPath(); ctx.ellipse(Math.cos(a) * 60, Math.sin(a) * 50, 60, 22, a, 0, 7); ctx.fill();
+      ctx.save();
+      ctx.clip(edge);
+      ctx.fillStyle = "rgba(0,0,0,0.05)";
+      for (let i = 0; i < 3; i++) {
+        const a = seed + i * 2.1;
+        ctx.beginPath(); ctx.ellipse(Math.cos(a) * 70, Math.sin(a) * 60, 70, 30, a, 0, 7); ctx.fill();
       }
-      ctx.strokeStyle = "rgba(255,255,255,0.9)"; ctx.lineWidth = 1.5; ctx.stroke();
+      ctx.restore();
+      ctx.strokeStyle = "rgba(255,255,255,0.9)"; ctx.lineWidth = 1.5; ctx.stroke(edge);
     });
   }
 

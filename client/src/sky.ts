@@ -26,7 +26,7 @@ export class Sky {
 
   constructor(private readonly scene: Phaser.Scene, private readonly paint: Painter, private readonly dict: Dictionary) {
     this.tex = scene.textures.createCanvas("sky", 64, 64)!;
-    this.img = scene.add.image(0, 0, "sky").setScrollFactor(0).setDepth(9000).setOrigin(0.5);
+    this.img = scene.add.image(0, 0, "sky").setDepth(9000).setOrigin(0);
   }
 
   private made(kind: string, i: number): Made {
@@ -83,7 +83,7 @@ export class Sky {
     const w = Math.max(1, Math.ceil(cam.width / SHRINK)), h = Math.max(1, Math.ceil(cam.height / SHRINK));
     const blank = !layers.length && this.flash === 0;
     if (!blank || !this.drawnBlank) {
-      if (this.tex.width !== w || this.tex.height !== h) this.tex.setSize(w, h);
+      if (this.tex.width !== w || this.tex.height !== h) { this.tex.setSize(w, h); this.img.setTexture("sky"); }
       const ctx = this.tex.context;
       ctx.clearRect(0, 0, w, h);
       for (const l of layers) { ctx.fillStyle = l; ctx.fillRect(0, 0, w, h); }
@@ -110,7 +110,8 @@ export class Sky {
       this.tex.refresh();
       this.drawnBlank = blank;
     }
-    this.img.setVisible(!blank).setPosition(cam.width / 2, cam.height / 2).setDisplaySize(cam.width / cam.zoom, cam.height / cam.zoom);
+    // Laid over the part of the world in view.
+    this.img.setVisible(!blank).setPosition(view.x, view.y).setDisplaySize(view.width, view.height);
 
     // Drifting cut-outs: weather first, else the first field over the map.
     const kind = weather === "rain" || weather === "storm" || weather === "snow" ? weather : overMap[0] ?? "";

@@ -6,7 +6,7 @@
 import Phaser from "phaser";
 import type { Dictionary } from "@lastword/shared";
 import { icon } from "./art/build.js";
-import { num } from "./art/palette.js";
+import { mix, num } from "./art/palette.js";
 import { hash } from "./art/util.js";
 import { PX, useMade, type Made, type Painter } from "./paint.js";
 
@@ -100,7 +100,7 @@ export class Zones {
       if (!z) {
         const style = zoneStyle(this.dict, zone.word);
         const seed = Math.floor(hash(id.length, zone.word.charCodeAt(0), 3) * 100);
-        const disc = this.scene.add.image(0, 0, "__WHITE").setDepth(50).setAlpha(0.42).setTint(num(style.colour));
+        const disc = this.scene.add.image(0, 0, "__WHITE").setDepth(50).setAlpha(0.42).setTint(num(mix(style.colour, "#ffffff", 0.35)));
         useMade(disc, this.paint.tissue(seed % 7), this.k);
         disc.setData("s", disc.scaleX);
         const tag = this.scene.add.image(0, 0, "__WHITE").setDepth(10000);

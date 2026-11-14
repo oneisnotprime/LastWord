@@ -22,6 +22,8 @@ export interface Standee {
   flames: Pt[];
   flies: boolean;
   living: boolean;
+  /** The tip of what is held, in units from the feet, for flames on a burning blade. */
+  tip?: Pt;
 }
 
 /** Bounds of a silhouette in units at scale s. */
@@ -54,13 +56,17 @@ export interface StandeeOptions {
   k: number;
   /** A silhouette held in the hand, drawn small. */
   held?: { sil: Silhouette; colour: string };
+  /** What a person rides: drawn under them, the person standing on top. */
+  ride?: { sil: Silhouette; colour: string };
 }
 
 export function renderStandee(look: Look, opt: StandeeOptions): Standee {
   const sil = look.shape, s = look.scale, k = opt.k;
   const flies = !!sil.flies, living = !!sil.living;
-  const lift = flies ? 22 * Math.max(1, s * 0.8) : 0;
-  const b = bounds(sil, s);
+  const rb = opt.ride ? bounds(opt.ride.sil, 0.9) : null;
+  const lift = (flies ? 22 * Math.max(1, s * 0.8) : 0) + (rb ? -rb.y0 * 0.55 : 0);
+  const b0 = bounds(sil, s);
+  const b = rb ? { x0: Math.min(b0.x0, rb.x0), x1: Math.max(b0.x1, rb.x1), y0: b0.y0, y1: b0.y1 } : b0;
   // Crowds: copies around the first; swarms: specks.
   const many = look.count > 1;
   const swarm = many && (sil.speck || look.count > 60);
@@ -85,6 +91,7 @@ export function renderStandee(look: Look, opt: StandeeOptions): Standee {
   ctx.translate(-wx0, -wy0);
   const ink = inks(look.colour, look.frozen);
   const ghost = look.invisible || look.hidden;
+  let tip: Pt | undefined;
   const halfW = Math.max(6, (b.x1 - b.x0) / 2);
   if (ghost) ctx.globalAlpha = look.invisible ? 0.55 : 0.8;
   if (swarm) {
@@ -110,6 +117,8 @@ export function renderStandee(look: Look, opt: StandeeOptions): Standee {
       groundShadow(ctx, 6, 0, halfW * 0.9, 0.16);
       ctx.strokeStyle = "rgba(255,255,255,0.7)"; ctx.lineWidth = 0.7;
       ctx.beginPath(); ctx.moveTo(0, b.y0 - lift - 4); ctx.lineTo(0, wy0); ctx.stroke();
+    } else if (opt.ride) {
+      groundShadow(ctx, 3, 0, halfW * 0.85 + 2, 0.2);
     } else if (living) {
       stand(ctx, 0, 0, Math.min(26, halfW * 0.75 + 4));
     } else {
@@ -119,6 +128,7 @@ export function renderStandee(look: Look, opt: StandeeOptions): Standee {
       if (living) stand(ctx, c.x, c.y, Math.min(20, halfW * 0.6 + 3));
       drawSilhouette(ctx, sil, c, ink, { frozen: look.frozen, depth: 2.5 });
     }
+    if (opt.ride) drawSilhouette(ctx, opt.ride.sil, { x: 0, y: 0, s: 0.9, flip: false }, inks(opt.ride.colour), { depth: 3 });
     const main: Placed = { x: 0, y: -lift - (living ? 1.5 : 0), s, flip: false };
     drawSilhouette(ctx, sil, main, ink, { frozen: look.frozen, depth: sil.flat ? 1.5 : 2.5 + s * 1.5, ghost });
     if (opt.held && sil.hand) {
@@ -128,6 +138,8 @@ export function renderStandee(look: Look, opt: StandeeOptions): Standee {
       ctx.save();
       ctx.translate(hx * s, hy * s - lift + 3 * s);
       ctx.rotate(0.35);
+      const reach = -hb.y0 * hs * 0.75;
+      tip = [hx * s + Math.sin(0.35) * reach, hy * s - lift + 3 * s - Math.cos(0.35) * reach + 6];
       drawSilhouette(ctx, opt.held.sil, { x: 0, y: 0, s: hs, flip: false }, inks(opt.held.colour), { depth: 2 });
       ctx.restore();
     }
@@ -137,6 +149,6 @@ export function renderStandee(look: Look, opt: StandeeOptions): Standee {
     top: -Math.min(b.y0 - lift, swarm ? -crowdR * 0.7 : 0, ...copies.map((c) => c.y + b.y0 * 0.82)),
     half: Math.max(halfW, crowdR),
     flames: swarm ? [[-crowdR * 0.4, -crowdR * 0.2], [crowdR * 0.3, -crowdR * 0.1], [0, crowdR * 0.3]] : flameSpots(sil, s, lift),
-    flies, living,
+    flies, living, tip,
   };
 }
