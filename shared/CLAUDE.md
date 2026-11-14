@@ -96,6 +96,23 @@ server and the client import this, so anything here must give the same answer on
   around a starter word, leaning toward the job), `jobStats`/`jobBodyOps`/`jobRules` (a job as a
   carried tool, body operations and place rules), `kitCard` lines, `unlockText`/`unlockNeed`/
   `sealedLetters` (legendary conditions), `legendCost` (an unsealed legendary spells free), `kitScore`.
+- Dictionary themes (TODO.md), each a shared system words use by their properties:
+  - `material.ts` (materials): a material noun before a noun (GLASS SWORD) or an adjective whose
+    `material` names one (WOODEN) remakes the thing out of it (`applyMaterial`, called by `resolve`):
+    density, toughness, hardness, brittleness, flammability, conductivity, value, colour, and the
+    material's own damage and resistances; `susceptibility` (brittle things shatter, flammable burn,
+    low melting points melt, conductors carry lightning) is read by every `strike`; `materialText`;
+    `alchemyRatio`: a carried precious material cuts what transmuting to Z costs, and is used up.
+  - `food.ts` (food): `raw` things by heat (`cooks`: 150 C within COOK_RANGE) become their
+    `cooks_into` or COOKED (`cooked`); past `shelf_life` they go ROTTEN (`rotted`); `toxin` is the
+    poison eating gives. States sit on `Spelled.states` (adjectives that take no slot).
+  - `produce.ts` `grow` (plants): rooted living things grow from SEEDLING to full yield over
+    `growth_time` × GROW_PACE minutes at the place's growth; `Conditions.grown` scales output.
+  - `work.ts` (professions): `jobsOf` reads a worker's jobs from its properties (farm, craft, build,
+    scout, trade, heal, preach, lead, guard); `haggled`, `builtBy`, `jobText`.
+  - `law.ts` (law): `pactOf` (`binds`: a pact with people you pick, `bind_penalty` for breaking
+    it), `breachText`, `takeLetters` (fines, commonest letters first). `place.ts` adds `fine` and
+    the `hunt` law.
 - `tips.ts` teaching tips: `wordTip` (one line of what a word does in numbers, plus its shortest
   counter-word), `wordIdeas` (one word per `TIP_KINDS` kind, weighted by `tipWeight` toward words
   the held letters nearly spell), `RULE_TIPS` (short "did you know" lines, test-checked against the

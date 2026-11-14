@@ -46,7 +46,6 @@ job bard: authority=2 command_limit=4 produce_T*1.25 produce_S*1.25 letters=s
 job herbalist: harvest_sources=plant,forage harvest_bonus=3 produce_P*1.3 res_poison+0.3 letters=pe
 job mason: produce_G*1.25 produce_L*1.25 strength+2 letters=gl
 job shepherd: produce_I*1.4 command_limit=4 letters=i
-job cook: produce_E*1.2 produce_I*1.2 letters=e
 job scholar: produce_Y*1.5 produce_J*1.3 sight_range*1.1 letters=y
 job doctor: integrity*1.2 res_poison+0.5 produce_Y*1.25 letters=y
 job guard: armor+6 sight_range*1.2 produce_L*1.2 letters=l
@@ -229,3 +228,5 @@ legend unicorn: unlock=city counter=lasso
 legend wyvern: unlock=boss counter=lance
 legend god: unlock=minutes:20 counter=blasphemy
 legend apocalypse: unlock=kills:2 counter=armistice
+skip police
+skip doge

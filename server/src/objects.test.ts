@@ -230,12 +230,15 @@ it("uses every usable word in the dictionary", async () => {
     wa.player.x = c.x + 0.5; wa.player.y = c.y + 0.5;
     room.rebuild(wa);
     const before = said.length;
+    // Each reply is waited for, not a fixed time: under load a fixed wait can miss one.
+    const reply_ = async (n: number) => { for (let t = 0; t < 100 && said.length < n; t++) await wait(10); };
     a.send("spell", word);
-    await wait(20);
+    await reply_(before + 1);
     a.send("use");
-    await wait(20);
+    await reply_(before + 2);
     const reply = String(said.at(-1));
-    expect(said.length, word).toBe(before + 2);
+    expect(said.length, `${word} ${JSON.stringify(said.slice(-4))}`).toBe(before + 2);
+    wa.statuses = []; (room as any).statusChanged(wa); // a poisonous one (HEMLOCK) would kill the next try
     (reply.startsWith("Used ") ? did : not).push(`${word}${reply.startsWith("Used ") ? "" : ` (${reply})`}`);
     // Clear the ground and the hands for the next word; creatures it made leave too.
     for (const id of [...room.state.things.keys()]) room.removeThing(id);
@@ -249,4 +252,4 @@ it("uses every usable word in the dictionary", async () => {
   const effective = candidates.filter((w) => useObject(dict, w) && !dict.word(w)!.set.tile_type &&
     !(parsePhrase(dict, w).stats.flag("alive") && parsePhrase(dict, w).stats.num("speed_land") > 0));
   for (const w of effective) expect(did.map((d) => d.split(" ")[0]), w).toContain(w);
-});
+}, 240_000);

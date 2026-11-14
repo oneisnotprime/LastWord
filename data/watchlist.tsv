@@ -99,10 +99,10 @@ phoenix	death escape	7	45.3	6.5	X	noun:supernatural
 ore	economy	3	4.1	1.4	-	noun:mineral
 oil	economy	3	4.6	1.5	-	noun:liquid
 rent	economy	4	5.6	1.4	-	noun:possession
-loan	economy	4	6.2	1.6	-	noun:possession
+loan	economy	4	6.2	1.6	-	noun:act
 loot	economy	4	6.5	1.6	-	noun:attribute
-mint	economy	4	8.0	2.0	-	noun:quantity
-crop	economy	4	9.1	2.3	-	noun:exchange
+mint	economy	4	8.0	2.0	-	noun:herb
+crop	economy	4	9.1	2.3	-	noun:produce
 herd	economy	4	10.2	2.5	-	noun:phenomenon
 mirror	economy	6	11.1	1.8	-	noun:device
 debt	economy	4	11.2	2.8	-	noun:possession
@@ -121,7 +121,7 @@ spell	letter and word meta	5	10.0	2.0	-	verb:create
 type	letter and word meta	4	11.1	2.8	-	noun:knowledge
 printer	letter and word meta	7	12.0	1.7	-	noun:worker
 font	letter and word meta	4	12.9	3.2	-	noun:container
-scribe	letter and word meta	6	13.2	2.2	-	noun:person
+scribe	letter and word meta	6	13.2	2.2	-	noun:worker
 consonant	letter and word meta	9	14.8	1.6	-	adjective:quality
 ink	letter and word meta	3	15.4	5.1	K	noun:liquid
 library	letter and word meta	7	17.7	2.5	-	noun:building
@@ -197,23 +197,23 @@ anthrax	mass destruction	7	43.6	6.2	X	noun:affliction
 quasar	mass destruction	6	72.8	12.1	Q	noun:celestial
 quake	mass destruction	5	81.9	16.4	KQ	noun:event
 earthquake	mass destruction	10	91.7	9.2	KQ	noun:disaster
-seer	rules, fate and information	4	5.3	1.3	-	noun:person
+seer	rules, fate and information	4	5.3	1.3	-	noun:worker
 eye	rules, fate and information	3	6.9	2.3	-	noun:bodypart
 time	rules, fate and information	4	7.5	1.9	-	noun:event
 omen	rules, fate and information	4	7.8	1.9	-	noun:event
 map	rules, fate and information	3	8.6	2.9	-	noun:document
 radar	rules, fate and information	5	8.9	1.8	-	noun:device
-peace	rules, fate and information	5	9.3	1.9	-	noun:feeling
+peace	rules, fate and information	5	9.3	1.9	-	noun:group
 truce	rules, fate and information	5	9.5	1.9	-	noun:feeling
 curse	rules, fate and information	5	9.6	1.9	-	verb:inert
-oracle	rules, fate and information	6	9.6	1.6	-	noun:person
+oracle	rules, fate and information	6	9.6	1.6	-	noun:worker
 spy	rules, fate and information	3	10.3	3.4	-	noun:worker
 fate	rules, fate and information	4	12.1	3.0	-	noun:event
 miracle	rules, fate and information	7	12.9	1.8	-	noun:event
 magic	rules, fate and information	5	13.2	2.6	-	noun:knowledge
 charm	rules, fate and information	5	13.3	2.7	-	noun:attribute
-veto	rules, fate and information	4	14.6	3.6	V	noun:attribute
-law	rules, fate and information	3	17.2	5.7	W	noun:attribute
+veto	rules, fate and information	4	14.6	3.6	V	noun:act
+law	rules, fate and information	3	17.2	5.7	W	noun:knowledge
 key	rules, fate and information	3	18.6	6.2	K	noun:tool
 luck	rules, fate and information	4	19.8	5.0	K	noun:attribute
 victory	rules, fate and information	7	23.7	3.4	V	noun:event
@@ -227,7 +227,7 @@ reset	verbs that end things	5	6.8	1.4	-	noun:device
 ruin	verbs that end things	4	7.3	1.8	-	noun:building
 rule	verbs that end things	4	7.3	1.8	-	noun:knowledge
 steal	verbs that end things	5	7.4	1.5	-	verb:transfer
-ban	verbs that end things	3	8.2	2.7	-	noun:document
+ban	verbs that end things	3	8.2	2.7	-	noun:act
 rob	verbs that end things	3	8.4	2.8	-	verb:transfer
 stop	verbs that end things	4	8.5	2.1	-	verb:movement
 halt	verbs that end things	4	9.1	2.3	-	verb:movement
@@ -244,7 +244,7 @@ destroy	verbs that end things	7	15.6	2.2	-	verb:combat
 take	verbs that end things	4	16.5	4.1	K	verb:social
 win	verbs that end things	3	16.9	5.6	W	verb:combat
 annihilate	verbs that end things	10	16.9	1.7	-	verb:transform
-own	verbs that end things	3	17.2	5.7	W	adjective:quality
+own	verbs that end things	3	17.2	5.7	W	verb:social
 kill	verbs that end things	4	17.5	4.4	K	verb:contact
 obliterate	verbs that end things	10	17.9	1.8	-	verb:transform
 raze	verbs that end things	4	34.0	8.5	Z	verb:create

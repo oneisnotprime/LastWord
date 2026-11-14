@@ -123,7 +123,7 @@ export function buildingLines(dict: Dictionary, word: string): KitLine[] {
   const claim = claimOf(s);
   if (claim) out.push({ icon: "🚩", text: `claims ${fmt(claim.radius)} tiles, ${Math.round(claim.shelter * 100)}% shelter` });
   if (s.num("field_radius") > 0) {
-    const what = [...def.ops.filter((o) => !yieldOp(o)).map(opText), ...rulesText(placeRules(def, s) ?? emptyRules)];
+    const what = [...def.ops.filter((o) => !yieldOp(o)).map(opText), ...((r) => (r ? rulesText(r) : []))(placeRules(def, s))];
     if (what.length) out.push({ icon: "✨", text: `within ${fmt(s.num("field_radius") / TILE_METERS)} tiles: ${what.slice(0, 3).join(", ")}` });
   }
   if (s.num("heals") > 0) out.push({ icon: "❤", text: `heals your side ${fmt(s.num("heals"))}/s` });
@@ -136,7 +136,6 @@ export function buildingLines(dict: Dictionary, word: string): KitLine[] {
   out.push({ icon: "🧱", text: `integrity ${fmt(s.num("integrity"))}` });
   return out;
 }
-const emptyRules: PlaceRules = { yields: {}, growth: 1, deposits: 1, tax: 0, lode: [], lodeShare: 0, lodeStock: 0, tradeRate: 1, law: [] };
 
 /** The letters a legendary is unsealed with, under the "letters" condition: every other one of its letters. */
 export function sealedLetters(word: string): string {

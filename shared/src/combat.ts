@@ -1,5 +1,6 @@
 import type { Rng } from "./rng.js";
 import type { Stats } from "./stats.js";
+import { susceptibility } from "./material.js";
 
 /** Something in the world that can hit or be hit. */
 export interface Entity {
@@ -38,7 +39,8 @@ export interface Strike {
 }
 
 /**
- * One strike. Order: hit roll, per-type resistance, armor, critical, shield, integrity.
+ * One strike. Order: hit roll, per-type resistance and make-up (`susceptibility`), armor,
+ * critical, shield, integrity.
  *
  * Absolutes: an attack absolute (IRRESISTIBLE) ignores resistance, armor and INDESTRUCTIBLE,
  * except where the defender holds a narrower absolute on that damage type (FIREPROOF against
@@ -68,7 +70,8 @@ export function strike(attacker: Stats, defender: Entity, rng: Rng): Strike {
     let resistance = Math.min(1, target.num(`res_${type}`));
     const wall = target.absolute(`res_${type}`);
     if (pierce && !(wall && wall.specificity > pierce.specificity)) resistance = Math.min(resistance, 0);
-    const dealt = raw * (1 - resistance);
+    // What the target is made of: glass shatters under blows, paper burns, iron carries lightning.
+    const dealt = raw * (1 - resistance) * susceptibility(target, type);
     if (dealt > 0) {
       byType[type] = dealt;
       total += dealt;

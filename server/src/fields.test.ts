@@ -58,7 +58,7 @@ it("spells every field word without error, and nearly all of them do something",
   expect(refusals).toEqual([]);
   // Words whose data gives them no effect, damage or letters: tolerated, listed when they appear.
   expect(idle.length).toBeLessThan(fields.length * 0.1);
-});
+}, 120_000);
 
 it("LOVE helps you and yours, FEAR hurts the others, HEAVEN blesses your side map-wide", async () => {
   const { a, wa, wb } = await twoPlayers();
