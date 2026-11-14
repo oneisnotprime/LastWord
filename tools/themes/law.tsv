@@ -1,0 +1,299 @@
+will	6.45	noun	knowledge	new	a legal document declaring a person's wishes regarding the d
+put	5.66	verb	contact	new	the option to sell a given stock (or stock index or commodit
+case	5.55	noun	event	new	a comprehensive term for any proceeding in a court of law wh
+patent	4.18	noun	document	new	an official document granting a right or privilege
+assignment	4.18	noun	document	new	the instrument by which a claim or right or interest or prop
+lease	4.17	noun	possession	new	a contract granting use or occupation of property during a s
+legislature	4.16	noun	group	new	persons who make or amend or repeal laws
+conviction	4.14	noun	knowledge	new	(criminal law) a final judgment of guilty in a criminal case
+governing	4.12	adjective	quality	new	the act of governing
+parish	4.11	noun	group	new	the local subdivision of a diocese committed to one pastor
+jurisdiction	4.1	noun	attribute	new	in law
+lawsuit	4.09	noun	act	new	a comprehensive term for any proceeding in a court of law wh
+governance	4.09	noun	group	new	the act of governing
+testament	4.07	noun	knowledge	new	a legal document declaring a person's wishes regarding the d
+compact	4.06	noun	container	new	a signed written agreement between two or more parties (nati
+ballot	4.06	noun	document	new	a choice that is made by counting the number of people in fa
+passport	4.05	noun	document	new	a document issued by a country to a citizen allowing that pe
+mandate	3.97	noun	document	new	a document giving an official instruction or command
+licence	3.97	noun	document	new	a legal document giving official permission to do something
+detention	3.96	noun	act	new	a punishment in which a student must stay at school after ot
+imprisonment	3.89	noun	act	new	putting someone in prison or in jail as lawful punishment
+tribunal	3.88	noun	group	new	an assembly (including one or more judges) to conduct judici
+attachment	3.88	noun	feeling	new	a writ authorizing the seizure of property that may be neede
+sovereignty	3.86	noun	attribute	new	the authority of a state to govern another state
+pickup	3.86	noun	vehicle_land	new	a warrant to take someone into custody
+judgement	3.86	noun	document	new	the legal document stating the reasons for a judicial decisi
+taxation	3.81	noun	possession	new	charge against a citizen's person or property or activity fo
+turf	3.76	noun	natural_object	new	range of jurisdiction or influence
+authorization	3.74	noun	document	new	a document giving an official instruction or command
+proxy	3.73	noun	person	new	a power of attorney document given by shareholders of a corp
+covenant	3.73	noun	document	new	a signed written agreement between two or more parties (nati
+verification	3.7	noun	knowledge	new	(law) an affidavit attached to a statement confirming the tr
+indictment	3.7	noun	document	new	a formal document written for a prosecuting attorney chargin
+manifest	3.68	verb	transform	new	a customs document listing the contents put on a ship or pla
+derivative	3.65	noun	knowledge	new	a financial instrument whose value is based on another secur
+fiat	3.63	noun	document	new	a legally binding command or decision entered on the court r
+impeachment	3.59	noun	document	new	a formal document charging a public official with misconduct
+concession	3.57	noun	document	new	a contract granting the right to operate a subsidiary busine
+kite	3.55	noun	document	new	a bank check that has been fraudulently altered to increase 
+convertible	3.55	noun	vehicle_land	new	a corporate security (usually bonds or preferred stock) that
+bureaucracy	3.55	noun	group	new	a government that is administered primarily by bureaus that 
+vat	3.54	noun	container	new	a tax levied on the difference between a commodity's price b
+executing	3.54	noun	act	new	putting a condemned person to death
+runoff	3.53	noun	event	new	a final election to resolve an earlier election that did not
+licking	3.51	noun	event	new	the act of inflicting corporal punishment with repeated blow
+paycheck	3.5	noun	document	new	a check issued in payment of wages or salary
+diocese	3.5	noun	place	new	the territorial jurisdiction of a bishop
+pragmatic	3.49	noun	document	new	an imperial decree that becomes part of the fundamental law 
+cheque	3.49	noun	document	new	a written order directing a bank to pay money
+injunction	3.48	noun	document	new	(law) a judicial remedy issued in order to prohibit a party 
+summons	3.47	noun	document	new	a writ issued by authority of law
+affidavit	3.38	noun	document	new	written declaration made under oath
+withholding	3.36	noun	possession	new	income tax withheld from employees' wages and paid directly 
+whipping	3.36	noun	artifact	new	beating with a whip or strap or rope as a form of punishment
+subpoena	3.34	noun	document	new	a writ issued by court authority to compel the attendance of
+reelection	3.32	noun	act	new	election again
+tanning	3.31	noun	act	new	beating with a whip or strap or rope as a form of punishment
+writ	3.3	noun	document	new	(law) a legal document issued by a court or judicial officer
+lordship	3.29	noun	attribute	new	the authority of a lord
+spanking	3.28	noun	act	new	the act of slapping on the buttocks
+potency	3.27	noun	attribute	new	the power or right to give orders or make decisions
+excise	3.26	noun	possession	new	a tax that is measured by the amount of business done (not o
+moot	3.23	noun	act	new	a hypothetical case that law students argue as an exercise
+enactment	3.22	noun	document	new	the passing of a law by a legislative body
+caliphate	3.21	noun	place	new	the territorial jurisdiction of a caliph
+devise	3.19	verb	create	new	a will disposing of real property
+penance	3.13	noun	feeling	new	voluntary self-punishment in order to atone for some wrongdo
+crucifixion	3.09	noun	act	new	the act of executing by a method widespread in the ancient w
+archdiocese	3.08	noun	place	new	the diocese of an archbishop
+lashing	3.04	noun	device	new	beating with a whip or strap or rope as a form of punishment
+escrow	3.04	noun	document	new	a written agreement (or property or money) delivered to a th
+giro	3.03	noun	document	new	a check given by the British government to someone who is un
+authorisation	3.03	noun	document	new	a document giving an official instruction or command
+papacy	3.02	noun	group	new	the government of the Roman Catholic Church
+beheading	2.95	noun	act	new	execution by cutting off the victim's head
+tonnage	2.94	noun	possession	new	a tax imposed on ships that enter the US
+chancery	2.91	noun	group	new	a court with jurisdiction in equity
+flogging	2.85	noun	act	new	beating with a whip or strap or rope as a form of punishment
+overdraft	2.84	noun	document	new	a draft in excess of the credit balance
+arraignment	2.8	noun	document	new	a legal document calling someone to court to answer an indic
+conveyance	2.79	noun	document	new	document effecting a property transfer
+stoning	2.75	noun	act	new	the act of pelting with stones
+decapitation	2.63	noun	act	new	execution by cutting off the victim's head
+balloting	2.62	noun	act	new	a choice that is made by counting the number of people in fa
+scrip	2.6	noun	document	new	a certificate whose value is recognized by the payer and pay
+decriminalization	2.59	noun	act	new	legislation that makes something legal that was formerly ill
+legislating	2.58	noun	act	new	the act of making or enacting laws
+electrocution	2.58	noun	act	new	execution by electricity
+whacking	2.57	noun	act	new	the act of inflicting corporal punishment with repeated blow
+bishopric	2.57	noun	place	new	the territorial jurisdiction of a bishop
+causa	2.55	noun	act	new	a comprehensive term for any proceeding in a court of law wh
+criminalization	2.53	noun	act	new	legislation that makes something illegal
+pontificate	2.51	noun	group	new	the government of the Roman Catholic Church
+certiorari	2.46	noun	document	new	a common law writ issued by a superior court to one of infer
+patriarchate	2.45	noun	place	new	the jurisdiction of a patriarch
+consistory	2.33	noun	group	new	a church tribunal or governing body
+subcontract	2.32	noun	document	new	a contract assigning to another party some obligations of a 
+dungeon	3.57	noun	structure
+courthouse	3.61	noun	building
+capitol	4.0	noun	building
+embassy	4.13	noun	building
+marshal	3.87	noun	person
+prosecutor	3.94	noun	worker
+bailiff	3.0	noun	worker
+warden	3.63	noun	person
+jailer	2.61	noun	person
+constable	3.79	noun	person
+magistrate	3.71	noun	worker
+chancellor	4.13	noun	person
+diplomat	3.69	noun	worker
+consul	3.6	noun	worker
+delegate	3.7	noun	person
+envoy	3.48	noun	worker
+monarch	3.69	noun	leader
+sultan	3.64	noun	leader
+tsar	3.16	noun	leader
+czar	3.0	noun	leader
+regent	3.45	noun	person
+viceroy	3.08	noun	leader
+baron	3.88	noun	leader
+earl	4.18	noun	leader
+aristocrat	2.99	noun	leader
+vassal	2.92	noun	person
+serf	2.41	noun	person
+voter	4.11	noun	person
+bureaucrat	2.84	noun	worker
+notary	3.11	noun	worker
+auditor	3.48	noun	person
+taxman	2.31	noun	worker
+collector	3.91	noun	person
+bail	4.01	noun	possession
+pledge	4.0	verb	transfer
+confederation	3.45	noun	group
+monarchy	3.67	noun	group
+oligarchy	2.85	noun	group
+theocracy	2.59	noun	group
+frontier	3.97	noun	place
+colony	4.12	noun	group
+realm	4.06	noun	place
+dominion	3.66	noun	place
+inheritance	3.8	noun	possession
+referendum	3.98	noun	act
+martial	4.06	adjective	quality
+censorship	3.85	noun	act
+surveillance	4.17	noun	act
+felony	3.77	noun	crime
+misdemeanor	3.38	noun	crime
+acquittal	3.04	noun	act
+clemency	2.97	noun	weather
+parole	3.78	noun	act
+probation	3.79	noun	act
+banishment	2.76	noun	act
+deportation	3.57	noun	act
+confinement	3.46	noun	act
+torture	4.15	noun	feeling
+injustice	3.81	noun	attribute
+lawful	3.62	adjective	quality
+unlawful	3.72	adjective	quality
+illegitimate	3.43	noun	person
+imperial	4.21	noun	bodypart
+corrupt	4.14	adjective	quality
+sovereign	3.95	noun	leader
+forbidden	3.96	adjective	quality
+taboo	3.47	adjective	quality
+tyrannical	2.97	adjective	quality
+convict	3.56	noun	person
+acquit	2.58	verb	social
+imprison	2.87	verb	social
+banish	3.07	verb	social
+deport	3.18	verb	social
+expel	3.26	verb	social
+evict	2.97	verb	contact
+prosecute	3.54	verb	social
+reign	4.07	verb	social
+elect	4.03	verb	social
+appoint	3.7	verb	social
+enact	3.43	verb	social
+enforce	3.96	verb	social
+forbid	3.66	verb	social
+outlaw	3.51	noun	criminal
+confiscate	2.93	verb	transfer
+seize	3.8	verb	contact
+annex	3.5	noun	artifact
+conquer	3.77	verb	transform
+colonize	2.78	verb	social
+liberate	3.24	verb	social
+enslave	2.83	verb	social
+negotiate	3.99	verb	movement
+ratify	2.94	verb	social
+amend	3.55	verb	transform
+abdicate	2.66	verb	social
+inherit	3.52	verb	transfer
+bequeath	2.47	verb	transfer
+own	5.74	adjective	quality
+certify	3.08	verb	transfer
+civil	4.93	adjective	quality	REGENERATE
+candidate	4.66	noun	leader	REGENERATE
+lawyer	4.67	noun	worker	REGENERATE
+noble	4.24	adjective	quality	REGENERATE
+official	5.14	noun	worker	REGENERATE
+peace	5.02	noun	feeling	REGENERATE
+domain	4.31	noun	place	REGENERATE
+territory	4.6	noun	place	REGENERATE
+legal	5.08	adjective	quality	REGENERATE
+independent	4.93	adjective	quality	REGENERATE
+county	5.19	noun	place	REGENERATE
+senate	4.8	noun	group	REGENERATE
+permit	4.22	noun	document	REGENERATE
+property	5.11	noun	possession	REGENERATE
+senator	4.58	noun	leader	REGENERATE
+poll	4.35	noun	knowledge	REGENERATE
+emperor	4.25	noun	leader	REGENERATE
+execution	4.29	noun	killing	REGENERATE
+agency	4.87	noun	group	REGENERATE
+custody	4.22	noun	act	REGENERATE
+federal	5.13	adjective	quality	REGENERATE
+sign	5.08	verb	contact	REGENERATE
+legitimate	4.22	adjective	quality	REGENERATE
+prison	4.8	noun	building	REGENERATE
+guilty	4.61	adjective	quality	REGENERATE
+license	4.52	noun	document	REGENERATE
+appeal	4.67	noun	attribute	REGENERATE
+subject	4.96	noun	person	REGENERATE
+governor	4.71	noun	leader	REGENERATE
+fine	5.23	adjective	quality	REGENERATE
+free	5.63	adjective	quality	REGENERATE
+vote	5.11	verb	social	REGENERATE
+bill	5.15	noun	document	REGENERATE
+allow	5.01	verb	social	REGENERATE
+revolution	4.56	noun	conflict	REGENERATE
+president	5.45	noun	leader	REGENERATE
+cabinet	4.49	noun	furniture	REGENERATE
+parliament	4.74	noun	group	REGENERATE
+kingdom	4.62	noun	place	REGENERATE
+honest	4.73	adjective	quality	REGENERATE
+constitutional	4.33	noun	travel	REGENERATE
+agreement	4.88	noun	attribute	REGENERATE
+province	4.47	noun	place	REGENERATE
+citizen	4.39	noun	person	REGENERATE
+minister	5.04	noun	leader	REGENERATE
+jail	4.62	noun	building	REGENERATE
+estate	4.82	noun	building	REGENERATE
+trial	4.87	noun	contest	REGENERATE
+code	5.08	verb	contact	REGENERATE
+contract	4.94	noun	document	REGENERATE
+promise	4.71	noun	possession	REGENERATE
+regime	4.3	noun	group	REGENERATE
+ownership	4.4	noun	possession	REGENERATE
+congress	4.9	noun	group	REGENERATE
+democratic	4.73	adjective	quality	REGENERATE
+strike	4.66	verb	contact	REGENERATE
+lord	5.1	noun	leader	REGENERATE
+warrant	4.24	noun	document	REGENERATE
+duke	4.45	noun	leader	REGENERATE
+district	5.04	noun	landform	REGENERATE
+punishment	4.34	noun	act	REGENERATE
+heritage	4.36	noun	knowledge	REGENERATE
+command	4.7	noun	attribute	REGENERATE
+council	5.08	noun	group	REGENERATE
+attorney	4.69	noun	worker	REGENERATE
+palace	4.45	noun	building	REGENERATE
+banned	4.41	adjective	quality	REGENERATE
+criminal	4.75	noun	criminal	REGENERATE
+bureau	4.41	noun	furniture	REGENERATE
+hearing	4.82	noun	attribute	REGENERATE
+royal	4.85	adjective	pertaining	REGENERATE
+rule	4.94	noun	knowledge	REGENERATE
+act	5.3	noun	document	REGENERATE
+ministry	4.63	noun	group	REGENERATE
+election	5.08	noun	act	REGENERATE
+amendment	4.38	noun	act	REGENERATE
+nation	4.88	noun	group	REGENERATE
+sue	4.22	verb	social	REGENERATE
+justice	4.97	noun	worker	REGENERATE
+sacred	4.24	adjective	quality	REGENERATE
+charter	4.23	noun	document	REGENERATE
+empire	4.54	noun	place	REGENERATE
+crime	4.89	noun	crime	REGENERATE
+state	5.78	noun	place	REGENERATE
+border	4.7	noun	structure	REGENERATE
+innocent	4.45	adjective	quality	REGENERATE
+resolution	4.59	noun	document	REGENERATE
+motion	4.59	noun	event	REGENERATE
+campaign	5.0	noun	contest	REGENERATE
+jury	4.49	noun	group	REGENERATE
+ambassador	4.35	noun	worker	REGENERATE
+union	5.08	noun	group	REGENERATE
+offense	4.26	noun	feeling	REGENERATE
+illegal	4.68	adjective	quality	REGENERATE
+register	4.59	noun	device	REGENERATE
+protest	4.45	noun	act	REGENERATE
+order	5.49	noun	attribute	REGENERATE
+republic	4.6	noun	group	REGENERATE
+mayor	4.62	noun	leader	REGENERATE
+fee	4.51	noun	possession	REGENERATE
+inspector	4.25	noun	worker	REGENERATE
+bond	4.59	noun	phenomenon	REGENERATE
+claim	4.95	noun	act	REGENERATE
+judgment	4.28	noun	act	REGENERATE

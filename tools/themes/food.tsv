@@ -1,0 +1,520 @@
+must	5.68	noun	natural_object	new	grape juice before or during fermentation
+snap	4.21	verb	contact	new	tender green beans without strings that easily snap into sec
+dish	4.21	noun	container	new	a particular item of prepared food
+chips	4.21	noun	produce	new	strips of potato fried in deep fat
+bitter	4.21	adjective	quality	new	English term for a dry sharp-tasting ale with strong flavor 
+wrap	4.2	noun	clothing	new	a sandwich in which the filling is rolled up in a soft torti
+flip	4.2	noun	drink	new	hot or cold alcoholic mixed drink containing a beaten egg
+preserve	4.19	verb	transfer	new	fruit preserved by cooking with sugar
+filling	4.19	noun	material	new	a food mixture used to fill pastry or sandwiches etc.
+vintage	4.18	noun	drink	new	a season's yield of wine from a vineyard
+mixture	4.18	noun	material	new	any foodstuff made by combining different ingredients
+liver	4.18	noun	bodypart	new	liver of an animal used as meat
+grain	4.18	noun	natural_object	new	foodstuff prepared from the starchy grains of cereal grasses
+cole	4.18	noun	herb	new	coarse curly-leafed cabbage
+cherry	4.18	noun	plant	new	a red fruit with a single hard stone
+dressing	4.17	noun	food	new	savory dressings for salads
+chuck	4.17	noun	food	new	informal terms for a meal
+spirits	4.16	noun	drink	new	an alcoholic beverage that is distilled rather than fermente
+manhattan	4.16	noun	drink	new	a cocktail made with whiskey and sweet vermouth with a dash 
+collins	4.15	noun	drink	new	tall iced drink of liquor (usually gin) with fruit juice
+plug	4.14	noun	structure	new	a wad of something chewable as tobacco
+murphy	4.13	noun	produce	new	an edible tuber native to South America
+provisions	4.12	noun	food	new	a stock or supply of foods
+ham	4.12	noun	food	new	meat cut from the thigh of a hog (usually smoked)
+generic	4.11	noun	drink	new	wine that does not meet the minimum qualifications and stand
+nutrition	4.1	noun	food	new	a source of materials to nourish the body
+coke	4.08	noun	fuel	new	Coca Cola is a trademarked cola
+concentrate	4.07	noun	mineral	new	a concentrated form of a foodstuff
+burger	4.07	noun	food	new	a sandwich consisting of a fried cake of minced beef served 
+fiber	4.06	noun	material	new	coarse, indigestible plant food low in nutrients
+chile	4.06	noun	produce	new	very hot and finely tapering pepper of special pungency
+rabbit	4.05	noun	mammal	new	flesh of any of various rabbits or hares (wild or domesticat
+cos	4.05	noun	produce	new	lettuce with long dark-green leaves in a loosely packed elon
+pork	4.03	noun	food	new	meat from a domestic hog or pig
+marc	4.03	noun	drink	new	made from residue of grapes or apples after pressing
+salmon	4.01	noun	fish	new	flesh of any of various marine or freshwater fish of the fam
+liquor	4.01	noun	drink	new	an alcoholic beverage that is distilled rather than fermente
+slice	4.0	noun	possession	new	a serving that has been cut from a larger portion
+pledge	4.0	verb	transfer	new	a drink in honor of or to the health of a person or event
+organs	4.0	noun	food	new	edible viscera of a butchered animal
+java	4.0	noun	drink	new	a beverage consisting of an infusion of ground coffee beans
+geneva	4.0	noun	drink	new	gin made in the Netherlands
+berry	3.97	noun	produce	new	any of numerous small and pulpy edible fruits
+curry	3.96	noun	food	new	(East Indian cookery) a pungent dish of vegetables or meats 
+cooler	3.96	noun	artifact	new	an iced drink especially white wine and fruit juice
+eats	3.95	noun	food	new	informal terms for a meal
+vegetable	3.94	noun	produce	new	edible seeds or roots or stems or leaves or bulbs or tubers 
+spice	3.94	noun	material	new	any of a variety of pungent aromatic vegetable substances us
+gum	3.94	noun	food	new	a preparation (usually made of sweetened chicle) for chewing
+hay	3.91	noun	food	new	grass mowed and cured for use as fodder
+danish	3.91	noun	food	new	light sweet yeast-raised roll usually filled with fruits or 
+snack	3.9	noun	food	new	a light informal meal
+rack	3.9	noun	structure	new	rib section of a forequarter of veal or pork or especially l
+dope	3.9	noun	medicine	new	carbonated drink flavored with extract from kola nuts (`dope
+champagne	3.9	noun	drink	new	a white sparkling wine either produced in Champagne or resem
+onion	3.89	noun	plant	new	an aromatic flavorful vegetable
+cod	3.89	noun	plant	new	lean white flesh of important North Atlantic food fish
+cocktail	3.89	noun	drink	new	a short mixed drink
+coconut	3.88	noun	food	new	the edible white meat of a coconut
+bomber	3.88	noun	vehicle_air	new	a large sandwich made of a long crusty roll split lengthwise
+swallow	3.87	noun	bird	new	a small amount of liquid food
+greens	3.86	noun	produce	new	any of various leafy plants or their leaves and stems eaten 
+coral	3.86	noun	attribute	new	unfertilized lobster roe
+vanilla	3.84	noun	flower	new	a flavoring prepared from vanilla beans macerated in alcohol
+goose	3.84	noun	bird	new	flesh of a goose (domestic or wild)
+dessert	3.83	noun	food	new	a dish served as the last course of a meal
+timothy	3.82	noun	herb	new	a grass grown for hay
+fries	3.81	noun	produce	new	strips of potato fried in deep fat
+cuisine	3.81	noun	food	new	the practice or manner of preparing food or the food so prep
+picnic	3.8	noun	food	new	any informal meal eaten outside or on an excursion
+peel	3.8	noun	food	new	the rind of a fruit or vegetable
+shrimp	3.79	noun	person	new	any of various edible decapod crustaceans
+turnover	3.78	noun	food	new	a dish made by folding a piece of pastry over a filling
+trout	3.78	noun	food	new	flesh of any of several primarily freshwater game and food f
+peach	3.77	noun	tree	new	downy juicy fruit with sweet yellowish or whitish flesh
+napoleon	3.77	noun	food	new	a rectangular piece of pastry with thin flaky layers and fil
+jelly	3.77	noun	food	new	an edible jelly (sweet or pungent) made with gelatin and use
+chop	3.77	noun	phenomenon	new	a small cut of meat including part of a rib
+syrup	3.76	noun	food	new	a thick sweet sticky liquid
+supper	3.74	noun	food	new	a light evening meal
+ingredient	3.74	noun	artifact	new	food that is a component of a mixture in cooking
+cola	3.74	noun	drink	new	carbonated drink flavored with extract from kola nuts (`dope
+cereal	3.74	noun	herb	new	foodstuff prepared from the starchy grains of cereal grasses
+thigh	3.73	noun	bodypart	new	the upper joint of the leg of a fowl
+saddle	3.73	noun	device	new	cut of meat (especially mutton or lamb) consisting of part o
+popcorn	3.73	noun	herb	new	small kernels of corn exploded by heat
+chili	3.73	noun	food	new	ground beef and chili peppers or chili powder often with tom
+mayo	3.72	noun	food	new	egg yolks and oil and vinegar
+dietary	3.7	adjective	pertaining	new	a regulated daily food allowance
+crisp	3.7	noun	food	new	a thin crisp slice of potato fried in deep fat
+cinnamon	3.7	noun	plant	new	spice from the dried aromatic bark of the Ceylon cinnamon tr
+taco	3.69	noun	person	new	a tortilla rolled cupped around a filling
+shin	3.69	noun	bodypart	new	a cut of meat from the lower part of the leg
+scotch	3.69	adjective	pertaining	new	whiskey distilled in Scotland
+mustard	3.69	noun	herb	new	pungent powder or paste prepared from ground mustard seeds
+beverage	3.69	noun	drink	new	any liquid suitable for drinking
+sushi	3.68	noun	food	new	rice (with raw fish) wrapped in seaweed
+pike	3.68	noun	route	new	highly valued northern freshwater fish with lean flesh
+gin	3.68	noun	drink	new	strong liquor flavored with juniper berries
+ale	3.68	noun	drink	new	a general name for beer made with a top fermenting yeast
+snail	3.67	noun	invertebrate	new	edible terrestrial snail usually served in the shell with a 
+hare	3.66	noun	mammal	new	flesh of any of various rabbits or hares (wild or domesticat
+chew	3.66	verb	consume	new	a wad of something chewable as tobacco
+spaghetti	3.65	noun	food	new	spaghetti served with a tomato sauce
+seafood	3.65	noun	food	new	edible fish (broadly including freshwater fish) or shellfish
+lobster	3.65	noun	food	new	flesh of a lobster
+booze	3.65	noun	drink	new	an alcoholic beverage that is distilled rather than fermente
+blackberry	3.65	noun	produce	new	large sweet black or very dark purple edible aggregate fruit
+vinegar	3.64	noun	food	new	sour-tasting liquid produced usually by oxidation of the alc
+tuna	3.64	noun	plant	new	important warm-water fatty fish of the genus Thunnus of the 
+flank	3.64	noun	group	new	a cut from the fleshy part of an animal's side between the r
+cocoa	3.64	noun	drink	new	a beverage made from cocoa powder and milk and sugar
+brew	3.64	noun	drink	new	drink made by steeping and boiling and fermenting rather tha
+yogurt	3.63	noun	food	new	a custard-like food made from curdled milk
+whisky	3.63	noun	drink	new	a liquor made from fermented mash of grain
+squash	3.63	noun	plant	new	edible fruit of a squash plant
+soy	3.63	noun	produce	new	thin sauce made of fermented soy beans
+rum	3.63	noun	drink	new	liquor distilled from fermented molasses
+hash	3.63	noun	food	new	chopped meat mixed with potatoes and browned
+edible	3.63	noun	food	new	any substance that can be used as food
+wedge	3.62	noun	food	new	a large sandwich made of a long crusty roll split lengthwise
+paddy	3.62	noun	place	new	rice in the husk either gathered or still in the field
+gluten	3.62	noun	food	new	a protein substance that remains when starch is removed from
+barbecue	3.62	noun	food	new	meat that has been barbecued or grilled in a highly seasoned
+pudding	3.61	noun	food	new	any of various soft thick unsweetened baked dishes
+bourbon	3.6	noun	drink	new	whiskey distilled from a mash of corn and malt and rye and a
+rib	3.59	noun	device	new	cut of meat including one or more ribs
+coloring	3.59	noun	food	new	a digestible substance used to give color to food
+banquet	3.59	noun	group	new	a meal that is well prepared and greatly enjoyed
+pineapple	3.58	noun	herb	new	large sweet fleshy tropical fruit with a terminal tuft of st
+patty	3.58	noun	food	new	small flat mass of chopped food
+citrus	3.58	noun	produce	new	any of numerous fruits of the genus Citrus having thick rind
+baba	3.58	noun	food	new	a small cake leavened with yeast
+rosemary	3.57	noun	herb	new	extremely pungent leaves used fresh or dried as seasoning fo
+walnut	3.56	noun	produce	new	nut of any of various walnut trees having a wrinkled two-lob
+topping	3.56	noun	food	new	a flavorful addition on top of a dish
+sup	3.56	noun	food	new	a small amount of liquid food
+rue	3.56	noun	herb	new	leaves sometimes used for flavoring fruit or claret cup but 
+mango	3.56	noun	tree	new	large oval tropical fruit having smooth skin, juicy aromatic
+lettuce	3.56	noun	currency	new	leaves of any of various plants of Lactuca sativa
+bun	3.56	noun	food	new	small rounded bread either plain or sweet
+tuck	3.55	verb	contact	new	eatables (especially sweets)
+puff	3.55	verb	consume	new	a light inflated pastry or puff shell
+plum	3.55	noun	tree	new	any of numerous varieties of small to medium-sized round or 
+mash	3.55	noun	material	new	mixture of ground animal feeds
+poultry	3.54	noun	bird	new	flesh of chickens or turkeys or ducks or geese raised for fo
+pea	3.54	noun	produce	new	seed of a pea plant used for food
+oyster	3.54	noun	invertebrate	new	edible body of any of numerous oysters
+buffet	3.54	noun	furniture	new	a meal set out on a buffet at which guests help themselves
+salsa	3.53	noun	food	new	spicy sauce of tomatoes and onions and chili peppers to acco
+pastry	3.53	noun	food	new	a dough of flour and water and shortening
+marrow	3.53	noun	bodypart	new	very tender and very nutritious tissue from marrowbones
+almond	3.53	noun	tree	new	oval-shaped edible seed of the almond tree
+rye	3.52	noun	produce	new	whiskey distilled from rye or rye and malt
+mast	3.52	noun	tool	new	nuts of forest trees used as feed for swine
+brandy	3.51	noun	drink	new	distilled from wine or fermented fruit juice
+raspberry	3.5	noun	plant	new	red or black edible aggregate berries usually smaller than t
+mixer	3.5	noun	group	new	club soda or fruit juice used to mix with alcohol
+cider	3.5	noun	drink	new	a beverage made from juice pressed from apples
+chilly	3.5	noun	produce	new	very hot and finely tapering pepper of special pungency
+broccoli	3.5	noun	herb	new	branched green undeveloped flower heads
+loaf	3.49	noun	food	new	a shaped mass of baked bread that is usually sliced before e
+icing	3.49	noun	food	new	a flavored sugar topping used to coat and decorate cakes
+cling	3.49	verb	contact	new	fruit (especially peach) whose flesh adheres strongly to the
+cisco	3.49	noun	food	new	cold-water fish caught in Lake Superior and northward
+barley	3.49	noun	food	new	a grain of barley
+tequila	3.48	noun	drink	new	Mexican liquor made from fermented juices of an agave plant
+spinach	3.48	noun	produce	new	dark green leaves
+herring	3.48	noun	food	new	valuable flesh of fatty fish from shallow waters of northern
+gravy	3.48	noun	food	new	a sauce made by adding stock, flour, or other ingredients to
+caramel	3.48	noun	food	new	firm chewy candy made from caramelized sugar and butter and 
+stuffing	3.47	noun	food	new	a mixture of seasoned ingredients used to stuff meats and ve
+pear	3.47	noun	produce	new	sweet juicy gritty-textured fruit available in many varietie
+octopus	3.46	noun	food	new	tentacles of octopus prepared as food
+ketchup	3.46	noun	food	new	thick spicy sauce made from tomatoes
+chestnut	3.46	noun	plant	new	edible nut of any of various chestnut trees of the genus Cas
+burgundy	3.46	noun	attribute	new	red table wine from the Burgundy region of France (or any si
+brunch	3.46	noun	food	new	combination breakfast and lunch
+stout	3.45	adjective	quality	new	a strong very dark heavy-bodied ale made from pale malt and 
+hamburger	3.45	noun	food	new	a sandwich consisting of a fried cake of minced beef served 
+divinity	3.45	noun	supernatural	new	white creamy fudge made with egg whites
+cracker	3.45	noun	food	new	a thin crisp wafer made of flour and water with or without l
+brat	3.45	noun	person	new	a small pork sausage
+biscuit	3.45	noun	food	new	small round bread leavened with baking-powder or soda
+avocado	3.45	noun	produce	new	a pear-shaped tropical fruit with green or blackish skin and
+torpedo	3.44	noun	criminal	new	a large sandwich made of a long crusty roll split lengthwise
+squid	3.44	noun	food	new	(Italian cuisine) squid prepared as food
+roe	3.44	noun	food	new	fish eggs or egg-filled ovary
+lemonade	3.44	noun	drink	new	sweetened beverage of diluted lemon juice
+mead	3.43	noun	drink	new	made of fermented honey and water
+chow	3.43	noun	food	new	informal terms for a meal
+phosphate	3.42	noun	material	new	carbonated drink with fruit syrup and a little phosphoric ac
+noodle	3.42	noun	food	new	a ribbonlike strip of pasta
+eater	3.42	noun	person	new	any green goods that are good to eat
+blanc	3.42	noun	food	new	a white sauce of fat, broth, and vegetables (used especially
+malt	3.41	noun	food	new	a milkshake made with malt powder
+cucumber	3.41	noun	plant	new	cylindrical green fruit with thin green rind and white flesh
+sherry	3.4	noun	drink	new	dry to sweet amber wine from the Jerez region of southern Sp
+tonic	3.39	noun	drink	new	lime- or lemon-flavored carbonated water containing quinine
+pickle	3.39	noun	food	new	vegetables (especially cucumbers) preserved in brine or vine
+espresso	3.39	noun	drink	new	strong black coffee brewed by forcing hot water under pressu
+bartlett	3.39	noun	produce	new	juicy yellow pear
+leftovers	3.38	noun	food	new	food remaining from a previous meal
+kale	3.38	noun	currency	new	coarse curly-leafed cabbage
+tart	3.37	noun	person	new	a small open pie with a fruit filling
+oatmeal	3.37	noun	food	new	porridge made of rolled oats
+conserve	3.37	noun	food	new	fruit preserved by cooking with sugar
+steamer	3.36	noun	food	new	a clam that is usually steamed in the shell
+preserves	3.36	noun	food	new	fruit preserved by cooking with sugar
+pasture	3.36	noun	place	new	bulky food like grass or hay for browsing or grazing horses 
+herbal	3.36	noun	drink	new	tea-like drink made of leaves of various herbs
+fodder	3.36	noun	worker	new	coarse food (especially for livestock) composed of entire pl
+duff	3.36	noun	food	new	a stiff flour pudding steamed or boiled usually and containi
+watermelon	3.35	noun	plant	new	large oblong or roundish melon with a hard green rind and sw
+pancake	3.35	noun	food	new	a flat cake of thin batter fried on both sides on a griddle
+muffin	3.35	noun	food	new	a sweet quick bread baked in a cup-shaped pan
+iceberg	3.35	noun	landform	new	lettuce with crisp tightly packed light-green leaves in a fi
+cupcake	3.35	noun	food	new	small cake baked in a muffin tin
+catfish	3.35	noun	food	new	flesh of scaleless food fish of the southern United States
+sling	3.34	noun	drink	new	a highball with liquor and water with sugar and lemon or lim
+prima	3.34	adjective	quality	new	used primarily as eating apples
+mace	3.33	noun	worker	new	spice made from the dried fleshy covering of the nutmeg seed
+kiwi	3.33	noun	plant	new	fuzzy brown egg-shaped fruit with slightly tart green flesh
+fudge	3.33	noun	food	new	soft creamy candy
+farce	3.33	noun	food	new	mixture of ground raw chicken and mushrooms with pistachios 
+takeaway	3.32	noun	food	new	prepared food that is intended to be eaten off of the premis
+relish	3.32	noun	feeling	new	spicy or savory condiment
+quid	3.32	noun	quantity	new	a wad of something chewable as tobacco
+melon	3.32	noun	produce	new	any of numerous fruits of the gourd family having a hard rin
+grinder	3.32	noun	food	new	a large sandwich made of a long crusty roll split lengthwise
+celery	3.32	noun	herb	new	stalks eaten raw or cooked or used as seasoning
+luncheon	3.31	noun	food	new	a midday meal
+donut	3.31	noun	food	new	a small ring-shaped friedcake
+waffle	3.3	noun	food	new	pancake batter baked in a waffle iron
+veg	3.3	noun	produce	new	edible seeds or roots or stems or leaves or bulbs or tubers 
+margarita	3.3	noun	drink	new	a cocktail made of tequila and triple sec with lime and lemo
+latte	3.3	noun	drink	new	strong espresso coffee with a topping of frothed steamed mil
+bran	3.3	noun	material	new	food prepared from the husks of cereal grains
+blueberry	3.3	noun	shrub	new	sweet edible dark-blue berries of either low-growing or high
+tofu	3.29	noun	food	new	cheeselike food made of curdled soybean milk
+chilli	3.29	noun	produce	new	very hot and finely tapering pepper of special pungency
+cheddar	3.29	noun	food	new	hard smooth-textured cheese
+seasoning	3.28	noun	food	new	something added to food primarily for the savor it imparts
+pap	3.28	noun	food	new	a diet that does not require chewing
+glaze	3.28	verb	contact	new	any of various thin shiny (savory or sweet) coatings applied
+brittle	3.28	noun	food	new	caramelized sugar cooled in thin sheets
+parsley	3.27	noun	herb	new	aromatic herb with flat or crinkly leaves that are cut finel
+martini	3.27	noun	drink	new	a cocktail made of gin (or vodka) with dry vermouth
+veggie	3.26	noun	produce	new	edible seeds or roots or stems or leaves or bulbs or tubers 
+kosher	3.26	noun	food	new	food that fulfills the requirements of Jewish dietary law
+dodger	3.26	noun	person	new	small oval cake of corn bread baked or fried (chiefly southe
+burrito	3.26	noun	food	new	a flour tortilla folded around a filling
+smoothie	3.25	noun	person	new	a thick smooth drink consisting of fresh fruit pureed with i
+nectar	3.25	noun	material	new	fruit juice especially when undiluted
+bologna	3.25	noun	food	new	large smooth-textured smoked sausage of beef and veal and po
+asparagus	3.25	noun	herb	new	edible young shoots of the asparagus plant
+mayonnaise	3.24	noun	food	new	egg yolks and oil and vinegar
+pollock	3.23	noun	food	new	lean white flesh of North Atlantic fish
+eel	3.23	noun	food	new	the fatty flesh of eel
+colouring	3.22	noun	food	new	a digestible substance used to give color to food
+clam	3.22	noun	invertebrate	new	flesh of either hard-shell or soft-shell clams
+cheesecake	3.22	noun	food	new	made with sweetened cream cheese and eggs and cream baked in
+saffron	3.21	noun	plant	new	dried pungent stigmas of the Old World saffron crocus
+brownie	3.21	noun	supernatural	new	square or bar of very rich chocolate cake usually with nuts
+partridge	3.2	noun	food	new	flesh of either quail or grouse
+cauliflower	3.2	noun	herb	new	compact head of white undeveloped flowers
+bubbly	3.2	noun	drink	new	a white sparkling wine either produced in Champagne or resem
+snowball	3.18	noun	plant	new	ball of ice cream covered with coconut and usually chocolate
+delicacy	3.18	noun	attribute	new	something considered choice to eat
+carp	3.18	noun	food	new	the lean flesh of a fish that is often farmed
+bagel	3.18	noun	food	new	(Yiddish) glazed yeast-raised doughnut-shaped roll with hard
+wiener	3.17	noun	food	new	a smooth-textured sausage of minced beef or pork usually smo
+grapefruit	3.17	noun	tree	new	large yellow fruit with somewhat acid juicy pulp
+doughnut	3.17	noun	food	new	a small ring-shaped friedcake
+custard	3.17	noun	food	new	sweetened mixture of milk and eggs baked or boiled or frozen
+cranberry	3.17	noun	shrub	new	very tart red berry used for sauce or juice
+lager	3.16	noun	structure	new	a general term for beer made with bottom fermenting yeast (u
+elixir	3.16	noun	liquid	new	a substance believed to cure all ills
+shortening	3.15	noun	food	new	fat such as butter or lard used in baked goods
+shellfish	3.15	noun	food	new	meat of edible aquatic invertebrate with a shell (especially
+mulberry	3.15	noun	tree	new	sweet usually dark purple blackberry-like fruit of any of se
+marshmallow	3.15	noun	food	new	spongy confection made of gelatin and sugar and corn syrup a
+lollipop	3.15	noun	food	new	ice cream or water ice on a small wooden stick
+halal	3.15	noun	food	new	(Islam) meat from animals that have been slaughtered in the 
+caviar	3.15	noun	food	new	salted roe of sturgeon or other large fish
+grouse	3.14	noun	food	new	flesh of any of various grouse of the family Tetraonidae
+wafer	3.13	noun	material	new	a small thin crisp cake or cookie
+screwdriver	3.13	noun	tool	new	a cocktail made with vodka and orange juice
+quail	3.13	noun	food	new	flesh of quail
+macon	3.13	noun	drink	new	fine Burgundy wine usually white and dry
+chipotle	3.13	noun	produce	new	a ripe jalapeno that has been dried for use in cooking
+chaser	3.13	noun	person	new	a drink to follow immediately after another drink
+lasagna	3.12	noun	food	new	baked dish of layers of lasagna pasta with sauce and cheese 
+grub	3.12	noun	food	new	informal terms for a meal
+forage	3.12	noun	food	new	bulky food like grass or hay for browsing or grazing horses 
+cheeseburger	3.12	noun	food	new	a hamburger with melted cheese on it
+sprout	3.11	noun	plant	new	a newly grown bud (especially from a germinating seed)
+porridge	3.11	noun	food	new	soft food made by boiling oatmeal or other meal or legumes i
+macaroni	3.11	noun	person	new	pasta in the form of slender tubes
+dill	3.11	noun	herb	new	aromatic threadlike foliage of the dill plant used as season
+dahl	3.11	noun	shrub	new	small highly nutritious seed of the tropical pigeon-pea plan
+undercut	3.1	noun	material	new	the tender meat of the loin muscle on each side of the verte
+mozzarella	3.1	noun	food	new	mild white Italian cheese
+medallion	3.1	noun	currency	new	a circular helping of food (especially a boneless cut of mea
+cordial	3.1	noun	drink	new	strong highly flavored sweet liquor usually drunk after a me
+soybean	3.09	noun	produce	new	the most highly proteinaceous vegetable known
+savoy	3.09	noun	produce	new	head of soft crinkly leaves
+peppermint	3.09	noun	herb	new	a candy flavored with peppermint oil
+angelica	3.09	noun	herb	new	candied stalks of the angelica plant
+whiting	3.08	noun	food	new	flesh of a cod-like fish of the Atlantic waters of Europe
+veal	3.08	noun	food	new	meat from a calf
+mulligan	3.08	noun	food	new	Irish version of burgoo
+marge	3.08	noun	food	new	a spread made chiefly from vegetable oils and used as a subs
+mackerel	3.08	noun	food	new	flesh of very important usually small (to 18 in) fatty Atlan
+draught	3.08	noun	food	new	a serving of drink (usually alcoholic) drawn from a keg
+thyme	3.07	noun	herb	new	leaves can be used as seasoning for almost any meat and stew
+shank	3.07	noun	food	new	a cut of meat (beef or veal or mutton or lamb) from the uppe
+dainty	3.07	noun	food	new	something considered choice to eat
+casserole	3.07	noun	food	new	food cooked and served in a casserole
+brine	3.07	noun	liquid	new	a strong solution of salt and water used for pickling
+bootleg	3.07	noun	drink	new	whiskey illegally distilled from a corn mash
+wad	3.06	noun	material	new	a wad of something chewable as tobacco
+tortilla	3.06	noun	food	new	thin unleavened pancake made from cornmeal or wheat flour
+whey	3.05	noun	material	new	watery part of milk produced when raw milk sours and coagula
+twister	3.05	noun	weather	new	small friedcake formed into twisted strips and fried
+swede	3.05	noun	herb	new	the large yellow root of a rutabaga plant used as food
+rump	3.05	noun	bodypart	new	fleshy hindquarters
+quark	3.05	noun	natural_object	new	fresh unripened cheese of a smooth texture made from pasteur
+frosting	3.05	noun	food	new	a flavored sugar topping used to coat and decorate cakes
+beet	3.05	noun	produce	new	round red root vegetable
+yolk	3.04	noun	food	new	the yellow spherical part of an egg that is surrounded by th
+yam	3.04	noun	plant	new	sweet potato with deep orange flesh that remains moist when 
+nutmeg	3.04	noun	tree	new	hard aromatic seed of the nutmeg tree used as spice when gra
+goody	3.04	noun	food	new	something considered choice to eat
+garnish	3.04	noun	food	new	something (such as parsley) added to a dish for flavor or de
+cob	3.04	noun	produce	new	nut of any of several trees of the genus Corylus
+pheasant	3.03	noun	bird	new	flesh of a pheasant
+nourishment	3.03	noun	food	new	a source of materials to nourish the body
+milkshake	3.03	noun	food	new	frothy drink of milk and flavoring and sometimes fruit or ic
+kebab	3.03	noun	food	new	cubes of meat marinated and cooked on a skewer usually with 
+grasshopper	3.03	noun	insect	new	a cocktail made of creme de menthe and cream (sometimes with
+gingerbread	3.03	noun	food	new	cake flavored with ginger
+nacho	3.02	noun	food	new	a tortilla chip topped with cheese and chili-pepper and broi
+mince	3.02	noun	food	new	food chopped into small bits
+banger	3.02	noun	food	new	(British informal) pork sausage
+yoghurt	3.01	noun	food	new	a custard-like food made from curdled milk
+roux	3.01	noun	food	new	a mixture of fat and flour heated and used as a basis for sa
+raisin	3.01	noun	produce	new	dried grape
+pepperoni	3.01	noun	food	new	a pork and beef sausage (or a thin slice of this sausage)
+mutton	3.01	noun	food	new	meat from a mature domestic sheep
+mouthful	3.01	noun	quantity	new	a small amount eaten or drunk
+eggplant	3.01	noun	produce	new	egg-shaped vegetable having a shiny skin typically dark purp
+cumin	3.01	noun	herb	new	aromatic seeds of the cumin herb of the carrot family
+snapper	3.0	noun	person	new	flesh of any of various important food fishes of warm seas
+savory	3.0	noun	herb	new	either of two aromatic herbs of the mint family
+pita	3.0	noun	food	new	usually small round bread that can open into a pocket for fi
+molasses	3.0	noun	food	new	thick dark syrup produced by boiling down juice from sugar c
+hummus	3.0	noun	food	new	a thick spread made from mashed chickpeas, tahini, lemon jui
+gelatin	3.0	noun	material	new	an edible jelly (sweet or pungent) made with gelatin and use
+fowl	3.0	noun	bird	new	the flesh of a bird or fowl (wild or domestic) used as food
+dumplings	3.0	noun	food	new	small balls or strips of boiled or steamed dough
+sustenance	2.99	noun	food	new	a source of materials to nourish the body
+smelt	2.99	noun	food	new	small cold-water silvery fish
+fryer	2.99	noun	food	new	flesh of a medium-sized young chicken suitable for frying
+pretzel	2.98	noun	food	new	glazed and salted cracker typically in the shape of a loose 
+lard	2.98	noun	food	new	soft white semisolid fat obtained by rendering the fatty tis
+granola	2.98	noun	food	new	cereal made of especially rolled oats with dried fruits and 
+fizz	2.98	noun	drink	new	an effervescent beverage (usually alcoholic)
+ade	2.98	noun	drink	new	a sweetened beverage of diluted fruit juice
+rhubarb	2.97	noun	produce	new	long pinkish sour leafstalks usually eaten cooked and sweete
+mullet	2.97	noun	food	new	highly valued lean flesh of marine or freshwater mullet
+fillet	2.97	noun	food	new	a boneless steak cut from the tenderloin of beef
+prune	2.96	noun	produce	new	dried plum
+oreo	2.96	noun	food	new	chocolate cookie with white cream filling
+mousse	2.96	noun	food	new	a rich, frothy, creamy dessert made with whipped egg whites 
+confectionery	2.96	noun	food	new	candy and other sweets considered collectively
+sprinkles	2.95	noun	food	new	bits of sweet chocolate used as a topping on e.g. ice cream
+buttermilk	2.95	noun	drink	new	residue from making butter from sour raw milk
+takeout	2.94	noun	food	new	prepared food that is intended to be eaten off of the premis
+refreshment	2.94	noun	food	new	snacks and drinks served as a light meal
+trifle	2.93	noun	food	new	a cold pudding made of layers of sponge cake spread with fru
+grits	2.93	noun	food	new	coarsely ground hulled corn boiled as a breakfast dish in th
+stinger	2.92	noun	drink	new	a cocktail made of made of creme de menthe and brandy
+curd	2.92	noun	food	new	a coagulated liquid resembling milk curd
+bleu	2.92	noun	food	new	cheese containing a blue mold
+guacamole	2.91	noun	food	new	a dip made of mashed avocado mixed with chopped onions and o
+sweetener	2.9	noun	food	new	something added to foods to make them taste sweeter
+venison	2.89	noun	food	new	meat from a deer used as food
+toffee	2.89	noun	food	new	caramelized sugar cooled in thin sheets
+marmalade	2.89	noun	food	new	a preserve made of the pulp and rind of citrus fruits
+salami	2.88	noun	food	new	highly seasoned fatty sausage of pork and beef usually dried
+pesto	2.88	noun	food	new	a sauce typically served with pasta
+pate	2.88	noun	food	new	liver or meat or fowl finely minced or ground and variously 
+pasty	2.88	noun	food	new	small meat pie or turnover
+gyro	2.88	noun	food	new	a Greek sandwich: sliced roast lamb with onion and tomato st
+sop	2.87	noun	food	new	piece of solid food for dipping in a liquid
+risotto	2.87	noun	food	new	rice cooked with broth and sprinkled with grated cheese
+puree	2.87	noun	food	new	food prepared by cooking and straining or processed in a ble
+prawn	2.87	noun	food	new	any of various edible decapod crustaceans
+meatball	2.87	noun	food	new	ground meat formed into a ball and fried or simmered in brot
+cappuccino	2.87	noun	drink	new	equal parts of espresso and hot milk topped with cinnamon an
+brisket	2.87	noun	food	new	a cut of meat from the breast or lower chest especially of b
+ravioli	2.86	noun	food	new	small circular or square cases of dough with savory fillings
+appetizer	2.86	noun	food	new	food or drink to stimulate the appetite (usually served befo
+omelette	2.85	noun	food	new	beaten eggs or an egg mixture cooked until just set
+crayfish	2.85	noun	food	new	warm-water lobsters without claws
+shad	2.84	noun	food	new	bony flesh of herring-like fish usually caught during their 
+meatloaf	2.84	noun	food	new	a baked loaf of ground meat
+hock	2.84	noun	drink	new	any of several white wines from the Rhine River valley in Ge
+potable	2.83	noun	drink	new	any liquid suitable for drinking
+poi	2.83	noun	food	new	Hawaiian dish of taro root pounded to a paste and often allo
+margarine	2.83	noun	food	new	a spread made chiefly from vegetable oils and used as a subs
+haddock	2.83	noun	food	new	lean white flesh of fish similar to but smaller than cod
+popsicle	2.82	noun	food	new	ice cream or water ice on a small wooden stick
+jello	2.82	noun	food	new	fruit-flavored dessert (trade mark Jell-O) made from a comme
+baguette	2.82	noun	food	new	narrow French stick loaf
+savoury	2.81	noun	food	new	either of two aromatic herbs of the mint family
+liqueur	2.81	noun	drink	new	strong highly flavored sweet liquor usually drunk after a me
+concoction	2.81	noun	food	new	any foodstuff made by combining different ingredients
+perishable	2.8	noun	food	new	food that will decay rapidly if not refrigerated
+filet	2.8	noun	food	new	a boneless steak cut from the tenderloin of beef
+bock	2.8	noun	drink	new	a very strong lager traditionally brewed in the fall and age
+meringue	2.79	noun	food	new	sweet topping especially for pies made of beaten egg whites 
+radish	2.78	noun	produce	new	pungent fleshy edible root
+flounder	2.78	verb	movement	new	flesh of any of various American and European flatfish
+croissant	2.78	noun	food	new	very rich flaky crescent-shaped roll
+chowder	2.78	noun	food	new	a thick soup or stew made with milk and bacon and onions and
+bap	2.78	noun	food	new	a small loaf or roll of soft bread
+vino	2.77	noun	drink	new	fermented juice (of grapes especially)
+miso	2.77	noun	food	new	a thick paste made from fermented soybeans and barley or ric
+flavoring	2.77	noun	food	new	something added to food primarily for the savor it imparts
+entree	2.77	noun	food	new	the principal dish of a meal
+chorizo	2.77	noun	food	new	a spicy Spanish pork sausage
+sundae	2.76	noun	food	new	ice cream served with a topping
+rind	2.76	noun	food	new	the natural outer covering of food (usually removed before e
+marinade	2.75	noun	food	new	mixtures of vinegar or wine and oil with various spices and 
+loin	2.75	noun	food	new	a cut of meat taken from the side and back of an animal betw
+scone	2.74	noun	food	new	small biscuit (rich with cream and eggs) cut into diamonds o
+mussel	2.74	noun	food	new	black marine bivalves usually steamed in wine
+chutney	2.74	noun	food	new	a spicy condiment made of chopped fruits or vegetables cooke
+canola	2.74	noun	food	new	vegetable oil made from rapeseed
+cornbread	2.72	noun	food	new	bread made primarily of cornmeal
+winkle	2.71	noun	food	new	small edible marine snail
+tripe	2.71	noun	food	new	lining of the stomach of a ruminant (especially a bovine) us
+taffy	2.71	noun	food	new	chewy candy of sugar or syrup boiled until thick and pulled 
+slop	2.71	noun	food	new	wet feed (especially for pigs) consisting of mostly kitchen 
+halibut	2.71	noun	food	new	lean flesh of very large flatfish of Atlantic or Pacific
+rusk	2.7	noun	food	new	slice of sweet raised bread baked again until it is brown an
+jak	2.7	noun	produce	new	immense East Indian fruit resembling breadfruit
+cuppa	2.7	noun	drink	new	a cup of tea
+condiment	2.7	noun	food	new	a preparation (a sauce or relish or spice) to enhance flavor
+barbeque	2.7	noun	food	new	meat that has been barbecued or grilled in a highly seasoned
+spud	2.69	noun	produce	new	an edible tuber native to South America
+seltzer	2.69	noun	drink	new	naturally effervescent mineral water
+bream	2.69	noun	food	new	flesh of various freshwater fishes of North America or of Eu
+ricotta	2.68	noun	food	new	soft Italian cheese like cottage cheese
+grist	2.68	noun	food	new	grain intended to be or that has been ground
+farina	2.68	noun	food	new	fine meal made from cereal grain especially wheat
+swordfish	2.67	noun	food	new	flesh of swordfish usually served as steaks
+ghee	2.67	noun	food	new	clarified butter used in Indian cookery
+dumpling	2.67	noun	food	new	small balls or strips of boiled or steamed dough
+sauerkraut	2.66	noun	food	new	shredded cabbage fermented in brine
+sardine	2.66	noun	food	new	small fatty fish usually canned
+milt	2.66	noun	food	new	fish sperm or sperm-filled reproductive gland
+lentil	2.66	noun	produce	new	round flat seed of the lentil plant used for food
+homebrew	2.66	noun	drink	new	an alcoholic beverage (especially beer) made at home
+haggis	2.66	noun	food	new	made of sheep's or calf's viscera minced with oatmeal and su
+duckling	2.66	noun	food	new	flesh of a young domestic duck
+bitters	2.66	noun	drink	new	alcoholic liquor flavored with bitter herbs and roots
+grog	2.65	noun	drink	new	rum cut with water
+frankfurter	2.65	noun	food	new	a smooth-textured sausage of minced beef or pork usually smo
+crawfish	2.65	noun	food	new	tiny lobster-like crustaceans usually boiled briefly
+sorbet	2.64	noun	food	new	an ice containing no milk but having a mushy consistency
+romaine	2.64	noun	produce	new	lettuce with long dark-green leaves in a loosely packed elon
+puffer	2.64	noun	food	new	delicacy that is highly dangerous because of a potent nerve 
+gastronomy	2.64	noun	food	new	a particular style of cookery (as of a region)
+falafel	2.64	noun	food	new	small croquette of mashed chick peas or fava beans seasoned 
+coleslaw	2.64	noun	food	new	basically shredded cabbage
+choc	2.64	noun	food	new	colloquial British abbreviation
+rickey	2.63	noun	drink	new	a mixed drink made of sweetened lime juice and soda water us
+paella	2.63	noun	food	new	saffron-flavored dish made of rice with shellfish and chicke
+omelet	2.63	noun	food	new	beaten eggs or an egg mixture cooked until just set
+decaf	2.63	noun	drink	new	coffee with the caffeine removed
+applesauce	2.63	noun	food	new	puree of stewed apples usually sweetened and spiced
+weenie	2.62	noun	food	new	a smooth-textured sausage of minced beef or pork usually smo
+vinaigrette	2.62	noun	food	new	oil and vinegar with mustard and garlic
+tapioca	2.62	noun	food	new	granular preparation of cassava starch used to thicken espec
+sinker	2.61	noun	food	new	a small ring-shaped friedcake
+sashimi	2.61	noun	food	new	very thinly sliced raw fish
+lacing	2.61	noun	drink	new	a small amount of liquor added to a food or beverage
+collation	2.61	noun	food	new	a light informal meal
+vegetarianism	2.6	noun	food	new	a diet excluding all meat and fish
+tater	2.6	noun	produce	new	an edible tuber native to South America
+couscous	2.6	noun	food	new	a spicy dish that originated in northern Africa
+whitefish	2.59	noun	food	new	any market fish--edible saltwater fish or shellfish--except 
+vermouth	2.59	noun	drink	new	any of several white wines flavored with aromatic herbs
+slaw	2.59	noun	food	new	basically shredded cabbage
+fondue	2.59	noun	food	new	cubes of meat or seafood cooked in hot oil and then dipped i
+drinkable	2.59	noun	drink	new	any liquid suitable for drinking
+butterscotch	2.59	noun	food	new	a hard brittle candy made with butter and brown sugar
+naan	2.58	noun	food	new	leavened bread baked in a clay oven in India
+hooch	2.58	noun	drink	new	an illicitly distilled (and usually inferior) alcoholic liqu
+anchovy	2.58	noun	food	new	tiny fishes usually canned or salted
+tidbit	2.57	noun	food	new	a small tasty bit of food
+stover	2.57	noun	food	new	the dried stalks and leaves of a field crop (especially corn
+nougat	2.57	noun	food	new	nuts or fruit pieces in a sugar paste
+fondant	2.57	noun	food	new	candy made of a thick creamy sugar paste
+calamari	2.57	noun	food	new	(Italian cuisine) squid prepared as food
+brioche	2.57	noun	food	new	a light roll rich with eggs and butter and somewhat sweet
+toddy	2.55	noun	drink	new	a mixed drink made of liquor and water with sugar and spices
+tiffin	2.54	noun	food	new	a midday meal
+sidecar	2.54	noun	drink	new	a cocktail made of orange liqueur with lemon juice and brand
+potluck	2.54	noun	food	new	whatever happens to be available especially when offered to 
+grouper	2.54	noun	food	new	flesh of a saltwater fish similar to sea bass
+bouillon	2.54	noun	food	new	a clear seasoned broth
+teriyaki	2.53	noun	food	new	beef or chicken or seafood marinated in spicy soy sauce and 
+prosciutto	2.53	noun	food	new	Italian salt-cured ham usually sliced paper thin
+polenta	2.53	noun	food	new	a thick mush made of cornmeal boiled in stock or water
+mouton	2.53	noun	food	new	meat from a mature domestic sheep
+marmite	2.53	noun	food	new	soup cooked in a large pot
