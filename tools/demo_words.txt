@@ -2215,19 +2215,23 @@ waterproof: res_water=ABS wetness=0 is_absolute=true absolute_side=defence speci
 # a thing at once (CENTURY: more Y, food rots); REWIND undoes the damage of the last seconds.
 # Counters: HASTE and SLOW end each other, ETERNITY is immune to stasis, slowing and doom.
 
+# noun event
+century: placement=target placement_range=40 event_target=object ages=6000 integrity*0.5 counters=eternity
+millennium: placement=target placement_range=40 event_target=object ages=60000 integrity*0.2 counters=eternity
+decade: placement=target placement_range=40 event_target=object ages=600 counters=eternity
+deadline: placement=target placement_range=100 event_target=character inflict_doom=90 event_duration=1 counters=extension,eternity,overtime,reprieve
+countdown: placement=target placement_range=100 event_target=character inflict_doom=60 event_duration=1 counters=eternity,reprieve,pause
+timeout: placement=target placement_range=60 event_target=character inflict_stasis=10 event_duration=1 counters=haste,overtime
+ageing: placement=target placement_range=60 event_target=object ages=1200 integrity*0.7 counters=rejuvenation,eternity
+rejuvenation: placement=target placement_range=40 event_target=object ages=-6000 integrity*1.5 counters=ageing,century,decay
+
 # noun duration
 stasis: placement=target placement_range=80 field_radius=6 field_targets=all field_duration=1 inflict_stasis=12 counters=haste,acceleration,hurry,rush
 eternity: placement=self field_radius=40 field_targets=owned field_duration=6 immune_stasis=true immune_slow=true immune_doom=true effect_status=stasis,slow,doom morale+2 counters=stasis,doom,decay,delay,deceleration,century
 moment: placement=self field_radius=4 field_targets=self field_duration=1 inflict_haste=8 effect_status=slow
 instant: placement=self field_radius=4 field_targets=self field_duration=1 inflict_haste=4 cast_time*0 attack_windup*0
-century: placement=target placement_range=40 event_target=object ages=6000 integrity*0.5 counters=eternity
-millennium: placement=target placement_range=40 event_target=object ages=60000 integrity*0.2 counters=eternity
-decade: placement=target placement_range=40 event_target=object ages=600 counters=eternity
 epoch: placement=map field_radius=ABS field_targets=all field_duration=5 time_scale*1.5 growth=1.5 produce_Y*2 counters=eternity,stasis
-deadline: placement=target placement_range=100 event_target=character inflict_doom=90 event_duration=1 counters=extension,eternity,overtime,reprieve
-countdown: placement=target placement_range=100 event_target=character inflict_doom=60 event_duration=1 counters=eternity,reprieve,pause
 pause: placement=self field_radius=30 field_targets=all field_duration=1 inflict_stasis=6 counters=countdown,haste
-timeout: placement=target placement_range=60 event_target=character inflict_stasis=10 event_duration=1 counters=haste,overtime
 overtime: placement=self field_radius=4 field_targets=self field_duration=3 time_scale*1.3 effect_status=doom,stasis counters=deadline,timeout,countdown
 
 # noun attribute
@@ -2235,7 +2239,6 @@ haste: placement=self field_radius=30 field_targets=owned field_duration=2 infli
 acceleration: placement=self field_radius=40 field_targets=owned field_duration=3 time_scale*2 counters=deceleration,slowness,stasis
 deceleration: placement=target placement_range=150 field_radius=40 field_targets=enemies field_duration=3 time_scale*0.4 counters=acceleration,haste
 slowness: placement=target placement_range=100 field_radius=30 field_targets=enemies field_duration=2 inflict_slow=12 effect_status=haste counters=haste,hurry,rush,acceleration
-ageing: placement=target placement_range=60 event_target=object ages=1200 integrity*0.7 counters=rejuvenation,eternity
 
 # noun act
 delay: placement=target placement_range=120 field_radius=30 field_targets=enemies field_duration=2 time_scale*0.5 inflict_slow=8 effect_status=haste counters=haste,hurry,rush
@@ -2244,7 +2247,6 @@ hurry: placement=self field_radius=4 field_targets=self field_duration=1 inflict
 reprieve: placement=target placement_range=100 event_target=character effect_status=doom,stasis restores=50 event_duration=1 counters=deadline,countdown,doom
 
 # noun phenomenon
-rejuvenation: placement=target placement_range=40 event_target=object ages=-6000 integrity*1.5 counters=ageing,century,decay
 
 # noun device
 hourglass: mass=1 integrity=6 brittleness=9 material=glass,wood extends_duration=1.5 field_radius=12 field_targets=owned time_scale*1.2 beauty=6 color=gold
@@ -2276,6 +2278,16 @@ sluggish: time_scale*0.6 speed_land*0.8
 # cover and a DOME keep impacts off.
 
 # noun phenomenon
+singularity: placement=target placement_range=200 field_radius=50 field_targets=all field_duration=1 pull=8 gravity*5 dmg_crush=40 attack_rate=0.5 friendly_fire=true counters=repulsion,levitation
+pulsar: placement=target placement_range=200 field_radius=40 field_targets=enemies field_duration=2 dmg_radiation=12 attack_rate=1 inflict_confuse=2 counters=dome,shelter,lead
+wormhole: placement=target placement_range=300 field_radius=6 field_targets=all field_duration=2 pull=10 counters=singularity
+space: placement=target placement_range=150 field_radius=40 field_targets=all field_duration=2 gravity*0.05 temperature_delta=-200 res_suffocation+-1 counters=atmosphere,spacesuit
+orbit: placement=self field_radius=6 field_targets=self field_duration=3 gravity*0.1 hover=true speed_land*1.5 map_reveal+60 counters=gravity
+
+# noun event
+bolide: placement=target placement_range=300 event_radius=10 event_duration=3 dmg_blast=600 dmg_fire=200 friendly_fire=true luminosity=10 tile_type=pit radius=1 lode=x,z lode_share=0.5 lode_stock=2
+
+# noun phenomenon
 gravity: placement=target placement_range=150 field_radius=40 field_targets=all field_duration=2 gravity*3 speed_air*0 counters=levitation,weightlessness,flight,float,hover
 gravitation: placement=self field_radius=30 field_targets=enemies field_duration=2 pull=3 gravity*2 counters=levitation,repulsion
 levitation: placement=self field_radius=30 field_targets=owned field_duration=2 gravity*0.2 hover=true counters=gravity,gravitation,singularity
@@ -2284,7 +2296,6 @@ attraction: placement=target placement_range=100 field_radius=25 field_targets=a
 repulsion: placement=self field_radius=20 field_targets=enemies field_duration=1 pull=-6 counters=attraction,gravitation,singularity,vortex
 magnetism: placement=self field_radius=20 field_targets=enemies field_duration=2 pull=2 accuracy+-0.2 counters=repulsion
 radiation: placement=target placement_range=200 field_radius=30 field_targets=all field_duration=3 dmg_radiation=6 attack_rate=0.5 friendly_fire=true inflict_sick=6 counters=shield,lead,shelter
-bolide: placement=target placement_range=300 event_radius=10 event_duration=3 dmg_blast=600 dmg_fire=200 friendly_fire=true luminosity=10 tile_type=pit radius=1 lode=x,z lode_share=0.5 lode_stock=2
 starlight: placement=map field_radius=ABS field_targets=owned field_duration=5 luminosity+3 sight_range*1.3 morale+2 night_vision=true counters=eclipse,blackout
 aurora: placement=map field_radius=ABS field_targets=all field_duration=4 luminosity+4 morale+3 beauty+3 produce_Q*1.5 counters=eclipse
 
@@ -2296,14 +2307,9 @@ barrage: placement=target placement_range=300 field_radius=25 field_targets=all 
 shower: placement=map field_radius=ABS field_targets=all field_duration=3 meteors=6 dmg_blast=200 dmg_fire=80 attack_area=8 friendly_fire=true luminosity+2 lode=x,z,q lode_share=0.05 lode_stock=6 counters=dome,shelter,atmosphere
 
 # noun celestial
-singularity: placement=target placement_range=200 field_radius=50 field_targets=all field_duration=1 pull=8 gravity*5 dmg_crush=40 attack_rate=0.5 friendly_fire=true counters=repulsion,levitation
 supernova: placement=map field_radius=ABS field_targets=all field_duration=2 luminosity+10 inflict_blind=5 dmg_radiation=4 attack_rate=0.1 friendly_fire=true temperature_delta=15 lode=z,q,x lode_share=0.1 lode_stock=8 counters=eclipse,dome,shelter
 nebula: placement=map field_radius=ABS field_targets=all field_duration=4 sight_range*0.5 stealth+3 luminosity+1 counters=telescope,starlight
 galaxy: placement=map field_radius=ABS field_targets=owned field_duration=4 map_reveal+200 detect_life+800 morale+2 counters=nebula
-pulsar: placement=target placement_range=200 field_radius=40 field_targets=enemies field_duration=2 dmg_radiation=12 attack_rate=1 inflict_confuse=2 counters=dome,shelter,lead
-wormhole: mass=0 integrity=ABS portable=false placement=target placement_range=300 field_radius=6 field_targets=all field_duration=2 pull=10 counters=singularity
-space: placement=target placement_range=150 field_radius=40 field_targets=all field_duration=2 gravity*0.05 temperature_delta=-200 res_suffocation+-1 counters=atmosphere,spacesuit
-orbit: placement=self field_radius=6 field_targets=self field_duration=3 gravity*0.1 hover=true speed_land*1.5 map_reveal+60 counters=gravity
 
 # noun natural_object
 meteoroid: placement=map field_radius=ABS field_targets=all field_duration=2 meteors=3 dmg_blast=500 dmg_fire=200 attack_area=10 friendly_fire=true lode=z,x lode_share=0.1 lode_stock=4 counters=dome,shelter,atmosphere
@@ -2518,6 +2524,11 @@ unbeatable: evasion+0.3 luck+5 morale+3
 # end chaos, EXISTENCE and REALITY end void, KARMA, PROVIDENCE and FREEDOM end doom, a REASON ends
 # a paradox, a DICTIONARY corrects a typo.
 
+# noun event
+irony: placement=target placement_range=60 event_target=character reflect=0.8 inflict_confuse=4 event_duration=1 counters=truth
+nothing: placement=target placement_range=60 event_target=character inflict_void=30 event_duration=1 counters=existence,reality,everything
+oblivion: placement=target placement_range=100 event_target=character inflict_void=40 morale+-3 event_duration=1 counters=existence,reality,infinity,memory
+
 # noun phenomenon
 chaos: placement=target placement_range=150 field_radius=30 field_targets=all field_duration=1 inflict_chaos=20 friendly_fire=true counters=order,logic,harmony,law
 entropy: placement=map field_radius=ABS field_targets=all field_duration=3 inflict_chaos=8 decay_rate*3 integrity*0.9 counters=order,harmony
@@ -2528,12 +2539,9 @@ chance: placement=self field_radius=4 field_targets=self field_duration=2 luck+3
 randomness: placement=target placement_range=100 field_radius=20 field_targets=all field_duration=1 inflict_chaos=12 friendly_fire=true counters=order,logic
 jinx: placement=target placement_range=60 field_radius=8 field_targets=enemies field_duration=5 luck+-6 harvest_bonus*0.2 accuracy+-0.3 critical+-0.2 counters=luck,serendipity,blessing,cornucopia,fluke
 order: placement=self field_radius=60 field_targets=all field_duration=3 effect_status=chaos,confuse,rage immune_chaos=true counters=chaos,entropy,randomness,anarchy,havoc,pandemonium
-irony: placement=target placement_range=60 event_target=character reflect=0.8 inflict_confuse=4 event_duration=1 counters=truth
 absurdity: placement=target placement_range=80 field_radius=20 field_targets=enemies field_duration=2 inflict_confuse=8 inflict_chaos=6 counters=logic,reason
 
 # noun quantity
-nothing: placement=target placement_range=60 event_target=character inflict_void=30 event_duration=1 counters=existence,reality,everything
-zero: placement=target placement_range=40 event_target=character inflict_void=10 event_duration=1 counters=infinity,existence
 infinity: placement=self field_radius=4 field_targets=self field_duration=1 immune_void=true immune_doom=true effect_status=void,doom regeneration+10 counters=nothing,zero,void,oblivion
 
 # noun quality
@@ -2541,7 +2549,6 @@ void: placement=target placement_range=100 field_radius=20 field_targets=all fie
 null: placement=target placement_range=60 event_target=character inflict_void=15 event_duration=1 counters=existence
 
 # noun knowledge
-oblivion: placement=target placement_range=100 event_target=character inflict_void=40 morale+-3 event_duration=1 counters=existence,reality,infinity,memory
 existence: placement=self field_radius=40 field_targets=owned field_duration=4 immune_void=true effect_status=void counters=nothing,void,oblivion,zero,null
 reality: placement=self field_radius=60 field_targets=all field_duration=3 effect_status=void,chaos,confuse detect_stealth+5 counters=illusion,dream,nothing,void,chaos,decoy,hoax
 logic: placement=self field_radius=40 field_targets=owned field_duration=3 effect_status=chaos,confuse immune_chaos=true intelligence+2 counters=chaos,absurdity,paradox,randomness

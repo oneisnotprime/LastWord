@@ -223,6 +223,15 @@ export const RULE_TIPS: readonly RuleTip[] = [
   { text: "WANTED shows a foe on every threat arrow; a HOAX fakes foes on theirs.", words: ["wanted", "hoax"], properties: ["inflict_expose", "decoys"] },
   { text: "A SHRINE gathers faith, a MIRACLE spends 40; deaths by an ALTAR are offerings.", words: ["shrine", "miracle", "altar"], properties: ["faith_output", "faith_cost", "sacrifice"] },
   { text: "A BLIZZARD snows over grass and freezes lakes to walk on; a THAW melts it.", words: ["blizzard", "thaw"], properties: ["tile_type"] },
+  { text: "HASTE doubles your side's time; TIMEOUT stops a foe's, but they are unhurt.", words: ["haste", "timeout"], properties: ["inflict_haste", "inflict_stasis"] },
+  { text: "REWIND undoes the last 20 s of harm; CENTURY ages a thing for lots of Y.", words: ["rewind", "century"], properties: ["rewinds", "ages"] },
+  { text: "LEVITATION floats your side over water and walls; GRAVITY brings flyers down.", words: ["levitation", "gravity"], properties: ["gravity"] },
+  { text: "A BOAT launches on near water: E on the shore boards it, R puts you ashore.", words: ["boat"], properties: ["speed_water"] },
+  { text: "Fish by water with a ROD or NET: a catch gives its fish's first letter.", words: ["rod", "net"], properties: ["harvest_sources"] },
+  { text: "A DUEL stakes 10 letters each in a ring where nobody dies; winner takes all.", words: ["duel"], properties: ["stakes"] },
+  { text: "A GAVEL: a truce, untouchable but harmless. PROVOCATION ends it.", words: ["gavel", "provocation"], properties: ["peace"] },
+  { text: "NOTHING voids a foe's gear; FATE dooms them unless KARMA or a REPRIEVE.", words: ["nothing", "fate", "karma", "reprieve"], properties: ["inflict_void", "inflict_doom"] },
+  { text: "LUCKY adds 12% to every roll you make: gathering, hitting, dodging.", words: ["lucky"], properties: ["luck"] },
 ];
 
 /** One tip for the idle spell window: a word idea or a rule, alternating at random. */

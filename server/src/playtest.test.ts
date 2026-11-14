@@ -117,12 +117,12 @@ it("R gets off what you ride: a CAR stays on the ground as yours, an ASS walks w
   ticks(room, 2);
 });
 
-it("a BOAT cannot move on land, so it is not ridden: it stays on the ground and says why", async () => {
+it("a BOAT is not ridden on land: it is launched on water near by, or waits on dry land, and says which", async () => {
   const { clients: [a], ws: [wa], said, things } = await players();
   a.send("spell", "boat"); await wait();
   expect(wa.gear).toEqual([]);
   expect(things().map((t) => t.phrase)).toEqual(["boat"]);
-  expect(said[0]).toContain("BOAT cannot move on land: it stays on the ground");
+  expect(said.join(" ")).toMatch(/launched on the water nearby|no water is near/);
 });
 
 it("a person's route search never waits on the per-tick budget the bots and creatures share", async () => {

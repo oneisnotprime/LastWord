@@ -12,6 +12,11 @@ import { crimeText } from "./crime.js";
 import { signalText } from "./signal.js";
 import { faithText } from "./faith.js";
 import { weatherText } from "./weather.js";
+import { timeText } from "./time.js";
+import { spaceText } from "./space.js";
+import { seaText } from "./sea.js";
+import { sportText } from "./sport.js";
+import { ideaText } from "./idea.js";
 import type { Dictionary } from "./dictionary.js";
 import { GROW_PACE, needsText, producerOf, SEEDLING } from "./produce.js";
 import { parsePhrase, type Phrase } from "./phrase.js";
@@ -61,7 +66,7 @@ export function aimOf(p: Phrase): "someone" | "anywhere" | null {
   const s = p.stats;
   if (p.kind === "verb") {
     const eventful = s.flag("destroys_target") || s.flag("transfers_ownership") || s.num("moves_target") > 0 || s.num("severs") > 0 ||
-      s.num("pays") > 0 || s.flag("read_inventory"); // PAY, SNOOP: on whoever is clicked (shared money.ts, signal.ts)
+      s.num("pays") > 0 || s.flag("read_inventory") || s.flag("misspells"); // PAY, SNOOP, MISPRINT: on whoever is clicked
     return s.get("effect_target") === "touched" && eventful ? "someone" : null;
   }
   if (p.kind === "field") return s.get("placement") === "target" ? "anywhere" : null;
@@ -70,6 +75,9 @@ export function aimOf(p: Phrase): "someone" | "anywhere" | null {
   if (p.kind !== "event") return null;
   if (pactOf(s) || s.num("severs") > 0 || s.num("pays") > 0 || s.flag("read_inventory") || s.flag("transfers_ownership") || s.flag("destroys_target") || s.num("letter_steal") > 0 || s.num("moves_target") > 0 ||
     s.num("restores") > 0 || s.num("produce_T") > 0 || (s.num("inflict_stun") > 0 && s.get("event_target") === "character")) return "someone";
+  // Themes batch 5: a challenge, a swap of owners, a typo, ageing and a rewind land on whoever or whatever is clicked.
+  if (s.num("stakes") > 0 || s.flag("swaps_owners") || s.flag("misspells") || (s.num("ages") !== 0 && s.get("event_target") !== "character") ||
+    (s.num("rewinds") > 0 && s.get("event_target") === "character")) return "someone";
   // Passed on a person (ARREST, EXILE, PARDON): its statuses or cures land on whoever is clicked.
   if (s.get("event_target") === "character" && !(s.num("event_radius") > 0) && (inflictsAny(s) || s.tags("effect_status").length)) return "someone";
   if (s.flag("frees_target")) return null;
@@ -187,7 +195,7 @@ export function behaviours(s: Stats, count = 1): string[] {
   if (s.num("luminosity") > 0) out.push("gives off light");
   if (s.num("fear_aura") > 0) out.push(`frightens enemies (fear ${num(s.num("fear_aura"))})`);
   if (s.num("heals") > 0) out.push(`heals allies ${num(s.num("heals"))} a second`);
-  out.push(...homeText(s), ...craftText(s), ...techText(s), ...herdText(s), ...bodyText(s), ...wearText(s), ...diseaseText(s), ...emotionText(s), ...soundText(s), ...moneyText(s), ...crimeText(s), ...signalText(s), ...faithText(s), ...weatherText(s));
+  out.push(...homeText(s), ...craftText(s), ...techText(s), ...herdText(s), ...bodyText(s), ...wearText(s), ...diseaseText(s), ...emotionText(s), ...soundText(s), ...moneyText(s), ...crimeText(s), ...signalText(s), ...faithText(s), ...weatherText(s), ...batch5(s));
   const need = needs(s, count), make = outputs(s, count);
   for (const k of SUPPLIES) {
     if (need[k] > 0) out.push(`draws ${num(need[k])} ${k} a minute${s.flag("alive") ? "" : ` (comes with ${STARTING_SUPPLY_MINUTES} min)`}`);
@@ -240,7 +248,7 @@ export function cardOf(dict: Dictionary, p: Phrase): Card {
     const e = p.effect ?? { set: {}, ops: [] };
     card.does.push(...e.ops.map(opText), ...Object.entries(e.set).map(([k, v]) => setText(k, v)).filter((x): x is string => !!x));
     if (s.tags("effect_status").length) card.does.push(`cures ${s.tags("effect_status").join(", ")}`);
-    card.does.push(...moneyText(s), ...signalText(s), ...faithText(s)); // themes 16, 18, 19
+    card.does.push(...moneyText(s), ...signalText(s), ...faithText(s), ...batch5(s)); // themes 16, 18, 19, 21-25
     card.does.push(aimed ?? "acts on you");
     return card;
   }
@@ -259,7 +267,7 @@ export function cardOf(dict: Dictionary, p: Phrase): Card {
     const pact = pactOf(s);
     if (pact) card.does.push(`binds you and ${pact.size - 1} other${pact.size === 2 ? "" : "s"} you pick to one side for ${num(pact.minutes)} min; whoever breaks it pays ${breachText(pact.penalty)}`);
     if (s.flag("sets_hostile")) card.does.push("creatures in it attack everyone not on your side");
-    card.does.push(...moneyText(s), ...signalText(s), ...faithText(s)); // themes 16, 18, 19
+    card.does.push(...moneyText(s), ...signalText(s), ...faithText(s), ...batch5(s)); // themes 16, 18, 19, 21-25
     card.does.push(...placeLines(dict, p.noun, s));
     for (const [id] of s.entries()) if (id.startsWith("inflict_") && s.num(id) > 0) card.does.push(`${plain(id)} ${num(statusSeconds(id.slice(8) as Status, s.num(id)))} s`);
     if (s.get("contest_with") && s.get("contested_by")) card.does.push(`your ${words(String(s.get("contest_with")))} against their ${words(String(s.get("contested_by")))}`);
@@ -327,7 +335,7 @@ export function inspectText(dict: Dictionary, text: string): { card: Card } | { 
 /** What a word's area does to letters, acts and the land, in short lines (shared `placeRules`), plus what it summons or lays. */
 export function placeLines(dict: Dictionary, word: string, s: Stats): string[] {
   const def = dict.word(word);
-  const out = def ? rulesText(placeRules(def, s) ?? { yields: {}, growth: 1, deposits: 1, tax: 0, lode: [], lodeShare: 0, lodeStock: 0, tradeRate: 1, law: [], fine: 0 }) : [];
+  const out = def ? rulesText(placeRules(def, s) ?? { yields: {}, growth: 1, deposits: 1, tax: 0, lode: [], lodeShare: 0, lodeStock: 0, tradeRate: 1, law: [], fine: 0, time: 1 }) : [];
   const summons = String(s.get("summons"));
   if (summons && s.num("summon_count") > 0) {
     const n = s.num("summon_count");
@@ -437,4 +445,9 @@ export function effectText(dict: Dictionary, word: string): string {
   if (!def) return "";
   const lines = [...def.ops.filter(([id]) => !/^produce_|^harvest/.test(id)).map(opText), ...(def.role === "noun" ? placeLines(dict, noun, resolve(dict, noun, [])) : [])];
   return lines.slice(0, 3).join(" · ") || `${kindWord(dict, noun)}: no effect on you`;
+}
+
+/** What themes 21 to 25 add to a card: time, space, sea, sports, abstract ideas. */
+function batch5(s: Stats): string[] {
+  return [...timeText(s), ...spaceText(s), ...seaText(s), ...sportText(s), ...ideaText(s)];
 }

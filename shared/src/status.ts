@@ -9,7 +9,7 @@ export const UNHEARD: readonly string[] = ["charm", "sleep"];
 /** Every status a word can inflict (`inflict_<status>`) or be immune to (`immune_<status>`). */
 export const STATUSES = [
   "stun", "slow", "blind", "fear", "burn", "freeze", "poison", "bleed", "sleep", "charm", "silence", "root", "confuse", "shrink",
-  "sick", "rage", "deaf", "debt", "curse", "bless", "expose",
+  "sick", "rage", "deaf", "debt", "curse", "bless", "expose", "haste", "stasis", "truce", "chaos", "void", "doom",
 ] as const;
 export type Status = (typeof STATUSES)[number];
 
@@ -51,12 +51,33 @@ export interface StatusRule {
   exposed?: boolean;
   /** A boon: areas give it to those they are aimed at (their side), not to those they harm. */
   boon?: boolean;
+  /**
+   * How fast time runs for the body (shared time.ts): moving, striking and its other statuses
+   * wearing off. 0 stops it (stasis). A status with a time runs down by the clock itself.
+   */
+  time?: number;
+  /** Nothing lands on it: no blow, no area, no burn or poison (stasis, truce). */
+  untouchable?: boolean;
+  /** Statuses it ends as it takes hold (haste ends slow, slow ends haste). */
+  ends?: Status[];
+  /** Everything the body carries, wears, rides or stands in does nothing (shared idea.ts). */
+  nulls?: boolean;
+  /** When it runs out (not cured), the body takes `DOOM_SHARE` of its full integrity (shared idea.ts). */
+  fated?: boolean;
+  /** What it sets on the body while it lasts (stasis and truce: untargetable). */
+  set?: Record<string, Value>;
 }
+
+/** Every kind of damage, for statuses that take them all away (void). */
+export const DAMAGE_TYPES = [
+  "blunt", "slash", "pierce", "crush", "fire", "cold", "electric", "acid", "poison", "radiation", "blast", "sonic", "light", "dark",
+  "water", "wind", "earth", "psychic", "holy", "unholy", "disease", "magic", "suffocation", "hunger",
+] as const;
 
 /** The one table of what each status does. Words only say how long. */
 export const STATUS_RULES: Record<Status, StatusRule> = {
   stun: { still: true, helpless: true },
-  slow: { ops: [["speed_land", "mul", 0.5], ["speed_air", "mul", 0.5], ["speed_water", "mul", 0.5]], tempo: 0.5 },
+  slow: { ops: [["speed_land", "mul", 0.5], ["speed_air", "mul", 0.5], ["speed_water", "mul", 0.5]], tempo: 0.5, ends: ["haste"] },
   blind: { ops: [["sight_range", "mul", 0.05], ["accuracy", "mul", 0.3]] },
   fear: { flees: true, living: true, resistedBy: "courage" },
   burn: { dot: { fire: 8 } },
@@ -82,6 +103,18 @@ export const STATUS_RULES: Record<Status, StatusRule> = {
   bless: { earns: 1.5, boon: true, ops: [["regeneration", "add", 1], ["morale", "add", 2], ["courage", "add", 2]] },
   // Information (shared signal.ts): everyone knows where you are.
   expose: { exposed: true, ops: [["stealth", "mul", 0], ["disguise", "mul", 0]] },
+  // Time (shared time.ts): twice the time, or none at all.
+  haste: { time: 2, boon: true, ends: ["slow"] },
+  stasis: { time: 0, still: true, helpless: true, untouchable: true, set: { untargetable: true } },
+  // Sports (shared sport.ts): a peace keeper's truce: nobody strikes them, they strike nobody.
+  truce: { helpless: true, untouchable: true, boon: true, set: { untargetable: true } },
+  // Abstract ideas (shared idea.ts): random properties (ops drawn as it takes hold), nothing at all, a sealed fate.
+  chaos: {},
+  void: {
+    nulls: true,
+    ops: [...DAMAGE_TYPES.map((d): Op => [`dmg_${d}`, "mul", 0]), ["speed_air", "mul", 0], ["armor", "mul", 0], ["regeneration", "mul", 0], ["luck", "mul", 0]],
+  },
+  doom: { fated: true, ops: [["morale", "add", -2]] },
 };
 
 /**
@@ -97,6 +130,7 @@ export const STATUS_STRETCH: Record<Status, number> = {
   slow: 12, blind: 8, fear: 8, charm: 8, confuse: 8, shrink: 12,
   sick: 6, rage: 6, deaf: 8,
   debt: 3, curse: 6, bless: 6, expose: 6,
+  haste: 6, stasis: 2, truce: 1.5, chaos: 4, void: 4, doom: 1.2,
 };
 /** Seconds past which stretching bends toward a ceiling of about this much more. */
 export const STATUS_HORIZON = 120;
@@ -131,6 +165,8 @@ export interface Affliction {
   contagion?: number;
   /** For debt: seconds run toward the next letter owed (shared money.ts `debtDue`). */
   owing?: number;
+  /** For chaos: the property changes drawn for it as it took hold (shared idea.ts `chaosOps`). */
+  ops?: Op[];
 }
 
 /** What someone's statuses do to the letters they earn: blessed half again, cursed half (shared faith.ts). */
@@ -182,6 +218,8 @@ export function afflict(
     if (had) {
       if (seconds >= had.left) Object.assign(had, { left: seconds, from, origin });
     } else list.push({ status, left: seconds, from, origin });
+    const ends = STATUS_RULES[status].ends;
+    if (ends) remove(list, (a) => ends.includes(a.status));
     done.push(status);
   }
   return done;
@@ -204,15 +242,22 @@ function remove(list: Affliction[], drop: (a: Affliction) => boolean): Status[] 
 }
 
 /** Counts statuses down; removes and returns those that ran out. */
-export function tickStatuses(list: Affliction[], seconds: number, held = 1): Status[] {
+export function tickStatuses(list: Affliction[], seconds: number, held = 1, time = 1): Status[] {
   // In a lockup's ground (shared home.ts `holdFactor`), root and silence wear off `held` times slower.
-  for (const a of list) a.left -= held > 1 && HELD.includes(a.status) ? seconds / held : seconds;
+  // Time running fast or slow for the body (shared time.ts) wears its statuses off faster or slower,
+  // except those that set its time, which run by the clock.
+  for (const a of list) {
+    const t = STATUS_RULES[a.status].time === undefined ? seconds * time : seconds;
+    a.left -= held > 1 && HELD.includes(a.status) ? t / held : t;
+  }
   return remove(list, (a) => a.left <= 0);
 }
 
 /** The property changes statuses make, as passing effects for a `Unit`'s loadout. */
 export function statusEffects(list: readonly Affliction[]): { set?: Record<string, Value>; ops?: Op[] }[] {
-  return list.map((a) => ({ ops: STATUS_RULES[a.status].ops ?? [] })).filter((e) => e.ops.length);
+  return list
+    .map((a) => ({ ops: a.ops ?? STATUS_RULES[a.status].ops ?? [], ...(STATUS_RULES[a.status].set ? { set: STATUS_RULES[a.status].set } : {}) }))
+    .filter((e) => e.ops.length || e.set);
 }
 
 /** What someone's statuses stop them doing, and whom they run from or spare. */
@@ -233,10 +278,16 @@ export interface Hampered {
   berserk: boolean;
   /** Hears no orders. */
   deaf: boolean;
+  /** How fast time runs for it from its statuses (shared time.ts): 0 in stasis, 2 in haste. */
+  time: number;
+  /** Nothing lands on it (stasis, truce). */
+  untouchable: boolean;
+  /** Its gear, mount and the fields it stands in do nothing (void). */
+  nulled: boolean;
 }
 
 export function hampered(list: readonly Affliction[]): Hampered {
-  const h: Hampered = { moves: true, acts: true, spells: true, random: false, tempo: 1, flees: [], spares: [], berserk: false, deaf: false };
+  const h: Hampered = { moves: true, acts: true, spells: true, random: false, tempo: 1, flees: [], spares: [], berserk: false, deaf: false, time: 1, untouchable: false, nulled: false };
   for (const a of list) {
     const r = STATUS_RULES[a.status];
     if (r.still) h.moves = false;
@@ -248,6 +299,9 @@ export function hampered(list: readonly Affliction[]): Hampered {
     if (r.spares) h.spares.push(a.from);
     if (r.berserk) h.berserk = true;
     if (r.deaf) h.deaf = true;
+    if (r.time !== undefined) h.time *= r.time;
+    if (r.untouchable) h.untouchable = true;
+    if (r.nulls) h.nulled = true;
   }
   return h;
 }

@@ -157,6 +157,21 @@ server and the client import this, so anything here must give the same answer on
   - `weather.ts` (weather): `weatherTile` (a weather word's `tile_type`), `PATCH_FROM` (what each
     laid tile may change: a stamp's `only` mask in world.ts), `patchNear`, PATCH_SECONDS,
     `weatherText`.
+  - `time.ts` (time): `timeOf` (a body's `time_scale` times its statuses' `time`: haste 2, stasis 0;
+    `tickStatuses` takes it), `areaTime`/place.ts `timeAt` (an area's time on letters made, growth
+    and ageing), `rewound` (REWIND_WINDOW of health history), `agedBorn` (`ages`), `timeText`.
+    Statuses `haste` (ends slow, slow ends it) and `stasis` (still, helpless, `untouchable`).
+  - `space.ts` (space): `gravityOf`, `gravitySpeed`, `gravityRange`, `floats` (under FLOAT_BELOW),
+    `grounded` (from GROUNDED_FROM), `knockbackOf` (`anchored` holds), `impacts`/`impactNear`
+    (`meteors`), `spaceText`; `pull` is an area's.
+  - `sea.ts` (sea): `sails` (a vessel), `SAIL_COST` (world.ts `Costs`: `walkable`, `stepToward`,
+    path.ts `findPath`/`clearLine` take it), LAUNCH_TILES, BOARD_TILES, PORT_TILES, PORT_TOLL
+    (`docks`), `waveDamage`/`waveSlow` (`waves`), `fishTable`/`catchOf` (a catch's letter), `seaText`.
+  - `sport.ts` (sports): `Challenge` (`stakes`, `race_to`: `ahead`, `pot`, `backInRing`, RING_FLOOR,
+    FLAG_TILES), `peaceOf` (`peace` gives the `truce` status: helpless, `untouchable`), `sportText`.
+  - `idea.ts` (abstract ideas): `luckOps` (`luck`, LUCK_POINT; `Unit` applies it), `chaosOps` (the
+    `chaos` status's random ops, on `Affliction.ops`), the `void` status (`nulls`: `hampered.nulled`),
+    the `doom` status (`fated`, `doomDamage`), `typoOf` (`misspells`), `ideaText`.
 - `tips.ts` teaching tips: `wordTip` (one line of what a word does in numbers, plus its shortest
   counter-word), `wordIdeas` (one word per `TIP_KINDS` kind, weighted by `tipWeight` toward words
   the held letters nearly spell), `RULE_TIPS` (short "did you know" lines, test-checked against the

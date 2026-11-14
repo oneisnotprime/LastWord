@@ -2045,6 +2045,32 @@
    "core": false
   },
   {
+   "word": "grandmaster",
+   "set": {
+    "command_limit": 8.0,
+    "authority": 2
+   },
+   "ops": [
+    [
+     "produce_Y",
+     "mul",
+     1.5
+    ],
+    [
+     "armor",
+     "add",
+     6
+    ],
+    [
+     "integrity",
+     "mul",
+     1.15
+    ]
+   ],
+   "letters": "syk",
+   "core": false
+  },
+  {
    "word": "welder",
    "set": {},
    "ops": [
@@ -2316,6 +2342,34 @@
    "core": false
   },
   {
+   "word": "whaler",
+   "set": {
+    "harvest_sources": [
+     "fishing"
+    ],
+    "harvest_bonus": 3.0
+   },
+   "ops": [
+    [
+     "strength",
+     "add",
+     2
+    ],
+    [
+     "armor",
+     "add",
+     6
+    ],
+    [
+     "integrity",
+     "mul",
+     1.15
+    ]
+   ],
+   "letters": "ok",
+   "core": false
+  },
+  {
    "word": "gaucho",
    "set": {
     "command_limit": 6,
@@ -2510,40 +2564,6 @@
     ]
    ],
    "letters": "sy",
-   "core": false
-  },
-  {
-   "word": "queen",
-   "set": {
-    "command_limit": 8.0,
-    "authority": 4,
-    "recruit_rate": 0.5
-   },
-   "ops": [
-    [
-     "produce_Y",
-     "mul",
-     1.5
-    ]
-   ],
-   "letters": "sy",
-   "core": false
-  },
-  {
-   "word": "chairman",
-   "set": {
-    "trade_rate": 0.8,
-    "command_limit": 8.0,
-    "authority": 3
-   },
-   "ops": [
-    [
-     "produce_T",
-     "mul",
-     1.5
-    ]
-   ],
-   "letters": "ts",
    "core": false
   }
  ],

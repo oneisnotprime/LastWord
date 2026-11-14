@@ -9,6 +9,8 @@ lowest: a degree of LOW, which it follows
 older: a degree of OLD, which it follows
 smaller: a degree of SMALL, which it follows
 younger: a degree of YOUNG, which it follows
+martian: lexicon has ['adjective', 'modifier', 'pertaining']
+neanderthal: lexicon has ['adjective', 'modifier', 'quality']
 
 ## dropped tokens
 employed: produce_T+0.2: letters come from producers.txt alone

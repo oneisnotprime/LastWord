@@ -18,6 +18,9 @@ import {
   wonOver, spoiling, earshot, HEARD_FROM, CAUGHT_SECONDS, Stats as Sheet,
   earnFactor, isBoon, isExposed, debtDue, owesTo, contestOf, canPay, interestDue, isTrap, springReach, hiddenFrom, EXPOSED_TILES,
   fooledByDecoys, decoyAt, readout, offering, faithProblem, ALTAR_TILES, weatherTile, patchNear, PATCH_SECONDS, PATCHES,
+  walkable as walkableAt, timeOf, timeAt, rewound, agedBorn, REWIND_WINDOW, gravityOf, gravitySpeed, gravityRange, floats, grounded, knockbackOf, impacts, impactNear,
+  sails, SAIL_COST, LAUNCH_TILES, BOARD_TILES, PORT_TILES, PORT_TOLL, waveDamage, waveSlow, fishTable, catchOf,
+  LUCK_POINT, RING_FLOOR, FLAG_TILES, STAKES_MAX, CHALLENGE_MINUTES, ahead, pot, backInRing, peaceOf, chaosOps, doomDamage, typoOf, type Challenge,
 } from "@lastword/shared";
 import { affords, botSettings, chooseWord, held, phraseFor, SKILL, wordBook, type BotWord, type Difficulty, type Use } from "./bots.js";
 import { loadDictionary, loadKits } from "./data.js";
@@ -56,6 +59,8 @@ interface Gear {
   heat?: number;
   /** For a structure raised near builders (shared work.ts): how many times sturdier it is. */
   built?: number;
+  /** A peace keeper whose truce has been given (shared sport.ts `peace`): it gives no more. */
+  peaceUsed?: boolean;
 }
 
 /** People on one side for a while (shared law.ts): a TREATY, an ALLIANCE. */
@@ -128,21 +133,40 @@ interface Area {
   decoys?: number;
   /** Blacks out the minimap and watching things of those it reaches (shared signal.ts). */
   jams?: boolean;
+  /** Metres a second it draws bodies to its centre, negative to push them out (shared space.ts). */
+  pull?: number;
+  /** Height of the waves it raises, in metres: vessels afloat inside are rocked (shared sea.ts). */
+  waves?: number;
+  /** Impacts it drops near people inside, a minute, each striking with `attack` over `reach` tiles (shared space.ts). */
+  meteors?: { per: number; attack: Stats; reach: number };
 }
 
 /** What areas start with before a word's own properties say otherwise. */
 const AREA_DEFAULTS = { inflicts: [] as [Status, number][], hostile: false, contagion: 0, cures: [] as string[], pulsed: -Infinity, heals: 0, rules: null as PlaceRules | null, lodeLeft: 0 };
 
+/** What an area does to where bodies are (shared space.ts, sea.ts): its pull, its waves, the impacts it drops. */
+function motionOf(s: Stats): Pick<Area, "pull" | "waves" | "meteors"> {
+  const out: Pick<Area, "pull" | "waves" | "meteors"> = {};
+  const pull = s.num("pull"), waves = s.num("waves"), per = s.num("meteors");
+  if (pull && Number.isFinite(pull)) out.pull = pull;
+  if (waves > 0 && Number.isFinite(waves)) out.waves = waves;
+  if (per > 0 && Number.isFinite(per) && hasDamage(s)) {
+    const reach = Math.max(1, (s.num("attack_area") || 8) / TILE_METERS);
+    out.meteors = { per, attack: alwaysHits(s), reach };
+  }
+  return out;
+}
+
 /** True if an area would act on anything: damage, effects, statuses, hostility, cures or healing. */
 function acts(a: Area): boolean {
-  return !!(a.attack || a.effect || a.inflicts.length || a.hostile || a.cures.length || a.heals > 0 || a.rules || a.decoys || a.jams || a.weather !== undefined);
+  return !!(a.attack || a.effect || a.inflicts.length || a.hostile || a.cures.length || a.heals > 0 || a.rules || a.decoys || a.jams || a.weather !== undefined || a.pull || a.waves || a.meteors);
 }
 
 /** Where something that radiates is: carried by a walker, or lying on the ground as a thing. */
 interface Radiating { holder: string; keys: string[] }
 
 /** How a status reads in "you cannot spell while you are ...". */
-const STATE_WORDS: Partial<Record<Status, string>> = { stun: "stunned", freeze: "frozen", sleep: "asleep", silence: "silenced" };
+const STATE_WORDS: Partial<Record<Status, string>> = { stun: "stunned", freeze: "frozen", sleep: "asleep", silence: "silenced", stasis: "out of time (stasis)", truce: "under a truce" };
 
 /** Tiles a frightened walker runs ahead of itself each tick. */
 const FLEE_TILES = 6;
@@ -308,6 +332,17 @@ interface Walker {
   kit?: PersonKit;
   /** For a person: deeds counted toward a legendary's unlock. */
   deeds?: { hunts: number; trades: number; bosses: number; kills: number };
+  /** How fast time runs for it (shared time.ts `timeOf`): its speed, strikes and statuses. */
+  time?: number;
+  /** The gravity on it (shared space.ts), and how far its shots carry for it. */
+  gravity?: number;
+  range?: number;
+  /** Riding a vessel: it moves only over water (shared sea.ts). */
+  sailing?: boolean;
+  /** Its health each of the last REWIND_WINDOW seconds, newest last (shared time.ts `rewound`). */
+  past?: number[];
+  /** Room time waves last rocked its vessel: it sails slower for a moment (shared sea.ts `waveSlow`). */
+  waved?: { at: number; height: number };
 }
 
 /**
@@ -534,6 +569,10 @@ export class WorldRoom extends Room {
   private land!: Uint8Array;
   /** Each market's trades in hand and when that was last counted. */
   private markets = new Map<string, { stock: number; at: number }>();
+  /** Challenges on (shared sport.ts): a duel's ring or a race's flag, by the key of the area that shows it. */
+  private challenges = new Map<string, Challenge>();
+  /** The fish a catch can be (shared sea.ts `fishTable`), worked out once. */
+  private fishes: [string, number][] | null = null;
   /** What each thing on the ground is, so it can be picked up again. */
   private grounded = new Map<string, Gear>();
   private everJoined = 0;
@@ -593,7 +632,7 @@ export class WorldRoom extends Room {
       // the last key press aimed and then turn back (the route is otherwise only searched again
       // once the target has drifted two tiles, which suits chasing, not steering).
       // Open ground (the usual case for steering) needs no search.
-      const open = walker.flying || clearLine(this.map, walker.player, walker.target);
+      const open = walker.flying || clearLine(this.map, walker.player, walker.target, walker.sailing ? SAIL_COST : undefined);
       walker.route = open ? [walker.target] : [];
       walker.routeTo = open ? { ...walker.target } : null;
       walker.routeAge = 0;
@@ -636,13 +675,19 @@ export class WorldRoom extends Room {
       if (!walker) return;
       const at = walker.gear.findIndex((g) => g.vehicle);
       if (at < 0) return void client.send("refused", "You are not riding anything");
+      // Off a vessel (shared sea.ts): only with the shore close by; it stays moored where it floats.
+      const afloat = walker.sailing ? { x: walker.player.x, y: walker.player.y } : null;
+      if (afloat) {
+        const shore = nearestWalkable(this.map, afloat);
+        if (Math.hypot(shore.x - afloat.x, shore.y - afloat.y) > BOARD_TILES) return void client.send("refused", "No shore near: sail to land first");
+      }
       const [ride] = walker.gear.splice(at, 1);
       this.rebuild(walker);
-      const { x, y } = walker.player;
+      const { x, y } = afloat ?? walker.player;
       if (this.statsOf(ride!).flag("alive")) {
         this.addCreature(ride!, client.sessionId, x + 0.6, y, ride!.spelled.count ?? 1, ride!.integrity ?? undefined);
         this.command(client.sessionId);
-      } else this.addThing(ride!, client.sessionId, x + 0.6, y);
+      } else this.addThing(ride!, client.sessionId, afloat ? x : x + 0.6, y);
       this.tell(walker);
       client.send("notice", `Off ${ride!.phrase.toUpperCase()} (E: back on)`);
       this.refreshViews();
@@ -801,12 +846,15 @@ export class WorldRoom extends Room {
 
   /** Picks up the nearest thing of a person's own, or nobody's, in reach (or the one named), gets back on a mount, or claims a fixed ownerless thing. Throws why not. */
   takeNear(id: string, walker: Walker, named: string | null): string {
-    let best: string | null = null, bestDistance = TAKE_RANGE;
+    let best: string | null = null, bestDistance = Infinity;
     this.state.things.forEach((t, tid) => {
       const d = Math.hypot(t.x - walker.player.x, t.y - walker.player.y);
       const free = t.owner === id || t.owner === "";
       if (named && tid !== named) return;
-      if (free && d <= bestDistance && this.grounded.has(tid) && !this.grounded.get(tid)!.terrain) { best = tid; bestDistance = d; }
+      // A vessel moored on the water is boarded from the shore (shared sea.ts BOARD_TILES).
+      const g = this.grounded.get(tid);
+      const reach = g?.vehicle && !walker.gear.some((x) => x.vehicle) && sails(this.statsOf(g)) ? BOARD_TILES : TAKE_RANGE;
+      if (free && d <= reach && d < bestDistance && g && !g.terrain) { best = tid; bestDistance = d; }
     });
     if (named && !best) throw new Error("Too far away to claim: walk up to it");
     // A mount of your own walking with you: get back on it.
@@ -833,11 +881,16 @@ export class WorldRoom extends Room {
     const fixed = !stats.flag("portable") || (!gear.vehicle && stats.get("equip_slot") === "none" && (!loose || !!cannotCarry(stats, walker.unit.body.stats, gear.phrase)));
     // Nobody's and too big to carry (a RUIN, an abandoned HOUSE): standing by it and taking it makes it yours.
     if (fixed && this.state.things.get(best)!.owner === "") { this.claim(id, walker, best, gear); return `${gear.phrase.toUpperCase()} claimed`; }
+    // Boarding a vessel: aboard where it floats (shared sea.ts); one still on dry land cannot be boarded.
+    const vessel = gear.vehicle && sails(stats) ? this.state.things.get(best)! : null;
+    if (vessel && walkableAt(this.map, vessel.x, vessel.y)) throw new Error(`${gear.phrase.toUpperCase()} is on dry land: it sails only on water`);
+    const was = { x: walker.player.x, y: walker.player.y };
+    if (vessel) { walker.player.x = vessel.x; walker.player.y = vessel.y; walker.target = null; walker.route = []; }
     const problem = (loose && cannotCarry(stats, walker.unit.body.stats, gear.phrase)) || this.equip(walker, gear);
-    if (problem) throw new Error(problem);
+    if (problem) { if (vessel) Object.assign(walker.player, was); throw new Error(problem); }
     this.removeThing(best);
     this.tell(walker);
-    const done = `${gear.phrase.toUpperCase()} ${loose ? "in hand" : "equipped"}`;
+    const done = `${gear.phrase.toUpperCase()} ${vessel ? "boarded: sail the water, R to go ashore" : loose ? "in hand" : "equipped"}`;
     this.sendTo(id, "notice", done);
     this.refreshViews();
     return done;
@@ -888,7 +941,12 @@ export class WorldRoom extends Room {
   /** What a walker's body and gear add to each kind of gathering (shared `toolHelp`): a SHOVEL digs, a NET fishes. */
   private helpOf(w: Walker): (kind: string) => Help[] {
     const things = [{ name: w.player.name, stats: w.unit.body.stats }, ...this.jobTool(w), ...w.gear.map((g) => ({ name: g.phrase, stats: this.statsOf(g) }))];
-    return (kind) => toolHelp(kind, things);
+    // Luck shifts the odds of every gathering (shared idea.ts LUCK_POINT a point).
+    const luck = w.unit.body.stats.num("luck");
+    return (kind) => {
+      const help = toolHelp(kind, things);
+      return luck && Number.isFinite(luck) ? [...help, { by: luck > 0 ? "luck" : "bad luck", chance: luck * LUCK_POINT }] : help;
+    };
   }
 
   /**
@@ -1474,7 +1532,7 @@ export class WorldRoom extends Room {
   equip(walker: Walker, gear: Gear): string | null {
     const slot = this.slotOf(gear);
     if (gear.vehicle) {
-      const why = cannotRide(this.statsOf(gear), gear.phrase);
+      const why = sails(this.statsOf(gear)) ? null : cannotRide(this.statsOf(gear), gear.phrase);
       if (why) return why;
     }
     if (slot !== "held" && slot !== "graft" && walker.gear.some((g) => this.slotOf(g) === slot)) {
@@ -1483,6 +1541,7 @@ export class WorldRoom extends Room {
     walker.gear.push(gear);
     try {
       this.rebuild(walker);
+      this.keepPeace(walker, gear);
       return null;
     } catch (e) {
       walker.gear.pop();
@@ -1493,11 +1552,13 @@ export class WorldRoom extends Room {
 
   /** Rebuilds a walker's unit from its gear, keeping the damage each piece has taken. */
   rebuild(walker: Walker) {
+    // In the void (shared idea.ts) nothing it carries, wears, rides or stands in does anything.
+    const nulled = !!walker.hamper?.nulled;
     const unit = new Unit(this.dict, {
       body: walker.body,
-      items: walker.gear.filter((g) => !g.vehicle).map((g) => g.spelled),
-      riding: walker.gear.find((g) => g.vehicle)?.spelled,
-      effects: [...(walker.kit ? [walker.kit.effect] : []), ...(this.weather ? [this.weather] : []), ...(walker.fields ?? []), ...walker.buffs, ...statusEffects(walker.statuses)],
+      items: nulled ? [] : walker.gear.filter((g) => !g.vehicle).map((g) => g.spelled),
+      riding: nulled ? undefined : walker.gear.find((g) => g.vehicle)?.spelled,
+      effects: nulled ? statusEffects(walker.statuses) : [...(walker.kit ? [walker.kit.effect] : []), ...(this.weather ? [this.weather] : []), ...(walker.fields ?? []), ...walker.buffs, ...statusEffects(walker.statuses)],
     });
     unit.body.integrity = walker.hp;
     for (const g of walker.gear) {
@@ -1512,15 +1573,22 @@ export class WorldRoom extends Room {
     // Morale only means something to the living; it falls at once (FEAR, a dragon's aura) and climbs back in `beat`.
     walker.moraleGoal = body.flag("alive") ? moraleGoal(walker.moraleBase, body.num("morale"), courageOf(body)) : NORMAL;
     if (walker.moraleGoal < walker.morale) { walker.morale = walker.moraleGoal; this.nerve(walker); }
-    const air = unit.movement.num("speed_air");
-    walker.flying = air > 0;
-    walker.speed = Math.max(unit.movement.num("speed_land"), air);
+    // Time and gravity (shared time.ts, space.ts): how fast it goes, whether it may fly or floats.
+    walker.time = timeOf(body, walker.statuses);
+    const g = gravityOf(body);
+    walker.gravity = g;
+    walker.range = gravityRange(g);
+    const air = grounded(g) ? 0 : unit.movement.num("speed_air");
+    // A vessel (shared sea.ts) sails over water only.
+    walker.sailing = !!unit.riding && sails(unit.riding.stats);
+    walker.flying = air > 0 || (!walker.sailing && floats(g));
+    walker.speed = (walker.sailing ? unit.riding!.stats.num("speed_water") : Math.max(unit.movement.num("speed_land") * gravitySpeed(g), air)) * walker.time;
     // A ridden machine out of fuel or power goes nowhere (and comes down) until it is fed again.
     if (unit.riding && walker.gear.find((g) => g.vehicle)?.stalled) { walker.flying = false; walker.speed = 0; }
     const dark = this.state.daylight === "night" && !unit.body.stats.flag("night_vision");
     walker.sight = (unit.body.stats.num("sight_range") * (dark ? NIGHT_SIGHT : 1)) / TILE_METERS;
     walker.player.gear = [...walker.gear.map((g) => g.phrase), ...walker.buffs.map((b) => b.word.toUpperCase())].join(", ");
-    if (!walker.flying) {
+    if (!walker.flying && !walker.sailing) {
       const ground = openGround(this.map, walker.player); // coming down over water puts you ashore, with room to walk
       if (ground !== walker.player) { walker.player.x = ground.x; walker.player.y = ground.y; walker.target = null; }
     }
@@ -3024,6 +3092,13 @@ export class WorldRoom extends Room {
    */
   private beat(since: number) {
     this.keepPacts();
+    if (this.challenges.size) this.refereeChallenges();
+    // Each walker's health over the last minute, for REWIND (shared time.ts).
+    for (const w of this.walkers.values()) {
+      const past = (w.past ??= []);
+      past.push(w.hp);
+      if (past.length > REWIND_WINDOW) past.shift();
+    }
     this.kitchen(since);
     this.state.alive = this.people.length;
     this.state.clock = Math.floor(this.elapsed);
@@ -3175,11 +3250,14 @@ export class WorldRoom extends Room {
     const target = w.target!;
     // A wild creature that is only wandering ambles; it runs only to chase or to flee. At full
     // speed a grazing PIG, as fast as a person, could never be caught.
-    const speed = w.master === "-" && !w.foe && !w.fleeing && !w.hamper.flees.length ? w.speed * AMBLE_PACE : w.speed;
+    // Rough water (shared sea.ts) slows a vessel for a moment after the waves last rocked it.
+    const rough = w.sailing && w.waved !== undefined && this.elapsed - w.waved.at < 1.5 ? waveSlow(w.waved.height) : 1;
+    const speed = (w.master === "-" && !w.foe && !w.fleeing && !w.hamper.flees.length ? w.speed * AMBLE_PACE : w.speed) * rough;
     if (w.flying) {
       if (stepToward(this.map, w.player, target, speed, seconds, true)) w.target = null;
       return;
     }
+    const costs = w.sailing ? SAIL_COST : undefined; // a vessel keeps to the water (shared sea.ts)
     w.routeAge += seconds;
     // A chased target moves: work the route out again once it has moved two tiles, at most once a second.
     const drift = w.routeTo ? Math.hypot(w.routeTo.x - target.x, w.routeTo.y - target.y) : Infinity;
@@ -3188,7 +3266,7 @@ export class WorldRoom extends Room {
     if ((drift === Infinity || (drift > 2 && w.routeAge > every)) && (this.routesLeft > 0 || this.steered(w))) {
       this.routesLeft--;
       // Aim for ground: asking for the sea should walk you to the shore, not search the whole map.
-      w.route = findPath(this.map, w.player, nearestWalkable(this.map, target));
+      w.route = findPath(this.map, w.player, costs ? target : nearestWalkable(this.map, target), costs);
       // A wild creature that cannot reach its prey gives it up rather than search again every tick.
       const end = w.route.at(-1) ?? w.player;
       if (w.master === "-" && w.foe && Math.hypot(end.x - target.x, end.y - target.y) > 2) {
@@ -3202,7 +3280,7 @@ export class WorldRoom extends Room {
     while (left > 0 && w.route.length) {
       const before = { x: w.player.x, y: w.player.y };
       const leg = w.route[0]!;
-      const arrived = stepToward(this.map, w.player, leg, speed, left);
+      const arrived = stepToward(this.map, w.player, leg, speed, left, false, costs);
       if (!arrived) return;
       if (Math.hypot(w.player.x - leg.x, w.player.y - leg.y) > 1e-3) {
         // Blocked short of the waypoint (a corner it cannot cut): first to the middle of its own
@@ -3270,6 +3348,7 @@ export class WorldRoom extends Room {
     // Things that move of themselves act on their own; ones you can ride are gear instead.
     if (becomes(phrase.stats) === "creature") {
       for (let i = 0; i < copies; i++) { const p = at(i); this.addCreature(one(), owner, p.x, p.y, each); }
+      if (walker.master === null && peaceOf(phrase.stats) > 0) this.keepPeace(walker, one(), phrase.stats);
       const wild = this.command(owner);
       if (wild >= copies) return "runs wild: you cannot command more";
       return wild ? `is with you; ${wild} ran wild` : "is with you";
@@ -3288,7 +3367,7 @@ export class WorldRoom extends Room {
     } else if (tile !== undefined) this.reshape(walker.player.x, walker.player.y, phrase.stats.num("radius") * Math.sqrt(n), tile, tile === Tile.Field);
     // Anything fertile put down (COMPOST, MANURE, a FARM) enriches the soil it lies on.
     if (phrase.stats.num("fertility") > 0) this.soil.enrich(here.x, here.y, this.elapsed, phrase.stats.num("fertility") * n);
-    let worn = 0;
+    let worn = 0, launched = "";
     // A body part grows on whoever its speller picked (shared body.ts): themselves, a creature, anyone in sight.
     const host = isGraft(phrase.stats) ? this.graftHost(walker) : walker;
     // Builders of the speller's within WORK_RANGE make a structure sturdier (shared work.ts).
@@ -3297,6 +3376,14 @@ export class WorldRoom extends Room {
     for (let i = 0; i < copies; i++) {
       const gear = one();
       if (tile !== undefined) gear.terrain = true;
+      // A vessel is launched on the water nearest its maker, or by a port of theirs (shared sea.ts).
+      if (gear.vehicle && sails(phrase.stats)) {
+        const water = this.launchSpot(owner, here);
+        const p = water ?? (i === 0 ? here : at(i));
+        this.addThing(gear, owner, p.x, p.y);
+        launched = water ? "launched on the water nearby: walk to the shore and press E to board" : "made, but no water is near: it waits on dry land";
+        continue;
+      }
       // Things you can hold, wear or ride go straight onto you if there is room; the rest sit on the ground.
       const wearable = gear.vehicle || phrase.stats.get("equip_slot") !== "none";
       const problem = wearable ? this.equip(host, gear) : "";
@@ -3306,6 +3393,7 @@ export class WorldRoom extends Room {
       if (!phrase.stats.flag("portable") && built > 1) gear.built = built; // raised by builders: sturdier
       this.addThing(gear, owner, p.x, p.y); // a stack of a thousand makes a thousand's worth
     }
+    if (launched) return launched;
     let crafted = "";
     if (plan) {
       const used = plan.use();
@@ -3401,6 +3489,7 @@ export class WorldRoom extends Room {
     if (Math.hypot(victim.player.x - walker.player.x, victim.player.y - walker.player.y) > Math.max(1.5, walker.sight)) throw new Error(`Too far away for ${word}`);
     const harmless = given.every(([st]) => isBoon(st)) && !(s.num("severs") > 0); // a BLESS or a WAGE is no attack
     if (selected !== id && !harmless) {
+      if (victim.hamper.untouchable) throw new Error(`${victim.player.name.toUpperCase()} cannot be touched just now`);
       const barred = this.lawAgainst("attack", selected, victim, victim.player, id);
       if (barred) throw new Error(`${barred}: ${LAWS.attack} there`);
     }
@@ -3437,6 +3526,8 @@ export class WorldRoom extends Room {
     const name = [...phrase.adverbs, phrase.noun].join(" ");
     const said: string[] = [];
     const eventful = s.flag("destroys_target") || s.flag("transfers_ownership") || s.num("moves_target") > 0;
+    if (s.flag("forfeits")) { const n = this.forfeit(id); said.push(n ? `gave up ${n} challenge${n === 1 ? "" : "s"}` : "no challenge to give up"); }
+    if (s.flag("misspells") && s.get("effect_target") === "touched") said.push(this.meta(id, walker, phrase));
     if (s.get("effect_target") === "touched" && eventful) said.push(this.happen(id, walker, phrase));
     else if (s.get("effect_target") === "touched") { const t = this.touch(id, walker, phrase); if (t) said.push(t); }
     const done = this.affect(walker, name, s, effect);
@@ -3456,7 +3547,9 @@ export class WorldRoom extends Room {
     const cures = s.tags("effect_status");
     const seconds = effectSeconds(s.num("duration"));
     const lasting = seconds > 0 && (effect.ops.length > 0 || Object.keys(effect.set).length > 0);
-    if (!(heal > 0) && !cures.length && !lasting) return null;
+    // REWIND, UNDO (shared time.ts): the last seconds of harm undone.
+    const back = s.num("rewinds") > 0 && this.rewind(walker, s.num("rewinds"));
+    if (!(heal > 0) && !cures.length && !lasting && !back) return s.num("rewinds") > 0 ? `${name.toUpperCase()}: no harm to undo` : null;
     if (heal > 0) walker.hp = Math.min(walker.unit.body.stats.num("integrity"), walker.hp + heal);
     // effect_status lists what it ends: HEAL and MEDICINE end poison, bleeding and burns.
     const ended = cure(walker.statuses, cures);
@@ -3470,6 +3563,7 @@ export class WorldRoom extends Room {
     walker.player.hp = Math.min(100, Math.ceil((walker.hp / walker.unit.body.stats.num("integrity")) * 100));
     const upper = name.toUpperCase();
     const said = [!lasting ? upper : seconds === Infinity ? `${upper} forever` : `${upper} for ${+seconds.toFixed(1)} seconds`];
+    if (back) said.push(`the last ${Math.round(Math.min(REWIND_WINDOW, s.num("rewinds")))} s of harm undone`);
     if (ended.length) said.push(`no longer ${ended.join(", ")}`);
     return said.join("; ");
   }
@@ -3570,6 +3664,17 @@ export class WorldRoom extends Room {
    */
   private happen(id: string, walker: Walker, phrase: Phrase): string {
     const s = phrase.stats, word = phrase.noun.toUpperCase();
+    // Sports (shared sport.ts): a challenge with stakes; giving up.
+    if (s.num("stakes") > 0) return this.challenge(id, walker, phrase);
+    if (s.flag("forfeits")) {
+      const n = this.forfeit(id);
+      const ended = cure(walker.statuses, s.tags("effect_status"));
+      if (inflicts(s).length) this.hurtWith(walker, inflicts(s), id, id, false);
+      if (ended.length) this.statusChanged(walker);
+      return n ? `${word}: you gave up ${n} challenge${n === 1 ? "" : "s"}` : `${word}: you had no challenge to give up${inflicts(s).length ? `; ${inflicts(s).map(([st]) => st).join(", ")}` : ""}`;
+    }
+    // Abstract ideas and time (shared idea.ts, time.ts) on a thing or creature picked.
+    if (s.flag("swaps_owners") || s.flag("misspells") || (s.num("ages") !== 0 && s.get("event_target") !== "character")) return this.meta(id, walker, phrase);
     const pact = pactOf(s);
     if (pact) return this.makePact(id, walker, phrase, pact);
     if (s.flag("transfers_ownership")) return this.steal(id, walker, phrase);
@@ -3594,6 +3699,9 @@ export class WorldRoom extends Room {
     };
     // A law where the victim stands (a SANCTUARY, a TRUCE) covers an event landing on them as it covers a blow.
     const lawful = (victim: Walker, act: "attack" | "theft") => {
+      // In stasis or a truce nothing lands, but a word that ends it (PROVOCATION, a REPRIEVE) still reaches them.
+      const ends = s.tags("effect_status");
+      if (act === "attack" && victim.hamper.untouchable && victim.id !== id && !ends.includes("truce") && !ends.includes("stasis")) throw new Error(`${victim.player.name.toUpperCase()} cannot be touched just now`);
       const barred = this.lawAgainst(act, selected, victim, victim.player, id);
       if (barred) throw new Error(`${barred}: ${LAWS[act]} there`);
     };
@@ -3614,7 +3722,7 @@ export class WorldRoom extends Room {
     // Passed on a person (ARREST, SENTENCE, EXILE, VERDICT, PARDON: law theme): its statuses given or
     // ended, health restored, letters taken as a fine; no blow is struck. Resisted by its contest.
     const onPerson = s.get("event_target") === "character" && !hasDamage(s) && !(s.num("event_radius") > 0) && !(s.num("inflict_stun") > 0); // a stun is an AMBUSH: a blow
-    if (onPerson && (inflicts(s).length || s.tags("effect_status").length || s.num("letter_steal") > 0 || s.num("restores") > 0 || s.num("pays") > 0 || s.flag("read_inventory"))) {
+    if (onPerson && (inflicts(s).length || s.tags("effect_status").length || s.num("letter_steal") > 0 || s.num("restores") > 0 || s.num("pays") > 0 || s.flag("read_inventory") || s.num("rewinds") > 0)) {
       const victim = needCreature();
       const given = inflicts(s);
       const harmful = given.some(([st]) => !isBoon(st) && st !== "charm"); // a GIFT's goodwill is no attack
@@ -3626,6 +3734,7 @@ export class WorldRoom extends Room {
       const ended = cure(victim.statuses, s.tags("effect_status"));
       if (ended.length) { this.statusChanged(victim); said.push(`no longer ${ended.join(", ")}`); }
       if (s.num("restores") > 0) { this.restore(victim, s.num("restores")); said.push("restored"); }
+      if (s.num("rewinds") > 0 && this.rewind(victim, s.num("rewinds"))) { this.tell(victim); said.push(`the last ${Math.round(Math.min(REWIND_WINDOW, s.num("rewinds")))} s of harm undone`); }
       said.push(...this.informAndPay(id, walker, victim, s, word));
       const payer = this.walkers.get(victim.master && victim.master !== "-" ? victim.master : victim.id);
       if (s.num("letter_steal") > 0 && payer && payer.id !== id) {
@@ -3722,7 +3831,7 @@ export class WorldRoom extends Room {
     const flags = bodyFlags(def.set);
     const effect = bodyOps.length || Object.keys(flags).length ? { word: phrase.noun, set: flags, ops: bodyOps, until: Infinity } : null;
     const summons = this.summonsOf(s), tile = TILE_TYPES[String(s.get("tile_type"))];
-    if (!hasDamage(s) && !rules && !effect && !given.length && !s.flag("sets_hostile") && !summons && tile === undefined && !s.tags("counters").length && !(s.num("decoys") > 0) && !s.flag("jams")) throw new Error(`${word} does nothing yet`);
+    if (!hasDamage(s) && !rules && !effect && !given.length && !s.flag("sets_hostile") && !summons && tile === undefined && !s.tags("counters").length && !(s.num("decoys") > 0) && !s.flag("jams") && !motionOf(s).pull && !motionOf(s).waves && !motionOf(s).meteors) throw new Error(`${word} does nothing yet`);
     // A region event covers the speller's surroundings. Anything else lands where it was aimed:
     // a picked spot, else the picked or attacked target. It must be in reach.
     const regional = s.get("placement") === "region" || s.get("placement") === "map" || s.get("placement") === "self";
@@ -3737,7 +3846,7 @@ export class WorldRoom extends Room {
       word: phrase.noun, owner: id, x: at.x, y: at.y,
       radius,
       until: this.elapsed + lasts,
-      attack: hasDamage(s) ? alwaysHits(s) : null,
+      attack: hasDamage(s) && !(s.num("meteors") > 0) ? alwaysHits(s) : null,
       cooldown: 0,
       friendlyFire: s.flag("friendly_fire"),
       spread: s.num("spread_rate"),
@@ -3756,6 +3865,7 @@ export class WorldRoom extends Room {
       // Lies and jamming (shared signal.ts) ride on events too (a HOAX, STATIC).
       ...(s.num("decoys") > 0 ? { decoys: Math.round(Math.min(12, s.num("decoys"))) } : {}),
       ...(s.flag("jams") ? { jams: true } : {}),
+      ...motionOf(s),
     };
     if (this.weather && this.countered(this.weather.word, area.word)) {
       throw new Error(`${word} cannot take hold: the ${this.weather.word} puts it out`);
@@ -3765,6 +3875,73 @@ export class WorldRoom extends Room {
     this.burn(key, area, 0);
     const span = minutes >= 1 ? `${minutes} minute${minutes === 1 ? "" : "s"}` : "a moment";
     return `${word} for ${span}${began ? `: ${began}` : ""}`;
+  }
+
+  /**
+   * A word passed on a thing or creature that bends what it is (shared idea.ts, time.ts): PARADOX
+   * swaps its owner with the speller's most valuable; a TYPO turns it into the word one letter
+   * off, or breaks it; CENTURY ages it.
+   */
+  private meta(id: string, walker: Walker, phrase: Phrase): string {
+    const s = phrase.stats, word = phrase.noun.toUpperCase();
+    const targetId = walker.picked ?? walker.foe ?? "";
+    const thing = this.state.things.get(targetId), gear = this.grounded.get(targetId), creature = this.walkers.get(targetId);
+    const reach = Math.max(1.5, s.num("placement_range") / TILE_METERS);
+    const at = thing ?? creature?.player;
+    if (!at || (gear && (gear.terrain || gear.fixture)) || (creature && creature.master === null && !s.num("ages"))) throw new Error(`Select a thing or creature for ${word} first: click it`);
+    if (Math.hypot(at.x - walker.player.x, at.y - walker.player.y) > reach) throw new Error(`Too far away for ${word}`);
+    if (creature?.hamper.untouchable) throw new Error(`${creature.player.name.toUpperCase()} cannot be touched just now`);
+    const name = gear?.phrase.toUpperCase() ?? creature!.player.name.toUpperCase();
+    if (s.flag("swaps_owners")) {
+      const owner = thing ? thing.owner : creature!.master ?? "";
+      if (!owner || owner === "-" || owner === id) throw new Error(`${word} needs a thing or creature someone else owns`);
+      const mine = this.dearest(id);
+      if (!mine) throw new Error(`${word} needs something of yours to swap: you own nothing out in the world`);
+      if (thing) this.giveThing(targetId, id); else this.setMaster(targetId, creature!, id);
+      let gave = "";
+      if (mine.thing) { this.giveThing(mine.thing, owner); gave = this.grounded.get(mine.thing)!.phrase.toUpperCase(); }
+      else { const c = this.walkers.get(mine.creature!)!; this.setMaster(mine.creature!, c, owner); gave = c.player.name.toUpperCase(); }
+      this.command(id); this.command(owner);
+      this.sendTo(owner, "notice", `${walker.player.name}'s ${word}: your ${name} is theirs, and their ${gave} is yours`);
+      walker.foe = null;
+      return `${word}: ${name} is yours, ${gave} is theirs`;
+    }
+    if (s.flag("misspells")) {
+      const noun = gear?.spelled.noun ?? creature!.body.noun;
+      const next = typoOf(this.dict, noun, this.rng);
+      const owner = thing ? thing.owner : creature!.master ?? "";
+      if (!next) {
+        if (thing) { this.removeThing(targetId); this.refreshViews(); }
+        else this.kill(targetId, id);
+        if (owner && owner !== id && owner !== "-") this.sendTo(owner, "notice", `${walker.player.name}'s ${word} broke your ${name}: no word is one letter off it`);
+        return `${word}: ${name} breaks (no word is one letter off)`;
+      }
+      if (gear && thing) {
+        gear.spelled = { ...gear.spelled, noun: next };
+        gear.phrase = [...(gear.spelled.adjectives ?? []).filter((a) => !this.onlyCounts(a)), next].join(" ");
+        gear.integrity = null;
+        this.resolved.delete(gear);
+        const [x, y, count] = [thing.x, thing.y, thing.count];
+        this.removeThing(targetId);
+        gear.vehicle = resolveSpelled(this.dict, gear.spelled).flag("mountable");
+        if (becomes(resolveSpelled(this.dict, gear.spelled)) === "creature") this.addCreature(gear, owner || "-", x, y, count);
+        else this.addThing(gear, owner, x, y);
+      } else {
+        const c = creature!, spelled = { ...c.body, noun: next };
+        const g: Gear = { spelled, phrase: [...(spelled.adjectives ?? []), next].join(" "), vehicle: false, integrity: null };
+        const { x, y } = c.player, master = c.master ?? "-", count = c.player.count;
+        this.removeWalker(targetId);
+        if (becomes(resolveSpelled(this.dict, spelled)) === "creature") this.addCreature(g, master, x, y, count);
+        else this.addThing(g, master === "-" ? "" : master, x, y);
+      }
+      this.refreshViews();
+      if (owner && owner !== id && owner !== "-") this.sendTo(owner, "notice", `${walker.player.name}'s ${word} turned your ${name} into ${next.toUpperCase()}`);
+      return `${word}: ${name} is now ${next.toUpperCase()}`;
+    }
+    const minutes = s.num("ages");
+    const aged = this.age(targetId, minutes);
+    if (!aged) throw new Error(`Select a thing or creature for ${word} first: click it`);
+    return `${word}: ${aged} ${minutes > 0 ? `aged ${Math.round(minutes)} minutes` : `${Math.round(-minutes)} minutes younger`}`;
   }
 
   /** What a word summons as its area begins (shared `summons`, `summon_count`), if the creature exists. */
@@ -3921,10 +4098,10 @@ export class WorldRoom extends Room {
     return {
       word, owner, x: at.x, y: at.y, radius,
       until: this.elapsed + lasts,
-      attack: hasDamage(s) ? alwaysHits(s) : null,
+      attack: hasDamage(s) && !(s.num("meteors") > 0) ? alwaysHits(s) : null, // impacts strike where they fall instead
       cooldown: 0,
       friendlyFire: s.flag("friendly_fire"),
-            spread: 0,
+      spread: 0,
       effect: ops.length || Object.keys(flags).length ? { word, set: flags, ops, until: Infinity } : null,
       targets: String(s.get("field_targets")),
       follows: whole ? null : follows,
@@ -3941,6 +4118,7 @@ export class WorldRoom extends Room {
       lasts,
       ...(s.num("decoys") > 0 ? { decoys: Math.round(Math.min(12, s.num("decoys"))) } : {}),
       ...(s.flag("jams") ? { jams: true } : {}),
+      ...motionOf(s),
     };
   }
 
@@ -4183,6 +4361,7 @@ export class WorldRoom extends Room {
 
   /** True if an area's harm (damage, statuses) lands on a walker: inside it, and among whom it targets. */
   private harms(a: Area, wid: string, w: Walker): boolean {
+    if (w.hamper.untouchable) return false; // in stasis or a truce nothing lands
     if (Math.hypot(w.player.x - a.x, w.player.y - a.y) > a.radius) return false;
     if (!a.friendlyFire && (wid === a.owner || w.master === a.owner)) return false;
     return !a.effect || this.reaches(a, wid, w); // a field strikes only whom it targets
@@ -4205,6 +4384,80 @@ export class WorldRoom extends Room {
       if (a.heals > 0 && since > 0 && reached && (wid === a.owner || w.master === a.owner)) this.restore(w, a.heals * since);
     }
     if (a.attack && a.contagion > 0 && since > 0 && this.rng() < 1 - (1 - Math.min(1, a.contagion)) ** (since / 60)) this.spread(a);
+    if (since > 0 && (a.pull || a.waves || a.meteors)) this.move(key, a, since);
+  }
+
+  /**
+   * Once a second, what an area does to where bodies are (shared space.ts, sea.ts): its pull draws
+   * the bodies it reaches toward its centre (or pushes them out), its waves rock the vessels afloat
+   * inside, and its impacts fall near the people inside.
+   */
+  private move(key: string, a: Area, since: number) {
+    for (const [wid, w] of [...this.walkers]) {
+      if (!this.walkers.has(wid)) continue;
+      const d = Math.hypot(w.player.x - a.x, w.player.y - a.y);
+      if (d > a.radius) continue;
+      if (a.pull && !this.anchored(w) && !w.hamper.untouchable && (a.effect ? this.reaches(a, wid, w) : true) && (a.friendlyFire || (wid !== a.owner && w.master !== a.owner) || a.targets === "all")) {
+        const step = (a.pull * since) / TILE_METERS;
+        const to = a.pull > 0
+          ? (d <= Math.abs(step) ? { x: a.x, y: a.y } : { x: w.player.x + ((a.x - w.player.x) / d) * step, y: w.player.y + ((a.y - w.player.y) / d) * step })
+          : d < 1e-3 ? { x: w.player.x + step, y: w.player.y } : { x: w.player.x + ((w.player.x - a.x) / d) * -step, y: w.player.y + ((w.player.y - a.y) / d) * -step };
+        stepToward(this.map, w.player, to, Math.abs(a.pull), since, w.flying, w.sailing ? SAIL_COST : undefined);
+        w.route = []; w.routeTo = null;
+      }
+      if (a.waves && w.sailing && w.unit.riding) {
+        w.waved = { at: this.elapsed, height: a.waves };
+        const hull = w.unit.riding.stats;
+        const hurt = waveDamage(a.waves, hull.num("length"), this.anchored(w)) * since;
+        if (hurt > 0) {
+          w.unit.riding.integrity -= hurt;
+          this.blow(key, wid, { hit: true, critical: false, damage: hurt }, w.unit.riding.name, false, a);
+          const name = w.unit.riding.name;
+          this.settle(wid, w);
+          if (!w.unit.riding) this.sendTo(wid, "notice", `The waves wrecked your ${name.toUpperCase()}: you are thrown ashore`);
+        }
+      }
+    }
+    if (a.meteors) {
+      const n = impacts(a.meteors.per, since, this.rng);
+      const inside = n ? [...this.walkers.values()].filter((w) => Math.hypot(w.player.x - a.x, w.player.y - a.y) <= a.radius) : [];
+      for (let i = 0; i < n && inside.length; i++) {
+        const near = inside[Math.floor(this.rng() * inside.length)]!;
+        const at = impactNear(near.player.x, near.player.y, 6, this.rng);
+        this.impact(key, a, at);
+      }
+    }
+  }
+
+  /** One impact (a METEOR SHOWER's, a BOMBARDMENT's): everything within its reach struck, a crater mark for a moment. */
+  private impact(key: string, a: Area, at: Point) {
+    const m = a.meteors!;
+    for (const [wid, w] of [...this.walkers]) {
+      if (!this.walkers.has(wid) || w.hamper.untouchable || w.flying) continue;
+      if (Math.hypot(w.player.x - at.x, w.player.y - at.y) > m.reach) continue;
+      if (!a.friendlyFire && (wid === a.owner || w.master === a.owner)) continue;
+      if (this.areaLaw(a, w.player, wid, w)) continue;
+      const outer = w.unit.outer, r = strike(m.attack, outer, this.rng);
+      this.blow(key, wid, r, outer === w.unit.body ? "" : outer.name, true, { ...a, x: at.x, y: at.y });
+      this.settle(wid, w);
+      if (w.unit.dead) this.kill(wid, a.owner);
+      else if (r.hit && a.inflicts.length) this.hurtWith(w, a.inflicts, a.owner, key, true);
+    }
+    this.state.things.forEach((t, tid) => {
+      const g = this.grounded.get(tid);
+      if (!g || g.terrain || Math.hypot(t.x - at.x, t.y - at.y) > m.reach || (!a.friendlyFire && t.owner === a.owner)) return;
+      this.strikeThing(a.owner, m.attack, tid, t);
+    });
+    // The impact shows where it fell, for a moment.
+    this.addArea({
+      word: a.word, owner: a.owner, x: at.x, y: at.y, radius: m.reach, until: this.elapsed + 2, attack: null, cooldown: 0,
+      friendlyFire: false, spread: 0, effect: null, targets: "all", follows: null, ...AREA_DEFAULTS, baseRadius: m.reach, lasts: 2,
+    }, true);
+  }
+
+  /** Held fast (shared space.ts `anchored`): its body, what it carries or what it rides. */
+  private anchored(w: Walker): boolean {
+    return w.unit.body.stats.flag("anchored") || !!w.unit.riding?.stats.flag("anchored");
   }
 
   /**
@@ -4237,6 +4490,8 @@ export class WorldRoom extends Room {
     // Sickness does not take where the body is guarded (a VACCINE) or got over it lately (shared disease.ts).
     if (given.some(([st]) => st === "sick") && (recovered(w.recovered, this.elapsed) || w.unit.body.stats.num("res_disease") >= 1)) given = given.filter(([st]) => st !== "sick");
     const done = given.length ? afflict(w.statuses, given, w.unit.body.stats, from, origin) : [];
+    // Chaos (shared idea.ts) draws its random property changes as it takes hold.
+    if (done.includes("chaos")) { const a = w.statuses.find((x) => x.status === "chaos")!; a.ops ??= chaosOps(this.rng); w.statusKey = ""; }
     if (done.includes("sick")) {
       const a = w.statuses.find((x) => x.status === "sick")!;
       a.contagion = contagion > 0 ? contagion : a.contagion ?? SICK_CONTAGION;
@@ -4292,7 +4547,7 @@ export class WorldRoom extends Room {
 
   /** Burn, poison and bleeding hurt once a second, and statuses run down. */
   private sufferStatuses(id: string, w: Walker, seconds: number) {
-    const hurt = statusDamage(this.dict, w.statuses);
+    const hurt = w.hamper.untouchable ? null : statusDamage(this.dict, w.statuses); // in stasis nothing hurts
     if (hurt) {
       w.dot += seconds;
       const longest = Math.max(...w.statuses.map((a) => a.left));
@@ -4304,7 +4559,18 @@ export class WorldRoom extends Room {
       }
     } else w.dot = 0;
     for (const a of w.statuses) if (a.status === "debt") this.payDebt(w, a, seconds);
-    const over = tickStatuses(w.statuses, seconds, w.statuses.length ? this.heldAt(id, w) : 1);
+    const doomFrom = w.statuses.find((a) => a.status === "doom")?.from ?? "";
+    const over = tickStatuses(w.statuses, seconds, w.statuses.length ? this.heldAt(id, w) : 1, timeOf(w.unit.body.stats, w.statuses));
+    // A sealed fate that ran out (shared idea.ts `doom`): three quarters of its full health, whatever resists.
+    if (over.includes("doom") && !w.hamper.untouchable) {
+      const doomed = doomDamage(w.unit.body.stats.num("integrity"));
+      w.hp = Math.max(0, w.hp - doomed);
+      w.unit.body.integrity = w.hp;
+      this.blow("doom", id, { hit: true, critical: true, damage: doomed }, "", false);
+      this.settle(id, w);
+      this.sendTo(id, "notice", `Your doom came: ${Math.round(doomed)} damage`);
+      if (w.hp <= 0) return void this.kill(id, doomFrom);
+    }
     if (over.includes("sick")) w.recovered = this.elapsed; // got over it: immune a while (shared disease.ts)
     if (over.length) {
       this.statusChanged(w);
@@ -4483,7 +4749,7 @@ export class WorldRoom extends Room {
       let victimId = "";
       const owner = this.walkers.get(t.owner), ownerSide = owner ? this.side(t.owner, owner) : t.owner;
       for (const [wid, w] of this.walkers) {
-        if (w.flying || wid === t.owner || w.master === t.owner || this.side(wid, w) === ownerSide) continue;
+        if (w.flying || w.hamper.untouchable || wid === t.owner || w.master === t.owner || this.side(wid, w) === ownerSide) continue;
         if (Math.abs(w.player.x - t.x) > reach || Math.abs(w.player.y - t.y) > reach || Math.hypot(w.player.x - t.x, w.player.y - t.y) > reach) continue;
         victimId = wid; break;
       }
@@ -4541,6 +4807,187 @@ export class WorldRoom extends Room {
   }
 
   /** THEFT: the selected thing becomes yours if your stealth meets its security. */
+  /**
+   * A peace keeper (shared sport.ts `peace`: a GAVEL taken up, a JUDGE spelled) gives its holder a
+   * truce, once: untouchable, but unable to strike or spell, for that many seconds.
+   */
+  private keepPeace(w: Walker, gear: Gear, stats?: Stats) {
+    const seconds = peaceOf(stats ?? this.statsOf(gear));
+    if (!(seconds > 0) || gear.peaceUsed || w.master !== null) return;
+    gear.peaceUsed = true;
+    this.hurtWith(w, [["truce", seconds]], w.id, w.id, false);
+    if (w.statuses.some((a) => a.status === "truce")) this.sendTo(w.id, "notice", `${gear.phrase.toUpperCase()} keeps the peace: a truce for ${Math.round(seconds)} s (nobody strikes you; you strike and spell nothing)`);
+  }
+
+  /**
+   * Where a new vessel of `owner`'s is launched (shared sea.ts): beside a port of theirs within
+   * PORT_TILES, else the water nearest `at` within LAUNCH_TILES, or null with no water near.
+   */
+  private launchSpot(owner: string, at: Point): Point | null {
+    const water = (p: Point, r: number): Point | null => {
+      let best: Point | null = null, bestD = Infinity;
+      for (let dy = -r; dy <= r; dy++) for (let dx = -r; dx <= r; dx++) {
+        const x = Math.floor(p.x) + dx + 0.5, y = Math.floor(p.y) + dy + 0.5, d = Math.hypot(dx, dy);
+        if (d > r || d >= bestD || !walkableAt(this.map, x, y, SAIL_COST)) continue;
+        best = { x, y }; bestD = d;
+      }
+      return best;
+    };
+    let port: Point | null = null, portD = PORT_TILES;
+    this.state.things.forEach((t, tid) => {
+      if (t.owner !== owner || !this.markets.has(tid)) return;
+      const d = Math.hypot(t.x - at.x, t.y - at.y);
+      if (d <= portD) { port = t; portD = d; }
+    });
+    return (port ? water(port, LAUNCH_TILES) : null) ?? water(at, LAUNCH_TILES);
+  }
+
+  /**
+   * A challenge (shared sport.ts `stakes`: a DUEL, a WAGER, a RACE) passed on someone: each stakes
+   * their commonest letters into the pot, and a ring holds the two of them (or a flag stands for a
+   * race) until one wins or time runs out.
+   */
+  private challenge(id: string, walker: Walker, phrase: Phrase): string {
+    const s = phrase.stats, word = phrase.noun.toUpperCase();
+    const otherId = walker.picked ?? walker.foe ?? "";
+    const other = this.walkers.get(otherId);
+    if (!other || other.master !== null || otherId === id) throw new Error(`Select someone for ${word} first: click a person`);
+    const reach = Math.max(1.5, s.num("placement_range") / TILE_METERS);
+    if (Math.hypot(other.player.x - walker.player.x, other.player.y - walker.player.y) > reach) throw new Error(`Too far away for ${word}`);
+    for (const c of this.challenges.values()) if ([c.a.id, c.b.id].some((x) => x === id || x === otherId)) throw new Error("One of you is already in a challenge");
+    if (other.hamper.untouchable) throw new Error(`${other.player.name.toUpperCase()} cannot be touched just now`);
+    const n = Math.round(Math.min(STAKES_MAX, s.num("stakes")));
+    const mine = takeLetters(walker.letters, n, this.rng), theirs = takeLetters(other.letters, n, this.rng, other.stored ?? 0);
+    this.lettersChanged.add(id); this.lettersChanged.add(otherId);
+    const minutes = s.num("field_duration") || s.num("event_duration") || CHALLENGE_MINUTES;
+    const race = s.num("race_to") > 0;
+    const mid = { x: (walker.player.x + other.player.x) / 2, y: (walker.player.y + other.player.y) / 2 };
+    let at = mid, radius = Math.max(4, (s.num("field_radius") || 40) / TILE_METERS);
+    if (race) {
+      const t = this.rng() * Math.PI * 2, d = Math.min(this.map.size / 3, s.num("race_to") / TILE_METERS);
+      at = nearestWalkable(this.map, { x: Math.min(this.map.size - 2, Math.max(1, mid.x + Math.cos(t) * d)), y: Math.min(this.map.size - 2, Math.max(1, mid.y + Math.sin(t) * d)) });
+      radius = FLAG_TILES;
+    }
+    const until = this.elapsed + minutes * 60;
+    const key = this.addArea({
+      word: phrase.noun, owner: id, x: at.x, y: at.y, radius, until, attack: null, cooldown: 0, friendlyFire: false, spread: 0,
+      effect: null, targets: "all", follows: null, ...AREA_DEFAULTS, baseRadius: radius, lasts: minutes * 60,
+    }, true);
+    this.challenges.set(key, {
+      word: phrase.noun, a: { id, staked: mine, dealt: 0 }, b: { id: otherId, staked: theirs, dealt: 0 },
+      ring: race ? null : { x: at.x, y: at.y, radius }, flag: race ? { x: at.x, y: at.y } : null, until,
+    });
+    const what = race ? `race to the flag ${Math.round(Math.hypot(at.x - mid.x, at.y - mid.y) * TILE_METERS)} m off` : "fight in the ring: blows here cannot kill";
+    this.sendTo(otherId, "notice", `${walker.player.name} challenged you: ${word}! Each staked ${n} letters (${(mine + theirs).length} in the pot); ${what}`);
+    return `${word} with ${other.player.name}: ${(mine + theirs).length} letters in the pot; ${what}`;
+  }
+
+  /** A challenge ends: the winner takes the pot, or with none each gets their stake back. */
+  private settleChallenge(key: string, c: Challenge, winner: string | null, why: string) {
+    this.challenges.delete(key);
+    if (this.areas.has(key)) { this.areas.delete(key); this.state.zones.delete(key); }
+    const word = c.word.toUpperCase();
+    for (const side of [c.a, c.b]) {
+      const w = this.walkers.get(side.id);
+      if (!w) continue;
+      if (winner === null) addLetters(w.letters, side.staked);
+      else if (side.id === winner) this.award(side.id, w, pot(c), `won ${word}`, w.player);
+      this.lettersChanged.add(side.id);
+      const won = side.id === winner;
+      this.sendTo(side.id, "notice", winner === null ? `${word} ${why}: stakes handed back` : `${word}: you ${won ? `won ${pot(c).length} letters` : "lost your stake"} (${why})`);
+    }
+  }
+
+  /** Once a second: duellists are kept in their ring, a racer at the flag wins, time runs out, a voided ring hands the stakes back. */
+  private refereeChallenges() {
+    for (const [key, c] of [...this.challenges]) {
+      const a = this.walkers.get(c.a.id), b = this.walkers.get(c.b.id);
+      if (!a || !b) { this.settleChallenge(key, c, a ? c.a.id : b ? c.b.id : null, "the other is gone"); continue; }
+      if (!this.areas.has(key) && this.elapsed < c.until - 0.5) { this.settleChallenge(key, c, null, "was called off"); continue; }
+      if (c.flag) {
+        const at = [c.a, c.b].filter((x) => { const w = this.walkers.get(x.id)!; return Math.hypot(w.player.x - c.flag!.x, w.player.y - c.flag!.y) <= FLAG_TILES; });
+        if (at.length) { this.settleChallenge(key, c, at[0]!.id, "first to the flag"); continue; }
+      }
+      if (this.elapsed >= c.until) { this.settleChallenge(key, c, c.flag ? null : ahead(c)?.id ?? null, c.flag ? "nobody reached the flag" : ahead(c) ? "more blows landed" : "a draw"); continue; }
+      if (c.ring) for (const w of [a, b]) {
+        const back = backInRing(c.ring, w.player);
+        if (back && !w.flying) { w.player.x = back.x; w.player.y = back.y; w.target = null; w.route = []; }
+      }
+    }
+  }
+
+  /** The challenge two walkers are in together, if any, with its key. */
+  private challengeOf(x: string, y: string): [string, Challenge] | undefined {
+    for (const e of this.challenges) if ((e[1].a.id === x && e[1].b.id === y) || (e[1].a.id === y && e[1].b.id === x)) return e;
+    return undefined;
+  }
+
+  /** FORFEIT, SURRENDER (shared sport.ts `forfeits`): the speller's challenges go to the other side. */
+  private forfeit(id: string): number {
+    let n = 0;
+    for (const [key, c] of [...this.challenges]) {
+      if (c.a.id !== id && c.b.id !== id) continue;
+      this.settleChallenge(key, c, c.a.id === id ? c.b.id : c.a.id, `${this.walkers.get(id)?.player.name ?? "someone"} gave up`);
+      n++;
+    }
+    return n;
+  }
+
+  /** Undoes the damage a walker took in the last `seconds` (shared time.ts `rewound`). */
+  private rewind(w: Walker, seconds: number): boolean {
+    const max = w.unit.body.stats.num("integrity");
+    const hp = rewound(w.past ?? [], w.hp, seconds, max);
+    if (!(hp > w.hp)) return false;
+    w.hp = hp;
+    w.unit.body.integrity = hp;
+    w.player.hp = Math.min(100, Math.ceil((hp / max) * 100));
+    return true;
+  }
+
+  /** A thing or creature passed `ages` (shared time.ts): older at once (more Y, food rots), or younger. */
+  private age(target: string, minutes: number): string | null {
+    const shift = (g: Gear, pid: string | Gear) => {
+      g.born = agedBorn(g.born ?? this.elapsed, this.elapsed, minutes);
+      const p = typeof pid === "string" ? this.producers.get(pid) : this.carried.get(pid);
+      if (p) p.born = g.born;
+    };
+    const gear = this.grounded.get(target);
+    if (gear && !gear.terrain && !gear.fixture) { shift(gear, target); return gear.phrase.toUpperCase(); }
+    const w = this.walkers.get(target);
+    if (!w) return null;
+    const p = this.producers.get(target);
+    if (p) p.born = agedBorn(p.born, this.elapsed, minutes);
+    for (const g of w.gear) shift(g, g);
+    return w.player.name.toUpperCase();
+  }
+
+  /** The speller's most valuable thing on the ground or creature, for a PARADOX (shared idea.ts `swaps_owners`). */
+  private dearest(id: string): { thing?: string; creature?: string; value: number } | null {
+    let best: { thing?: string; creature?: string; value: number } | null = null;
+    this.state.things.forEach((t, tid) => {
+      const g = this.grounded.get(tid);
+      if (t.owner !== id || !g || g.terrain || g.fixture) return;
+      const v = this.statsOf(g).num("value") * t.count + 1e-6 * this.statsOf(g).num("mass");
+      if (!best || v > best.value) best = { thing: tid, value: v };
+    });
+    for (const [cid, c] of this.walkers) {
+      if (c.master !== id) continue;
+      const v = c.unit.body.stats.num("value") * c.player.count + 1e-6 * c.unit.body.stats.num("mass");
+      if (!best || v > best.value) best = { creature: cid, value: v };
+    }
+    return best;
+  }
+
+  /** Hands a thing on the ground to a new owner, with its fields and what it makes. */
+  private giveThing(tid: string, to: string) {
+    const t = this.state.things.get(tid), g = this.grounded.get(tid);
+    if (!t || !g) return;
+    t.owner = to;
+    for (const k of this.radiating.get(g)?.keys ?? []) { const a = this.areas.get(k); if (a) a.owner = to; }
+    const producer = this.producers.get(tid);
+    if (producer) producer.owner = to;
+  }
+
   private steal(id: string, walker: Walker, phrase: Phrase): string {
     const word = phrase.noun.toUpperCase();
     const guarded = this.lawAgainst("theft", id, walker);
@@ -4624,7 +5071,7 @@ export class WorldRoom extends Room {
       did = `${word} for ${minutes} minutes`;
       if (rules && rules.deposits !== 1) this.deposits.scale(this.map.size / 2, this.map.size / 2, this.map.size * 2, this.elapsed, rules.deposits);
       // Weather that strikes (a STORM's lightning, HAIL) does so everywhere while it lasts.
-      if (hasDamage(s) || inflicts(s).length) {
+      if (hasDamage(s) || inflicts(s).length || s.num("waves") > 0 || s.num("meteors") > 0) {
         const area = this.fieldArea(phrase.noun, s, def, id, this.walkers.get(id)?.player ?? { x: 0, y: 0 }, null);
         Object.assign(area, { effect: null, rules: null, until: ends, x: this.map.size / 2, y: this.map.size / 2, radius: this.map.size * 2 });
         this.addArea(area, false);
@@ -4688,6 +5135,17 @@ export class WorldRoom extends Room {
   private kill(id: string, killerId: string) {
     const dead = this.walkers.get(id);
     if (!dead) return;
+    // A blow in a challenge cannot kill (shared sport.ts): left standing at a tenth, the other wins.
+    const ring = this.challenges.size ? this.challengeOf(id, this.payee(killerId)?.[0] ?? killerId) : undefined;
+    if (ring) {
+      const max = dead.unit.body.stats.num("integrity");
+      dead.hp = Math.max(1, max * RING_FLOOR);
+      this.rebuild(dead);
+      dead.player.hp = Math.ceil(RING_FLOOR * 100);
+      this.settleChallenge(ring[0], ring[1], this.payee(killerId)?.[0] ?? killerId, `${dead.player.name} was knocked down`);
+      for (const o of this.walkers.values()) if (o.foe === id && (o.id === killerId || o.master === killerId)) o.foe = null;
+      return;
+    }
     if (this.altars.size) this.sacrificed(dead.unit.body.stats, dead.player); // a death by an altar is an offering (shared faith.ts)
     // A creature's kill is its master's.
     const [payId, killer] = this.payee(killerId) ?? ["", undefined];
@@ -5219,6 +5677,11 @@ export class WorldRoom extends Room {
     spend(walker.letters, give);
     this.award(id, walker, get, "trade");
     const t = this.earn(id, "t".repeat(get.length), market, "trade");
+    // A port's owner takes a toll on others' trades there (shared sea.ts PORT_TOLL).
+    if (market.owner && market.owner !== id) {
+      const toll = this.earn(market.owner, "t".repeat(PORT_TOLL), market, `toll at your ${this.grounded.get(best)?.phrase.toUpperCase() ?? "PORT"}`);
+      if (toll) this.lettersChanged.add(market.owner);
+    }
     this.deed(walker, "trades");
     this.sendTo(id, "letters", walker.letters);
     const done = `Traded ${give.toUpperCase()} for ${get.toUpperCase()}${t ? `, and ${t.toUpperCase()} for the trade` : ""}`;
@@ -5264,6 +5727,7 @@ export class WorldRoom extends Room {
     this.waterers.delete(id);
     this.traps.delete(id);
     this.altars.delete(id);
+    if (!this.grounded.get(id)?.fixture) this.markets.delete(id);
     this.thingEntities.delete(id);
   }
 
@@ -5411,6 +5875,8 @@ export class WorldRoom extends Room {
     const wind = windAt(this.state.seed, this.elapsed);
     this.state.wind = Math.round(wind * 100);
     const raining = wetWeather(this.state.weather);
+    // Time running fast or slow in an area (shared time.ts): what is made, grown and aged there.
+    const timed = [...this.areas.values()].some((a) => a.rules && a.rules.time !== 1) || (this.weatherRules?.time ?? 1) !== 1;
     // Who works where: every walker that works (`labor`), by the side it works for.
     const workers = new Map<string, { x: number; y: number; labor: number }[]>();
     for (const [id, w] of this.walkers) {
@@ -5490,7 +5956,14 @@ export class WorldRoom extends Room {
         p.idle = out.idle;
       }
       // Age: what its owner keeps standing on the ground yields Y.
-      if (ages) rates = { ...rates, y: (rates.y ?? 0) + ageRate(p.spec.age, (this.elapsed - p.born) / 60) };
+      const time = timed ? timeAt(this.rulesAt(at).rules) : 1;
+      if (time !== 1) {
+        rates = Object.fromEntries(Object.entries(rates).map(([ch, r]) => [ch, r * time]));
+        // Ageing runs at the place's time too: it counts as made that much earlier.
+        p.born -= (time - 1) * seconds;
+        if (gear) gear.born = p.born;
+      }
+      if (ages) rates = { ...rates, y: (rates.y ?? 0) + ageRate(p.spec.age, (this.elapsed - p.born) / 60) * (time > 0 ? 1 : 0) };
       p.now = rates;
       const mine = tally.get(ownerId) ?? tally.set(ownerId, { lines: [], letters: new Map(), age: 0, aged: 0 }).get(ownerId)!;
       if (rates.y) { mine.age += rates.y; mine.aged++; }
@@ -5605,6 +6078,8 @@ export class WorldRoom extends Room {
       if (water > 0) this.waterers.set(id, water);
       if (isTrap(stats)) this.traps.set(id, springReach(stats));
       if (stats.num("sacrifice") > 0) this.altars.set(id, stats.num("sacrifice"));
+      // A port (shared sea.ts `docks`) is a market for anyone at it.
+      if (stats.flag("docks") && owner) this.markets.set(id, { stock: MARKET.stock, at: this.elapsed });
     }
     return id;
   }
@@ -5672,6 +6147,7 @@ export class WorldRoom extends Room {
       const at = foe?.player ?? thing;
       if (!at) { w.foe = null; continue; }
       if (!w.hamper.acts || w.fleeing) continue; // stunned, frozen, asleep, afraid or broken
+      if (foe?.hamper.untouchable) { w.foe = null; continue; } // in stasis or a truce: nothing to strike
       if (w.hamper.spares.includes(foeId)) { w.foe = null; continue; } // charmed: will not hurt the charmer
       // A SANCTUARY, a TRUCE: nobody it reaches strikes, or is struck, inside it.
       const truce = this.lawAgainst("attack", id, w) ?? (foe ? this.lawAgainst("attack", foeId, foe, foe.player, id) : null)
@@ -5681,7 +6157,9 @@ export class WorldRoom extends Room {
       const attack = w.unit.attack;
       // Nobody strikes what they cannot see: a RIFLE's 400 m or a JET's 5 km reach only as far as
       // their sight (a TELESCOPE, a RADAR, night and FOG change it).
-      const reach = Math.max(1, Math.min(attack.num("attack_range") / TILE_METERS, Math.max(1.5, w.sight)));
+      // Low gravity carries shots farther, high gravity shorter (shared space.ts `gravityRange`).
+      const range = attack.num("attack_range") > 5 ? attack.num("attack_range") * (w.range ?? 1) : attack.num("attack_range");
+      const reach = Math.max(1, Math.min(range / TILE_METERS, Math.max(1.5, w.sight)));
       if (Math.hypot(at.x - w.player.x, at.y - w.player.y) > reach) {
         w.target = { x: at.x, y: at.y }; // close the distance
         continue;
@@ -5697,10 +6175,13 @@ export class WorldRoom extends Room {
       else {
         const r = strikeUnit(w.unit, foe!.unit, this.rng, moraleAim(w.morale));
         landed = r.hit;
+        // In a challenge (shared sport.ts) every blow between the two counts toward the winner.
+        if (r.hit && this.challenges.size) { const c = this.challengeOf(id, foeId)?.[1]; if (c) (c.a.id === id ? c.a : c.b).dealt += r.damage; }
         this.blow(id, foeId, r, r.on === foe!.unit.body.name ? "" : r.on, ranged);
       }
-      const rate = attack.num("attack_rate") * w.hamper.tempo;
-      w.cooldown = rate > 0 ? 1 / rate : 1 / w.hamper.tempo;
+      const tempo = w.hamper.tempo * Math.max(0.05, w.time ?? 1); // time running fast or slow (shared time.ts)
+      const rate = attack.num("attack_rate") * tempo;
+      w.cooldown = rate > 0 ? 1 / rate : 1 / tempo;
       w.unmasked = this.elapsed + UNMASKED_SECONDS; // whoever strikes shows who they are (shared wear.ts)
       if (attack.flag("single_use") && w.unit.weapon) {
         const spent = w.unit.weapon; // a grenade is gone once thrown
@@ -5712,6 +6193,13 @@ export class WorldRoom extends Room {
       if (foe.unit.dead) this.kill(foeId, id);
       else if (landed) {
         this.hurtWith(foe, given, id, id, true, attack.num("contagion"));
+        // A blow knocks its target back: farther in low gravity (shared space.ts `knockbackOf`).
+        const push = knockbackOf(attack.num("knockback"), foe.gravity ?? 1, this.anchored(foe));
+        if (push > 0) {
+          const dx = foe.player.x - w.player.x, dy = foe.player.y - w.player.y, d = Math.hypot(dx, dy) || 1;
+          const tiles = push / TILE_METERS;
+          stepToward(this.map, foe.player, { x: foe.player.x + (dx / d) * tiles, y: foe.player.y + (dy / d) * tiles }, push, 1, foe.flying, foe.sailing ? SAIL_COST : undefined);
+        }
         // A blade that severs (a SCALPEL, a SURGEON's hand) cuts a graft off with each blow (shared body.ts).
         if (attack.num("severs") > 0) this.sever(foe, attack.num("severs"));
       }
@@ -5732,6 +6220,15 @@ export class WorldRoom extends Room {
         ? { letter: lode.rules!.lode[Math.floor(this.rng() * lode.rules!.lode.length)]!, from: lode.word }
         : this.deposits.gather(w.player.x, w.player.y, this.elapsed, this.rng, growthOf(place.rules), this.helpOf(w));
       if (lode && "from" in got && got.from === lode.word) lode.lodeLeft--;
+      // Fishing with gear lands a catch (shared sea.ts): its fish's first letter, and food.
+      if (got.letter && "from" in got && got.from === "fish" && this.helpOf(w)("fish").some((h) => h.by !== "luck" && h.by !== "bad luck")) {
+        const caught = catchOf(this.fishes ??= fishTable(this.dict), this.dict, this.rng);
+        if (caught) {
+          w.stores.food += caught.food;
+          this.award(id, w, caught.letter, `caught ${caught.fish.toUpperCase()}`, w.player);
+          changed.add(id);
+        }
+      }
       w.stores.food += groundFood(tileAt(this.map, w.player.x, w.player.y)); // a little forage where things grow
       if (got.letter) {
         const from = "from" in got ? got.from : "", site = this.state.things.get(from);
