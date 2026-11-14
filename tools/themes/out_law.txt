@@ -1,0 +1,515 @@
+# Theme 15, law and government (generated from the hand-written examples).
+
+# noun knowledge
+code: placement=region placement_range=200 field_radius=80 field_targets=all field_duration=12 law=theft,attack fine=4 obedience+2
+rule: placement=region placement_range=150 field_radius=50 field_targets=enemies field_duration=8 law=gather fine=2 authority+1
+enactment: placement=region placement_range=200 field_radius=70 field_targets=enemies field_duration=10 law=trade fine=4 authority+2
+criminalization: placement=region placement_range=200 field_radius=100 field_targets=enemies field_duration=8 law=theft,hunt fine=8
+injunction: placement=target placement_range=100 field_radius=25 field_targets=enemies field_duration=5 law=spell,gather
+fiat: placement=map field_radius=ABS field_targets=enemies field_duration=3 law=spell fine=4 authority+4
+proclamation: placement=map field_radius=ABS field_targets=all field_duration=4 law=attack fine=6 morale+1 authority+2
+jurisdiction: placement=self field_radius=100 field_targets=all field_duration=10 law=theft fine=5 authority+3
+poll: placement=map field_radius=ABS field_targets=enemies field_duration=1 read_properties+4 read_inventory=true
+census: placement=map field_radius=ABS field_targets=all field_duration=2 map_reveal=40 read_inventory=true detect_life=500 tax_rate=0.05
+evidence: placement=target placement_range=30 event_target=character read_properties=8 read_inventory=true detect_stealth=6 stealth+-4 event_duration=2
+will: on_owner_death=pass_to_heir survives_death=true letter_refund=0.5 courage+2
+testament: on_owner_death=pass_to_heir survives_death=true letter_refund=0.6 reputation=2
+
+# noun document
+bill: placement=target placement_range=40 event_target=character letter_steal=6 contest_with=charm contested_by=charm event_duration=1
+charter: claim_radius=12 security+2 authority=3 recruit_rate=0.5 faction=charter trade_rate=0.8
+contract: binds=2 bind_penalty=letters,reputation event_duration=12
+covenant: binds=3 bind_penalty=letters,loyalty,morale,reputation event_duration=15 morale+2
+warrant: placement=target placement_range=60 event_target=character inflict_root=15 detect_stealth+8 stealth+-6 contest_with=authority contested_by=stealth event_duration=2
+license: trade_bonus=0.2 counters=ban,prohibition,regulation,ordinance,edict,embargo,curfew
+licence: trade_bonus=0.2 counters=ban,prohibition,regulation,ordinance,edict,embargo,curfew
+permit: counters=ban,ordinance,regulation,curfew,checkpoint,customs,toll trade_bonus=0.1
+authorization: counters=ban,prohibition,regulation,ordinance,edict,curfew,lockdown authority+1
+authorisation: counters=ban,prohibition,regulation,ordinance,edict,curfew,lockdown authority+1
+passport: counters=border,customs,toll,checkpoint,embargo,tariff,lockdown,exile,deportation terrain_ignored=wall speed_land*1.1
+patent: placement=self field_radius=200 field_targets=enemies field_duration=10 law=spell fine=2 produce_T*1.5
+mandate: authority=4 command_limit=15 morale+2 obedience+2
+ballot: placement=self field_radius=40 field_targets=owned field_duration=3 morale+2 loyalty+2 authority+1
+indictment: placement=target placement_range=40 event_target=character inflict_silence=20 reputation+-5 contest_with=authority contested_by=charm event_duration=1
+impeachment: placement=target placement_range=60 event_target=character negates=authority,command_limit,tax_rate contest_with=authority contested_by=charm event_duration=1
+concession: placement=self field_radius=40 field_targets=all field_duration=10 trade_rate=0.7 produce_T*1.5 charm+2
+summons: placement=target placement_range=100 event_target=character moves_target=60 inflict_root=5 contest_with=authority contested_by=stealth event_duration=1
+subpoena: placement=target placement_range=150 event_target=character moves_target=80 read_properties=5 inflict_silence=5 contest_with=authority contested_by=stealth event_duration=1
+writ: placement=target placement_range=60 event_target=character inflict_root=10 letter_steal=4 contest_with=authority contested_by=charm event_duration=1
+arraignment: placement=target placement_range=30 event_target=character inflict_root=15 moves_target=20 contest_with=authority contested_by=charm event_duration=1
+escrow: storage_letters=500 security=9 locks=true survives_death=true letter_refund=1
+judgement: placement=target placement_range=30 event_target=character inflict_root=15 letter_steal=10 dmg_holy=30 contest_with=authority contested_by=charm event_duration=1
+
+# noun event
+conviction: placement=target placement_range=30 event_target=character inflict_root=30 inflict_silence=15 letter_steal=5 contest_with=authority contested_by=charm event_duration=1
+judgment: placement=target placement_range=30 event_target=character inflict_root=15 letter_steal=10 contest_with=authority contested_by=charm event_duration=1
+detention: placement=target placement_range=20 event_target=character inflict_root=30 contest_with=authority contested_by=stealth event_duration=1
+imprisonment: placement=target placement_range=20 event_target=character inflict_root=60 inflict_silence=30 contest_with=authority contested_by=stealth event_duration=1
+confinement: placement=target placement_range=20 event_target=character inflict_root=45 sight_range*0.3 contest_with=authority contested_by=courage event_duration=1
+custody: placement=target placement_range=20 event_target=character inflict_root=25 moves_target=20 contest_with=authority contested_by=stealth event_duration=1
+punishment: placement=target placement_range=30 event_target=character inflict_stun=5 inflict_root=20 letter_steal=6 morale+-2 contest_with=authority contested_by=courage event_duration=1
+execution: placement=target placement_range=20 event_target=character destroys_target=true contest_with=authority contested_by=charm cast_time=5 event_duration=1
+banishment: placement=target placement_range=40 event_target=character inflict_fear=60 contest_with=authority contested_by=courage event_duration=1
+deportation: placement=target placement_range=60 event_target=character inflict_fear=45 moves_target=-150 contest_with=authority contested_by=courage event_duration=1
+lawsuit: placement=target placement_range=60 event_target=character letter_steal=15 contest_with=intelligence contested_by=charm event_duration=1
+trial: placement=target placement_range=30 event_target=character inflict_root=20 inflict_silence=10 read_properties=5 contest_with=authority contested_by=charm event_duration=2
+tribunal: placement=target placement_range=40 event_target=character inflict_root=30 letter_steal=8 contest_with=authority contested_by=charm event_duration=2
+acquittal: placement=target placement_range=50 event_target=character effect_status=root,stun,silence,fear restores=40 reputation+2 event_duration=1 counters=verdict,sentence,conviction,indictment,trial,arrest
+clemency: placement=target placement_range=60 event_target=character effect_status=root,silence,fear restores=60 morale+2 event_duration=1 counters=sentence,execution,punishment,banishment,exile
+parole: placement=target placement_range=40 event_target=character effect_status=root,silence speed_land*0.7 event_duration=5 counters=imprisonment,detention,confinement,custody
+probation: placement=target placement_range=40 event_target=character effect_status=root speed_land*0.8 stealth+-3 event_duration=8 counters=detention,custody
+appeal: placement=self field_radius=40 field_duration=1 effect_status=root,silence counters=verdict,sentence,conviction,judgment,judgement,punishment,indictment,fine
+election: placement=map field_radius=ABS field_targets=owned field_duration=5 authority+4 morale+2 loyalty+2 recruit_rate+1 counters=dictatorship,tyranny,coup,regime
+reelection: placement=map field_radius=ABS field_targets=owned field_duration=8 authority+3 loyalty+3 extends_duration=1.5
+referendum: placement=map field_radius=ABS field_targets=all field_duration=3 morale+2 counters=law,decree,edict,statute,ordinance,regulation,tax
+campaign: placement=region placement_range=200 field_radius=120 field_targets=all field_duration=6 charm+3 recruit_rate+2 reputation=5
+protest: placement=region placement_range=100 event_radius=60 event_duration=4 law=trade,gather loudness+5 morale+1 counters=law,decree,tax,curfew,censorship
+strike: placement=region placement_range=100 event_radius=80 event_duration=5 law=gather labor*0 produce_A*0 produce_E*0 produce_T*0 build_speed*0.2 counters=tax,levy,duty
+revolution: placement=map field_radius=ABS field_targets=all field_duration=5 sets_hostile=true authority+-6 obedience+-4 morale+2 counters=monarchy,dictatorship,tyranny,regime,oligarchy,empire,kingdom,tax,curfew,law,decree
+treason: placement=target placement_range=60 event_target=character loyalty+-8 transfers_ownership=true contest_with=charm contested_by=loyalty event_duration=1
+assassination: placement=target placement_range=40 event_target=character destroys_target=true contest_with=stealth contested_by=detect_stealth cast_time=3 event_duration=1
+secession: placement=self field_radius=150 field_targets=all field_duration=10 frees_target=true claim_radius=30 counters=empire,kingdom,federation,union,confederation,dominion
+independence: placement=self field_radius=100 field_targets=owned field_duration=10 morale+3 immune_charm=true counters=colony,dominion,empire,annexation,tax,tribute
+emancipation: placement=region field_radius=100 field_duration=1 frees_target=true effect_status=root,charm counters=enslave,slavery,serfdom,imprisonment,custody
+censorship: placement=region placement_range=200 field_radius=100 field_targets=enemies field_duration=6 law=spell fine=5 silences=100
+surveillance: placement=region placement_range=300 field_radius=150 field_targets=enemies field_duration=10 detect_stealth=8 read_inventory=true read_properties=4 stealth+-4 alarm=true
+investigation: placement=target placement_range=60 event_target=character read_properties=8 read_inventory=true detect_stealth=8 tracking=8 event_duration=3
+inspection: placement=target placement_range=20 event_target=structure read_properties=6 read_inventory=true security+-3 event_duration=2
+audit: placement=target placement_range=60 event_target=character read_inventory=true letter_steal=8 contest_with=intelligence contested_by=charm event_duration=1
+confession: placement=target placement_range=20 event_target=character read_properties=10 read_inventory=true stealth+-8 contest_with=charm contested_by=courage event_duration=1
+plea: placement=self field_radius=20 field_duration=1 charm+3 counters=sentence,verdict,punishment,fine
+
+# noun possession
+lease: claim_radius=5 persistence=20 security+1 produce_T*1.2
+property: claim_radius=6 security+3 lockable=true
+ownership: claim_radius=8 security+4 locks=true
+estate: mass=3000000 footprint=40 height=10 integrity=30000 material=stone,wood portable=false enterable=true occupants=40 lockable=true claim_radius=25 security=5 storage_letters=1500 authority=2 needs_foundation=true
+inheritance: on_owner_death=pass_to_heir survives_death=true letter_refund=1 claim_radius=5
+taxation: placement=region placement_range=200 field_radius=120 field_targets=enemies field_duration=10 tax_rate=0.3 morale+-1
+withholding: placement=self field_radius=60 field_targets=enemies field_duration=8 tax_rate=0.4 produce_T*0.5
+excise: placement=region field_radius=100 field_targets=enemies field_duration=10 tax_rate=0.2 trade_rate=1.5
+fee: placement=target placement_range=30 field_radius=10 field_targets=enemies field_duration=10 law=gather,trade fine=3
+bail: placement=target placement_range=40 event_target=character effect_status=root,silence restores=20 event_duration=1 counters=detention,custody,arrest,imprisonment
+claim: claim_radius=10 security+1 authority=1
+sovereignty: claim_radius=40 authority=6 command_limit=20 immune_charm=true counters=annexation,colony,empire,dominion
+lordship: claim_radius=20 authority=5 command_limit=15 tax_rate=0.1
+rent: placement=self field_radius=30 field_targets=enemies field_duration=15 tax_rate=0.3
+mortgage: claim_radius=8 storage_letters=300 letter_steal=2 tax_rate=0.1 persistence=30
+debt: placement=target placement_range=60 event_target=character letter_steal=12 morale+-2 contest_with=authority contested_by=charm event_duration=1
+lien: placement=target placement_range=30 event_target=structure locks=true transfers_ownership=true contest_with=authority contested_by=security event_duration=1
+copyright: placement=self field_radius=300 field_targets=enemies field_duration=10 law=spell fine=3
+trademark: placement=self field_radius=150 field_targets=enemies field_duration=10 law=trade fine=2 reputation=3
+royalty: placement=self field_radius=200 field_targets=enemies field_duration=10 tax_rate=0.1 produce_R*2
+privilege: authority+2 charm+2 immune_silence=true counters=fine,fee,toll,tax
+immunity: immune_root=true immune_silence=true counters=arrest,warrant,indictment,subpoena,summons,detention,custody,lawsuit,sentence
+
+# noun group
+legislature: placement=region field_radius=150 field_targets=owned field_duration=12 authority+3 command_limit+10 law=theft fine=4
+governance: placement=region field_radius=120 field_targets=owned field_duration=12 authority+2 obedience+2 tax_rate=0.1 build_speed*1.3
+bureaucracy: placement=region placement_range=200 field_radius=120 field_targets=enemies field_duration=10 build_speed*0.3 speed_land*0.8 trade_rate=1.5 fine=2 law=trade
+bureau: placement=region field_radius=60 field_targets=owned field_duration=10 authority+1 read_properties+3 detect_stealth+2
+agency: placement=region field_radius=80 field_targets=owned field_duration=10 detect_stealth+4 read_properties+3 command_limit+5
+ministry: placement=region field_radius=100 field_targets=owned field_duration=12 authority+2 command_limit+8 tax_rate=0.1
+senate: placement=region field_radius=150 field_targets=owned field_duration=12 authority+3 command_limit+15 morale+1 counters=dictatorship,tyranny
+parliament: placement=region field_radius=200 field_targets=owned field_duration=12 authority+3 command_limit+20 loyalty+2 counters=monarchy,dictatorship,tyranny
+congress: placement=map field_radius=ABS field_targets=owned field_duration=10 authority+2 command_limit+15 loyalty+1
+council: placement=self field_radius=60 field_targets=owned field_duration=10 intelligence+2 authority+2 command_limit+8
+jury: placement=target placement_range=30 event_target=character inflict_root=20 letter_steal=6 contest_with=charm contested_by=charm event_duration=1
+union: binds=6 bind_penalty=letters,loyalty event_duration=12 labor+2 morale+2
+confederation: binds=6 bind_penalty=letters,reputation event_duration=10
+compact: binds=2 bind_penalty=letters,reputation event_duration=8
+agreement: binds=2 bind_penalty=reputation event_duration=6
+promise: binds=2 bind_penalty=reputation,morale event_duration=5
+bond: binds=2 bind_penalty=loyalty,letters event_duration=15 loyalty+3
+peace: placement=region field_radius=200 field_targets=all field_duration=8 law=attack morale+2 regeneration+1 counters=war,battle,feud,riot,invasion,siege,skirmish
+pledge: binds=2 bind_penalty=letters,loyalty event_duration=6 loyalty+2
+monarchy: placement=region field_radius=200 field_targets=all field_duration=15 authority+6 command_limit+30 tax_rate=0.25 obedience+3 counters=democracy,republic,anarchy
+oligarchy: placement=region field_radius=150 field_targets=enemies field_duration=12 tax_rate=0.35 trade_rate=1.5 authority+3 morale+-1 counters=democracy
+theocracy: placement=region field_radius=150 field_targets=all field_duration=15 law=spell fine=3 tax_rate=0.1 authority+4 dmg_holy*1.5 heals+1 morale+1 produce_Q*2
+autocracy: placement=region field_radius=150 field_targets=all field_duration=12 authority+6 command_limit+25 tax_rate=0.3 morale+-2 counters=democracy,republic
+junta: placement=region field_radius=120 field_targets=all field_duration=8 law=gather,trade fine=5 authority+5 command_limit+20 summons=soldier summon_count=4 summon_owned=true
+regime: placement=region field_radius=150 field_targets=all field_duration=10 authority+4 tax_rate=0.2 obedience+3 morale+-1
+republic: placement=region field_radius=150 field_targets=owned field_duration=15 morale+3 loyalty+3 authority+2 trade_rate=0.8 counters=monarchy,tyranny,dictatorship
+nation: placement=region field_radius=250 field_targets=owned field_duration=15 claim_radius=40 loyalty+3 morale+2 command_limit+20
+papacy: authority=7 command_limit=30 dmg_holy+50 recruit_rate=1 tax_rate=0.1 faction=church
+cartel: placement=region field_radius=200 field_targets=enemies field_duration=10 trade_rate=3 tax_rate=0.2 faction=cartel
+syndicate: placement=region field_radius=150 field_targets=enemies field_duration=10 tax_rate=0.3 letter_steal+2 faction=syndicate
+mafia: placement=region field_radius=120 field_targets=enemies field_duration=10 tax_rate=0.4 intimidation=6 letter_steal+3 law=attack fine=10 faction=mafia
+mob: pack_size=15 mass=75 integrity=80 alive=true sentient=true hands=true speech=true speed_land=5 aggression=7 obedience=2 dmg_blunt=15 attack_rate=1 morale=6 fear_aura=3 food_need=0.03
+gang: pack_size=6 mass=75 integrity=110 alive=true sentient=true intelligence=4 loyalty=6 hands=true speech=true speed_land=6 aggression=6 dmg_slash=25 attack_rate=1 letter_steal=3 intimidation=4 faction=gang food_need=0.03
+tribe: binds=5 bind_penalty=loyalty,reputation faction=tribe morale+2 command_limit+10
+dynasty: on_owner_death=pass_to_heir survives_death=true authority=5 command_limit=20 claim_radius=15 tax_rate=0.1
+regency: placement=region field_radius=150 field_targets=owned field_duration=10 authority+4 command_limit+15
+constabulary: pack_size=6 mass=85 integrity=200 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=6 authority=3 detect_stealth=5 inflict_root=3 dmg_blunt=30 attack_rate=1 counters=thief,riot food_need=0.04
+caucus: binds=4 bind_penalty=reputation,loyalty event_duration=6 authority+1
+lobby: placement=self field_radius=40 field_targets=all field_duration=6 charm+4 trade_rate=0.8 authority+1
+
+# noun place
+kingdom: placement=region field_radius=300 field_targets=owned field_duration=20 claim_radius=50 authority+4 command_limit+30 tax_rate=0.2
+empire: placement=region field_radius=500 field_targets=owned field_duration=20 claim_radius=80 authority+5 command_limit+60 tax_rate=0.25 counters=republic,rebellion
+realm: placement=region field_radius=250 field_targets=owned field_duration=15 claim_radius=40 authority+3 command_limit+20
+dominion: placement=region field_radius=200 field_targets=all field_duration=15 claim_radius=35 authority+4 tax_rate=0.2 obedience+2
+domain: claim_radius=20 placement=region field_radius=80 field_targets=owned field_duration=15 security+2 authority+2
+territory: claim_radius=25 placement=region field_radius=100 field_targets=owned field_duration=15 security+1 morale+1
+province: claim_radius=30 placement=region field_radius=120 field_targets=owned field_duration=15 tax_rate=0.15 authority+2
+county: claim_radius=20 placement=region field_radius=80 field_targets=owned field_duration=15 tax_rate=0.1 authority+1
+district: claim_radius=15 placement=region field_radius=60 field_targets=all field_duration=15 law=theft fine=3
+state: placement=region field_radius=250 field_targets=owned field_duration=15 claim_radius=40 authority+3 command_limit+20 tax_rate=0.15 law=theft fine=5
+colony: claim_radius=25 placement=region field_radius=100 field_targets=owned field_duration=15 produce_T*1.5 labor*1.5 tax_rate=0.2 recruit_rate+1
+frontier: placement=region field_radius=200 field_targets=all field_duration=10 deposit_factor=2 tax_rate*0 courage+2 speed_land*1.1
+parish: placement=region field_radius=60 field_targets=owned field_duration=15 heals+1 morale+1 tax_rate=0.05 produce_Q*1.5
+diocese: placement=region field_radius=150 field_targets=all field_duration=15 tax_rate=0.1 res_unholy+0.3 produce_Q*1.5
+caliphate: placement=region field_radius=300 field_targets=all field_duration=15 claim_radius=50 authority+5 command_limit+40 tax_rate=0.1 law=theft fine=5
+turf: claim_radius=10 placement=self field_radius=40 field_targets=owned field_duration=10 courage+2 morale+1 tax_rate=0.1
+fief: claim_radius=15 tax_rate=0.15 authority=2 labor+1
+manor: mass=2000000 footprint=30 height=12 integrity=25000 material=stone portable=false enterable=true occupants=30 lockable=true claim_radius=20 security=5 tax_rate=0.1 food_output=2 needs_foundation=true
+
+# noun person
+marshal: mass=85 integrity=220 alive=true sentient=true hands=true speech=true intelligence=6 loyalty=8 courage=8 speed_land=6 authority=6 command_limit=15 detect_stealth=6 tracking=6 dmg_pierce=60 attack_rate=1 attack_range=40 inflict_root=5 counters=outlaw,bandit,fugitive food_need=0.04
+warden: mass=85 integrity=200 alive=true sentient=true hands=true speech=true intelligence=6 loyalty=7 speed_land=4 authority=5 security+5 detect_stealth=5 alarm=true inflict_root=6 dmg_blunt=30 attack_rate=1 counters=prisoner,inmate,convict,escape food_need=0.03
+jailer: mass=85 integrity=180 alive=true sentient=true hands=true speech=true intelligence=5 loyalty=6 speed_land=4 authority=3 security+4 alarm=true inflict_root=8 dmg_blunt=25 attack_rate=1 counters=prisoner,inmate,escape food_need=0.03
+constable: mass=85 integrity=200 alive=true sentient=true hands=true speech=true intelligence=6 loyalty=7 courage=7 speed_land=5 authority=4 detect_stealth=5 inflict_root=4 dmg_blunt=30 attack_rate=1 counters=thief,vandal food_need=0.04
+chancellor: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=8 loyalty=6 speed_land=3 authority=7 command_limit=30 tax_rate=0.15 food_need=0.03
+delegate: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=6 speed_land=4 charm=4 trade_bonus=0.1 reputation=2 food_need=0.03
+regent: mass=75 integrity=100 alive=true sentient=true hands=true speech=true intelligence=7 loyalty=6 speed_land=3 authority=7 command_limit=30 tax_rate=0.1 on_owner_death=pass_to_heir food_need=0.03
+vassal: mass=80 integrity=150 alive=true sentient=true hands=true speech=true intelligence=5 loyalty=8 obedience=8 speed_land=4 labor=2 dmg_slash=30 attack_rate=1 produce_T=0.2 food_need=0.03
+serf: mass=65 integrity=80 alive=true sentient=true hands=true speech=true intelligence=4 loyalty=5 obedience=7 speed_land=4 labor=4 harvest_bonus=1.3 food_need=0.02
+voter: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=5 speed_land=4 loyalty=5 morale=6 food_need=0.03
+citizen: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=5 loyalty=6 speed_land=5 labor=2 morale=6 food_need=0.03
+proxy: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=6 loyalty=7 speed_land=5 stealth=4 untargetable=false read_properties=3 food_need=0.03
+auditor: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=8 speed_land=3 read_inventory=true read_properties=6 letter_steal=3 food_need=0.03
+collector: mass=80 integrity=110 alive=true sentient=true hands=true speech=true intelligence=6 speed_land=5 tax_rate=0.15 letter_steal=4 intimidation=3 food_need=0.03
+aristocrat: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=7 speed_land=4 authority=4 charm=5 tax_rate=0.1 storage_letters=300 value=500 food_need=0.04
+convict: mass=80 integrity=140 alive=true sentient=true hands=true speech=true intelligence=5 loyalty=2 speed_land=5 courage=7 dmg_blunt=30 attack_rate=1 letter_steal=2 stealth=4 food_need=0.03
+prisoner: mass=70 integrity=100 alive=true sentient=true hands=true speech=true intelligence=5 loyalty=3 speed_land=0.5 morale=2 labor=2 food_need=0.02
+inmate: mass=75 integrity=110 alive=true sentient=true hands=true speech=true intelligence=5 loyalty=3 speed_land=2 labor=3 morale=3 dmg_blunt=20 attack_rate=1 food_need=0.02
+suspect: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=6 loyalty=3 speed_land=6 stealth=5 evasion=0.2 food_need=0.03
+fugitive: mass=70 integrity=90 alive=true sentient=true hands=true speech=true intelligence=6 loyalty=3 speed_land=8 agility=8 stealth=7 evasion=0.3 immune_root=true food_need=0.03
+witness: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=6 speed_land=4 sight_range=60 read_properties=5 detect_stealth=4 alarm=true food_need=0.03
+defendant: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=6 speed_land=3 charm=3 courage=4 food_need=0.03
+plaintiff: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=6 speed_land=4 letter_steal=5 charm=3 food_need=0.03
+hostage: mass=70 integrity=80 alive=true sentient=true hands=true speech=true intelligence=5 loyalty=4 speed_land=1 morale=1 value=200 food_need=0.02
+refugee: mass=60 integrity=70 alive=true sentient=true hands=true speech=true intelligence=5 loyalty=6 speed_land=4 morale=3 labor=2 recruit_rate=0.2 food_need=0.02
+juror: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=6 speed_land=4 read_properties=4 food_need=0.03
+squire: mass=75 integrity=200 alive=true sentient=true hands=true speech=true intelligence=5 loyalty=8 courage=6 speed_land=5 armor=10 dmg_slash=35 attack_rate=1 carry_capacity=60 training=3 food_need=0.03
+herald: mass=70 integrity=90 alive=true sentient=true hands=true speech=true intelligence=6 loyalty=8 speed_land=6 loudness=6 morale+2 authority=2 map_reveal=10 food_need=0.03
+treasurer: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=8 loyalty=7 speed_land=3 storage_letters=500 security+4 trade_bonus=0.15 food_need=0.03
+secretary: mass=70 integrity=90 alive=true sentient=true hands=true speech=true intelligence=7 loyalty=7 speed_land=4 craft_slots=2 build_speed=1.3 read_properties=2 food_need=0.03
+sergeant: mass=90 integrity=260 alive=true sentient=true hands=true speech=true intelligence=5 loyalty=8 courage=8 speed_land=5 authority=3 command_limit=10 dmg_pierce=60 attack_rate=1.5 attack_range=200 morale+2 training=4 food_need=0.04
+deputy: mass=85 integrity=200 alive=true sentient=true hands=true speech=true intelligence=5 loyalty=7 courage=7 speed_land=6 authority=3 detect_stealth=4 dmg_pierce=50 attack_rate=1 attack_range=40 inflict_root=3 counters=thief,outlaw food_need=0.04
+detective: mass=75 integrity=110 alive=true sentient=true hands=true speech=true intelligence=9 loyalty=6 speed_land=5 detect_stealth=8 tracking=9 read_properties=7 read_inventory=true sight_range=60 counters=thief,spy,smuggler,fugitive food_need=0.03
+investigator: mass=75 integrity=100 alive=true sentient=true hands=true speech=true intelligence=8 loyalty=6 speed_land=5 detect_stealth=7 tracking=7 read_properties=6 read_inventory=true food_need=0.03
+cop: mass=85 integrity=200 alive=true sentient=true hands=true speech=true intelligence=5 loyalty=7 courage=6 speed_land=6 authority=3 detect_stealth=5 dmg_pierce=40 attack_rate=1 attack_range=30 inflict_root=3 counters=thief,riot,robber food_need=0.04
+lawman: mass=85 integrity=220 alive=true sentient=true hands=true speech=true intelligence=6 loyalty=8 courage=8 speed_land=6 authority=4 tracking=6 dmg_pierce=60 attack_rate=1 attack_range=40 inflict_root=4 counters=outlaw,bandit food_need=0.04
+trooper: mass=90 integrity=220 alive=true sentient=true hands=true speech=true intelligence=5 loyalty=7 courage=7 speed_land=7 authority=3 dmg_pierce=50 attack_rate=1.2 attack_range=60 inflict_root=3 food_need=0.04
+informant: mass=70 integrity=80 alive=true sentient=true hands=true speech=true intelligence=6 loyalty=2 speed_land=5 stealth=6 read_properties=5 read_inventory=true food_need=0.03
+traitor: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=7 loyalty=0 speed_land=5 stealth=5 letter_steal=6 read_inventory=true food_need=0.03
+loyalist: mass=80 integrity=150 alive=true sentient=true hands=true speech=true intelligence=5 loyalty=10 courage=7 speed_land=5 dmg_slash=30 attack_rate=1 immune_charm=true food_need=0.03
+rebel: mass=75 integrity=150 alive=true sentient=true hands=true speech=true intelligence=6 loyalty=6 courage=8 speed_land=6 stealth=4 dmg_pierce=45 attack_rate=1 attack_range=100 counters=tax,curfew,regime,tyranny,dictatorship food_need=0.03
+anarchist: mass=70 integrity=110 alive=true sentient=true hands=true speech=true intelligence=6 loyalty=3 obedience=0 speed_land=6 dmg_blast=60 attack_rate=0.3 attack_area=5 immune_charm=true counters=law,tax,curfew,decree food_need=0.03
+bandit: mass=80 integrity=150 alive=true sentient=true hands=true speech=true intelligence=5 loyalty=3 aggression=6 speed_land=6 stealth=4 dmg_slash=40 attack_rate=1 letter_steal=6 habitat=hill,forest food_need=0.03
+smuggler: mass=75 integrity=110 alive=true sentient=true hands=true speech=true intelligence=7 loyalty=3 speed_land=6 stealth=7 storage_letters=150 trade_bonus=0.3 counters=embargo,customs,tariff,blockade food_need=0.03
+partisan: mass=75 integrity=150 alive=true sentient=true hands=true speech=true intelligence=6 loyalty=9 courage=8 speed_land=6 stealth=6 camouflage=forest,hill dmg_pierce=45 attack_rate=1 attack_range=80 food_need=0.03
+politician: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=7 loyalty=2 speed_land=4 charm=7 authority=3 recruit_rate=0.5 trade_bonus=0.1 food_need=0.03
+statesman: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=8 loyalty=7 speed_land=3 charm=6 authority=5 command_limit=15 reputation=5 food_need=0.03
+legislator: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=7 speed_land=3 authority=4 command_limit=10 field_radius=20 field_targets=enemies law=trade fine=2 food_need=0.03
+lawmaker: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=7 speed_land=3 authority=4 command_limit=10 field_radius=20 field_targets=enemies law=gather fine=2 food_need=0.03
+ombudsman: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=7 speed_land=3 read_properties=6 counters=corruption,bribe,bribery,fraud food_need=0.03
+prefect: mass=75 integrity=100 alive=true sentient=true hands=true speech=true intelligence=7 loyalty=7 speed_land=4 authority=5 command_limit=15 tax_rate=0.1 food_need=0.03
+alderman: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=6 speed_land=4 authority=3 command_limit=8 morale+1 food_need=0.03
+councillor: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=7 speed_land=4 authority=3 command_limit=8 read_properties=2 food_need=0.03
+commissioner: mass=75 integrity=100 alive=true sentient=true hands=true speech=true intelligence=7 loyalty=6 speed_land=4 authority=6 command_limit=20 detect_stealth=4 food_need=0.03
+arbitrator: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=8 speed_land=3 charm=5 field_radius=15 field_targets=all law=attack food_need=0.03
+mediator: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=7 speed_land=4 charm=6 field_radius=15 field_targets=all law=attack morale+1 food_need=0.03
+arbiter: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=8 speed_land=3 authority=5 field_radius=20 field_targets=all law=attack,theft fine=3 food_need=0.03
+barrister: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=8 speed_land=4 charm=6 read_properties=4 counters=verdict,sentence,indictment,lawsuit food_need=0.03
+solicitor: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=8 speed_land=4 charm=5 trade_bonus=0.1 counters=lawsuit,lien,debt food_need=0.03
+counsel: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=8 speed_land=4 charm=5 read_properties=3 counters=indictment,lawsuit,verdict food_need=0.03
+advocate: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=7 speed_land=4 charm=6 morale+1 counters=sentence,verdict,conviction food_need=0.03
+
+# noun worker
+prosecutor: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=8 loyalty=6 speed_land=4 authority=5 read_properties=6 letter_steal=4 counters=defendant,criminal,thief,fugitive,smuggler food_need=0.03
+bailiff: mass=90 integrity=200 alive=true sentient=true hands=true speech=true intelligence=5 loyalty=7 courage=7 speed_land=5 authority=4 inflict_root=6 dmg_blunt=30 attack_rate=1 letter_steal=5 counters=debt,squatter food_need=0.04
+magistrate: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=8 loyalty=6 speed_land=3 authority=6 read_properties=5 field_radius=12 field_targets=all law=theft,attack fine=3 food_need=0.03
+diplomat: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=8 speed_land=4 charm=7 trade_bonus=0.2 immune_root=true field_radius=10 field_targets=all law=attack food_need=0.03
+consul: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=7 speed_land=4 charm=5 authority=5 command_limit=15 trade_bonus=0.15 food_need=0.03
+envoy: mass=70 integrity=90 alive=true sentient=true hands=true speech=true intelligence=7 speed_land=6 charm=6 untargetable=false immune_root=true trade_bonus=0.15 range=200 food_need=0.03
+ambassador: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=8 speed_land=4 charm=8 authority=3 trade_bonus=0.25 immune_root=true immune_silence=true field_radius=15 field_targets=all law=attack reputation=5 food_need=0.03
+bureaucrat: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=6 speed_land=3 authority=2 build_speed=0.7 field_radius=15 field_targets=enemies trade_rate=1.3 law=trade fine=1 food_need=0.03
+notary: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=7 speed_land=3 security+3 locks=true read_properties=3 food_need=0.03
+taxman: mass=80 integrity=110 alive=true sentient=true hands=true speech=true intelligence=6 speed_land=5 tax_rate=0.2 letter_steal=5 read_inventory=true reputation=-3 food_need=0.03
+lawyer: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=8 speed_land=4 charm=6 read_properties=4 letter_steal=3 counters=verdict,sentence,lawsuit,indictment,warrant,fine food_need=0.03
+attorney: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=8 speed_land=4 charm=6 read_properties=4 letter_steal=3 counters=verdict,sentence,lawsuit,indictment,conviction food_need=0.03
+official: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=6 speed_land=4 authority=4 command_limit=8 tax_rate=0.05 food_need=0.03
+inspector: mass=75 integrity=110 alive=true sentient=true hands=true speech=true intelligence=8 speed_land=4 authority=3 detect_stealth=7 read_properties=6 read_inventory=true counters=smuggler,fraud,forgery,counterfeit food_need=0.03
+justice: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=9 loyalty=7 speed_land=3 authority=8 read_properties=7 field_radius=15 field_targets=all law=theft,attack fine=5 food_need=0.03
+
+# noun leader
+monarch: mass=80 integrity=120 alive=true sentient=true hands=true speech=true intelligence=7 speed_land=4 authority=9 command_limit=50 tax_rate=0.2 recruit_rate=1 claim_radius=20 morale+2 on_owner_death=pass_to_heir food_need=0.04
+sultan: mass=85 integrity=120 alive=true sentient=true hands=true speech=true intelligence=7 speed_land=4 authority=9 command_limit=50 tax_rate=0.25 storage_letters=2000 claim_radius=20 charm=4 on_owner_death=pass_to_heir food_need=0.04
+tsar: mass=90 integrity=130 alive=true sentient=true hands=true speech=true intelligence=7 speed_land=4 authority=10 command_limit=60 tax_rate=0.3 claim_radius=25 fear_aura=4 on_owner_death=pass_to_heir food_need=0.04
+czar: mass=90 integrity=130 alive=true sentient=true hands=true speech=true intelligence=7 speed_land=4 authority=10 command_limit=60 tax_rate=0.3 claim_radius=25 fear_aura=4 on_owner_death=pass_to_heir food_need=0.04
+viceroy: mass=80 integrity=110 alive=true sentient=true hands=true speech=true intelligence=7 loyalty=7 speed_land=4 authority=7 command_limit=30 tax_rate=0.15 claim_radius=15 food_need=0.04
+baron: mass=85 integrity=150 alive=true sentient=true hands=true speech=true intelligence=6 speed_land=4 authority=5 command_limit=15 tax_rate=0.15 claim_radius=10 food_need=0.04
+earl: mass=80 integrity=140 alive=true sentient=true hands=true speech=true intelligence=6 speed_land=4 authority=5 command_limit=18 tax_rate=0.12 claim_radius=12 food_need=0.04
+duke: mass=80 integrity=150 alive=true sentient=true hands=true speech=true intelligence=7 speed_land=4 authority=6 command_limit=25 tax_rate=0.15 claim_radius=15 charm=3 food_need=0.04
+duchess: mass=65 integrity=110 alive=true sentient=true hands=true speech=true intelligence=7 speed_land=4 authority=6 command_limit=25 tax_rate=0.12 claim_radius=15 charm=5 food_need=0.03
+countess: mass=65 integrity=100 alive=true sentient=true hands=true speech=true intelligence=7 speed_land=4 authority=5 command_limit=15 charm=5 claim_radius=10 food_need=0.03
+marquis: mass=80 integrity=130 alive=true sentient=true hands=true speech=true intelligence=7 speed_land=4 authority=5 command_limit=18 claim_radius=12 food_need=0.04
+lord: mass=80 integrity=150 alive=true sentient=true hands=true speech=true intelligence=6 speed_land=4 authority=6 command_limit=20 tax_rate=0.15 claim_radius=12 food_need=0.04
+emperor: mass=85 integrity=140 alive=true sentient=true hands=true speech=true intelligence=8 speed_land=4 authority=10 command_limit=100 tax_rate=0.3 recruit_rate=2 claim_radius=40 fear_aura=3 morale+3 on_owner_death=pass_to_heir food_need=0.04
+empress: mass=65 integrity=130 alive=true sentient=true hands=true speech=true intelligence=8 speed_land=4 authority=10 command_limit=90 tax_rate=0.25 charm=6 recruit_rate=2 claim_radius=40 on_owner_death=pass_to_heir food_need=0.03
+prince: mass=75 integrity=130 alive=true sentient=true hands=true speech=true intelligence=6 speed_land=5 authority=6 command_limit=20 charm=5 claim_radius=10 survives_death=true food_need=0.04
+princess: mass=60 integrity=110 alive=true sentient=true hands=true speech=true intelligence=7 speed_land=5 authority=6 command_limit=15 charm=7 recruit_rate=0.5 food_need=0.03
+pope: mass=80 integrity=120 alive=true sentient=true hands=true speech=true intelligence=8 speed_land=3 authority=9 command_limit=40 recruit_rate=2 heals=4 dmg_holy=80 attack_rate=0.5 res_unholy=0.8 morale+3 tax_rate=0.1 food_need=0.03
+chief: mass=85 integrity=180 alive=true sentient=true hands=true speech=true intelligence=6 courage=8 speed_land=5 authority=6 command_limit=25 morale+2 food_need=0.04
+chieftain: mass=95 integrity=300 alive=true sentient=true hands=true speech=true intelligence=6 courage=9 speed_land=5 authority=6 command_limit=30 dmg_slash=60 attack_rate=1 morale+3 fear_aura=3 food_need=0.05
+khan: mass=85 integrity=250 alive=true sentient=true hands=true speech=true intelligence=7 courage=9 speed_land=5 authority=8 command_limit=80 dmg_pierce=50 attack_rate=1 attack_range=150 fear_aura=4 food_need=0.05
+emir: mass=80 integrity=120 alive=true sentient=true hands=true speech=true intelligence=7 speed_land=4 authority=7 command_limit=30 tax_rate=0.15 storage_letters=1000 food_need=0.04
+sheikh: mass=80 integrity=120 alive=true sentient=true hands=true speech=true intelligence=7 speed_land=4 authority=6 command_limit=25 charm=4 storage_letters=1000 food_need=0.04
+dictator: mass=85 integrity=150 alive=true sentient=true hands=true speech=true intelligence=7 speed_land=4 authority=10 command_limit=60 tax_rate=0.4 fear_aura=6 field_radius=60 field_targets=enemies law=spell fine=6 food_need=0.04
+tyrant: mass=90 integrity=160 alive=true sentient=true hands=true speech=true intelligence=6 speed_land=4 authority=9 command_limit=50 tax_rate=0.4 fear_aura=7 intimidation=7 morale+-1 food_need=0.04
+despot: mass=85 integrity=150 alive=true sentient=true hands=true speech=true intelligence=6 speed_land=4 authority=9 command_limit=45 tax_rate=0.35 fear_aura=6 intimidation=6 food_need=0.04
+autocrat: mass=80 integrity=130 alive=true sentient=true hands=true speech=true intelligence=7 speed_land=4 authority=9 command_limit=40 tax_rate=0.3 obedience+3 food_need=0.04
+overlord: mass=110 integrity=400 alive=true sentient=true hands=true speech=true intelligence=7 speed_land=4 authority=10 command_limit=80 tax_rate=0.35 fear_aura=7 claim_radius=30 food_need=0.05
+warlord: mass=100 integrity=500 alive=true sentient=true hands=true speech=true intelligence=6 courage=9 speed_land=5 authority=8 command_limit=60 dmg_slash=80 attack_rate=1 fear_aura=6 tax_rate=0.2 strength=8 training=6 food_need=0.05
+kingpin: mass=90 integrity=150 alive=true sentient=true hands=true speech=true intelligence=8 speed_land=4 authority=7 command_limit=30 intimidation=8 letter_steal=8 tax_rate=0.25 storage_letters=1500 food_need=0.04
+shogun: mass=80 integrity=400 alive=true sentient=true hands=true speech=true intelligence=8 courage=9 speed_land=5 authority=9 command_limit=60 dmg_slash=80 attack_rate=1.2 training=8 food_need=0.04
+sovereign: mass=80 integrity=130 alive=true sentient=true hands=true speech=true intelligence=7 speed_land=4 authority=10 command_limit=60 tax_rate=0.2 claim_radius=30 immune_charm=true on_owner_death=pass_to_heir food_need=0.04
+president: mass=80 integrity=100 alive=true sentient=true hands=true speech=true intelligence=7 speed_land=4 authority=8 command_limit=40 charm=5 morale+2 recruit_rate=1 food_need=0.04
+governor: mass=80 integrity=100 alive=true sentient=true hands=true speech=true intelligence=7 speed_land=4 authority=6 command_limit=25 tax_rate=0.1 claim_radius=15 food_need=0.04
+senator: mass=80 integrity=90 alive=true sentient=true hands=true speech=true intelligence=7 speed_land=4 authority=5 command_limit=15 charm=5 food_need=0.04
+minister: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=8 speed_land=4 authority=6 command_limit=20 tax_rate=0.05 food_need=0.03
+premier: mass=80 integrity=100 alive=true sentient=true hands=true speech=true intelligence=8 speed_land=4 authority=8 command_limit=35 morale+1 food_need=0.04
+mayor: mass=80 integrity=90 alive=true sentient=true hands=true speech=true intelligence=6 speed_land=4 authority=5 command_limit=15 tax_rate=0.1 build_speed=1.3 claim_radius=10 food_need=0.04
+candidate: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=6 speed_land=5 charm=6 recruit_rate=0.5 authority=1 food_need=0.03
+incumbent: mass=80 integrity=100 alive=true sentient=true hands=true speech=true intelligence=7 speed_land=4 authority=6 command_limit=20 charm=3 food_need=0.04
+nominee: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=6 speed_land=4 charm=4 authority=2 food_need=0.03
+successor: mass=75 integrity=110 alive=true sentient=true hands=true speech=true intelligence=6 speed_land=5 authority=4 survives_death=true on_owner_death=pass_to_heir food_need=0.03
+
+# noun building
+courthouse: mass=8000000 footprint=30 height=18 integrity=60000 material=stone portable=false enterable=true occupants=150 lockable=true claim_radius=20 security=6 authority=6 field_radius=80 field_targets=all law=attack,theft fine=6 needs_foundation=true
+courtroom: mass=500000 footprint=8 height=6 integrity=15000 material=stone,wood portable=false enterable=true occupants=60 authority=5 field_radius=20 field_targets=all law=attack,theft,spell fine=5 needs_foundation=true
+capitol: mass=20000000 footprint=60 height=50 integrity=150000 material=stone portable=false enterable=true occupants=500 lockable=true claim_radius=40 security=8 authority=8 command_limit=40 tax_rate=0.15 field_radius=150 field_targets=all law=attack,theft fine=8 needs_foundation=true
+embassy: mass=3000000 footprint=15 height=12 integrity=40000 material=stone portable=false enterable=true occupants=80 lockable=true claim_radius=10 security=8 charm=5 trade_bonus=0.2 field_radius=40 field_targets=all law=attack,theft needs_foundation=true
+consulate: mass=2000000 footprint=12 height=10 integrity=30000 material=stone portable=false enterable=true occupants=50 lockable=true claim_radius=8 security=7 charm=4 trade_bonus=0.15 field_radius=30 field_targets=all law=attack needs_foundation=true
+palace: mass=30000000 footprint=80 height=25 integrity=120000 material=stone,marble portable=false enterable=true occupants=400 lockable=true claim_radius=40 security=7 authority=8 command_limit=40 tax_rate=0.2 beauty=9 storage_letters=3000 needs_foundation=true
+prison: mass=20000000 footprint=60 height=12 integrity=200000 hardness=8 material=stone,steel portable=false enterable=true occupants=500 lockable=true security=9 claim_radius=20 field_radius=60 field_targets=enemies law=spell,trade speed_land*0.3 inflict_root=30 needs_foundation=true
+jail: mass=2000000 footprint=10 height=6 integrity=50000 hardness=8 material=stone,iron portable=false enterable=true occupants=30 lockable=true security=8 field_radius=20 field_targets=enemies law=spell speed_land*0.5 inflict_root=20 needs_foundation=true
+penitentiary: mass=25000000 footprint=70 height=12 integrity=250000 hardness=8 material=stone,steel portable=false enterable=true occupants=800 lockable=true security=10 claim_radius=25 field_radius=70 field_targets=enemies law=spell,trade,gather speed_land*0.3 inflict_root=40 needs_foundation=true
+dungeon: mass=5000000 footprint=12 height=4 depth=8 integrity=100000 hardness=9 material=stone portable=false enterable=true occupants=20 lockable=true security=9 luminosity=-4 field_radius=20 field_targets=enemies law=spell morale+-3 inflict_root=30 fear_aura=4
+cell: mass=50000 footprint=1 height=3 integrity=20000 hardness=8 material=stone,iron portable=false enterable=true occupants=2 lockable=true security=8 inflict_root=20
+treasury: mass=3000000 footprint=12 height=10 integrity=80000 hardness=9 material=stone,steel portable=false enterable=true lockable=true security=10 storage_letters=8000 tax_rate=0.05 survives_death=true needs_foundation=true
+checkpoint: mass=5000 footprint=2 height=3 integrity=3000 material=concrete,steel portable=false blocks=land field_radius=10 field_targets=enemies tax_rate=0.3 law=theft fine=3 detect_stealth=5 alarm=true
+border: mass=30000 footprint=1 height=3 integrity=8000 material=stone,wire portable=false blocks=land plural_count=12 field_radius=20 field_targets=enemies trade_rate=1.5 law=theft fine=3 alarm=true
+
+# noun crime
+felony: placement=target placement_range=30 event_target=character letter_steal=20 inflict_stun=5 reputation=-10 contest_with=stealth contested_by=detect_stealth event_duration=1
+misdemeanor: placement=target placement_range=20 event_target=character letter_steal=5 reputation=-2 contest_with=stealth contested_by=detect_stealth event_duration=1
+crime: placement=target placement_range=20 event_target=character letter_steal=12 reputation=-5 contest_with=stealth contested_by=detect_stealth event_duration=1
+fraud: placement=target placement_range=40 event_target=character letter_steal=15 contest_with=charm contested_by=intelligence reputation=-5 event_duration=1
+bribery: placement=target placement_range=30 field_radius=10 field_targets=enemies field_duration=4 law=attack loyalty+-4 charm+4 counters=law,fine,fee,toll,checkpoint
+embezzlement: placement=target placement_range=60 event_target=structure letter_steal=40 contest_with=intelligence contested_by=security event_duration=1
+blackmail: placement=target placement_range=40 event_target=character letter_steal=15 obedience+4 contest_with=intelligence contested_by=courage event_duration=3
+forgery: copies=true placement=target placement_range=20 event_target=object contest_with=intelligence contested_by=read_properties reputation=-3
+counterfeit: copies=true value*0.1 reputation=-3 trade_bonus+0.3
+perjury: placement=target placement_range=30 event_target=character inflict_confuse=15 stealth+4 contest_with=charm contested_by=intelligence event_duration=1 counters=trial,verdict,witness
+vandalism: placement=target placement_range=10 event_target=structure dmg_blunt=300 siege=3 reputation=-3 event_duration=1
+trespass: duration=60 stealth+3 counters=border,fence,checkpoint,law,claim reputation=-2
+arson: placement=target placement_range=20 event_target=structure dmg_fire=400 inflict_burn=60 temperature=700 siege=4 contest_with=stealth contested_by=alarm event_duration=1
+kidnapping: placement=target placement_range=15 event_target=character moves_target=40 inflict_root=30 transfers_ownership=true contest_with=strength contested_by=courage event_duration=1
+
+# noun tool
+gavel: mass=0.5 length=0.3 material=wood equip_slot=held hands_required=1 dmg_blunt=8 attack_rate=1 inflict_stun=1 authority=3 loudness=4 field_radius=10 field_targets=all law=attack
+handcuff: mass=0.4 material=steel hardness=7 integrity=200 equip_slot=held inflict_root=30 single_use=true attack_range=1 counters=thief,criminal,convict,fugitive
+shackle: mass=2 material=iron hardness=7 integrity=300 inflict_root=45 inflict_slow=60 single_use=true attack_range=1
+manacle: mass=1.5 material=iron hardness=7 integrity=250 inflict_root=40 single_use=true attack_range=1
+badge: mass=0.05 material=steel equip_slot=body authority=3 detect_stealth=1 reputation=2 charm=1
+
+# noun document
+ticket: placement=target placement_range=20 event_target=character letter_steal=3 contest_with=authority contested_by=charm event_duration=1
+budget: storage_letters=300 security=3 trade_bonus=0.1 upkeep_food*0.8 upkeep_fuel*0.8
+cheque: value=500 letter_refund=0.5 portable=true mass=0.005
+
+# noun possession
+fine: placement=target placement_range=30 event_target=character letter_steal=8 contest_with=authority contested_by=charm event_duration=1
+subsidy: placement=region field_radius=100 field_targets=owned field_duration=10 trade_rate=0.6 build_speed*1.3
+welfare: placement=region field_radius=100 field_targets=owned field_duration=10 food_output*1.5 morale+2 regeneration+1
+pension: survives_death=true storage_letters=200 produce_T*1.3 morale+1
+wage: placement=self field_radius=30 field_targets=owned field_duration=10 labor*1.5 loyalty+2 morale+1
+salary: placement=self field_radius=40 field_targets=owned field_duration=15 labor*1.5 loyalty+3
+reward: placement=target placement_range=40 event_target=character loyalty+3 morale+3 recruit_rate=0.5 event_duration=1
+coinage: trade_bonus=0.2 produce_T*1.5 value=50
+currency: trade_bonus=0.15 value=10 produce_T*1.2
+
+# adjective quality
+legal: security+2 reputation+2 counters=ban,prohibition,fine,warrant
+illegal: letter_steal+3 stealth+2 reputation+-4 trade_bonus+0.2 value*3
+lawful: obedience+3 loyalty+2 reputation+2 security+2
+unlawful: letter_steal+3 aggression+2 reputation+-4 obedience+-3
+illegitimate: authority*0.5 loyalty+-3 reputation+-3
+legitimate: authority+3 loyalty+2 reputation+3 immune_charm=true
+guilty: morale+-3 courage+-3 stealth+-3 evasion+-0.1 reputation+-4
+innocent: charm+4 immune_root=true reputation+3 aggression+-3
+corrupt: letter_steal+4 loyalty+-4 tax_rate+0.1 charm+2 reputation+-5
+forbidden: value*5 stealth+3 dmg_unholy+30 reputation+-3 fear_aura+2
+taboo: fear_aura+4 charm+-3 reputation+-4 counters=charm
+tyrannical: authority+4 tax_rate+0.2 fear_aura+4 morale+-2 loyalty+-3
+martial: dmg_slash*1.3 dmg_pierce*1.3 training+3 courage+3 obedience+3 authority+2
+civil: charm+2 loyalty+1 aggression+-2 law=attack
+noble: authority+3 charm+3 loyalty+3 courage+2 value*3 reputation+3
+federal: authority+3 command_limit*1.5 claim_radius*2 field_radius*2
+independent: immune_charm=true loyalty+-2 obedience+-3 courage+2 morale+1
+free: immune_root=true speed_land*1.2 morale+2 obedience+-2 value*0
+honest: charm+2 reputation+4 letter_steal*0 trade_bonus+0.1 stealth+-2
+democratic: morale+2 loyalty+2 authority+1
+constitutional: security+2 authority+1 immune_silence=true
+governing: authority+3 command_limit+10 tax_rate+0.05
+banned: stealth+2 value*4 reputation+-3 trade_rate*2
+sacred: dmg_holy+60 res_unholy+0.6 locks=true security+4 charm+2 counters=demon,ghost,curse
+judicial: authority+3 read_properties+3
+diplomatic: charm+4 trade_bonus+0.2 immune_root=true aggression+-3
+royal: authority+4 command_limit*1.5 charm+3 value*5 beauty+3 survives_death=true
+imperial: authority+5 command_limit*2 claim_radius*1.5 tax_rate+0.1 beauty+2
+regal: authority+3 charm+4 beauty+3 morale+1
+feudal: tax_rate+0.15 labor*1.5 obedience+3 loyalty+2
+bureaucratic: build_speed*0.5 trade_rate*1.3 authority+1 speed_land*0.8
+
+# noun criminal
+criminal: mass=75 integrity=110 alive=true sentient=true hands=true speech=true intelligence=6 loyalty=2 speed_land=6 stealth=6 letter_steal=6 dmg_pierce=25 attack_rate=1.5 reputation=-5 food_need=0.03
+outlaw: mass=80 integrity=160 alive=true sentient=true hands=true speech=true intelligence=6 loyalty=3 courage=8 speed_land=7 stealth=5 dmg_pierce=60 attack_rate=1 attack_range=40 letter_steal=6 immune_root=true counters=law,warrant,sheriff,marshal food_need=0.03
+
+# adjective quality
+
+# verb social
+acquit: duration=30 effect_status=root,silence,fear restores=30 counters=verdict,sentence,conviction,indictment
+imprison: effect_target=touched duration=60 inflict_root=60 inflict_silence=30 speed_land*0 contest_with=authority contested_by=stealth
+banish: effect_target=touched duration=60 inflict_fear=60 moves_target=-200 contest_with=authority contested_by=courage
+deport: effect_target=touched duration=30 moves_target=-150 inflict_fear=30 contest_with=authority contested_by=courage
+expel: effect_target=touched moves_target=-100 inflict_fear=20 knockback=30 contest_with=authority contested_by=courage
+evict: effect_target=touched moves_target=-60 frees_target=true contest_with=authority contested_by=security
+prosecute: effect_target=touched duration=10 inflict_root=20 letter_steal=8 contest_with=authority contested_by=charm
+sue: effect_target=touched letter_steal=12 contest_with=intelligence contested_by=charm
+reign: duration=300 authority+6 command_limit+30 tax_rate+0.15 morale+2
+elect: duration=180 authority+4 command_limit+15 morale+2 charm+2
+appoint: effect_target=touched duration=300 authority+3 loyalty+3 command_limit+5
+enact: duration=60 authority+3 field_radius+40 law=theft fine=4
+enforce: duration=60 authority+4 detect_stealth+4 inflict_root+3 obedience+3
+forbid: duration=60 field_radius=40 field_targets=enemies law=spell,trade authority+2
+allow: duration=60 counters=ban,prohibition,curfew,embargo,lockdown,law,ordinance,regulation charm+1
+vote: duration=60 morale+2 loyalty+2 authority+1
+sign: duration=60 charm+2 reputation+2 trade_bonus+0.1
+confiscate: effect_target=touched transfers_ownership=true contest_with=authority contested_by=security
+seize: effect_target=touched transfers_ownership=true inflict_root=5 contest_with=strength contested_by=security
+conquer: duration=120 authority+5 command_limit+30 claim_radius+20 aggression+3 fear_aura+3
+colonize: duration=300 claim_radius+15 build_speed*1.5 recruit_rate+1 produce_T*1.3
+liberate: effect_target=touched frees_target=true effect_status=root,charm,silence,fear morale+3
+negotiate: duration=60 charm+5 trade_bonus+0.3 aggression+-4 law=attack
+ratify: duration=120 extends_duration=2 authority+2 reputation+2
+amend: duration=60 strips_adjectives=1 authority+1 counters=law,statute,constitution,decree
+abdicate: duration=60 authority*0 command_limit*0 stealth+5 evasion+0.3 untargetable=true morale+-2
+inherit: duration=600 survives_death=true on_owner_death=pass_to_heir letter_refund+0.5 claim_radius+5
+bequeath: effect_target=touched transfers_ownership=true on_owner_death=pass_to_heir
+certify: effect_target=touched duration=300 reputation+3 security+2 trade_bonus+0.1
+own: duration=600 claim_radius+5 security+3 locks=true
+
+# noun attribute
+order: placement=region placement_range=150 field_radius=80 field_targets=all field_duration=8 law=attack,theft fine=4 obedience+3 counters=riot,anarchy,chaos,looting
+command: placement=self field_radius=30 field_targets=owned field_duration=5 obedience+4 morale+1 authority=4 command_limit=15
+injustice: placement=target placement_range=40 event_target=character letter_steal=10 morale+-3 contest_with=authority contested_by=charm event_duration=1
+citizenship: claim_radius=3 loyalty+3 immune_charm=true counters=exile,deportation,banishment
+suffrage: placement=region field_radius=150 field_targets=owned field_duration=12 morale+3 loyalty+2 counters=tyranny,dictatorship,autocracy,oligarchy
+
+# noun act
+amendment: placement=self field_radius=60 field_duration=1 counters=law,statute,constitution,decree,regulation,ordinance,code authority+1
+decriminalization: placement=region field_radius=150 field_duration=1 counters=law,ban,prohibition,criminalization,statute,ordinance,fine,penalty
+annex: placement=target placement_range=200 event_target=structure event_radius=40 transfers_ownership=true contest_with=authority contested_by=security event_duration=1
+diplomacy: placement=region field_radius=150 field_targets=all field_duration=6 law=attack charm+3 trade_rate=0.8 counters=war,battle,feud,siege
+negotiation: placement=self field_radius=30 field_targets=all field_duration=4 law=attack charm+3 trade_rate=0.7
+summit: binds=5 bind_penalty=reputation,letters event_duration=6 charm+2
+filibuster: placement=region field_radius=100 field_targets=enemies field_duration=4 silences=100 law=spell
+espionage: placement=target placement_range=300 event_target=faction read_properties=9 read_inventory=true map_reveal=60 contest_with=stealth contested_by=detect_stealth event_duration=3
+sedition: placement=region field_radius=100 field_targets=enemies field_duration=4 loyalty+-5 obedience+-4 authority*0.5
+conspiracy: binds=4 bind_penalty=letters,loyalty event_duration=8 stealth+4
+insurgency: placement=region placement_range=300 event_radius=150 event_duration=6 sets_hostile=true summons=rebel summon_count=5 summon_owned=true authority+-4 counters=regime,occupation,empire,colony
+scandal: placement=target placement_range=100 event_target=character reputation=-10 charm+-5 authority+-3 contest_with=charm contested_by=charm event_duration=3
+corruption: placement=region field_radius=100 field_targets=enemies field_duration=8 loyalty+-4 letter_steal+2 tax_rate=0.2 authority*0.7
+inauguration: placement=self field_radius=60 field_targets=owned field_duration=5 authority+4 morale+3 command_limit+20
+coronation: placement=self field_radius=80 field_targets=owned field_duration=6 authority+6 morale+4 loyalty+3 command_limit+30 beauty+3
+abdication: placement=self field_radius=1 field_duration=1 frees_target=true authority*0
+succession: on_owner_death=pass_to_heir survives_death=true authority+2
+nomination: placement=target placement_range=40 event_target=character authority+3 charm+2 event_duration=5
+quota: placement=region field_radius=100 field_targets=enemies field_duration=8 produce_A*0.5 produce_E*0.5 produce_T*0.5 labor*1.3
+administration: placement=region field_radius=100 field_targets=owned field_duration=12 authority+2 build_speed*1.3 tax_rate=0.1
+government: placement=region field_radius=200 field_targets=all field_duration=15 authority+4 command_limit+20 tax_rate=0.15 law=theft fine=4
+judiciary: placement=region field_radius=150 field_targets=all field_duration=12 law=theft,attack fine=6 authority+3
+loan: storage_letters=300 persistence=10 letter_refund=1 tax_rate=0.2
+
+# noun group
+commonwealth: binds=6 bind_penalty=reputation,letters event_duration=15 morale+2 trade_rate=0.8
+confederacy: binds=6 bind_penalty=letters,loyalty event_duration=10
+electorate: placement=region field_radius=150 field_targets=owned field_duration=10 morale+2 loyalty+2 authority+2
+nobility: placement=region field_radius=100 field_targets=owned field_duration=12 authority+3 charm+2 tax_rate=0.15 courage+2
+aristocracy: placement=region field_radius=120 field_targets=all field_duration=12 tax_rate=0.25 authority+3 charm+2 morale+-1
+gentry: placement=region field_radius=80 field_targets=owned field_duration=12 authority+2 tax_rate=0.1 food_output*1.3
+proletariat: placement=region field_radius=120 field_targets=owned field_duration=10 labor*1.5 morale+2 counters=aristocracy,nobility,oligarchy,bourgeoisie
+bourgeoisie: placement=region field_radius=100 field_targets=owned field_duration=10 trade_rate=0.7 storage_letters*1.5 produce_T*1.5
+populace: placement=region field_radius=150 field_targets=owned field_duration=10 labor*1.3 recruit_rate+1 morale+1
+
+# noun place
+capital: claim_radius=40 placement=region field_radius=150 field_targets=owned field_duration=20 authority+4 command_limit+25 tax_rate=0.15 trade_rate=0.8
+metropolis: claim_radius=50 placement=region field_radius=200 field_targets=all field_duration=20 trade_rate=0.7 produce_T*2 tax_rate=0.1 recruit_rate+2
+municipality: claim_radius=20 placement=region field_radius=80 field_targets=owned field_duration=15 build_speed*1.3 tax_rate=0.1 law=theft fine=3
+borough: claim_radius=15 placement=region field_radius=60 field_targets=owned field_duration=15 tax_rate=0.08 law=theft fine=2
+township: claim_radius=12 placement=region field_radius=50 field_targets=owned field_duration=15 tax_rate=0.05 labor*1.2
+precinct: claim_radius=8 placement=region field_radius=40 field_targets=all field_duration=12 law=theft,attack fine=4 detect_stealth+3
+ward: claim_radius=8 placement=region field_radius=40 field_targets=owned field_duration=12 security+3 loyalty+1
+constituency: placement=region field_radius=80 field_targets=owned field_duration=12 loyalty+3 authority+2
+shire: claim_radius=20 placement=region field_radius=100 field_targets=owned field_duration=15 food_output*1.5 tax_rate=0.1 morale+1
+canton: claim_radius=15 placement=region field_radius=70 field_targets=owned field_duration=15 security+3 courage+2
+principality: claim_radius=30 placement=region field_radius=120 field_targets=owned field_duration=15 authority+4 command_limit+15 tax_rate=0.15
+duchy: claim_radius=30 placement=region field_radius=120 field_targets=owned field_duration=15 authority+3 command_limit+15 tax_rate=0.15
+emirate: claim_radius=30 placement=region field_radius=120 field_targets=owned field_duration=15 authority+4 tax_rate=0.15 storage_letters*1.5
+sultanate: claim_radius=40 placement=region field_radius=150 field_targets=owned field_duration=15 authority+5 command_limit+20 tax_rate=0.2
+khanate: claim_radius=50 placement=region field_radius=200 field_targets=owned field_duration=15 authority+5 command_limit+40 speed_land*1.2
+protectorate: claim_radius=25 placement=region field_radius=100 field_targets=owned field_duration=15 security+4 armor+5 tax_rate=0.1 loyalty+1
+enclave: claim_radius=10 placement=region field_radius=40 field_targets=owned field_duration=15 security+5 law=attack,theft
+homeland: claim_radius=25 placement=region field_radius=100 field_targets=owned field_duration=15 morale+3 courage+3 loyalty+3 regeneration+1
+motherland: claim_radius=25 placement=region field_radius=100 field_targets=owned field_duration=15 morale+3 loyalty+4 courage+2
+fatherland: claim_radius=25 placement=region field_radius=100 field_targets=owned field_duration=15 morale+2 loyalty+4 courage+3
+homestead: claim_radius=8 security+2 food_output=1 labor+1 tax_rate*0
+freehold: claim_radius=10 security+4 tax_rate*0 locks=true
+leasehold: claim_radius=8 persistence=30 security+2
+easement: terrain_ignored=wall movement_cost*0.5 counters=border,fence,checkpoint,claim
+
+# noun person
+robber: mass=80 integrity=130 alive=true sentient=true hands=true speech=true intelligence=5 loyalty=2 aggression=5 speed_land=6 stealth=5 dmg_blunt=30 attack_rate=1 letter_steal=8 intimidation=4 food_need=0.03
+burglar: mass=70 integrity=90 alive=true sentient=true hands=true speech=true intelligence=7 loyalty=2 speed_land=6 climb=7 stealth=8 letter_steal=8 counters=lockable,lock,vault,safe food_need=0.03
+pickpocket: mass=60 integrity=70 alive=true sentient=true hands=true speech=true intelligence=7 loyalty=2 speed_land=7 agility=9 stealth=9 evasion=0.3 letter_steal=4 attack_rate=2 food_need=0.02
+felon: mass=80 integrity=140 alive=true sentient=true hands=true speech=true intelligence=5 loyalty=2 courage=7 speed_land=6 dmg_blunt=35 attack_rate=1 letter_steal=4 reputation=-5 food_need=0.03
+offender: mass=75 integrity=110 alive=true sentient=true hands=true speech=true intelligence=5 loyalty=3 speed_land=6 stealth=4 letter_steal=3 food_need=0.03
+gangster: mass=85 integrity=160 alive=true sentient=true hands=true speech=true intelligence=6 loyalty=6 aggression=6 speed_land=5 dmg_pierce=60 attack_rate=2 attack_range=40 intimidation=6 letter_steal=5 tax_rate=0.1 food_need=0.04
+mobster: mass=90 integrity=160 alive=true sentient=true hands=true speech=true intelligence=6 loyalty=6 aggression=6 speed_land=5 dmg_pierce=60 attack_rate=2 attack_range=40 intimidation=7 tax_rate=0.15 food_need=0.04
+racketeer: mass=85 integrity=130 alive=true sentient=true hands=true speech=true intelligence=7 loyalty=4 speed_land=5 intimidation=7 tax_rate=0.25 letter_steal=4 food_need=0.04
+thug: mass=95 integrity=200 alive=true sentient=true hands=true speech=true intelligence=3 loyalty=4 aggression=7 strength=7 speed_land=5 dmg_blunt=40 attack_rate=1 intimidation=5 food_need=0.04
+hitman: mass=80 integrity=140 alive=true sentient=true hands=true speech=true intelligence=7 loyalty=5 speed_land=6 stealth=8 dmg_pierce=120 attack_rate=0.5 attack_range=300 critical=0.4 food_need=0.03
+assassin: mass=70 integrity=120 alive=true sentient=true hands=true speech=true intelligence=8 loyalty=5 speed_land=7 agility=9 stealth=9 dmg_pierce=100 dmg_poison=60 attack_rate=1 critical=0.5 inflict_poison=10 food_need=0.03
+enforcer: mass=100 integrity=250 alive=true sentient=true hands=true speech=true intelligence=4 loyalty=7 aggression=6 strength=8 speed_land=5 dmg_blunt=50 attack_rate=1 intimidation=7 letter_steal=4 food_need=0.04
+bodyguard: mass=95 integrity=300 alive=true sentient=true hands=true speech=true intelligence=5 loyalty=9 courage=9 speed_land=5 armor=15 block=0.5 dmg_pierce=40 attack_rate=1 attack_range=30 cover=0.5 food_need=0.04
+henchman: mass=90 integrity=180 alive=true sentient=true hands=true speech=true intelligence=4 loyalty=6 obedience=8 speed_land=5 dmg_blunt=35 attack_rate=1 pack_size=3 food_need=0.04
+courtier: mass=70 integrity=80 alive=true sentient=true hands=true speech=true intelligence=7 loyalty=4 speed_land=4 charm=6 read_properties=3 food_need=0.03
+chamberlain: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=7 loyalty=8 speed_land=3 storage_letters=400 security+3 build_speed=1.2 food_need=0.03
+vizier: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=9 loyalty=4 speed_land=3 authority=6 command_limit=20 read_properties=6 dmg_magic=40 attack_rate=0.5 food_need=0.03
+magnate: mass=85 integrity=90 alive=true sentient=true hands=true speech=true intelligence=8 speed_land=3 storage_letters=3000 trade_bonus=0.4 produce_T=1 charm=4 food_need=0.04
+tycoon: mass=85 integrity=90 alive=true sentient=true hands=true speech=true intelligence=8 speed_land=3 storage_letters=3000 trade_bonus=0.4 produce_T=1 charm=4 food_need=0.04
+baroness: mass=65 integrity=110 alive=true sentient=true hands=true speech=true intelligence=7 speed_land=4 authority=5 command_limit=15 tax_rate=0.12 charm=5 claim_radius=10 food_need=0.03
+viscount: mass=80 integrity=130 alive=true sentient=true hands=true speech=true intelligence=6 speed_land=4 authority=5 command_limit=15 tax_rate=0.12 claim_radius=10 food_need=0.04
+archduke: mass=85 integrity=150 alive=true sentient=true hands=true speech=true intelligence=7 speed_land=4 authority=7 command_limit=30 tax_rate=0.2 claim_radius=20 food_need=0.04
+commoner: mass=70 integrity=85 alive=true sentient=true hands=true speech=true intelligence=5 loyalty=5 speed_land=5 labor=3 food_need=0.02
+plebeian: mass=70 integrity=85 alive=true sentient=true hands=true speech=true intelligence=4 loyalty=5 speed_land=5 labor=3 food_need=0.02
+landlord: mass=85 integrity=90 alive=true sentient=true hands=true speech=true intelligence=6 speed_land=4 tax_rate=0.3 claim_radius=10 storage_letters=500 food_need=0.04
+tenant: mass=75 integrity=90 alive=true sentient=true hands=true speech=true intelligence=5 loyalty=5 speed_land=5 labor=2 food_need=0.03
+deserter: mass=80 integrity=150 alive=true sentient=true hands=true speech=true intelligence=5 loyalty=0 courage=2 speed_land=7 stealth=6 dmg_pierce=40 attack_rate=1 attack_range=100 food_need=0.03
+whistleblower: mass=70 integrity=90 alive=true sentient=true hands=true speech=true intelligence=7 loyalty=8 speed_land=5 read_properties=6 read_inventory=true counters=corruption,fraud,conspiracy,embezzlement,cover food_need=0.03
+policeman: mass=85 integrity=200 alive=true sentient=true hands=true speech=true intelligence=6 loyalty=7 courage=6 speed_land=6 authority=3 detect_stealth=6 alarm=true dmg_pierce=40 attack_rate=1 attack_range=30 inflict_root=3 counters=thief,riot,looting food_need=0.04
+patrolman: mass=85 integrity=200 alive=true sentient=true hands=true speech=true intelligence=5 loyalty=7 courage=6 speed_land=6 authority=3 detect_stealth=6 alarm=true dmg_pierce=40 attack_rate=1 attack_range=30 inflict_root=3 sight_range=60 food_need=0.04
