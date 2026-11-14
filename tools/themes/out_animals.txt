@@ -1,0 +1,526 @@
+# noun mammal
+bull: mass=900 length=2.8 height=1.6 integrity=800 alive=true aggression=7 courage=9 diet=herbivore food_need=0.4 speed_land=15 dmg_pierce=120 dmg_blunt=150 attack_rate=0.6 knockback=6 fear_aura=4 tamable=true reproduction=0.5 habitat=meadow color=black
+cattle: mass=650 length=2.5 integrity=400 alive=true diet=herbivore food_need=0.4 speed_land=7 dmg_blunt=50 attack_rate=0.4 pack_size=6 food_output=2 reproduction=0.5 tamable=true edible=true nutrition=15 habitat=meadow color=brown
+livestock: mass=400 length=2 integrity=200 alive=true diet=herbivore food_need=0.25 speed_land=6 pack_size=8 food_output=1.5 reproduction=0.8 tamable=true edible=true nutrition=12 habitat=meadow color=brown
+bullock: mass=600 length=2.5 integrity=500 alive=true diet=herbivore food_need=0.3 speed_land=7 tow_capacity=3000 labor=5 dmg_blunt=50 attack_rate=0.4 tamable=true edible=true nutrition=15 habitat=meadow color=brown
+heifer: mass=450 length=2.3 integrity=300 alive=true diet=herbivore food_need=0.3 speed_land=7 food_output=1 reproduction=0.5 tamable=true edible=true nutrition=14 habitat=meadow color=brown
+longhorn: mass=700 length=2.6 integrity=650 alive=true aggression=4 courage=7 diet=herbivore food_need=0.35 speed_land=12 dmg_pierce=110 attack_rate=0.5 knockback=4 temp_max=50 tamable=true reproduction=0.4 habitat=badlands,meadow,desert color=orange
+bovine: mass=600 length=2.5 integrity=400 alive=true diet=herbivore food_need=0.35 speed_land=7 food_output=2 reproduction=0.5 tamable=true dmg_blunt=50 attack_rate=0.4 habitat=meadow color=brown
+swine: mass=150 length=1.5 integrity=60 alive=true intelligence=4 diet=omnivore food_need=0.15 speed_land=5 smell_range=200 detect_underground=true reproduction=2 pack_size=4 food_output=1.5 tamable=true edible=true nutrition=20 odor=5 habitat=meadow,forest color=pink
+hog: mass=200 length=1.7 integrity=120 alive=true intelligence=4 aggression=3 diet=omnivore food_need=0.18 speed_land=6 dmg_pierce=25 attack_rate=0.8 smell_range=250 detect_underground=true reproduction=2 food_output=2 tamable=true edible=true nutrition=25 odor=6 habitat=meadow,forest color=pink
+piglet: mass=5 length=0.4 integrity=8 alive=true intelligence=3 diet=omnivore food_need=0.01 speed_land=4 comfort=2 charm=5 reproduction=0.5 tamable=true edible=true nutrition=4 habitat=meadow color=pink
+piggy: mass=20 length=0.7 integrity=15 alive=true intelligence=4 diet=omnivore food_need=0.03 speed_land=4 comfort=2 charm=5 reproduction=2 tamable=true edible=true nutrition=6 habitat=meadow color=pink
+razorback: mass=120 length=1.6 integrity=200 alive=true aggression=6 courage=8 diet=omnivore food_need=0.1 speed_land=15 dmg_pierce=45 attack_rate=1 armor=3 smell_range=300 reproduction=2 edible=true nutrition=20 habitat=forest,badlands,marsh color=black
+ewe: mass=60 length=1.2 integrity=25 alive=true diet=herbivore food_need=0.07 speed_land=8 food_output=0.4 reproduction=1 pack_size=3 courage=1 tamable=true habitat=meadow,hills color=white
+merino: mass=70 length=1.3 integrity=30 alive=true diet=herbivore food_need=0.08 speed_land=7 res_cold=0.7 temp_min=-30 reproduction=1 pack_size=4 courage=1 tamable=true value=50 habitat=hills,meadow color=white
+mare: mass=480 length=2.4 height=1.6 integrity=380 alive=true sentient=true intelligence=3 loyalty=6 diet=herbivore food_need=0.2 speed_land=17 jump=2 mountable=true seats=1 carry_capacity=140 dmg_blunt=50 attack_rate=0.5 food_output=0.5 reproduction=0.3 tamable=true equip_slot=mount habitat=meadow color=brown
+colt: mass=250 length=1.9 integrity=200 alive=true sentient=true intelligence=3 loyalty=5 diet=herbivore food_need=0.1 speed_land=16 jump=1.5 dmg_blunt=30 attack_rate=0.6 trainable=8 tamable=true habitat=meadow color=brown
+filly: mass=230 length=1.8 integrity=180 alive=true sentient=true intelligence=3 loyalty=6 diet=herbivore food_need=0.1 speed_land=16 jump=1.5 charm=4 trainable=8 tamable=true habitat=meadow color=brown
+foal: mass=60 length=1.2 integrity=50 alive=true sentient=true intelligence=2 loyalty=7 diet=herbivore food_need=0.03 speed_land=10 comfort=2 charm=6 trainable=9 tamable=true habitat=meadow color=brown
+mustang: mass=400 length=2.3 height=1.5 integrity=380 alive=true sentient=true intelligence=4 loyalty=3 aggression=3 courage=7 diet=herbivore food_need=0.15 speed_land=20 jump=2 mountable=true seats=1 carry_capacity=120 dmg_blunt=60 attack_rate=0.6 pack_size=8 tamable=true equip_slot=mount habitat=badlands,meadow,savanna color=brown
+bronco: mass=420 length=2.3 integrity=400 alive=true sentient=true intelligence=3 loyalty=1 aggression=6 diet=herbivore food_need=0.15 speed_land=19 jump=2.5 mountable=true seats=1 dmg_blunt=80 knockback=5 attack_rate=0.8 obedience=1 tamable=true equip_slot=mount habitat=badlands,meadow color=brown
+steed: mass=550 length=2.5 height=1.7 integrity=480 alive=true sentient=true intelligence=4 loyalty=8 courage=9 diet=herbivore food_need=0.2 speed_land=20 jump=2.5 mountable=true seats=1 carry_capacity=180 dmg_blunt=70 attack_rate=0.6 tamable=true equip_slot=mount color=white
+charger: mass=650 length=2.6 height=1.7 integrity=600 alive=true sentient=true intelligence=4 loyalty=8 courage=10 diet=herbivore food_need=0.25 speed_land=19 mountable=true seats=1 carry_capacity=200 armor=10 dmg_blunt=90 dmg_crush=60 knockback=6 attack_rate=0.6 fear_aura=2 tamable=true equip_slot=mount color=black
+racehorse: mass=500 length=2.4 height=1.65 integrity=350 alive=true sentient=true intelligence=4 loyalty=6 diet=herbivore food_need=0.25 speed_land=24 acceleration=9 jump=2 mountable=true seats=1 carry_capacity=80 value=50000 tamable=true equip_slot=mount habitat=meadow color=brown
+thoroughbred: mass=500 length=2.4 height=1.65 integrity=380 alive=true sentient=true intelligence=4 loyalty=6 courage=7 diet=herbivore food_need=0.25 speed_land=23 acceleration=9 jump=2.5 mountable=true seats=1 carry_capacity=100 beauty=8 value=30000 tamable=true equip_slot=mount color=brown
+gelding: mass=500 length=2.4 integrity=400 alive=true sentient=true intelligence=3 loyalty=8 obedience=9 diet=herbivore food_need=0.2 speed_land=17 mountable=true seats=1 carry_capacity=150 tow_capacity=1500 tamable=true equip_slot=mount color=brown
+palomino: mass=480 length=2.4 integrity=380 alive=true sentient=true intelligence=3 loyalty=7 diet=herbivore food_need=0.2 speed_land=18 mountable=true seats=1 carry_capacity=150 beauty=9 charm=4 tamable=true equip_slot=mount color=gold
+pinto: mass=470 length=2.4 integrity=380 alive=true sentient=true intelligence=3 loyalty=6 diet=herbivore food_need=0.2 speed_land=18 mountable=true seats=1 carry_capacity=140 camouflage=forest,meadow tamable=true equip_slot=mount habitat=meadow,badlands color=white
+nag: mass=380 length=2.3 integrity=200 alive=true sentient=true intelligence=2 loyalty=5 diet=herbivore food_need=0.15 speed_land=8 mountable=true seats=1 carry_capacity=80 tow_capacity=600 tamable=true equip_slot=mount color=gray
+workhorse: mass=900 length=2.7 height=1.8 integrity=700 alive=true sentient=true intelligence=3 loyalty=8 diet=herbivore food_need=0.35 speed_land=12 mountable=true seats=2 carry_capacity=300 tow_capacity=5000 labor=8 strength=9 tamable=true equip_slot=mount color=brown
+equine: mass=450 length=2.4 integrity=350 alive=true sentient=true intelligence=3 loyalty=6 diet=herbivore food_need=0.2 speed_land=17 mountable=true seats=1 carry_capacity=140 dmg_blunt=50 attack_rate=0.5 reproduction=0.3 tamable=true equip_slot=mount habitat=meadow color=brown
+jackass: mass=260 length=2 integrity=260 alive=true sentient=true intelligence=4 loyalty=4 obedience=1 diet=herbivore food_need=0.1 speed_land=10 carry_capacity=100 mountable=true seats=1 dmg_blunt=55 knockback=4 attack_rate=0.7 loudness=9 tamable=true equip_slot=mount habitat=meadow,badlands color=gray
+burro: mass=200 length=1.8 integrity=230 alive=true sentient=true intelligence=4 loyalty=7 diet=herbivore food_need=0.08 water_need=0.05 speed_land=9 carry_capacity=100 mountable=true seats=1 temp_max=50 terrain_ignored=sand,hill dmg_blunt=40 attack_rate=0.6 reproduction=0.2 tamable=true equip_slot=mount habitat=desert,badlands color=gray
+dromedary: mass=500 length=3 height=2 integrity=480 alive=true diet=herbivore food_need=0.1 water_need=0.01 speed_land=11 mountable=true seats=1 carry_capacity=250 temp_max=55 terrain_ignored=sand dmg_blunt=40 attack_rate=0.4 tamable=true equip_slot=mount reproduction=0.1 habitat=desert color=brown
+hart: mass=150 length=2 integrity=250 alive=true courage=5 diet=herbivore food_need=0.06 speed_land=19 jump=2.5 dmg_pierce=45 attack_rate=0.6 edible=true nutrition=15 habitat=forest,meadow color=brown
+stag: mass=180 length=2.1 integrity=300 alive=true aggression=3 courage=7 diet=herbivore food_need=0.07 speed_land=19 jump=2.5 dmg_pierce=55 knockback=3 attack_rate=0.6 beauty=8 loudness=7 edible=true nutrition=18 habitat=forest,hills,meadow color=brown
+doe: mass=70 length=1.6 integrity=110 alive=true courage=1 diet=herbivore food_need=0.04 speed_land=18 jump=2 evasion=0.3 stealth=4 camouflage=forest reproduction=0.5 edible=true nutrition=9 habitat=forest,meadow color=brown
+hind: mass=90 length=1.8 integrity=130 alive=true courage=1 diet=herbivore food_need=0.05 speed_land=18 jump=2 evasion=0.3 reproduction=0.5 edible=true nutrition=10 habitat=forest,hills color=brown
+fawn: mass=8 length=0.8 integrity=15 alive=true courage=0 diet=herbivore food_need=0.005 speed_land=10 stealth=8 camouflage=forest,meadow odor=0 comfort=1 charm=7 tamable=true habitat=forest,meadow color=brown
+roebuck: mass=30 length=1.2 integrity=60 alive=true courage=3 diet=herbivore food_need=0.02 speed_land=18 jump=2 dmg_pierce=20 attack_rate=0.6 loudness=5 edible=true nutrition=6 habitat=forest,meadow color=brown
+whitetail: mass=70 length=1.8 integrity=120 alive=true courage=1 diet=herbivore food_need=0.04 speed_land=20 jump=3 evasion=0.35 alarm=true reproduction=0.4 edible=true nutrition=10 habitat=forest,meadow color=brown
+impala: mass=55 length=1.4 integrity=90 alive=true courage=1 diet=herbivore food_need=0.03 speed_land=25 jump=3 evasion=0.45 pack_size=20 edible=true nutrition=8 habitat=savanna color=brown
+springbok: mass=40 length=1.4 integrity=80 alive=true courage=1 diet=herbivore food_need=0.02 water_need=0 speed_land=25 jump=4 evasion=0.45 pack_size=20 temp_max=48 edible=true nutrition=7 habitat=savanna,desert color=brown
+gnu: mass=250 length=2.2 integrity=220 alive=true diet=herbivore food_need=0.1 speed_land=22 dmg_pierce=35 attack_rate=0.7 pack_size=100 reproduction=0.3 edible=true nutrition=20 habitat=savanna color=gray
+eland: mass=600 length=3 integrity=500 alive=true courage=3 diet=herbivore food_need=0.2 speed_land=18 jump=2.5 dmg_pierce=60 attack_rate=0.5 pack_size=10 tamable=true food_output=1 edible=true nutrition=30 habitat=savanna color=brown
+kudu: mass=250 length=2.4 integrity=250 alive=true courage=2 diet=herbivore food_need=0.08 speed_land=20 jump=2.5 stealth=5 camouflage=savanna,forest dmg_pierce=50 attack_rate=0.5 edible=true nutrition=20 habitat=savanna color=gray
+oryx: mass=200 length=2.2 integrity=260 alive=true courage=6 diet=herbivore food_need=0.06 water_need=0 speed_land=20 temp_max=55 dmg_pierce=90 attack_range=1.5 attack_rate=0.6 pack_size=8 edible=true nutrition=16 habitat=desert,savanna color=white
+pronghorn: mass=50 length=1.4 integrity=80 alive=true courage=1 diet=herbivore food_need=0.03 speed_land=27 acceleration=9 sight_range=6000 evasion=0.45 pack_size=10 edible=true nutrition=7 habitat=meadow,badlands,desert color=brown
+ibex: mass=80 length=1.5 integrity=130 alive=true courage=6 diet=herbivore food_need=0.04 speed_land=12 climb=10 jump=2 dmg_blunt=40 knockback=3 attack_rate=0.6 res_cold=0.6 terrain_ignored=hill,mountain edible=true nutrition=9 habitat=hills color=brown
+bighorn: mass=120 length=1.7 integrity=200 alive=true aggression=3 courage=8 diet=herbivore food_need=0.06 speed_land=13 climb=9 dmg_blunt=90 knockback=5 inflict_stun=2 attack_rate=0.4 loudness=6 res_cold=0.6 terrain_ignored=hill habitat=hills,badlands color=brown
+chamois: mass=40 length=1.2 integrity=70 alive=true courage=3 diet=herbivore food_need=0.02 speed_land=14 climb=10 jump=2.5 res_cold=0.6 terrain_ignored=hill,mountain value=30 edible=true nutrition=6 habitat=hills color=brown
+hound: mass=30 length=1.1 integrity=90 alive=true sentient=true intelligence=4 loyalty=8 aggression=3 diet=carnivore food_need=0.02 speed_land=15 smell_range=1500 tracking=10 detect_stealth=6 loudness=7 alarm=true dmg_pierce=22 attack_rate=1.2 pack_size=4 tamable=true trainable=7 equip_slot=companion harvest_bonus=1.5 harvest_sources=hunting color=brown
+bloodhound: mass=45 length=1.2 integrity=100 alive=true sentient=true intelligence=4 loyalty=9 diet=carnivore food_need=0.025 speed_land=11 smell_range=4000 tracking=10 detect_stealth=8 detect_life=500 loudness=7 alarm=true dmg_pierce=18 attack_rate=1 tamable=true trainable=7 equip_slot=companion counters=thief,spy,fugitive color=brown
+greyhound: mass=30 length=1.1 integrity=70 alive=true sentient=true intelligence=4 loyalty=7 diet=carnivore food_need=0.02 speed_land=20 acceleration=10 agility=8 sight_range=800 dmg_pierce=15 attack_rate=1.3 tamable=true trainable=6 equip_slot=companion harvest_bonus=1.5 harvest_sources=hunting comfort=2 color=gray
+whippet: mass=13 length=0.8 integrity=45 alive=true sentient=true intelligence=4 loyalty=8 diet=carnivore food_need=0.01 speed_land=19 acceleration=10 agility=9 dmg_pierce=10 attack_rate=1.4 tamable=true trainable=6 equip_slot=companion comfort=2 counters=rabbit,hare color=gray
+terrier: mass=8 length=0.5 integrity=40 alive=true sentient=true intelligence=5 loyalty=8 aggression=5 courage=10 diet=carnivore food_need=0.007 speed_land=11 speed_underground=0.2 dmg_pierce=12 attack_rate=1.6 smell_range=300 loudness=7 alarm=true tamable=true trainable=6 equip_slot=companion comfort=2 counters=rat,mouse,mole,badger,fox color=white
+bulldog: mass=25 length=0.7 integrity=110 alive=true sentient=true intelligence=3 loyalty=9 aggression=4 courage=10 diet=carnivore food_need=0.015 speed_land=7 dmg_crush=35 inflict_root=3 attack_rate=1 knockback=1 tamable=true trainable=5 equip_slot=companion alarm=true comfort=2 color=white
+mastiff: mass=80 length=1.1 integrity=220 alive=true sentient=true intelligence=4 loyalty=10 aggression=5 courage=10 diet=carnivore food_need=0.04 speed_land=11 dmg_pierce=40 dmg_crush=40 knockback=3 attack_rate=1 fear_aura=3 alarm=true security+3 tamable=true trainable=6 equip_slot=companion counters=thief,wolf color=brown
+alsatian: mass=35 length=1.1 integrity=110 alive=true sentient=true intelligence=7 loyalty=10 aggression=4 courage=9 diet=carnivore food_need=0.02 speed_land=13 dmg_pierce=30 attack_rate=1.3 smell_range=1500 tracking=9 detect_stealth=7 alarm=true tamable=true trainable=10 equip_slot=companion counters=thief,spy color=black
+watchdog: mass=35 length=1.1 integrity=110 alive=true sentient=true intelligence=5 loyalty=10 aggression=6 courage=9 diet=carnivore food_need=0.02 speed_land=12 dmg_pierce=30 attack_rate=1.2 smell_range=500 hearing_range=300 detect_stealth=8 alarm=true loudness=9 security+4 tamable=true trainable=7 equip_slot=companion counters=thief,spy,burglar color=black
+sheepdog: mass=20 length=0.9 integrity=70 alive=true sentient=true intelligence=8 loyalty=10 aggression=2 diet=carnivore food_need=0.015 speed_land=14 agility=9 command_limit=40 alarm=true smell_range=400 tamable=true trainable=10 equip_slot=companion counters=wolf,coyote,fox comfort=2 color=black
+collie: mass=22 length=0.9 integrity=70 alive=true sentient=true intelligence=9 loyalty=10 diet=carnivore food_need=0.015 speed_land=14 agility=9 command_limit=30 alarm=true tamable=true trainable=10 equip_slot=companion comfort=3 counters=wolf,coyote color=brown
+retriever: mass=32 length=1 integrity=80 alive=true sentient=true intelligence=7 loyalty=10 diet=carnivore food_need=0.02 speed_land=12 speed_water=2 smell_range=600 tracking=7 tamable=true trainable=9 equip_slot=companion comfort=3 charm=5 harvest_bonus=2 harvest_sources=hunting,fishing color=gold
+setter: mass=28 length=1 integrity=75 alive=true sentient=true intelligence=6 loyalty=9 diet=carnivore food_need=0.02 speed_land=14 smell_range=1200 tracking=8 detect_stealth=5 tamable=true trainable=8 equip_slot=companion comfort=2 harvest_bonus=2 harvest_sources=hunting counters=pheasant,quail,grouse color=red
+spaniel: mass=14 length=0.8 integrity=50 alive=true sentient=true intelligence=6 loyalty=9 diet=carnivore food_need=0.01 speed_land=12 speed_water=2 smell_range=800 tracking=7 tamable=true trainable=8 equip_slot=companion comfort=3 charm=5 harvest_bonus=1.8 harvest_sources=hunting counters=duck,pheasant color=brown
+springer: mass=22 length=0.9 integrity=60 alive=true sentient=true intelligence=6 loyalty=9 diet=carnivore food_need=0.015 speed_land=13 jump=2 smell_range=800 tracking=7 tamable=true trainable=8 equip_slot=companion comfort=2 harvest_bonus=1.8 harvest_sources=hunting color=brown
+beagle: mass=11 length=0.7 integrity=45 alive=true sentient=true intelligence=5 loyalty=9 diet=carnivore food_need=0.01 speed_land=12 smell_range=1500 tracking=9 detect_stealth=5 loudness=8 alarm=true tamable=true trainable=6 equip_slot=companion comfort=3 counters=rabbit,hare color=brown
+basset: mass=25 length=0.9 integrity=60 alive=true sentient=true intelligence=4 loyalty=9 diet=carnivore food_need=0.015 speed_land=7 smell_range=2000 tracking=10 detect_stealth=6 loudness=7 tamable=true trainable=5 equip_slot=companion comfort=3 color=brown
+dachshund: mass=9 length=0.6 integrity=35 alive=true sentient=true intelligence=5 loyalty=8 courage=10 diet=carnivore food_need=0.007 speed_land=8 speed_underground=0.3 smell_range=600 detect_underground=true dmg_pierce=8 attack_rate=1.4 tamable=true trainable=5 equip_slot=companion comfort=3 counters=badger,rabbit,mole color=brown
+poodle: mass=20 length=0.8 integrity=50 alive=true sentient=true intelligence=9 loyalty=8 diet=carnivore food_need=0.012 speed_land=12 speed_water=2 beauty=7 charm=5 tamable=true trainable=10 equip_slot=companion comfort=3 value=1500 color=white
+pug: mass=8 length=0.45 integrity=30 alive=true sentient=true intelligence=3 loyalty=9 diet=carnivore food_need=0.006 speed_land=5 charm=7 comfort=3 loudness=4 tamable=true equip_slot=companion color=yellow
+corgi: mass=12 length=0.7 integrity=40 alive=true sentient=true intelligence=7 loyalty=9 diet=carnivore food_need=0.01 speed_land=10 command_limit=15 charm=7 comfort=3 tamable=true trainable=8 equip_slot=companion counters=cattle,cow,sheep color=orange
+dalmatian: mass=25 length=0.9 integrity=70 alive=true sentient=true intelligence=6 loyalty=9 diet=carnivore food_need=0.015 speed_land=15 range=40 alarm=true res_fire=0.2 beauty=7 tamable=true trainable=7 equip_slot=companion comfort=2 color=white
+schnauzer: mass=15 length=0.7 integrity=50 alive=true sentient=true intelligence=7 loyalty=9 aggression=3 diet=carnivore food_need=0.01 speed_land=11 alarm=true loudness=7 tamable=true trainable=7 equip_slot=companion comfort=2 counters=rat,mouse color=gray
+husky: mass=23 length=1 integrity=80 alive=true sentient=true intelligence=6 loyalty=8 diet=carnivore food_need=0.02 speed_land=12 range=150 res_cold=0.9 temp_min=-50 tow_capacity=300 loudness=7 pack_size=6 tamable=true trainable=8 equip_slot=companion terrain_ignored=snow,tundra habitat=tundra,taiga color=gray
+lapdog: mass=4 length=0.35 integrity=15 alive=true sentient=true intelligence=3 loyalty=10 diet=carnivore food_need=0.004 speed_land=6 comfort=3 charm=7 loudness=5 tamable=true equip_slot=companion color=white
+doggy: mass=15 length=0.7 integrity=50 alive=true sentient=true intelligence=4 loyalty=9 diet=carnivore food_need=0.01 speed_land=11 dmg_pierce=10 attack_rate=1.2 smell_range=300 alarm=true comfort=3 charm=6 tamable=true trainable=6 equip_slot=companion color=brown
+doggie: mass=15 length=0.7 integrity=50 alive=true sentient=true intelligence=4 loyalty=9 diet=carnivore food_need=0.01 speed_land=11 dmg_pierce=10 attack_rate=1.2 smell_range=300 alarm=true comfort=3 charm=6 tamable=true trainable=6 equip_slot=companion color=brown
+pooch: mass=18 length=0.8 integrity=55 alive=true sentient=true intelligence=4 loyalty=9 diet=carnivore food_need=0.012 speed_land=11 dmg_pierce=12 attack_rate=1.2 smell_range=300 alarm=true comfort=3 tamable=true trainable=6 equip_slot=companion color=brown
+mutt: mass=20 length=0.8 integrity=70 alive=true sentient=true intelligence=5 loyalty=8 courage=6 diet=omnivore food_need=0.012 speed_land=12 dmg_pierce=15 attack_rate=1.2 smell_range=400 res_disease=0.4 alarm=true comfort=2 tamable=true trainable=6 equip_slot=companion color=brown
+mongrel: mass=20 length=0.8 integrity=70 alive=true sentient=true intelligence=5 loyalty=7 courage=6 diet=omnivore food_need=0.012 speed_land=12 dmg_pierce=15 attack_rate=1.2 smell_range=400 res_disease=0.5 alarm=true tamable=true trainable=6 equip_slot=companion color=brown
+cur: mass=18 length=0.8 integrity=50 alive=true sentient=true intelligence=3 loyalty=2 aggression=6 diet=scavenger food_need=0.01 speed_land=12 dmg_pierce=14 dmg_disease=3 attack_rate=1.3 loudness=7 pack_size=3 tamable=true habitat=city color=gray
+canine: mass=30 length=1 integrity=80 alive=true sentient=true intelligence=5 loyalty=7 aggression=3 diet=carnivore food_need=0.02 speed_land=14 dmg_pierce=25 attack_rate=1.2 smell_range=500 tracking=7 tamable=true equip_slot=companion habitat=forest,meadow color=gray
+dingo: mass=15 length=1.1 integrity=60 alive=true sentient=true intelligence=6 loyalty=2 aggression=5 diet=carnivore food_need=0.015 speed_land=16 dmg_pierce=25 attack_rate=1.3 pack_size=5 stealth=5 temp_max=48 night_vision=true tamable=true habitat=desert,savanna,badlands color=yellow
+stray: mass=15 length=0.8 integrity=40 alive=true sentient=true intelligence=4 loyalty=2 aggression=3 diet=scavenger food_need=0.01 speed_land=12 stealth=5 dmg_pierce=12 dmg_disease=2 attack_rate=1.2 letter_steal=1 tamable=true habitat=city color=gray
+tom: mass=5 length=0.55 integrity=30 alive=true sentient=true intelligence=4 loyalty=3 aggression=4 diet=carnivore food_need=0.006 speed_land=13 agility=9 climb=8 dmg_slash=8 attack_rate=2 night_vision=true nocturnal=true loudness=6 stealth=6 reproduction=1 tamable=true equip_slot=companion counters=rat,mouse habitat=city color=orange
+tomcat: mass=5 length=0.55 integrity=30 alive=true sentient=true intelligence=4 loyalty=3 aggression=5 diet=carnivore food_need=0.006 speed_land=13 agility=9 climb=8 dmg_slash=9 attack_rate=2 night_vision=true nocturnal=true loudness=7 stealth=6 reproduction=1 tamable=true equip_slot=companion counters=rat,mouse habitat=city color=gray
+tabby: mass=4 length=0.5 integrity=25 alive=true sentient=true intelligence=4 loyalty=5 diet=carnivore food_need=0.005 speed_land=13 agility=9 climb=8 dmg_slash=6 attack_rate=2 night_vision=true stealth=6 camouflage=forest,meadow comfort=3 tamable=true equip_slot=companion counters=rat,mouse color=orange
+mouser: mass=4 length=0.5 integrity=25 alive=true sentient=true intelligence=5 loyalty=5 aggression=4 diet=carnivore food_need=0.005 speed_land=14 agility=10 climb=8 dmg_slash=8 attack_rate=2.5 night_vision=true stealth=8 tracking=6 comfort=1 tamable=true equip_slot=companion counters=rat,mouse,vole,mole,rodent color=gray
+feline: mass=5 length=0.55 integrity=30 alive=true sentient=true intelligence=5 loyalty=4 diet=carnivore food_need=0.006 speed_land=14 agility=9 climb=8 jump=2 dmg_slash=8 attack_rate=2 night_vision=true stealth=7 tamable=true equip_slot=companion counters=rat,mouse color=gray
+cougar: mass=70 length=2 integrity=200 alive=true sentient=true intelligence=6 aggression=6 diet=carnivore food_need=0.05 speed_land=18 jump=6 climb=8 stealth=8 night_vision=true camouflage=hill,forest,badlands dmg_slash=50 dmg_pierce=45 attack_rate=1.2 critical=0.2 fear_aura=3 habitat=hills,forest,badlands color=yellow
+puma: mass=65 length=2 integrity=190 alive=true sentient=true intelligence=6 aggression=6 diet=carnivore food_need=0.05 speed_land=18 jump=6 climb=8 stealth=8 night_vision=true camouflage=hill,forest dmg_slash=48 dmg_pierce=42 attack_rate=1.2 critical=0.2 fear_aura=3 habitat=hills,forest,jungle color=yellow
+bobcat: mass=10 length=0.9 integrity=50 alive=true aggression=4 diet=carnivore food_need=0.01 speed_land=15 climb=7 jump=3 stealth=8 night_vision=true nocturnal=true camouflage=forest,badlands dmg_slash=15 attack_rate=1.5 counters=rabbit,hare,rat habitat=forest,badlands,marsh color=brown
+ocelot: mass=12 length=1 integrity=50 alive=true aggression=4 diet=carnivore food_need=0.01 speed_land=14 climb=9 stealth=8 night_vision=true nocturnal=true camouflage=jungle,forest dmg_slash=15 attack_rate=1.5 beauty=8 value=500 tamable=true habitat=jungle color=yellow
+serval: mass=12 length=1 integrity=50 alive=true aggression=3 diet=carnivore food_need=0.01 speed_land=16 jump=3 hearing_range=500 stealth=6 camouflage=savanna dmg_slash=14 attack_rate=1.5 tamable=true counters=rat,bird habitat=savanna,marsh color=yellow
+lioness: mass=130 length=1.8 integrity=380 alive=true sentient=true intelligence=6 aggression=7 diet=carnivore food_need=0.2 speed_land=22 jump=3 stealth=6 camouflage=savanna dmg_slash=65 dmg_pierce=55 attack_rate=1.1 pack_size=4 tracking=6 fear_aura=4 habitat=savanna color=yellow
+tigress: mass=150 length=2.6 integrity=450 alive=true aggression=8 diet=carnivore food_need=0.18 speed_land=18 speed_water=2 jump=5 stealth=7 camouflage=forest,jungle night_vision=true dmg_slash=90 dmg_pierce=70 attack_rate=1 inflict_bleed=8 fear_aura=5 habitat=jungle,taiga color=orange
+liger: mass=400 length=3.5 integrity=900 alive=true aggression=6 diet=carnivore food_need=0.35 speed_land=17 speed_water=2 jump=4 dmg_slash=130 dmg_pierce=100 attack_rate=0.9 inflict_bleed=8 fear_aura=7 loudness=8 color=orange
+civet: mass=4 length=0.8 integrity=20 alive=true diet=omnivore food_need=0.005 speed_land=8 climb=7 stealth=6 nocturnal=true night_vision=true odor=8 habitat=jungle,forest color=gray
+grizzly: mass=360 length=2.2 height=1.2 integrity=1000 alive=true aggression=7 courage=9 diet=omnivore food_need=0.3 speed_land=15 speed_water=2 dmg_slash=110 dmg_crush=70 attack_rate=0.9 knockback=4 armor=6 smell_range=2000 res_cold=0.6 fear_aura=6 habitat=forest,taiga,hills color=brown
+bruin: mass=300 length=2 integrity=850 alive=true aggression=5 diet=omnivore food_need=0.25 speed_land=13 climb=5 dmg_slash=85 dmg_crush=55 attack_rate=0.8 armor=5 smell_range=1500 fear_aura=4 habitat=forest,taiga color=brown
+ape: mass=100 length=1.6 integrity=300 alive=true sentient=true intelligence=7 aggression=3 hands=true diet=omnivore food_need=0.06 speed_land=10 climb=8 strength=10 dmg_blunt=60 attack_rate=1 habitat=jungle color=black
+chimp: mass=50 length=1.2 integrity=120 alive=true sentient=true intelligence=8 aggression=5 hands=true diet=omnivore food_need=0.04 speed_land=10 climb=9 strength=12 dmg_blunt=40 dmg_pierce=20 attack_rate=1.2 pack_size=5 loudness=8 habitat=jungle color=black
+bonobo: mass=40 length=1.1 integrity=100 alive=true sentient=true intelligence=8 aggression=1 hands=true diet=omnivore food_need=0.03 speed_land=9 climb=9 charm=5 morale+2 pack_size=6 habitat=jungle color=black
+silverback: mass=200 length=1.8 integrity=600 alive=true sentient=true intelligence=7 aggression=4 courage=10 hands=true diet=herbivore food_need=0.12 speed_land=11 climb=5 strength=10 dmg_blunt=110 knockback=5 attack_rate=0.7 fear_aura=5 authority=4 command_limit=12 loudness=9 habitat=jungle color=gray
+gibbon: mass=7 length=0.6 integrity=20 alive=true sentient=true intelligence=6 hands=true diet=herbivore food_need=0.006 speed_land=5 climb=10 jump=10 agility=10 evasion=0.5 loudness=9 habitat=jungle color=black
+macaque: mass=8 length=0.6 integrity=25 alive=true sentient=true intelligence=7 aggression=4 hands=true diet=omnivore food_need=0.008 speed_land=9 climb=10 letter_steal=2 pack_size=8 loudness=7 res_cold=0.3 tamable=true habitat=jungle,forest,city,hills color=brown
+capuchin: mass=3 length=0.45 integrity=12 alive=true sentient=true intelligence=8 loyalty=5 hands=true diet=omnivore food_need=0.004 speed_land=7 climb=10 letter_steal=2 pack_size=6 tamable=true trainable=7 equip_slot=companion habitat=jungle color=brown
+howler: mass=7 length=0.6 integrity=20 alive=true sentient=true intelligence=5 hands=true diet=herbivore food_need=0.006 speed_land=4 climb=10 loudness=10 dmg_sonic=10 inflict_fear=2 pack_size=8 hearing_range=500 habitat=jungle color=black
+marmoset: mass=0.35 length=0.2 integrity=4 alive=true sentient=true intelligence=6 hands=true diet=omnivore food_need=0.001 speed_land=5 climb=10 stealth=5 comfort=1 charm=5 pack_size=6 tamable=true equip_slot=companion habitat=jungle color=gray
+lemur: mass=2.5 length=0.45 integrity=10 alive=true sentient=true intelligence=5 hands=true diet=herbivore food_need=0.003 speed_land=6 climb=10 jump=6 night_vision=true charm=6 pack_size=8 tamable=true habitat=jungle,forest color=gray
+primate: mass=40 length=1 integrity=100 alive=true sentient=true intelligence=7 hands=true diet=omnivore food_need=0.03 speed_land=8 climb=9 strength=8 dmg_blunt=30 attack_rate=1 pack_size=4 habitat=jungle color=brown
+rhinoceros: mass=2300 length=3.8 integrity=3000 alive=true aggression=5 courage=8 diet=herbivore food_need=0.6 speed_land=14 armor=15 dmg_pierce=250 dmg_crush=150 attack_rate=0.4 knockback=7 siege=3 sight_range=30 smell_range=800 fear_aura=4 habitat=savanna color=gray
+mastodon: mass=7000 length=5 height=3 integrity=8500 alive=true aggression=3 courage=8 diet=herbivore food_need=0.8 speed_land=9 dmg_crush=220 dmg_pierce=140 attack_rate=0.3 knockback=8 siege=3 armor=15 res_cold=0.7 fear_aura=4 edible=true nutrition=200 habitat=taiga,forest,tundra color=brown
+tapir: mass=250 length=2 integrity=250 alive=true diet=herbivore food_need=0.08 speed_land=8 speed_water=3 dive_depth=5 stealth=5 nocturnal=true habitat=jungle,marsh color=black
+capybara: mass=50 length=1.2 integrity=70 alive=true diet=herbivore food_need=0.03 speed_land=8 speed_water=3 dive_depth=3 courage=4 comfort=2 charm=6 morale+1 pack_size=10 tamable=true habitat=marsh,jungle,savanna color=brown
+aardvark: mass=60 length=1.8 integrity=100 alive=true diet=carnivore food_need=0.04 speed_land=4 speed_underground=0.6 nocturnal=true smell_range=500 hearing_range=400 dmg_slash=30 attack_rate=0.8 counters=ant,termite habitat=savanna color=gray
+pangolin: mass=15 length=1 integrity=80 alive=true diet=carnivore food_need=0.01 speed_land=2 speed_underground=0.3 armor=25 res_slash=0.9 res_pierce=0.8 res_blunt=0.5 nocturnal=true counters=ant,termite habitat=savanna,jungle color=brown
+echidna: mass=5 length=0.45 integrity=40 alive=true diet=carnivore food_need=0.003 speed_land=2 speed_underground=0.3 thorns=12 res_slash=0.6 res_pierce=0.4 counters=ant,termite habitat=forest,desert,savanna color=brown
+platypus: mass=2 length=0.5 integrity=15 alive=true diet=carnivore food_need=0.004 speed_land=2 speed_water=3 dive_depth=10 venomous=true dmg_poison=30 inflict_poison=20 detect_life=20 sees_through=water placeable_on=water,land habitat=marsh,forest color=brown
+wombat: mass=30 length=1 integrity=120 alive=true diet=herbivore food_need=0.02 speed_land=11 speed_underground=0.4 armor=8 dmg_crush=40 knockback=2 attack_rate=0.5 nocturnal=true comfort=1 habitat=forest,hills,meadow color=brown
+wallaby: mass=15 length=1 integrity=40 alive=true diet=herbivore food_need=0.01 speed_land=13 jump=5 dmg_blunt=15 attack_rate=1 storage_objects=0.5 reproduction=0.4 habitat=forest,savanna,hills color=gray
+bandicoot: mass=1 length=0.4 integrity=6 alive=true diet=omnivore food_need=0.002 speed_land=6 speed_underground=0.1 nocturnal=true reproduction=8 habitat=forest,savanna color=brown
+possum: mass=3 length=0.7 integrity=15 alive=true diet=omnivore food_need=0.004 speed_land=3 climb=8 nocturnal=true night_vision=true stealth=5 evasion=0.2 res_poison=0.9 letter_steal=1 habitat=forest,city color=gray
+opossum: mass=3 length=0.75 integrity=15 alive=true diet=omnivore food_need=0.004 speed_land=3 climb=8 nocturnal=true night_vision=true stealth=5 res_poison=0.9 res_disease=0.5 prevents_death=1 counters=snake,tick habitat=forest,city,marsh color=gray
+meerkat: mass=0.8 length=0.5 integrity=6 alive=true sentient=true intelligence=5 diet=carnivore food_need=0.002 speed_land=8 speed_underground=0.2 sight_range=300 alarm=true res_poison=0.6 pack_size=12 counters=scorpion habitat=desert,savanna color=brown
+genet: mass=2 length=0.9 integrity=10 alive=true diet=carnivore food_need=0.003 speed_land=8 climb=9 stealth=7 nocturnal=true night_vision=true habitat=savanna,forest color=gray
+chipmunk: mass=0.1 length=0.25 integrity=2 alive=true diet=omnivore food_need=0.001 speed_land=7 speed_underground=0.1 climb=8 agility=9 evasion=0.4 stealth=4 storage_letters=8 courage=0 habitat=forest,meadow color=brown
+groundhog: mass=4 length=0.6 integrity=20 alive=true diet=herbivore food_need=0.005 speed_land=4 speed_underground=0.4 alarm=true loudness=6 sleep_need=0.6 counters=garden,lettuce,cabbage habitat=meadow,forest color=brown
+woodchuck: mass=4 length=0.6 integrity=20 alive=true diet=herbivore food_need=0.005 speed_land=4 speed_underground=0.4 climb=4 sleep_need=0.6 counters=garden,lettuce,log habitat=meadow,forest color=brown
+marmot: mass=5 length=0.6 integrity=22 alive=true diet=herbivore food_need=0.005 speed_land=4 speed_underground=0.3 alarm=true loudness=7 res_cold=0.6 sleep_need=0.6 pack_size=4 habitat=hills,tundra color=brown
+pika: mass=0.15 length=0.2 integrity=2 alive=true diet=herbivore food_need=0.001 speed_land=5 climb=6 loudness=5 alarm=true storage_objects=1 res_cold=0.6 habitat=hills,tundra color=gray
+vole: mass=0.04 length=0.12 integrity=1 alive=true diet=herbivore food_need=0.0005 speed_land=3 speed_underground=0.1 stealth=5 reproduction=25 pack_size=8 courage=0 counters=garden,wheat habitat=meadow,forest,tundra color=brown
+shrew: mass=0.01 length=0.08 integrity=1 alive=true aggression=6 diet=carnivore food_need=0.0005 speed_land=4 stealth=5 venomous=true dmg_poison=2 attack_rate=3 reproduction=10 habitat=meadow,forest,marsh color=brown
+mouse: mass=0.02 length=0.08 integrity=1 alive=true diet=omnivore food_need=0.0003 speed_land=3 climb=6 stealth=7 evasion=0.4 reproduction=12 pack_size=5 courage=0 letter_steal=1 counters=cheese,grain,wheat habitat=city,meadow,forest color=gray
+rodent: mass=0.3 length=0.2 integrity=3 alive=true diet=omnivore food_need=0.001 speed_land=3 speed_underground=0.1 stealth=6 reproduction=15 pack_size=5 courage=0 letter_steal=1 dmg_disease=1 contagion=0.05 habitat=city,meadow,forest color=gray
+muskrat: mass=1.2 length=0.5 integrity=8 alive=true diet=herbivore food_need=0.002 speed_land=2 speed_water=1.5 dive_depth=3 reproduction=8 odor=4 value=10 habitat=marsh color=brown
+jackrabbit: mass=3 length=0.6 integrity=8 alive=true diet=herbivore food_need=0.003 speed_land=20 jump=3 evasion=0.5 hearing_range=500 courage=0 reproduction=6 edible=true nutrition=4 temp_max=48 habitat=desert,badlands,meadow color=brown
+cottontail: mass=1.2 length=0.4 integrity=5 alive=true diet=herbivore food_need=0.002 speed_land=13 evasion=0.4 stealth=5 courage=0 reproduction=12 pack_size=4 edible=true nutrition=3 counters=garden,lettuce habitat=meadow,forest color=brown
+bunny: mass=1.5 length=0.4 integrity=5 alive=true diet=herbivore food_need=0.002 speed_land=12 evasion=0.4 courage=0 comfort=3 charm=7 reproduction=12 tamable=true equip_slot=companion edible=true nutrition=3 habitat=meadow color=white
+marten: mass=1.2 length=0.6 integrity=10 alive=true aggression=4 diet=carnivore food_need=0.003 speed_land=8 climb=9 agility=9 stealth=6 dmg_pierce=7 attack_rate=2 value=150 counters=squirrel habitat=forest,taiga color=brown
+stoat: mass=0.3 length=0.3 integrity=6 alive=true sentient=true intelligence=6 aggression=6 diet=carnivore food_need=0.002 speed_land=9 agility=10 stealth=7 camouflage=snow inflict_charm=4 dmg_pierce=8 attack_rate=2 counters=rabbit,hare habitat=meadow,taiga,tundra color=brown
+ermine: mass=0.3 length=0.3 integrity=6 alive=true aggression=5 diet=carnivore food_need=0.002 speed_land=9 agility=10 stealth=8 camouflage=snow,tundra res_cold=0.6 dmg_pierce=8 attack_rate=2 value=400 beauty=8 counters=rabbit,vole habitat=tundra,taiga color=white
+polecat: mass=1.2 length=0.5 integrity=10 alive=true aggression=4 diet=carnivore food_need=0.003 speed_land=6 stealth=5 nocturnal=true odor=8 dmg_pierce=7 inflict_confuse=3 attack_rate=1.8 counters=rat,rabbit habitat=forest,meadow color=brown
+seahorse: mass=0.01 length=0.15 integrity=1 alive=true diet=carnivore speed_water=0.02 stealth=8 camouflage=water beauty=8 breathes=water placeable_on=water habitat=shore color=yellow
+porpoise: mass=60 length=1.8 integrity=80 alive=true sentient=true intelligence=7 diet=carnivore food_need=0.03 speed_water=9 dive_depth=200 breathes=air placeable_on=water pack_size=4 detect_life=200 sees_through=water,fog habitat=shore color=gray
+bottlenose: mass=300 length=3 integrity=250 alive=true sentient=true intelligence=9 loyalty=7 diet=carnivore food_need=0.07 speed_water=16 jump=5 dive_depth=300 breathes=air placeable_on=water dmg_blunt=35 attack_rate=1 pack_size=6 detect_life=300 sees_through=water,fog charm=6 tamable=true counters=shark habitat=shore color=gray
+beluga: mass=1400 length=4.5 integrity=1200 alive=true sentient=true intelligence=8 diet=carnivore food_need=0.25 speed_water=8 dive_depth=800 breathes=air placeable_on=water,deep_water loudness=8 res_cold=0.9 pack_size=6 detect_life=400 sees_through=water habitat=tundra,shore color=white
+narwhal: mass=1500 length=5 integrity=1300 alive=true diet=carnivore food_need=0.25 speed_water=9 dive_depth=1500 breathes=air placeable_on=deep_water res_cold=0.9 dmg_pierce=200 attack_range=3 attack_rate=0.5 pack_size=4 value=3000 habitat=tundra color=gray
+cetacean: mass=30000 length=15 integrity=15000 alive=true intelligence=6 diet=carnivore food_need=8 speed_water=9 dive_depth=1000 breathes=air placeable_on=deep_water dmg_crush=1200 attack_rate=0.2 loudness=9 habitat=shore color=gray
+mammal: mass=50 length=1.2 integrity=100 alive=true diet=omnivore food_need=0.03 speed_land=10 dmg_pierce=15 attack_rate=1 reproduction=0.5 habitat=meadow,forest color=brown
+carnivore: mass=60 length=1.5 integrity=150 alive=true aggression=6 diet=carnivore food_need=0.06 speed_land=16 dmg_pierce=40 dmg_slash=30 attack_rate=1.2 smell_range=500 tracking=6 fear_aura=3 habitat=forest,savanna color=brown
+
+# noun creature
+pet: mass=5 length=0.5 integrity=25 alive=true sentient=true intelligence=4 loyalty=9 diet=omnivore food_need=0.005 speed_land=8 comfort=3 charm=5 tamable=true equip_slot=companion color=brown
+critter: mass=0.5 length=0.25 integrity=4 alive=true diet=omnivore food_need=0.001 speed_land=4 stealth=6 evasion=0.3 letter_steal=1 reproduction=8 pack_size=3 habitat=forest,meadow,city color=brown
+creature: mass=80 length=1.6 integrity=150 alive=true aggression=4 diet=omnivore food_need=0.05 speed_land=8 dmg_slash=25 dmg_pierce=20 attack_rate=1 night_vision=true fear_aura=2 habitat=forest,marsh color=gray
+varmint: mass=2 length=0.4 integrity=8 alive=true aggression=3 diet=scavenger food_need=0.002 speed_land=6 stealth=6 letter_steal=2 reproduction=10 pack_size=3 counters=garden,chicken,hen habitat=meadow,city,forest color=brown
+prey: mass=40 length=1.2 integrity=40 alive=true courage=0 diet=herbivore food_need=0.02 speed_land=16 evasion=0.4 stealth=4 alarm=true reproduction=2 pack_size=4 edible=true nutrition=10 habitat=meadow,savanna,forest color=brown
+predator: mass=90 length=1.8 integrity=300 alive=true aggression=8 courage=8 diet=carnivore food_need=0.1 speed_land=18 stealth=7 night_vision=true smell_range=800 tracking=9 dmg_pierce=60 dmg_slash=50 attack_rate=1.1 critical=0.2 fear_aura=5 counters=prey,rabbit,deer habitat=forest,savanna,taiga color=gray
+herbivore: mass=300 length=2.2 integrity=300 alive=true diet=herbivore food_need=0.12 speed_land=14 dmg_blunt=30 attack_rate=0.5 pack_size=6 reproduction=0.5 edible=true nutrition=20 habitat=meadow,savanna color=brown
+omnivore: mass=80 length=1.6 integrity=180 alive=true aggression=3 diet=omnivore food_need=0.06 speed_land=10 dmg_slash=30 attack_rate=0.9 smell_range=400 res_poison=0.3 habitat=forest,meadow color=brown
+scavenger: mass=8 length=0.9 integrity=25 alive=true diet=scavenger food_need=0.005 speed_land=8 speed_air=15 smell_range=3000 res_disease=0.9 res_poison=0.5 reclaim_rate=0.2 reclaim_range=30 habitat=savanna,desert,badlands color=black
+mutant: mass=100 length=1.8 integrity=400 alive=true sentient=true intelligence=4 aggression=7 diet=omnivore food_need=0.08 speed_land=7 regeneration=2 radioactivity=3 res_radiation=0.9 res_poison=0.5 dmg_slash=50 dmg_radiation=20 attack_rate=1 fear_aura=4 habitat=volcanic,badlands color=green
+pup: mass=3 length=0.35 integrity=12 alive=true sentient=true intelligence=3 loyalty=10 diet=carnivore food_need=0.004 speed_land=7 comfort=3 charm=6 dmg_pierce=2 trainable=9 tamable=true equip_slot=companion color=brown
+whelp: mass=3 length=0.35 integrity=12 alive=true sentient=true intelligence=3 loyalty=9 aggression=2 diet=carnivore food_need=0.004 speed_land=7 comfort=2 charm=4 dmg_pierce=3 trainable=9 tamable=true equip_slot=companion color=gray
+cub: mass=8 length=0.6 integrity=30 alive=true sentient=true intelligence=3 loyalty=8 diet=carnivore food_need=0.008 speed_land=7 climb=4 dmg_slash=6 attack_rate=1 comfort=2 charm=8 trainable=9 tamable=true equip_slot=companion habitat=forest,savanna color=brown
+hatchling: mass=0.05 length=0.1 integrity=1 alive=true diet=omnivore food_need=0.0005 speed_land=1 courage=0 charm=6 comfort=1 tamable=true trainable=8 color=green
+nestling: mass=0.02 length=0.06 integrity=1 alive=true diet=carnivore food_need=0.0005 speed_land=0 loudness=6 courage=0 charm=5 tamable=true trainable=8 color=gray
+fledgling: mass=0.1 length=0.15 integrity=1 alive=true diet=omnivore food_need=0.001 speed_land=1 speed_air=3 flight_ceiling=5 courage=0 charm=5 tamable=true trainable=8 habitat=forest,meadow color=brown
+larva: mass=0.001 length=0.02 integrity=1 alive=true diet=herbivore food_need=0.0001 speed_land=0.05 growth_time=5 reproduction=0 pack_size=30 edible=true nutrition=0.1 habitat=marsh,forest,meadow color=white
+maggot: mass=0.0001 length=0.01 integrity=1 alive=true diet=scavenger food_need=0.00005 speed_land=0.01 pack_size=200 res_disease=1 reclaim_rate=0.1 reclaim_range=5 regeneration+0.5 counters=rotten,meat,carcass odor=3 habitat=marsh,city color=white
+grub: mass=0.003 length=0.03 integrity=1 alive=true diet=herbivore food_need=0.0001 speed_underground=0.01 pack_size=20 edible=true nutrition=0.3 counters=grass,lawn,garden habitat=meadow,forest color=white
+
+# noun bird
+bird: mass=0.5 length=0.3 integrity=4 alive=true diet=omnivore food_need=0.002 speed_air=15 flight_ceiling=500 sight_range=300 loudness=4 pack_size=3 tamable=true habitat=forest,meadow,city color=brown
+fowl: mass=2 length=0.5 integrity=5 alive=true diet=omnivore food_need=0.003 speed_land=4 speed_air=5 food_output=0.3 reproduction=5 pack_size=4 tamable=true edible=true nutrition=6 raw=true habitat=meadow color=brown
+chick: mass=0.05 length=0.08 integrity=1 alive=true diet=omnivore food_need=0.0005 speed_land=2 courage=0 comfort=2 charm=7 loudness=4 reproduction=0 growth_time=30 tamable=true habitat=meadow color=yellow
+rooster: mass=3 length=0.5 integrity=8 alive=true aggression=5 courage=9 diet=omnivore food_need=0.004 speed_land=5 speed_air=4 dmg_pierce=6 dmg_slash=5 attack_rate=1.5 loudness=10 alarm=true reproduction=6 tamable=true habitat=meadow color=red
+cockerel: mass=2 length=0.45 integrity=6 alive=true aggression=4 courage=8 diet=omnivore food_need=0.003 speed_land=5 speed_air=4 dmg_pierce=5 attack_rate=1.5 loudness=9 alarm=true reproduction=5 tamable=true habitat=meadow color=red
+bantam: mass=0.6 length=0.3 integrity=3 alive=true aggression=5 courage=10 diet=omnivore food_need=0.002 speed_land=5 speed_air=5 dmg_pierce=4 attack_rate=2 food_output=0.2 reproduction=6 comfort=1 tamable=true habitat=meadow color=brown
+capon: mass=3.5 length=0.5 integrity=5 alive=true diet=omnivore food_need=0.004 speed_land=3 courage=0 tamable=true edible=true nutrition=15 raw=true habitat=meadow color=white
+gobbler: mass=10 length=1.2 integrity=28 alive=true aggression=4 diet=omnivore food_need=0.006 speed_land=11 speed_air=15 flight_ceiling=50 dmg_slash=8 attack_rate=1 loudness=8 reproduction=2 tamable=true edible=true nutrition=40 habitat=meadow,forest color=brown
+drake: mass=1.3 length=0.55 integrity=5 alive=true diet=omnivore food_need=0.003 speed_land=2 speed_water=2 speed_air=20 beauty=6 reproduction=3 tamable=true edible=true nutrition=5 habitat=marsh,meadow color=green
+mallard: mass=1.2 length=0.55 integrity=4 alive=true diet=omnivore food_need=0.003 speed_land=2 speed_water=2 speed_air=22 food_output=0.2 pack_size=4 reproduction=3 tamable=true edible=true nutrition=5 habitat=marsh,meadow color=green
+duckling: mass=0.05 length=0.1 integrity=1 alive=true diet=omnivore food_need=0.0005 speed_land=1 speed_water=1 courage=0 comfort=2 charm=8 pack_size=6 tamable=true habitat=marsh,meadow color=yellow
+gosling: mass=0.1 length=0.15 integrity=1 alive=true diet=herbivore food_need=0.0006 speed_land=1.5 speed_water=1 courage=1 comfort=2 charm=7 pack_size=5 tamable=true habitat=marsh,meadow color=yellow
+gander: mass=5 length=1 integrity=18 alive=true aggression=6 courage=9 diet=herbivore food_need=0.006 speed_land=4 speed_water=2 speed_air=20 dmg_blunt=8 dmg_pierce=4 attack_rate=1.5 loudness=9 alarm=true security+2 tamable=true habitat=marsh,meadow color=white
+waterfowl: mass=2 length=0.6 integrity=6 alive=true diet=omnivore food_need=0.003 speed_land=2 speed_water=3 speed_air=20 pack_size=8 placeable_on=water,land edible=true nutrition=6 habitat=marsh,shore color=brown
+eider: mass=2 length=0.6 integrity=6 alive=true diet=carnivore food_need=0.003 speed_water=3 speed_air=20 dive_depth=20 res_cold=0.9 value=50 pack_size=6 habitat=shore,tundra color=white
+teal: mass=0.35 length=0.35 integrity=2 alive=true diet=omnivore food_need=0.001 speed_water=2 speed_air=25 agility=9 pack_size=8 edible=true nutrition=2 habitat=marsh color=blue
+swallow: mass=0.02 length=0.18 integrity=1 alive=true diet=carnivore food_need=0.0005 speed_air=20 agility=10 evasion=0.5 range=10000 pack_size=10 counters=mosquito,fly,gnat,midge habitat=meadow,marsh,city color=blue
+sparrow: mass=0.03 length=0.15 integrity=1 alive=true diet=omnivore food_need=0.0005 speed_air=12 pack_size=8 reproduction=4 loudness=4 letter_steal=1 habitat=city,meadow color=brown
+robin: mass=0.08 length=0.2 integrity=1 alive=true diet=carnivore food_need=0.0006 speed_air=13 loudness=5 beauty=6 charm=3 counters=worm,earthworm habitat=meadow,forest,city color=red
+jay: mass=0.17 length=0.3 integrity=2 alive=true sentient=true intelligence=7 aggression=3 diet=omnivore food_need=0.001 speed_air=15 loudness=8 alarm=true letter_steal=1 storage_letters=10 habitat=forest color=blue
+finch: mass=0.02 length=0.13 integrity=1 alive=true diet=herbivore food_need=0.0004 speed_air=12 loudness=5 beauty=6 comfort=1 pack_size=6 reproduction=4 tamable=true habitat=meadow,forest color=yellow
+goldfinch: mass=0.016 length=0.12 integrity=1 alive=true diet=herbivore food_need=0.0004 speed_air=12 loudness=5 beauty=8 charm=3 pack_size=6 tamable=true habitat=meadow color=yellow
+nightingale: mass=0.02 length=0.16 integrity=1 alive=true diet=carnivore food_need=0.0004 speed_air=12 nocturnal=true stealth=5 loudness=7 beauty=8 charm=5 morale+2 habitat=forest color=brown
+lark: mass=0.04 length=0.18 integrity=1 alive=true diet=omnivore food_need=0.0005 speed_air=12 flight_ceiling=300 loudness=6 morale+1 camouflage=field,meadow habitat=meadow color=brown
+skylark: mass=0.04 length=0.18 integrity=1 alive=true diet=omnivore food_need=0.0005 speed_air=12 flight_ceiling=300 hover=true loudness=7 morale+1 camouflage=field,meadow habitat=meadow,tundra color=brown
+meadowlark: mass=0.1 length=0.24 integrity=1 alive=true diet=omnivore food_need=0.0006 speed_air=13 loudness=7 camouflage=field,meadow morale+1 habitat=meadow,savanna color=yellow
+wren: mass=0.01 length=0.1 integrity=1 alive=true diet=carnivore food_need=0.0003 speed_air=8 stealth=6 loudness=7 courage=6 habitat=forest,meadow color=brown
+starling: mass=0.08 length=0.2 integrity=1 alive=true diet=omnivore food_need=0.0006 speed_air=20 pack_size=300 loudness=6 letter_steal=1 counters=wheat,corn habitat=city,meadow color=black
+blackbird: mass=0.1 length=0.25 integrity=1 alive=true diet=omnivore food_need=0.0007 speed_air=15 loudness=6 pack_size=4 counters=worm,berry habitat=forest,meadow,city color=black
+bluebird: mass=0.03 length=0.18 integrity=1 alive=true diet=carnivore food_need=0.0005 speed_air=12 beauty=8 charm=3 morale+2 habitat=meadow color=blue
+mockingbird: mass=0.05 length=0.25 integrity=1 alive=true sentient=true intelligence=6 diet=omnivore food_need=0.0005 speed_air=12 loudness=7 speech=true copies=true aggression=4 habitat=meadow,city color=gray
+songbird: mass=0.03 length=0.15 integrity=1 alive=true diet=omnivore food_need=0.0005 speed_air=12 loudness=6 beauty=7 charm=3 morale+1 comfort=1 tamable=true habitat=forest,meadow color=yellow
+chickadee: mass=0.01 length=0.12 integrity=1 alive=true diet=omnivore food_need=0.0003 speed_air=10 loudness=5 alarm=true res_cold=0.5 storage_letters=5 habitat=forest,taiga color=gray
+nuthatch: mass=0.02 length=0.14 integrity=1 alive=true diet=omnivore food_need=0.0003 speed_air=10 climb=10 storage_letters=6 habitat=forest color=blue
+oriole: mass=0.035 length=0.2 integrity=1 alive=true diet=omnivore food_need=0.0005 speed_air=13 beauty=8 loudness=6 habitat=forest,meadow color=orange
+flycatcher: mass=0.015 length=0.14 integrity=1 alive=true diet=carnivore food_need=0.0003 speed_air=12 agility=10 counters=fly,mosquito,gnat,midge habitat=forest,meadow color=gray
+shrike: mass=0.06 length=0.22 integrity=2 alive=true aggression=6 diet=carnivore food_need=0.0006 speed_air=13 dmg_pierce=6 inflict_bleed=3 attack_rate=1.5 counters=mouse,lizard,grasshopper habitat=meadow,savanna color=gray
+cuckoo: mass=0.12 length=0.33 integrity=2 alive=true diet=carnivore food_need=0.0008 speed_air=15 stealth=5 loudness=7 copies=true letter_steal=1 counters=nest habitat=forest,meadow color=gray
+magpie: mass=0.2 length=0.45 integrity=3 alive=true sentient=true intelligence=8 diet=omnivore food_need=0.001 speed_air=13 loudness=7 letter_steal=3 storage_letters=20 tamable=true habitat=meadow,city,forest color=black
+jackdaw: mass=0.25 length=0.34 integrity=3 alive=true sentient=true intelligence=8 diet=omnivore food_need=0.001 speed_air=14 pack_size=6 letter_steal=2 loudness=6 tamable=true habitat=city,meadow color=black
+rook: mass=0.45 length=0.45 integrity=4 alive=true sentient=true intelligence=8 diet=omnivore food_need=0.002 speed_air=15 pack_size=12 loudness=7 letter_steal=1 counters=wheat,corn habitat=meadow,forest color=black
+cockatoo: mass=0.8 length=0.5 integrity=6 alive=true sentient=true intelligence=8 loyalty=7 diet=herbivore food_need=0.002 speed_air=16 loudness=10 speech=true beauty=7 comfort=2 dmg_pierce=6 attack_rate=1 tamable=true equip_slot=companion habitat=jungle,forest,savanna color=white
+macaw: mass=1.2 length=0.9 integrity=8 alive=true sentient=true intelligence=8 loyalty=7 diet=herbivore food_need=0.002 speed_air=20 loudness=10 speech=true beauty=10 charm=4 dmg_crush=10 attack_rate=1 res_poison=0.5 tamable=true equip_slot=companion habitat=jungle color=red
+parakeet: mass=0.04 length=0.2 integrity=1 alive=true sentient=true intelligence=6 diet=herbivore food_need=0.0005 speed_air=14 loudness=6 speech=true beauty=7 comfort=2 pack_size=4 reproduction=3 tamable=true equip_slot=companion habitat=jungle,savanna,city color=green
+budgie: mass=0.035 length=0.18 integrity=1 alive=true sentient=true intelligence=6 diet=herbivore food_need=0.0004 speed_air=13 loudness=6 speech=true beauty=7 comfort=2 reproduction=3 tamable=true equip_slot=companion color=green
+kea: mass=0.9 length=0.48 integrity=8 alive=true sentient=true intelligence=9 aggression=3 diet=omnivore food_need=0.002 speed_air=16 res_cold=0.6 letter_steal=3 dmg_pierce=8 siege=1.5 counters=car,tent habitat=hills,tundra color=green
+lory: mass=0.15 length=0.25 integrity=2 alive=true diet=herbivore food_need=0.001 speed_air=15 beauty=9 loudness=7 fertility+1 tamable=true habitat=jungle color=red
+kookaburra: mass=0.35 length=0.45 integrity=4 alive=true diet=carnivore food_need=0.002 speed_air=14 loudness=10 dmg_crush=6 attack_rate=1 counters=snake,lizard,mouse habitat=forest,savanna color=brown
+kingfisher: mass=0.04 length=0.17 integrity=1 alive=true diet=carnivore food_need=0.0005 speed_air=18 dive_depth=1 beauty=9 accuracy=0.99 harvest_bonus=1.5 harvest_sources=fishing habitat=marsh,shore color=blue
+raptor: mass=2 length=0.6 integrity=20 alive=true sentient=true intelligence=5 aggression=5 diet=carnivore food_need=0.005 speed_air=35 flight_ceiling=3000 sight_range=2500 map_reveal=15 dmg_slash=18 dmg_pierce=12 attack_rate=1.2 targets=land,air tracking=7 tamable=true equip_slot=companion habitat=hills,meadow,badlands color=brown
+peregrine: mass=1 length=0.45 integrity=12 alive=true sentient=true intelligence=6 loyalty=7 diet=carnivore food_need=0.003 speed_air=90 acceleration=10 sight_range=3000 map_reveal=15 dmg_slash=22 dmg_pierce=18 attack_rate=1 critical=0.3 targets=land,air tamable=true equip_slot=companion harvest_bonus=2 harvest_sources=hunting counters=pigeon,dove,duck habitat=hills,city,shore color=gray
+kestrel: mass=0.2 length=0.35 integrity=4 alive=true sentient=true intelligence=5 loyalty=6 diet=carnivore food_need=0.001 speed_air=20 hover=true sight_range=1500 map_reveal=8 dmg_slash=6 attack_rate=1.5 targets=land tamable=true equip_slot=companion counters=mouse,vole,rat habitat=meadow,hills color=brown
+merlin: mass=0.2 length=0.3 integrity=4 alive=true sentient=true intelligence=6 loyalty=6 diet=carnivore food_need=0.001 speed_air=30 agility=10 sight_range=1500 dmg_slash=6 attack_rate=1.8 targets=land,air tamable=true equip_slot=companion counters=sparrow,lark,finch habitat=tundra,meadow,taiga color=gray
+goshawk: mass=1.2 length=0.6 integrity=15 alive=true sentient=true intelligence=6 loyalty=6 aggression=6 diet=carnivore food_need=0.004 speed_air=30 agility=10 stealth=5 sight_range=1500 dmg_slash=18 dmg_pierce=12 attack_rate=1.3 targets=land,air tamable=true equip_slot=companion harvest_bonus=2 harvest_sources=hunting counters=rabbit,squirrel,pheasant habitat=forest,taiga color=gray
+harrier: mass=0.5 length=0.5 integrity=8 alive=true diet=carnivore food_need=0.002 speed_air=18 sight_range=1200 hearing_range=300 map_reveal=10 dmg_slash=8 attack_rate=1.5 counters=vole,mouse habitat=marsh,meadow color=gray
+buzzard: mass=1 length=0.55 integrity=12 alive=true diet=scavenger food_need=0.003 speed_air=20 flight_ceiling=2000 sight_range=2500 map_reveal=15 dmg_slash=8 attack_rate=1 res_disease=0.8 counters=rabbit,vole habitat=meadow,hills,badlands color=brown
+osprey: mass=1.6 length=0.6 integrity=15 alive=true sentient=true intelligence=5 diet=carnivore food_need=0.004 speed_air=25 dive_depth=1 sight_range=2000 dmg_pierce=15 attack_rate=1 targets=land,water tamable=true harvest_bonus=2.5 harvest_sources=fishing counters=fish,trout,salmon,carp habitat=shore,marsh color=brown
+erne: mass=5 length=0.9 integrity=40 alive=true diet=carnivore food_need=0.01 speed_air=28 flight_ceiling=3000 sight_range=3000 map_reveal=20 dmg_slash=25 dmg_pierce=15 attack_rate=1 targets=land,water,air habitat=shore,tundra color=brown
+nighthawk: mass=0.08 length=0.24 integrity=1 alive=true diet=carnivore food_need=0.0006 speed_air=15 nocturnal=true night_vision=true stealth=7 camouflage=field,badlands counters=moth,mosquito habitat=meadow,badlands,city color=gray
+nightjar: mass=0.08 length=0.26 integrity=1 alive=true diet=carnivore food_need=0.0006 speed_air=14 nocturnal=true night_vision=true stealth=9 camouflage=forest,field counters=moth,mosquito habitat=forest,meadow color=brown
+roadrunner: mass=0.35 length=0.55 integrity=4 alive=true diet=carnivore food_need=0.002 speed_land=9 speed_air=5 agility=9 temp_max=50 dmg_pierce=6 attack_rate=1.5 res_poison=0.5 counters=rattlesnake,snake,scorpion,lizard habitat=desert,badlands color=brown
+emu: mass=40 length=1.8 height=1.8 integrity=90 alive=true diet=omnivore food_need=0.02 speed_land=14 speed_water=1 dmg_blunt=30 attack_rate=0.8 pack_size=3 counters=wheat,corn habitat=savanna,desert color=brown
+rhea: mass=25 length=1.4 height=1.5 integrity=60 alive=true diet=omnivore food_need=0.015 speed_land=16 agility=8 pack_size=6 habitat=savanna,meadow color=gray
+cassowary: mass=60 length=1.7 height=1.8 integrity=180 alive=true aggression=7 courage=8 diet=herbivore food_need=0.03 speed_land=14 jump=1.5 speed_water=1.5 dmg_slash=90 inflict_bleed=8 attack_rate=1 fear_aura=4 habitat=jungle color=black
+moa: mass=230 length=2 height=3.6 integrity=300 alive=true diet=herbivore food_need=0.08 speed_land=10 dmg_blunt=50 attack_rate=0.6 edible=true nutrition=60 habitat=forest,hills color=brown
+dodo: mass=15 length=0.7 integrity=15 alive=true intelligence=1 diet=herbivore food_need=0.005 speed_land=2 courage=0 evasion=0 edible=true nutrition=20 habitat=forest,shore color=gray
+stork: mass=3.5 length=1 integrity=12 alive=true diet=carnivore food_need=0.004 speed_land=3 speed_air=18 range=10000 dmg_pierce=10 attack_rate=1 reproduction*2 counters=frog,snake habitat=marsh,meadow color=white
+ibis: mass=1.5 length=0.65 integrity=6 alive=true diet=carnivore food_need=0.002 speed_land=3 speed_air=15 detect_underground=true dmg_pierce=6 pack_size=6 habitat=marsh,shore color=white
+egret: mass=0.9 length=0.9 integrity=5 alive=true diet=carnivore food_need=0.002 speed_land=3 speed_air=15 stealth=4 beauty=8 dmg_pierce=8 attack_rate=1 habitat=marsh,shore color=white
+bittern: mass=1.5 length=0.75 integrity=6 alive=true diet=carnivore food_need=0.002 speed_land=2 speed_air=13 stealth=9 camouflage=swamp,marsh loudness=8 dmg_pierce=8 habitat=marsh color=brown
+loon: mass=4 length=0.8 integrity=12 alive=true diet=carnivore food_need=0.004 speed_land=0.5 speed_water=4 speed_air=30 dive_depth=60 loudness=9 placeable_on=water habitat=taiga,marsh color=black
+grebe: mass=1 length=0.5 integrity=4 alive=true diet=carnivore food_need=0.002 speed_water=3 speed_air=15 dive_depth=20 placeable_on=water habitat=marsh color=brown
+coot: mass=0.8 length=0.4 integrity=3 alive=true aggression=4 diet=omnivore food_need=0.002 speed_water=2 speed_air=10 dive_depth=5 loudness=6 pack_size=10 habitat=marsh color=black
+cormorant: mass=2.5 length=0.9 integrity=8 alive=true diet=carnivore food_need=0.004 speed_water=6 speed_air=18 dive_depth=45 tamable=true harvest_bonus=2 harvest_sources=fishing counters=fish,trout,carp habitat=shore,marsh color=black
+gannet: mass=3 length=1 integrity=10 alive=true diet=carnivore food_need=0.004 speed_air=25 speed_water=4 dive_depth=20 pack_size=20 counters=herring,mackerel,sardine habitat=shore color=white
+puffin: mass=0.5 length=0.3 integrity=3 alive=true diet=carnivore food_need=0.001 speed_air=24 speed_water=3 dive_depth=60 charm=6 beauty=7 pack_size=10 habitat=shore,tundra color=black
+auk: mass=1 length=0.4 integrity=4 alive=true diet=carnivore food_need=0.002 speed_air=20 speed_water=4 dive_depth=100 res_cold=0.8 pack_size=20 habitat=shore,tundra color=black
+petrel: mass=0.5 length=0.35 integrity=3 alive=true diet=carnivore food_need=0.001 speed_air=20 speed_water=1 range=10000 odor=6 smell_range=5000 habitat=shore color=gray
+seabird: mass=1 length=0.5 integrity=4 alive=true diet=carnivore food_need=0.002 speed_air=20 speed_water=2 dive_depth=10 pack_size=20 habitat=shore color=white
+seagull: mass=1 length=0.6 integrity=5 alive=true aggression=3 diet=scavenger food_need=0.002 speed_air=18 speed_water=2 loudness=8 letter_steal=2 pack_size=6 habitat=shore,city color=white
+tern: mass=0.12 length=0.35 integrity=2 alive=true aggression=5 diet=carnivore food_need=0.001 speed_air=22 range=40000 dive_depth=1 dmg_pierce=4 attack_rate=1.5 pack_size=20 habitat=shore,tundra color=white
+plover: mass=0.06 length=0.2 integrity=1 alive=true diet=carnivore food_need=0.0005 speed_land=6 speed_air=18 stealth=6 camouflage=sand pack_size=8 habitat=shore,tundra color=brown
+sandpiper: mass=0.05 length=0.2 integrity=1 alive=true diet=carnivore food_need=0.0005 speed_land=5 speed_air=18 pack_size=20 camouflage=sand habitat=shore,marsh color=brown
+curlew: mass=0.8 length=0.55 integrity=4 alive=true diet=carnivore food_need=0.002 speed_land=4 speed_air=18 loudness=7 detect_underground=true habitat=marsh,shore,meadow color=brown
+snipe: mass=0.1 length=0.27 integrity=1 alive=true diet=carnivore food_need=0.0006 speed_land=3 speed_air=25 agility=10 evasion=0.6 stealth=8 camouflage=swamp,marsh edible=true nutrition=1 habitat=marsh color=brown
+woodcock: mass=0.3 length=0.35 integrity=2 alive=true diet=carnivore food_need=0.001 speed_land=2 speed_air=15 stealth=9 camouflage=forest nocturnal=true detect_underground=true edible=true nutrition=2 habitat=forest color=brown
+partridge: mass=0.4 length=0.3 integrity=2 alive=true diet=herbivore food_need=0.001 speed_land=6 speed_air=15 stealth=6 camouflage=field pack_size=8 courage=1 edible=true nutrition=3 raw=true habitat=meadow,hills color=brown
+grouse: mass=0.6 length=0.4 integrity=3 alive=true diet=herbivore food_need=0.002 speed_land=5 speed_air=15 stealth=6 camouflage=forest,snow res_cold=0.6 courage=1 edible=true nutrition=4 raw=true habitat=taiga,hills,tundra color=brown
+ptarmigan: mass=0.5 length=0.35 integrity=3 alive=true diet=herbivore food_need=0.002 speed_land=5 speed_air=15 stealth=8 camouflage=snow,tundra res_cold=0.9 temp_min=-40 edible=true nutrition=3 habitat=tundra,hills color=white
+quetzal: mass=0.2 length=1 integrity=2 alive=true diet=herbivore food_need=0.001 speed_air=15 beauty=10 charm=5 value=2000 habitat=jungle color=green
+archaeopteryx: mass=0.5 length=0.5 integrity=6 alive=true diet=carnivore food_need=0.002 speed_land=3 speed_air=8 climb=6 dmg_slash=4 attack_rate=1.5 habitat=jungle color=brown
+
+# noun bird
+bunting: mass=0.025 length=0.16 integrity=1 alive=true diet=herbivore food_need=0.0004 speed_air=12 beauty=7 loudness=5 pack_size=6 habitat=meadow,hills color=blue
+
+# noun supernatural
+firebird: mass=5 length=1.5 integrity=500 alive=true sentient=true intelligence=8 diet=none speed_air=40 flight_ceiling=5000 luminosity=9 temperature=900 res_fire=1 immune_burn=true dmg_fire=200 inflict_burn=8 attack_rate=1 beauty=10 value=50000 prevents_death=1 regeneration=5 habitat=volcanic color=red
+
+# noun fish
+sole: mass=0.5 length=0.35 integrity=3 alive=true diet=carnivore food_need=0.0006 speed_water=2 stealth=8 camouflage=sand,water breathes=water placeable_on=water edible=true nutrition=3 raw=true habitat=shore color=brown
+bass: mass=2 length=0.5 integrity=6 alive=true aggression=3 diet=carnivore food_need=0.002 speed_water=5 breathes=water placeable_on=water reproduction=3 edible=true nutrition=4 raw=true habitat=marsh,forest,shore color=green
+catfish: mass=10 length=1 integrity=20 alive=true diet=scavenger food_need=0.003 speed_water=3 night_vision=true nocturnal=true smell_range=200 breathes=water placeable_on=water reproduction=3 edible=true nutrition=8 raw=true habitat=marsh color=gray
+sturgeon: mass=200 length=3 integrity=150 alive=true diet=carnivore food_need=0.02 speed_water=4 armor=6 dive_depth=100 breathes=water placeable_on=water,deep_water food_output=0.5 value=3000 edible=true nutrition=50 raw=true habitat=taiga,shore color=gray
+herring: mass=0.3 length=0.3 integrity=1 alive=true diet=carnivore food_need=0.0002 speed_water=4 breathes=water placeable_on=water,deep_water pack_size=500 reproduction=10 edible=true nutrition=2 raw=true habitat=shore color=silver
+mackerel: mass=0.5 length=0.35 integrity=2 alive=true diet=carnivore food_need=0.0003 speed_water=8 breathes=water placeable_on=water,deep_water pack_size=200 reproduction=8 edible=true nutrition=3 raw=true habitat=shore color=blue
+sardine: mass=0.08 length=0.2 integrity=1 alive=true diet=herbivore food_need=0.00005 speed_water=3 breathes=water placeable_on=water,deep_water pack_size=1000 reproduction=12 edible=true nutrition=1 raw=true habitat=shore color=silver
+anchovy: mass=0.03 length=0.15 integrity=1 alive=true diet=herbivore food_need=0.00003 speed_water=3 breathes=water placeable_on=water,deep_water pack_size=2000 reproduction=15 edible=true nutrition=0.5 raw=true habitat=shore color=silver
+haddock: mass=2 length=0.6 integrity=5 alive=true diet=carnivore food_need=0.001 speed_water=3 breathes=water placeable_on=water,deep_water pack_size=20 edible=true nutrition=5 raw=true habitat=shore,tundra color=gray
+hake: mass=3 length=0.8 integrity=6 alive=true diet=carnivore food_need=0.001 speed_water=4 nocturnal=true breathes=water placeable_on=deep_water pack_size=20 edible=true nutrition=6 raw=true habitat=shore color=silver
+halibut: mass=30 length=1.5 integrity=40 alive=true diet=carnivore food_need=0.006 speed_water=3 stealth=8 camouflage=sand,water breathes=water placeable_on=deep_water edible=true nutrition=25 raw=true habitat=shore,tundra color=brown
+flounder: mass=1.5 length=0.4 integrity=4 alive=true diet=carnivore food_need=0.0008 speed_water=2 stealth=9 camouflage=sand,water breathes=water placeable_on=water edible=true nutrition=3 raw=true habitat=shore color=brown
+plaice: mass=1.5 length=0.45 integrity=4 alive=true diet=carnivore food_need=0.0008 speed_water=2 stealth=8 camouflage=sand breathes=water placeable_on=water edible=true nutrition=3 raw=true habitat=shore color=brown
+turbot: mass=10 length=0.8 integrity=12 alive=true diet=carnivore food_need=0.002 speed_water=2 stealth=8 camouflage=sand breathes=water placeable_on=water value=100 edible=true nutrition=10 raw=true habitat=shore color=brown
+mullet: mass=2 length=0.5 integrity=5 alive=true diet=herbivore food_need=0.001 speed_water=5 jump=1 breathes=water placeable_on=water pack_size=30 edible=true nutrition=4 raw=true habitat=shore,marsh color=gray
+grouper: mass=100 length=1.8 integrity=150 alive=true aggression=3 diet=carnivore food_need=0.015 speed_water=4 stealth=6 breathes=water placeable_on=water,deep_water dmg_crush=40 attack_rate=0.5 edible=true nutrition=40 raw=true habitat=shore color=brown
+monkfish: mass=20 length=1.2 integrity=30 alive=true diet=carnivore food_need=0.003 speed_water=1 stealth=9 camouflage=sand luminosity=1 dmg_pierce=30 attack_rate=1 breathes=water placeable_on=deep_water edible=true nutrition=15 raw=true habitat=shore color=brown
+marlin: mass=400 length=4 integrity=300 alive=true aggression=4 diet=carnivore food_need=0.05 speed_water=30 jump=3 breathes=water placeable_on=deep_water dmg_pierce=160 attack_rate=0.8 value=2000 habitat=shore color=blue
+sailfish: mass=90 length=3 integrity=120 alive=true aggression=3 diet=carnivore food_need=0.02 speed_water=30 acceleration=10 breathes=water placeable_on=deep_water dmg_pierce=90 attack_rate=1 habitat=shore color=blue
+mako: mass=150 length=3.2 integrity=300 alive=true aggression=8 diet=carnivore food_need=0.08 speed_water=20 jump=6 breathes=water placeable_on=deep_water dmg_pierce=180 dmg_slash=80 attack_rate=1 smell_range=800 inflict_bleed=8 fear_aura=5 habitat=shore color=blue
+dogfish: mass=4 length=1 integrity=12 alive=true aggression=3 diet=carnivore food_need=0.002 speed_water=4 breathes=water placeable_on=water,deep_water thorns=5 venomous=true dmg_poison=8 pack_size=20 habitat=shore color=gray
+stingray: mass=30 length=1.5 integrity=40 alive=true diet=carnivore food_need=0.004 speed_water=3 stealth=8 camouflage=sand,water venomous=true dmg_pierce=20 dmg_poison=60 inflict_poison=20 attack_rate=0.5 breathes=water placeable_on=water habitat=shore color=brown
+manta: mass=1500 length=5 integrity=600 alive=true diet=carnivore food_need=0.1 speed_water=6 jump=2 breathes=water placeable_on=deep_water beauty=9 charm=4 habitat=shore color=black
+barracuda: mass=10 length=1.5 integrity=30 alive=true aggression=6 diet=carnivore food_need=0.003 speed_water=12 acceleration=9 breathes=water placeable_on=water,deep_water dmg_slash=35 inflict_bleed=6 attack_rate=1.5 pack_size=6 habitat=shore color=silver
+moray: mass=15 length=2 integrity=30 alive=true aggression=6 diet=carnivore food_need=0.003 speed_water=4 stealth=8 breathes=water placeable_on=water dmg_pierce=40 dmg_crush=20 inflict_bleed=5 attack_rate=1 habitat=shore color=green
+conger: mass=25 length=2.5 integrity=40 alive=true aggression=5 diet=carnivore food_need=0.004 speed_water=4 nocturnal=true stealth=7 breathes=water placeable_on=water,deep_water dmg_crush=40 attack_rate=0.8 edible=true nutrition=15 habitat=shore color=gray
+lamprey: mass=1 length=0.8 integrity=4 alive=true aggression=5 diet=carnivore food_need=0.001 speed_water=3 breathes=water placeable_on=water lifesteal=0.6 dmg_pierce=4 inflict_bleed=6 attack_rate=1 habitat=marsh,shore color=gray
+pike: mass=8 length=1.1 integrity=20 alive=true aggression=6 diet=carnivore food_need=0.003 speed_water=10 acceleration=10 stealth=7 camouflage=swamp,water breathes=water placeable_on=water dmg_pierce=25 attack_rate=1 counters=duckling,frog,minnow habitat=marsh,taiga color=green
+perch: mass=1 length=0.35 integrity=3 alive=true diet=carnivore food_need=0.0006 speed_water=4 breathes=water placeable_on=water pack_size=20 reproduction=5 edible=true nutrition=2 raw=true habitat=marsh,forest color=green
+sunfish: mass=0.4 length=0.2 integrity=2 alive=true diet=carnivore food_need=0.0003 speed_water=3 breathes=water placeable_on=water beauty=6 reproduction=5 edible=true nutrition=1 habitat=marsh color=orange
+bluegill: mass=0.3 length=0.2 integrity=2 alive=true diet=carnivore food_need=0.0003 speed_water=3 breathes=water placeable_on=water pack_size=15 reproduction=6 edible=true nutrition=1 habitat=marsh,forest color=blue
+minnow: mass=0.005 length=0.06 integrity=1 alive=true diet=omnivore food_need=0.00002 speed_water=2 breathes=water placeable_on=water pack_size=100 reproduction=15 harvest_bonus=1.3 harvest_sources=fishing habitat=marsh,forest color=silver
+guppy: mass=0.001 length=0.04 integrity=1 alive=true diet=omnivore food_need=0.00001 speed_water=1 breathes=water placeable_on=water beauty=7 comfort=1 reproduction=15 tamable=true counters=mosquito color=orange
+fingerling: mass=0.01 length=0.08 integrity=1 alive=true diet=omnivore food_need=0.00003 speed_water=2 breathes=water placeable_on=water pack_size=50 growth_time=60 tamable=true habitat=marsh,forest color=silver
+puffer: mass=1 length=0.3 integrity=6 alive=true diet=carnivore food_need=0.0005 speed_water=1 breathes=water placeable_on=water toxicity=10 thorns=8 venomous=true dmg_poison=200 inflict_poison=30 edible=true nutrition=2 habitat=shore color=yellow
+blowfish: mass=1 length=0.3 integrity=6 alive=true diet=carnivore food_need=0.0005 speed_water=1 breathes=water placeable_on=water toxicity=10 thorns=8 venomous=true dmg_poison=200 inflict_poison=30 edible=true nutrition=2 habitat=shore color=yellow
+lionfish: mass=1 length=0.35 integrity=5 alive=true aggression=3 diet=carnivore food_need=0.0006 speed_water=2 breathes=water placeable_on=water thorns=10 venomous=true dmg_poison=40 inflict_poison=15 beauty=9 reproduction=6 habitat=shore color=red
+parrotfish: mass=5 length=0.7 integrity=10 alive=true diet=herbivore food_need=0.002 speed_water=3 breathes=water placeable_on=water beauty=8 habitat=shore color=green
+bluefin: mass=300 length=2.8 integrity=250 alive=true diet=carnivore food_need=0.06 speed_water=20 range=8000 temp_min=-5 breathes=water placeable_on=deep_water pack_size=10 value=10000 edible=true nutrition=150 raw=true habitat=shore color=blue
+yellowfin: mass=150 length=2 integrity=180 alive=true diet=carnivore food_need=0.04 speed_water=20 breathes=water placeable_on=deep_water pack_size=15 edible=true nutrition=80 raw=true habitat=shore color=yellow
+albacore: mass=30 length=1.2 integrity=40 alive=true diet=carnivore food_need=0.008 speed_water=16 breathes=water placeable_on=deep_water pack_size=30 edible=true nutrition=20 raw=true habitat=shore color=silver
+bonito: mass=5 length=0.75 integrity=10 alive=true diet=carnivore food_need=0.002 speed_water=15 breathes=water placeable_on=water,deep_water pack_size=40 edible=true nutrition=5 raw=true habitat=shore color=blue
+sockeye: mass=3 length=0.7 integrity=7 alive=true diet=carnivore food_need=0.0015 speed_water=8 jump=3 breathes=water placeable_on=water pack_size=50 reproduction=3 edible=true nutrition=6 raw=true habitat=taiga,tundra color=red
+tarpon: mass=60 length=2 integrity=70 alive=true diet=carnivore food_need=0.01 speed_water=12 jump=3 breathes=both placeable_on=water habitat=shore,marsh color=silver
+
+# noun reptile
+reptile: mass=5 length=1 integrity=25 alive=true diet=carnivore food_need=0.002 speed_land=3 armor=4 res_cold=-0.5 temp_min=5 stealth=5 habitat=desert,jungle,marsh color=green
+serpent: mass=20 length=4 integrity=60 alive=true aggression=5 diet=carnivore food_need=0.005 speed_land=3 speed_water=2 stealth=7 venomous=true dmg_pierce=10 dmg_poison=90 inflict_poison=30 dmg_crush=40 inflict_root=4 attack_rate=0.8 fear_aura=4 camouflage=forest,swamp habitat=jungle,marsh,desert color=green
+asp: mass=1 length=0.8 integrity=8 alive=true aggression=5 diet=carnivore food_need=0.001 speed_land=3 stealth=7 venomous=true dmg_pierce=6 dmg_poison=100 inflict_poison=30 attack_rate=1 camouflage=sand habitat=desert color=brown
+adder: mass=0.15 length=0.6 integrity=5 alive=true aggression=4 diet=carnivore food_need=0.0005 speed_land=2 stealth=7 venomous=true dmg_pierce=5 dmg_poison=50 inflict_poison=20 attack_rate=1 camouflage=meadow,forest habitat=meadow,marsh,forest color=brown
+mamba: mass=1.6 length=2.5 integrity=15 alive=true aggression=7 diet=carnivore food_need=0.002 speed_land=5 climb=6 venomous=true dmg_pierce=8 dmg_poison=250 inflict_poison=40 attack_rate=2 multi_target=3 fear_aura=5 habitat=savanna,jungle color=black
+boa: mass=15 length=3 integrity=60 alive=true aggression=3 diet=carnivore food_need=0.005 speed_land=2 speed_water=1 climb=5 stealth=7 dmg_crush=60 inflict_root=8 attack_rate=0.5 habitat=jungle,savanna color=brown
+constrictor: mass=40 length=4 integrity=100 alive=true aggression=4 diet=carnivore food_need=0.01 speed_land=2 speed_water=2 stealth=7 dmg_crush=80 inflict_root=10 attack_rate=0.5 habitat=jungle,marsh color=brown
+anaconda: mass=150 length=7 integrity=300 alive=true aggression=5 diet=carnivore food_need=0.03 speed_land=2 speed_water=4 dive_depth=5 stealth=8 camouflage=swamp,water dmg_crush=150 dmg_suffocation=40 inflict_root=15 attack_rate=0.4 fear_aura=5 placeable_on=water,land habitat=marsh,jungle color=green
+rattler: mass=2 length=1.4 integrity=12 alive=true aggression=5 diet=carnivore food_need=0.002 speed_land=3 stealth=6 venomous=true loudness=5 alarm=true dmg_pierce=8 dmg_poison=100 inflict_poison=30 inflict_fear=2 detect_life=10 habitat=desert,badlands color=brown
+diamondback: mass=4 length=1.8 integrity=18 alive=true aggression=6 diet=carnivore food_need=0.003 speed_land=3 stealth=6 venomous=true loudness=6 alarm=true dmg_pierce=10 dmg_poison=150 inflict_poison=40 detect_life=10 night_vision=true habitat=desert,badlands color=brown
+sidewinder: mass=0.3 length=0.6 integrity=5 alive=true aggression=4 diet=carnivore food_need=0.0005 speed_land=8 stealth=8 camouflage=sand terrain_ignored=sand venomous=true dmg_pierce=5 dmg_poison=50 inflict_poison=20 habitat=desert color=yellow
+copperhead: mass=0.4 length=0.8 integrity=6 alive=true aggression=4 diet=carnivore food_need=0.0006 speed_land=3 stealth=8 camouflage=forest venomous=true dmg_pierce=5 dmg_poison=40 inflict_poison=20 habitat=forest,marsh color=orange
+cottonmouth: mass=1.5 length=1 integrity=10 alive=true aggression=6 diet=carnivore food_need=0.001 speed_land=3 speed_water=2 stealth=6 venomous=true dmg_pierce=6 dmg_poison=80 inflict_poison=30 fear_aura=2 placeable_on=water,land habitat=marsh color=black
+alligator: mass=400 length=4 integrity=1100 alive=true aggression=6 diet=carnivore food_need=0.08 speed_land=8 speed_water=9 stealth=7 armor=12 dmg_crush=170 dmg_pierce=110 attack_rate=0.5 inflict_bleed=6 camouflage=swamp,water fear_aura=5 placeable_on=water,land habitat=marsh color=green
+gator: mass=350 length=3.8 integrity=1000 alive=true aggression=6 diet=carnivore food_need=0.07 speed_land=8 speed_water=9 stealth=7 armor=12 dmg_crush=160 dmg_pierce=100 attack_rate=0.5 inflict_bleed=6 camouflage=swamp,water fear_aura=5 placeable_on=water,land habitat=marsh color=green
+caiman: mass=60 length=2.2 integrity=300 alive=true aggression=5 diet=carnivore food_need=0.02 speed_land=7 speed_water=8 stealth=7 armor=8 dmg_crush=60 dmg_pierce=50 attack_rate=0.6 camouflage=swamp,water placeable_on=water,land habitat=marsh,jungle color=black
+cayman: mass=60 length=2.2 integrity=300 alive=true aggression=5 diet=carnivore food_need=0.02 speed_land=7 speed_water=8 stealth=7 armor=8 dmg_crush=60 dmg_pierce=50 attack_rate=0.6 camouflage=swamp,water placeable_on=water,land habitat=marsh,jungle color=black
+terrapin: mass=1 length=0.25 integrity=20 alive=true diet=omnivore food_need=0.0005 speed_land=0.5 speed_water=2 armor=10 res_slash=0.6 comfort=1 tamable=true placeable_on=water,land habitat=marsh,shore color=brown
+loggerhead: mass=130 length=1 integrity=300 alive=true diet=carnivore food_need=0.01 speed_land=0.3 speed_water=5 dive_depth=200 range=10000 armor=25 res_slash=0.7 dmg_crush=60 attack_rate=0.4 placeable_on=water,deep_water habitat=shore color=brown
+leatherback: mass=600 length=2 integrity=700 alive=true diet=carnivore food_need=0.05 speed_land=0.3 speed_water=9 dive_depth=1200 range=16000 armor=15 res_cold=0.6 temp_min=-5 counters=jellyfish placeable_on=deep_water habitat=shore color=black
+skink: mass=0.05 length=0.2 integrity=2 alive=true diet=carnivore food_need=0.0003 speed_land=5 speed_underground=0.05 stealth=6 evasion=0.4 regeneration=0.2 habitat=desert,forest,savanna color=blue
+tyrannosaurus: mass=8000 length=12 height=4 integrity=10000 alive=true aggression=10 courage=10 diet=carnivore food_need=2.5 speed_land=8 smell_range=3000 dmg_pierce=800 dmg_crush=500 attack_rate=0.5 armor_pierce=0.5 inflict_bleed=10 fear_aura=9 loudness=10 counters=triceratops,car,jeep,fence habitat=jungle,volcanic,forest color=green
+velociraptor: mass=15 length=2 integrity=60 alive=true sentient=true intelligence=7 aggression=9 diet=carnivore food_need=0.02 speed_land=17 jump=3 agility=9 stealth=6 dmg_slash=45 inflict_bleed=8 attack_rate=2 pack_size=4 tracking=8 fear_aura=4 habitat=desert,badlands,jungle color=brown
+triceratops: mass=9000 length=9 height=3 integrity=12000 alive=true aggression=5 courage=10 diet=herbivore food_need=1.5 speed_land=8 armor=40 res_pierce=0.5 dmg_pierce=600 dmg_crush=300 knockback=10 attack_rate=0.4 siege=3 fear_aura=5 counters=tyrannosaurus habitat=jungle,meadow color=brown
+stegosaurus: mass=5000 length=9 height=4 integrity=8000 alive=true aggression=3 courage=8 diet=herbivore food_need=1 speed_land=5 armor=30 thorns=60 dmg_pierce=350 attack_range=3 attack_rate=0.4 knockback=6 intelligence=1 habitat=jungle,forest color=green
+brontosaurus: mass=17000 length=22 height=5 integrity=25000 alive=true diet=herbivore food_need=4 speed_land=4 dmg_crush=1500 attack_rate=0.2 attack_range=10 knockback=12 siege=4 loudness=8 fear_aura=4 sight_range=500 habitat=jungle,marsh,forest color=green
+pterodactyl: mass=20 length=2 integrity=60 alive=true aggression=6 diet=carnivore food_need=0.02 speed_land=2 speed_air=25 flight_ceiling=1500 sight_range=2000 dmg_pierce=40 attack_rate=1 targets=land,air,water fear_aura=3 counters=fish habitat=shore,hills,volcanic color=brown
+
+# noun amphibian
+bullfrog: mass=0.5 length=0.2 integrity=4 alive=true aggression=3 diet=carnivore food_need=0.0006 speed_land=2 speed_water=3 jump=2 loudness=9 placeable_on=water,land counters=mosquito,fly,minnow edible=true nutrition=1 habitat=marsh color=green
+axolotl: mass=0.1 length=0.25 integrity=3 alive=true diet=carnivore food_need=0.0002 speed_water=1 breathes=water placeable_on=water regeneration=3 charm=6 comfort=1 tamable=true habitat=marsh color=pink
+
+# noun insect
+bug: mass=0.0005 length=0.01 integrity=1 alive=true diet=herbivore food_need=0.00002 speed_land=0.2 speed_air=2 stealth=6 pack_size=50 reproduction=50 counters=garden,crop habitat=meadow,forest,city color=black
+insect: mass=0.001 length=0.02 integrity=1 alive=true diet=herbivore food_need=0.00003 speed_land=0.3 speed_air=3 pack_size=40 reproduction=40 habitat=meadow,forest,jungle color=black
+cricket: mass=0.0008 length=0.025 integrity=1 alive=true diet=omnivore speed_land=0.5 jump=1 nocturnal=true loudness=6 pack_size=20 reproduction=20 morale+1 counters=cloth habitat=meadow,city color=brown
+grasshopper: mass=0.002 length=0.05 integrity=1 alive=true diet=herbivore food_need=0.00005 speed_land=0.5 jump=1 speed_air=3 stealth=5 camouflage=field,meadow pack_size=30 counters=grass,wheat,corn habitat=meadow,savanna color=green
+mantis: mass=0.004 length=0.08 integrity=1 alive=true aggression=7 diet=carnivore speed_land=0.2 stealth=9 camouflage=forest,meadow,jungle dmg_slash=1 critical=0.5 attack_rate=3 counters=fly,mosquito,moth,grasshopper habitat=meadow,jungle color=green
+cicada: mass=0.002 length=0.04 integrity=1 alive=true diet=herbivore speed_air=3 loudness=10 speed_underground=0.001 pack_size=500 habitat=forest,meadow color=green
+ladybug: mass=0.00002 length=0.008 integrity=1 alive=true diet=carnivore speed_air=1 beauty=7 charm=2 pack_size=30 toxicity=2 fertility+1 counters=aphid habitat=meadow,forest color=red
+ladybird: mass=0.00002 length=0.008 integrity=1 alive=true diet=carnivore speed_air=1 beauty=7 charm=2 pack_size=30 toxicity=2 fertility+1 counters=aphid habitat=meadow,forest color=red
+aphid: mass=0.000001 length=0.002 integrity=1 alive=true diet=herbivore speed_land=0.01 pack_size=1000 reproduction=200 growth*0.7 counters=rose,garden,wheat habitat=meadow,forest color=green
+bumblebee: mass=0.0003 length=0.02 integrity=1 alive=true diet=herbivore speed_air=5 res_cold=0.5 dmg_poison=4 inflict_slow=2 attack_rate=1 pack_size=50 fertility+3 food_output=0.005 loudness=3 habitat=meadow,tundra color=yellow
+honeybee: mass=0.0001 length=0.015 integrity=1 alive=true diet=herbivore speed_air=7 dmg_poison=3 inflict_slow=2 attack_rate=1 single_use=true pack_size=300 food_output=0.015 fertility+3 tamable=true habitat=meadow,forest color=yellow
+pollinator: mass=0.0002 length=0.015 integrity=1 alive=true diet=herbivore speed_air=5 pack_size=100 fertility+4 growth*1.3 habitat=meadow,jungle color=yellow
+gnat: mass=0.0000005 length=0.002 integrity=1 alive=true aggression=4 speed_air=1 plural_count=1000 pack_size=500 dmg_disease=1 attack_rate=1 accuracy+-0.05 habitat=marsh,meadow color=black
+midge: mass=0.0000005 length=0.002 integrity=1 alive=true aggression=6 speed_air=1 plural_count=1000 pack_size=1000 dmg_pierce=1 attack_rate=1 morale+-1 habitat=marsh,taiga,tundra color=black
+mite: mass=0.0000001 length=0.0005 integrity=1 alive=true speed_land=0.01 stealth=10 pack_size=1000 reproduction=100 dmg_disease=1 contagion=0.2 counters=bee,honeybee habitat=forest,meadow,city color=red
+louse: mass=0.0000005 length=0.002 integrity=1 alive=true speed_land=0.01 stealth=9 pack_size=200 reproduction=50 dmg_disease=1 attack_rate=1 contagion=0.3 charm+-2 habitat=city color=white
+bedbug: mass=0.000005 length=0.005 integrity=1 alive=true aggression=5 speed_land=0.01 stealth=9 nocturnal=true pack_size=200 reproduction=40 dmg_pierce=1 lifesteal=1 attack_rate=1 counters=bed,mattress habitat=city color=red
+tsetse: mass=0.00003 length=0.012 integrity=1 alive=true aggression=6 speed_air=6 pack_size=50 dmg_disease=10 inflict_sleep=60 attack_rate=1 contagion=0.2 habitat=savanna,jungle color=brown
+gadfly: mass=0.0002 length=0.02 integrity=1 alive=true aggression=8 speed_air=10 dmg_pierce=2 inflict_confuse=3 attack_rate=1 morale+-1 counters=horse,cow,cattle habitat=meadow,marsh color=gray
+weevil: mass=0.00001 length=0.005 integrity=1 alive=true diet=herbivore speed_land=0.01 stealth=8 pack_size=500 reproduction=40 armor=1 counters=wheat,grain,corn,flour habitat=meadow,city color=brown
+scarab: mass=0.002 length=0.03 integrity=3 alive=true diet=scavenger speed_land=0.2 speed_air=3 armor=4 res_slash=0.6 reclaim_rate=0.1 reclaim_range=10 fertility+2 value=50 habitat=desert,savanna color=blue
+earwig: mass=0.00005 length=0.015 integrity=1 alive=true diet=omnivore speed_land=0.1 nocturnal=true stealth=7 dmg_pierce=1 counters=garden habitat=meadow,forest,city color=brown
+silverfish: mass=0.00001 length=0.012 integrity=1 alive=true diet=scavenger speed_land=0.3 nocturnal=true stealth=8 evasion=0.5 pack_size=50 counters=book,paper,map,scroll habitat=city color=silver
+mayfly: mass=0.00005 length=0.015 integrity=1 alive=true diet=none speed_air=1 lifespan=1440 pack_size=2000 reproduction=200 habitat=marsh color=yellow
+chrysalis: mass=0.001 length=0.03 integrity=3 alive=true diet=none speed_land=0 stealth=8 camouflage=forest growth_time=10 armor=2 regeneration=1 habitat=meadow,forest,jungle color=green
+pupa: mass=0.001 length=0.02 integrity=2 alive=true diet=none speed_land=0 stealth=7 growth_time=10 armor=1 habitat=meadow,forest color=brown
+
+# noun invertebrate
+starfish: mass=0.3 length=0.3 integrity=10 alive=true diet=carnivore food_need=0.0005 speed_water=0.01 regeneration=1 breathes=water placeable_on=water counters=oyster,clam,mussel habitat=shore color=orange
+tick: mass=0.00001 length=0.004 integrity=1 alive=true aggression=6 diet=carnivore speed_land=0.01 stealth=9 lifesteal=1 dmg_pierce=1 dmg_disease=8 contagion=0.2 attack_rate=0.2 pack_size=20 habitat=forest,meadow,taiga color=brown
+centipede: mass=0.01 length=0.15 integrity=2 alive=true aggression=5 diet=carnivore speed_land=0.5 nocturnal=true stealth=6 venomous=true dmg_pierce=2 dmg_poison=15 inflict_poison=8 attack_rate=1.5 fear_aura=2 habitat=jungle,forest,desert color=red
+earthworm: mass=0.004 length=0.15 integrity=1 alive=true diet=herbivore speed_underground=0.05 fertility+3 growth*1.2 reproduction=6 pack_size=40 regeneration=0.5 habitat=meadow,forest color=pink
+nightcrawler: mass=0.008 length=0.25 integrity=1 alive=true diet=herbivore speed_underground=0.05 nocturnal=true fertility+3 reproduction=5 pack_size=30 harvest_bonus=1.5 harvest_sources=fishing habitat=meadow,forest color=pink
+tapeworm: mass=0.05 length=5 integrity=2 alive=true diet=carnivore speed_land=0 stealth=10 lifesteal=1 dmg_hunger=3 attack_rate=0.2 food_need+0.01 contagion=0.1 color=white
+hookworm: mass=0.00001 length=0.01 integrity=1 alive=true diet=carnivore stealth=10 dmg_disease=4 dmg_hunger=2 lifesteal=1 attack_rate=0.2 contagion=0.2 habitat=jungle,marsh color=white
+oyster: mass=0.1 length=0.1 integrity=15 alive=true diet=herbivore speed_water=0 armor=10 res_slash=0.7 breathes=water placeable_on=water pack_size=20 value=20 reproduction=5 edible=true nutrition=1 raw=true shelf_life=60 habitat=shore color=gray
+clam: mass=0.2 length=0.1 integrity=15 alive=true diet=herbivore speed_water=0 speed_underground=0.01 armor=10 res_slash=0.7 breathes=water placeable_on=water pack_size=20 reproduction=5 edible=true nutrition=1 raw=true shelf_life=60 habitat=shore color=white
+mussel: mass=0.05 length=0.07 integrity=10 alive=true diet=herbivore armor=8 res_slash=0.6 stickiness=6 breathes=water placeable_on=water pack_size=40 reproduction=6 edible=true nutrition=0.5 raw=true shelf_life=60 habitat=shore color=black
+cockle: mass=0.03 length=0.05 integrity=8 alive=true diet=herbivore speed_underground=0.01 armor=6 breathes=water placeable_on=water pack_size=40 edible=true nutrition=0.4 raw=true shelf_life=60 habitat=shore color=white
+abalone: mass=0.5 length=0.2 integrity=20 alive=true diet=herbivore speed_water=0.01 armor=12 stickiness=9 beauty=8 value=100 breathes=water placeable_on=water edible=true nutrition=3 raw=true habitat=shore color=blue
+limpet: mass=0.02 length=0.05 integrity=15 alive=true diet=herbivore speed_land=0.001 armor=10 stickiness=10 immune_root=true breathes=both placeable_on=water,land habitat=shore color=gray
+barnacle: mass=0.01 length=0.03 integrity=8 alive=true diet=herbivore armor=6 stickiness=10 pack_size=100 breathes=water placeable_on=water speed_water*0.8 counters=ship,boat habitat=shore color=white
+conch: mass=2 length=0.3 integrity=40 alive=true diet=herbivore speed_land=0.01 armor=15 res_slash=0.7 loudness=8 beauty=7 breathes=water placeable_on=water edible=true nutrition=3 habitat=shore color=pink
+nautilus: mass=1.5 length=0.25 integrity=25 alive=true diet=carnivore speed_water=1 dive_depth=700 buoyancy=5 armor=10 beauty=9 breathes=water placeable_on=deep_water habitat=shore color=white
+cuttlefish: mass=4 length=0.5 integrity=10 alive=true sentient=true intelligence=8 diet=carnivore food_need=0.002 speed_water=5 stealth=10 camouflage=water,sand,swamp inflict_blind=5 inflict_confuse=3 attack_rate=1 breathes=water placeable_on=water habitat=shore color=brown
+mollusk: mass=0.2 length=0.1 integrity=10 alive=true diet=herbivore speed_land=0.01 speed_water=0.01 armor=8 res_slash=0.6 breathes=water placeable_on=water,land reproduction=5 edible=true nutrition=1 habitat=shore,marsh color=gray
+mollusc: mass=0.2 length=0.1 integrity=10 alive=true diet=herbivore speed_land=0.01 speed_water=0.01 armor=8 res_slash=0.6 breathes=water placeable_on=water,land reproduction=5 edible=true nutrition=1 habitat=shore,marsh color=gray
+shellfish: mass=0.3 length=0.15 integrity=10 alive=true diet=scavenger armor=8 res_slash=0.6 breathes=water placeable_on=water pack_size=12 reproduction=4 edible=true nutrition=2 raw=true shelf_life=60 habitat=shore color=pink
+prawn: mass=0.03 length=0.15 integrity=2 alive=true diet=scavenger speed_water=1 breathes=water placeable_on=water pack_size=40 reproduction=10 edible=true nutrition=0.5 raw=true shelf_life=60 habitat=shore color=pink
+crawfish: mass=0.05 length=0.12 integrity=4 alive=true diet=scavenger speed_land=0.3 speed_water=1 armor=3 dmg_crush=3 attack_rate=1 placeable_on=water,land pack_size=30 reproduction=8 edible=true nutrition=0.5 raw=true habitat=marsh color=red
+krill: mass=0.002 length=0.05 integrity=1 alive=true diet=herbivore speed_water=0.3 luminosity=1 breathes=water placeable_on=water,deep_water pack_size=10000 reproduction=50 food_output=0.1 edible=true nutrition=0.02 habitat=shore,tundra color=pink
+anemone: mass=0.5 length=0.1 integrity=6 alive=true diet=carnivore speed_water=0 venomous=true thorns=4 dmg_poison=8 inflict_stun=1 beauty=8 breathes=water placeable_on=water habitat=shore color=pink
+trilobite: mass=0.05 length=0.1 integrity=6 alive=true diet=scavenger speed_water=0.2 armor=5 breathes=water placeable_on=water value=100 habitat=shore color=gray
+
+# noun group
+hive: mass=20 integrity=60 portable=false placement=target placement_range=20 summons=honeybee summon_count=300 summon_owned=true food_output=0.5 fertility=4 field_radius=30 growth=1.5 dmg_poison=3 inflict_slow=2 attack_rate=5 aggression=6 loudness=4 color=yellow
+brood: placement=target placement_range=10 summons=chick summon_count=10 summon_owned=true field_radius=10 field_targets=owned reproduction*2 comfort=1 morale+1
+litter: placement=target placement_range=10 summons=puppy summon_count=6 summon_owned=true field_radius=10 field_targets=owned comfort=2 charm=5 reproduction*1.5
+gaggle: placement=region placement_range=50 field_radius=40 field_duration=5 summons=goose summon_count=12 loudness=9 alarm=true counters=thief,spy
+troop: placement=region placement_range=100 field_radius=80 field_duration=6 summons=baboon summon_count=20 sets_hostile=true letter_steal=2 loudness=8 produce_H*2
+covey: placement=region placement_range=100 field_radius=60 field_duration=5 summons=quail summon_count=12 produce_H*2 food_output=1
+fauna: placement=region placement_range=200 field_radius=300 field_duration=15 summons=deer summon_count=10 growth=1.5 reproduction*2 produce_H*2 produce_I*1.5
+poultry: placement=target placement_range=20 summons=chicken summon_count=10 summon_owned=true food_output=3 reproduction*2 produce_I*1.5 field_radius=10 field_targets=owned
+
+# noun structure
+hutch: mass=30 footprint=1 height=1 integrity=60 material=wood,wire portable=false enterable=true occupants=4 claim_radius=1 comfort=1 security=2 reproduction*2 flammability=7 color=brown
+aviary: mass=5000 footprint=4 height=6 integrity=800 material=steel,wire portable=false enterable=true occupants=40 claim_radius=2 beauty=7 comfort=1 loudness=6 field_radius=20 field_targets=owned reproduction*1.5 map_reveal=10 color=gray
+paddock: mass=1000 footprint=9 height=1.5 integrity=400 material=wood portable=false blocks=land occupants=12 claim_radius=3 fertility=4 food_output=2 counters=stampede,herd reproduction*1.5 color=brown
+zoo: mass=2000000 footprint=60 height=5 integrity=30000 material=stone,steel portable=false enterable=true occupants=300 claim_radius=20 lockable=true security=5 beauty=7 charm=4 trade_bonus=0.1 recruit_rate=0.3 summons=lion summon_count=2 summon_owned=true produce_I*2 color=green
+
+# noun natural_object
+nest: mass=0.5 integrity=5 material=wood,fiber flammability=8 portable=false occupants=4 comfort=1 storage_letters=15 field_radius=3 field_targets=owned reproduction*3 regeneration+1 color=brown
+
+# noun place
+den: mass=5000 footprint=2 integrity=3000 portable=false enterable=true occupants=6 cover=0.7 stealth=6 claim_radius=2 comfort=1 field_radius=10 field_targets=owned regeneration+2 reproduction*2 placeable_on=hill,forest,land color=brown
+lair: mass=20000 footprint=4 integrity=10000 portable=false enterable=true occupants=10 cover=0.8 stealth=7 claim_radius=5 fear_aura=4 storage_letters=300 security=5 field_radius=20 field_targets=owned regeneration+3 aggression+2 placeable_on=hill,mountain,forest,land color=black
+
+# noun depression
+burrow: tile_type=pit radius=1 depth=3 enterable=true occupants=6 cover=0.9 stealth=8 res_blast=0.6 portable=false claim_radius=1 field_radius=5 field_targets=owned reproduction*2 placeable_on=land,field,meadow,forest
+
+# verb consume
+graze: duration=300 food_need*0 restores=60 regeneration+1 alarm=true speed_land*0.8
+scavenge: duration=120 smell_range+500 reclaim_rate+0.3 reclaim_range+30 res_disease+0.5 food_need*0
+gnaw: duration=20 dmg_slash+20 siege*3 armor_pierce+0.3 attack_rate*1.5 counters=wood,rope,fence,door
+
+# verb contact
+peck: duration=2 dmg_pierce+10 attack_rate*2 accuracy+0.1 inflict_blind+1
+sting: duration=2 dmg_poison+50 inflict_poison+15 dmg_pierce+3 venomous=true
+lick: duration=5 restores=20 effect_status=bleed charm+2 comfort+1
+snarl: duration=8 fear_aura+4 inflict_fear=3 aggression+3 loudness+5
+growl: duration=8 fear_aura+3 inflict_fear=2 aggression+2 loudness+4 alarm=true
+hiss: duration=6 fear_aura+3 inflict_fear=3 loudness+3 stealth+-1 counters=cat,dog,goose
+howl: duration=10 loudness+9 fear_aura+5 inflict_fear=4 morale+2 summons=wolf summon_count=3 summon_owned=true stealth=0
+purr: duration=60 comfort+3 morale+3 regeneration+2 charm+4 aggression+-3 loudness+1
+neigh: duration=5 loudness+7 alarm=true morale+1 summons=horse summon_count=1 summon_owned=true
+bleat: duration=5 loudness+5 charm+2 alarm=true summons=sheep summon_count=2 summon_owned=true
+chirp: duration=10 loudness+3 morale+1 charm+1 alarm=true
+croak: duration=10 loudness+6 sets_weather=rain field_radius=200 field_duration=3 moisture=2
+
+# verb movement
+gallop: duration=30 speed_land*2.5 jump+2 knockback+3 food_need*2 loudness+5
+trot: duration=60 speed_land*1.5 range*1.5 food_need*1.2
+canter: duration=45 speed_land*2 jump+1 food_need*1.5
+slither: duration=60 stealth+6 speed_land*0.8 terrain_ignored=swamp,forest,jungle climb+3 loudness+-4
+crawl: duration=60 stealth+5 speed_land*0.3 evasion+0.2 cover+0.3 loudness+-4
+swoop: duration=3 speed_air*3 dmg_slash+40 critical+0.3 knockback+3 targets=land,air,water
+migrate: duration=600 speed_land*1.5 speed_air*1.5 speed_water*1.5 range*5 temp_min+-20 temp_max+15 food_need*0.5
+trample: duration=5 dmg_crush+150 knockback+4 inflict_stun=2 speed_land*1.5 siege*2 counters=fence,crop,garden,wheat
+prowl: duration=120 stealth+6 night_vision=true speed_land*0.7 critical+0.3 detect_stealth+3 loudness+-5
+pounce: duration=2 jump+6 dmg_slash+60 critical+0.5 inflict_root=2 knockback+2
+flutter: duration=20 speed_air+5 hover=true evasion+0.3 flight_ceiling+20
+waddle: duration=60 speed_land*0.6 charm+3 comfort+1 loudness+1
+scurry: duration=10 speed_land*2 evasion+0.4 stealth+3 agility+3
+
+# verb body
+hibernate: duration=1800 sleep_need=1 food_need*0 water_need*0 regeneration+20 temp_min+-40 res_cold+0.8 effect_status=sleep morale+4
+hatch: summons=chick summon_count=6 summon_owned=true duration=0 reproduction*2
+breed: duration=600 reproduction*5 food_need*1.5 morale+1
+molt: duration=300 regeneration+5 effect_status=poison,bleed,burn armor+-5 stealth+2 integrity*1.2
+moult: duration=300 regeneration+5 effect_status=poison,bleed,burn armor+-5 stealth+2 integrity*1.2
+roost: duration=600 regeneration+5 morale+2 stealth+3 sleep_need*0.5 sight_range+100
+
+# verb perceive
+sniff: duration=60 smell_range+800 tracking+6 detect_stealth+4 detect_life=300
+
+# adjective quality
+feral: aggression+5 obedience+-5 loyalty+-4 tamable=false res_disease+0.3 speed_land*1.2 stealth+2 dmg_pierce*1.3 dmg_slash*1.3 pack_size*2
+venomous: venomous=true dmg_poison+80 inflict_poison+25 fear_aura+2 toxicity+5
+hairy: res_cold+0.4 temp_min+-15 armor+2 charm+-1 odor+1
+scaly: armor+15 res_slash+0.4 res_pierce+0.2 res_fire+0.2 slipperiness+2
+feathered: speed_air+8 flight_ceiling+500 res_cold+0.4 beauty+2 mass*0.9
+horned: dmg_pierce+50 knockback+3 fear_aura+1 counters=wolf,lion
+hoofed: speed_land*1.3 dmg_blunt+30 terrain_ignored=hill,badlands loudness+2
+winged: speed_air+25 flight_ceiling+3000 targets=land,air terrain_ignored=water,pit,wall
+clawed: dmg_slash+35 climb+5 inflict_bleed+4 sharpness+3
+predatory: aggression+5 tracking+5 stealth+3 critical+0.2 smell_range+300 fear_aura+2
+nocturnal: nocturnal=true night_vision=true stealth+3 sight_range*1.2
+herbivorous: diet=herbivore aggression+-3 food_need*1.2
+savage: aggression+7 dmg_slash*1.6 dmg_pierce*1.6 inflict_bleed+6 fear_aura+4 obedience+-6 loyalty+-4 armor+-5
+ferocious: aggression+6 attack_rate*1.5 dmg_slash*1.4 dmg_pierce*1.4 courage+5 fear_aura+5
+docile: aggression+-6 obedience+5 loyalty+3 tamable=true fear_aura*0 courage+-2
+skittish: courage+-5 evasion+0.3 speed_land*1.3 alarm=true obedience+-2 hearing_range*2
+mangy: integrity*0.6 dmg_disease+5 contagion+0.2 beauty+-4 charm+-3 value*0.2 odor+4
+bestial: strength+4 dmg_slash*1.5 intelligence+-3 speech=false aggression+5 fear_aura+3 smell_range+300
+beastly: strength+3 dmg_blunt*1.4 aggression+4 charm+-4 fear_aura+2 reputation+-3
+brutish: strength+4 dmg_blunt*1.6 dmg_crush*1.5 intelligence+-3 charm+-3 knockback+2
+spotted: camouflage=forest,savanna,jungle stealth+3 beauty+2
+striped: camouflage=jungle,savanna,meadow stealth+3 beauty+2 fear_aura+1
+shaggy: res_cold+0.6 temp_min+-25 armor+3 res_slash+0.15 mass*1.1 beauty+-1
+
+# adjective pertaining
+rabid: aggression+10 dmg_disease+30 contagion+0.5 inflict_confuse+3 obedience=0 loyalty=0 courage=10 immune_fear=true fear_aura+4 lifespan=60
+fanged: dmg_pierce+40 inflict_bleed+5 fear_aura+1
+carnivorous: diet=carnivore aggression+3 dmg_pierce*1.3 smell_range+200 counters=meat
+
+# noun food
+beef: mass=1 integrity=1 edible=true nutrition=12 restores=30 raw=true cooks_into=steak shelf_life=60 strength+1 duration=300 single_use=true odor=5 color=red
+
+# noun leader
+monarch: mass=80 integrity=120 alive=true sentient=true intelligence=7 hands=true speech=true speed_land=4 authority=10 command_limit=60 tax_rate=0.2 recruit_rate=1 claim_radius=25 charm=5 morale+2 on_owner_death=pass_to_heir
+viceroy: mass=75 integrity=110 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 authority=7 command_limit=30 tax_rate=0.15 claim_radius=15 morale+1
+admiral: mass=80 integrity=140 alive=true sentient=true intelligence=8 hands=true speech=true speed_land=4 authority=7 command_limit=40 courage=8 speed_water*1.3 accuracy+0.1 morale+2 counters=pirate,fleet
+
+# noun worker
+fisher: mass=75 integrity=100 alive=true sentient=true intelligence=5 hands=true speech=true speed_land=5 speed_water=1 labor=2 harvest_bonus=2.5 harvest_sources=fishing food_output=1 food_need=0.03
+sawyer: mass=80 integrity=110 alive=true sentient=true intelligence=5 hands=true speech=true speed_land=5 labor=3 build_speed=1.5 harvest_bonus=2.5 harvest_sources=tree dmg_slash=15 attack_rate=0.8 food_need=0.03
+nanny: mass=65 integrity=90 alive=true sentient=true intelligence=6 loyalty=8 hands=true speech=true speed_land=5 heals=3 comfort=2 morale+2 reproduction*1.5 food_need=0.03
+
+# noun mineral
+cinnabar: mass=8 density=8100 hardness=2 brittleness=5 toxicity=7 integrity=40 value=60 color=red melting_point=580 dmg_poison=20 flammability=0
+
+# verb create
+sow: duration=60 fertility+4 growth*2 harvest_bonus*1.5 tile_type=tilled radius=2
