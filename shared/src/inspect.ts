@@ -11,6 +11,7 @@ import { placeRules, rulesText } from "./place.js";
 import { resolve } from "./stats.js";
 import { pluralize } from "./plural.js";
 import { effectSeconds, statusSeconds, type Status } from "./status.js";
+import { toolHelp } from "./biome.js";
 import { TILE_TYPES } from "./world.js";
 
 /**
@@ -332,4 +333,67 @@ export function eventCard(dict: Dictionary, word: string): { title: string; kind
   if (body.length) lines.push(`on everyone it reaches: ${body.slice(0, 6).join(", ")}`);
   const kind = [def.class === "event" ? "event" : def.archetype === "weather" ? "weather" : "field", def.archetype].filter((x, i, a) => a.indexOf(x) === i).map(words).join(" · ");
   return { title: word.toUpperCase(), kind, lines, counters: countersOf(dict, word) };
+}
+
+/** A thing's kind in a word or two for a short line: "material", "weapon", "feeling". */
+const kindWord = (dict: Dictionary, noun: string) => words(dict.word(noun)?.archetype ?? dict.word(noun)?.class ?? "thing");
+
+/**
+ * What carrying, wearing or riding something does for you, in one short line for the HUD,
+ * loadout and inventory: "damage 40 slash · reach 2 m", "+10% digging", "light · frightens foes",
+ * "U: 4 food". When it does nothing held, it says so plainly, with what it is good for instead:
+ * "material · burns · builds: no effect held".
+ */
+export function heldText(dict: Dictionary, phrase: string): string {
+  let p: Phrase;
+  try { p = parsePhrase(dict, phrase); } catch { return ""; }
+  const s = p.stats, out: string[] = [];
+  const hit = damage(s);
+  if (hit && s.get("equip_slot") === "held") out.push(`${hit}${s.num("attack_range") > 1.5 ? `, reach ${num(s.num("attack_range"))} m` : ""}`);
+  if (s.num("armor") > 0) out.push(`armor ${num(s.num("armor"))}`);
+  if (s.flag("mountable") && Math.max(s.num("speed_land"), s.num("speed_air"), s.num("speed_water")) > 0) {
+    out.push(`ride at ${num(Math.max(s.num("speed_land"), s.num("speed_air"), s.num("speed_water")))} m/s`);
+  }
+  const KINDS: [string, string][] = [["forage", "foraging"], ["fish", "fishing"], ["dig", "digging"], ["cache", "caches"], ["hunt", "hunting"]];
+  for (const [kind, name] of KINDS) {
+    const h = toolHelp(kind, [{ name: p.noun, stats: s }]);
+    if (h.length) out.push(kind === "hunt" ? `more letters ${name}` : `+${Math.round(h[0]!.chance * 100)}% ${name}`);
+  }
+  for (const [id] of s.entries()) if (id.startsWith("res_") && s.num(id) > 0 && out.length < 4) out.push(`${plain(id)} ${Math.round(s.num(id) * 100)}%`);
+  if (s.num("luminosity") > 0) out.push("light");
+  if (s.num("fear_aura") > 0) out.push("frightens foes");
+  if (s.num("heals") > 0) out.push(`heals ${num(s.num("heals"))}/s around you`);
+  if (s.num("sight_range") > 10 && s.get("equip_slot") !== "none") out.push(`sight ${num(s.num("sight_range"))} m`);
+  const letters = Object.entries(production(s));
+  if (letters.length) out.push(`makes ${letters.map(([ch, n]) => `${ch.toUpperCase()} ${num(n * p.count)}`).join(", ")}/min`);
+  const claim = claimOf(s);
+  if (claim) out.push(`claims ${num(claim.radius)} tiles`);
+  for (const [id, op, amount] of dict.word(p.noun)?.ops ?? []) {
+    if (out.length >= 4 || /^produce_|^harvest/.test(id)) continue;
+    if (typeof amount === "number") out.push(opText([id, op, amount]));
+  }
+  const use = useObject(dict, p.noun, p.adjectives);
+  if (use) {
+    const u = use.stats, bits: string[] = [];
+    if (u.num("restores") > 0) bits.push(`+${num(u.num("restores"))} health`);
+    if (u.num("nutrition") > 0) bits.push(`${num(u.num("nutrition"))} food`);
+    if (u.tags("effect_status").length) bits.push(`cures ${u.tags("effect_status").join(", ")}`);
+    out.push(`U: ${bits.join(", ") || "use it"}`);
+  }
+  if (out.length) return out.slice(0, 3).join(" · ");
+  // Nothing held: say what it is and what it is good for.
+  const traits = [kindWord(dict, p.noun)];
+  if (s.num("flammability") >= 5) traits.push("burns");
+  if (dict.word(p.noun)?.class === "material") traits.push("builds");
+  if (improvisable(s) && s.flag("portable")) traits.push("can be swung");
+  return `${traits.join(" · ")}: no effect held`;
+}
+
+/** What something in force on you (a verb cast, a field you stand in: HOPE, RUN) does, in one short line. */
+export function effectText(dict: Dictionary, word: string): string {
+  const noun = word.toLowerCase().trim().split(/\s+/).at(-1) ?? word;
+  const def = dict.word(noun);
+  if (!def) return "";
+  const lines = [...def.ops.filter(([id]) => !/^produce_|^harvest/.test(id)).map(opText), ...(def.role === "noun" ? placeLines(dict, noun, resolve(dict, noun, [])) : [])];
+  return lines.slice(0, 3).join(" · ") || `${kindWord(dict, noun)}: no effect on you`;
 }

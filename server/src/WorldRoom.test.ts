@@ -510,7 +510,7 @@ it("tells a player the detail of their own character and drops what they choose"
   expect(d.gear.map((g: any) => [g.phrase, g.slot])).toEqual([["sword", "held"], ["armor", "body"], ["hat", "head"], ["tank", "ride"]]);
   expect(d.gear[1]).toMatchObject({ integrity: 400, max: 400 });
   expect(d.gear[0].integrity).toBeNull(); // a sword is not a layer
-  expect(d.attack).toMatchObject({ with: "tank", damage: { blast: 1200 }, reach: 3000 });
+  expect(d.attack).toMatchObject({ with: "tank", damage: { blast: 1200 }, reach: 60 }); // a TANK reaches 3 km, but no farther than its driver sees
   expect(d.speed).toBe(18); // the tank's speed: RUN acts on the body, not on what it rides
   expect(d.effects).toEqual([{ word: "run", left: 200 }]);
   expect(d.creatures).toEqual([{ name: "dog", health: 100 }]);

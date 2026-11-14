@@ -1,3 +1,4 @@
+import type { Threat } from "./threats.js";
 import { Client } from "@colyseus/sdk";
 import type { Letters, LoadoutDetail, Sensed } from "@lastword/shared";
 import { chooseGame } from "./start.js";
@@ -12,7 +13,8 @@ export interface Connection {
   spell(text: string): void;
   gather(): void;
   give(to: string, letters: string): void;
-  take(): void;
+  /** E: pick up or claim what is nearest, or the thing named (a click on something nobody owns). */
+  take(id?: string): void;
   /** Get off what you ride; it stays yours. */
   dismount(): void;
   /** Drop the item at `index` in the loadout, or the last thing equipped. */
@@ -64,6 +66,8 @@ export interface Handlers {
   reconnected(): void;
   /** Blows struck where we can see them. */
   hits(list: Hit[]): void;
+  /** What is coming for us, seen or not (incoming-threat arrows). */
+  threats(list: Threat[]): void;
 }
 
 /** One blow, as the server tells it (server `Hit`). */
@@ -104,6 +108,7 @@ export async function connect(on: Handlers): Promise<Connection> {
   room.onMessage("watching", on.watching);
   room.onMessage("sensed", on.sensed);
   room.onMessage("hits", on.hits);
+  room.onMessage("threats", on.threats);
   room.onLeave(on.closed);
   room.onDrop(on.dropped);
   room.onReconnect(on.reconnected);
@@ -120,7 +125,7 @@ export async function connect(on: Handlers): Promise<Connection> {
     spell: (text) => room.send("spell", text),
     gather: () => room.send("gather"),
     give: (to, letters) => room.send("give", { to, letters }),
-    take: () => room.send("take"),
+    take: (id) => room.send("take", id ? { id } : undefined),
     dismount: () => room.send("dismount"),
     drop: (index) => room.send("drop", index),
     use: (which) => room.send("use", which),

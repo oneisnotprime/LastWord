@@ -193,6 +193,8 @@ interface Walker {
   seenThings: Set<string>;
   /** Held letters. Private: sent to their owner by message, never put in shared state. */
   letters: Letters;
+  /** For a person: the threats last sent to them, as JSON, to send only changes. */
+  threatsSent?: string;
   /** For a person: the exploration regions (shared `regionOf`) they have been to; each new one gives a J. */
   explored?: Set<number>;
   /** Seconds left on a gathering action, or 0. Moving cancels it. */
@@ -248,6 +250,11 @@ interface Holdings { creatures: [string, Walker][]; things: [string, Gear][] }
 
 /** An object's letter output: rate per minute and the fraction built up so far. */
 interface Producer { owner: string; rates: Letters; built: Letters }
+
+/** Something coming for a person, for the incoming-threat arrows: where, what, by air, aimed at them, its reach in tiles. */
+interface Threat { id: string; x: number; y: number; name: string; air: boolean; targeting: boolean; reach: number }
+/** Speed in m/s from which something hostile is shown coming before it is seen (a horse is 18, a PLANE 60). */
+const THREAT_SPEED = 15;
 
 /**
  * A starting hand: eight letters around one word that produces something (shared `starterHand`).
@@ -419,16 +426,19 @@ export class WorldRoom extends Room {
       walker.gathering = GATHER_SECONDS;
       client.send("gathering", GATHER_SECONDS);
     },
-    /** Pick up the nearest thing of your own, or nobody's, from the ground. */
-    take: (client: Client) => {
+    /** Pick up the nearest thing of your own, or nobody's, from the ground; or the one named ({ id }: a click to claim it). */
+    take: (client: Client, message?: unknown) => {
       const walker = this.walkers.get(client.sessionId);
       if (!walker) return;
+      const named = message && typeof message === "object" && typeof (message as { id?: unknown }).id === "string" ? (message as { id: string }).id : null;
       let best: string | null = null, bestDistance = TAKE_RANGE;
       this.state.things.forEach((t, id) => {
         const d = Math.hypot(t.x - walker.player.x, t.y - walker.player.y);
         const free = t.owner === client.sessionId || t.owner === "";
+        if (named && id !== named) return;
         if (free && d <= bestDistance && this.grounded.has(id) && !this.grounded.get(id)!.terrain) { best = id; bestDistance = d; }
       });
+      if (named && !best) return void client.send("refused", "Too far away to claim: walk up to it");
       // A mount of your own walking with you: get back on it.
       const mount = [...this.walkers].find(([, c]) => c.master === client.sessionId && c.unit.body.stats.flag("mountable") &&
         Math.hypot(c.player.x - walker.player.x, c.player.y - walker.player.y) <= TAKE_RANGE);
@@ -1031,7 +1041,7 @@ export class WorldRoom extends Room {
           attack.entries().filter(([k, v]) => k.startsWith("dmg_") && typeof v === "number" && v > 0).map(([k, v]) => [k.slice(4), Math.round(v as number)]),
         ),
         rate: attack.num("attack_rate"),
-        reach: attack.num("attack_range"),
+        reach: Math.round(Math.min(attack.num("attack_range"), Math.max(1.5, walker.sight) * TILE_METERS) * 10) / 10, // no farther than you see
       },
       gear: walker.gear.map((g, index) => {
         const layer = unit.entityFor(g.spelled);
@@ -1321,6 +1331,34 @@ export class WorldRoom extends Room {
   /** The side a walker is on: a person's own id, a creature's master, "-" for the wild. */
   private side(id: string, w: Walker): string {
     return w.master ?? id;
+  }
+
+  /**
+   * Tells each person what is coming for them, even from beyond their sight: anything whose foe
+   * they are (within four sights plus its reach), and anything fast (THREAT_SPEED m/s and up)
+   * on another person's side, or wild and fierce, within three sights or its reach. The client
+   * draws an arrow at the screen's edge for those it cannot see. Sent only when it changes.
+   */
+  private sendThreats() {
+    for (const c of this.clients) {
+      const p = this.walkers.get(c.sessionId);
+      if (!p) continue;
+      const mine = this.side(c.sessionId, p), out: Threat[] = [];
+      for (const [id, w] of this.walkers) {
+        if (id === c.sessionId || this.side(id, w) === mine) continue;
+        const d = Math.hypot(w.player.x - p.player.x, w.player.y - p.player.y);
+        const reach = Math.max(1, Math.min(w.unit.attack.num("attack_range") / TILE_METERS, Math.max(1.5, w.sight)));
+        const targeting = w.foe === c.sessionId;
+        const fast = w.speed >= THREAT_SPEED && (w.master !== "-" || aggressive(w.unit.body.stats));
+        if (!(targeting && d <= p.sight * 4 + reach) && !(fast && d <= Math.max(p.sight * 3, reach))) continue;
+        out.push({ id, x: Math.round(w.player.x * 10) / 10, y: Math.round(w.player.y * 10) / 10, name: w.player.name, air: w.flying, targeting, reach: Math.round(reach) });
+        if (out.length >= 8) break;
+      }
+      const key = JSON.stringify(out);
+      if (key === (p.threatsSent ?? "[]")) continue;
+      p.threatsSent = key;
+      c.send("threats", out);
+    }
   }
 
   /** Walkers bucketed into cells NEAR_CELL tiles wide, built once a beat for `enemiesNear`. */
@@ -3180,7 +3218,9 @@ export class WorldRoom extends Room {
       const truce = this.lawAgainst("attack", id, w) ?? (foe ? this.lawAgainst("attack", foeId, foe) : null);
       if (truce) { if (w.master === null) this.sendTo(id, "refused", `${truce}: no fighting here`); w.foe = null; continue; }
       const attack = w.unit.attack;
-      const reach = Math.max(1, attack.num("attack_range") / TILE_METERS);
+      // Nobody strikes what they cannot see: a RIFLE's 400 m or a JET's 5 km reach only as far as
+      // their sight (a TELESCOPE, a RADAR, night and FOG change it).
+      const reach = Math.max(1, Math.min(attack.num("attack_range") / TILE_METERS, Math.max(1.5, w.sight)));
       if (Math.hypot(at.x - w.player.x, at.y - w.player.y) > reach) {
         w.target = { x: at.x, y: at.y }; // close the distance
         continue;
@@ -3288,6 +3328,8 @@ export class WorldRoom extends Room {
     this.toTell.clear();
     // Once a second: fields follow people about, so work out again who stands in which.
     if ((this.tickCount % TICK_HZ === 0 && this.areas.size) || this.fieldsDirty) this.applyFields();
+    // Twice a second: who is coming for each person, seen or not (incoming-threat arrows).
+    if (this.tickCount % (TICK_HZ / 2) === 0) this.sendThreats();
     // Once a second, anyone with a verb in force is told how long it has left.
     if (this.tickCount % TICK_HZ === 0) for (const w of this.walkers.values()) if (w.buffs.length || w.statuses.length) this.tell(w);
     if (this.tickCount++ % VIEW_EVERY === 0) this.refreshViews();

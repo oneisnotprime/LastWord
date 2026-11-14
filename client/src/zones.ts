@@ -66,6 +66,8 @@ interface ZoneView {
   tag: Phaser.GameObjects.Image;
   decor: { img: Phaser.GameObjects.Image; a: number; d: number; base: number; i: number }[];
   word: string; style: ZoneStyle; x: number; y: number; r: number; laidFor: number;
+  /** What its card says: who made it, until when, and for claimed ground whose it is and how much it shelters. */
+  info: { by: string; until: number; owner: string; shelter: number; mine: boolean };
   /** Claimed ground (HOME, CASTLE): a fence of stakes around its edge, redrawn as it changes size. */
   fence?: Phaser.GameObjects.Graphics; fencedFor?: number;
 }
@@ -114,8 +116,12 @@ export class Zones {
     z.laidFor = z.r;
   }
 
-  /** Draws the zones in `zones`; returns the words over the whole map. */
-  update(zones: any, time: number, mine = ""): string[] {
+  /**
+   * Draws the zones in `zones`; returns the words over the whole map. `focus` (world pixels, you)
+   * puts each name tag on the edge nearest you, so a big circle's tag is on screen; `nameOf`
+   * names an owner for claimed ground's tag.
+   */
+  update(zones: any, time: number, mine = "", focus?: { x: number; y: number }, nameOf: (id: string) => string = () => ""): string[] {
     const t = time / 1000;
     const live = new Set<string>(), overMap: string[] = [];
     zones.forEach((zone: any, id: string) => {
@@ -130,9 +136,13 @@ export class Zones {
         useMade(disc, this.paint.tissue(seed % 7), this.k);
         disc.setData("s", disc.scaleX);
         const tag = this.scene.add.image(0, 0, "__WHITE").setDepth(10000);
-        const title = claim ? `${zone.word.toUpperCase()} · ${zone.owner === mine ? "YOURS" : "CLAIMED"} −${zone.shelter}%` : zone.word.toUpperCase();
+        // Owner and kind on the tag: "BOT3's HOME · claimed ground", "FIRE · by BOT2".
+        const owner = zone.owner === mine ? "YOUR" : `${(nameOf(zone.owner) || zone.by || "SOMEONE").toUpperCase()}'S`;
+        const title = claim ? `${owner} ${zone.word.toUpperCase()} · claimed −${zone.shelter}%`
+          : `${zone.word.toUpperCase()}${zone.by ? ` · by ${String(zone.by).toUpperCase()}` : ""}`;
         useMade(tag, this.paint.tag([title], style.ink, 13), this.k);
-        z = { disc, tag, decor: [], word: zone.word, style, x: 0, y: 0, r: 0, laidFor: 0 };
+        z = { disc, tag, decor: [], word: zone.word, style, x: 0, y: 0, r: 0, laidFor: 0,
+          info: { by: String(zone.by ?? ""), until: Number(zone.until ?? 0), owner: String(zone.owner ?? ""), shelter: Number(zone.shelter ?? 0), mine: zone.owner === mine } };
         if (claim) { z.fence = this.scene.add.graphics().setDepth(51).setScale(1, 0.9); disc.setAlpha(0.2); }
         this.views.set(id, z);
       }
@@ -145,7 +155,12 @@ export class Zones {
       // The tissue's radius is 124 units, 62 world pixels, at its base scale.
       const s = (z.disc.getData("s") as number) * (z.r / 62);
       z.disc.setPosition(z.x, z.y).setScale(s * (1 + Math.sin(t * 1.3) * 0.01), s * 0.9 * (1 + Math.cos(t * 1.1) * 0.01));
-      z.tag.setPosition(z.x, z.y - z.r * 0.85 - 8);
+      // The tag sits on the edge nearest you, or, standing well inside a big one, a few tiles
+      // from you toward that edge, so it is on screen; the top when you are at its middle.
+      const fx = focus ? focus.x - z.x : 0, fy = focus ? focus.y - z.y : -1, fd = Math.hypot(fx, fy);
+      const ux = fd > z.r * 0.25 ? fx / fd : 0, uy = fd > z.r * 0.25 ? fy / fd : -1;
+      const along = fd < z.r ? Math.min(z.r * 0.92, fd + 6 * PX) : z.r * 0.92;
+      z.tag.setPosition(z.x + ux * along, z.y + uy * along * 0.9 - 8);
       for (const d of z.decor) {
         let x = z.x + Math.cos(d.a) * d.d * z.r, y = z.y + Math.sin(d.a) * d.d * z.r * 0.85;
         switch (z.style.decor) {
@@ -191,6 +206,20 @@ export class Zones {
       g.fillStyle(ink, 1).fillCircle(x, y - 6, 1.8);
     }
     z.fencedFor = r;
+  }
+
+  /** The zone whose name tag is at a world point, as an event card wants it, or null. With `inside`, the smallest zone covering the point. */
+  tagAt(x: number, y: number, inside = false): { word: string; until: number; by: string; kind: "zone"; extra: string[] } | null {
+    const hits = [...this.views.values()].filter((z) => inside ? Math.hypot(x - z.x, (y - z.y) / 0.9) <= z.r : z.tag.getBounds().contains(x, y));
+    for (const z of hits.sort((a, b) => a.r - b.r)) {
+      const extra = z.info.shelter > 0 ? [
+        `claimed ground: ${z.info.mine ? "yours" : "someone else's"}`,
+        `${z.info.mine ? "your" : "their"} things inside take ${z.info.shelter}% less damage and are harder to steal`,
+        z.info.mine ? "you are sheltered inside" : "their side is sheltered inside",
+      ] : [];
+      return { word: z.word, until: z.info.until, by: z.info.by, kind: "zone", extra };
+    }
+    return null;
   }
 
   /** The zones' name tags, to keep clear of other tags. */

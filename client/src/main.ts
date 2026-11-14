@@ -14,6 +14,7 @@ import { Events } from "./events.js";
 import { Hud, type Aimed } from "./hud.js";
 import { Minimap } from "./minimap.js";
 import { connect, type Connection, type Described, type Got, type Hit } from "./net.js";
+import { Threats } from "./threats.js";
 import { Painter, PX, useMade, useStandee, ZOOM } from "./paint.js";
 import { Sky } from "./sky.js";
 import { Zones } from "./zones.js";
@@ -121,6 +122,12 @@ class World extends Phaser.Scene {
   private tracerGfx!: Phaser.GameObjects.Graphics;
   /** Who struck you lately, and until when they are marked as targeting you. */
   private threats = new Map<string, number>();
+  /** Something nobody owns that a click asked to claim: walk to it, then take it. */
+  private claiming: string | null = null;
+  /** What is coming for you, from the server (arrows at the screen's edge for what is off screen). */
+  private threatList = new Threats();
+  /** Whether a person's gear text has them flying (riding something with air speed), by gear text. */
+  private airCache = new Map<string, boolean>();
   /** What you can see, in tiles, from the loadout; the camera zooms so the screen shows that much. */
   private sightTiles = 15;
   private fog!: Phaser.GameObjects.Image;
@@ -185,6 +192,7 @@ class World extends Phaser.Scene {
         got: (g) => this.onGot(g),
         missed: (m) => { this.fx.fail(m.x, m.y - 1.2, m.text, true); this.gathering = null; },
         hits: (list) => this.onHits(list),
+        threats: (list) => this.threatList.set(list),
         dropped: () => this.hud.toast("Connection lost: reconnecting…", "bad"),
         reconnected: () => this.hud.toast("Reconnected", "good"),
         notice: (text) => { const t = terse("notice", text); if (t) this.hud.toast(t, "good"); },
@@ -250,18 +258,35 @@ class World extends Phaser.Scene {
       }
       if (p.rightButtonDown()) return this.inspectAt(x, y, p);
       this.hud.closeInspect();
+      // A click on an area's name tag (claimed ground, a FIRE) opens what it does.
+      const tagged = this.zoneView.tagAt(at.x, at.y);
+      if (tagged) return this.chips.show(tagged);
+      this.claiming = null;
       // A click on another player or on a thing attacks it; a click anywhere else walks there and stops attacking.
       // Your own things and creatures, and the land itself (a LAKE), are walked over, not attacked:
       // the server refuses those, and a click that did neither left you standing.
       let hit: string | null = null;
       const mine = this.net.sessionId;
+      let claim: string | null = null;
       this.net.state.things.forEach((thing: any, id: string) => {
         const land = dictionary.word(lookOf(dictionary, thing.phrase).noun)?.set.tile_type;
-        if (thing.owner !== mine && !land && Math.hypot(thing.x - x, thing.y - y) < 0.6) hit = id;
+        if (thing.owner === mine || land || Math.hypot(thing.x - x, thing.y - y) >= 0.6) return;
+        // Nobody's (a RUIN, something dropped): walk over and claim it. Shift-click attacks it instead.
+        if (!thing.owner && !thing.fixture?.match(/market|temple|cache/) && !(p.event as MouseEvent).shiftKey) { claim = id; hit = null; }
+        else { hit = id; claim = null; }
       });
       this.net.state.players.forEach((other: any, id: string) => {
-        if (id !== mine && other.owner !== mine && Math.hypot(other.x - x, other.y - y) < 0.8) hit = id;
+        if (id !== mine && other.owner !== mine && Math.hypot(other.x - x, other.y - y) < 0.8) { hit = id; claim = null; }
       });
+      if (claim) {
+        const t = this.net.state.things.get(claim);
+        this.claiming = claim;
+        this.foe = null;
+        this.net.attack(null);
+        this.net.move(t.x, t.y);
+        this.gathering = null;
+        return;
+      }
       this.foe = hit;
       this.net.attack(hit);
       if (!hit) { this.net.move(x, y); this.gathering = null; }
@@ -454,6 +479,23 @@ class World extends Phaser.Scene {
         t.lineStyle(2.4, 0xfbf6ea, 0.9 * k).beginPath().arc(to.x, to.y, 9, ang + Math.PI - 0.9, ang + Math.PI + 0.9).strokePath();
       }
     }
+    // Aircraft: a shadow on the ground below and speed streaks behind, so a PLANE is seen coming.
+    for (const [id, p] of this.net.state.players as Map<string, { gear: string; x: number; y: number }>) {
+      const v = this.views.get(id);
+      if (!v || !this.airborne(p.gear)) continue;
+      const lift = 22 + Math.sin(time / 300 + v.phase) * 2;
+      t.fillStyle(0x2b2a28, 0.22).fillEllipse(v.x + 10, v.y + lift, Math.max(18, v.half * 1.6), Math.max(6, v.half * 0.5));
+      if (v.moving > 0) for (let i = 0; i < 3; i++) {
+        const y = v.y - v.top * 0.3 + (i - 1) * 5, len = 14 + ((time / 40 + i * 7) % 10);
+        t.lineStyle(1.4, 0xfbf6ea, 0.7).lineBetween(v.x - v.facing * (v.half + 4), y, v.x - v.facing * (v.half + 4 + len), y);
+      }
+    }
+    // What is aimed at you and in sight is marked like a blow taken; what is not gets an edge arrow.
+    for (const th of this.threatList.all) if (th.targeting && this.views.has(th.id)) this.threats.set(th.id, Math.max(this.threats.get(th.id) ?? 0, time + 600));
+    this.threatList.frame((x, y) => {
+      const c = this.cameras.main;
+      return { x: ((x * PX - c.worldView.x) * c.zoom) / DPR, y: ((y * PX - c.worldView.y) * c.zoom) / DPR };
+    }, me ? { x: me.x, y: me.y } : null, TILE_METERS);
     // Whoever struck you lately: a red pulsing mark over them.
     for (const [id, until] of this.threats) {
       const v = this.views.get(id);
@@ -465,6 +507,19 @@ class World extends Phaser.Scene {
     this.fx.frame(performance.now());
     if (me && time - this.lastPrompt > 200) { this.lastPrompt = time; this.promptAt(me); }
     else if (!me) this.hud.prompt("", "");
+  }
+
+  /** True if a person's gear has them in the air: riding something with air speed (a PLANE, a DRAGON). */
+  private airborne(gear: string): boolean {
+    if (!gear) return false;
+    let air = this.airCache.get(gear);
+    if (air === undefined) {
+      const ride = this.slotOf(gear, "ride");
+      air = false;
+      if (ride) try { air = parsePhrase(dictionary, ride).stats.num("speed_air") > 0; } catch { /* not a word */ }
+      this.airCache.set(gear, air);
+    }
+    return air;
   }
 
   /** The fog past your sight: one canvas, clear in the middle, paper-grey beyond; scaled to fit. */
@@ -506,7 +561,13 @@ class World extends Phaser.Scene {
   /** Right-click: the inspect card for whoever or whatever is under the pointer; nothing there closes it. */
   private inspectAt(x: number, y: number, p: Phaser.Input.Pointer) {
     const id = this.hitAt(x, y, true);
-    if (!id) return this.hud.closeInspect();
+    if (!id) {
+      this.hud.closeInspect();
+      // Inside an area (claimed ground, a FIRE): its card, what it does and whose it is.
+      const zone = this.zoneView.tagAt(x * PX, y * PX, true) ?? this.zoneView.tagAt(x * PX, y * PX);
+      if (zone) this.chips.show(zone);
+      return;
+    }
     const state = this.net.state, mine = this.net.sessionId;
     const nameOf = (owner: string) => (owner === mine ? "you" : String(state.players.get(owner)?.name ?? "someone"));
     const read = (phrase: string, count: number): Card => {
@@ -800,7 +861,14 @@ class World extends Phaser.Scene {
     }
     this.updateChunks();
 
-    const overMap = this.zoneView.update(state.zones, time, mine);
+    const me0 = state.players.get(mine);
+    const overMap = this.zoneView.update(state.zones, time, mine, me0 ? { x: me0.x * PX, y: me0.y * PX } : undefined, (id: string) => String(state.players.get(id)?.name ?? ""));
+    // A claim on its way: once close enough, take it.
+    if (this.claiming) {
+      const t = state.things.get(this.claiming);
+      if (!t || !me0 || t.owner) this.claiming = null;
+      else if (Math.hypot(t.x - me0.x, t.y - me0.y) <= 1.8) { this.net.take(this.claiming); this.net.stop(); this.claiming = null; }
+    }
 
     const k = Math.min(1, delta / 100);
     state.things.forEach((t: any, id: string) => {
