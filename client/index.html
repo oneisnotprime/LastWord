@@ -109,7 +109,7 @@
       /* Esc: a small menu with the controls. */
       #menu { position: fixed; z-index: 6; inset: 0; display: none; pointer-events: auto; background: rgba(28, 22, 16, .45); }
       #menu.show { display: block; }
-      #menu .card { position: absolute; left: 50%; top: 45%; transform: translate(-50%, -50%) rotate(-0.5deg); width: min(440px, 90vw); padding: 14px 22px 16px;
+      #menu .card { position: absolute; left: 50%; top: 45%; transform: translate(-50%, -50%) rotate(-0.5deg); width: min(760px, 94vw); padding: 14px 22px 16px;
         background: var(--paper); border-radius: 4px; box-shadow: 0 3px 0 #cfc3a6, 0 22px 50px rgba(20, 14, 8, .6); }
       #menu h2 { margin: 0 0 8px; font: 700 24px var(--hand); letter-spacing: 4px; color: var(--ink); text-align: center; }
       #menu dl { display: grid; grid-template-columns: 120px 1fr; gap: 3px 10px; margin: 0; font: 500 12.5px/1.4 var(--round); }
@@ -118,6 +118,20 @@
       #menu kbd { font: 600 11px var(--round); background: var(--card); border-radius: 3px; padding: 0 5px; box-shadow: 0 1px 0 #cfc3a6; }
       #menu button { display: block; margin: 12px auto 0; font: 600 14px var(--round); color: var(--ink); background: var(--gold); border: 0; border-radius: 3px;
         padding: 5px 18px; cursor: pointer; box-shadow: 0 1px 0 #b8902a, 0 2px 4px rgba(40, 28, 16, .25); }
+      /* The menu's word ideas (shared wordIdeas) beside the controls, and the tips setting. */
+      #menu .cols { display: grid; grid-template-columns: 1fr 270px; gap: 18px; }
+      #ideas .head { display: flex; justify-content: space-between; align-items: center; font: 600 10.5px var(--round); text-transform: uppercase; letter-spacing: 1px; color: var(--soft); }
+      #ideas .head button { margin: 0; padding: 1px 8px; font-size: 11px; text-transform: none; letter-spacing: 0; }
+      #ideas .idea { padding: 4px 8px 5px; margin: 4px 0; background: var(--card); border-radius: 3px; box-shadow: inset 0 1px 2px rgba(60, 40, 20, .15); font: 500 11.5px/1.35 var(--round); }
+      #ideas .idea > b { font: 700 14px var(--hand); letter-spacing: 1px; }
+      #ideas .idea .k { font: 600 9.5px var(--round); text-transform: uppercase; letter-spacing: 1px; color: var(--soft); }
+      #ideas .idea .d { color: #8a5a1a; }
+      #ideas .idea .c { color: var(--soft); font-size: 10.5px; } #ideas .idea .c b { color: var(--red); }
+      #ideas .opt { display: flex; gap: 6px; align-items: center; margin-top: 8px; font: 500 11.5px var(--round); color: var(--soft); cursor: pointer; }
+      /* The spell window's tip while nothing is typed: one line, a word idea or a rule. */
+      #tip { display: none; margin-top: 8px; font: 500 11.5px var(--round); color: #8a5a1a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      #tip.show { display: block; }
+      #tip::before { content: "tip · "; color: var(--soft); }
       /* A letter you do not hold: the spell window flashes red and shakes. */
       #spellwin .card.reject { animation: reject .38s; background: #f6c9c2; box-shadow: 0 0 0 5px var(--red), 0 3px 0 5px #8a2a2a, 0 22px 50px rgba(20, 14, 8, .6); }
       #spellwin .card.reject #spell { box-shadow: inset 0 2px 4px rgba(60, 40, 20, .2), 0 0 0 2px var(--red); }
@@ -278,11 +292,12 @@
       <div id="spellfor"></div>
       <input id="spell" autocomplete="off" spellcheck="false" maxlength="80" />
       <div id="preview"></div>
+      <div id="tip"></div>
       <div id="abc"></div>
     </div></div>
     <div id="menu"><div class="card">
       <h2>MENU</h2>
-      <dl>
+      <div class="cols"><dl>
         <dt>Move</dt><dd>WASD, arrows, or click the ground</dd>
         <dt>Attack</dt><dd>click someone, a wild animal, or something of someone else's · <kbd>Shift</kbd>-click to attack what nobody owns</dd>
         <dt>Claim</dt><dd>click what nobody owns (a RUIN): you walk over and claim it</dd>
@@ -298,6 +313,11 @@
         <dt>Inventory</dt><dd><kbd>I</kbd></dd>
         <dt>Loadout</dt><dd><kbd>L</kbd></dd>
       </dl>
+      <div id="ideas">
+        <div class="head">Word ideas <button id="reroll" title="Other words">↻ more</button></div>
+        <div class="list"></div>
+        <label class="opt"><input type="checkbox" id="tipson" /> Show tips (start screen, spell window)</label>
+      </div></div>
       <button id="resume">Resume</button>
     </div></div>
     <div id="hurt"></div>

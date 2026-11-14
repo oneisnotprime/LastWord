@@ -73,3 +73,6 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
   Shift-click attacks it. A gathering miss shows small (`missed`), a find's popup its `detail`.
 - Knocked out, the HUD card has Start new round: `playAgain` (start.ts) reloads into a fresh room
   with the same choice, past the start screen. A room lost for good (server restart) does the same.
+- `src/tips.ts` teaching tips (shared `tips.ts`): rotating word cards on the start screen, one
+  line (`#tip`) in the spell window while it is empty, and Word ideas with a reroll in the Esc
+  menu, where Show tips turns them off (`lastword.tips` in localStorage).
