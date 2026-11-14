@@ -281,6 +281,23 @@
       #status button.again { pointer-events: auto; display: block; width: 100%; margin-top: 8px; font: 700 15px var(--hand); letter-spacing: 1px; color: #4a3510; background: var(--gold);
         border: 0; border-radius: 3px; padding: 5px 8px; cursor: pointer; box-shadow: 0 2px 0 #b8902a, 0 4px 8px rgba(40, 28, 16, .3); }
       #status button.again:hover { transform: translateY(-1px) rotate(-1deg); }
+      /* Controller: the letter picker in the spell window (the tiles you hold) and for an offer's letters. */
+      #picker, #pickhint { display: none; }
+      body.pad #picker { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin: 12px auto 4px; max-width: 470px; }
+      body.pad #pickhint { display: block; margin-top: 6px; font: 500 12px var(--round); color: var(--soft); }
+      body.pad #spellwin .card { top: 50%; }
+      #picker .tile, #fieldpick .tile { cursor: pointer; }
+      .tile.spent { opacity: .35; }
+      .tile.space { width: 52px; font-size: 16px; }
+      #fieldpick { position: fixed; z-index: 7; display: none; width: 330px; padding: 10px 12px; background: var(--paper); border-radius: 3px; box-shadow: var(--shadow); font: 500 13px var(--round); color: var(--ink); }
+      #fieldpick.show { display: block; }
+      #fieldpick .head b { font: 700 17px var(--hand); letter-spacing: 2px; }
+      #fieldpick .grid { display: flex; flex-wrap: wrap; gap: 5px; margin: 8px 0; }
+      #fieldpick .tile { width: 26px; height: 34px; font-size: 16px; }
+      #fieldpick .hint, #inspect .hint { color: var(--soft); font-size: 11.5px; margin-top: 6px; }
+      #panel .item { cursor: help; }
+      #menu dl.padonly, body.pad #menu dl.keysonly { display: none; }
+      body.pad #menu dl.padonly { display: grid; }
     </style>
   </head>
   <body>
@@ -305,12 +322,14 @@
       <div id="spellfor"></div>
       <input id="spell" autocomplete="off" spellcheck="false" maxlength="80" />
       <div id="preview"></div>
+      <div id="picker"></div>
+      <div id="pickhint"></div>
       <div id="tip"></div>
       <div id="abc"></div>
     </div></div>
     <div id="menu"><div class="card">
       <h2>MENU</h2>
-      <div class="cols"><dl>
+      <div class="cols"><div><dl class="keysonly">
         <dt>Move</dt><dd>WASD, arrows, or click the ground</dd>
         <dt>Attack</dt><dd>click someone, a wild animal, or something of someone else's · <kbd>Shift</kbd>-click to attack what nobody owns</dd>
         <dt>Claim</dt><dd>click what nobody owns (a RUIN): you walk over and claim it</dd>
@@ -326,6 +345,7 @@
         <dt>Inventory</dt><dd><kbd>I</kbd></dd>
         <dt>Loadout</dt><dd><kbd>L</kbd></dd>
       </dl>
+      <dl class="padonly" id="padmap"></dl></div>
       <div id="ideas">
         <div class="head">Word ideas <button id="reroll" title="Other words">↻ more</button></div>
         <div class="list"></div>
@@ -337,6 +357,7 @@
     <div id="aimcursor"></div>
     <div id="inspect"></div>
     <div id="offers"></div>
+    <div id="fieldpick"></div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
