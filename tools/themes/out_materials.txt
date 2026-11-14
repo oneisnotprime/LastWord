@@ -1,0 +1,559 @@
+# Theme 11, materials and elements: generated entries.
+
+# noun metal
+nickel: mass=8.9 density=8900 hardness=4 brittleness=2 melting_point=1455 conductivity=6 magnetism=5 flammability=0 integrity=200 value=15 color=silver res_acid=0.3
+sodium: mass=0.97 density=970 hardness=0 melting_point=98 conductivity=8 flammability=9 corrosiveness=6 integrity=5 value=3 color=silver dmg_fire=60 dmg_blast=80 res_water=-1 inflict_burn=4
+calcium: mass=1.55 density=1550 hardness=2 brittleness=4 melting_point=842 conductivity=6 flammability=2 integrity=40 value=4 color=white res_disease=0.1
+stainless: mass=8 density=8000 hardness=7 brittleness=2 melting_point=1450 conductivity=4 flammability=0 integrity=380 value=8 reflectivity=6 color=silver res_acid=0.6 res_water=0.8 sharpness=7
+aluminium: mass=2.7 density=2700 hardness=3 brittleness=2 melting_point=660 conductivity=9 flammability=0 integrity=100 value=2 reflectivity=6 color=silver
+alloy: mass=7.8 density=7800 hardness=6 brittleness=2 melting_point=1300 conductivity=5 flammability=0 integrity=300 value=15 color=gray
+zinc: mass=7.1 density=7140 hardness=3 brittleness=4 melting_point=420 conductivity=6 flammability=0 integrity=90 value=3 color=gray res_acid=0.2 res_water=0.4
+potassium: mass=0.86 density=860 hardness=0 melting_point=63 conductivity=8 flammability=10 corrosiveness=7 integrity=4 value=10 color=silver dmg_fire=80 dmg_blast=120 inflict_burn=5 luminosity=2
+lithium: mass=0.53 density=534 hardness=1 melting_point=180 conductivity=7 flammability=8 buoyancy=6 integrity=10 value=60 color=silver dmg_fire=40 dmg_electric=40 power_output=0.5
+magnesium: mass=1.74 density=1740 hardness=3 melting_point=650 conductivity=7 flammability=8 burn_time=60 integrity=90 value=3 color=silver luminosity=1 dmg_light=60 inflict_blind=5 dmg_fire=40
+cobalt: mass=8.9 density=8900 hardness=5 melting_point=1495 conductivity=5 magnetism=7 flammability=0 integrity=260 value=35 color=blue
+alum: mass=1.7 density=1725 hardness=2 brittleness=6 melting_point=92 flammability=0 integrity=10 value=2 color=white res_fire=0.2 inflict_bleed=-2
+palladium: mass=12 density=12020 hardness=5 melting_point=1555 conductivity=5 flammability=0 integrity=150 value=40000 beauty=9 color=silver res_acid=0.7
+chromium: mass=7.2 density=7190 hardness=9 brittleness=3 melting_point=1907 conductivity=4 flammability=0 reflectivity=9 integrity=320 value=10 color=silver res_acid=0.6 res_light=0.5
+manganese: mass=7.2 density=7210 hardness=6 brittleness=7 melting_point=1246 conductivity=2 magnetism=1 flammability=0 integrity=120 value=2 color=gray
+spiegel: mass=7.5 density=7500 hardness=6 brittleness=5 melting_point=1100 conductivity=4 flammability=0 reflectivity=8 integrity=200 value=3 color=silver
+pewter: mass=7.3 density=7280 hardness=2 melting_point=240 conductivity=4 flammability=0 integrity=60 value=20 color=gray beauty=5
+zirconium: mass=6.5 density=6520 hardness=6 melting_point=1855 conductivity=2 flammability=1 integrity=280 value=30 color=silver res_acid=0.8 res_radiation=0.3
+iridium: mass=22.6 density=22560 hardness=7 brittleness=5 melting_point=2446 conductivity=6 flammability=0 integrity=400 value=150000 beauty=8 color=silver res_acid=1 res_fire=0.6
+osmium: mass=22.6 density=22590 hardness=7 brittleness=7 melting_point=3033 conductivity=4 flammability=0 integrity=350 value=12000 color=blue toxicity=3 res_fire=0.7 dmg_crush=60 knockback=4
+bismuth: mass=9.8 density=9780 hardness=2 brittleness=8 melting_point=271 conductivity=1 magnetism=-1 flammability=0 integrity=30 value=10 beauty=8 color=pink reflectivity=6
+antimony: mass=6.7 density=6690 hardness=3 brittleness=9 melting_point=631 conductivity=3 flammability=0 toxicity=5 integrity=25 value=12 color=silver inflict_poison=6
+gallium: mass=5.9 density=5910 hardness=1 melting_point=30 conductivity=5 flammability=0 integrity=10 value=300 color=silver slipperiness=4 corrosiveness=4
+beryllium: mass=1.85 density=1850 hardness=6 brittleness=6 melting_point=1287 conductivity=6 flammability=0 toxicity=7 integrity=250 value=800 color=gray inflict_poison=10 res_radiation=0.3
+cesium: mass=1.93 density=1930 hardness=0 melting_point=28 conductivity=8 flammability=10 corrosiveness=8 integrity=3 value=60000 color=gold dmg_blast=300 dmg_fire=100 inflict_burn=6 luminosity=1
+strontium: mass=2.6 density=2640 hardness=2 melting_point=777 conductivity=5 flammability=7 integrity=30 value=20 color=silver luminosity=3 radioactivity=1 dmg_fire=30
+barium: mass=3.6 density=3510 hardness=1 melting_point=727 conductivity=5 flammability=6 toxicity=6 integrity=20 value=15 color=silver dmg_poison=20
+radium: mass=5.5 density=5500 hardness=2 melting_point=700 conductivity=4 flammability=0 radioactivity=10 luminosity=5 integrity=40 value=150000 color=green dmg_radiation=120 lingering=60 inflict_poison=20
+thorium: mass=11.7 density=11700 hardness=4 melting_point=1750 conductivity=4 flammability=0 radioactivity=5 integrity=180 value=300 color=silver dmg_radiation=30 power_output=5
+tantalum: mass=16.7 density=16690 hardness=7 melting_point=3017 conductivity=3 flammability=0 integrity=420 value=300 color=gray res_acid=0.9 res_fire=0.6
+vanadium: mass=6 density=6000 hardness=7 melting_point=1910 conductivity=3 flammability=0 integrity=380 value=30 color=silver res_acid=0.4
+electrum: mass=14 density=14000 hardness=3 melting_point=1000 conductivity=8 flammability=0 integrity=70 value=3000 beauty=8 color=gold dmg_electric=30 dmg_holy=15
+quicksilver: mass=13.5 state=liquid density=13500 hardness=0 melting_point=-39 conductivity=7 toxicity=8 slipperiness=7 integrity=5 value=25 reflectivity=9 color=silver inflict_poison=10 speed_land*1.2
+plutonium: mass=19.8 density=19800 hardness=5 brittleness=6 melting_point=640 conductivity=1 flammability=4 radioactivity=10 toxicity=10 temperature=60 integrity=150 value=4000000 color=silver dmg_radiation=200 dmg_blast=500 lingering=600 inflict_poison=30 luminosity=2
+
+# noun gas
+hydrogen: mass=0.0001 state=gas density=0.09 hardness=0 flammability=10 buoyancy=10 integrity=1 value=5 color=white speed_air=5 flight_ceiling=10000 hover=true dmg_blast=200 dmg_fire=150 inflict_burn=4 mass*0.05
+nitrogen: mass=0.0013 state=gas density=1.25 hardness=0 flammability=0 temperature=-196 integrity=1 value=1 color=white dmg_cold=80 inflict_freeze=6 dmg_suffocation=20 res_fire=0.5
+neon: mass=0.0009 state=gas density=0.9 hardness=0 flammability=0 buoyancy=6 luminosity=8 integrity=1 value=100 beauty=7 color=red dmg_light=40 inflict_blind=2 hover=true
+methane: mass=0.0007 state=gas density=0.66 hardness=0 flammability=10 buoyancy=7 odor=0 integrity=1 value=1 color=white dmg_blast=150 dmg_fire=120 dmg_suffocation=30 hover=true
+chlorine: mass=0.0032 state=gas density=3.2 hardness=0 flammability=0 toxicity=9 corrosiveness=6 odor=8 integrity=1 value=2 color=green dmg_poison=80 dmg_acid=40 inflict_poison=20 inflict_blind=4 res_disease=1 lingering=5
+ozone: mass=0.0021 state=gas density=2.1 hardness=0 flammability=0 toxicity=4 corrosiveness=3 odor=5 integrity=1 value=10 color=blue res_radiation=0.6 res_light=0.4 dmg_electric=20 res_disease=0.6
+helium: mass=0.0002 state=gas density=0.18 hardness=0 flammability=0 buoyancy=10 integrity=1 value=30 color=white speed_air=6 flight_ceiling=10000 hover=true mass*0.05 loudness+-1
+fumes: mass=0.002 state=gas density=1.5 hardness=0 toxicity=6 odor=8 integrity=1 value=0 color=gray dmg_poison=30 dmg_suffocation=30 inflict_confuse=4 transparency=0.6 visibility*0.5
+propane: mass=0.002 state=gas density=1.9 hardness=0 flammability=10 integrity=1 value=2 color=white dmg_blast=250 dmg_fire=200 inflict_burn=5 fuel_output=1
+formaldehyde: mass=0.0008 state=gas density=0.82 hardness=0 flammability=6 toxicity=7 odor=8 integrity=1 value=2 color=white dmg_poison=40 inflict_poison=15 shelf_life*0 decay_rate*0
+ethylene: mass=0.0012 state=gas density=1.18 hardness=0 flammability=10 odor=3 integrity=1 value=2 color=white dmg_blast=120 dmg_fire=100 growth*2 inflict_sleep=4
+argon: mass=0.0018 state=gas density=1.78 hardness=0 flammability=0 conductivity=0 integrity=1 value=5 color=purple luminosity=3 res_fire=0.6 res_acid=0.5 dmg_suffocation=40 decay_rate*0
+krypton: mass=0.0037 state=gas density=3.7 hardness=0 flammability=0 integrity=1 value=300 color=white luminosity=6 beauty=6 dmg_light=30 inflict_blind=2
+xenon: mass=0.0059 state=gas density=5.9 hardness=0 flammability=0 integrity=1 value=1500 color=blue luminosity=9 dmg_light=60 inflict_blind=4 inflict_sleep=8 speed_space=50
+radon: mass=0.0097 state=gas density=9.7 hardness=0 flammability=0 radioactivity=7 integrity=1 value=10 color=white dmg_radiation=60 lingering=30 stealth=6 luminosity=1
+fluorine: mass=0.0017 state=gas density=1.7 hardness=0 flammability=0 toxicity=10 corrosiveness=10 odor=8 integrity=1 value=50 color=yellow dmg_acid=150 dmg_poison=80 dmg_fire=60 inflict_burn=6 armor_pierce=0.5
+butane: mass=0.0025 state=gas density=2.48 hardness=0 flammability=10 integrity=1 value=2 color=white dmg_fire=150 dmg_blast=150 inflict_burn=4
+sarin: mass=0.001 state=gas density=1.09 hardness=0 flammability=0 toxicity=10 odor=0 integrity=1 value=500 color=white dmg_poison=400 inflict_poison=60 inflict_stun=8 stealth=8 lingering=20
+
+# noun mineral
+ore: mass=4 density=4000 hardness=6 brittleness=4 flammability=0 conductivity=4 magnetism=3 integrity=250 value=3 color=brown production_needs=extract
+mineral: mass=2.7 density=2700 hardness=5 brittleness=5 flammability=0 integrity=150 value=5 color=gray
+limestone: mass=2.6 density=2600 hardness=3 brittleness=4 flammability=0 integrity=220 value=2 color=white res_acid=-0.5
+gravel: mass=1.7 density=1700 hardness=6 brittleness=2 flammability=0 integrity=200 value=0.5 color=gray movement_cost*1.2 loudness=3 dmg_blunt=10
+shale: mass=2.4 density=2400 hardness=3 brittleness=7 flammability=2 integrity=60 value=1 color=gray fuel_output=0.2
+chalk: mass=2.5 density=2500 hardness=1 brittleness=8 flammability=0 integrity=10 value=0.5 color=white inflict_blind=1
+sandstone: mass=2.3 density=2300 hardness=5 brittleness=4 flammability=0 integrity=200 value=2 color=orange res_fire=0.4
+asbestos: mass=2.5 density=2500 hardness=4 brittleness=3 flammability=0 conductivity=0 integrity=80 value=1 color=white res_fire=0.95 immune_burn=true toxicity=6 dmg_disease=20
+grit: mass=1.6 density=1600 hardness=7 brittleness=2 flammability=0 integrity=40 value=0.2 color=gray dmg_slash=8 slipperiness=-4 courage+2
+conglomerate: mass=2.6 density=2600 hardness=6 brittleness=3 flammability=0 integrity=260 value=1 color=brown
+turquoise: mass=2.7 density=2700 hardness=6 brittleness=4 flammability=0 integrity=120 value=1500 beauty=9 color=blue res_magic=0.2 charm=2
+emery: mass=4 density=4000 hardness=9 brittleness=3 flammability=0 integrity=300 value=3 color=black sharpness=6 armor_pierce=0.2
+tripoli: mass=1.9 density=1900 hardness=4 brittleness=7 flammability=0 integrity=20 value=1 color=white reflectivity=4
+basalt: mass=3 density=3000 hardness=7 brittleness=3 flammability=0 integrity=450 value=2 color=black res_fire=0.8 melting_point=1200
+tuff: mass=1.4 density=1400 hardness=3 brittleness=5 flammability=0 integrity=120 value=1 color=gray buoyancy=2
+mica: mass=2.8 density=2830 hardness=2 brittleness=4 flammability=0 conductivity=0 transparency=0.5 reflectivity=7 integrity=20 value=10 color=silver res_electric=0.8 res_fire=0.6
+sienna: mass=2.5 density=2500 hardness=2 brittleness=5 flammability=0 integrity=20 value=3 color=brown camouflage=sand
+gypsum: mass=2.3 density=2310 hardness=2 brittleness=6 flammability=0 integrity=40 value=1 color=white res_fire=0.6
+beryl: mass=2.76 density=2760 hardness=8 brittleness=5 flammability=0 transparency=0.6 integrity=200 value=2000 beauty=8 color=green
+spar: mass=2.6 density=2600 hardness=6 brittleness=6 flammability=0 transparency=0.5 reflectivity=6 integrity=90 value=10 color=white
+silica: mass=2.65 density=2650 hardness=7 brittleness=7 flammability=0 conductivity=0 transparency=0.4 integrity=60 value=1 color=white res_fire=0.7 dmg_disease=5
+quartz: mass=2.65 density=2650 hardness=7 brittleness=6 sharpness=6 flammability=0 conductivity=1 transparency=0.8 integrity=150 value=50 beauty=7 color=white dmg_electric=20 luminosity=1
+pumice: mass=0.6 density=600 hardness=6 brittleness=7 flammability=0 buoyancy=7 integrity=40 value=1 color=gray res_fire=0.8 dmg_slash=5
+alabaster: mass=2.3 density=2300 hardness=2 brittleness=6 flammability=0 transparency=0.3 integrity=60 value=50 beauty=8 color=white luminosity=1
+soapstone: mass=2.75 density=2750 hardness=1 brittleness=3 flammability=0 slipperiness=4 integrity=90 value=10 color=gray res_fire=0.8 res_acid=0.6 temperature=40
+steatite: mass=2.75 density=2750 hardness=1 brittleness=3 flammability=0 slipperiness=4 integrity=90 value=10 color=green res_fire=0.8 res_acid=0.6
+bauxite: mass=2.5 density=2500 hardness=2 brittleness=5 flammability=0 integrity=60 value=1 color=red
+hematite: mass=5.3 density=5260 hardness=6 brittleness=5 flammability=0 magnetism=2 integrity=200 value=5 color=red reflectivity=6 inflict_bleed=3
+magnetite: mass=5.2 density=5170 hardness=6 brittleness=4 flammability=0 conductivity=4 magnetism=9 integrity=220 value=5 color=black counters=compass
+pyrite: mass=5 density=5010 hardness=6 brittleness=6 flammability=1 reflectivity=7 integrity=120 value=1 beauty=6 color=gold charm=2 inflict_burn=2
+galena: mass=7.6 density=7600 hardness=3 brittleness=7 flammability=0 toxicity=5 reflectivity=6 integrity=60 value=3 color=silver res_radiation=0.5
+cinnabar: mass=8.1 density=8100 hardness=2 brittleness=6 flammability=0 toxicity=8 integrity=40 value=100 beauty=7 color=red inflict_poison=12
+malachite: mass=4 density=4000 hardness=4 brittleness=5 flammability=0 toxicity=2 integrity=90 value=300 beauty=9 color=green
+bloodstone: mass=2.6 density=2610 hardness=7 brittleness=4 flammability=0 integrity=150 value=200 beauty=7 color=green inflict_bleed=6 regeneration+1 lifesteal=0.1
+tourmaline: mass=3.1 density=3100 hardness=7 brittleness=5 flammability=0 conductivity=4 transparency=0.6 integrity=180 value=2000 beauty=9 color=pink dmg_electric=25
+topaz: mass=3.5 density=3550 hardness=8 brittleness=6 flammability=0 transparency=0.8 integrity=220 value=3000 beauty=9 color=yellow luminosity=1
+agate: mass=2.6 density=2600 hardness=7 brittleness=4 flammability=0 transparency=0.3 integrity=180 value=100 beauty=8 color=orange
+citrine: mass=2.65 density=2650 hardness=7 brittleness=5 flammability=0 transparency=0.8 integrity=150 value=500 beauty=8 color=yellow luminosity=1 morale+1
+zircon: mass=4.7 density=4700 hardness=7 brittleness=7 flammability=0 transparency=0.8 reflectivity=9 integrity=150 value=1000 beauty=9 color=blue radioactivity=1
+opal: mass=2.1 density=2090 hardness=6 brittleness=8 flammability=0 transparency=0.4 reflectivity=7 integrity=40 value=8000 beauty=10 color=white luminosity=2 dmg_magic=20 inflict_confuse=2
+garnet: mass=3.9 density=3900 hardness=7 brittleness=4 flammability=0 transparency=0.6 integrity=200 value=1000 beauty=8 color=red sharpness=5 inflict_bleed=3
+amethyst: mass=2.65 density=2650 hardness=7 brittleness=5 flammability=0 transparency=0.7 integrity=150 value=1500 beauty=9 color=purple res_psychic=0.4 res_poison=0.3 dmg_magic=15
+onyx: mass=2.65 density=2650 hardness=7 brittleness=4 flammability=0 integrity=180 value=300 beauty=8 color=black reflectivity=5 res_dark=0.3 stealth=1
+brimstone: mass=2 density=2070 hardness=2 brittleness=7 melting_point=115 flammability=9 toxicity=4 odor=9 integrity=10 value=1 color=yellow dmg_fire=60 dmg_unholy=30 inflict_burn=5
+saltpeter: mass=2.1 density=2110 hardness=2 brittleness=6 flammability=6 integrity=10 value=5 color=white dmg_blast=60 dmg_fire=40 fertility=4 shelf_life*0
+
+# noun gem
+jasper: mass=2.6 density=2600 hardness=7 brittleness=4 flammability=0 integrity=180 value=200 beauty=8 color=red res_earth=0.3
+gemstone: mass=3.5 density=3500 hardness=8 brittleness=5 flammability=0 transparency=0.6 integrity=200 value=20000 beauty=10 color=red luminosity=1
+gem: mass=3.5 density=3500 hardness=8 brittleness=5 flammability=0 transparency=0.6 integrity=200 value=20000 beauty=10 color=blue luminosity=1 charm=2
+peridot: mass=3.3 density=3300 hardness=7 brittleness=6 flammability=0 transparency=0.7 integrity=150 value=2000 beauty=9 color=green luminosity=1 res_dark=0.3
+moonstone: mass=2.6 density=2600 hardness=6 brittleness=5 flammability=0 transparency=0.5 reflectivity=6 integrity=120 value=2500 beauty=9 color=white luminosity=3 night_vision=true res_dark=0.3
+amber: mass=1.08 density=1080 hardness=2 brittleness=6 melting_point=250 flammability=6 transparency=0.6 conductivity=0 integrity=40 value=1500 beauty=9 color=orange res_electric=0.6 decay_rate*0 luminosity=1
+coral: mass=2.6 density=2600 hardness=4 brittleness=7 flammability=0 integrity=60 value=600 beauty=8 color=pink sharpness=5 inflict_bleed=4 res_water=0.6
+
+# noun material
+mud: mass=1.7 density=1700 hardness=0 brittleness=1 flammability=0 wetness=6 stickiness=6 integrity=10 value=0 color=brown inflict_slow=4 res_fire=0.6 camouflage=swamp stealth=2 tile_type=swamp radius=1
+ash: mass=0.6 density=600 hardness=0 flammability=0 integrity=2 value=0 color=gray inflict_blind=4 fertility=3 res_fire=1
+spray: mass=0.3 state=liquid density=1000 hardness=0 wetness=4 integrity=1 value=1 color=white inflict_blind=2 attack_range=3
+mixture: mass=1.5 density=1500 hardness=2 integrity=30 value=2 color=brown
+garbage: mass=0.5 density=500 hardness=1 flammability=6 odor=9 toxicity=3 integrity=10 value=0 color=brown dmg_disease=15 decay_rate=2 morale+-2
+filling: mass=1.2 density=1200 hardness=1 integrity=10 value=1 color=white
+packing: mass=0.1 density=100 hardness=0 elasticity=8 flammability=7 integrity=5 value=0.1 color=white res_blunt=0.5 res_crush=0.4
+fiber: mass=1.3 density=1300 hardness=1 elasticity=4 flammability=6 integrity=40 value=2 color=white
+fibre: mass=1.3 density=1300 hardness=1 elasticity=4 flammability=6 integrity=40 value=2 color=white
+junk: mass=3 density=3000 hardness=3 brittleness=5 flammability=2 conductivity=4 integrity=40 value=0.1 color=brown beauty=0
+extract: mass=1 state=liquid density=1000 hardness=0 potency=5 integrity=1 value=50 color=brown odor=5
+timber: mass=0.6 density=600 hardness=4 brittleness=2 flammability=7 burn_time=1800 integrity=80 value=1 color=brown buoyancy=6 build_speed*1.5
+lumber: mass=0.6 density=600 hardness=4 brittleness=2 flammability=7 burn_time=1800 integrity=80 value=1 color=brown buoyancy=6 build_speed*1.5
+plank: mass=0.6 density=600 hardness=4 brittleness=2 flammability=7 burn_time=1500 integrity=70 value=1 color=brown buoyancy=6
+hardwood: mass=0.8 density=800 hardness=6 brittleness=2 flammability=5 burn_time=3600 integrity=120 value=5 color=brown buoyancy=4
+firewood: mass=0.6 density=600 hardness=3 brittleness=3 flammability=9 burn_time=3600 integrity=40 value=0.5 color=brown fuel_output=1
+pad: mass=0.2 density=200 hardness=1 elasticity=8 flammability=5 integrity=20 value=1 color=white res_blunt=0.4 loudness+-2
+vinyl: mass=1.4 density=1400 hardness=3 elasticity=3 conductivity=0 flammability=4 melting_point=160 integrity=40 value=3 color=black res_water=0.9 res_electric=0.7 reflectivity=4
+silicon: mass=2.33 density=2330 hardness=7 brittleness=8 conductivity=5 flammability=0 melting_point=1414 reflectivity=6 integrity=50 value=10 color=gray intelligence+1 read_properties=1
+cement: mass=1.5 density=1500 hardness=7 brittleness=4 flammability=0 integrity=450 value=0.5 color=gray inflict_root=6 res_fire=0.8
+debris: mass=2 density=2000 hardness=4 brittleness=5 flammability=2 integrity=50 value=0 color=gray movement_cost*1.5 dmg_blunt=15
+paste: mass=1.2 density=1200 hardness=0 stickiness=6 integrity=5 value=0.5 color=white inflict_slow=3
+scrap: mass=4 density=4000 hardness=5 brittleness=4 flammability=0 conductivity=6 integrity=100 value=1 color=brown sharpness=3 inflict_bleed=3 beauty=1
+rubbish: mass=0.5 density=500 hardness=1 flammability=6 odor=8 toxicity=2 integrity=8 value=0 color=brown dmg_disease=10 beauty=0
+lime: mass=2.2 density=2200 hardness=2 brittleness=6 flammability=0 corrosiveness=5 integrity=20 value=1 color=white dmg_acid=30 inflict_blind=4 fertility=3
+gel: mass=1 density=1000 hardness=0 elasticity=6 stickiness=3 integrity=10 value=3 color=blue transparency=0.7 res_blunt=0.5 slipperiness=3
+dye: mass=1 state=liquid density=1000 hardness=0 integrity=1 value=10 color=purple stickiness=2 stealth+1
+glue: mass=1.1 state=liquid density=1100 hardness=0 stickiness=10 flammability=4 integrity=5 value=2 color=white inflict_root=8 inflict_slow=6
+foam: mass=0.05 density=50 hardness=0 elasticity=9 buoyancy=9 flammability=6 integrity=8 value=0.5 color=white res_blunt=0.6 res_fire=0.2 knockback*0.2
+buffer: mass=0.8 density=800 hardness=1 elasticity=7 integrity=40 value=1 color=gray res_blunt=0.5 res_crush=0.5
+rust: mass=5.2 density=5240 hardness=2 brittleness=8 flammability=0 conductivity=1 integrity=20 value=0 color=brown dmg_disease=10 inflict_poison=4
+grease: mass=0.9 density=900 hardness=0 slipperiness=10 flammability=7 integrity=3 value=1 color=yellow evasion=0.2 knockback=2
+wallpaper: mass=0.3 density=700 hardness=1 flammability=9 integrity=5 value=1 beauty=5 color=green stealth=4 camouflage=wall
+pulp: mass=1 density=1000 hardness=0 wetness=4 flammability=2 integrity=3 value=0.2 color=white
+yeast: mass=1 density=1100 hardness=0 alive=true reproduction=10 integrity=1 value=2 color=yellow edible=true nutrition=1 growth*1.5 odor=3
+insulation: mass=0.05 density=40 hardness=0 elasticity=5 conductivity=0 flammability=1 integrity=10 value=1 color=pink res_cold=0.8 res_fire=0.5 res_electric=0.9 res_sonic=0.6 loudness+-3
+polymer: mass=1.2 density=1200 hardness=4 elasticity=5 conductivity=0 flammability=4 melting_point=220 integrity=80 value=3 color=white res_acid=0.5 res_electric=0.7
+resin: mass=1.1 density=1100 hardness=3 brittleness=4 stickiness=5 flammability=7 melting_point=150 transparency=0.6 integrity=40 value=10 color=orange odor=5
+sap: mass=1.05 state=liquid density=1050 hardness=0 stickiness=7 flammability=4 integrity=1 value=2 color=yellow edible=true nutrition=2 inflict_slow=3
+sponge: mass=0.05 density=50 hardness=0 elasticity=8 buoyancy=8 flammability=4 integrity=10 value=1 color=yellow res_water=0.9 res_blunt=0.5 wetness*0
+thinner: mass=0.87 state=liquid density=870 hardness=0 flammability=9 toxicity=5 corrosiveness=4 odor=8 integrity=1 value=3 color=white negates=color inflict_confuse=3
+sewage: mass=1.05 state=liquid density=1050 hardness=0 toxicity=5 odor=10 wetness=8 integrity=1 value=0 color=brown dmg_disease=40 inflict_poison=10 morale+-3
+mash: mass=1.1 density=1100 hardness=0 wetness=4 integrity=2 value=0.5 color=yellow edible=true nutrition=3 potency=2
+semiconductor: mass=2.33 density=2330 hardness=6 brittleness=7 conductivity=5 flammability=0 integrity=50 value=500 color=gray power_output=0.2
+residue: mass=1 density=1000 hardness=1 stickiness=3 integrity=2 value=0 color=gray odor=3 tracking=2
+plaster: mass=1.1 density=1100 hardness=3 brittleness=7 flammability=0 integrity=60 value=1 color=white res_fire=0.7 restores=20
+asphalt: mass=2.3 density=2300 hardness=4 brittleness=2 melting_point=100 flammability=5 integrity=200 value=1 color=black tile_type=road radius=2 movement_cost*0.5 odor=4
+adobe: mass=1.7 density=1700 hardness=3 brittleness=5 flammability=0 integrity=150 value=0.5 color=brown res_fire=0.8 temp_max+10
+musk: mass=0.9 density=900 hardness=0 odor=10 integrity=1 value=4000 color=brown charm=3 smell_range+100 counters=perfume
+matte: mass=5 density=5000 hardness=3 brittleness=4 flammability=0 reflectivity=0 integrity=80 value=5 color=black stealth=2
+char: mass=0.3 density=300 hardness=1 brittleness=8 flammability=8 integrity=3 value=0.2 color=black fuel_output=0.5 stealth=1
+mould: mass=1 density=1000 hardness=0 alive=true reproduction=6 toxicity=4 odor=6 integrity=1 value=0 color=green dmg_disease=30 decay_rate=3 spread_rate=0.2
+solvent: mass=0.8 state=liquid density=790 hardness=0 flammability=8 corrosiveness=6 toxicity=4 integrity=1 value=3 color=white dmg_acid=25 counters=glue,tar,paint
+rubble: mass=2 density=2000 hardness=6 brittleness=3 flammability=0 integrity=300 value=0 color=gray movement_cost=3 cover=0.4 dmg_crush=40
+sulfur: mass=2 density=2070 hardness=2 brittleness=7 melting_point=115 flammability=8 toxicity=3 odor=9 integrity=10 value=1 color=yellow dmg_fire=40 inflict_burn=4 dmg_unholy=20
+sulphur: mass=2 density=2070 hardness=2 brittleness=7 melting_point=115 flammability=8 toxicity=3 odor=9 integrity=10 value=1 color=yellow dmg_fire=40 inflict_burn=4 dmg_unholy=20
+phosphate: mass=2 density=2000 hardness=4 brittleness=5 flammability=0 integrity=40 value=2 color=white fertility=6 growth*1.5
+paving: mass=2.4 density=2400 hardness=6 brittleness=3 flammability=0 integrity=400 value=1 color=gray tile_type=road radius=2 movement_cost*0.5
+nylon: mass=1.15 density=1150 hardness=2 elasticity=6 flammability=4 melting_point=220 conductivity=0 integrity=80 value=4 color=white res_slash=0.2 res_pierce=0.2
+hemp: mass=1.5 density=1500 hardness=2 flammability=6 integrity=60 value=3 color=brown tow_capacity+200 potency=2
+filler: mass=1 density=1000 hardness=1 integrity=10 value=0.1 color=white
+fertilizer: mass=1.2 density=1200 hardness=0 flammability=4 odor=6 toxicity=1 integrity=2 value=1 color=brown fertility=8 growth*2 dmg_blast=40
+acrylic: mass=1.18 density=1180 hardness=4 brittleness=5 flammability=5 melting_point=160 transparency=0.92 conductivity=0 integrity=60 value=10 color=white res_electric=0.8 res_water=0.8
+goo: mass=1.2 density=1200 hardness=0 stickiness=8 elasticity=4 integrity=5 value=0 color=green inflict_slow=5 slipperiness=3
+filth: mass=1.3 density=1300 hardness=0 odor=9 toxicity=4 integrity=2 value=0 color=brown dmg_disease=30 beauty=0 charm+-3
+silicone: mass=1.1 density=1100 hardness=1 elasticity=8 conductivity=0 flammability=1 melting_point=300 integrity=50 value=8 color=white res_fire=0.4 res_electric=0.8 res_water=0.9
+latex: mass=0.95 density=950 hardness=1 elasticity=10 conductivity=0 flammability=4 integrity=30 value=4 color=white res_electric=0.8 res_disease=0.7 knockback=3
+ether: mass=0.71 state=liquid density=713 hardness=0 flammability=10 toxicity=3 odor=6 integrity=1 value=5 color=white inflict_sleep=20 dmg_fire=60 buoyancy=2
+scraps: mass=2 density=2000 hardness=3 brittleness=4 flammability=3 integrity=20 value=0.1 color=brown
+chloride: mass=2.2 density=2160 hardness=2 brittleness=6 flammability=0 corrosiveness=3 integrity=10 value=1 color=white slipperiness*0
+slime: mass=1.1 density=1100 hardness=0 elasticity=5 stickiness=7 slipperiness=6 toxicity=2 integrity=10 value=0 color=green inflict_slow=5 res_blunt=0.6 regeneration=1
+kraft: mass=0.8 density=800 hardness=2 flammability=8 integrity=12 value=0.3 color=brown
+pigment: mass=2 density=2000 hardness=1 integrity=2 value=20 color=red beauty=6
+adhesive: mass=1.1 density=1100 hardness=0 stickiness=9 flammability=4 integrity=5 value=2 color=white inflict_root=6
+wastewater: mass=1 state=liquid density=1000 hardness=0 wetness=8 toxicity=4 odor=8 integrity=1 value=0 color=brown dmg_disease=25
+fleece: mass=0.3 density=300 hardness=0 flammability=4 integrity=25 value=10 color=white res_cold=0.7 temp_min+-20 elasticity=4
+graphite: mass=2.2 density=2200 hardness=1 brittleness=5 conductivity=8 flammability=1 melting_point=3600 slipperiness=6 integrity=40 value=2 color=black res_fire=0.6 res_radiation=0.4
+saline: mass=1 state=liquid density=1005 hardness=0 wetness=8 conductivity=6 integrity=1 value=1 color=white restores=20 res_disease=0.2
+lac: mass=1.1 density=1100 hardness=3 flammability=6 melting_point=80 reflectivity=5 integrity=20 value=10 color=red res_water=0.6
+indigo: mass=1.2 density=1200 hardness=0 integrity=2 value=30 beauty=7 color=blue stealth+2 camouflage=water
+starch: mass=1.5 density=1500 hardness=2 brittleness=3 flammability=6 integrity=10 value=1 color=white edible=true nutrition=4 hardness+2
+peat: mass=0.4 density=400 hardness=0 wetness=5 flammability=6 burn_time=7200 integrity=10 value=0.5 color=brown fuel_output=0.8 fertility=4 decay_rate*0 tile_type=swamp radius=1
+bran: mass=0.3 density=300 hardness=1 flammability=7 integrity=2 value=0.2 color=brown edible=true nutrition=2
+silt: mass=1.6 density=1600 hardness=0 wetness=5 integrity=5 value=0 color=brown fertility=7 inflict_slow=2 tile_type=field radius=1
+incense: mass=0.5 density=500 hardness=1 flammability=8 burn_time=1800 odor=8 integrity=2 value=50 color=brown luminosity=1 morale+2 res_unholy=0.3 dmg_holy=10
+parchment: mass=0.9 density=900 hardness=1 flammability=8 integrity=8 value=20 color=yellow beauty=5
+vellum: mass=0.9 density=900 hardness=1 flammability=7 integrity=10 value=50 color=white beauty=6
+papyrus: mass=0.7 density=700 hardness=1 brittleness=4 flammability=9 integrity=5 value=10 color=yellow
+sludge: mass=1.3 state=liquid density=1300 hardness=0 stickiness=6 toxicity=5 odor=8 integrity=5 value=0 color=brown inflict_slow=5 dmg_poison=20 tile_type=swamp radius=1
+dung: mass=1 density=1000 hardness=0 flammability=6 burn_time=600 odor=9 integrity=2 value=0 color=brown fertility=6 dmg_disease=10 fuel_output=0.2
+arsenic: mass=5.7 density=5730 hardness=3 brittleness=8 flammability=0 toxicity=10 integrity=20 value=10 color=gray dmg_poison=200 inflict_poison=40 stealth=4
+cyanide: mass=1.5 density=1520 hardness=1 flammability=0 toxicity=10 odor=3 integrity=2 value=20 color=white dmg_poison=500 dmg_suffocation=100 inflict_poison=20
+carbonate: mass=2.7 density=2710 hardness=3 brittleness=5 flammability=0 integrity=40 value=1 color=white res_acid=0.4
+abrasive: mass=3 density=3000 hardness=9 brittleness=3 flammability=0 sharpness=4 integrity=80 value=2 color=gray dmg_slash=15 armor_pierce=0.2
+fluff: mass=0.02 density=20 hardness=0 elasticity=7 flammability=9 buoyancy=6 integrity=1 value=0 color=white res_blunt=0.3
+detergent: mass=1.1 density=1100 hardness=0 slipperiness=6 toxicity=3 corrosiveness=2 integrity=1 value=2 color=blue res_disease=0.5 odor+-5 negates=stickiness
+sulfate: mass=2.5 density=2500 hardness=3 brittleness=6 flammability=0 corrosiveness=3 integrity=20 value=1 color=white
+slag: mass=3 density=3000 hardness=5 brittleness=7 flammability=0 temperature=300 integrity=60 value=0 color=black dmg_fire=20 sharpness=4
+iodine: mass=4.9 density=4930 hardness=1 brittleness=7 flammability=0 toxicity=4 odor=5 corrosiveness=3 integrity=5 value=40 color=purple res_radiation=0.6 res_disease=0.6 restores=15
+coolant: mass=1.1 state=liquid density=1070 hardness=0 temperature=-20 toxicity=4 integrity=1 value=3 color=green res_fire=0.7 dmg_cold=20 temp_max+40
+carbohydrate: mass=1.5 density=1500 hardness=1 flammability=6 integrity=2 value=1 color=white edible=true nutrition=5
+isotope: mass=10 density=10000 hardness=5 flammability=0 radioactivity=7 integrity=100 value=5000 color=green luminosity=2 dmg_radiation=60
+acetate: mass=1.3 density=1300 hardness=2 flammability=6 transparency=0.8 melting_point=230 integrity=15 value=3 color=white odor=4
+wafer: mass=2.33 density=2330 hardness=6 brittleness=9 conductivity=5 flammability=0 reflectivity=8 integrity=8 value=200 color=silver
+peroxide: mass=1.45 state=liquid density=1450 hardness=0 corrosiveness=6 flammability=3 integrity=1 value=3 color=white dmg_acid=30 dmg_blast=60 res_disease=0.8
+lube: mass=0.9 state=liquid density=900 hardness=0 slipperiness=10 integrity=1 value=3 color=white evasion=0.15 immune_root=true
+lubricant: mass=0.9 state=liquid density=900 hardness=0 slipperiness=10 flammability=5 integrity=1 value=3 color=yellow evasion=0.15 attack_rate*1.1 immune_root=true
+lactose: mass=1.5 density=1525 hardness=1 integrity=2 value=1 color=white edible=true nutrition=3
+muck: mass=1.5 density=1500 hardness=0 wetness=6 stickiness=6 odor=6 integrity=5 value=0 color=brown inflict_slow=5 tile_type=swamp radius=1
+polyester: mass=1.38 density=1380 hardness=2 elasticity=4 flammability=5 melting_point=250 conductivity=0 integrity=50 value=3 color=white res_water=0.6
+corrosive: mass=1.8 state=liquid density=1830 hardness=0 corrosiveness=10 toxicity=6 integrity=1 value=5 color=yellow dmg_acid=150 inflict_burn=4 armor_pierce=0.6
+epoxy: mass=1.2 density=1200 hardness=6 brittleness=4 stickiness=8 flammability=3 integrity=150 value=10 color=white res_acid=0.6 res_water=0.9 inflict_root=6
+filament: mass=1.2 density=1200 hardness=3 elasticity=6 flammability=4 conductivity=6 luminosity=4 integrity=20 value=5 color=gold
+octane: mass=0.7 state=liquid density=703 hardness=0 flammability=10 integrity=1 value=3 color=white dmg_fire=100 dmg_blast=100 speed_land*1.5 acceleration*1.5
+toner: mass=1.2 density=1200 hardness=0 integrity=1 value=50 color=black inflict_blind=4 stealth+2
+electrolyte: mass=1.1 state=liquid density=1100 hardness=0 conductivity=9 corrosiveness=4 wetness=6 integrity=1 value=3 color=white dmg_electric=40 power_output=0.2
+cellulose: mass=1.5 density=1500 hardness=2 flammability=8 integrity=20 value=1 color=white
+lint: mass=0.05 density=50 hardness=0 flammability=10 integrity=1 value=0 color=gray
+whey: mass=1 state=liquid density=1030 hardness=0 integrity=1 value=2 color=yellow edible=true nutrition=3 strength+1 duration=300
+wad: mass=0.5 density=500 hardness=1 elasticity=4 flammability=6 integrity=5 value=1 color=white
+tarmac: mass=2.3 density=2300 hardness=5 brittleness=2 melting_point=100 flammability=4 integrity=250 value=1 color=black tile_type=road radius=3 movement_cost*0.5
+fiberglass: mass=1.8 density=1800 hardness=5 brittleness=4 conductivity=0 flammability=1 melting_point=1100 integrity=200 value=5 color=white res_electric=0.8 res_water=0.9 dmg_disease=5
+hydrocarbon: mass=0.8 state=liquid density=800 hardness=0 flammability=9 integrity=1 value=2 color=black fuel_output=1 dmg_fire=60
+hydrate: mass=0.9 density=900 hardness=2 brittleness=6 flammability=8 temperature=-10 integrity=10 value=2 color=white dmg_cold=10 dmg_fire=60
+ammonium: mass=1.7 density=1720 hardness=2 brittleness=5 flammability=5 integrity=5 value=2 color=white dmg_blast=120 fertility=5
+vapour: mass=0.001 state=gas density=0.6 hardness=0 wetness=3 integrity=1 value=0 color=white transparency=0.5 stealth=3 visibility*0.6
+vapor: mass=0.001 state=gas density=0.6 hardness=0 wetness=3 integrity=1 value=0 color=white transparency=0.5 stealth=3 visibility*0.6
+soot: mass=0.4 density=400 hardness=0 flammability=3 integrity=1 value=0 color=black inflict_blind=4 stealth=3 dmg_suffocation=10 camouflage=wall
+fructose: mass=1.7 density=1690 hardness=1 integrity=2 value=1 color=white edible=true nutrition=4 speed_land*1.1 duration=60
+agar: mass=1 density=1000 hardness=1 elasticity=5 integrity=3 value=20 color=white edible=true nutrition=1
+wicker: mass=0.4 density=400 hardness=2 elasticity=5 flammability=8 integrity=40 value=3 color=yellow buoyancy=4 beauty=5
+gelatin: mass=1.3 density=1300 hardness=0 elasticity=7 integrity=5 value=3 color=white edible=true nutrition=2 res_blunt=0.4 melting_point=35
+shingle: mass=2 density=2000 hardness=4 brittleness=4 flammability=2 integrity=100 value=1 color=gray res_water=0.9
+remover: mass=0.8 state=liquid density=790 hardness=0 corrosiveness=5 flammability=8 odor=7 integrity=1 value=3 color=white negates=color,stickiness strips_adjectives=1
+carbide: mass=15.6 density=15600 hardness=9 brittleness=5 flammability=0 melting_point=2870 integrity=500 value=60 color=gray sharpness=8 armor_pierce=0.4
+polyethylene: mass=0.95 density=950 hardness=2 elasticity=4 conductivity=0 flammability=6 melting_point=130 buoyancy=6 integrity=40 value=1 color=white res_water=1 res_acid=0.8 res_electric=0.8
+petrochemical: mass=0.9 state=liquid density=900 hardness=0 flammability=8 toxicity=4 odor=6 integrity=1 value=3 color=black dmg_fire=50
+caustic: mass=2.1 density=2130 hardness=1 corrosiveness=9 toxicity=6 integrity=2 value=2 color=white dmg_acid=100 inflict_burn=4
+tusk: mass=1.85 density=1850 hardness=6 brittleness=3 flammability=1 sharpness=5 integrity=200 value=2000 beauty=7 color=white dmg_pierce=20
+slurry: mass=1.5 state=liquid density=1500 hardness=0 wetness=6 stickiness=4 integrity=2 value=0 color=gray inflict_slow=4
+stabilizer: mass=1 density=1000 hardness=2 integrity=20 value=5 color=white decay_rate*0.2 shelf_life*3 immune_confuse=true
+repellent: mass=1 state=liquid density=900 hardness=0 odor=6 toxicity=2 integrity=1 value=5 color=white counters=insect,mosquito,tick res_disease=0.3
+antioxidant: mass=1 density=1000 hardness=0 integrity=1 value=20 color=red regeneration+0.5 decay_rate*0.5 res_disease=0.2
+alkali: mass=2.1 density=2130 hardness=1 corrosiveness=8 toxicity=5 integrity=2 value=2 color=white dmg_acid=80 counters=acid
+watercolour: mass=1 state=liquid density=1000 hardness=0 integrity=1 value=10 beauty=6 color=blue transparency=0.5
+watercolor: mass=1 state=liquid density=1000 hardness=0 integrity=1 value=10 beauty=6 color=blue transparency=0.5
+ethyl: mass=0.79 state=liquid density=789 hardness=0 flammability=9 potency=6 integrity=1 value=3 color=white dmg_fire=40 inflict_confuse=4
+sulfide: mass=4 density=4000 hardness=3 brittleness=6 flammability=4 toxicity=5 odor=9 integrity=20 value=2 color=yellow dmg_poison=30
+selenium: mass=4.8 density=4810 hardness=2 brittleness=7 conductivity=4 flammability=1 toxicity=5 integrity=20 value=30 color=red luminosity=1 power_output=0.1
+propellant: mass=1.6 density=1600 hardness=1 flammability=10 integrity=2 value=10 color=gray dmg_blast=200 speed_air+200 attack_range*2
+lacquer: mass=1.2 density=1200 hardness=4 flammability=7 reflectivity=7 integrity=20 value=15 beauty=8 color=red res_water=0.8 res_acid=0.3
+hemoglobin: mass=1.3 density=1350 hardness=0 integrity=1 value=10 color=red res_suffocation=0.5 regeneration+1
+boron: mass=2.34 density=2340 hardness=9 brittleness=7 flammability=2 melting_point=2076 integrity=250 value=50 color=black res_radiation=0.9 armor_pierce=0.3
+hydroxide: mass=2.1 density=2130 hardness=1 corrosiveness=9 toxicity=6 integrity=2 value=2 color=white dmg_acid=90 inflict_burn=3
+crackling: mass=0.3 density=300 hardness=2 brittleness=8 flammability=6 integrity=2 value=1 color=brown edible=true nutrition=4 loudness=3
+tortoiseshell: mass=1.3 density=1300 hardness=4 brittleness=4 flammability=5 integrity=150 value=1500 beauty=8 color=brown res_blunt=0.3 armor=5
+chitin: mass=1.4 density=1400 hardness=5 brittleness=3 flammability=3 integrity=180 value=2 color=brown res_slash=0.3 res_pierce=0.2
+bromine: mass=3.1 state=liquid density=3100 hardness=0 corrosiveness=8 toxicity=9 odor=9 integrity=1 value=5 color=red dmg_acid=60 dmg_poison=60 inflict_poison=10
+germanium: mass=5.3 density=5320 hardness=6 brittleness=8 conductivity=5 flammability=0 integrity=60 value=1500 color=gray reflectivity=6
+polystyrene: mass=0.05 density=50 hardness=1 brittleness=5 flammability=8 melting_point=100 buoyancy=9 conductivity=0 integrity=8 value=1 color=white res_cold=0.6
+neoprene: mass=1.23 density=1230 hardness=1 elasticity=8 conductivity=0 flammability=2 integrity=60 value=10 color=black res_cold=0.6 res_water=1 dive_depth+30 buoyancy=4
+celluloid: mass=1.35 density=1350 hardness=3 flammability=10 burn_time=10 integrity=20 value=3 color=white transparency=0.6 dmg_fire=40
+naphtha: mass=0.75 state=liquid density=750 hardness=0 flammability=10 toxicity=4 odor=7 integrity=1 value=2 color=white dmg_fire=120 inflict_burn=5
+paraffin: mass=0.9 density=900 hardness=1 melting_point=60 flammability=8 burn_time=3600 conductivity=0 integrity=8 value=1 color=white luminosity=1 res_water=0.8
+creosote: mass=1.1 state=liquid density=1100 hardness=0 flammability=8 toxicity=6 odor=9 stickiness=4 integrity=1 value=2 color=black res_disease=0.6 decay_rate*0
+turpentine: mass=0.86 state=liquid density=860 hardness=0 flammability=9 toxicity=4 odor=8 integrity=1 value=3 color=yellow dmg_fire=50 counters=paint
+shellac: mass=1.1 density=1100 hardness=3 flammability=6 melting_point=80 reflectivity=6 integrity=20 value=10 color=orange res_water=0.6
+putty: mass=1.6 density=1600 hardness=0 elasticity=3 stickiness=5 integrity=10 value=1 color=white res_water=0.5 inflict_root=2
+caulk: mass=1.4 density=1400 hardness=1 elasticity=5 stickiness=7 integrity=10 value=1 color=white res_water=0.9 blocks=water
+stucco: mass=1.9 density=1900 hardness=5 brittleness=5 flammability=0 integrity=220 value=1 color=white res_fire=0.8
+driftwood: mass=0.5 density=500 hardness=3 brittleness=4 flammability=6 buoyancy=8 integrity=40 value=1 color=gray beauty=5 res_water=0.6
+ooze: mass=1.2 density=1200 hardness=0 stickiness=6 slipperiness=4 integrity=3 value=0 color=green inflict_slow=4
+loam: mass=1.3 density=1300 hardness=0 integrity=10 value=0.3 color=brown fertility=8 growth*1.5 tile_type=field radius=1
+humus: mass=1 density=1000 hardness=0 integrity=5 value=0.5 color=black fertility=9 growth*1.8 odor=3
+chamois: mass=0.7 density=700 hardness=1 elasticity=4 flammability=3 integrity=40 value=20 color=yellow reflectivity+2
+alpaca: mass=1.3 density=1300 hardness=1 flammability=3 integrity=30 value=80 beauty=7 color=brown res_cold=0.8 temp_min+-25
+vicuna: mass=1.3 density=1300 hardness=1 flammability=3 integrity=25 value=3000 beauty=9 color=orange res_cold=0.8 charm=3
+ermine: mass=1 density=1000 hardness=1 flammability=5 integrity=30 value=2000 beauty=9 color=white res_cold=0.7 authority=2 camouflage=snow
+chinchilla: mass=1 density=1000 hardness=0 flammability=5 integrity=20 value=3000 beauty=9 color=gray res_cold=0.8
+pelt: mass=1.2 density=1000 hardness=1 flammability=5 integrity=40 value=30 color=brown res_cold=0.7 stealth=1
+rawhide: mass=0.9 density=900 hardness=4 elasticity=3 flammability=3 integrity=150 value=4 color=yellow res_slash=0.3
+sheepskin: mass=1 density=1000 hardness=1 flammability=4 integrity=50 value=20 color=white res_cold=0.8 temp_min+-25
+bitumen: state=liquid mass=1.05 density=1050 hardness=0 stickiness=9 flammability=7 melting_point=90 integrity=20 value=1 color=black inflict_slow=5 res_water=0.9 tile_type=road radius=1
+macadam: mass=2.2 density=2200 hardness=6 brittleness=2 flammability=0 integrity=250 value=1 color=gray tile_type=road radius=2 movement_cost*0.6
+cedar: mass=0.53 density=530 hardness=3 brittleness=3 flammability=7 burn_time=1800 buoyancy=6 integrity=70 value=8 odor=5 color=red counters=moth,insect res_disease=0.3
+mahogany: mass=0.7 density=700 hardness=5 brittleness=2 flammability=6 burn_time=2400 buoyancy=5 integrity=110 value=40 beauty=9 color=red
+ebony: mass=1.2 density=1200 hardness=8 brittleness=3 flammability=4 burn_time=3600 integrity=180 value=200 beauty=9 color=black stealth=1
+walnut: mass=0.65 density=650 hardness=5 brittleness=2 flammability=6 buoyancy=5 integrity=100 value=30 beauty=8 color=brown
+hickory: mass=0.8 density=820 hardness=7 brittleness=1 elasticity=5 flammability=6 burn_time=3600 integrity=150 value=8 color=brown odor=4
+rosewood: mass=0.85 density=850 hardness=6 brittleness=2 flammability=5 integrity=120 value=150 beauty=9 color=red odor=4
+teak: mass=0.65 density=650 hardness=5 brittleness=2 flammability=4 buoyancy=6 integrity=120 value=40 beauty=8 color=brown res_water=0.9 decay_rate*0
+balsa: mass=0.15 density=150 hardness=1 brittleness=5 flammability=8 buoyancy=10 integrity=10 value=5 color=white
+ironwood: mass=1.1 density=1100 hardness=8 brittleness=2 flammability=3 burn_time=7200 integrity=250 value=30 color=brown res_slash=0.3
+blackwood: mass=1.2 density=1200 hardness=8 brittleness=3 flammability=4 integrity=170 value=150 beauty=8 color=black
+yew: mass=0.67 density=670 hardness=5 elasticity=8 flammability=6 toxicity=6 integrity=100 value=20 color=red inflict_poison=6 attack_range*1.3
+cypress: mass=0.51 density=510 hardness=4 flammability=5 buoyancy=6 integrity=90 value=10 color=yellow res_water=0.8 decay_rate*0
+spruce: mass=0.45 density=450 hardness=3 elasticity=6 flammability=8 buoyancy=7 integrity=70 value=3 color=white loudness=3
+fir: mass=0.45 density=450 hardness=3 flammability=8 buoyancy=7 integrity=65 value=2 color=white odor=4
+elm: mass=0.6 density=600 hardness=4 brittleness=1 flammability=6 integrity=90 value=4 color=brown res_water=0.6
+beech: mass=0.72 density=720 hardness=5 brittleness=2 flammability=7 burn_time=3600 integrity=100 value=5 color=brown
+alder: mass=0.5 density=500 hardness=3 flammability=6 integrity=70 value=3 color=red res_water=0.7
+poplar: mass=0.45 density=450 hardness=2 flammability=7 buoyancy=7 integrity=55 value=2 color=white
+sycamore: mass=0.6 density=610 hardness=4 flammability=6 integrity=85 value=4 color=white
+linden: mass=0.5 density=500 hardness=2 flammability=6 integrity=60 value=3 color=white beauty=6
+chestnut: mass=0.56 density=560 hardness=4 flammability=6 integrity=90 value=6 color=brown res_water=0.7 decay_rate*0.5
+hazel: mass=0.6 density=600 hardness=3 elasticity=7 flammability=7 integrity=60 value=3 color=brown detect_underground=true dmg_magic=10
+eucalyptus: mass=0.8 density=800 hardness=5 flammability=10 integrity=90 value=4 odor=7 color=red res_disease=0.4 dmg_fire=10
+juniper: mass=0.55 density=550 hardness=4 flammability=8 odor=7 integrity=70 value=6 color=red res_disease=0.3 res_unholy=0.2
+pecan: mass=0.75 density=750 hardness=6 brittleness=2 flammability=6 burn_time=3600 integrity=120 value=8 color=brown
+cherry: mass=0.58 density=580 hardness=4 flammability=6 integrity=85 value=15 beauty=8 color=red
+olive: mass=0.9 density=900 hardness=6 flammability=5 integrity=110 value=20 beauty=7 color=yellow res_holy=0.2 charm=1
+stalk: mass=0.3 density=300 hardness=2 elasticity=5 flammability=8 integrity=10 value=0.1 color=green
+sod: mass=1.4 density=1400 hardness=0 wetness=3 integrity=20 value=0.5 color=green fertility=6 camouflage=field tile_type=field radius=1
+grain: mass=0.75 density=750 hardness=3 brittleness=3 flammability=7 integrity=20 value=1 color=yellow edible=true nutrition=3 raw=true cooks_into=bread
+feather: mass=0.025 density=25 hardness=0 elasticity=6 flammability=8 buoyancy=7 integrity=3 value=1 beauty=6 color=white speed_air+5 jump*1.5 res_cold=0.5 mass*0.3
+plumage: mass=0.05 density=30 hardness=0 elasticity=5 flammability=8 integrity=5 value=5 beauty=9 color=blue charm=3 res_cold=0.5
+enamel: mass=2.9 density=2900 hardness=7 brittleness=7 flammability=0 reflectivity=6 integrity=150 value=20 beauty=7 color=white res_acid=0.5 res_water=1
+collagen: mass=1.3 density=1300 hardness=1 elasticity=7 integrity=40 value=10 color=white regeneration+0.5 elasticity+2
+suede: mass=0.8 density=800 hardness=1 flammability=4 integrity=80 value=25 beauty=7 color=brown res_slash=0.15 loudness+-2 stealth=1
+mink: mass=1 density=1000 hardness=0 flammability=5 integrity=30 value=5000 beauty=10 color=brown res_cold=0.8 charm=4
+beaver: mass=1 density=1000 hardness=1 flammability=4 buoyancy=5 integrity=40 value=200 color=brown res_cold=0.7 res_water=0.8
+otter: mass=1 density=1000 hardness=1 flammability=4 buoyancy=6 integrity=35 value=800 beauty=7 color=brown res_cold=0.9 res_water=0.9
+leopard: mass=1 density=1000 hardness=1 flammability=5 integrity=35 value=3000 beauty=9 color=yellow camouflage=forest,field stealth=3 intimidation=3
+alligator: mass=1.1 density=1100 hardness=5 flammability=3 integrity=200 value=500 color=green res_slash=0.4 res_pierce=0.3 armor=8
+morocco: mass=0.85 density=860 hardness=3 flammability=3 integrity=110 value=60 beauty=7 color=red res_slash=0.2
+nectar: mass=1.4 state=liquid density=1400 hardness=0 stickiness=6 integrity=1 value=20 beauty=6 color=gold edible=true nutrition=4 restores=20 charm=3
+balm: mass=0.9 density=900 hardness=0 odor=4 integrity=1 value=10 color=yellow restores=40 regeneration+2 res_fire=0.2 inflict_burn=-4
+
+# noun poison
+venom: mass=1 state=liquid density=1050 hardness=0 toxicity=10 integrity=1 value=200 color=yellow dmg_poison=150 inflict_poison=30 inflict_root=4
+toxin: mass=1 state=liquid density=1000 hardness=0 toxicity=10 integrity=1 value=100 color=green dmg_poison=120 inflict_poison=30
+nicotine: mass=1 state=liquid density=1010 hardness=0 toxicity=7 potency=5 integrity=1 value=50 color=brown dmg_poison=60 inflict_poison=10 courage+2 attack_rate*1.1
+strychnine: mass=1.4 density=1360 hardness=1 toxicity=10 integrity=1 value=200 color=white dmg_poison=400 inflict_poison=30 inflict_stun=10
+ricin: mass=1.3 density=1300 hardness=1 toxicity=10 integrity=1 value=1000 color=white dmg_poison=600 inflict_poison=120 stealth=5
+nightshade: mass=0.1 density=900 hardness=0 toxicity=9 integrity=1 value=20 color=purple edible=true dmg_poison=200 inflict_poison=30 inflict_confuse=10
+belladonna: mass=0.1 density=900 hardness=0 toxicity=9 integrity=1 value=30 color=purple edible=true dmg_poison=180 inflict_poison=30 inflict_confuse=8 charm=2
+curare: mass=1 state=liquid density=1100 hardness=0 toxicity=9 integrity=1 value=300 color=brown dmg_poison=100 inflict_root=20 dmg_suffocation=150
+
+# noun liquid
+ink: mass=1 state=liquid density=1000 hardness=0 wetness=4 integrity=1 value=20 color=black inflict_blind=5 stealth+3
+spill: mass=1 state=liquid density=1000 hardness=0 wetness=5 slipperiness=7 integrity=1 value=0 color=black inflict_slow=2 tile_type=swamp radius=1
+freshwater: mass=1 state=liquid density=1000 hardness=0 wetness=10 conductivity=2 flammability=0 integrity=1 value=1 color=blue transparency=0.9 dmg_water=30 counters=fire water_output=10
+ethanol: mass=0.79 state=liquid density=789 hardness=0 flammability=9 potency=7 integrity=1 value=3 color=white dmg_fire=60 res_disease=0.6 fuel_output=0.5
+ammonia: mass=0.68 state=liquid density=682 hardness=0 toxicity=7 corrosiveness=5 odor=10 temperature=-33 integrity=1 value=2 color=white dmg_poison=50 inflict_blind=6 res_disease=0.5 dmg_cold=20
+seawater: mass=1.03 state=liquid density=1025 hardness=0 wetness=10 conductivity=6 flammability=0 corrosiveness=2 integrity=1 value=0 color=blue dmg_water=40 buoyancy=3 counters=fire
+brine: mass=1.2 state=liquid density=1200 hardness=0 wetness=8 conductivity=7 corrosiveness=3 integrity=1 value=1 color=white shelf_life*0 buoyancy=5 freezing_point=-21
+saltwater: mass=1.03 state=liquid density=1025 hardness=0 wetness=10 conductivity=6 corrosiveness=2 integrity=1 value=0 color=blue dmg_water=40 buoyancy=3 counters=fire,slug
+rainwater: mass=1 state=liquid density=1000 hardness=0 wetness=10 conductivity=1 integrity=1 value=1 color=blue transparency=1 dmg_water=25 fertility=4 counters=fire
+slush: mass=0.9 state=liquid density=900 hardness=0 wetness=8 slipperiness=7 temperature=0 integrity=2 value=0 color=white dmg_cold=15 inflict_slow=5 tile_type=snow radius=1
+elixir: mass=0.3 state=liquid density=1000 hardness=0 potency=8 integrity=1 value=1000 luminosity=2 color=gold edible=true restores=200 regeneration+5 effect_status=poison,disease,curse duration=300 single_use=true
+distillation: mass=0.8 state=liquid density=800 hardness=0 potency=7 flammability=8 integrity=1 value=10 color=white
+cholesterol: mass=1 density=1050 hardness=1 integrity=2 value=0 color=yellow speed_land*0.9 stickiness=3
+syrup: mass=1.3 state=liquid density=1330 hardness=0 stickiness=8 integrity=1 value=3 color=brown edible=true nutrition=4 inflict_slow=4 morale+1
+molasses: mass=1.4 state=liquid density=1400 hardness=0 stickiness=9 integrity=1 value=2 color=black edible=true nutrition=4 inflict_slow=8 speed_land*0.5
+
+# noun fuel
+lighter: mass=0.05 integrity=10 material=plastic equip_slot=held hands_required=1 temperature=1000 dmg_fire=10 inflict_burn=3 luminosity=3 attack_range=0.3 counters=tinder,fuse
+coke: mass=0.5 density=500 hardness=3 brittleness=5 flammability=6 burn_time=7200 integrity=20 value=1 color=gray temperature+200 fuel_output=2
+petroleum: mass=0.85 state=liquid density=850 hardness=0 flammability=8 toxicity=3 odor=6 slipperiness=6 integrity=1 value=5 color=black dmg_fire=80 fuel_output=2
+gasoline: mass=0.74 state=liquid density=740 hardness=0 flammability=10 toxicity=4 odor=7 integrity=1 value=4 color=yellow dmg_fire=150 dmg_blast=100 inflict_burn=6 fuel_output=3
+petrol: mass=0.74 state=liquid density=740 hardness=0 flammability=10 toxicity=4 odor=7 integrity=1 value=4 color=yellow dmg_fire=150 dmg_blast=100 inflict_burn=6 fuel_output=3
+tinder: mass=0.05 density=100 hardness=0 flammability=10 burn_time=30 integrity=1 value=0.1 color=brown fuel_output=0.3
+charcoal: mass=0.3 density=300 hardness=1 brittleness=7 flammability=7 burn_time=7200 temperature=20 integrity=5 value=1 color=black fuel_output=1.5 res_poison=0.4 stealth+1
+biomass: mass=0.5 density=500 hardness=0 flammability=6 integrity=5 value=0.2 color=green fuel_output=0.8 fertility=3
+kerosene: mass=0.8 state=liquid density=800 hardness=0 flammability=9 burn_time=3600 toxicity=3 odor=7 integrity=1 value=3 color=white dmg_fire=100 luminosity=2 fuel_output=2
+methanol: mass=0.79 state=liquid density=792 hardness=0 flammability=9 toxicity=8 integrity=1 value=2 color=white dmg_fire=60 inflict_blind=20 dmg_poison=60 stealth=3
+napalm: mass=0.9 state=liquid density=900 hardness=0 flammability=10 stickiness=9 burn_time=600 temperature=1000 integrity=1 value=20 color=orange dmg_fire=400 inflict_burn=20 lingering=10 attack_area=10 fear_aura=6
+diesel: mass=0.85 state=liquid density=850 hardness=0 flammability=6 toxicity=3 odor=8 integrity=1 value=3 color=yellow dmg_fire=60 fuel_output=3 tow_capacity*1.5
+
+# noun fabric
+felt: mass=0.3 density=300 hardness=1 elasticity=5 flammability=4 integrity=25 value=5 color=gray res_cold=0.5 res_blunt=0.2 loudness+-3
+fabric: mass=1.4 density=1400 hardness=1 flammability=7 integrity=15 value=3 color=white
+cloth: mass=1.4 density=1400 hardness=1 flammability=7 integrity=15 value=2 color=white
+canvas: mass=1.5 density=1500 hardness=2 flammability=6 integrity=40 value=3 color=yellow res_water=0.5 res_wind=0.4
+textile: mass=1.4 density=1400 hardness=1 flammability=7 integrity=15 value=3 color=white
+screening: mass=0.5 density=500 hardness=2 flammability=1 conductivity=5 transparency=0.7 integrity=15 value=2 color=gray counters=insect
+satin: mass=1.3 density=1300 hardness=1 slipperiness=5 flammability=6 reflectivity=6 integrity=20 value=40 beauty=8 color=white charm=2
+denim: mass=1.5 density=1500 hardness=2 flammability=6 integrity=50 value=8 color=blue res_slash=0.15
+tweed: mass=1.4 density=1400 hardness=1 flammability=4 integrity=40 value=20 color=brown res_cold=0.5 res_water=0.3 authority=1
+flannel: mass=1.3 density=1300 hardness=1 flammability=6 integrity=25 value=8 color=red res_cold=0.5
+cashmere: mass=1.3 density=1300 hardness=0 flammability=4 integrity=20 value=500 beauty=9 color=white res_cold=0.8 charm=2
+rayon: mass=1.5 density=1500 hardness=1 flammability=8 integrity=15 value=4 color=white reflectivity=4
+plush: mass=1 density=1000 hardness=0 elasticity=6 flammability=6 integrity=20 value=10 beauty=6 color=red res_blunt=0.3 morale+1
+plaid: mass=1.4 density=1400 hardness=1 flammability=5 integrity=30 value=10 color=red res_cold=0.5
+tartan: mass=1.4 density=1400 hardness=1 flammability=4 integrity=35 value=15 color=green res_cold=0.6 courage+1 faction=clan
+paisley: mass=1.3 density=1300 hardness=1 flammability=6 integrity=20 value=15 beauty=6 color=red inflict_confuse=1
+madras: mass=1.4 density=1400 hardness=1 flammability=7 integrity=15 value=8 color=orange temp_max+5
+serge: mass=1.5 density=1500 hardness=2 flammability=4 integrity=40 value=10 color=blue res_cold=0.4 obedience+1
+khaki: mass=1.5 density=1500 hardness=2 flammability=6 integrity=40 value=6 color=brown camouflage=sand,field stealth=2
+camo: mass=1.5 density=1500 hardness=2 flammability=6 integrity=40 value=8 color=green camouflage=forest,field,swamp stealth=4
+camouflage: mass=1.5 density=1500 hardness=2 flammability=6 integrity=40 value=8 color=green camouflage=forest,field,swamp,sand stealth=5
+chino: mass=1.5 density=1500 hardness=2 flammability=6 integrity=35 value=6 color=brown
+bunting: mass=0.5 density=500 hardness=1 flammability=8 integrity=8 value=2 beauty=6 color=red morale+2
+lace: mass=0.3 density=300 hardness=0 flammability=8 transparency=0.5 integrity=5 value=80 beauty=9 color=white charm=3
+netting: mass=0.3 density=300 hardness=1 elasticity=5 flammability=5 transparency=0.8 integrity=20 value=2 color=gray inflict_root=4 counters=insect
+tarp: mass=1.2 density=1200 hardness=2 flammability=4 integrity=40 value=3 color=blue res_water=0.95 res_wind=0.5
+sacking: mass=1.3 density=1300 hardness=2 flammability=7 integrity=25 value=1 color=brown
+bagging: mass=1.3 density=1300 hardness=2 flammability=7 integrity=25 value=1 color=brown
+burlap: mass=1.3 density=1300 hardness=2 flammability=7 integrity=30 value=1 color=brown
+muslin: mass=1.2 density=1200 hardness=0 flammability=8 transparency=0.3 integrity=10 value=4 color=white
+gauze: mass=0.5 density=500 hardness=0 flammability=8 transparency=0.6 integrity=4 value=3 color=white restores=15 inflict_bleed=-5
+chiffon: mass=0.5 density=500 hardness=0 flammability=8 transparency=0.6 integrity=5 value=30 beauty=8 color=pink speed_air+1 charm=2
+taffeta: mass=1.2 density=1200 hardness=1 flammability=7 reflectivity=5 loudness=3 integrity=20 value=30 beauty=8 color=purple
+organza: mass=0.6 density=600 hardness=1 flammability=8 transparency=0.7 integrity=8 value=25 beauty=8 color=white
+corduroy: mass=1.6 density=1600 hardness=1 flammability=5 loudness=2 integrity=40 value=8 color=brown res_cold=0.4
+gabardine: mass=1.5 density=1500 hardness=2 flammability=5 integrity=40 value=15 color=brown res_water=0.6
+spandex: mass=1.2 density=1200 hardness=1 elasticity=10 flammability=6 integrity=30 value=8 color=black agility+1 speed_land*1.1
+mohair: mass=1.3 density=1300 hardness=0 flammability=4 integrity=25 value=60 beauty=8 color=white res_cold=0.7
+gossamer: mass=0.01 density=10 hardness=0 elasticity=8 flammability=9 transparency=0.9 stickiness=4 integrity=2 value=100 beauty=9 color=white stealth=5 speed_air+2
+cobweb: mass=0.01 density=10 hardness=0 elasticity=8 flammability=9 transparency=0.9 stickiness=8 integrity=2 value=0 color=gray inflict_root=4 stealth=3 camouflage=wall
+pique: mass=1.4 density=1400 hardness=1 flammability=7 integrity=20 value=10 color=white
+mackintosh: mass=1.3 density=1300 hardness=1 flammability=3 integrity=30 value=15 color=brown res_water=1 res_electric=0.4
+macintosh: mass=1.3 density=1300 hardness=1 flammability=3 integrity=30 value=15 color=brown res_water=1 res_electric=0.4
+rag: mass=0.1 density=1300 hardness=0 flammability=8 integrity=3 value=0 color=gray beauty=1 charm+-1
+remnant: mass=0.3 density=1400 hardness=1 flammability=7 integrity=5 value=1 color=white
+knit: mass=1.2 density=1200 hardness=0 elasticity=6 flammability=4 integrity=20 value=8 color=red res_cold=0.6
+
+# noun artifact
+towel: mass=0.5 integrity=10 material=cotton equip_slot=held flammability=7 wetness*0 res_water+0.2 counters=wet color=white
+handkerchief: mass=0.02 integrity=2 material=cotton equip_slot=hands flammability=8 color=white res_disease+0.1
+soap: mass=0.1 integrity=3 material=wax slipperiness=8 res_disease+0.5 odor=3 color=white effect_status=poison,disease single_use=true plural_count=3
+tablet: mass=0.3 length=0.25 integrity=20 material=glass,silicon equip_slot=held read_properties=3 map_reveal=10 upkeep_power=0.01 color=black
+cleaner: mass=1 state=liquid integrity=1 corrosiveness=3 toxicity=2 odor=5 res_disease+0.6 negates=stickiness,odor color=blue
+shampoo: mass=0.4 state=liquid integrity=1 slipperiness=5 odor=4 beauty+1 charm+1 color=pink
+toothpaste: mass=0.1 integrity=1 stickiness=3 odor=3 res_disease+0.2 charm+1 color=white
+cleanser: mass=0.4 state=liquid integrity=1 corrosiveness=2 res_disease+0.5 negates=odor color=white
+coating: mass=0.5 integrity=20 reflectivity=4 res_water+0.5 res_acid+0.3 res_fire+0.2
+lining: mass=0.5 integrity=20 material=cloth res_cold+0.3 armor+2
+tile: mass=2 integrity=60 hardness=6 brittleness=7 material=clay flammability=0 color=white res_fire=0.9 tile_type=floor radius=1 plural_count=20
+slate: mass=2.8 density=2800 integrity=200 hardness=5 brittleness=6 material=stone flammability=0 color=gray res_water=0.9 sharpness=4
+mortar: mass=150 length=1.2 integrity=300 material=steel portable=false dmg_blast=200 attack_rate=0.2 attack_range=3000 attack_area=8 attack_windup=3 targets=land siege=3 loudness=9 ammo_per_hit=1 ammo_type=shell
+pavement: mass=100000 footprint=10 integrity=10000 material=concrete portable=false tile_type=road radius=3 movement_cost=0.5
+flooring: mass=200 footprint=4 integrity=400 material=wood portable=false tile_type=floor radius=2
+siding: mass=200 integrity=300 material=vinyl portable=false res_water=0.8 cover=0.2
+ballast: mass=1000 integrity=500 material=stone buoyancy+-3 knockback*0.2 res_wind=0.8
+confetti: mass=0.5 integrity=1 material=paper morale+3 charm+2 inflict_blind=1 color=pink plural_count=100
+decal: mass=0.01 integrity=1 material=vinyl beauty+1 faction=tag
+canopy: mass=30 footprint=4 height=3 integrity=60 material=canvas portable=false cover=0.3 res_light=0.5 temp_max+8 blocks=sight
+tapestry: mass=20 integrity=30 material=wool flammability=6 beauty=9 value=5000 charm=3 morale+2
+staple: mass=0.001 integrity=2 material=steel plural_count=100 inflict_root=1
+quill: mass=0.01 integrity=2 material=feather equip_slot=held dmg_pierce=2 beauty=6
+pencil: mass=0.01 length=0.18 integrity=3 material=wood,graphite equip_slot=held dmg_pierce=3 sharpness=3
+cigarette: mass=0.001 integrity=1 material=paper,tobacco flammability=9 temperature=700 single_use=true potency=3 courage+1 morale+1 odor=6 duration=300 toxicity=2 plural_count=20
+cigar: mass=0.01 integrity=1 material=tobacco flammability=8 temperature=700 single_use=true potency=4 courage+2 authority+1 odor=8 duration=900 toxicity=2
+tobacco: mass=0.05 density=300 hardness=0 flammability=8 potency=3 toxicity=3 odor=6 integrity=1 value=20 color=brown courage+1 duration=300
+gunpowder: mass=0.5 density=1700 hardness=0 flammability=10 integrity=1 value=10 color=black dmg_blast=400 dmg_fire=100 attack_area=3 single_use=true friendly_fire=true loudness=10
+ammunition: mass=1 integrity=10 material=lead,brass single_use=true plural_count=60 ammo_per_hit*0.5
+firework: mass=0.5 integrity=3 material=paper,gunpowder single_use=true speed_air=60 dmg_fire=40 dmg_blast=40 dmg_light=60 inflict_blind=3 luminosity=10 loudness=10 morale+3 attack_range=50 attack_area=5 color=red
+warhead: mass=500 integrity=50 material=steel single_use=true dmg_blast=20000 dmg_fire=4000 attack_area=60 siege=6 friendly_fire=true loudness=10
+
+# noun material
+frost: mass=0.1 density=100 hardness=1 brittleness=8 temperature=-10 melting_point=0 flammability=0 integrity=2 value=0 color=white dmg_cold=30 inflict_freeze=3 inflict_slow=3 slipperiness=6
+gum: mass=1.1 density=1100 hardness=0 elasticity=7 stickiness=9 integrity=5 value=1 color=pink inflict_root=5 inflict_slow=4
+concentrate: mass=2 density=2000 hardness=2 integrity=10 value=50 color=orange potency=8
+particle: mass=0.001 density=2000 hardness=5 integrity=1 value=0 color=gray stealth=8
+atom: mass=0.00001 density=2000 hardness=10 integrity=1 value=0 color=white stealth=10 phase=true radioactivity=1
+molecule: mass=0.00001 density=1000 hardness=5 integrity=1 value=0 color=white stealth=10
+emission: mass=0.001 state=gas density=1.5 hardness=0 toxicity=4 odor=5 integrity=1 value=0 color=gray dmg_poison=15 visibility*0.8
+contamination: mass=1 density=1000 hardness=0 toxicity=6 integrity=1 value=0 color=green dmg_disease=40 dmg_poison=20 contagion=0.2 lingering=30
+fallout: mass=1 density=1500 hardness=0 radioactivity=9 integrity=1 value=0 color=gray dmg_radiation=100 lingering=600 contagion=0.1 inflict_poison=20
+caffeine: mass=1.2 density=1230 hardness=1 potency=6 integrity=1 value=20 color=white attack_rate*1.4 speed_land*1.2 immune_sleep=true duration=300
+glucose: mass=1.5 density=1540 hardness=1 integrity=1 value=1 color=white edible=true nutrition=4 restores=10 speed_land*1.1 duration=60
+oxide: mass=5 density=5000 hardness=4 brittleness=7 flammability=0 integrity=30 value=1 color=red
+dioxide: mass=0.002 state=gas density=1.98 hardness=0 flammability=0 integrity=1 value=1 color=white dmg_suffocation=60 counters=fire inflict_sleep=4
+monoxide: mass=0.0012 state=gas density=1.14 hardness=0 flammability=6 toxicity=10 odor=0 integrity=1 value=0 color=white dmg_suffocation=150 inflict_sleep=20 stealth=10
+nitrate: mass=2.2 density=2200 hardness=2 brittleness=5 flammability=7 integrity=5 value=2 color=white dmg_blast=100 fertility=6
+phosphorus: mass=1.8 density=1820 hardness=1 brittleness=6 melting_point=44 flammability=10 toxicity=7 luminosity=6 integrity=5 value=4 color=white dmg_fire=200 inflict_burn=15 dmg_poison=40 lingering=5
+fluoride: mass=3.2 density=3180 hardness=4 brittleness=6 flammability=0 toxicity=3 integrity=30 value=2 color=white res_acid=0.5
+methyl: mass=0.79 state=liquid density=792 hardness=0 flammability=9 toxicity=8 integrity=1 value=2 color=white dmg_poison=60 inflict_blind=15
+mocha: mass=0.85 density=860 hardness=3 flammability=3 integrity=110 value=60 color=brown res_slash=0.2
+manila: mass=1.4 density=1400 hardness=2 elasticity=5 flammability=6 integrity=60 value=3 color=yellow tow_capacity+300 res_water=0.6
+glaze: mass=2.5 density=2500 hardness=6 brittleness=7 flammability=0 reflectivity=7 transparency=0.6 integrity=40 value=5 beauty=7 color=blue res_water=1 res_acid=0.6
+ceramic: mass=2.4 density=2400 hardness=7 brittleness=8 flammability=0 conductivity=0 melting_point=1800 integrity=150 value=10 beauty=6 color=white res_fire=0.9 res_electric=0.9 res_acid=0.7
+porcelain: mass=2.4 density=2400 hardness=7 brittleness=9 flammability=0 conductivity=0 melting_point=1800 transparency=0.2 integrity=60 value=200 beauty=9 color=white res_fire=0.8 res_electric=0.9
+stoneware: mass=2.3 density=2300 hardness=6 brittleness=7 flammability=0 melting_point=1300 integrity=120 value=5 color=gray res_fire=0.9
+plywood: mass=0.6 density=600 hardness=4 brittleness=2 flammability=7 integrity=90 value=1 color=brown buoyancy=5 build_speed*1.5
+cellophane: mass=1.4 density=1400 hardness=1 flammability=8 transparency=0.95 integrity=4 value=1 color=white res_water=0.8 loudness=3
+foil: mass=2.7 density=2700 hardness=1 conductivity=9 flammability=0 reflectivity=9 integrity=3 value=1 color=silver res_light=0.6 res_psychic=0.3
+tinfoil: mass=2.7 density=2700 hardness=1 conductivity=9 flammability=0 reflectivity=9 integrity=3 value=1 color=silver res_psychic=0.6 immune_charm=true
+gilt: mass=19.3 density=19300 hardness=2 flammability=0 reflectivity=9 integrity=10 value=500 beauty=8 color=gold charm=2
+gilding: mass=19.3 density=19300 hardness=2 flammability=0 reflectivity=9 integrity=10 value=500 beauty=8 color=gold charm=2
+veneer: mass=0.7 density=700 hardness=4 flammability=6 integrity=20 value=10 beauty=7 color=red
+tinsel: mass=2.7 density=2700 hardness=0 flammability=1 reflectivity=10 integrity=1 value=1 beauty=6 color=silver morale+1 luminosity=1
+sequin: mass=1.2 density=1200 hardness=2 reflectivity=10 integrity=2 value=5 beauty=8 color=gold inflict_blind=1 charm=2
+glitter: mass=1.2 density=1200 hardness=1 reflectivity=10 integrity=1 value=1 beauty=7 color=pink inflict_blind=2 stickiness=3 tracking=3
+
+# adjective pertaining
+earthen: material=clay res_fire+0.3 brittleness+2 color=brown
+waxen: material=wax melting_point=60 color=yellow
+vitreous: material=glass transparency+0.6
+chalky: material=chalk brittleness+3 color=white
+ferrous: material=iron magnetism+4
+tinny: material=tin loudness+3 integrity*0.6
+waxy: material=wax slipperiness+3 res_water+0.5
+flinty: material=flint sharpness+3 hardness+2
+glacial: material=ice temperature+-40 speed_land*0.5 dmg_cold+40 inflict_freeze+4
+
+# adjective quality
+woolly: material=wool res_cold+0.5 temp_min+-15
+leathery: material=leather res_slash+0.2 hardness+1
+ashen: material=ash color=gray morale+-2
+flaxen: material=linen color=yellow beauty+1
+marbled: material=marble beauty+2
+oaken: material=hardwood integrity*1.3 courage+1
+steely: material=steel courage+3 immune_fear=true
+coppery: material=copper color=copper
+papery: material=paper integrity*0.2 flammability+5
+muddy: material=mud wetness+4 stealth+2 speed_land*0.8
+sandy: material=sand color=yellow camouflage=sand
+rocky: material=rock integrity*1.5 hardness+2
+dusty: material=dust inflict_blind+1 value*0.7
+fiery: material=magma temperature+300 dmg_fire+60 inflict_burn+4 luminosity+4 res_fire+0.6
+oily: material=oil slipperiness+5 flammability+4
+greasy: material=grease slipperiness+7 flammability+3 evasion+0.1
+inky: material=ink color=black stealth+3
+sooty: material=soot color=black stealth+2 inflict_blind+1
+gilded: material=gold value*5 beauty+3 charm+2 color=gold
+velvety: material=velvet beauty+2 loudness+-2
+satiny: material=satin beauty+2 slipperiness+2
+silky: material=silk beauty+2 charm+1
+furry: material=fur res_cold+0.5 temp_min+-20
+feathery: material=feather mass*0.3 speed_air+3 jump*1.5
+jeweled: material=gem value*10 beauty+4 charm+3
+jewelled: material=gem value*10 beauty+4 charm+3
+gemmed: material=gem value*8 beauty+3
+ebon: material=ebony color=black stealth+2
+fibrous: material=fiber elasticity+2 integrity*1.2
+smoky: material=fumes stealth+3 visibility*0.6 odor+3
+gaseous: material=hydrogen state=gas mass*0.01 phase=true hover=true
+molten: material=magma state=liquid temperature+1000 dmg_fire+120 inflict_burn+6 luminosity+5 hardness*0
+cottony: material=cotton res_blunt+0.2
+frosty: material=frost temperature+-20 dmg_cold+20 inflict_slow+2
+vaporous: material=vapor state=gas transparency+0.6 phase=true stealth+4
+resinous: material=resin stickiness+3 flammability+3 odor+3
+gummy: material=gum stickiness+6 inflict_root+2
+sticky: material=glue stickiness+8 inflict_slow+3
+slimy: material=slime slipperiness+5 stickiness+3 res_blunt+0.3
+gooey: material=goo stickiness+5 inflict_slow+3
+radioactive: material=uranium radioactivity+8 dmg_radiation+80 luminosity+2 lingering+30
+acidic: material=acid corrosiveness+6 dmg_acid+50
+alkaline: material=alkali corrosiveness+5 dmg_acid+40
+wiry: material=steel elasticity+3 agility+1
+corky: material=cork buoyancy+8 mass*0.3
+spongy: material=sponge elasticity+6 res_blunt+0.4
