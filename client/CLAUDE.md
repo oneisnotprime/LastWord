@@ -115,3 +115,5 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
   `only` (weather patches change only some tiles); faith is a fourth store on the HUD and the
   loadout; `WORDS` has the core money, crime, information, religion and weather words, drawn
   with the existing builders (rosette and sign icons for acts and events).
+- Themes batch 5: `WORDS` has the core time, space, sea, sports and abstract words (rosettes and
+  signs for acts and events, boats for vessels, bridges for docks, existing builders elsewhere).

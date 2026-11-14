@@ -1,6 +1,7 @@
 import type { Rng } from "./rng.js";
 import type { Stats } from "./stats.js";
 import type { Op, WordDef } from "./types.js";
+import { areaTime } from "./time.js";
 
 /**
  * What an area does to the letters earned and the acts done inside it (PLAN.md "Letter
@@ -29,6 +30,8 @@ export interface PlaceRules {
   tradeRate: number;
   law: string[];
   fine: number;
+  /** How fast time runs inside (shared time.ts `time_scale`): letters made, crops growing, ageing into Y. */
+  time: number;
 }
 
 /** Acts a `law` can forbid, and how each reads. */
@@ -68,9 +71,10 @@ export function placeRules(def: WordDef, s: Stats): PlaceRules | null {
     tradeRate: s.num("trade_rate"),
     law: s.tags("law").filter((l) => l in LAWS),
     fine: Math.max(0, num("fine")),
+    time: areaTime(s.num("time_scale"), def.ops),
   };
   const changes = Object.keys(yields).length || rules.growth !== 1 || rules.deposits !== 1 || rules.tax > 0 ||
-    (rules.lode.length && rules.lodeShare > 0) || rules.tradeRate !== 1 || rules.law.length;
+    (rules.lode.length && rules.lodeShare > 0) || rules.tradeRate !== 1 || rules.law.length || rules.time !== 1;
   return changes ? rules : null;
 }
 
@@ -107,6 +111,11 @@ export function growthOf(rules: readonly PlaceRules[]): number {
   return rules.reduce((g, r) => g * r.growth, 1);
 }
 
+/** How fast time runs at a place (shared time.ts): the product of every rule's time. */
+export function timeAt(rules: readonly PlaceRules[]): number {
+  return rules.reduce((t, r) => t * (r.time ?? 1), 1);
+}
+
 /** Letters a market at a place asks for one, as a multiple of the usual. */
 export function tradeRateOf(rules: readonly PlaceRules[]): number {
   return rules.reduce((g, r) => g * r.tradeRate, 1);
@@ -128,6 +137,7 @@ export function rulesText(r: PlaceRules): string[] {
   }).filter(Boolean);
   if (ys.length) out.push(`letters earned here: ${ys.join(", ")}`);
   if (r.growth !== 1) out.push(r.growth === 0 ? "picked ground never grows back" : `picked ground grows back ×${fmt(r.growth)}`);
+  if ((r.time ?? 1) !== 1) out.push(r.time === 0 ? "time stands still: nothing is made, nothing grows or ages" : `time runs ×${fmt(r.time)}: letters made, growth and ageing`);
   if (r.deposits !== 1) out.push(r.deposits === 0 ? "strips the ground bare as it begins" : `ground deposits ×${fmt(r.deposits)} as it begins`);
   if (r.tax > 0) out.push(`${Math.round(r.tax * 100)}% of letters others earn here go to its maker`);
   if (r.lode.length && r.lodeShare > 0) {

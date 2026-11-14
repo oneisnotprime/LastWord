@@ -1,6 +1,6 @@
 word	reason	length	cost	cost_per_letter	scarce_letters	roles
 ten	absolute and scaling modifiers	3	4.1	1.4	-	adjective:quality
-all	absolute and scaling modifiers	3	4.9	1.6	-	adjective:quality
+all	absolute and scaling modifiers	3	4.9	1.6	-	noun:quantity
 top	absolute and scaling modifiers	3	6.8	2.3	-	noun:toy
 dire	absolute and scaling modifiers	4	7.1	1.8	-	adjective:quality
 sure	absolute and scaling modifiers	4	7.2	1.8	-	adjective:quality
@@ -89,7 +89,7 @@ wizard	beings and forces	6	51.7	8.6	WZ	noun:worker
 djinn	beings and forces	5	75.6	15.1	J	noun:supernatural
 heir	death escape	4	8.1	2.0	-	noun:worker
 soul	death escape	4	8.1	2.0	-	noun:supernatural
-ark	death escape	3	15.5	5.2	K	noun:artifact
+ark	death escape	3	15.5	5.2	K	noun:vehicle_water
 vault	death escape	5	18.1	3.6	V	noun:structure
 will	death escape	4	19.0	4.8	W	noun:knowledge
 heaven	death escape	6	19.7	3.3	V	noun:place
@@ -139,7 +139,7 @@ pit	map-scale terrain and states	3	6.4	2.1	-	noun:depression
 sand	map-scale terrain and states	4	7.9	2.0	-	noun:mineral
 moon	map-scale terrain and states	4	8.4	2.1	-	noun:celestial
 earth	map-scale terrain and states	5	9.8	2.0	-	noun:celestial
-space	map-scale terrain and states	5	10.0	2.0	-	noun:celestial
+space	map-scale terrain and states	5	10.0	2.0	-	noun:phenomenon
 planet	map-scale terrain and states	6	10.8	1.8	-	noun:celestial
 cosmos	map-scale terrain and states	6	12.7	2.1	-	noun:natural_object
 night	map-scale terrain and states	5	13.3	2.7	-	noun:inert
@@ -173,12 +173,12 @@ magma	mass destruction	5	14.5	2.9	-	noun:mineral
 deluge	mass destruction	6	14.7	2.4	-	noun:weather
 nova	mass destruction	4	14.9	3.7	V	noun:celestial
 lava	mass destruction	4	14.9	3.7	V	noun:material
-abyss	mass destruction	5	15.0	3.0	-	noun:natural_object
+abyss	mass destruction	5	15.0	3.0	-	noun:landform
 plague	mass destruction	6	15.3	2.6	-	noun:affliction
 bomb	mass destruction	4	15.9	4.0	-	noun:weapon
 antimatter	mass destruction	10	16.3	1.6	-	noun:material
 flood	mass destruction	5	16.5	3.3	-	noun:phenomenon
-void	mass destruction	4	16.6	4.2	V	adjective:quality
+void	mass destruction	4	16.6	4.2	V	noun:quality
 inferno	mass destruction	7	16.7	2.4	-	noun:place
 war	mass destruction	3	16.9	5.6	W	noun:conflict
 famine	mass destruction	6	17.0	2.8	-	noun:disaster
@@ -194,12 +194,12 @@ apocalypse	mass destruction	10	23.3	2.3	-	noun:disaster
 supernova	mass destruction	9	25.7	2.9	V	noun:celestial
 pox	mass destruction	3	37.2	12.4	X	noun:affliction
 anthrax	mass destruction	7	43.6	6.2	X	noun:affliction
-quasar	mass destruction	6	72.8	12.1	Q	noun:celestial
+quasar	mass destruction	6	72.8	12.1	Q	noun:event
 quake	mass destruction	5	81.9	16.4	KQ	noun:event
 earthquake	mass destruction	10	91.7	9.2	KQ	noun:disaster
 seer	rules, fate and information	4	5.3	1.3	-	noun:worker
 eye	rules, fate and information	3	6.9	2.3	-	noun:bodypart
-time	rules, fate and information	4	7.5	1.9	-	noun:event
+time	rules, fate and information	4	7.5	1.9	-	noun:duration
 omen	rules, fate and information	4	7.8	1.9	-	noun:event
 map	rules, fate and information	3	8.6	2.9	-	noun:document
 radar	rules, fate and information	5	8.9	1.8	-	noun:device
@@ -223,14 +223,14 @@ eat	verbs that end things	3	3.9	1.3	-	verb:consume
 die	verbs that end things	3	5.5	1.8	-	verb:transform
 end	verbs that end things	3	5.8	1.9	-	noun:destruction
 erase	verbs that end things	5	6.5	1.3	-	verb:transform
-reset	verbs that end things	5	6.8	1.4	-	noun:device
+reset	verbs that end things	5	6.8	1.4	-	verb:transform
 ruin	verbs that end things	4	7.3	1.8	-	noun:structure
 rule	verbs that end things	4	7.3	1.8	-	noun:knowledge
 steal	verbs that end things	5	7.4	1.5	-	verb:transfer
 ban	verbs that end things	3	8.2	2.7	-	noun:act
 rob	verbs that end things	3	8.4	2.8	-	verb:transfer
 stop	verbs that end things	4	8.5	2.1	-	verb:movement
-halt	verbs that end things	4	9.1	2.3	-	verb:movement
+halt	verbs that end things	4	9.1	2.3	-	noun:act
 gut	verbs that end things	3	9.1	3.0	-	noun:bodypart
 smite	verbs that end things	5	9.2	1.8	-	verb:social
 mute	verbs that end things	4	9.2	2.3	-	verb:social
@@ -262,10 +262,10 @@ fly	verbs that escape or multiply	3	15.0	5.0	-	verb:movement
 summon	verbs that escape or multiply	6	15.2	2.5	-	verb:create
 resurrect	verbs that escape or multiply	9	15.3	1.7	-	verb:social
 double	verbs that escape or multiply	6	16.0	2.7	-	adjective:quality
-warp	verbs that escape or multiply	4	20.6	5.2	W	noun:event
+warp	verbs that escape or multiply	4	20.6	5.2	W	verb:movement
 vanish	verbs that escape or multiply	6	20.6	3.4	V	verb:movement
 wish	verbs that escape or multiply	4	21.5	5.4	W	noun:feeling
 multiply	verbs that escape or multiply	8	21.7	2.7	-	verb:transform
 grow	verbs that escape or multiply	4	21.8	5.5	W	verb:transform
 spawn	verbs that escape or multiply	5	22.3	4.5	W	noun:creature
-revive	verbs that escape or multiply	6	25.7	4.3	V	verb:body
+revive	verbs that escape or multiply	6	25.7	4.3	V	verb:transform

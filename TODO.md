@@ -104,7 +104,7 @@ by how many words set them (minds and upkeep took `sentient`, `intelligence`, `f
 - [ ] Replace the live "xxx" shortcut (999 of every letter, `CHEAT` in `WorldRoom.ts`) with a
       real debug server (its own app or a password), then take the shortcut off the live game.
 
-- [ ] Dictionary themes: broad concepts of a few hundred words each, built through shared
+- [x] Dictionary themes: broad concepts of a few hundred words each, built through shared
       systems. Batch 1 is done (1, 2, 8, 11, 15; README "Dictionary themes"): about 2,200 words,
       the core of each hand-written in demo_words.txt, the rest generated from it
       (`tools/themes/check.py` checks a generated theme file). Still to do for batch 1: worker art beyond the
@@ -153,11 +153,12 @@ by how many words set them (minds and upkeep took `sentient`, `intelligence`, `f
       18. [x] Communication and information: see and fake what others know
       19. [x] Religion and myth: sacrifice for F, blessings, curses, faith as a store
       20. [x] Weather, climate and seasons: drive letter yields and terrain
-      21. Time: speed up or slow things, ageing gives Y
-      22. Space and astronomy: eclipses, comets, gravity; map-wide events
-      23. Sea and ships: naval travel, fishing for O, storms, ports
-      24. Sports and games: duels, races, wagers; low-risk challenges with stakes
-      25. Abstract ideas: truth, chaos, luck, fate, nothing; meta words that bend rules
+      21. [x] Time: speed up or slow things, ageing gives Y
+      22. [x] Space and astronomy: eclipses, comets, gravity; map-wide events
+      23. [x] Sea and ships: naval travel, fishing for O, storms, ports
+      24. [x] Sports and games: duels, races, wagers; low-risk challenges with stakes
+      25. [x] Abstract ideas: truth, chaos, luck, fate, nothing; meta words that bend rules (batch 5:
+          about 1,500 words; README "Dictionary themes"). All 25 done
 
 - [x] Before the next art pass: research external tools that make per-word art faster and
       cheaper than writing it with Claude (image generation pipelines, pixel/paper-style
@@ -184,7 +185,8 @@ lexicon so every related word is captured.
 - [ ] Brainstorm a few hundred cool systems, then search the dictionary for each one's words
 - [ ] Every system and power has an opposing system and power
 - [ ] Every mechanic is modifiable by words: player total HP, anything, maybe even graphics
-- [ ] Meta words: TYPO makes something break; DICTIONARY gives a full list of words
+- [ ] Meta words: TYPO makes something break (done in themes batch 5: `misspells` turns a thing
+      into the word one letter off, or breaks it); DICTIONARY gives a full list of words (open)
 - [ ] FAILED, BROKEN, PATHETIC, COWARDLY do what they say
 - [ ] INVISIBLE does what it says
 - [ ] Tiny things have uses (TINY and related adjectives, bugs, swirls): high stealth, slipping
@@ -475,9 +477,10 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
       areas, weather and creatures, running when badly hurt; kits picked by difficulty, working
       toward their legendary's unlock, spelling it, countering enemies' legendaries. `loadtest/tournament.ts` reports it
 - [ ] Bots still to do: use terrain words on purpose, form pacts
-- [ ] Carried or following things whose field forbids fighting (GAVEL, JUDGE, REFEREE, PEACEKEEPER:
-      a law with no fine and no end) make their holder untouchable and unable to strike; rule on
-      fines or durations for them, or a counter-word. Bots put such a thing down to fight
+- [x] Carried or following things whose field forbids fighting (GAVEL, JUDGE, REFEREE, PEACEKEEPER):
+      ruled in themes batch 5 (shared sport.ts): `peace` gives whoever takes one a `truce` status
+      once, for 90 to 180 s (untouchable, cannot strike or spell); PROVOCATION and TAUNT end it
+      (effect_status=truce); the same thing never gives a second truce, so bots need not put it down
 - [x] Deploy-ready: one container serves the page and the game; Dockerfile, fly.toml and
       DEPLOY.md; image built and played locally
 - [ ] M6 (rest): deploy to Fly.io; needs the user's account

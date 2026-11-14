@@ -167,8 +167,11 @@ export function tileAt(map: WorldMap, x: number, y: number): Tile {
   return map.tiles[ty * map.size + tx] as Tile;
 }
 
-export const walkable = (map: WorldMap, x: number, y: number): boolean =>
-  WALK_COST[tileAt(map, x, y)] !== Infinity;
+/** What crossing each tile costs a walker; a vessel passes `costs` of its own (shared sea.ts `SAIL_COST`). */
+export type Costs = Record<Tile, number>;
+
+export const walkable = (map: WorldMap, x: number, y: number, costs: Costs = WALK_COST): boolean =>
+  costs[tileAt(map, x, y)] !== Infinity;
 
 /** Smooth noise in [0, 1) built from a lattice of seeded values. */
 function noise(seed: number, size: number, cell: number): (x: number, y: number) => number {
@@ -288,19 +291,20 @@ export function randomWalkable(map: WorldMap, rng: () => number): Point {
  * Moves a walker toward its target for `seconds` at `speed` metres a second. Terrain slows it,
  * and it stops at the edge of anything it cannot walk on. Returns true when it has arrived.
  */
-export function stepToward(map: WorldMap, pos: Point, target: Point, speed: number, seconds: number, flying = false): boolean {
+export function stepToward(map: WorldMap, pos: Point, target: Point, speed: number, seconds: number, flying = false, costs: Costs = WALK_COST): boolean {
   const dx = target.x - pos.x, dy = target.y - pos.y;
   const distance = Math.hypot(dx, dy);
   if (distance < 1e-6) return true;
   // Somehow standing where nobody can (land laid under you): out to the nearest ground first.
-  if (!flying && !walkable(map, pos.x, pos.y)) {
-    const ground = nearestWalkable(map, pos);
+  if (!flying && !walkable(map, pos.x, pos.y, costs)) {
+    const ground = costs === WALK_COST ? nearestWalkable(map, pos) : pos;
+    if (ground === pos) return true;
     pos.x = ground.x;
     pos.y = ground.y;
     return false;
   }
   // In the air the ground below does not matter, but the map still has edges.
-  const cost = flying ? 1 : WALK_COST[tileAt(map, pos.x, pos.y)];
+  const cost = flying ? 1 : costs[tileAt(map, pos.x, pos.y)];
   const reach = (speed / TILE_METERS / cost) * seconds;
   const step = Math.min(distance, reach);
   const ux = dx / distance, uy = dy / distance;
@@ -315,18 +319,18 @@ export function stepToward(map: WorldMap, pos: Point, target: Point, speed: numb
       pos.y = edge(ny);
       return Math.hypot(pos.x - x0, pos.y - y0) < 1e-4;
     }
-  } else if (!walkable(map, nx, ny)) {
+  } else if (!walkable(map, nx, ny, costs)) {
     // Blocked: walk up to the edge, then slide along it on whichever axis is open. Stopping dead
     // at the first corner left a player holding a key going nowhere.
     const x0 = pos.x, y0 = pos.y;
     let left = step;
-    for (const cut = Math.min(0.05, step); left >= cut && walkable(map, pos.x + ux * cut, pos.y + uy * cut); left -= cut) {
+    for (const cut = Math.min(0.05, step); left >= cut && walkable(map, pos.x + ux * cut, pos.y + uy * cut, costs); left -= cut) {
       pos.x += ux * cut;
       pos.y += uy * cut;
     }
     if (left > 1e-6) {
-      if (Math.abs(ux) > 1e-6 && walkable(map, pos.x + ux * left, pos.y)) pos.x += ux * left;
-      else if (Math.abs(uy) > 1e-6 && walkable(map, pos.x, pos.y + uy * left)) pos.y += uy * left;
+      if (Math.abs(ux) > 1e-6 && walkable(map, pos.x + ux * left, pos.y, costs)) pos.x += ux * left;
+      else if (Math.abs(uy) > 1e-6 && walkable(map, pos.x, pos.y + uy * left, costs)) pos.y += uy * left;
     }
     return Math.hypot(pos.x - x0, pos.y - y0) < 1e-4;
   }

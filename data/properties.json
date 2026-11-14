@@ -1,19 +1,19 @@
 {
- "count": 391,
+ "count": 419,
  "groups": {
   "physical": 45,
   "mobility": 25,
-  "offence": 64,
-  "defence": 60,
+  "offence": 70,
+  "defence": 69,
   "perception": 14,
   "life": 29,
   "economy": 58,
   "spatial": 19,
   "social": 13,
   "slots": 9,
-  "meta": 17,
-  "field": 16,
-  "event": 14,
+  "meta": 18,
+  "field": 21,
+  "event": 21,
   "effect": 8
  },
  "damage_types": [
@@ -70,7 +70,13 @@
   "debt",
   "curse",
   "bless",
-  "expose"
+  "expose",
+  "haste",
+  "stasis",
+  "truce",
+  "chaos",
+  "void",
+  "doom"
  ],
  "properties": [
   {
@@ -970,6 +976,54 @@
    "default": 0
   },
   {
+   "id": "inflict_haste",
+   "group": "offence",
+   "type": "num",
+   "desc": "seconds of haste applied on hit (haste: time runs twice as fast for them: twice the speed and attacks, their other statuses wear off twice as fast; ends slow, and slow ends it: shared time.ts)",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "inflict_stasis",
+   "group": "offence",
+   "type": "num",
+   "desc": "seconds of stasis applied on hit (stasis: time stops for them: they cannot move, strike or spell, nothing can hurt them, their other statuses wait: shared time.ts)",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "inflict_truce",
+   "group": "offence",
+   "type": "num",
+   "desc": "seconds of truce applied on hit (truce: untouchable and harmless: no blow lands on them and they cannot strike or spell; they may walk, gather and trade: shared sport.ts)",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "inflict_chaos",
+   "group": "offence",
+   "type": "num",
+   "desc": "seconds of chaos applied on hit (chaos: a handful of their properties (speed, damage rate, armour, aim, strength, sight...) are each multiplied by a random 0.25 to 3 while it lasts: shared idea.ts)",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "inflict_void",
+   "group": "offence",
+   "type": "num",
+   "desc": "seconds of void applied on hit (void: nothing they carry, wear, ride or stand in does anything, and their own damage, statuses and flight are nothing: shared idea.ts)",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "inflict_doom",
+   "group": "offence",
+   "type": "num",
+   "desc": "seconds of doom applied on hit (doom: a sealed fate: when it runs out the body takes three quarters of its full integrity as damage nothing resists, unless ended first (effect_status=doom): shared idea.ts)",
+   "unit": "s",
+   "default": 0
+  },
+  {
    "id": "attack_rate",
    "group": "offence",
    "type": "num",
@@ -1427,6 +1481,48 @@
    "default": false
   },
   {
+   "id": "immune_haste",
+   "group": "defence",
+   "type": "bool",
+   "desc": "cannot be affected by haste",
+   "default": false
+  },
+  {
+   "id": "immune_stasis",
+   "group": "defence",
+   "type": "bool",
+   "desc": "cannot be affected by stasis",
+   "default": false
+  },
+  {
+   "id": "immune_truce",
+   "group": "defence",
+   "type": "bool",
+   "desc": "cannot be affected by truce",
+   "default": false
+  },
+  {
+   "id": "immune_chaos",
+   "group": "defence",
+   "type": "bool",
+   "desc": "cannot be affected by chaos",
+   "default": false
+  },
+  {
+   "id": "immune_void",
+   "group": "defence",
+   "type": "bool",
+   "desc": "cannot be affected by void",
+   "default": false
+  },
+  {
+   "id": "immune_doom",
+   "group": "defence",
+   "type": "bool",
+   "desc": "cannot be affected by doom",
+   "default": false
+  },
+  {
    "id": "armor",
    "group": "defence",
    "type": "num",
@@ -1529,6 +1625,28 @@
    "type": "bool",
    "desc": "cannot be chosen as a target",
    "default": false
+  },
+  {
+   "id": "anchored",
+   "group": "defence",
+   "type": "bool",
+   "desc": "held fast: no pull, push, knockback or waves move or rock it, and its rider (shared space.ts, sea.ts)",
+   "default": false
+  },
+  {
+   "id": "luck",
+   "group": "defence",
+   "type": "scale",
+   "desc": "shifts its holder's dice: each point adds 3% to gathering odds and to hitting, landing criticals and dodging; negative is misfortune (shared idea.ts)",
+   "default": 0
+  },
+  {
+   "id": "peace",
+   "group": "defence",
+   "type": "num",
+   "desc": "carried or following: gives whoever takes it a truce for this many seconds, once (untouchable, cannot strike or spell); a word that ends truce (effect_status=truce) breaks it (shared sport.ts)",
+   "unit": "s",
+   "default": 0
   },
   {
    "id": "indestructible",
@@ -2801,6 +2919,13 @@
    "default": false
   },
   {
+   "id": "docks",
+   "group": "meta",
+   "type": "bool",
+   "desc": "a port, harbour or pier on the ground: a market for anyone at it, its owner earning a T toll on others' trades, and vessels its owner spells within 30 tiles are launched at the water beside it (shared sea.ts)",
+   "default": false
+  },
+  {
    "id": "field_radius",
    "group": "field",
    "type": "num",
@@ -2926,6 +3051,46 @@
    "default": 0
   },
   {
+   "id": "time_scale",
+   "group": "field",
+   "type": "num",
+   "desc": "how fast time runs for whoever it is on or its field reaches (field words: an operation, time_scale*0.5): movement, attacks and statuses wearing off; inside an area also letters made, crops growing and things ageing into Y run this many times as fast (shared time.ts)",
+   "unit": "x",
+   "default": 1
+  },
+  {
+   "id": "gravity",
+   "group": "field",
+   "type": "num",
+   "desc": "the pull of the ground on whoever it reaches (field words: an operation, gravity*0.2): under 1 they bound faster, shots fly farther and blows knock them back farther, under 0.3 they float over water and walls; over 1 they plod and shoot short, and from 3 nothing can fly (shared space.ts)",
+   "unit": "g",
+   "default": 1
+  },
+  {
+   "id": "pull",
+   "group": "field",
+   "type": "num",
+   "desc": "its field draws every body it reaches toward its centre this fast (negative pushes them out); anchored bodies stay put (shared space.ts)",
+   "unit": "m/s",
+   "default": 0
+  },
+  {
+   "id": "meteors",
+   "group": "field",
+   "type": "num",
+   "desc": "its field drops this many impacts a minute near people inside it: each strikes with the word's own damage over its attack_area (a METEOR SHOWER, STARFALL) (shared space.ts)",
+   "unit": "/min",
+   "default": 0
+  },
+  {
+   "id": "waves",
+   "group": "field",
+   "type": "num",
+   "desc": "rough water in its field: vessels afloat take damage by wave height against their length (a big ship rides it out) and sail slower; anchored ones are spared (shared sea.ts)",
+   "unit": "m",
+   "default": 0
+  },
+  {
    "id": "jams",
    "group": "field",
    "type": "bool",
@@ -3041,6 +3206,59 @@
    "group": "event",
    "type": "bool",
    "desc": "what it summons follows its maker instead of running wild",
+   "default": false
+  },
+  {
+   "id": "ages",
+   "group": "event",
+   "type": "num",
+   "desc": "ages its target at once by this many minutes: a thing or creature (or everything a person carries) yields more Y as it ages, food rots; negative makes it young again (shared time.ts)",
+   "unit": "min",
+   "default": 0
+  },
+  {
+   "id": "rewinds",
+   "group": "event",
+   "type": "num",
+   "desc": "undoes the damage whoever it lands on took in the last this many seconds: health back to the best it was, and burn, poison and bleed taken since gone (shared time.ts)",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "stakes",
+   "group": "event",
+   "type": "num",
+   "desc": "a challenge passed on a person (DUEL, WAGER): each puts this many letters into a pot and a ring (field_radius, field_duration) holds the two of them; blows inside cannot kill (the loser is left standing at a tenth), and whoever drops the other, or dealt more when time runs out, takes the pot; a word that counters it voids it and hands the stakes back (shared sport.ts)",
+   "unit": "letters",
+   "default": 0
+  },
+  {
+   "id": "race_to",
+   "group": "event",
+   "type": "num",
+   "desc": "a challenge with stakes run as a race: a flag stands this far off and the first of the two to reach it takes the pot (shared sport.ts)",
+   "unit": "m",
+   "default": 0
+  },
+  {
+   "id": "forfeits",
+   "group": "event",
+   "type": "bool",
+   "desc": "gives up its speller's challenges: the other side takes the pot (shared sport.ts)",
+   "default": false
+  },
+  {
+   "id": "swaps_owners",
+   "group": "event",
+   "type": "bool",
+   "desc": "passed on a thing or creature someone else owns: it becomes the speller's, and the speller's most valuable thing or creature becomes theirs (shared idea.ts)",
+   "default": false
+  },
+  {
+   "id": "misspells",
+   "group": "event",
+   "type": "bool",
+   "desc": "passed on a thing or creature: one letter of its name changes and it becomes that word (a SWORD to a SWARD), or it breaks if no word is one letter off (shared idea.ts)",
    "default": false
   },
   {

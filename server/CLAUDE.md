@@ -201,3 +201,18 @@ Node process that owns the game state. One room per map instance (from milestone
   minimap dots), `jams` (`jammed`: `sensed` is blacked out) and `weather` (a sky field's tile);
   `sendThreats` shows the exposed to every enemy within EXPOSED_TILES; `weatherPatches` (in
   `beat`) lays weather tiles near people through `reshapeOnly` (`Edit.only`).
+- Themes batch 5: `rebuild` reads time and gravity (`Walker.time`, `gravity`, `range`), sailing
+  (`Walker.sailing`: `walk` routes with SAIL_COST) and the void (`hampered.nulled`: no gear, mount
+  or fields). `make` launches vessels (`launchSpot`: by the owner's port, else the nearest water);
+  `takeNear` boards one from the shore; `dismount` leaves it moored. Areas carry `pull`, `waves`
+  and `meteors` (`motionOf`; `move` once a second, `impact` strikes and marks a zone). `beat` keeps
+  `Walker.past` (health a second, for `rewind`) and runs `refereeChallenges`. Challenges
+  (`challenge`, `settleChallenge`, `forfeit`, `challengeOf`; keyed by the ring or flag area: a word
+  that counters it voids it) stake letters; `kill` spares a duellist (RING_FLOOR) and settles it.
+  `keepPeace` (in `equip`, and `make` for creatures) gives `peace` holders a truce once
+  (`Gear.peaceUsed`). `meta` handles `swaps_owners` (`dearest`, `giveThing`), `misspells` and `ages`
+  (`age`). `hurtWith` draws chaos ops; `sufferStatuses` ticks at the walker's time, skips damage on
+  the untouchable and lands doom. `harms`, `lawful`, `touch`, traps and combat skip the untouchable.
+  Combat: tempo times time, ranged reach times `range`, `knockbackOf` after a landed blow. A thing
+  that `docks` joins `markets` (its owner takes PORT_TOLL T); `helpOf` adds luck to gathering; a
+  fishing find with gear lands a catch (`fishes`).

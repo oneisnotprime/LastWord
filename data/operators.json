@@ -180,11 +180,6 @@
    "property": "mass"
   },
   {
-   "word": "instant",
-   "side": "none",
-   "property": "cast_time"
-  },
-  {
    "word": "silent",
    "side": "neutral",
    "property": "loudness"

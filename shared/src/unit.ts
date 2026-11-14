@@ -6,6 +6,7 @@ import type { Op, Value } from "./types.js";
 import { inflicts } from "./status.js";
 import { graftCosts, handsOf, isGraft } from "./body.js";
 import { lend, lends } from "./wear.js";
+import { luckOps } from "./idea.js";
 
 /**
  * A noun with the adjectives on it. `count` above 1 is many of it as one body (a swarm, a
@@ -154,6 +155,8 @@ export class Unit {
       for (const [id, value] of Object.entries(effect.set ?? {})) body.set(id, value);
       body.apply(effect.ops ?? []);
     }
+    // Luck shifts every roll (shared idea.ts): aim, criticals and dodging.
+    body.apply(luckOps(body.num("luck")));
     this.onFoot = armed(weapon, body);
     this.body = spawn(loadout.body.noun, body);
     // A rider's own adjectives carry over to what it rides: a FAST driver makes a fast tank.

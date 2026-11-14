@@ -1289,7 +1289,6 @@ daybreak	noun	inert	time	3.03	common	n15193837	-
 days	noun	inert	time	5.61	core	n15166019	-
 dayspring	noun	inert	time	1.72	rare	n15193837	-
 daytime	noun	inert	time	3.66	common	n15190004	-
-deadline	noun	inert	time	4.12	core	n15204935	-
 deadlock	noun	inert	state	2.97	uncommon	n14038832	-
 deafness	noun	inert	state	2.9	uncommon	n14574579	-
 dealignment	noun	inert	process	0.0	obscure	n13477079	-
@@ -1809,7 +1808,6 @@ epithalamium	noun	inert	communication	1.27	rare	n06395462	-
 epithet	noun	inert	communication	2.87	uncommon	n06733713	-
 epitomise	verb	inert	stative	1.63	rare	v02704983	-
 epitomize	verb	inert	stative	2.04	uncommon	v02704983	-
-epoch	noun	inert	time	3.19	common	n15273375	-
 eponym	noun	inert	communication	1.57	rare	n06345996	-
 eponymy	noun	inert	process	0.0	obscure	n13483883	-
 epos	noun	inert	communication	2.04	uncommon	n06395166	-
@@ -1836,7 +1834,6 @@ est	noun	inert	time	4.11	core	n15156946	-
 estoppel	noun	inert	communication	2.27	uncommon	n06666656	-
 estrus	noun	inert	state	2.01	uncommon	n14061746	-
 eta	noun	inert	communication	3.37	common	n06847830	-
-eternity	noun	inert	time	3.8	common	n15268787	-
 etiquette	noun	inert	communication	3.4	common	n06677590	-
 etude	noun	inert	communication	2.57	uncommon	n07057264	-
 etymologise	verb	inert	communication	0.0	obscure	v01072477	-
@@ -2609,7 +2606,6 @@ infection	noun	inert	state	4.33	core	n14198031	-
 infer	verb	inert	cognition	3.16	common	v00638236	-
 infertility	noun	inert	state	3.18	common	n14068989	-
 infinitive	noun	inert	communication	2.57	uncommon	n06329897	-
-infinity	noun	inert	time	3.82	common	n15268787	-
 infirmity	noun	inert	state	2.32	uncommon	n14571235	-
 inflect	verb	inert	communication	1.66	rare	v00984546	-
 inflexion	noun	inert	relation	1.65	rare	n13825994	-
@@ -3048,7 +3044,6 @@ mazopathy	noun	inert	state	0.0	obscure	n14231824	-
 mc	noun	inert	time	4.0	core	n15305175	-
 mealtime	noun	inert	time	2.31	uncommon	n15190684	-
 mearstone	noun	inert	communication	0.0	obscure	n07274106	-
-medal	noun	inert	communication	4.39	core	n06719615	-
 mediant	noun	inert	communication	1.27	rare	n06871036	-
 meditate	verb	inert	cognition	3.26	common	v00632042	-
 medley	noun	inert	communication	3.28	common	n07061563	-
@@ -3146,7 +3141,6 @@ migraine	noun	inert	state	3.33	common	n14351112	-
 milepost	noun	inert	communication	2.18	uncommon	n07285872	-
 miliaria	noun	inert	state	1.29	rare	n14345533	-
 milieu	noun	inert	state	2.93	uncommon	n14537546	-
-millennium	noun	inert	time	3.7	common	n15166173	-
 mintmark	noun	inert	communication	1.25	rare	n06812000	-
 minutes	noun	inert	communication	5.31	core	n06520103	-
 miocene	noun	inert	time	2.89	uncommon	n15150471	-
@@ -3204,7 +3198,6 @@ moharram	noun	inert	time	1.31	rare	n15242104	-
 moistness	noun	inert	state	1.59	rare	n14559507	-
 moisture	noun	inert	state	3.9	common	n14559033	-
 molting	noun	inert	process	2.23	uncommon	n13538045	-
-moment	noun	inert	time	5.24	core	n15269461	-
 mon	noun	inert	time	3.86	common	n15189026	-
 monandry	noun	inert	state	0.0	obscure	n13989237	-
 monday	noun	inert	time	4.8	core	n15189026	-
@@ -3621,7 +3614,6 @@ papilledema	noun	inert	state	1.43	rare	n14339591	-
 parable	noun	inert	communication	3.1	common	n06383718	-
 parabola	noun	inert	shape	2.39	uncommon	n13909064	-
 paraboloid	noun	inert	shape	1.68	rare	n13919695	-
-paradox	noun	inert	communication	3.63	common	n06737308	-
 paraesthesia	noun	inert	state	1.16	rare	n14348204	-
 paralanguage	noun	inert	communication	0.0	obscure	n07096217	-
 paraleipsis	noun	inert	communication	0.0	obscure	n07119399	-
@@ -4656,7 +4648,6 @@ stagnation	noun	inert	state	3.19	common	n14036138	-
 stammer	verb	inert	communication	2.49	uncommon	v00983576	noun:state
 stanza	noun	inert	communication	3.01	common	n07066331	-
 stardom	noun	inert	state	3.09	common	n13971984	-
-stasis	noun	inert	state	2.99	uncommon	n14591393	-
 statement	noun	inert	communication	4.97	core	n06735202	-
 stationariness	noun	inert	state	0.0	obscure	n14029975	-
 stationery	noun	inert	communication	3.29	common	n06269505	-
@@ -5066,7 +5057,6 @@ typewriting	noun	inert	communication	1.7	rare	n06414208	-
 typicality	noun	inert	state	1.27	rare	n14525129	-
 typify	verb	inert	stative	2.01	uncommon	v02704983	-
 typing	noun	inert	communication	3.84	common	n06414208	-
-typo	noun	inert	communication	3.3	common	n06782461	-
 ubiety	noun	inert	state	0.0	obscure	n13981639	-
 ubiquitousness	noun	inert	state	1.02	rare	n13981742	-
 ubiquity	noun	inert	state	2.66	uncommon	n13981742	-
