@@ -1,12 +1,13 @@
 import { boot, type ColyseusTestServer } from "@colyseus/testing";
-import { afterAll, beforeAll, expect, it } from "vitest";
+import { afterAll, afterEach, beforeAll, expect, it } from "vitest";
 import { nearestWalkable, type LoadoutDetail, type Sensed } from "@lastword/shared";
 import appConfig from "./app.config.js";
-import type { WorldRoom } from "./WorldRoom.js";
+import { WorldRoom } from "./WorldRoom.js";
 
 let colyseus: ColyseusTestServer;
 beforeAll(async () => { colyseus = await boot(appConfig); });
 afterAll(async () => { await colyseus.shutdown(); });
+afterEach(() => { WorldRoom.testSeed = null; });
 
 const wait = (ms = 120) => new Promise((r) => setTimeout(r, ms));
 /** Waits until the server has acted on what was sent (a slow machine takes longer than `wait`), up to two seconds. */
@@ -15,7 +16,11 @@ const all = () => Object.fromEntries([..."abcdefghijklmnopqrstuvwxyz"].map((ch) 
 const ticks = (room: WorldRoom, n: number) => { for (let i = 0; i < n; i++) room.update(0.1); };
 
 async function players(n = 2) {
+  // One known map with nothing wild about: a random one can put a fierce animal by the city, whose
+  // fear breaks a player's nerve and sends them running mid-test.
+  WorldRoom.testSeed = 4242;
   const room = (await colyseus.createRoom("world", {})) as unknown as WorldRoom;
+  for (const [id, w] of [...(room as any).walkers]) if (w.master === "-" && w.citizenOf === undefined) (room as any).removeWalker(id);
   const clients: any[] = [];
   for (let i = 0; i < n; i++) clients.push(await colyseus.connectTo(room as never));
   const said = clients.map(() => [] as string[]);
@@ -41,7 +46,8 @@ async function players(n = 2) {
 it("MAP goes on your screen as a minimap, not on the ground; the senses show letter sources and the living in range", async () => {
   const { room, clients: [a], ws: [wa], said, last, things } = await players();
   a.send("spell", "map"); await wait();
-  expect(said[0]!.at(-1)).toBe("MAP is on your screen: a minimap");
+  // The spelled reply, not whatever notice came last (a random map can put a fierce animal close by).
+  expect(last(0, "spelled")).toBe("MAP is on your screen: a minimap");
   expect(things()).toEqual([]);
   expect(wa.gear).toEqual([]);
   const d = last(0, "loadout") as LoadoutDetail;

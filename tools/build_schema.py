@@ -340,6 +340,8 @@ race_to|num|0|m|a challenge with stakes run as a race: a flag stands this far of
 forfeits|bool|false||gives up its speller's challenges: the other side takes the pot (shared sport.ts)
 swaps_owners|bool|false||passed on a thing or creature someone else owns: it becomes the speller's, and the speller's most valuable thing or creature becomes theirs (shared idea.ts)
 misspells|bool|false||passed on a thing or creature: one letter of its name changes and it becomes that word (a SWORD to a SWARD), or it breaks if no word is one letter off (shared idea.ts)
+spellchecks|num|0|m|things and creatures of its holder's side this close to it cannot be misspelled: a typo leaves them as they are (shared idea.ts)
+stands_for|text|||spelled before another word, it stands for it and its letters are paid instead: a length (4: any four-letter word) or an archetype (document: any document) (shared idea.ts)
 """
 GROUPS["effect"] = """
 cast_time|num|0|s|delay between spelling and effect

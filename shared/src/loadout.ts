@@ -50,7 +50,8 @@ export interface LoadoutDetail {
    * has in hand, letters it never sells, why it is closed ("" if open), what hiring a worker costs
    * in letters, citizens left to hire, and who rules its city ("" for nobody).
    */
-  market?: { ratio: number; stock: number; refuses: string; closed: string; hire: number; citizens: number; ruler: string };
+  /** `sells`: what you carry the market would buy, by gear index, and the letters it pays (shared `salePrice`). */
+  market?: { ratio: number; stock: number; refuses: string; closed: string; hire: number; citizens: number; ruler: string; sells?: { index: number; phrase: string; price: number }[] };
   /** Common letters a transmutation into Z takes for you now. */
   transmute?: number;
 }

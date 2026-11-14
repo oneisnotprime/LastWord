@@ -1,4 +1,4 @@
-import { effectText, heldText, tipOfTheMoment, inspectText, LETTER_GUIDE, missing, parsePhrase, readTrade, type Card, type Dictionary, type Letters, type LoadoutDetail, type Offer } from "@lastword/shared";
+import { effectText, heldText, tipOfTheMoment, inspectText, LETTER_GUIDE, missing, parsePhrase, readTrade, standIn, standsFor, type Card, type Dictionary, type Letters, type LoadoutDetail, type Offer } from "@lastword/shared";
 import { BADGE } from "./art/paper.js";
 import { ideasHtml, setTipsOn, tipRng, tipsOn } from "./tips.js";
 import { keyGlyph, only, pad, padGlyph } from "./pad.js";
@@ -83,7 +83,7 @@ export class Hud {
   kitHtml = "";
   private open: "inventory" | "loadout" | "trade" | null = null;
   /** Sends a trading action to the server (set by the scene). */
-  act: (type: "market" | "hire" | "transmute" | "offer" | "answer", payload: unknown) => void = () => {};
+  act: (type: "market" | "sell" | "hire" | "transmute" | "offer" | "answer", payload: unknown) => void = () => {};
   /** People near enough to trade with (set by the scene). */
   people: () => { id: string; name: string }[] = () => [];
   /** On the trade screen: the letter you want from the market, and whom an offer goes to. */
@@ -399,6 +399,9 @@ export class Hud {
     const alchemy = /^transmute\s*(\S*)/.exec(t);
     if (alchemy) return alchemy[1]!.replace(/[^a-z]/g, "");
     if (/^hire\b/.test(t)) return "";
+    // A stand-in (WORD, LETTER, BOOK) before another word: only the stand-in's letters are paid.
+    const parts = t.trim().split(/\s+/);
+    if (parts.length === 2 && standsFor(this.dict.word(parts[0]!)?.set.stands_for)) return parts[0]!;
     return t.replace(/[^a-z]/g, "");
   }
 
@@ -428,9 +431,10 @@ export class Hud {
     const el = $("preview"), t = this.input.value.trim().toLowerCase();
     const hide = () => { el.className = ""; el.innerHTML = ""; };
     if (!t || readTrade(t) || /^(give|trade)\b/.test(t) || "xxx".startsWith(t)) return hide();
-    const read = inspectText(this.dict, t);
+    const stood = standIn(this.dict, t);
+    const read = inspectText(this.dict, stood ? stood.word : t);
     if (!("card" in read)) return hide();
-    const c = read.card;
+    const c = stood ? { ...read.card, title: `${stood.stand.toUpperCase()} → ${read.card.title}` } : read.card;
     const key = [...c.does.filter((d) => !/^equip slot|^lies where/.test(d)).slice(0, 2), ...c.stats.slice(0, 2)].slice(0, 3);
     el.innerHTML = `<div><b>${esc(c.title)}</b>${c.kind ? ` <span class="kind">${esc(c.kind)}</span>` : ""}</div>${key.length ? `<div class="key">${esc(key.join(" · "))}</div>` : ""}`;
     el.className = "show";
@@ -699,6 +703,7 @@ export class Hud {
     if (d.want !== undefined) { this.want = d.want; this.drawPanel(); }
     if (d.marketTrade !== undefined && this.want) this.act("market", { give: this.payFor(this.want), get: this.want });
     if (d.hire !== undefined) this.act("hire", {});
+    if (d.sell !== undefined && this.want) this.act("sell", { index: Number(d.sell), get: this.want });
     if (d.transmute !== undefined) this.act("transmute", { give: this.commons(this.detail?.transmute ?? 10, "") });
     if (d.offerTo !== undefined) { this.offerTo = d.offerTo; this.drawPanel(); }
     if (d.sendOffer !== undefined && this.offerTo) {
@@ -746,7 +751,10 @@ export class Hud {
         <div class="words">${letters.map((c) => `<button data-want="${c}" class="${c === this.want ? "aim" : ""}">${c.toUpperCase()}</button>`).join("")}</div>
         <div class="row">${this.want ? `You give ${tiles(pay)} for ${tiles(this.want)} and a T` : "Choose a letter to buy"}
           <button data-market-trade ${!this.want || pay.length < m.ratio ? "disabled" : ""}>Trade</button></div>
-        <div class="row">Hire a ${m.citizens ? "citizen" : "worker (none left)"} for ${m.hire} of your letters: they work your fields and stations and pay N<button data-hire ${m.citizens ? "" : "disabled"}>Hire</button></div>`);
+        <div class="row">Hire a ${m.citizens ? "citizen" : "worker (none left)"} for ${m.hire} of your letters: they work your fields and stations and pay N<button data-hire ${m.citizens ? "" : "disabled"}>Hire</button></div>
+        <h3>Sell</h3>${m.sells?.length ? `<div class="hint">${this.want ? `Paid in ${tiles(this.want)}, and a T` : "Choose a letter above to be paid in"}</div>${m.sells.map((x) =>
+          `<div class="row">${esc(x.phrase.toUpperCase())} for ${x.price} letter${x.price === 1 ? "" : "s"}<button data-sell="${x.index}" ${this.want ? "" : "disabled"}>Sell</button></div>`).join("")}`
+          : `<div class="hint">Nothing you carry is worth anything to the market (things sell for their value).</div>`}`);
     } else parts.push(`<h3>Market</h3><div class="hint">Stand by a city's MARKET to buy letters or hire workers.</div>`);
     const n = d?.transmute ?? 10;
     parts.push(`<h3>Transmute</h3><div class="row">${tiles(this.commons(n, ""))} into ${tiles("z")}: ${n} common letters for one Z, anywhere<button data-transmute>Transmute</button></div>`);

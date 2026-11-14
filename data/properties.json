@@ -1,5 +1,5 @@
 {
- "count": 419,
+ "count": 421,
  "groups": {
   "physical": 45,
   "mobility": 25,
@@ -13,7 +13,7 @@
   "slots": 9,
   "meta": 18,
   "field": 21,
-  "event": 21,
+  "event": 23,
   "effect": 8
  },
  "damage_types": [
@@ -3260,6 +3260,21 @@
    "type": "bool",
    "desc": "passed on a thing or creature: one letter of its name changes and it becomes that word (a SWORD to a SWARD), or it breaks if no word is one letter off (shared idea.ts)",
    "default": false
+  },
+  {
+   "id": "spellchecks",
+   "group": "event",
+   "type": "num",
+   "desc": "things and creatures of its holder's side this close to it cannot be misspelled: a typo leaves them as they are (shared idea.ts)",
+   "unit": "m",
+   "default": 0
+  },
+  {
+   "id": "stands_for",
+   "group": "event",
+   "type": "text",
+   "desc": "spelled before another word, it stands for it and its letters are paid instead: a length (4: any four-letter word) or an archetype (document: any document) (shared idea.ts)",
+   "default": ""
   },
   {
    "id": "cast_time",
