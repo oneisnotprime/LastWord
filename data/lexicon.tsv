@@ -5212,7 +5212,7 @@ behaviouristic	adjective	modifier	pertaining	0.0	obscure	a02671356	-
 behead	verb	spell	contact	2.71	uncommon	v01574185	-
 beheaded	adjective	modifier	quality	3.22	common	a01188127	-
 beheading	noun	event	act	2.95	uncommon	n01167714	-
-behemoth	noun	person	person	2.97	uncommon	n10148446	-
+behemoth	noun	creature	supernatural	2.97	uncommon	n10148446	-
 behind	adverb	verb_modifier	manner	5.29	core	r00223465	noun:bodypart,adjective:quality
 behindhand	adjective	modifier	quality	0.0	obscure	a01907194	adverb:manner
 behold	verb	spell	perceive	3.76	common	v02134625	-
@@ -10714,7 +10714,7 @@ colorless	adjective	modifier	quality	3.02	common	a00409108	-
 colorlessness	noun	aura	attribute	0.0	obscure	n04965811	-
 colors	noun	artifact	artifact	4.46	core	n03075927	-
 colossal	adjective	modifier	quality	3.37	common	a01387664	-
-colossus	noun	person	person	3.06	common	n10148446	-
+colossus	noun	creature	supernatural	3.06	common	n10148446	-
 colostomy	noun	event	act	2.4	uncommon	n00669795	-
 colostrum	noun	bodypart	bodypart	2.22	uncommon	n05406699	-
 colour	noun	material	material	4.49	core	n15009532	adjective:quality,verb:social
@@ -19989,7 +19989,7 @@ firebird	noun	creature	bird	2.66	uncommon	n01600378	-
 fireboat	noun	artifact	vehicle_water	1.36	rare	n03349239	-
 firebomb	noun	artifact	device	2.11	uncommon	n03571171	verb:combat
 firebox	noun	artifact	structure	2.37	uncommon	n03349355	-
-firebrand	noun	material	fuel	2.52	uncommon	n15125724	-
+firebrand	noun	material	material	2.52	uncommon	n15125724	-
 firebrat	noun	creature	insect	0.0	obscure	n02273597	-
 firebreak	noun	terrain	place	1.66	rare	n08589189	-
 firebrick	noun	artifact	artifact	1.72	rare	n03349488	-
@@ -25254,7 +25254,7 @@ hybridizing	noun	event	act	1.78	rare	n00852055	-
 hybridoma	noun	bodypart	bodypart	1.64	rare	n05477665	-
 hydantoin	noun	artifact	medicine	1.08	rare	n03555713	-
 hydathode	noun	flora	plant	0.0	obscure	n13174524	-
-hydra	noun	knowledge	knowledge	3.31	common	n05695974	-
+hydra	noun	creature	supernatural	3.31	common	n05695974	-
 hydralazine	noun	artifact	medicine	1.42	rare	n03555851	-
 hydrangea	noun	flora	shrub	2.37	uncommon	n12808961	-
 hydrant	noun	artifact	device	2.71	uncommon	n04566737	-
@@ -28838,6 +28838,7 @@ kowtow	verb	spell	movement	2.16	uncommon	v02044554	noun:communication
 kraal	noun	terrain	place	1.93	rare	n08690869	-
 kraft	noun	material	material	3.38	common	n14903131	-
 krait	noun	creature	reptile	1.85	rare	n01753677	-
+kraken	noun	creature	supernatural	2.85	uncommon	-	-
 kremlin	noun	artifact	structure	3.39	common	n03633802	-
 krigia	noun	flora	herb	0.0	obscure	n12006208	-
 krill	noun	creature	invertebrate	2.63	uncommon	n01991342	-
@@ -29708,7 +29709,7 @@ lever	noun	artifact	tool	3.64	common	n03664618	verb:contact
 leverage	noun	world_state	phenomenon	3.88	common	n11493538	verb:transfer
 leveraging	noun	event	exchange	3.02	common	n01101851	-
 leveret	noun	creature	mammal	1.27	rare	n02329415	-
-leviathan	noun	person	person	3.09	common	n10275425	-
+leviathan	noun	creature	supernatural	3.09	common	n09519933	-
 levirate	noun	knowledge	knowledge	1.43	rare	n05677462	-
 levis	noun	artifact	clothing	2.6	uncommon	n03665450	-
 levitate	verb	spell	movement	2.52	uncommon	v01948325	-
@@ -38647,7 +38648,7 @@ phocine	adjective	modifier	pertaining	0.0	obscure	a02864548	-
 phoebe	noun	creature	bird	3.38	common	n01552527	-
 phoenician	adjective	modifier	pertaining	2.69	uncommon	a02787738	noun:person
 phoenicophorium	noun	flora	plant	0.0	obscure	n12614450	-
-phoenix	noun	flora	plant	4.21	core	n12614587	-
+phoenix	noun	creature	supernatural	4.21	core	n09524068	-
 phon	noun	measure	quantity	2.05	uncommon	n13736088	-
 phone	noun	artifact	device	5.3	core	n03266479	verb:communication
 phonebook	noun	artifact	document	2.12	uncommon	n06435397	-
@@ -52747,7 +52748,7 @@ tirolean	noun	artifact	clothing	0.0	obscure	n04513183	-
 tisane	noun	consumable	drink	1.51	rare	n07950272	-
 tissue	noun	bodypart	bodypart	4.32	core	n05274844	verb:create
 tit	noun	bodypart	bodypart	3.48	common	n05562038	-
-titan	noun	person	person	3.69	common	n09958449	-
+titan	noun	creature	supernatural	3.69	common	n09958449	-
 titania	noun	material	material	2.52	uncommon	n14640918	-
 titanic	adjective	modifier	quality	3.59	common	a01393617	-
 titanium	noun	material	metal	3.55	common	n14683390	-
@@ -58021,7 +58022,7 @@ wearing	adjective	modifier	participle	4.85	core	a00840788	noun:act
 wearisome	adjective	modifier	quality	1.98	rare	a01348155	-
 weary	adjective	modifier	quality	3.61	common	a02441240	verb:body
 wearying	adjective	modifier	quality	1.91	rare	a00840788	-
-weasel	noun	person	person	3.19	common	n10791658	-
+weasel	noun	creature	mammal	3.19	common	n02444573	-
 weather	noun	world_state	weather	4.87	core	n11545095	adjective:quality,verb:movement
 weatherboard	noun	material	material	1.86	rare	n15127574	-
 weatherboarding	noun	material	material	0.0	obscure	n15127574	-

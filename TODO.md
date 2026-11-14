@@ -91,6 +91,15 @@ by how many words set them (minds and upkeep took `sentient`, `intelligence`, `f
       accept, counter and decline; typed shortcuts kept), Z from three roaming bosses (data:
       wild-hearted creatures of 2,000 to 20,000 integrity) and transmuting ten common letters.
       Producers make letters while they belong to you, carried too; the HUD lists your income
+- [x] Starting kits (PLAN.md "Starting kits", shared `kits.ts`, `data/kits.json`): pick one of
+      three at round start: a job (100, worn as shared properties), a building at your spawn (100),
+      a sealed legendary (16, each with an unlock condition and a counter-word, unsealed with a
+      map-wide call and spelled free once) and eight letters leaning toward the job
+- [ ] Starting kits: once the professions theme is merged, rebuild `data/kits.json` so the derived
+      jobs come from its profession words; drop the 18 profession lines copied into
+      `tools/demo_words.txt` if the theme's own are better; tune perks from playtests
+- [ ] Starting kits: EXCALIBUR (WordNet knows it only as a name, and a weapon has no counter-word
+      mechanic yet); legendaries bots aim at their counters; show other people's jobs
 - [ ] Letter economy: tune rates from playtests (pacing table in the part 3 pull request)
 - [ ] Replace the live "xxx" shortcut (999 of every letter, `CHEAT` in `WorldRoom.ts`) with a
       real debug server (its own app or a password), then take the shortcut off the live game.
@@ -435,9 +444,9 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
       and answered, picking up and claiming, adjective phrases and plurals, adjectives on foes and
       their own gear, aimed fields and events, area words by their place rules (plenty, taxes,
       laws, war, refuges, weather), roads, taking cities, crop land, cooking, counter-words to
-      areas, weather and creatures, running when badly hurt. `loadtest/tournament.ts` reports it
-- [ ] Bots still to do: unseal legendaries (once starting kits land), use terrain words on
-      purpose, form pacts
+      areas, weather and creatures, running when badly hurt, unsealing and spelling their kit's
+      legendary. `loadtest/tournament.ts` reports it
+- [ ] Bots still to do: use terrain words on purpose, form pacts
 - [x] Deploy-ready: one container serves the page and the game; Dockerfile, fly.toml and
       DEPLOY.md; image built and played locally
 - [ ] M6 (rest): deploy to Fly.io; needs the user's account

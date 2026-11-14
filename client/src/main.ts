@@ -11,6 +11,7 @@ import { CHUNK } from "./art/terrain.js";
 import type { FromWorker, ToWorker } from "./art/terrain.worker.js";
 import { dictionary } from "./data.js";
 import { Events } from "./events.js";
+import { KitView } from "./kits.js";
 import { Hud, type Aimed } from "./hud.js";
 import { Minimap } from "./minimap.js";
 import { pad, type Pad } from "./pad.js";
@@ -133,6 +134,8 @@ class World extends Phaser.Scene {
   private sightTiles = 15;
   private fog!: Phaser.GameObjects.Image;
   private lastPrompt = 0;
+  /** Starting kits: the pick, the HUD lines, the legendary calls. */
+  private kits!: KitView;
   /**
    * Controller: a cursor on the map (tiles) moved by the right stick or snapped to a target, the
    * target it is on, when the stick last moved it, and whether LT's inspect card is up.
@@ -166,6 +169,7 @@ class World extends Phaser.Scene {
       this.net.describe(this.aiming, this.net.sessionId, index);
       this.endAim();
     }, () => { this.net?.leave(); playAgain(); });
+    this.kits = new KitView((i) => this.net?.pickKit(i), () => this.net?.unseal(), () => { this.hud.kitHtml = this.kits.hudHtml(); this.hud.redraw(); });
     // Trading: what the trade screen and offer cards send, and the people near enough to trade with.
     this.hud.act = (type, payload) => this.net?.act(type, payload);
     this.hud.people = () => {
@@ -215,6 +219,12 @@ class World extends Phaser.Scene {
         hits: (list) => this.onHits(list),
         offers: (list) => this.hud.setOffers(list),
         threats: (list) => this.threatList.set(list),
+        kits: (offer) => this.kits.offer(offer),
+        kit: (state) => this.kits.set(state),
+        legend: (call) => {
+          this.kits.announce(call, call.name === this.net?.state.players.get(this.net.sessionId)?.name);
+          this.cameras.main.shake(call.spelled ? 700 : 450, call.spelled ? 0.012 : 0.006);
+        },
         dropped: () => this.hud.toast("Connection lost: reconnecting…", "bad"),
         reconnected: () => this.hud.toast("Reconnected", "good"),
         notice: (text) => { const t = terse("notice", text); if (t) this.hud.toast(t, "good"); },

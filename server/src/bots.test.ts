@@ -32,6 +32,8 @@ it("reads bot options, clamped to the room, and ignores nonsense", () => {
 });
 
 it("bots join with the first client's options, count as people, gather, spell and equip", async () => {
+  // A fixed map and dice: on some random ones no bot had armed itself within three minutes.
+  WorldRoom.testSeed = 7;
   const room = (await colyseus.createRoom("world", { bots: 5 })) as unknown as WorldRoom;
   const a = await join(room);
   expect(bots(room).length).toBe(5);

@@ -418,7 +418,7 @@
  {
   "class": "creature",
   "archetype": "mammal",
-  "words": 597,
+  "words": 598,
   "groups": [
    "physical",
    "life",
@@ -530,7 +530,7 @@
  {
   "class": "creature",
   "archetype": "supernatural",
-  "words": 124,
+  "words": 131,
   "groups": [
    "physical",
    "life",
@@ -712,7 +712,7 @@
  {
   "class": "flora",
   "archetype": "plant",
-  "words": 787,
+  "words": 786,
   "groups": [
    "physical",
    "life",
@@ -809,7 +809,7 @@
  {
   "class": "knowledge",
   "archetype": "knowledge",
-  "words": 1929,
+  "words": 1928,
   "groups": [
    "economy",
    "meta"
@@ -818,7 +818,7 @@
  {
   "class": "material",
   "archetype": "material",
-  "words": 1615,
+  "words": 1616,
   "groups": [
    "physical",
    "economy"
@@ -872,7 +872,7 @@
  {
   "class": "material",
   "archetype": "fuel",
-  "words": 30,
+  "words": 29,
   "groups": [
    "physical",
    "economy"
@@ -938,7 +938,7 @@
  {
   "class": "person",
   "archetype": "person",
-  "words": 4207,
+  "words": 4202,
   "groups": [
    "physical",
    "life",

@@ -37,6 +37,13 @@ Node process that owns the game state. One room per map instance (from milestone
   closes after `ROUND_END_SECONDS` (15; tests use 1). Clients reload into a new room.
 - For local testing only: `LETTERS=9` gives every player nine of each letter, `CROWD=1` spawns
   everyone in one city, `SEED_THINGS=5000` scatters that many objects at start.
+- Starting kits: `onJoin` deals kits (`kits` message; the client sends `ready` once listening and
+  gets them again); `kit` picks, else the best (`bestKit`) after KIT_SECONDS; bots pick at once.
+  `chooseKit` sets `Walker.kit`: the job's effect in `rebuild`, its stats in `helpOf`, hunting
+  tools and `sources`, its rules in `rulesAt`; the hand; the building through `make`. Legendary
+  progress is counted in `beat` (`legendProgress`, `deeds`), unsealed with a `legend` call to
+  everyone, `unseal` pays the "letters" condition, and `spellWord` waives its letters once.
+  Room tests run with kits off (`WorldRoom.kits`, off under Vitest) unless they turn them on.
 - `loadtest/bots.ts` modes: `wander`, `crowd`, `play` (gathers, spells and fights).
 - Only the room's first client's options are read (`onCreate`: `bots`, `difficulty`, `mode`);
   later joiners' are ignored. A message with no handler disconnects the sender.
@@ -65,7 +72,7 @@ Node process that owns the game state. One room per map instance (from milestone
   `botPickUp` (`takeNear`, the same as E), `botCounter`, `botSpell` (`phraseFor`: adjective
   phrases and plurals), `botSystems` (adjectives on foes and own gear, area words, roads, cities,
   crop land, cooking, `botOffer`), `botTrade` (market, hiring), `botAnswer`. `SKILL` scales each
-  by difficulty. `mind.used` counts what each used; `botReport` and `onAward` feed
+  by difficulty; `botLegend` spells its kit's legendary once unsealed. `mind.used` counts what each used; `botReport` and `onAward` feed
   `loadtest/tournament.ts` (`npx tsx loadtest/tournament.ts 4 8 mixed 60`: rounds of bots, the
   systems they used, letter sources by `sourceOf`, round lengths).
 - Objects are made by `make`: up to `SEPARATE_UP_TO` (12) creatures or things each, more as one
