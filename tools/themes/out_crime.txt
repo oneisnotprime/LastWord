@@ -1,0 +1,338 @@
+# noun crime
+con: placement=target placement_range=40 event_target=character letter_steal=7 inflict_charm=6 contest_with=charm contested_by=intelligence event_duration=1 counters=audit,truth
+crime: placement=target placement_range=30 event_target=character letter_steal=6 inflict_expose=30 contest_with=stealth contested_by=detect_stealth event_duration=1 counters=alibi
+plot: placement=target placement_range=200 event_target=character inflict_stun=6 critical+0.5 contest_with=intelligence contested_by=detect_stealth event_duration=1 counters=investigation,truth,informant
+scheme: placement=target placement_range=150 field_radius=30 field_targets=enemies field_duration=3 decoys=3 letter_steal=5 contest_with=intelligence contested_by=intelligence counters=investigation,audit,truth
+stealing: placement=target placement_range=5 event_target=object transfers_ownership=true contest_with=stealth contested_by=security event_duration=1 counters=lock,guard
+cheating: placement=target placement_range=40 event_target=character letter_steal=5 inflict_confuse=4 contest_with=intelligence contested_by=detect_stealth event_duration=1 reputation+-2 counters=audit,referee
+violation: placement=target placement_range=60 event_target=character inflict_expose=40 letter_steal=3 contest_with=authority contested_by=charm event_duration=1
+offense: placement=target placement_range=60 event_target=character inflict_expose=30 morale+-2 contest_with=authority contested_by=charm event_duration=1
+scam: placement=target placement_range=80 event_target=character letter_steal=8 inflict_confuse=4 contest_with=charm contested_by=intelligence event_duration=1 counters=audit,truth,investigation
+treason: placement=target placement_range=100 event_target=creature transfers_ownership=true contest_with=charm contested_by=loyalty inflict_expose=60 event_duration=1 counters=loyalty,oath,execution
+felony: placement=target placement_range=40 event_target=character letter_steal=6 inflict_fear=8 contest_with=strength contested_by=security event_duration=1 reputation+-4 counters=arrest,police
+seizure: placement=target placement_range=40 event_target=object transfers_ownership=true contest_with=authority contested_by=security event_duration=1 counters=alibi
+hustle: placement=target placement_range=40 event_target=character letter_steal=6 inflict_charm=6 contest_with=charm contested_by=intelligence event_duration=1 counters=audit
+fabrication: placement=target placement_range=200 field_radius=50 field_targets=enemies field_duration=4 decoys=4 inflict_confuse=4 counters=truth,investigation,evidence
+mayhem: placement=region placement_range=150 event_radius=40 event_duration=2 sets_hostile=true inflict_confuse=8 aggression+5 morale+-2 counters=police,curfew,crackdown
+abduction: placement=target placement_range=10 event_target=creature transfers_ownership=true contest_with=strength contested_by=strength inflict_fear=12 inflict_silence=10 event_duration=1 counters=rescue,police
+arson: placement=target placement_range=20 event_target=structure event_radius=6 event_duration=5 dmg_fire=200 inflict_burn=20 siege=3 contest_with=stealth contested_by=alarm stealth+3 temperature=900 luminosity=7 counters=rain,firefighter,sprinkler
+bribery: placement=target placement_range=30 event_target=creature transfers_ownership=true pays=10 contest_with=pays contested_by=loyalty event_duration=1 counters=audit,auditor
+misdemeanor: placement=target placement_range=30 event_target=character letter_steal=2 inflict_expose=15 contest_with=stealth contested_by=detect_stealth event_duration=1
+vandalism: placement=target placement_range=10 event_target=structure dmg_blunt=300 siege=2 beauty+-4 comfort+-3 contest_with=stealth contested_by=security event_duration=1 counters=guard,alarm,camera
+perjury: placement=target placement_range=60 event_target=character inflict_expose=60 inflict_debt=60 contest_with=charm contested_by=intelligence event_duration=1 counters=truth,evidence,alibi
+forgery: placement=self field_radius=20 field_targets=all field_duration=5 trade_rate=0.6 produce_T*2 decoys=1 counters=audit,investigation,auditor
+hijack: placement=target placement_range=20 event_target=object transfers_ownership=true contest_with=strength contested_by=security event_duration=1 inflict_fear=8 counters=lock,guard
+hijacking: placement=target placement_range=20 event_target=object transfers_ownership=true contest_with=strength contested_by=security event_duration=1 inflict_fear=10 counters=lock,guard,police
+trespass: placement=self field_radius=4 field_targets=self field_duration=3 stealth+4 climb+4 security*0.5 counters=fence,guard,alarm,dog
+skimming: placement=target placement_range=60 event_target=character letter_steal=4 inflict_debt=60 contest_with=stealth contested_by=detect_stealth event_duration=1 counters=audit
+shoplifting: placement=target placement_range=5 event_target=object transfers_ownership=true contest_with=stealth contested_by=security event_duration=1 stealth+2 counters=camera,guard,alarm
+larceny: placement=target placement_range=8 event_target=object transfers_ownership=true contest_with=stealth contested_by=security event_duration=1 letter_steal=4 counters=lock,guard
+racketeering: placement=region placement_range=100 event_radius=40 event_duration=6 tax_rate=0.3 inflict_debt=120 intimidation+4 contest_with=authority contested_by=security counters=police,audit,investigation
+rustling: placement=target placement_range=20 event_target=creature transfers_ownership=true contest_with=stealth contested_by=loyalty event_duration=1 summon_count=3 counters=dog,sheriff,fence
+mugging: placement=target placement_range=4 event_target=character letter_steal=8 inflict_fear=6 inflict_stun=2 contest_with=strength contested_by=strength event_duration=1 counters=police,guard
+cybercrime: placement=target placement_range=1000 event_target=character letter_steal=6 read_inventory=true jams=true contest_with=intelligence contested_by=intelligence event_duration=1 counters=encryption,cipher
+swindle: placement=target placement_range=40 event_target=character letter_steal=7 inflict_charm=5 contest_with=charm contested_by=intelligence event_duration=1 counters=audit,truth
+misappropriation: placement=target placement_range=80 event_target=character letter_steal=6 contest_with=stealth contested_by=detect_stealth event_duration=1 counters=audit
+thievery: placement=target placement_range=5 event_target=object transfers_ownership=true letter_steal=3 contest_with=stealth contested_by=security event_duration=1 counters=lock,guard
+carjacking: placement=target placement_range=10 event_target=object transfers_ownership=true contest_with=strength contested_by=security inflict_fear=8 event_duration=1 counters=lock,police
+holdup: placement=target placement_range=15 event_target=character letter_steal=8 inflict_root=5 inflict_fear=8 contest_with=strength contested_by=courage event_duration=1 counters=police,sheriff,guard
+sabotage: placement=target placement_range=30 event_target=structure dmg_blast=500 siege=4 upkeep_power*3 contest_with=stealth contested_by=detect_stealth event_duration=1 counters=guard,alarm,investigation
+poaching: placement=target placement_range=60 event_target=creature destroys_target=true contest_with=stealth contested_by=detect_stealth reputation+-2 event_duration=1 counters=ranger,warden
+graft: placement=target placement_range=30 event_target=character letter_steal=6 pays=2 contest_with=authority contested_by=detect_stealth event_duration=1 counters=audit,auditor
+sedition: placement=region placement_range=150 event_radius=60 event_duration=4 loyalty+-4 obedience+-4 authority+-3 morale+-1 counters=censorship,loyalty,oath
+infringement: placement=target placement_range=60 event_target=character letter_steal=3 inflict_expose=20 contest_with=authority contested_by=charm event_duration=1
+infraction: placement=target placement_range=60 event_target=character letter_steal=2 inflict_expose=15 contest_with=authority contested_by=charm event_duration=1
+assault: placement=target placement_range=3 event_target=character dmg_blunt=60 inflict_stun=3 inflict_fear=5 event_duration=1 reputation+-2 counters=guard,police
+
+# noun act
+deception: placement=target placement_range=150 field_radius=40 field_targets=enemies field_duration=3 decoys=4 inflict_confuse=5 stealth+3 counters=truth,investigation
+bluff: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=1 decoys=6 inflict_fear=6 counters=truth,detective
+sham: placement=target placement_range=100 field_radius=30 field_targets=enemies field_duration=2 decoys=3 counters=truth,investigation
+facade: placement=self field_radius=4 field_targets=self field_duration=5 disguise+6 decoys=1 stealth+2 counters=truth,investigation
+evasion: placement=self field_radius=4 field_targets=self field_duration=2 evasion+0.4 stealth+3 tax_rate*0 counters=audit,tracker
+pretext: placement=target placement_range=30 event_target=character inflict_charm=8 read_inventory=true contest_with=charm contested_by=intelligence event_duration=1
+deceit: placement=target placement_range=100 field_radius=30 field_targets=enemies field_duration=3 decoys=3 inflict_confuse=4 counters=truth,confession
+pretense: placement=self field_radius=4 field_targets=self field_duration=4 disguise+5 decoys=1 counters=truth
+misrepresentation: placement=target placement_range=100 field_radius=30 field_targets=enemies field_duration=3 decoys=2 inflict_confuse=4 trade_rate*1.3 counters=truth,audit
+trickery: placement=target placement_range=80 field_radius=30 field_targets=enemies field_duration=2 decoys=4 inflict_confuse=6 counters=truth,investigation
+falsehood: placement=target placement_range=150 field_radius=40 field_targets=enemies field_duration=3 decoys=3 inflict_confuse=4 counters=truth,confession
+charade: placement=self field_radius=20 field_targets=enemies field_duration=3 decoys=3 disguise+4 counters=truth,detective
+impersonation: placement=self field_radius=4 field_targets=self field_duration=5 disguise+9 charm+2 authority+2 counters=truth,detective,dog
+humbug: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=2 decoys=2 inflict_confuse=3 counters=truth
+wile: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=2 decoys=2 inflict_charm=5 stealth+2 counters=truth
+duplicity: placement=target placement_range=100 event_target=creature transfers_ownership=true contest_with=charm contested_by=loyalty decoys=2 event_duration=1 counters=truth,loyalty
+whopper: placement=map field_radius=ABS field_targets=enemies field_duration=2 decoys=5 inflict_confuse=4 counters=truth,investigation,detective
+cheat: placement=target placement_range=40 event_target=character letter_steal=5 inflict_confuse=3 contest_with=intelligence contested_by=detect_stealth event_duration=1 counters=audit
+feint: placement=target placement_range=30 field_radius=10 field_targets=enemies field_duration=1 decoys=2 inflict_confuse=3 critical+0.3 evasion+0.2
+ridicule: placement=target placement_range=60 event_target=character morale+-3 inflict_expose=20 courage+-2 event_duration=1 counters=dignity,pride
+insult: placement=target placement_range=40 event_target=character inflict_rage=10 morale+-2 accuracy+-0.1 event_duration=1 counters=apology
+headlock: placement=target placement_range=2 event_target=character inflict_root=6 inflict_silence=4 dmg_suffocation=10 contest_with=strength contested_by=strength event_duration=1
+
+# noun attack
+offensive: placement=region placement_range=500 event_radius=100 event_duration=5 summons=soldier summon_count=6 summon_owned=true attack_rate*1.4 courage+3 aggression+4 counters=defense,fortification,trench
+ambuscade: placement=target placement_range=100 event_target=character contest_with=stealth contested_by=detect_stealth inflict_stun=5 critical+1 event_duration=1
+
+# noun criminal
+killer: mass=75 integrity=110 alive=true sentient=true intelligence=6 loyalty=3 aggression=8 courage=7 hands=true speech=true speed_land=6 stealth=6 dmg_slash=45 attack_rate=1.2 critical=0.3 inflict_bleed=6 fear_aura=4 food_need=0.03
+pirate: mass=80 integrity=150 alive=true sentient=true intelligence=5 loyalty=3 aggression=6 courage=7 hands=true speech=true speed_land=5 speed_water=1 dmg_slash=40 attack_rate=1 letter_steal=6 buoyancy=2 food_need=0.04 pack_size=4 counters=ship,boat,merchant
+operative: mass=75 integrity=100 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=6 stealth=8 disguise=5 read_inventory=true dmg_pierce=40 attack_rate=1 attack_range=30 food_need=0.03
+murderer: mass=75 integrity=100 alive=true sentient=true intelligence=6 loyalty=2 aggression=8 hands=true speech=true speed_land=6 stealth=6 dmg_slash=50 attack_rate=1 critical=0.3 inflict_bleed=8 fear_aura=5 reputation=-4 food_need=0.03
+confederate: mass=70 integrity=90 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=6 stealth=6 decoys=1 letter_steal=2 food_need=0.03
+traitor: mass=75 integrity=90 alive=true sentient=true intelligence=7 loyalty=0 hands=true speech=true speed_land=6 stealth=6 disguise=7 read_inventory=true letter_steal=5 food_need=0.03 on_owner_death=vanish
+hacker: mass=70 integrity=70 alive=true sentient=true intelligence=9 loyalty=3 hands=true speech=true speed_land=4 stealth=6 read_inventory=true jams=true field_radius=60 field_targets=enemies letter_steal=4 upkeep_power=0.2 food_need=0.03 counters=camera,radar,computer,alarm
+assassin: mass=70 integrity=110 alive=true sentient=true intelligence=8 loyalty=4 aggression=6 courage=8 hands=true speech=true speed_land=8 agility=9 climb=7 stealth=10 disguise=6 dmg_pierce=90 dmg_poison=60 attack_rate=1 critical=0.6 armor_pierce=0.5 inflict_poison=20 night_vision=true food_need=0.03
+gangster: mass=85 integrity=130 alive=true sentient=true intelligence=6 loyalty=4 aggression=6 courage=7 hands=true speech=true speed_land=6 dmg_pierce=60 attack_rate=1.5 attack_range=40 loudness=8 intimidation=6 inflict_debt=60 food_need=0.04 pack_size=3
+outlaw: mass=80 integrity=140 alive=true sentient=true intelligence=6 loyalty=3 aggression=5 courage=8 hands=true speech=true speed_land=6 stealth=6 dmg_pierce=55 attack_rate=1 attack_range=40 targets=land,air letter_steal=5 immune_root=true food_need=0.04
+thug: mass=95 integrity=160 alive=true sentient=true intelligence=3 loyalty=4 aggression=7 courage=6 hands=true speech=true speed_land=5 strength=8 dmg_blunt=45 attack_rate=1 inflict_stun=1 intimidation=5 letter_steal=3 food_need=0.04 pack_size=2
+stalker: mass=75 integrity=90 alive=true sentient=true intelligence=6 loyalty=2 hands=true speech=true speed_land=6 stealth=8 tracking=9 inflict_fear=10 inflict_expose=60 attack_rate=0.2 food_need=0.03
+crook: mass=70 integrity=85 alive=true sentient=true intelligence=6 loyalty=2 hands=true speech=true speed_land=6 stealth=7 letter_steal=5 charm=4 dmg_blunt=12 attack_rate=1 food_need=0.03
+robber: mass=75 integrity=100 alive=true sentient=true intelligence=5 loyalty=2 aggression=5 hands=true speech=true speed_land=7 stealth=6 letter_steal=8 inflict_fear=5 dmg_blunt=25 attack_rate=1 security+-3 food_need=0.03
+bandit: mass=75 integrity=120 alive=true sentient=true intelligence=5 loyalty=3 aggression=6 hands=true speech=true speed_land=7 stealth=6 camouflage=badlands,desert,hill letter_steal=6 dmg_slash=35 attack_rate=1 food_need=0.04 pack_size=4
+gunman: mass=80 integrity=110 alive=true sentient=true intelligence=5 loyalty=3 aggression=7 hands=true speech=true speed_land=6 dmg_pierce=60 attack_rate=1.5 attack_range=50 targets=land,air loudness=9 fear_aura=4 food_need=0.03
+raider: mass=85 integrity=140 alive=true sentient=true intelligence=5 loyalty=4 aggression=7 courage=7 hands=true speech=true speed_land=8 dmg_slash=40 attack_rate=1 siege=2 letter_steal=6 dmg_fire=10 food_need=0.04 pack_size=5
+hitman: mass=80 integrity=110 alive=true sentient=true intelligence=7 loyalty=5 aggression=5 hands=true speech=true speed_land=6 stealth=8 disguise=4 dmg_pierce=100 attack_rate=0.8 attack_range=60 critical=0.5 accuracy=0.95 food_need=0.03
+ripper: mass=75 integrity=100 alive=true sentient=true intelligence=6 loyalty=1 aggression=9 hands=true speech=true speed_land=6 stealth=8 nocturnal=true dmg_slash=55 attack_rate=1.2 inflict_bleed=15 fear_aura=6 food_need=0.03
+accomplice: mass=70 integrity=90 alive=true sentient=true intelligence=6 loyalty=5 hands=true speech=true speed_land=6 stealth=6 letter_steal=3 decoys=1 food_need=0.03
+felon: mass=80 integrity=110 alive=true sentient=true intelligence=5 loyalty=2 aggression=5 hands=true speech=true speed_land=6 stealth=5 letter_steal=4 dmg_blunt=25 attack_rate=1 reputation=-3 food_need=0.03
+collaborator: mass=70 integrity=85 alive=true sentient=true intelligence=6 loyalty=1 hands=true speech=true speed_land=5 read_inventory=true detect_life=200 food_need=0.03
+snitch: mass=65 integrity=70 alive=true sentient=true intelligence=6 loyalty=1 hands=true speech=true speed_land=7 stealth=6 inflict_expose=120 read_inventory=true loudness=4 food_need=0.03
+hustler: mass=70 integrity=85 alive=true sentient=true intelligence=7 loyalty=2 hands=true speech=true speed_land=6 charm=8 trade_bonus=0.3 letter_steal=4 food_need=0.03
+ghoul: mass=60 integrity=150 alive=false sentient=true aggression=8 diet=scavenger speed_land=5 nocturnal=true night_vision=true dmg_slash=30 dmg_disease=20 inflict_sick=20 attack_rate=1 fear_aura=6 odor=8 res_poison=1 immune_fear=true smell_range=200
+cutthroat: mass=75 integrity=110 alive=true sentient=true intelligence=6 loyalty=1 aggression=8 hands=true speech=true speed_land=7 stealth=7 dmg_slash=50 attack_rate=1.2 critical=0.4 inflict_bleed=12 letter_steal=4 food_need=0.03
+corsair: mass=80 integrity=150 alive=true sentient=true intelligence=6 loyalty=3 aggression=6 courage=8 hands=true speech=true speed_land=5 speed_water=1 dmg_slash=45 attack_rate=1 letter_steal=6 food_need=0.04 pack_size=4 counters=ship,merchant
+mobster: mass=85 integrity=130 alive=true sentient=true intelligence=7 loyalty=5 aggression=5 hands=true speech=true speed_land=6 dmg_pierce=60 attack_rate=1.5 attack_range=40 intimidation=7 inflict_debt=120 tax_rate=0.1 food_need=0.04 pack_size=3
+conspirator: mass=70 integrity=85 alive=true sentient=true intelligence=8 loyalty=3 hands=true speech=true speed_land=5 stealth=7 decoys=2 field_radius=60 field_targets=enemies read_inventory=true food_need=0.03
+kidnapper: mass=85 integrity=130 alive=true sentient=true intelligence=6 loyalty=2 aggression=5 hands=true speech=true speed_land=7 strength=8 stealth=6 inflict_root=6 inflict_silence=6 dmg_blunt=20 attack_rate=1 food_need=0.04
+shill: mass=70 integrity=80 alive=true sentient=true intelligence=6 loyalty=4 hands=true speech=true speed_land=5 charm=7 decoys=1 trade_rate=1.3 field_radius=20 field_targets=enemies food_need=0.03
+charlatan: mass=70 integrity=80 alive=true sentient=true intelligence=8 loyalty=1 hands=true speech=true speed_land=5 charm=9 disguise=6 letter_steal=5 decoys=2 field_radius=40 field_targets=enemies food_need=0.03
+arsonist: mass=70 integrity=90 alive=true sentient=true intelligence=5 loyalty=2 aggression=6 hands=true speech=true speed_land=7 stealth=6 dmg_fire=60 inflict_burn=15 attack_rate=0.5 siege=3 res_fire=0.3 food_need=0.03
+gunslinger: mass=80 integrity=130 alive=true sentient=true intelligence=6 loyalty=4 courage=9 hands=true speech=true speed_land=6 dmg_pierce=70 attack_rate=2 attack_range=40 accuracy=0.97 critical=0.3 targets=land,air loudness=9 training=8 food_need=0.04
+poacher: mass=75 integrity=100 alive=true sentient=true intelligence=6 loyalty=2 hands=true speech=true speed_land=6 stealth=7 camouflage=forest,savanna,jungle dmg_pierce=60 attack_range=200 attack_rate=0.5 harvest_bonus=3 harvest_sources=hunting tracking=6 food_need=0.03
+hijacker: mass=80 integrity=110 alive=true sentient=true intelligence=6 loyalty=2 aggression=6 hands=true speech=true speed_land=6 stealth=5 dmg_pierce=40 attack_rate=1 inflict_fear=8 counters=car,truck,plane,ship,train food_need=0.03
+forger: mass=65 integrity=70 alive=true sentient=true intelligence=8 loyalty=3 hands=true speech=true speed_land=5 craft_slots=1 crafts=document,currency decoys=1 trade_rate=0.7 food_need=0.03
+grifter: mass=70 integrity=80 alive=true sentient=true intelligence=8 loyalty=1 hands=true speech=true speed_land=6 charm=8 disguise=5 letter_steal=6 food_need=0.03
+mugger: mass=80 integrity=110 alive=true sentient=true intelligence=4 loyalty=2 aggression=6 hands=true speech=true speed_land=7 stealth=6 letter_steal=6 inflict_fear=5 dmg_blunt=25 attack_rate=1 nocturnal=true food_need=0.03
+abductor: mass=85 integrity=130 alive=true sentient=true intelligence=6 loyalty=2 hands=true speech=true speed_land=7 strength=8 stealth=6 inflict_root=6 inflict_silence=6 dmg_blunt=20 attack_rate=1 food_need=0.04
+buccaneer: mass=80 integrity=150 alive=true sentient=true intelligence=6 loyalty=3 aggression=6 courage=8 hands=true speech=true speed_land=5 speed_water=1 dmg_slash=45 dmg_pierce=30 attack_rate=1 letter_steal=6 food_need=0.04 pack_size=4 counters=ship,merchant
+saboteur: mass=70 integrity=90 alive=true sentient=true intelligence=7 loyalty=3 hands=true speech=true speed_land=6 stealth=8 disguise=4 dmg_blast=300 siege=5 attack_rate=0.1 counters=machine,bridge,factory,generator,engine food_need=0.03
+pusher: mass=70 integrity=80 alive=true sentient=true intelligence=5 loyalty=2 hands=true speech=true speed_land=6 stealth=5 trade_bonus=0.3 inflict_sick=20 inflict_debt=60 attack_rate=0.2 food_need=0.03
+slasher: mass=80 integrity=120 alive=true sentient=true intelligence=4 loyalty=1 aggression=9 hands=true speech=true speed_land=6 stealth=6 dmg_slash=60 attack_rate=1.3 inflict_bleed=15 fear_aura=7 food_need=0.03
+cutpurse: mass=60 integrity=70 alive=true sentient=true intelligence=7 loyalty=2 hands=true speech=true speed_land=7 agility=9 stealth=9 letter_steal=4 dmg_slash=8 attack_rate=2 food_need=0.03
+safecracker: mass=70 integrity=80 alive=true sentient=true intelligence=9 loyalty=3 hands=true speech=true speed_land=5 stealth=7 security+-8 letter_steal=8 counters=safe,vault,lock,padlock,lockable food_need=0.03
+ringleader: mass=80 integrity=120 alive=true sentient=true intelligence=8 loyalty=4 hands=true speech=true speed_land=5 authority=5 command_limit=8 charm=6 stealth=5 recruit_rate=0.5 food_need=0.04
+godfather: mass=90 integrity=110 alive=true sentient=true intelligence=9 loyalty=6 courage=8 hands=true speech=true speed_land=4 authority=8 command_limit=20 intimidation=9 tax_rate=0.15 inflict_debt=180 fear_aura=4 summons=gangster summon_count=3 summon_owned=true food_need=0.04
+
+# noun person
+cop: mass=85 integrity=200 alive=true sentient=true intelligence=6 loyalty=7 courage=6 hands=true speech=true speed_land=6 authority=3 detect_stealth=6 alarm=true dmg_pierce=40 attack_rate=1 attack_range=30 targets=land,air inflict_root=3 counters=thief,robber,mugger,crook food_need=0.04
+inspector: mass=75 integrity=110 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=5 authority=4 detect_stealth=8 read_properties=6 read_inventory=true counters=fraud,forgery,lie,hoax,decoy food_need=0.03
+bobby: mass=80 integrity=180 alive=true sentient=true intelligence=6 loyalty=8 courage=7 hands=true speech=true speed_land=6 authority=3 detect_stealth=5 alarm=true dmg_blunt=25 attack_rate=1 inflict_root=4 counters=thief,pickpocket,hooligan food_need=0.04
+liar: mass=70 integrity=80 alive=true sentient=true intelligence=6 loyalty=2 hands=true speech=true speed_land=5 charm=5 decoys=3 field_radius=60 field_targets=enemies inflict_confuse=3 food_need=0.03 counters=truth
+rogue: mass=70 integrity=100 alive=true sentient=true intelligence=7 loyalty=3 hands=true speech=true speed_land=7 agility=8 stealth=7 charm=5 letter_steal=4 dmg_slash=25 attack_rate=1.5 critical=0.25 food_need=0.03
+villain: mass=80 integrity=150 alive=true sentient=true intelligence=8 loyalty=3 aggression=7 hands=true speech=true speed_land=5 authority=4 fear_aura=6 intimidation=7 dmg_slash=40 attack_rate=1 command_limit=6 food_need=0.04 counters=hero
+bully: mass=90 integrity=130 alive=true sentient=true intelligence=3 loyalty=3 aggression=6 courage=4 hands=true speech=true speed_land=5 strength=7 intimidation=5 letter_steal=2 dmg_blunt=20 attack_rate=1 inflict_fear=4 food_need=0.04
+investigator: mass=75 integrity=100 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=6 detect_stealth=9 read_properties=7 tracking=8 sight_range=60 counters=hoax,lie,ruse,fraud,forgery,decoy,landmine,tripwire,pitfall,trap food_need=0.03
+policeman: mass=85 integrity=200 alive=true sentient=true intelligence=6 loyalty=7 courage=6 hands=true speech=true speed_land=6 authority=3 detect_stealth=6 alarm=true dmg_pierce=40 attack_rate=1 attack_range=30 targets=land,air inflict_root=3 counters=thief,robber,burglar food_need=0.04
+policewoman: mass=70 integrity=190 alive=true sentient=true intelligence=7 loyalty=7 courage=6 hands=true speech=true speed_land=6 authority=3 detect_stealth=6 alarm=true dmg_pierce=40 attack_rate=1 attack_range=30 targets=land,air inflict_root=3 counters=thief,robber,burglar food_need=0.04
+offender: mass=75 integrity=100 alive=true sentient=true intelligence=5 loyalty=2 hands=true speech=true speed_land=6 stealth=5 letter_steal=3 reputation=-2 food_need=0.03
+attacker: mass=80 integrity=120 alive=true sentient=true intelligence=5 aggression=8 hands=true speech=true speed_land=7 dmg_blunt=35 attack_rate=1.2 food_need=0.04
+convict: mass=75 integrity=120 alive=true sentient=true intelligence=5 loyalty=2 courage=7 hands=true speech=true speed_land=5 strength=7 dmg_blunt=25 attack_rate=1 reputation=-3 security+-2 food_need=0.03
+fugitive: mass=70 integrity=90 alive=true sentient=true intelligence=6 loyalty=3 hands=true speech=true speed_land=8 stealth=8 evasion=0.3 disguise=4 immune_root=true food_need=0.03
+mimic: mass=70 integrity=80 alive=true sentient=true intelligence=7 hands=true speech=true speed_land=6 copies=true disguise=7 food_need=0.03
+brute: mass=110 integrity=220 alive=true sentient=true intelligence=2 aggression=8 courage=8 hands=true speech=true speed_land=5 strength=9 dmg_blunt=60 attack_rate=0.8 knockback=3 food_need=0.05
+culprit: mass=75 integrity=90 alive=true sentient=true intelligence=6 loyalty=2 hands=true speech=true speed_land=6 stealth=5 letter_steal=4 reputation=-2 food_need=0.03
+perpetrator: mass=75 integrity=100 alive=true sentient=true intelligence=6 loyalty=2 aggression=5 hands=true speech=true speed_land=6 stealth=6 letter_steal=4 dmg_blunt=20 attack_rate=1 food_need=0.03
+cheater: mass=70 integrity=80 alive=true sentient=true intelligence=7 loyalty=1 hands=true speech=true speed_land=5 letter_steal=4 decoys=1 charm=3 reputation=-2 food_need=0.03
+renegade: mass=80 integrity=140 alive=true sentient=true intelligence=6 loyalty=0 courage=8 hands=true speech=true speed_land=6 dmg_pierce=40 attack_rate=1 immune_charm=true obedience=0 food_need=0.04
+rowdy: mass=85 integrity=120 alive=true sentient=true intelligence=3 aggression=6 hands=true speech=true speed_land=6 loudness=7 dmg_blunt=25 attack_rate=1 inflict_rage=4 food_need=0.04 pack_size=3
+punk: mass=70 integrity=100 alive=true sentient=true intelligence=4 loyalty=2 aggression=6 hands=true speech=true speed_land=7 loudness=6 dmg_blunt=20 attack_rate=1.2 beauty=2 obedience=1 food_need=0.03 pack_size=3
+delinquent: mass=60 integrity=80 alive=true sentient=true intelligence=4 loyalty=2 aggression=4 hands=true speech=true speed_land=7 stealth=5 obedience=1 letter_steal=2 dmg_blunt=12 attack_rate=1 food_need=0.03
+goon: mass=100 integrity=170 alive=true sentient=true intelligence=2 loyalty=6 aggression=6 hands=true speech=true speed_land=5 strength=8 dmg_blunt=45 attack_rate=1 intimidation=4 food_need=0.04 pack_size=3
+assailant: mass=80 integrity=120 alive=true sentient=true intelligence=5 aggression=8 hands=true speech=true speed_land=7 stealth=5 dmg_slash=35 attack_rate=1.2 inflict_fear=4 food_need=0.04
+avenger: mass=80 integrity=160 alive=true sentient=true intelligence=7 loyalty=8 courage=9 hands=true speech=true speed_land=7 tracking=9 dmg_slash=55 attack_rate=1.2 critical=0.3 immune_fear=true counters=murderer,killer,assassin,traitor food_need=0.04
+rascal: mass=40 integrity=50 alive=true sentient=true intelligence=6 loyalty=3 hands=true speech=true speed_land=8 agility=8 stealth=6 letter_steal=2 charm=5 evasion=0.3 food_need=0.02
+aggressor: mass=85 integrity=140 alive=true sentient=true intelligence=5 aggression=9 courage=7 hands=true speech=true speed_land=6 dmg_blunt=40 attack_rate=1.2 inflict_rage=5 food_need=0.04
+scammer: mass=70 integrity=80 alive=true sentient=true intelligence=7 loyalty=1 hands=true speech=true speed_land=5 charm=7 letter_steal=5 decoys=1 food_need=0.03
+henchman: mass=95 integrity=160 alive=true sentient=true intelligence=3 loyalty=7 aggression=5 hands=true speech=true speed_land=5 strength=8 dmg_blunt=40 attack_rate=1 food_need=0.04 pack_size=3
+imposter: mass=70 integrity=80 alive=true sentient=true intelligence=7 loyalty=2 hands=true speech=true speed_land=5 disguise=9 charm=5 read_inventory=true food_need=0.03 counters=truth
+impostor: mass=70 integrity=80 alive=true sentient=true intelligence=7 loyalty=2 hands=true speech=true speed_land=5 disguise=9 charm=5 read_inventory=true food_need=0.03 counters=truth
+trickster: mass=65 integrity=80 alive=true sentient=true intelligence=8 loyalty=2 hands=true speech=true speed_land=7 agility=8 decoys=3 field_radius=50 field_targets=enemies inflict_confuse=5 attack_rate=0.5 charm=5 food_need=0.03
+faker: mass=70 integrity=75 alive=true sentient=true intelligence=6 loyalty=2 hands=true speech=true speed_land=5 disguise=5 decoys=2 field_radius=30 field_targets=enemies food_need=0.03
+pretender: mass=75 integrity=100 alive=true sentient=true intelligence=6 loyalty=3 hands=true speech=true speed_land=5 disguise=6 authority=3 charm=5 food_need=0.03 counters=king,queen,emperor,throne
+scoundrel: mass=75 integrity=90 alive=true sentient=true intelligence=6 loyalty=1 hands=true speech=true speed_land=6 stealth=6 letter_steal=5 charm=4 dmg_slash=20 attack_rate=1 food_need=0.03
+impersonator: mass=70 integrity=80 alive=true sentient=true intelligence=7 loyalty=2 hands=true speech=true speed_land=5 disguise=10 copies=true charm=4 food_need=0.03
+charmer: mass=70 integrity=80 alive=true sentient=true intelligence=7 loyalty=3 hands=true speech=true speed_land=5 charm=10 inflict_charm=15 attack_rate=0.3 beauty=8 food_need=0.03
+deserter: mass=75 integrity=110 alive=true sentient=true intelligence=5 loyalty=0 courage=2 hands=true speech=true speed_land=8 stealth=7 obedience=0 dmg_pierce=30 attack_rate=1 food_need=0.04
+hooligan: mass=85 integrity=130 alive=true sentient=true intelligence=3 aggression=7 hands=true speech=true speed_land=6 loudness=8 dmg_blunt=30 attack_rate=1 siege=1.5 inflict_rage=5 food_need=0.04 pack_size=4
+sleuth: mass=70 integrity=90 alive=true sentient=true intelligence=9 loyalty=7 hands=true speech=true speed_land=6 detect_stealth=10 read_properties=8 tracking=9 smell_range=20 counters=hoax,lie,ruse,fraud,forgery,decoy,disguise,alibi food_need=0.03
+defector: mass=75 integrity=90 alive=true sentient=true intelligence=7 loyalty=1 hands=true speech=true speed_land=6 stealth=6 read_inventory=true detect_life=300 food_need=0.03
+usurper: mass=80 integrity=140 alive=true sentient=true intelligence=8 loyalty=1 courage=8 hands=true speech=true speed_land=5 authority=6 command_limit=10 takes_city=true intimidation=5 food_need=0.04 counters=king,queen,throne,crown
+marauder: mass=85 integrity=150 alive=true sentient=true intelligence=4 loyalty=3 aggression=8 courage=7 hands=true speech=true speed_land=8 dmg_slash=45 dmg_fire=15 siege=2 attack_rate=1 letter_steal=6 food_need=0.04 pack_size=5
+knave: mass=70 integrity=85 alive=true sentient=true intelligence=6 loyalty=1 hands=true speech=true speed_land=6 stealth=5 letter_steal=3 charm=3 food_need=0.03
+baddie: mass=80 integrity=130 alive=true sentient=true intelligence=6 loyalty=3 aggression=7 hands=true speech=true speed_land=6 dmg_pierce=40 attack_rate=1 fear_aura=3 food_need=0.04
+deceiver: mass=70 integrity=80 alive=true sentient=true intelligence=8 loyalty=1 hands=true speech=true speed_land=5 disguise=6 decoys=3 field_radius=50 field_targets=enemies inflict_confuse=4 food_need=0.03
+coroner: mass=75 integrity=90 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=5 read_properties=8 detect_life=100 reclaim_rate=0.3 reclaim_range=10 food_need=0.03
+ombudsman: mass=75 integrity=90 alive=true sentient=true intelligence=8 loyalty=8 hands=true speech=true speed_land=5 authority=3 detect_stealth=6 read_inventory=true counters=bribery,graft,fraud,embezzlement,extortion food_need=0.03
+quack: mass=75 integrity=80 alive=true sentient=true intelligence=4 loyalty=2 hands=true speech=true speed_land=5 charm=6 heals=0.5 inflict_sick=10 letter_steal=3 food_need=0.03
+peddler: mass=70 integrity=80 alive=true sentient=true intelligence=6 loyalty=4 hands=true speech=true speed_land=5 carry_capacity=40 trade_bonus=0.3 charm=5 food_need=0.03
+informer: mass=65 integrity=75 alive=true sentient=true intelligence=7 loyalty=3 hands=true speech=true speed_land=6 stealth=7 read_inventory=true inflict_expose=90 food_need=0.03
+turncoat: mass=75 integrity=90 alive=true sentient=true intelligence=6 loyalty=0 hands=true speech=true speed_land=6 disguise=6 read_inventory=true letter_steal=4 food_need=0.03 on_owner_death=vanish
+crony: mass=75 integrity=90 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=5 charm=3 pays=2 food_need=0.03
+lackey: mass=70 integrity=80 alive=true sentient=true intelligence=4 loyalty=8 obedience=9 hands=true speech=true speed_land=6 labor=1 carry_capacity=30 food_need=0.03
+stooge: mass=75 integrity=90 alive=true sentient=true intelligence=3 loyalty=7 obedience=9 hands=true speech=true speed_land=5 decoys=1 food_need=0.03
+patsy: mass=75 integrity=90 alive=true sentient=true intelligence=3 loyalty=6 hands=true speech=true speed_land=5 decoys=2 field_radius=40 field_targets=enemies food_need=0.03
+scapegoat: mass=75 integrity=90 alive=true sentient=true intelligence=4 loyalty=6 hands=true speech=true speed_land=5 decoys=3 field_radius=60 field_targets=enemies food_need=0.03 counters=accusation,blame,verdict,warrant
+sucker: mass=75 integrity=90 alive=true sentient=true intelligence=2 loyalty=8 hands=true speech=true speed_land=5 charm=1 pays=3 food_need=0.03
+dupe: mass=75 integrity=90 alive=true sentient=true intelligence=2 loyalty=7 hands=true speech=true speed_land=5 decoys=1 food_need=0.03
+jailbird: mass=75 integrity=110 alive=true sentient=true intelligence=5 loyalty=3 courage=6 hands=true speech=true speed_land=5 climb=5 immune_root=true reputation=-2 food_need=0.03
+captive: mass=70 integrity=80 alive=true sentient=true intelligence=5 loyalty=1 hands=true speech=true speed_land=2 courage=2 morale=2 food_need=0.03
+
+# noun tool
+web: mass=0.01 integrity=8 material=silk portable=false stealth=7 stickiness=9 trigger_radius=2 inflict_root=15 inflict_slow=20 single_use=true flammability=8 targets=land,air color=white
+seine: mass=20 length=200 integrity=40 material=fiber portable=false trigger_radius=4 inflict_root=12 targets=water harvest_bonus=4 harvest_sources=fishing single_use=true
+noose: mass=1 length=3 integrity=25 material=fiber portable=false stealth=6 trigger_radius=1 inflict_root=20 dmg_suffocation=60 single_use=true fear_aura=3 color=brown
+trawl: mass=200 length=50 integrity=80 material=fiber placeable_on=water inflict_root=10 targets=water harvest_bonus=5 harvest_sources=fishing
+fishnet: mass=3 integrity=20 material=fiber equip_slot=held attack_range=6 inflict_root=6 targets=land,water harvest_bonus=3 harvest_sources=fishing
+caltrop: plural_count=20 mass=0.05 integrity=30 sharpness=8 material=iron portable=false stealth=7 trigger_radius=1 dmg_pierce=25 inflict_slow=30 inflict_bleed=6 single_use=true color=gray
+spike: mass=1 length=0.5 integrity=60 sharpness=8 material=iron portable=false stealth=6 trigger_radius=1 dmg_pierce=50 inflict_bleed=8 inflict_root=3 single_use=true
+dragnet: mass=40 integrity=60 material=fiber portable=false trigger_radius=4 attack_area=8 multi_target=6 inflict_root=20 single_use=true detect_stealth+4 counters=fugitive,thief,smuggler,outlaw
+skeleton: mass=0.03 integrity=20 material=iron equip_slot=held security+-7 counters=lock,padlock,lockable,deadbolt,latch
+
+# noun weapon
+dagger: mass=0.4 length=0.35 integrity=40 sharpness=9 material=steel equip_slot=held hands_required=1 dmg_pierce=30 dmg_slash=10 attack_rate=1.8 attack_range=0.8 critical=0.3 stealth=4 armor_pierce=0.3
+torpedo: mass=1500 length=6 integrity=60 single_use=true speed_water=25 self_propelled=true requires_pilot=false dmg_blast=6000 attack_range=10000 attack_area=10 targets=water siege=5 placeable_on=water
+truncheon: mass=0.7 length=0.5 integrity=60 material=wood equip_slot=held hands_required=1 dmg_blunt=20 attack_rate=1.2 inflict_stun=1.5 authority+1
+nightstick: mass=0.6 length=0.6 integrity=70 material=wood,plastic equip_slot=held hands_required=1 dmg_blunt=20 attack_rate=1.2 inflict_stun=1.5 authority+1
+stab: placement=target placement_range=1 event_target=character dmg_pierce=60 inflict_bleed=10 critical+0.3 contest_with=stealth contested_by=detect_stealth event_duration=1
+sharpie: mass=0.02 integrity=3 material=plastic equip_slot=held color=black decoys=1 crafts=document
+
+# noun device
+latch: mass=0.2 integrity=60 material=iron portable=false locks=true lockable=true security=3 counters=thief
+deadbolt: mass=0.6 integrity=300 hardness=9 material=steel portable=false locks=true lockable=true security=8 counters=thief,burglar,burglary,theft,trespass,crowbar
+keyhole: mass=0 integrity=200 portable=false sight_range=5 read_inventory=true stealth=8
+pin: mass=0.01 integrity=5 material=steel sharpness=7 equip_slot=held dmg_pierce=2 security+-2 stealth=6 counters=lock,padlock,latch
+
+# noun document
+fingerprint: placement=target placement_range=30 event_target=character inflict_expose=120 contest_with=detect_stealth contested_by=stealth event_duration=1 counters=alibi,disguise,mask
+autopsy: placement=self field_radius=10 field_targets=owned field_duration=2 read_properties+8 detect_stealth+6 counters=poison,murder,assassination
+
+# noun knowledge
+motive: placement=target placement_range=60 event_target=character inflict_expose=60 read_properties+4 event_duration=1 counters=alibi
+stakeout: placement=target placement_range=300 event_target=tile event_radius=40 event_duration=10 map_reveal=20 detect_stealth+6 alarm=true counters=heist,robbery,burglary,smuggling
+
+# noun possession
+contraband: mass=20 integrity=20 value=500 stealth=5 trade_bonus=0.3 reputation=-2 counters=embargo,customs
+stash: mass=10 integrity=40 portable=false stealth=8 storage_letters=150 storage_objects=50 color=brown
+cunning: placement=self field_radius=4 field_targets=self field_duration=5 intelligence+3 stealth+3 evasion+0.2 decoys=1
+
+# noun place
+hideout: mass=50000 footprint=3 height=3 integrity=4000 material=stone,wood portable=false enterable=true occupants=8 lockable=true stealth=8 cover=0.6 security=5 storage_letters=300 claim_radius=2 comfort=2 color=brown
+getaway: placement=self field_radius=4 field_targets=self field_duration=1 speed_land*2 stealth+4 effect_status=root,slow immune_root=true
+
+# noun group
+posse: pack_size=6 mass=80 integrity=150 alive=true sentient=true intelligence=5 loyalty=7 courage=7 hands=true speech=true speed_land=7 tracking=7 dmg_pierce=50 attack_rate=1 attack_range=40 targets=land,air counters=outlaw,bandit,fugitive,rustling food_need=0.04
+
+# noun creature
+beast: mass=400 length=2.5 integrity=800 alive=true aggression=8 courage=8 diet=carnivore food_need=0.2 speed_land=14 dmg_slash=90 dmg_crush=60 attack_rate=1 fear_aura=6 night_vision=true loudness=7 habitat=forest,badlands
+predator: mass=120 length=2 integrity=300 alive=true aggression=7 diet=carnivore food_need=0.1 speed_land=17 stealth=7 tracking=8 smell_range=500 dmg_pierce=60 dmg_slash=40 attack_rate=1 inflict_bleed=6 fear_aura=4 night_vision=true habitat=forest,savanna
+
+# noun bird
+harrier: mass=0.5 length=0.5 integrity=8 alive=true diet=carnivore food_need=0.002 speed_air=15 flight_ceiling=1000 sight_range=800 dmg_pierce=6 attack_rate=1 stealth=4 habitat=marsh,meadow
+
+# noun bodypart
+maw: mass=8 integrity=60 material=flesh equip_slot=graft dmg_pierce=60 dmg_crush=40 attack_rate=0.8 inflict_bleed=8 fear_aura=3 lifesteal=0.1
+
+# noun worker
+runner: mass=60 integrity=80 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=10 acceleration=7 range=40 carry_capacity=10 command_limit+3 food_need=0.04
+
+# noun fighter
+trooper: mass=85 integrity=200 alive=true sentient=true intelligence=5 loyalty=7 courage=7 hands=true speech=true speed_land=6 armor=10 dmg_pierce=60 attack_rate=1.5 attack_range=200 targets=land,air training=5 authority=2 food_need=0.04 pack_size=4
+
+# noun drink
+gin: state=liquid mass=0.7 volume=0.0007 edible=true nutrition=1 potency=7 courage+3 accuracy+-0.1 flammability=6 color=clear
+smoothie: state=liquid mass=0.4 volume=0.0004 edible=true nutrition=5 shelf_life=60 regeneration+0.3 color=pink
+
+# adjective quality
+tough: integrity*1.5 armor+5 courage+2 hardness+2 immune_fear=true
+slight: mass*0.6 integrity*0.7 stealth+2 evasion+0.1
+petty: value*0.3 letter_steal*0.5 reputation+-1 stealth+2
+savage: aggression+5 dmg_slash*1.4 dmg_pierce*1.4 fear_aura+3 loyalty+-3 obedience+-3
+phony: value*0.05 integrity*0.4 decoys+2 disguise+3 charm+1
+sneaky: stealth+5 loudness+-3 letter_steal+2 critical+0.2
+crooked: letter_steal+3 reputation+-3 loyalty+-3 trade_rate*1.3 stealth+2
+dishonest: decoys+1 letter_steal+2 reputation+-3 loyalty+-2 charm+1
+sly: stealth+4 intelligence+2 evasion+0.15 decoys+1
+wily: intelligence+3 evasion+0.25 stealth+3 immune_charm=true
+devious: intelligence+2 decoys+2 stealth+3 loyalty+-2
+shady: stealth+4 reputation+-2 trade_bonus+0.2 light_delta+-1
+deceitful: decoys+2 disguise+3 loyalty+-3 reputation+-2
+treacherous: loyalty*0 critical+0.4 disguise+4 stealth+3 reputation+-3
+lawless: authority+-5 negates=law,fine aggression+3 obedience+-4 stealth+2
+illicit: stealth+3 value*2 reputation+-2 trade_bonus+0.2
+bogus: value*0.05 integrity*0.4 decoys+2
+spurious: value*0.1 decoys+2 integrity*0.5
+fraudulent: value*0.1 letter_steal+3 decoys+2 reputation+-3
+fictitious: decoys+4 integrity*0.1 mass*0
+suspicious: detect_stealth+4 alarm=true inflict_expose+20 loyalty+-1
+notorious: fear_aura+3 intimidation+3 inflict_expose+60 reputation+-4
+infamous: fear_aura+4 intimidation+4 inflict_expose+60 reputation+-5
+anonymous: stealth+4 immune_expose=true disguise+3
+undercover: disguise+8 stealth+4 read_inventory=true
+clandestine: stealth+6 immune_expose=true alarm=false loudness+-3
+stealthy: stealth+6 loudness+-5 critical+0.2
+furtive: stealth+5 speed_land*0.8 loudness+-4
+burglarproof: security+6 lockable=true locks=true
+forensic: detect_stealth+6 read_properties+5 tracking+4
+
+# verb transfer
+burgle: effect_target=touched letter_steal+6 security+-4 stealth+4 duration=1
+pilfer: effect_target=touched letter_steal+3 stealth+3 duration=1
+filch: effect_target=touched letter_steal+3 stealth+3 duration=1
+purloin: effect_target=touched transfers_ownership=true contest_with=stealth contested_by=security duration=1
+embezzle: effect_target=touched letter_steal+6 stealth+2 duration=1
+defraud: effect_target=touched letter_steal+6 inflict_confuse=4 duration=1
+extort: effect_target=touched inflict_debt=150 inflict_fear=10 contest_with=authority contested_by=security duration=1
+launder: duration=300 stealth+4 immune_expose=true trade_rate*0.8 produce_T*1.5
+smuggle: duration=180 stealth+5 trade_rate*0.5 carry_capacity*1.5
+
+# verb transform
+pretend: duration=120 disguise+6 decoys=1
+teach: effect_target=touched duration=300 training+3 intelligence+2 trainable+2
+falsify: duration=120 decoys=3 trade_rate*0.7 value*0.1
+impersonate: duration=180 disguise+9 charm+2 authority+2
+conceal: effect_target=held duration=300 stealth+8 untargetable=true
+
+# verb social
+deceive: effect_target=touched inflict_confuse=10 inflict_charm=6 decoys=2 duration=1
+mislead: effect_target=touched inflict_confuse=12 decoys=2 duration=1
+hoodwink: effect_target=touched inflict_confuse=8 letter_steal+3 duration=1
+betray: effect_target=touched transfers_ownership=true contest_with=charm contested_by=loyalty critical+1 duration=1
+mock: effect_target=touched inflict_rage=8 morale+-2 duration=1
+lynch: effect_target=touched destroys_target=true contest_with=authority contested_by=strength inflict_fear=20 reputation+-5 duration=1
+
+# verb movement
+flee: duration=20 speed_land*2.5 evasion+0.3 effect_status=root courage+-3
+lurk: duration=180 stealth+6 speed_land*0.3 critical+0.3
+skulk: duration=120 stealth+5 speed_land*0.6 loudness+-4
+
+# verb combat
+assassinate: effect_target=touched destroys_target=true contest_with=stealth contested_by=detect_stealth duration=1
+strangle: effect_target=touched dmg_suffocation=80 inflict_silence=10 inflict_root=6 contest_with=strength contested_by=strength duration=1
+ensnare: effect_target=touched inflict_root=15 inflict_slow=20 duration=1
+entrap: effect_target=touched inflict_root=20 inflict_expose=30 duration=1
+
+# verb perceive
+clue: duration=60 detect_stealth+5 read_properties+3 tracking+4
+
+# adverb manner
+secretly: stealth+5 immune_expose=true loudness+-3
+sneakily: stealth+5 loudness+-4 critical+0.2
+stealthily: stealth+6 loudness+-5 speed_land*0.8
+covertly: stealth+5 immune_expose=true disguise+2
+slyly: stealth+3 decoys+1 critical+0.2
+guiltily: inflict_expose+20 morale+-1
+illegally: stealth+2 letter_steal+2 reputation+-2
+dishonestly: decoys+1 letter_steal+2 reputation+-2
+treacherously: critical+0.4 loyalty+-3 stealth+2
+falsely: decoys+2 inflict_confuse+3
+deceptively: decoys+2 disguise+2 inflict_confuse+3
+innocently: disguise+3 charm+2 effect_status=expose
