@@ -25,11 +25,11 @@ import type { Op, Value } from "./types.js";
 import { improvisable } from "./unit.js";
 import { claimOf, senseOf } from "./sense.js";
 import { needs, outputs, STARTING_SUPPLY_MINUTES, SUPPLIES } from "./upkeep.js";
-import { useObject } from "./verb.js";
+import { bodyFlags, useObject } from "./verb.js";
 import { placeRules, rulesText } from "./place.js";
 import { resolve } from "./stats.js";
 import { pluralize } from "./plural.js";
-import { effectSeconds, statusSeconds, type Status } from "./status.js";
+import { effectSeconds, inflicts, statusSeconds, type Status } from "./status.js";
 import { toolHelp } from "./biome.js";
 import { TILE_TYPES } from "./world.js";
 import { isMaterial, materialText } from "./material.js";
@@ -348,6 +348,16 @@ export function placeLines(dict: Dictionary, word: string, s: Stats): string[] {
 
 /** Words that end a word's area or weather: those whose `counters` name it, or that clear it as weather. */
 export function countersOf(dict: Dictionary, word: string): string[] {
+  // A dictionary never changes once loaded, so each word's answer is worked out once (it reads every word).
+  let memo = COUNTERS.get(dict);
+  if (!memo) COUNTERS.set(dict, (memo = new Map()));
+  const known = memo.get(word) ?? memo.set(word, findCounters(dict, word)).get(word)!;
+  return known.slice();
+}
+
+const COUNTERS = new WeakMap<Dictionary, Map<string, string[]>>();
+
+function findCounters(dict: Dictionary, word: string): string[] {
   const out: string[] = [];
   const weather = String(dict.word(word)?.set.sets_weather ?? word);
   // Night and day undo each other: a word that brings day ends one that brought night.
@@ -358,6 +368,42 @@ export function countersOf(dict: Dictionary, word: string): string[] {
     if ((undo && def.set.sets_daylight === undo && def.role === "noun") || (Array.isArray(c) && c.includes(word)) || (Array.isArray(clears) && (clears.includes(word) || clears.includes(weather)))) out.push(w);
   }
   return out.sort((a, b) => a.length - b.length || a.localeCompare(b));
+}
+
+/** Minutes an area must cover the whole map, or one place, to count as lasting (`lasting`). */
+export const LASTING = { wideMinutes: 2, localMinutes: 10 };
+
+/**
+ * Whether a spelling lays something that lasts (the server's `happen`, `field` and `sky`): an
+ * area over the whole map for `LASTING.wideMinutes` or more, weather, a change of daylight, or an
+ * area at one place for `LASTING.localMinutes` or more (a field with no length lasts for good).
+ * Null for objects (they can be broken or taken), verbs, things over in a moment, areas that do
+ * nothing, and a field that follows its speller (it ends when they fall). Every lasting word
+ * must have a word that ends it (`countersOf`): the polish batch 2 test checks.
+ */
+export function lasting(dict: Dictionary, word: string): { wide: boolean; minutes: number } | null {
+  const def = dict.word(word);
+  if (!def || def.role !== "noun") return null;
+  let p: Phrase;
+  try { p = parsePhrase(dict, word); } catch { return null; }
+  if (p.kind !== "event" && p.kind !== "field" && p.kind !== "sky") return null;
+  const s = p.stats, placement = String(s.get("placement"));
+  const sky = s.get("sets_weather") !== "" || s.get("sets_daylight") !== "none";
+  const does = sky || def.ops.length > 0 || Object.keys(bodyFlags(def.set)).length > 0 || inflicts(s).length > 0 || s.flag("sets_hostile") ||
+    s.num("contagion") > 0 || s.num("heals") > 0 || placeRules(def, s) !== null || s.num("pull") !== 0 || s.num("waves") > 0 || s.num("meteors") > 0 ||
+    s.num("decoys") > 0 || s.flag("jams") || s.entries().some(([k, v]) => k.startsWith("dmg_") && typeof v === "number" && v > 0);
+  if (!does) return null;
+  let wide: boolean, minutes: number;
+  if (p.kind === "event") {
+    minutes = s.num("event_duration") || s.num("field_duration");
+    wide = placement === "map" || (s.num("event_radius") || s.num("field_radius")) === Infinity;
+  } else {
+    const m = s.num("field_duration") || s.num("persistence");
+    minutes = m > 0 ? m : Infinity;
+    wide = sky || placement === "sky" || placement === "map" || s.num("field_radius") === Infinity;
+    if (!wide && placement === "self") return null; // it follows its speller and ends when they fall
+  }
+  return minutes >= (wide ? LASTING.wideMinutes : LASTING.localMinutes) ? { wide, minutes } : null;
 }
 
 /**

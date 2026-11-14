@@ -76,6 +76,7 @@ it("a bot attacks a player who comes near", async () => {
 });
 
 it("a hard bot puts out a fire set on it with a counter-word", async () => {
+  WorldRoom.testSeed = 31;
   const room = (await colyseus.createRoom("world", { bots: 1, difficulty: "hard" })) as unknown as WorldRoom;
   const a = await join(room);
   const botId = bots(room)[0]![0];

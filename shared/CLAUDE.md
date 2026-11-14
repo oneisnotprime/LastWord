@@ -77,7 +77,10 @@ server and the client import this, so anything here must give the same answer on
   applies them to letters earned; `rulesText` says it in plain lines. `Deposits.scale` and the
   `growth` argument of `gather` act on the ground; `marketRatio` turns `trade_rate` into a price.
 - `inspect.ts` `eventCard` and `countersOf`: what an event, field or weather in force does, and the
-  words that end it (event chips).
+  words that end it (event chips; remembered per dictionary). `lasting`: whether a spelling lays
+  something lasting (map-wide `LASTING.wideMinutes`, or one place `LASTING.localMinutes`); the
+  polish2 test checks every one has a word that ends it.
+- `territory.ts` `discTiles`: a claim's tiles, remembered per map (`landHeld` uses it).
 - `inspect.ts` cards telling what something is (spell preview, right-click inspect): `inspectText`,
   `cardOf`, `keyStats`, `behaviours`; `heldText` (one line: what carrying it does, or "no effect
   held"), `effectText` (what something in force on you does); `becomes` (creature, worn, terrain or ground: the rule the

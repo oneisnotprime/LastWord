@@ -1,10 +1,14 @@
 import { boot, type ColyseusTestServer } from "@colyseus/testing";
-import { afterAll, beforeAll, expect, it } from "vitest";
+import { afterAll, beforeAll, beforeEach, expect, it } from "vitest";
 import appConfig from "./app.config.js";
 import { WorldRoom } from "./WorldRoom.js";
 
 let colyseus: ColyseusTestServer;
 beforeAll(async () => { WorldRoom.testBare = true; colyseus = await boot(appConfig); });
+// One fixed map and fixed rolls for every room here: a random map can spawn someone in a desert or
+// by water, and random rolls can miss (polish batch 2: no test leans on luck).
+beforeEach(() => { WorldRoom.testSeed = 108; });
+afterAll(() => { WorldRoom.testSeed = null; });
 afterAll(async () => { WorldRoom.testBare = false; await colyseus.shutdown(); });
 
 const wait = (ms = 120) => new Promise((r) => setTimeout(r, ms));

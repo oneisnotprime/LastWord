@@ -225,3 +225,8 @@ Node process that owns the game state. One room per map instance (from milestone
   by shared `salePrice`. `spellWord` reads stand-ins (shared `standIn`: WORD WOLF pays W O R D);
   `meta` skips a typo where the owner's side has something that `spellchecks` (`spellchecker`).
   `dismountWalker` is the R key for people and bots.
+- Polish batch 2: `counter` also ends the weather a word counters. `botBoat` gets a riding bot
+  off first and walks it to the shore by its boat; `takeNear` boards a vessel in reach rather than
+  remounting a mount beside you. `fixtures` indexes the map's fixtures for `nearFixture`;
+  `claimGround` remembers a claim's road tiles; `within` is the cheap distance test. Every room
+  test file sets `testSeed`: no test depends on a random map or random rolls.

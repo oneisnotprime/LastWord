@@ -3,7 +3,7 @@ import { StateView } from "@colyseus/schema";
 import {
   producerOf, outputOf, ageRate, SOIL, landHeld, roadRun, readOffer, readTransmute, transmuteProblem, bossWords, taper, stampTiles, TRANSMUTE_RATIO,
   LAND_RATE, ROAD_RATE, ROAD_HALF, CLAIMED_ROAD, CITIZEN_S, CITIZENS, CITIZEN_LEAVE, CITIZEN_RETURN, HIRE_PRICE, HIRED, TRADE_RANGE, OFFER_SECONDS, PAIR_COOLDOWN, BOSS_TIMES, BOSS_Z, BOSS_HOARD,
-  type ClaimDisc, windAt, moistureAt, waterNear, wateringReach, wetWeather, producingLine, Soil, LABOUR_RANGE, CYCLE_SECONDS, PEACE_RADIUS, PEACE_SECONDS, VOWELS, type ProducerSpec, type Conditions,
+  type ClaimDisc, discTiles, windAt, moistureAt, waterNear, wateringReach, wetWeather, producingLine, Soil, LABOUR_RANGE, CYCLE_SECONDS, PEACE_RADIUS, PEACE_SECONDS, VOWELS, type ProducerSpec, type Conditions,
   addLetters, afflict, placeRules, harvest, growthOf, tradeRateOf, marketRatio, type PlaceRules, aggressive, clearLine, courageOf, pluralize, auras, authorityOf, chooseTarget, commandLimit, draw, groundFood, hasAny, ignoresOrder, moraleAim, moraleGoal, needs, nextMorale, noStores, outputs, recruitRate, rerouteSeconds, startingSupply, becomes, retreats, routed, supply, theftResistance, HUNGER_LOYALTY, NORMAL, STARTING_STORES, STARVING, SUPPLIES, bodyFlags, cure, useObject, findPath, hampered, inflicts, statusDamage, statusEffects, tickStatuses, wake, GATHER_SECONDS, GATHER_REASONS, cachePrize, carcassFood, Deposits, destroyLetters, killLetters, mainland, MARKET, pickAnimal, placeSources, readTrade, regionOf, RUIN_INTEGRITY, CACHE_X, SITE_RADIUS, spawnPoint, starterHand, TEMPLE_Q, tradeProblem, generateMap, GIVE_RANGE, missing, parsePhrase, applyAdjectives, cannotCarry, improvisable, readDescription, production, resolveSpelled, SEPARATE_UP_TO, nearestWalkable, openGround, randomWalkable, resolve, Tile, tileAt, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit, cannotRide, claimOf, senseOf, combineSenses, type Sense, type Sensed,
   dealKits, legendOf, jobBodyOps, jobRules, jobStats, kitCard, kitScore, legendCost, sealedLetters, unlockNeed, unlockText, makesLetters, KIT_SECONDS,
   type JobDef, type Kit, type KitCard, type KitData, type LegendDef,
@@ -180,6 +180,14 @@ const CONFUSED_TILES = 4;
 const BURNS: Partial<Record<Tile, number>> = {
   [Tile.Forest]: 3, [Tile.Taiga]: 3, [Tile.Jungle]: 2, [Tile.Savanna]: 2, [Tile.Grass]: 1, [Tile.Meadow]: 1, [Tile.Swamp]: 0.2, [Tile.Marsh]: 0.2,
 };
+
+/**
+ * True if (dx, dy) lies within `r`: Math.hypot(dx, dy) <= r, with the cheap test first (neither
+ * offset is longer than the hypotenuse), so most far-off pairs never reach Math.hypot.
+ */
+function within(dx: number, dy: number, r: number): boolean {
+  return Math.abs(dx) <= r && Math.abs(dy) <= r && Math.hypot(dx, dy) <= r;
+}
 
 function hasDamage(s: Stats): boolean {
   return s.entries().some(([k, v]) => k.startsWith("dmg_") && typeof v === "number" && v > 0);
@@ -585,6 +593,10 @@ export class WorldRoom extends Room {
   private fishes: [string, number][] | null = null;
   /** What each thing on the ground is, so it can be picked up again. */
   private grounded = new Map<string, Gear>();
+  /** The map's fixtures among `grounded` (markets, the temple, caches, ruins), for `nearFixture`. */
+  private fixtures = new Map<string, Gear>();
+  /** The legendaries' words (`botCounter` looks for enemies' near a bot), read once. */
+  private legendWords: Set<string> | null = null;
   private everJoined = 0;
   /** Things on the ground that have been attacked, with the damage they carry. */
   private thingEntities = new Map<string, Entity>();
@@ -882,8 +894,11 @@ export class WorldRoom extends Room {
       if (free && d <= reach && d < bestDistance && g && !g.terrain) { best = tid; bestDistance = d; }
     });
     if (named && !best) throw new Error("Too far away to claim: walk up to it");
-    // A mount of your own walking with you: get back on it.
-    const mount = [...this.walkers].find(([, c]) => c.master === id && c.unit.body.stats.flag("mountable") &&
+    // A mount of your own walking with you: get back on it, unless a thing was named or a vessel is
+    // in reach (off the horse by the shore, E boards the boat, not the horse again).
+    const boat = best ? this.grounded.get(best) : undefined;
+    const boarding = !!boat?.vehicle && sails(this.statsOf(boat));
+    const mount = !named && !boarding && [...this.walkers].find(([, c]) => c.master === id && c.unit.body.stats.flag("mountable") &&
       Math.hypot(c.player.x - walker.player.x, c.player.y - walker.player.y) <= TAKE_RANGE);
     if (mount && !walker.gear.some((g) => g.vehicle)) {
       const [cid, c] = mount;
@@ -1858,8 +1873,10 @@ export class WorldRoom extends Room {
       if (oid === id) continue;
       if (wary && !sick && o.statuses.length && o.statuses.some((a) => a.status === "sick") && Math.hypot(o.player.x - w.player.x, o.player.y - w.player.y) <= CONTACT_TILES + 1.5) sick = o;
       if (o.master === id) { mine++; continue; }
-      const d = Math.hypot(o.player.x - w.player.x, o.player.y - w.player.y);
-      if (d > w.sight * 2 || (o.flying && !w.flying)) continue;
+      const dx = o.player.x - w.player.x, dy = o.player.y - w.player.y, far = w.sight * 2;
+      if (Math.abs(dx) > far || Math.abs(dy) > far) continue; // past twice its sight either way: no need for Math.hypot
+      const d = Math.hypot(dx, dy);
+      if (d > far || (o.flying && !w.flying)) continue;
       const e = { id: oid, d, hp: o.hp, person: o.master === null };
       if (o.foe === id) attackers.push(e);
       else if (o.master === null) { if (!this.fooled(w, o, d)) people.push(e); } // a disguise passes (shared wear.ts)
@@ -2134,7 +2151,7 @@ export class WorldRoom extends Room {
     const usable = (tag: string) => book.counters.get(tag)?.find((x) => !mind.tried.has(x.word) && affords(have, x));
     const targets: string[] = [];
     for (const a of this.areas.values()) {
-      if (a.owner === id || a.claim || a.owner === "" || Math.hypot(a.x - w.player.x, a.y - w.player.y) > a.radius + 3) continue;
+      if (a.owner === id || a.claim || a.owner === "" || !within(a.x - w.player.x, a.y - w.player.y, a.radius + 3)) continue;
       const theirs = this.walkers.get(a.owner);
       if (theirs && this.side(a.owner, theirs) === this.side(id, w)) continue;
       targets.push(a.word);
@@ -2147,9 +2164,9 @@ export class WorldRoom extends Room {
       if (c && c.master !== null) targets.push(c.body.noun, this.dict.word(c.body.noun)?.archetype ?? "");
     }
     // An enemy's legendary (a DRAGON loosed, an APOCALYPSE fallen) near it: the word that counters it (LANCE, ARMISTICE).
-    const legends = new Set((this.kitData?.legendaries ?? []).map((l) => l.word));
+    const legends = this.legendWords ??= new Set((this.kitData?.legendaries ?? []).map((l) => l.word));
     if (legends.size) {
-      const near = (p: Point, more = 0) => Math.hypot(p.x - w.player.x, p.y - w.player.y) <= Math.max(COUNTER_TILES, w.sight) + more;
+      const near = (p: Point, more = 0) => within(p.x - w.player.x, p.y - w.player.y, Math.max(COUNTER_TILES, w.sight) + more);
       for (const c of this.walkers.values()) {
         if (legends.has(c.body.noun) && c.master !== null && c.master !== id && c.master !== "-" && near(c.player)) targets.unshift(c.body.noun);
       }
@@ -2471,7 +2488,11 @@ export class WorldRoom extends Room {
     if (b.phase === "board") {
       const t = this.state.things.get(b.thing);
       if (!t || t.owner !== id || this.elapsed > b.until) { mind.boat = undefined; return false; }
+      w.foe = null; w.gathering = 0;
       if (Math.hypot(t.x - w.player.x, t.y - w.player.y) <= BOARD_TILES) {
+        // Off its horse (or out of its cart) first, as a person presses R before E: nobody
+        // boards from the saddle, and a rider's reach is only TAKE_RANGE.
+        if (w.gear.some((g) => g.vehicle)) { try { this.dismountWalker(id, w); } catch { mind.boat = undefined; return false; } }
         try { this.takeNear(id, w, b.thing); } catch { mind.boat = undefined; return false; }
         if (!w.sailing) { mind.boat = undefined; return false; }
         b.phase = "sail"; b.dock = { x: w.player.x, y: w.player.y }; b.until = this.elapsed + 30 + this.rng() * 30;
@@ -2479,7 +2500,9 @@ export class WorldRoom extends Room {
         this.botUsed(mind, "sail");
         return true;
       }
-      if (!w.target) w.target = nearestWalkable(this.map, { x: t.x, y: t.y });
+      // Straight to the shore by it, whatever it was walking toward before.
+      const shore = nearestWalkable(this.map, { x: t.x, y: t.y });
+      if (!w.target || Math.hypot(w.target.x - shore.x, w.target.y - shore.y) > 0.5) { w.target = shore; w.route = []; w.routeTo = null; }
       return true;
     }
     if (!w.sailing) { mind.boat = undefined; return false; } // wrecked, and thrown ashore
@@ -2501,7 +2524,7 @@ export class WorldRoom extends Room {
   /** The nearest of the map's fixtures of a kind within `tiles` of a walker, by thing id. */
   private nearFixture(w: Walker, kind: NonNullable<Gear["fixture"]>, tiles: number): string | null {
     let best: string | null = null, bestD = tiles;
-    for (const [tid, g] of this.grounded) {
+    for (const [tid, g] of this.fixtures) {
       if (g.fixture !== kind) continue;
       const t = this.state.things.get(tid);
       const d = t ? Math.hypot(t.x - w.player.x, t.y - w.player.y) : Infinity;
@@ -3158,7 +3181,7 @@ export class WorldRoom extends Room {
    */
   private home(id: string, w: Walker, h: Holdings) {
     const claims = [...this.areas.values()].filter((a) => a.claim && a.owner === id);
-    const inside = (p: Point) => claims.some((a) => Math.hypot(p.x - a.x, p.y - a.y) <= a.radius);
+    const inside = (p: Point) => claims.some((a) => within(p.x - a.x, p.y - a.y, a.radius));
     let comfort = 0, stored = 0;
     const eyes: NonNullable<Walker["eyes"]> = [];
     for (const [tid, g] of h.things) {
@@ -4441,6 +4464,8 @@ export class WorldRoom extends Room {
   private addArea(area: Area, shown: boolean): string {
     const key = `z${this.nextThing++}`;
     this.areas.set(key, area);
+    // A claim that stays put: its ground is worked out now, not all at once at the next count of territory.
+    if (area.claim && !area.follows) { discTiles(this.map, area.x, area.y, area.radius); this.claimGround(area); }
     if (shown) {
       this.state.zones.set(key, Object.assign(new Zone(), {
         word: area.word, x: area.x, y: area.y, radius: area.radius >= this.map.size * 2 ? 0 : area.radius,
@@ -4537,7 +4562,7 @@ export class WorldRoom extends Room {
 
   /** True if a field reaches a walker, by its targets and its position. */
   private reaches(a: Area, wid: string, w: Walker): boolean {
-    if (Math.hypot(w.player.x - a.x, w.player.y - a.y) > a.radius) return false;
+    if (!within(w.player.x - a.x, w.player.y - a.y, a.radius)) return false;
     return this.aims(a, wid, w);
   }
 
@@ -4569,9 +4594,11 @@ export class WorldRoom extends Room {
   /** Gives every walker the effects of the fields it stands in; rebuilds only those that changed. */
   private applyFields() {
     this.fieldsDirty = false;
+    const fields: Area[] = [];
+    for (const a of this.areas.values()) if (a.effect) fields.push(a);
     for (const [wid, w] of this.walkers) {
       const now: Effect[] = [];
-      for (const a of this.areas.values()) if (a.effect && this.reaches(a, wid, w)) now.push(a.effect);
+      for (const a of fields) if (this.reaches(a, wid, w)) now.push(a.effect!);
       if (w.home) now.push(w.home);
       const key = now.map((e) => e.word).sort().join(",");
       if (key === (w.fieldKey ?? "")) continue;
@@ -4587,9 +4614,15 @@ export class WorldRoom extends Room {
     return Array.isArray(tags) && tags.includes(other);
   }
 
-  /** Ends every area that `word` counters; returns how many. */
+  /** Ends every area that `word` counters, and the weather if it counters that; returns how many. */
   private counter(word: string): number {
     let n = 0;
+    const was = this.state.weatherWord;
+    if (this.weather && was && was !== word && (this.countered(word, was) || this.countered(word, this.weather.word))) {
+      this.clearWeather();
+      for (const w of this.walkers.values()) this.rebuild(w);
+      n++;
+    }
     for (const [key, a] of [...this.areas]) {
       if (this.countered(word, a.word)) { this.areas.delete(key); this.state.zones.delete(key); this.producers.delete(`field:${key}`); this.fieldsDirty = true; n++; }
     }
@@ -4682,7 +4715,9 @@ export class WorldRoom extends Room {
    * that cures ends statuses on whoever it reaches, and a contagious one may spread.
    */
   private pulse(key: string, a: Area, since: number) {
-    for (const [wid, w] of [...this.walkers]) {
+    // Only statuses, cures and healing act on bodies here (an area's effect is `applyFields`'s): most fields have none.
+    const touches = (!a.attack && a.inflicts.length > 0) || a.cures.length > 0 || (a.heals > 0 && since > 0);
+    if (touches) for (const [wid, w] of [...this.walkers]) {
       if (!a.attack && a.inflicts.length) {
         // A boon (a BLESSING) goes to those the area is aimed at; harm to those it harms.
         const harm = a.inflicts.filter(([st]) => !isBoon(st)), boons = a.inflicts.filter(([st]) => isBoon(st));
@@ -6100,6 +6135,7 @@ export class WorldRoom extends Room {
     if (cell) cell.splice(cell.indexOf(id), 1);
     this.state.things.delete(id);
     this.grounded.delete(id);
+    this.fixtures.delete(id);
     this.producers.delete(id);
     this.waterers.delete(id);
     this.traps.delete(id);
@@ -6178,7 +6214,7 @@ export class WorldRoom extends Room {
     }
     for (const c of claims) {
       const e = roadPay.get(c.owner) ?? roadPay.set(c.owner, { weight: 0, tiles: 0, at: { x: c.x, y: c.y } }).get(c.owner)!;
-      for (const i of stampTiles(this.map, { x: c.x, y: c.y, radius: c.radius - 0.5, tile: Tile.Road })) {
+      for (const i of this.claimGround(c)) {
         if (this.map.tiles[i] === Tile.Road && !this.roads.has(i)) { e.weight += CLAIMED_ROAD; e.tiles++; }
       }
     }
@@ -6220,6 +6256,19 @@ export class WorldRoom extends Room {
       }
     });
     this.territoryIncome = new Map([...income].map(([k, v]) => [k, { lines: v.lines, letters: v.letters }]));
+  }
+
+  /** Tiles a claim's roads are counted on (shared `stampTiles`), remembered: claims stay put for minutes. */
+  private claimGrounds = new Map<string, number[]>();
+  private claimGround(c: { x: number; y: number; radius: number }): number[] {
+    const key = `${c.x},${c.y},${c.radius}`;
+    let tiles = this.claimGrounds.get(key);
+    if (!tiles) {
+      tiles = stampTiles(this.map, { x: c.x, y: c.y, radius: c.radius - 0.5, tile: Tile.Road });
+      if (this.claimGrounds.size >= 1024) this.claimGrounds.delete(this.claimGrounds.keys().next().value!);
+      this.claimGrounds.set(key, tiles);
+    }
+    return tiles;
   }
 
   /** Makes someone ruler of a city and tells everyone. `how`: "claims" (an empty city's middle) or the word that took it. */
@@ -6272,7 +6321,7 @@ export class WorldRoom extends Room {
     const labourAt = (owner: string, x: number, y: number) =>
       (workers.get(owner) ?? []).reduce((n, k) => n + (Math.hypot(k.x - x, k.y - y) <= LABOUR_RANGE ? k.labor : 0), 0);
     const claimedBy = (owner: string, x: number, y: number) => {
-      for (const a of this.areas.values()) if (a.claim && a.owner === owner && Math.hypot(a.x - x, a.y - y) <= a.radius) return true;
+      for (const a of this.areas.values()) if (a.claim && a.owner === owner && within(a.x - x, a.y - y, a.radius)) return true;
       return false;
     };
     const watered = (x: number, y: number) => {
@@ -6319,7 +6368,7 @@ export class WorldRoom extends Room {
           flow: needs.includes("flow") ? waterNear(this.map, at.x, at.y, 2) : true,
           claimed: needs.includes("claim") ? claimedBy(ownerId, at.x, at.y) : true,
           fed: !(creature?.hungry ?? gear?.hungry ?? false),
-          peace: !this.fights.some((f) => Math.hypot(f.x - at.x, f.y - at.y) <= PEACE_RADIUS),
+          peace: !this.fights.some((f) => within(f.x - at.x, f.y - at.y, PEACE_RADIUS)),
           powered: !gear?.stalled,
           made: p.made,
           grown: p.spec.grows > 0 ? (p.grown ?? 1) : 1,
@@ -6432,6 +6481,7 @@ export class WorldRoom extends Room {
   addThing(gear: Gear, owner: string, x: number, y: number): string {
     const id = `t${this.nextThing++}`;
     this.grounded.set(id, gear);
+    if (gear.fixture) this.fixtures.set(id, gear);
     const phrase = gear.phrase;
     const thing = new Thing();
     thing.phrase = phrase;
