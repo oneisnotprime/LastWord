@@ -303,5 +303,16 @@ pad.add({
   // B does nothing here: Esc would open the menu behind the start screen.
   press: (b) => b === "b",
 });
+// The starting kits (kits.ts): the pick of three (B does nothing: a kit must be chosen), or your
+// own kit card (B closes it).
+pad.add({
+  rank: 25, el: () => document.querySelector<HTMLElement>("#kits.show .sheet"),
+  press: (b) => {
+    if (b !== "b") return false;
+    const close = document.querySelector<HTMLElement>("#kits.show button.close");
+    if (close) pad.click(close);
+    return true;
+  },
+});
 // Any other screen that asks for it (data-pad-scope), such as a choice before the round.
 pad.add({ rank: 45, el: () => [...document.querySelectorAll<HTMLElement>("[data-pad-scope]")].find(visible) ?? null, press: (b) => b === "b" });
