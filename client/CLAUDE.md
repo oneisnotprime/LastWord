@@ -111,3 +111,7 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
 - Themes batch 3: a body part is aimed like an event ("someone"; you can click yourself); threat
   arrows show a note (♪, `heard`) for someone only heard; `WORDS` has the core body parts,
   clothes, medicines, instruments, songs and feelings, drawn with the existing builders.
+- Themes batch 4: the minimap shows static and JAMMED when `sensed.jammed`; terrain edits carry
+  `only` (weather patches change only some tiles); faith is a fourth store on the HUD and the
+  loadout; `WORDS` has the core money, crime, information, religion and weather words, drawn
+  with the existing builders (rosette and sign icons for acts and events).

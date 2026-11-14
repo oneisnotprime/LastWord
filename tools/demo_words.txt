@@ -65,7 +65,7 @@ house: mass=100000 footprint=4 height=6 integrity=3000 material=wood,brick porta
 barn: mass=60000 footprint=6 height=8 integrity=2000 material=wood portable=false enterable=true occupants=20 storage_objects=50000 flammability=6 needs_foundation=true produce_I=0.3 production_needs=livestock
 castle: mass=50000000 footprint=100 height=30 integrity=500000 hardness=8 material=stone portable=false enterable=true occupants=300 lockable=true cover=0.9 security=7 claim_radius=30 authority=5 storage_letters=2000 blocks=land,sight,projectiles comfort=8
 tent: mass=10 footprint=2 height=2 integrity=20 material=cloth enterable=true occupants=3 cover=0.1 flammability=7 comfort=1 claim_radius=2
-bank: mass=2000000 footprint=12 height=10 integrity=40000 material=stone,steel portable=false enterable=true lockable=true security=8 storage_letters=5000 trade_bonus=0.2 produce_T=0.5 needs_foundation=true
+bank: mass=2000000 footprint=12 height=10 integrity=40000 material=stone,steel portable=false enterable=true lockable=true security=8 storage_letters=5000 trade_bonus=0.2 produce_T=0.5 needs_foundation=true interest=0.02
 
 # noun fortification
 fort: mass=5000000 footprint=40 height=8 integrity=150000 hardness=7 material=stone,wood portable=false enterable=true occupants=100 lockable=true cover=0.8 security=6 claim_radius=15 blocks=land,sight,projectiles
@@ -1929,7 +1929,7 @@ cash: mass=0.1 integrity=2 material=paper flammability=9 equip_slot=held hands_r
 dollar: plural_count=100 mass=0.001 integrity=1 material=paper flammability=9 equip_slot=held hands_required=0 value=1 trade_bonus=0.05 charm+1 color=green
 fortune: mass=50 integrity=100 material=gold equip_slot=held hands_required=1 value=100000 trade_bonus=0.4 charm+6 speed_land*0.8 security+-4 loudness=2 color=gold
 
-# noun possession
+# noun exchange
 gift: placement=target placement_range=30 event_target=character pays=5 inflict_charm=20 loyalty+2 event_duration=1
 wage: placement=target placement_range=30 event_target=character pays=4 inflict_charm=10 event_duration=1
 tip: placement=target placement_range=20 event_target=character pays=2 inflict_charm=8 event_duration=1
@@ -1937,12 +1937,14 @@ donation: placement=target placement_range=50 event_target=character pays=8 mora
 bribe: placement=target placement_range=30 event_target=creature transfers_ownership=true pays=8 contest_with=pays contested_by=loyalty counters=audit
 payoff: placement=target placement_range=30 event_target=creature transfers_ownership=true pays=14 contest_with=pays contested_by=loyalty
 kickback: placement=target placement_range=20 event_target=creature transfers_ownership=true pays=4 contest_with=pays contested_by=loyalty
+dividend: placement=self field_radius=4 field_targets=self field_duration=3 produce_T*3 harvest_bonus*1.2
+
+# noun act
 debt: placement=target placement_range=60 event_target=character inflict_debt=120 contest_with=authority contested_by=security counters=bankruptcy
 loan: placement=target placement_range=30 event_target=character pays=10 inflict_debt=300 contest_with=authority contested_by=security
 mortgage: placement=target placement_range=60 event_target=character inflict_debt=400 contest_with=authority contested_by=security
 usury: placement=target placement_range=30 event_target=character pays=4 inflict_debt=360 morale+-2 contest_with=authority contested_by=security
 lien: placement=target placement_range=60 event_target=character inflict_debt=90 contest_with=authority contested_by=security
-dividend: placement=self field_radius=4 field_targets=self field_duration=3 produce_T*3 harvest_bonus*1.2
 
 # noun act
 bankruptcy: placement=self field_radius=4 field_targets=self field_duration=1 effect_status=debt morale+-3 reputation=-5 counters=debt,loan,mortgage,usury,lien
@@ -1952,7 +1954,7 @@ foreclosure: placement=target placement_range=40 event_target=object transfers_o
 audit: placement=target placement_range=100 event_target=character read_inventory=true inflict_expose=60 letter_steal=6 contest_with=authority contested_by=stealth event_duration=1 counters=bribe,fraud,embezzlement,smuggling,forgery
 
 # noun exchange
-auction: placement=self field_radius=40 field_targets=all field_duration=3 trade_rate=0.5 produce_T*3 loudness=6
+auction: placement=target placement_range=50 event_target=character trade_bonus+0.2 loudness=6 event_duration=1
 sale: placement=self field_radius=30 field_targets=all field_duration=5 trade_rate=0.7 produce_T*2
 investment: placement=self field_radius=4 field_targets=self field_duration=10 produce_T*2 harvest_bonus*1.1 counters=recession,crash
 
@@ -1997,7 +1999,7 @@ cheap: value*0.2 trade_rate*0.5 integrity*0.7
 # DETECTIVE, INVESTIGATE), DISARM breaks traps, security (a LOCK, a GUARD), an ALIBI ends arrests.
 
 # noun tool
-landmine: mass=4 integrity=40 material=steel portable=false stealth=8 trigger_radius=3 dmg_blast=400 dmg_pierce=150 attack_area=4 inflict_stun=3 single_use=true friendly_fire=true loudness=10 color=green
+landmine: mass=4 integrity=40 material=steel portable=false stealth=8 trigger_radius=3 dmg_blast=400 dmg_pierce=150 attack_area=4 inflict_stun=3 single_use=true friendly_fire=true color=green
 tripwire: mass=0.2 integrity=5 material=steel portable=false stealth=9 trigger_radius=2 inflict_stun=4 inflict_root=6 alarm=true single_use=true color=gray
 pitfall: mass=0 integrity=100 portable=false stealth=7 trigger_radius=2 dmg_crush=80 dmg_pierce=60 inflict_root=20 inflict_bleed=5 single_use=true color=brown
 mousetrap: mass=0.1 integrity=10 material=wood,steel portable=false stealth=6 trigger_radius=1 dmg_crush=15 inflict_root=5 single_use=true harvest_bonus=1.5 harvest_sources=hunting color=brown
@@ -2072,6 +2074,8 @@ censorship: placement=self field_radius=150 field_targets=enemies field_duration
 broadcast: placement=map field_radius=ABS field_targets=owned field_duration=3 morale+3 courage+2 command_limit+5 loudness=6 counters=jammer,static
 
 # noun event
+tracker: placement=target placement_range=10 event_target=character inflict_expose=300 event_duration=1 counters=cipher,encryption
+wanted: placement=target placement_range=300 event_target=character inflict_expose=200 reputation+-3 event_duration=1 counters=pardon,alibi
 flare: placement=target placement_range=200 event_target=tile event_radius=40 event_duration=1 inflict_expose=60 inflict_blind=3 luminosity=10 counters=fog,smoke
 static: placement=target placement_range=200 field_radius=80 field_targets=enemies field_duration=3 jams=true inflict_confuse=2 counters=broadcast,radio
 interference: placement=target placement_range=300 field_radius=120 field_targets=enemies field_duration=4 jams=true counters=broadcast,radio,satellite
@@ -2085,13 +2089,11 @@ secret: stealth+6 immune_expose=true read_properties+-5 alarm=false
 
 # noun device
 jammer: mass=10 integrity=40 material=steel,plastic portable=false field_radius=200 field_targets=enemies jams=true upkeep_power=0.5 counters=radio,radar,satellite,broadcast,transmitter color=black
-tracker: mass=0.05 integrity=5 material=plastic placement=target placement_range=10 event_target=character inflict_expose=300 stealth=8 event_duration=1
 radio: mass=2 integrity=15 material=plastic,steel loudness=6 hearing_range+3000 alarm=true command_limit+10 detect_life=300 upkeep_power=0.05 color=black
 telegraph: mass=20 integrity=60 material=wood,copper portable=false command_limit+10 detect_life=200 map_reveal=60 upkeep_power=0.1 color=brown
 
 # noun document
 map: mass=0.1 integrity=3 flammability=9 material=paper map_reveal=200 detect_letters=500
-wanted: placement=target placement_range=300 event_target=character inflict_expose=200 reputation+-3 event_duration=1 counters=pardon,alibi
 newspaper: mass=0.3 integrity=1 material=paper flammability=9 placement=map field_radius=ABS field_targets=all field_duration=1 detect_life+300 morale+1
 
 # noun worker
@@ -2145,7 +2147,7 @@ sacrifice: placement=target placement_range=4 event_target=creature destroys_tar
 
 # noun event
 miracle: placement=region event_radius=100 event_duration=1 faith_cost=40 deposit_factor=5 lode=q,z lode_share=0.5 lode_stock=4 effect_status=poison,bleed,burn,fear,sick,curse regeneration+20 morale+5
-resurrection: placement=self field_radius=10 field_targets=owned field_duration=1 faith_cost=60 restores=1000 regeneration+50 effect_status=poison,bleed,burn,sick,curse,stun,freeze prevents_death=1
+resurrection: placement=self field_radius=10 field_targets=owned field_duration=1 faith_cost=60 heals=200 regeneration+50 effect_status=poison,bleed,burn,sick,curse,stun,freeze prevents_death=1
 curse: placement=target placement_range=100 event_target=character inflict_curse=120 faith_cost=10 morale+-2 event_duration=1 counters=blessing,exorcism,prayer
 hex: placement=target placement_range=60 event_target=character inflict_curse=60 inflict_confuse=10 faith_cost=6 event_duration=1 counters=exorcism,blessing
 blessing: placement=region event_radius=60 event_duration=3 field_targets=owned inflict_bless=60 regeneration+5 morale+3 harvest_bonus*1.5 produce_Q*2 effect_status=curse counters=jinx,misfortune,heresy,curse,hex

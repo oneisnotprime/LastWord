@@ -27,7 +27,7 @@ export interface LoadoutDetail {
   /** Morale, 0 to 10 and beyond: shaken below 3, fleeing at 0. */
   morale: number;
   /** Food, fuel and power in store, and what everything you own draws (need) and supplies (makes) a minute. */
-  stores: Record<"food" | "fuel" | "power", { have: number; need: number; make: number }>;
+  stores: Record<"food" | "fuel" | "power" | "faith", { have: number; need: number; make: number }>;
   /** Things of yours that went short at the last count, by name: hungry creatures, stalled machines. */
   short: string[];
   /** Creatures you can command at once, and how many you have. */
@@ -79,4 +79,6 @@ export interface Sensed {
   letters: { x: number; y: number; letters: string }[];
   /** Things of yours on the ground that watch, and the land around each they show (tiles). */
   eyes?: { x: number; y: number; r: number; word: string }[];
+  /** A JAMMER's field reaches you: the minimap shows only static (shared signal.ts). */
+  jammed?: boolean;
 }

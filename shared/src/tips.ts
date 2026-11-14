@@ -218,6 +218,11 @@ export const RULE_TIPS: readonly RuleTip[] = [
   { text: "RAGE on enemies sends them at whoever is nearest, friend or foe. CALM ends it.", words: ["rage", "calm"], properties: ["inflict_rage"] },
   { text: "A FLUTE charms wild animals around you; charmed long enough, they are yours.", words: ["flute"], properties: ["inflict_charm"] },
   { text: "A DRUM gives you away on others' threat arrows; SILENCE hushes it.", words: ["drum", "silence"], properties: ["loudness"] },
+  { text: "A BRIBE buys a CAT for 8 letters; DEBT makes a foe pay you a letter each 10 s.", words: ["bribe", "cat", "debt"], properties: ["pays", "inflict_debt"] },
+  { text: "A LANDMINE hides until it springs; a DETECTIVE sees it, DISARM breaks it.", words: ["landmine", "detective", "disarm"], properties: ["trigger_radius"] },
+  { text: "WANTED shows a foe on every threat arrow; a HOAX fakes foes on theirs.", words: ["wanted", "hoax"], properties: ["inflict_expose", "decoys"] },
+  { text: "A SHRINE gathers faith, a MIRACLE spends 40; deaths by an ALTAR are offerings.", words: ["shrine", "miracle", "altar"], properties: ["faith_output", "faith_cost", "sacrifice"] },
+  { text: "A BLIZZARD snows over grass and freezes lakes to walk on; a THAW melts it.", words: ["blizzard", "thaw"], properties: ["tile_type"] },
 ];
 
 /** One tip for the idle spell window: a word idea or a rule, alternating at random. */

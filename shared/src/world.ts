@@ -55,7 +55,8 @@ export const TILE_TYPES: Record<string, Tile> = {
  * A change a word made to the map: a disc of one kind of tile, or with a second end (`x2`, `y2`)
  * a run between two points `radius` wide (a ROAD). `soil` changes only soil (tilling).
  */
-export interface Stamp { x: number; y: number; radius: number; tile: Tile; soil?: boolean; x2?: number; y2?: number }
+/** `only`: a mask of tiles (bit 1 << Tile) the stamp may change, 0 for any (weather patches: shared weather.ts). */
+export interface Stamp { x: number; y: number; radius: number; tile: Tile; soil?: boolean; x2?: number; y2?: number; only?: number }
 
 /** Ground that can be tilled into crop land: a `soil` stamp changes only these. */
 export const SOIL: readonly Tile[] = [
@@ -67,6 +68,7 @@ export const SOIL: readonly Tile[] = [
 export function stampTerrain(map: WorldMap, s: Stamp): void {
   for (const i of stampTiles(map, s)) {
     if (s.soil && !SOIL.includes(map.tiles[i]! as Tile)) continue;
+    if (s.only && !(s.only & (1 << map.tiles[i]!))) continue;
     map.tiles[i] = s.tile;
   }
 }

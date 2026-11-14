@@ -123,6 +123,15 @@ by how many words set them (minds and upkeep took `sentient`, `intelligence`, `f
       the cold and using disguises, a disguised person's name tag showing their disguise to
       others, stealth hiding people from view (only theft reads it), shelter from cold indoors,
       per-word art for the generated body parts, clothes and instruments.
+      Batch 4 is done (16 to 20): about 1,900 words through shared `money.ts` (pays, bribes,
+      the debt status, foreclosure, bank interest), `crime.ts` (hidden traps that spring),
+      `signal.ts` (the expose status, reading what someone holds, decoys on threat arrows and
+      minimaps, jamming), `faith.ts` (faith as a store, miracles' faith cost, altars' offerings,
+      bless and curse statuses on letters earned) and `weather.ts` (weather lays snow, floods,
+      dries water and melts snow in patches). Still to do for batch 4: bots using money,
+      traps, lies and faith; a player's own view of decoys as fakes once seen through; selling
+      objects at markets for their `value`; jamming watching things (cameras) of the jammed;
+      per-word art for the generated words.
       1. [x] Professions: hired NPC workers producing N; farm, guard, build, scout
       2. [x] Plants and botany: crops, trees, herbs, fungi; P and A; medicine and poison
       3. [x] Buildings and rooms: claims, shelter, storage, production
@@ -139,11 +148,11 @@ by how many words set them (minds and upkeep took `sentient`, `intelligence`, `f
       13. [x] Emotions and mental states: fields that move morale, loyalty, aggression
       14. [x] Music and sound: morale, charm animals, give away position, deafen
       15. [x] Law and government: tax, ban, curfew, election, treaty; map or regional rules
-      16. Money and trade: prices, T, bribes, debt, auctions
-      17. Crime and deception: theft, disguise, traps, false information
-      18. Communication and information: see and fake what others know
-      19. Religion and myth: sacrifice for F, blessings, curses, faith as a store
-      20. Weather, climate and seasons: drive letter yields and terrain
+      16. [x] Money and trade: prices, T, bribes, debt, auctions
+      17. [x] Crime and deception: theft, disguise, traps, false information
+      18. [x] Communication and information: see and fake what others know
+      19. [x] Religion and myth: sacrifice for F, blessings, curses, faith as a store
+      20. [x] Weather, climate and seasons: drive letter yields and terrain
       21. Time: speed up or slow things, ageing gives Y
       22. Space and astronomy: eclipses, comets, gravity; map-wide events
       23. Sea and ships: naval travel, fishing for O, storms, ports

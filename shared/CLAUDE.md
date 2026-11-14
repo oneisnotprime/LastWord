@@ -141,6 +141,22 @@ server and the client import this, so anything here must give the same answer on
   - `sound.ts` (music): `earshot` (HEARD_FROM loudness, EARSHOT tiles a point, plus
     `hearing_range`), the `deaf` status (`UNHEARD` in status.ts: charm and sleep do not reach the
     deaf), `soundText`.
+  - `money.ts` (money): `pays` (letters handed over; `canPay`), `contestOf` (a word's own value
+    is the speller's side of a contest: a BRIBE's price against loyalty), the `debt` status
+    (`debtDue`: a letter every DEBT_SECONDS to the creditor; `owesTo`: a debtor's things have no
+    security against them), `interestDue` (a store's `interest` as T), `moneyText`.
+  - `crime.ts` (crime): traps (`isTrap`: `trigger_radius`; `springReach`; `hiddenFrom`: stealth
+    against detect_stealth), SEES_THROUGH, `crimeText`.
+  - `signal.ts` (information): the `expose` status (status.ts `exposed`; EXPOSED_TILES),
+    `readout` (what `read_inventory` tells), decoys (`decoyAt`, `fooledByDecoys`), `jams`,
+    `signalText`. `Sensed.jammed` blacks out the minimap.
+  - `faith.ts` (religion): faith is a fourth `SUPPLIES` store (`faith_output`, `upkeep_faith`),
+    `faithProblem` (`faith_cost`), `offering` and ALTAR_TILES (`sacrifice`), the `bless` and
+    `curse` statuses (status.ts `earns`, `earnFactor`; `boon`: areas give a boon to their side),
+    `faithText`.
+  - `weather.ts` (weather): `weatherTile` (a weather word's `tile_type`), `PATCH_FROM` (what each
+    laid tile may change: a stamp's `only` mask in world.ts), `patchNear`, PATCH_SECONDS,
+    `weatherText`.
 - `tips.ts` teaching tips: `wordTip` (one line of what a word does in numbers, plus its shortest
   counter-word), `wordIdeas` (one word per `TIP_KINDS` kind, weighted by `tipWeight` toward words
   the held letters nearly spell), `RULE_TIPS` (short "did you know" lines, test-checked against the

@@ -7,6 +7,11 @@ import { wearText } from "./wear.js";
 import { diseaseText } from "./disease.js";
 import { emotionText } from "./emotion.js";
 import { soundText } from "./sound.js";
+import { moneyText } from "./money.js";
+import { crimeText } from "./crime.js";
+import { signalText } from "./signal.js";
+import { faithText } from "./faith.js";
+import { weatherText } from "./weather.js";
 import type { Dictionary } from "./dictionary.js";
 import { GROW_PACE, needsText, producerOf, SEEDLING } from "./produce.js";
 import { parsePhrase, type Phrase } from "./phrase.js";
@@ -55,14 +60,15 @@ export function becomes(stats: Stats): Becomes {
 export function aimOf(p: Phrase): "someone" | "anywhere" | null {
   const s = p.stats;
   if (p.kind === "verb") {
-    const eventful = s.flag("destroys_target") || s.flag("transfers_ownership") || s.num("moves_target") > 0 || s.num("severs") > 0;
+    const eventful = s.flag("destroys_target") || s.flag("transfers_ownership") || s.num("moves_target") > 0 || s.num("severs") > 0 ||
+      s.num("pays") > 0 || s.flag("read_inventory"); // PAY, SNOOP: on whoever is clicked (shared money.ts, signal.ts)
     return s.get("effect_target") === "touched" && eventful ? "someone" : null;
   }
   if (p.kind === "field") return s.get("placement") === "target" ? "anywhere" : null;
   // A body part grows on whoever is clicked (you, a creature, anyone): shared body.ts.
   if (p.kind === "object") return s.get("equip_slot") === "graft" ? "someone" : null;
   if (p.kind !== "event") return null;
-  if (pactOf(s) || s.num("severs") > 0 || s.flag("transfers_ownership") || s.flag("destroys_target") || s.num("letter_steal") > 0 || s.num("moves_target") > 0 ||
+  if (pactOf(s) || s.num("severs") > 0 || s.num("pays") > 0 || s.flag("read_inventory") || s.flag("transfers_ownership") || s.flag("destroys_target") || s.num("letter_steal") > 0 || s.num("moves_target") > 0 ||
     s.num("restores") > 0 || s.num("produce_T") > 0 || (s.num("inflict_stun") > 0 && s.get("event_target") === "character")) return "someone";
   // Passed on a person (ARREST, EXILE, PARDON): its statuses or cures land on whoever is clicked.
   if (s.get("event_target") === "character" && !(s.num("event_radius") > 0) && (inflictsAny(s) || s.tags("effect_status").length)) return "someone";
@@ -181,7 +187,7 @@ export function behaviours(s: Stats, count = 1): string[] {
   if (s.num("luminosity") > 0) out.push("gives off light");
   if (s.num("fear_aura") > 0) out.push(`frightens enemies (fear ${num(s.num("fear_aura"))})`);
   if (s.num("heals") > 0) out.push(`heals allies ${num(s.num("heals"))} a second`);
-  out.push(...homeText(s), ...craftText(s), ...techText(s), ...herdText(s), ...bodyText(s), ...wearText(s), ...diseaseText(s), ...emotionText(s), ...soundText(s));
+  out.push(...homeText(s), ...craftText(s), ...techText(s), ...herdText(s), ...bodyText(s), ...wearText(s), ...diseaseText(s), ...emotionText(s), ...soundText(s), ...moneyText(s), ...crimeText(s), ...signalText(s), ...faithText(s), ...weatherText(s));
   const need = needs(s, count), make = outputs(s, count);
   for (const k of SUPPLIES) {
     if (need[k] > 0) out.push(`draws ${num(need[k])} ${k} a minute${s.flag("alive") ? "" : ` (comes with ${STARTING_SUPPLY_MINUTES} min)`}`);
@@ -234,6 +240,7 @@ export function cardOf(dict: Dictionary, p: Phrase): Card {
     const e = p.effect ?? { set: {}, ops: [] };
     card.does.push(...e.ops.map(opText), ...Object.entries(e.set).map(([k, v]) => setText(k, v)).filter((x): x is string => !!x));
     if (s.tags("effect_status").length) card.does.push(`cures ${s.tags("effect_status").join(", ")}`);
+    card.does.push(...moneyText(s), ...signalText(s), ...faithText(s)); // themes 16, 18, 19
     card.does.push(aimed ?? "acts on you");
     return card;
   }
@@ -252,6 +259,7 @@ export function cardOf(dict: Dictionary, p: Phrase): Card {
     const pact = pactOf(s);
     if (pact) card.does.push(`binds you and ${pact.size - 1} other${pact.size === 2 ? "" : "s"} you pick to one side for ${num(pact.minutes)} min; whoever breaks it pays ${breachText(pact.penalty)}`);
     if (s.flag("sets_hostile")) card.does.push("creatures in it attack everyone not on your side");
+    card.does.push(...moneyText(s), ...signalText(s), ...faithText(s)); // themes 16, 18, 19
     card.does.push(...placeLines(dict, p.noun, s));
     for (const [id] of s.entries()) if (id.startsWith("inflict_") && s.num(id) > 0) card.does.push(`${plain(id)} ${num(statusSeconds(id.slice(8) as Status, s.num(id)))} s`);
     if (s.get("contest_with") && s.get("contested_by")) card.does.push(`your ${words(String(s.get("contest_with")))} against their ${words(String(s.get("contested_by")))}`);

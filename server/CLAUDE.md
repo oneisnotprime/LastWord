@@ -188,3 +188,16 @@ Node process that owns the game state. One room per map instance (from milestone
   `fooled` (a disguise: `Walker.unmasked` after a strike) keeps wild animals, angry creatures and
   bots off a disguised walker. `compel` sends the enraged (`hampered.berserk`) at the nearest
   walker; deaf creatures take no orders. `sendThreats` adds walkers heard (`earshot`, `heard`).
+- Themes batch 4: `spellWord` refuses a miracle without its faith (`spendFaith`) and a payer
+  without the letters; what a spelling `pays` is noted on `Walker.paying` and paid by
+  `settlePay` once its letters are spent. `informAndPay` (events on a person and touched verbs:
+  `read_inventory`, `pays`). `sufferStatuses` pays debts (`payDebt`); `steal`/`stealCreature` give
+  a debtor no security against their creditor and count a word's own contest value (BRIBE).
+  `home` pays bank interest (`payInterest`, `Walker.interest`). `earn` multiplies by the earner's
+  `earnFactor` (bless, curse). `pulse` gives boons to the area's own side. Altars (`altars`) make
+  deaths and ruins near them offerings (`sacrificed`, in `kill` and `strikeThing`). Traps
+  (`traps`, `springTraps` five times a second; `trapHidden` keeps them out of enemies' views;
+  `exterminate` breaks traps a word counters). Areas carry `decoys` (`decoysFor`: fake threats and
+  minimap dots), `jams` (`jammed`: `sensed` is blacked out) and `weather` (a sky field's tile);
+  `sendThreats` shows the exposed to every enemy within EXPOSED_TILES; `weatherPatches` (in
+  `beat`) lays weather tiles near people through `reshapeOnly` (`Edit.only`).

@@ -94,7 +94,7 @@ describe("upkeep", () => {
   });
 
   it("draws what it can and says what fell short", () => {
-    const stores: Stores = { food: 2, fuel: 0, power: 0 };
+    const stores: Stores = { food: 2, fuel: 0, power: 0, faith: 0 };
     expect(draw(stores, needs(resolve(dict, "dragon")), 60)).toEqual(["food"]);
     expect(stores.food).toBe(0);
     supply(stores, outputs(resolve(dict, "farm")), 60);
@@ -111,10 +111,10 @@ describe("upkeep", () => {
 
 describe("starting supply", () => {
   it("a made machine comes with half an hour of what it draws; a living thing brings nothing", () => {
-    expect(startingSupply(resolve(dict, "car"))).toEqual({ food: 0, fuel: 0.1 * STARTING_SUPPLY_MINUTES, power: 0 });
-    expect(startingSupply(resolve(dict, "radar"), 2)).toEqual({ food: 0, fuel: 0, power: 2 * 20 * STARTING_SUPPLY_MINUTES });
-    expect(startingSupply(resolve(dict, "dragon"))).toEqual({ food: 0, fuel: 0, power: 0 });
-    expect(startingSupply(resolve(dict, "sword"))).toEqual({ food: 0, fuel: 0, power: 0 });
+    expect(startingSupply(resolve(dict, "car"))).toEqual({ food: 0, fuel: 0.1 * STARTING_SUPPLY_MINUTES, power: 0, faith: 0 });
+    expect(startingSupply(resolve(dict, "radar"), 2)).toEqual({ food: 0, fuel: 0, power: 2 * 20 * STARTING_SUPPLY_MINUTES, faith: 0 });
+    expect(startingSupply(resolve(dict, "dragon"))).toEqual({ food: 0, fuel: 0, power: 0, faith: 0 });
+    expect(startingSupply(resolve(dict, "sword"))).toEqual({ food: 0, fuel: 0, power: 0, faith: 0 });
   });
 });
 
