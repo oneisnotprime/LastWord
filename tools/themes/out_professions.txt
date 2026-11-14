@@ -1,0 +1,570 @@
+# noun worker
+physician: mass=75 integrity=90 alive=true sentient=true intelligence=9 loyalty=7 hands=true speech=true speed_land=4 heals=10 res_disease=0.7 counters=plague,poison,fever food_need=0.03
+vet: mass=75 integrity=100 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=5 heals=6 recruit_rate=0.2 res_disease=0.5 counters=plague,rabies,poison food_need=0.03
+veterinarian: mass=75 integrity=100 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=5 heals=7 recruit_rate=0.2 res_disease=0.5 counters=plague,rabies,poison food_need=0.03
+dentist: mass=70 integrity=85 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 heals=4 res_disease=0.4 dmg_pierce=10 sharpness=6 attack_rate=0.5 inflict_fear=3 food_need=0.03
+paramedic: mass=75 integrity=110 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=7 heals=8 res_disease=0.5 acceleration=7 counters=plague,poison food_need=0.03
+medic: mass=75 integrity=120 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=6 heals=7 armor=5 res_disease=0.5 training=3 courage=7 counters=plague,poison food_need=0.03
+midwife: mass=65 integrity=85 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=4 heals=5 res_disease=0.5 field_radius=8 field_targets=owned regeneration+1 counters=plague food_need=0.03
+orderly: mass=85 integrity=120 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=5 heals=3 labor=1 strength=7 carry_capacity=120 food_need=0.04
+pharmacist: mass=70 integrity=80 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 heals=3 craft_slots=1 trade_bonus=0.1 res_poison=0.6 counters=poison,plague,venom food_need=0.03
+apothecary: mass=70 integrity=80 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 heals=4 craft_slots=1 res_poison=0.5 counters=poison,plague food_need=0.03
+chemist: mass=70 integrity=80 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 craft_slots=1 labor=1 res_acid=0.5 res_poison=0.4 dmg_acid=30 attack_rate=0.5 attack_range=8 counters=poison food_need=0.03
+pathologist: mass=70 integrity=80 alive=true sentient=true intelligence=9 loyalty=5 hands=true speech=true speed_land=4 read_properties=6 detect_life=40 res_disease=0.8 counters=plague food_need=0.03
+psychiatrist: mass=70 integrity=80 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 heals=2 res_psychic=0.6 field_radius=8 field_targets=owned morale+2 courage+2 counters=madness,panic food_need=0.03
+psychoanalyst: mass=70 integrity=80 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 read_properties=5 res_psychic=0.6 field_radius=8 field_targets=owned morale+2 food_need=0.03
+psychologist: mass=70 integrity=80 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 read_properties=4 res_psychic=0.5 field_radius=8 field_targets=owned courage+2 food_need=0.03
+therapist: mass=70 integrity=80 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=4 heals=3 res_psychic=0.4 field_radius=8 field_targets=owned morale+2 food_need=0.03
+pediatrician: mass=70 integrity=85 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=4 heals=8 res_disease=0.6 charm=5 counters=plague food_need=0.03
+dermatologist: mass=70 integrity=85 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 heals=4 res_disease=0.5 res_acid=0.3 res_fire=0.2 food_need=0.03
+cardiologist: mass=75 integrity=90 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 heals=10 field_radius=6 field_targets=owned regeneration+2 res_disease=0.5 food_need=0.03
+neurologist: mass=70 integrity=85 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 heals=6 res_psychic=0.5 immune_confuse=true counters=stun,confusion food_need=0.03
+neurosurgeon: mass=70 integrity=90 alive=true sentient=true intelligence=10 loyalty=6 hands=true speech=true speed_land=4 heals=14 sharpness=10 dmg_slash=15 attack_rate=0.5 res_disease=0.7 food_need=0.03
+oncologist: mass=70 integrity=85 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 heals=8 res_radiation=0.6 res_disease=0.6 counters=plague,tumor food_need=0.03
+gynecologist: mass=70 integrity=85 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 heals=7 res_disease=0.6 counters=plague food_need=0.03
+gynaecologist: mass=70 integrity=85 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 heals=7 res_disease=0.6 counters=plague food_need=0.03
+obstetrician: mass=70 integrity=85 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=4 heals=7 res_disease=0.6 field_radius=6 field_targets=owned regeneration+1 food_need=0.03
+radiologist: mass=70 integrity=85 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 heals=3 sees_through=walls detect_life=60 res_radiation=0.7 food_need=0.03
+anesthesiologist: mass=70 integrity=85 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 heals=6 inflict_sleep=20 attack_rate=0.3 attack_range=2 immune_sleep=true food_need=0.03
+urologist: mass=70 integrity=85 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 heals=6 res_disease=0.5 food_need=0.03
+orthodontist: mass=70 integrity=85 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 heals=3 charm=4 res_disease=0.4 food_need=0.03
+endocrinologist: mass=70 integrity=85 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 heals=6 res_disease=0.5 field_radius=6 field_targets=owned strength+1 food_need=0.03
+internist: mass=70 integrity=85 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 heals=8 res_disease=0.6 counters=plague,fever food_need=0.03
+clinician: mass=70 integrity=85 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 heals=7 res_disease=0.6 food_need=0.03
+practitioner: mass=70 integrity=85 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 heals=6 res_disease=0.5 food_need=0.03
+optometrist: mass=70 integrity=80 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 heals=2 sight_range=50 field_radius=8 field_targets=owned sight_range*1.3 food_need=0.03
+optician: mass=70 integrity=80 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 craft_slots=1 sight_range=50 field_radius=8 field_targets=owned sight_range*1.25 food_need=0.03
+ophthalmologist: mass=70 integrity=85 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 heals=6 sight_range=50 field_radius=8 field_targets=owned sight_range*1.3 counters=blindness food_need=0.03
+chiropractor: mass=75 integrity=90 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 heals=5 strength=6 counters=stun,root food_need=0.03
+hygienist: mass=65 integrity=80 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 heals=2 res_disease=0.7 counters=plague,rot food_need=0.03
+nutritionist: mass=65 integrity=80 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 food_output=1 field_radius=8 field_targets=owned food_need*0.8 regeneration+0.5 food_need=0.03
+dietitian: mass=65 integrity=80 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 food_output=1 field_radius=8 field_targets=owned food_need*0.8 strength+1 food_need=0.03
+quack: mass=70 integrity=80 alive=true sentient=true intelligence=4 loyalty=4 hands=true speech=true speed_land=5 heals=1 charm=6 trade_bonus=0.1 dmg_poison=5 attack_rate=0.5 food_need=0.03
+caregiver: mass=65 integrity=85 alive=true sentient=true intelligence=6 loyalty=9 hands=true speech=true speed_land=4 heals=4 labor=1 res_disease=0.4 food_need=0.03
+masseur: mass=75 integrity=90 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 heals=3 strength=6 field_radius=6 field_targets=owned morale+2 regeneration+0.5 food_need=0.03
+masseuse: mass=65 integrity=85 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 heals=3 field_radius=6 field_targets=owned morale+2 regeneration+0.5 food_need=0.03
+coroner: mass=70 integrity=85 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 read_properties=7 detect_life=50 res_disease=0.8 counters=zombie food_need=0.03
+mortician: mass=75 integrity=90 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 reclaim_rate=0.2 reclaim_range=20 res_disease=0.9 res_unholy=0.4 counters=zombie,ghoul food_need=0.03
+embalmer: mass=70 integrity=85 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 reclaim_rate=0.15 reclaim_range=15 res_disease=0.9 res_poison=0.5 counters=zombie,rot food_need=0.03
+undertaker: mass=80 integrity=100 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 reclaim_rate=0.25 reclaim_range=30 res_disease=0.8 res_unholy=0.5 counters=zombie,ghoul food_need=0.03
+gravedigger: mass=85 integrity=130 alive=true sentient=true intelligence=4 loyalty=6 hands=true speech=true speed_land=4 labor=2 strength=7 speed_underground=0.5 reclaim_rate=0.15 reclaim_range=15 res_disease=0.6 counters=zombie food_need=0.04
+sexton: mass=75 integrity=100 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=4 labor=1 loudness=7 alarm=true reclaim_rate=0.1 reclaim_range=20 res_unholy=0.3 food_need=0.03
+herbalist: mass=65 integrity=85 alive=true sentient=true intelligence=7 loyalty=7 hands=true speech=true speed_land=4 heals=4 labor=1 harvest_bonus=1.5 harvest_sources=field,tree res_poison=0.4 counters=poison food_need=0.03
+lifeguard: mass=75 integrity=110 alive=true sentient=true intelligence=6 loyalty=8 hands=true speech=true speed_land=6 speed_water=2.5 dive_depth=10 heals=5 sight_range=200 alarm=true counters=drowning,flood food_need=0.03
+lifesaver: mass=75 integrity=110 alive=true sentient=true intelligence=6 loyalty=8 hands=true speech=true speed_land=6 speed_water=2.5 dive_depth=10 heals=5 sight_range=200 counters=drowning food_need=0.03
+firefighter: mass=85 integrity=180 alive=true sentient=true intelligence=6 loyalty=8 hands=true speech=true speed_land=6 res_fire=0.8 temp_max=90 water_output=60 strength=7 courage=9 counters=fire,blaze,inferno,wildfire,arson food_need=0.04
+fireman: mass=85 integrity=180 alive=true sentient=true intelligence=6 loyalty=8 hands=true speech=true speed_land=6 res_fire=0.8 temp_max=90 water_output=60 strength=7 courage=9 counters=fire,blaze,inferno,wildfire,arson food_need=0.04
+blacksmith: mass=95 integrity=160 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 labor=3 craft_slots=1 build_speed=1.5 strength=8 res_fire=0.4 dmg_blunt=35 attack_rate=0.8 food_need=0.05
+gunsmith: mass=80 integrity=110 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 labor=2 craft_slots=1 dmg_pierce=50 attack_rate=1 attack_range=40 targets=land,air loudness=8 food_need=0.04
+locksmith: mass=75 integrity=90 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 labor=1 craft_slots=1 stealth=3 security=6 counters=lock,safe,vault,chain food_need=0.03
+welder: mass=85 integrity=130 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 labor=3 build_speed=2 res_fire=0.5 res_light=0.6 dmg_fire=30 attack_rate=1 attack_range=1.5 inflict_burn=3 food_need=0.04
+electrician: mass=80 integrity=110 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 labor=2 build_speed=1.5 res_electric=0.8 dmg_electric=30 attack_rate=0.5 climb=4 counters=blackout food_need=0.04
+plumber: mass=85 integrity=120 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 labor=2 build_speed=1.5 res_water=0.5 water_output=20 counters=flood,leak food_need=0.04
+machinist: mass=80 integrity=110 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 labor=3 craft_slots=1 strength=6 food_need=0.04
+mechanic: mass=80 integrity=120 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 labor=2 craft_slots=1 build_speed=1.5 strength=6 counters=breakdown food_need=0.04
+technician: mass=75 integrity=90 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 labor=2 craft_slots=1 res_electric=0.4 food_need=0.03
+repairman: mass=80 integrity=110 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 labor=2 craft_slots=1 build_speed=1.5 food_need=0.04
+handyman: mass=80 integrity=120 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=4 labor=3 build_speed=1.6 food_need=0.04
+bricklayer: mass=90 integrity=150 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 labor=3 build_speed=2.5 strength=7 food_need=0.04
+roofer: mass=80 integrity=120 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 labor=2 build_speed=1.8 climb=6 food_need=0.04
+glazier: mass=75 integrity=100 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 labor=2 craft_slots=1 build_speed=1.5 food_need=0.03
+plasterer: mass=80 integrity=110 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 labor=2 build_speed=1.7 food_need=0.04
+decorator: mass=70 integrity=90 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 labor=2 build_speed=1.3 charm=4 field_radius=8 field_targets=owned beauty+2 food_need=0.03
+tiler: mass=75 integrity=100 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 labor=2 build_speed=1.6 food_need=0.03
+draftsman: mass=70 integrity=80 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 labor=1 build_speed=2 food_need=0.03
+draughtsman: mass=70 integrity=80 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 labor=1 build_speed=2 food_need=0.03
+shipbuilder: mass=90 integrity=140 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 labor=3 craft_slots=1 build_speed=2.5 speed_water=1 strength=7 food_need=0.04
+cartwright: mass=85 integrity=130 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 labor=2 craft_slots=1 build_speed=1.5 food_need=0.04
+wainwright: mass=85 integrity=130 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 labor=2 craft_slots=1 build_speed=1.5 food_need=0.04
+farrier: mass=85 integrity=130 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 labor=2 craft_slots=1 res_fire=0.3 field_radius=8 field_targets=owned speed_land*1.1 food_need=0.04
+saddler: mass=75 integrity=100 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 labor=2 craft_slots=1 food_need=0.03
+cobbler: mass=70 integrity=90 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 labor=2 craft_slots=1 field_radius=6 field_targets=owned speed_land*1.1 food_need=0.03
+shoemaker: mass=70 integrity=90 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 labor=2 craft_slots=1 field_radius=6 field_targets=owned speed_land*1.1 food_need=0.03
+tanner: mass=80 integrity=110 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 labor=2 craft_slots=1 odor=6 res_acid=0.3 food_need=0.04
+furrier: mass=70 integrity=90 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 labor=2 craft_slots=1 trade_bonus=0.1 res_cold=0.4 food_need=0.03
+glassblower: mass=75 integrity=100 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 labor=2 craft_slots=1 res_fire=0.6 food_need=0.03
+goldsmith: mass=70 integrity=85 alive=true sentient=true intelligence=7 loyalty=5 hands=true speech=true speed_land=4 labor=1 craft_slots=1 trade_bonus=0.15 storage_letters=80 security=5 food_need=0.03
+silversmith: mass=70 integrity=85 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 labor=1 craft_slots=1 trade_bonus=0.1 dmg_holy=20 attack_rate=0.5 counters=werewolf,vampire food_need=0.03
+tinsmith: mass=75 integrity=100 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 labor=2 craft_slots=1 food_need=0.03
+engraver: mass=70 integrity=85 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 labor=1 craft_slots=1 sharpness=6 food_need=0.03
+carver: mass=75 integrity=100 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 labor=2 craft_slots=1 sharpness=6 dmg_slash=12 attack_rate=1 food_need=0.03
+chandler: mass=70 integrity=90 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 labor=2 craft_slots=1 luminosity=2 trade_bonus=0.1 food_need=0.03
+dyer: mass=70 integrity=90 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 labor=2 craft_slots=1 odor=4 food_need=0.03
+spinner: mass=60 integrity=80 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 labor=2 craft_slots=1 food_need=0.03
+seamstress: mass=60 integrity=80 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 labor=2 craft_slots=1 food_need=0.03
+dressmaker: mass=60 integrity=80 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 labor=2 craft_slots=1 charm=4 food_need=0.03
+milliner: mass=60 integrity=80 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 labor=2 craft_slots=1 charm=5 food_need=0.03
+hatter: mass=65 integrity=80 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 labor=2 craft_slots=1 charm=4 food_need=0.03
+draper: mass=70 integrity=85 alive=true sentient=true intelligence=6 loyalty=5 hands=true speech=true speed_land=4 trade_bonus=0.15 storage_letters=80 food_need=0.03
+grocer: mass=75 integrity=90 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 trade_bonus=0.2 food_output=2 storage_letters=80 food_need=0.03
+fishmonger: mass=75 integrity=90 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 trade_bonus=0.15 food_output=2 odor=6 loudness=5 food_need=0.03
+florist: mass=65 integrity=80 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 trade_bonus=0.1 charm=6 field_radius=8 field_targets=owned morale+1 food_need=0.03
+brewer: mass=85 integrity=110 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 labor=2 craft_slots=1 food_output=1 field_radius=8 field_targets=owned courage+2 morale+1 accuracy+-0.05 food_need=0.04
+distiller: mass=85 integrity=110 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 labor=2 craft_slots=1 fuel_output=1 field_radius=8 field_targets=owned courage+3 accuracy+-0.1 food_need=0.04
+vintner: mass=75 integrity=100 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 labor=2 harvest_bonus=1.5 harvest_sources=orchard trade_bonus=0.1 field_radius=8 field_targets=owned morale+2 food_need=0.03
+winemaker: mass=75 integrity=100 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 labor=2 craft_slots=1 harvest_bonus=1.5 harvest_sources=orchard field_radius=8 field_targets=owned morale+2 food_need=0.03
+confectioner: mass=70 integrity=85 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 labor=2 craft_slots=1 food_output=3 field_radius=8 field_targets=owned morale+2 food_need=0.03
+caterer: mass=75 integrity=90 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=5 labor=2 craft_slots=1 food_output=5 food_need=0.03
+printer: mass=75 integrity=90 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 labor=2 craft_slots=1 duplicates=1 food_need=0.03
+pressman: mass=80 integrity=110 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 labor=2 craft_slots=1 strength=7 loudness=5 food_need=0.04
+typist: mass=65 integrity=80 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 labor=1 storage_letters=40 food_need=0.03
+stenographer: mass=65 integrity=80 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 labor=1 storage_letters=60 hearing_range=40 food_need=0.03
+scribe: mass=65 integrity=80 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=4 labor=1 storage_letters=80 food_need=0.03
+scrivener: mass=65 integrity=80 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 labor=1 storage_letters=80 food_need=0.03
+copywriter: mass=65 integrity=80 alive=true sentient=true intelligence=7 loyalty=5 hands=true speech=true speed_land=4 charm=5 trade_bonus=0.15 food_need=0.03
+bookkeeper: mass=70 integrity=80 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 storage_letters=150 security=4 trade_bonus=0.05 food_need=0.03
+accountant: mass=70 integrity=80 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 storage_letters=200 security=5 trade_bonus=0.1 food_need=0.03
+auditor: mass=70 integrity=80 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 read_inventory=true read_properties=5 counters=embezzler,fraud,swindler food_need=0.03
+treasurer: mass=75 integrity=90 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=4 storage_letters=400 security=7 food_need=0.03
+cashier: mass=65 integrity=80 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 storage_letters=100 security=4 trade_bonus=0.05 food_need=0.03
+teller: mass=65 integrity=80 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 storage_letters=120 security=5 food_need=0.03
+economist: mass=70 integrity=80 alive=true sentient=true intelligence=9 loyalty=5 hands=true speech=true speed_land=4 trade_bonus=0.2 read_properties=3 food_need=0.03
+financier: mass=80 integrity=85 alive=true sentient=true intelligence=8 loyalty=4 hands=true speech=true speed_land=4 trade_bonus=0.3 storage_letters=300 security=5 food_need=0.03
+investor: mass=80 integrity=85 alive=true sentient=true intelligence=8 loyalty=4 hands=true speech=true speed_land=4 trade_bonus=0.2 storage_letters=300 food_need=0.03
+entrepreneur: mass=75 integrity=90 alive=true sentient=true intelligence=8 loyalty=5 hands=true speech=true speed_land=5 trade_bonus=0.3 labor=1 craft_slots=1 charm=5 food_need=0.03
+salesman: mass=80 integrity=90 alive=true sentient=true intelligence=6 loyalty=5 hands=true speech=true speed_land=5 trade_bonus=0.3 charm=6 food_need=0.03
+salesperson: mass=75 integrity=90 alive=true sentient=true intelligence=6 loyalty=5 hands=true speech=true speed_land=5 trade_bonus=0.3 charm=6 food_need=0.03
+dealer: mass=80 integrity=100 alive=true sentient=true intelligence=6 loyalty=4 hands=true speech=true speed_land=5 trade_bonus=0.35 charm=5 storage_letters=100 food_need=0.03
+broker: mass=80 integrity=90 alive=true sentient=true intelligence=8 loyalty=4 hands=true speech=true speed_land=4 trade_bonus=0.4 charm=5 food_need=0.03
+peddler: mass=70 integrity=90 alive=true sentient=true intelligence=5 loyalty=5 hands=true speech=true speed_land=5 trade_bonus=0.2 storage_letters=40 range=40 food_need=0.03
+hawker: mass=70 integrity=90 alive=true sentient=true intelligence=5 loyalty=5 hands=true speech=true speed_land=5 trade_bonus=0.2 loudness=7 storage_letters=40 food_need=0.03
+vendor: mass=75 integrity=90 alive=true sentient=true intelligence=5 loyalty=5 hands=true speech=true speed_land=4 trade_bonus=0.25 storage_letters=60 food_need=0.03
+auctioneer: mass=80 integrity=90 alive=true sentient=true intelligence=7 loyalty=5 hands=true speech=true speed_land=4 trade_bonus=0.3 loudness=7 charm=6 food_need=0.03
+innkeeper: mass=85 integrity=100 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 food_output=3 trade_bonus=0.1 storage_objects=200 field_radius=8 field_targets=owned regeneration+0.5 food_need=0.04
+barkeep: mass=85 integrity=110 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 food_output=1 trade_bonus=0.05 field_radius=8 field_targets=owned morale+2 courage+1 food_need=0.04
+bartender: mass=80 integrity=100 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 food_output=1 trade_bonus=0.05 field_radius=8 field_targets=owned morale+2 courage+1 food_need=0.03
+barman: mass=80 integrity=100 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 food_output=1 field_radius=8 field_targets=owned morale+2 courage+1 food_need=0.03
+barmaid: mass=65 integrity=80 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 food_output=1 charm=5 field_radius=8 field_targets=owned morale+2 food_need=0.03
+publican: mass=85 integrity=100 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 food_output=2 trade_bonus=0.1 field_radius=8 field_targets=owned morale+2 courage+1 food_need=0.04
+landlord: mass=85 integrity=90 alive=true sentient=true intelligence=7 loyalty=4 hands=true speech=true speed_land=4 tax_rate=0.1 field_radius=12 claim_radius=3 storage_letters=150 food_need=0.03
+waiter: mass=70 integrity=85 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=6 labor=1 food_output=1 charm=4 agility=6 food_need=0.03
+waitress: mass=60 integrity=80 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=6 labor=1 food_output=1 charm=5 agility=6 food_need=0.03
+hostess: mass=60 integrity=80 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 charm=7 trade_bonus=0.05 field_radius=8 field_targets=owned morale+1 food_need=0.03
+sommelier: mass=70 integrity=80 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 read_properties=3 res_poison=0.5 field_radius=8 field_targets=owned morale+1 courage+1 food_need=0.03
+cupbearer: mass=65 integrity=80 alive=true sentient=true intelligence=6 loyalty=10 hands=true speech=true speed_land=4 res_poison=0.8 detect_stealth=3 counters=poison,hemlock,venom food_need=0.03
+butler: mass=80 integrity=100 alive=true sentient=true intelligence=7 loyalty=9 hands=true speech=true speed_land=4 labor=1 security=5 alarm=true detect_stealth=4 storage_objects=100 food_need=0.03
+footman: mass=80 integrity=110 alive=true sentient=true intelligence=5 loyalty=8 hands=true speech=true speed_land=5 labor=1 carry_capacity=60 alarm=true food_need=0.03
+valet: mass=75 integrity=90 alive=true sentient=true intelligence=6 loyalty=8 hands=true speech=true speed_land=5 labor=1 carry_capacity=40 field_radius=6 field_targets=owned charm+1 food_need=0.03
+doorman: mass=90 integrity=140 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=4 alarm=true detect_stealth=5 strength=7 counters=thief,burglar food_need=0.04
+bellhop: mass=65 integrity=80 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=6 carry_capacity=60 labor=1 food_need=0.03
+bellman: mass=70 integrity=85 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=5 carry_capacity=60 labor=1 loudness=5 food_need=0.03
+concierge: mass=70 integrity=80 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 map_reveal=10 trade_bonus=0.1 charm=5 food_need=0.03
+maid: mass=60 integrity=80 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=4 labor=2 res_disease=0.3 counters=dust,dirt food_need=0.03
+housemaid: mass=60 integrity=80 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=4 labor=2 res_disease=0.3 counters=dust,dirt food_need=0.03
+housekeeper: mass=65 integrity=85 alive=true sentient=true intelligence=6 loyalty=8 hands=true speech=true speed_land=4 labor=2 storage_objects=200 security=4 food_need=0.03
+scullion: mass=60 integrity=80 alive=true sentient=true intelligence=3 loyalty=6 hands=true speech=true speed_land=4 labor=2 food_output=0.5 food_need=0.03
+janitor: mass=80 integrity=100 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=4 labor=2 res_disease=0.4 security=3 counters=dirt,slime food_need=0.04
+custodian: mass=80 integrity=100 alive=true sentient=true intelligence=5 loyalty=8 hands=true speech=true speed_land=4 labor=2 security=5 alarm=true food_need=0.04
+sweeper: mass=70 integrity=90 alive=true sentient=true intelligence=4 loyalty=6 hands=true speech=true speed_land=4 labor=2 counters=dust,ash,leaves food_need=0.03
+nanny: mass=65 integrity=85 alive=true sentient=true intelligence=6 loyalty=9 hands=true speech=true speed_land=4 heals=2 field_radius=8 field_targets=owned morale+1 obedience+2 food_need=0.03
+babysitter: mass=60 integrity=80 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 heals=1 alarm=true field_radius=6 field_targets=owned obedience+1 food_need=0.03
+governess: mass=65 integrity=85 alive=true sentient=true intelligence=8 loyalty=8 hands=true speech=true speed_land=4 field_radius=8 field_targets=owned training+1 obedience+2 intelligence+1 food_need=0.03
+caretaker: mass=75 integrity=100 alive=true sentient=true intelligence=6 loyalty=8 hands=true speech=true speed_land=4 heals=3 labor=1 security=4 food_need=0.03
+minder: mass=85 integrity=130 alive=true sentient=true intelligence=5 loyalty=8 hands=true speech=true speed_land=5 alarm=true detect_stealth=5 strength=7 food_need=0.04
+steward: mass=75 integrity=90 alive=true sentient=true intelligence=7 loyalty=7 hands=true speech=true speed_land=4 storage_objects=500 food_output=1 trade_bonus=0.1 food_need=0.03
+receptionist: mass=65 integrity=80 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 labor=1 alarm=true charm=5 food_need=0.03
+attendant: mass=70 integrity=85 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 labor=1 heals=1 food_need=0.03
+usher: mass=70 integrity=90 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 labor=1 field_radius=8 field_targets=owned obedience+1 food_need=0.03
+helper: mass=70 integrity=90 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=4 labor=2 food_need=0.03
+workman: mass=85 integrity=130 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 labor=3 build_speed=1.3 strength=7 food_need=0.04
+journeyman: mass=80 integrity=110 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=5 labor=2 craft_slots=1 range=30 food_need=0.04
+artisan: mass=70 integrity=90 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 labor=2 craft_slots=1 trade_bonus=0.1 food_need=0.03
+craftsman: mass=75 integrity=100 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 labor=2 craft_slots=1 food_need=0.03
+intern: mass=65 integrity=80 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=5 labor=1 training=1 trainable=6 food_need=0.03
+staffer: mass=70 integrity=85 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 labor=1 storage_letters=30 food_need=0.03
+porter: mass=85 integrity=130 alive=true sentient=true intelligence=4 loyalty=6 hands=true speech=true speed_land=4 labor=1 carry_capacity=150 strength=7 food_need=0.04
+loader: mass=90 integrity=140 alive=true sentient=true intelligence=4 loyalty=6 hands=true speech=true speed_land=4 labor=2 carry_capacity=150 strength=8 food_need=0.04
+mover: mass=90 integrity=140 alive=true sentient=true intelligence=4 loyalty=6 hands=true speech=true speed_land=4 labor=2 carry_capacity=200 strength=8 food_need=0.04
+docker: mass=90 integrity=150 alive=true sentient=true intelligence=4 loyalty=6 hands=true speech=true speed_land=4 labor=3 carry_capacity=200 strength=8 speed_water=1 food_need=0.04
+packer: mass=75 integrity=100 alive=true sentient=true intelligence=4 loyalty=6 hands=true speech=true speed_land=4 labor=2 storage_objects=150 food_need=0.03
+stacker: mass=80 integrity=110 alive=true sentient=true intelligence=4 loyalty=6 hands=true speech=true speed_land=4 labor=2 carry_capacity=100 food_need=0.03
+bagger: mass=65 integrity=80 alive=true sentient=true intelligence=4 loyalty=6 hands=true speech=true speed_land=4 labor=1 storage_objects=60 food_need=0.03
+settler: mass=80 integrity=130 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=5 labor=2 build_speed=1.3 claim_radius=3 harvest_bonus=1.3 harvest_sources=field,tree food_need=0.04
+pioneer: mass=80 integrity=140 alive=true sentient=true intelligence=7 loyalty=7 hands=true speech=true speed_land=6 labor=2 build_speed=1.5 sight_range=300 map_reveal=30 claim_radius=3 terrain_ignored=forest,swamp food_need=0.04
+chauffeur: mass=75 integrity=90 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=5 field_radius=6 field_targets=owned speed_land*1.15 food_need=0.03
+trucker: mass=90 integrity=120 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 carry_capacity=150 range=1000 field_radius=6 field_targets=owned speed_land*1.1 tow_capacity*1.2 food_need=0.04
+coachman: mass=80 integrity=110 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=4 command_limit=4 field_radius=8 field_targets=owned speed_land*1.15 food_need=0.04
+wagoner: mass=80 integrity=110 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=4 command_limit=4 carry_capacity=80 field_radius=8 field_targets=owned tow_capacity*1.2 food_need=0.04
+jockey: mass=55 integrity=70 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=5 agility=8 field_radius=4 field_targets=owned speed_land*1.3 acceleration+2 food_need=0.03
+postman: mass=75 integrity=90 alive=true sentient=true intelligence=5 loyalty=8 hands=true speech=true speed_land=6 sight_range=300 map_reveal=15 range=30 carry_capacity=30 food_need=0.03
+mailman: mass=75 integrity=90 alive=true sentient=true intelligence=5 loyalty=8 hands=true speech=true speed_land=6 sight_range=300 map_reveal=15 range=30 carry_capacity=30 food_need=0.03
+courier: mass=65 integrity=85 alive=true sentient=true intelligence=6 loyalty=8 hands=true speech=true speed_land=8 sight_range=300 map_reveal=15 range=60 acceleration=7 food_need=0.03
+dispatcher: mass=70 integrity=80 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 command_limit=6 hearing_range=100 alarm=true food_need=0.03
+paperboy: mass=45 integrity=60 alive=true sentient=true intelligence=4 loyalty=6 hands=true speech=true speed_land=7 map_reveal=10 sight_range=200 loudness=4 food_need=0.02
+newsboy: mass=45 integrity=60 alive=true sentient=true intelligence=4 loyalty=6 hands=true speech=true speed_land=7 map_reveal=10 sight_range=200 loudness=6 food_need=0.02
+sailor: mass=80 integrity=120 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=5 speed_water=2 dive_depth=10 labor=2 climb=5 harvest_sources=fishing harvest_bonus=1.3 res_water=0.3 food_need=0.04
+seaman: mass=80 integrity=120 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=5 speed_water=2 dive_depth=10 labor=2 climb=5 res_water=0.3 food_need=0.04
+mariner: mass=80 integrity=120 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=5 speed_water=2 sight_range=400 map_reveal=20 res_water=0.3 food_need=0.04
+boatman: mass=80 integrity=110 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 speed_water=2 labor=1 field_radius=8 field_targets=owned speed_water*1.2 food_need=0.04
+waterman: mass=80 integrity=110 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 speed_water=2.5 dive_depth=8 labor=1 harvest_sources=fishing harvest_bonus=1.3 food_need=0.04
+helmsman: mass=80 integrity=110 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=4 speed_water=2 field_radius=10 field_targets=owned speed_water*1.3 agility+1 food_need=0.04
+navigator: mass=75 integrity=100 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=4 speed_water=1.5 sight_range=400 map_reveal=40 night_vision=true food_need=0.03
+crewman: mass=80 integrity=120 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=5 speed_water=2 labor=2 climb=4 food_need=0.04
+purser: mass=75 integrity=90 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 storage_letters=150 security=5 trade_bonus=0.1 food_need=0.03
+whaler: mass=90 integrity=150 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=5 speed_water=2 dmg_pierce=60 attack_rate=0.5 attack_range=15 targets=land,water food_output=3 harvest_sources=fishing harvest_bonus=2 food_need=0.05
+submariner: mass=80 integrity=120 alive=true sentient=true intelligence=7 loyalty=7 hands=true speech=true speed_land=4 speed_water=2 dive_depth=60 res_suffocation=0.5 sight_range=200 stealth=4 food_need=0.04
+aviator: mass=75 integrity=100 alive=true sentient=true intelligence=7 loyalty=7 hands=true speech=true speed_land=5 sight_range=600 map_reveal=40 field_radius=6 field_targets=owned speed_air*1.3 food_need=0.03
+airman: mass=75 integrity=110 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=5 sight_range=500 map_reveal=30 training=4 field_radius=6 field_targets=owned speed_air*1.2 food_need=0.03
+copilot: mass=75 integrity=100 alive=true sentient=true intelligence=7 loyalty=7 hands=true speech=true speed_land=5 sight_range=500 map_reveal=20 field_radius=6 field_targets=owned speed_air*1.15 agility+1 food_need=0.03
+wingman: mass=75 integrity=110 alive=true sentient=true intelligence=6 loyalty=9 hands=true speech=true speed_land=5 sight_range=500 training=5 field_radius=8 field_targets=owned evasion+0.1 speed_air*1.1 food_need=0.03
+astronaut: mass=80 integrity=140 alive=true sentient=true intelligence=9 loyalty=7 hands=true speech=true speed_land=5 sight_range=1000 map_reveal=60 jump=3 res_suffocation=0.8 res_radiation=0.5 res_cold=0.5 temp_min=-60 food_need=0.04
+cosmonaut: mass=80 integrity=140 alive=true sentient=true intelligence=9 loyalty=7 hands=true speech=true speed_land=5 sight_range=1000 map_reveal=60 jump=3 res_suffocation=0.8 res_radiation=0.5 res_cold=0.5 temp_min=-60 food_need=0.04
+pathfinder: mass=70 integrity=110 alive=true sentient=true intelligence=7 loyalty=7 hands=true speech=true speed_land=7 sight_range=400 map_reveal=40 tracking=6 terrain_ignored=forest,swamp,snow food_need=0.03
+surveyor: mass=70 integrity=90 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=5 sight_range=500 map_reveal=35 build_speed=1.3 detect_letters=30 food_need=0.03
+cartographer: mass=70 integrity=85 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=5 sight_range=300 map_reveal=60 food_need=0.03
+mapper: mass=70 integrity=90 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=6 sight_range=300 map_reveal=45 food_need=0.03
+tracker: mass=70 integrity=110 alive=true sentient=true intelligence=7 loyalty=7 hands=true speech=true speed_land=7 tracking=9 smell_range=60 detect_stealth=6 sight_range=300 map_reveal=15 stealth=4 food_need=0.03
+spotter: mass=70 integrity=100 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=5 sight_range=600 detect_stealth=5 alarm=true field_radius=10 field_targets=owned accuracy+0.1 food_need=0.03
+lookout: mass=70 integrity=100 alive=true sentient=true intelligence=5 loyalty=8 hands=true speech=true speed_land=5 sight_range=600 alarm=true detect_stealth=6 night_vision=true food_need=0.03
+watchman: mass=80 integrity=140 alive=true sentient=true intelligence=5 loyalty=8 hands=true speech=true speed_land=5 alarm=true detect_stealth=6 sight_range=200 night_vision=true dmg_blunt=25 attack_rate=0.8 loudness=6 counters=thief,burglar,spy food_need=0.04
+gamekeeper: mass=80 integrity=130 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=6 alarm=true detect_stealth=7 tracking=6 dmg_pierce=40 attack_range=50 attack_rate=0.6 counters=poacher,trapper,rustler food_need=0.04
+groundskeeper: mass=80 integrity=110 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=4 labor=2 harvest_bonus=1.3 harvest_sources=field fertility=1 food_need=0.04
+forester: mass=85 integrity=140 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=5 labor=3 harvest_bonus=2 harvest_sources=tree sight_range=200 counters=wildfire,beetle food_need=0.04
+woodcutter: mass=95 integrity=160 alive=true sentient=true intelligence=4 loyalty=6 hands=true speech=true speed_land=5 labor=3 harvest_bonus=2 harvest_sources=tree dmg_slash=45 attack_rate=0.7 siege=2 strength=8 food_need=0.05
+logger: mass=95 integrity=160 alive=true sentient=true intelligence=4 loyalty=6 hands=true speech=true speed_land=5 labor=3 harvest_bonus=2.2 harvest_sources=tree dmg_slash=45 attack_rate=0.7 strength=8 food_need=0.05
+feller: mass=95 integrity=150 alive=true sentient=true intelligence=4 loyalty=6 hands=true speech=true speed_land=5 labor=3 harvest_bonus=2 harvest_sources=tree dmg_slash=45 attack_rate=0.7 food_need=0.05
+sawyer: mass=90 integrity=140 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 labor=3 craft_slots=1 harvest_bonus=1.5 harvest_sources=tree build_speed=1.3 food_need=0.05
+collier: mass=85 integrity=150 alive=true sentient=true intelligence=4 loyalty=6 hands=true speech=true speed_land=4 labor=3 harvest_bonus=2 harvest_sources=mine speed_underground=0.5 fuel_output=1 res_suffocation=0.3 food_need=0.05
+quarryman: mass=95 integrity=170 alive=true sentient=true intelligence=4 loyalty=6 hands=true speech=true speed_land=4 labor=3 harvest_bonus=2 harvest_sources=quarry strength=8 dmg_blunt=30 attack_rate=0.7 food_need=0.05
+stonecutter: mass=90 integrity=160 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 labor=3 harvest_bonus=1.8 harvest_sources=quarry build_speed=1.5 strength=7 food_need=0.05
+digger: mass=90 integrity=150 alive=true sentient=true intelligence=4 loyalty=6 hands=true speech=true speed_land=4 labor=3 speed_underground=1 harvest_sources=mine harvest_bonus=1.5 strength=7 food_need=0.05
+roughneck: mass=95 integrity=170 alive=true sentient=true intelligence=4 loyalty=5 hands=true speech=true speed_land=4 labor=3 strength=8 fuel_output=2 harvest_sources=mine res_fire=0.2 food_need=0.05
+ploughman: mass=85 integrity=130 alive=true sentient=true intelligence=4 loyalty=7 hands=true speech=true speed_land=4 labor=3 harvest_bonus=2 harvest_sources=field fertility=1 strength=7 food_need=0.04
+planter: mass=75 integrity=110 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 labor=2 harvest_bonus=1.5 harvest_sources=field,orchard fertility=2 food_need=0.04
+reaper: mass=80 integrity=130 alive=true sentient=true intelligence=4 loyalty=6 hands=true speech=true speed_land=4 labor=3 harvest_bonus=2 harvest_sources=field dmg_slash=40 attack_rate=0.7 attack_range=2 sharpness=7 food_need=0.04
+rancher: mass=85 integrity=140 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=5 labor=2 recruit_rate=0.3 command_limit=12 food_output=2 dmg_pierce=40 attack_range=30 attack_rate=0.8 food_need=0.04
+herder: mass=75 integrity=110 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=5 labor=1 recruit_rate=0.3 command_limit=12 detect_stealth=3 food_need=0.03
+herdsman: mass=75 integrity=110 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=5 labor=1 recruit_rate=0.3 command_limit=14 detect_stealth=3 food_need=0.03
+cowherd: mass=75 integrity=110 alive=true sentient=true intelligence=4 loyalty=7 hands=true speech=true speed_land=5 labor=1 recruit_rate=0.3 command_limit=12 food_output=1 food_need=0.03
+goatherd: mass=70 integrity=100 alive=true sentient=true intelligence=4 loyalty=7 hands=true speech=true speed_land=5 labor=1 recruit_rate=0.3 command_limit=10 climb=5 food_need=0.03
+dairyman: mass=80 integrity=110 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=4 labor=2 food_output=2 food_need=0.04
+milkmaid: mass=60 integrity=80 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=4 labor=2 food_output=2 charm=4 food_need=0.03
+milkman: mass=75 integrity=90 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=5 food_output=1 range=20 carry_capacity=40 food_need=0.03
+beekeeper: mass=70 integrity=100 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=4 labor=2 harvest_bonus=1.5 harvest_sources=orchard,field food_output=1 res_poison=0.7 counters=bee,wasp,hornet food_need=0.03
+falconer: mass=70 integrity=100 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=5 recruit_rate=0.3 command_limit=4 sight_range=400 map_reveal=15 counters=pigeon,rabbit food_need=0.03
+trapper: mass=75 integrity=120 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=5 stealth=5 dmg_pierce=30 attack_rate=0.3 inflict_root=12 food_output=1 tracking=6 food_need=0.04
+huntsman: mass=85 integrity=140 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=6 stealth=5 tracking=8 sight_range=300 dmg_pierce=45 attack_rate=0.8 attack_range=60 targets=land,air food_output=1 command_limit=6 food_need=0.04
+huntress: mass=70 integrity=130 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=7 stealth=6 tracking=8 sight_range=300 dmg_pierce=45 attack_rate=0.9 attack_range=60 targets=land,air food_output=1 food_need=0.04
+fowler: mass=75 integrity=110 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=5 stealth=5 dmg_pierce=30 attack_rate=0.8 attack_range=50 targets=air,land food_output=1 food_need=0.03
+fisher: mass=80 integrity=100 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 speed_water=2 labor=2 harvest_bonus=2 harvest_sources=fishing food_output=2 food_need=0.03
+cowboy: mass=80 integrity=140 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=6 recruit_rate=0.4 command_limit=12 dmg_pierce=40 attack_range=30 attack_rate=1 inflict_root=3 courage=7 food_need=0.04
+cowgirl: mass=65 integrity=130 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=6 recruit_rate=0.4 command_limit=12 dmg_pierce=40 attack_range=30 attack_rate=1 inflict_root=3 courage=7 food_need=0.04
+wrangler: mass=80 integrity=140 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=6 recruit_rate=0.5 command_limit=10 inflict_root=5 attack_range=8 attack_rate=0.5 food_need=0.04
+roper: mass=80 integrity=130 alive=true sentient=true intelligence=4 loyalty=6 hands=true speech=true speed_land=6 inflict_root=8 attack_range=10 attack_rate=0.5 recruit_rate=0.3 food_need=0.04
+gaucho: mass=80 integrity=140 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=6 recruit_rate=0.4 command_limit=12 dmg_slash=30 inflict_root=5 attack_range=10 attack_rate=0.8 food_need=0.04
+buckaroo: mass=80 integrity=140 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=6 recruit_rate=0.4 command_limit=12 dmg_pierce=35 attack_range=30 inflict_root=3 food_need=0.04
+tamer: mass=80 integrity=140 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=5 recruit_rate=0.8 command_limit=10 courage=8 inflict_charm=4 attack_rate=0.3 food_need=0.04
+trainer: mass=80 integrity=120 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=6 recruit_rate=0.2 field_radius=8 field_targets=owned training+2 strength+1 food_need=0.04
+scientist: mass=70 integrity=80 alive=true sentient=true intelligence=10 loyalty=6 hands=true speech=true speed_land=4 craft_slots=1 read_properties=5 food_need=0.03
+physicist: mass=70 integrity=80 alive=true sentient=true intelligence=10 loyalty=6 hands=true speech=true speed_land=4 craft_slots=1 res_radiation=0.4 read_properties=4 dmg_electric=25 attack_rate=0.3 attack_range=10 food_need=0.03
+biologist: mass=70 integrity=80 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 detect_life=80 read_properties=4 res_disease=0.4 food_need=0.03
+botanist: mass=70 integrity=85 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 labor=2 harvest_bonus=1.5 harvest_sources=field,orchard,tree fertility=2 res_poison=0.3 food_need=0.03
+zoologist: mass=70 integrity=85 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=5 recruit_rate=0.4 detect_life=60 read_properties=3 food_need=0.03
+geologist: mass=75 integrity=90 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 detect_letters=40 detect_underground=true harvest_bonus=1.5 harvest_sources=mine,quarry food_need=0.03
+mathematician: mass=65 integrity=75 alive=true sentient=true intelligence=10 loyalty=6 hands=true speech=true speed_land=4 trade_bonus=0.1 read_properties=4 food_need=0.03
+astronomer: mass=70 integrity=80 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 sight_range=600 map_reveal=20 night_vision=true food_need=0.03
+astrologer: mass=70 integrity=80 alive=true sentient=true intelligence=6 loyalty=5 hands=true speech=true speed_land=4 charm=5 read_properties=3 night_vision=true food_need=0.03
+inventor: mass=70 integrity=85 alive=true sentient=true intelligence=10 loyalty=6 hands=true speech=true speed_land=4 craft_slots=2 build_speed=1.5 labor=1 food_need=0.03
+alchemist: mass=70 integrity=85 alive=true sentient=true intelligence=9 loyalty=5 hands=true speech=true speed_land=4 craft_slots=1 transmute_in=4 res_poison=0.5 res_acid=0.4 food_need=0.03
+philosopher: mass=65 integrity=80 alive=true sentient=true intelligence=10 loyalty=6 hands=true speech=true speed_land=3 field_radius=8 field_targets=owned intelligence+1 courage+1 res_psychic=0.5 food_need=0.03
+historian: mass=65 integrity=80 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 read_properties=4 storage_letters=60 food_need=0.03
+scholar: mass=65 integrity=80 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 storage_letters=50 field_radius=8 field_targets=owned training+1 food_need=0.03
+archivist: mass=65 integrity=80 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=4 storage_letters=300 security=6 food_need=0.03
+librarian: mass=65 integrity=80 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=4 storage_letters=250 security=4 silences=8 food_need=0.03
+curator: mass=70 integrity=85 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 storage_objects=300 security=6 trade_bonus=0.1 food_need=0.03
+programmer: mass=75 integrity=80 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 craft_slots=1 labor=1 res_electric=0.2 food_need=0.03
+techie: mass=70 integrity=80 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 craft_slots=1 labor=1 food_need=0.03
+instructor: mass=75 integrity=100 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=4 field_radius=8 field_targets=owned training+2 food_need=0.03
+lecturer: mass=70 integrity=85 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 field_radius=10 field_targets=owned intelligence+1 training+1 loudness=4 food_need=0.03
+tutor: mass=65 integrity=80 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=4 field_radius=6 field_targets=owned training+2 intelligence+1 food_need=0.03
+educator: mass=70 integrity=85 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=4 field_radius=8 field_targets=owned training+2 intelligence+1 food_need=0.03
+docent: mass=65 integrity=80 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 map_reveal=10 field_radius=8 field_targets=owned intelligence+1 food_need=0.03
+schoolteacher: mass=70 integrity=85 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=4 field_radius=8 field_targets=owned training+2 intelligence+1 food_need=0.03
+schoolmaster: mass=75 integrity=90 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=4 authority=2 field_radius=10 field_targets=owned training+2 obedience+1 food_need=0.03
+prof: mass=70 integrity=85 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 field_radius=8 field_targets=owned training+2 intelligence+1 food_need=0.03
+poet: mass=65 integrity=80 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 charm=6 field_radius=10 field_targets=owned morale+2 courage+1 food_need=0.03
+bard: mass=70 integrity=100 alive=true sentient=true intelligence=7 loyalty=7 hands=true speech=true speed_land=5 loudness=7 charm=7 field_radius=12 field_targets=owned morale+3 courage+2 food_need=0.03
+minstrel: mass=65 integrity=90 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=5 loudness=7 charm=6 field_radius=12 field_targets=owned morale+3 food_need=0.03
+troubadour: mass=65 integrity=90 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=5 loudness=6 charm=8 field_radius=12 field_targets=owned morale+3 charm+1 food_need=0.03
+fiddler: mass=65 integrity=80 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 loudness=7 charm=6 field_radius=12 field_targets=owned morale+3 speed_land*1.05 food_need=0.03
+piper: mass=65 integrity=80 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 loudness=9 charm=6 recruit_rate=0.6 field_radius=12 field_targets=owned morale+3 food_need=0.03
+drummer: mass=75 integrity=90 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 loudness=9 field_radius=12 field_targets=owned morale+2 courage+2 attack_rate*1.1 food_need=0.03
+trumpeter: mass=70 integrity=85 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=4 loudness=10 alarm=true field_radius=12 field_targets=owned courage+3 morale+2 food_need=0.03
+pianist: mass=65 integrity=80 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 loudness=6 charm=6 field_radius=10 field_targets=owned morale+3 food_need=0.03
+violinist: mass=65 integrity=80 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 loudness=6 charm=7 field_radius=10 field_targets=owned morale+3 food_need=0.03
+guitarist: mass=70 integrity=80 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 loudness=7 charm=6 field_radius=10 field_targets=owned morale+3 food_need=0.03
+vocalist: mass=65 integrity=80 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 loudness=8 charm=7 field_radius=12 field_targets=owned morale+3 food_need=0.03
+soprano: mass=65 integrity=80 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 loudness=9 charm=7 dmg_sonic=25 attack_rate=0.5 attack_range=10 field_radius=12 field_targets=owned morale+3 counters=glass,crystal,window food_need=0.03
+tenor: mass=75 integrity=85 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 loudness=8 charm=7 field_radius=12 field_targets=owned morale+3 food_need=0.03
+baritone: mass=80 integrity=85 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 loudness=8 charm=6 field_radius=12 field_targets=owned morale+2 courage+1 food_need=0.03
+rapper: mass=75 integrity=90 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=5 loudness=8 charm=6 intimidation=3 field_radius=10 field_targets=owned morale+3 food_need=0.03
+composer: mass=65 integrity=80 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 craft_slots=1 field_radius=12 field_targets=owned morale+3 food_need=0.03
+lyricist: mass=65 integrity=80 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 charm=5 field_radius=10 field_targets=owned morale+2 food_need=0.03
+conductor: mass=70 integrity=85 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=4 command_limit=20 field_radius=12 field_targets=owned morale+3 attack_rate*1.1 food_need=0.03
+dancer: mass=60 integrity=90 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=6 agility=8 evasion=0.3 charm=6 field_radius=10 field_targets=owned morale+2 food_need=0.03
+ballerina: mass=50 integrity=80 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=6 agility=9 evasion=0.35 jump=1.5 charm=7 beauty=8 field_radius=10 field_targets=owned morale+2 food_need=0.03
+choreographer: mass=65 integrity=85 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=5 agility=7 field_radius=10 field_targets=owned agility+2 evasion+0.05 food_need=0.03
+juggler: mass=65 integrity=85 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=5 agility=7 charm=6 field_radius=10 field_targets=owned morale+2 accuracy+0.05 food_need=0.03
+acrobat: mass=55 integrity=90 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=7 agility=9 jump=3 climb=7 evasion=0.4 charm=5 food_need=0.03
+magician: mass=70 integrity=85 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 charm=7 stealth=4 inflict_confuse=5 attack_rate=0.5 attack_range=8 field_radius=10 field_targets=owned morale+2 food_need=0.03
+illusionist: mass=70 integrity=85 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 stealth=7 inflict_confuse=8 attack_rate=0.5 attack_range=10 evasion=0.3 food_need=0.03
+puppeteer: mass=65 integrity=80 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 command_limit=4 inflict_charm=5 attack_rate=0.3 attack_range=6 charm=5 food_need=0.03
+comedian: mass=70 integrity=80 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 charm=7 field_radius=12 field_targets=owned morale+4 food_need=0.03
+mime: mass=60 integrity=80 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 loudness=0 stealth=5 silences=6 charm=4 food_need=0.03
+painter: mass=70 integrity=90 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 labor=2 craft_slots=1 charm=4 field_radius=8 field_targets=owned beauty+1 food_need=0.03
+sculptor: mass=75 integrity=100 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 labor=2 craft_slots=1 build_speed=1.3 sharpness=5 food_need=0.03
+illustrator: mass=65 integrity=80 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 craft_slots=1 labor=1 charm=4 food_need=0.03
+filmmaker: mass=70 integrity=80 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 charm=6 sight_range=200 field_radius=10 field_targets=owned morale+2 food_need=0.03
+novelist: mass=65 integrity=80 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 charm=5 read_properties=3 field_radius=8 field_targets=owned morale+2 food_need=0.03
+playwright: mass=65 integrity=80 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 charm=6 field_radius=10 field_targets=owned morale+2 courage+1 food_need=0.03
+columnist: mass=65 integrity=80 alive=true sentient=true intelligence=8 loyalty=5 hands=true speech=true speed_land=4 charm=5 reputation=5 read_properties=3 food_need=0.03
+critic: mass=65 integrity=80 alive=true sentient=true intelligence=8 loyalty=4 hands=true speech=true speed_land=4 read_properties=5 field_radius=10 field_targets=enemies morale+-2 charm+-1 food_need=0.03
+supermodel: mass=60 integrity=70 alive=true sentient=true intelligence=5 loyalty=5 hands=true speech=true speed_land=4 charm=9 beauty=10 trade_bonus=0.1 field_radius=8 field_targets=owned charm+1 food_need=0.03
+stylist: mass=60 integrity=80 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 charm=6 field_radius=6 field_targets=owned charm+2 food_need=0.03
+hairdresser: mass=60 integrity=80 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 charm=5 sharpness=5 field_radius=6 field_targets=owned charm+2 food_need=0.03
+hairstylist: mass=60 integrity=80 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 charm=5 sharpness=5 field_radius=6 field_targets=owned charm+2 food_need=0.03
+barber: mass=75 integrity=90 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 charm=4 sharpness=8 dmg_slash=20 attack_rate=1 field_radius=6 field_targets=owned charm+1 food_need=0.03
+beautician: mass=60 integrity=80 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 charm=6 field_radius=6 field_targets=owned charm+2 beauty+1 food_need=0.03
+manicurist: mass=55 integrity=75 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 charm=5 field_radius=4 field_targets=owned charm+1 food_need=0.03
+geisha: mass=50 integrity=75 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=4 charm=9 beauty=9 field_radius=8 field_targets=owned morale+3 food_need=0.03
+athlete: mass=75 integrity=130 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=8 strength=7 jump=2 agility=7 range=40 food_need=0.05
+sprinter: mass=70 integrity=110 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=10 acceleration=10 agility=6 strength=6 food_need=0.05
+runner: mass=65 integrity=110 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=8 range=60 acceleration=7 food_need=0.04
+swimmer: mass=75 integrity=110 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=5 speed_water=2.5 dive_depth=15 res_suffocation=0.3 food_need=0.04
+cyclist: mass=70 integrity=110 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=6 range=100 field_radius=6 field_targets=owned speed_land*1.1 food_need=0.04
+golfer: mass=80 integrity=100 alive=true sentient=true intelligence=6 loyalty=5 hands=true speech=true speed_land=4 dmg_blunt=30 attack_rate=0.3 attack_range=150 accuracy=0.6 targets=land,air food_need=0.03
+caddie: mass=65 integrity=90 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=5 labor=1 carry_capacity=40 read_properties=3 field_radius=6 field_targets=owned accuracy+0.1 food_need=0.03
+referee: mass=75 integrity=100 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=6 authority=4 field_radius=12 field_targets=all law=attack fine=3 loudness=7 food_need=0.03
+umpire: mass=75 integrity=100 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 authority=4 read_properties=4 field_radius=12 field_targets=all law=attack fine=3 food_need=0.03
+
+# noun fighter
+boxer: mass=85 integrity=170 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=6 strength=8 training=7 dmg_blunt=30 attack_rate=2 inflict_stun=1 evasion=0.2 block=0.3 food_need=0.05
+wrestler: mass=100 integrity=200 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=5 strength=9 training=6 dmg_crush=30 attack_rate=1 inflict_root=3 knockback=2 food_need=0.05
+fencer: mass=70 integrity=120 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=6 training=8 dmg_pierce=35 attack_rate=2 attack_range=1.5 evasion=0.3 block=0.3 agility=8 food_need=0.04
+quarterback: mass=95 integrity=180 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=7 strength=7 dmg_blunt=20 attack_rate=0.8 attack_range=50 accuracy=0.95 command_limit=10 food_need=0.05
+goalkeeper: mass=85 integrity=160 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=5 block=0.6 evasion=0.2 agility=8 jump=1.5 food_need=0.05
+pitcher: mass=90 integrity=140 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=5 dmg_blunt=30 attack_rate=1 attack_range=40 accuracy=0.95 targets=land,air food_need=0.04
+catcher: mass=95 integrity=180 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=4 block=0.4 armor=10 accuracy=0.9 food_need=0.05
+linebacker: mass=115 integrity=220 alive=true sentient=true intelligence=4 loyalty=6 hands=true speech=true speed_land=7 strength=9 dmg_blunt=30 attack_rate=1 knockback=4 inflict_stun=1 armor=10 food_need=0.06
+striker: mass=80 integrity=140 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=8 dmg_blunt=25 attack_rate=1 attack_range=30 accuracy=0.8 acceleration=8 food_need=0.05
+defender: mass=85 integrity=160 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=6 block=0.5 armor=5 strength=7 inflict_slow=2 attack_rate=1 food_need=0.05
+sergeant: mass=90 integrity=200 alive=true sentient=true intelligence=6 loyalty=8 hands=true speech=true speed_land=6 training=7 courage=8 dmg_pierce=40 attack_rate=1 attack_range=40 command_limit=10 loudness=7 field_radius=10 field_targets=owned courage+2 obedience+2 food_need=0.05
+corporal: mass=85 integrity=190 alive=true sentient=true intelligence=5 loyalty=8 hands=true speech=true speed_land=6 training=6 courage=7 dmg_pierce=40 attack_rate=1 attack_range=40 command_limit=5 field_radius=8 field_targets=owned obedience+1 food_need=0.05
+cadet: mass=70 integrity=140 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=6 training=3 courage=6 dmg_pierce=30 attack_rate=1 attack_range=30 trainable=8 food_need=0.04
+recruit: mass=75 integrity=150 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=6 training=2 courage=5 dmg_slash=25 attack_rate=1 trainable=8 food_need=0.04
+conscript: mass=75 integrity=150 alive=true sentient=true intelligence=4 loyalty=3 hands=true speech=true speed_land=6 training=2 courage=4 morale=3 dmg_pierce=35 attack_rate=1 attack_range=30 pack_size=4 food_need=0.04
+veteran: mass=85 integrity=220 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=5 training=8 courage=9 immune_fear=true dmg_pierce=45 attack_rate=1.2 attack_range=40 armor=5 food_need=0.05
+reservist: mass=80 integrity=170 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=6 training=4 courage=6 dmg_pierce=40 attack_rate=1 attack_range=40 food_need=0.04
+serviceman: mass=85 integrity=190 alive=true sentient=true intelligence=5 loyalty=8 hands=true speech=true speed_land=6 training=6 courage=7 dmg_pierce=40 attack_rate=1 attack_range=40 armor=5 food_need=0.05
+infantryman: mass=85 integrity=200 alive=true sentient=true intelligence=5 loyalty=8 hands=true speech=true speed_land=6 training=6 courage=7 dmg_pierce=45 attack_rate=1 attack_range=40 armor=8 pack_size=3 food_need=0.05
+trooper: mass=85 integrity=200 alive=true sentient=true intelligence=5 loyalty=8 hands=true speech=true speed_land=6 training=6 courage=7 dmg_pierce=45 attack_rate=1 attack_range=40 armor=8 food_need=0.05
+paratrooper: mass=85 integrity=200 alive=true sentient=true intelligence=6 loyalty=8 hands=true speech=true speed_land=6 training=8 courage=9 dmg_pierce=45 attack_rate=1 attack_range=40 jump=5 placement=target placement_range=500 food_need=0.05
+guardsman: mass=90 integrity=220 alive=true sentient=true intelligence=5 loyalty=9 hands=true speech=true speed_land=5 training=7 courage=8 dmg_pierce=45 attack_rate=1 attack_range=3 armor=12 block=0.3 alarm=true detect_stealth=5 food_need=0.05
+grenadier: mass=95 integrity=220 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=5 strength=8 training=6 dmg_blast=60 attack_area=4 attack_rate=0.3 attack_range=30 siege=2 res_blast=0.3 food_need=0.05
+musketeer: mass=80 integrity=180 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=5 training=7 dmg_pierce=60 attack_rate=0.3 attack_range=50 loudness=9 dmg_slash=30 food_need=0.05
+dragoon: mass=85 integrity=200 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=6 training=6 dmg_pierce=55 attack_rate=0.5 attack_range=50 dmg_slash=35 loudness=8 food_need=0.05
+lancer: mass=85 integrity=200 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=6 training=7 dmg_pierce=55 attack_rate=0.8 attack_range=3.5 knockback=3 counters=infantry,archer food_need=0.05
+hussar: mass=80 integrity=190 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=6 training=7 dmg_slash=45 attack_rate=1 attack_range=1.5 courage=9 agility=7 food_need=0.05
+cuirassier: mass=95 integrity=240 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=5 training=7 dmg_slash=45 attack_rate=0.8 armor=20 res_pierce=0.3 knockback=2 food_need=0.05
+cavalryman: mass=85 integrity=200 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=6 training=6 dmg_slash=45 attack_rate=1 attack_range=2 courage=8 food_need=0.05
+gunner: mass=85 integrity=190 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=4 training=6 dmg_pierce=70 attack_rate=2 attack_range=200 targets=land,air loudness=9 siege=2 food_need=0.05
+bombardier: mass=85 integrity=190 alive=true sentient=true intelligence=7 loyalty=7 hands=true speech=true speed_land=4 training=6 dmg_blast=120 attack_area=6 attack_rate=0.2 attack_range=400 siege=4 friendly_fire=true food_need=0.05
+artilleryman: mass=90 integrity=200 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=4 training=6 dmg_blast=150 attack_area=6 attack_rate=0.1 attack_range=1000 siege=5 loudness=10 food_need=0.05
+sapper: mass=85 integrity=190 alive=true sentient=true intelligence=7 loyalty=7 hands=true speech=true speed_land=5 labor=2 build_speed=2 speed_underground=0.5 dmg_blast=80 attack_area=3 attack_rate=0.2 siege=4 res_blast=0.3 food_need=0.05
+commando: mass=85 integrity=220 alive=true sentient=true intelligence=8 loyalty=9 hands=true speech=true speed_land=7 training=9 courage=9 stealth=7 camouflage=forest,swamp dmg_pierce=50 dmg_slash=40 attack_rate=1.5 attack_range=40 climb=6 food_need=0.05
+sniper: mass=75 integrity=150 alive=true sentient=true intelligence=8 loyalty=8 hands=true speech=true speed_land=5 training=9 stealth=8 camouflage=forest,hill dmg_pierce=120 attack_rate=0.25 attack_range=800 accuracy=0.98 critical=0.5 sight_range=800 food_need=0.04
+rifleman: mass=80 integrity=180 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=6 training=6 dmg_pierce=60 attack_rate=1 attack_range=300 targets=land,air loudness=9 food_need=0.05
+archer: mass=70 integrity=140 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=6 training=6 dmg_pierce=35 attack_rate=0.8 attack_range=60 targets=land,air sight_range=200 food_need=0.04
+longbowman: mass=75 integrity=150 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=5 training=7 strength=7 dmg_pierce=45 attack_rate=0.6 attack_range=100 targets=land,air armor_pierce=0.3 food_need=0.04
+swordsman: mass=80 integrity=180 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=6 training=7 dmg_slash=45 attack_rate=1.2 attack_range=1.5 block=0.3 food_need=0.05
+halberdier: mass=85 integrity=200 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=5 training=6 dmg_slash=55 dmg_pierce=40 attack_rate=0.7 attack_range=3 counters=cavalry,knight,cavalryman food_need=0.05
+legionary: mass=85 integrity=220 alive=true sentient=true intelligence=6 loyalty=8 hands=true speech=true speed_land=5 training=8 dmg_pierce=40 attack_rate=1 attack_range=2 armor=15 block=0.5 pack_size=4 food_need=0.05
+gladiator: mass=90 integrity=250 alive=true sentient=true intelligence=5 loyalty=5 hands=true speech=true speed_land=6 training=8 strength=8 courage=9 dmg_slash=50 attack_rate=1.2 armor=10 charm=5 field_radius=10 field_targets=owned morale+2 food_need=0.05
+samurai: mass=75 integrity=220 alive=true sentient=true intelligence=8 loyalty=10 hands=true speech=true speed_land=6 training=10 courage=10 immune_fear=true dmg_slash=65 attack_rate=1.5 attack_range=1.5 critical=0.3 armor=10 food_need=0.05
+ninja: mass=65 integrity=150 alive=true sentient=true intelligence=8 loyalty=8 hands=true speech=true speed_land=8 training=9 stealth=9 climb=8 evasion=0.4 dmg_slash=40 dmg_pierce=25 attack_rate=2 attack_range=10 critical=0.4 night_vision=true food_need=0.04
+warrior: mass=85 integrity=220 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=6 training=7 strength=8 courage=8 dmg_slash=50 attack_rate=1 armor=8 food_need=0.05
+mercenary: mass=85 integrity=200 alive=true sentient=true intelligence=6 loyalty=2 hands=true speech=true speed_land=6 training=8 courage=7 dmg_slash=45 dmg_pierce=40 attack_rate=1.2 attack_range=30 food_need=0.05
+barbarian: mass=100 integrity=250 alive=true sentient=true intelligence=4 loyalty=5 hands=true speech=true speed_land=6 strength=10 courage=9 aggression=7 dmg_slash=70 attack_rate=0.8 siege=2 res_cold=0.4 food_need=0.06
+berserker: mass=100 integrity=260 alive=true sentient=true intelligence=3 loyalty=5 hands=true speech=true speed_land=7 strength=10 courage=10 immune_fear=true aggression=10 dmg_slash=75 attack_rate=1.5 lifesteal=0.1 armor=0 self_damage=0.05 food_need=0.06
+paladin: mass=90 integrity=280 alive=true sentient=true intelligence=7 loyalty=10 hands=true speech=true speed_land=5 training=8 courage=10 dmg_slash=45 dmg_holy=40 attack_rate=1 armor=20 heals=3 res_unholy=0.6 counters=demon,zombie,vampire,ghost food_need=0.05
+crusader: mass=90 integrity=260 alive=true sentient=true intelligence=6 loyalty=9 hands=true speech=true speed_land=5 training=8 courage=10 immune_fear=true dmg_slash=45 dmg_holy=30 attack_rate=1 armor=18 res_unholy=0.5 counters=demon,heretic food_need=0.05
+squire: mass=70 integrity=150 alive=true sentient=true intelligence=5 loyalty=9 hands=true speech=true speed_land=6 training=3 dmg_slash=25 attack_rate=1 carry_capacity=60 labor=1 trainable=8 food_need=0.04
+bodyguard: mass=95 integrity=250 alive=true sentient=true intelligence=6 loyalty=10 hands=true speech=true speed_land=6 strength=8 training=7 armor=10 block=0.4 alarm=true detect_stealth=6 dmg_blunt=30 attack_rate=1.2 counters=assassin,hitman,kidnapper food_need=0.05
+bouncer: mass=110 integrity=240 alive=true sentient=true intelligence=4 loyalty=6 hands=true speech=true speed_land=5 strength=9 dmg_blunt=30 attack_rate=1 knockback=4 intimidation=6 alarm=true counters=thug,drunk,thief food_need=0.05
+vigilante: mass=85 integrity=200 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=7 training=6 stealth=5 detect_stealth=6 tracking=7 dmg_blunt=30 attack_rate=1.2 counters=thief,mugger,bandit,gangster food_need=0.05
+peacekeeper: mass=85 integrity=220 alive=true sentient=true intelligence=6 loyalty=8 hands=true speech=true speed_land=5 armor=15 block=0.4 authority=3 dmg_pierce=40 attack_rate=0.8 attack_range=40 field_radius=12 field_targets=all law=attack aggression+-3 food_need=0.05
+privateer: mass=85 integrity=180 alive=true sentient=true intelligence=6 loyalty=4 hands=true speech=true speed_land=5 speed_water=2 training=6 dmg_slash=40 dmg_pierce=50 attack_range=40 attack_rate=1 letter_steal=3 counters=merchant,trader food_need=0.05
+
+# noun leader
+admiral: mass=80 integrity=200 alive=true sentient=true intelligence=9 loyalty=8 hands=true speech=true speed_land=4 authority=7 command_limit=80 courage=9 sight_range=500 speed_water=1.5 field_radius=12 field_targets=owned speed_water*1.2 courage+3 food_need=0.04
+commodore: mass=80 integrity=190 alive=true sentient=true intelligence=8 loyalty=8 hands=true speech=true speed_land=4 authority=5 command_limit=40 courage=8 speed_water=1.5 field_radius=12 field_targets=owned speed_water*1.15 courage+2 food_need=0.04
+brigadier: mass=85 integrity=210 alive=true sentient=true intelligence=8 loyalty=8 hands=true speech=true speed_land=5 authority=6 command_limit=60 training=7 courage=9 field_radius=12 field_targets=owned courage+3 training+1 food_need=0.05
+commandant: mass=85 integrity=210 alive=true sentient=true intelligence=8 loyalty=8 hands=true speech=true speed_land=5 authority=6 command_limit=40 training=7 courage=8 field_radius=10 field_targets=owned courage+3 obedience+2 food_need=0.05
+ensign: mass=75 integrity=160 alive=true sentient=true intelligence=6 loyalty=9 hands=true speech=true speed_land=6 command_limit=5 courage=8 field_radius=10 field_targets=owned courage+3 morale+1 food_need=0.04
+centurion: mass=90 integrity=260 alive=true sentient=true intelligence=7 loyalty=9 hands=true speech=true speed_land=5 authority=5 command_limit=80 training=8 courage=9 dmg_slash=45 attack_rate=1 armor=15 field_radius=10 field_targets=owned courage+3 obedience+2 food_need=0.05
+warlord: mass=100 integrity=320 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=6 authority=6 command_limit=100 intimidation=8 fear_aura=5 courage=10 dmg_slash=60 attack_rate=1 armor=12 tax_rate=0.2 field_radius=12 food_need=0.06
+chieftain: mass=90 integrity=260 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=5 authority=5 command_limit=30 courage=9 dmg_slash=45 attack_rate=1 field_radius=10 field_targets=owned courage+3 morale+2 food_need=0.05
+shogun: mass=80 integrity=260 alive=true sentient=true intelligence=9 loyalty=9 hands=true speech=true speed_land=5 authority=8 command_limit=100 training=10 courage=10 dmg_slash=60 attack_rate=1.2 field_radius=12 field_targets=owned courage+3 training+2 food_need=0.05
+sultan: mass=80 integrity=120 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=3 authority=8 command_limit=60 tax_rate=0.2 field_radius=12 claim_radius=8 storage_letters=1000 charm=6 food_need=0.05
+sheikh: mass=80 integrity=120 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=4 authority=6 command_limit=40 tax_rate=0.1 field_radius=12 claim_radius=6 storage_letters=600 food_need=0.04
+czar: mass=85 integrity=130 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=3 authority=9 command_limit=100 tax_rate=0.25 field_radius=12 claim_radius=8 fear_aura=3 food_need=0.05
+tsar: mass=85 integrity=130 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=3 authority=9 command_limit=100 tax_rate=0.25 field_radius=12 claim_radius=8 fear_aura=3 food_need=0.05
+empress: mass=65 integrity=120 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=3 authority=10 command_limit=150 charm=8 tax_rate=0.2 field_radius=12 claim_radius=10 field_targets=owned morale+3 food_need=0.04
+monarch: mass=80 integrity=120 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=3 authority=9 command_limit=120 tax_rate=0.2 claim_radius=10 field_radius=12 field_targets=owned morale+2 courage+2 food_need=0.04
+regent: mass=75 integrity=110 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=3 authority=8 command_limit=80 tax_rate=0.15 claim_radius=6 field_radius=12 food_need=0.04
+viceroy: mass=80 integrity=110 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=3 authority=7 command_limit=60 tax_rate=0.15 claim_radius=6 field_radius=12 food_need=0.04
+baron: mass=85 integrity=130 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 authority=5 command_limit=30 tax_rate=0.1 claim_radius=5 field_radius=12 food_need=0.04
+baroness: mass=65 integrity=110 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 authority=5 command_limit=30 tax_rate=0.1 claim_radius=5 field_radius=12 charm=6 food_need=0.04
+countess: mass=65 integrity=110 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 authority=5 command_limit=35 tax_rate=0.1 claim_radius=5 field_radius=12 charm=7 food_need=0.04
+earl: mass=85 integrity=130 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 authority=5 command_limit=35 tax_rate=0.1 claim_radius=5 field_radius=12 food_need=0.04
+viscount: mass=80 integrity=120 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 authority=4 command_limit=25 tax_rate=0.08 claim_radius=4 field_radius=10 food_need=0.04
+marquis: mass=80 integrity=120 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 authority=5 command_limit=35 tax_rate=0.1 claim_radius=5 field_radius=12 charm=6 food_need=0.04
+nobleman: mass=80 integrity=120 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 authority=4 command_limit=20 tax_rate=0.08 claim_radius=4 field_radius=10 storage_letters=300 food_need=0.04
+chancellor: mass=75 integrity=100 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=3 authority=7 command_limit=40 tax_rate=0.1 field_radius=12 field_targets=owned obedience+2 food_need=0.03
+vizier: mass=70 integrity=100 alive=true sentient=true intelligence=9 loyalty=5 hands=true speech=true speed_land=3 authority=6 command_limit=30 read_properties=6 field_radius=10 field_targets=owned intelligence+1 food_need=0.03
+doge: mass=75 integrity=100 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=3 authority=6 command_limit=30 trade_bonus=0.2 speed_water=1 tax_rate=0.1 field_radius=12 food_need=0.03
+praetor: mass=80 integrity=110 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 authority=6 command_limit=30 field_radius=12 field_targets=all law=theft,attack fine=4 food_need=0.04
+commissar: mass=85 integrity=150 alive=true sentient=true intelligence=7 loyalty=9 hands=true speech=true speed_land=5 authority=6 command_limit=20 fear_aura=4 intimidation=6 field_radius=10 field_targets=owned obedience+3 loyalty+2 morale+-1 food_need=0.04
+spymaster: mass=70 integrity=110 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=5 authority=4 command_limit=12 read_inventory=true read_properties=7 stealth=6 detect_stealth=8 counters=spy,traitor,mole food_need=0.03
+foreman: mass=90 integrity=160 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=4 command_limit=12 labor=2 field_radius=10 field_targets=owned labor*1.3 build_speed*1.2 food_need=0.05
+supervisor: mass=80 integrity=110 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 command_limit=10 field_radius=10 field_targets=owned labor*1.2 obedience+1 food_need=0.04
+overseer: mass=85 integrity=140 alive=true sentient=true intelligence=6 loyalty=5 hands=true speech=true speed_land=4 command_limit=15 detect_stealth=4 field_radius=12 field_targets=owned labor*1.25 obedience+2 food_need=0.04
+taskmaster: mass=90 integrity=150 alive=true sentient=true intelligence=6 loyalty=5 hands=true speech=true speed_land=4 command_limit=15 intimidation=5 field_radius=10 field_targets=owned labor*1.5 morale+-2 obedience+3 food_need=0.04
+headmaster: mass=75 integrity=100 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=4 authority=4 command_limit=20 field_radius=12 field_targets=owned training+2 obedience+2 food_need=0.03
+headmistress: mass=65 integrity=95 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=4 authority=4 command_limit=20 field_radius=12 field_targets=owned training+2 obedience+2 food_need=0.03
+tycoon: mass=85 integrity=90 alive=true sentient=true intelligence=8 loyalty=4 hands=true speech=true speed_land=4 trade_bonus=0.4 storage_letters=800 command_limit=15 authority=3 charm=6 food_need=0.04
+magnate: mass=85 integrity=90 alive=true sentient=true intelligence=8 loyalty=4 hands=true speech=true speed_land=4 trade_bonus=0.4 storage_letters=800 command_limit=15 authority=3 food_need=0.04
+mogul: mass=85 integrity=90 alive=true sentient=true intelligence=8 loyalty=4 hands=true speech=true speed_land=4 trade_bonus=0.4 storage_letters=700 command_limit=15 authority=3 charm=6 food_need=0.04
+industrialist: mass=85 integrity=90 alive=true sentient=true intelligence=8 loyalty=4 hands=true speech=true speed_land=4 command_limit=20 craft_slots=2 build_speed=1.5 trade_bonus=0.2 field_radius=12 field_targets=owned labor*1.2 food_need=0.04
+cardinal: mass=75 integrity=100 alive=true sentient=true intelligence=8 loyalty=8 hands=true speech=true speed_land=3 authority=6 command_limit=30 recruit_rate=0.8 heals=3 dmg_holy=40 attack_rate=0.5 res_unholy=0.7 field_radius=12 field_targets=owned morale+2 counters=demon,ghost food_need=0.03
+archbishop: mass=75 integrity=100 alive=true sentient=true intelligence=8 loyalty=8 hands=true speech=true speed_land=3 authority=6 command_limit=30 recruit_rate=1 heals=4 dmg_holy=45 attack_rate=0.5 res_unholy=0.7 counters=demon,ghost,zombie food_need=0.03
+abbot: mass=70 integrity=110 alive=true sentient=true intelligence=8 loyalty=9 hands=true speech=true speed_land=4 authority=4 command_limit=15 heals=3 labor=1 res_unholy=0.5 field_radius=10 field_targets=owned morale+2 courage+1 food_need=0.03
+abbess: mass=60 integrity=100 alive=true sentient=true intelligence=8 loyalty=9 hands=true speech=true speed_land=4 authority=4 command_limit=15 heals=4 res_unholy=0.5 field_radius=10 field_targets=owned regeneration+1 food_need=0.03
+necromancer: mass=70 integrity=120 alive=true sentient=true intelligence=9 loyalty=4 hands=true speech=true speed_land=4 summons=skeleton summon_count=3 summon_owned=true dmg_unholy=50 dmg_dark=30 attack_rate=0.5 attack_range=20 res_unholy=0.8 fear_aura=4 command_limit=20 food_need=0.03
+
+# noun person
+magistrate: mass=80 integrity=100 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=3 authority=6 read_properties=5 field_radius=12 field_targets=all law=theft,attack fine=5 food_need=0.03
+prosecutor: mass=80 integrity=100 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 authority=3 read_properties=5 counters=thief,smuggler,swindler,embezzler,criminal food_need=0.03
+barrister: mass=80 integrity=100 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 charm=6 read_properties=4 counters=arrest,verdict,sentence,fine food_need=0.03
+solicitor: mass=80 integrity=100 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 charm=5 trade_bonus=0.1 counters=arrest,verdict,fine food_need=0.03
+counsel: mass=80 integrity=100 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 charm=5 read_properties=3 counters=arrest,verdict,sentence food_need=0.03
+paralegal: mass=70 integrity=85 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 labor=1 storage_letters=60 counters=fine food_need=0.03
+notary: mass=75 integrity=90 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 authority=2 security=6 storage_letters=100 food_need=0.03
+registrar: mass=75 integrity=90 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 storage_letters=200 security=5 authority=2 food_need=0.03
+bailiff: mass=90 integrity=160 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=5 authority=4 letter_steal=4 inflict_root=5 attack_rate=0.5 strength=7 food_need=0.04
+constable: mass=85 integrity=190 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=6 authority=3 alarm=true detect_stealth=6 dmg_blunt=30 attack_rate=1 inflict_root=3 counters=thief,burglar,vandal food_need=0.04
+marshal: mass=85 integrity=210 alive=true sentient=true intelligence=7 loyalty=7 hands=true speech=true speed_land=6 authority=5 alarm=true detect_stealth=6 tracking=7 dmg_pierce=60 attack_rate=1 attack_range=40 inflict_root=4 courage=8 counters=outlaw,bandit,fugitive food_need=0.04
+detective: mass=80 integrity=120 alive=true sentient=true intelligence=9 loyalty=7 hands=true speech=true speed_land=5 detect_stealth=8 read_properties=6 tracking=8 alarm=true dmg_pierce=40 attack_rate=0.8 attack_range=30 counters=thief,spy,murderer,burglar food_need=0.04
+sleuth: mass=75 integrity=110 alive=true sentient=true intelligence=9 loyalty=7 hands=true speech=true speed_land=5 detect_stealth=8 read_properties=6 tracking=8 counters=thief,spy,burglar food_need=0.03
+sentry: mass=85 integrity=180 alive=true sentient=true intelligence=5 loyalty=8 hands=true speech=true speed_land=5 alarm=true detect_stealth=6 sight_range=300 dmg_pierce=40 attack_rate=1 attack_range=3 counters=spy,thief food_need=0.04
+sentinel: mass=90 integrity=220 alive=true sentient=true intelligence=5 loyalty=9 hands=true speech=true speed_land=4 alarm=true detect_stealth=7 sight_range=400 night_vision=true armor=10 dmg_pierce=45 attack_rate=1 attack_range=3 courage=9 counters=spy,thief,assassin food_need=0.04
+warden: mass=85 integrity=180 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=4 authority=4 alarm=true detect_stealth=6 inflict_root=10 attack_rate=0.5 security=8 counters=escape,prisoner,fugitive food_need=0.04
+jailer: mass=90 integrity=180 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 inflict_root=20 attack_rate=0.3 security=8 alarm=true counters=escape,prisoner food_need=0.04
+jailor: mass=90 integrity=180 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 inflict_root=20 attack_rate=0.3 security=8 alarm=true counters=escape,prisoner food_need=0.04
+turnkey: mass=85 integrity=160 alive=true sentient=true intelligence=4 loyalty=6 hands=true speech=true speed_land=4 inflict_root=15 attack_rate=0.3 security=7 counters=escape food_need=0.04
+executioner: mass=100 integrity=220 alive=true sentient=true intelligence=4 loyalty=6 hands=true speech=true speed_land=4 strength=9 dmg_slash=150 attack_rate=0.2 critical=0.5 fear_aura=6 intimidation=8 food_need=0.05
+hangman: mass=90 integrity=200 alive=true sentient=true intelligence=4 loyalty=6 hands=true speech=true speed_land=4 strength=8 dmg_suffocation=120 inflict_root=10 attack_rate=0.2 fear_aura=5 intimidation=7 food_need=0.05
+inquisitor: mass=80 integrity=140 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=4 authority=5 read_properties=7 detect_stealth=7 inflict_fear=8 dmg_holy=30 attack_rate=0.5 counters=heretic,witch,warlock,spy food_need=0.04
+censor: mass=75 integrity=100 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 authority=4 silences=15 counters=poet,critic,columnist,rumor food_need=0.03
+diplomat: mass=75 integrity=90 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 charm=8 trade_bonus=0.15 field_radius=12 field_targets=all aggression+-3 food_need=0.03
+envoy: mass=75 integrity=90 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=5 charm=7 trade_bonus=0.1 field_radius=10 field_targets=all aggression+-2 food_need=0.03
+consul: mass=75 integrity=95 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 charm=6 authority=3 trade_bonus=0.15 food_need=0.03
+legate: mass=80 integrity=110 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=4 authority=4 charm=6 command_limit=15 food_need=0.04
+emissary: mass=75 integrity=90 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=5 charm=7 field_radius=10 field_targets=all aggression+-2 food_need=0.03
+delegate: mass=75 integrity=90 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 charm=5 authority=2 food_need=0.03
+attache: mass=70 integrity=85 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 charm=5 read_properties=3 food_need=0.03
+statesman: mass=80 integrity=100 alive=true sentient=true intelligence=9 loyalty=7 hands=true speech=true speed_land=3 authority=5 charm=7 field_radius=12 field_targets=owned morale+2 food_need=0.03
+politician: mass=80 integrity=100 alive=true sentient=true intelligence=8 loyalty=4 hands=true speech=true speed_land=4 charm=7 recruit_rate=0.3 authority=3 trade_bonus=0.1 food_need=0.03
+congressman: mass=80 integrity=100 alive=true sentient=true intelligence=8 loyalty=5 hands=true speech=true speed_land=4 authority=4 charm=6 field_radius=12 field_targets=all law=theft fine=3 food_need=0.03
+legislator: mass=80 integrity=100 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 authority=4 field_radius=12 field_targets=all law=theft,hunt fine=3 food_need=0.03
+alderman: mass=80 integrity=100 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 authority=3 tax_rate=0.05 field_radius=10 food_need=0.03
+councillor: mass=75 integrity=95 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 authority=3 tax_rate=0.05 field_radius=10 food_need=0.03
+bureaucrat: mass=75 integrity=85 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=3 authority=2 storage_letters=60 tax_rate=0.05 field_radius=10 food_need=0.03
+taxman: mass=80 integrity=100 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 authority=3 tax_rate=0.15 field_radius=20 read_inventory=true food_need=0.03
+assessor: mass=75 integrity=90 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 read_inventory=true read_properties=4 tax_rate=0.05 field_radius=10 food_need=0.03
+functionary: mass=75 integrity=85 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 authority=1 labor=1 storage_letters=40 food_need=0.03
+appointee: mass=75 integrity=85 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 authority=2 food_need=0.03
+courtier: mass=70 integrity=85 alive=true sentient=true intelligence=7 loyalty=4 hands=true speech=true speed_land=4 charm=7 reputation=5 trade_bonus=0.05 food_need=0.03
+chamberlain: mass=75 integrity=95 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=4 authority=3 storage_letters=200 security=6 storage_objects=300 food_need=0.03
+seneschal: mass=80 integrity=110 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=4 authority=4 command_limit=10 storage_objects=500 food_output=1 food_need=0.04
+herald: mass=70 integrity=90 alive=true sentient=true intelligence=6 loyalty=8 hands=true speech=true speed_land=6 loudness=9 alarm=true sight_range=300 field_radius=12 field_targets=owned courage+2 morale+1 food_need=0.03
+crier: mass=70 integrity=90 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=5 loudness=10 alarm=true map_reveal=5 field_radius=12 field_targets=owned morale+1 food_need=0.03
+informant: mass=65 integrity=80 alive=true sentient=true intelligence=6 loyalty=2 hands=true speech=true speed_land=5 stealth=5 read_inventory=true read_properties=4 hearing_range=40 food_need=0.03
+hermit: mass=60 integrity=90 alive=true sentient=true intelligence=9 loyalty=5 hands=true speech=true speed_land=3 stealth=5 heals=2 res_disease=0.4 res_psychic=0.6 food_need=0.01
+beggar: mass=55 integrity=70 alive=true sentient=true intelligence=4 loyalty=4 hands=true speech=true speed_land=3 charm=3 trade_bonus=0.05 stealth=3 hearing_range=30 food_need=0.02
+vagabond: mass=65 integrity=90 alive=true sentient=true intelligence=5 loyalty=3 hands=true speech=true speed_land=5 map_reveal=15 sight_range=200 stealth=3 range=80 food_need=0.02
+
+# noun worker
+nun: mass=60 integrity=90 alive=true sentient=true intelligence=7 loyalty=10 hands=true speech=true speed_land=4 heals=4 recruit_rate=0.3 res_unholy=0.6 courage=8 field_radius=8 field_targets=owned regeneration+1 food_need=0.02
+rabbi: mass=75 integrity=95 alive=true sentient=true intelligence=9 loyalty=8 hands=true speech=true speed_land=4 recruit_rate=0.5 read_properties=4 res_unholy=0.5 field_radius=10 field_targets=owned morale+2 intelligence+1 food_need=0.03
+imam: mass=75 integrity=95 alive=true sentient=true intelligence=8 loyalty=8 hands=true speech=true speed_land=4 recruit_rate=0.6 loudness=6 res_unholy=0.5 field_radius=10 field_targets=owned morale+2 courage+1 food_need=0.03
+shaman: mass=70 integrity=110 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=4 heals=5 dmg_magic=30 attack_rate=0.5 attack_range=15 detect_life=50 recruit_rate=0.3 res_unholy=0.4 counters=ghost,spirit,curse food_need=0.03
+prophet: mass=70 integrity=100 alive=true sentient=true intelligence=9 loyalty=8 hands=true speech=true speed_land=4 recruit_rate=1.2 read_properties=6 charm=7 loudness=6 field_radius=12 field_targets=owned morale+3 courage+2 food_need=0.03
+friar: mass=75 integrity=100 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=4 heals=2 recruit_rate=0.4 labor=1 res_unholy=0.4 food_output=0.5 food_need=0.03
+cleric: mass=70 integrity=110 alive=true sentient=true intelligence=8 loyalty=8 hands=true speech=true speed_land=4 heals=5 dmg_holy=35 attack_rate=0.5 res_unholy=0.6 counters=zombie,ghost,curse food_need=0.03
+chaplain: mass=75 integrity=120 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=5 heals=3 res_unholy=0.5 field_radius=10 field_targets=owned courage+3 morale+2 food_need=0.03
+pastor: mass=75 integrity=95 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=4 recruit_rate=0.5 heals=2 field_radius=10 field_targets=owned morale+2 food_need=0.03
+vicar: mass=75 integrity=95 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=4 recruit_rate=0.4 heals=2 field_radius=10 field_targets=owned morale+2 food_need=0.03
+rector: mass=75 integrity=95 alive=true sentient=true intelligence=8 loyalty=8 hands=true speech=true speed_land=4 recruit_rate=0.4 authority=2 field_radius=10 field_targets=owned morale+2 food_need=0.03
+reverend: mass=75 integrity=95 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=4 recruit_rate=0.5 heals=2 res_unholy=0.4 field_radius=10 field_targets=owned morale+2 food_need=0.03
+deacon: mass=75 integrity=95 alive=true sentient=true intelligence=6 loyalty=8 hands=true speech=true speed_land=4 heals=2 recruit_rate=0.2 labor=1 food_need=0.03
+deaconess: mass=65 integrity=90 alive=true sentient=true intelligence=6 loyalty=8 hands=true speech=true speed_land=4 heals=3 recruit_rate=0.2 labor=1 food_need=0.03
+evangelist: mass=75 integrity=95 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=5 recruit_rate=1.5 loudness=7 charm=7 field_radius=12 field_targets=owned morale+2 food_need=0.03
+missionary: mass=75 integrity=110 alive=true sentient=true intelligence=7 loyalty=9 hands=true speech=true speed_land=5 recruit_rate=1 map_reveal=20 sight_range=200 heals=2 terrain_ignored=forest,swamp food_need=0.03
+novice: mass=65 integrity=85 alive=true sentient=true intelligence=5 loyalty=8 hands=true speech=true speed_land=4 heals=1 labor=1 trainable=8 food_need=0.03
+acolyte: mass=60 integrity=85 alive=true sentient=true intelligence=5 loyalty=9 hands=true speech=true speed_land=4 heals=1 labor=1 luminosity=1 trainable=7 food_need=0.03
+disciple: mass=70 integrity=90 alive=true sentient=true intelligence=6 loyalty=10 hands=true speech=true speed_land=4 labor=1 heals=1 courage=7 trainable=7 food_need=0.03
+apostle: mass=70 integrity=100 alive=true sentient=true intelligence=8 loyalty=10 hands=true speech=true speed_land=5 recruit_rate=1.2 heals=3 charm=7 courage=9 map_reveal=15 food_need=0.03
+oracle: mass=65 integrity=90 alive=true sentient=true intelligence=10 loyalty=6 hands=true speech=true speed_land=3 read_properties=9 read_inventory=true map_reveal=30 sees_through=fog,walls food_need=0.03
+seer: mass=65 integrity=90 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=3 read_properties=7 sight_range=500 sees_through=fog,walls night_vision=true food_need=0.03
+mystic: mass=65 integrity=90 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 read_properties=5 dmg_magic=25 attack_rate=0.5 attack_range=15 res_psychic=0.6 food_need=0.03
+psychic: mass=65 integrity=85 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 read_inventory=true read_properties=6 dmg_psychic=30 attack_rate=0.5 attack_range=20 detect_stealth=5 food_need=0.03
+exorcist: mass=75 integrity=110 alive=true sentient=true intelligence=8 loyalty=8 hands=true speech=true speed_land=4 dmg_holy=60 attack_rate=0.5 attack_range=10 res_unholy=0.8 immune_fear=true counters=demon,ghost,poltergeist,spirit food_need=0.03
+
+# noun person
+witch: mass=60 integrity=100 alive=true sentient=true intelligence=8 loyalty=5 hands=true speech=true speed_land=4 dmg_poison=40 inflict_poison=20 dmg_magic=30 attack_rate=0.5 attack_range=20 craft_slots=1 heals=2 night_vision=true food_need=0.03
+sorcerer: mass=75 integrity=120 alive=true sentient=true intelligence=9 loyalty=5 hands=true speech=true speed_land=4 dmg_magic=60 dmg_fire=40 attack_rate=0.5 attack_range=30 res_magic=0.5 luminosity=2 food_need=0.03
+warlock: mass=75 integrity=120 alive=true sentient=true intelligence=9 loyalty=4 hands=true speech=true speed_land=4 dmg_unholy=50 dmg_dark=40 attack_rate=0.5 attack_range=30 res_unholy=0.6 fear_aura=3 food_need=0.03
+enchanter: mass=70 integrity=100 alive=true sentient=true intelligence=9 loyalty=5 hands=true speech=true speed_land=4 inflict_charm=10 attack_rate=0.4 attack_range=20 charm=7 res_magic=0.4 food_need=0.03
+conjurer: mass=70 integrity=100 alive=true sentient=true intelligence=8 loyalty=5 hands=true speech=true speed_land=4 summons=dove summon_count=3 summon_owned=true dmg_magic=30 inflict_confuse=4 attack_rate=0.5 attack_range=15 charm=5 food_need=0.03
+jester: mass=65 integrity=85 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=5 charm=8 agility=7 inflict_confuse=3 attack_rate=0.5 attack_range=5 field_radius=12 field_targets=owned morale+3 food_need=0.03
+
+# noun criminal
+assassin: mass=70 integrity=140 alive=true sentient=true intelligence=8 loyalty=4 hands=true speech=true speed_land=7 stealth=9 camouflage=forest,road dmg_slash=60 dmg_poison=40 attack_rate=1.5 critical=0.6 inflict_poison=10 climb=7 evasion=0.3 food_need=0.04
+bandit: mass=80 integrity=160 alive=true sentient=true intelligence=5 loyalty=3 hands=true speech=true speed_land=6 stealth=5 letter_steal=5 dmg_slash=40 attack_rate=1 intimidation=5 pack_size=4 camouflage=forest,hill food_need=0.04
+outlaw: mass=80 integrity=170 alive=true sentient=true intelligence=6 loyalty=3 hands=true speech=true speed_land=6 stealth=5 letter_steal=5 dmg_pierce=55 attack_rate=1 attack_range=40 courage=8 camouflage=hill,sand food_need=0.04
+smuggler: mass=75 integrity=120 alive=true sentient=true intelligence=7 loyalty=4 hands=true speech=true speed_land=5 stealth=7 speed_water=1.5 storage_letters=150 trade_bonus=0.3 security=6 counters=customs,tariff,embargo food_need=0.03
+pirate: mass=85 integrity=170 alive=true sentient=true intelligence=5 loyalty=3 hands=true speech=true speed_land=5 speed_water=2 letter_steal=6 dmg_slash=45 dmg_pierce=40 attack_rate=1 attack_range=30 intimidation=6 climb=5 counters=merchant,trader,sailor food_need=0.04
+buccaneer: mass=85 integrity=170 alive=true sentient=true intelligence=5 loyalty=3 hands=true speech=true speed_land=5 speed_water=2 letter_steal=6 dmg_slash=45 attack_rate=1 intimidation=6 climb=5 food_need=0.04
+corsair: mass=85 integrity=170 alive=true sentient=true intelligence=6 loyalty=3 hands=true speech=true speed_land=5 speed_water=2.5 letter_steal=6 dmg_slash=45 attack_rate=1.2 intimidation=6 food_need=0.04
+raider: mass=85 integrity=170 alive=true sentient=true intelligence=5 loyalty=3 hands=true speech=true speed_land=7 letter_steal=6 dmg_slash=45 attack_rate=1 siege=2 aggression=7 pack_size=4 food_need=0.04
+brigand: mass=85 integrity=160 alive=true sentient=true intelligence=5 loyalty=3 hands=true speech=true speed_land=6 stealth=5 letter_steal=5 dmg_slash=40 attack_rate=1 intimidation=5 pack_size=3 food_need=0.04
+highwayman: mass=80 integrity=150 alive=true sentient=true intelligence=6 loyalty=3 hands=true speech=true speed_land=7 stealth=5 letter_steal=6 dmg_pierce=50 attack_range=30 attack_rate=0.8 charm=5 counters=merchant,courier,coach food_need=0.04
+rustler: mass=80 integrity=140 alive=true sentient=true intelligence=5 loyalty=3 hands=true speech=true speed_land=6 stealth=5 recruit_rate=0.5 command_limit=10 inflict_root=4 attack_range=10 counters=rancher,cowboy food_need=0.04
+burglar: mass=70 integrity=110 alive=true sentient=true intelligence=7 loyalty=3 hands=true speech=true speed_land=6 stealth=8 climb=7 letter_steal=8 night_vision=true counters=lock,safe,vault food_need=0.04
+robber: mass=80 integrity=130 alive=true sentient=true intelligence=5 loyalty=3 hands=true speech=true speed_land=6 letter_steal=6 intimidation=6 dmg_pierce=40 attack_rate=1 attack_range=20 food_need=0.04
+pickpocket: mass=55 integrity=80 alive=true sentient=true intelligence=7 loyalty=3 hands=true speech=true speed_land=7 stealth=8 letter_steal=3 attack_rate=2 attack_range=1 evasion=0.4 agility=8 food_need=0.03
+mugger: mass=80 integrity=120 alive=true sentient=true intelligence=4 loyalty=2 hands=true speech=true speed_land=6 letter_steal=4 dmg_slash=25 attack_rate=1.5 intimidation=5 stealth=4 food_need=0.04
+swindler: mass=75 integrity=90 alive=true sentient=true intelligence=8 loyalty=2 hands=true speech=true speed_land=4 charm=8 letter_steal=4 trade_bonus=0.2 attack_rate=0.3 food_need=0.03
+grifter: mass=75 integrity=90 alive=true sentient=true intelligence=7 loyalty=2 hands=true speech=true speed_land=5 charm=8 letter_steal=3 trade_bonus=0.15 food_need=0.03
+hustler: mass=75 integrity=90 alive=true sentient=true intelligence=6 loyalty=3 hands=true speech=true speed_land=6 charm=7 trade_bonus=0.25 letter_steal=2 food_need=0.03
+charlatan: mass=75 integrity=90 alive=true sentient=true intelligence=7 loyalty=2 hands=true speech=true speed_land=4 charm=8 heals=1 trade_bonus=0.15 letter_steal=3 inflict_confuse=3 food_need=0.03
+shill: mass=70 integrity=85 alive=true sentient=true intelligence=5 loyalty=3 hands=true speech=true speed_land=4 charm=6 trade_bonus=0.1 field_radius=10 field_targets=all trade_rate*1.2 food_need=0.03
+gangster: mass=85 integrity=160 alive=true sentient=true intelligence=5 loyalty=5 hands=true speech=true speed_land=6 intimidation=7 dmg_pierce=60 attack_rate=2 attack_range=30 tax_rate=0.1 field_radius=12 loudness=9 food_need=0.04
+mobster: mass=90 integrity=170 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=5 intimidation=8 dmg_pierce=60 attack_rate=2 attack_range=30 tax_rate=0.15 field_radius=12 command_limit=6 food_need=0.04
+thug: mass=95 integrity=160 alive=true sentient=true intelligence=3 loyalty=4 hands=true speech=true speed_land=6 strength=8 intimidation=6 dmg_blunt=35 attack_rate=1 aggression=6 pack_size=3 food_need=0.05
+hitman: mass=80 integrity=150 alive=true sentient=true intelligence=8 loyalty=3 hands=true speech=true speed_land=6 stealth=7 dmg_pierce=90 attack_rate=0.8 attack_range=50 critical=0.5 accuracy=0.95 food_need=0.04
+kidnapper: mass=85 integrity=150 alive=true sentient=true intelligence=6 loyalty=2 hands=true speech=true speed_land=6 stealth=6 inflict_root=15 inflict_silence=10 attack_rate=0.3 moves_target=10 strength=7 food_need=0.04
+arsonist: mass=75 integrity=110 alive=true sentient=true intelligence=5 loyalty=2 hands=true speech=true speed_land=6 stealth=6 dmg_fire=60 inflict_burn=15 attack_rate=0.5 attack_range=10 res_fire=0.3 siege=3 food_need=0.04
+looter: mass=80 integrity=120 alive=true sentient=true intelligence=4 loyalty=2 hands=true speech=true speed_land=6 letter_steal=5 reclaim_rate=0.3 reclaim_range=20 carry_capacity=80 aggression=4 food_need=0.04
+counterfeiter: mass=70 integrity=90 alive=true sentient=true intelligence=8 loyalty=3 hands=true speech=true speed_land=4 craft_slots=1 stealth=5 trade_bonus=0.3 duplicates=1 food_need=0.03
+forger: mass=70 integrity=90 alive=true sentient=true intelligence=8 loyalty=3 hands=true speech=true speed_land=4 craft_slots=1 stealth=5 trade_bonus=0.2 food_need=0.03
+embezzler: mass=75 integrity=90 alive=true sentient=true intelligence=8 loyalty=1 hands=true speech=true speed_land=4 storage_letters=200 letter_steal=2 stealth=6 trade_bonus=0.1 food_need=0.03
+saboteur: mass=75 integrity=120 alive=true sentient=true intelligence=8 loyalty=2 hands=true speech=true speed_land=6 stealth=8 dmg_blast=80 attack_area=3 attack_rate=0.2 siege=5 counters=machine,engine,bridge food_need=0.04
+operative: mass=75 integrity=130 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=6 stealth=7 read_inventory=true detect_stealth=5 dmg_pierce=40 attack_rate=1 attack_range=30 food_need=0.04
+traitor: mass=75 integrity=100 alive=true sentient=true intelligence=7 loyalty=0 hands=true speech=true speed_land=5 stealth=5 read_inventory=true letter_steal=4 charm=5 food_need=0.03
+snitch: mass=60 integrity=70 alive=true sentient=true intelligence=5 loyalty=1 hands=true speech=true speed_land=6 stealth=5 read_inventory=true hearing_range=40 alarm=true food_need=0.03
+stalker: mass=75 integrity=110 alive=true sentient=true intelligence=6 loyalty=3 hands=true speech=true speed_land=6 stealth=7 tracking=10 detect_stealth=4 inflict_fear=5 attack_rate=0.5 food_need=0.04
+poacher: mass=80 integrity=130 alive=true sentient=true intelligence=6 loyalty=3 hands=true speech=true speed_land=6 stealth=6 tracking=7 dmg_pierce=50 attack_rate=0.8 attack_range=60 food_output=1 counters=deer,elephant,rhino food_need=0.04
+hacker: mass=70 integrity=80 alive=true sentient=true intelligence=9 loyalty=3 hands=true speech=true speed_land=4 stealth=6 read_inventory=true letter_steal=3 attack_range=1000 attack_rate=0.2 counters=computer,lock,robot food_need=0.03
+accomplice: mass=75 integrity=100 alive=true sentient=true intelligence=5 loyalty=4 hands=true speech=true speed_land=6 stealth=4 labor=1 letter_steal=2 food_need=0.04
