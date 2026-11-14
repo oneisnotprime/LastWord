@@ -1,0 +1,601 @@
+word	pick	note	retry_subject	retry_colours
+heath	C	clean heather shrub		
+insect	B	clear six-legged beetle		
+iris	A	clear iris		
+nitrogen	A	flask; gas reads weakly		
+rover	C	clear rover		
+stainless	B	plain ingot		
+syrup	A	bottle; generic		
+turf	A	rolled turf visible		
+volcano	B	clear		
+ark	A	cabin visible		
+chandler	C	candles readable		
+dwarf	B	single pickaxe, helmet		
+flagship	B	clear warship with flag		
+glucose	D	jar of powder; generic		
+gore	B	blood puddle; mild gore		
+gown	B	full ball gown		
+halo	C	reads as ring with halo		
+limestone	A	white block		
+liner	B	clear liner		
+mortar	A	cannon on baseplate		
+retailer	B	shopping bag clear		
+spacecraft	C	clear rocket		
+specification	D	rolled blueprint		
+textile	X	looks like paper sheets	a folded stack of brightly coloured patterned woven cloth	red, blue, yellow
+tray	A	flat tray with handles		
+authorization	D	document with wax seal		
+baggage	B	clear suitcase		
+beacon	A	clear signal tower		
+boxer	C	clear boxer		
+ceramic	B	clean vase		
+cereal	D	wheat bundle		
+challenger	B	raised sword clear		
+cola	D	glass with straw		
+credentials	C	badge on lanyard		
+folder	D	papers sticking out		
+hedge	X	green blob, not a hedge	a neatly trimmed boxy green hedge with leafy texture and a brown base	green, brown
+ingredient	C	egg and carrot in bowl		
+jewellery	C	necklace with gem		
+joker	B	jester card readable		
+notebook	B	open laptop		
+palette	D	classic palette shape		
+reverend	A	no white collar visible		
+rust	A	corroded lump		
+serum	D	dropper vial		
+skate	B	clear ice skate		
+stray	B	scruffy dog		
+stud	X	unreadable blobs	a single round silver stud earring with short post, side view	silver
+supper	A	plate of roast dinner		
+aluminium	A	plain ingot		
+arcade	B	arched colonnade		
+chili	C	bowl of chili		
+covenant	A	scroll with seal		
+hose	C	coiled hose with nozzle		
+millionaire	B	top hat and money bag		
+patron	B	purse barely readable		
+popcorn	B	striped tub		
+proxy	B	cloaked figure with mask		
+sniper	B	scoped rifle		
+thigh	A	drumstick		
+troll	D	troll with club		
+vest	C	buttoned waistcoat		
+vine	B	leafy vine; tendrils weak		
+yen	B	generic coin		
+apparel	C	shirt on hanger		
+atom	C	atom readable		
+cholesterol	A	flask of yellow liquid		
+grease	B	tin of yellow grease		
+hallway	A	reads as door only		
+jeep	C	military jeep		
+knot	X	reads as crossed sticks	a thick brown rope tied in a single loose overhand knot with frayed ends	tan, brown
+lecturer	B	pointer clear		
+mayo	B	jar of white cream		
+petrol	C	jerrycan		
+philosopher	D	toga and scroll		
+plantation	B	crop rows with farmhouse		
+razor	X	drawn as kitchen knife	an open folding barber's straight razor, thin steel blade hinged to black handle	silver, black
+rug	B	patterned rug		
+strawberry	A	clear		
+sunglasses	B	clear		
+tile	X	shapeless grey blobs	a square glazed ceramic floor tile with simple blue pattern, slight angle	white, blue
+boiler	B	gauge and pipes		
+coating	C	paint can with drip		
+cork	A	stopper shape		
+detector	X	unreadable rings	a metal detector: long pole with arm cuff handle and flat round search coil at bottom	grey, black
+magistrate	D	robe and gavel		
+mug	C	clear mug		
+pod	C	open pod with peas		
+predator	C	prowling tiger		
+recorder	C	cassette recorder; reads as tape		
+stove	C	stove with chimney		
+tract	B	plot with fence		
+bikini	B	clear		
+bracelet	B	chain links		
+capsule	B	two-tone capsule		
+captive	B	shackled wrists		
+cinnamon	C	tied sticks		
+confederate	B	hooded figure with lantern		
+contamination	A	leaking barrel		
+crisp	A	weak, reads as pasta		
+cutter	D	box cutter		
+delegate	A	suit with briefcase		
+emission	C	smoke cloud		
+fin	D	fin shape; abstract		
+grape	B	bunch of grapes		
+gravel	A	pebble pile		
+indictment	A	document; stamp unclear		
+jumper	C	knit jumper		
+limb	B	weak, bent arm		
+mack	C	belted raincoat		
+offender	A	striped prisoner, ball and chain		
+oracle	B	crystal ball		
+pottery	B	workshop with kiln		
+prairie	B	grass tuft with flowers		
+psychiatrist	C	white coat clipboard		
+quartz	A	crystal cluster		
+songwriter	C	guitar		
+technician	C	overalls and wrench		
+yuan	C	banknote		
+aide	B	folder		
+avatar	C	four arms		
+beverage	C	drink with straw and lemon		
+bumper	B	reads as car front, not bumper		
+chalk	B	chalk stick		
+coaster	C	could read as cookie		
+councillor	C	gold chain		
+diplomat	C	briefcase		
+fallout	C	ash pile with glow		
+footballer	A	striped kit, ball		
+lipstick	D	single tube		
+mart	B	shop with awning		
+monarch	D	crown, sceptre		
+mustard	B	squeeze bottle		
+plaque	B	artery with blob; abstract		
+rabbi	C	hat, book		
+scoop	C	hand scoop		
+scotch	B	tumbler with ice		
+shale	B	layered stack		
+shin	A	lower leg		
+solicitor	B	briefcase and papers		
+taco	A	clear taco		
+tinder	A	twig pile		
+titan	C	giant with boulder		
+traitor	C	hidden dagger		
+wallpaper	B	roll of wallpaper		
+willow	A	weeping willow		
+ale	B	pint with foam		
+courier	B	satchel and parcel		
+drummer	B	drum and sticks		
+gin	D	clear bottle		
+ignition	D	key; no slot		
+jewel	C	faceted gem		
+pike	B	long green pike		
+piper	C	bagpipes and kilt		
+pulp	D	bucket of pulp		
+reel	C	fishing reel; small detail		
+staple	X	drawn as plain block	a single large bent steel office staple, U shape, shown at an angle	silver
+sushi	D	nigiri with nori		
+tails	C	tailcoat with tails		
+bakery	A	brick building with chimney		
+believer	B	praying hands		
+caffeine	A	powder jar; generic		
+coward	B	hiding behind shield		
+fibre	C	strands; weak		
+garrison	B	fort with gate and tower		
+hacker	C	laptop		
+harness	X	reads as horse	a brown leather horse harness with collar, straps and brass buckles, laid flat	brown, gold
+insulation	A	pink roll; toilet-roll-like		
+intern	B	coffee cup and badge		
+mole	B	mole with pink paws		
+molecule	B	ball and stick		
+parcel	C	string-tied parcel		
+partition	D	folding screen		
+savior	B	halo, outstretched arms		
+toby	C	mug with tricorn hat		
+translator	A	two books barely		
+tutor	B	book and pencil		
+yeast	B	pale block		
+assassin	B	dagger		
+brewery	B	vats and chimney		
+bulb	B	glowing bulb		
+cardboard	X	crumpled lumps, not a sheet	a flat brown corrugated cardboard sheet showing wavy ridged edge	tan, brown
+dictator	B	uniform with medals		
+dime	C	small coin		
+freezer	B	chest freezer; plain box		
+oxide	B	red powder lump		
+rouge	C	compact with brush; muddled		
+softball	B	clear		
+spur	X	gears, not a riding spur	a silver riding spur: U-shaped heel band with a small spiked rowel wheel at back	silver
+artery	A	red tube		
+bamboo	C	stalk with leaves		
+basil	B	basil sprig		
+blackberry	C	berry with leaves		
+booze	D	whisky bottle		
+cellphone	B	smartphone		
+corporal	B	rifle; stripes not visible		
+crest	B	rooster rather than comb alone		
+decor	B	armchair and plant		
+elf	B	pointed ears and bow		
+graffiti	B	spray can with rainbow		
+helm	C	ship's wheel		
+monastery	B	bell tower		
+nightclub	D	neon entrance		
+samurai	B	katana		
+seafood	B	shrimp crab mussels		
+spaghetti	B	weak, reads as omelette		
+stein	C	lidded stein		
+woodland	B	three trees		
+zinc	B	ingot		
+baton	A	baton		
+brew	B	tankard with foam		
+charger	B	horse; no armour		
+checkout	C	counter with till		
+coca	A	shrub; generic leaves		
+cocoa	D	mug with cream		
+compartment	A	locker		
+cove	D	curved bay		
+lever	X	reads as axe or hammer	a tall steel lever arm with round wooden grip, mounted on a pivot base	grey, brown
+mutant	B	three eyes		
+neon	B	red tube; glow weak		
+nun	C	habit and rosary		
+polymer	C	white pellet pile		
+pup	A	puppy		
+salesman	B	sample case		
+spokesperson	B	microphone		
+sultan	C	turban and sceptre		
+vinegar	A	brown bottle		
+accessory	C	belt with buckle		
+broadcaster	D	blue suit with mic		
+cache	B	chest under leaves		
+condo	A	apartment block		
+edible	B	basket of bread, fruit, cheese		
+fax	A	paper coming out		
+fowler	B	shotgun		
+gag	X	reads as apron or dress	a strip of white cloth tied in a loop with a knot in the middle	white, grey
+gill	A	whole fish, gill visible		
+guitarist	B	electric guitar		
+hash	C	bowl of hash		
+hogan	B	earth lodge		
+laurel	B	tree		
+podium	D	speaker podium		
+practitioner	C	white coat stethoscope		
+puck	B	hockey puck		
+rum	D	dark rum bottle		
+scorer	D	raising ball		
+shareholder	C	holding certificate		
+soy	C	open pod with beans		
+squash	D	butternut		
+tar	B	bucket of tar		
+turbine	A	wind turbine		
+warden	B	ring of keys		
+whisky	B	brown bottle		
+yogurt	D	cup with spoon		
+barbecue	B	meat skewer		
+bladder	A	weak, organ unclear		
+blossom	D	pink branch		
+carrot	C	carrot		
+filmmaker	B	beret and clapperboard		
+fuse	B	cartridge fuse		
+gluten	B	dough lump; reads as rock		
+lotus	B	lotus on pad		
+mantle	B	cloak; collar faint		
+mascot	B	plush bear		
+ottoman	B	round footstool		
+paddy	B	flooded plot with shoots		
+paperback	D	book		
+peasant	C	tunic and pitchfork		
+pointer	B	laser beam		
+regulator	A	valve; no gauge		
+tally	X	reads as baguette	a straight wooden stick with a row of cut notches along one edge, flat side view	tan, brown
+wedge	B	cheese wedge		
+alloy	B	boat-shaped ingot		
+bale	A	tied straw bale		
+courthouse	C	columns		
+crank	A	crank handle		
+enclosure	B	fence pen; no mesh		
+jasmine	A	white flower sprig		
+linen	X	reads as paper sheets	a folded white linen bedsheet with soft draped edges and stitched hem	white, cream
+lookout	C	sailor with spyglass		
+mosquito	D	long legs and proboscis		
+motel	C	row of doors		
+novelist	A	quill pen		
+pavement	C	concrete slab		
+pudding	B	holly on top		
+resin	B	golden lump		
+simulator	X	drawn as airplane	a white egg-shaped flight simulator capsule on six hydraulic legs	white, grey
+sock	B	striped sock		
+storey	D	floor section with windows		
+tailor	B	tape measure and scissors		
+waiter	D	vest and tray		
+adapter	C	plug adapter		
+attendant	D	towel over arm		
+bourbon	C	amber bottle		
+breaker	X	unreadable black blobs	a black circuit breaker box with a single toggle switch lever on its front	black, grey
+cockpit	D	seat with canopy		
+colon	B	large intestine		
+consul	C	passport		
+contender	B	championship belt		
+emerald	D	faceted emerald		
+mare	C	brown horse		
+meadow	C	meadow patch with flowers		
+mystic	A	glowing crystal		
+quarry	X	rocks, not a stepped pit	an open stone quarry pit with stepped grey terraces cut into the ground, seen from above at an angle	grey, tan
+sap	B	yellow drop		
+sheikh	C	white robes, beads		
+strait	B	channel between shores		
+weaver	C	shuttle unclear		
+yarn	B	ball of yarn		
+attacker	B	raised axe		
+banquet	A	table with roast and goblets		
+chamberlain	B	ring of keys		
+coloring	A	small red bottle		
+cortex	C	brain		
+dynamite	B	stick with fuse		
+garment	A	dress on hanger		
+impeachment	C	document with stamp		
+inventor	B	goggles and gadget		
+jasper	B	red stone		
+librarian	B	glasses and books		
+lumber	C	plank stack		
+muse	B	lyre		
+nanny	C	pushing pram		
+nucleus	C	cell with nucleus		
+poppy	D	poppy with stem		
+rib	X	generic dog bone, not a rib	a single long thin curved white rib bone shaped like a gentle arc	white, cream
+sponge	B	yellow sponge		
+sucker	B	treasure map		
+vaccination	B	syringe with vial		
+announcer	B	herald trumpet		
+baba	B	weak, generic cake		
+charcoal	B	black lumps		
+citrus	C	three fruits		
+columnist	B	newspaper; pen faint		
+courtroom	B	judge's bench		
+cushion	D	square cushion		
+cyclist	C	helmet, bike		
+dorm	B	brick block		
+duct	X	reads as cream tube	a short curved pink fleshy anatomical tube with open round ends	pink, red
+emblem	X	shapeless gold blobs	a round gold brass badge with a raised star in the centre and rim	gold, brown
+foreman	B	hard hat, clipboard		
+glacier	C	blue-white ice block		
+kernel	B	corn kernel		
+mustang	B	rearing horse		
+patty	C	weak, could be macaron		
+pineapple	A	clear		
+potassium	A	silver lump		
+scissors	B	red-handled scissors		
+seaside	C	beach umbrella on sand		
+shampoo	B	pink pump bottle		
+autopsy	A	report on clipboard		
+cartridge	X	shapeless black block	a black inkjet printer cartridge, small box shape with a copper contact strip	black, copper
+cashier	C	cash tray		
+cigar	C	cigar with band		
+cologne	B	fancy bottle		
+colt	C	young horse		
+concession	A	contract with ribbon		
+crescent	C	crescent moon		
+hog	C	pink hog		
+jockey	A	silks and crop		
+mummy	B	bandaged mummy		
+orchard	C	trees with fence		
+riches	B	chest of gold coins		
+rosemary	C	sprig		
+sandstone	B	orange block		
+scooter	C	kick scooter		
+springer	D	spaniel with long ears		
+venom	B	green vial; no fang		
+winger	B	kicking ball		
+abdomen	B	belly torso; weak		
+aquarium	B	fish tank		
+batter	B	bowl with whisk		
+booster	B	reads as whole rocket		
+bun	C	round bun		
+calculator	B	calculator		
+chemotherapy	C	IV bag on stand		
+consulate	C	building with flag		
+convict	C	stripes, ball and chain		
+glitter	D	jar; sparkle weak		
+hen	B	brown hen		
+lettuce	C	lettuce head		
+lithium	B	ingot		
+mango	D	mango		
+porcelain	D	teapot		
+programmer	C	laptop		
+rue	B	herb sprig; generic		
+scanner	C	flatbed scanner		
+sup	D	bowl of broth		
+tanner	B	apron and hide		
+thinner	X	plain white cylinder	a grey metal paint thinner can with small screw spout and carry handle	grey, red
+topping	C	whipped cream with cherry		
+vapor	X	flask, no vapour shown	a glass flask with a curling white wisp of vapour rising from its open top	pale blue, white
+veronica	B	flower spike; weak		
+waitress	C	coffee pot		
+walnut	B	wood plank		
+bowel	B	coiled intestine		
+brow	A	eyebrow over eye		
+cabbage	C	cabbage		
+convertible	C	top-down car		
+crater	A	round crater		
+curator	C	magnifying glass		
+educator	C	pointer and book		
+finch	C	yellow finch		
+gangster	B	pinstripe, fedora, gun		
+heater	A	radiator		
+kite	D	kite with tail		
+lighthouse	D	striped lighthouse		
+mash	C	bucket of mash		
+messiah	B	halo, raised hands		
+plaintiff	C	holding document; faint		
+plum	B	plum with leaf		
+rag	D	tattered cloth; weak		
+sedan	C	four-door car		
+sewage	A	pipe pouring sludge		
+suitcase	B	wheeled suitcase		
+titanium	B	ingot		
+ulster	B	long overcoat		
+vibes	D	vibraphone		
+algae	A	green clump; reads as bush		
+asbestos	B	jar of fibre; weak		
+boutique	B	shop with awning		
+brewer	B	apron, tankard		
+buffet	B	table with trays		
+catcher	B	mask and mitt		
+dryer	B	tumble dryer		
+fireplace	B	fireplace with fire		
+fugitive	A	running with bundle		
+hazel	D	forked rod; fork-like		
+headset	C	headset with mic		
+inmate	A	orange jumpsuit, cup		
+interpreter	C	headset and notepad		
+methane	B	flask; gas weak		
+oyster	D	oyster with pearl		
+pea	C	pod with peas		
+sawyer	B	two-handled saw		
+seminary	A	building with spire		
+skipper	C	ship's wheel		
+transcription	D	clipboard		
+unicorn	D	unicorn		
+vat	B	steel vat		
+vineyard	C	vines with grapes		
+viola	C	viola with bow		
+adobe	C	brick stack		
+almond	B	almond		
+asphalt	D	black slab		
+backbone	B	stacked vertebrae		
+booklet	X	reads as file icon	a thin stapled paper booklet lying slightly open, with a coloured cover	blue, white
+countess	C	gown, tiara, fan		
+fungus	B	mushroom cluster		
+lingerie	B	nightgown on hanger		
+magician	C	top hat and wand		
+marrow	C	bone showing marrow		
+pastry	B	croissant		
+pawn	B	spear		
+plaster	C	bag of powder		
+residue	X	grey paper squares, no dish	a small round dish with a grey sticky smear stuck to its bottom	white, grey
+salsa	C	bowl of salsa		
+semiconductor	C	microchip		
+thyroid	X	reads as butterfly	a pink two-lobed thyroid gland wrapped around a short pale windpipe tube	pink, cream
+vomit	C	cartoon puddle		
+wiring	X	red sticks, not wires	a coiled bundle of red insulated wires with bare copper ends	red, copper
+adrenaline	C	vial with syringe		
+ballroom	A	chandelier only		
+canopy	B	canopy tent		
+comb	X	stray shapes behind combs	a single black plastic hair comb, flat side view, even fine teeth	black
+cruiser	D	police car		
+dart	A	dart with flights		
+denim	B	jeans		
+encyclopedia	D	thick book		
+freshwater	C	bottle of water		
+mandarin	C	mandarin with leaf		
+mast	D	radio mast		
+matte	B	black lump		
+nicotine	D	brown dropper bottle		
+rye	D	grain stalk		
+socket	X	generic bone, no joint	a cartoon ball-and-socket joint: round bone end sitting in a cup-shaped bone socket	cream, white
+weir	B	low weir with water		
+wrestler	A	holding belt		
+appendix	X	shapeless pink blobs	a small pink worm-shaped appendix hanging from a short section of large intestine	pink, red
+auditorium	A	curved roof hall		
+brandy	B	brandy glass		
+chemist	D	pill bottle		
+coastline	C	rocky coast with waves		
+cuff	X	shapeless white blocks	a white shirt sleeve end with a folded cuff fastened by a round gold cufflink	white, gold
+loft	B	barn with hay door		
+outlaw	B	bandana and revolver		
+parasite	X	reads as pig or blob	a pale swollen tick with eight short dark legs, top view	beige, dark brown
+perennial	B	potted plant		
+spectator	B	cap and binoculars		
+tyre	B	car tyre		
+ultrasound	C	screen and cart		
+usher	A	torch		
+bartender	B	vest and shaker		
+birch	A	white trunk		
+broccoli	C	broccoli		
+buckle	C	brass buckle		
+canoe	C	canoe with paddle		
+cider	B	golden glass		
+destroyer	D	warship		
+hind	D	female deer, no antlers		
+hitter	B	helmet and bat		
+imam	C	robes, cap, book		
+locomotive	C	steam locomotive		
+microscope	B	microscope		
+mixer	A	stand mixer		
+paycheck	B	cheque in envelope		
+primer	A	small textbook		
+raspberry	C	raspberry		
+router	A	router with antennas		
+tug	C	tugboat		
+ancestor	B	ghostly elder		
+arbor	C	arch with roses		
+attire	C	suit on hanger		
+axle	X	reads as dumbbell or toy	a long steel axle rod with a black rubber wheel fixed at each end, front view	grey, black
+barley	A	barley stalk		
+cheque	C	cheque with lines		
+cisco	A	silver fish		
+cub	B	bear cub		
+derrick	D	derrick tower		
+diaper	D	white diaper		
+fingerprint	C	magnifier over card; weak		
+fisherman	B	raincoat and rod		
+homestead	C	farmhouse with porch		
+icing	B	piping bag		
+ledger	B	leather book with clasp		
+loaf	B	reads as slice not loaf		
+magnesium	B	ingot		
+mimic	A	white face, stripes		
+musk	C	small perfume bottle		
+paddle	B	paddle oar		
+peg	X	cone shapes, unreadable	a single wooden tent peg with a notched head, tapering to a point	tan, brown
+refinery	D	tower with pipes		
+siding	C	siding panels		
+stocking	A	nylon stocking		
+swimmer	A	cap, goggles, towel		
+teller	C	counting notes		
+ape	B	gorilla		
+bidder	C	auction paddle		
+bowler	C	bowler hat		
+cameo	C	cameo brooch		
+caramel	A	pile of candies		
+chromosome	B	X-shaped		
+contestant	C	sash and trophy		
+convent	D	bell tower with cross		
+diner	C	chrome diner		
+envoy	B	sealed scroll		
+fir	C	plank stack		
+goalie	B	gloves and ball		
+gravy	X	bowl of mush, no gravy boat	a white gravy boat with a spout and curled handle, brown gravy at the brim	white, brown
+herring	A	silver fish		
+hopper	D	funnel on legs		
+paw	C	paw pad		
+pianist	C	at piano with music		
+placebo	B	white pill		
+punt	A	flat boat with pole		
+scalp	A	hair on head		
+shutter	B	roller shutter		
+sparrow	C	sparrow		
+spinach	B	leaf bunch		
+stew	D	beef stew		
+tequila	D	golden bottle		
+thorn	B	thorny stem		
+thug	D	crowbar		
+alto	C	robe and book		
+aperture	B	camera lens		
+char	B	charred wood pile		
+coupling	A	reads as crane hook		
+crate	D	slatted crate		
+funnel	D	funnel		
+gloss	X	reads as file icon	a small stapled booklet lying slightly open, with a plain coloured cover	blue, cream
+mermaid	C	green tail, long hair		
+pear	A	green pear		
+piston	C	piston with rod		
+stuffing	B	bowl with herbs		
+summons	B	paper with wax seal		
+throttle	X	black blobs, not a lever	a black throttle lever on a curved slotted base, handle knob on top	black, grey
+wand	A	plain wooden wand		
+apostle	C	beard, robes, staff		
+bowman	B	longbow		
+brunch	B	eggs, bacon, pancakes		
+chestnut	C	wood plank		
+ethanol	A	flask; faint		
+flashlight	D	torch with beam		
+garland	C	flower garland		
+grail	B	golden chalice		
+illustrator	B	brush and sketchbook		
+ketchup	A	ketchup bottle		
+martyr	C	palm branch		
+opium	A	poppy pod with crown		
+plank	D	plank; weak		
+privy	D	wooden outhouse		
+serpent	D	coiled snake		
+sesame	B	seed pile		
+stalk	X	reads as cactus	a single tall green celery-like plant stalk with a few small leaves at top	green
+statesman	B	suit and scroll		
+swine	C	pink pig		
+tram	C	red tram		
+amplifier	B	guitar amp		
+avocado	B	halved avocado		
+bathtub	A	clawfoot tub		
+biscuit	B	round biscuit		
+caretaker	D	overalls and broom		
