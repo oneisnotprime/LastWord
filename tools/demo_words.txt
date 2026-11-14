@@ -1330,6 +1330,13 @@ issue: placement=target placement_range=60 field_radius=15 field_targets=enemies
 # noun ceremony
 date: placement=target placement_range=20 event_target=character inflict_charm=20 contest_with=charm contested_by=courage morale+3 event_duration=1
 
+# noun building
+# GARAGE and HOSPITAL were generated healing their owner's side 20 and 50 a second, far beyond any
+# other building (TEMPLE 2, SHRINE 3). A garage mends machines, not people; a hospital is the best
+# healer among buildings, and cures.
+garage: mass=50000 footprint=6 height=4 integrity=3000 material=concrete,steel portable=false enterable=true lockable=true storage_objects=20000 craft_slots=2 build_speed=1.5 needs_foundation=true
+hospital: mass=20000000 footprint=40 height=25 integrity=60000 material=concrete,glass portable=false enterable=true occupants=500 heals=6 res_disease+0.8 effect_status=poison,bleed,burn,disease prevents_death=3 upkeep_power=500 needs_foundation=true counters=plague
+
 # noun place
 # ZONE was generated as a law against fighting over 200 m that never ended and nothing countered.
 zone: placement=region field_radius=100 field_targets=all field_duration=5 claim_radius=20 law=attack security+2

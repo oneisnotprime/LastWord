@@ -5,7 +5,7 @@ import {
   LAND_RATE, ROAD_RATE, ROAD_HALF, CLAIMED_ROAD, CITIZEN_S, CITIZENS, CITIZEN_LEAVE, CITIZEN_RETURN, HIRE_PRICE, HIRED, TRADE_RANGE, OFFER_SECONDS, PAIR_COOLDOWN, BOSS_TIMES, BOSS_Z, BOSS_HOARD,
   type ClaimDisc, windAt, moistureAt, waterNear, wateringReach, wetWeather, producingLine, Soil, LABOUR_RANGE, CYCLE_SECONDS, PEACE_RADIUS, PEACE_SECONDS, VOWELS, type ProducerSpec, type Conditions,
   addLetters, afflict, placeRules, harvest, growthOf, tradeRateOf, marketRatio, type PlaceRules, aggressive, clearLine, courageOf, pluralize, auras, authorityOf, chooseTarget, commandLimit, draw, groundFood, hasAny, ignoresOrder, moraleAim, moraleGoal, needs, nextMorale, noStores, outputs, recruitRate, rerouteSeconds, startingSupply, becomes, retreats, routed, supply, theftResistance, HUNGER_LOYALTY, NORMAL, STARTING_STORES, STARVING, SUPPLIES, bodyFlags, cure, useObject, findPath, hampered, inflicts, statusDamage, statusEffects, tickStatuses, wake, GATHER_SECONDS, GATHER_REASONS, cachePrize, carcassFood, Deposits, destroyLetters, killLetters, mainland, MARKET, pickAnimal, placeSources, readTrade, regionOf, RUIN_INTEGRITY, CACHE_X, SITE_RADIUS, spawnPoint, starterHand, TEMPLE_Q, tradeProblem, generateMap, GIVE_RANGE, missing, parsePhrase, applyAdjectives, cannotCarry, improvisable, readDescription, production, resolveSpelled, SEPARATE_UP_TO, nearestWalkable, openGround, randomWalkable, resolve, Tile, tileAt, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit, cannotRide, claimOf, senseOf, combineSenses, type Sense, type Sensed,
-  dealKits, jobBodyOps, jobRules, jobStats, kitCard, kitScore, legendCost, sealedLetters, unlockNeed, unlockText, makesLetters, KIT_SECONDS,
+  dealKits, legendOf, jobBodyOps, jobRules, jobStats, kitCard, kitScore, legendCost, sealedLetters, unlockNeed, unlockText, makesLetters, KIT_SECONDS,
   type JobDef, type Kit, type KitCard, type KitData, type LegendDef,
   effectSeconds, biomeAt, huntYield, pickWild, rollText, toolHelp, wildlife, RUIN_X_CHANCE, type Help,
   type Affliction, type Candidate, type Dictionary, type Stores, type Supply, type Entity, type Hampered, type Status, type Stats, type Letters, type LoadoutDetail, type Op, type Phrase, type Point, type Spelled, type Value, type WordDef, type WorldMap,
@@ -1125,7 +1125,7 @@ export class WorldRoom extends Room {
     for (let i = 0; i < n; i++) {
       const id = `bot${++this.botCount}`;
       const bot = this.addPerson(id, id, this.spawnSpot());
-      if (this.kitsOn) { this.offerKits(id, bot); this.chooseKit(id, bot, this.bestKit(bot.picking!.kits)); }
+      if (this.kitsOn) { this.offerKits(id, bot); this.chooseKit(id, bot, this.botKit(bot.picking!.kits, difficulty)); }
       this.bots.set(id, {
         difficulty, phase: this.botCount, stay: 3 + Math.floor(this.rng() * 6), tried: new Set(), gathered: 0, spelled: 0, at: { x: 0, y: 0 }, stuck: 0,
         peaceUntil: this.elapsed + BOT_PEACE[0] + this.rng() * (BOT_PEACE[1] - BOT_PEACE[0]), nextSpell: this.elapsed + this.rng() * BOT_SPELL_GAP[1], producers: 0,
@@ -1160,6 +1160,20 @@ export class WorldRoom extends Room {
       cards: w.picking.kits.map((k) => kitCard(this.kitData, this.dict, k)),
       seconds: Math.max(0, Math.ceil(w.picking.until - this.elapsed)),
     });
+  }
+
+  /**
+   * The kit a bot picks (`SKILL`): easy any of the three, normal one of the best two by shared
+   * `kitScore`, hard the best, counting a legendary it unseals by playing as it does anyway
+   * (round time, letters, producers, hunts, trades) a fifth better.
+   */
+  private botKit(kits: readonly Kit[], difficulty: Difficulty): number {
+    if (difficulty === "easy") return Math.floor(this.rng() * kits.length);
+    const easyUnlock = new Set(["minutes", "letters", "producers", "hunts", "trades"]);
+    const score = (k: Kit) => kitScore(this.kitData, this.dict, k) *
+      (difficulty === "hard" && easyUnlock.has(legendOf(this.kitData, k.legend)?.unlock.kind ?? "") ? 1.2 : 1);
+    const order = kits.map((k, i) => [score(k), i] as const).sort((a, b) => b[0] - a[0]);
+    return difficulty === "hard" || order.length < 2 ? order[0]![1] : order[this.rng() < 0.5 ? 0 : 1]![1];
   }
 
   /** The kit a bot (or someone out of time) takes: the best by shared `kitScore`. */
@@ -1668,7 +1682,6 @@ export class WorldRoom extends Room {
    * how often and how well each difficulty does each.
    */
   private thinkBot(id: string, w: Walker, mind: BotMind) {
-    if (w.kit?.state === "open") { try { this.spellWord(id, w, w.kit.legend.word); } catch { /* not here: try again later */ } }
     if (this.state.phase === "over" || w.fleeing || w.hamper.flees.length || w.hamper.random) return;
     const skill = SKILL[mind.difficulty];
     const hard = mind.difficulty === "hard", easy = mind.difficulty === "easy";
@@ -1681,6 +1694,8 @@ export class WorldRoom extends Room {
     };
     if (canSpell() && (w.hungry || w.stores.food < 0.5)) { const ate = this.botEat(id, w, mind, have); if (ate) spelled(ate); }
     const peaceful = this.elapsed < mind.peaceUntil;
+    // What its sealed legendary asks of it (normal and hard bots work toward it): see `botQuest`.
+    const quest = this.botQuest(w, mind);
 
     // Who is about: people (and their creatures) who attack it, people to hunt down, wild game.
     type Seen = { id: string; d: number; hp: number; person: boolean };
@@ -1694,7 +1709,7 @@ export class WorldRoom extends Room {
       const e = { id: oid, d, hp: o.hp, person: o.master === null };
       if (o.foe === id) attackers.push(e);
       else if (o.master === null) people.push(e);
-      else if (o.master === "-" && o.citizenOf === undefined && d <= w.sight && !aggressive(o.unit.body.stats)) game.push(e);
+      else if (o.master === "-" && o.citizenOf === undefined && d <= w.sight * (quest === "hunts" ? 2 : 1) && !aggressive(o.unit.body.stats)) game.push(e);
     }
 
     // Badly hurt and under attack: run from them, and spell a refuge or a cure on the way.
@@ -1724,7 +1739,7 @@ export class WorldRoom extends Room {
     };
     let foe = keep && (!current || !("player" in current) || strikable({ id: w.foe!, d: 0, hp: 0, person: true })) ? w.foe : null;
     if (!foe && attackers.length) foe = pick(attackers.filter(strikable));
-    else if (!foe && !peaceful && (!easy || armed)) foe = pick(people.filter((e) => e.d <= (easy ? 5 : w.sight * 2) && strikable(e)));
+    else if (!foe && !peaceful && (!easy || armed)) foe = pick(people.filter((e) => e.d <= (easy ? 5 : w.sight * (quest === "kills" ? 3 : 2)) && strikable(e)));
     // Hunting (H) and breaking ruins (D, X) when nobody needs fighting.
     if (!foe && game.length && (armed || w.unit.attack.num("dmg_blunt") > 0)) foe = pick(game.filter((e) => (e.hp <= 100 || armed) && strikable(e) && !this.lawBars("hunt", id, w, w.player)));
     if (!foe) {
@@ -1735,8 +1750,9 @@ export class WorldRoom extends Room {
       else if (ruin && t?.owner !== id) foe = ruin;
     }
     // Late in the round, an armed bot goes after a roaming boss it hears of nearby, for its Z.
-    if (!foe && armed && !easy && this.elapsed > BOT_BOSS_AFTER) {
-      for (const [oid, o] of this.walkers) if (o.boss && Math.hypot(o.player.x - w.player.x, o.player.y - w.player.y) <= w.sight * 3) { foe = oid; break; }
+    if (!foe && armed && !easy && (this.elapsed > BOT_BOSS_AFTER || quest === "boss")) {
+      const far = w.sight * (quest === "boss" ? 8 : 3);
+      for (const [oid, o] of this.walkers) if (o.boss && Math.hypot(o.player.x - w.player.x, o.player.y - w.player.y) <= far) { foe = oid; break; }
     }
     if (foe !== w.foe) { w.foe = foe; if (foe) { w.gathering = 0; mind.fetch = undefined; } }
 
@@ -1793,7 +1809,7 @@ export class WorldRoom extends Room {
     const clamp = (v: number) => Math.min(this.map.size - 1, Math.max(0, v));
     const c = this.map.cities[Math.floor(this.rng() * this.map.cities.length)];
     const total = Object.values(w.letters).reduce((n, v) => n + v, 0);
-    if (c && !easy && armed && !peaceful && this.rng() < skill.systems * 0.25 && this.state.cities[this.map.cities.indexOf(c)]?.ruler !== w.player.name) {
+    if (c && !easy && (armed || quest === "city") && !peaceful && this.rng() < skill.systems * (quest === "city" ? 0.8 : 0.25) && this.state.cities[this.map.cities.indexOf(c)]?.ruler !== w.player.name) {
       const book = wordBook(this.dict);
       if ((book.byUse.get("city") ?? []).some((x) => affords(have, x)) || (book.byUse.get("claim") ?? []).some((x) => affords(have, x))) {
         mind.goal = { x: c.x + 0.5, y: c.y + 0.5 };
@@ -1801,17 +1817,22 @@ export class WorldRoom extends Room {
         return;
       }
     }
-    if (c && total >= 12 && this.rng() < 0.4) {
+    if (c && total >= 12 && this.rng() < (quest === "trades" ? 0.8 : quest === "regions" ? 0.1 : 0.4)) {
       w.target = { x: c.x + 0.5 + (this.rng() - 0.5) * 2, y: c.y + 0.5 + (this.rng() - 0.5) * 2 };
       return;
     }
     // Often back home to its producers: to work them and bring in their harvest.
-    if (mind.home && this.rng() < 0.5) {
+    if (mind.home && quest !== "regions" && this.rng() < 0.5) {
       w.target = nearestWalkable(this.map, { x: clamp(mind.home.x + (this.rng() - 0.5) * 6), y: clamp(mind.home.y + (this.rng() - 0.5) * 6) });
       return;
     }
-    const angle = this.rng() * Math.PI * 2, far = 10 + this.rng() * 20;
+    const angle = this.rng() * Math.PI * 2, far = quest === "regions" ? 25 + this.rng() * 25 : 10 + this.rng() * 20;
     w.target = nearestWalkable(this.map, { x: clamp(w.player.x + Math.cos(angle) * far), y: clamp(w.player.y + Math.sin(angle) * far) });
+  }
+
+  /** What a bot's sealed legendary asks of it, if it plays well enough to work toward it (not easy): its unlock kind, or "". */
+  private botQuest(w: Walker, mind: BotMind): string {
+    return w.kit?.state === "sealed" && mind.difficulty !== "easy" ? w.kit.legend.unlock.kind : "";
   }
 
   /**
@@ -1929,6 +1950,15 @@ export class WorldRoom extends Room {
     for (const aid of attackers) {
       const c = this.walkers.get(aid);
       if (c && c.master !== null) targets.push(c.body.noun, this.dict.word(c.body.noun)?.archetype ?? "");
+    }
+    // An enemy's legendary (a DRAGON loosed, an APOCALYPSE fallen) near it: the word that counters it (LANCE, ARMISTICE).
+    const legends = new Set((this.kitData?.legendaries ?? []).map((l) => l.word));
+    if (legends.size) {
+      const near = (p: Point, more = 0) => Math.hypot(p.x - w.player.x, p.y - w.player.y) <= Math.max(COUNTER_TILES, w.sight) + more;
+      for (const c of this.walkers.values()) {
+        if (legends.has(c.body.noun) && c.master !== null && c.master !== id && c.master !== "-" && near(c.player)) targets.unshift(c.body.noun);
+      }
+      for (const a of this.areas.values()) if (legends.has(a.word) && a.owner !== id && near(a, a.radius)) targets.unshift(a.word);
     }
     for (const tag of targets) {
       const c = tag ? usable(tag) : undefined;
@@ -2057,8 +2087,15 @@ export class WorldRoom extends Room {
    * The best word a bot wants that it is exactly one letter short of (a producer, a weapon, armour,
    * a creature), and that letter: what it trades and makes offers for.
    */
-  private botWant(mind: BotMind, have: Uint8Array): { word: BotWord; letter: string } | null {
+  private botWant(mind: BotMind, have: Uint8Array, w?: Walker): { word: BotWord; letter: string } | null {
     const book = wordBook(this.dict);
+    // A legendary sealed until its letters are paid: the letters it still lacks for it come first.
+    if (w && this.botQuest(w, mind) === "letters") {
+      const seal = sealedLetters(w.kit!.legend.word), cost = new Uint8Array(26);
+      for (const ch of seal) cost[ch.charCodeAt(0) - 97]!++;
+      const short = [...new Set(seal)].filter((ch) => cost[ch.charCodeAt(0) - 97]! > have[ch.charCodeAt(0) - 97]!);
+      if (short.length && short.length <= 3) return { word: { word: w.kit!.legend.word, use: "creature", score: 1, cost, slot: "", reach: 0 }, letter: short[0]! };
+    }
     for (const use of ["producer", "weapon", "armor", "creature"] as Use[]) {
       for (const word of book.byUse.get(use) ?? []) {
         if (mind.tried.has(word.word)) continue;
@@ -2087,7 +2124,12 @@ export class WorldRoom extends Room {
     }
     const spare = Object.entries(w.letters).filter(([, n]) => n > 0).sort((a, b) => b[1] - a[1])[0];
     if (!spare || spare[1] < info.ratio + 1) return null;
-    const want = this.botWant(mind, have);
+    let want = this.botWant(mind, have, w);
+    // Working toward a legendary sealed until enough trades: any fair trade will do, for its scarcest letter.
+    if ((!want || MARKET.refuses.includes(want.letter)) && this.botQuest(w, mind) === "trades") {
+      const scarce = [..."abcdefghijklmnopqrstuvwxyz"].filter((ch) => !MARKET.refuses.includes(ch) && ch !== spare[0]).sort((a, b) => (w.letters[a] ?? 0) - (w.letters[b] ?? 0))[0];
+      if (scarce) want = { word: { word: "", use: "producer", score: 0, cost: new Uint8Array(26), slot: "", reach: 0 }, letter: scarce };
+    }
     if (!want || MARKET.refuses.includes(want.letter) || want.letter === spare[0]) return null;
     try { this.spellWord(id, w, `trade ${spare[0].repeat(info.ratio)} for ${want.letter}`); return "trade"; } catch { return null; }
   }
@@ -2098,7 +2140,7 @@ export class WorldRoom extends Room {
    */
   private botOffer(id: string, w: Walker, mind: BotMind, have: Uint8Array): string | null {
     if (this.elapsed - mind.offeredAt < 30) return null;
-    const want = this.botWant(mind, have);
+    const want = this.botWant(mind, have, w);
     if (!want) return null;
     const spare = Object.entries(w.letters).filter(([ch, n]) => n >= 3 && ch !== want.letter && !want.word.cost[ch.charCodeAt(0) - 97]).sort((a, b) => b[1] - a[1])[0];
     if (!spare) return null;
@@ -2133,10 +2175,13 @@ export class WorldRoom extends Room {
       n === "claim" ? claimed : n === "flow" ? waterNear(this.map, w.player.x, w.player.y, 2)
       : n === "fuel" || n === "power" ? w.stores[n] > 1 || !mind.producers
       : n === "tilled" ? SOIL.includes(tileAt(this.map, w.player.x, w.player.y)) : true);
-    const build = mind.producers < (peaceful ? 6 : 3) ? () => choose("producer", runs) : () => null;
+    const quest = this.botQuest(w, mind);
+    const wanted = Math.max(peaceful ? 6 : 3, quest === "producers" && w.kit ? unlockNeed(w.kit.legend) : 0);
+    const build = mind.producers < wanted ? () => choose("producer", runs) : () => null;
     // Once it has a home, it claims the ground around it (L), if it holds none there yet.
     const homeClaimed = mind.home && [...this.areas.values()].some((a) => a.claim && a.owner === id && Math.hypot(a.x - mind.home!.x, a.y - mind.home!.y) <= a.radius);
-    const stake = mind.home && !homeClaimed && Math.hypot(w.player.x - mind.home.x, w.player.y - mind.home.y) < 6 ? () => choose("claim") : () => null;
+    const landless = quest === "land" && ![...this.areas.values()].some((a) => a.claim && a.owner === id);
+    const stake = landless || (mind.home && !homeClaimed && Math.hypot(w.player.x - mind.home.x, w.player.y - mind.home.y) < 6) ? () => choose("claim") : () => null;
     const inReach = (x: BotWord) => !!foe && Math.hypot(foe.player.x - w.player.x, foe.player.y - w.player.y) <= x.reach;
     return (peaceful ? build() ?? stake() : null)
       ?? stake()
@@ -4428,7 +4473,7 @@ export class WorldRoom extends Room {
     const o = this.offers.get(offerId), w = this.walkers.get(id), mind = this.bots.get(id);
     if (!o || !w || !mind) return;
     let yes = o.give.length >= o.get.length && !missing(w.letters, o.get);
-    const want = mind.difficulty === "easy" ? null : this.botWant(mind, held(w.letters));
+    const want = mind.difficulty === "easy" ? null : this.botWant(mind, held(w.letters), w);
     if (yes && want && [...o.get].some((ch) => want.word.cost[ch.charCodeAt(0) - 97]! > 0)) yes = false;
     if (yes && mind.difficulty === "hard" && o.give.length === o.get.length && !(want && o.give.includes(want.letter))) yes = false;
     this.botUsed(mind, yes ? "accept offer" : "decline offer");

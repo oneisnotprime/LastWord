@@ -193,6 +193,10 @@ lexicon so every related word is captured.
       WordNet lacks), TECHNICAL (an adjective). LEAD stays the metal the materials theme needs
       ZONE (a generated law against fighting over 200 m that never ended; bot rounds stalled in
       it) lasts five minutes and ANARCHY ends it
+- [x] Kits report outliers: GARAGE healed its side 20 a second and HOSPITAL 50 (now none and 6;
+      TEMPLE 2, SHRINE 3); derived jobs dermatologist, oncologist, quarterback and near-duplicates
+      skipped for 16 hand-tuned trades (chef, tailor, potter, weaver, brewer, butcher, innkeeper,
+      healer, monk, archer, mercenary, gardener, beekeeper, trapper, navigator, banker)
 
 - [x] Word lists by role, class and archetype (59,232 with a role, 5,385 inert)
 - [x] Property schema (349 properties, 14 groups)
@@ -444,8 +448,8 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
       and answered, picking up and claiming, adjective phrases and plurals, adjectives on foes and
       their own gear, aimed fields and events, area words by their place rules (plenty, taxes,
       laws, war, refuges, weather), roads, taking cities, crop land, cooking, counter-words to
-      areas, weather and creatures, running when badly hurt, unsealing and spelling their kit's
-      legendary. `loadtest/tournament.ts` reports it
+      areas, weather and creatures, running when badly hurt; kits picked by difficulty, working
+      toward their legendary's unlock, spelling it, countering enemies' legendaries. `loadtest/tournament.ts` reports it
 - [ ] Bots still to do: use terrain words on purpose, form pacts
 - [x] Deploy-ready: one container serves the page and the game; Dockerfile, fly.toml and
       DEPLOY.md; image built and played locally

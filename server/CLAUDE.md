@@ -72,7 +72,9 @@ Node process that owns the game state. One room per map instance (from milestone
   `botPickUp` (`takeNear`, the same as E), `botCounter`, `botSpell` (`phraseFor`: adjective
   phrases and plurals), `botSystems` (adjectives on foes and own gear, area words, roads, cities,
   crop land, cooking, `botOffer`), `botTrade` (market, hiring), `botAnswer`. `SKILL` scales each
-  by difficulty; `botLegend` spells its kit's legendary once unsealed. `mind.used` counts what each used; `botReport` and `onAward` feed
+  by difficulty. Kits: `botKit` picks one by difficulty, `botQuest` steers normal and hard bots toward
+  their legendary's unlock (producers, land, hunts, trades, regions, a city, a boss, kills, letters),
+  `botLegend` spells it once unsealed, and `botCounter` aims counter-words at enemies' legendaries. `mind.used` counts what each used; `botReport` and `onAward` feed
   `loadtest/tournament.ts` (`npx tsx loadtest/tournament.ts 4 8 mixed 60`: rounds of bots, the
   systems they used, letter sources by `sourceOf`, round lengths).
 - Objects are made by `make`: up to `SEPARATE_UP_TO` (12) creatures or things each, more as one
