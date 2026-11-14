@@ -715,7 +715,9 @@ class World extends Phaser.Scene {
     const state = this.net.state, me = state.players.get(this.net.sessionId), now = performance.now();
     if (p.pressed("start")) p.key("Escape");
     if (p.pressed("up")) p.key("l");
-    if (p.pressed("down") || p.pressed("back")) p.key("i");
+    if (p.pressed("down")) p.key("i");
+    // View: your starting kit's card when you have one, else the inventory.
+    if (p.pressed("back")) { const kit = document.querySelector<HTMLElement>("[data-kit]"); if (kit) p.click(kit); else p.key("i"); }
     if (p.pressed("right")) p.key("t");
     if (p.pressed("left") && !this.hud.focusOffers()) this.hud.toast("No offers", "bad");
     if (!me) return;

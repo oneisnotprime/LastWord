@@ -918,7 +918,7 @@ const PAD_MAP: [string, string][] = [
   ["Get off", padGlyph("b")],
   ["Drop", padGlyph("lb")],
   ["Use", padGlyph("rb")],
-  ["Screens", `${padGlyph("up")} loadout · ${padGlyph("down")} inventory · ${padGlyph("right")} trade · ${padGlyph("left")} offers · ${padGlyph("back")} inventory`],
+  ["Screens", `${padGlyph("up")} loadout · ${padGlyph("down")} inventory · ${padGlyph("right")} trade · ${padGlyph("left")} offers · ${padGlyph("back")} your kit (else inventory)`],
   ["On a screen", `D-pad or left stick to move · ${padGlyph("a")} choose · ${padGlyph("b")} back · an item shows its card`],
   ["Menu", padGlyph("start")],
 ];
