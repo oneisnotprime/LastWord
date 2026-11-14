@@ -21,7 +21,15 @@ server and the client import this, so anything here must give the same answer on
   `useObject`: what using an object (eating, drinking) does, as a verb cast on yourself.
 - `aura.ts` `auras`: light, fear and healing an object or creature gives off around itself.
 - `stats.ts` also has `massed`: many of one thing as one body, integrity, mass and damage scaled.
-- `letters.ts` what gathering yields on each ground, and what an object produces a minute.
+- `letters.ts` where letters come from (PLAN.md "Letter economy"): `ACTION_SOURCES` (the eleven
+  action letters), `Deposits` (gathering: E anywhere, O by water, G in hills, U by mountains, per
+  8-tile patch, running out and growing back slowly; sites: caches give X, the temple Q),
+  `placeSources` (markets, temple, caches, ruins, wild animals on the `mainland`), `spawnPoint`
+  (people far apart), `regionOf` (exploring gives J), `MARKET` and `readTrade` ("trade eee for o"),
+  `killLetters` (K, V, H) and `destroyLetters` (D, V, F, X); `production` reads `produce_*`.
+- `economy.ts` `starterHand` (eight letters around a word that produces something, `starterWords`)
+  and `reachability`/`reachTable`: the shortest chain from the action letters to every letter;
+  its test prints the table.
 - `unit.ts` a character with its gear: damage layers, held weapon scaled by strength and
   training, riding. `strikeUnit` hits the outermost layer.
 - `status.ts` `STATUS_RULES`: the one table of what each status (stun, fear, poison...) does;

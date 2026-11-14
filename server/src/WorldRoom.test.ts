@@ -2,10 +2,11 @@ import { boot, type ColyseusTestServer } from "@colyseus/testing";
 import { afterAll, beforeAll, expect, it } from "vitest";
 import { generateMap, Tile, tileAt, walkable } from "@lastword/shared";
 import appConfig from "./app.config.js";
-import type { WorldRoom } from "./WorldRoom.js";
+import { WorldRoom } from "./WorldRoom.js";
 
 let colyseus: ColyseusTestServer;
-beforeAll(async () => { colyseus = await boot(appConfig); });
+// These rooms test other systems: no markets, ruins, animals or exploring to get in the way.
+beforeAll(async () => { WorldRoom.testBare = true; colyseus = await boot(appConfig); });
 afterAll(async () => { await colyseus.shutdown(); });
 
 const visible = (client: any) => [...client.state.players.keys()].sort();
@@ -101,9 +102,9 @@ it("spells a word into an object, spends the letters, and refuses what it cannot
   const [here, far] = [room.map.cities[0]!, room.map.cities[1]!];
   pa.x = here.x + 0.5; pa.y = here.y + 0.5; pb.x = far.x + 0.5; pb.y = far.y + 0.5;
   await new Promise((r) => setTimeout(r, 100));
-  // The first hand is sent on join, before this test could listen; read it from the room.
+  // Nobody starts with a SWORD's letters any more: hand them over.
+  (room as any).walkers.get(a.sessionId).letters = { s: 1, w: 1, o: 2, r: 1, d: 1, e: 2 };
   const before = { ...(room as any).walkers.get(a.sessionId).letters } as Record<string, number>;
-  expect(before.s).toBeGreaterThanOrEqual(1);
 
   a.send("spell", "sword");
   a.send("spell", "zzz");
@@ -160,7 +161,7 @@ it("gathers letters from the ground, pays out production, and passes letters bet
   const count = (w: any) => Object.values(w.letters as Record<string, number>).reduce((n, v) => n + v, 0);
   const wait = () => new Promise((r) => setTimeout(r, 150));
 
-  // Gathering takes two seconds of standing still and yields a city letter.
+  // Gathering takes two seconds of standing still and yields what is found there: in a city, foraging (E).
   const start = count(wa);
   a.send("gather");
   await wait();
@@ -169,7 +170,7 @@ it("gathers letters from the ground, pays out production, and passes letters bet
   room.update(1.1);
   await wait();
   expect(count(wa)).toBe(start + 1);
-  expect(got.a.find(([t]) => t === "gathered")![1]).toMatch(/^[lnst]$/);
+  expect(got.a.find(([t]) => t === "gathered")![1]).toBe("e");
 
   // Moving cancels a gathering.
   a.send("gather");

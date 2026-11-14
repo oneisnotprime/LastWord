@@ -1,4 +1,4 @@
-import { parsePhrase, TILE_METERS, type Dictionary, type Letters, type Op, type Stats } from "@lastword/shared";
+import { ACTION_LETTERS, becomes, parsePhrase, production, TILE_METERS, TILE_TYPES, type Dictionary, type Letters, type Op, type Stats } from "@lastword/shared";
 
 /**
  * Server-side bot players: what a bot knows about words, and how hard it plays. The room
@@ -24,7 +24,7 @@ export function botSettings(options: unknown, capacity: number, env = process.en
 }
 
 /** What a word is good for to a bot, in the order a bot wants them. */
-export type Use = "weapon" | "armor" | "mount" | "creature" | "heal" | "boost" | "field" | "event" | "food";
+export type Use = "weapon" | "armor" | "mount" | "creature" | "producer" | "heal" | "boost" | "field" | "event" | "food";
 
 export interface BotWord {
   word: string;
@@ -130,14 +130,20 @@ export function wordBook(dict: Dictionary) {
       else if (s.num("inflict_stun") > 0 && s.get("event_target") === "character") add("event", 50, { reach });
       continue;
     }
-    if (p.kind !== "object" || s.get("tile_type") !== "none" || p.plural) continue;
+    if (p.kind !== "object" || p.plural) continue;
+    // Producers that run by themselves (no fuel or power), scored by what they make a minute;
+    // letters no action gives count double.
+    const makes = Object.entries(production(s));
+    if (makes.length && TILE_TYPES[String(s.get("tile_type"))] === undefined && !(s.num("upkeep_fuel") > 0) && !(s.num("upkeep_power") > 0) && !s.flag("mountable")) {
+      add("producer", makes.reduce((n, [ch, rate]) => n + rate * (ACTION_LETTERS.includes(ch) ? 1 : 2), 0) * p.count);
+    }
+    if (s.get("tile_type") !== "none") continue;
     const slot = String(s.get("equip_slot"));
-    const alive = s.flag("alive");
     if (s.flag("mountable")) {
       // A ship cannot leave the water: no use to a bot on land.
       if (Math.max(s.num("speed_land"), s.num("speed_air")) > 0) add("mount", Math.max(s.num("speed_land"), s.num("speed_air")) / 2 + s.num("integrity") / 20 + dps(s) / 10);
     }
-    else if (alive && Math.max(s.num("speed_land"), s.num("speed_air")) > 0) add("creature", (dps(s) + s.num("integrity") / 10) * p.count);
+    else if (becomes(s) === "creature") add("creature", (dps(s) + s.num("integrity") / 10) * p.count);
     // A weapon thrown once (GRENADE) is worth little next to one that lasts.
     else if (slot === "held" && damage(s) > 0) add("weapon", dps(s) * (s.num("attack_range") > 6 ? 1.5 : 1) * (s.flag("single_use") ? 0.05 : 1), { slot });
     else if (slot !== "held" && slot !== "none" && s.num("armor") > 0) add("armor", s.num("armor") + s.num("integrity") / 20, { slot });

@@ -10,10 +10,13 @@ const card = (text: string) => {
 };
 
 describe("becomes", () => {
-  it("a living mover is a creature; a mount or slotted thing is worn; terrain reshapes; the rest lies on the ground", () => {
+  it("a mover that is alive, sentient or self-propelled is a creature; a mount or slotted thing is worn; terrain reshapes; the rest lies on the ground", () => {
     expect(becomes(resolve(dict, "wolf"))).toBe("creature");
     expect(becomes(resolve(dict, "prince"))).toBe("creature");
-    expect(becomes(resolve(dict, "ghost"))).toBe("ground"); // alive=false: it does not walk with you
+    expect(becomes(resolve(dict, "ghost"))).toBe("creature"); // sentient
+    expect(becomes(resolve(dict, "robot"))).toBe("creature"); // sentient machine
+    expect(becomes(resolve(dict, "zombie"))).toBe("creature"); // self-propelled
+    expect(becomes(resolve(dict, "rock"))).toBe("ground");
     expect(becomes(resolve(dict, "car"))).toBe("worn");
     expect(becomes(resolve(dict, "dragon"))).toBe("worn"); // mountable
     expect(becomes(resolve(dict, "sword"))).toBe("worn");
@@ -48,8 +51,10 @@ describe("cards", () => {
     expect(c.does.some((d) => /draws 0\.1 fuel a minute \(comes with 30 min\)/.test(d))).toBe(true);
     expect(card("wolves").title).toBe("WOLF ×3");
   });
-  it("a GHOST says it stays put; BREAD can be used; adjectives alone are aimed", () => {
-    expect(card("ghost").does[0]).toMatch(/does not follow you/);
+  it("a GHOST follows and needs no food; BREAD can be used; adjectives alone are aimed", () => {
+    expect(card("ghost").does).toContain("walks with you and defends you");
+    expect(card("ghost").does).toContain("not alive: needs no food");
+    expect(card("zombie").does).toContain("takes no orders (not sentient)");
     expect(card("bread").does.some((d) => d.startsWith("usable (U)"))).toBe(true);
     const a = card("worst");
     expect(a.kind).toBe("adjectives");

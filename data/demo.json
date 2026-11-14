@@ -2813,6 +2813,7 @@
 "mass":70.0,
 "integrity":250.0,
 "alive":false,
+"self_propelled":true,
 "aggression":10.0,
 "intelligence":1.0,
 "speed_land":1.5,
