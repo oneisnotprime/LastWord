@@ -190,6 +190,7 @@ anyway	adverb	manner
 anywhere	adverb	manner
 apart	adverb	manner
 apartment	noun	structure
+apiary	noun	building
 apocalypse	noun	disaster
 apostle	noun	worker
 apothecary	noun	worker
@@ -426,6 +427,7 @@ based	adjective	participle
 basic	adjective	quality
 basically	adverb	manner
 basil	noun	herb
+basilisk	noun	supernatural
 basis	noun	knowledge
 basket	noun	tool
 basketball	noun	toy
@@ -441,6 +443,7 @@ bauxite	noun	mineral
 bay	noun	water
 bazaar	noun	artifact
 beach	noun	landform
+beacon	noun	artifact
 bean	noun	produce
 beanstalk	noun	plant
 bear	noun	mammal
@@ -459,6 +462,7 @@ bedroom	noun	structure
 bee	noun	insect
 beech	noun	material
 beef	noun	food
+beehive	noun	artifact
 beekeeper	noun	worker
 beer	noun	drink
 beet	noun	produce
@@ -469,6 +473,7 @@ beginning	noun	event
 behalf	noun	attribute
 behavior	noun	attribute
 behaviour	noun	attribute
+behemoth	noun	supernatural
 behind	adverb	manner
 belief	noun	knowledge
 bell	noun	device
@@ -534,6 +539,7 @@ blackwood	noun	material
 blame	adjective	quality
 blanc	noun	food
 bland	adjective	quality
+blasphemy	noun	act
 blast	noun	event
 blessed	adjective	participle
 blessing	noun	act
@@ -733,6 +739,7 @@ button	noun	device
 buy	verb	transfer
 buying	noun	exchange
 cabbage	noun	produce
+cabin	noun	structure
 cabinet	noun	furniture
 cable	noun	tool
 cacao	noun	tree
@@ -839,6 +846,7 @@ catcher	noun	fighter
 category	noun	group
 caterer	noun	worker
 catfish	noun	food
+cathedral	noun	building
 catnip	noun	herb
 caucus	noun	group
 cauldron	noun	device
@@ -904,6 +912,7 @@ changing	adjective	quality
 channel	noun	route
 chanterelle	noun	fungus
 chaos	noun	phenomenon
+chapel	noun	building
 chaplain	noun	worker
 chapter	noun	group
 char	noun	material
@@ -954,6 +963,7 @@ chip	noun	device
 chipotle	noun	produce
 chips	noun	produce
 chiropractor	noun	worker
+chisel	noun	tool
 chitin	noun	material
 chives	noun	plant
 chloride	noun	material
@@ -987,6 +997,7 @@ circuit	noun	device
 circumstances	noun	possession
 circus	noun	ceremony
 cisco	noun	food
+citadel	noun	structure
 citizen	noun	person
 citizenship	noun	attribute
 citrine	noun	mineral
@@ -1084,6 +1095,7 @@ colony	noun	place
 color	adjective	quality
 coloring	noun	food
 colors	noun	artifact
+colossus	noun	supernatural
 colour	noun	material
 colouring	noun	food
 columbine	noun	flower
@@ -1273,6 +1285,7 @@ cos	noun	produce
 cosmonaut	noun	worker
 cost	noun	possession
 costs	noun	possession
+cottage	noun	building
 cotton	noun	fabric
 cottonwood	noun	tree
 cottony	adjective	quality
@@ -1350,6 +1363,7 @@ crocus	noun	flower
 croissant	noun	food
 crop	noun	produce
 cross	verb	movement
+crossbow	noun	weapon
 crossed	adjective	quality
 crossing	noun	travel
 croton	noun	shrub
@@ -1611,6 +1625,7 @@ division	noun	group
 divorce	noun	act
 doc	noun	worker
 docent	noun	worker
+dock	noun	structure
 docker	noun	worker
 doctor	noun	worker
 document	noun	document
@@ -1982,6 +1997,7 @@ farina	noun	food
 farm	noun	structure
 farmer	noun	worker
 farmhand	noun	worker
+farmhouse	noun	building
 farrier	noun	worker
 fashion	noun	attribute
 fast	adjective	quality
@@ -2076,6 +2092,7 @@ finishing	noun	material
 fir	noun	material
 fire	noun	event
 fireball	noun	phenomenon
+firebrand	noun	material
 fired	adjective	quality
 firefighter	noun	worker
 fireman	noun	worker
@@ -2179,12 +2196,15 @@ former	adjective	quality
 formerly	adverb	manner
 fort	noun	fortification
 forth	adverb	manner
+fortress	noun	structure
 fortune	noun	possession
 forum	noun	group
 forward	adverb	manner
 foster	verb	social
 foundation	noun	structure
 founder	noun	person
+foundry	noun	structure
+fountain	noun	structure
 four	noun	quantity
 fourth	adjective	quality
 fowl	noun	produce
@@ -2278,6 +2298,7 @@ garland	noun	flower
 garlic	noun	food
 garnet	noun	mineral
 garnish	noun	food
+garrison	noun	artifact
 gas	noun	material
 gaseous	adjective	quality
 gasoline	noun	fuel
@@ -2306,6 +2327,7 @@ generator	noun	artifact
 generic	noun	drink
 genetic	adjective	quality
 geneva	noun	drink
+genie	noun	supernatural
 genius	noun	person
 gentry	noun	group
 genuine	adjective	quality
@@ -2362,6 +2384,7 @@ gold	noun	metal
 golden	adjective	quality
 goldmine	noun	artifact
 goldsmith	noun	worker
+golem	noun	supernatural
 golf	noun	contest
 golfer	noun	worker
 goo	noun	material
@@ -2421,6 +2444,7 @@ greens	noun	produce
 grenade	noun	weapon
 grenadier	noun	fighter
 grey	adjective	quality
+griffin	noun	supernatural
 grifter	noun	criminal
 grill	noun	device
 grinder	noun	food
@@ -2511,6 +2535,7 @@ hardware	noun	weapon
 hardwood	noun	material
 hare	noun	mammal
 harm	noun	event
+harpoon	noun	tool
 harry	verb	combat
 harvest	noun	act
 harvester	noun	tool
@@ -2673,6 +2698,8 @@ husband	noun	person
 husk	noun	plant
 hussar	noun	fighter
 hustler	noun	criminal
+hut	noun	structure
+hydra	noun	supernatural
 hydrangea	noun	shrub
 hydrate	noun	material
 hydrocarbon	noun	material
@@ -2920,6 +2947,7 @@ kebab	noun	food
 keeping	noun	possession
 keg	noun	container
 kelp	noun	plant
+kennel	noun	building
 kernel	noun	plant
 kerosene	noun	fuel
 ketchup	noun	food
@@ -2954,6 +2982,7 @@ knowing	adjective	quality
 kola	noun	tree
 kosher	noun	food
 kraft	noun	material
+kraken	noun	supernatural
 krypton	noun	gas
 kudzu	noun	plant
 lab	noun	building
@@ -2974,6 +3003,7 @@ lager	noun	drink
 laid	adjective	participle
 lake	noun	water
 lamp	noun	device
+lance	noun	weapon
 lancer	noun	fighter
 land	noun	landform
 landed	adjective	quality
@@ -2990,6 +3020,7 @@ large	adjective	quality
 largely	adverb	manner
 larger	adjective	quality
 lasagna	noun	food
+lasso	noun	artifact
 late	adjective	quality
 lately	adverb	manner
 later	adverb	manner
@@ -3064,6 +3095,7 @@ letters	noun	knowledge
 letting	noun	possession
 lettuce	noun	produce
 level	noun	attribute
+leviathan	noun	supernatural
 levy	noun	possession
 liana	noun	plant
 liberal	noun	person
@@ -3640,6 +3672,7 @@ oat	noun	produce
 oatmeal	noun	food
 object	noun	artifact
 objective	noun	knowledge
+observatory	noun	building
 observed	adjective	quality
 obsidian	noun	mineral
 obstetrician	noun	worker
@@ -3781,6 +3814,7 @@ pair	noun	quantity
 paisley	noun	fabric
 palace	noun	building
 paladin	noun	fighter
+palisade	noun	fortification
 palladium	noun	metal
 palm	noun	tree
 palmetto	noun	tree
@@ -3931,6 +3965,7 @@ pheasant	noun	bird
 philosopher	noun	worker
 philosophy	noun	knowledge
 phlox	noun	herb
+phoenix	noun	supernatural
 phone	noun	device
 phosphate	noun	material
 phosphorus	noun	material
@@ -3954,6 +3989,7 @@ picnic	noun	food
 picture	noun	artifact
 pie	noun	food
 piece	noun	artifact
+pier	noun	artifact
 pig	noun	mammal
 pigment	noun	material
 pilgrim	noun	person
@@ -4900,6 +4936,7 @@ silk	noun	fabric
 silken	adjective	quality
 silky	adjective	quality
 silly	adjective	quality
+silo	noun	structure
 silt	noun	material
 silver	noun	metal
 silversmith	noun	worker
@@ -4960,6 +4997,7 @@ smell	verb	perceive
 smelt	noun	food
 smile	verb	body
 smith	noun	worker
+smithy	noun	artifact
 smoke	noun	phenomenon
 smoked	adjective	participle
 smokehouse	noun	structure
@@ -5105,6 +5143,7 @@ stainless	noun	metal
 stale	adjective	quality
 stalk	noun	material
 stalker	noun	criminal
+stall	noun	structure
 stampede	noun	event
 stand	verb	contact
 standard	noun	knowledge
@@ -5121,6 +5160,7 @@ stated	adjective	quality
 statesman	noun	person
 station	noun	structure
 statistics	noun	knowledge
+statue	noun	artifact
 statute	noun	knowledge
 stay	verb	body
 stays	noun	clothing
@@ -5460,6 +5500,7 @@ tiny	adjective	quality
 tip	noun	exchange
 tired	adjective	quality
 tissue	noun	bodypart
+titan	noun	supernatural
 titanium	noun	metal
 tithe	noun	possession
 title	noun	possession
@@ -5646,6 +5687,7 @@ understood	adjective	participle
 undertaker	noun	worker
 unexpected	adjective	quality
 unfortunately	adverb	manner
+unicorn	noun	supernatural
 uniform	noun	clothing
 union	noun	group
 unique	adjective	quality
@@ -5802,6 +5844,7 @@ wanting	adjective	quality
 war	noun	conflict
 ward	noun	place
 warden	noun	person
+warehouse	noun	artifact
 warfare	noun	conflict
 warhead	noun	artifact
 warlock	noun	person
@@ -5818,6 +5861,7 @@ wastewater	noun	material
 watch	noun	device
 watching	noun	act
 watchman	noun	worker
+watchtower	noun	structure
 water	noun	liquid
 watercolor	noun	material
 watercolour	noun	material
@@ -5835,6 +5879,7 @@ wealth	noun	attribute
 weapon	noun	weapon
 wear	verb	body
 wearing	adjective	participle
+weasel	noun	mammal
 weather	noun	weather
 weaver	noun	worker
 web	noun	natural_object
@@ -5938,6 +5983,7 @@ worker	noun	worker
 working	adjective	participle
 workman	noun	worker
 works	noun	building
+workshop	noun	artifact
 world	noun	celestial
 worldwide	adjective	quality
 wormwood	noun	shrub
@@ -5963,6 +6009,7 @@ writer	noun	worker
 writing	noun	act
 written	adjective	participle
 wrong	adjective	quality
+wyvern	noun	supernatural
 xenon	noun	gas
 yak	noun	mammal
 yam	noun	produce

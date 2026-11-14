@@ -5,6 +5,8 @@ import {
   LAND_RATE, ROAD_RATE, ROAD_HALF, CLAIMED_ROAD, CITIZEN_S, CITIZENS, CITIZEN_LEAVE, CITIZEN_RETURN, HIRE_PRICE, HIRED, TRADE_RANGE, OFFER_SECONDS, PAIR_COOLDOWN, BOSS_TIMES, BOSS_Z, BOSS_HOARD,
   type ClaimDisc, windAt, moistureAt, waterNear, wateringReach, wetWeather, producingLine, Soil, LABOUR_RANGE, CYCLE_SECONDS, PEACE_RADIUS, PEACE_SECONDS, VOWELS, type ProducerSpec, type Conditions,
   addLetters, afflict, placeRules, harvest, growthOf, tradeRateOf, marketRatio, type PlaceRules, aggressive, clearLine, courageOf, pluralize, auras, authorityOf, chooseTarget, commandLimit, draw, groundFood, hasAny, ignoresOrder, moraleAim, moraleGoal, needs, nextMorale, noStores, outputs, recruitRate, rerouteSeconds, startingSupply, becomes, retreats, routed, supply, theftResistance, HUNGER_LOYALTY, NORMAL, STARTING_STORES, STARVING, SUPPLIES, bodyFlags, cure, useObject, findPath, hampered, inflicts, statusDamage, statusEffects, tickStatuses, wake, GATHER_SECONDS, GATHER_REASONS, cachePrize, carcassFood, Deposits, destroyLetters, killLetters, mainland, MARKET, pickAnimal, placeSources, readTrade, regionOf, RUIN_INTEGRITY, CACHE_X, SITE_RADIUS, spawnPoint, starterHand, TEMPLE_Q, tradeProblem, generateMap, GIVE_RANGE, missing, parsePhrase, applyAdjectives, cannotCarry, improvisable, readDescription, production, resolveSpelled, SEPARATE_UP_TO, nearestWalkable, openGround, randomWalkable, resolve, Tile, tileAt, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit, cannotRide, claimOf, senseOf, combineSenses, type Sense, type Sensed,
+  dealKits, jobBodyOps, jobRules, jobStats, kitCard, kitScore, legendCost, sealedLetters, unlockNeed, unlockText, makesLetters, KIT_SECONDS,
+  type JobDef, type Kit, type KitCard, type KitData, type LegendDef,
   effectSeconds, biomeAt, huntYield, pickWild, rollText, toolHelp, wildlife, RUIN_X_CHANCE, type Help,
   type Affliction, type Candidate, type Dictionary, type Stores, type Supply, type Entity, type Hampered, type Status, type Stats, type Letters, type LoadoutDetail, type Op, type Phrase, type Point, type Spelled, type Value, type WordDef, type WorldMap,
 } from "@lastword/shared";
@@ -13,7 +15,7 @@ import {
   COOK_RANGE, COOK_SECONDS, alchemyRatio, jobsOf, haggled, builtBy, WORK_RANGE, SCOUT_RANGE, grow, SEEDLING, type PactSpec,
 } from "@lastword/shared";
 import { affords, botSettings, chooseWord, held, wordBook, type BotWord, type Difficulty, type Use } from "./bots.js";
-import { loadDictionary } from "./data.js";
+import { loadDictionary, loadKits } from "./data.js";
 import { City, Edit, Player, Thing, WorldState, Zone } from "./state.js";
 
 /** Seconds after paying a law's fine before the same law fines the same person for the same act again. */
@@ -269,6 +271,30 @@ interface Walker {
   shown: string;
   /** For a person: words that became part of their screen (shared `senseOf`): a MAP's minimap. */
   senses?: Sense[];
+  /** For a person choosing a starting kit: the kits offered and the room time it is picked for them. */
+  picking?: { kits: Kit[]; until: number };
+  /** For a person: the starting kit they picked (PLAN.md "Starting kits"). */
+  kit?: PersonKit;
+  /** For a person: deeds counted toward a legendary's unlock. */
+  deeds?: { hunts: number; trades: number; bosses: number; kills: number };
+}
+
+/**
+ * A person's starting kit: their job (worn like an invisible tool: its own stats help gathering,
+ * hunting and command, its body operations change them, its rules go wherever they go) and their
+ * sealed legendary word, which unlocks once (`state` open) and is then spelled free once (used).
+ */
+interface PersonKit {
+  job: JobDef;
+  stats: Stats;
+  rules: PlaceRules | null;
+  effect: Effect;
+  building: string;
+  legend: LegendDef;
+  state: "sealed" | "open" | "used";
+  have: number;
+  card: KitCard;
+  shown: string;
 }
 
 /** What a new walker's mind and stores start as. */
@@ -393,6 +419,12 @@ export class WorldRoom extends Room {
   private wild = new Map<string, [string, number][]>();
   /** For tests of other systems: rooms created while this is set get no markets, temple, caches, ruins, animals or exploring. */
   static testBare = false;
+  /** Starting kits: each person picks one of three as they join. Off in room tests unless a test turns it on. */
+  static kits = !process.env.VITEST;
+  private kitsOn = true;
+  private kitData!: KitData;
+  /** Tiles of land each person held at the last count of territory, for legendaries that need land. */
+  private landTiles = new Map<string, number>();
   private bare = false;
   /** Bot players by id, and how many have been made. */
   private bots = new Map<string, BotMind>();
@@ -493,6 +525,7 @@ export class WorldRoom extends Room {
     move: (client: Client, to: unknown) => {
       const walker = this.walkers.get(client.sessionId);
       const p = to as Partial<Point> | null;
+      if (walker?.picking) return;
       if (!walker || !p || !Number.isFinite(p.x) || !Number.isFinite(p.y)) return;
       const clamp = (v: number) => Math.min(this.map.size - 1e-3, Math.max(0, v));
       walker.target = { x: clamp(p.x!), y: clamp(p.y!) };
@@ -520,7 +553,7 @@ export class WorldRoom extends Room {
     /** Stand still and gather a letter from the ground. */
     gather: (client: Client) => {
       const walker = this.walkers.get(client.sessionId);
-      if (!walker || walker.gathering > 0) return;
+      if (!walker || walker.gathering > 0 || walker.picking) return;
       // Nothing to find here: say so at once rather than after the wait.
       const problem = this.deposits.problem(walker.player.x, walker.player.y, this.elapsed);
       if (problem) return void client.send("refused", problem);
@@ -717,10 +750,25 @@ export class WorldRoom extends Room {
       if (!a || typeof a.id !== "string") throw new Error("Answer which offer?");
       return this.answer(id, a.id, a.accept === true);
     }),
+    /** Pick a starting kit: the index of one of the kits offered. */
+    kit: (client: Client, index: unknown) => {
+      const walker = this.walkers.get(client.sessionId);
+      if (!walker?.picking || !Number.isInteger(index) || !walker.picking.kits[index as number]) return;
+      this.chooseKit(client.sessionId, walker, index as number);
+    },
+    /** The client is listening: send its kits to pick from, or its kit as it stands. */
+    ready: (client: Client) => {
+      const walker = this.walkers.get(client.sessionId);
+      if (walker?.picking) this.sendKits(client.sessionId, walker);
+      else if (walker?.kit) { walker.kit.shown = ""; this.sendKit(client.sessionId, walker); }
+    },
+    /** Pay a legendary's sealed letters (the "letters" condition) to unseal it. */
+    unseal: (client: Client) => this.attempt(client, (id, w) => this.unseal(id, w)),
     /** Spend letters to make an object where the player stands. */
     spell: (client: Client, text: unknown) => {
       const walker = this.walkers.get(client.sessionId);
       if (!walker) return;
+      if (walker.picking) return void client.send("refused", "Pick your starting kit first");
       try {
         this.spellWord(client.sessionId, walker, text);
       } catch (e) {
@@ -772,7 +820,7 @@ export class WorldRoom extends Room {
 
   /** What a walker's body and gear add to each kind of gathering (shared `toolHelp`): a SHOVEL digs, a NET fishes. */
   private helpOf(w: Walker): (kind: string) => Help[] {
-    const things = [{ name: w.player.name, stats: w.unit.body.stats }, ...w.gear.map((g) => ({ name: g.phrase, stats: this.statsOf(g) }))];
+    const things = [{ name: w.player.name, stats: w.unit.body.stats }, ...this.jobTool(w), ...w.gear.map((g) => ({ name: g.phrase, stats: this.statsOf(g) }))];
     return (kind) => toolHelp(kind, things);
   }
 
@@ -807,7 +855,10 @@ export class WorldRoom extends Room {
     const hushed = this.lawAgainst("spell", id, walker);
     if (hushed) throw new Error(`${hushed}: no spelling here`);
     const phrase = parsePhrase(this.dict, text);
-    const lacking = missing(walker.letters, phrase.letters);
+    // An unsealed legendary is spelled free, once: only its adjectives and a plural cost.
+    const free = walker.kit?.state === "open" ? legendCost(phrase.letters, phrase.noun, walker.kit.legend.word) : null;
+    const cost = free ?? phrase.letters;
+    const lacking = missing(walker.letters, cost);
     if (lacking) throw new Error(`You need ${lacking.toUpperCase().split("").join(" ")}`);
     const name = [...phrase.adverbs, ...phrase.adjectives, phrase.noun].join(" ");
     const spelledAs = text.toLowerCase().trim().split(/\s+/).join(" ").toUpperCase();
@@ -826,13 +877,15 @@ export class WorldRoom extends Room {
         : this.sky(id, phrase, name);
       if (city >= 0) { this.rule(city, id, phrase.noun); done = done ? `${done}; the city is yours` : "The city is yours"; }
       if (phrase.kind !== "sky") done = this.withCounters(phrase.noun, done, id, walker);
-      spend(walker.letters, phrase.letters);
+      spend(walker.letters, cost);
+      if (free !== null) this.legendSpelled(id, walker);
       this.sendTo(id, "letters", walker.letters);
       this.sendTo(id, "spelled", done);
       return done;
     }
     if (phrase.count < 1) throw new Error(`${spelledAs} is none at all`);
-    spend(walker.letters, phrase.letters);
+    spend(walker.letters, cost);
+    if (free !== null) this.legendSpelled(id, walker);
     const countered = this.counter(phrase.noun);
     if (countered) this.sendTo(id, "notice", `${phrase.noun.toUpperCase()} ended ${countered} area${countered === 1 ? "" : "s"}`);
     const culled = this.exterminate(phrase.noun, id, walker);
@@ -946,6 +999,8 @@ export class WorldRoom extends Room {
     if (WorldRoom.testSeed !== null) this.rng = seeded(WorldRoom.testSeed);
     const seed = Math.floor(this.rng() * 2 ** 32);
     this.dict = loadDictionary();
+    this.kitData = loadKits();
+    this.kitsOn = WorldRoom.kits;
     this.map = generateMap(seed);
     this.placeSources();
     this.state.seed = seed;
@@ -1043,7 +1098,8 @@ export class WorldRoom extends Room {
     wordBook(this.dict); // worked out once, before the first tick that needs it
     for (let i = 0; i < n; i++) {
       const id = `bot${++this.botCount}`;
-      this.addPerson(id, id, this.spawnSpot());
+      const bot = this.addPerson(id, id, this.spawnSpot());
+      if (this.kitsOn) { this.offerKits(id, bot); this.chooseKit(id, bot, this.bestKit(bot.picking!.kits)); }
       this.bots.set(id, {
         difficulty, phase: this.botCount, stay: 3 + Math.floor(this.rng() * 6), tried: new Set(), gathered: 0, spelled: 0, at: { x: 0, y: 0 }, stuck: 0,
         peaceUntil: this.elapsed + BOT_PEACE[0] + this.rng() * (BOT_PEACE[1] - BOT_PEACE[0]), nextSpell: this.elapsed + this.rng() * BOT_SPELL_GAP[1], producers: 0,
@@ -1062,6 +1118,164 @@ export class WorldRoom extends Room {
     this.tell(walker);
     client.view = new StateView();
     client.view.add(walker.player);
+    if (this.kitsOn) this.offerKits(client.sessionId, walker);
+  }
+
+  /** Deals a person three kits and tells them (bots choose at once). */
+  private offerKits(id: string, w: Walker) {
+    w.picking = { kits: dealKits(this.kitData, this.dict, this.rng), until: this.elapsed + KIT_SECONDS };
+    this.sendKits(id, w);
+  }
+
+  private sendKits(id: string, w: Walker) {
+    if (!w.picking) return;
+    this.sendTo(id, "kits", {
+      cards: w.picking.kits.map((k) => kitCard(this.kitData, this.dict, k)),
+      seconds: Math.max(0, Math.ceil(w.picking.until - this.elapsed)),
+    });
+  }
+
+  /** The kit a bot (or someone out of time) takes: the best by shared `kitScore`. */
+  private bestKit(kits: readonly Kit[]): number {
+    let best = 0;
+    kits.forEach((k, i) => { if (kitScore(this.kitData, this.dict, k) > kitScore(this.kitData, this.dict, kits[best]!)) best = i; });
+    return best;
+  }
+
+  /**
+   * Gives a person the kit they picked: the job (worn from now on), the starting hand, the
+   * legendary sealed, and the building made at their feet as if they had spelled it there.
+   */
+  private chooseKit(id: string, w: Walker, index: number) {
+    const kit = w.picking?.kits[index];
+    if (!kit) return;
+    w.picking = undefined;
+    const job = this.kitData.jobs.find((j) => j.word === kit.job)!;
+    const legend = this.kitData.legendaries.find((l) => l.word === kit.legend)!;
+    w.kit = {
+      job, stats: jobStats(this.dict, job), rules: jobRules(this.dict, job),
+      effect: { word: job.word, set: {}, ops: jobBodyOps(job), until: Infinity },
+      building: kit.building, legend, state: "sealed", have: 0, card: kitCard(this.kitData, this.dict, kit), shown: "",
+    };
+    w.deeds ??= { hunts: 0, trades: 0, bosses: 0, kills: 0 };
+    if (!(Number(process.env.LETTERS) > 0)) w.letters = { ...kit.hand };
+    this.rebuild(w);
+    // A job that adds health starts you at the new full health.
+    w.hp = w.unit.body.stats.num("integrity");
+    w.unit.body.integrity = w.hp;
+    try {
+      this.make(id, w, parsePhrase(this.dict, kit.building));
+    } catch (e) {
+      console.error(`starting building ${kit.building}:`, e);
+    }
+    this.sendTo(id, "letters", w.letters);
+    this.sendTo(id, "notice", `${job.word.toUpperCase()}: your ${kit.building.toUpperCase()} stands here. ${kit.legend.toUpperCase()} is sealed: ${unlockText(legend)}`);
+    this.legendProgress(id, w);
+    this.tell(w);
+    this.refreshViews();
+  }
+
+  /** A person's job as a tool they carry, for the shared readers of tools (gathering, hunting, command). */
+  private jobTool(w: Walker): { name: string; stats: Stats }[] {
+    return w.kit ? [{ name: w.kit.job.word, stats: w.kit.stats }] : [];
+  }
+
+  /** Counts a deed toward a legendary's unlock. */
+  private deed(w: Walker, what: keyof NonNullable<Walker["deeds"]>) {
+    if (w.master === null && w.deeds) w.deeds[what]++;
+  }
+
+  /** How far a person is toward unsealing their legendary, by its condition. */
+  private legendHave(id: string, w: Walker): number {
+    const k = w.kit!, d = w.deeds ?? { hunts: 0, trades: 0, bosses: 0, kills: 0 };
+    switch (k.legend.unlock.kind) {
+      case "minutes": return Math.floor(this.elapsed / 60);
+      case "letters": {
+        const hand = { ...w.letters };
+        let n = 0;
+        for (const ch of sealedLetters(k.legend.word)) if ((hand[ch] ?? 0) > 0) { hand[ch]!--; n++; }
+        return n;
+      }
+      case "land": return this.landTiles.get(id) ?? 0;
+      case "boss": return d.bosses;
+      case "producers": {
+        let n = 0;
+        for (const [pid, p] of this.producers) {
+          if (!makesLetters(p.spec)) continue;
+          const thing = this.state.things.get(pid), creature = thing ? undefined : this.walkers.get(pid);
+          if ((thing ? thing.owner : creature ? creature.master : p.owner) === id) n++;
+        }
+        for (const g of w.gear) { const p = this.carried.get(g); if (p && makesLetters(p.spec)) n++; }
+        return n;
+      }
+      case "regions": return w.explored?.size ?? 0;
+      case "hunts": return d.hunts;
+      case "trades": return d.trades;
+      case "city": return this.rulers.some((r) => r.ruler === id) ? 1 : 0;
+      case "kills": return d.kills;
+    }
+  }
+
+  /** Counts progress toward a sealed legendary, unseals it when its condition is met, and tells its holder. */
+  private legendProgress(id: string, w: Walker) {
+    const k = w.kit!;
+    if (k.state === "sealed") {
+      k.have = this.legendHave(id, w);
+      const need = unlockNeed(k.legend);
+      if (k.have >= need) {
+        if (k.legend.unlock.kind !== "letters") this.unlockLegend(id, w, unlockText(k.legend));
+        else if (this.bots.has(id)) { try { this.unseal(id, w); } catch { /* not yet */ } }
+      }
+    }
+    this.sendKit(id, w);
+  }
+
+  /** Tells a person their kit as it stands, if it changed. */
+  private sendKit(id: string, w: Walker) {
+    const k = w.kit;
+    if (!k) return;
+    const need = unlockNeed(k.legend);
+    const shown = `${k.state}|${Math.min(k.have, need)}`;
+    if (shown === k.shown) return;
+    k.shown = shown;
+    this.sendTo(id, "kit", {
+      job: k.job.word, building: k.building, card: k.card,
+      legend: { word: k.legend.word, unlock: unlockText(k.legend), kind: k.legend.unlock.kind, counter: k.legend.counter, have: Math.min(k.have, need), need, state: k.state },
+    });
+  }
+
+  /** Pays the sealed letters of a legendary whose condition is "letters". */
+  private unseal(id: string, w: Walker): string {
+    const k = w.kit;
+    if (!k || k.state !== "sealed") throw new Error("Nothing sealed to open");
+    if (k.legend.unlock.kind !== "letters") throw new Error(`${k.legend.word.toUpperCase()} unseals when you ${unlockText(k.legend)}`);
+    const pay = sealedLetters(k.legend.word);
+    const lacking = missing(w.letters, pay);
+    if (lacking) throw new Error(`You need ${lacking.toUpperCase().split("").join(" ")}`);
+    spend(w.letters, pay);
+    this.sendTo(id, "letters", w.letters);
+    this.unlockLegend(id, w, `paid ${pay.toUpperCase()}`);
+    return `${k.legend.word.toUpperCase()} unsealed`;
+  }
+
+  /** A legendary unseals: its holder may spell it once, free, and the whole map hears of it. */
+  private unlockLegend(id: string, w: Walker, how: string) {
+    const k = w.kit!;
+    k.state = "open";
+    k.have = unlockNeed(k.legend);
+    const message = { name: w.player.name, word: k.legend.word, how, x: w.player.x, y: w.player.y, counter: k.legend.counter, spelled: false };
+    for (const c of this.clients) c.send("legend", message);
+    this.sendTo(id, "notice", `${k.legend.word.toUpperCase()} is unsealed: spell it once, free`);
+    this.sendKit(id, w);
+  }
+
+  /** An unsealed legendary has been spelled: used up, and everyone is told. */
+  private legendSpelled(id: string, w: Walker) {
+    const k = w.kit!;
+    k.state = "used";
+    const message = { name: w.player.name, word: k.legend.word, how: "spelled", x: w.player.x, y: w.player.y, counter: k.legend.counter, spelled: true };
+    for (const c of this.clients) c.send("legend", message);
+    this.sendKit(id, w);
   }
 
   /** Puts a person in the world: a human body at a random spot with a starting hand of letters. */
@@ -1137,6 +1351,9 @@ export class WorldRoom extends Room {
       walker.seen = new Set([client.sessionId]);
       client.send("letters", walker.letters);
       this.tell(walker);
+      // Back mid-pick: the kits again, with the time left; else their kit as it stands.
+      if (walker.picking) this.sendKits(client.sessionId, walker);
+      else if (walker.kit) { walker.kit.shown = ""; this.sendKit(client.sessionId, walker); }
     }
     this.refreshViews();
   }
@@ -1189,7 +1406,7 @@ export class WorldRoom extends Room {
       body: walker.body,
       items: walker.gear.filter((g) => !g.vehicle).map((g) => g.spelled),
       riding: walker.gear.find((g) => g.vehicle)?.spelled,
-      effects: [...(this.weather ? [this.weather] : []), ...(walker.fields ?? []), ...walker.buffs, ...statusEffects(walker.statuses)],
+      effects: [...(walker.kit ? [walker.kit.effect] : []), ...(this.weather ? [this.weather] : []), ...(walker.fields ?? []), ...walker.buffs, ...statusEffects(walker.statuses)],
     });
     unit.body.integrity = walker.hp;
     for (const g of walker.gear) {
@@ -1408,6 +1625,7 @@ export class WorldRoom extends Room {
    * producers first while at peace. Fleeing and statuses are left to minds.
    */
   private thinkBot(id: string, w: Walker, mind: BotMind) {
+    if (w.kit?.state === "open") { try { this.spellWord(id, w, w.kit.legend.word); } catch { /* not here: try again later */ } }
     if (this.state.phase === "over" || w.fleeing || w.hamper.flees.length || w.hamper.random) return;
     const hard = mind.difficulty === "hard", easy = mind.difficulty === "easy";
     const have = held(w.letters);
@@ -1878,7 +2096,7 @@ export class WorldRoom extends Room {
 
   /** Everything that is someone's, as properties: their body, what they carry, their creatures and things. */
   private sources(w: Walker, h: Holdings): Stats[] {
-    return [w.unit.body.stats, ...w.gear.map((g) => this.statsOf(g)), ...h.creatures.map(([, c]) => c.unit.body.stats), ...h.things.map(([, g]) => this.statsOf(g))];
+    return [w.unit.body.stats, ...this.jobTool(w).map((t) => t.stats), ...w.gear.map((g) => this.statsOf(g)), ...h.creatures.map(([, c]) => c.unit.body.stats), ...h.things.map(([, g]) => this.statsOf(g))];
   }
 
   /**
@@ -2111,6 +2329,11 @@ export class WorldRoom extends Room {
       if (shown !== w.shown) { w.shown = shown; this.tell(w); }
     }
     for (const [id, w] of [...this.walkers]) if (w.master === "-") this.roam(id, w);
+    for (const [id, w] of [...this.walkers]) {
+      if (w.master !== null) continue;
+      if (w.picking && this.elapsed >= w.picking.until) this.chooseKit(id, w, this.bestKit(w.picking.kits));
+      if (w.kit) this.legendProgress(id, w);
+    }
     for (const [id, w] of this.walkers) if (w.senses?.length) this.sendSensed(id, w);
     this.nearGrid = null; // walkers move between beats
     // Offers lapse, or fall through when either side is gone or walks off.
@@ -3200,6 +3423,9 @@ export class WorldRoom extends Room {
     const d = Math.hypot(dx, dy);
     if (d < 1e-6) { const t = this.rng() * Math.PI * 2; dx = Math.cos(t); dy = Math.sin(t); } else { dx /= d; dy /= d; }
     w.target = { x: clamp(w.player.x + dx * FLEE_TILES), y: clamp(w.player.y + dy * FLEE_TILES) };
+    // Running away turns you at once: a route worked out before (toward whoever you were attacking)
+    // would otherwise be walked for up to a second, straight at what you flee.
+    if (!w.routeTo || Math.hypot(w.routeTo.x - w.target.x, w.routeTo.y - w.target.y) > 2) { w.route = []; w.routeTo = null; }
   }
 
   /** THEFT: the selected thing becomes yours if your stealth meets its security. */
@@ -3364,10 +3590,11 @@ export class WorldRoom extends Room {
         const striker = this.walkers.get(killerId);
         const held = striker?.unit.weapon ? striker.gear.find((g) => g.spelled === striker.unit.weapon) : undefined;
         const weapon = held ? { name: held.phrase, stats: this.statsOf(held) } : null;
-        const tools = striker ? [{ name: striker.player.name, stats: striker.unit.body.stats }, ...striker.gear.map((g) => ({ name: g.phrase, stats: this.statsOf(g) }))] : [];
+        const tools = striker ? [{ name: striker.player.name, stats: striker.unit.body.stats }, ...this.jobTool(striker), ...striker.gear.map((g) => ({ name: g.phrase, stats: this.statsOf(g) }))] : [];
         const y = huntYield(dead.body.noun, dead.unit.body.stats, weapon, tools, this.rng);
         meat = Math.round(meat * y.food * 10) / 10;
         spoils += this.earn(payId, y.letters, at, `hunted ${name}${meat ? ` (+${meat} food)` : ""}`, 1, y.why.join(" · ") || undefined);
+        this.deed(killer, "hunts");
       } else for (const ch of new Set(base)) {
         const why = ch === "v" ? `beat ${owner ? `${owner}'s ` : ""}${name}` : `kill ${name}`;
         spoils += this.earn(payId, base.split("").filter((c) => c === ch).join(""), at, why);
@@ -3376,12 +3603,14 @@ export class WorldRoom extends Room {
       if (dead.boss) {
         // A roaming boss drops Z and its hoard of everyday letters (PLAN.md: Z from roaming bosses).
         spoils += this.earn(payId, "z".repeat(BOSS_Z), at, `slew ${name}`);
+        this.deed(killer, "bosses");
         this.award(payId, killer, cachePrize(this.rng) + cachePrize(this.rng), `${name}'s hoard`, at);
         for (const c of this.clients) c.send("notice", `${killer.player.name} slew the ${name}: ${"Z".repeat(BOSS_Z)}`);
       }
       if (kind === "wild") kc?.send("letters", killer.letters);
       if (meat) this.toTell.add(payId); // the food store on the HUD
       for (const k of SUPPLIES) killer.stores[k] += dead.stores[k]; // and their stores
+      if (kind === "person" && dead.master === null) this.deed(killer, "kills");
       if (kind !== "wild") {
         kc?.send("letters", killer.letters);
         kc?.send("notice", `You killed ${dead.player.name} and took their letters`);
@@ -3476,6 +3705,8 @@ export class WorldRoom extends Room {
    */
   private rulesAt(p: Point, wid?: string, w?: Walker): { rules: PlaceRules[]; areas: Area[] } {
     const rules: PlaceRules[] = this.weatherRules ? [this.weatherRules] : [];
+    // A job's rules go wherever its holder goes (a MERCHANT's prices, a FISHER's O).
+    if (w?.kit?.rules && w.master === null && wid === w.id) rules.push(w.kit.rules);
     const areas: Area[] = [];
     for (const a of this.areas.values()) {
       if (!a.rules || Math.hypot(p.x - a.x, p.y - a.y) > a.radius) continue;
@@ -3772,7 +4003,7 @@ export class WorldRoom extends Room {
         this.paired.set(pair, this.elapsed);
         this.earn(o.from, "t", from.player, "trade"); this.earn(o.to, "t", to.player, "trade");
       }
-      for (const [pid, p] of [[o.from, from], [o.to, to]] as const) this.sendTo(pid, "letters", p.letters);
+      for (const [pid, p] of [[o.from, from], [o.to, to]] as const) { this.sendTo(pid, "letters", p.letters); this.deed(p, "trades"); }
       done = `Traded ${o.get.toUpperCase() || "nothing"} for ${fromName}'s ${o.give.toUpperCase() || "nothing"}`;
       this.sendTo(o.from, "notice", `${toName} accepted: ${o.give.toUpperCase() || "nothing"} for ${o.get.toUpperCase() || "nothing"}`);
     }
@@ -3822,6 +4053,7 @@ export class WorldRoom extends Room {
     spend(walker.letters, give);
     this.award(id, walker, get, "trade");
     const t = this.earn(id, "t".repeat(get.length), market, "trade");
+    this.deed(walker, "trades");
     this.sendTo(id, "letters", walker.letters);
     const done = `Traded ${give.toUpperCase()} for ${get.toUpperCase()}${t ? `, and ${t.toUpperCase()} for the trade` : ""}`;
     this.sendTo(id, "spelled", done);
@@ -3908,6 +4140,7 @@ export class WorldRoom extends Room {
       if (owner?.master === null) claims.push({ owner: a.owner, x: a.x, y: a.y, radius: a.radius, born: a.claim.born });
     }
     const held = landHeld(this.map, claims, this.elapsed);
+    this.landTiles = new Map([...held].map(([owner, h]) => [owner, h.tiles]));
     const income = new Map<string, { lines: string[]; letters: { letter: string; rate: number; from: string }[]; at: Point }>();
     const pay = (owner: string, letter: string, rate: number, from: string, line: string, at: Point) => {
       const i = income.get(owner) ?? income.set(owner, { lines: [], letters: [], at }).get(owner)!;

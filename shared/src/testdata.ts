@@ -13,3 +13,5 @@ export const demo = () =>
     degrees: read("operators.json").degrees,
   });
 export const rawProperties = () => read("properties.json");
+/** The starting-kit tables (data/kits.json), for tests only. */
+export const kitData = () => read("kits.json");

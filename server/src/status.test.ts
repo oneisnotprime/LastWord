@@ -16,7 +16,10 @@ const ticks = (room: WorldRoom, n: number, step = 0.1) => { for (let i = 0; i < 
 
 /** Two people a tile apart in the first city, with every letter and plenty of health. */
 async function twoPlayers(apart = 1) {
+  // A fixed map: on some random ones the first city boxes a frightened walker in.
+  WorldRoom.testSeed = 7;
   const room = (await colyseus.createRoom("world", {})) as unknown as WorldRoom;
+  WorldRoom.testSeed = null;
   const a: any = await colyseus.connectTo(room as never);
   const b: any = await colyseus.connectTo(room as never);
   const said = { a: [] as unknown[], b: [] as unknown[] };
@@ -40,7 +43,9 @@ it("FEAR makes those it frightens run from its maker and strike nobody", async (
   const { room, a, wa, wb, has } = await twoPlayers(2);
   wb.foe = a.sessionId; // B was attacking A
   const hp = wa.hp;
-  a.send("spell", "fear"); await wait();
+  a.send("spell", "fear");
+  // On a busy machine the spelling can land late: tick only once it has.
+  await until(() => has(wb, "fear"));
   ticks(room, 20);
   expect(has(wb, "fear")).toBe(true);
   expect(wb.player.status).toContain("fear");

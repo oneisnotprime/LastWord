@@ -37,6 +37,13 @@ Node process that owns the game state. One room per map instance (from milestone
   closes after `ROUND_END_SECONDS` (15; tests use 1). Clients reload into a new room.
 - For local testing only: `LETTERS=9` gives every player nine of each letter, `CROWD=1` spawns
   everyone in one city, `SEED_THINGS=5000` scatters that many objects at start.
+- Starting kits: `onJoin` deals kits (`kits` message; the client sends `ready` once listening and
+  gets them again); `kit` picks, else the best (`bestKit`) after KIT_SECONDS; bots pick at once.
+  `chooseKit` sets `Walker.kit`: the job's effect in `rebuild`, its stats in `helpOf`, hunting
+  tools and `sources`, its rules in `rulesAt`; the hand; the building through `make`. Legendary
+  progress is counted in `beat` (`legendProgress`, `deeds`), unsealed with a `legend` call to
+  everyone, `unseal` pays the "letters" condition, and `spellWord` waives its letters once.
+  Room tests run with kits off (`WorldRoom.kits`, off under Vitest) unless they turn them on.
 - `loadtest/bots.ts` modes: `wander`, `crowd`, `play` (gathers, spells and fights).
 - Only the room's first client's options are read (`onCreate`: `bots`, `difficulty`, `mode`);
   later joiners' are ignored. A message with no handler disconnects the sender.

@@ -2,6 +2,7 @@ import type { Threat } from "./threats.js";
 import { Client } from "@colyseus/sdk";
 import type { Letters, LoadoutDetail, Offer, Sensed } from "@lastword/shared";
 import { chooseGame } from "./start.js";
+import type { KitOffer, KitState, LegendCall } from "./kits.js";
 
 export interface Connection {
   sessionId: string;
@@ -30,6 +31,10 @@ export interface Connection {
   /** Leaves the room for good (a new round elsewhere). */
   leave(): void;
   /** Trading and the like: "market" { give, get }, "hire" {}, "transmute" { give }, "offer" { to, give, get }, "answer" { id, accept }. */
+  /** Pick a starting kit by its index among those offered. */
+  pickKit(index: number): void;
+  /** Pay a sealed legendary's letters to unseal it. */
+  unseal(): void;
   act(type: "market" | "hire" | "transmute" | "offer" | "answer", payload: unknown): void;
 }
 
@@ -72,6 +77,11 @@ export interface Handlers {
   offers(list: Offer[]): void;
   /** What is coming for us, seen or not (incoming-threat arrows). */
   threats(list: Threat[]): void;
+  /** Starting kits to pick from, and your kit as it stands. */
+  kits(offer: KitOffer): void;
+  kit(state: KitState): void;
+  /** A legendary unsealed or spelled somewhere on the map. */
+  legend(call: LegendCall): void;
 }
 
 /** One blow, as the server tells it (server `Hit`). */
@@ -114,9 +124,14 @@ export async function connect(on: Handlers): Promise<Connection> {
   room.onMessage("hits", on.hits);
   room.onMessage("offers", on.offers);
   room.onMessage("threats", on.threats);
+  room.onMessage("kits", on.kits);
+  room.onMessage("kit", on.kit);
+  room.onMessage("legend", on.legend);
   room.onLeave(on.closed);
   room.onDrop(on.dropped);
-  room.onReconnect(on.reconnected);
+  // Listening now: the server sends the kits to pick from (or your kit), here and after a reconnect.
+  room.onReconnect(() => { room.send("ready"); on.reconnected(); });
+  room.send("ready");
   await new Promise<void>((done) => {
     const ready = () => room.state?.seed && room.state.players?.get(room.sessionId);
     if (ready()) return done();
@@ -137,6 +152,8 @@ export async function connect(on: Handlers): Promise<Connection> {
     attack: (target) => room.send("attack", target),
     pick: (what) => room.send("pick", what),
     act: (type, payload) => room.send(type, payload),
+    pickKit: (index) => room.send("kit", index),
+    unseal: () => room.send("unseal"),
     leave: () => { room.onLeave.clear?.(); void room.leave(true); },
     describe: (text, target, gear) => room.send("describe", { text, target, ...(gear !== undefined ? { gear } : {}) }),
   };
