@@ -73,6 +73,8 @@ by how many words set them (minds and upkeep took `sentient`, `intelligence`, `f
 - [ ] Letter economy part 3: land held (L), roads and routes (R), citizens in cities you control
       (S), hired NPC labour (N), Z from roaming bosses and transmuting commons; a real trading
       interface for markets and players
+- [ ] Replace the live "xxx" shortcut (999 of every letter, `CHEAT` in `WorldRoom.ts`) with a
+      real debug server (its own app or a password), then take the shortcut off the live game.
 
 - [ ] Dictionary themes: broad concepts of a few hundred words each, built through shared
       systems. Start with materials, food, professions, plants and law.

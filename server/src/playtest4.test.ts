@@ -125,6 +125,14 @@ it("with DEBUG=1 (local development) spelling DEBUG fills every letter instead",
   expect(of("spelled").at(-1)).toMatch(/^DEBUG/);
 });
 
+it("xxx (playtest shortcut, live for now) fills every letter, holding none of them", async () => {
+  const { c, w, of } = await player({});
+  c.send("spell", " XXX "); await wait();
+  expect(w.letters.x).toBe(999);
+  expect(w.letters.q).toBe(999);
+  expect(of("spelled").at(-1)).toMatch(/^DEBUG/);
+});
+
 it("blows are sent as compact hits to whoever can see them, merged per attacker and target", async () => {
   const { room, r, c, w, of } = await player();
   const pig = r.addCreature({ spelled: { noun: "pig" }, phrase: "pig", vehicle: false, integrity: null }, "-", w.player.x + 0.8, w.player.y);
