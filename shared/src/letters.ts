@@ -114,19 +114,44 @@ export class Deposits {
     this.sites.set(site.id, { ...site, max: site.max ?? site.stock, at: now });
   }
 
-  private patch(x: number, y: number, now: number) {
+  /**
+   * A patch brought up to date. `growth` scales how fast it grows back (RAIN 1.5, DROUGHT 0.1,
+   * BLIGHT 0: the place's rules, shared `growthOf`); stock above the usual (after a HARVEST) is
+   * kept until it is gathered down.
+   */
+  private patch(x: number, y: number, now: number, growth = 1) {
     const key = Math.floor(y / PATCH_TILES) * 4096 + Math.floor(x / PATCH_TILES);
     let p = this.patches.get(key);
     if (!p) this.patches.set(key, (p = { stock: KINDS.map((k) => DEPOSITS[k].stock), at: now }));
     const since = now - p.at;
     if (since > 0) {
       KINDS.forEach((k, i) => {
-        const d = DEPOSITS[k];
-        if (d.regen > 0) p!.stock[i] = Math.min(d.stock, p!.stock[i]! + since / d.regen);
+        const d = DEPOSITS[k], have = p!.stock[i]!;
+        if (d.regen > 0 && have < d.stock) p!.stock[i] = Math.min(d.stock, have + (since * Math.max(0, growth)) / d.regen);
       });
       p.at = now;
     }
     return p;
+  }
+
+  /**
+   * Multiplies the deposits of every patch within `radius` tiles of a point by `factor`, as an
+   * area with `deposit_factor` begins: 0 strips the ground (BLIGHT), 3 fills it to three times its
+   * usual stock (HARVEST). Returns how many patches it touched.
+   */
+  scale(x: number, y: number, radius: number, now: number, factor: number): number {
+    const r = Math.max(0, radius), n = this.map.size;
+    let touched = 0;
+    for (let py = Math.max(0, Math.floor((y - r) / PATCH_TILES)); py <= Math.min(n - 1, y + r) / PATCH_TILES; py++) {
+      for (let px = Math.max(0, Math.floor((x - r) / PATCH_TILES)); px <= Math.min(n - 1, x + r) / PATCH_TILES; px++) {
+        const cx = (px + 0.5) * PATCH_TILES, cy = (py + 0.5) * PATCH_TILES;
+        if (Math.hypot(cx - x, cy - y) > r + PATCH_TILES / 2) continue;
+        const p = this.patch(cx, cy, now);
+        KINDS.forEach((k, i) => { p.stock[i] = factor === 0 ? 0 : Math.max(p.stock[i]!, DEPOSITS[k].stock * factor); });
+        touched++;
+      }
+    }
+    return touched;
   }
 
   private grow(s: Site, now: number) {
@@ -147,13 +172,13 @@ export class Deposits {
   }
 
   /** Whole letters to be had at a point right now, by letter. */
-  available(x: number, y: number, now: number): Letters {
+  available(x: number, y: number, now: number, growth = 1): Letters {
     const out: Letters = {};
     const site = this.siteAt(x, y, now);
     if (site) out[site.letter] = Math.floor(site.stock);
     const here = depositsAt(this.map, x, y);
     if (!here.length) return out;
-    const p = this.patch(x, y, now);
+    const p = this.patch(x, y, now, growth);
     for (const k of here) {
       const n = Math.floor(p.stock[KINDS.indexOf(k)]!);
       if (n > 0) out[DEPOSITS[k].letter] = (out[DEPOSITS[k].letter] ?? 0) + n;
@@ -168,7 +193,7 @@ export class Deposits {
   }
 
   /** One gathering action at a point: a site in reach first, else a deposit here, weighted, that has stock left. */
-  gather(x: number, y: number, now: number, rng: Rng): Gathered {
+  gather(x: number, y: number, now: number, rng: Rng, growth = 1): Gathered {
     const site = this.siteAt(x, y, now);
     if (site) {
       site.stock -= 1;
@@ -178,7 +203,7 @@ export class Deposits {
     }
     const here = depositsAt(this.map, x, y);
     if (!here.length) return { letter: "", why: "Nothing to gather here" };
-    const p = this.patch(x, y, now);
+    const p = this.patch(x, y, now, growth);
     const open = here.filter((k) => p.stock[KINDS.indexOf(k)]! >= 1);
     if (!open.length) return { letter: "", why: "This ground is picked clean for now: move on" };
     const total = open.reduce((n, k) => n + DEPOSITS[k].weight, 0);
@@ -234,6 +259,11 @@ export function pickAnimal(rng: Rng): string {
  */
 export const MARKET = { ratio: 3, range: 4, stock: 8, regen: 20, refuses: "jqxz" };
 
+/** Letters a market asks for one where its place's rules (shared `tradeRateOf`) scale the price: never under 1. */
+export function marketRatio(rate: number): number {
+  return Math.max(1, Math.round(MARKET.ratio * (Number.isFinite(rate) ? rate : 1)));
+}
+
 /** Reads "trade eee for o": what is given and what is wanted. Null if the text is not a trade. */
 export function readTrade(text: string): { give: string; get: string } | null {
   const m = /^\s*trade\s+([a-z]+)\s+for\s+([a-z]+)\s*$/i.exec(text);
@@ -241,9 +271,9 @@ export function readTrade(text: string): { give: string; get: string } | null {
 }
 
 /** Why a market trade cannot happen, or null if it can (letters held are checked by the caller). */
-export function tradeProblem(give: string, get: string): string | null {
-  if (give.length !== get.length * MARKET.ratio) {
-    return `The market takes ${MARKET.ratio} letters for each one: ${get.length * MARKET.ratio} for ${get.toUpperCase()}`;
+export function tradeProblem(give: string, get: string, ratio: number = MARKET.ratio): string | null {
+  if (give.length !== get.length * ratio) {
+    return `The market takes ${ratio} letter${ratio === 1 ? "" : "s"} for each one: ${get.length * ratio} for ${get.toUpperCase()}`;
   }
   const rare = [...get].filter((ch) => MARKET.refuses.includes(ch));
   if (rare.length) return `No market sells ${[...new Set(rare)].join(" ").toUpperCase()}`;

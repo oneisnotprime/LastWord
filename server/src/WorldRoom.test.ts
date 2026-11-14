@@ -387,7 +387,7 @@ it("casts verbs, steals with THEFT once stealthy enough, and changes the sky", a
   expect(last("b", "notice")).toBe("Your CHEST was stolen");
   a.send("spell", "siege");
   await wait();
-  expect(last("a", "refused")).toBe("SIEGE does nothing yet");
+  expect(last("a", "refused")).toBe("Aim SIEGE: spell it, then click where it should go");
 
   // Sky: MOON brings night and halves sight; RAIN cuts it further; SUN brings day and clears the rain.
   room.update(200); // let SNEAK wear off
@@ -663,7 +663,7 @@ it("events act through their properties: murder, raid, repair, rescue, trade, re
   wa.player.x = c.x - 20; // out of the fire
   a.send("pick", null);
   a.send("spell", "war"); await wait(); // a region event needs no aim
-  expect(said("a")).toBe("WAR for 30 minutes");
+  expect(said("a")).toBe("WAR for 10 minutes: 6 SOLDIERS rally to you");
   b.send("spell", "wolf"); await wait();
   const wolfId = [...walkers].find(([, w]) => w.player.name === "wolf")![0];
   walkers.get(wolfId).player.x = wa.player.x; walkers.get(wolfId).player.y = wa.player.y;
@@ -700,7 +700,7 @@ it("fire spreads over forest, not stone, and rain or a flood puts it out", async
 
   // RAIN puts it out, and no new fire takes hold while it rains.
   a.send("spell", "rain"); await wait();
-  expect(said.at(-1)).toBe("RAIN for 10 minutes; 1 fire put out");
+  expect(said.at(-1)).toBe("RAIN for 10 minutes; 1 area ended");
   expect(fire()).toBeUndefined();
   wa.player.x = c.x + 0.5; // back in reach of the picked spot
   a.send("spell", "fire"); await wait();
@@ -717,7 +717,7 @@ it("fire spreads over forest, not stone, and rain or a flood puts it out", async
   for (let i = 0; i < 600; i++) room.update(0.1);
   expect(fire()!.radius).toBeGreaterThan(3);
   await (room as any).waitForNextPatch();
-  expect([...a.state.zones.values()][0].radius).toBeGreaterThan(3);
+  expect([...a.state.zones.values()].find((z: any) => z.word === "fire").radius).toBeGreaterThan(3);
 
   // FLOOD puts it out too.
   a.send("spell", "flood"); await wait(); // terrain now: it lays water, and as a counter to FIRE ends it

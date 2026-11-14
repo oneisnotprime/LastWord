@@ -33,6 +33,8 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
 - The spell window is only the input: a letter you do not hold (counting copies; for
   `give name abc` only the given letters) is not added, and the window shakes red.
 - Letter tiles: one per copy, or one with a count above `COPIES_SHOWN` (4).
+- `src/events.ts` event chips at the top middle (`#events`): weather, night and zones you stand in,
+  with time left; a click opens `#eventcard` (shared `eventCard`: what it changes, who, what ends it).
 - `src/minimap.ts` the minimap, only while the loadout lists `senses` (a MAP); `sensed` fills it.
 - Opening or closing the spell window, and window blur, reset Phaser's keys: a key released
   while the window had focus was never seen, and the player walked on or stopped answering.

@@ -40,7 +40,7 @@
 Properties set by at least 20 words in `data/demo.json` that nothing in `shared/src` or
 `server/src` reads (searched for the id as a string, plus the `dmg_`, `res_`, `immune_`,
 `inflict_` and `produce_` prefixes). Not counted: `counters` (read as `set.counters`), `stealth`
-and `security` (read through THEFT's `contest_with` and `contested_by`). 71 properties,
+and `security` (read through THEFT's `contest_with` and `contested_by`). 68 properties,
 by how many words set them (minds and upkeep took `sentient`, `intelligence`, `food_need`,
 `authority`, `recruit_rate`, `command_limit`, `food_output`, `nutrition`, `upkeep_power`,
 `upkeep_fuel` and `aggression` off this list):
@@ -49,14 +49,14 @@ by how many words set them (minds and upkeep took `sentient`, `intelligence`, `f
   `diet` 108, `reputation` 107, `hardness` 102, `enterable` 102, `read_properties` 102,
   `occupants` 93, `claim_radius` 90, `storage_letters` 86, `labor` 86, `alarm` 85,
   `bind_penalty` 80, `trade_bonus` 77, `map_reveal` 77, `binds` 76, `beauty` 73, `blocks` 72,
-  `movement_cost` 71, `cover` 69, `storage_objects` 68, `needs_foundation` 61, `tax_rate` 60,
-  `lockable` 59, `law` 55, `craft_slots` 53, `density` 53, `shape` 49, `targets` 48, `state` 48,
+  `movement_cost` 71, `cover` 69, `storage_objects` 68, `needs_foundation` 61,
+  `lockable` 59, `craft_slots` 53, `density` 53, `shape` 49, `targets` 48, `state` 48,
   `placeable_on` 47, `build_speed` 47, `read_inventory` 47, `survives_death` 46,
   `grants_adjective_slots` 43, `detect_letters` 43, `grants_slots_to` 41, `seats` 39, `odor` 38,
   `color` 38, `attack_area` 37, `self_propelled` 36, `depth` 36, `camouflage` 34, `moisture` 34,
   `carry_capacity` 32, `temperature_delta` 32, `prevents_death` 31, `fertility` 30,
   `detect_stealth` 30, `container_slots` 29, `terrain_ignored` 28, `knockback` 28, `negates` 27,
-  `water_output` 26, `copies` 24, `harvest_bonus` 23, `brittleness` 23, `reproduction` 23,
+  `water_output` 26, `copies` 24, `brittleness` 23, `reproduction` 23,
   `locks` 23, `conductivity` 22, `harvest_sources` 22, `teleport_range` 22, `burn_time` 21,
   `tamable` 20, `growth_time` 20, `elevation` 20
 
@@ -289,7 +289,7 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
       ride are mounts instead; they outlive their master, ownerless
 - [x] Events act through their properties: MURDER, RAID, REPAIR, RESCUE, TRADE, REVOLT, AMBUSH,
       and areas that damage or turn hostile (FIRE, WAR, EARTHQUAKE, FAMINE); WAR triples K
-- [ ] SIEGE does nothing yet (food upkeep exists now; cutting supply off is the next step)
+- [x] SIEGE: the besieged cannot trade or gather, and soldiers rally to the besieger
 - [x] Right-click picks out a target or marks a spot without attacking; targeted area events
       (FIRE) must be aimed and in reach; region events (WAR, EARTHQUAKE, FAMINE) cover the speller's
       surroundings
@@ -346,7 +346,15 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
       damage against the 100 integrity of a human
 - [ ] Weather and night cover the whole map; region-sized weather and per-tile quantities
       (temperature, moisture, light) are not built
-- [ ] Sky and weather change only sight and speed so far; their other effects (wetness, growth,
+- [x] Places (shared `place.ts`): any area's `produce_*` and `harvest_bonus` operations act on
+      letters earned inside (gathered, produced, kills, deeds, trades), plus `growth`,
+      `deposit_factor`, `tax_rate`, `lode`, `trade_rate`, `law` and `summons`; 25 concepts built on
+      them (README "Areas, places and concepts"). WAR's K ×3 is now one of these
+- [x] Event chips at the top middle: weather, night and every zone you stand in, with time left;
+      a click shows what it changes (shared `eventCard`) and the words that end it
+- [ ] Places still to do: `tax_rate` and `law` on an object's claim; `law` does not stop an
+      area's own damage; bots do not use the new concept words on purpose
+- [ ] Sky and weather change sight, speed, growth and letter yields so far; their other effects (wetness, growth,
       crop output) wait on the tile systems
 - [x] Field words (120: LOVE, FEAR, HOPE, CHAOS, DISEASE, HEAVEN, PLANET, GALAXY...) are auras
       that follow their maker, fields where aimed, or conditions over a region or the whole map;

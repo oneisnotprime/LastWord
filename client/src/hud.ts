@@ -467,15 +467,6 @@ export class Hud {
       </div>`;
   }
 
-  /** The paper banner naming the fields over the whole map: HEAVEN, LOVE. */
-  overMap(words: string[]) {
-    const text = words.map((w) => w.toUpperCase()).join(" · ");
-    const el = $("overmap");
-    if (el.dataset.text === text) return;
-    el.dataset.text = text;
-    el.innerHTML = text ? `<small>over the map</small>${text}` : "";
-    el.className = text ? "show" : "";
-  }
 
   /** What you can do where you stand, over the letters ("G: dig the cache"), or nothing. */
   prompt(key: string, text: string) {

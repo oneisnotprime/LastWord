@@ -51,6 +51,12 @@ server and the client import this, so anything here must give the same answer on
 - `upkeep.ts` food, fuel and power: `needs`, `outputs`, `draw`, `supply`, `groundFood`,
   `carcassFood` (what a hunted body feeds, by its mass);
   `startingSupply`: a newly made machine brings `STARTING_SUPPLY_MINUTES` (30) of what it draws.
+- `place.ts` what an area does to letters and acts (`placeRules`): yields from `produce_*` and
+  `harvest_bonus` ops, `growth`, `deposit_factor`, `tax_rate`, `lode`, `trade_rate`, `law`; `harvest`
+  applies them to letters earned; `rulesText` says it in plain lines. `Deposits.scale` and the
+  `growth` argument of `gather` act on the ground; `marketRatio` turns `trade_rate` into a price.
+- `inspect.ts` `eventCard` and `countersOf`: what an event, field or weather in force does, and the
+  words that end it (event chips).
 - `inspect.ts` cards telling what something is (spell preview, right-click inspect): `inspectText`,
   `cardOf`, `keyStats`, `behaviours`; `becomes` (creature, worn, terrain or ground: the rule the
   server's `make` uses) and `aimOf` (whether a spelling is clicked onto someone, anywhere, or neither).

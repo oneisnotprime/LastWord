@@ -1,5 +1,5 @@
 {
- "count": 351,
+ "count": 359,
  "groups": {
   "physical": 41,
   "mobility": 25,
@@ -7,13 +7,13 @@
   "defence": 51,
   "perception": 14,
   "life": 29,
-  "economy": 46,
+  "economy": 51,
   "spatial": 19,
   "social": 12,
   "slots": 9,
   "meta": 16,
   "field": 14,
-  "event": 10,
+  "event": 13,
   "effect": 8
  },
  "damage_types": [
@@ -1936,6 +1936,43 @@
    "default": 1
   },
   {
+   "id": "deposit_factor",
+   "group": "economy",
+   "type": "num",
+   "desc": "ground deposits in its area are multiplied by this as it begins (0 strips them)",
+   "unit": "x",
+   "default": 1
+  },
+  {
+   "id": "lode",
+   "group": "economy",
+   "type": "tags",
+   "desc": "letters gathering inside its area turns up",
+   "default": []
+  },
+  {
+   "id": "lode_share",
+   "group": "economy",
+   "type": "frac",
+   "desc": "chance a gathering inside its area finds the lode instead",
+   "default": 0
+  },
+  {
+   "id": "lode_stock",
+   "group": "economy",
+   "type": "num",
+   "desc": "lode letters it holds in all (0 = endless while it lasts)",
+   "default": 0
+  },
+  {
+   "id": "trade_rate",
+   "group": "economy",
+   "type": "num",
+   "desc": "markets inside its area ask this times their usual letters for one",
+   "unit": "x",
+   "default": 1
+  },
+  {
    "id": "harvest_sources",
    "group": "economy",
    "type": "tags",
@@ -2286,14 +2323,14 @@
    "id": "tax_rate",
    "group": "social",
    "type": "frac",
-   "desc": "share of NPC letter income it collects",
+   "desc": "share of letters others earn inside its area that goes to its maker",
    "default": 0
   },
   {
    "id": "law",
    "group": "social",
    "type": "tags",
-   "desc": "acts it forbids inside its claim",
+   "desc": "acts it forbids inside its area (attack, gather, spell, trade, theft)",
    "default": []
   },
   {
@@ -2609,7 +2646,7 @@
    "id": "growth",
    "group": "field",
    "type": "num",
-   "desc": "multiplier on flora and creature growth",
+   "desc": "multiplier on flora and creature growth, and on how fast picked ground grows back",
    "unit": "x",
    "default": 1
   },
@@ -2728,6 +2765,27 @@
    "desc": "distance the target is carried toward the speller",
    "unit": "m",
    "default": 0
+  },
+  {
+   "id": "summons",
+   "group": "event",
+   "type": "text",
+   "desc": "creature that appears in its area as it begins",
+   "default": ""
+  },
+  {
+   "id": "summon_count",
+   "group": "event",
+   "type": "num",
+   "desc": "how many it summons",
+   "default": 0
+  },
+  {
+   "id": "summon_owned",
+   "group": "event",
+   "type": "bool",
+   "desc": "what it summons follows its maker instead of running wild",
+   "default": false
   },
   {
    "id": "cast_time",

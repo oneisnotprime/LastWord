@@ -1,7 +1,7 @@
 import { Room, type Client } from "colyseus";
 import { StateView } from "@colyseus/schema";
 import {
-  addLetters, afflict, aggressive, clearLine, courageOf, pluralize, auras, authorityOf, chooseTarget, commandLimit, draw, groundFood, hasAny, ignoresOrder, moraleAim, moraleGoal, needs, nextMorale, noStores, outputs, recruitRate, rerouteSeconds, startingSupply, becomes, retreats, routed, supply, theftResistance, HUNGER_LOYALTY, NORMAL, STARTING_STORES, STARVING, SUPPLIES, bodyFlags, cure, useObject, findPath, hampered, inflicts, statusDamage, statusEffects, tickStatuses, wake, GATHER_SECONDS, GATHER_REASONS, cachePrize, carcassFood, Deposits, destroyLetters, killLetters, mainland, MARKET, pickAnimal, placeSources, readTrade, regionOf, RUIN_INTEGRITY, CACHE_X, SITE_RADIUS, spawnPoint, starterHand, TEMPLE_Q, tradeProblem, generateMap, GIVE_RANGE, missing, parsePhrase, applyAdjectives, cannotCarry, improvisable, readDescription, production, resolveSpelled, SEPARATE_UP_TO, nearestWalkable, openGround, randomWalkable, resolve, Tile, tileAt, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit, cannotRide, claimOf, senseOf, combineSenses, type Sense, type Sensed,
+  addLetters, afflict, placeRules, harvest, growthOf, tradeRateOf, marketRatio, type PlaceRules, aggressive, clearLine, courageOf, pluralize, auras, authorityOf, chooseTarget, commandLimit, draw, groundFood, hasAny, ignoresOrder, moraleAim, moraleGoal, needs, nextMorale, noStores, outputs, recruitRate, rerouteSeconds, startingSupply, becomes, retreats, routed, supply, theftResistance, HUNGER_LOYALTY, NORMAL, STARTING_STORES, STARVING, SUPPLIES, bodyFlags, cure, useObject, findPath, hampered, inflicts, statusDamage, statusEffects, tickStatuses, wake, GATHER_SECONDS, GATHER_REASONS, cachePrize, carcassFood, Deposits, destroyLetters, killLetters, mainland, MARKET, pickAnimal, placeSources, readTrade, regionOf, RUIN_INTEGRITY, CACHE_X, SITE_RADIUS, spawnPoint, starterHand, TEMPLE_Q, tradeProblem, generateMap, GIVE_RANGE, missing, parsePhrase, applyAdjectives, cannotCarry, improvisable, readDescription, production, resolveSpelled, SEPARATE_UP_TO, nearestWalkable, openGround, randomWalkable, resolve, Tile, tileAt, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit, cannotRide, claimOf, senseOf, combineSenses, type Sense, type Sensed,
   type Affliction, type Candidate, type Dictionary, type Stores, type Supply, type Entity, type Hampered, type Status, type Stats, type Letters, type LoadoutDetail, type Op, type Phrase, type Point, type Spelled, type Value, type WordDef, type WorldMap,
 } from "@lastword/shared";
 import { affords, botSettings, chooseWord, held, wordBook, type BotWord, type Difficulty, type Use } from "./bots.js";
@@ -54,8 +54,10 @@ interface Area {
   cooldown: number;
   /** Hurts its own maker and their creatures too. */
   friendlyFire: boolean;
-  /** Multiplier on the K a kill inside it gives. */
-  killBonus: number;
+  /** What it does to letters earned and acts done inside it (shared `placeRules`), or null. */
+  rules: PlaceRules | null;
+  /** Lode letters it has left to give (Infinity: endless while it lasts). */
+  lodeLeft: number;
   /** Tiles a minute it grows over ground that burns. */
   spread: number;
   /** What it does to bodies inside it (an aura or condition), or null. */
@@ -88,11 +90,11 @@ interface Area {
 }
 
 /** What areas start with before a word's own properties say otherwise. */
-const AREA_DEFAULTS = { inflicts: [] as [Status, number][], hostile: false, contagion: 0, cures: [] as string[], pulsed: -Infinity, heals: 0 };
+const AREA_DEFAULTS = { inflicts: [] as [Status, number][], hostile: false, contagion: 0, cures: [] as string[], pulsed: -Infinity, heals: 0, rules: null as PlaceRules | null, lodeLeft: 0 };
 
 /** True if an area would act on anything: damage, effects, statuses, hostility, cures or healing. */
 function acts(a: Area): boolean {
-  return !!(a.attack || a.effect || a.inflicts.length || a.hostile || a.cures.length || a.heals > 0);
+  return !!(a.attack || a.effect || a.inflicts.length || a.hostile || a.cures.length || a.heals > 0 || a.rules);
 }
 
 /** Where something that radiates is: carried by a walker, or lying on the ground as a thing. */
@@ -343,6 +345,12 @@ export class WorldRoom extends Room {
   private areas = new Map<string, Area>();
   /** The weather in force over the whole map, if any. */
   private weather: Effect | null = null;
+  /** What the weather does to letters and acts everywhere (MONSOON: O ×3), or null. */
+  private weatherRules: PlaceRules | null = null;
+  /** Room time the daylight a sky word set runs out and what it was before, or null if it lasts. */
+  private daylightEnds: { at: number; back: string } | null = null;
+  /** People whose letters changed this tick and are told at its end. */
+  private lettersChanged = new Set<string>();
   /** Areas each radiating thing gives off, by what radiates: a Gear, or a walker's body. */
   private radiating = new Map<object, Radiating>();
   /** What radiates from each walker or thing, by its id. */
@@ -600,6 +608,8 @@ export class WorldRoom extends Room {
     }
     const deal = readTrade(text);
     if (deal) return this.trade(id, walker, deal.give, deal.get);
+    const hushed = this.lawAgainst("spell", id, walker);
+    if (hushed) throw new Error(`${hushed}: no spelling here`);
     const phrase = parsePhrase(this.dict, text);
     const lacking = missing(walker.letters, phrase.letters);
     if (lacking) throw new Error(`You need ${lacking.toUpperCase().split("").join(" ")}`);
@@ -2043,9 +2053,15 @@ export class WorldRoom extends Room {
       return `Ambushed ${victim.player.name}`;
     }
     const minutes = s.num("event_duration");
-    const killBonus = this.dict.word(phrase.noun)!.ops.find(([p, op]) => p === "produce_K" && op === "mul")?.[2] ?? 1;
+    const def = this.dict.word(phrase.noun)!;
     const given = inflicts(s), cures = s.tags("effect_status");
-    if (!hasDamage(s) && killBonus === 1 && !given.length && !s.flag("sets_hostile")) throw new Error(`${word} does nothing yet`);
+    const rules = placeRules(def, s);
+    // What it does to bodies inside while it lasts: the word's own operations and flags.
+    const bodyOps = def.ops.filter(([p]) => !/^produce_[A-Z]$/.test(p) && p !== "harvest_bonus");
+    const flags = bodyFlags(def.set);
+    const effect = bodyOps.length || Object.keys(flags).length ? { word: phrase.noun, set: flags, ops: bodyOps, until: Infinity } : null;
+    const summons = this.summonsOf(s), tile = TILE_TYPES[String(s.get("tile_type"))];
+    if (!hasDamage(s) && !rules && !effect && !given.length && !s.flag("sets_hostile") && !summons && tile === undefined) throw new Error(`${word} does nothing yet`);
     // A region event covers the speller's surroundings. Anything else lands where it was aimed:
     // a picked spot, else the picked or attacked target. It must be in reach.
     const regional = s.get("placement") === "region" || s.get("placement") === "map";
@@ -2053,34 +2069,95 @@ export class WorldRoom extends Room {
     if (!regional && !aimed) throw new Error(`Aim ${word}: spell it, then click where it should go`);
     if (!regional && !near(aimed!)) throw new Error(`Too far away for ${word}`);
     const at = regional ? walker.player : aimed!;
+    const whole = s.get("placement") === "map" || s.num("event_radius") === Infinity;
+    const radius = whole ? this.map.size * 2 : Math.max(1, s.num("event_radius") / TILE_METERS);
+    const lasts = Math.max(1, minutes * 60);
     const area: Area = {
       word: phrase.noun, owner: id, x: at.x, y: at.y,
-      radius: Math.max(1, s.num("event_radius") / TILE_METERS),
-      until: this.elapsed + Math.max(1, minutes * 60),
+      radius,
+      until: this.elapsed + lasts,
       attack: hasDamage(s) ? alwaysHits(s) : null,
       cooldown: 0,
       friendlyFire: s.flag("friendly_fire"),
-      killBonus,
       spread: s.num("spread_rate"),
-      effect: null,
-      targets: "all",
+      effect,
+      targets: String(s.get("field_targets")),
       follows: null,
       ...AREA_DEFAULTS,
       inflicts: given,
       hostile: s.flag("sets_hostile"),
       contagion: s.num("contagion"),
       cures,
-      baseRadius: Math.max(1, s.num("event_radius") / TILE_METERS),
-      lasts: Math.max(1, minutes * 60),
+      rules,
+      lodeLeft: rules ? this.lodeStock(rules) : 0,
+      baseRadius: radius,
+      lasts,
     };
     if (this.weather && this.countered(this.weather.word, area.word)) {
       throw new Error(`${word} cannot take hold: the ${this.weather.word} puts it out`);
     }
-    const key = `z${this.nextThing++}`;
-    this.areas.set(key, area);
-    this.state.zones.set(key, Object.assign(new Zone(), { word: area.word, x: area.x, y: area.y, radius: area.radius, owner: "", shelter: 0 }));
+    const key = this.addArea(area, true);
+    const began = this.begin(area, s);
     this.burn(key, area, 0);
-    return `${word} for ${minutes >= 1 ? `${minutes} minute${minutes === 1 ? "" : "s"}` : "a moment"}`;
+    const span = minutes >= 1 ? `${minutes} minute${minutes === 1 ? "" : "s"}` : "a moment";
+    return `${word} for ${span}${began ? `: ${began}` : ""}`;
+  }
+
+  /** What a word summons as its area begins (shared `summons`, `summon_count`), if the creature exists. */
+  private summonsOf(s: Stats): { word: string; count: number; owned: boolean } | null {
+    const word = String(s.get("summons")).toLowerCase(), count = Math.round(s.num("summon_count"));
+    const def = word ? this.dict.word(word) : undefined;
+    if (!def || def.role !== "noun" || !(count > 0) || !Number.isFinite(count)) return null;
+    return { word, count, owned: s.flag("summon_owned") };
+  }
+
+  private lodeStock(r: PlaceRules): number {
+    return r.lodeStock > 0 ? r.lodeStock : Infinity;
+  }
+
+  /**
+   * What happens once as an area begins, from its word's properties: deposits inside are
+   * multiplied (`deposit_factor`), creatures are summoned (`summons`), an event lays terrain
+   * (`tile_type` over `radius` tiles), and everyone else inside is told who brought it.
+   * Returns a short note of what it did.
+   */
+  private begin(a: Area, s: Stats): string {
+    const notes: string[] = [];
+    if (a.rules && a.rules.deposits !== 1) {
+      this.deposits.scale(a.x, a.y, Math.min(a.radius, this.map.size * 2), this.elapsed, a.rules.deposits);
+      notes.push(a.rules.deposits === 0 ? "the ground is stripped" : `the ground holds ×${+a.rules.deposits.toFixed(2)}`);
+    }
+    const summons = this.summonsOf(s);
+    if (summons) {
+      const spot = (i: number) => {
+        const t = (i / summons.count) * Math.PI * 2 + this.rng(), d = Math.min(a.radius * 0.6, 3 + this.rng() * 6);
+        return nearestWalkable(this.map, { x: a.x + Math.cos(t) * d, y: a.y + Math.sin(t) * d });
+      };
+      const separate = Math.min(summons.count, SEPARATE_UP_TO);
+      const each = summons.count > SEPARATE_UP_TO ? summons.count : 1;
+      const phrase = summons.word;
+      for (let i = 0; i < (each > 1 ? 1 : separate); i++) {
+        const p = spot(i);
+        const gear: Gear = { spelled: { noun: phrase, adjectives: [], ...(each > 1 ? { count: each } : {}) }, phrase, vehicle: false, integrity: null };
+        if (becomes(resolve(this.dict, phrase, [])) !== "creature") { this.addThing(gear, summons.owned ? a.owner : "", p.x, p.y); continue; }
+        this.addCreature(gear, summons.owned ? a.owner : "-", p.x, p.y, each);
+      }
+      if (summons.owned) this.command(a.owner);
+      notes.push(`${summons.count} ${(summons.count > 1 ? pluralize(phrase) : phrase).toUpperCase()} ${summons.owned ? "rally to you" : "appear"}`);
+    }
+    const tile = TILE_TYPES[String(s.get("tile_type"))];
+    if (tile !== undefined && s.num("radius") > 0 && this.dict.word(a.word)?.class === "event") {
+      this.reshape(a.x, a.y, s.num("radius"), tile);
+      notes.push(`the land turns to ${String(s.get("tile_type")).replaceAll("_", " ")}`);
+    }
+    // Everyone else it covers learns who brought it.
+    const maker = this.walkers.get(a.owner)?.player.name ?? "someone";
+    for (const [wid, w] of this.walkers) {
+      if (wid === a.owner || w.master !== null || Math.hypot(w.player.x - a.x, w.player.y - a.y) > a.radius) continue;
+      this.sendTo(wid, "notice", `${maker} brought ${a.word.toUpperCase()} here`);
+    }
+    this.refreshViews();
+    return notes.join(", ");
   }
 
   /** Adds what a word ended by countering to the message for it. */
@@ -2130,16 +2207,18 @@ export class WorldRoom extends Room {
       at = { x: target.x, y: target.y };
     }
     const area = this.fieldArea(phrase.noun, s, def, id, at, placement === "self" ? id : null);
+    if (area.rules) area.lodeLeft = this.lodeStock(area.rules);
     const rates = production(s);
-    if (!acts(area) && !Object.keys(rates).length) throw new Error(`${word} does nothing yet`);
+    if (!acts(area) && !Object.keys(rates).length && !this.summonsOf(s)) throw new Error(`${word} does nothing yet`);
     // Casting it again replaces your earlier one.
     for (const [k, a] of this.areas) if (a.owner === id && a.word === phrase.noun) { this.areas.delete(k); this.state.zones.delete(k); }
     const key = this.addArea(area, true);
     if (Object.keys(rates).length) this.producers.set(`field:${key}`, { owner: id, rates, built: {} });
     this.applyFields();
+    const began = this.begin(area, s);
     const minutes = s.num("field_duration") || s.num("persistence");
     const where = area.radius >= this.map.size * 2 ? "over the whole map" : area.follows ? "around you" : "where it fell";
-    return `${word} ${where}${area.lasts < Infinity ? ` for ${minutes} minute${minutes === 1 ? "" : "s"}` : ""}`;
+    return `${word} ${where}${area.lasts < Infinity ? ` for ${minutes} minute${minutes === 1 ? "" : "s"}` : ""}${began ? `: ${began}` : ""}`;
   }
 
   /**
@@ -2170,8 +2249,7 @@ export class WorldRoom extends Room {
       attack: hasDamage(s) ? alwaysHits(s) : null,
       cooldown: 0,
       friendlyFire: s.flag("friendly_fire"),
-      killBonus: 1,
-      spread: 0,
+            spread: 0,
       effect: ops.length || Object.keys(flags).length ? { word, set: flags, ops, until: Infinity } : null,
       targets: String(s.get("field_targets")),
       follows: whole ? null : follows,
@@ -2182,9 +2260,16 @@ export class WorldRoom extends Room {
       contagion: s.num("contagion"),
       cures: s.tags("effect_status"),
       heals: s.num("heals"),
+      rules: placeRules(def, s),
+      lodeLeft: 0,
       baseRadius: radius,
       lasts,
     };
+  }
+
+  /** When a zone ends on the round clock (0 if it lasts) and who made it, for the event chips. */
+  private zoneTime(a: Area): { until: number; by: string } {
+    return { until: Number.isFinite(a.until) ? Math.ceil(a.until) : 0, by: this.walkers.get(a.owner)?.player.name ?? "" };
   }
 
   /** Puts an area in the world; `shown` also sends it to clients as a zone. Returns its key. */
@@ -2195,6 +2280,7 @@ export class WorldRoom extends Room {
       this.state.zones.set(key, Object.assign(new Zone(), {
         word: area.word, x: area.x, y: area.y, radius: area.radius >= this.map.size * 2 ? 0 : area.radius,
         owner: area.claim ? area.owner : "", shelter: area.claim ? Math.round(area.claim.shelter * 100) : 0,
+        ...this.zoneTime(area),
       }));
     }
     this.fieldsDirty = true;
@@ -2215,6 +2301,7 @@ export class WorldRoom extends Room {
     const made: [Area, boolean][] = [];
     if (s.num("field_radius") > 0) {
       const area = this.fieldArea(spelled.noun, s, def, owner, at, follows);
+      if (area.rules) area.lodeLeft = this.lodeStock(area.rules);
       if (acts(area)) made.push([area, true]);
     }
     const claim = claimOf(s);
@@ -2223,16 +2310,14 @@ export class WorldRoom extends Room {
       const radius = Math.max(1, claim.radius);
       const ops: Op[] = [...this.dict.properties.keys()].filter((k) => k.startsWith("res_")).map((k) => [k, "add", claim.shelter]);
       made.push([{
-        word: spelled.noun, owner, x: at.x, y: at.y, radius, until: Infinity, attack: null, cooldown: 0, friendlyFire: false, killBonus: 1,
-        spread: 0, effect: { word: spelled.noun, set: {}, ops, until: Infinity }, targets: "owned", follows, ...AREA_DEFAULTS,
+        word: spelled.noun, owner, x: at.x, y: at.y, radius, until: Infinity, attack: null, cooldown: 0, friendlyFire: false,         spread: 0, effect: { word: spelled.noun, set: {}, ops, until: Infinity }, targets: "owned", follows, ...AREA_DEFAULTS,
         baseRadius: radius, lasts: Infinity, claim: { shelter: claim.shelter, security: claim.security, source: follows ? "" : holder },
       }, true]);
     }
     for (const aura of auras(s, sightM)) {
       const radius = Math.max(1, aura.radius / TILE_METERS);
       made.push([{
-        word: spelled.noun, owner, x: at.x, y: at.y, radius, until: Infinity, attack: null, cooldown: 0, friendlyFire: false, killBonus: 1,
-        spread: 0, effect: aura.set.night_vision || aura.ops.length ? { word: spelled.noun, set: aura.set, ops: aura.ops, until: Infinity } : null,
+        word: spelled.noun, owner, x: at.x, y: at.y, radius, until: Infinity, attack: null, cooldown: 0, friendlyFire: false,         spread: 0, effect: aura.set.night_vision || aura.ops.length ? { word: spelled.noun, set: aura.set, ops: aura.ops, until: Infinity } : null,
         targets: aura.targets, follows, ...AREA_DEFAULTS, heals: aura.heals, baseRadius: radius, lasts: Infinity,
       }, false]);
     }
@@ -2288,6 +2373,11 @@ export class WorldRoom extends Room {
   /** True if a field reaches a walker, by its targets and its position. */
   private reaches(a: Area, wid: string, w: Walker): boolean {
     if (Math.hypot(w.player.x - a.x, w.player.y - a.y) > a.radius) return false;
+    return this.aims(a, wid, w);
+  }
+
+  /** True if a field is meant for a walker (its `field_targets`), wherever they stand. */
+  private aims(a: Area, wid: string, w: Walker): boolean {
     if (a.claim?.source === wid) return false; // a claim's own walls take the blows
     const mine = wid === a.owner || w.master === a.owner;
     switch (a.targets) {
@@ -2335,7 +2425,7 @@ export class WorldRoom extends Room {
   private counter(word: string): number {
     let n = 0;
     for (const [key, a] of [...this.areas]) {
-      if (this.countered(word, a.word)) { this.areas.delete(key); this.state.zones.delete(key); n++; }
+      if (this.countered(word, a.word)) { this.areas.delete(key); this.state.zones.delete(key); this.producers.delete(`field:${key}`); this.fieldsDirty = true; n++; }
     }
     return n;
   }
@@ -2348,6 +2438,7 @@ export class WorldRoom extends Room {
     const leader = a.follows ? this.walkers.get(a.follows) : undefined;
     if (this.elapsed >= a.until || (a.follows && !leader)) {
       this.areas.delete(key);
+      if (a.effect) this.fieldsDirty = true;
       this.state.zones.delete(key);
       this.producers.delete(`field:${key}`);
       return;
@@ -2431,7 +2522,7 @@ export class WorldRoom extends Room {
     };
     const key = `z${this.nextThing++}`;
     this.areas.set(key, copy);
-    this.state.zones.set(key, Object.assign(new Zone(), { word: copy.word, x: copy.x, y: copy.y, radius: copy.radius, owner: "", shelter: 0 }));
+    this.state.zones.set(key, Object.assign(new Zone(), { word: copy.word, x: copy.x, y: copy.y, radius: copy.radius, owner: "", shelter: 0, ...this.zoneTime(copy) }));
     this.clients.find((c) => c.sessionId === hid)?.send("notice", `You caught ${a.word.toUpperCase()}`);
   }
 
@@ -2539,6 +2630,8 @@ export class WorldRoom extends Room {
   /** THEFT: the selected thing becomes yours if your stealth meets its security. */
   private steal(id: string, walker: Walker, phrase: Phrase): string {
     const word = phrase.noun.toUpperCase();
+    const guarded = this.lawAgainst("theft", id, walker);
+    if (guarded) throw new Error(`${guarded}: no stealing here`);
     const targetId = walker.picked ?? walker.foe ?? "";
     const creature = this.walkers.get(targetId);
     if (creature && creature.master !== null) return this.stealCreature(id, walker, phrase, targetId, creature);
@@ -2590,22 +2683,62 @@ export class WorldRoom extends Room {
     const clears = s.tags("clears_weather");
     const weather = String(s.get("sets_weather"));
     const minutes = s.num("field_duration") || s.num("persistence");
+    const by = this.walkers.get(id)?.player.name ?? "";
+    const ends = minutes > 0 && Number.isFinite(minutes) ? this.elapsed + minutes * 60 : Infinity;
+    const word = phrase.noun.toUpperCase();
     let did = "";
-    if (daylight !== "none") { this.state.daylight = daylight; did = `It is ${daylight}`; }
-    if (this.weather && clears.includes(this.weather.word)) { this.weather = null; this.state.weather = ""; did ||= "The sky clears"; }
+    if (daylight !== "none") {
+      // A sky word with a length (ECLIPSE, three minutes) gives the old daylight back after.
+      const back = this.daylightEnds?.back ?? this.state.daylight;
+      this.daylightEnds = ends < Infinity && daylight !== back ? { at: ends, back } : null;
+      this.state.daylight = daylight;
+      Object.assign(this.state, { daylightWord: phrase.noun, daylightBy: by, daylightUntil: this.daylightEnds ? Math.ceil(ends) : 0 });
+      did = `It is ${daylight}${this.daylightEnds ? ` for ${minutes} minute${minutes === 1 ? "" : "s"}` : ""}`;
+    }
+    if (this.weather && clears.includes(this.weather.word)) { this.clearWeather(); did ||= "The sky clears"; }
+    const rules = placeRules(def, s);
     if (weather) {
-      this.weather = { word: weather, set: {}, ops: def.ops, until: this.elapsed + (minutes > 0 ? minutes * 60 : Infinity) };
-      this.state.weather = weather;
-      did = `${name.toUpperCase()} for ${minutes} minutes`;
+      this.weather = { word: weather, set: {}, ops: def.ops, until: ends };
+      this.weatherRules = rules;
+      Object.assign(this.state, { weather, weatherWord: phrase.noun, weatherBy: by, weatherUntil: ends < Infinity ? Math.ceil(ends) : 0 });
+      did = `${word} for ${minutes} minutes`;
+      if (rules && rules.deposits !== 1) this.deposits.scale(this.map.size / 2, this.map.size / 2, this.map.size * 2, this.elapsed, rules.deposits);
+      // Weather that strikes (a STORM's lightning, HAIL) does so everywhere while it lasts.
+      if (hasDamage(s) || inflicts(s).length) {
+        const area = this.fieldArea(phrase.noun, s, def, id, this.walkers.get(id)?.player ?? { x: 0, y: 0 }, null);
+        Object.assign(area, { effect: null, rules: null, until: ends, x: this.map.size / 2, y: this.map.size / 2, radius: this.map.size * 2 });
+        this.addArea(area, false);
+      }
+    } else if (s.num("field_radius") > 0) {
+      // A sky word that also lays a field (DROUGHT over a region, an ECLIPSE's dread over the map).
+      const area = this.fieldArea(phrase.noun, s, def, id, this.walkers.get(id)?.player ?? { x: 0, y: 0 }, null);
+      if (area.rules) area.lodeLeft = this.lodeStock(area.rules);
+      area.attack = null; // a body in the sky (the SUN) does not strike the map
+      if (acts(area)) {
+        for (const [k, a] of this.areas) if (a.owner === id && a.word === phrase.noun) { this.areas.delete(k); this.state.zones.delete(k); }
+        this.addArea(area, true);
+        const began = this.begin(area, s);
+        if (!daylight || daylight === "none") did = `${did ? `${did}; ` : ""}${word} ${area.radius >= this.map.size * 2 ? "over the whole map" : "around you"}${began ? `: ${began}` : ""}`;
+        else if (began) did += `: ${began}`;
+      }
     }
     const out = this.counter(phrase.noun);
-    if (out) did = did ? `${did}; ${out} fire${out === 1 ? "" : "s"} put out` : `${out} fire${out === 1 ? "" : "s"} put out`;
-    if (!did) throw new Error(`${name.toUpperCase()} does nothing yet`);
+    if (out) did = did ? `${did}; ${out} area${out === 1 ? "" : "s"} ended` : `${out} area${out === 1 ? "" : "s"} ended`;
+    if (!did) throw new Error(`${word} does nothing yet`);
     const rates = production(s);
     if (Object.keys(rates).length) this.producers.set(`sky:${phrase.noun}:${id}`, { owner: id, rates, built: {} });
+    for (const [wid, w] of this.walkers) if (wid !== id && w.master === null) this.sendTo(wid, "notice", `${by || "Someone"} brought ${word}`);
     for (const w of this.walkers.values()) this.rebuild(w);
     this.refreshViews();
     return did;
+  }
+
+  private clearWeather() {
+    const was = this.state.weatherWord;
+    for (const [k, a] of this.areas) if (a.word === was && !this.state.zones.has(k)) this.areas.delete(k); // its strikes end with it
+    this.weather = null;
+    this.weatherRules = null;
+    Object.assign(this.state, { weather: "", weatherWord: "", weatherBy: "", weatherUntil: 0 });
   }
 
   /** Writes a struck unit's damage back to its walker; destroyed gear is gone for good. */
@@ -2642,21 +2775,20 @@ export class WorldRoom extends Room {
       this.award(payId, killer, loot, `${dead.player.name.toUpperCase()}'s letters`, dead.player);
       const kc = this.clients.find((c) => c.sessionId === payId);
       // K comes from kills of people, V from beating someone's creature, H from hunting the wild;
-      // a war over the place multiplies K.
-      const bonus = Math.max(1, ...[...this.areas.values()]
-        .filter((a) => Math.hypot(a.x - dead.player.x, a.y - dead.player.y) <= a.radius).map((a) => a.killBonus));
+      // the place's rules multiply them (a WAR over it: K ×3, a SAFARI: H ×3).
       const kind = dead.master === null ? "person" : dead.master === "-" ? "wild" : "owned";
-      const spoils = killLetters(kind, dead.unit.body.stats.flag("sentient")).replace("k", "k".repeat(Math.round(bonus)));
+      const base = killLetters(kind, dead.unit.body.stats.flag("sentient"));
+      let spoils = "";
       const name = dead.player.name.toUpperCase(), at = { x: dead.player.x, y: dead.player.y };
       // A hunted body feeds the hunter by its mass (shared `carcassFood`): a COW far more than a CHICKEN.
       const meat = dead.master !== null && !dead.unit.body.stats.flag("sentient") ? carcassFood(dead.unit.body.stats, dead.player.count) : 0;
       killer.stores.food += meat;
       const owner = kind === "owned" ? this.walkers.get(dead.master!)?.player.name : undefined;
-      for (const ch of new Set(spoils)) {
+      for (const ch of new Set(base)) {
         const why = ch === "h" ? `hunted ${name}${meat ? ` (+${meat} food)` : ""}`
           : ch === "v" ? `beat ${owner ? `${owner}'s ` : ""}${name}`
           : `kill ${name}`;
-        this.award(payId, killer, spoils.split("").filter((c) => c === ch).join(""), why, at);
+        spoils += this.earn(payId, base.split("").filter((c) => c === ch).join(""), at, why);
       }
       if (kind === "wild") kc?.send("letters", killer.letters);
       if (meat) this.toTell.add(payId); // the food store on the HUD
@@ -2730,10 +2862,11 @@ export class WorldRoom extends Room {
     const theirs = thing.owner !== "" && thing.owner !== payId;
     if (w) {
       // D for destroying; V for another player's thing; F if it burnt; X from a ruin.
-      const spoils = destroyLetters(theirs, attack.num("dmg_fire") > 0, gear.fixture === "ruin");
+      const base = destroyLetters(theirs, attack.num("dmg_fire") > 0, gear.fixture === "ruin");
+      let spoils = "";
       const name = gear.phrase.toUpperCase(), owner = theirs ? this.walkers.get(thing.owner)?.player.name : undefined;
       const reasons: Record<string, string> = { d: `broke ${name}`, v: `beat ${owner ? `${owner}'s ` : ""}${name}`, f: `burned ${name}`, x: `broke ${name}` };
-      for (const ch of new Set(spoils)) this.award(payId, w, spoils.split("").filter((c) => c === ch).join(""), reasons[ch] ?? name, thing);
+      for (const ch of new Set(base)) spoils += this.earn(payId, base.split("").filter((c) => c === ch).join(""), thing, reasons[ch] ?? name);
       client?.send("letters", w.letters);
       client?.send("notice", `${gear.phrase.toUpperCase()} destroyed: + ${spoils.toUpperCase()}`);
     }
@@ -2744,6 +2877,55 @@ export class WorldRoom extends Room {
       if (other.picked === id) other.picked = null;
     }
     this.refreshViews();
+  }
+
+  /**
+   * The rules in force at a point for one walker (shared `placeRules`): the weather's, and every
+   * area covering the point that reaches them (a field reaches only whom it targets).
+   */
+  private rulesAt(p: Point, wid?: string, w?: Walker): { rules: PlaceRules[]; areas: Area[] } {
+    const rules: PlaceRules[] = this.weatherRules ? [this.weatherRules] : [];
+    const areas: Area[] = [];
+    for (const a of this.areas.values()) {
+      if (!a.rules || Math.hypot(p.x - a.x, p.y - a.y) > a.radius) continue;
+      if (a.effect && wid && w && !this.aims(a, wid, w)) continue;
+      rules.push(a.rules);
+      areas.push(a);
+    }
+    return { rules, areas };
+  }
+
+  /** The first area whose law forbids an act to a walker where it stands, if any. */
+  private lawAgainst(act: string, wid: string, w: Walker, at: Point = w.player): string | null {
+    for (const a of this.rulesAt(at, wid, w).areas) if (a.rules!.law.includes(act)) return a.word.toUpperCase();
+    return null;
+  }
+
+  /**
+   * Letters a person earns at a place: the place's rules multiply them (DROUGHT: no A; WAR: K
+   * ×3; `bonus` is the earner's own `harvest_bonus` for gathering), then any area that taxes
+   * others there (`tax_rate`) takes its share for its maker. Returns what they kept.
+   */
+  private earn(id: string, letters: string, at: Point, why: string, bonus = 1): string {
+    const w = this.walkers.get(id);
+    if (!w || !letters) return "";
+    const { rules, areas } = this.rulesAt(at, id, w);
+    let got = harvest(letters, rules, this.rng, bonus);
+    for (const a of areas) {
+      if (!(a.rules!.tax > 0) || a.owner === id || w.master === a.owner) continue;
+      const taxer = this.walkers.get(a.owner);
+      if (!taxer) continue;
+      let kept = "", taken = "";
+      for (const ch of got) (this.rng() < a.rules!.tax ? (taken += ch) : (kept += ch));
+      if (!taken) continue;
+      got = kept;
+      this.award(a.owner, taxer, taken, `${a.word.toUpperCase()} on ${w.player.name}`, at);
+      this.lettersChanged.add(a.owner);
+      this.sendTo(id, "notice", `${a.word.toUpperCase()}: ${taken.toUpperCase()} went to ${taxer.player.name}`);
+    }
+    this.award(id, w, got, why, at);
+    this.lettersChanged.add(id);
+    return got;
   }
 
   /**
@@ -2814,8 +2996,6 @@ export class WorldRoom extends Room {
    * and takes on one more every MARKET.regen seconds.
    */
   private trade(id: string, walker: Walker, give: string, get: string): string {
-    const problem = tradeProblem(give, get);
-    if (problem) throw new Error(problem);
     let best: string | null = null, bestD = MARKET.range;
     for (const mid of this.markets.keys()) {
       const t = this.state.things.get(mid);
@@ -2823,6 +3003,12 @@ export class WorldRoom extends Room {
       if (d <= bestD) { best = mid; bestD = d; }
     }
     if (!best) throw new Error("Trade at a MARKET: there is one in the middle of every city");
+    // The market's place sets its price (INFLATION doubles it) and may shut it (an EMBARGO).
+    const market = this.state.things.get(best)!;
+    const closed = this.lawAgainst("trade", id, walker, market);
+    if (closed) throw new Error(`${closed}: this market is closed`);
+    const problem = tradeProblem(give, get, marketRatio(tradeRateOf(this.rulesAt(market, id, walker).rules)));
+    if (problem) throw new Error(problem);
     const m = this.markets.get(best)!;
     m.stock = Math.min(MARKET.stock, m.stock + (this.elapsed - m.at) / MARKET.regen);
     m.at = this.elapsed;
@@ -2832,9 +3018,9 @@ export class WorldRoom extends Room {
     m.stock -= get.length;
     spend(walker.letters, give);
     this.award(id, walker, get, "trade");
-    this.award(id, walker, "t".repeat(get.length), "trade");
+    const t = this.earn(id, "t".repeat(get.length), market, "trade");
     this.sendTo(id, "letters", walker.letters);
-    const done = `Traded ${give.toUpperCase()} for ${get.toUpperCase()}, and ${"T".repeat(get.length)} for the trade`;
+    const done = `Traded ${give.toUpperCase()} for ${get.toUpperCase()}${t ? `, and ${t.toUpperCase()} for the trade` : ""}`;
     this.sendTo(id, "spelled", done);
     return done;
   }
@@ -2907,8 +3093,13 @@ export class WorldRoom extends Room {
     this.elapsed += seconds;
     this.routesLeft = ROUTES_PER_TICK;
     if (this.weather && this.elapsed >= this.weather.until) {
-      this.weather = null;
-      this.state.weather = "";
+      this.clearWeather();
+      for (const w of this.walkers.values()) this.rebuild(w);
+    }
+    if (this.daylightEnds && this.elapsed >= this.daylightEnds.at) {
+      this.state.daylight = this.daylightEnds.back;
+      this.daylightEnds = null;
+      Object.assign(this.state, { daylightWord: "", daylightBy: "", daylightUntil: 0 });
       for (const w of this.walkers.values()) this.rebuild(w);
     }
     for (const [id, w] of this.walkers) {
@@ -2942,6 +3133,9 @@ export class WorldRoom extends Room {
       if (!at) { w.foe = null; continue; }
       if (!w.hamper.acts || w.fleeing) continue; // stunned, frozen, asleep, afraid or broken
       if (w.hamper.spares.includes(foeId)) { w.foe = null; continue; } // charmed: will not hurt the charmer
+      // A SANCTUARY, a TRUCE: nobody it reaches strikes, or is struck, inside it.
+      const truce = this.lawAgainst("attack", id, w) ?? (foe ? this.lawAgainst("attack", foeId, foe) : null);
+      if (truce) { if (w.master === null) this.sendTo(id, "refused", `${truce}: no fighting here`); w.foe = null; continue; }
       const attack = w.unit.attack;
       const reach = Math.max(1, attack.num("attack_range") / TILE_METERS);
       if (Math.hypot(at.x - w.player.x, at.y - w.player.y) > reach) {
@@ -2979,15 +3173,25 @@ export class WorldRoom extends Room {
       w.gathering -= seconds;
       if (w.gathering > 0) continue;
       w.gathering = 0;
-      const got = this.deposits.gather(w.player.x, w.player.y, this.elapsed, this.rng);
       const client = this.clients.find((c) => c.sessionId === id);
+      const banned = this.lawAgainst("gather", id, w);
+      if (banned) { client?.send("refused", `${banned}: no gathering here`); continue; }
+      // A lode in force here (a BONANZA, a METEOR's crater) turns up its letters first.
+      const place = this.rulesAt(w.player, id, w);
+      const lode = place.areas.find((a) => a.rules!.lode.length && a.rules!.lodeShare > 0 && a.lodeLeft >= 1);
+      const got = lode && this.rng() < lode.rules!.lodeShare
+        ? { letter: lode.rules!.lode[Math.floor(this.rng() * lode.rules!.lode.length)]!, from: lode.word }
+        : this.deposits.gather(w.player.x, w.player.y, this.elapsed, this.rng, growthOf(place.rules));
+      if (lode && "from" in got && got.from === lode.word) lode.lodeLeft--;
       w.stores.food += groundFood(tileAt(this.map, w.player.x, w.player.y)); // a little forage where things grow
       if (got.letter) {
         const from = "from" in got ? got.from : "", site = this.state.things.get(from);
-        const why = site ? (got.letter === "q" ? "temple" : "cache") : GATHER_REASONS[from as keyof typeof GATHER_REASONS] ?? "gathered";
-        this.award(id, w, got.letter, why, site ?? w.player);
+        const why = lode && from === lode.word ? lode.word.toUpperCase()
+          : site ? (got.letter === "q" ? "temple" : "cache") : GATHER_REASONS[from as keyof typeof GATHER_REASONS] ?? "gathered";
+        const kept = this.earn(id, got.letter, site ?? w.player, why, w.unit.body.stats.num("harvest_bonus"));
         changed.add(id);
-        client?.send("gathered", got.letter);
+        if (kept) client?.send("gathered", kept);
+        else client?.send("refused", `Nothing grows here: ${place.areas.find((a) => harvest(got.letter, [a.rules!], () => 0.999) === "")?.word.toUpperCase() ?? "the weather"} took it`);
         if ("emptied" in got && got.emptied) {
           // The bottom of a cache: a prize of everyday letters besides its X.
           this.award(id, w, cachePrize(this.rng), "cache prize", site ?? w.player);
@@ -3004,9 +3208,9 @@ export class WorldRoom extends Room {
       const region = regionOf(w.player.x, w.player.y);
       if (w.explored.has(region)) continue;
       w.explored.add(region);
-      this.award(id, w, "j", "new ground");
+      const j = this.earn(id, "j", w.player, "new ground");
       changed.add(id);
-      this.sendTo(id, "gathered", "j");
+      if (j) this.sendTo(id, "gathered", j);
     }
     // Objects that produce letters pay their owner as each whole letter builds up.
     for (const [pid, p] of this.producers) {
@@ -3016,15 +3220,19 @@ export class WorldRoom extends Room {
         const built = (p.built[letter] ?? 0) + (perMinute * seconds) / 60;
         const whole = Math.floor(built);
         p.built[letter] = built - whole;
+        // What it makes is earned where it stands (a thing) or where its owner is (a field, the sky).
         if (whole > 0) {
           const t = this.state.things.get(pid);
-          this.award(p.owner, owner, letter.repeat(whole), (this.grounded.get(pid)?.phrase ?? t?.phrase ?? pid.replace(/^field:.*/, "field")).toUpperCase(), t ?? owner.player);
+          this.earn(p.owner, letter.repeat(whole), t ?? owner.player, (this.grounded.get(pid)?.phrase ?? t?.phrase ?? pid.replace(/^field:.*/, "field")).toUpperCase());
           changed.add(p.owner);
         }
       }
     }
+    for (const id of this.lettersChanged) changed.add(id);
+    this.lettersChanged.clear();
     for (const id of changed) {
-      this.clients.find((c) => c.sessionId === id)?.send("letters", this.walkers.get(id)!.letters);
+      const w = this.walkers.get(id);
+      if (w) this.clients.find((c) => c.sessionId === id)?.send("letters", w.letters);
     }
     this.tellMoods();
     this.flushHits();
