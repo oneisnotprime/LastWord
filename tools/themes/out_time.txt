@@ -1,0 +1,321 @@
+# noun duration
+time: placement=self field_radius=20 field_targets=owned field_duration=2 time_scale*1.3 extends_duration=1.3 counters=stasis,pause
+eon: placement=map field_radius=ABS field_targets=all field_duration=8 time_scale*2 growth=2 produce_Y*3 decay_rate*3 counters=eternity,stasis,timeless
+aeon: placement=map field_radius=ABS field_targets=all field_duration=8 time_scale*2 growth=2 produce_Y*3 decay_rate*3 counters=eternity,stasis,timeless
+millisecond: placement=self field_radius=2 field_targets=self field_duration=1 inflict_haste=2 cast_time*0 attack_windup*0 evasion+0.3
+trice: placement=self field_radius=2 field_targets=self field_duration=1 inflict_haste=3 cast_time*0 attack_windup*0
+interval: placement=self field_radius=10 field_targets=self field_duration=1 inflict_stasis=4 regeneration+10 counters=countdown
+morrow: placement=self field_radius=4 field_targets=self field_duration=1 inflict_stasis=8 restores=150 morale+2 counters=deadline,countdown
+tomorrow: placement=self field_radius=4 field_targets=self field_duration=1 inflict_stasis=10 restores=120 effect_status=poison,bleed,burn morale+4 counters=deadline,countdown
+yesterday: placement=self field_radius=4 field_targets=self field_duration=1 rewinds=15 effect_status=poison,bleed,burn letter_refund=0.3 counters=tomorrow
+future: placement=self field_radius=4 field_targets=self field_duration=2 time_scale*1.3 read_properties=5 detect_stealth+4 evasion+0.25 critical+0.1 counters=past,history
+perpetuity: placement=self field_radius=20 field_targets=owned field_duration=4 immune_stasis=true immune_slow=true decay_rate*0 persistence*3 counters=stasis,slowness,expiry
+continuance: extends_duration=2 persistence*2 field_duration*2
+span: extends_duration=1.5 field_duration*1.5 field_radius*1.2
+interlude: placement=self field_radius=12 field_targets=all field_duration=1 inflict_stasis=5 morale+1 counters=countdown,rush
+intermission: placement=self field_radius=25 field_targets=all field_duration=1 inflict_stasis=7 morale+1 counters=countdown,haste,overtime
+hiatus: placement=target placement_range=60 event_target=character inflict_stasis=8 event_duration=1 counters=haste,overtime
+recess: placement=self field_radius=20 field_targets=owned field_duration=1 inflict_stasis=4 regeneration+8 morale+2 counters=countdown
+respite: placement=self field_radius=4 field_targets=self field_duration=1 inflict_stasis=6 restores=80 effect_status=burn,poison,bleed counters=countdown,deadline
+maturity: placement=target placement_range=40 event_target=object ages=600 growth_time*0 integrity*1.3 counters=youth,rejuvenation
+dormancy: placement=target placement_range=60 event_target=character inflict_stasis=10 event_duration=1 counters=haste,overtime
+gestation: placement=self field_radius=10 field_targets=owned field_duration=10 growth=2 time_scale*1.3 reproduction*3 growth_time*0.5 counters=stasis
+incubation: placement=self field_radius=10 field_targets=owned field_duration=10 growth=3 temperature_delta=10 time_scale*1.4 growth_time*0.3 counters=stasis,deceleration
+
+# noun attribute
+duration: extends_duration=2 persistence*2 field_duration*2 duration*2
+brevity: extends_duration=0.5 cast_time*0.3 duration*0.5 persistence*0.5
+speed: placement=self field_radius=20 field_targets=owned field_duration=2 time_scale*1.5 acceleration+3 effect_status=slow counters=slowness,delay,deceleration,lethargy
+quickness: placement=self field_radius=4 field_targets=self field_duration=2 time_scale*1.5 evasion+0.1 effect_status=slow counters=slowness,delay,lethargy
+swiftness: placement=self field_radius=4 field_targets=self field_duration=2 inflict_haste=12 speed_land*1.3 effect_status=slow counters=slowness,sluggishness
+rapidity: placement=self field_radius=15 field_targets=owned field_duration=2 time_scale*1.3 attack_rate*1.5 effect_status=slow counters=slowness,delay
+celerity: placement=self field_radius=20 field_targets=owned field_duration=2 inflict_haste=12 effect_status=slow counters=slowness,delay,lethargy
+sluggishness: placement=target placement_range=100 field_radius=25 field_targets=enemies field_duration=2 time_scale*0.6 inflict_slow=10 effect_status=haste counters=haste,hurry,rush
+lethargy: placement=target placement_range=100 field_radius=20 field_targets=enemies field_duration=3 time_scale*0.5 inflict_sleep=4 morale+-2 effect_status=haste counters=haste,hurry,amphetamine
+torpor: placement=target placement_range=60 event_target=character time_scale*0.3 inflict_slow=20 event_duration=1 effect_status=haste counters=haste,hurry,rush
+inertia: placement=target placement_range=100 field_radius=20 field_targets=enemies field_duration=2 time_scale*0.7 acceleration*0.2 agility+-2 counters=acceleration,haste
+procrastination: placement=target placement_range=100 field_radius=20 field_targets=enemies field_duration=3 cast_time*4 time_scale*0.7 effect_status=haste counters=haste,hurry,punctuality
+tardiness: placement=target placement_range=80 event_target=character inflict_slow=15 cast_time*2 event_duration=1 effect_status=haste counters=punctuality,haste,hurry
+punctuality: placement=self field_radius=4 field_targets=self field_duration=5 immune_slow=true cast_time*0.5 accuracy+0.1 counters=delay,lag,tardiness,procrastination
+timeliness: placement=self field_radius=4 field_targets=self field_duration=5 immune_slow=true cast_time*0.5 critical+0.15 counters=delay,lag,tardiness
+precedence: placement=self field_radius=4 field_targets=self field_duration=1 inflict_haste=5 cast_time*0 attack_windup*0 counters=delay,lag
+longevity: placement=self field_radius=20 field_targets=owned field_duration=10 lifespan*3 decay_rate*0.3 regeneration+3 integrity*1.2 counters=mortality,ageing,senescence
+immortality: placement=self field_radius=4 field_targets=self field_duration=3 prevents_death=1 immune_doom=true regeneration+10 lifespan*0 counters=mortality,doom,deadline,countdown
+mortality: placement=target placement_range=80 event_target=character inflict_doom=90 lifespan*0.5 event_duration=1 counters=immortality,eternity,reprieve,longevity
+permanence: placement=self field_radius=10 field_targets=owned field_duration=10 decay_rate*0 immune_slow=true persistence*2 counters=decay,ageing,expiry
+persistence: placement=self field_radius=4 field_targets=self field_duration=10 immune_slow=true morale+3 regeneration+2 persistence*2 counters=slowness,lethargy
+durability: placement=self field_radius=10 field_targets=owned field_duration=10 integrity*1.5 decay_rate*0.2 brittleness+-3 shelf_life*3 counters=decay,ageing
+antiquity: placement=target placement_range=40 event_target=object ages=50000 integrity*0.4 value*10 counters=eternity,rejuvenation
+senescence: placement=target placement_range=60 event_target=object ages=3000 integrity*0.6 lifespan*0.5 speed_land*0.7 counters=rejuvenation,youth,longevity
+freshness: placement=target placement_range=40 event_target=object ages=-600 shelf_life*2 decay_rate*0.5 counters=rot,decay,staleness
+newness: placement=target placement_range=40 event_target=object ages=-1200 integrity*1.2 value*1.5 counters=ageing,decay
+modernity: placement=self field_radius=30 field_targets=owned field_duration=5 time_scale*1.2 build_speed*1.5 labor*1.3 counters=antiquity,obsolescence
+seniority: placement=self field_radius=4 field_targets=self field_duration=10 age+50000 authority+3 intelligence+3 morale+2 speed_land*0.9
+foresight: placement=self field_radius=4 field_targets=self field_duration=3 time_scale*1.2 evasion+0.3 detect_stealth+4 counters=ambush,surprise
+hindsight: placement=self field_radius=4 field_targets=self field_duration=1 rewinds=12 read_properties=3
+inevitability: placement=target placement_range=100 event_target=character inflict_doom=90 ignores_resistance=true event_duration=1 counters=eternity,reprieve,immortality
+finality: placement=target placement_range=80 event_target=character inflict_doom=60 effect_status=stasis,haste event_duration=1 counters=eternity,reprieve,rebirth
+idleness: placement=target placement_range=80 field_radius=20 field_targets=enemies field_duration=3 time_scale*0.7 labor*0 harvest_bonus*0.5 effect_status=haste counters=haste,hurry
+inactivity: placement=target placement_range=80 event_target=character inflict_root=8 time_scale*0.6 event_duration=1 effect_status=haste counters=haste,rush
+
+# noun act
+lag: placement=target placement_range=150 field_radius=25 field_targets=enemies field_duration=2 time_scale*0.6 cast_time*2 accuracy+-0.2 effect_status=haste counters=haste,punctuality,precedence
+slowdown: placement=target placement_range=120 field_radius=30 field_targets=enemies field_duration=2 time_scale*0.6 effect_status=haste counters=haste,acceleration,speed
+postponement: placement=target placement_range=100 event_target=character cast_time*3 inflict_slow=10 time_scale*0.6 event_duration=1 counters=deadline,countdown,haste
+deferral: placement=self field_radius=4 field_targets=self field_duration=1 effect_status=doom inflict_stasis=4 counters=deadline,countdown,doom
+deferment: placement=self field_radius=4 field_targets=self field_duration=1 effect_status=doom inflict_stasis=5 counters=deadline,countdown,doom
+adjournment: placement=self field_radius=20 field_targets=all field_duration=1 inflict_stasis=5 counters=countdown,haste
+halt: placement=target placement_range=60 event_target=character inflict_root=6 speed_land*0 event_duration=1 effect_status=haste counters=haste,rush
+standstill: placement=target placement_range=100 field_radius=15 field_targets=all field_duration=1 inflict_root=10 time_scale*0.5 effect_status=haste counters=haste,acceleration
+speeding: placement=self field_radius=4 field_targets=self field_duration=1 speed_land*2 time_scale*1.3 accuracy+-0.1 counters=slowness
+pacing: placement=self field_radius=4 field_targets=self field_duration=10 time_scale*1.1 food_need*0.6 range*1.5 morale+1
+interruption: placement=target placement_range=80 event_target=character inflict_silence=5 cast_time*3 inflict_stun=1 event_duration=1 counters=countdown
+lingering: placement=self field_radius=10 field_targets=owned field_duration=5 lingering*3 persistence*2 extends_duration=1.5
+expiry: placement=target placement_range=60 event_target=object ages=1440 persistence*0.1 shelf_life*0.01 counters=renewal,extension,eternity
+expiration: placement=target placement_range=60 event_target=object ages=1440 persistence*0.1 shelf_life*0.01 counters=renewal,extension,eternity
+renewal: placement=target placement_range=40 event_target=object ages=-1440 restores=100 shelf_life*2 counters=expiry,decay,expiration
+revival: placement=target placement_range=40 event_target=character restores=250 rewinds=10 effect_status=stun,sleep morale+3 event_duration=1 counters=expiry
+rebirth: placement=self field_radius=4 field_targets=self field_duration=1 rewinds=30 restores=200 effect_status=burn,poison,bleed,curse,doom counters=death,mortality,doom
+recurrence: duplicates=1 cast_time=20
+repetition: duplicates=1 cast_time=5
+reminiscence: placement=self field_radius=10 field_targets=owned field_duration=2 rewinds=8 morale+2
+nap: placement=self field_radius=2 field_targets=self field_duration=1 inflict_sleep=10 restores=100 morale+2
+catnap: placement=self field_radius=2 field_targets=self field_duration=1 inflict_sleep=5 restores=50 morale+1
+siesta: placement=self field_radius=10 field_targets=owned field_duration=1 inflict_sleep=15 restores=150 morale+3 temp_max+5
+doze: placement=self field_radius=2 field_targets=self field_duration=1 inflict_sleep=6 restores=60
+snooze: placement=self field_radius=2 field_targets=self field_duration=1 inflict_sleep=8 restores=70 cast_time=0
+leisure: placement=self field_radius=10 field_targets=owned field_duration=5 time_scale*0.8 regeneration+5 morale+3 comfort+2
+hibernation: placement=self field_radius=4 field_targets=self field_duration=1 inflict_stasis=20 restores=250 food_need*0 temp_min+-30 counters=countdown
+climax: placement=self field_radius=10 field_targets=owned field_duration=1 inflict_haste=8 critical+0.3 morale+3
+culmination: placement=self field_radius=20 field_targets=owned field_duration=1 critical+0.25 attack_rate*1.5 morale+3
+heartbeat: placement=self field_radius=4 field_targets=self field_duration=1 inflict_haste=3 cast_time*0 regeneration+2
+regression: placement=target placement_range=60 event_target=object ages=-6000 integrity*0.7 intelligence+-2 trainable+-2 counters=progression,evolution
+progression: placement=self field_radius=20 field_targets=owned field_duration=5 time_scale*1.2 trainable+3 training+1 counters=regression,stasis
+devolution: placement=target placement_range=60 event_target=creature ages=-60000 intelligence+-3 mass*0.5 counters=evolution,progression
+
+# noun device
+watch: mass=0.1 integrity=20 material=steel,glass equip_slot=hands extends_duration=1.3 time_scale*1.15 accuracy+0.05 color=silver
+wristwatch: mass=0.1 integrity=20 material=steel,glass equip_slot=hands extends_duration=1.3 time_scale*1.15 accuracy+0.05 color=silver
+timepiece: mass=0.2 integrity=15 material=gold,glass equip_slot=held hands_required=0 extends_duration=1.3 time_scale*1.15 value=80 beauty=6 color=gold
+chronometer: mass=0.3 integrity=15 material=brass,glass equip_slot=held hands_required=0 extends_duration=1.4 time_scale*1.2 accuracy+0.1 color=gold
+chronograph: mass=0.15 integrity=20 material=steel,glass equip_slot=hands extends_duration=1.3 time_scale*1.2 accuracy+0.05 critical+0.05 color=silver
+sandglass: mass=1 integrity=6 brittleness=9 material=glass,wood extends_duration=1.5 field_radius=12 field_targets=owned time_scale*1.2 beauty=5 color=tan
+clepsydra: mass=20 integrity=40 material=stone,water portable=false extends_duration=1.4 field_radius=15 field_targets=owned time_scale*1.2 color=blue
+mainspring: mass=0.05 integrity=5 material=steel elasticity=8 extends_duration=1.5 time_scale*1.1 color=silver
+ticktock: mass=0.5 integrity=8 material=wood,steel loudness=2 extends_duration=1.2 field_radius=8 field_targets=owned time_scale*1.1
+
+# noun possession
+heirloom: mass=0.3 integrity=50 material=gold,gem equip_slot=neck age=200000 value=400 beauty=7 loyalty=10 survives_death=true on_owner_death=pass_to_heir
+keepsake: mass=0.1 integrity=10 age=20000 value=20 beauty=5 survives_death=true on_owner_death=pass_to_heir
+memento: mass=0.1 integrity=10 age=10000 value=15 beauty=4 survives_death=true on_owner_death=pass_to_heir
+souvenir: mass=0.2 integrity=5 age=100 value=5 beauty=4 charm=1
+
+# noun natural_object
+fossil: mass=5 integrity=200 hardness=7 material=stone age=6000000 value=150 color=gray
+ammonite: mass=2 integrity=150 hardness=7 material=stone shape=round age=20000000 value=200 beauty=6 color=brown
+
+# noun structure
+megalith: mass=40000 height=6 integrity=20000 hardness=8 material=stone portable=false age=2500000 field_radius=20 field_targets=owned time_scale*1.2 faith_output=0.5 color=gray
+dolmen: mass=30000 height=3 integrity=15000 hardness=8 material=stone portable=false enterable=true occupants=4 cover=0.6 age=2500000 field_radius=12 field_targets=owned time_scale*1.15 color=gray
+menhir: mass=20000 height=5 integrity=12000 hardness=8 material=stone portable=false age=2500000 field_radius=15 field_targets=owned time_scale*1.15 color=gray
+
+# noun person
+elder: mass=60 integrity=70 alive=true sentient=true hands=true speech=true speed_land=2 intelligence=8 loyalty=8 age=40000 authority=3 heals=2 read_properties=3 food_need=0.02
+grandmother: mass=60 integrity=70 alive=true sentient=true hands=true speech=true speed_land=2 intelligence=8 loyalty=10 age=40000 heals=4 comfort=4 read_properties=4 grants_adjective_slots=1 grants_slots_to=person food_need=0.02
+matriarch: mass=65 integrity=90 alive=true sentient=true hands=true speech=true speed_land=3 intelligence=8 loyalty=9 age=35000 authority=5 command_limit=6 morale=8 food_need=0.02
+greybeard: mass=65 integrity=70 alive=true sentient=true hands=true speech=true speed_land=2 intelligence=8 age=45000 read_properties=4 training=5 food_need=0.02
+graybeard: mass=65 integrity=70 alive=true sentient=true hands=true speech=true speed_land=2 intelligence=8 age=45000 read_properties=4 training=5 food_need=0.02
+crone: mass=50 integrity=60 alive=true sentient=true hands=true speech=true speed_land=2 intelligence=8 age=50000 dmg_magic=20 inflict_curse=10 attack_rate=0.3 attack_range=15 fear_aura=2 food_need=0.02
+timekeeper: mass=70 integrity=100 alive=true sentient=true hands=true speech=true speed_land=4 intelligence=7 extends_duration=1.5 field_radius=15 field_targets=owned time_scale*1.2 alarm=true food_need=0.03
+chronicler: mass=65 integrity=90 alive=true sentient=true hands=true speech=true speed_land=4 intelligence=8 read_properties=5 map_reveal=20 rewinds=10 food_need=0.03
+archaeologist: mass=75 integrity=100 alive=true sentient=true hands=true speech=true speed_land=4 intelligence=8 detect_underground=true detect_letters=30 harvest_bonus=1.5 lode=Y lode_share=0.2 food_need=0.03
+caveman: mass=80 integrity=140 alive=true sentient=true hands=true speed_land=6 strength=8 intelligence=4 dmg_blunt=35 attack_rate=1 age=2000000 res_cold=0.3 food_need=0.06
+neanderthal: mass=85 integrity=160 alive=true sentient=true hands=true speed_land=5 strength=9 intelligence=5 dmg_blunt=40 attack_rate=0.8 age=2000000 res_cold=0.5 food_need=0.07
+clairvoyant: mass=60 integrity=70 alive=true sentient=true hands=true speech=true speed_land=4 intelligence=7 read_properties=6 detect_stealth=6 sees_through=walls,fog evasion=0.3 food_need=0.02
+soothsayer: mass=60 integrity=70 alive=true sentient=true hands=true speech=true speed_land=4 intelligence=7 read_properties=5 detect_stealth=5 luck=3 food_need=0.02
+
+# noun supernatural
+ancestor: mass=0 integrity=80 alive=false sentient=true phase=true hover=true speed_air=3 intelligence=8 loyalty=10 dmg_psychic=25 attack_rate=0.5 heals=5 age=1000000 immune_stasis=true
+
+# noun reptile
+allosaurus: mass=2000 length=9 height=3 integrity=4000 alive=true aggression=9 diet=carnivore food_need=1.5 speed_land=9 dmg_pierce=400 dmg_slash=200 attack_rate=0.6 fear_aura=7 loudness=8 age=80000000 habitat=jungle,savanna color=brown
+diplodocus: mass=15000 length=26 height=5 integrity=15000 alive=true aggression=2 diet=herbivore food_need=3 speed_land=4 dmg_crush=500 dmg_blunt=300 knockback=12 attack_rate=0.2 fear_aura=4 age=80000000 habitat=jungle,savanna color=green
+iguanodon: mass=3000 length=10 height=3 integrity=4000 alive=true aggression=3 diet=herbivore food_need=1 speed_land=7 dmg_pierce=150 dmg_crush=150 attack_rate=0.4 age=70000000 habitat=jungle color=green
+ankylosaurus: mass=6000 length=8 height=2 integrity=9000 alive=true aggression=4 diet=herbivore food_need=1.5 speed_land=3 armor=80 res_pierce=0.6 res_slash=0.6 dmg_blunt=500 knockback=10 attack_rate=0.3 age=70000000 habitat=jungle color=brown
+plesiosaur: mass=2000 length=10 integrity=3500 alive=true aggression=7 diet=carnivore food_need=1.5 breathes=air speed_water=8 dive_depth=200 dmg_pierce=300 attack_rate=0.6 targets=water fear_aura=5 age=80000000 habitat=water,deep_water color=gray
+ichthyosaur: mass=1500 length=8 integrity=2500 alive=true aggression=7 diet=carnivore food_need=1 breathes=air speed_water=12 dive_depth=500 dmg_pierce=250 attack_rate=0.8 targets=water age=90000000 habitat=deep_water color=gray
+pterosaur: mass=25 length=3 integrity=70 alive=true aggression=6 diet=carnivore food_need=0.02 speed_land=2 speed_air=25 flight_ceiling=1500 sight_range=2000 dmg_pierce=45 attack_rate=1 targets=land,air,water age=80000000 color=brown
+
+# noun mammal
+sabertooth: mass=300 length=2 integrity=500 alive=true aggression=8 diet=carnivore food_need=0.2 speed_land=14 dmg_pierce=180 inflict_bleed=10 attack_rate=0.8 fear_aura=5 stealth=4 age=10000000 habitat=savanna,tundra color=tan
+
+# noun fish
+coelacanth: mass=80 length=2 integrity=150 alive=true diet=carnivore breathes=water speed_water=2 dive_depth=700 age=400000000 lifespan=60000 value=300 immune_slow=true color=blue
+
+# noun knowledge
+chronology: read_properties=3 extends_duration=1.2 rewinds=5
+archaeology: detect_underground=true detect_letters=40 lode=Y lode_share=0.15 read_properties=2
+anachronism: placement=target placement_range=60 event_target=object misspells=true ages=-50000 counters=history,chronology
+
+# verb transform
+hasten: effect_target=self time_scale*1.6 effect_status=slow duration=15
+accelerate: effect_target=self time_scale*1.8 speed_land*1.2 acceleration+4 effect_status=slow duration=10
+expedite: effect_target=self time_scale*1.5 cast_time*0.3 duration=20
+decelerate: effect_target=touched time_scale*0.4 inflict_slow=10 effect_status=haste duration=15
+rejuvenate: effect_target=self ages=-6000 restores=150 integrity*1.2 effect_status=sick,poison duration=60
+ripen: effect_target=held ages=1440 growth_time*0 nutrition*2 duration=1
+evolve: effect_target=self age+60000 intelligence+3 integrity*1.5 trainable+3 duration=300
+expire: effect_target=touched ages=6000 persistence*0 inflict_doom=45 duration=1 counters=reprieve,eternity,immortality,renewal
+perish: effect_target=touched ages=60000 decay_rate+20 inflict_doom=45 duration=1 counters=reprieve,eternity,immortality,rebirth
+prolong: effect_target=self extends_duration=2 duration*2 persistence*2
+suspend: effect_target=self inflict_stasis=8 duration=8
+retire: effect_target=self inflict_stasis=12 restores=120 regeneration+10 duration=15
+redo: effect_target=self rewinds=8 duplicates=1 duration=1
+restart: effect_target=self rewinds=15 effect_status=stun,root,slow,burn,poison,bleed duration=1
+reset: effect_target=self rewinds=12 effect_status=slow,haste,curse,chaos,confuse duration=1
+revert: effect_target=self rewinds=10 ages=-1440 duration=1
+restore: effect_target=self restores=150 rewinds=8 duration=1
+renew: effect_target=held ages=-1440 restores=80 shelf_life*2 duration=1
+revive: effect_target=touched restores=200 rewinds=10 effect_status=sleep,stun duration=1
+
+# verb movement
+hie: effect_target=self time_scale*1.3 speed_land*1.5 duration=10
+dawdle: effect_target=self time_scale*0.6 stealth+3 regeneration+3 duration=30
+tarry: effect_target=self time_scale*0.7 regeneration+4 morale+1 duration=30
+linger: effect_target=self time_scale*0.8 stealth+2 extends_duration=1.5 duration=30
+scamper: effect_target=self inflict_haste=4 speed_land*1.6 evasion+0.2 duration=6
+
+# verb body
+persist: effect_target=self immune_slow=true immune_stun=true morale+2 regeneration+2 duration=30
+elapse: effect_target=self time_scale*1.5 duration=10
+adjourn: effect_target=self inflict_stasis=10 effect_status=doom duration=10
+
+# adjective quality
+swift: time_scale*1.3 speed_land*1.5 speed_air*1.3 evasion+0.1 attack_rate*1.2
+new: age*0 integrity*1.2 value*1.3 decay_rate*0.5 shelf_life*2
+momentary: duration*0.3 persistence*0.3 cast_time*0.2 inflict_haste+2
+punctual: cast_time*0.5 immune_slow=true accuracy+0.1
+delayed: cast_time*3 time_scale*0.8 attack_windup+2
+hurried: time_scale*1.4 accuracy+-0.1 cast_time*0.5
+hurrying: time_scale*1.3 speed_land*1.2 accuracy+-0.05
+leisurely: time_scale*0.7 regeneration+2 morale+2 food_need*0.7
+idle: time_scale*0.6 labor*0 regeneration+2 attack_rate*0.5
+abrupt: cast_time*0 attack_windup*0 critical+0.1
+prehistoric: age+2000000 produce_Y*5 mass*3 integrity*2 intelligence+-2 fear_aura+2 value*10
+obsolete: age+20000 produce_Y*2 value*0.2 integrity*0.6 time_scale*0.8 upkeep_fuel*1.5
+outdated: age+5000 produce_Y*1.5 value*0.4 integrity*0.8 accuracy+-0.1
+archaic: age+100000 produce_Y*3 value*5 intelligence+-1 integrity*0.8 speed_land*0.8
+primeval: age+1000000 produce_Y*4 integrity*2 aggression+3 fertility+3 growth*2
+primordial: age+3000000 produce_Y*5 integrity*2 mass*2 hardness+2 fear_aura+2 res_magic+0.3
+immemorial: age+400000 produce_Y*4 value*10 intelligence+2 immune_slow=true
+elderly: age+40000 produce_Y*2 speed_land*0.6 integrity*0.7 intelligence+3 read_properties+2
+youthful: age*0.5 speed_land*1.2 regeneration*2 integrity*0.9 trainable+3 morale+1
+juvenile: growth_time*0.5 speed_land*1.1 integrity*0.6 mass*0.4 trainable+2 lifespan*1.5
+newborn: age*0 mass*0.1 integrity*0.2 speed_land*0.3 growth_time*1 trainable+4 lifespan*2 beauty+2
+fleeting: duration*0.4 persistence*0.4 speed_land*1.5 evasion+0.2 stealth+2
+transient: persistence*0.5 duration*0.5 phase=true evasion+0.1
+ephemeral: persistence*0.2 lifespan*0.1 duration*0.3 beauty+3 phase=true evasion+0.3
+lasting: persistence*3 duration*2 decay_rate*0.5 shelf_life*3
+enduring: integrity*1.5 persistence*3 decay_rate*0.3 immune_slow=true
+perpetual: persistence*10 duration*5 decay_rate*0 lifespan*10
+everlasting: persistence*20 lifespan*20 decay_rate*0 immune_doom=true shelf_life*0
+endless: persistence*10 duration*5 range*10 ammo_per_hit*0
+unending: persistence*10 duration*5 decay_rate*0
+interminable: duration*6 persistence*6 time_scale*0.8
+ceaseless: attack_rate*1.3 sleep_need*0 duration*3 immune_sleep=true
+incessant: attack_rate*1.5 loudness+3 sleep_need*0 duration*2
+continual: persistence*3 duration*2 regeneration+1
+ageless: immune_doom=true decay_rate*0 lifespan*0 age*0 value*3
+undying: prevents_death+1 immune_doom=true regeneration+5 alive=false fear_aura+2
+deathless: prevents_death+1 immune_doom=true lifespan*0
+unchanging: immune_chaos=true immune_shrink=true decay_rate*0 time_scale*0.9
+changeless: immune_chaos=true decay_rate*0 immune_slow=true
+immutable: immune_chaos=true immune_shrink=true immune_slow=true decay_rate*0
+stagnant: time_scale*0.5 decay_rate*2 odor+3 morale+-2 growth*0.5
+dormant: time_scale*0.2 stealth+4 food_need*0.1 aggression*0 regeneration+3
+latent: stealth+5 cast_time=30 aggression*0
+senile: age+50000 intelligence+-4 loyalty+-2 obedience+-3 produce_Y*2
+decrepit: age+60000 integrity*0.4 speed_land*0.5 brittleness+4 produce_Y*3 value*0.5
+doddering: age+50000 speed_land*0.5 accuracy+-0.2 agility+-2 produce_Y*2
+venerable: age+80000 produce_Y*3 authority+3 intelligence+3 value*5 reputation+3
+hoary: age+70000 produce_Y*3 color=white intelligence+2 res_cold+0.2
+grizzled: age+30000 produce_Y*2 training+3 courage+3 color=gray
+wizened: age+60000 produce_Y*3 mass*0.7 intelligence+3 integrity*0.8
+wrinkled: age+30000 produce_Y*2 beauty+-1 integrity*0.9
+bygone: age+20000 produce_Y*2 stealth+3 value*2 integrity*0.7
+erstwhile: age+5000 loyalty+-3 value*1.5
+olden: age+60000 produce_Y*3 value*4 beauty+1
+forthcoming: cast_time=10 critical+0.1 read_properties+1
+imminent: cast_time=3 critical+0.2 fear_aura+2
+impending: cast_time=10 fear_aura+3 critical+0.15
+pending: cast_time=20 duration*1.5
+slothful: time_scale*0.5 food_need*0.5 regeneration+2 aggression+-2
+dilatory: time_scale*0.7 cast_time*2
+twinkling: cast_time*0 inflict_haste+2 luminosity+2
+
+# adjective participle
+aging: age+1000 produce_Y*2 integrity*0.8 speed_land*0.9 intelligence+1
+extinct: age+60000000 alive=false produce_Y*6 value*20 stealth+5
+
+# adjective pertaining
+temporal: time_scale*1.2 extends_duration*1.3
+geologic: age+50000000 produce_Y*6 mass*10 hardness+3 time_scale*0.5
+geological: age+50000000 produce_Y*6 mass*10 hardness+3 time_scale*0.5
+jurassic: age+600000 produce_Y*6 mass*4 integrity*2 dmg_crush*1.5 aggression+3 fear_aura+3 speed_land*0.9
+triassic: age+700000 produce_Y*6 mass*2 integrity*1.8 aggression+3 res_fire+0.3 speed_land*1.1
+cretaceous: age+500000 produce_Y*6 mass*3 integrity*2 dmg_pierce*1.5 aggression+4 fear_aura+3
+cambrian: age+1500000 produce_Y*6 armor+20 hardness+2 integrity*1.5 breathes=water
+carboniferous: age+1000000 produce_Y*6 mass*3 flammability+4 burn_time*3 growth*2 fuel_output*2
+paleozoic: age+1500000 produce_Y*6 hardness+3 armor+15 integrity*1.5
+mesozoic: age+600000 produce_Y*6 mass*3 integrity*2 aggression+3 fear_aura+2
+cenozoic: age+200000 produce_Y*5 mass*2 res_cold+0.4 speed_land*1.2
+neolithic: age+300000 produce_Y*5 material=stone hardness+2 sharpness+2 value*5
+paleolithic: age+600000 produce_Y*5 material=stone sharpness+2 dmg_pierce*1.3 intelligence+-1
+medieval: age+300000 produce_Y*4 armor+20 dmg_slash*1.3 material=steel value*4
+victorian: age+80000 produce_Y*3 beauty+2 value*4 charm+2
+futuristic: age*0 time_scale*1.2 dmg_electric+40 luminosity+2 value*5 upkeep_power+5
+retro: age+20000 produce_Y*2 beauty+2 value*3 charm+2
+anachronistic: age*0 misspells=true value*3 charm+1
+centenary: age+6000 produce_Y*2 value*3 morale+1
+centennial: age+6000 produce_Y*2 value*3 morale+1
+bicentennial: age+12000 produce_Y*2.5 value*4 morale+1
+millenary: age+60000 produce_Y*4 value*10 integrity*0.5
+millennial: age+60000 produce_Y*4 value*10 integrity*0.5
+quincentennial: age+30000 produce_Y*3 value*6
+hourly: extends_duration*1.2 duration*1.5
+yearly: age+500 produce_Y*1.5 extends_duration*2
+
+# adjective absolute
+sempiternal: persistence=ABS lifespan=ABS decay_rate=0 immune_doom=true immune_stasis=true is_absolute=true
+
+# adverb manner
+swiftly: cast_time*0.3 time_scale*1.3
+hastily: cast_time*0.1 accuracy+-0.15 duration*0.7
+speedily: cast_time*0.3 time_scale*1.2
+expeditiously: cast_time*0.2 duration*0.8
+promptly: cast_time*0 attack_windup*0
+forthwith: cast_time*0
+punctually: cast_time*0.5 accuracy+0.1
+momentarily: cast_time*0.2 duration*0.3
+temporarily: duration*0.5 persistence*0.5
+permanently: duration*10 persistence*10
+eternally: duration=ABS persistence=ABS
+belatedly: cast_time*3 effect_multiplier=1.5
+tardily: cast_time*3
+sluggishly: cast_time*2.5 time_scale*0.7
+lazily: cast_time*2 duration*1.5 time_scale*0.8
+gradually: cast_time*2 duration*3 effect_multiplier=1.3
+abruptly: cast_time*0 duration*0.5 critical+0.2
+presently: cast_time=5
+soon: cast_time=10 effect_multiplier=1.2
+someday: cast_time=120 effect_multiplier=3
+hereafter: duration*4 cast_time*1.5
+anew: rewinds+5 duplicates=1
+again: duplicates=1 cast_time*1.5
+always: duration*10 persistence*10
+often: duplicates=1 duration*0.6
+seldom: cast_time*3 effect_multiplier=2
+overnight: cast_time=60 duration*8
+beforehand: cast_time*0 effect_multiplier=1.1
+afterward: cast_time=15 effect_multiplier=1.3
+annually: duration*20 cast_time*3
