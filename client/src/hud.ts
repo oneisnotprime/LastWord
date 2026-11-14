@@ -78,6 +78,7 @@ export class Hud {
   private aimingAny = false;
   /** The spelling as it last stood, to put back a letter you do not hold. */
   private lastText = "";
+  private rejectTimer = 0;
   /** Knocked out, and whom you are watching. */
   private out: string | null = null;
 
@@ -186,6 +187,8 @@ export class Hud {
     card.classList.remove("reject");
     void card.offsetWidth; // restart the animation
     card.classList.add("reject");
+    clearTimeout(this.rejectTimer);
+    this.rejectTimer = window.setTimeout(() => card.classList.remove("reject"), 450);
   }
 
   /** True while the spell window is open: every key goes to it. */
