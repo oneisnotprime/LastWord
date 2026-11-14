@@ -265,10 +265,11 @@ export const ARCHETYPES: Record<string, Silhouette> = {
   supernatural: ghost, person: human, worker: farmer, leader: king, criminal: thief, fighter: soldier,
   tree: tree(), plant: s([part(band([[0, 0], [0, -18]], 2), "#5f8a4a"), glue(P(0, -8, -10, -14, -12, -22, -2, -16), "body"), glue(P(0, -12, 10, -18, 12, -26, 2, -20), "body"), glue(P(0, -18, -3, -26, 0, -30, 3, -26), "body")], "#6f9a50", { flat: true }),
   shrub: tree({ kind: "bush" }), produce: apple, flower: flower(), fungus: mushroom,
+  herb: s([part(band([[0, 0], [0, -14]], 1.6), "#5f8a4a"), glue(P(0, -6, -8, -10, -9, -16, -1, -11), "body"), glue(P(0, -9, 8, -13, 9, -19, 1, -14), "body"), glue(P(0, -13, -3, -20, 0, -23, 3, -20), "body")], "#7fae5a", { flat: true }),
   bodypart: s([part(band([[-12, -4], [12, -16]], 5)), glue(E(-14, -2, 4, 4, 8), "body"), glue(E(-12, -7, 4, 4, 8), "body"), glue(E(14, -15, 4, 4, 8), "body"), glue(E(12, -20, 4, 4, 8), "body")], "#f3ece0"),
   food: bread, drink: s([part(P(-8, -20, 8, -20, 7, 0, -7, 0), "body", 1), glue(band(E(8, -10, 4.5, 5, 10, -Math.PI / 2, Math.PI / 2), 2), "body"), glue([...E(0, -20, 9, 4, 12, Math.PI, Math.PI * 2)] as Pt[], "#fbf7ec")], "#c9955a"),
   // Stuff.
-  material: pile, mineral: crystal, metal: ingot, gas, liquid: puddle, fuel: barrel, poison: s([...potion.pieces, dot(icon.skull().map((p) => p.pts)[0]!.map(([x, y]) => [x * 0.4, -9 + y * 0.4] as Pt), "#f3ece0")], "#7fbf6a"),
+  material: pile, mineral: crystal, gem: crystal, metal: ingot, gas, liquid: puddle, fuel: barrel, poison: s([...potion.pieces, dot(icon.skull().map((p) => p.pts)[0]!.map(([x, y]) => [x * 0.4, -9 + y * 0.4] as Pt), "#f3ece0")], "#7fbf6a"),
   // Land, sky and weather, when spelled as a thing.
   place: sign(icon.house()), natural_object: rock, landform: sign(icon.island()), water: puddle, depression: sign(icon.hole()), elevation: sign(icon.mountain()), rock,
   celestial: s([part(Array.from({ length: 10 }, (_, i) => { const a = -Math.PI / 2 + (i / 10) * Math.PI * 2, r = i % 2 ? 7 : 16; return [Math.cos(a) * r, -26 + Math.sin(a) * r] as Pt; }), "body", 0), dot(E(0, -26, 4, 4, 8), "light")], "#f4d35e", { flies: true }),
@@ -328,6 +329,20 @@ export const WORDS: Record<string, Silhouette> = {
   base: fort, story: book, study: book, block: brickWall(24, 2), prince: biped({ hat: "crown", colour: "#3f6fa8", cloak: "#c9553f" }), princess: biped({ hat: "crown", robe: true, colour: "#e0708f" }),
   warrior: soldier, fighter: soldier, champion: knight, cop: biped({ hat: "cap", colour: "#2f4a7a", legs: "#2f3a5a" }), marine: soldier, killer: thief, criminal: thief, miner: biped({ hat: "helmet", colour: "#7a6a4a", held: "spear" }),
   merchant: biped({ hat: "tophat", colour: "#7a5a3a", belt: "#e3b341" }), boss: biped({ hat: "tophat", colour: "#2f2c33" }), bishop: priest, coach: captain, commander: captain, colonel: captain,
+  // Professions (dictionary theme 1): a look for the commonest, the rest by archetype.
+  chef: biped({ hat: "bun", colour: "#f6f2ea", legs: "#3a3633", belt: "#c9453f" }), cook: biped({ hat: "bun", colour: "#f6f2ea", legs: "#3a3633" }),
+  baker: biped({ hat: "bun", colour: "#efe4cf", legs: "#8a6a4a" }), butcher: biped({ colour: "#f2ead8", legs: "#3a3633", belt: "#c9453f" }),
+  nurse: biped({ colour: "#9cc6d2", legs: "#9cc6d2", hair: "#3d2a1e" }), surgeon: biped({ colour: "#7fae8a", legs: "#7fae8a", hat: "cap" }),
+  judge: biped({ robe: true, colour: "#2b2a28", hair: "#efe9dc" }), lawyer: biped({ hat: "tophat", colour: "#3a3633", belt: "#c9a24a" }),
+  sheriff: biped({ hat: "cap", colour: "#a8703c", legs: "#3f4a6a", belt: "#e3b341" }),
+  policeman: biped({ hat: "cap", colour: "#2f4a7a", legs: "#2f3a5a" }), scout: biped({ hat: "hood", colour: "#5f7a4a", legs: "#4a3f33", arms: "forward" }),
+  explorer: biped({ hat: "cap", colour: "#c9a77a", legs: "#6b4a2e", held: "staff" }), hunter: biped({ hat: "hood", colour: "#6f5a3a", legs: "#4a3f33", held: "spear" }),
+  builder: biped({ hat: "helmet", colour: "#e8892e", legs: "#3f6fa8" }), mason: biped({ hat: "cap", colour: "#b3b0a8", legs: "#6a6e78" }),
+  carpenter: biped({ hat: "cap", colour: "#a8703c", legs: "#3f6fa8" }), lumberjack: biped({ hat: "cap", colour: "#c9453f", legs: "#3f4a6a", beard: "#6b4a2e" }),
+  monk: biped({ robe: true, hat: "hood", colour: "#a8703c" }), preacher: biped({ robe: true, colour: "#2f2c33", arms: "up" }),
+  teacher: biped({ colour: "#7a5a8a", legs: "#3a3633", hair: "#6b4a2e" }), musician: biped({ colour: "#8a5ac9", legs: "#3a3633", arms: "forward" }),
+  trader: biped({ hat: "tophat", colour: "#5f8a6a", belt: "#e3b341" }), banker: biped({ hat: "tophat", colour: "#3a3633", belt: "#e3b341" }),
+  gardener: biped({ hat: "cap", colour: "#6f9a50", legs: "#8a6a4a" }), shepherd: biped({ hat: "hood", colour: "#efe9dc", legs: "#8a6a4a", held: "staff" }),
   // Weapons and armour.
   sword: sword(), blade: sword(26), axe, spear, knife, dagger: knife, bow, gun, pistol: gun, rifle, cannon, bomb, grenade: s(bomb.pieces.map((p) => ({ ...p, pts: p.pts.map(([x, y]) => [x * 0.7, y * 0.7] as Pt) })), "#5f6a3a"),
   club: s([part(P(-2, 0, 2, 0, 5, -26, 3, -34, -3, -34, -5, -26), "body", 2), dot(E(1, -28, 1.4, 1.4, 6), "dark"), dot(E(-2, -22, 1.2, 1.2, 6), "dark")], "#8a6440"),

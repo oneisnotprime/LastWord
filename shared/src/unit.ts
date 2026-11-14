@@ -9,11 +9,17 @@ import { inflicts } from "./status.js";
  * A noun with the adjectives on it. `count` above 1 is many of it as one body (a swarm, a
  * stack): see `massed`.
  */
-export interface Spelled { noun: string; adjectives?: string[]; count?: number }
+export interface Spelled {
+  noun: string;
+  adjectives?: string[];
+  count?: number;
+  /** States it has taken on in the world (COOKED, ROTTEN: shared food.ts): adjectives that take no slot. */
+  states?: string[];
+}
 
-/** What a spelled thing is: its noun and adjectives resolved, scaled by how many there are. */
+/** What a spelled thing is: its noun and adjectives resolved (and its states), scaled by how many there are. */
 export function resolveSpelled(dict: Dictionary, s: Spelled, lent: readonly string[] = []): Stats {
-  return massed(resolve(dict, s.noun, s.adjectives, lent), s.count ?? 1);
+  return massed(resolve(dict, s.noun, s.adjectives, [...(s.states ?? []), ...lent]), s.count ?? 1);
 }
 
 /** A character and everything it carries. */

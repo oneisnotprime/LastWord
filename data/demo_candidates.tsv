@@ -47,7 +47,7 @@ blue	adjective	modifier	quality	5.13	core	a00371931	noun:attribute,verb:transfor
 boat	noun	artifact	vehicle_water	4.71	core	n02861626	verb:movement
 bomb	noun	artifact	weapon	4.6	core	n02869918	verb:combat
 book	noun	artifact	document	5.43	core	n06422547	verb:social
-border	noun	artifact	structure	4.7	core	n08529808	verb:contact
+border	noun	artifact	building	4.7	core	n08529808	verb:contact
 boss	noun	person	leader	4.76	core	n10123978	adjective:quality,verb:contact
 both	adjective	modifier	quality	5.79	core	a02275890	-
 bottom	noun	terrain	depression	4.84	core	n09240545	adjective:quality,verb:transfer
@@ -58,7 +58,7 @@ break	verb	spell	contact	5.18	core	v00364717	noun:event
 bridge	noun	artifact	structure	4.77	core	n02901994	verb:contact
 bring	verb	spell	movement	5.27	core	v02081903	-
 british	adjective	modifier	pertaining	5.18	core	a03033691	noun:person
-budget	noun	artifact	currency	4.82	core	n13443005	verb:cognition
+budget	noun	artifact	document	4.82	core	n13443005	verb:cognition
 bus	noun	artifact	vehicle_land	4.83	core	n02927500	verb:movement
 buy	verb	spell	transfer	5.32	core	v02211988	noun:possession
 camera	noun	artifact	device	4.87	core	n02946154	-
@@ -72,7 +72,7 @@ cash	noun	artifact	currency	4.92	core	n13407787	verb:transfer
 cast	noun	artifact	medicine	4.79	core	n08254784	verb:create
 cat	noun	creature	mammal	4.78	core	n02124272	verb:contact
 cause	verb	spell	create	5.35	core	v01649143	noun:event
-cell	noun	artifact	structure	4.87	core	n02995010	-
+cell	noun	artifact	building	4.87	core	n02995166	-
 cent	noun	artifact	currency	4.83	core	n13411799	-
 central	adjective	modifier	quality	5.12	core	a01280207	noun:artifact
 certain	adjective	modifier	quality	5.16	core	a00704329	-
@@ -82,7 +82,7 @@ change	noun	artifact	currency	5.54	core	n13408862	verb:transform
 channel	noun	artifact	route	4.85	core	n03009709	verb:movement
 check	noun	artifact	document	5.31	core	n13402907	verb:social
 chicken	noun	creature	bird	4.63	core	n01794266	adjective:quality
-chief	adjective	modifier	quality	5.11	core	a01280536	noun:leader
+chief	noun	person	leader	5.11	core	n10182584	adjective:quality
 china	noun	artifact	container	5.1	core	n03021863	-
 clear	adjective	modifier	quality	5.25	core	a00429900	verb:transform,noun:place,adverb:manner
 close	adjective	modifier	quality	5.36	core	a00448955	verb:contact,noun:act,adverb:manner
@@ -95,7 +95,6 @@ college	noun	artifact	building	5.27	core	n08295090	-
 come	verb	spell	movement	5.78	core	v01853188	noun:bodypart
 coming	adjective	modifier	quality	5.4	core	a01736850	noun:attribute
 common	adjective	modifier	quality	5.2	core	a00494722	noun:place
-cook	noun	person	worker	4.65	core	n09982799	verb:create
 cool	adjective	modifier	quality	5.15	core	a02540350	verb:transform,noun:attribute
 core	noun	artifact	device	4.73	core	n08259144	verb:contact
 count	noun	person	leader	4.83	core	n09988748	verb:communication
@@ -137,7 +136,6 @@ engine	noun	artifact	machine	4.84	core	n03292644	-
 english	adjective	modifier	pertaining	5.19	core	a03014852	noun:communication
 enough	adjective	modifier	quality	5.54	core	a02344113	adverb:manner,noun:quantity
 entry	noun	artifact	structure	4.67	core	n06515715	-
-estate	noun	artifact	building	4.82	core	n13271829	-
 every	adjective	modifier	quality	5.79	core	a02277553	-
 fall	noun	terrain	water	5.13	core	n15261656	verb:movement
 falls	noun	terrain	water	4.63	core	n09498422	-
@@ -155,7 +153,6 @@ fight	verb	spell	combat	5.23	core	v01092746	noun:conflict
 file	noun	artifact	tool	4.75	core	n03341784	verb:contact
 final	adjective	modifier	quality	5.28	core	a01013868	noun:contest
 find	verb	spell	transfer	5.76	core	v02253273	noun:knowledge
-fine	adjective	modifier	quality	5.23	core	a02088253	noun:possession,adverb:manner,verb:social
 first	adjective	modifier	quality	6.11	core	a01014459	adverb:manner,noun:quantity
 fish	noun	creature	fish	4.9	core	n02514684	verb:contact
 floor	noun	artifact	structure	4.94	core	n03370837	verb:contact
@@ -297,6 +294,7 @@ most	adjective	modifier	quality	6.0	core	a01561513	adverb:manner
 move	verb	spell	movement	5.35	core	v01839438	noun:act
 much	adjective	modifier	quality	6.0	core	a01557986	noun:quantity,adverb:manner
 museum	noun	artifact	building	4.71	core	n03806085	-
+must	noun	consumable	drink	5.68	core	n07940895	adjective:quality
 natural	adjective	modifier	quality	5.11	core	a01574358	noun:person
 near	adjective	modifier	quality	5.29	core	a00446553	verb:movement,adverb:manner
 needed	adjective	modifier	quality	5.18	core	a01585183	-
@@ -322,7 +320,7 @@ other	adjective	modifier	quality	6.16	core	a02076759	-
 out	adjective	modifier	quality	6.38	core	a02068891	noun:act,adverb:manner,verb:communication
 outside	adjective	modifier	quality	5.25	core	a01697422	noun:place,adverb:manner
 over	adjective	modifier	quality	6.08	core	a01006696	adverb:manner,noun:time
-own	adjective	modifier	quality	5.74	core	a01773236	verb:transfer
+own	verb	spell	social	5.74	core	v02209474	adjective:quality
 pack	noun	artifact	container	4.66	core	n03876224	verb:contact
 page	noun	artifact	document	5.12	core	n06267274	verb:social
 paid	adjective	modifier	participle	5.12	core	a01712702	-
@@ -342,6 +340,7 @@ planet	noun	terrain	celestial	4.68	core	n09416900	-
 plant	noun	flora	plant	4.89	core	n03963198	verb:contact
 play	verb	spell	social	5.61	core	v01075360	noun:act
 played	adjective	modifier	participle	5.23	core	a03164026	-
+police	noun	person	worker	5.33	core	n08226608	verb:social
 pool	noun	terrain	water	4.67	core	n09420266	verb:transfer
 pop	noun	consumable	drink	4.87	core	n07943752	verb:movement,adjective:quality,adverb:manner
 port	noun	artifact	building	4.73	core	n08651532	adjective:quality,verb:movement

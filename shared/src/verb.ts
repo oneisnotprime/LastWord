@@ -86,16 +86,17 @@ export function bodyFlags(set: Record<string, Value>): Record<string, Value> {
  * Using an object (eating BREAD, drinking WINE, taking MEDICINE) works as casting a verb on
  * yourself: it restores `restores` integrity, ends the statuses in `effect_status`, and for its
  * `duration` its operations and body flags act on you, and its `nutrition` goes into your food
- * store. Returns null if using it would do nothing. Whether it is gone afterwards is its
+ * store; eaten, its `toxicity` poisons you (shared food.ts `toxin`). Returns null if using it would do nothing. Whether it is gone afterwards is its
  * `single_use`; anything eaten for its nutrition is gone too.
  */
-export function useObject(dict: Dictionary, noun: string, adjectives: readonly string[] = []): Cast | null {
+export function useObject(dict: Dictionary, noun: string, adjectives: readonly string[] = [], states: readonly string[] = []): Cast | null {
   const def = dict.word(noun);
   if (!def || def.role !== "noun") return null;
-  const stats = resolve(dict, noun, adjectives);
+  const stats = resolve(dict, noun, adjectives, states);
   const set = bodyFlags(def.set);
   const ops = def.ops;
   const lasting = stats.num("duration") > 0 && (ops.length > 0 || Object.keys(set).length > 0);
-  if (!(stats.num("restores") > 0) && !stats.tags("effect_status").length && !lasting && !(stats.num("nutrition") > 0)) return null;
+  const poisonous = stats.flag("edible") && stats.num("toxicity") > 0; // eaten, it poisons (shared food.ts `toxin`)
+  if (!(stats.num("restores") > 0) && !stats.tags("effect_status").length && !lasting && !(stats.num("nutrition") > 0) && !poisonous) return null;
   return { stats, set, ops };
 }

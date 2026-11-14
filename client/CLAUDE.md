@@ -86,6 +86,9 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
   Shift-click attacks it. A gathering miss shows small (`missed`), a find's popup its `detail`.
 - Knocked out, the HUD card has Start new round: `playAgain` (start.ts) reloads into a fresh room
   with the same choice, past the start screen. A room lost for good (server restart) does the same.
+- Themes batch 1 art: `ARCHETYPES` has `herb` and `gem`; `WORDS` has the common professions (chef,
+  nurse, judge, scout, mason...). Materials, cooked and rotten things take their colour from the
+  data (`color`), through `look.ts`.
 - The top-left HUD lists letters coming in a minute by letter and what makes them (loadout
   `income`), and food, fuel and power in and out; the loadout screen's Producing lines say why a
   producer is idle. The corner shows the wind and the city you stand in (ruler, citizens).

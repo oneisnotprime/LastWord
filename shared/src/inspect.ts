@@ -1,5 +1,5 @@
 import type { Dictionary } from "./dictionary.js";
-import { needsText, producerOf } from "./produce.js";
+import { GROW_PACE, needsText, producerOf, SEEDLING } from "./produce.js";
 import { parsePhrase, type Phrase } from "./phrase.js";
 import type { Stats } from "./stats.js";
 import type { Op, Value } from "./types.js";
@@ -13,6 +13,10 @@ import { pluralize } from "./plural.js";
 import { effectSeconds, statusSeconds, type Status } from "./status.js";
 import { toolHelp } from "./biome.js";
 import { TILE_TYPES } from "./world.js";
+import { isMaterial, materialText } from "./material.js";
+import { foodText } from "./food.js";
+import { jobText } from "./work.js";
+import { breachText, pactOf } from "./law.js";
 
 /**
  * How a spelled object enters the world (the server's `make` follows this):
@@ -47,12 +51,16 @@ export function aimOf(p: Phrase): "someone" | "anywhere" | null {
   }
   if (p.kind === "field") return s.get("placement") === "target" ? "anywhere" : null;
   if (p.kind !== "event") return null;
-  if (s.flag("transfers_ownership") || s.flag("destroys_target") || s.num("letter_steal") > 0 || s.num("moves_target") > 0 ||
+  if (pactOf(s) || s.flag("transfers_ownership") || s.flag("destroys_target") || s.num("letter_steal") > 0 || s.num("moves_target") > 0 ||
     s.num("restores") > 0 || s.num("produce_T") > 0 || (s.num("inflict_stun") > 0 && s.get("event_target") === "character")) return "someone";
+  // Passed on a person (ARREST, EXILE, PARDON): its statuses or cures land on whoever is clicked.
+  if (s.get("event_target") === "character" && !(s.num("event_radius") > 0) && (inflictsAny(s) || s.tags("effect_status").length)) return "someone";
   if (s.flag("frees_target")) return null;
-  const regional = s.get("placement") === "region" || s.get("placement") === "map";
+  const regional = s.get("placement") === "region" || s.get("placement") === "map" || s.get("placement") === "self";
   return regional ? null : "anywhere";
 }
+
+const inflictsAny = (s: Stats) => s.entries().some(([id, v]) => id.startsWith("inflict_") && typeof v === "number" && v > 0);
 
 /** A card telling what something is: shown as you spell it, and when you right-click it in the world. */
 export interface Card {
@@ -135,6 +143,7 @@ export function behaviours(s: Stats, count = 1): string[] {
       out.push("walks with you and defends you");
       out.push(s.flag("sentient") ? "attacks what you attack" : "takes no orders (not sentient)");
       if (!s.flag("alive")) out.push("not alive: needs no food");
+      out.push(...jobText(s));
       break;
     case "terrain":
       out.push(`reshapes the land into ${words(String(s.get("tile_type")))}${s.num("radius") > 0 ? `, radius ${num(s.num("radius"))} tile${s.num("radius") === 1 ? "" : "s"}` : ""}`);
@@ -173,6 +182,7 @@ export function behaviours(s: Stats, count = 1): string[] {
     out.push(`makes ${letters.map(([ch, n]) => `${ch.toUpperCase()} +${num(n)}/min`).join(", ")} while yours${needs ? `, ${needs}` : ""}`);
   }
   if (spec.age > 0) out.push(`ages into Y faster than most (+${num(spec.age)})`);
+  if (spec.grows > 0) out.push(`planted where it is made: grows to full yield in ${num(spec.grows * GROW_PACE * (1 - SEEDLING))} min, faster in rain and rich soil`);
   if (s.flag("phase")) out.push("passes through walls");
   if (s.flag("hover") || s.num("speed_air") > 0) out.push("flies");
   if (s.flag("edible") || s.num("nutrition") > 0) out.push(`edible (${num(s.num("nutrition"))} food)`);
@@ -227,6 +237,8 @@ export function cardOf(dict: Dictionary, p: Phrase): Card {
     if (s.num("moves_target") > 0) card.does.push("brings its target to you");
     if (s.num("restores") > 0) card.does.push("repairs a thing");
     if (s.flag("frees_target")) card.does.push("frees everything around you from its owners");
+    const pact = pactOf(s);
+    if (pact) card.does.push(`binds you and ${pact.size - 1} other${pact.size === 2 ? "" : "s"} you pick to one side for ${num(pact.minutes)} min; whoever breaks it pays ${breachText(pact.penalty)}`);
     if (s.flag("sets_hostile")) card.does.push("creatures in it attack everyone not on your side");
     card.does.push(...placeLines(dict, p.noun, s));
     for (const [id] of s.entries()) if (id.startsWith("inflict_") && s.num(id) > 0) card.does.push(`${plain(id)} ${num(statusSeconds(id.slice(8) as Status, s.num(id)))} s`);
@@ -256,9 +268,12 @@ export function cardOf(dict: Dictionary, p: Phrase): Card {
     return card;
   }
   card.stats = becomes(s) === "terrain" ? [] : keyStats(s);
-  card.does = behaviours(s, p.count);
+  // What heat, time or a new material do to it come first: they are why it was spelled so.
+  const remade = p.adjectives.some((a) => isMaterial(dict.lookup(a)?.def) || dict.lookup(a)?.def.set.material !== undefined);
+  card.does = [...(remade ? materialText(dict, s) : []), ...foodText(dict, s), ...behaviours(s, p.count)];
   const use = useText(dict, p.noun, p.adjectives);
   if (use) card.does.push(use);
+  if (!remade) card.does.push(...materialText(dict, s));
   return card;
 }
 
@@ -292,7 +307,7 @@ export function inspectText(dict: Dictionary, text: string): { card: Card } | { 
 /** What a word's area does to letters, acts and the land, in short lines (shared `placeRules`), plus what it summons or lays. */
 export function placeLines(dict: Dictionary, word: string, s: Stats): string[] {
   const def = dict.word(word);
-  const out = def ? rulesText(placeRules(def, s) ?? { yields: {}, growth: 1, deposits: 1, tax: 0, lode: [], lodeShare: 0, lodeStock: 0, tradeRate: 1, law: [] }) : [];
+  const out = def ? rulesText(placeRules(def, s) ?? { yields: {}, growth: 1, deposits: 1, tax: 0, lode: [], lodeShare: 0, lodeStock: 0, tradeRate: 1, law: [], fine: 0 }) : [];
   const summons = String(s.get("summons"));
   if (summons && s.num("summon_count") > 0) {
     const n = s.num("summon_count");
