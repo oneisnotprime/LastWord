@@ -51,7 +51,9 @@ it("FEAR makes those it frightens run from its maker and strike nobody", async (
   expect(wb.player.status).toContain("fear");
   expect(wb.foe).toBeNull();
   expect(wa.hp).toBe(hp);
-  expect(Math.hypot(wb.player.x - wa.player.x, wb.player.y - wa.player.y)).toBeGreaterThan(4);
+  const why = JSON.stringify({ a: [wa.player.x, wa.player.y], b: [wb.player.x, wb.player.y], target: wb.target, route: wb.route, speed: wb.speed,
+    hamper: wb.hamper, statuses: wb.statuses, morale: wb.morale, fleeing: wb.fleeing, elapsed: (room as any).elapsed, seed: room.state.seed, kits: WorldRoom.kits });
+  expect(Math.hypot(wb.player.x - wa.player.x, wb.player.y - wa.player.y), why).toBeGreaterThan(4);
   expect(has(wa, "fear")).toBe(false); // FEAR targets enemies only
 });
 
