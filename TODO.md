@@ -92,6 +92,7 @@ lexicon so every related word is captured.
 - [ ] Ways to see more of the map: wider sight, or a zoomed-out view of the map
 - [ ] Scales such as good and evil, smart and dumb, that words move players and things along
 - [ ] Name idea: a new word for war
+- [ ] Brainstorm alternative game modes
 - [ ] Word idea: AI. AI and GENIE need something special of their own
 - [ ] A lexicon of extremely powerful words: CTHULHU, GOLEM, BEAST, QUETZALCOATL and the like
       (mythic beings, legendary creatures, cosmic horrors), with matching counter-words
