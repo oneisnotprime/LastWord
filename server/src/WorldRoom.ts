@@ -1,7 +1,7 @@
 import { Room, type Client } from "colyseus";
 import { StateView } from "@colyseus/schema";
 import {
-  addLetters, afflict, aggressive, clearLine, courageOf, pluralize, auras, authorityOf, chooseTarget, commandLimit, draw, groundFood, hasAny, ignoresOrder, moraleAim, moraleGoal, needs, nextMorale, noStores, outputs, recruitRate, rerouteSeconds, retreats, routed, supply, theftResistance, HUNGER_LOYALTY, NORMAL, STARTING_STORES, STARVING, SUPPLIES, bodyFlags, cure, useObject, findPath, hampered, inflicts, statusDamage, statusEffects, tickStatuses, wake, GATHER_SECONDS, gatherLetter, generateMap, GIVE_RANGE, missing, parsePhrase, production, resolveSpelled, SEPARATE_UP_TO, nearestWalkable, randomWalkable, resolve, Tile, tileAt, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit,
+  addLetters, afflict, aggressive, clearLine, courageOf, pluralize, auras, authorityOf, chooseTarget, commandLimit, draw, groundFood, hasAny, ignoresOrder, moraleAim, moraleGoal, needs, nextMorale, noStores, outputs, recruitRate, rerouteSeconds, retreats, routed, supply, theftResistance, HUNGER_LOYALTY, NORMAL, STARTING_STORES, STARVING, SUPPLIES, bodyFlags, cure, useObject, findPath, hampered, inflicts, statusDamage, statusEffects, tickStatuses, wake, GATHER_SECONDS, gatherLetter, generateMap, GIVE_RANGE, missing, parsePhrase, applyAdjectives, cannotCarry, improvisable, readDescription, production, resolveSpelled, SEPARATE_UP_TO, nearestWalkable, randomWalkable, resolve, Tile, tileAt, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit,
   type Affliction, type Candidate, type Dictionary, type Stores, type Supply, type Entity, type Hampered, type Status, type Stats, type Letters, type LoadoutDetail, type Op, type Phrase, type Point, type Spelled, type Value, type WordDef, type WorldMap,
 } from "@lastword/shared";
 import { affords, botSettings, chooseWord, held, wordBook, type BotWord, type Difficulty, type Use } from "./bots.js";
@@ -341,12 +341,14 @@ export class WorldRoom extends Room {
       });
       if (!best) return void client.send("refused", "Nothing of yours to pick up here");
       const gear = this.grounded.get(best)!;
-      const wearable = gear.vehicle || this.slotOf(gear) !== "none";
-      const problem = wearable ? this.equip(walker, gear) : `${gear.phrase.toUpperCase()} cannot be carried`;
+      // Anything light enough is carried in a free hand as an improvised weapon (shared `improvised`).
+      const stats = this.statsOf(gear);
+      const loose = !gear.vehicle && improvisable(stats);
+      const problem = (loose && cannotCarry(stats, walker.unit.body.stats, gear.phrase)) || this.equip(walker, gear);
       if (problem) return void client.send("refused", problem);
       this.removeThing(best);
       this.tell(walker);
-      client.send("notice", `${gear.phrase.toUpperCase()} equipped`);
+      client.send("notice", `${gear.phrase.toUpperCase()} ${loose ? "in hand" : "equipped"}`);
       this.refreshViews();
     },
     /** Put down something you carry: the one at `index`, or the last thing equipped. */
@@ -429,6 +431,20 @@ export class WorldRoom extends Room {
         client.send("refused", (e as Error).message);
       }
     },
+    /**
+     * Adjectives spelled on their own, put on something in sight: { text, target } names a player,
+     * creature or thing by id (your own id for yourself), and `gear` an index into your own gear.
+     */
+    describe: (client: Client, what: unknown) => {
+      const walker = this.walkers.get(client.sessionId);
+      const w = what as { text?: unknown; target?: unknown; gear?: unknown } | null;
+      if (!walker || !w) return;
+      try {
+        this.describeWord(client.sessionId, walker, w.text, w.target, w.gear);
+      } catch (e) {
+        client.send("refused", (e as Error).message);
+      }
+    },
     /** Spend letters to make an object where the player stands. */
     spell: (client: Client, text: unknown) => {
       const walker = this.walkers.get(client.sessionId);
@@ -482,6 +498,100 @@ export class WorldRoom extends Room {
       : `${[...phrase.adjectives.filter((a) => !this.onlyCounts(a)), phrase.noun].join(" ").toUpperCase()} ${done}`;
     this.sendTo(id, "spelled", said);
     this.tell(walker); // what is now in reach to use
+    this.refreshViews();
+    return said;
+  }
+
+  /**
+   * Adjectives spelled alone and put on something in the speller's sight, exactly as if it had
+   * been spelled with them (shared `applyAdjectives`): a thing on the ground, a creature, a
+   * person's body (yours too), or a piece of your own gear. Anyone's, not only yours: WEAK on an
+   * enemy's wolf. Checks letters, sight and free adjective slots before spending anything; then
+   * everyone who can see the target is sent `described` to show what changed.
+   */
+  describeWord(id: string, walker: Walker, text: unknown, target: unknown, gearIndex?: unknown): string {
+    if (typeof text !== "string" || text.length > 80) throw new Error("Spell something");
+    if (!walker.hamper.spells) throw new Error(`You cannot spell while you are ${STATE_WORDS[walker.hamper.muteBy!] ?? walker.hamper.muteBy}`);
+    const read = readDescription(this.dict, text);
+    if (!read) return this.spellWord(id, walker, text);
+    const lacking = missing(walker.letters, read.letters);
+    if (lacking) throw new Error(`You need ${lacking.toUpperCase().split("").join(" ")}`);
+    const words = read.adjectives.join(" ").toUpperCase();
+    if (typeof target !== "string") throw new Error(`Click something for ${words}`);
+    const shown = (adjectives: readonly string[], noun: string) => [...adjectives.filter((a) => !this.onlyCounts(a)), noun].join(" ");
+    const other = this.walkers.get(target), thing = this.state.things.get(target), gear = this.grounded.get(target);
+    const at = other?.player ?? thing;
+    if (!at) throw new Error(`Nothing there for ${words}`);
+    if (Math.hypot(at.x - walker.player.x, at.y - walker.player.y) > Math.max(1.5, walker.sight)) throw new Error(`Too far away for ${words}: it must be in sight`);
+    const ownGear = target === id && Number.isInteger(gearIndex) ? walker.gear[gearIndex as number] : undefined;
+    if (ownGear) {
+      // A piece of your own gear: rebuilt with its damage kept in proportion.
+      const before = this.statsOf(ownGear).num("integrity");
+      const done = applyAdjectives(this.dict, ownGear.spelled, read.adjectives);
+      const kept = ownGear.integrity === null ? null : ownGear.integrity / before;
+      const old = { spelled: ownGear.spelled, phrase: ownGear.phrase };
+      ownGear.spelled = done.spelled;
+      this.resolved.delete(ownGear);
+      ownGear.phrase = shown(done.spelled.adjectives!, done.spelled.noun);
+      ownGear.integrity = null;
+      try { this.rebuild(walker); } catch (e) { Object.assign(ownGear, old); this.resolved.delete(ownGear); this.rebuild(walker); throw e; }
+      const layer = walker.unit.entityFor(ownGear.spelled);
+      if (layer && kept !== null) { layer.integrity = kept * layer.stats.num("integrity"); ownGear.integrity = layer.integrity; }
+      return this.described(id, walker, read, target, at, old.phrase, done.changes, id);
+    } else if (other) {
+      if (other.unit.body.stats.flag("untargetable")) throw new Error(`${other.player.name.toUpperCase()} cannot be targeted`);
+      const max = other.unit.body.stats.num("integrity");
+      const done = applyAdjectives(this.dict, other.body, read.adjectives);
+      const old = other.body;
+      other.body = done.spelled;
+      try { this.rebuild(other); } catch (e) { other.body = old; this.rebuild(other); throw e; }
+      other.hp = (other.hp / max) * other.unit.body.stats.num("integrity");
+      other.unit.body.integrity = other.hp;
+      const what = other.player.name;
+      if (other.master === null) other.player.traits = done.spelled.adjectives!.join(" ");
+      else other.player.name = shown(done.spelled.adjectives!, done.spelled.noun);
+      return this.described(id, walker, read, target, at, what, done.changes, other.master ?? target, other.master === null ? other.player.name : undefined);
+    } else if (thing && gear && !gear.terrain) {
+      const before = this.statsOf(gear).num("integrity");
+      const done = applyAdjectives(this.dict, gear.spelled, read.adjectives);
+      const kept = gear.integrity === null ? null : gear.integrity / before;
+      const what = gear.phrase;
+      this.unradiateAll(target);
+      gear.spelled = done.spelled;
+      this.resolved.delete(gear);
+      gear.phrase = shown(done.spelled.adjectives!, done.spelled.noun);
+      const stats = this.statsOf(gear);
+      gear.vehicle = stats.flag("mountable");
+      if (kept !== null) gear.integrity = kept * stats.num("integrity");
+      this.thingEntities.delete(target);
+      thing.phrase = gear.phrase;
+      if (this.producers.has(target)) {
+        const rates = production(stats);
+        for (const k of Object.keys(rates)) rates[k]! *= gear.spelled.count ?? 1;
+        this.producers.set(target, { owner: thing.owner, rates, built: {} });
+      }
+      this.radiate(gear, gear.spelled, target, thing.owner, { x: thing.x, y: thing.y }, null, Number(this.dict.base(gear.spelled.noun, "sight_range")));
+      return this.described(id, walker, read, target, at, what, done.changes, thing.owner);
+    }
+    throw new Error(`${words} cannot be put on that`);
+  }
+
+  /** Spends the letters for adjectives put on something, tells the speller and the owner, and shows everyone in sight what changed. */
+  private described(id: string, walker: Walker, read: { adjectives: string[]; letters: string }, target: string, at: Point,
+    what: string, changes: string[], owner: string, person?: string): string {
+    spend(walker.letters, read.letters);
+    this.sendTo(id, "letters", walker.letters);
+    const words = read.adjectives.join(" ").toUpperCase();
+    const said = `${words} on ${person ? (target === id ? "yourself" : person) : what.toUpperCase()}${changes.length ? `: ${changes.join(", ")}` : ""}`;
+    this.sendTo(id, "spelled", said);
+    const victim = person ? target : owner;
+    if (victim && victim !== id && victim !== "-") this.sendTo(victim, "notice", `${walker.player.name} put ${words} on ${person ? "you" : `your ${what.toUpperCase()}`}`);
+    const effect = { target, x: at.x, y: at.y, words, what: what.toUpperCase(), changes };
+    for (const c of this.clients) {
+      const w = this.walkers.get(c.sessionId);
+      if (w && (c.sessionId === id || Math.hypot(w.player.x - at.x, w.player.y - at.y) <= w.sight)) c.send("described", effect);
+    }
+    this.tell(walker);
     this.refreshViews();
     return said;
   }
@@ -570,6 +680,7 @@ export class WorldRoom extends Room {
     player.owner = "";
     player.status = "";
     player.count = 1;
+    player.traits = "";
     this.state.players.set(id, player);
     this.walkers.set(id, {
       id: id,
@@ -613,8 +724,11 @@ export class WorldRoom extends Room {
     this.unradiateAll(client.sessionId);
   }
 
+  /** Where a carried thing goes: its own `equip_slot`, "ride" for a vehicle, "held" for a thing with no slot (a STONE in the hand). */
   private slotOf(g: Gear): string {
-    return g.vehicle ? "ride" : String(this.dict.base(g.spelled.noun, "equip_slot"));
+    if (g.vehicle) return "ride";
+    const slot = String(this.dict.base(g.spelled.noun, "equip_slot"));
+    return slot === "none" ? "held" : slot;
   }
 
   /**
@@ -1212,6 +1326,8 @@ export class WorldRoom extends Room {
    * wild creatures choose what to do.
    */
   private beat(since: number) {
+    this.state.alive = this.people.length;
+    this.state.clock = Math.floor(this.elapsed);
     this.nearGrid = new Map();
     for (const [id, w] of this.walkers) {
       const k = Math.floor(w.player.x / NEAR_CELL) * 4096 + Math.floor(w.player.y / NEAR_CELL);

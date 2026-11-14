@@ -27,6 +27,52 @@ export interface Loadout {
   effects?: { set?: Record<string, Value>; ops?: Op[] }[];
 }
 
+/**
+ * Kilograms a point of strength can lift and swing in its hands: 20 kg for an ordinary person
+ * (strength 5), so a STONE or a CHAIR can be picked up and a TABLE or a LOG cannot.
+ */
+export const CARRY_PER_STRENGTH = 4;
+/** Blunt damage of a carried thing per point of hardness times the square root of its mass in kg. */
+export const IMPROVISED_DAMAGE = 2;
+
+/** The most a body can carry in its hands, in kg: its strength times CARRY_PER_STRENGTH. */
+export function carryLimit(body: Stats): number {
+  return Math.max(0, body.num("strength")) * CARRY_PER_STRENGTH;
+}
+
+/** True for something with no place to be worn, held or ridden: carried, it is an improvised weapon. */
+export function improvisable(stats: Stats): boolean {
+  return stats.get("equip_slot") === "none" && !stats.flag("mountable");
+}
+
+/**
+ * Why a body cannot pick up a thing that has no slot of its own (a STONE, a CHAIR), or null if it
+ * can: it must be portable and weigh no more than the body's `carryLimit`.
+ */
+export function cannotCarry(item: Stats, body: Stats, name: string): string | null {
+  const what = name.toUpperCase();
+  if (!item.flag("portable")) return `${what} cannot be picked up`;
+  if (item.num("mass") > carryLimit(body)) return `${what} is too heavy to carry`;
+  return null;
+}
+
+/**
+ * A thing with no slot of its own held as a weapon: a blow from its mass and hardness
+ * (IMPROVISED_DAMAGE × hardness × √mass of blunt damage, so a STONE hits harder than BREAD), at
+ * arm's length, once a second, in one hand, or two if it weighs over half the carry limit.
+ * Damage it already does on its own is kept if larger. Strength and training then scale it like
+ * any swung weapon.
+ */
+export function improvised(item: Stats, body: Stats): Stats {
+  const stats = item.clone();
+  const blow = IMPROVISED_DAMAGE * Math.max(0, stats.num("hardness")) * Math.sqrt(Math.max(0, stats.num("mass")));
+  if (blow > stats.num("dmg_blunt")) stats.set("dmg_blunt", Math.round(blow * 10) / 10);
+  if (!(stats.num("attack_rate") > 0)) stats.set("attack_rate", 1);
+  stats.set("attack_range", Math.min(stats.num("attack_range"), MELEE_RANGE));
+  stats.set("hands_required", stats.num("mass") > carryLimit(body) / 2 ? 2 : 1);
+  return stats;
+}
+
 /** Reach, in metres, below which a weapon is swung and so scales with strength. */
 const MELEE_RANGE = 5;
 /** A bare hand, for a character holding no weapon. */
@@ -60,7 +106,15 @@ export class Unit {
 
     for (const item of loadout.items ?? []) {
       const def = dict.lookup(item.noun)?.def;
-      const stats = resolveSpelled(dict, item);
+      let stats = resolveSpelled(dict, item);
+      // A thing with no slot of its own and no weapon of its own (a STONE) is carried in the hand
+      // as an improvised weapon.
+      if (improvisable(stats) && !hasDamage(stats) && !inflicts(stats).length) {
+        const name = [...(item.adjectives ?? []), item.noun].join(" ");
+        const heavy = cannotCarry(stats, body, name);
+        if (heavy) throw new Error(heavy);
+        stats = improvised(stats, body);
+      }
       hands += stats.num("hands_required");
       if (hands > 2) throw new Error(`${item.noun} needs a free hand`);
       if (stats.num("hands_required") > 0 && !body.flag("hands")) throw new Error(`${loadout.body.noun} has no hands`);

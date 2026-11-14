@@ -50,6 +50,10 @@ Node process that owns the game state. One room per map instance (from milestone
 - `cast` applies a verb with its adverbs (shared `castVerb`); touched verbs with event properties
   go through `happen` on the picked target. A verb that would do nothing is refused.
 - `use` (U) applies an object to its user through `affect`, the same code as `cast`.
+- `take` (E) picks up wearables, and anything light enough (shared `cannotCarry`) into a hand.
+- `describe` { text, target, gear? }: adjectives spelled alone put on a thing, creature, person
+  (`Player.traits`) or your own gear, within your sight (`describeWord`); everyone in sight of the
+  target gets `described` with what changed. `state.alive` and `state.clock` feed the HUD.
 - Objects radiate (`radiate`, `syncRadiation`): a `field_radius` gives the same `Area` a field
   word makes (`fieldArea`), and shared `auras` adds light, fear and healing. Carried things and
   bodies radiate around their walker (synced in `rebuild`), things on the ground around

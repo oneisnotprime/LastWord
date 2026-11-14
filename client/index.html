@@ -13,8 +13,53 @@
       #game canvas { display: block; }
       #hud { position: fixed; inset: 0; pointer-events: none; font: 500 14px/1.35 var(--round); color: var(--ink); }
       .paper { background: var(--paper); border-radius: 3px; box-shadow: var(--shadow); }
-      #status { position: absolute; top: 12px; left: 12px; max-width: 46vw; padding: 6px 12px 5px; background: var(--paper); border-radius: 3px;
-        box-shadow: var(--shadow); transform: rotate(-0.6deg); font: 700 15px/1.3 var(--hand); }
+      /* Top-left HUD: a card of paper pinned to the corner. */
+      #status { position: absolute; top: 10px; left: 10px; width: 250px; padding: 9px 12px 10px; background: var(--paper); border-radius: 3px;
+        box-shadow: var(--shadow); transform: rotate(-0.5deg); font: 500 12px/1.3 var(--round); color: var(--ink);
+        background-image: linear-gradient(90deg, transparent 0 10px, rgba(201, 69, 63, .18) 10px 11px, transparent 11px); }
+      #status::before { content: ""; position: absolute; top: -7px; left: 50%; width: 46px; height: 14px; margin-left: -23px; background: rgba(233, 214, 160, .75);
+        transform: rotate(-3deg); box-shadow: 0 1px 2px rgba(40, 28, 16, .2); }
+      #status .top { display: flex; align-items: baseline; justify-content: space-between; gap: 6px; margin-bottom: 5px; }
+      #status .me { font: 700 17px/1 var(--hand); letter-spacing: 1px; color: var(--blue); }
+      #status .round { font: 600 11px var(--round); color: var(--soft); white-space: nowrap; }
+      #status .round b { color: var(--ink); font-weight: 600; }
+      #status .bar { display: grid; grid-template-columns: 62px 1fr; align-items: center; gap: 6px; margin: 3px 0; }
+      #status .bar > span { font: 600 10px var(--round); color: var(--soft); text-transform: uppercase; letter-spacing: 1px; }
+      #status .track { position: relative; height: 13px; background: #e6dcc6; border-radius: 7px; overflow: hidden; box-shadow: inset 0 1px 2px rgba(0, 0, 0, .2); }
+      #status .track i { position: absolute; inset: 0 auto 0 0; border-radius: 7px; background: #7fbf6a; transition: width .25s;
+        background-image: repeating-linear-gradient(-45deg, rgba(255, 255, 255, .18) 0 4px, transparent 4px 8px); }
+      #status .track i.mid { background-color: #e9b949; } #status .track i.low { background-color: #d9573b; }
+      #status .track i.armor { background-color: #8a9aa8; } #status .track i.ride { background-color: #b07a45; }
+      #status .track em { position: absolute; inset: 0; text-align: center; font: 600 9.5px/13px var(--round); font-style: normal; color: #3a2f24; }
+      #status .gear { margin-top: 6px; display: grid; grid-template-columns: 62px 1fr; gap: 2px 6px; }
+      #status .gear > span { font: 600 10px/18px var(--round); color: var(--soft); text-transform: uppercase; letter-spacing: 1px; }
+      #status .gear > b { font: 700 14px/18px var(--hand); text-transform: uppercase; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      #status .gear > b.none { color: #b9ab90; font-weight: 400; }
+      #status .chips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+      #status .chip { font: 600 10.5px/1 var(--round); padding: 3px 6px 3px; border-radius: 3px; box-shadow: 0 1px 0 rgba(0, 0, 0, .15); letter-spacing: .5px; }
+      #status .chip:nth-child(odd) { transform: rotate(-2deg); }
+      #status .chip small { font-size: 9px; opacity: .8; margin-left: 3px; }
+      #status .store { background: #efe4c8; color: var(--ink); }
+      #status .note { margin-top: 5px; font: 500 11px var(--round); color: var(--soft); }
+      /* The spell window: the game dims and a gold frame says every key now spells. */
+      #spellwin { position: fixed; z-index: 3; inset: 0; display: none; pointer-events: auto; background: rgba(28, 22, 16, .45);
+        box-shadow: inset 0 0 0 6px var(--gold), inset 0 0 60px rgba(233, 185, 73, .45); }
+      #spellwin.show { display: block; }
+      #spellwin .card { position: absolute; left: 50%; top: 34%; transform: translate(-50%, -50%) rotate(-0.8deg); width: min(560px, 90vw); padding: 14px 22px 16px;
+        background: var(--paper); border-radius: 4px; box-shadow: 0 0 0 5px var(--gold), 0 3px 0 5px #b8903a, 0 22px 50px rgba(20, 14, 8, .6); text-align: center; }
+      #spellwin h2 { margin: 0 0 6px; font: 700 26px var(--hand); letter-spacing: 6px; color: #8a5a1a; }
+      #spellwin h2::before, #spellwin h2::after { content: "✎"; margin: 0 10px; font-size: 18px; color: var(--gold); }
+      #spellwin .hint { margin-top: 8px; font: 500 12px var(--round); color: var(--soft); }
+      #spellwin .hint kbd { font: 600 11px var(--round); background: var(--card); border-radius: 3px; padding: 1px 6px; box-shadow: 0 1px 0 #cfc3a6; color: var(--ink); }
+      /* Aiming adjectives: a banner up top and the words beside the cursor. */
+      #aim { position: absolute; top: 104px; left: 50%; transform: translateX(-50%) rotate(0.6deg); display: none; padding: 6px 18px 7px; background: var(--gold);
+        color: #4a3510; box-shadow: var(--shadow); border-radius: 3px; font: 700 18px var(--hand); letter-spacing: 1px; white-space: nowrap; }
+      #aim.show { display: block; }
+      #aim small { font: 600 11px var(--round); letter-spacing: .5px; margin-left: 10px; color: #6a4a10; }
+      #aimcursor { position: fixed; display: none; pointer-events: none; padding: 1px 8px 2px; background: var(--paper); border: 2px solid var(--gold); border-radius: 3px;
+        font: 700 14px var(--hand); color: #8a5a1a; letter-spacing: 1px; transform: translate(14px, 10px) rotate(-2deg); box-shadow: 0 3px 8px rgba(40, 28, 16, .35); z-index: 5; }
+      #aimcursor.show { display: block; }
+      body.aiming #game canvas { cursor: crosshair; }
       #help { position: absolute; top: 12px; right: 12px; max-width: 40vw; text-align: right; font: 500 11.5px/1.45 var(--round); padding: 6px 10px; border-radius: 3px;
         background: #f3ead6e8; color: var(--soft); box-shadow: 0 1px 0 #cfc3a6, 0 3px 8px rgba(40, 28, 16, .25); transform: rotate(0.4deg); }
       #overmap { position: absolute; top: 58px; left: 50%; transform: translateX(-50%) rotate(-1deg); display: none; padding: 4px 26px 6px;
@@ -22,7 +67,7 @@
         clip-path: polygon(0 0, 100% 0, 96% 50%, 100% 100%, 0 100%, 4% 50%); }
       #overmap.show { display: block; }
       #overmap small { display: block; font: 600 10px var(--round); letter-spacing: 2px; color: var(--soft); text-transform: uppercase; margin-bottom: -4px; }
-      #bottom { position: absolute; bottom: 14px; left: 0; right: 0; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+      #bottom { position: absolute; z-index: 4; bottom: 14px; left: 0; right: 0; display: flex; flex-direction: column; align-items: center; gap: 10px; }
       #toast { position: relative; padding: 5px 16px 5px 24px; background: var(--paper); box-shadow: var(--shadow); font: 700 16px var(--hand);
         opacity: 0; transform: translateY(6px) rotate(-1deg); transition: opacity .2s, transform .2s; border-radius: 2px;
         clip-path: polygon(10px 0, 100% 0, 100% 100%, 10px 100%, 0 50%); }
@@ -55,16 +100,16 @@
       #panel .stat b { color: #8a5a1a; font: 700 15px var(--hand); }
       #panel .stat.status b, #panel .stat.status span { color: var(--red); }
       #panel .slot.status { color: var(--red); }
+      #panel button.aim { background: var(--gold); }
       #panel .bag { display: flex; flex-wrap: wrap; gap: 5px; }
       #panel .words { display: flex; flex-wrap: wrap; gap: 5px; }
       #panel .words button { text-transform: uppercase; font: 700 13px var(--hand); }
       #panel .words button:nth-child(3n) { transform: rotate(-1.5deg); }
       #panel .words button:nth-child(4n+1) { transform: rotate(1deg); }
-      #spell { width: min(480px, 80vw); pointer-events: auto; box-sizing: border-box; text-align: center;
-        font: 700 22px var(--hand); text-transform: uppercase; letter-spacing: 3px; padding: 6px 14px 4px; color: var(--ink);
-        background: var(--paper); border: 0; border-radius: 3px; outline: none; box-shadow: 0 3px 0 #d9cfb6, 0 6px 14px rgba(40, 28, 16, .35); transform: rotate(-0.6deg); }
-      #spell::placeholder { color: #b9ab90; letter-spacing: 1px; text-transform: none; font-weight: 400; }
-      #spell:focus { box-shadow: 0 3px 0 #d9cfb6, 0 6px 14px rgba(40, 28, 16, .35), 0 0 0 3px var(--gold); }
+      #spell { width: 100%; box-sizing: border-box; text-align: center;
+        font: 700 28px var(--hand); text-transform: uppercase; letter-spacing: 4px; padding: 8px 14px 6px; color: var(--ink);
+        background: #fffdf6; border: 0; border-radius: 3px; outline: none; box-shadow: inset 0 2px 4px rgba(60, 40, 20, .2), 0 0 0 2px #e6d3a3; }
+      #spell::placeholder { color: #c4b698; letter-spacing: 1px; text-transform: none; font-weight: 400; font-size: 20px; }
       #letters { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; max-width: 96vw; }
       .tile { width: 30px; height: 40px; background: var(--paper); color: var(--ink); border-radius: 3px; display: flex; flex-direction: column;
         align-items: center; justify-content: center; font: 700 19px/1 var(--round); box-shadow: 0 2px 0 #cfc3a6, 0 4px 8px rgba(40, 28, 16, .4); }
@@ -81,16 +126,22 @@
     <div id="game"></div>
     <div id="hud">
       <div id="status">Connecting…</div>
-      <div id="help">Move: WASD, arrows, click · Attack: click · Pick or aim: right-click · Gather: G · Pick up: E · Drop: Q · Use: U · Spell: Enter · Inventory: I · Loadout: L · Trade: give player2 abc</div>
+      <div id="help">Move: WASD, arrows, click · Attack: click · Pick or aim: right-click · Gather: G · Pick up: E · Drop: Q · Use: U · Inventory: I · Loadout: L<br><b>Enter</b>: spell window · adjectives alone (WORST): spell, then click a target · Trade: give player2 abc</div>
       <div id="overmap"></div>
+      <div id="aim"></div>
       <div id="banner"></div>
       <div id="panel"></div>
       <div id="bottom">
         <div id="toast"></div>
-        <input id="spell" placeholder="Press Enter to spell" autocomplete="off" spellcheck="false" maxlength="80" />
         <div id="letters"></div>
       </div>
     </div>
+    <div id="spellwin"><div class="card">
+      <h2>SPELL</h2>
+      <input id="spell" placeholder="type a word: SWORD, BIG WOLF, WORST…" autocomplete="off" spellcheck="false" maxlength="80" />
+      <div class="hint"><kbd>Enter</kbd> casts · <kbd>Esc</kbd> cancels · adjectives alone (WORST) are aimed with a click · <kbd>give player2 abc</kbd> trades letters</div>
+    </div></div>
+    <div id="aimcursor"></div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
