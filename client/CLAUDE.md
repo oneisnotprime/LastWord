@@ -21,9 +21,14 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
   the bottom middle, the spell window (Enter opens it; while open every key goes to it, Enter
   casts, Esc cancels), the aiming banner, toasts, and the inventory (I) and loadout (L) screens,
   drawn from the server's private `loadout` message. Location and weather are on the loadout screen.
-- Adjectives spelled alone (`readDescription`) put `main.ts` into aiming: a click on a thing,
-  creature, person or yourself sends `describe`; Esc or right-click cancels. `burst` draws the
-  `described` effect: a gold burst and a rising tag listing what changed.
+- Adjectives spelled alone (`readDescription`) and events that need a target (shared `aimOf`) put
+  `main.ts` into aiming: a click on a thing, creature, person or yourself sends `describe`, or
+  `pick` + `spell` + `pick(null)` for an event; Esc or right-click cancels.
+- Right-click is only inspect: `inspectAt` shows the inspect card (shared `cardOf`) with Add
+  adjective, which opens the spell window aimed at that target. The spell window shows a live
+  preview (shared `inspectText`) and whether you hold the letters. `Hud.lock` stops spelling once
+  you are dead, spectating or the round is over. Bottom left (`#corner`): ground and tile.
+- `burst` draws the `described` effect: a gold burst and a rising tag listing what changed.
 - `window.__lw` exposes the connection and map for browser checks.
 - To check in a browser: start the server (`npm start -w server`), build and
   `npx vite preview` in `client/`, then drive it with Playwright.

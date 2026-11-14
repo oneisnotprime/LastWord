@@ -18,6 +18,20 @@ export const noStores = (): Stores => ({ food: 0, fuel: 0, power: 0 });
 /** What a person starts with: a little food, nothing else. */
 export const STARTING_STORES: Stores = { food: 2, fuel: 0, power: 0 };
 
+/** Minutes of running a newly made machine comes with: a car arrives with a full tank. */
+export const STARTING_SUPPLY_MINUTES = 30;
+
+/**
+ * What a newly made thing brings into its owner's stores: STARTING_SUPPLY_MINUTES of whatever it
+ * draws (fuel, power, food), so a CAR can drive and a RADAR can sweep the moment they are spelled.
+ * Living things bring nothing: their master feeds them, and a hungry one turns wild.
+ */
+export function startingSupply(stats: Stats, count = 1): Stores {
+  if (stats.flag("alive")) return noStores();
+  const n = needs(stats, count);
+  return { food: n.food * STARTING_SUPPLY_MINUTES, fuel: n.fuel * STARTING_SUPPLY_MINUTES, power: n.power * STARTING_SUPPLY_MINUTES };
+}
+
 /** Loyalty a creature loses for each minute it goes hungry, and regains for each minute fed. */
 export const HUNGER_LOYALTY = 1;
 /** Fraction of their integrity a starving person loses each minute. */

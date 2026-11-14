@@ -179,7 +179,7 @@ it("a ridden DRAGON (5 food a minute) with no food goes hungry, then throws its 
   expect(dragon.foe).not.toBeNull(); // aggression 8: it turns on whoever it sees
 });
 
-it("a FARM keeps a DRAGON fed; a TANK with no fuel cannot fire until COAL fuels it", async () => {
+it("a FARM keeps a DRAGON fed; a TANK out of fuel cannot fire until COAL fuels it", async () => {
   const { room, a, wa, wb, said, loadouts } = await twoPlayers();
   a.send("spell", "farm"); await wait();
   a.send("spell", "dragon"); await wait();
@@ -196,6 +196,8 @@ it("a FARM keeps a DRAGON fed; a TANK with no fuel cannot fire until COAL fuels 
 
   wa.gear = []; room.rebuild(wa);
   a.send("spell", "tank"); await wait();
+  expect(wa.stores.fuel).toBeCloseTo(30); // a new TANK comes with half an hour of fuel (one a minute)
+  wa.stores.fuel = 0; // and burns it
   ticks(room, 12); await wait();
   expect(said.a).toContain("Your TANK has no fuel: it stops working");
   a.send("attack", wb.id); await wait();

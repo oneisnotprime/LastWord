@@ -3,12 +3,12 @@ import "@fontsource/kalam/700.css";
 import "@fontsource/fredoka/500.css";
 import "@fontsource/fredoka/600.css";
 import Phaser from "phaser";
-import { missing, readDescription, stampTerrain, Tile, tileAt, TILE_METERS, type WorldMap, generateMap } from "@lastword/shared";
+import { aimOf, cardOf, missing, parsePhrase, readDescription, stampTerrain, Tile, tileAt, TILE_METERS, type Card, type Phrase, type WorldMap, generateMap } from "@lastword/shared";
 import { lookOf, type Look } from "./art/look.js";
 import { CHUNK } from "./art/terrain.js";
 import type { FromWorker, ToWorker } from "./art/terrain.worker.js";
 import { dictionary } from "./data.js";
-import { Hud } from "./hud.js";
+import { Hud, type Aimed } from "./hud.js";
 import { connect, type Connection, type Described } from "./net.js";
 import { Painter, PX, useMade, useStandee, ZOOM } from "./paint.js";
 import { Sky } from "./sky.js";
@@ -57,11 +57,9 @@ class World extends Phaser.Scene {
   private steering = false;
   private lastSteer = 0;
   private foe: string | null = null;
-  /** Right-click choice for events: an id, or a spot drawn as a cross. */
-  private picked: string | null = null;
-  private aimMark?: Phaser.GameObjects.Container;
-  /** Adjectives spelled alone, waiting for a click on what they describe. */
+  /** A spelling waiting for a click on its target: adjectives alone (`describe`), or an event. */
   private aiming: string | null = null;
+  private aimHow: "describe" | "someone" | "anywhere" = "describe";
   /** What the pointer is over while aiming. */
   private hover: string | null = null;
   private over = false;
@@ -78,18 +76,23 @@ class World extends Phaser.Scene {
   private pending = 0;
 
   async create() {
-    this.hud = new Hud((text) => {
-      // "give player2 abc" hands letters over; adjectives alone are aimed at a target; anything else is a spelling.
+    this.hud = new Hud((text, target) => {
+      // "give player2 abc" hands letters over; adjectives alone and events are aimed at a target
+      // (the one the window was opened for, else the next click); anything else is a spelling.
       const give = /^\s*give\s+(\S+)\s+([a-z]+)\s*$/i.exec(text);
+      if (give) return this.net?.give(give[1]!, give[2]!.toLowerCase());
       const alone = readDescription(dictionary, text);
-      if (give) this.net?.give(give[1]!, give[2]!.toLowerCase());
-      else if (alone) {
-        const lacking = missing(this.hud.letters, alone.letters);
-        if (lacking) this.hud.toast(`You need ${lacking.toUpperCase().split("").join(" ")}`, "bad");
-        else this.startAim(alone.adjectives.join(" "));
-      } else this.net?.spell(text);
+      let phrase: Phrase | null = null;
+      try { phrase = alone ? null : parsePhrase(dictionary, text); } catch { /* the server says why */ }
+      const how = alone ? "describe" : phrase ? aimOf(phrase) : null;
+      if (!how) return this.net?.spell(text);
+      const lacking = missing(this.hud.letters, alone ? alone.letters : phrase!.letters);
+      if (lacking) return this.hud.toast(`You need ${lacking.toUpperCase().split("").join(" ")}`, "bad");
+      const words = alone ? alone.adjectives.join(" ") : text.trim().toLowerCase();
+      if (target) this.release(words, how, target.id);
+      else this.startAim(words, how);
     }, dictionary, (index) => this.net?.drop(index), (which) => this.net?.use(which), (index) => {
-      if (!this.aiming || !this.net) return;
+      if (!this.aiming || this.aimHow !== "describe" || !this.net) return;
       this.net.describe(this.aiming, this.net.sessionId, index);
       this.endAim();
     });
@@ -112,10 +115,12 @@ class World extends Phaser.Scene {
         refused: (reason) => this.hud.toast(reason, "bad"),
         gathered: (letter) => this.hud.toast(`+ ${letter.toUpperCase()}`, "good"),
         notice: (text) => this.hud.toast(text, "good"),
-        dead: (killer) => { this.over = true; this.hud.banner(`You were killed by ${killer}. Your letters are theirs.\nYou can watch until the round ends.`); },
+        dead: (killer) => { this.over = true; this.endAim(); this.hud.lock(); this.hud.banner(`You were killed by ${killer}. Your letters are theirs.\nYou can watch until the round ends.`); },
         won: () => {},
         roundover: ({ winner, seconds }) => {
           this.roundOver = true;
+          this.endAim();
+          this.hud.lock();
           const mine = winner === this.net.state.players.get(this.net.sessionId)?.name;
           const end = Date.now() + seconds * 1000;
           const tick = () => {
@@ -152,12 +157,13 @@ class World extends Phaser.Scene {
       const x = at.x / PX, y = at.y / PX;
       if (this.aiming) {
         if (p.rightButtonDown()) return this.endAim(true);
-        const target = this.hitAt(x, y, true);
-        if (!target) return this.hud.toast("Click a thing, a creature, a person or yourself", "bad");
-        this.net.describe(this.aiming, target);
-        return this.endAim();
+        const target = this.hitAt(x, y, this.aimHow === "describe");
+        if (!target && this.aimHow === "describe") return this.hud.toast("Click a thing, a creature, a person or yourself", "bad");
+        if (!target && this.aimHow === "someone") return this.hud.toast("Click a person, a creature or a thing", "bad");
+        return this.release(this.aiming, this.aimHow, target ?? { x, y });
       }
-      if (p.rightButtonDown()) return this.pickAt(x, y);
+      if (p.rightButtonDown()) return this.inspectAt(x, y, p);
+      this.hud.closeInspect();
       // A click on another player or on a thing attacks it; a click anywhere else walks there and stops attacking.
       let hit: string | null = null;
       this.net.state.things.forEach((thing: any, id: string) => {
@@ -174,7 +180,7 @@ class World extends Phaser.Scene {
     window.addEventListener("keydown", (e) => {
       if (e.key !== "Escape" || this.hud.typing) return;
       if (this.aiming) this.endAim(true);
-      else if (!this.hud.screen) this.pickAt(null);
+      else this.hud.closeInspect();
     });
     window.addEventListener("mousemove", (e) => { if (this.aiming) this.hud.pointer(e.clientX, e.clientY); });
     (window as any).__lw = { net: this.net, map: this.map, dictionary, scene: this, PX, game: this.game, chunkMs: this.chunkMs }; // for browser checks
@@ -193,9 +199,11 @@ class World extends Phaser.Scene {
   }
 
   /** Waits for a click on what these adjectives describe. Nothing is spent until the server agrees. */
-  private startAim(words: string) {
+  private startAim(words: string, how: "describe" | "someone" | "anywhere") {
+    this.hud.closeInspect();
     this.aiming = words;
-    this.hud.aim(words);
+    this.aimHow = how;
+    this.hud.aim(words, how);
     const p = this.input.activePointer;
     this.hud.pointer(p.x / DPR, p.y / DPR);
   }
@@ -236,22 +244,22 @@ class World extends Phaser.Scene {
     this.tweens.add({ targets: label, y: y - 64, alpha: 0, delay: 3400, duration: 700, onComplete: () => label.destroy() });
   }
 
-  /** Right-click: pick out whoever or whatever is under the pointer, else that spot. Null clears. */
-  private pickAt(x: number | null, y = 0) {
-    this.aimMark?.destroy();
-    this.aimMark = undefined;
-    this.picked = null;
-    if (x === null) { this.net.pick(null); return; }
-    let hit: string | null = null;
-    this.net.state.things.forEach((t: any, id: string) => { if (Math.hypot(t.x - x, t.y - y) < 0.6) hit = id; });
-    this.net.state.players.forEach((o: any, id: string) => { if (id !== this.net.sessionId && Math.hypot(o.x - x, o.y - y) < 0.8) hit = id; });
-    if (hit) {
-      this.picked = hit;
-      this.net.pick({ id: hit });
-      this.hud.toast("Picked out: spell an event to use it on them", "good");
-      return;
-    }
-    // A paper pin stuck in the map.
+  /**
+   * Casts an aimed spelling at what was clicked: adjectives are put on it (`describe`); an event is
+   * pointed at it (`pick`, an id or a spot) and spelled, then the pick is cleared, so each event
+   * goes where its own click said. Nothing is spent until the server agrees.
+   */
+  private release(words: string, how: "describe" | "someone" | "anywhere", at: string | { x: number; y: number }) {
+    this.endAim();
+    if (how === "describe") return this.net.describe(words, at as string);
+    this.net.pick(typeof at === "string" ? { id: at } : at);
+    this.net.spell(words);
+    this.net.pick(null);
+    if (typeof at !== "string") this.pin(at.x, at.y);
+  }
+
+  /** A paper pin stuck in the map where an event was aimed, for a moment. */
+  private pin(x: number, y: number) {
     const ring = this.add.image(0, 0, "__WHITE");
     useMade(ring, this.paint.ring(14), DPR);
     ring.setTint(0x2f8aa8);
@@ -260,10 +268,46 @@ class World extends Phaser.Scene {
     g.lineStyle(1.2, 0x6b4a2e, 1).lineBetween(0, 0, 3, -9);
     g.fillStyle(0xfbf7ec, 1).fillCircle(3, -10, 3.2);
     g.fillStyle(0x2f8aa8, 1).fillCircle(3, -10, 2.4);
-    this.aimMark = this.add.container(x * PX, y * PX, [ring, g]).setDepth(12000);
-    this.tweens.add({ targets: ring, scale: ring.scale * 1.15, duration: 600, yoyo: true, repeat: -1 });
-    this.net.pick({ x, y });
-    this.hud.toast("Spot marked: area events will land here", "good");
+    const mark = this.add.container(x * PX, y * PX, [ring, g]).setDepth(12000);
+    this.tweens.add({ targets: mark, alpha: 0, delay: 1200, duration: 600, onComplete: () => mark.destroy() });
+  }
+
+  /** Right-click: the inspect card for whoever or whatever is under the pointer; nothing there closes it. */
+  private inspectAt(x: number, y: number, p: Phaser.Input.Pointer) {
+    const id = this.hitAt(x, y, true);
+    if (!id) return this.hud.closeInspect();
+    const state = this.net.state, mine = this.net.sessionId;
+    const nameOf = (owner: string) => (owner === mine ? "you" : String(state.players.get(owner)?.name ?? "someone"));
+    const read = (phrase: string, count: number): Card => {
+      try {
+        const card = cardOf(dictionary, parsePhrase(dictionary, phrase));
+        card.title = counted(phrase, count);
+        return card;
+      } catch {
+        return { title: counted(phrase, count), kind: "", stats: [], does: [], letters: "" };
+      }
+    };
+    const thing = state.things.get(id), who = state.players.get(id);
+    let card: Card, extra: string[], name: string;
+    if (thing) {
+      name = String(thing.phrase);
+      card = read(name, thing.count);
+      extra = [thing.owner ? `belongs to ${nameOf(thing.owner)}` : "belongs to nobody", `condition ${Math.round(thing.hp)}%`];
+    } else if (who.owner) {
+      name = String(who.name);
+      card = read(name, who.count);
+      extra = [who.owner === "-" ? "wild" : `belongs to ${nameOf(who.owner)}`, `health ${Math.round(who.hp)}%`];
+    } else {
+      // A person: a human body with whatever was put on them, carrying their gear.
+      name = String(who.name);
+      const traits = String(who.traits ?? "");
+      card = read(traits ? `${traits} human` : "human", 1);
+      card.title = id === mine ? `${name.toUpperCase()} (you)` : name.toUpperCase();
+      card.kind = traits ? `person · ${traits}` : "person";
+      card.does = who.gear ? [`carries ${String(who.gear).toUpperCase()}`] : ["carries nothing"];
+      extra = [`health ${Math.round(who.hp)}%`];
+    }
+    this.hud.inspect(card, extra, { id, name } satisfies Aimed, p.x / DPR, p.y / DPR);
   }
 
   // -------------------------------------------------------------------------------------------
@@ -436,10 +480,11 @@ class World extends Phaser.Scene {
       b.setPosition(bx + b.displayWidth / 2, v.y - v.top * 0.5 - (showBar ? 12 : 7));
       bx += b.displayWidth;
     }
-    const ringed = id === this.foe || id === this.picked || id === this.hover;
+    const inspected = this.hud.inspecting;
+    const ringed = id === this.foe || id === inspected || id === this.hover;
     if (ringed) {
       if (!v.ring) { v.ring = this.add.image(0, 0, "__WHITE"); useMade(v.ring, this.paint.ring(Math.max(10, Math.min(40, v.half + 6))), DPR); }
-      v.ring.setPosition(v.x, v.y).setDepth(v.body.depth - 0.5).setTint(id === this.hover ? 0xe9b949 : id === this.picked ? 0x2f8aa8 : 0xd9573b).setAlpha(0.75 + Math.sin(t * 6) * 0.25);
+      v.ring.setPosition(v.x, v.y).setDepth(v.body.depth - 0.5).setTint(id === this.hover ? 0xe9b949 : id === inspected ? 0x2f8aa8 : 0xd9573b).setAlpha(0.75 + Math.sin(t * 6) * 0.25);
     } else if (v.ring) { v.ring.destroy(); v.ring = undefined; }
   }
 
@@ -555,6 +600,7 @@ class World extends Phaser.Scene {
 
     const me = state.players.get(mine);
     if (!me) {
+      this.hud.lock(); // dead or spectating: no spelling
       if (this.over) this.hud.status("Knocked out");
       return;
     }
@@ -565,12 +611,13 @@ class World extends Phaser.Scene {
       if (time - this.lastSteer > 100) { this.net.move(me.x + dx * 3, me.y + dy * 3); this.lastSteer = time; }
       this.steering = true;
     } else if (this.steering) {
-      this.net.move(me.x, me.y); // stop where we are when the keys are released
+      this.net.stop(); // stop where the server has us, not where our older copy says
       this.steering = false;
     }
     let others = 0;
     state.players.forEach((p: any, id: string) => { if (id !== mine && p.owner === "") others++; });
     this.hud.hud({ name: String(me.name), hp: me.hp, alive: state.alive || others + 1, clock: state.clock ?? 0 });
+    this.hud.corner(Tile[tileAt(this.map, me.x, me.y)] ?? "", Math.floor(me.x), Math.floor(me.y));
     this.hud.where(
       `${Tile[tileAt(this.map, me.x, me.y)]} · ${Math.round(me.x * TILE_METERS)}, ${Math.round(me.y * TILE_METERS)} m · ` +
       `${others} other${others === 1 ? "" : "s"} in sight${state.daylight === "night" ? " · night" : ""}${state.weather ? ` · ${state.weather}` : ""}`,
@@ -578,7 +625,7 @@ class World extends Phaser.Scene {
     // While aiming, ring whatever the pointer is over.
     if (this.aiming) {
       const p = this.input.activePointer, at = this.cameras.main.getWorldPoint(p.x, p.y);
-      this.hover = this.hitAt(at.x / PX, at.y / PX, true);
+      this.hover = this.hitAt(at.x / PX, at.y / PX, this.aimHow === "describe");
     }
     this.hud.overMap(overMap);
   }

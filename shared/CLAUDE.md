@@ -33,7 +33,11 @@ server and the client import this, so anything here must give the same answer on
 - `testdata.ts` loads the demo dictionary from disk, for tests only.
 - `mind.ts` morale (`moraleGoal`, `nextMorale`, `routed`, `moraleAim`), how creatures choose
   (`chooseTarget`, `retreats`, `ignoresOrder`) and command (`commandLimit`, `recruitRate`).
-- `upkeep.ts` food, fuel and power: `needs`, `outputs`, `draw`, `supply`, `groundFood`.
+- `upkeep.ts` food, fuel and power: `needs`, `outputs`, `draw`, `supply`, `groundFood`;
+  `startingSupply`: a newly made machine brings `STARTING_SUPPLY_MINUTES` (30) of what it draws.
+- `inspect.ts` cards telling what something is (spell preview, right-click inspect): `inspectText`,
+  `cardOf`, `keyStats`, `behaviours`; `becomes` (creature, worn, terrain or ground: the rule the
+  server's `make` uses) and `aimOf` (whether a spelling is clicked onto someone, anywhere, or neither).
 - `describe.ts` adjectives spelled alone: `readDescription` reads them, `applyAdjectives` puts
   them on something already made (same as spelling it with them; refuses past `adjective_slots`),
   `changes` says what changed in plain words ("integrity ×0.2", "accuracy −0.4").
