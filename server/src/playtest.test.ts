@@ -41,7 +41,8 @@ async function players(n = 2) {
 it("MAP goes on your screen as a minimap, not on the ground; the senses show letter sources and the living in range", async () => {
   const { room, clients: [a], ws: [wa], said, last, things } = await players();
   a.send("spell", "map"); await wait();
-  expect(said[0]!.at(-1)).toBe("MAP is on your screen: a minimap");
+  // The spelled reply, not whatever notice came last (a random map can put a fierce animal close by).
+  expect(last(0, "spelled")).toBe("MAP is on your screen: a minimap");
   expect(things()).toEqual([]);
   expect(wa.gear).toEqual([]);
   const d = last(0, "loadout") as LoadoutDetail;
