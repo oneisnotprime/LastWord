@@ -1,0 +1,350 @@
+# noun attribute
+probability: placement=self field_radius=4 field_targets=self field_duration=2 luck+3 accuracy+0.05 critical+0.05
+uncertainty: placement=target placement_range=80 field_radius=15 field_targets=enemies field_duration=2 luck+-3 accuracy+-0.1 inflict_confuse=3 counters=certainty,certitude,proof
+inevitability: placement=target placement_range=100 event_target=character inflict_doom=90 event_duration=1 counters=karma,providence,freedom,miracle,reprieve,chance
+symmetry: placement=self field_radius=20 field_targets=owned field_duration=3 immune_chaos=true effect_status=chaos reflect+0.2 beauty+2 counters=chaos,asymmetry,randomness
+asymmetry: placement=target placement_range=60 field_radius=10 field_targets=enemies field_duration=1 inflict_chaos=6 accuracy+-0.1 counters=symmetry,balance
+instability: placement=target placement_range=80 field_radius=15 field_targets=all field_duration=1 inflict_chaos=10 friendly_fire=true integrity*0.9 counters=stability,balance,order
+volatility: placement=target placement_range=80 field_radius=12 field_targets=all field_duration=1 inflict_chaos=14 friendly_fire=true critical+0.2 counters=stability,equilibrium,order
+fairness: placement=self field_radius=40 field_targets=all field_duration=3 luck*0 critical*0.5 effect_status=chaos,doom counters=jinx,luck,fluke,cheat
+clarity: placement=self field_radius=30 field_targets=owned field_duration=3 effect_status=confuse,chaos immune_confuse=true detect_stealth+5 accuracy+0.1 counters=confusion,fog,illusion,ambiguity,nonsense
+ambiguity: placement=target placement_range=80 field_radius=20 field_targets=enemies field_duration=2 inflict_confuse=5 decoys=2 counters=clarity,certainty,definition
+vagueness: placement=target placement_range=60 field_radius=15 field_targets=enemies field_duration=2 inflict_confuse=3 accuracy+-0.15 sight_range*0.7 counters=clarity,precision
+obscurity: placement=self field_radius=10 field_targets=owned field_duration=3 stealth+4 immune_expose=true counters=fame,clarity,spotlight
+inconsistency: placement=target placement_range=60 field_radius=10 field_targets=enemies field_duration=1 inflict_chaos=6 accuracy+-0.1 counters=logic,consistency
+perplexity: placement=target placement_range=60 event_target=character inflict_confuse=8 intelligence+-2 event_duration=1 counters=clarity,insight,logic
+veracity: placement=self field_radius=40 field_targets=owned field_duration=3 detect_stealth+6 decoys*0 immune_confuse=true counters=lie,hoax,illusion,deception,falsehood
+certitude: placement=self field_radius=4 field_targets=self field_duration=3 accuracy+0.25 luck+2 immune_chaos=true immune_confuse=true counters=doubt,uncertainty,chance
+nullity: placement=target placement_range=60 event_target=character inflict_void=15 event_duration=1 counters=existence,reality
+futility: placement=target placement_range=80 field_radius=15 field_targets=enemies field_duration=2 morale+-4 harvest_bonus*0.5 dmg_blunt*0.5 dmg_slash*0.5 dmg_pierce*0.5 counters=hope,purpose,meaning
+discrepancy: placement=target placement_range=60 event_target=object misspells=true counters=dictionary,audit,proof
+aberration: placement=target placement_range=80 event_target=character inflict_chaos=12 event_duration=1 counters=order,norm,logic
+anomaly: placement=target placement_range=100 field_radius=15 field_targets=all field_duration=1 inflict_chaos=10 gravity*0.5 friendly_fire=true counters=order,law,norm
+oddity: placement=target placement_range=40 event_target=character inflict_chaos=5 inflict_confuse=2 event_duration=1 counters=norm,order
+quirk: placement=self field_radius=4 field_targets=self field_duration=2 luck+2 inflict_chaos+3 charm+1
+equilibrium: placement=self field_radius=40 field_targets=all field_duration=3 effect_status=chaos,haste,slow,rage immune_chaos=true luck*0 counters=chaos,volatility,instability,upheaval
+duality: placement=self field_radius=4 field_targets=self field_duration=2 decoys=1 reflect+0.3 evasion+0.15
+dichotomy: placement=target placement_range=60 event_target=object swaps_owners=true counters=unity,reason
+totality: placement=self field_radius=40 field_targets=owned field_duration=3 immune_void=true effect_status=void integrity*1.2 counters=nothing,void,zero,oblivion
+essence: placement=self field_radius=4 field_targets=self field_duration=3 immune_void=true effect_status=void,chaos regeneration+3 counters=nothing,void,nullity
+whimsy: placement=self field_radius=10 field_targets=all field_duration=2 inflict_chaos=4 luck+2 morale+2 charm+2
+vagary: placement=target placement_range=60 field_radius=10 field_targets=all field_duration=1 inflict_chaos=8 luck+-1 friendly_fire=true
+lucidity: placement=self field_radius=4 field_targets=self field_duration=3 immune_confuse=true effect_status=confuse,sleep,charm intelligence+2 counters=dream,delusion,confusion,illusion
+insight: placement=self field_radius=4 field_targets=self field_duration=3 detect_stealth+6 read_properties+5 intelligence+2 critical+0.1 counters=illusion,disguise,mystery
+semantics: placement=self field_radius=20 field_targets=owned field_duration=3 immune_chaos=true intelligence+1 counters=typo,misspelling,ambiguity
+fatalism: placement=self field_radius=4 field_targets=self field_duration=3 immune_fear=true courage+5 luck+-2 morale+2
+existentialism: placement=self field_radius=4 field_targets=self field_duration=3 immune_void=true effect_status=void,doom courage+3 counters=nothing,void,doom
+
+# noun event
+happenstance: placement=self field_radius=4 field_targets=self field_duration=2 luck+4 evasion+0.05 inflict_chaos+2
+kismet: placement=target placement_range=150 event_target=character inflict_doom=60 event_duration=1 luck+3 counters=karma,providence,freedom,miracle
+mishap: placement=target placement_range=60 event_radius=6 event_duration=1 luck+-3 dmg_blunt=30 inflict_stun=1 friendly_fire=true
+misadventure: placement=target placement_range=80 event_radius=10 event_duration=2 luck+-4 inflict_confuse=3 dmg_blunt=25 friendly_fire=true counters=luck,providence
+fiasco: placement=target placement_range=80 event_radius=15 event_duration=1 luck+-5 inflict_chaos=8 morale+-3 friendly_fire=true counters=order,planning
+debacle: placement=target placement_range=100 event_radius=20 event_duration=1 luck+-5 morale+-4 inflict_confuse=6 friendly_fire=true counters=order,discipline
+catastrophe: placement=target placement_range=150 event_radius=30 event_duration=1 dmg_blast=120 dmg_crush=60 inflict_chaos=10 luck+-5 friendly_fire=true counters=providence,miracle,shelter
+calamity: placement=target placement_range=120 event_radius=25 event_duration=1 dmg_crush=100 inflict_stun=3 luck+-4 friendly_fire=true counters=providence,miracle,shelter
+snafu: placement=target placement_range=60 event_target=object misspells=true luck+-2 counters=dictionary,order
+backfire: placement=target placement_range=60 event_target=character reflect=1 event_duration=1 counters=caution,foresight
+recoil: placement=self field_radius=4 field_targets=self field_duration=1 reflect+0.5 knockback+3
+retribution: placement=target placement_range=100 event_target=character reflect=0.7 inflict_doom=45 event_duration=1 counters=mercy,forgiveness,pardon,providence
+upheaval: placement=region placement_range=150 field_radius=40 field_targets=all field_duration=2 inflict_chaos=14 dmg_earth=40 friendly_fire=true counters=order,stability,equilibrium
+fluctuation: placement=target placement_range=80 field_radius=15 field_targets=all field_duration=1 inflict_chaos=6 friendly_fire=true
+variance: placement=self field_radius=4 field_targets=self field_duration=2 critical+0.2 accuracy+-0.1 luck+1
+flux: placement=target placement_range=100 field_radius=20 field_targets=all field_duration=2 inflict_chaos=8 friendly_fire=true counters=stability,order
+toss: placement=target placement_range=60 event_target=character stakes=10 field_radius=8 field_duration=1 luck+1
+raffle: placement=self field_radius=4 field_targets=self field_duration=2 luck+5 harvest_bonus*1.3 lode=q,z,x,j lode_share=0.1 lode_stock=2
+annulment: placement=target placement_range=60 event_target=character inflict_void=20 effect_status=charm,bless,haste event_duration=1 counters=existence,marriage,vow
+nullification: placement=target placement_range=80 event_target=character inflict_void=25 effect_status=bless,haste,stasis event_duration=1 counters=existence,reality
+obliteration: placement=target placement_range=100 event_target=character inflict_void=35 dmg_blast=60 event_duration=1 counters=existence,reality,infinity,memory
+refutation: placement=target placement_range=80 event_target=character effect_status=charm,confuse,bless reflect=0.4 event_duration=1 counters=lie,hoax,claim,theory
+entanglement: placement=target placement_range=60 field_radius=8 field_targets=enemies field_duration=1 inflict_root=8 inflict_confuse=4 counters=blade,clarity
+epiphany: placement=self field_radius=4 field_targets=self field_duration=2 intelligence+4 detect_stealth+5 critical+0.25 effect_status=confuse
+
+# noun act
+blunder: placement=target placement_range=60 event_target=object misspells=true luck+-2 counters=dictionary,grammar,care
+gaffe: placement=target placement_range=40 event_target=character charm+-4 reputation+-3 inflict_confuse=2 event_duration=1 counters=tact,grace
+misstep: placement=target placement_range=40 event_target=character inflict_stun=2 luck+-3 event_duration=1 counters=balance,grace
+oversight: placement=target placement_range=60 event_target=character detect_stealth+-5 sight_range*0.5 event_duration=2 counters=vigilance,watch,audit
+lapse: placement=target placement_range=60 event_target=character inflict_confuse=4 effect_status=bless,haste event_duration=1 counters=vigilance,discipline
+goof: placement=target placement_range=40 event_target=object misspells=true counters=dictionary
+blooper: placement=target placement_range=40 event_target=character inflict_confuse=3 charm+-2 luck+-2 event_duration=1
+bungle: placement=target placement_range=60 event_target=object misspells=true luck+-1 counters=dictionary,skill
+botch: placement=target placement_range=60 event_target=object misspells=true integrity*0.7 counters=dictionary,repair
+flub: placement=target placement_range=40 event_target=character accuracy+-0.3 luck+-2 event_duration=1
+fumble: placement=target placement_range=40 event_target=character accuracy+-0.3 inflict_stun=1 luck+-3 event_duration=1 counters=grip,grace
+misfire: placement=target placement_range=60 event_target=character reflect=0.6 accuracy+-0.4 event_duration=1 counters=aim,precision
+miscount: placement=target placement_range=60 event_target=character inflict_confuse=3 letter_steal=2 event_duration=1 counters=audit,arithmetic
+miscalculation: placement=target placement_range=80 event_target=character inflict_confuse=4 accuracy+-0.2 luck+-2 event_duration=1 counters=logic,arithmetic
+deception: placement=target placement_range=150 field_radius=30 field_targets=enemies field_duration=3 decoys=3 inflict_confuse=3 counters=truth,reality,veracity
+trickery: placement=target placement_range=80 field_radius=15 field_targets=enemies field_duration=2 decoys=2 inflict_confuse=4 counters=truth,wisdom
+misrepresentation: placement=target placement_range=100 event_target=object misspells=true decoys=1 counters=truth,dictionary
+pretense: placement=self field_radius=4 field_targets=self field_duration=3 disguise+5 decoys=1 counters=truth,insight
+feigning: placement=self field_radius=4 field_targets=self field_duration=2 decoys=2 evasion+0.2 stealth+2 counters=insight,truth
+omission: placement=target placement_range=60 event_target=character inflict_void=10 read_properties+-5 event_duration=1 counters=audit,existence
+
+# noun quantity
+nil: placement=target placement_range=40 event_target=character inflict_void=12 event_duration=1 counters=existence,infinity
+naught: placement=target placement_range=60 event_target=character inflict_void=20 event_duration=1 counters=existence,reality,everything
+nought: placement=target placement_range=40 event_target=character inflict_void=12 event_duration=1 counters=existence,infinity
+nada: placement=target placement_range=40 event_target=character inflict_void=10 event_duration=1 counters=existence
+nix: placement=target placement_range=40 event_target=character inflict_void=10 effect_status=haste,bless event_duration=1 counters=existence
+zilch: placement=target placement_range=40 event_target=character inflict_void=12 event_duration=1 counters=existence
+zip: placement=target placement_range=30 event_target=character inflict_void=10 event_duration=1 counters=existence
+all: placement=self field_radius=40 field_targets=owned field_duration=2 immune_void=true effect_status=void counters=nothing,none,nada
+whole: placement=self field_radius=4 field_targets=self field_duration=2 immune_void=true effect_status=void,bleed regeneration+4 counters=nothing,fracture
+
+# noun knowledge
+notion: placement=self field_radius=4 field_targets=self field_duration=2 intelligence+2 luck+1
+thought: placement=self field_radius=4 field_targets=self field_duration=2 intelligence+3 effect_status=confuse
+delusion: placement=target placement_range=100 event_target=character inflict_confuse=10 decoys=3 event_duration=2 counters=reality,truth,lucidity,clarity
+hallucination: placement=target placement_range=100 field_radius=15 field_targets=enemies field_duration=2 decoys=5 inflict_confuse=6 counters=reality,lucidity,clarity
+daydream: placement=target placement_range=60 event_target=character inflict_sleep=4 inflict_confuse=3 event_duration=1 counters=alarm,clarity
+reverie: placement=target placement_range=60 event_target=character inflict_sleep=6 morale+2 event_duration=1 counters=alarm,clarity
+figment: placement=target placement_range=100 field_radius=20 field_targets=enemies field_duration=2 decoys=2 counters=reality,truth
+phantasm: placement=target placement_range=120 field_radius=25 field_targets=enemies field_duration=3 decoys=4 inflict_fear=5 counters=reality,truth,exorcism
+dilemma: placement=target placement_range=80 event_target=character inflict_root=4 inflict_confuse=5 event_duration=1 counters=logic,reason,decision
+quandary: placement=target placement_range=60 event_target=character inflict_confuse=6 inflict_slow=4 event_duration=1 counters=logic,reason
+puzzle: placement=target placement_range=60 event_target=character inflict_confuse=5 intelligence+-1 event_duration=1 counters=logic,insight,solution
+confusion: placement=target placement_range=100 field_radius=20 field_targets=enemies field_duration=2 inflict_confuse=10 counters=clarity,order,logic,reason
+disarray: placement=target placement_range=100 field_radius=25 field_targets=enemies field_duration=2 inflict_chaos=8 obedience+-3 accuracy+-0.1 counters=order,discipline
+bewilderment: placement=target placement_range=80 field_radius=15 field_targets=enemies field_duration=2 inflict_confuse=8 inflict_slow=3 counters=clarity,insight
+etymology: mass=1 integrity=8 flammability=7 material=paper intelligence+2 read_properties+3 immune_chaos=true counters=typo,misspelling,nonsense
+vocabulary: placement=self field_radius=4 field_targets=self field_duration=3 intelligence+3 training+1 immune_confuse=true counters=nonsense,gibberish,drivel
+syntax: placement=self field_radius=20 field_targets=owned field_duration=3 immune_chaos=true effect_status=chaos,confuse counters=nonsense,typo,jumble
+idiom: placement=self field_radius=4 field_targets=self field_duration=2 charm+2 intelligence+1 decoys=1
+abbreviation: placement=self field_radius=4 field_targets=self field_duration=2 cast_time*0.5 duration*0.7
+drivel: placement=target placement_range=60 field_radius=15 field_targets=enemies field_duration=2 inflict_confuse=4 morale+-1 counters=logic,reason,grammar
+recursion: placement=target placement_range=80 event_target=character inflict_stun=2 inflict_confuse=6 event_duration=1 counters=logic,break
+fatality: placement=target placement_range=100 event_target=character inflict_doom=60 inflict_fear=6 event_duration=1 counters=reprieve,miracle,providence,medic
+
+# noun phenomenon
+havoc: placement=target placement_range=120 field_radius=25 field_targets=all field_duration=1 inflict_chaos=16 dmg_blunt=30 friendly_fire=true counters=order,discipline,law
+abyss: placement=target placement_range=100 field_radius=10 field_targets=all field_duration=1 inflict_void=25 pull=6 friendly_fire=true counters=existence,bridge,light
+portent: placement=target placement_range=120 event_target=character inflict_doom=45 inflict_fear=4 event_duration=1 counters=providence,karma,hope
+augury: placement=self field_radius=4 field_targets=self field_duration=3 luck+3 detect_stealth+3 immune_doom=true effect_status=doom counters=doom,fate,ambush
+presentiment: placement=self field_radius=4 field_targets=self field_duration=2 evasion+0.2 luck+2 effect_status=doom counters=ambush,surprise,doom
+prognosis: placement=target placement_range=60 event_target=character read_properties+5 inflict_expose=20 event_duration=1 counters=disguise,secret
+boon: placement=self field_radius=4 field_targets=self field_duration=3 luck+5 regeneration+2 harvest_bonus*1.3 counters=jinx,curse,misfortune
+
+# noun attribute
+flaw: placement=target placement_range=60 event_target=object integrity*0.5 brittleness+4 luck+-1 counters=repair,polish
+defect: placement=target placement_range=60 event_target=object misspells=true integrity*0.7 counters=repair,dictionary
+malfunction: placement=target placement_range=80 event_target=object misspells=true effect_status=haste counters=repair,mechanic,dictionary
+inaccuracy: placement=target placement_range=80 field_radius=15 field_targets=enemies field_duration=2 accuracy+-0.3 counters=precision,accuracy,aim
+predictability: placement=target placement_range=80 field_radius=15 field_targets=enemies field_duration=2 evasion*0.3 luck+-2 effect_status=chaos counters=surprise,randomness,chaos
+lawlessness: placement=region placement_range=150 field_radius=50 field_targets=all field_duration=3 obedience+-4 inflict_chaos=6 authority*0.3 counters=law,order,police
+wrongdoing: placement=target placement_range=60 event_target=character reputation+-5 inflict_curse=20 event_duration=1 counters=justice,pardon
+semblance: placement=self field_radius=4 field_targets=self field_duration=2 disguise+4 decoys=1 counters=truth,insight
+gleam: placement=self field_radius=4 field_targets=self field_duration=1 luck+2 luminosity+2
+blot: placement=target placement_range=60 event_target=object misspells=true counters=eraser,dictionary
+surety: placement=self field_radius=4 field_targets=self field_duration=3 luck+2 immune_chaos=true immune_doom=true effect_status=doom counters=risk,gamble,doom
+finality: placement=target placement_range=100 event_target=character inflict_doom=60 effect_status=bless,haste,stasis event_duration=1 counters=rebirth,resurrection,providence,karma
+hypocrisy: placement=target placement_range=80 event_target=character reflect=0.5 reputation+-4 inflict_confuse=3 event_duration=1 counters=truth,integrity
+stupidity: placement=target placement_range=60 event_target=character intelligence+-4 inflict_confuse=6 accuracy+-0.15 event_duration=1 counters=wisdom,logic,reason
+silliness: placement=target placement_range=60 field_radius=10 field_targets=enemies field_duration=1 inflict_confuse=3 morale+1 charm+1
+folly: placement=target placement_range=80 event_target=character luck+-5 intelligence+-3 inflict_confuse=4 event_duration=1 counters=wisdom,reason,prudence
+fickleness: placement=target placement_range=60 event_target=character loyalty+-4 inflict_chaos=6 event_duration=1 counters=loyalty,oath
+
+# noun affliction
+indecision: placement=target placement_range=80 event_target=character inflict_root=3 inflict_confuse=5 cast_time*2 event_duration=1 counters=resolve,decision,courage
+disbelief: placement=target placement_range=60 event_target=character effect_status=charm,fear,bless inflict_confuse=2 event_duration=1 counters=proof,miracle,evidence
+skepticism: placement=self field_radius=4 field_targets=self field_duration=3 immune_charm=true detect_stealth+4 effect_status=charm,confuse counters=lie,hoax,illusion,charm,propaganda
+distrust: placement=target placement_range=80 field_radius=20 field_targets=enemies field_duration=2 loyalty+-3 obedience+-2 counters=trust,loyalty,oath
+mistrust: placement=target placement_range=80 field_radius=20 field_targets=enemies field_duration=2 loyalty+-3 trade_rate*0.7 counters=trust,loyalty
+wavering: placement=target placement_range=60 event_target=character courage+-3 inflict_confuse=3 accuracy+-0.1 event_duration=1 counters=resolve,courage
+
+# noun destruction
+annihilation: placement=target placement_range=150 event_radius=15 event_duration=1 inflict_void=30 dmg_blast=120 friendly_fire=true counters=existence,reality,infinity,shield
+eradication: placement=target placement_range=100 event_target=character inflict_void=30 effect_status=bless,haste event_duration=1 counters=existence,reality,rebirth
+extermination: placement=target placement_range=100 event_radius=15 event_duration=1 dmg_poison=80 inflict_doom=45 friendly_fire=true counters=sanctuary,providence,miracle
+
+# adjective quality
+unfortunate: luck+-3 harvest_bonus*0.8
+fortuitous: luck+3 critical+0.05
+auspicious: luck+3 morale+2 inflict_bless+10
+inauspicious: luck+-3 morale+-2
+ominous: inflict_fear+4 inflict_doom+15 morale+-1
+fateful: inflict_doom+20 luck+2
+providential: luck+4 immune_doom=true regeneration+1
+predestined: inflict_doom+25 accuracy+0.1
+fatal: inflict_doom+30 critical+0.1
+luckless: luck+-4 harvest_bonus*0.7
+hapless: luck+-5 evasion+-0.1
+jinxed: luck+-6 critical+-0.15 accuracy+-0.1
+charmed: luck+5 evasion+0.15
+haphazard: inflict_chaos+5 accuracy+-0.15 luck+1
+arbitrary: inflict_chaos+6 luck+1
+stochastic: inflict_chaos+5 critical+0.1
+erratic: inflict_chaos+8 accuracy+-0.15 evasion+0.1
+unpredictable: inflict_chaos+8 evasion+0.15
+predictable: evasion*0.5 immune_chaos=true accuracy+0.05
+capricious: inflict_chaos+7 loyalty+-2 luck+1
+fickle: loyalty+-3 inflict_chaos+4
+chancy: luck+-1 critical+0.15
+dicey: luck+-2 critical+0.2
+iffy: luck+-1 accuracy+-0.05
+risky: critical+0.2 luck+-2 self_damage+0.05
+precarious: integrity*0.7 critical+0.15 luck+-2
+perilous: dmg_blunt*1.3 luck+-2 friendly_fire=true
+anarchic: inflict_chaos+8 obedience+-4 authority*0.5
+disorderly: inflict_chaos+5 obedience+-3
+unruly: obedience+-4 aggression+3 inflict_chaos+3
+tidy: immune_chaos=true storage_objects*1.2 beauty+1
+neat: immune_chaos=true beauty+1 accuracy+0.05
+symmetrical: immune_chaos=true beauty+2 reflect+0.1
+asymmetrical: inflict_chaos+4 beauty+-1
+balanced: immune_chaos=true accuracy+0.1 evasion+0.05
+unbalanced: inflict_chaos+5 accuracy+-0.15 evasion+-0.1
+logical: immune_chaos=true immune_confuse=true intelligence+2
+illogical: inflict_confuse+4 inflict_chaos+3 intelligence+-2
+rational: immune_confuse=true immune_charm=true intelligence+2
+irrational: inflict_chaos+6 inflict_confuse+3 aggression+2
+unreasonable: aggression+3 inflict_confuse+3
+sensible: immune_confuse=true intelligence+1 luck+1
+senseless: inflict_confuse+5 intelligence+-2
+nonsensical: inflict_confuse+6 inflict_chaos+3
+meaningless: inflict_void+8 morale+-2
+pointless: inflict_void+6 sharpness*0 dmg_pierce*0
+futile: dmg_blunt*0.5 dmg_slash*0.5 dmg_pierce*0.5 morale+-2
+vain: charm+2 inflict_void+5 beauty+1
+hollow: inflict_void+6 mass*0.5 integrity*0.6
+vacuous: inflict_void+6 intelligence+-3
+vacant: inflict_void+8 intelligence+-2
+existential: immune_void=true courage+2
+existent: immune_void=true
+nonexistent: inflict_void+15 stealth+6
+imaginary: decoys+1 inflict_void+5 stealth+3
+fictional: decoys+1 stealth+2 inflict_confuse+2
+fanciful: charm+2 inflict_confuse+2 luck+1
+surreal: inflict_chaos+6 inflict_confuse+4
+dreamlike: inflict_sleep+3 inflict_confuse+3 stealth+1
+unreal: decoys+1 inflict_confuse+3 stealth+2
+illusory: decoys+2 inflict_confuse+3
+illusive: decoys+2 stealth+2
+deceptive: decoys+2 disguise+3 inflict_confuse+2
+delusive: inflict_confuse+5 decoys+1
+delusional: inflict_confuse+6 intelligence+-2 courage+2
+untrue: decoys+1 inflict_confuse+2 accuracy+-0.1
+truthful: detect_stealth+4 immune_confuse=true charm+1
+sure: accuracy+0.15 luck+1
+unsure: accuracy+-0.15 luck+-1
+uncertain: luck+-2 accuracy+-0.1 inflict_confuse+2
+doubtful: luck+-2 accuracy+-0.1 courage+-1
+dubious: luck+-1 charm+-2 decoys+1
+skeptical: immune_charm=true detect_stealth+3
+sceptical: immune_charm=true detect_stealth+3
+questionable: charm+-2 luck+-1 reputation+-1
+ambiguous: inflict_confuse+3 decoys+1 stealth+1
+vague: inflict_confuse+2 accuracy+-0.1 stealth+2
+unclear: inflict_confuse+2 stealth+2
+lucid: immune_confuse=true immune_sleep=true intelligence+2
+ironic: reflect+0.4 inflict_confuse+2
+ironical: reflect+0.4 inflict_confuse+2
+contradictory: reflect+0.3 inflict_chaos+4
+inconsistent: inflict_chaos+5 accuracy+-0.1
+ludicrous: inflict_confuse+5 inflict_chaos+3 charm+1
+preposterous: inflict_confuse+6 inflict_chaos+4
+mysterious: stealth+4 decoys+1 immune_expose=true
+cryptic: stealth+3 immune_expose=true read_properties+-3
+enigmatic: stealth+4 immune_expose=true charm+2
+arcane: dmg_magic*1.4 stealth+2 intelligence+2
+esoteric: stealth+3 intelligence+2 read_properties+-2
+inexplicable: inflict_chaos+5 inflict_confuse+3 stealth+2
+unexplained: inflict_confuse+3 stealth+3
+puzzling: inflict_confuse+4
+baffling: inflict_confuse+5 inflict_slow+2
+perplexing: inflict_confuse+5 intelligence+-1
+confusing: inflict_confuse+5 accuracy+-0.05
+mistaken: misspells=true accuracy+-0.1
+erroneous: accuracy+-0.2 luck+-1 inflict_confuse+2
+incorrect: accuracy+-0.2 luck+-1
+inaccurate: accuracy+-0.25
+wordy: cast_time*1.5 effect_multiplier*1.2
+verbose: cast_time*1.6 effect_multiplier*1.25 loudness+2
+lexical: intelligence+1 immune_chaos=true
+linguistic: intelligence+2 charm+1
+grammatical: immune_chaos=true immune_confuse=true intelligence+1
+alphabetical: immune_chaos=true storage_letters*1.2
+
+# adjective participle
+destined: luck+3 immune_doom=true courage+2
+jumbled: inflict_chaos+5 inflict_confuse+3
+muddled: inflict_confuse+5 intelligence+-2 accuracy+-0.1
+scrambled: inflict_chaos+6 inflict_confuse+3
+deranged: inflict_rage+6 inflict_chaos+5 intelligence+-3
+entangled: inflict_root+4 speed_land*0.6
+
+# verb transform
+invalidate: effect_target=touched inflict_void=12 effect_status=bless,haste duration=1
+annul: effect_target=touched inflict_void=15 effect_status=charm,bless,haste duration=1
+revoke: effect_target=touched inflict_void=10 effect_status=bless,haste,charm duration=1
+obliterate: effect_target=touched inflict_void=25 dmg_blast=60 duration=1
+efface: effect_target=touched inflict_void=10 stealth+3 duration=1
+expunge: effect_target=touched inflict_void=15 effect_status=curse,debt,expose duration=1
+reset: duration=1 effect_status=chaos,confuse,curse,doom,rage,slow,void
+shuffle: effect_target=touched inflict_chaos=8 duration=1
+jumble: effect_target=touched inflict_chaos=8 inflict_confuse=3 duration=1
+muddle: effect_target=touched inflict_confuse=8 duration=1
+randomize: effect_target=touched inflict_chaos=10 duration=1
+disorganize: effect_target=touched inflict_chaos=6 obedience+-2 duration=1
+disarrange: effect_target=touched inflict_chaos=6 duration=1
+derange: effect_target=touched inflict_chaos=8 inflict_rage=5 duration=1
+tangle: effect_target=touched inflict_root=5 inflict_confuse=2 duration=1
+entangle: effect_target=touched inflict_root=8 duration=1
+unravel: effect_target=touched integrity*0.6 effect_status=bless,stasis,root duration=1
+
+# verb perceive
+baffle: effect_target=touched inflict_confuse=8 duration=1
+perplex: effect_target=touched inflict_confuse=8 intelligence+-1 duration=1
+mystify: effect_target=touched inflict_confuse=6 decoys=1 duration=1
+befuddle: effect_target=touched inflict_confuse=10 accuracy+-0.1 duration=1
+
+# adjective absolute
+inescapable: inflict_doom+30 inflict_root+2
+unavoidable: inflict_doom+20 accuracy+0.2
+inexorable: inflict_doom+25 knockback+2 immune_slow=true
+ineluctable: inflict_doom+30 accuracy+0.15
+foregone: inflict_doom+20 luck+1
+impossible: luck+-8 evasion+0.3
+improbable: luck+-3 critical+0.25
+
+# adjective quality
+coincidental: luck+3 inflict_chaos+2
+eventual: inflict_doom+15 cast_time*1.5
+perpetual: duration*3 field_duration*3 regeneration+1
+probable: luck+2 accuracy+0.05
+inverse: reflect+0.3 inflict_chaos+3
+contrary: reflect+0.3 aggression+2
+converse: reflect+0.3 charm+1
+tragic: inflict_doom+15 morale+-2 charm+2
+blank: inflict_void+6 stealth+2 read_properties+-3
+
+# noun attribute
+improbability: placement=self field_radius=4 field_targets=self field_duration=1 luck+10 inflict_chaos+4 critical+0.3 evasion+0.2 counters=logic,certainty,probability
+impossibility: placement=target placement_range=100 event_target=character inflict_void=20 luck+-6 event_duration=1 counters=miracle,improbability,existence
+incongruity: placement=target placement_range=80 field_radius=15 field_targets=enemies field_duration=2 inflict_chaos=6 inflict_confuse=4 counters=harmony,order,logic
+discord: placement=target placement_range=120 field_radius=30 field_targets=enemies field_duration=2 loyalty+-3 inflict_rage=6 sets_hostile=true counters=harmony,concord,peace,unity
+hazard: placement=target placement_range=80 field_radius=10 field_targets=all field_duration=3 luck+-4 dmg_blunt=10 friendly_fire=true counters=caution,safety
+peril: placement=target placement_range=80 field_radius=15 field_targets=enemies field_duration=2 luck+-5 inflict_fear=4 evasion+-0.1 counters=courage,safety,rescue,providence
+freak: placement=target placement_range=60 event_target=character inflict_chaos=10 inflict_fear=3 event_duration=1 counters=order,norm
+yin: placement=self field_radius=10 field_targets=owned field_duration=3 immune_chaos=true effect_status=chaos,rage regeneration+2 counters=yang,chaos
+yang: placement=self field_radius=10 field_targets=owned field_duration=3 immune_chaos=true effect_status=chaos,sleep strength+2 counters=yin,chaos
+
+# noun artifact
+mascot: placement=self field_radius=20 field_targets=owned field_duration=5 luck+3 morale+3 counters=jinx,misfortune
+clover: mass=0.01 integrity=1 material=plant color=green luck+4 harvest_bonus*1.2 counters=jinx,misfortune,unlucky
+voodoo: placement=target placement_range=100 event_target=character inflict_curse=60 inflict_doom=45 luck+-4 faith_cost=10 event_duration=1 counters=exorcism,blessing,karma,providence
+
+# noun building
+shambles: placement=target placement_range=100 field_radius=25 field_targets=all field_duration=2 inflict_chaos=10 integrity*0.8 movement_cost*2 friendly_fire=true counters=order,repair,builder
+
+# adverb manner
+luckily: luck+4 critical+0.1
+fortunately: luck+3 evasion+0.1
+randomly: inflict_chaos+5 effect_multiplier*1.3 accuracy+-0.1
+coincidentally: luck+3 cast_time*0.8
+inevitably: inflict_doom+20 accuracy+0.2
+maybe: effect_multiplier*1.5 luck+-2
+perhaps: effect_multiplier*1.4 luck+-2
+always: duration*4 field_duration*4
