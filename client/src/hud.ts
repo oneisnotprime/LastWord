@@ -1,4 +1,4 @@
-import { inspectText, missing, type Card, type Dictionary, type Letters, type LoadoutDetail } from "@lastword/shared";
+import { missing, parsePhrase, type Card, type Dictionary, type Letters, type LoadoutDetail } from "@lastword/shared";
 import { BADGE } from "./art/paper.js";
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
@@ -74,6 +74,13 @@ export class Hud {
   private target: Aimed | null = null;
   /** Called with what is being inspected's "Add adjective". */
   private inspected: Aimed | null = null;
+  /** Something waits for a click (adjectives or an event): Esc cancels that, not opens the menu. */
+  private aimingAny = false;
+  /** The spelling as it last stood, to put back a letter you do not hold. */
+  private lastText = "";
+  private rejectTimer = 0;
+  /** Knocked out, and whom you are watching. */
+  private out: string | null = null;
 
   constructor(
     onSpell: (text: string, target: Aimed | null) => void,
@@ -89,8 +96,14 @@ export class Hud {
       const key = e.key.toLowerCase();
       if (key === "i") this.show(this.open === "inventory" ? null : "inventory");
       else if (key === "l") this.show(this.open === "loadout" ? null : "loadout");
-      else if (key === "escape") this.show(null);
+      else if (key === "escape") {
+        // Esc closes what is open first (a screen, the menu, an aim, an inspect card), else opens the menu.
+        if (this.open) this.show(null);
+        else if (this.menuOpen) this.menu(false);
+        else if (!this.aimingAny && !this.inspected) this.menu(true);
+      }
     });
+    $("resume").addEventListener("click", () => this.menu(false));
     $("panel").addEventListener("click", (e) => {
       const el = (e.target as HTMLElement).closest("button");
       if (!el) return;
@@ -119,8 +132,8 @@ export class Hud {
         this.closeSpell();
       }
     });
-    this.input.addEventListener("keyup", (e) => e.stopPropagation());
-    this.input.addEventListener("input", () => { this.drawLetters(); this.drawPreview(); });
+    // Key releases are not stopped here: the game must see an arrow let go while the window was open.
+    this.input.addEventListener("input", () => this.typed());
     $("inspect").addEventListener("click", (e) => {
       const el = (e.target as HTMLElement).closest("button");
       if (!el) return;
@@ -131,6 +144,54 @@ export class Hud {
     // A click outside the card keeps the window open and the cursor in it.
     this.win.addEventListener("mousedown", (e) => { if (e.target !== this.input) { e.preventDefault(); this.input.focus(); } });
     this.input.addEventListener("blur", () => { if (this.typing) setTimeout(() => this.typing && this.input.focus(), 0); });
+  }
+
+  /** True while the Esc menu is up. */
+  get menuOpen(): boolean {
+    return $("menu").classList.contains("show");
+  }
+
+  private menu(open: boolean) {
+    $("menu").className = open ? "show" : "";
+  }
+
+  /**
+   * The letters a spelling spends: all of it, or for "give player2 abc" and "trade eee for o"
+   * only the letters handed over (the name, "give", "trade" and what you ask for cost nothing).
+   */
+  private spends(text: string): string {
+    const t = text.toLowerCase().trimStart();
+    const give = /^give\s+\S+\s+(.*)$/.exec(t);
+    if (give) return give[1]!.replace(/[^a-z]/g, "");
+    if (/^give(\s+\S*)?\s*$/.test(t) || (t && ("give".startsWith(t) || "trade".startsWith(t)))) return "";
+    // "trade eee for o" at a market: only the letters handed over.
+    const trade = /^trade\s+(\S*)/.exec(t);
+    if (trade) return trade[1]!.replace(/[^a-z]/g, "");
+    return t.replace(/[^a-z]/g, "");
+  }
+
+  /** A letter typed that you do not hold (one E too many counts) is not added: the window flashes red and shakes. */
+  private typed() {
+    const text = this.input.value;
+    const short = (t: string) => missing(this.held, this.spends(t)).length;
+    if (short(text) > short(this.lastText)) {
+      const caret = Math.max(0, (this.input.selectionStart ?? text.length) - (text.length - this.lastText.length));
+      this.input.value = this.lastText;
+      this.input.setSelectionRange(caret, caret);
+      this.reject();
+      return;
+    }
+    this.lastText = text;
+    this.drawLetters();
+  }
+
+  private reject() {
+    const card = this.win.querySelector(".card") as HTMLElement;
+    card.classList.remove("reject");
+    void card.offsetWidth; // restart the animation
+    card.classList.add("reject");
+    clearTimeout(this.rejectTimer);
+    this.rejectTimer = window.setTimeout(() => card.classList.remove("reject"), 450);
   }
 
   /** True while the spell window is open: every key goes to it. */
@@ -144,17 +205,18 @@ export class Hud {
     this.show(null);
     this.closeInspect();
     this.target = target;
-    $("spellfor").innerHTML = target ? `aimed at <b>${esc(target.name.toUpperCase())}</b>: spell adjectives (WORST) or an event` : "";
+    $("spellfor").innerHTML = target ? `on <b>${esc(target.name.toUpperCase())}</b>` : "";
     this.win.className = "show";
     this.input.value = text;
+    this.lastText = text;
     this.input.focus();
     this.drawLetters();
-    this.drawPreview();
   }
 
   closeSpell() {
     this.win.className = "";
     this.input.value = "";
+    this.lastText = "";
     this.target = null;
     this.input.blur();
     this.drawLetters();
@@ -166,22 +228,6 @@ export class Hud {
     this.locked = true;
     if (this.typing) this.closeSpell();
     this.closeInspect();
-  }
-
-  /** The live preview under the spelling: what it would make, and whether you hold the letters. */
-  private drawPreview() {
-    const el = $("preview"), text = this.input.value.trim();
-    if (!text) { el.innerHTML = ""; el.className = ""; return; }
-    const give = /^give\s+(\S+)\s+([a-z]*)$/i.exec(text);
-    if (give) { el.innerHTML = `<div class="kind">trade</div><ul class="does"><li>gives ${esc(give[2]!.toUpperCase())} to ${esc(give[1]!)}</li></ul>`; el.className = "show"; return; }
-    const r = inspectText(this.dict, text);
-    if ("error" in r) { el.innerHTML = `<div class="why">${esc(r.error)}</div>`; el.className = "show"; return; }
-    const lacking = missing(this.held, r.card.letters);
-    const letters = lacking
-      ? `<div class="need short">You need ${esc(lacking.toUpperCase().split("").join(" "))}</div>`
-      : `<div class="need ok">You hold the letters</div>`;
-    el.innerHTML = cardHtml(r.card) + letters;
-    el.className = "show";
   }
 
   /** The inspect card (right-click): what something in the world is, by the pointer, with Add adjective. */
@@ -223,16 +269,13 @@ export class Hud {
    */
   aim(words: string | null, how: "describe" | "someone" | "anywhere" = "describe") {
     this.aiming = how === "describe" ? words : null;
+    this.aimingAny = !!words;
     const banner = $("aim"), cursor = $("aimcursor");
     document.body.classList.toggle("aiming", !!words);
     banner.className = cursor.className = words ? "show" : "";
     if (words) {
       const W = esc(words.toUpperCase());
-      banner.innerHTML = how === "describe"
-        ? `${W} — click something to describe <small>a thing, a creature, a person, yourself · L for your own gear · Esc cancels</small>`
-        : how === "someone"
-          ? `${W} — click whom or what it acts on <small>a person, a creature or a thing · Esc cancels</small>`
-          : `${W} — click where it lands <small>a spot, or someone · Esc cancels</small>`;
+      banner.innerHTML = `${W} <small>${how === "anywhere" ? "click where" : "click a target"}${how === "describe" ? " · L: your gear" : ""} · Esc cancels</small>`;
       cursor.textContent = words.toUpperCase();
     }
     this.drawPanel();
@@ -261,28 +304,52 @@ export class Hud {
   private drawHud() {
     const f = this.frame, d = this.detail;
     if (!f) return;
-    const max = d?.health.max ?? 100;
     const parts = [`<div class="top"><span class="me">${esc(f.name.toUpperCase())}</span><span class="round"><b>${f.alive}</b> alive · <b>${clock(f.clock)}</b></span></div>`];
-    parts.push(bar("Health", (f.hp / 100) * max, max));
-    const gear = d?.gear ?? [];
-    for (const g of gear) if (g.max && g.slot !== "ride") parts.push(bar("Armor", g.integrity ?? 0, g.max, "armor"));
-    for (const g of gear) if (g.max && g.slot === "ride") parts.push(bar("Ride", g.integrity ?? 0, g.max, "ride"));
-    const list = (slots: string[]) => gear.filter((g) => slots.includes(g.slot)).map((g) => esc(g.phrase)).join(", ");
-    const held = list(["held"]), worn = list(["head", "face", "neck", "body", "back", "hands", "feet", "finger", "graft"]), ride = list(["ride"]);
-    const row = (label: string, text: string) => `<span>${label}</span><b class="${text ? "" : "none"}">${text || "nothing"}</b>`;
-    parts.push(`<div class="gear">${row("Hands", held)}${row("Wears", worn)}${ride ? row("Rides", ride) : ""}${
-      d ? row("Creatures", d.creatures.length ? `${d.creatures.length} of ${d.command.limit}` : "") : ""}</div>`);
-    const chips = [
-      ...(d?.statuses ?? []).map((s) => chip(s.status, s.left)),
-      ...(["food", "fuel", "power"] as const).filter((k) => (d?.stores[k].have ?? 0) > 0).map((k) =>
-        `<span class="chip store">${k.toUpperCase()} ${Math.round(d!.stores[k].have * 10) / 10}</span>`),
-      ...(d?.short ?? []).map((t) => chip("hungry").replace("HUNGRY", `SHORT: ${esc(t.toUpperCase())}`)),
-    ];
-    if (chips.length) parts.push(`<div class="chips">${chips.join("")}</div>`);
+    if (this.out !== null) {
+      // Knocked out: no bars, no gear; just that, and whom the camera follows.
+      parts.push(`<div class="out">KNOCKED OUT</div>${this.out ? `<div class="watch">watching ${esc(this.out.toUpperCase())}</div>` : ""}`);
+    } else {
+      const max = d?.health.max ?? 100;
+      parts.push(bar("Health", (f.hp / 100) * max, max));
+      const gear = d?.gear ?? [];
+      for (const g of gear) if (g.max && g.slot !== "ride") parts.push(bar("Armor", g.integrity ?? 0, g.max, "armor"));
+      for (const g of gear) if (g.max && g.slot === "ride") parts.push(bar("Ride", g.integrity ?? 0, g.max, "ride"));
+      const list = (slots: string[]) => gear.filter((g) => slots.includes(g.slot)).map((g) => esc(g.phrase)).join(", ");
+      const rides = gear.filter((g) => g.slot === "ride");
+      // A mount that lives (a HORSE, an ASS) is one of your animals too, ridden.
+      const animals = rides.filter((g) => this.alive(g.phrase)).map((g) => `${esc(g.phrase)} (ridden)`);
+      const creatures = [...(d?.creatures.length ? [`${d.creatures.length} of ${d.command.limit}`] : []), ...animals].join(", ");
+      const rows: [string, string][] = [
+        ["Hands", list(["held"])],
+        ["Wears", list(["head", "face", "neck", "body", "back", "hands", "feet", "finger", "graft"])],
+        ["Rides", rides.length ? `${list(["ride"])} <small>R: off</small>` : ""],
+        ["Creatures", creatures],
+      ];
+      const shown = rows.filter(([, text]) => text).map(([label, text]) => `<span>${label}</span><b>${text}</b>`).join("");
+      if (shown) parts.push(`<div class="gear">${shown}</div>`);
+      const chips = [
+        ...(d?.statuses ?? []).map((s) => chip(s.status, s.left)),
+        ...(["food", "fuel", "power"] as const).filter((k) => (d?.stores[k].have ?? 0) > 0).map((k) =>
+          `<span class="chip store">${k.toUpperCase()} ${Math.round(d!.stores[k].have * 10) / 10}</span>`),
+        ...(d?.short ?? []).map((t) => chip("hungry").replace("HUNGRY", esc(t.toUpperCase()))),
+      ];
+      if (chips.length) parts.push(`<div class="chips">${chips.join("")}</div>`);
+    }
     const html = parts.join("");
     if (html === this.drawnHud) return;
     this.drawnHud = html;
     $("status").innerHTML = html;
+  }
+
+  /** True if a phrase names something alive (a HORSE you ride is an animal, a CAR is not). */
+  private alive(phrase: string): boolean {
+    try { return parsePhrase(this.dict, phrase).stats.flag("alive"); } catch { return false; }
+  }
+
+  /** Knocked out: the HUD says so, and whom the camera now follows (null for nobody yet). */
+  knockedOut(watching: string | null) {
+    this.out = watching ?? "";
+    this.drawHud();
   }
 
   /** A plain line in place of the HUD, before the game starts or once it cannot. */
@@ -419,23 +486,30 @@ export class Hud {
     this.toastTimer = window.setTimeout(() => (el.className = ""), 2500);
   }
 
-  /** One tile per letter held; tiles the current spelling would use are lit, shortfalls in red. */
+  /**
+   * The letters held, at the bottom: a tile for each copy (E E E), or one tile with a count for a
+   * letter held more than COPIES_SHOWN times. Copies the current spelling would use are lit.
+   */
   private drawLetters() {
-    const text = this.typing ? this.input.value : "";
-    // "give player2 abc" lights only the letters given.
-    const give = /^\s*give\s+\S+\s+([a-z]*)/i.exec(text);
-    const typed = (give ? give[1]! : text).toLowerCase().replace(/[^a-z]/g, "");
+    const typed = this.typing ? this.spends(this.input.value) : "";
     const need: Letters = {};
     for (const ch of typed) need[ch] = (need[ch] ?? 0) + 1;
-    const short = new Set(missing(this.held, typed));
-    const letters = new Set([...Object.keys(this.held).filter((ch) => this.held[ch]! > 0), ...short]);
-    $("letters").replaceChildren(
-      ...[...letters].sort().map((ch) => {
-        const tile = document.createElement("div");
-        tile.className = `tile${short.has(ch) ? " short" : need[ch] ? " used" : ""}`;
-        tile.innerHTML = `${ch.toUpperCase()}<small>${this.held[ch] ?? 0}</small>`;
-        return tile;
-      }),
-    );
+    const tiles: HTMLElement[] = [];
+    const tile = (ch: string, cls: string, count?: number) => {
+      const el = document.createElement("div");
+      el.className = `tile${cls ? ` ${cls}` : ""}`;
+      el.innerHTML = `${ch.toUpperCase()}${count !== undefined ? `<small>${count}</small>` : ""}`;
+      el.dataset.letter = ch;
+      tiles.push(el);
+    };
+    for (const ch of Object.keys(this.held).filter((c) => this.held[c]! > 0).sort()) {
+      const n = this.held[ch]!, used = need[ch] ?? 0;
+      if (n > COPIES_SHOWN) tile(ch, used ? "used" : "", n);
+      else for (let i = 0; i < n; i++) tile(ch, i < used ? "used" : "");
+    }
+    $("letters").replaceChildren(...tiles);
   }
 }
+
+/** A letter held more often than this shows as one tile with a count. */
+const COPIES_SHOWN = 4;

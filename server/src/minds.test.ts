@@ -169,7 +169,7 @@ it("a ridden DRAGON (5 food a minute) with no food goes hungry, then throws its 
   expect(wa.gear.length).toBe(1);
   expect(wa.stores.food).toBe(0);
   await wait();
-  expect(loadouts.at(-1)!.short).toEqual(["dragon: no food"]);
+  expect(loadouts.at(-1)!.short).toEqual(["dragon is hungry (no food)"]);
   room.update(60); // its loyalty is 2: two hungry minutes
   await wait();
   expect(said.a).toContain("Your DRAGON went wild with hunger");
@@ -200,7 +200,13 @@ it("a FARM keeps a DRAGON fed; a TANK out of fuel cannot fire until COAL fuels i
   expect(wa.stores.fuel).toBeCloseTo(30); // a new TANK comes with half an hour of fuel (one a minute)
   wa.stores.fuel = 0; // and burns it
   ticks(room, 12); await wait();
-  expect(said.a).toContain("Your TANK has no fuel: it stops working");
+  expect(said.a.find((m) => m.startsWith("TANK out of fuel"))).toMatch(/^TANK out of fuel: stopped until refuelled\. [A-Z]+( or [A-Z]+)? makes fuel\.$/);
+  expect(loadouts.at(-1)!.short).toEqual(["tank out of fuel: stopped"]);
+  expect(wa.speed).toBe(0); // and it goes nowhere
+  const { x } = wa.player;
+  a.send("move", { x: x + 5, y: wa.player.y }); await wait();
+  ticks(room, 10);
+  expect(wa.player.x).toBe(x);
   a.send("attack", wb.id); await wait();
   const hp = wb.hp;
   ticks(room, 30);
@@ -208,6 +214,8 @@ it("a FARM keeps a DRAGON fed; a TANK out of fuel cannot fire until COAL fuels i
   a.send("spell", "coal"); await wait(); // two fuel a minute, the tank burns one
   ticks(room, 12); await wait();
   expect(said.a).toContain("Your TANK is working again");
+  expect(wa.speed).toBeGreaterThan(0);
+  a.send("stop"); a.send("attack", wb.id); await wait();
   (room as any).rng = seeded(5); // a tank fires once in 6.7 seconds and can miss: give it a few shots
   ticks(room, 150);
   expect(wb.hp).toBeLessThan(hp);

@@ -47,7 +47,13 @@ interface ZoneView {
   tag: Phaser.GameObjects.Image;
   decor: { img: Phaser.GameObjects.Image; a: number; d: number; base: number; i: number }[];
   word: string; style: ZoneStyle; x: number; y: number; r: number; laidFor: number;
+  /** Claimed ground (HOME, CASTLE): a fence of stakes around its edge, redrawn as it changes size. */
+  fence?: Phaser.GameObjects.Graphics; fencedFor?: number;
 }
+
+/** Claimed ground: green for yours, red for someone else's. */
+const CLAIM_MINE: ZoneStyle = { colour: "#8ccf7a", ink: "#2f6a3a", decor: "word" };
+const CLAIM_THEIRS: ZoneStyle = { colour: "#e08a7a", ink: "#8a2a2a", decor: "word" };
 
 export class Zones {
   private views = new Map<string, ZoneView>();
@@ -90,7 +96,7 @@ export class Zones {
   }
 
   /** Draws the zones in `zones`; returns the words over the whole map. */
-  update(zones: any, time: number): string[] {
+  update(zones: any, time: number, mine = ""): string[] {
     const t = time / 1000;
     const live = new Set<string>(), overMap: string[] = [];
     zones.forEach((zone: any, id: string) => {
@@ -98,18 +104,25 @@ export class Zones {
       live.add(id);
       let z = this.views.get(id);
       if (!z) {
-        const style = zoneStyle(this.dict, zone.word);
+        const claim = zone.shelter > 0;
+        const style = claim ? (zone.owner === mine ? CLAIM_MINE : CLAIM_THEIRS) : zoneStyle(this.dict, zone.word);
         const seed = Math.floor(hash(id.length, zone.word.charCodeAt(0), 3) * 100);
         const disc = this.scene.add.image(0, 0, "__WHITE").setDepth(50).setAlpha(0.32).setTint(num(mix(style.colour, "#ffffff", 0.15)));
         useMade(disc, this.paint.tissue(seed % 7), this.k);
         disc.setData("s", disc.scaleX);
         const tag = this.scene.add.image(0, 0, "__WHITE").setDepth(10000);
-        useMade(tag, this.paint.tag([zone.word.toUpperCase()], style.ink, 13), this.k);
+        const title = claim ? `${zone.word.toUpperCase()} · ${zone.owner === mine ? "YOURS" : "CLAIMED"} −${zone.shelter}%` : zone.word.toUpperCase();
+        useMade(tag, this.paint.tag([title], style.ink, 13), this.k);
         z = { disc, tag, decor: [], word: zone.word, style, x: 0, y: 0, r: 0, laidFor: 0 };
+        if (claim) { z.fence = this.scene.add.graphics().setDepth(51).setScale(1, 0.9); disc.setAlpha(0.2); }
         this.views.set(id, z);
       }
       z.x = zone.x * PX; z.y = zone.y * PX; z.r = zone.radius * PX;
-      if (Math.abs(z.r - z.laidFor) > z.laidFor * 0.12 + 1) this.lay(z);
+      if (z.fence) {
+        // Stakes and a dashed rope around claimed ground, instead of cut-outs inside it.
+        if (z.fencedFor !== z.r) this.fenceOut(z);
+        z.fence.setPosition(z.x, z.y);
+      } else if (Math.abs(z.r - z.laidFor) > z.laidFor * 0.12 + 1) this.lay(z);
       // The tissue's radius is 124 units, 62 world pixels, at its base scale.
       const s = (z.disc.getData("s") as number) * (z.r / 62);
       z.disc.setPosition(z.x, z.y).setScale(s * (1 + Math.sin(t * 1.3) * 0.01), s * 0.9 * (1 + Math.cos(t * 1.1) * 0.01));
@@ -138,10 +151,27 @@ export class Zones {
     });
     for (const [id, z] of this.views) {
       if (live.has(id)) continue;
-      z.disc.destroy(); z.tag.destroy(); z.decor.forEach((d) => d.img.destroy());
+      z.disc.destroy(); z.tag.destroy(); z.decor.forEach((d) => d.img.destroy()); z.fence?.destroy();
       this.views.delete(id);
     }
     return overMap;
+  }
+
+  private fenceOut(z: ZoneView) {
+    const g = z.fence!, ink = num(z.style.ink), r = z.r;
+    g.clear();
+    const n = Math.max(12, Math.round(r / 7));
+    for (let i = 0; i < n; i++) {
+      const a0 = (i / n) * Math.PI * 2, a1 = ((i + 0.55) / n) * Math.PI * 2;
+      g.lineStyle(2, ink, 0.75).beginPath();
+      g.arc(0, 0, r, a0, a1).strokePath();
+    }
+    for (let i = 0; i < n; i++) {
+      const a = (i / n) * Math.PI * 2, x = Math.cos(a) * r, y = Math.sin(a) * r;
+      g.fillStyle(0x6b4a2e, 1).fillRect(x - 1.2, y - 6, 2.4, 7);
+      g.fillStyle(ink, 1).fillCircle(x, y - 6, 1.8);
+    }
+    z.fencedFor = r;
   }
 
   /** The zones' name tags, to keep clear of other tags. */

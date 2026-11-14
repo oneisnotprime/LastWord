@@ -4,6 +4,7 @@ import { parsePhrase, type Phrase } from "./phrase.js";
 import type { Stats } from "./stats.js";
 import type { Op, Value } from "./types.js";
 import { improvisable } from "./unit.js";
+import { claimOf, senseOf } from "./sense.js";
 import { needs, outputs, STARTING_SUPPLY_MINUTES, SUPPLIES } from "./upkeep.js";
 import { useObject } from "./verb.js";
 import { TILE_TYPES } from "./world.js";
@@ -150,6 +151,8 @@ export function behaviours(s: Stats, count = 1): string[] {
     const effect = what && s.num("field_delta") ? `${plain(what)} ${s.num("field_delta") > 0 ? "+" : "−"}${num(Math.abs(s.num("field_delta")))}` : "";
     out.push(`radiates a field${effect ? ` (${effect})` : ""} ${Number.isFinite(s.num("field_radius")) ? `${num(s.num("field_radius"))} m around it` : "over the whole map"}`);
   }
+  const claim = claimOf(s);
+  if (claim) out.push(`claims ${num(claim.radius)} tiles around it: your things there take ${Math.round(claim.shelter * 100)}% less damage and are harder to steal`);
   if (s.num("luminosity") > 0) out.push("gives off light");
   if (s.num("fear_aura") > 0) out.push(`frightens enemies (fear ${num(s.num("fear_aura"))})`);
   if (s.num("heals") > 0) out.push(`heals allies ${num(s.num("heals"))} a second`);
@@ -230,6 +233,16 @@ export function cardOf(dict: Dictionary, p: Phrase): Card {
     return card;
   }
   card.kind = kindOf(dict, p.noun);
+  const sense = senseOf(dict, p.noun, s);
+  if (sense) {
+    const reach = (n: number) => (Number.isFinite(n) ? `${num(n)} tiles` : "the whole map");
+    card.does = [`goes on your screen as a minimap, not on the ground`, ...[
+      sense.reveal ? `shows the land within ${reach(sense.reveal)}` : "",
+      sense.letters ? `shows letter sources within ${reach(sense.letters)}` : "",
+      sense.life ? `shows living things within ${reach(sense.life)}` : "",
+    ].filter(Boolean)];
+    return card;
+  }
   card.stats = becomes(s) === "terrain" ? [] : keyStats(s);
   card.does = behaviours(s, p.count);
   const use = useText(dict, p.noun, p.adjectives);

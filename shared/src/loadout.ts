@@ -33,4 +33,14 @@ export interface LoadoutDetail {
   /** Creatures you can command at once, and how many you have. */
   command: { limit: number; have: number };
   creatures: { name: string; health: number; hungry?: boolean; fleeing?: boolean }[];
+  /** Words that are part of your screen (shared `senseOf`): a MAP's minimap. Empty: no minimap. */
+  senses: { word: string; reveal: number; letters: number; life: number }[];
+}
+
+/** What a player's senses pick up, sent about once a second while they have any: map positions in tiles. */
+export interface Sensed {
+  /** Living things in `life` range: people and creatures, and whether each is yours. */
+  life: { x: number; y: number; mine: boolean; person: boolean }[];
+  /** Letter sources in `letters` range: things that make letters, with the letters they make. */
+  letters: { x: number; y: number; letters: string }[];
 }
