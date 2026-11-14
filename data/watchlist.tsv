@@ -203,7 +203,7 @@ time	rules, fate and information	4	7.5	1.9	-	noun:event
 omen	rules, fate and information	4	7.8	1.9	-	noun:event
 map	rules, fate and information	3	8.6	2.9	-	noun:document
 radar	rules, fate and information	5	8.9	1.8	-	noun:device
-peace	rules, fate and information	5	9.3	1.9	-	noun:group
+peace	rules, fate and information	5	9.3	1.9	-	noun:feeling
 truce	rules, fate and information	5	9.5	1.9	-	noun:feeling
 curse	rules, fate and information	5	9.6	1.9	-	verb:inert
 oracle	rules, fate and information	6	9.6	1.6	-	noun:worker

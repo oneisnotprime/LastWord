@@ -14,7 +14,7 @@ OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data")
 DAMAGE = ("blunt slash pierce crush fire cold electric acid poison radiation blast sonic light dark "
           "water wind earth psychic holy unholy disease magic suffocation hunger").split()
 MEDIA = "land water air underground space".split()
-STATUS = "stun slow blind fear burn freeze poison bleed sleep charm silence root confuse shrink".split()
+STATUS = "stun slow blind fear burn freeze poison bleed sleep charm silence root confuse shrink sick rage deaf".split()
 
 GROUPS = {}
 GROUPS["physical"] = """
@@ -46,7 +46,7 @@ slipperiness|scale|0||makes movers slide
 transparency|frac|0||fraction of sight that passes through
 luminosity|scale|0||light it gives off
 reflectivity|scale|1||bounces light and light damage
-loudness|scale|0||noise it makes; reveals position
+loudness|scale|0||noise it makes: from 3 up it gives away where its maker is on the threat arrows of everyone within earshot (shared sound.ts)
 odor|scale|0||smell it gives off; reveals position
 state|enum|solid|solid,liquid,gas,plasma,energy,none|state of matter
 material|tags|||what it is made of (wood, steel, flesh, stone ...)
@@ -122,6 +122,7 @@ regeneration|num|0|hp/s|integrity restored per second
 reflect|frac|0||fraction of damage sent back
 thorns|num|0|hp|damage dealt to melee attackers
 stealth|scale|0||how hard it is to see
+disguise|scale|0||worn: passes its wearer off as one of another side: enemies' creatures, wild animals and bots leave them be until they strike; seen through by detect_stealth as high or a nose (smell_range) close by (shared wear.ts)
 camouflage|tags|||terrain types where stealth doubles
 cover|frac|0||damage reduction it gives things behind or inside it
 untargetable|bool|false||cannot be chosen as a target
@@ -129,7 +130,7 @@ indestructible|bool|false||defence absolute: integrity cannot reach 0
 """.strip().split("\n"))
 GROUPS["perception"] = """
 sight_range|num|10|m|how far it sees
-hearing_range|num|10|m|how far it detects loudness
+hearing_range|num|10|m|how far past earshot it hears noise (shared sound.ts)
 smell_range|num|0|m|how far it detects odor
 night_vision|bool|false||sees without light
 sees_through|tags|||things its sight ignores (walls, fog, water)
@@ -164,8 +165,8 @@ pack_size|num|1||how many arrive when one is spelled without a plural
 venomous|bool|false||its bite or sting poisons
 nocturnal|bool|false||active at night
 habitat|tags|||terrain where it thrives
-temp_min|num|-10|C|takes cold damage below this
-temp_max|num|40|C|takes fire damage above this
+temp_min|num|-10|C|takes cold damage when the air is colder (biome, night, weather; warm clothes lower it: shared wear.ts)
+temp_max|num|40|C|takes fire damage when the air is hotter (desert sun, volcanic ash, heat waves: shared wear.ts)
 breathes|enum|air|air,water,both,none|what it needs to breathe
 hands|bool|false||can hold tools and weapons
 speech|bool|false||can trade, negotiate and command
@@ -232,7 +233,7 @@ charm|scale|0||raises NPC attitude and trade prices
 intimidation|scale|0||makes NPCs yield letters or territory
 recruit_rate|num|0|/min|NPCs it draws to its owner
 tax_rate|frac|0||share of letters others earn inside its area that goes to its maker
-law|tags|||acts it forbids inside its area (attack, gather, spell, trade, theft, hunt)
+law|tags|||acts it forbids inside its area (attack, gather, spell, trade, theft, hunt; contact: sickness does not pass between people inside)
 fine|num|0|letters|with a law: the act is allowed but costs whoever does it this many letters, paid to its maker
 binds|num|0||people a pact made with it puts on one side, its speller included (2 or more)
 bind_penalty|tags|||what breaking the pact costs its breaker: letters, loyalty, morale, reputation
@@ -256,6 +257,7 @@ absolute_side|enum|none|none,attack,defence|attack absolutes beat defence absolu
 specificity|num|0||depth in the word tree; specific beats general among absolutes
 counters|tags|||words, classes or properties it specifically defeats
 strips_adjectives|num|0||adjectives it removes from a target
+severs|num|0||grafted body parts it cuts off whoever it lands on (ABS: all of them; shared body.ts)
 copies|bool|false||becomes a copy of its target
 negates|tags|||properties it resets to default on a target
 silences|num|0|m|radius in which verbs cannot be cast
@@ -279,7 +281,7 @@ light_delta|scale|0||change to light level
 temperature_delta|num|0|C|change to ambient temperature
 visibility|num|1|x|multiplier on all sight ranges
 growth|num|1|x|multiplier on flora and creature growth, and on how fast picked ground grows back
-contagion|frac|0||chance per minute it spreads to a neighbour
+contagion|frac|0||chance per minute it spreads to a neighbour; a word that inflicts sick makes its sickness this catching (shared disease.ts)
 sets_daylight|enum|none|none,day,night|forces day or night in its field
 sets_weather|text|||weather it starts in its field
 clears_weather|tags|||weather it ends in its field

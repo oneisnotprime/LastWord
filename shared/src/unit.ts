@@ -4,6 +4,8 @@ import type { Rng } from "./rng.js";
 import { massed, resolve, type Stats } from "./stats.js";
 import type { Op, Value } from "./types.js";
 import { inflicts } from "./status.js";
+import { graftCosts, handsOf, isGraft } from "./body.js";
+import { lend, lends } from "./wear.js";
 
 /**
  * A noun with the adjectives on it. `count` above 1 is many of it as one body (a swarm, a
@@ -110,9 +112,13 @@ export class Unit {
     let weapon: Stats | null = null;
     let hands = 0;
 
-    for (const item of loadout.items ?? []) {
+    // Grafted arms and hands (shared body.ts) are more hands to hold with.
+    const resolved = (loadout.items ?? []).map((item) => ({ item, stats: resolveSpelled(dict, item) }));
+    const handLimit = 2 + handsOf(resolved.map((r) => ({ stats: r.stats, count: r.item.count ?? 1 })));
+    const grafted: number[] = [];
+    for (const { item, stats: own } of resolved) {
       const def = dict.lookup(item.noun)?.def;
-      let stats = resolveSpelled(dict, item);
+      let stats = own;
       // A thing with no slot of its own and no weapon of its own (a STONE) is carried in the hand
       // as an improvised weapon.
       if (improvisable(stats) && !hasDamage(stats) && !inflicts(stats).length) {
@@ -122,10 +128,14 @@ export class Unit {
         stats = improvised(stats, body);
       }
       hands += stats.num("hands_required");
-      if (hands > 2) throw new Error(`${item.noun} needs a free hand`);
-      if (stats.num("hands_required") > 0 && !body.flag("hands")) throw new Error(`${loadout.body.noun} has no hands`);
+      if (hands > handLimit) throw new Error(`${item.noun} needs a free hand`);
+      if (stats.num("hands_required") > 0 && !body.flag("hands") && !(handLimit > 2)) throw new Error(`${loadout.body.noun} has no hands`);
       // What an item does for its wearer: a hat's warmth, a wing's flight, a ladder's climb.
       body.apply(def?.ops ?? []);
+      // Worn on the body it lends its armour, resistances, disguise and noise (shared wear.ts);
+      // a graft its capabilities, at a cost (shared body.ts).
+      if (lends(stats, def?.archetype)) lend(body, stats, item.count ?? 1);
+      if (isGraft(stats)) grafted.push(Math.max(0, stats.num("mass")));
       if (def?.archetype === "protection") {
         const layer = spawn(item.noun, stats);
         protection.push(layer);
@@ -137,6 +147,7 @@ export class Unit {
       }
     }
 
+    body.apply(graftCosts(body.num("mass"), grafted));
     for (const effect of loadout.effects ?? []) {
       for (const [id, value] of Object.entries(effect.set ?? {})) body.set(id, value);
       body.apply(effect.ops ?? []);

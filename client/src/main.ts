@@ -285,7 +285,7 @@ class World extends Phaser.Scene {
       const x = at.x / PX, y = at.y / PX;
       if (this.aiming) {
         if (p.rightButtonDown()) return this.endAim(true);
-        const target = this.hitAt(x, y, this.aimHow === "describe");
+        const target = this.hitAt(x, y, this.aimHow !== "anywhere"); // yourself too: adjectives, a graft
         if (!target && this.aimHow === "describe") return this.hud.toast("Click a thing, a creature, a person or yourself", "bad");
         if (!target && this.aimHow === "someone") return this.hud.toast("Click a person, a creature or a thing", "bad");
         return this.release(this.aiming, this.aimHow, target ?? { x, y });
@@ -688,7 +688,7 @@ class World extends Phaser.Scene {
       if (d <= reach) out.push({ id, x: t.x, y: t.y, d });
     });
     state.players.forEach((o: any, id: string) => {
-      if (id === mine) { if (kind === "describe" || kind === "any") out.push({ id, x: o.x, y: o.y, d: kind === "any" ? 1e6 : 0.5 }); return; }
+      if (id === mine) { if (kind === "describe" || kind === "any" || kind === "someone") out.push({ id, x: o.x, y: o.y, d: kind === "describe" ? 0.5 : 1e6 }); return; }
       if (kind === "foe" && o.owner === mine) return;
       const d = Math.hypot(o.x - me.x, o.y - me.y);
       if (d <= reach) out.push({ id, x: o.x, y: o.y, d });
@@ -757,7 +757,7 @@ class World extends Phaser.Scene {
       if (p.pressed("lb") || p.pressed("rb")) { const t = this.cycle(this.targets(kind), p.pressed("rb") ? 1 : -1); if (t) this.snap(t.id, t); }
       if (this.cursor) { const s = this.toScreen(this.cursor.x, this.cursor.y); this.hud.pointer(s.x, s.y); }
       if (p.pressed("a") && this.cursor) {
-        const target = this.cursorOn && (this.aimHow !== "someone" || this.cursorOn !== this.net.sessionId) ? this.cursorOn : null;
+        const target = this.cursorOn;
         if (!target && this.aimHow === "describe") return this.hud.toast("Move the cursor onto a thing, a creature, a person or you", "bad");
         if (!target && this.aimHow === "someone") return this.hud.toast("Move the cursor onto a person, a creature or a thing", "bad");
         this.release(this.aiming, this.aimHow, target ?? { ...this.cursor });

@@ -2,6 +2,11 @@ import { homeText } from "./home.js";
 import { craftText } from "./craft.js";
 import { techText } from "./tech.js";
 import { herdText } from "./herd.js";
+import { bodyText } from "./body.js";
+import { wearText } from "./wear.js";
+import { diseaseText } from "./disease.js";
+import { emotionText } from "./emotion.js";
+import { soundText } from "./sound.js";
 import type { Dictionary } from "./dictionary.js";
 import { GROW_PACE, needsText, producerOf, SEEDLING } from "./produce.js";
 import { parsePhrase, type Phrase } from "./phrase.js";
@@ -50,12 +55,14 @@ export function becomes(stats: Stats): Becomes {
 export function aimOf(p: Phrase): "someone" | "anywhere" | null {
   const s = p.stats;
   if (p.kind === "verb") {
-    const eventful = s.flag("destroys_target") || s.flag("transfers_ownership") || s.num("moves_target") > 0;
+    const eventful = s.flag("destroys_target") || s.flag("transfers_ownership") || s.num("moves_target") > 0 || s.num("severs") > 0;
     return s.get("effect_target") === "touched" && eventful ? "someone" : null;
   }
   if (p.kind === "field") return s.get("placement") === "target" ? "anywhere" : null;
+  // A body part grows on whoever is clicked (you, a creature, anyone): shared body.ts.
+  if (p.kind === "object") return s.get("equip_slot") === "graft" ? "someone" : null;
   if (p.kind !== "event") return null;
-  if (pactOf(s) || s.flag("transfers_ownership") || s.flag("destroys_target") || s.num("letter_steal") > 0 || s.num("moves_target") > 0 ||
+  if (pactOf(s) || s.num("severs") > 0 || s.flag("transfers_ownership") || s.flag("destroys_target") || s.num("letter_steal") > 0 || s.num("moves_target") > 0 ||
     s.num("restores") > 0 || s.num("produce_T") > 0 || (s.num("inflict_stun") > 0 && s.get("event_target") === "character")) return "someone";
   // Passed on a person (ARREST, EXILE, PARDON): its statuses or cures land on whoever is clicked.
   if (s.get("event_target") === "character" && !(s.num("event_radius") > 0) && (inflictsAny(s) || s.tags("effect_status").length)) return "someone";
@@ -174,7 +181,7 @@ export function behaviours(s: Stats, count = 1): string[] {
   if (s.num("luminosity") > 0) out.push("gives off light");
   if (s.num("fear_aura") > 0) out.push(`frightens enemies (fear ${num(s.num("fear_aura"))})`);
   if (s.num("heals") > 0) out.push(`heals allies ${num(s.num("heals"))} a second`);
-  out.push(...homeText(s), ...craftText(s), ...techText(s), ...herdText(s));
+  out.push(...homeText(s), ...craftText(s), ...techText(s), ...herdText(s), ...bodyText(s), ...wearText(s), ...diseaseText(s), ...emotionText(s), ...soundText(s));
   const need = needs(s, count), make = outputs(s, count);
   for (const k of SUPPLIES) {
     if (need[k] > 0) out.push(`draws ${num(need[k])} ${k} a minute${s.flag("alive") ? "" : ` (comes with ${STARTING_SUPPLY_MINUTES} min)`}`);
@@ -352,6 +359,7 @@ export function eventCard(dict: Dictionary, word: string): { title: string; kind
   for (const [id] of s.entries()) if (id.startsWith("inflict_") && s.num(id) > 0) lines.push(`${plain(id)} ${num(statusSeconds(id.slice(8) as Status, s.num(id)))} s`);
   if (s.flag("sets_hostile")) lines.push("creatures here attack everyone not on its maker's side");
   if (s.num("contagion") > 0) lines.push(`spreads to people inside (${Math.round(s.num("contagion") * 100)}% a minute)`);
+  if (s.tags("law").includes("contact")) lines.push("quarantine: sickness does not pass between bodies inside");
   if (s.get("sets_daylight") !== "none") lines.push(`makes it ${s.get("sets_daylight")}`);
   lines.push(...placeLines(dict, word, s));
   const body = def.ops.filter(([id]) => !/^produce_[A-Z]$/.test(id) && id !== "harvest_bonus").map(opText);

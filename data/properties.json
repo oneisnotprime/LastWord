@@ -1,17 +1,17 @@
 {
- "count": 366,
+ "count": 374,
  "groups": {
   "physical": 45,
   "mobility": 25,
-  "offence": 57,
-  "defence": 51,
+  "offence": 60,
+  "defence": 55,
   "perception": 14,
   "life": 29,
   "economy": 52,
   "spatial": 19,
   "social": 13,
   "slots": 9,
-  "meta": 16,
+  "meta": 17,
   "field": 14,
   "event": 14,
   "effect": 8
@@ -63,7 +63,10 @@
   "silence",
   "root",
   "confuse",
-  "shrink"
+  "shrink",
+  "sick",
+  "rage",
+  "deaf"
  ],
  "properties": [
   {
@@ -277,7 +280,7 @@
    "id": "loudness",
    "group": "physical",
    "type": "scale",
-   "desc": "noise it makes; reveals position",
+   "desc": "noise it makes: from 3 up it gives away where its maker is on the threat arrows of everyone within earshot (shared sound.ts)",
    "default": 0
   },
   {
@@ -907,6 +910,30 @@
    "default": 0
   },
   {
+   "id": "inflict_sick",
+   "group": "offence",
+   "type": "num",
+   "desc": "seconds of sick applied on hit",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "inflict_rage",
+   "group": "offence",
+   "type": "num",
+   "desc": "seconds of rage applied on hit",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "inflict_deaf",
+   "group": "offence",
+   "type": "num",
+   "desc": "seconds of deaf applied on hit",
+   "unit": "s",
+   "default": 0
+  },
+  {
    "id": "attack_rate",
    "group": "offence",
    "type": "num",
@@ -1315,6 +1342,27 @@
    "default": false
   },
   {
+   "id": "immune_sick",
+   "group": "defence",
+   "type": "bool",
+   "desc": "cannot be affected by sick",
+   "default": false
+  },
+  {
+   "id": "immune_rage",
+   "group": "defence",
+   "type": "bool",
+   "desc": "cannot be affected by rage",
+   "default": false
+  },
+  {
+   "id": "immune_deaf",
+   "group": "defence",
+   "type": "bool",
+   "desc": "cannot be affected by deaf",
+   "default": false
+  },
+  {
    "id": "armor",
    "group": "defence",
    "type": "num",
@@ -1383,6 +1431,13 @@
    "default": 0
   },
   {
+   "id": "disguise",
+   "group": "defence",
+   "type": "scale",
+   "desc": "worn: passes its wearer off as one of another side: enemies' creatures, wild animals and bots leave them be until they strike; seen through by detect_stealth as high or a nose (smell_range) close by (shared wear.ts)",
+   "default": 0
+  },
+  {
    "id": "camouflage",
    "group": "defence",
    "type": "tags",
@@ -1422,7 +1477,7 @@
    "id": "hearing_range",
    "group": "perception",
    "type": "num",
-   "desc": "how far it detects loudness",
+   "desc": "how far past earshot it hears noise (shared sound.ts)",
    "unit": "m",
    "default": 10
   },
@@ -1673,7 +1728,7 @@
    "id": "temp_min",
    "group": "life",
    "type": "num",
-   "desc": "takes cold damage below this",
+   "desc": "takes cold damage when the air is colder (biome, night, weather; warm clothes lower it: shared wear.ts)",
    "unit": "C",
    "default": -10
   },
@@ -1681,7 +1736,7 @@
    "id": "temp_max",
    "group": "life",
    "type": "num",
-   "desc": "takes fire damage above this",
+   "desc": "takes fire damage when the air is hotter (desert sun, volcanic ash, heat waves: shared wear.ts)",
    "unit": "C",
    "default": 40
   },
@@ -2376,7 +2431,7 @@
    "id": "law",
    "group": "social",
    "type": "tags",
-   "desc": "acts it forbids inside its area (attack, gather, spell, trade, theft, hunt)",
+   "desc": "acts it forbids inside its area (attack, gather, spell, trade, theft, hunt; contact: sickness does not pass between people inside)",
    "default": []
   },
   {
@@ -2531,6 +2586,13 @@
    "group": "meta",
    "type": "num",
    "desc": "adjectives it removes from a target",
+   "default": 0
+  },
+  {
+   "id": "severs",
+   "group": "meta",
+   "type": "num",
+   "desc": "grafted body parts it cuts off whoever it lands on (ABS: all of them; shared body.ts)",
    "default": 0
   },
   {
@@ -2708,7 +2770,7 @@
    "id": "contagion",
    "group": "field",
    "type": "frac",
-   "desc": "chance per minute it spreads to a neighbour",
+   "desc": "chance per minute it spreads to a neighbour; a word that inflicts sick makes its sickness this catching (shared disease.ts)",
    "default": 0
   },
   {

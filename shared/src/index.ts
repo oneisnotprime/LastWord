@@ -34,3 +34,8 @@ export * from "./craft.js";
 export * from "./tech.js";
 export * from "./herd.js";
 export * from "./kits.js";
+export * from "./body.js";
+export * from "./wear.js";
+export * from "./disease.js";
+export * from "./emotion.js";
+export * from "./sound.js";

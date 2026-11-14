@@ -3,9 +3,13 @@ import type { Dictionary } from "./dictionary.js";
 import { Stats } from "./stats.js";
 import type { Op, Value } from "./types.js";
 
+/** Statuses that come through the ears: the deaf are spared them (shared sound.ts). */
+export const UNHEARD: readonly string[] = ["charm", "sleep"];
+
 /** Every status a word can inflict (`inflict_<status>`) or be immune to (`immune_<status>`). */
 export const STATUSES = [
   "stun", "slow", "blind", "fear", "burn", "freeze", "poison", "bleed", "sleep", "charm", "silence", "root", "confuse", "shrink",
+  "sick", "rage", "deaf",
 ] as const;
 export type Status = (typeof STATUSES)[number];
 
@@ -35,6 +39,10 @@ export interface StatusRule {
   ops?: Op[];
   /** A property that shortens it: the time is scaled by 5 / that property (5 is ordinary). */
   resistedBy?: string;
+  /** Goes for whoever is nearest, friend or foe (shared emotion.ts). */
+  berserk?: boolean;
+  /** Hears nothing: no orders, no songs (shared sound.ts `UNHEARD`). */
+  deaf?: boolean;
 }
 
 /** The one table of what each status does. Words only say how long. */
@@ -53,6 +61,12 @@ export const STATUS_RULES: Record<Status, StatusRule> = {
   root: { still: true },
   confuse: { random: true },
   shrink: { ops: [["mass", "mul", 0.1], ["height", "mul", 0.25], ["length", "mul", 0.25], ["strength", "mul", 0.3], ["speed_land", "mul", 0.6]] },
+  // Disease (shared disease.ts): it wastes the body and passes to whoever stands close.
+  sick: { dot: { disease: 3 }, living: true, ops: [["strength", "mul", 0.7], ["speed_land", "mul", 0.8], ["labor", "mul", 0.5], ["morale", "add", -1]] },
+  // Emotions (shared emotion.ts): blind fury, at whoever is nearest.
+  rage: { berserk: true, tempo: 1.5, living: true, ops: [["strength", "mul", 1.5], ["accuracy", "add", -0.15], ["armor", "add", -5], ["courage", "add", 5]] },
+  // Sound (shared sound.ts).
+  deaf: { deaf: true, ops: [["hearing_range", "mul", 0]] },
 };
 
 /**
@@ -66,6 +80,7 @@ export const STATUS_STRETCH: Record<Status, number> = {
   stun: 3, freeze: 3, sleep: 4, root: 5, silence: 5,
   burn: 2, poison: 2, bleed: 2,
   slow: 12, blind: 8, fear: 8, charm: 8, confuse: 8, shrink: 12,
+  sick: 6, rage: 6, deaf: 8,
 };
 /** Seconds past which stretching bends toward a ceiling of about this much more. */
 export const STATUS_HORIZON = 120;
@@ -96,6 +111,8 @@ export interface Affliction {
   from: string;
   /** What to run from: the striker, or the area it came from. */
   origin: string;
+  /** For sickness: the chance a minute it passes to each body close by (shared disease.ts). */
+  contagion?: number;
 }
 
 /** Seconds of each status a strike carries, the most any of the striking stats gives. */
@@ -122,8 +139,10 @@ export function afflict(
   list: Affliction[], given: [Status, number][], target: Stats, from: string, origin = from,
 ): Status[] {
   const done: Status[] = [];
+  // The deaf hear no song or lullaby (shared sound.ts): charm and sleep do not reach them.
+  const deaf = list.some((a) => STATUS_RULES[a.status].deaf);
   for (const [status, base] of given) {
-    if (!susceptible(target, status)) continue;
+    if (!susceptible(target, status) || (deaf && UNHEARD.includes(status))) continue;
     const by = STATUS_RULES[status].resistedBy;
     const stretched = statusSeconds(status, base);
     const seconds = by ? stretched * (5 / Math.max(1e-3, target.num(by))) : stretched;
@@ -179,10 +198,14 @@ export interface Hampered {
   spares: string[];
   /** The status that stops them spelling, for telling them why. */
   muteBy?: Status;
+  /** In a rage: goes for whoever is nearest. */
+  berserk: boolean;
+  /** Hears no orders. */
+  deaf: boolean;
 }
 
 export function hampered(list: readonly Affliction[]): Hampered {
-  const h: Hampered = { moves: true, acts: true, spells: true, random: false, tempo: 1, flees: [], spares: [] };
+  const h: Hampered = { moves: true, acts: true, spells: true, random: false, tempo: 1, flees: [], spares: [], berserk: false, deaf: false };
   for (const a of list) {
     const r = STATUS_RULES[a.status];
     if (r.still) h.moves = false;
@@ -192,6 +215,8 @@ export function hampered(list: readonly Affliction[]): Hampered {
     if (r.tempo !== undefined) h.tempo *= r.tempo;
     if (r.flees) h.flees.push(a.origin);
     if (r.spares) h.spares.push(a.from);
+    if (r.berserk) h.berserk = true;
+    if (r.deaf) h.deaf = true;
   }
   return h;
 }

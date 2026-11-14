@@ -28,13 +28,13 @@ bullet: mass=0.01 length=0.03 integrity=3 material=lead single_use=true plural_c
 shield: mass=6 length=1 integrity=300 hardness=7 material=wood,steel equip_slot=held hands_required=1 block=0.6 armor=10 res_blast=0.5 res_pierce=0.4 cover=0.3
 armor: mass=25 integrity=400 hardness=8 material=steel equip_slot=body armor=30 res_slash=0.6 res_pierce=0.4 res_blunt=0.3 conductivity=8 loudness=3
 helmet: mass=1.5 integrity=150 hardness=8 material=steel equip_slot=head armor=8 res_blunt=0.3 immune_stun=true
-mask: mass=0.3 integrity=20 equip_slot=face res_poison=0.8 res_suffocation=0.6 stealth=1
+mask: mass=0.3 integrity=20 equip_slot=face res_poison=0.8 res_suffocation=0.6 stealth=1 disguise=4
 
 # noun clothing
-hat: mass=0.2 integrity=10 material=cloth equip_slot=head temp_max+5 charm+1
+hat: mass=0.2 integrity=10 material=cloth equip_slot=head res_fire=0.1 temp_max+8 temp_min+-3 charm+1
 boot: plural_count=2 mass=1.5 integrity=40 material=leather equip_slot=feet speed_land+1 terrain_ignored=swamp,snow
-cloak: mass=1 integrity=15 material=cloth equip_slot=back stealth=3 temp_min+-15 camouflage=forest
-glove: plural_count=2 mass=0.2 integrity=15 material=leather equip_slot=hands res_cold=0.3 res_acid=0.3 res_electric=0.3
+cloak: mass=1 integrity=15 material=cloth equip_slot=back stealth=3 disguise=2 res_cold=0.3 temp_min+-15 camouflage=forest
+glove: plural_count=2 mass=0.2 integrity=15 material=leather equip_slot=hands res_cold=0.3 res_acid=0.3 res_electric=0.3 temp_min+-3
 crown: mass=1 integrity=40 material=gold equip_slot=head authority=6 command_limit=10 charm=3 value=5000 beauty=9
 
 # noun adornment
@@ -171,7 +171,7 @@ wolf: mass=45 length=1.5 integrity=140 alive=true sentient=true intelligence=5 l
 bear: mass=400 length=2.5 height=1.5 integrity=900 alive=true aggression=6 diet=omnivore food_need=0.3 speed_land=13 speed_water=2 climb=5 dmg_slash=90 dmg_crush=60 attack_rate=0.8 armor=5 res_cold=0.5 fear_aura=4 habitat=forest,taiga,tundra
 lion: mass=190 length=2 integrity=500 alive=true aggression=7 diet=carnivore food_need=0.25 speed_land=20 jump=3 dmg_slash=70 dmg_pierce=60 attack_rate=1 pack_size=3 stealth=4 fear_aura=5 loudness=8 habitat=savanna
 elephant: mass=5000 length=6 height=3.2 integrity=6000 alive=true sentient=true intelligence=6 loyalty=6 diet=herbivore food_need=3 water_need=3 speed_land=10 mountable=true seats=4 carry_capacity=1000 tow_capacity=8000 dmg_crush=500 dmg_pierce=200 attack_rate=0.4 knockback=5 siege=3 armor=20 fear_aura=4 tamable=true equip_slot=mount habitat=savanna,jungle
-rat: mass=0.3 length=0.2 integrity=4 alive=true diet=scavenger food_need=0.001 speed_land=3 stealth=6 reproduction=20 pack_size=5 letter_steal=1 dmg_disease=2 attack_rate=1 contagion=0.1 habitat=city,marsh
+rat: mass=0.3 length=0.2 integrity=4 alive=true diet=scavenger food_need=0.001 speed_land=3 stealth=6 reproduction=20 pack_size=5 letter_steal=1 dmg_disease=2 attack_rate=1 contagion=0.3 habitat=city,marsh inflict_sick=10
 bat: mass=0.03 length=0.1 integrity=2 alive=true diet=carnivore speed_air=10 night_vision=true nocturnal=true sees_through=night,fog detect_stealth=4 pack_size=10 equip_slot=companion
 whale: mass=100000 length=25 integrity=40000 alive=true intelligence=6 diet=carnivore food_need=20 speed_water=8 dive_depth=1000 breathes=air placeable_on=deep_water dmg_crush=3000 attack_rate=0.1 loudness=9 mountable=true seats=10
 camel: mass=500 length=3 integrity=450 alive=true diet=herbivore food_need=0.1 water_need=0.01 speed_land=10 mountable=true seats=2 carry_capacity=250 temp_max=55 terrain_ignored=sand habitat=desert,badlands equip_slot=mount tamable=true
@@ -247,7 +247,7 @@ guard: mass=85 integrity=250 alive=true sentient=true intelligence=5 loyalty=7 c
 farmer: mass=75 integrity=100 alive=true sentient=true intelligence=5 hands=true speech=true speed_land=5 labor=3 harvest_bonus=2 harvest_sources=field produce_A=0.5 produce_N=0.3 food_need=0.03
 miner: mass=80 integrity=120 alive=true sentient=true intelligence=5 hands=true speech=true speed_land=4 speed_underground=0.1 labor=3 harvest_bonus=2 harvest_sources=mine,quarry produce_G=0.5 produce_N=0.3 food_need=0.04 night_vision=true
 smith: mass=90 integrity=130 alive=true sentient=true intelligence=6 hands=true speech=true labor=3 craft_slots=1 produce_C=0.5 produce_N=0.3 res_fire=0.3 food_need=0.03
-doctor: mass=70 integrity=90 alive=true sentient=true intelligence=9 hands=true speech=true speed_land=5 heals=10 res_disease=0.8 food_need=0.03 produce_N=0.3 counters=plague,poison
+doctor: mass=70 integrity=90 alive=true sentient=true intelligence=9 hands=true speech=true speed_land=5 heals=10 res_disease=0.8 food_need=0.03 produce_N=0.3 counters=plague,poison field_radius=12 field_targets=owned effect_status=sick
 merchant: mass=75 integrity=90 alive=true sentient=true intelligence=7 hands=true speech=true speed_land=5 trade_bonus=0.3 charm=5 produce_T=1 produce_N=0.3 storage_letters=100
 spy: mass=70 integrity=90 alive=true sentient=true intelligence=8 loyalty=5 hands=true speech=true speed_land=6 stealth=9 read_properties=8 read_inventory=true detect_stealth=5 sight_range=100
 wizard: mass=70 integrity=100 alive=true sentient=true intelligence=10 hands=true speech=true speed_land=4 dmg_magic=300 dmg_electric=200 attack_rate=0.5 attack_range=60 attack_area=4 targets=land,air grants_adjective_slots=1 grants_slots_to=artifact,creature extends_duration=2 transmute_in=12 produce_Z=0.02
@@ -353,13 +353,13 @@ potion: mass=0.3 state=liquid edible=true potency=9 restores=400 regeneration+5 
 # noun bodypart
 wing: equip_slot=graft mass=5 integrity=60 speed_air+15 flight_ceiling+2000 jump+5 plural_count=2
 claw: equip_slot=graft mass=0.2 integrity=80 sharpness=8 dmg_slash+30 climb+4 plural_count=2
-eye: equip_slot=graft mass=0.01 integrity=5 sight_range+50 detect_stealth+2 accuracy+0.05 plural_count=2
+eye: equip_slot=graft mass=0.01 integrity=5 night_vision=true sight_range+50 detect_stealth+2 accuracy+0.05 plural_count=2
 horn: equip_slot=graft mass=2 integrity=200 hardness=6 dmg_pierce+40 knockback+2 loudness+3 plural_count=2
 tail: equip_slot=graft mass=5 integrity=80 agility+2 speed_water+2 dmg_blunt+15
-fang: equip_slot=graft mass=0.01 integrity=60 sharpness=9 dmg_pierce+25 inflict_bleed+5 plural_count=2
+fang: equip_slot=graft mass=0.01 integrity=60 sharpness=9 venomous=true dmg_pierce+25 inflict_bleed+5 inflict_poison+4 plural_count=2
 shell: equip_slot=graft mass=30 integrity=1500 hardness=8 armor+40 speed_land*0.6 block+0.3
-gill: equip_slot=graft mass=0.1 integrity=10 breathes=both dive_depth+200 plural_count=2
-heart: equip_slot=graft mass=0.3 integrity=30 regeneration+2 courage+2 prevents_death=1 single_use=true
+gill: equip_slot=graft mass=0.1 integrity=10 breathes=both dive_depth+200 speed_water+2 plural_count=2
+heart: equip_slot=graft mass=0.3 integrity=30 regeneration+2 courage+2 morale+2 prevents_death=1 single_use=true
 
 # noun weather
 rain: placement=region field_radius=2000 field_targets=all sets_weather=rain field_duration=10 wetness+5 flammability+-3 visibility=0.7 moisture=5 growth=1.5 produce_O=1 sight_range*0.7 produce_O*2 counters=fire,drought,thirst,dearth
@@ -378,13 +378,13 @@ winter: placement=map field_radius=ABS field_targets=all field_duration=20 tempe
 summer: placement=map field_radius=ABS field_targets=all field_duration=20 temperature_delta=12 growth=2 produce_A*2 produce_P*2 water_need*1.5 clears_weather=snow counters=winter
 
 # noun affliction
-plague: placement=target placement_range=20 field_radius=10 field_targets=living field_duration=30 dmg_disease=15 attack_rate=0.2 contagion=0.4 friendly_fire=true morale+-3 labor*0.3 produce_N*0.3 produce_S*0.5 counters=army,city
+plague: placement=target placement_range=20 field_radius=10 field_targets=living field_duration=30 dmg_disease=15 attack_rate=0.2 contagion=0.4 friendly_fire=true morale+-3 labor*0.3 produce_N*0.3 produce_S*0.5 counters=army,city inflict_sick=30
 
 # noun feeling
-love: field_radius=30 field_targets=owned loyalty+4 morale+3 reproduction*2 aggression+-2
+love: field_radius=30 field_targets=living field_duration=2 inflict_charm=4 loyalty+4 morale+3 reproduction*2 aggression+-3 counters=hate,hatred,jealousy
 fear: field_radius=40 field_targets=enemies morale+-4 courage+-4 accuracy+-0.2 inflict_fear=5
-rage: field_radius=20 field_targets=owned aggression+5 attack_rate*1.5 armor+-10 obedience+-3
-hope: field_radius=50 field_targets=owned morale+4 regeneration+1 courage+3 prevents_death=0
+rage: placement=target placement_range=80 field_radius=16 field_targets=enemies field_duration=1 inflict_rage=8 aggression+5 obedience+-5 counters=calm,peace
+hope: field_radius=50 field_targets=owned field_duration=3 morale+5 regeneration+1 courage+4 prevents_death=0 counters=despair,gloom,misery,grief
 courage: field_radius=30 field_targets=owned courage+6 immune_fear=true morale+2
 
 # noun attribute
@@ -664,7 +664,7 @@ sunrise: placement=map field_radius=ABS field_targets=all sets_daylight=day fiel
 
 # noun affliction
 blight: placement=target placement_range=200 field_radius=120 field_duration=10 deposit_factor=0 growth=0 produce_E*0 produce_A*0 produce_P*0 produce_U*4 counters=harvest,plenty,abundance,spring
-pestilence: placement=region field_radius=300 field_duration=8 dmg_disease=6 attack_rate=0.2 friendly_fire=true contagion=0.3 growth=0.2 produce_A*0 produce_I*0 produce_U*2 morale+-2
+pestilence: placement=region field_radius=300 field_duration=8 dmg_disease=6 attack_rate=0.2 friendly_fire=true contagion=0.3 growth=0.2 produce_A*0 produce_I*0 produce_U*2 morale+-2 inflict_sick=20
 canker: placement=target placement_range=100 field_radius=40 field_duration=12 growth=0 produce_P*0 produce_A*0 regeneration*0
 pox: placement=target placement_range=30 field_radius=8 field_targets=living field_duration=10 dmg_disease=10 attack_rate=0.5 contagion=0.6 friendly_fire=true charm+-4
 pest: placement=target placement_range=50 field_radius=30 field_duration=6 growth=0.3 produce_A*0.2 produce_P*0.2
@@ -687,7 +687,7 @@ vaccine: mass=0.05 edible=true single_use=true duration=1200 res_disease+1 count
 sanctuary: mass=50000 footprint=6 integrity=20000 material=stone portable=false field_radius=60 law=attack,theft heals=2
 
 # noun medicine
-cure: mass=0.1 edible=true potency=9 restores=500 effect_status=poison,bleed,burn,sleep,confuse single_use=true res_disease+1 counters=plague,pox,epidemic,pandemic,fever,disease,blight,canker,pestilence
+cure: mass=0.1 edible=true potency=9 restores=500 effect_status=poison,bleed,burn,sleep,confuse,sick,rage single_use=true res_disease+1 counters=plague,pox,epidemic,pandemic,fever,disease,blight,canker,pestilence
 
 # noun building
 shrine: mass=20000 footprint=3 integrity=3000 material=stone portable=false field_radius=40 field_targets=owned heals=3 produce_Q=0.1
@@ -726,8 +726,8 @@ inflation: placement=map event_duration=8 trade_rate=2 produce_T*0.5 morale+-1 c
 deflation: placement=map event_duration=8 trade_rate=0.67 produce_T*2 counters=inflation,recession
 bust: placement=region event_radius=300 event_duration=10 trade_rate=1.5 produce_G*0.3 produce_T*0.5 counters=bonanza,eldorado,lode,jackpot,boom
 stampede: placement=region event_radius=60 event_duration=2 field_targets=enemies summons=buffalo summon_count=12 sets_hostile=true produce_H*2
-epidemic: placement=target placement_range=100 event_radius=40 event_duration=8 dmg_disease=12 attack_rate=0.3 friendly_fire=true contagion=0.8 produce_N*0.3 morale+-3
-pandemic: placement=map event_duration=5 dmg_disease=3 attack_rate=0.2 friendly_fire=true contagion=0.5 labor*0.3 produce_T*0.5 morale+-2
+epidemic: placement=target placement_range=100 event_radius=40 event_duration=8 dmg_disease=12 attack_rate=0.3 friendly_fire=true contagion=0.8 produce_N*0.3 morale+-3 inflict_sick=25
+pandemic: placement=map event_duration=5 dmg_disease=3 attack_rate=0.2 friendly_fire=true contagion=0.5 labor*0.3 produce_T*0.5 morale+-2 inflict_sick=20
 quake: placement=region event_radius=300 event_duration=1 dmg_earth=800 dmg_crush=200 siege=5 inflict_stun=3 friendly_fire=true targets=land,underground deposit_factor=1.5 produce_G*2
 tremor: placement=region event_radius=150 event_duration=1 dmg_earth=100 inflict_stun=1 friendly_fire=true deposit_factor=1.5 produce_G*2
 aftershock: placement=region event_radius=200 event_duration=3 dmg_earth=150 attack_rate=0.05 friendly_fire=true inflict_stun=2 produce_G*1.5
@@ -752,8 +752,8 @@ carnival: placement=region event_radius=100 event_duration=6 law=attack trade_ra
 fiesta: placement=region event_radius=80 event_duration=5 law=attack food_need*0 regeneration+5 produce_E*2 morale+4
 gala: placement=region event_radius=40 event_duration=4 law=attack,theft charm+5 produce_T*3 trade_rate=0.5
 revelry: placement=region event_radius=60 event_duration=4 courage+4 accuracy+-0.3 morale+4 produce_E*1.5
-quarantine: placement=region event_radius=100 event_duration=10 law=trade speed_land*0.3 counters=plague,epidemic,pandemic,pox,fever,disease,pestilence
-lockdown: placement=region event_radius=150 event_duration=4 law=gather,trade,theft speed_land*0.3 counters=plague,epidemic,pox,pandemic,looting,riot,plunder,pillage,loot
+quarantine: placement=region event_radius=100 event_duration=10 law=trade,contact speed_land*0.3 counters=plague,epidemic,pandemic,pox,fever,disease,pestilence
+lockdown: placement=region event_radius=150 event_duration=4 law=gather,trade,theft,contact speed_land*0.3 counters=plague,epidemic,pox,pandemic,looting,riot,plunder,pillage,loot
 patrol: placement=region event_radius=50 event_duration=5 field_targets=enemies law=theft summons=guard summon_count=3 summon_owned=true
 conquest: placement=region event_radius=150 event_duration=5 summons=soldier summon_count=3 summon_owned=true produce_L*3 produce_V*3
 skirmish: placement=region event_radius=60 event_duration=2 sets_hostile=true attack_rate*1.2 produce_K*2
@@ -808,10 +808,10 @@ squall: placement=map field_radius=ABS field_targets=all sets_weather=storm fiel
 gust: placement=region field_radius=100 field_duration=1 speed_air*0.5 accuracy+-0.2 produce_W*2
 
 # noun affliction
-leprosy: placement=target placement_range=20 field_radius=6 field_targets=living field_duration=15 dmg_disease=4 attack_rate=0.2 contagion=0.2 friendly_fire=true charm+-6 integrity*0.8
-cholera: placement=target placement_range=60 field_radius=20 field_targets=living field_duration=8 dmg_disease=15 attack_rate=0.3 contagion=0.5 friendly_fire=true produce_O*0 water_need*3
+leprosy: placement=target placement_range=20 field_radius=6 field_targets=living field_duration=15 dmg_disease=4 attack_rate=0.2 contagion=0.2 friendly_fire=true charm+-6 integrity*0.8 inflict_sick=30
+cholera: placement=target placement_range=60 field_radius=20 field_targets=living field_duration=8 dmg_disease=15 attack_rate=0.3 contagion=0.5 friendly_fire=true produce_O*0 water_need*3 inflict_sick=20
 typhus: placement=target placement_range=40 field_radius=12 field_targets=living field_duration=8 dmg_disease=10 attack_rate=0.3 contagion=0.5 friendly_fire=true inflict_confuse=1
-flu: placement=target placement_range=30 field_radius=10 field_targets=living field_duration=5 dmg_disease=3 attack_rate=0.3 contagion=0.7 friendly_fire=true speed_land*0.7 labor*0.5
+flu: placement=target placement_range=30 field_radius=10 field_targets=living field_duration=5 dmg_disease=3 attack_rate=0.3 contagion=0.7 friendly_fire=true speed_land*0.7 labor*0.5 inflict_sick=12
 
 # noun artifact
 granary: mass=30000 footprint=4 integrity=3000 material=wood,stone portable=false food_output=3 field_radius=30 field_targets=owned produce_A*1.5 counters=famine,starvation
@@ -824,8 +824,8 @@ moose: mass=500 length=3 integrity=700 alive=true diet=herbivore food_need=0.15 
 mammoth: mass=6000 length=5 height=3.5 integrity=8000 alive=true diet=herbivore food_need=0.8 speed_land=10 dmg_crush=200 dmg_pierce=120 attack_rate=0.3 knockback=8 aggression=4 courage=8 res_cold=0.9 fear_aura=4 edible=true nutrition=200 habitat=tundra
 
 # noun insect
-mosquito: mass=0.000002 length=0.005 integrity=1 alive=true food_need=0.00001 speed_air=2 plural_count=1000 dmg_disease=1 attack_rate=1 aggression=6 contagion=0.2 inflict_poison=1
-flea: mass=0.0000005 length=0.002 integrity=1 alive=true food_need=0.00001 speed_land=1 jump=10 plural_count=1000 dmg_disease=1 attack_rate=1 aggression=5 contagion=0.3
+mosquito: mass=0.000002 length=0.005 integrity=1 alive=true food_need=0.00001 speed_air=2 plural_count=1000 dmg_disease=1 attack_rate=1 aggression=6 contagion=0.4 inflict_poison=1 inflict_sick=8
+flea: mass=0.0000005 length=0.002 integrity=1 alive=true food_need=0.00001 speed_land=1 jump=10 plural_count=1000 dmg_disease=1 attack_rate=1 aggression=5 contagion=0.5 inflict_sick=12
 cockroach: mass=0.002 length=0.04 integrity=2 alive=true diet=scavenger food_need=0.0001 speed_land=1.5 plural_count=100 res_radiation=0.9 field_radius=8 produce_E*0.7
 
 # noun supernatural
@@ -1227,8 +1227,8 @@ engineer: mass=75 integrity=90 alive=true sentient=true intelligence=9 loyalty=6
 scout: mass=65 integrity=90 alive=true sentient=true intelligence=7 loyalty=7 hands=true speech=true speed_land=8 stealth=6 sight_range=500 map_reveal=30 tracking=6 food_need=0.03
 explorer: mass=75 integrity=110 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=6 sight_range=400 map_reveal=50 climb=6 terrain_ignored=swamp,snow food_need=0.04
 messenger: mass=65 integrity=80 alive=true sentient=true intelligence=6 loyalty=8 hands=true speech=true speed_land=10 sight_range=300 food_need=0.03
-nurse: mass=65 integrity=90 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=5 heals=5 res_disease=0.6 food_need=0.03 counters=plague,poison
-surgeon: mass=70 integrity=90 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 heals=15 res_disease=0.8 dmg_slash=15 sharpness=9 food_need=0.03
+nurse: mass=65 integrity=90 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=5 heals=5 res_disease=0.6 food_need=0.03 counters=plague,poison field_radius=8 field_targets=owned effect_status=sick,bleed
+surgeon: mass=70 integrity=90 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 heals=15 res_disease=0.8 dmg_slash=15 sharpness=9 food_need=0.03 severs=1 counters=mutant,chimera
 healer: mass=65 integrity=90 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=5 heals=8 field_radius=6 field_targets=owned regeneration+1 food_need=0.03
 priest: mass=70 integrity=100 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=4 recruit_rate=0.5 heals=3 dmg_holy=40 attack_rate=0.5 res_unholy=0.6 morale+2 counters=ghost,zombie,demon food_need=0.03
 preacher: mass=70 integrity=90 alive=true sentient=true intelligence=7 loyalty=7 hands=true speech=true speed_land=4 recruit_rate=1 loudness=6 charm=6 field_radius=10 field_targets=owned morale+2 food_need=0.03
@@ -1312,8 +1312,8 @@ cabin: mass=20000 footprint=3 height=4 integrity=1500 material=wood portable=fal
 mansion: mass=3000000 footprint=20 height=14 integrity=40000 material=stone,brick portable=false enterable=true occupants=40 lockable=true security=5 cover=0.7 claim_radius=10 comfort=12 storage_letters=800 beauty=8 needs_foundation=true color=white
 palace: mass=50000000 footprint=60 height=30 integrity=300000 material=marble,stone portable=false enterable=true occupants=400 lockable=true security=7 cover=0.8 claim_radius=25 comfort=20 storage_letters=4000 authority=6 command_limit=25 recruit_rate=0.3 beauty=10 value=1000000 needs_foundation=true color=white
 skyscraper: mass=200000000 footprint=30 height=300 integrity=500000 material=steel,glass,concrete portable=false enterable=true occupants=5000 cover=0.7 claim_radius=15 sight_range=3000 map_reveal=80 storage_letters=3000 upkeep_power=40 needs_foundation=true color=blue
-hospital: mass=20000000 footprint=40 height=25 integrity=60000 material=concrete,glass portable=false enterable=true occupants=500 claim_radius=8 comfort=3 field_radius=60 field_targets=owned heals=6 effect_status=poison,bleed,burn,confuse regeneration+5 res_disease+0.8 upkeep_power=10 needs_foundation=true counters=plague,pestilence,epidemic,disease,infection color=white
-clinic: mass=500000 footprint=6 height=6 integrity=6000 material=brick,glass portable=false enterable=true occupants=30 claim_radius=3 field_radius=24 field_targets=owned heals=3 effect_status=poison,bleed regeneration+2 res_disease+0.4 needs_foundation=true counters=disease,infection color=white
+hospital: mass=20000000 footprint=40 height=25 integrity=60000 material=concrete,glass portable=false enterable=true occupants=500 claim_radius=8 comfort=3 field_radius=60 field_targets=owned heals=6 effect_status=poison,bleed,burn,confuse,sick regeneration+5 res_disease+0.8 upkeep_power=10 needs_foundation=true counters=plague,pestilence,epidemic,disease,infection color=white
+clinic: mass=500000 footprint=6 height=6 integrity=6000 material=brick,glass portable=false enterable=true occupants=30 claim_radius=3 field_radius=24 field_targets=owned heals=3 effect_status=poison,bleed,sick regeneration+2 res_disease+0.4 needs_foundation=true counters=disease,infection color=white
 prison: mass=20000000 footprint=40 height=12 integrity=200000 hardness=8 material=stone,steel portable=false enterable=true occupants=500 lockable=true security=9 cover=0.8 claim_radius=10 blocks=land,projectiles alarm=true detect_stealth=5 needs_foundation=true counters=riot,mob color=gray
 jail: mass=3000000 footprint=10 height=6 integrity=60000 hardness=8 material=stone,iron portable=false enterable=true occupants=40 lockable=true security=7 cover=0.7 claim_radius=5 blocks=land,projectiles alarm=true needs_foundation=true color=gray
 dungeon: mass=5000000 footprint=12 depth=10 integrity=150000 hardness=8 material=stone portable=false enterable=true occupants=60 lockable=true security=8 cover=0.9 claim_radius=6 fear_aura=4 stealth=5 luminosity=0 res_blast=0.6 color=black
@@ -1640,3 +1640,307 @@ won: duration=60 morale+8 courage+5 critical+0.25 accuracy+0.1
 
 # verb movement
 sent: duration=5 teleport_range+500 moves_target=500 effect_target=touched
+
+# Theme 9, body parts and anatomy (shared body.ts, wear.ts). A body-part noun is grafted: spelled
+# with someone clicked (you, a creature of yours, anyone in sight) it grows on them. Its operations
+# add what it does (WINGS fly, CLAWS slash, a HORN gores; a body with no weapon fights with them),
+# and its own capabilities become the body's (GILLS breathe water, an EYE sees at night, an ARM or a
+# TENTACLE is one more hand to hold with). Every graft costs: food a minute by its weight, land speed
+# by the weight it adds, and a seam where sickness gets in. AMPUTATE, SEVER, a SCALPEL or a SURGEON
+# cut grafts off whoever they land on.
+
+# noun bodypart
+talon: equip_slot=graft mass=0.05 integrity=60 sharpness=9 dmg_pierce+30 dmg_slash+10 climb+3 inflict_bleed+3 plural_count=2
+beak: equip_slot=graft mass=0.2 integrity=80 hardness=6 dmg_pierce+25 harvest_bonus+0.3 plural_count=1
+fin: equip_slot=graft mass=1 integrity=30 speed_water+8 dive_depth+50 agility+1 plural_count=2
+tentacle: equip_slot=graft mass=6 integrity=90 hands=true grants_equip_slots=held dmg_blunt+15 inflict_root+2 climb+3 speed_water+3 plural_count=8
+antler: equip_slot=graft mass=4 integrity=150 hardness=5 dmg_pierce+35 knockback+3 intimidation+2 plural_count=2
+hoof: equip_slot=graft mass=1 integrity=120 hardness=6 dmg_blunt+30 speed_land+3 knockback+2 terrain_ignored=snow plural_count=4
+paw: equip_slot=graft mass=0.5 integrity=40 dmg_slash+10 stealth+2 climb+2 speed_land+1 plural_count=4
+jaw: equip_slot=graft mass=1.5 integrity=100 hardness=7 dmg_crush+45 dmg_pierce+15 attack_rate*0.9
+tooth: equip_slot=graft mass=0.01 integrity=50 hardness=9 sharpness=6 dmg_pierce+12 plural_count=32
+spine: equip_slot=graft mass=2 integrity=120 hardness=6 thorns+15 res_slash+0.1 inflict_bleed+2 plural_count=40
+stinger: equip_slot=graft mass=0.01 integrity=20 sharpness=10 venomous=true dmg_pierce+10 inflict_poison+12 inflict_root+2
+hump: equip_slot=graft mass=40 integrity=200 water_need*0.1 food_need*0.6 carry_capacity+60 res_fire+0.2
+mane: equip_slot=graft mass=1 integrity=20 charm+3 intimidation+3 res_cold+0.2 fear_aura+1
+feather: equip_slot=graft mass=0.01 integrity=2 speed_air+1 res_cold+0.05 beauty+1 plural_count=50
+lung: equip_slot=graft mass=1 integrity=30 res_suffocation+0.6 dive_depth+40 speed_land*1.1 loudness+2 plural_count=2
+pincer: equip_slot=graft mass=2 integrity=200 hardness=7 dmg_crush+40 dmg_slash+15 inflict_root+3 plural_count=2
+ear: equip_slot=graft mass=0.02 integrity=5 alarm=true hearing_range+120 detect_stealth+2 plural_count=2
+arm: equip_slot=graft mass=4 integrity=60 hands=true grants_equip_slots=held carry_capacity+20 dmg_blunt+15 strength+1 plural_count=2
+hand: equip_slot=graft mass=0.5 integrity=40 hands=true grants_equip_slots=held carry_capacity+10 dmg_blunt+8 plural_count=2
+leg: equip_slot=graft mass=12 integrity=120 speed_land+3 jump+1.5 dmg_blunt+25 knockback+2 plural_count=2
+brain: equip_slot=graft mass=1.4 integrity=10 immune_confuse=true intelligence+4 read_properties+3 training+2 res_psychic+0.4
+skull: equip_slot=graft mass=1 integrity=200 hardness=7 res_blunt+0.3 immune_stun=true fear_aura+2
+
+# noun device
+prosthesis: equip_slot=graft mass=3 integrity=200 hardness=7 material=steel,plastic hands=true grants_equip_slots=held strength+2 dmg_blunt+20 res_disease+0.1
+implant: equip_slot=graft mass=0.1 integrity=40 material=steel,plastic night_vision=true sees_through=fog sight_range+80 read_properties+3 upkeep_power+0.05
+
+# noun weapon
+scalpel: mass=0.05 length=0.15 integrity=20 hardness=8 sharpness=10 material=steel equip_slot=held hands_required=1 dmg_slash=18 inflict_bleed=6 severs=1 accuracy=0.95
+guillotine: mass=300 height=4 integrity=800 material=wood,steel portable=false dmg_slash=900 attack_rate=0.1 attack_range=2 severs=ABS fear_aura=6 inflict_fear=10
+
+# verb contact
+amputate: effect_target=touched severs=1 inflict_bleed=8 duration=1
+sever: effect_target=touched severs=2 inflict_bleed=6 dmg_slash=30 duration=1
+
+# verb transform
+mutate: duration=300 regeneration+2 integrity*1.3 radioactivity+2 charm+-3 res_radiation+0.4 dmg_slash+20
+
+# verb create
+transplant: effect_target=touched restores=80 effect_status=sick,poison duration=1
+
+# adjective quality
+winged: speed_air+15 flight_ceiling+2000 food_need*1.1
+horned: dmg_pierce+35 knockback+2 intimidation+2
+clawed: dmg_slash+25 climb+3
+scaly: armor+12 res_slash+0.2 res_fire+0.2 speed_land*0.9
+furry: res_cold+0.5 temp_min+-20 temp_max+-5 comfort+1 charm+1
+feathered: res_cold+0.3 temp_min+-10 speed_air+2 beauty+2
+eyeless: sight_range*0.1 accuracy*0.6 immune_blind=true hearing_range*2 smell_range+100
+
+# adjective pertaining
+fanged: dmg_pierce+20 inflict_bleed+4 venomous=true
+
+# Theme 10, clothing and fashion (shared wear.ts). Anything worn on the body (not held, not armour,
+# which is a layer of its own) lends its wearer its armour, resistances, stealth, disguise and noise.
+# The air is colder on tundra and snow and at night, and much colder in a BLIZZARD or WINTER; below
+# a body's temp_min it takes cold damage, above temp_max fire damage: warm clothes lower temp_min
+# (a PARKA by 40), a FIRE close by warms. A disguise (COSTUME, UNIFORM, MASK, WIG) makes enemies'
+# creatures, wild animals and bots take its wearer for one of theirs until it strikes; detect_stealth
+# as high (SPOTLIGHT, a DETECTIVE, UNMASK) or a nose (a HOUND) sees through it.
+
+# noun clothing
+coat: mass=2 integrity=40 material=wool equip_slot=body armor=3 res_cold=0.6 container_slots=2 temp_min+-25
+parka: mass=2.5 integrity=50 material=fur,cloth equip_slot=body armor=2 res_cold=0.8 temp_min+-40 speed_land*0.95
+overcoat: mass=2.5 integrity=45 material=wool equip_slot=body armor=3 res_cold=0.6 container_slots=3 disguise=1 temp_min+-25
+sweater: mass=0.6 integrity=20 material=wool equip_slot=body res_cold=0.4 temp_min+-12 comfort+1
+scarf: mass=0.2 integrity=10 material=wool equip_slot=neck res_cold=0.2 temp_min+-6 disguise=1 charm+1
+mitten: plural_count=2 mass=0.1 integrity=8 material=wool equip_slot=hands res_cold=0.3 temp_min+-5 accuracy+-0.05
+robe: mass=1.5 integrity=15 material=cloth equip_slot=body res_holy=0.2 res_unholy=0.2 temp_max+5 morale+1 comfort+1
+kimono: mass=1 integrity=15 material=silk equip_slot=body beauty=8 charm+3 temp_max+3 morale+1
+tuxedo: mass=1.5 integrity=20 material=wool equip_slot=body beauty=8 disguise=3 charm+4 authority+1
+uniform: mass=1.5 integrity=25 material=cloth equip_slot=body faction=uniform disguise=6 stealth=1 armor=1 authority+1 morale+2 loyalty+2
+livery: mass=1.2 integrity=20 material=cloth equip_slot=body faction=livery disguise=5 charm+2 loyalty+1
+costume: mass=1 integrity=15 material=cloth equip_slot=body disguise=7 stealth=1 charm+2 morale+1
+wig: mass=0.2 integrity=5 material=hair equip_slot=head disguise=3 charm+1
+veil: mass=0.1 integrity=4 material=silk equip_slot=face disguise=3 stealth=1 res_light=0.2 beauty=6
+balaclava: mass=0.2 integrity=10 material=wool equip_slot=face disguise=4 stealth=2 res_cold=0.3 temp_min+-8 intimidation+2
+hood: mass=0.3 integrity=10 material=cloth equip_slot=head disguise=2 stealth=3 res_cold=0.2 temp_min+-5
+camouflage: mass=1.5 integrity=30 material=cloth equip_slot=body stealth=6 disguise=2 camouflage=forest,jungle,meadow,marsh,taiga
+sandal: plural_count=2 mass=0.3 integrity=15 material=leather equip_slot=feet temp_max+5 speed_land+0.5
+earmuff: plural_count=2 mass=0.2 integrity=8 material=wool equip_slot=head res_cold=0.2 res_sonic=0.6 immune_deaf=true temp_min+-5 hearing_range*0.3
+
+# noun person
+detective: mass=75 integrity=100 alive=true sentient=true intelligence=9 loyalty=7 hands=true speech=true speed_land=5 detect_stealth=9 tracking=6 read_properties=5 food_need=0.03 counters=disguise,costume,mask,spy
+
+# noun mammal
+bloodhound: mass=40 length=1.1 integrity=90 alive=true sentient=true intelligence=5 loyalty=9 diet=carnivore food_need=0.02 speed_land=10 smell_range=800 tracking=10 detect_stealth=6 dmg_pierce=15 attack_rate=1 tamable=true equip_slot=companion counters=disguise,costume,thief
+hound: mass=30 length=1 integrity=80 alive=true sentient=true intelligence=5 loyalty=8 diet=carnivore food_need=0.02 speed_land=14 smell_range=500 tracking=8 dmg_pierce=20 attack_rate=1.1 tamable=true habitat=forest,meadow counters=disguise,fox
+
+# verb contact
+unmask: duration=60 detect_stealth+10 read_properties+3 counters=disguise,costume,mask,masquerade
+
+# verb perceive
+expose: duration=30 detect_stealth+8 detect_life+200 counters=disguise,camouflage,stealth
+
+# noun attribute
+disguise: mass=1 integrity=10 equip_slot=body disguise=8 stealth=2 charm+1
+
+# adjective quality
+fashionable: charm+3 beauty+3 morale+1
+ragged: armor*0.5 charm+-2 disguise+2 res_cold+-0.2
+warm: res_cold+0.4 temp_min+-15
+masked: disguise+4 stealth+1
+naked: armor*0 stealth+-3 temp_min+10 charm+-2 speed_land*1.05
+
+# Theme 12, disease and medicine (shared disease.ts). Sickness (sick) is a status: disease damage
+# a second, weaker, slower, idler, glum. The sick pass it to every living body within two tiles,
+# friend or foe, at the contagion of what gave it; res_disease cuts the chance and 1 or more (a
+# VACCINE) means never. Whoever gets over it is immune for three minutes. Inside a law naming
+# contact (QUARANTINE, LOCKDOWN) it does not pass. Cures (effect_status=sick) end it: MEDICINE,
+# ANTIBIOTIC, a HOSPITAL, a DOCTOR's care. Counters go both ways: CURE ends PLAGUE, SUPERBUG ends
+# ANTIBIOTIC, DISINFECT and SOAP end the germs.
+
+# noun affliction
+sickness: placement=target placement_range=30 field_radius=6 field_targets=living field_duration=2 inflict_sick=20 contagion=0.3 friendly_fire=true
+illness: placement=target placement_range=30 field_radius=5 field_targets=living field_duration=2 inflict_sick=25 contagion=0.2 friendly_fire=true morale+-1
+disease: placement=target placement_range=40 field_radius=8 field_targets=living field_duration=3 inflict_sick=30 contagion=0.4 friendly_fire=true labor*0.6
+fever: placement=target placement_range=20 field_radius=5 field_targets=living field_duration=2 inflict_sick=15 inflict_confuse=5 contagion=0.3 friendly_fire=true temperature+3 accuracy+-0.2
+smallpox: placement=target placement_range=40 field_radius=10 field_targets=living field_duration=4 inflict_sick=40 contagion=0.7 dmg_disease=10 attack_rate=0.2 friendly_fire=true charm+-4
+measles: placement=target placement_range=30 field_radius=10 field_targets=living field_duration=3 inflict_sick=25 inflict_blind=4 contagion=0.9 friendly_fire=true
+typhoid: placement=target placement_range=40 field_radius=8 field_targets=living field_duration=4 inflict_sick=40 inflict_confuse=6 contagion=0.3 friendly_fire=true water_need*2
+rabies: placement=target placement_range=10 field_radius=3 field_targets=living field_duration=2 inflict_sick=30 inflict_rage=20 contagion=0.5 friendly_fire=true aggression+8
+germ: placement=target placement_range=20 field_radius=4 field_targets=living field_duration=2 inflict_sick=15 contagion=0.5 stealth=8 friendly_fire=true
+superbug: placement=target placement_range=30 field_radius=8 field_targets=living field_duration=4 inflict_sick=45 contagion=0.6 dmg_disease=8 attack_rate=0.3 friendly_fire=true res_disease+-0.5 counters=antibiotic,penicillin,antiseptic,medicine
+
+# noun medicine
+antibiotic: mass=0.02 edible=true single_use=true potency=8 restores=60 duration=600 effect_status=sick res_disease+0.6 counters=germ,typhoid,cholera,plague
+penicillin: mass=0.02 edible=true single_use=true potency=8 restores=50 duration=600 effect_status=sick res_disease+0.5 counters=germ,typhoid
+antiseptic: mass=0.2 edible=false single_use=true restores=20 effect_status=sick,bleed duration=300 res_disease+0.4 counters=germ
+pill: mass=0.005 edible=true single_use=true potency=4 restores=40 effect_status=sick,poison duration=300 res_disease+0.2
+syringe: mass=0.02 integrity=2 equip_slot=held hands_required=1 sharpness=10 dmg_pierce=3 single_use=true restores=60 effect_status=sick,poison res_disease+0.4
+bandage: mass=0.05 single_use=true restores=60 effect_status=bleed,sick regeneration+1
+
+# noun material
+soap: mass=0.1 density=1000 integrity=5 value=2 color=white single_use=true effect_status=sick res_disease+0.3 counters=germ,flea,lice
+disinfectant: mass=0.5 state=liquid density=1000 integrity=1 value=5 color=blue toxicity=3 single_use=true effect_status=sick res_disease+0.5 counters=germ,plague,superbug
+
+# noun person
+medic: mass=72 integrity=100 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=5 heals=6 res_disease=0.7 food_need=0.03 field_radius=10 field_targets=owned effect_status=sick,bleed counters=plague,germ
+
+# verb body
+vaccinate: effect_target=touched duration=900 res_disease+1 counters=plague,smallpox,measles,flu,epidemic,pandemic
+infect: effect_target=touched inflict_sick=30 contagion=0.5 duration=1
+sneeze: duration=2 inflict_sick=8 contagion=0.5 loudness+3 stealth+-4
+cough: duration=2 inflict_sick=6 contagion=0.4 loudness+2
+
+# adjective quality
+contagious: inflict_sick+15 contagion+0.4
+sick: strength*0.7 speed_land*0.8 morale+-2 regeneration*0.5
+infected: inflict_sick+10 dmg_disease+5 integrity*0.85
+feverish: temperature+4 accuracy+-0.2 inflict_confuse+2
+sterile: res_disease+0.8 inflict_sick*0 reproduction*0
+
+# Theme 13, emotions and mental states (shared emotion.ts, mind.ts). Feelings are fields that move
+# morale (shaken below 3, broken at nothing), courage, loyalty, obedience and aggression on whoever
+# they reach, and statuses: RAGE sends whoever it reaches at the nearest body, friend or foe; a
+# creature charmed long enough (LOVE, ADORATION, a SONG) comes over to the charmer for good (its
+# loyalty shortens the charm); a creature of yours with aggression 5 or more goes for enemies it
+# sees unbidden. Every feeling has its opposite: CALM ends RAGE, HOPE ends DESPAIR, HATE ends LOVE.
+
+# noun feeling
+fury: field_radius=25 field_targets=owned field_duration=2 aggression+6 attack_rate*1.4 strength*1.3 armor+-8 obedience+-2 courage+4 counters=calm,serenity
+wrath: placement=target placement_range=100 field_radius=24 field_targets=enemies field_duration=1 inflict_rage=12 dmg_fire=20 attack_rate=0.5 morale+-2 counters=mercy,calm
+terror: placement=target placement_range=100 field_radius=30 field_targets=enemies field_duration=1 inflict_fear=15 fear_aura=10 morale+-9 courage+-9 accuracy+-0.4 obedience+-6 counters=courage,bravery,hope
+dread: field_radius=60 field_targets=enemies field_duration=3 morale+-5 courage+-4 speed_land*0.85 counters=hope,courage,joy
+joy: field_radius=50 field_targets=owned field_duration=3 morale+6 courage+3 regeneration+2 speed_land*1.2 luminosity+1 counters=despair,grief,sorrow,misery,gloom,shame,fear
+euphoria: field_radius=40 field_targets=owned field_duration=2 morale+10 courage+6 immune_fear=true accuracy+-0.15 regeneration+3 counters=despair,grief,gloom
+despair: placement=target placement_range=100 field_radius=40 field_targets=enemies field_duration=2 morale+-10 courage+-5 obedience+-4 labor*0.5 regeneration*0.5 counters=hope,joy,euphoria,cheer
+grief: placement=target placement_range=60 field_radius=30 field_targets=enemies field_duration=2 morale+-6 attack_rate*0.7 speed_land*0.8 counters=joy,cheer,comfort
+sorrow: placement=target placement_range=60 field_radius=30 field_targets=enemies field_duration=2 morale+-5 aggression+-3 counters=joy,cheer
+misery: placement=target placement_range=60 field_radius=40 field_targets=enemies field_duration=3 morale+-7 regeneration*0.3 food_need*1.5 counters=joy,hope,cheer
+gloom: field_radius=60 field_targets=enemies field_duration=3 morale+-4 sight_range*0.8 luminosity+-2 counters=joy,cheer,hope
+adoration: placement=target placement_range=40 field_radius=12 field_targets=living field_duration=1 inflict_charm=6 loyalty+3 aggression+-4 counters=hate,contempt
+devotion: field_radius=30 field_targets=owned field_duration=3 loyalty+6 obedience+5 morale+2 immune_charm=true counters=betrayal,envy
+passion: field_radius=25 field_targets=owned field_duration=2 morale+4 attack_rate*1.2 speed_land*1.15 courage+3 counters=boredom,apathy
+envy: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=2 loyalty+-5 obedience+-4 inflict_confuse=3 counters=pride,devotion
+jealousy: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=2 loyalty+-6 aggression+4 inflict_rage=4 counters=love,trust
+greed: field_radius=30 field_targets=enemies field_duration=2 loyalty+-4 letter_steal=1 obedience+-3 counters=charity,generosity
+pride: field_radius=30 field_targets=owned field_duration=3 morale+5 courage+3 authority+2 charm+-1 counters=shame,humility
+shame: placement=target placement_range=60 field_radius=25 field_targets=enemies field_duration=2 morale+-5 authority+-3 charm+-3 counters=pride
+guilt: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=2 morale+-4 attack_rate*0.6 aggression+-4 counters=pride,innocence
+serenity: field_radius=40 field_targets=all field_duration=3 effect_status=rage,fear,confuse aggression+-6 morale+2 accuracy+0.1 counters=rage,fury,wrath,panic,frenzy
+peace: placement=region field_radius=60 field_targets=all field_duration=3 effect_status=rage aggression+-8 law=attack counters=war,rage,fury,wrath,hatred
+awe: placement=target placement_range=60 field_radius=30 field_targets=enemies field_duration=1 inflict_stun=2 morale+-2 obedience+2 counters=contempt
+hysteria: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=1 inflict_confuse=8 inflict_fear=4 accuracy+-0.3 counters=calm,serenity
+madness: placement=target placement_range=60 field_radius=15 field_targets=enemies field_duration=1 inflict_confuse=10 inflict_rage=6 intelligence+-4 counters=sanity,calm
+hatred: field_radius=30 field_targets=owned field_duration=2 aggression+7 dmg_dark*1.5 strength*1.2 loyalty+2 charm+-4 immune_charm=true counters=love,adoration,affection
+spite: placement=target placement_range=40 field_radius=15 field_targets=enemies field_duration=1 inflict_rage=5 morale+-2 counters=kindness
+disgust: placement=target placement_range=30 field_radius=15 field_targets=enemies field_duration=1 inflict_fear=3 food_need*1.5 charm+-3
+melancholy: field_radius=50 field_targets=enemies field_duration=3 morale+-4 speed_land*0.85 aggression+-2 counters=joy,cheer,music
+cheer: field_radius=40 field_targets=owned field_duration=2 morale+5 courage+2 labor*1.2 counters=gloom,melancholy,sorrow
+happiness: field_radius=40 field_targets=owned field_duration=3 morale+5 regeneration+1 labor*1.15 counters=sadness,sorrow,misery
+
+# verb body
+soothe: effect_target=touched effect_status=rage,fear,confuse restores=30 duration=60 aggression+-4 morale+2
+
+# verb social
+befriend: effect_target=touched inflict_charm=8 duration=1 loyalty+2
+woo: effect_target=touched inflict_charm=10 duration=1 charm+3
+
+# verb contact
+seduce: effect_target=touched inflict_charm=12 duration=1 charm+4
+
+# verb create
+inspire: duration=120 morale+5 courage+4 training+1 labor*1.2
+pacify: effect_target=touched effect_status=rage aggression+-8 duration=60
+provoke: effect_target=touched inflict_rage=10 duration=1
+
+# noun act
+taunt: placement=target placement_range=60 event_target=character inflict_rage=8 event_duration=1 aggression+3
+
+# noun person
+berserk: mass=90 integrity=150 alive=true sentient=true intelligence=4 loyalty=4 obedience=2 hands=true speed_land=7 aggression=10 courage=10 immune_fear=true strength=9 dmg_slash=55 attack_rate=1.6 armor=0 food_need=0.04
+
+# adjective quality
+furious: aggression+6 attack_rate*1.4 strength*1.2 armor+-6 obedience+-3 accuracy+-0.1
+angry: aggression+4 attack_rate*1.2 obedience+-2
+serene: aggression+-6 immune_fear=true immune_confuse=true accuracy+0.15 morale+2
+jealous: loyalty+-4 aggression+3
+proud: morale+3 courage+3 authority+1 charm+-1
+scared: courage+-5 morale+-3 speed_land*1.2 aggression+-3
+hopeful: morale+3 regeneration+0.5
+hopeless: morale+-6 courage+-4 regeneration*0.5
+calm: immune_fear=true immune_rage=true sets_weather=clear clears_weather=storm,wind aggression+-5 morale+3 accuracy+0.1 loudness+-3
+
+# Theme 14, music and sound (shared sound.ts). Loudness of 3 or more (on a body, worn or held)
+# gives its maker away on the threat arrows of everyone within earshot (8 tiles a point). Songs and
+# instruments are fields: they lift their side's morale and courage, lull enemies to sleep, or
+# charm the living, which wins wild animals over (shared emotion.ts). The deaf hear no orders and
+# no songs. Counters: EARPLUGS and EARMUFFS (worn), SILENCE, NOISE, a GONG that deafens.
+
+# noun instrument
+drum: mass=5 integrity=40 material=wood,leather equip_slot=held hands_required=2 loudness=8 field_radius=40 field_targets=owned courage+3 aggression+2 speed_land*1.1 dmg_blunt=10
+flute: mass=0.4 length=0.6 integrity=20 material=wood equip_slot=held hands_required=2 loudness=4 inflict_charm=3 field_radius=30 field_targets=living morale+2 aggression+-3 value=50
+trumpet: mass=1.2 integrity=40 material=brass equip_slot=held hands_required=1 loudness=9 field_radius=50 field_targets=owned morale+3 courage+4 inflict_fear=2 dmg_sonic=5
+bugle: mass=0.8 integrity=30 material=brass equip_slot=held hands_required=1 loudness=8 field_radius=60 field_targets=owned courage+3 speed_land*1.1 command_limit+3
+violin: mass=0.5 integrity=20 material=wood equip_slot=held hands_required=2 loudness=5 inflict_charm=2 field_radius=30 field_targets=all morale+2 aggression+-2 value=500 beauty=7
+harp: mass=10 integrity=40 material=wood portable=true equip_slot=held hands_required=2 loudness=4 inflict_sleep=3 field_radius=30 field_targets=living morale+2 regeneration+1 value=800 beauty=8
+lute: mass=1.5 integrity=25 material=wood equip_slot=held hands_required=2 loudness=5 inflict_charm=2 field_radius=25 field_targets=all charm+3 morale+2
+bagpipe: mass=3 integrity=40 material=leather,wood equip_slot=held hands_required=2 loudness=10 field_radius=70 field_targets=owned courage+5 morale+2 inflict_fear=3 dmg_sonic=4
+gong: mass=20 integrity=150 material=bronze portable=false loudness=10 dmg_sonic=20 inflict_deaf=10 inflict_stun=2 attack_area=8 field_radius=40 field_targets=enemies
+cymbal: plural_count=2 mass=1.5 integrity=60 material=brass equip_slot=held hands_required=2 loudness=9 dmg_sonic=10 inflict_deaf=5 dmg_slash=12
+tambourine: mass=0.5 integrity=20 material=wood,metal equip_slot=held hands_required=1 loudness=6 field_radius=25 field_targets=owned morale+2 speed_land*1.05
+piano: mass=300 integrity=300 material=wood portable=false loudness=7 field_radius=30 field_targets=all morale+3 aggression+-3 comfort=3 value=5000 beauty=7
+fiddle: mass=0.5 integrity=20 material=wood equip_slot=held hands_required=2 loudness=6 field_radius=30 field_targets=all morale+3 speed_land*1.1 charm+2
+banjo: mass=2 integrity=30 material=wood equip_slot=held hands_required=2 loudness=6 field_radius=25 field_targets=owned morale+3 dmg_blunt=15
+accordion: mass=8 integrity=40 material=wood,leather equip_slot=held hands_required=2 loudness=7 field_radius=30 field_targets=all morale+3 charm+1
+harmonica: mass=0.1 integrity=15 material=steel equip_slot=held hands_required=1 loudness=4 field_radius=20 field_targets=owned morale+2 comfort+1
+tune: mass=0 integrity=1 equip_slot=held hands_required=0 loudness=3 inflict_charm=2 field_radius=20 field_targets=living morale+2
+
+# noun device
+earplug: plural_count=2 mass=0.002 integrity=2 material=rubber equip_slot=face res_sonic=0.9 immune_deaf=true immune_charm=true immune_sleep=true hearing_range*0.1 counters=lullaby,siren,song
+megaphone: mass=1 integrity=20 material=plastic equip_slot=held hands_required=1 loudness=9 field_radius=60 field_targets=owned command_limit+5 morale+2 obedience+2 upkeep_power+0.01
+microphone: mass=0.3 integrity=10 material=metal,plastic equip_slot=held hands_required=1 loudness=7 hearing_range+200 field_radius=40 field_targets=owned morale+2
+
+# noun knowledge
+song: field_radius=40 field_targets=living field_duration=2 loudness=4 inflict_charm=3 morale+3 charm+2 courage+2 counters=silence,gloom
+music: field_radius=50 field_targets=owned field_duration=3 loudness=5 morale+4 charm+3 courage+2 aggression+-2 counters=silence,melancholy
+melody: field_radius=40 field_targets=living field_duration=2 loudness=3 inflict_charm=2 morale+3 aggression+-3
+hymn: field_radius=50 field_targets=owned field_duration=2 loudness=4 morale+4 res_unholy+0.4 courage+3 counters=curse,despair
+
+# noun act
+lullaby: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=1 loudness=3 inflict_sleep=8 counters=noise,alarm,earplug
+serenade: placement=target placement_range=40 field_radius=10 field_targets=living field_duration=1 loudness=4 inflict_charm=8 morale+2
+
+# noun event
+noise: placement=target placement_range=300 event_target=tile event_radius=60 event_duration=1 loudness=10 dmg_sonic=40 inflict_confuse=4 inflict_fear=3 inflict_deaf=6 stealth+-6 counters=lullaby,silence
+racket: placement=target placement_range=100 event_target=tile event_radius=30 event_duration=1 loudness=9 dmg_sonic=15 inflict_deaf=4 inflict_confuse=3 counters=lullaby,silence
+uproar: placement=target placement_range=100 event_target=tile event_radius=40 event_duration=1 loudness=9 inflict_rage=5 inflict_confuse=3 counters=silence,calm
+cacophony: placement=target placement_range=100 event_target=tile event_radius=40 event_duration=1 loudness=10 dmg_sonic=25 inflict_deaf=8 inflict_confuse=5 counters=silence,harmony
+
+# noun group
+choir: mass=1400 integrity=1800 alive=true sentient=true pack_size=20 speech=true speed_land=4 loudness=8 food_need=0.6 field_radius=60 field_targets=owned morale+5 courage+3 res_unholy+0.3
+orchestra: mass=4000 integrity=4000 alive=true sentient=true pack_size=60 speed_land=3 loudness=10 food_need=1.8 field_radius=80 field_targets=all morale+6 aggression+-4 charm+4
+
+# noun phenomenon
+silence: placement=target placement_range=100 field_radius=50 field_targets=all field_duration=5 silences=50 effect_status=deaf,charm,sleep loudness*0 stealth+3 counters=noise,song,music,racket,uproar,cacophony,alarm,siren
+
+# verb perceive
+deafen: effect_target=touched inflict_deaf=15 dmg_sonic=20 duration=1
+scream: duration=5 loudness+10 dmg_sonic+20 inflict_fear+3 inflict_deaf+2 stealth+-6
+whistle: duration=10 loudness+5 command_limit+3 obedience+3
+
+# verb social
+sing: duration=30 loudness+6 charm+4 morale+3 inflict_charm+2 stealth+-4
+
+# noun attribute
+hush: placement=target placement_range=60 field_radius=20 field_targets=all field_duration=2 loudness*0 effect_status=rage stealth+3 aggression+-2 counters=noise,racket,uproar
+
+# adjective quality
+deaf: hearing_range*0 immune_charm=true immune_sleep=true immune_deaf=true res_sonic+0.5
+deafening: loudness+8 dmg_sonic+25 inflict_deaf+5
+shrill: loudness+5 dmg_sonic+10 inflict_confuse+1
+melodic: loudness+2 charm+3 inflict_charm+2 morale+1
