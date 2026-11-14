@@ -95,7 +95,7 @@ lexicon so every related word is captured.
 - [ ] Technology has a purpose: COMPUTER, MONITOR, CAMERA and the like
 - [ ] Ways to see more of the map: wider sight, or a zoomed-out view of the map
 - [ ] Scales such as good and evil, smart and dumb, that words move players and things along
-- [ ] Name idea: a new word for war
+- [ ] Name ideas (both potential titles): a new word for war; "them's fighting words"
 - [ ] Brainstorm alternative game modes
 - [ ] Word idea: AI. AI and GENIE need something special of their own
 - [ ] A lexicon of extremely powerful words: CTHULHU, GOLEM, BEAST, QUETZALCOATL and the like
@@ -206,7 +206,8 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
 
 - [ ] Map conditions: five random adjectives applied to the whole map at the start
 - [ ] Family mode with a filtered word list
-- [ ] Map size scales with the number of players in the round
+- [ ] Map scales with player count (user wants to get a feel first; don't action yet)
+- [ ] Minimap only through words (MAP, TELESCOPE, SPY, CAMERA...); no default minimap
 - [ ] Winners' rounds: the winner of a round is matched against other winners
 - [ ] Track consecutive wins; reward streaks with appearance-only adjectives on the player
       (GOLDEN, RADIANT and the like) that change how they look and nothing else

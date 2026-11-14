@@ -80,6 +80,14 @@ export function parsePhrase(dict: Dictionary, text: string): Phrase {
     const cast = castVerb(dict, head.word, modifiers);
     return { kind: "verb", noun: head.word, adjectives: [], adverbs: modifiers, plural: false, count: 1, letters, stats: cast.stats, effect: { set: cast.set, ops: cast.ops } };
   }
+  if (def.role === "adjective") {
+    const L = last.toUpperCase();
+    if (modifiers.every((w) => role(w) === "adjective")) {
+      throw new Error(`${words.join(" ").toUpperCase()} describes something. Spell it alone and click a target, or add a thing: ${L} SWORD.`);
+    }
+    const thing = (modifiers.find((w) => role(w) === "noun") ?? "sword").toUpperCase();
+    throw new Error(`${L} describes something, so it goes before a thing: ${L} ${thing}, not ${thing} ${L}.`);
+  }
   if (def.role !== "noun") throw new Error(`${last.toUpperCase()} is not a thing; end with a noun`);
   const adverb = modifiers.find((w) => role(w) === "adverb");
   if (adverb) throw new Error(`${adverb.toUpperCase()} goes with a verb, not with ${last.toUpperCase()}`);

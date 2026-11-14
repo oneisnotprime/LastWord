@@ -28,7 +28,8 @@ describe("parsePhrase", () => {
     expect(() => parsePhrase(dict, "")).toThrow("Spell something");
     expect(() => parsePhrase(dict, "sw0rd")).toThrow("sw0rd is not a word");
     expect(() => parsePhrase(dict, "zzz")).toThrow("ZZZ is not in the dictionary yet");
-    expect(() => parsePhrase(dict, "sword big")).toThrow("BIG is not a thing");
+    expect(() => parsePhrase(dict, "sword big")).toThrow("BIG describes something, so it goes before a thing: BIG SWORD, not SWORD BIG.");
+    expect(() => parsePhrase(dict, "worst")).toThrow("WORST describes something. Spell it alone and click a target, or add a thing: WORST SWORD.");
     expect(() => parsePhrase(dict, "big sharp sword")).toThrow("holds 1 adjective");
   });
 });

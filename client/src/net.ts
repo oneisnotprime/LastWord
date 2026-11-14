@@ -17,9 +17,14 @@ export interface Connection {
   use(which?: number | string): void;
   /** Attack a player by session id; null stops. */
   attack(target: string | null): void;
+  /** Put adjectives spelled alone on a player, creature or thing (by id), or on your own gear (your id and its index). */
+  describe(text: string, target: string, gear?: number): void;
   /** Pick a target or spot for events without attacking it; null clears. */
   pick(what: { id: string } | { x: number; y: number } | null): void;
 }
+
+/** Adjectives put on something, as everyone in sight of it is told. */
+export interface Described { target: string; x: number; y: number; words: string; what: string; changes: string[] }
 
 export interface Handlers {
   letters(held: Letters): void;
@@ -31,6 +36,8 @@ export interface Handlers {
   loadout(detail: LoadoutDetail): void;
   won(text: string): void;
   roundover(info: { winner: string; seconds: number }): void;
+  /** Adjectives were put on something in sight: show what changed. */
+  described(effect: Described): void;
   closed(): void;
 }
 
@@ -62,6 +69,7 @@ export async function connect(on: Handlers): Promise<Connection> {
   room.onMessage("loadout", on.loadout);
   room.onMessage("won", on.won);
   room.onMessage("roundover", on.roundover);
+  room.onMessage("described", on.described);
   room.onLeave(on.closed);
   await new Promise<void>((done) => {
     const ready = () => room.state?.seed && room.state.players?.get(room.sessionId);
@@ -80,5 +88,6 @@ export async function connect(on: Handlers): Promise<Connection> {
     use: (which) => room.send("use", which),
     attack: (target) => room.send("attack", target),
     pick: (what) => room.send("pick", what),
+    describe: (text, target, gear) => room.send("describe", { text, target, ...(gear !== undefined ? { gear } : {}) }),
   };
 }

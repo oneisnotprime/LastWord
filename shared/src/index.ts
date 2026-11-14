@@ -15,3 +15,4 @@ export * from "./verb.js";
 export * from "./aura.js";
 export * from "./mind.js";
 export * from "./upkeep.js";
+export * from "./describe.js";

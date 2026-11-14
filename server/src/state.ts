@@ -19,6 +19,8 @@ export const Player = schema(
     status: t.string(),
     /** How many it is: a swarm of a thousand ants is one walker with count 1000. 1 for a person. */
     count: t.float64(),
+    /** For a person: adjectives someone put on their body, space separated: "worst". "" when none. */
+    traits: t.string(),
   },
   "Player",
 );
@@ -65,6 +67,10 @@ export const WorldState = schema(
     phase: t.string(),
     /** Name of the winner once the round is over. */
     winner: t.string(),
+    /** People still alive in the round, bots included. */
+    alive: t.uint16(),
+    /** Whole seconds since the round began. */
+    clock: t.uint32(),
   },
   "WorldState",
 );

@@ -16,8 +16,14 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
 - `src/start.ts` the start screen shown before joining (Play with bots, or join friends); `net.ts` calls it.
 - `src/net.ts` connection to the server: port 2567 under Vite (ports 5173 and 4173), else the
   page's own origin, since a deployed server serves the page. `VITE_SERVER` overrides both.
-- `src/hud.ts` the HTML overlay: status line, letter tiles, spelling box, toasts, and the
-  inventory (I) and loadout (L) screens, drawn from the server's private `loadout` message.
+- `src/hud.ts` the HTML overlay: the top-left HUD card (health, armour and ride bars, hands,
+  wears, rides, creatures, status chips, stores; players alive and round time), letter tiles at
+  the bottom middle, the spell window (Enter opens it; while open every key goes to it, Enter
+  casts, Esc cancels), the aiming banner, toasts, and the inventory (I) and loadout (L) screens,
+  drawn from the server's private `loadout` message. Location and weather are on the loadout screen.
+- Adjectives spelled alone (`readDescription`) put `main.ts` into aiming: a click on a thing,
+  creature, person or yourself sends `describe`; Esc or right-click cancels. `burst` draws the
+  `described` effect: a gold burst and a rising tag listing what changed.
 - `window.__lw` exposes the connection and map for browser checks.
 - To check in a browser: start the server (`npm start -w server`), build and
   `npx vite preview` in `client/`, then drive it with Playwright.

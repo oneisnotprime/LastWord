@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { resolve, spawn, strike, strikeUnit, Unit } from "./index.js";
+import { cannotCarry, carryLimit, resolve, spawn, strike, strikeUnit, Unit } from "./index.js";
 import { demo } from "./testdata.js";
 
 const dict = demo();
 const hit = () => 0.5; // lands, no block, no critical
-const human = (items: { noun: string; adjectives?: string[] }[] = [], adjectives: string[] = []) =>
+const human = (items: { noun: string; adjectives?: string[]; count?: number }[] = [], adjectives: string[] = []) =>
   new Unit(dict, { body: { noun: "human", adjectives }, items });
 
 describe("what a character strikes with", () => {
@@ -118,5 +118,37 @@ describe("nothing is indestructible by default", () => {
 
   it("siege weapons do not multiply against the living or the portable", () => {
     expect(blow("dynamite", "cow")).toBe(2500);
+  });
+});
+
+describe("carrying light things", () => {
+  it("holds a thing with no slot as an improvised weapon, harder and heavier hitting harder", () => {
+    const stone = human([{ noun: "stone" }]).attack.num("dmg_blunt");
+    const bread = human([{ noun: "bread" }]).attack.num("dmg_blunt");
+    expect(stone).toBeCloseTo(2 * 7 * Math.sqrt(2.6), 0);
+    expect(bread).toBeLessThan(5); // softer than a fist
+    expect(stone).toBeGreaterThan(5 * 4);
+    expect(human([{ noun: "stone" }]).weapon?.noun).toBe("stone");
+  });
+
+  it("swings it with strength like any melee weapon", () => {
+    expect(human([{ noun: "stone" }], ["strong"]).attack.num("dmg_blunt")).toBeCloseTo(human([{ noun: "stone" }]).attack.num("dmg_blunt") * 8 / 5);
+  });
+
+  it("refuses what is too heavy for the carrier's strength", () => {
+    expect(carryLimit(resolve(dict, "human"))).toBe(20);
+    expect(() => human([{ noun: "table" }])).toThrow("TABLE is too heavy to carry");
+    expect(() => human([{ noun: "chair" }])).not.toThrow();
+    expect(() => human([{ noun: "table" }], ["strong"])).not.toThrow();
+    expect(() => human([{ noun: "stone", count: 5 }], ["weak"])).toThrow("STONE is too heavy to carry");
+    expect(cannotCarry(resolve(dict, "tree"), resolve(dict, "human"), "tree")).toBe("TREE cannot be picked up");
+  });
+
+  it("takes a free hand, or both for something over half the limit", () => {
+    expect(() => human([{ noun: "stone" }, { noun: "stone" }])).not.toThrow();
+    expect(() => human([{ noun: "stone" }, { noun: "stone" }, { noun: "stone" }])).toThrow("needs a free hand");
+    expect(() => human([{ noun: "rifle" }, { noun: "stone" }])).toThrow("needs a free hand");
+    expect(() => human([{ noun: "sword" }, { noun: "chair" }])).not.toThrow();
+    expect(() => human([{ noun: "sword" }, { noun: "stone", count: 5 }])).toThrow("needs a free hand"); // 13 kg: two hands
   });
 });

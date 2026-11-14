@@ -34,3 +34,9 @@ server and the client import this, so anything here must give the same answer on
 - `mind.ts` morale (`moraleGoal`, `nextMorale`, `routed`, `moraleAim`), how creatures choose
   (`chooseTarget`, `retreats`, `ignoresOrder`) and command (`commandLimit`, `recruitRate`).
 - `upkeep.ts` food, fuel and power: `needs`, `outputs`, `draw`, `supply`, `groundFood`.
+- `describe.ts` adjectives spelled alone: `readDescription` reads them, `applyAdjectives` puts
+  them on something already made (same as spelling it with them; refuses past `adjective_slots`),
+  `changes` says what changed in plain words ("integrity ×0.2", "accuracy −0.4").
+- `unit.ts` also carries light things: anything with no `equip_slot` and no damage of its own is
+  held as an improvised weapon (`improvised`: blunt damage 2 × hardness × √mass, one hand, two
+  over half the limit) if it weighs at most `carryLimit` (strength × 4 kg); `cannotCarry` says why not.
