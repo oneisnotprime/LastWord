@@ -5,6 +5,9 @@ Research for the TODO item "Before the next art pass: research external tools". 
 standee, made ahead of time, cheap, in one consistent style. Prices were checked in November
 2026 and move often; confirm on the linked pages before spending.
 
+The pilot is in [ART_PILOT.md](ART_PILOT.md) and the 3,000-word run in
+[ART_PIPELINE.md](ART_PIPELINE.md).
+
 ## What the game actually needs from a generator
 
 The paper look (white cut border, drop shadow, stand, flames, badges) is already drawn by code

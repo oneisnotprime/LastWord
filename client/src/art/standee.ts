@@ -5,7 +5,8 @@
  */
 import type { Pt, Silhouette } from "./build.js";
 import type { Look } from "./look.js";
-import { drawSilhouette, groundShadow, inks, stand, type Placed } from "./paper.js";
+import { drawRaster, drawSilhouette, groundShadow, inks, stand, type Placed } from "./paper.js";
+import type { Raster } from "./raster.js";
 import { hash } from "./util.js";
 
 export interface Standee {
@@ -58,6 +59,22 @@ export interface StandeeOptions {
   held?: { sil: Silhouette; colour: string };
   /** What a person rides: drawn under them, the person standing on top. */
   ride?: { sil: Silhouette; colour: string };
+  /** The word's generated image, drawn in place of the silhouette (which still gives its size and kind). */
+  raster?: Raster;
+}
+
+/** A generated image's size in units at scale 1: its longest side matches the shape it replaces. */
+export function rasterSize(r: Raster, sil: Silhouette): { w: number; h: number } {
+  const b = bounds(sil, 1);
+  const len = Math.max(12, b.x1 - b.x0, b.y1 - b.y0);
+  const m = Math.max(r.w, r.h);
+  return { w: (r.w / m) * len, h: (r.h / m) * len };
+}
+
+/** Flame spots along a generated image's top edge, like flameSpots. */
+function rasterFlames(r: Raster, w: number, h: number, s: number, lift: number): Pt[] {
+  const n = r.top.length;
+  return r.top.map((t, i) => [(-w / 2 + (w * (i + 0.5)) / n) * s, (-h + t * h) * s + 4 * s - lift] as Pt).filter((_, i) => r.top[i]! < 0.9);
 }
 
 export function renderStandee(look: Look, opt: StandeeOptions): Standee {
@@ -65,7 +82,8 @@ export function renderStandee(look: Look, opt: StandeeOptions): Standee {
   const flies = !!sil.flies, living = !!sil.living;
   const rb = opt.ride ? bounds(opt.ride.sil, 0.9) : null;
   const lift = (flies ? 22 * Math.max(1, s * 0.8) : 0) + (rb ? -rb.y0 * 0.55 : 0);
-  const b0 = bounds(sil, s);
+  const rast = opt.raster, rs = rast ? rasterSize(rast, sil) : null;
+  const b0 = rs ? { x0: (-rs.w / 2) * s, x1: (rs.w / 2) * s, y0: -rs.h * s, y1: 0 } : bounds(sil, s);
   const b = rb ? { x0: Math.min(b0.x0, rb.x0), x1: Math.max(b0.x1, rb.x1), y0: b0.y0, y1: b0.y1 } : b0;
   // Crowds: copies around the first; swarms: specks.
   const many = look.count > 1;
@@ -90,6 +108,11 @@ export function renderStandee(look: Look, opt: StandeeOptions): Standee {
   ctx.scale(k, k);
   ctx.translate(-wx0, -wy0);
   const ink = inks(look.colour, look.frozen);
+  const dye = look.dyed ? look.colour : undefined;
+  /** The body: the generated image if there is one, else the silhouette. */
+  const body = (at: Placed, depth: number, ghost?: boolean) => rast && rs
+    ? drawRaster(ctx, rast.img, rs.w, rs.h, at, { frozen: look.frozen, depth, ghost, dye })
+    : drawSilhouette(ctx, sil, at, ink, { frozen: look.frozen, depth, ghost });
   const ghost = look.invisible || look.hidden;
   let tip: Pt | undefined;
   const halfW = Math.max(6, (b.x1 - b.x0) / 2);
@@ -111,7 +134,7 @@ export function renderStandee(look: Look, opt: StandeeOptions): Standee {
       ctx.fillStyle = ink.body; ctx.beginPath(); ctx.ellipse(x - r * 0.5 * (i % 2 ? 1 : -1), y - 0.3, r * 0.6, r * 0.55, 0, 0, 7); ctx.fill();
     }
     // A few drawn in full at the front.
-    for (const [i, x] of [-crowdR * 0.35, crowdR * 0.3].entries()) drawSilhouette(ctx, sil, { x, y: crowdR * 0.45 + i * 3, s: s * 0.9, flip: i === 1 }, ink, { frozen: look.frozen, depth: 2 });
+    for (const [i, x] of [-crowdR * 0.35, crowdR * 0.3].entries()) body({ x, y: crowdR * 0.45 + i * 3, s: s * 0.9, flip: i === 1 }, 2);
   } else {
     if (flies) {
       groundShadow(ctx, 6, 0, halfW * 0.9, 0.16);
@@ -126,12 +149,12 @@ export function renderStandee(look: Look, opt: StandeeOptions): Standee {
     }
     for (const c of copies) {
       if (living) stand(ctx, c.x, c.y, Math.min(20, halfW * 0.6 + 3));
-      drawSilhouette(ctx, sil, c, ink, { frozen: look.frozen, depth: 2.5 });
+      body(c, 2.5);
     }
     if (opt.ride) drawSilhouette(ctx, opt.ride.sil, { x: 0, y: 0, s: 0.9, flip: false }, inks(opt.ride.colour), { depth: 3 });
     const main: Placed = { x: 0, y: -lift - (living ? 1.5 : 0), s, flip: false };
-    drawSilhouette(ctx, sil, main, ink, { frozen: look.frozen, depth: sil.flat ? 1.5 : 2.5 + s * 1.5, ghost });
-    if (opt.held && sil.hand) {
+    body(main, sil.flat ? 1.5 : 2.5 + s * 1.5, ghost);
+    if (opt.held && sil.hand && !rast) {
       const [hx, hy] = sil.hand;
       const hb = bounds(opt.held.sil, 1);
       const hs = Math.min(0.75, 26 / Math.max(10, hb.y1 - hb.y0, hb.x1 - hb.x0)) * s;
@@ -148,7 +171,7 @@ export function renderStandee(look: Look, opt: StandeeOptions): Standee {
     canvas, ox: -wx0 * k, oy: -wy0 * k, k,
     top: -Math.min(b.y0 - lift, swarm ? -crowdR * 0.7 : 0, ...copies.map((c) => c.y + b.y0 * 0.82)),
     half: Math.max(halfW, crowdR),
-    flames: swarm ? [[-crowdR * 0.4, -crowdR * 0.2], [crowdR * 0.3, -crowdR * 0.1], [0, crowdR * 0.3]] : flameSpots(sil, s, lift),
+    flames: swarm ? [[-crowdR * 0.4, -crowdR * 0.2], [crowdR * 0.3, -crowdR * 0.1], [0, crowdR * 0.3]] : rast && rs ? rasterFlames(rast, rs.w, rs.h, s, lift) : flameSpots(sil, s, lift),
     flies, living, tip,
   };
 }

@@ -44,3 +44,26 @@ it("draws JOHN as a toilet, BAR as an iron bar, MEN and other living groups as s
 it("gives the animals of every biome a shape of their own", () => {
   for (const w of ["camel", "scorpion", "monkey", "jaguar", "parrot", "seal", "walrus", "penguin", "crab", "frog", "heron", "zebra", "lizard"]) expect(WORDS[w], w).toBeDefined();
 });
+
+it("lists only generated images that exist, for dictionary words, with aliases to listed words", () => {
+  const dir = new URL("../../public/art/words/", import.meta.url);
+  const m = JSON.parse(readFileSync(new URL("manifest.json", dir), "utf8")) as { words: Record<string, [string, number, number, number[]]>; alias: Record<string, string> };
+  const entries = Object.entries(m.words);
+  expect(entries.length).toBeGreaterThan(0);
+  for (const [w, [file, width, height, top]] of entries) {
+    expect(dictionary.word(w), w).toBeDefined();
+    expect(Math.max(width, height), w).toBeLessThanOrEqual(128);
+    expect(top.length, w).toBe(5);
+    expect(readFileSync(new URL(file, dir)).length, file).toBeLessThan(40_000);
+  }
+  for (const [a, b] of Object.entries(m.alias)) expect(m.words[b], a).toBeDefined();
+});
+
+it("sizes a generated image to the shape it replaces", async () => {
+  const { rasterSize } = await import("./standee.js");
+  const sil = lookOf(dictionary, "wolf").shape;
+  const wide = rasterSize({ img: null as never, w: 128, h: 64, top: [0, 0, 0, 0, 0] }, sil);
+  const tall = rasterSize({ img: null as never, w: 64, h: 128, top: [0, 0, 0, 0, 0] }, sil);
+  expect(wide.w).toBeCloseTo(tall.h);
+  expect(wide.w / wide.h).toBeCloseTo(2);
+});

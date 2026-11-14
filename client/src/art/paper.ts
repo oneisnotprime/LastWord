@@ -227,3 +227,49 @@ export function badge(ctx: Ctx, status: string, x: number, y: number, rot = 0): 
 }
 
 export { E, type Ctx };
+
+/**
+ * A generated image as a standee body: the same white cut border and drop shadow as a drawn
+ * silhouette. `w` and `h` are its size in units at scale 1; `at` puts its bottom middle.
+ * `dye` recolours it (RED on a word with an image), `frozen` frosts it.
+ */
+export function drawRaster(ctx: Ctx, img: CanvasImageSource, w: number, h: number, at: Placed, opts: { frozen?: boolean; depth?: number; ghost?: boolean; dye?: string } = {}) {
+  const px = Math.abs(ctx.getTransform().a) || 1;
+  const border = Math.max(0.9, Math.min(2.2, 1.6 * at.s));
+  const bw = w * at.s, bh = h * at.s;
+  const pw = Math.max(1, Math.round(bw * px)), ph = Math.max(1, Math.round(bh * px)), bp = Math.ceil(border * px);
+  const make = () => { const c = document.createElement("canvas"); c.width = pw + bp * 2; c.height = ph + bp * 2; return c; };
+  // The picture, dyed or frosted, keeping its own cut-out edge.
+  const face = make(), f = face.getContext("2d")!;
+  f.imageSmoothingQuality = "high";
+  if (at.flip) { f.translate(face.width, 0); f.scale(-1, 1); }
+  f.drawImage(img, bp, bp, pw, ph);
+  f.setTransform(1, 0, 0, 1, 0, 0);
+  const tint = (style: string, op: GlobalCompositeOperation, alpha: number) => {
+    f.save(); f.globalCompositeOperation = op; f.globalAlpha = alpha; f.fillStyle = style; f.fillRect(0, 0, face.width, face.height); f.restore();
+  };
+  if (opts.dye) {
+    tint(opts.dye, "color", 0.85);
+    const keep = make(), kc = keep.getContext("2d")!;
+    if (at.flip) { kc.translate(keep.width, 0); kc.scale(-1, 1); }
+    kc.drawImage(img, bp, bp, pw, ph);
+    f.globalCompositeOperation = "destination-in"; f.drawImage(keep, 0, 0); f.globalCompositeOperation = "source-over";
+  }
+  if (opts.frozen) tint("#cfeaf5", "source-atop", 0.5);
+  // The white paper around it: the face's shape in paper, spread by the border width.
+  const paper = make(), p = paper.getContext("2d")!;
+  p.drawImage(face, 0, 0); p.globalCompositeOperation = "source-in"; p.fillStyle = PAPER; p.fillRect(0, 0, paper.width, paper.height);
+  const card = make(), c = card.getContext("2d")!;
+  for (let i = 0; i < 16; i++) { const a = (i / 16) * Math.PI * 2; c.drawImage(paper, Math.cos(a) * bp, Math.sin(a) * bp); }
+  c.drawImage(paper, 0, 0);
+  c.drawImage(face, 0, 0);
+  const x = at.x - bw / 2 - bp / px, y = at.y - bh - bp / px, cw = card.width / px, ch = card.height / px;
+  const depth = opts.depth ?? 3.5;
+  if (opts.ghost) { ctx.save(); ctx.globalAlpha = 0.3; }
+  withShadow(ctx, depth, () => ctx.drawImage(card, x, y, cw, ch));
+  if (opts.ghost) {
+    ctx.restore();
+    ctx.save(); ctx.setLineDash([3 * at.s, 3 * at.s]); ctx.lineWidth = 1.4; ctx.strokeStyle = "rgba(60,50,40,0.75)";
+    ctx.strokeRect(at.x - bw / 2, at.y - bh, bw, bh); ctx.restore();
+  }
+}

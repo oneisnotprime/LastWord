@@ -1,9 +1,14 @@
-/** gallery.html: every per-word and archetype silhouette, for checking shapes as they are added. */
+/**
+ * gallery.html: generated word images, then every per-word and archetype silhouette, for checking
+ * shapes as they are added. `?gen=all` shows every generated word (default the first 200),
+ * `?gen=0` none, `?gen=wolf,key` those words; `?compare=1` puts the drawn shape beside each.
+ */
 import "@fontsource/kalam/700.css";
 import "@fontsource/fredoka/600.css";
 import { dictionary } from "../data.js";
 import { lookOf, type Look } from "./look.js";
 import { tag } from "./paper.js";
+import { preload, rasterOf, rasterWords } from "./raster.js";
 import { ARCHETYPES, WORDS } from "./shapes.js";
 import { renderStandee } from "./standee.js";
 
@@ -12,8 +17,8 @@ const zoom = Number(params.get("zoom") ?? 1);
 const k = Math.min(2, devicePixelRatio || 1) * zoom;
 const out = document.getElementById("out")!;
 
-function cell(title: string, look: Look) {
-  const st = renderStandee(look, { k });
+function cell(title: string, look: Look, raster = false) {
+  const st = renderStandee(look, { k, raster: raster ? rasterOf(look.noun) : undefined });
   const W = 150, H = 140;
   const c = document.createElement("canvas");
   c.width = W * k; c.height = H * k; c.style.width = `${W * zoom}px`; c.style.height = `${H * zoom}px`;
@@ -25,17 +30,30 @@ function cell(title: string, look: Look) {
   return c;
 }
 
-function section(name: string, items: [string, Look][]) {
+function section(name: string, items: [string, Look, boolean?][]) {
   const h = document.createElement("h2");
   h.textContent = `${name} (${items.length})`;
   const grid = document.createElement("div");
   grid.className = "grid";
-  for (const [t, l] of items) grid.append(cell(t, l));
+  for (const [t, l, r] of items) grid.append(cell(t, l, r));
   out.append(h, grid);
 }
 
 await Promise.all([document.fonts.load("700 13px Kalam"), document.fonts.load("600 9px Fredoka")]);
 const extra = params.get("phrases");
-if (extra) section("Phrases", extra.split(",").map((p) => { const [text, n] = p.split("*"); return [`${text}${n ? ` ×${n}` : ""}`, lookOf(dictionary, text!, Number(n ?? 1))]; }));
+if (extra) {
+  const items = extra.split(",").map((p): [string, Look, boolean] => { const [text, n] = p.split("*"); return [`${text}${n ? ` ×${n}` : ""}`, lookOf(dictionary, text!, Number(n ?? 1)), true]; });
+  await preload(items.map(([, l]) => l.noun));
+  section("Phrases", items);
+}
+const gen = params.get("gen") ?? "200";
+if (gen !== "0") {
+  const all = await rasterWords();
+  const words = gen === "all" ? all : /^\d+$/.test(gen) ? all.slice(0, Number(gen)) : gen.split(",");
+  await preload(words);
+  const compare = params.get("compare") === "1";
+  section(`Generated images (${all.length} in all)`, words.flatMap((w): [string, Look, boolean][] =>
+    compare ? [[w, lookOf(dictionary, w), true], [`${w} (drawn)`, lookOf(dictionary, w), false]] : [[w, lookOf(dictionary, w), true]]));
+}
 section("Words", Object.keys(WORDS).map((w) => [w, lookOf(dictionary, w)]));
 section("Archetypes", Object.entries(ARCHETYPES).map(([a, sil]) => [a, { ...lookOf(dictionary, "box"), noun: a, shape: sil, colour: sil.colour ?? "#c9b99a" }]));

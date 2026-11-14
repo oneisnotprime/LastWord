@@ -178,6 +178,8 @@ How to read these:
 
 ## Recommendation for the 3,000-word run
 
+Done: see [ART_PIPELINE.md](ART_PIPELINE.md) (the LoRA was trained and kept; 2,964 words have images).
+
 1. **Route: Z-Image-Turbo with the a2 template minus the eyes clause, 4 seeds per word, raster
    output.** Hosted on fal, 12,000 images cost about $36 plus about $12 of BiRefNet.
    Self-hosting, as `ART_TOOLS.md` plans, is only worth it at the 300k scale.

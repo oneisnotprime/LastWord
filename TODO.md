@@ -167,7 +167,13 @@ by how many words set them (minds and upkeep took `sentient`, `intelligence`, `f
       each with its own look; not base shapes per kind with modifiers on top
       (`docs/ART_TOOLS.md`: self-hosted Z-Image-Turbo + style LoRA, cut-out, palette snap,
       optional trace to `Silhouette`; ~$10-20 for 3,000 words, ~$300-450 for 300,000)
-- [ ] Run the 50-word art pilot in `docs/ART_TOOLS.md` and pick the route and raster vs vector
+- [x] Run the 50-word art pilot in `docs/ART_TOOLS.md` and pick the route and raster vs vector
+      (`docs/ART_PILOT.md`: Z-Image-Turbo, raster)
+- [x] Generated art for the 3,000 most frequent drawable words with no hand-made shape
+      (`docs/ART_PIPELINE.md`: style LoRA, prompts from game data, 4 seeds, judged contact
+      sheets; `client/public/art/words`, loaded when a word first appears)
+- [ ] Generated art: a human look over the words that fell back (`docs/ART_PIPELINE.md`) and
+      over the persons, which come out as faceless pictograms; then the next 10,000 words
 - [x] Tooltips that show random words and how each one changes properties, to teach the game
       (shared `tips.ts`: word cards on the start screen, one tip in the idle spell window, word
       ideas in the Esc menu with a reroll; tips can be turned off in the menu)
@@ -272,6 +278,7 @@ lexicon so every related word is captured.
 - [x] Pick an art style from the prototypes (client/styles.html): 4, Paper Diorama, now drawn
       in the game (client/src/art: terrain sheets, standees, per-word shapes in shapes.ts)
 - [ ] Expand per-word art beyond the most common words, toward a shape for every word
+      (generated images now cover 3,000 more; `tools/art/`)
 
 ## Special objects: dictionary and related words
 

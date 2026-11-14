@@ -49,6 +49,11 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
   - `src/art/shapes.ts` what words look like: `WORDS` (a shape for one word) wins over
     `ARCHETYPES` (one per archetype) and `CLASSES`. Builders and units are in `build.ts`. Add a
     word's own shape there; `gallery.html` shows every shape (`?phrases=huge wolf,red car`).
+  - `src/art/raster.ts` generated word images (`public/art/words/*.webp`, `manifest.json`, made
+    by `tools/art`, `docs/ART_PIPELINE.md`): the manifest loads when the scene starts, an image
+    when its word is first drawn; until then the drawn shape stands in. An image wins over
+    `WORDS`; `paper.ts` `drawRaster` gives it the paper border and shadow, and the drawn shape
+    still sets its size, stand and thread. Gallery: `?gen=all`, `?compare=1`.
   - `src/art/look.ts` phrase to look: colour from colour or material, size from mass, burning,
     frozen, invisible, hidden, count. `standee.ts` renders one; `paper.ts` cut-outs, tags, badges.
   - `src/paint.ts` caches canvases as textures; `src/zones.ts` areas as tissue paper with
