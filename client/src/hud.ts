@@ -1,5 +1,6 @@
-import { effectText, heldText, inspectText, LETTER_GUIDE, missing, parsePhrase, readTrade, type Card, type Dictionary, type Letters, type LoadoutDetail, type Offer } from "@lastword/shared";
+import { effectText, heldText, tipOfTheMoment, inspectText, LETTER_GUIDE, missing, parsePhrase, readTrade, type Card, type Dictionary, type Letters, type LoadoutDetail, type Offer } from "@lastword/shared";
 import { BADGE } from "./art/paper.js";
+import { ideasHtml, setTipsOn, tipRng, tipsOn } from "./tips.js";
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 
@@ -102,6 +103,9 @@ export class Hud {
   /** The spelling as it last stood, to put back a letter you do not hold. */
   private lastText = "";
   private rejectTimer = 0;
+  /** Rotates the spell window's tip while nothing is typed. */
+  private tipTimer = 0;
+  private readonly tipRng = tipRng();
   /** Knocked out, and whom you are watching. */
   private out: string | null = null;
 
@@ -140,6 +144,11 @@ export class Hud {
     $("offers").addEventListener("click", (e) => {
       const el = (e.target as HTMLElement).closest("button");
       if (el) this.tradeClick(el);
+    });
+    $("reroll").addEventListener("click", () => this.drawIdeas());
+    $<HTMLInputElement>("tipson").addEventListener("change", (e) => {
+      setTipsOn((e.target as HTMLInputElement).checked);
+      this.drawIdeas();
     });
     $("panel").addEventListener("click", (e) => {
       const item = (e.target as HTMLElement).closest<HTMLElement>("[data-inspect]");
@@ -194,6 +203,28 @@ export class Hud {
 
   private menu(open: boolean) {
     $("menu").className = open ? "show" : "";
+    if (open) this.drawIdeas();
+  }
+
+  /** The menu's word ideas: four words of different kinds, near the letters you hold. */
+  private drawIdeas() {
+    const on = tipsOn();
+    $<HTMLInputElement>("tipson").checked = on;
+    $("ideas").querySelector(".list")!.innerHTML = ideasHtml(this.dict, this.held, 4, this.tipRng);
+  }
+
+  /**
+   * One tip above the alphabet while the spell window is open and empty (shared
+   * `tipOfTheMoment`), changing every few seconds; hidden once you type or with tips off.
+   */
+  private drawTip(fresh = false) {
+    const el = $("tip");
+    const show = this.typing && !this.input.value && tipsOn();
+    clearInterval(this.tipTimer);
+    if (!show) { el.className = ""; return; }
+    if (fresh || !el.textContent) el.textContent = tipOfTheMoment(this.dict, this.held, this.tipRng);
+    el.className = "show";
+    this.tipTimer = window.setInterval(() => { el.textContent = tipOfTheMoment(this.dict, this.held, this.tipRng); }, 9000);
   }
 
   /**
@@ -234,6 +265,7 @@ export class Hud {
     this.lastText = text;
     this.drawLetters();
     this.drawPreview();
+    this.drawTip();
   }
 
   /**
@@ -281,6 +313,7 @@ export class Hud {
     this.input.focus();
     this.drawLetters();
     this.drawPreview();
+    this.drawTip(true);
   }
 
   closeSpell() {
@@ -291,6 +324,7 @@ export class Hud {
     this.input.blur();
     this.drawLetters();
     this.drawPreview();
+    this.drawTip();
   }
 
   /** Stops all spelling for good (dead, spectating, round over), closing the window if open. */

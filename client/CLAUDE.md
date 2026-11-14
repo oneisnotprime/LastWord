@@ -81,3 +81,6 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
   and received are cards at the right (`#offers`: Accept, Counter, Decline, Withdraw). Inputs on a
   screen count as typing (`Hud.typing`), so their letters are not commands.
 - A roaming boss (`Player.boss`) stands 1.6 times as tall with a red tag.
+- `src/tips.ts` teaching tips (shared `tips.ts`): rotating word cards on the start screen, one
+  line (`#tip`) in the spell window while it is empty, and Word ideas with a reroll in the Esc
+  menu, where Show tips turns them off (`lastword.tips` in localStorage).

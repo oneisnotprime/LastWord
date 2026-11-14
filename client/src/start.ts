@@ -1,3 +1,6 @@
+import { dictionary } from "./data.js";
+import { IDEA_CSS, ideasHtml, setTipsOn, tipRng, tipsOn } from "./tips.js";
+
 /**
  * The start screen, shown before joining: play against bots (how many, how hard), or join
  * friends in a room with no bots. The last choice is remembered in this browser.
@@ -59,7 +62,13 @@ const CSS = `
 #start button { font: 700 18px 'Kalam', cursive; width: 100%; margin-top: 12px; padding: 8px; cursor: pointer; border-radius: 3px; border: 0;
   background: #fffdf6; color: #4a3f33; letter-spacing: 1px; box-shadow: 0 2px 0 #cfc3a6, 0 5px 10px rgba(40, 28, 16, .3); }
 #start button.main { background: #e9b949; color: #4a3510; box-shadow: 0 2px 0 #b8902a, 0 5px 10px rgba(40, 28, 16, .3); font-size: 22px; }
-#start button:hover { transform: translateY(-1px) rotate(-0.6deg); }`;
+#start button:hover { transform: translateY(-1px) rotate(-0.6deg); }
+#start .ideas { margin-top: 16px; padding-top: 8px; border-top: 1px dashed #d9cbb0; }
+#start .ideas .h { display: flex; justify-content: space-between; align-items: center; font: 600 10.5px 'Fredoka', sans-serif; text-transform: uppercase; letter-spacing: 1px; color: #8a7a60; }
+#start .ideas button.x { width: auto; margin: 0; padding: 0 6px; font: 600 11px 'Fredoka', sans-serif; letter-spacing: 0; box-shadow: none; background: transparent; color: #8a7a60; }
+#start .ideas .list { transition: opacity .4s; min-height: 150px; }
+#start .ideas .list.fade { opacity: 0; }
+${IDEA_CSS.replaceAll(".idea", "#start .idea")}`;
 
 /** Shows the start screen and resolves with the choice once the player clicks. */
 export function chooseGame(): Promise<Choice> {
@@ -79,16 +88,19 @@ export function chooseGame(): Promise<Choice> {
     </select></label>
     <button class="main" id="start-play">Play</button>
     <button id="start-friends">Join with friends (no bots)</button>
+    ${tipsOn() ? `<div class="ideas"><div class="h">Words of the moment <button class="x" title="Turn tips off (Esc menu turns them back on)">hide tips ×</button></div><div class="list"></div></div>` : ""}
   </div>`;
   document.head.append(style);
   document.body.append(root);
   const bots = root.querySelector<HTMLInputElement>("#start-bots")!;
   const difficulty = root.querySelector<HTMLSelectElement>("#start-difficulty")!;
+  const stopIdeas = wordsOfTheMoment(root);
   // Keys typed here are not moves or spellings in the game behind.
   root.addEventListener("keydown", (e) => e.stopPropagation());
   return new Promise((done) => {
     const finish = (choice: Choice) => {
       try { localStorage.setItem(KEY, JSON.stringify(choice.bots ? choice : { ...choice, bots: last.bots })); } catch { /* not remembered */ }
+      stopIdeas();
       root.remove();
       style.remove();
       current = choice;
@@ -100,4 +112,19 @@ export function chooseGame(): Promise<Choice> {
     });
     root.querySelector("#start-friends")!.addEventListener("click", () => finish({ bots: 0, difficulty: "normal" }));
   });
+}
+
+/** Rotating word cards (shared `wordIdeas`) under the buttons, three at a time; returns a stop. */
+function wordsOfTheMoment(root: HTMLElement): () => void {
+  const box = root.querySelector<HTMLElement>(".ideas");
+  const list = box?.querySelector<HTMLElement>(".list");
+  if (!box || !list) return () => {};
+  const rng = tipRng();
+  const draw = () => { list.innerHTML = ideasHtml(dictionary, {}, 3, rng); list.classList.remove("fade"); };
+  draw();
+  let swap = 0;
+  const timer = window.setInterval(() => { list.classList.add("fade"); swap = window.setTimeout(draw, 400); }, 8000);
+  const stop = () => { clearInterval(timer); clearTimeout(swap); };
+  box.querySelector("button.x")!.addEventListener("click", () => { setTipsOn(false); stop(); box.remove(); });
+  return stop;
 }

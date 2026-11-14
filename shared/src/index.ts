@@ -24,3 +24,4 @@ export * from "./place.js";
 export * from "./biome.js";
 export * from "./produce.js";
 export * from "./territory.js";
+export * from "./tips.js";
