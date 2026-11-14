@@ -30,7 +30,8 @@ export interface Connection {
 }
 
 /** Letters gained and why ("forage", "hunted COW (+12 food)"), and where they came from. */
-export interface Got { letters: string; why: string; x: number; y: number }
+/** Letters gained: what, why ("forage"), where, and the small print under the popup ("JUNGLE 35% · +10% SHOVEL"). */
+export interface Got { letters: string; why: string; x: number; y: number; detail?: string }
 
 /** Adjectives put on something, as everyone in sight of it is told. */
 export interface Described { target: string; x: number; y: number; words: string; what: string; changes: string[] }
@@ -43,6 +44,8 @@ export interface Handlers {
   /** A gathering action began: it takes this many seconds unless you move. */
   gathering(seconds: number): void;
   got(what: Got): void;
+  /** A gathering try found nothing: where, and the odds it had ("nothing · DESERT 12%"). */
+  missed(what: { x: number; y: number; text: string }): void;
   notice(text: string): void;
   dead(killer: string): void;
   loadout(detail: LoadoutDetail): void;
@@ -91,6 +94,7 @@ export async function connect(on: Handlers): Promise<Connection> {
   room.onMessage("gathered", on.gathered);
   room.onMessage("gathering", on.gathering);
   room.onMessage("got", on.got);
+  room.onMessage("missed", on.missed);
   room.onMessage("notice", on.notice);
   room.onMessage("dead", on.dead);
   room.onMessage("loadout", on.loadout);

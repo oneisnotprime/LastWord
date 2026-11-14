@@ -183,6 +183,7 @@ class World extends Phaser.Scene {
         gathered: () => {},
         gathering: (seconds) => { this.gathering = { start: this.time.now, ms: seconds * 1000 }; },
         got: (g) => this.onGot(g),
+        missed: (m) => { this.fx.fail(m.x, m.y - 1.2, m.text, true); this.gathering = null; },
         hits: (list) => this.onHits(list),
         dropped: () => this.hud.toast("Connection lost: reconnecting…", "bad"),
         reconnected: () => this.hud.toast("Reconnected", "good"),

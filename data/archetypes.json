@@ -11,7 +11,7 @@
  {
   "class": "artifact",
   "archetype": "artifact",
-  "words": 1592,
+  "words": 1591,
   "groups": [
    "physical",
    "mobility",
@@ -71,7 +71,7 @@
  {
   "class": "artifact",
   "archetype": "clothing",
-  "words": 432,
+  "words": 431,
   "groups": [
    "physical",
    "mobility",
@@ -86,7 +86,7 @@
  {
   "class": "artifact",
   "archetype": "tool",
-  "words": 328,
+  "words": 330,
   "groups": [
    "physical",
    "mobility",
@@ -101,7 +101,7 @@
  {
   "class": "artifact",
   "archetype": "container",
-  "words": 283,
+  "words": 282,
   "groups": [
    "physical",
    "mobility",
@@ -371,7 +371,7 @@
  {
   "class": "aura",
   "archetype": "attribute",
-  "words": 3136,
+  "words": 3135,
   "groups": [
    "field"
   ]
@@ -418,7 +418,7 @@
  {
   "class": "creature",
   "archetype": "mammal",
-  "words": 595,
+  "words": 598,
   "groups": [
    "physical",
    "life",
@@ -434,7 +434,7 @@
  {
   "class": "creature",
   "archetype": "bird",
-  "words": 437,
+  "words": 439,
   "groups": [
    "physical",
    "life",
@@ -514,7 +514,7 @@
  {
   "class": "creature",
   "archetype": "reptile",
-  "words": 155,
+  "words": 159,
   "groups": [
    "physical",
    "life",
@@ -546,7 +546,7 @@
  {
   "class": "creature",
   "archetype": "amphibian",
-  "words": 28,
+  "words": 25,
   "groups": [
    "physical",
    "life",
@@ -818,7 +818,7 @@
  {
   "class": "material",
   "archetype": "material",
-  "words": 1573,
+  "words": 1571,
   "groups": [
    "physical",
    "economy"
@@ -938,7 +938,7 @@
  {
   "class": "person",
   "archetype": "person",
-  "words": 4402,
+  "words": 4400,
   "groups": [
    "physical",
    "life",
@@ -1106,7 +1106,7 @@
  {
   "class": "terrain",
   "archetype": "place",
-  "words": 458,
+  "words": 455,
   "groups": [
    "physical",
    "spatial",
@@ -1116,7 +1116,7 @@
  {
   "class": "terrain",
   "archetype": "natural_object",
-  "words": 254,
+  "words": 252,
   "groups": [
    "physical",
    "spatial",
@@ -1126,7 +1126,7 @@
  {
   "class": "terrain",
   "archetype": "landform",
-  "words": 111,
+  "words": 116,
   "groups": [
    "physical",
    "spatial",

@@ -10,6 +10,7 @@ import { useObject } from "./verb.js";
 import { placeRules, rulesText } from "./place.js";
 import { resolve } from "./stats.js";
 import { pluralize } from "./plural.js";
+import { effectSeconds, statusSeconds, type Status } from "./status.js";
 import { TILE_TYPES } from "./world.js";
 
 /**
@@ -121,7 +122,7 @@ export function keyStats(s: Stats): string[] {
   add("speed_water", "m/s");
   if (s.num("sight_range") !== 10) add("sight_range", "m");
   for (const [id] of s.entries()) if (id.startsWith("res_") && s.num(id) > 0) out.push(`${plain(id)} ${Math.round(s.num(id) * 100)}%`);
-  for (const [id] of s.entries()) if (id.startsWith("inflict_") && s.num(id) > 0) out.push(`${plain(id)} ${num(s.num(id))} s`);
+  for (const [id] of s.entries()) if (id.startsWith("inflict_") && s.num(id) > 0) out.push(`${plain(id)} ${num(statusSeconds(id.slice(8) as Status, s.num(id)))} s`);
   return out;
 }
 
@@ -181,7 +182,7 @@ function useText(dict: Dictionary, noun: string, adjectives: readonly string[]):
   if (s.tags("effect_status").length) parts.push(`cures ${s.tags("effect_status").join(", ")}`);
   if (s.num("nutrition") > 0) parts.push(`${num(s.num("nutrition"))} food`);
   const lasting = [...use.ops.map(opText), ...Object.entries(use.set).map(([k, v]) => setText(k, v)).filter((x): x is string => !!x)];
-  if (lasting.length && s.num("duration") > 0) parts.push(`${lasting.slice(0, 3).join(", ")} for ${num(s.num("duration"))} s`);
+  if (lasting.length && s.num("duration") > 0) parts.push(`${lasting.slice(0, 3).join(", ")} for ${num(effectSeconds(s.num("duration")))} s`);
   return `usable (U): ${parts.join("; ")}`;
 }
 
@@ -201,7 +202,7 @@ export function cardOf(dict: Dictionary, p: Phrase): Card {
   if (p.kind === "verb") {
     card.kind = kindOf(dict, p.noun, "verb");
     if (s.num("restores") > 0) card.stats.push(`restores ${num(s.num("restores"))} health`);
-    if (s.num("duration") > 0) card.stats.push(`lasts ${num(s.num("duration"))} s`);
+    if (s.num("duration") > 0) card.stats.push(`lasts ${num(effectSeconds(s.num("duration")))} s`);
     const e = p.effect ?? { set: {}, ops: [] };
     card.does.push(...e.ops.map(opText), ...Object.entries(e.set).map(([k, v]) => setText(k, v)).filter((x): x is string => !!x));
     if (s.tags("effect_status").length) card.does.push(`cures ${s.tags("effect_status").join(", ")}`);
@@ -222,7 +223,7 @@ export function cardOf(dict: Dictionary, p: Phrase): Card {
     if (s.flag("frees_target")) card.does.push("frees everything around you from its owners");
     if (s.flag("sets_hostile")) card.does.push("creatures in it attack everyone not on your side");
     card.does.push(...placeLines(dict, p.noun, s));
-    for (const [id] of s.entries()) if (id.startsWith("inflict_") && s.num(id) > 0) card.does.push(`${plain(id)} ${num(s.num(id))} s`);
+    for (const [id] of s.entries()) if (id.startsWith("inflict_") && s.num(id) > 0) card.does.push(`${plain(id)} ${num(statusSeconds(id.slice(8) as Status, s.num(id)))} s`);
     if (s.get("contest_with") && s.get("contested_by")) card.does.push(`your ${words(String(s.get("contest_with")))} against their ${words(String(s.get("contested_by")))}`);
     card.does.push(aimed ?? "lands around you");
     return card;
@@ -322,7 +323,7 @@ export function eventCard(dict: Dictionary, word: string): { title: string; kind
   const lines: string[] = [];
   const hit = damage(s);
   if (hit) lines.push(`${hit}${s.num("attack_rate") > 0 ? ` every ${num(1 / s.num("attack_rate"))} s` : ""}`);
-  for (const [id] of s.entries()) if (id.startsWith("inflict_") && s.num(id) > 0) lines.push(`${plain(id)} ${num(s.num(id))} s`);
+  for (const [id] of s.entries()) if (id.startsWith("inflict_") && s.num(id) > 0) lines.push(`${plain(id)} ${num(statusSeconds(id.slice(8) as Status, s.num(id)))} s`);
   if (s.flag("sets_hostile")) lines.push("creatures here attack everyone not on its maker's side");
   if (s.num("contagion") > 0) lines.push(`spreads to people inside (${Math.round(s.num("contagion") * 100)}% a minute)`);
   if (s.get("sets_daylight") !== "none") lines.push(`makes it ${s.get("sets_daylight")}`);

@@ -162,6 +162,9 @@ it("gathers letters from the ground, pays out production, and passes letters bet
   const wait = () => new Promise((r) => setTimeout(r, 150));
 
   // Gathering takes two seconds of standing still and yields what is found there: in a city, foraging (E).
+  // (Most tries find nothing: this room's dice always come up lucky.)
+  const dice = (room as any).rng;
+  (room as any).rng = () => 0;
   const start = count(wa);
   a.send("gather");
   await wait();
@@ -172,6 +175,7 @@ it("gathers letters from the ground, pays out production, and passes letters bet
   expect(count(wa)).toBe(start + 1);
   expect(got.a.find(([t]) => t === "gathered")![1]).toBe("e");
 
+  (room as any).rng = dice;
   // Moving cancels a gathering.
   a.send("gather");
   await wait();
@@ -334,10 +338,10 @@ it("casts verbs, steals with THEFT once stealthy enough, and changes the sky", a
   // RUN doubles speed for thirty seconds, then wears off.
   a.send("spell", "run");
   await wait();
-  expect(last("a", "spelled")).toBe("RUN for 30 seconds");
+  expect(last("a", "spelled")).toBe("RUN for 200 seconds");
   expect(wa.speed).toBe(10);
   expect(wa.player.gear).toBe("RUN");
-  room.update(31);
+  room.update(201);
   await wait();
   expect(wa.speed).toBe(5);
   expect(last("a", "notice")).toBe("RUN wore off");
@@ -351,7 +355,7 @@ it("casts verbs, steals with THEFT once stealthy enough, and changes the sky", a
   await wait();
   room.update(0.5);
   expect(wa.player.x).toBeGreaterThan(2.5);
-  room.update(61);
+  room.update(241); // FLY's 60 s, stretched to four minutes
   expect(wa.flying).toBe(false);
   expect(walkable(room.map, wa.player.x, wa.player.y)).toBe(true);
 
@@ -508,7 +512,7 @@ it("tells a player the detail of their own character and drops what they choose"
   expect(d.gear[0].integrity).toBeNull(); // a sword is not a layer
   expect(d.attack).toMatchObject({ with: "tank", damage: { blast: 1200 }, reach: 3000 });
   expect(d.speed).toBe(18); // the tank's speed: RUN acts on the body, not on what it rides
-  expect(d.effects).toEqual([{ word: "run", left: 30 }]);
+  expect(d.effects).toEqual([{ word: "run", left: 200 }]);
   expect(d.creatures).toEqual([{ name: "dog", health: 100 }]);
 
   // Dropping by index takes that item, not the last one.

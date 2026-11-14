@@ -3,7 +3,14 @@ import { seeded } from "./rng.js";
 /** Metres across one map tile. Word properties are in metres; the map is in tiles. */
 export const TILE_METERS = 4;
 
-export enum Tile { DeepWater, Water, Sand, Grass, Forest, Hill, Mountain, Road, City, Pit, Snow, Swamp, Lava, Wall }
+/**
+ * Kinds of ground. Numbers are sent and stamped by both sides, so new kinds go at the end. The
+ * kinds after Wall are biomes laid by `generateMap` (and by terrain words): see shared `biome.ts`.
+ */
+export enum Tile {
+  DeepWater, Water, Sand, Grass, Forest, Hill, Mountain, Road, City, Pit, Snow, Swamp, Lava, Wall,
+  Jungle, Desert, Tundra, Savanna, Badlands, Ash, Meadow, Taiga, Marsh,
+}
 
 /** Slowdown for walking across a tile; Infinity cannot be walked. */
 export const WALK_COST: Record<Tile, number> = {
@@ -21,6 +28,15 @@ export const WALK_COST: Record<Tile, number> = {
   [Tile.Swamp]: 4,
   [Tile.Lava]: Infinity,
   [Tile.Wall]: Infinity,
+  [Tile.Jungle]: 2.2,
+  [Tile.Desert]: 1.4,
+  [Tile.Tundra]: 1.4,
+  [Tile.Savanna]: 1,
+  [Tile.Badlands]: 1.5,
+  [Tile.Ash]: 1.6,
+  [Tile.Meadow]: 1,
+  [Tile.Taiga]: 2,
+  [Tile.Marsh]: 2.2,
 };
 
 /** The `tile_type` property's values, as map tiles. */
@@ -28,6 +44,8 @@ export const TILE_TYPES: Record<string, Tile> = {
   water: Tile.Water, deep_water: Tile.DeepWater, hill: Tile.Hill, mountain: Tile.Mountain, pit: Tile.Pit,
   forest: Tile.Forest, field: Tile.Grass, sand: Tile.Sand, snow: Tile.Snow, swamp: Tile.Swamp,
   lava: Tile.Lava, road: Tile.Road, floor: Tile.City, wall: Tile.Wall,
+  jungle: Tile.Jungle, desert: Tile.Desert, tundra: Tile.Tundra, savanna: Tile.Savanna, badlands: Tile.Badlands,
+  ash: Tile.Ash, meadow: Tile.Meadow, taiga: Tile.Taiga, marsh: Tile.Marsh,
 };
 
 /** A change a word made to the map: a disc of one kind of tile. */
@@ -144,18 +162,40 @@ function noise(seed: number, size: number, cell: number): (x: number, y: number)
 /** Builds a map from a seed. The same seed always gives the same map, on server and client. */
 export function generateMap(seed: number, size = 256, cityCount = 5): WorldMap {
   const big = noise(seed, size, 48), small = noise(seed + 1, size, 12), wet = noise(seed + 2, size, 32);
+  // Biomes: large, coherent regions from temperature (colder to the north) and moisture, and a
+  // few volcanic patches among the high ground.
+  const warm = noise(seed + 5, size, 96), damp = noise(seed + 6, size, 72), fire = noise(seed + 7, size, 40);
   const tiles = new Uint8Array(size * size);
+  const height = new Float32Array(size * size), heat = new Float32Array(size * size), moist = new Float32Array(size * size);
   for (let y = 0; y < size; y++) {
     for (let x = 0; x < size; x++) {
       // Land falls away toward the edges so the map is an island.
       const dx = (x / size) * 2 - 1, dy = (y / size) * 2 - 1;
       const edge = Math.max(Math.abs(dx), Math.abs(dy)) ** 4;
-      const h = big(x, y) * 0.7 + small(x, y) * 0.3 - edge * 0.6;
-      const m = wet(x, y);
+      const i = y * size + x;
+      height[i] = big(x, y) * 0.7 + small(x, y) * 0.3 - edge * 0.6;
+      heat[i] = warm(x, y) * 0.7 + (y / size) * 0.5; // colder to the north
+      moist[i] = wet(x, y) * 0.35 + damp(x, y) * 0.65;
+    }
+  }
+  // Temperature and moisture as ranks over the land, so every map has its share of each biome.
+  const land = [...height.keys()].filter((i) => height[i]! >= 0.3);
+  const rank = (v: Float32Array) => {
+    const out = new Float32Array(size * size);
+    const order = land.slice().sort((a, b) => v[a]! - v[b]!);
+    order.forEach((i, k) => { out[i] = k / Math.max(1, order.length - 1); });
+    return out;
+  };
+  const heatRank = rank(heat), moistRank = rank(moist);
+  for (let y = 0; y < size; y++) {
+    for (let x = 0; x < size; x++) {
+      const i = y * size + x, h = height[i]!, t = heatRank[i]!, m = moistRank[i]!;
+      const volcanic = fire(x, y) > 0.74 && h > 0.5;
       tiles[y * size + x] =
-        h < 0.22 ? Tile.DeepWater : h < 0.3 ? Tile.Water : h < 0.34 ? Tile.Sand
-        : h > 0.72 ? Tile.Mountain : h > 0.62 ? Tile.Hill
-        : m > 0.58 ? Tile.Forest : Tile.Grass;
+        h < 0.22 ? Tile.DeepWater : h < 0.3 ? Tile.Water : h < 0.34 ? (t < 0.2 ? Tile.Tundra : Tile.Sand)
+        : volcanic ? (h > 0.74 ? Tile.Lava : h > 0.62 ? Tile.Mountain : Tile.Ash)
+        : h > 0.72 ? Tile.Mountain : h > 0.62 ? (t < 0.2 ? Tile.Snow : t > 0.6 && m < 0.38 ? Tile.Badlands : Tile.Hill)
+        : biomeTile(t, m, h);
     }
   }
   const map: WorldMap = { seed, size, tiles, cities: [] };
@@ -165,7 +205,7 @@ export function generateMap(seed: number, size = 256, cityCount = 5): WorldMap {
     const x = Math.floor(rng() * size), y = Math.floor(rng() * size);
     const t = tileAt(map, x, y);
     const apart = map.cities.every((c) => Math.hypot(c.x - x, c.y - y) > size / 5);
-    if ((t === Tile.Grass || t === Tile.Forest) && apart) map.cities.push({ x, y, radius: 5 + Math.floor(rng() * 4) });
+    if (CITY_GROUND.has(t) && apart) map.cities.push({ x, y, radius: 5 + Math.floor(rng() * 4) });
   }
   // Roads first, then cities on top, so a road ends at the city edge.
   for (let i = 1; i < map.cities.length; i++) {
@@ -187,6 +227,25 @@ export function generateMap(seed: number, size = 256, cityCount = 5): WorldMap {
     }
   }
   return map;
+}
+
+/** Ground a city may be founded on: open, walkable, not too harsh. */
+const CITY_GROUND = new Set([Tile.Grass, Tile.Forest, Tile.Meadow, Tile.Savanna, Tile.Taiga, Tile.Desert, Tile.Tundra]);
+
+/**
+ * The lowland biome for a temperature, a moisture (both 0 to 1) and a height: cold tundra and
+ * taiga, temperate grass, meadow, forest and marsh, hot desert, badlands, savanna and jungle.
+ */
+export function biomeTile(t: number, m: number, h: number): Tile {
+  if (t < 0.2) return m < 0.5 ? Tile.Tundra : Tile.Taiga;
+  if (t < 0.6) {
+    if (m > 0.78) return h < 0.46 ? Tile.Marsh : Tile.Forest;
+    if (m > 0.5) return Tile.Forest;
+    return m < 0.25 ? Tile.Grass : Tile.Meadow;
+  }
+  if (m < 0.38) return h > 0.5 ? Tile.Badlands : Tile.Desert;
+  if (m < 0.66) return Tile.Savanna;
+  return h < 0.36 ? Tile.Swamp : Tile.Jungle;
 }
 
 /** A random walkable point, for spawning. */

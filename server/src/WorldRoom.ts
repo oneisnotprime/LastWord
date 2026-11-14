@@ -1,7 +1,7 @@
 import { Room, type Client } from "colyseus";
 import { StateView } from "@colyseus/schema";
 import {
-  addLetters, afflict, placeRules, harvest, growthOf, tradeRateOf, marketRatio, type PlaceRules, aggressive, clearLine, courageOf, pluralize, auras, authorityOf, chooseTarget, commandLimit, draw, groundFood, hasAny, ignoresOrder, moraleAim, moraleGoal, needs, nextMorale, noStores, outputs, recruitRate, rerouteSeconds, startingSupply, becomes, retreats, routed, supply, theftResistance, HUNGER_LOYALTY, NORMAL, STARTING_STORES, STARVING, SUPPLIES, bodyFlags, cure, useObject, findPath, hampered, inflicts, statusDamage, statusEffects, tickStatuses, wake, GATHER_SECONDS, GATHER_REASONS, cachePrize, carcassFood, Deposits, destroyLetters, killLetters, mainland, MARKET, pickAnimal, placeSources, readTrade, regionOf, RUIN_INTEGRITY, CACHE_X, SITE_RADIUS, spawnPoint, starterHand, TEMPLE_Q, tradeProblem, generateMap, GIVE_RANGE, missing, parsePhrase, applyAdjectives, cannotCarry, improvisable, readDescription, production, resolveSpelled, SEPARATE_UP_TO, nearestWalkable, openGround, randomWalkable, resolve, Tile, tileAt, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit, cannotRide, claimOf, senseOf, combineSenses, type Sense, type Sensed,
+  addLetters, afflict, effectSeconds, biomeAt, huntYield, pickWild, rollText, toolHelp, wildlife, RUIN_X_CHANCE, type Help, placeRules, harvest, growthOf, tradeRateOf, marketRatio, type PlaceRules, aggressive, clearLine, courageOf, pluralize, auras, authorityOf, chooseTarget, commandLimit, draw, groundFood, hasAny, ignoresOrder, moraleAim, moraleGoal, needs, nextMorale, noStores, outputs, recruitRate, rerouteSeconds, startingSupply, becomes, retreats, routed, supply, theftResistance, HUNGER_LOYALTY, NORMAL, STARTING_STORES, STARVING, SUPPLIES, bodyFlags, cure, useObject, findPath, hampered, inflicts, statusDamage, statusEffects, tickStatuses, wake, GATHER_SECONDS, GATHER_REASONS, cachePrize, carcassFood, Deposits, destroyLetters, killLetters, mainland, MARKET, pickAnimal, placeSources, readTrade, regionOf, RUIN_INTEGRITY, CACHE_X, SITE_RADIUS, spawnPoint, starterHand, TEMPLE_Q, tradeProblem, generateMap, GIVE_RANGE, missing, parsePhrase, applyAdjectives, cannotCarry, improvisable, readDescription, production, resolveSpelled, SEPARATE_UP_TO, nearestWalkable, openGround, randomWalkable, resolve, Tile, tileAt, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit, cannotRide, claimOf, senseOf, combineSenses, type Sense, type Sensed,
   type Affliction, type Candidate, type Dictionary, type Stores, type Supply, type Entity, type Hampered, type Status, type Stats, type Letters, type LoadoutDetail, type Op, type Phrase, type Point, type Spelled, type Value, type WordDef, type WorldMap,
 } from "@lastword/shared";
 import { affords, botSettings, chooseWord, held, wordBook, type BotWord, type Difficulty, type Use } from "./bots.js";
@@ -111,7 +111,9 @@ const NEAR_CELL = 8;
 const CONFUSED_TILES = 4;
 
 /** How readily fire spreads over each kind of ground; anything missing does not burn. */
-const BURNS: Partial<Record<Tile, number>> = { [Tile.Forest]: 3, [Tile.Grass]: 1, [Tile.Swamp]: 0.2 };
+const BURNS: Partial<Record<Tile, number>> = {
+  [Tile.Forest]: 3, [Tile.Taiga]: 3, [Tile.Jungle]: 2, [Tile.Savanna]: 2, [Tile.Grass]: 1, [Tile.Meadow]: 1, [Tile.Swamp]: 0.2, [Tile.Marsh]: 0.2,
+};
 
 function hasDamage(s: Stats): boolean {
   return s.entries().some(([k, v]) => k.startsWith("dmg_") && typeof v === "number" && v > 0);
@@ -313,6 +315,10 @@ export class WorldRoom extends Room {
   map!: WorldMap;
   /** For tests: rooms created while this is set use it as their random seed. */
   static testSeed: number | null = null;
+  /** Exploration regions someone has been first into (each gave its J). */
+  private discovered = new Set<number>();
+  /** Wild creatures by habitat (shared `wildlife`), worked out once a room. */
+  private wild = new Map<string, [string, number][]>();
   /** For tests of other systems: rooms created while this is set get no markets, temple, caches, ruins, animals or exploring. */
   static testBare = false;
   private bare = false;
@@ -588,10 +594,16 @@ export class WorldRoom extends Room {
    * Gives letters and tells their new holder why, for the letter popup ("E · forage",
    * "H · hunted COW (+12 food)"), with where they came from. The caller sends `letters`.
    */
-  private award(id: string, w: Walker, letters: string, why: string, at: Point = w.player) {
+  private award(id: string, w: Walker, letters: string, why: string, at: Point = w.player, detail?: string) {
     if (!letters) return;
     addLetters(w.letters, letters);
-    this.sendTo(id, "got", { letters, why, x: at.x, y: at.y });
+    this.sendTo(id, "got", { letters, why, x: at.x, y: at.y, ...(detail ? { detail } : {}) });
+  }
+
+  /** What a walker's body and gear add to each kind of gathering (shared `toolHelp`): a SHOVEL digs, a NET fishes. */
+  private helpOf(w: Walker): (kind: string) => Help[] {
+    const things = [{ name: w.player.name, stats: w.unit.body.stats }, ...w.gear.map((g) => ({ name: g.phrase, stats: this.statsOf(g) }))];
+    return (kind) => toolHelp(kind, things);
   }
 
   /**
@@ -795,7 +807,10 @@ export class WorldRoom extends Room {
       this.state.things.get(id)!.hp = Math.ceil((RUIN_INTEGRITY / Number(this.dict.base("ruin", "integrity"))) * 100);
     }
     for (const p of places.animals) {
-      const noun = pickAnimal(this.rng);
+      // What lives in that biome (shared `wildlife`: creatures whose habitat names it); else farm stock.
+      const habitat = biomeAt(this.map, p.x, p.y)?.habitat ?? "meadow";
+      const table = this.wild.get(habitat) ?? this.wild.set(habitat, wildlife(this.dict, habitat)).get(habitat)!;
+      const noun = pickWild(table, this.rng) ?? pickAnimal(this.rng);
       this.addCreature({ spelled: { noun }, phrase: noun, vehicle: false, integrity: null }, "-", p.x, p.y);
     }
   }
@@ -1813,7 +1828,10 @@ export class WorldRoom extends Room {
       const p = i === 0 ? here : at(i);
       const id = this.addThing(gear, owner, p.x, p.y);
       const rates = production(phrase.stats);
-      for (const k of Object.keys(rates)) rates[k]! *= each; // a stack of a thousand makes a thousand's worth
+      // A stack of a thousand makes a thousand's worth; a collective's own rate (an ARMY's K) is the whole band's.
+      // (A BIGGER ARMY of twice as many makes twice as much.)
+      const band = !phrase.plural && this.dict.word(phrase.noun)?.archetype === "group" ? Math.max(1, Number(this.dict.base(phrase.noun, "pack_size")) || 1) : 1;
+      for (const k of Object.keys(rates)) rates[k]! *= each / band;
       if (Object.keys(rates).length) this.producers.set(id, { owner, rates, built: {} });
     }
     return worn === copies ? "equipped" : worn ? `made; ${worn} equipped` : "made";
@@ -1855,7 +1873,7 @@ export class WorldRoom extends Room {
   private affect(walker: Walker, name: string, s: Stats, effect: { set: Record<string, Value>; ops: Op[] }): string | null {
     const heal = s.num("restores");
     const cures = s.tags("effect_status");
-    const seconds = s.num("duration");
+    const seconds = effectSeconds(s.num("duration"));
     const lasting = seconds > 0 && (effect.ops.length > 0 || Object.keys(effect.set).length > 0);
     if (!(heal > 0) && !cures.length && !lasting) return null;
     if (heal > 0) walker.hp = Math.min(walker.unit.body.stats.num("integrity"), walker.hp + heal);
@@ -2798,15 +2816,23 @@ export class WorldRoom extends Room {
       let spoils = "";
       const name = dead.player.name.toUpperCase(), at = { x: dead.player.x, y: dead.player.y };
       // A hunted body feeds the hunter by its mass (shared `carcassFood`): a COW far more than a CHICKEN.
-      const meat = dead.master !== null && !dead.unit.body.stats.flag("sentient") ? carcassFood(dead.unit.body.stats, dead.player.count) : 0;
-      killer.stores.food += meat;
+      let meat = dead.master !== null && !dead.unit.body.stats.flag("sentient") ? carcassFood(dead.unit.body.stats, dead.player.count) : 0;
       const owner = kind === "owned" ? this.walkers.get(dead.master!)?.player.name : undefined;
-      for (const ch of new Set(base)) {
-        const why = ch === "h" ? `hunted ${name}${meat ? ` (+${meat} food)` : ""}`
-          : ch === "v" ? `beat ${owner ? `${owner}'s ` : ""}${name}`
-          : `kill ${name}`;
+      if (kind === "wild") {
+        // A hunt pays H and the animal's first letter (FOX: H F), more for a big body, a blade,
+        // a bow on a bird, hunting gear, and maybe a rare letter from far-off ground (shared `huntYield`).
+        const striker = this.walkers.get(killerId);
+        const held = striker?.unit.weapon ? striker.gear.find((g) => g.spelled === striker.unit.weapon) : undefined;
+        const weapon = held ? { name: held.phrase, stats: this.statsOf(held) } : null;
+        const tools = striker ? [{ name: striker.player.name, stats: striker.unit.body.stats }, ...striker.gear.map((g) => ({ name: g.phrase, stats: this.statsOf(g) }))] : [];
+        const y = huntYield(dead.body.noun, dead.unit.body.stats, weapon, tools, this.rng);
+        meat = Math.round(meat * y.food * 10) / 10;
+        spoils += this.earn(payId, y.letters, at, `hunted ${name}${meat ? ` (+${meat} food)` : ""}`, 1, y.why.join(" · ") || undefined);
+      } else for (const ch of new Set(base)) {
+        const why = ch === "v" ? `beat ${owner ? `${owner}'s ` : ""}${name}` : `kill ${name}`;
         spoils += this.earn(payId, base.split("").filter((c) => c === ch).join(""), at, why);
       }
+      killer.stores.food += meat;
       if (kind === "wild") kc?.send("letters", killer.letters);
       if (meat) this.toTell.add(payId); // the food store on the HUD
       for (const k of SUPPLIES) killer.stores[k] += dead.stores[k]; // and their stores
@@ -2879,7 +2905,7 @@ export class WorldRoom extends Room {
     const theirs = thing.owner !== "" && thing.owner !== payId;
     if (w) {
       // D for destroying; V for another player's thing; F if it burnt; X from a ruin.
-      const base = destroyLetters(theirs, attack.num("dmg_fire") > 0, gear.fixture === "ruin");
+      const base = destroyLetters(theirs, attack.num("dmg_fire") > 0, gear.fixture === "ruin" && this.rng() < RUIN_X_CHANCE);
       let spoils = "";
       const name = gear.phrase.toUpperCase(), owner = theirs ? this.walkers.get(thing.owner)?.player.name : undefined;
       const reasons: Record<string, string> = { d: `broke ${name}`, v: `beat ${owner ? `${owner}'s ` : ""}${name}`, f: `burned ${name}`, x: `broke ${name}` };
@@ -2923,7 +2949,7 @@ export class WorldRoom extends Room {
    * ×3; `bonus` is the earner's own `harvest_bonus` for gathering), then any area that taxes
    * others there (`tax_rate`) takes its share for its maker. Returns what they kept.
    */
-  private earn(id: string, letters: string, at: Point, why: string, bonus = 1): string {
+  private earn(id: string, letters: string, at: Point, why: string, bonus = 1, detail?: string): string {
     const w = this.walkers.get(id);
     if (!w || !letters) return "";
     const { rules, areas } = this.rulesAt(at, id, w);
@@ -2940,7 +2966,7 @@ export class WorldRoom extends Room {
       this.lettersChanged.add(a.owner);
       this.sendTo(id, "notice", `${a.word.toUpperCase()}: ${taken.toUpperCase()} went to ${taxer.player.name}`);
     }
-    this.award(id, w, got, why, at);
+    this.award(id, w, got, why, at, detail);
     this.lettersChanged.add(id);
     return got;
   }
@@ -3198,14 +3224,14 @@ export class WorldRoom extends Room {
       const lode = place.areas.find((a) => a.rules!.lode.length && a.rules!.lodeShare > 0 && a.lodeLeft >= 1);
       const got = lode && this.rng() < lode.rules!.lodeShare
         ? { letter: lode.rules!.lode[Math.floor(this.rng() * lode.rules!.lode.length)]!, from: lode.word }
-        : this.deposits.gather(w.player.x, w.player.y, this.elapsed, this.rng, growthOf(place.rules));
+        : this.deposits.gather(w.player.x, w.player.y, this.elapsed, this.rng, growthOf(place.rules), this.helpOf(w));
       if (lode && "from" in got && got.from === lode.word) lode.lodeLeft--;
       w.stores.food += groundFood(tileAt(this.map, w.player.x, w.player.y)); // a little forage where things grow
       if (got.letter) {
         const from = "from" in got ? got.from : "", site = this.state.things.get(from);
         const why = lode && from === lode.word ? lode.word.toUpperCase()
           : site ? (got.letter === "q" ? "temple" : "cache") : GATHER_REASONS[from as keyof typeof GATHER_REASONS] ?? "gathered";
-        const kept = this.earn(id, got.letter, site ?? w.player, why, w.unit.body.stats.num("harvest_bonus"));
+        const kept = this.earn(id, got.letter, site ?? w.player, why, w.unit.body.stats.num("harvest_bonus"), got.roll ? rollText(got.roll) : undefined);
         changed.add(id);
         if (kept) client?.send("gathered", kept);
         else client?.send("refused", `Nothing grows here: ${place.areas.find((a) => harvest(got.letter, [a.rules!], () => 0.999) === "")?.word.toUpperCase() ?? "the weather"} took it`);
@@ -3215,17 +3241,22 @@ export class WorldRoom extends Room {
           this.removeThing(got.emptied);
           this.refreshViews();
         }
+      } else if (got.roll) {
+        // Most tries find nothing: say so small, with the odds it had ("nothing · DESERT 12%").
+        client?.send("missed", { x: w.player.x, y: w.player.y, text: `nothing · ${rollText(got.roll)}` });
       } else if ("why" in got) {
         client?.send("refused", got.why);
       }
     }
-    // The first visit to each region gives a person one J.
+    // The first person into each region gives the map up one J; after that it is explored ground.
     for (const [id, w] of this.walkers) {
       if (!w.explored) continue;
       const region = regionOf(w.player.x, w.player.y);
       if (w.explored.has(region)) continue;
       w.explored.add(region);
-      const j = this.earn(id, "j", w.player, "new ground");
+      if (this.discovered.has(region)) continue;
+      this.discovered.add(region);
+      const j = this.earn(id, "j", w.player, "new ground", 1, "first here");
       changed.add(id);
       if (j) this.sendTo(id, "gathered", j);
     }

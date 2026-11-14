@@ -38,8 +38,19 @@ const SHEETS: Sheet[] = [
   { test: (t) => t !== Tile.DeepWater, colour: "#6d9eaa", depth: 2, blur: 4 },
   { test: (t) => !water(t), colour: "#e6d3a3", depth: 3, blur: 3 },
   { test: (t) => !water(t) && t !== Tile.Sand, colour: "#a3b86f", depth: 3, blur: 3 },
+  // Biomes: each its own sheet of paper on the green.
+  { test: (t) => t === Tile.Desert, colour: "#e8cc8a", depth: 1, blur: 4 },
+  { test: (t) => t === Tile.Savanna, colour: "#d2bd6c", depth: 1, blur: 4 },
+  { test: (t) => t === Tile.Meadow, colour: "#b9c96f", depth: 1, blur: 4 },
+  { test: (t) => t === Tile.Tundra, colour: "#d3d8c8", depth: 2, blur: 4, rim: "#f6f6f0" },
+  { test: (t) => t === Tile.Badlands, colour: "#c48a5c", depth: 3, blur: 2 },
+  { test: (t) => t === Tile.Badlands, colour: "#d39d6c", depth: 1, blur: 2, level: 0.72 },
+  { test: (t) => t === Tile.Ash, colour: "#6a615b", depth: 2, blur: 3, rim: "#3e3833" },
+  { test: (t) => t === Tile.Marsh, colour: "#8c9c66", depth: 1, blur: 3 },
   { test: (t) => t === Tile.Swamp, colour: "#7f8a55", depth: 1, blur: 3 },
   { test: (t) => t === Tile.Forest, colour: "#7f9b5a", depth: 2, blur: 2 },
+  { test: (t) => t === Tile.Taiga, colour: "#5c7a58", depth: 2, blur: 2 },
+  { test: (t) => t === Tile.Jungle, colour: "#4f8a3e", depth: 2, blur: 2 },
   { test: (t) => t === Tile.City, colour: "#ddd0b6", depth: 2, blur: 3 },
   { test: (t) => t === Tile.Road, colour: "#c9a77a", depth: 2, blur: 1 },
   { test: (t) => t === Tile.Snow, colour: "#f4f1ea", depth: 3, blur: 3, rim: "#ffffff" },
@@ -303,6 +314,96 @@ function decorate(ctx: Ctx, at: (tx: number, ty: number) => Tile, tx0: number, t
         }
         ctx.stroke();
       } });
+    } else if (k === Tile.Taiga) {
+      // Close-set dark pines.
+      for (let i = 0; i < 3; i++) {
+        if (r(i + 20) < 0.25) continue;
+        const x = tx * S + 5 + r(i) * 22, y = ty * S + 8 + r(i + 4) * 22, R = 6 + r(i + 8) * 3;
+        marks.push({ y, draw: () => {
+          ctx.fillStyle = "#5a3e28"; ctx.fillRect(x - 1.2, y - R * 0.6, 2.4, R * 0.6);
+          cutout(ctx, [[x, y - R * 3.4], [x + R * 0.9, y - R * 0.5], [x - R * 0.9, y - R * 0.5]], ["#3f6345", "#46704a", "#3a5a40"][Math.floor(r(i + 12) * 3)]!, 3, 1);
+          fillPoly(ctx, [[x, y - R * 3.4], [x + R * 0.35, y - R * 2.4], [x - R * 0.35, y - R * 2.4]], "rgba(240,245,235,0.55)");
+        } });
+      }
+    } else if (k === Tile.Jungle) {
+      // Palms and broad fronds, now and then a red or yellow bloom.
+      for (let i = 0; i < 2; i++) {
+        const x = tx * S + 6 + r(i) * 20, y = ty * S + 10 + r(i + 4) * 18, R = 8 + r(i + 8) * 5;
+        const palm = r(i + 12) < 0.45;
+        marks.push({ y, draw: () => {
+          if (palm) {
+            withShadow(ctx, 3, () => { ctx.strokeStyle = "#7a5634"; ctx.lineWidth = 2.6; ctx.beginPath(); ctx.moveTo(x, y); ctx.quadraticCurveTo(x + 3, y - R, x + 1, y - R * 2); ctx.stroke(); });
+            for (let f = 0; f < 6; f++) {
+              const a = (f / 6) * Math.PI * 2 + r(i + 30);
+              const leaf: [number, number][] = [[x + 1, y - R * 2], [x + 1 + Math.cos(a) * R * 1.1, y - R * 2 + Math.sin(a) * R * 0.6 + R * 0.25], [x + 1 + Math.cos(a + 0.35) * R * 0.5, y - R * 2 + Math.sin(a + 0.35) * R * 0.3]];
+              cutout(ctx, leaf, f % 2 ? "#3f7f36" : "#4e9440", 1.5, 0.6);
+            }
+          } else {
+            cutout(ctx, smooth(blob(x, y - R * 1.2, R * 1.1, tx * 17 + ty * 3 + i, 10), 1), ["#3d7a34", "#4a8a3a", "#2f6a30"][Math.floor(r(i + 16) * 3)]!, 3, 1);
+            fillPoly(ctx, blob(x - R * 0.3, y - R * 1.5, R * 0.5, tx + ty * 11 + i, 8), "rgba(170,220,120,0.35)");
+            if (r(i + 18) < 0.3) { ctx.fillStyle = r(i + 19) < 0.5 ? "#e0533b" : "#f2c14a"; ctx.beginPath(); ctx.arc(x + R * 0.4, y - R * 0.9, 2.2, 0, 7); ctx.fill(); }
+          }
+        } });
+      }
+    } else if (k === Tile.Desert) {
+      const x = tx * S + 4 + r(1) * 24, y = ty * S + 6 + r(2) * 22;
+      if (r(3) < 0.4) marks.push({ y: y - 60, draw: () => {
+        ctx.strokeStyle = "rgba(170,130,70,0.35)"; ctx.lineWidth = 1.2; ctx.lineCap = "round";
+        ctx.beginPath(); ctx.moveTo(x - 9, y); ctx.quadraticCurveTo(x, y - 4, x + 9, y); ctx.moveTo(x - 6, y + 4); ctx.quadraticCurveTo(x + 1, y + 1, x + 8, y + 4); ctx.stroke();
+      } });
+      if (r(4) < 0.07) marks.push({ y, draw: () => {
+        const g = "#6f9a4f";
+        cutout(ctx, [[x - 2.5, y], [x - 2.5, y - 18], [x + 2.5, y - 18], [x + 2.5, y]], g, 3, 0.8);
+        cutout(ctx, [[x - 2.5, y - 8], [x - 8, y - 8], [x - 8, y - 14], [x - 5, y - 14], [x - 5, y - 11], [x - 2.5, y - 11]], g, 2, 0.6);
+        cutout(ctx, [[x + 2.5, y - 10], [x + 7, y - 10], [x + 7, y - 16], [x + 4.5, y - 16], [x + 4.5, y - 12.5], [x + 2.5, y - 12.5]], g, 2, 0.6);
+      } });
+    } else if (k === Tile.Savanna) {
+      const x = tx * S + 4 + r(1) * 24, y = ty * S + 8 + r(2) * 20;
+      if (r(3) < 0.06) marks.push({ y, draw: () => {
+        withShadow(ctx, 3, () => { ctx.strokeStyle = "#6b4a2e"; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x, y - 12); ctx.lineTo(x - 5, y - 16); ctx.moveTo(x, y - 12); ctx.lineTo(x + 5, y - 17); ctx.stroke(); });
+        cutout(ctx, smooth([[x - 16, y - 16], [x - 8, y - 22], [x + 6, y - 23], [x + 16, y - 17], [x + 4, y - 14], [x - 8, y - 14]], 2), "#7d9446", 3, 1);
+      } });
+      else if (r(3) < 0.4) marks.push({ y, draw: () => cutout(ctx, [[x - 4, y], [x - 3, y - 7], [x - 1, y - 2], [x + 1, y - 8], [x + 2, y - 2], [x + 4, y - 6], [x + 5, y]], "#b9a050", 1.2, 0.5) });
+    } else if (k === Tile.Meadow) {
+      for (let i = 0; i < 2; i++) {
+        if (r(i + 10) > 0.55) continue;
+        const x = tx * S + r(i) * S, y = ty * S + r(i + 4) * S, col = ["#f2f0e6", "#e9b949", "#d96a8a", "#8a7ad0"][Math.floor(r(i + 8) * 4)]!;
+        marks.push({ y, draw: () => {
+          ctx.strokeStyle = "#6f8a3e"; ctx.lineWidth = 0.8; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x, y - 5); ctx.stroke();
+          ctx.fillStyle = col; for (let p = 0; p < 5; p++) { const a = (p / 5) * Math.PI * 2; ctx.beginPath(); ctx.arc(x + Math.cos(a) * 1.8, y - 6 + Math.sin(a) * 1.8, 1.4, 0, 7); ctx.fill(); }
+          ctx.fillStyle = "#f4c95d"; ctx.beginPath(); ctx.arc(x, y - 6, 1, 0, 7); ctx.fill();
+        } });
+      }
+    } else if (k === Tile.Tundra && r(0) < 0.3) {
+      const x = tx * S + 4 + r(1) * 24, y = ty * S + 6 + r(2) * 22;
+      marks.push({ y, draw: () => {
+        if (r(3) < 0.5) cutout(ctx, smooth(blob(x, y - 2, 3 + r(4) * 3, tx * 5 + ty, 7), 1), "#a7a69c", 1.5, 0.6);
+        else { cutout(ctx, [[x - 4, y], [x - 2, y - 4], [x, y - 1], [x + 2, y - 5], [x + 4, y]], "#9aa37a", 1, 0.5); fillPoly(ctx, blob(x + 6, y + 2, 4, tx + ty * 3, 8), "rgba(255,255,255,0.6)"); }
+      } });
+    } else if (k === Tile.Badlands) {
+      const x = tx * S, y = ty * S;
+      marks.push({ y: y - 64, draw: () => {
+        ctx.strokeStyle = "rgba(140,80,45,0.35)"; ctx.lineWidth = 1;
+        ctx.beginPath(); for (let row = 0; row < 3; row++) { const yy = y + 6 + row * 9 + r(row) * 3; ctx.moveTo(x, yy); ctx.quadraticCurveTo(x + 16, yy + (r(row + 3) - 0.5) * 4, x + S, yy); } ctx.stroke();
+      } });
+      if (r(6) < 0.08) { const px = x + 16, py = y + 24; marks.push({ y: py, draw: () => {
+        cutout(ctx, [[px - 7, py], [px - 6, py - 20], [px + 6, py - 21], [px + 7, py]], "#b9774a", 3, 1);
+        ctx.fillStyle = "rgba(120,60,30,0.3)"; ctx.fillRect(px - 6, py - 14, 13, 2); ctx.fillRect(px - 6.5, py - 7, 13.5, 2);
+      } }); }
+    } else if (k === Tile.Ash && r(0) < 0.35) {
+      const x = tx * S + 4 + r(1) * 24, y = ty * S + 6 + r(2) * 22;
+      marks.push({ y, draw: () => {
+        if (r(3) < 0.35) {
+          for (let p = 0; p < 3; p++) { ctx.fillStyle = `rgba(200,195,190,${0.35 - p * 0.08})`; ctx.beginPath(); ctx.arc(x + p * 2, y - 6 - p * 7, 3 + p * 2, 0, 7); ctx.fill(); }
+          ctx.fillStyle = "#e8743a"; ctx.beginPath(); ctx.arc(x, y - 1, 1.6, 0, 7); ctx.fill();
+        } else cutout(ctx, smooth(blob(x, y - 3, 3 + r(4) * 4, tx * 7 + ty, 7), 1), "#3e3833", 2, 0.8);
+      } });
+    } else if (k === Tile.Marsh) {
+      if (r(3) < 0.35) { const x = tx * S + 6 + r(1) * 20, y = ty * S + 8 + r(2) * 18; marks.push({ y: y - 40, draw: () => { ctx.fillStyle = "rgba(90,130,140,0.55)"; ctx.beginPath(); ctx.ellipse(x, y, 6 + r(4) * 4, 2.5 + r(5) * 1.5, 0, 0, 7); ctx.fill(); } }); }
+      if (r(6) < 0.5) {
+        const rx = tx * S + r(7) * S, ry = ty * S + r(8) * S;
+        marks.push({ y: ry, draw: () => { for (let i = 0; i < 3; i++) cutout(ctx, [[rx - 1 + i * 2.5, ry], [rx + i * 2.5 - 2 + i, ry - 9 - i * 2], [rx + 1 + i * 2.5, ry]], "#7f8f45", 1.2, 0.5); } });
+      }
     } else if (k === Tile.Water && r(0) < 0.25) {
       const x = tx * S + 16 + (r(1) - 0.5) * 12, y = ty * S + 16;
       marks.push({ y: y - 64, draw: () => {

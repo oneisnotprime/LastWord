@@ -53,6 +53,7 @@ it("digging beside a cache gives X until it is gone; the temple gives Q", async 
   const [cid, cache] = fixtures("cache")[0]!;
   me.player.x = cache.x + 1; me.player.y = cache.y;
   me.letters = {};
+  (room as any).rng = () => 0; // every dig finds it
   for (let i = 0; i < CACHE_X; i++) { a.send("gather"); await wait(); second(room, 2.1); }
   expect(me.letters.x).toBe(CACHE_X);
   expect(room.state.things.has(cid)).toBe(false);

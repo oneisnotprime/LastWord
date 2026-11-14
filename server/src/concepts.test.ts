@@ -81,7 +81,10 @@ it("HARVEST fills the ground three times over; BLIGHT strips it and only U comes
   wa.player.x = g.x; wa.player.y = g.y;
   a.send("spell", "harvest"); await wait();
   wa.letters = {};
+  const dice = (room as any).rng;
+  (room as any).rng = () => 0; // every try finds something, and E
   for (let i = 0; i < 8; i++) await gather(a, wa);
+  (room as any).rng = dice;
   expect(wa.letters.e).toBeGreaterThanOrEqual(8); // six would be a patch's usual, and E ×2 besides
   wa.letters = all();
   a.send("pick", { x: g.x, y: g.y });

@@ -2129,7 +2129,16 @@
     "lava",
     "road",
     "floor",
-    "wall"
+    "wall",
+    "jungle",
+    "desert",
+    "tundra",
+    "savanna",
+    "badlands",
+    "ash",
+    "meadow",
+    "taiga",
+    "marsh"
    ],
    "default": "none"
   },

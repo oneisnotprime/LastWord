@@ -13,7 +13,11 @@ describe("generateMap", () => {
     const count = (t: Tile) => map.tiles.filter((v) => v === t).length;
     const total = map.size * map.size;
     expect(tileAt(map, 0, 0)).toBe(Tile.DeepWater);
-    expect(count(Tile.Grass) + count(Tile.Forest)).toBeGreaterThan(total * 0.2);
+    let land = 0;
+    for (let i = 0; i < total; i++) if (walkable(map, (i % map.size) + 0.5, Math.floor(i / map.size) + 0.5)) land++;
+    expect(land).toBeGreaterThan(total * 0.3);
+    // Biomes: large regions of most kinds on every map.
+    for (const t of [Tile.Forest, Tile.Jungle, Tile.Savanna, Tile.Tundra, Tile.Taiga, Tile.Meadow]) expect(count(t)).toBeGreaterThan(total * 0.005);
     expect(count(Tile.DeepWater) + count(Tile.Water)).toBeGreaterThan(total * 0.1);
     expect(map.cities).toHaveLength(5);
     expect(count(Tile.City)).toBeGreaterThan(0);

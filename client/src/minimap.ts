@@ -10,6 +10,9 @@ const COLOURS: Record<Tile, [number, number, number]> = {
   [Tile.Forest]: [111, 139, 80], [Tile.Hill]: [185, 176, 119], [Tile.Mountain]: [163, 155, 140], [Tile.Road]: [201, 167, 122],
   [Tile.City]: [221, 208, 182], [Tile.Pit]: [59, 47, 38], [Tile.Snow]: [244, 241, 234], [Tile.Swamp]: [127, 138, 85],
   [Tile.Lava]: [236, 122, 58], [Tile.Wall]: [179, 166, 143],
+  [Tile.Jungle]: [79, 138, 62], [Tile.Desert]: [232, 204, 138], [Tile.Tundra]: [211, 216, 200], [Tile.Savanna]: [210, 189, 108],
+  [Tile.Badlands]: [196, 138, 92], [Tile.Ash]: [106, 97, 91], [Tile.Meadow]: [185, 201, 111], [Tile.Taiga]: [92, 122, 88],
+  [Tile.Marsh]: [140, 156, 102],
 };
 /** The fog beyond what you can see. */
 const FOG: [number, number, number] = [42, 63, 72];
