@@ -92,7 +92,8 @@ it("hunting a wild animal gives H; breaking a ruin gives D and X; a new region g
   const { room, a, me, walkers, fixtures } = await setup();
   me.letters = {};
   me.hp = 1e6; room.rebuild(me);
-  const [pid, prey] = [...walkers].find(([, w]) => w.master === "-")!;
+  // An unarmoured one (bare fists do not get through a CRAB's shell) whose name has no H of its own.
+  const [pid, prey] = [...walkers].find(([, w]) => w.master === "-" && !(w.unit.body.stats.num("armor") > 0) && !w.player.name.includes("h"))!;
   me.player.x = prey.player.x + 0.5; me.player.y = prey.player.y;
   prey.hp = 1; prey.unit.body.integrity = 1;
   a.send("attack", pid); await wait();

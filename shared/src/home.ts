@@ -17,7 +17,7 @@ import type { Status } from "./status.js";
  *   (`exposed`), and at its owner's death what was stored stays inside (`hoards`), the rarest
  *   letters first, for whoever takes or breaks it. Counter: raid the building itself (THEFT,
  *   ROBBERY), or break it.
- * - holding: something `lockable` with `security` (a PRISON, a JAIL, a DUNGEON, a CAGE) holds the
+ * - holding: something `lockable` with `security` and no comfort (a PRISON, a JAIL, a DUNGEON, a CAGE) holds the
  *   enemies in its claimed ground: their root and silence wear off `holdFactor` times slower, so an
  *   ARRESTed thief stays put. Counter: PARDON, ESCAPE or a key, or break the walls.
  */
@@ -91,12 +91,16 @@ export function hoards(kept: Letters, capacity: readonly number[]): string[] {
 /** The statuses a lockup holds. */
 export const HELD: readonly Status[] = ["root", "silence"];
 
+/** Security from which something lockable and without comfort is a lockup (a JAIL, a CAGE), not a home with a door. */
+export const HOLD_FROM = 5;
+
 /**
  * How many times slower a lockup's enemies' root and silence wear off: one more than its
- * `security`, if it is `lockable`; 1 (no hold) otherwise.
+ * `security`, if it is `lockable` with at least HOLD_FROM and no `comfort` (a lockup is no home);
+ * 1 (no hold) otherwise.
  */
 export function holdFactor(stats: Stats): number {
-  if (!stats.flag("lockable")) return 1;
+  if (!stats.flag("lockable") || stats.num("security") < HOLD_FROM || stats.num("comfort") > 0) return 1;
   return 1 + Math.max(0, stats.num("security"));
 }
 

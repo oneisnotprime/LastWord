@@ -2110,7 +2110,8 @@ export class WorldRoom extends Room {
     for (const [noun, herd] of herds) {
       const [, first] = herd[0]!;
       const near = herd.filter(([, c]) => Math.hypot(c.player.x - first.player.x, c.player.y - first.player.y) <= HERD_RANGE);
-      const n = near.reduce((k, [, c]) => k + Math.max(1, c.player.count), 0);
+      // Bodies, not heads: a massed swarm (MILLION ANTS) is one body and does not breed by itself.
+      const n = near.length;
       const rate = breedRate(first.unit.body.stats.num("reproduction"), n);
       if (!(rate > 0)) { w.breeding.delete(noun); continue; }
       let due = (w.breeding.get(noun) ?? 0) + (rate * since) / 60;

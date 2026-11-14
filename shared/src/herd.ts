@@ -6,7 +6,7 @@ import type { Stats } from "./stats.js";
  * feed the hunter by their mass (`carcassFood`), carry riders (`mountable`), give food
  * (`food_output`: milk, eggs) and, kept, make I (tools/producers.txt). One rule is the herd's own:
  *
- * - breeding: two or more of one kind of creature of yours, fed and within HERD_RANGE of each
+ * - breeding: two or more bodies of one kind of creature of yours (a massed swarm is one), fed and within HERD_RANGE of each
  *   other, have young at their `reproduction` a game hour, BREED_PACE times faster than life, one
  *   pair at a time: rabbits and hens fill a yard, cattle slowly. The young are yours while you can
  *   command them. Counter: hunger (a herd eats), your command limit, predators (WOLF, FOX), a

@@ -41,7 +41,7 @@ it("comfort at home: a HOUSE with a BED and a SOFA lifts the morale of its owner
   a.send("spell", "sofa"); await wait();
   second(2);
   expect(wa.home?.ops).toEqual(expect.arrayContaining([["morale", "add", expect.any(Number)]]));
-  expect(wa.unit.body.stats.num("morale")).toBeGreaterThan(before + 2);
+  expect(wa.unit.body.stats.num("morale"), JSON.stringify([before, wa.home, wa.fields?.map((f: any) => f.word)])).toBeGreaterThan(before + 2);
   wa.player.x += 60; // away from home
   second(2);
   expect(wa.home).toBeNull();

@@ -29,9 +29,9 @@ describe("senses", () => {
 
 describe("claims", () => {
   it("HOME shelters 10 tiles (twice its claim) at its cover; a CASTLE 60 tiles at 90%; a FLAG at least home ground", () => {
-    expect(claimOf(resolve(dict, "home"))).toEqual({ radius: 10, shelter: 0.5, security: 5, holds: 1 });
+    expect(claimOf(resolve(dict, "home"))).toEqual({ radius: 10, shelter: 0.6, security: 6, holds: 1 });
     expect(claimOf(resolve(dict, "castle"))).toMatchObject({ radius: 60, shelter: 0.9 });
-    expect(claimOf(resolve(dict, "base"))).toMatchObject({ radius: 40, shelter: 0.8, security: 8 });
+    expect(claimOf(resolve(dict, "base"))).toMatchObject({ radius: 50, shelter: 0.85, security: 8.5 });
     expect(claimOf(resolve(dict, "flag"))).toEqual({ radius: 20, shelter: HOME_GROUND, security: 2.5, holds: 1 });
     expect(claimOf(resolve(dict, "sword"))).toBeNull();
   });
@@ -52,6 +52,6 @@ describe("cards", () => {
     expect(cardOf(dict, parsePhrase(dict, "map")).does).toEqual([
       "goes on your screen as a minimap, not on the ground", "shows the land within 200 tiles", "shows letter sources within 125 tiles",
     ]);
-    expect(cardOf(dict, parsePhrase(dict, "home")).does).toContain("claims 10 tiles around it: your things there take 50% less damage and are harder to steal");
+    expect(cardOf(dict, parsePhrase(dict, "home")).does).toContain("claims 10 tiles around it: your things there take 60% less damage and are harder to steal");
   });
 });

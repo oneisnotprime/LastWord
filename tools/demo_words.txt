@@ -1484,7 +1484,7 @@ manatee: mass=500 length=3.5 integrity=400 alive=true diet=herbivore food_need=0
 
 # noun bird
 crow: mass=0.5 length=0.45 integrity=5 alive=true sentient=true intelligence=8 diet=omnivore food_need=0.002 speed_air=15 sight_range=400 letter_steal=1 dmg_pierce=4 attack_rate=1 tamable=true habitat=meadow,city,forest color=black
-raven: mass=1.2 length=0.6 integrity=8 alive=true sentient=true intelligence=9 diet=omnivore food_need=0.003 speed_air=16 sight_range=600 map_reveal=15 dmg_pierce=6 attack_rate=1 fear_aura=1 tamable=true equip_slot=companion habitat=taiga,tundra,hills color=black
+raven: mass=1.2 length=0.6 integrity=8 alive=true sentient=true intelligence=9 diet=omnivore food_need=0.003 speed_air=16 sight_range=600 map_reveal=15 dmg_pierce=6 attack_rate=1 tamable=true equip_slot=companion habitat=taiga,tundra,hills color=black
 pigeon: mass=0.35 length=0.3 integrity=3 alive=true diet=herbivore food_need=0.001 speed_air=20 range=1000 map_reveal=10 reproduction=4 tamable=true habitat=city,meadow color=gray
 dove: mass=0.15 length=0.3 integrity=2 alive=true diet=herbivore food_need=0.001 speed_air=18 morale+1 charm=5 comfort=1 reproduction=3 tamable=true habitat=meadow,city color=white
 falcon: mass=1 length=0.45 integrity=12 alive=true sentient=true intelligence=6 loyalty=7 diet=carnivore food_need=0.003 speed_air=80 sight_range=2500 dmg_slash=20 dmg_pierce=15 attack_rate=1.2 targets=land,air tamable=true equip_slot=companion harvest_bonus=2 harvest_sources=hunting habitat=hills,badlands,desert color=brown

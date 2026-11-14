@@ -205,6 +205,12 @@ export const RULE_TIPS: readonly RuleTip[] = [
   { text: "Burn things with FIRE for F; destroy them for D; beat others' things for V.", words: ["fire"], properties: ["flammability"] },
   { text: "FLYING lifts anything into the air: a FLYING WOLF.", words: ["flying", "wolf"], properties: ["speed_air"] },
   { text: "Right-click a WOLF, a RUIN, anything: see what it does, then add an adjective.", words: ["wolf", "ruin"], properties: [] },
+  { text: "A BED or a SOFA in your claimed ground lifts your morale and healing there.", words: ["bed", "sofa"], properties: ["comfort"] },
+  { text: "A VAULT keeps your letters from thieves and fines.", words: ["vault"], properties: ["storage_letters"] },
+  { text: "Carry IRON to your ANVIL and spell SWORD: an IRON SWORD, handmade.", words: ["iron", "anvil", "sword"], properties: ["crafts"] },
+  { text: "A CAMERA left on the ground shows its ground on your minimap.", words: ["camera"], properties: ["map_reveal"] },
+  { text: "Two HAMSTERS of yours, fed, have young.", words: ["hamsters"], properties: ["reproduction"] },
+  { text: "A PRISON holds an ARRESTed enemy in its ground ten times longer.", words: ["prison", "arrest"], properties: ["security"] },
 ];
 
 /** One tip for the idle spell window: a word idea or a rule, alternating at random. */
