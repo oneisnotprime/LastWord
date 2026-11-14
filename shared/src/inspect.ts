@@ -168,8 +168,9 @@ export function behaviours(s: Stats, count = 1): string[] {
   const letters = Object.entries(spec.rates);
   if (letters.length) {
     const needs = needsText(spec);
-    out.push(`makes letters: ${letters.map(([ch, n]) => `${ch.toUpperCase()} ${num(n)}`).join(", ")} a minute${needs ? `, ${needs}` : ""}`);
+    out.push(`makes ${letters.map(([ch, n]) => `${ch.toUpperCase()} +${num(n)}/min`).join(", ")} while yours${needs ? `, ${needs}` : ""}`);
   }
+  if (spec.age > 0) out.push(`ages into Y faster than most (+${num(spec.age)})`);
   if (s.flag("phase")) out.push("passes through walls");
   if (s.flag("hover") || s.num("speed_air") > 0) out.push("flies");
   if (s.flag("edible") || s.num("nutrition") > 0) out.push(`edible (${num(s.num("nutrition"))} food)`);

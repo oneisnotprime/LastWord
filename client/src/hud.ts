@@ -333,10 +333,20 @@ export class Hud {
       ];
       const shown = rows.filter(([, text]) => text).map(([label, text]) => `<span>${label}</span><b>${text}</b>`).join("");
       if (shown) parts.push(`<div class="gear">${shown}</div>`);
+      // Letters coming in from what you own, a line each: "A +1.2/min HOE, FARM".
+      const income = (d?.income ?? []).filter((l) => l.rate >= 0.01);
+      if (income.length) {
+        parts.push(`<div class="income">${income.slice(0, 8).map((l) =>
+          `<div title="${esc(`${l.letter.toUpperCase()} from ${l.from}`)}"><b>${l.letter.toUpperCase()}</b><span>+${+l.rate.toFixed(2)}/min</span><small>${esc(l.from.toUpperCase())}</small></div>`).join("")}</div>`);
+      }
+      const flow = (k: "food" | "fuel" | "power") => {
+        const s = d!.stores[k], net = Math.round((s.make - s.need) * 100) / 100;
+        return s.make || s.need ? ` <small>${s.make ? `+${+s.make.toFixed(2)}` : ""}${s.need ? ` −${+s.need.toFixed(2)}` : ""}/min</small>${net < 0 && s.have < -net * 5 ? " <small>!</small>" : ""}` : "";
+      };
       const chips = [
         ...(d?.statuses ?? []).map((s) => chip(s.status, s.left)),
-        ...(["food", "fuel", "power"] as const).filter((k) => (d?.stores[k].have ?? 0) > 0).map((k) =>
-          `<span class="chip store">${k.toUpperCase()} ${Math.round(d!.stores[k].have * 10) / 10}</span>`),
+        ...(["food", "fuel", "power"] as const).filter((k) => (d?.stores[k].have ?? 0) > 0 || (d?.stores[k].need ?? 0) > 0 || (d?.stores[k].make ?? 0) > 0).map((k) =>
+          `<span class="chip store">${k.toUpperCase()} ${Math.round(d!.stores[k].have * 10) / 10}${flow(k)}</span>`),
         ...(d?.short ?? []).map((t) => chip("hungry").replace("HUNGRY", esc(t.toUpperCase()))),
       ];
       if (chips.length) parts.push(`<div class="chips">${chips.join("")}</div>`);

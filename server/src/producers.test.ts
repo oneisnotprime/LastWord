@@ -155,3 +155,17 @@ it("whatever you keep on the ground ages into Y, faster for old things; the soil
   await minutes(10);
   expect(r.soil.fertility(w.player.x, w.player.y, r.elapsed)).toBeLessThan(fresh);
 });
+
+it("whatever belongs to you produces, carried or ridden too; the loadout's income says what comes in from what", async () => {
+  const { r, w, c, spell, minutes, gotFrom, of } = await farmer();
+  await spell("horse");
+  expect(w.gear.some((g: any) => g.vehicle)).toBe(true);
+  await minutes(4);
+  expect(gotFrom("HORSE")).toMatch(/i/);
+  await spell("hoe");
+  await minutes(1);
+  const income = r.income.get(c.sessionId).letters as { letter: string; rate: number; from: string }[];
+  expect(income.find((l) => l.letter === "a")?.from).toBe("HOE");
+  expect(income.find((l) => l.letter === "i")?.from).toBe("HORSE");
+  expect(of("loadout").at(-1).income.length).toBeGreaterThan(0);
+});

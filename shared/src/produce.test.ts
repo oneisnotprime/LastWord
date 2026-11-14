@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
-  ageRate, EXTRACT_HALF, generateMap, IDEAL, labourBoost, moistureAt, outputOf, parsePhrase, producerOf, Soil, SOIL_DRAIN, SOIL_REGROW, Tile, tileAt, waterNear, windAt,
+  ageRate, behaviours, EXTRACT_HALF, generateMap, IDEAL, labourBoost, moistureAt, outputOf, parsePhrase, producerOf, Soil, SOIL_DRAIN, SOIL_REGROW, Tile, tileAt, waterNear, windAt,
 } from "./index.js";
 import { demo } from "./testdata.js";
 
@@ -82,5 +82,14 @@ describe("the ground", () => {
     expect(soil.fertility(at.x, at.y, 600)).toBe(0);
     soil.enrich(at.x, at.y, 600, 8);
     expect(soil.fertility(at.x, at.y, 600)).toBeCloseTo(0.8);
+  });
+});
+
+describe("the inspect card", () => {
+  it("says what a producer makes while it is yours, and what it needs", () => {
+    const lines = behaviours(parsePhrase(dict, "kiln").stats);
+    expect(lines).toContain("makes C +0.8/min while yours, while someone works it, uses 1 G a letter");
+    expect(behaviours(parsePhrase(dict, "press").stats).find((l) => l.startsWith("makes"))).toMatch(/uses 2 vowels a letter/);
+    expect(behaviours(parsePhrase(dict, "check").stats).some((l) => l.startsWith("makes"))).toBe(false);
   });
 });

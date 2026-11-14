@@ -31,6 +31,8 @@ interface Gear {
   hungry?: boolean;
   /** Loyalty it has lost to hunger. */
   hungerLost?: number;
+  /** Room time it was made: it ages into Y for its owner from then, wherever it is kept. */
+  born?: number;
 }
 
 /** A passing effect on bodies: a verb someone cast, or weather over everyone. */
@@ -358,6 +360,10 @@ export class WorldRoom extends Room {
   private soil!: Soil;
   /** Blows struck lately, where and when: producers near one make nothing (shared PEACE_RADIUS). */
   private fights: { x: number; y: number; t: number }[] = [];
+  /** Producers carried, worn or ridden, by the gear (it makes letters for whoever has it). */
+  private carried = new WeakMap<Gear, Producer>();
+  /** What each person's producers made a minute at the last count (`producing`), and what was last told. */
+  private income = new Map<string, { lines: string[]; letters: { letter: string; rate: number; from: string }[]; shown: string }>();
   /** Seconds toward the next second of production. */
   private produceClock = 0;
   /** Things that water the ground around them (`water_output`): thing id -> tiles they reach. */
@@ -719,6 +725,7 @@ export class WorldRoom extends Room {
       const old = { spelled: ownGear.spelled, phrase: ownGear.phrase };
       ownGear.spelled = done.spelled;
       this.resolved.delete(ownGear);
+      this.carried.delete(ownGear);
       ownGear.phrase = shown(done.spelled.adjectives!, done.spelled.noun);
       ownGear.integrity = null;
       try { this.rebuild(walker); } catch (e) { Object.assign(ownGear, old); this.resolved.delete(ownGear); this.rebuild(walker); throw e; }
@@ -1083,6 +1090,7 @@ export class WorldRoom extends Room {
       })),
       senses: (walker.senses ?? []).map((x) => ({ ...x })),
       producing: this.producing(walker.id),
+      income: this.income.get(walker.id)?.letters ?? [],
     };
     client.send("loadout", detail);
   }
@@ -3141,14 +3149,33 @@ export class WorldRoom extends Room {
       for (const [tid, reach] of this.waterers) { const t = this.state.things.get(tid); if (t && Math.hypot(t.x - x, t.y - y) <= reach) return true; }
       return false;
     };
+    // Everything that belongs to someone makes its letters for them: on the ground, as a creature,
+    // or carried, worn and ridden (where its owner stands).
+    type Job = { p: Producer; ownerId: string; owner: Walker; at: Point; gear?: Gear; creature?: Walker; ages: boolean };
+    const jobs: Job[] = [];
     for (const [pid, p] of this.producers) {
       const thing = this.state.things.get(pid), creature = thing ? undefined : this.walkers.get(pid);
       if (!thing && !creature && !/^(field|sky):/.test(pid)) { this.producers.delete(pid); continue; }
       const ownerId = thing ? thing.owner : creature ? creature.master ?? "" : p.owner;
       const owner = this.walkers.get(ownerId);
       if (!owner || owner.master !== null) { p.idle = null; p.now = {}; continue; }
-      const at = thing ?? creature?.player ?? owner.player;
-      const gear = this.grounded.get(pid);
+      jobs.push({ p, ownerId, owner, at: thing ?? creature?.player ?? owner.player, gear: this.grounded.get(pid), creature, ages: !!thing });
+    }
+    for (const [ownerId, owner] of this.walkers) {
+      if (owner.master !== null) continue;
+      for (const gear of owner.gear) {
+        let p = this.carried.get(gear);
+        if (!p) {
+          p = { owner: ownerId, spec: producerOf(this.statsOf(gear), gear.spelled.count ?? 1), built: {}, made: 0, ripe: {}, cycle: 0,
+            born: gear.born ?? this.elapsed, now: {}, idle: null, name: gear.phrase.toUpperCase() };
+          gear.born ??= this.elapsed;
+          this.carried.set(gear, p);
+        }
+        jobs.push({ p, ownerId, owner, at: owner.player, gear, ages: true });
+      }
+    }
+    const tally = new Map<string, { lines: string[]; letters: Map<string, { rate: number; from: string[] }>; age: number; aged: number }>();
+    for (const { p, ownerId, owner, at, gear, creature, ages } of jobs) {
       let rates: Letters = {};
       p.idle = null;
       if (Object.keys(p.spec.rates).length) {
@@ -3171,8 +3198,19 @@ export class WorldRoom extends Room {
         p.idle = out.idle;
       }
       // Age: what its owner keeps standing on the ground yields Y.
-      if (thing) rates = { ...rates, y: (rates.y ?? 0) + ageRate(p.spec.age, (this.elapsed - p.born) / 60) };
+      if (ages) rates = { ...rates, y: (rates.y ?? 0) + ageRate(p.spec.age, (this.elapsed - p.born) / 60) };
       p.now = rates;
+      const mine = tally.get(ownerId) ?? tally.set(ownerId, { lines: [], letters: new Map(), age: 0, aged: 0 }).get(ownerId)!;
+      if (rates.y) { mine.age += rates.y; mine.aged++; }
+      if (Object.keys(p.spec.rates).length) {
+        const made = Object.fromEntries(Object.entries(rates).filter(([ch]) => ch !== "y" || p.spec.age > 0));
+        for (const [ch, r] of Object.entries(made)) {
+          if (ch === "y" || !(r > 0)) continue;
+          const l = mine.letters.get(ch) ?? mine.letters.set(ch, { rate: 0, from: [] }).get(ch)!;
+          l.rate += r;
+          if (!l.from.includes(p.name)) l.from.push(p.name);
+        }
+      }
       const harvested = p.spec.needs.includes("harvest");
       let pay = "";
       for (const [letter, perMinute] of Object.entries(rates)) {
@@ -3219,22 +3257,33 @@ export class WorldRoom extends Room {
       p.made += grownHere;
       this.earn(ownerId, pay, at, p.name);
     }
+    // Lines once every producer has run (what it converts may have left it idle).
+    for (const { p, ownerId } of jobs) {
+      if (!Object.keys(p.spec.rates).length) continue;
+      tally.get(ownerId)?.lines.push(producingLine(p.name, Object.fromEntries(Object.entries(p.now).filter(([ch]) => ch !== "y")), p.idle));
+    }
+    // Each person's income, told when it changes (to a tenth of a letter a minute).
+    for (const [id, w] of this.walkers) {
+      if (w.master !== null) continue;
+      const t = tally.get(id);
+      const letters = t ? [...t.letters].map(([letter, l]) => ({ letter, rate: Math.round(l.rate * 100) / 100, from: l.from.join(", ") })) : [];
+      if (t?.aged) letters.push({ letter: "y", rate: Math.round(t.age * 100) / 100, from: `age of ${t.aged} thing${t.aged === 1 ? "" : "s"}` });
+      letters.sort((a, b) => b.rate - a.rate);
+      const lines = [...(t?.lines ?? []), ...(t?.aged ? [producingLine(`AGE (${t.aged} thing${t.aged === 1 ? "" : "s"})`, { y: t.age }, null)] : [])];
+      const shown = JSON.stringify([letters.map((l) => [l.letter, Math.round(l.rate * 10), l.from]), lines.map((l) => l.replace(/[\d.]+\/min/g, ""))]);
+      const was = this.income.get(id);
+      this.income.set(id, { lines, letters, shown });
+      if (was?.shown !== shown) this.toTell.add(id);
+    }
   }
 
-  /** What a person's things are making, a line each, for the loadout: "HOE: A 0.75/min", "MILL: no wind". */
+  /**
+   * What a person's things are making a minute, from the last second of production: a line each
+   * for the loadout ("HOE: A 0.75/min", "MILL: no wind"), and for the HUD each letter coming in
+   * with the producers it comes from (`income`), Y from age as one.
+   */
   private producing(id: string): string[] {
-    const out: string[] = [];
-    let age = 0, things = 0;
-    for (const [pid, p] of this.producers) {
-      const owner = this.state.things.get(pid)?.owner ?? this.walkers.get(pid)?.master ?? p.owner;
-      if (owner !== id) continue;
-      if (p.now.y) { age += p.now.y; things++; }
-      if (!Object.keys(p.spec.rates).length) continue;
-      const rates = Object.fromEntries(Object.entries(p.now).filter(([ch]) => ch !== "y"));
-      out.push(producingLine(p.name, rates, p.idle));
-    }
-    if (things) out.push(producingLine(`AGE (${things} thing${things === 1 ? "" : "s"})`, { y: age }, null));
-    return out;
+    return this.income.get(id)?.lines ?? [];
   }
 
   addThing(gear: Gear, owner: string, x: number, y: number): string {
@@ -3258,6 +3307,7 @@ export class WorldRoom extends Room {
     if (!gear.fixture) {
       const stats = this.statsOf(gear);
       this.addProducer(id, owner, stats, thing.count, phrase, true);
+      this.producers.get(id)!.born = gear.born ??= this.elapsed; // it keeps its age, picked up and put down
       const water = wateringReach(stats.num("water_output"));
       if (water > 0) this.waterers.set(id, water);
     }
