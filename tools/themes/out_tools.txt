@@ -1,0 +1,281 @@
+# Theme 5, tools and crafting: generated entries.
+
+# noun tool
+line: mass=0.2 length=50 integrity=15 material=nylon equip_slot=held hands_required=1 attack_range=20 inflict_root=2 harvest_bonus=2 harvest_sources=fishing color=white
+match: mass=0.002 length=0.05 integrity=1 material=wood flammability=10 burn_time=10 temperature=600 dmg_fire=3 inflict_burn=2 luminosity=3 single_use=true plural_count=20 counters=dark,darkness color=red
+weight: mass=20 length=0.3 integrity=500 hardness=8 density=7800 material=iron equip_slot=held hands_required=1 dmg_blunt=40 dmg_crush=30 attack_rate=0.5 knockback=2 strength+1 color=black
+jack: mass=4 length=0.5 integrity=300 hardness=8 material=steel equip_slot=held hands_required=2 tow_capacity=2000 build_speed=1.5 dmg_crush=20 color=red
+file: mass=0.3 length=0.3 integrity=120 hardness=9 material=steel equip_slot=held hands_required=1 dmg_slash=6 craft_slots=1 crafts=weapon,tool,metal sharpness+1 counters=chain,shackle,handcuff color=gray
+vice: mass=12 length=0.3 integrity=600 hardness=8 material=iron portable=false craft_slots=1 crafts=tool,weapon,metal,wood dmg_crush=60 inflict_root=6 build_speed=1.3 color=blue
+vise: mass=12 length=0.3 integrity=600 hardness=8 material=iron portable=false craft_slots=1 crafts=tool,weapon,metal,wood dmg_crush=60 inflict_root=6 build_speed=1.3 color=blue
+tool: mass=1 length=0.3 integrity=60 hardness=7 material=steel equip_slot=held hands_required=1 dmg_blunt=10 build_speed=1.3 harvest_bonus=1.5 harvest_sources=dig,tree,quarry color=gray
+jimmy: mass=1.5 length=0.5 integrity=180 hardness=8 material=steel equip_slot=held hands_required=1 dmg_blunt=22 dmg_pierce=6 siege=2 counters=lock,padlock,latch,safe stealth=2 color=black
+tape: mass=0.2 length=50 integrity=5 material=plastic,adhesive equip_slot=held hands_required=1 stickiness=8 inflict_root=3 inflict_silence=5 restores=20 color=gray
+thread: mass=0.01 length=200 integrity=2 material=cotton equip_slot=held hands_required=1 craft_slots=1 crafts=clothing,fabric restores=10 color=white
+wire: mass=1 length=50 integrity=60 material=copper,steel conductivity=10 inflict_root=3 dmg_electric+10 build_speed=1.2 counters=fence plural_count=5 color=copper
+string: mass=0.02 length=10 integrity=5 material=cotton equip_slot=held hands_required=1 inflict_root=1 harvest_bonus=1.3 harvest_sources=fishing,hunting color=white
+cable: mass=5 length=30 integrity=300 material=steel,copper conductivity=10 tow_capacity=5000 build_speed=1.5 inflict_root=4 color=black
+brush: mass=0.1 length=0.25 integrity=10 material=wood,bristle equip_slot=held hands_required=1 craft_slots=1 crafts=document,adornment beauty+1 color=brown
+pole: mass=4 length=4 integrity=80 material=wood equip_slot=held hands_required=2 dmg_blunt=20 attack_range=4 jump=4 knockback=2 harvest_bonus=1.5 harvest_sources=fishing,tree color=brown
+implement: mass=1 length=0.4 integrity=60 hardness=7 material=steel,wood equip_slot=held hands_required=1 dmg_blunt=10 build_speed=1.2 harvest_bonus=1.5 harvest_sources=field,dig color=gray
+pencil: mass=0.01 length=0.18 integrity=3 sharpness=4 material=wood,graphite equip_slot=held hands_required=1 dmg_pierce=3 craft_slots=1 crafts=document intelligence+1 color=yellow
+strap: mass=0.2 length=1 integrity=40 material=leather equip_slot=held hands_required=1 dmg_slash=6 inflict_root=2 carry_capacity+10 color=brown
+cane: mass=0.5 length=0.9 integrity=50 material=wood equip_slot=held hands_required=1 dmg_blunt=14 attack_rate=1.2 speed_land+0.5 agility+1 color=brown
+tray: mass=0.8 length=0.5 integrity=30 material=steel equip_slot=held hands_required=1 dmg_blunt=8 block=0.3 storage_objects=5 color=silver
+razor: mass=0.05 length=0.15 integrity=15 sharpness=10 material=steel equip_slot=held hands_required=1 dmg_slash=22 inflict_bleed=6 critical=0.2 attack_rate=1.8 stealth=3 beauty+1 color=silver
+cutter: mass=0.4 length=0.2 integrity=60 sharpness=9 hardness=8 material=steel equip_slot=held hands_required=1 dmg_slash=18 counters=wire,fence,chain,cable,rope harvest_bonus=1.5 harvest_sources=quarry,plant color=orange
+baton: mass=0.5 length=0.6 integrity=60 material=wood,rubber equip_slot=held hands_required=1 dmg_blunt=20 inflict_stun=1 attack_rate=1.3 authority+1 command_limit+3 color=black
+scissors: mass=0.1 length=0.2 integrity=40 sharpness=8 material=steel equip_slot=held hands_required=1 dmg_slash=10 dmg_pierce=8 craft_slots=1 crafts=clothing,fabric,leather,document counters=paper,rope,thread,string,net color=red
+funnel: mass=0.3 length=0.2 integrity=20 material=steel equip_slot=held hands_required=1 water_output=1 color=silver
+wand: mass=0.05 length=0.35 integrity=15 material=wood equip_slot=held hands_required=1 dmg_magic=30 attack_range=20 attack_rate=1 luminosity=2 charm+2 detect_letters=60 color=brown
+blender: mass=3 integrity=20 material=plastic,steel portable=false sharpness=8 dmg_slash=60 upkeep_power=0.4 loudness=7 craft_slots=1 crafts=drink,food color=white
+shear: mass=40 length=1.2 integrity=800 sharpness=9 hardness=9 material=steel portable=false dmg_slash=120 siege=2 craft_slots=1 crafts=metal,protection,vehicle_land counters=armor,plate,sheet color=gray
+shears: mass=0.8 length=0.4 integrity=80 sharpness=8 material=steel equip_slot=held hands_required=2 dmg_slash=25 harvest_bonus=2 harvest_sources=plant,forage,field counters=hedge,wool,rope color=silver
+mop: mass=1.5 length=1.4 integrity=25 material=cotton,wood equip_slot=held hands_required=2 dmg_blunt=8 wetness=6 counters=puddle,spill,mud,slime color=gray
+toothbrush: mass=0.02 length=0.18 integrity=5 material=plastic equip_slot=held hands_required=1 res_disease+0.1 charm+1 color=blue
+rein: mass=0.5 length=3 integrity=30 material=leather equip_slot=held hands_required=1 obedience+3 speed_land+2 agility+2 plural_count=2 color=brown
+cooker: mass=10 integrity=200 material=steel portable=false temperature=200 craft_slots=1 crafts=food upkeep_fuel=0.05 color=gray
+platter: mass=1.5 length=0.5 integrity=25 brittleness=6 material=porcelain storage_objects=5 beauty=5 value=30 color=white
+machete: mass=0.9 length=0.6 integrity=70 sharpness=8 hardness=7 material=steel equip_slot=held hands_required=1 dmg_slash=38 attack_rate=1.1 inflict_bleed=3 terrain_ignored=jungle,forest harvest_bonus=2 harvest_sources=plant,forage color=silver
+grapple: mass=3 length=0.4 integrity=150 sharpness=5 material=steel equip_slot=held hands_required=1 attack_range=20 dmg_pierce=12 climb+8 moves_target=15 inflict_root=2 color=gray
+quill: mass=0.01 length=0.3 integrity=2 sharpness=5 material=feather equip_slot=held hands_required=1 craft_slots=1 crafts=document intelligence+1 beauty=5 color=white
+mower: mass=30 length=1.5 integrity=200 sharpness=8 material=steel,plastic dmg_slash=60 attack_area=1 harvest_bonus=2.5 harvest_sources=field,plant upkeep_fuel=0.05 loudness=8 color=red
+beater: mass=0.4 length=0.35 integrity=30 material=steel equip_slot=held hands_required=1 dmg_blunt=8 attack_rate=3 color=silver
+pry: mass=2 length=0.7 integrity=200 hardness=8 material=iron equip_slot=held hands_required=1 dmg_blunt=24 siege=2.5 counters=lock,latch,crate,door color=black
+sledge: mass=6 length=0.9 integrity=200 hardness=8 material=iron,wood equip_slot=held hands_required=2 dmg_blunt=70 dmg_crush=40 attack_rate=0.5 siege=4 knockback=3 inflict_stun=1.5 build_speed=1.5 harvest_bonus=2 harvest_sources=quarry color=gray
+sledgehammer: mass=6 length=0.9 integrity=220 hardness=8 material=iron,wood equip_slot=held hands_required=2 dmg_blunt=75 dmg_crush=40 attack_rate=0.5 siege=4 knockback=3 inflict_stun=1.5 build_speed=1.5 harvest_bonus=2 harvest_sources=quarry,mine color=gray
+maul: mass=5 length=0.9 integrity=200 hardness=8 material=iron,wood equip_slot=held hands_required=2 dmg_blunt=65 dmg_slash=20 attack_rate=0.5 siege=3 knockback=3 inflict_stun=1 harvest_bonus=2 harvest_sources=tree,quarry color=gray
+crayon: mass=0.01 length=0.09 integrity=1 material=wax equip_slot=held hands_required=1 craft_slots=1 crafts=document plural_count=24 beauty=4 comfort=0.5 color=red
+stylus: mass=0.02 length=0.12 integrity=20 sharpness=6 material=steel equip_slot=held hands_required=1 dmg_pierce=4 craft_slots=1 crafts=document,clay color=silver
+cutlery: mass=0.5 integrity=40 sharpness=5 material=steel equip_slot=held hands_required=1 dmg_slash=6 dmg_pierce=6 plural_count=12 comfort=1 color=silver
+saucepan: mass=1.2 length=0.4 integrity=80 material=steel equip_slot=held hands_required=1 dmg_blunt=14 inflict_stun=0.5 temperature=100 craft_slots=1 crafts=food color=silver
+eraser: mass=0.02 integrity=3 material=rubber equip_slot=held hands_required=1 strips_adjectives=1 negates=color color=pink
+crutch: mass=1.5 length=1.3 integrity=60 material=wood,aluminum equip_slot=held hands_required=1 dmg_blunt=15 speed_land+1 immune_root=true color=silver
+oar: mass=3 length=2.5 integrity=60 material=wood equip_slot=held hands_required=2 dmg_blunt=28 attack_range=2.5 knockback=2 speed_water+2 color=brown
+sweeper: mass=8 length=1.2 integrity=40 material=plastic,bristle dmg_blunt=5 counters=dust,ash,litter,glass harvest_bonus=1.5 harvest_sources=forage color=gray
+tamper: mass=4 length=1.2 integrity=150 material=iron equip_slot=held hands_required=2 dmg_blunt=30 dmg_crush=20 build_speed=1.5 color=gray
+spatula: mass=0.15 length=0.3 integrity=25 material=steel,plastic equip_slot=held hands_required=1 dmg_blunt=5 craft_slots=1 crafts=food color=black
+harpoon: mass=4 length=2 integrity=60 sharpness=8 material=steel,wood equip_slot=held hands_required=2 dmg_pierce=70 inflict_bleed=6 attack_range=25 moves_target=20 targets=land,water harvest_bonus=2.5 harvest_sources=fishing,hunting counters=whale,shark color=gray
+highlighter: mass=0.02 length=0.13 integrity=3 material=plastic equip_slot=held hands_required=1 detect_letters=40 read_properties=2 luminosity=2 color=yellow
+swab: mass=0.002 integrity=1 material=cotton single_use=true restores=15 effect_status=poison res_disease+0.2 plural_count=10 color=white
+toothpick: mass=0.001 length=0.06 integrity=1 sharpness=5 material=wood dmg_pierce=1 plural_count=50 color=brown
+auger: mass=4 length=1 integrity=150 hardness=8 sharpness=6 material=steel equip_slot=held hands_required=2 dmg_pierce=30 armor_pierce=0.3 build_speed=1.4 harvest_bonus=2 harvest_sources=dig,tree,mine color=gray
+scalpel: mass=0.02 length=0.15 integrity=15 sharpness=10 hardness=8 material=steel equip_slot=held hands_required=1 dmg_slash=20 critical=0.4 inflict_bleed=4 accuracy=0.99 heals=3 harvest_bonus=1.5 harvest_sources=hunting color=silver
+scraper: mass=0.3 length=0.25 integrity=50 sharpness=4 material=steel equip_slot=held hands_required=1 dmg_slash=8 strips_adjectives=1 harvest_bonus=1.5 harvest_sources=forage,quarry color=gray
+corkscrew: mass=0.1 length=0.12 integrity=40 sharpness=6 material=steel equip_slot=held hands_required=1 dmg_pierce=8 inflict_bleed=2 color=silver
+gouge: mass=0.3 length=0.3 integrity=70 sharpness=8 hardness=8 material=steel,wood equip_slot=held hands_required=1 dmg_pierce=14 dmg_slash=10 build_speed=1.2 craft_slots=1 crafts=furniture,wood color=silver
+racquet: mass=0.3 length=0.7 integrity=30 material=graphite,nylon equip_slot=held hands_required=1 dmg_blunt=10 reflect=0.3 block=0.2 attack_rate=1.5 color=white
+bolo: mass=0.9 length=0.5 integrity=70 sharpness=8 material=steel equip_slot=held hands_required=1 dmg_slash=40 attack_rate=1 harvest_bonus=1.8 harvest_sources=plant,forage terrain_ignored=jungle color=silver
+gaff: mass=1.5 length=1.5 integrity=60 sharpness=7 material=steel,wood equip_slot=held hands_required=2 dmg_pierce=25 attack_range=1.5 moves_target=2 harvest_bonus=2 harvest_sources=fishing color=gray
+gavel: mass=0.4 length=0.25 integrity=60 material=wood equip_slot=held hands_required=1 dmg_blunt=10 authority+3 loudness=6 law=attack fine=5 silences=10 color=brown
+handcuff: mass=0.4 integrity=200 hardness=8 material=steel lockable=true inflict_root=30 effect_status=root locks=true counters=thief,criminal,prisoner plural_count=2 color=silver
+paintbrush: mass=0.05 length=0.25 integrity=5 material=wood,bristle equip_slot=held hands_required=1 craft_slots=1 crafts=document,adornment,furniture beauty+2 value*1.3 color=brown
+spanner: mass=0.6 length=0.3 integrity=150 hardness=8 material=steel equip_slot=held hands_required=1 dmg_blunt=18 attack_rate=1.1 build_speed=1.2 counters=machine,engine,motor color=silver
+shackle: mass=2 integrity=300 hardness=8 material=iron lockable=true inflict_root=60 inflict_slow=60 locks=true counters=prisoner,slave,thief color=black
+flail: mass=2 length=1.4 integrity=60 material=wood,leather equip_slot=held hands_required=2 dmg_blunt=30 attack_area=1 attack_rate=1 harvest_bonus=2 harvest_sources=field color=brown
+hacksaw: mass=0.6 length=0.5 integrity=80 sharpness=7 hardness=9 material=steel equip_slot=held hands_required=1 dmg_slash=15 siege=1.5 counters=chain,shackle,handcuff,bar,lock,padlock color=blue
+pestle: mass=1 length=0.2 integrity=200 hardness=7 material=stone equip_slot=held hands_required=1 dmg_blunt=14 dmg_crush=10 craft_slots=1 crafts=medicine,food,mineral color=gray
+ballpoint: mass=0.01 length=0.14 integrity=4 sharpness=4 material=plastic,steel equip_slot=held hands_required=1 dmg_pierce=4 craft_slots=1 crafts=document color=blue
+sharpener: mass=0.3 integrity=60 hardness=9 material=steel,stone craft_slots=1 crafts=weapon,tool sharpness+2 dmg_slash*1.2 dmg_pierce*1.2 color=gray
+utensil: mass=0.1 length=0.2 integrity=20 material=steel equip_slot=held hands_required=1 dmg_pierce=3 craft_slots=1 crafts=food color=silver
+grater: mass=0.3 length=0.25 integrity=40 sharpness=6 material=steel equip_slot=held hands_required=1 dmg_slash=8 inflict_bleed=2 craft_slots=1 crafts=food color=silver
+juicer: mass=1 integrity=30 material=plastic,steel portable=false craft_slots=1 crafts=drink upkeep_power=0.1 color=white
+cookware: mass=3 integrity=100 material=steel,iron temperature=150 craft_slots=2 crafts=food comfort=1 color=gray
+griddle: mass=4 integrity=200 material=iron portable=false temperature=220 dmg_fire=15 craft_slots=1 crafts=food color=black
+steamer: mass=1 integrity=50 material=bamboo,steel temperature=100 craft_slots=1 crafts=food wetness=3 color=brown
+wok: mass=1.5 length=0.4 integrity=120 material=steel equip_slot=held hands_required=1 dmg_blunt=16 inflict_stun=0.5 temperature=250 craft_slots=1 crafts=food block=0.2 color=black
+seine: mass=20 length=60 integrity=80 material=nylon,lead portable=false placeable_on=water inflict_root=10 harvest_bonus=3 harvest_sources=fishing,river counters=fish,school color=green
+trawl: mass=100 length=40 integrity=150 material=nylon,steel placeable_on=deep_water,water inflict_root=12 harvest_bonus=3 harvest_sources=fishing counters=fish,school,shoal color=green
+noose: mass=0.3 length=2 integrity=20 material=fiber portable=false stealth=6 inflict_root=12 dmg_suffocation=20 fear_aura=3 harvest_bonus=1.8 harvest_sources=hunting color=brown
+pitfall: mass=0 footprint=1 depth=3 integrity=500 portable=false stealth=9 tile_type=pit dmg_pierce=40 dmg_blunt=30 inflict_root=15 harvest_bonus=2 harvest_sources=hunting counters=elephant,bear,boar color=brown
+web: mass=0.001 integrity=3 material=silk portable=false stealth=6 stickiness=10 inflict_root=8 harvest_bonus=1.5 harvest_sources=hunting counters=fly,insect,moth color=white
+
+# noun weapon
+staff: mass=2 length=1.8 integrity=80 material=wood equip_slot=held hands_required=2 dmg_blunt=28 attack_rate=1.2 attack_range=1.8 block=0.3 inflict_stun=0.5 color=brown
+stick: mass=0.5 length=1 integrity=20 material=wood equip_slot=held hands_required=1 dmg_blunt=10 attack_rate=1.2 flammability=6 burn_time=120 plural_count=10 color=brown
+chain: mass=5 length=3 integrity=400 hardness=8 material=steel equip_slot=held hands_required=1 dmg_blunt=30 attack_range=3 inflict_root=6 tow_capacity=5000 lockable=true locks=true conductivity=8 color=gray
+ram: mass=600 length=6 integrity=2000 hardness=7 material=wood,iron hands_required=2 dmg_blunt=300 dmg_crush=200 siege=10 attack_rate=0.2 knockback=5 counters=gate,door,wall,fort color=brown
+bolt: mass=0.05 length=0.4 integrity=5 sharpness=8 material=steel,wood single_use=true dmg_pierce=40 armor_pierce=0.4 plural_count=20 color=gray
+lance: mass=4 length=3.5 integrity=80 sharpness=7 material=wood,steel equip_slot=held hands_required=1 dmg_pierce=90 attack_range=3.5 knockback=4 armor_pierce=0.3 counters=horse,knight,cavalry color=silver
+blackjack: mass=0.4 length=0.25 integrity=40 material=leather,lead equip_slot=held hands_required=1 dmg_blunt=22 inflict_stun=3 inflict_sleep=4 stealth=4 color=black
+needle: mass=0.001 length=0.05 integrity=5 sharpness=9 hardness=7 material=steel equip_slot=held hands_required=1 dmg_pierce=4 craft_slots=1 crafts=clothing,fabric,leather restores=15 counters=balloon,bubble color=silver
+awl: mass=0.1 length=0.15 integrity=40 sharpness=8 hardness=8 material=steel,wood equip_slot=held hands_required=1 dmg_pierce=12 armor_pierce=0.3 craft_slots=1 crafts=leather,clothing color=brown
+bodkin: mass=0.05 length=0.12 integrity=30 sharpness=8 material=steel equip_slot=held hands_required=1 dmg_pierce=14 armor_pierce=0.5 stealth=3 color=silver
+gimlet: mass=0.1 length=0.15 integrity=50 sharpness=7 hardness=8 material=steel,wood equip_slot=held hands_required=1 dmg_pierce=10 build_speed=1.2 color=brown
+rasp: mass=0.4 length=0.35 integrity=150 hardness=9 material=steel equip_slot=held hands_required=1 dmg_slash=8 craft_slots=1 crafts=wood,furniture,bone counters=hoof,horn color=gray
+adze: mass=1.5 length=0.6 integrity=90 hardness=7 sharpness=7 material=steel,wood equip_slot=held hands_required=1 dmg_slash=32 attack_rate=0.9 build_speed=1.5 harvest_bonus=1.8 harvest_sources=tree craft_slots=1 crafts=wood,vehicle_water color=brown
+pickaxe: mass=3 length=0.9 integrity=120 hardness=9 sharpness=5 material=steel,wood equip_slot=held hands_required=2 dmg_pierce=40 attack_rate=0.7 siege=2.5 armor_pierce=0.3 harvest_bonus=2.5 harvest_sources=mine,quarry,dig color=gray
+clamp: mass=1 length=0.3 integrity=200 hardness=7 material=steel equip_slot=held hands_required=1 dmg_crush=15 inflict_root=4 build_speed=1.2 color=orange
+handsaw: mass=0.8 length=0.6 integrity=60 sharpness=7 material=steel,wood equip_slot=held hands_required=1 dmg_slash=20 inflict_bleed=3 build_speed=1.4 harvest_bonus=1.8 harvest_sources=tree craft_slots=1 crafts=furniture,wood color=silver
+jackhammer: mass=30 length=1.2 integrity=300 hardness=9 material=steel equip_slot=held hands_required=2 dmg_pierce=60 dmg_crush=60 siege=6 attack_rate=10 loudness=10 upkeep_power=1.5 harvest_bonus=2.5 harvest_sources=quarry,mine,dig counters=road,concrete,floor color=yellow
+sander: mass=2 integrity=50 material=plastic,steel equip_slot=held hands_required=2 dmg_slash=6 upkeep_power=0.3 loudness=6 craft_slots=1 crafts=furniture,wood beauty+1 color=green
+sandblaster: mass=20 integrity=150 material=steel portable=false dmg_slash=40 attack_range=5 strips_adjectives=2 upkeep_power=2 loudness=9 color=gray
+blowtorch: mass=1.5 length=0.3 integrity=40 material=steel,brass equip_slot=held hands_required=1 temperature=1300 dmg_fire=40 inflict_burn=4 attack_range=0.5 luminosity=5 craft_slots=1 crafts=metal,glass counters=ice,lock,chain upkeep_fuel=0.05 color=blue
+blowpipe: mass=3 length=1.5 integrity=60 material=steel equip_slot=held hands_required=2 temperature=1100 craft_slots=1 crafts=glass,container,adornment color=gray
+whetstone: mass=0.5 integrity=200 hardness=8 material=stone craft_slots=1 crafts=weapon,tool sharpness+3 dmg_slash*1.3 dmg_pierce*1.2 color=gray
+sandpaper: mass=0.01 integrity=2 material=paper,sand dmg_slash=2 sharpness+1 beauty+1 strips_adjectives=1 plural_count=10 color=brown
+caliper: mass=0.2 length=0.2 integrity=40 material=steel read_properties=3 accuracy+0.05 build_speed=1.2 color=silver
+protractor: mass=0.02 integrity=5 material=plastic read_properties=1 accuracy+0.05 build_speed=1.1 color=white
+yardstick: mass=0.2 length=0.9 integrity=10 material=wood equip_slot=held hands_required=1 dmg_blunt=6 read_properties=2 build_speed=1.2 color=yellow
+tapeline: mass=0.2 length=30 integrity=10 material=steel read_properties=2 build_speed=1.2 color=yellow
+plumb: mass=0.3 integrity=60 material=lead density=11000 build_speed=1.3 accuracy+0.05 color=gray
+nail: mass=0.01 length=0.08 integrity=10 sharpness=6 hardness=7 material=steel dmg_pierce=5 build_speed=1.3 single_use=true plural_count=50 color=gray
+tack: mass=0.002 length=0.02 integrity=2 sharpness=7 material=steel portable=false stealth=6 dmg_pierce=6 inflict_slow=4 plural_count=50 counters=tire,foot color=silver
+rivet: mass=0.01 integrity=30 hardness=8 material=steel build_speed=1.4 single_use=true plural_count=50 color=gray
+thumbtack: mass=0.002 integrity=2 sharpness=7 material=steel portable=false stealth=5 dmg_pierce=5 inflict_slow=3 plural_count=50 color=red
+pushpin: mass=0.002 integrity=2 sharpness=7 material=steel,plastic portable=false stealth=4 dmg_pierce=4 inflict_slow=3 plural_count=50 color=red
+paperclip: mass=0.001 integrity=2 material=steel conductivity=8 counters=lock,padlock,handcuff plural_count=50 color=silver
+clothespin: mass=0.005 integrity=3 material=wood dmg_crush=1 inflict_silence=2 plural_count=20 color=brown
+scaffold: mass=2000 footprint=3 height=10 integrity=400 material=steel,wood portable=false climb+10 build_speed=2.5 cover=0.2 color=gray
+scaffolding: mass=3000 footprint=4 height=12 integrity=500 material=steel,wood portable=false climb+10 build_speed=2.5 cover=0.2 color=gray
+winch: mass=50 integrity=500 material=steel portable=false tow_capacity=10000 moves_target=30 build_speed=1.8 upkeep_power=1 color=gray
+pulley: mass=5 integrity=200 material=steel,rope portable=false tow_capacity=2000 build_speed=1.5 carry_capacity=500 color=gray
+hoist: mass=100 height=4 integrity=600 material=steel portable=false tow_capacity=5000 build_speed=2 carry_capacity=3000 color=yellow
+lever: mass=3 length=2 integrity=150 material=iron equip_slot=held hands_required=2 tow_capacity=3000 dmg_blunt=20 siege=2 build_speed=1.3 color=gray
+crank: mass=1 length=0.4 integrity=100 material=iron equip_slot=held hands_required=1 dmg_blunt=14 labor=1 color=black
+toolbox: mass=10 integrity=150 material=steel lockable=true storage_objects=20 container_slots=12 build_speed=1.5 craft_slots=1 crafts=tool,device,machine dmg_blunt=15 color=red
+sawhorse: mass=8 length=1 height=0.8 integrity=100 material=wood portable=false craft_slots=1 crafts=furniture,wood build_speed=1.3 color=brown
+stapler: mass=0.3 integrity=40 material=steel equip_slot=held hands_required=1 dmg_pierce=3 inflict_root=1 craft_slots=1 crafts=document color=black
+stencil: mass=0.05 integrity=5 material=plastic craft_slots=1 crafts=document,adornment beauty+1 color=white
+palette: mass=0.3 integrity=10 material=wood craft_slots=1 crafts=document,adornment beauty+1 color=brown
+easel: mass=4 height=1.7 integrity=30 material=wood portable=false craft_slots=1 crafts=document beauty=5 comfort=1 color=brown
+pastel: mass=0.01 integrity=1 material=chalk,pigment craft_slots=1 crafts=document beauty=6 plural_count=24 color=pink
+marker: mass=0.02 length=0.13 integrity=4 material=plastic,ink equip_slot=held hands_required=1 craft_slots=1 crafts=document odor=2 map_reveal=5 color=black
+sharpie: mass=0.02 length=0.13 integrity=4 material=plastic,ink equip_slot=held hands_required=1 craft_slots=1 crafts=document odor=3 color=black
+nib: mass=0.002 integrity=5 sharpness=6 material=steel dmg_pierce=2 craft_slots=1 crafts=document color=gold
+inkwell: mass=0.3 integrity=10 brittleness=8 material=glass,ink storage_objects=0.1 craft_slots=1 crafts=document color=black
+stamp: mass=0.2 integrity=40 material=rubber,wood craft_slots=1 crafts=document authority+1 color=red
+signet: mass=0.02 integrity=40 material=gold equip_slot=finger authority+2 value=400 beauty=6 craft_slots=1 crafts=document color=gold
+spindle: mass=0.1 length=0.3 integrity=20 sharpness=4 material=wood equip_slot=held hands_required=1 dmg_pierce=6 inflict_sleep=10 craft_slots=1 crafts=fabric color=brown
+distaff: mass=0.3 length=1 integrity=25 material=wood equip_slot=held hands_required=1 dmg_blunt=8 craft_slots=1 crafts=fabric color=brown
+bobbin: mass=0.01 integrity=5 material=wood,thread craft_slots=1 crafts=fabric,clothing plural_count=10 color=white
+shuttle: mass=0.1 length=0.3 integrity=20 material=wood craft_slots=1 crafts=fabric,clothing build_speed=1.1 color=brown
+thimble: mass=0.005 integrity=40 hardness=8 material=steel equip_slot=finger res_pierce+0.2 craft_slots=1 crafts=clothing color=silver
+spool: mass=0.05 integrity=10 material=wood,thread length=100 craft_slots=1 crafts=fabric,clothing restores=15 plural_count=5 color=white
+yarn: mass=0.1 length=200 integrity=5 material=wool flammability=5 craft_slots=1 crafts=clothing,fabric comfort=1 counters=cat color=red
+twine: mass=0.1 length=100 integrity=15 material=jute inflict_root=2 build_speed=1.1 harvest_bonus=1.3 harvest_sources=field color=brown
+cord: mass=0.2 length=20 integrity=30 material=nylon inflict_root=3 tow_capacity=200 color=gray
+knot: mass=0 integrity=20 material=rope inflict_root=4 locks=true build_speed=1.1 color=brown
+fishhook: mass=0.005 integrity=8 sharpness=8 material=steel dmg_pierce=4 inflict_bleed=2 harvest_bonus=2 harvest_sources=fishing plural_count=10 color=silver
+fishnet: mass=2 length=4 integrity=40 material=nylon equip_slot=held hands_required=2 attack_range=4 inflict_root=6 harvest_bonus=2.5 harvest_sources=fishing,river counters=fish color=green
+lure: mass=0.02 integrity=5 sharpness=6 material=plastic,steel beauty=6 charm+2 harvest_bonus=2 harvest_sources=fishing,hunting color=orange
+bait: mass=0.05 integrity=1 edible=true nutrition=1 odor=5 charm+2 single_use=true harvest_bonus=1.8 harvest_sources=fishing,hunting plural_count=10 color=brown
+reel: mass=0.4 integrity=40 material=aluminum,nylon length=200 attack_range+50 moves_target=50 harvest_bonus=1.5 harvest_sources=fishing color=silver
+paddle: mass=1.2 length=1.5 integrity=40 material=wood equip_slot=held hands_required=2 dmg_blunt=18 knockback=1 speed_water+1.5 color=brown
+stake: mass=1 length=1 integrity=40 sharpness=6 material=wood dmg_pierce=30 build_speed=1.2 counters=vampire,undead,ghoul color=brown
+peg: mass=0.05 length=0.15 integrity=15 material=wood build_speed=1.2 inflict_root=1 plural_count=10 color=brown
+padlock: mass=0.4 integrity=400 hardness=9 material=steel lockable=true security=6 locks=true color=gray
+latch: mass=0.2 integrity=100 material=iron lockable=true security=2 color=black
+hose: mass=3 length=20 integrity=30 material=rubber water_output=20 wetness=8 dmg_water=10 knockback=2 attack_range=10 counters=fire,flame,blaze color=green
+duster: mass=0.1 length=0.5 integrity=5 material=feather counters=dust,ash beauty+1 color=gray
+pail: mass=1 integrity=25 material=steel,wood equip_slot=held hands_required=1 storage_objects=10 water_output=1 counters=fire,flame color=gray
+scoop: mass=0.2 integrity=30 material=steel equip_slot=held hands_required=1 storage_objects=1 harvest_bonus=1.5 harvest_sources=dig,river color=silver
+strainer: mass=0.3 integrity=15 material=steel,wire harvest_bonus=1.8 harvest_sources=river,dig craft_slots=1 crafts=food,drink color=silver
+colander: mass=0.5 integrity=40 material=steel equip_slot=head armor=2 harvest_bonus=1.8 harvest_sources=river,dig craft_slots=1 crafts=food color=silver
+peeler: mass=0.05 length=0.15 integrity=20 sharpness=7 material=steel equip_slot=held hands_required=1 dmg_slash=4 strips_adjectives=1 craft_slots=1 crafts=food color=silver
+opener: mass=0.05 integrity=40 material=steel equip_slot=held hands_required=1 dmg_pierce=3 counters=can,tin,bottle,lock color=silver
+fork: mass=0.04 length=0.2 integrity=20 sharpness=5 material=steel equip_slot=held hands_required=1 dmg_pierce=5 plural_count=6 comfort=0.5 color=silver
+spoon: mass=0.04 length=0.18 integrity=20 material=steel equip_slot=held hands_required=1 dmg_blunt=2 plural_count=6 comfort=0.5 color=silver
+skewer: mass=0.05 length=0.3 integrity=15 sharpness=7 material=steel dmg_pierce=10 craft_slots=1 crafts=food plural_count=10 color=silver
+spit: mass=4 length=1.5 integrity=150 material=iron portable=false temperature=300 craft_slots=1 crafts=food dmg_pierce=20 color=black
+trivet: mass=1 integrity=200 material=iron res_fire=0.8 temperature=100 craft_slots=1 crafts=food color=black
+mixer: mass=4 integrity=40 material=steel,plastic portable=false labor=1 upkeep_power=0.3 loudness=6 craft_slots=1 crafts=food,drink color=white
+comb: mass=0.02 length=0.15 integrity=10 material=plastic equip_slot=held hands_required=1 beauty+1 charm+1 color=black
+dibble: mass=0.3 length=0.3 integrity=40 sharpness=4 material=wood,steel equip_slot=held hands_required=1 dmg_pierce=6 harvest_bonus=1.8 harvest_sources=plant,field growth*1.2 color=brown
+cultivator: mass=60 length=1.5 integrity=300 sharpness=6 material=steel portable=false tile_type=tilled radius=2 fertility=3 harvest_bonus=2 harvest_sources=field,plant upkeep_fuel=0.05 color=red
+pruner: mass=0.3 length=0.2 integrity=50 sharpness=8 material=steel equip_slot=held hands_required=1 dmg_slash=10 harvest_bonus=1.8 harvest_sources=plant,tree,forage color=red
+secateurs: mass=0.3 length=0.2 integrity=50 sharpness=8 material=steel equip_slot=held hands_required=1 dmg_slash=10 harvest_bonus=1.8 harvest_sources=plant,tree,forage color=red
+chopper: mass=1 length=0.35 integrity=70 sharpness=8 hardness=7 material=steel equip_slot=held hands_required=1 dmg_slash=35 attack_rate=1 inflict_bleed=3 harvest_bonus=1.5 harvest_sources=tree,hunting color=silver
+tweezer: mass=0.01 length=0.1 integrity=20 material=steel equip_slot=held hands_required=1 dmg_pierce=1 effect_status=bleed heals=1 color=silver
+pincer: mass=0.3 length=0.25 integrity=80 material=steel equip_slot=held hands_required=1 dmg_crush=10 counters=nail,wire color=black
+horseshoe: mass=0.4 integrity=150 hardness=8 material=iron speed_land*1.2 terrain_ignored=road,badlands value=10 charm+1 plural_count=4 color=gray
+harness: mass=3 integrity=80 material=leather equip_slot=body climb+4 tow_capacity+500 obedience+2 color=brown
+yoke: mass=15 length=1.5 integrity=150 material=wood tow_capacity+2000 obedience+3 speed_land*0.8 color=brown
+bridle: mass=1 integrity=40 material=leather obedience+4 agility+2 equip_slot=mount color=brown
+spur: mass=0.2 integrity=60 sharpness=5 material=steel equip_slot=feet speed_land+2 acceleration+2 dmg_pierce=4 plural_count=2 color=silver
+
+# noun container
+pot: mass=2 integrity=100 material=iron,clay temperature=100 storage_objects=5 craft_slots=1 crafts=food,drink equip_slot=held hands_required=1 dmg_blunt=18 color=black
+cauldron: mass=40 integrity=600 material=iron portable=false temperature=100 storage_objects=50 craft_slots=2 crafts=food,drink,medicine,poison upkeep_fuel=0.05 odor=4 color=black
+boiler: mass=500 integrity=1500 material=steel portable=false temperature=180 power_output=10 upkeep_fuel=0.3 dmg_fire=20 loudness=5 color=gray
+urn: mass=5 integrity=40 brittleness=7 material=clay,bronze storage_objects=8 beauty=7 value=100 color=bronze
+china: mass=3 integrity=10 brittleness=9 material=porcelain storage_objects=4 plural_count=12 beauty=7 value=200 comfort=1 color=white
+pottery: mass=3 integrity=20 brittleness=8 material=clay storage_objects=5 plural_count=6 beauty=5 value=40 comfort=1 color=orange
+earthenware: mass=3 integrity=20 brittleness=8 material=clay storage_objects=5 plural_count=6 beauty=4 value=20 comfort=1 color=orange
+stoneware: mass=4 integrity=40 brittleness=6 material=clay storage_objects=5 plural_count=6 beauty=5 value=50 res_fire=0.6 comfort=1 color=gray
+
+# noun material
+lumber: mass=50 length=3 integrity=200 material=wood flammability=6 burn_time=1800 build_speed=1.5 plural_count=10 color=brown
+porcelain: mass=1 integrity=15 hardness=7 brittleness=9 material=porcelain beauty=7 value=50 res_fire=0.8 conductivity=0 color=white
+
+# noun fuel
+charcoal: mass=1 integrity=3 material=carbon flammability=7 burn_time=3600 temperature=20 fuel_output=2 craft_slots=1 crafts=document color=black
+
+# noun structure
+smelter: mass=500000 footprint=8 height=10 integrity=20000 material=brick,steel portable=false temperature=1500 craft_slots=4 crafts=metal,mineral upkeep_fuel=1 luminosity=6 loudness=7 odor=6 needs_foundation=true color=orange
+brazier: mass=30 integrity=300 material=iron portable=false temperature=700 dmg_fire=20 luminosity=6 temperature_delta=10 craft_slots=1 crafts=food,metal upkeep_fuel=0.1 color=orange
+
+# noun toy
+puppet: mass=0.3 integrity=5 material=wood,cloth equip_slot=held hands_required=1 charm=4 beauty=5 comfort=1 inflict_charm=2 color=red
+
+# noun document
+manual: mass=0.5 integrity=5 material=paper flammability=8 build_speed=1.5 intelligence+2 read_properties=2 craft_slots=1 crafts=machine,device,tool color=white
+
+# verb create
+weld: duration=30 effect_target=held temperature+1500 integrity*2 hardness+1 build_speed*1.5 luminosity+6 inflict_blind+1
+sew: duration=30 effect_target=held restores=60 integrity*1.3 build_speed*1.2
+weave: duration=60 build_speed*1.5 craft_slots+1 restores=40
+knit: duration=60 effect_target=held res_cold+0.3 comfort+1 restores=30
+crochet: duration=60 effect_target=held res_cold+0.2 comfort+1 beauty+1 restores=25
+embroider: duration=60 effect_target=held beauty+3 value*1.5 charm+1
+stitch: duration=20 restores=80 effect_status=bleed integrity*1.1
+mend: duration=10 effect_target=held restores=300 integrity*1.2
+patch: duration=10 effect_target=held restores=150 armor+5
+tinker: duration=60 build_speed*1.5 labor+2 craft_slots+1 intelligence+1
+sculpt: duration=60 effect_target=held beauty+4 value*3 craft_slots+1
+sketch: duration=20 map_reveal+20 read_properties+2 beauty+1
+fasten: duration=60 effect_target=held locks=true integrity*1.3 build_speed*1.3
+bind: duration=30 inflict_root+10 locks=true restores=40
+braid: duration=30 effect_target=held integrity*1.5 tow_capacity*2 beauty+1
+
+# verb transform
+carve: duration=30 effect_target=held sharpness+2 dmg_slash*1.4 beauty+2 value*1.5 build_speed*1.3
+whittle: duration=60 effect_target=held sharpness+3 dmg_pierce*1.5 mass*0.7 beauty+1
+sharpen: duration=600 effect_target=held sharpness+2 dmg_slash*1.3 dmg_pierce*1.3 critical+0.1
+hone: duration=600 effect_target=held sharpness+3 dmg_slash*1.4 accuracy+0.05 critical+0.15
+grind: duration=60 effect_target=held sharpness+2 dmg_slash*1.3 mass*0.9 loudness+5
+temper: duration=600 effect_target=held hardness+2 brittleness+-3 integrity*1.5 temperature+800
+hew: duration=20 dmg_slash*1.5 harvest_bonus*1.5 harvest_sources=tree,quarry build_speed*1.4
+hack: duration=20 dmg_slash*1.5 attack_rate*1.3 accuracy+-0.1 harvest_bonus*1.3 harvest_sources=plant,forage
+slice: duration=20 dmg_slash*1.4 sharpness+1 inflict_bleed+2 critical+0.1
+engrave: duration=60 effect_target=held beauty+3 value*2 adjective_slots+1
+etch: duration=60 effect_target=held beauty+2 value*1.5 corrosiveness+2
+
+# adjective participle
+carved: beauty+3 value*2 sharpness+1 dmg_slash*1.2 mass*0.8 integrity*0.9
+woven: material=fabric integrity*0.8 mass*0.5 elasticity+3 comfort+1 beauty+2 flammability+3
+sculpted: beauty+4 value*3 charm+1
+molded: integrity*1.1 beauty+1 value*1.2 build_speed*1.2
+etched: beauty+2 value*1.6 adjective_slots+1
+engraved: beauty+3 value*2.5 adjective_slots+1 charm+1
+stitched: integrity*1.3 armor+3 comfort+1 value*1.3
+sewn: integrity*1.2 comfort+1 value*1.2
+knitted: material=wool res_cold+0.4 comfort+2 temp_min+-10 flammability+3 beauty+1
+braided: integrity*1.6 tow_capacity*2 beauty+1 elasticity+2
+varnished: res_water+0.5 decay_rate*0.3 beauty+2 reflectivity+2 flammability+2 value*1.3
+hammered: hardness+1 integrity*1.3 dmg_blunt*1.2 beauty+1 value*1.3
+tempered: hardness+2 brittleness+-3 integrity*1.8 sharpness+1 dmg_slash*1.25 dmg_pierce*1.25 value*1.5
+rusted: integrity*0.5 sharpness+-3 dmg_slash*0.7 dmg_pierce*0.7 inflict_poison+3 value*0.3 color=orange
+improvised: integrity*0.5 dmg_blunt*0.8 dmg_slash*0.8 value*0.2 build_speed*2 cast_time*0.5
+
+# adjective quality
+polished: beauty+3 reflectivity+4 value*2 sharpness+1 slipperiness+2 charm+1 stealth+-2
+burnished: beauty+3 reflectivity+5 value*1.8 luminosity+1 stealth+-2
+blunt: sharpness*0 dmg_slash*0.2 dmg_pierce*0.3 dmg_blunt+15 inflict_stun+1
+dull: sharpness+-4 dmg_slash*0.5 dmg_pierce*0.6 beauty+-2 value*0.5 luminosity+-2
+keen: sharpness+3 dmg_slash*1.4 dmg_pierce*1.3 critical+0.15 sight_range*1.3
+jagged: sharpness+2 dmg_slash*1.3 inflict_bleed+6 thorns+10 beauty+-2
+serrated: sharpness+2 dmg_slash*1.4 inflict_bleed+5 harvest_bonus*1.2
+sturdy: integrity*2 hardness+2 brittleness+-3 mass*1.2 res_blunt+0.2
+flimsy: integrity*0.3 brittleness+5 mass*0.5 value*0.4
+makeshift: integrity*0.5 build_speed*2 value*0.3 beauty+-2 persistence=60
