@@ -11,7 +11,7 @@ import {
 import {
   LAWS, takeLetters, pactOf, breachText, BREACH_LETTERS, BREACH_LOYALTY, BREACH_MINUTES, cooked, rotted, cooks, cookable, spoils, toxin,
   COOK_RANGE, COOK_SECONDS, alchemyRatio, jobsOf, haggled, builtBy, WORK_RANGE, SCOUT_RANGE, grow, SEEDLING, type PactSpec,
-  comfortOf, homeComfort, storageOf, keepSafe, exposed, hoards, eyeOf, automates, breedRate, HERD_RANGE, craftPlan, craftsOf, CRAFT_RANGE,
+  comfortOf, homeComfort, storageOf, keepSafe, exposed, hoards, eyeOf, automates, breedRate, HERD_RANGE, craftPlan, craftsOf, CRAFT_RANGE, CRAFTED,
 } from "@lastword/shared";
 import { affords, botSettings, chooseWord, held, wordBook, type BotWord, type Difficulty, type Use } from "./bots.js";
 import { loadDictionary } from "./data.js";
@@ -2388,7 +2388,8 @@ export class WorldRoom extends Room {
     const plan = walker.master === null ? this.craftAt(walker, phrase) : null;
     const one = (): Gear => ({
       spelled: { noun: phrase.noun, adjectives: phrase.adjectives, ...(each > 1 ? { count: each } : {}), ...(plan?.states.length ? { states: [...plan.states] } : {}) },
-      phrase: [...shown, phrase.noun].join(" "),
+      // Its name says what it was crafted out of (IRON SWORD); HANDMADE stays in its states.
+      phrase: [...(plan?.states ?? []).filter((x) => x !== CRAFTED), ...shown, phrase.noun].join(" "),
       vehicle: phrase.stats.flag("mountable"),
       integrity: null,
     });

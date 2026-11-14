@@ -86,6 +86,7 @@ it("crafting: IRON at an ANVIL makes a handmade IRON SWORD and uses the iron up"
   expect(String(last("a", "spelled")), String(last("a", "refused"))).toMatch(/handmade at your ANVIL out of your IRON/);
   const sword = [...wa.gear, ...grounded(room).map(([, g]) => g)].find((g: any) => g.spelled.noun === "sword");
   expect(sword.spelled.states).toEqual(["handmade", "iron"]);
+  expect(sword.phrase).toBe("iron sword");
   expect(grounded(room).some(([, g]) => g.phrase === "iron")).toBe(false);
 });
 
