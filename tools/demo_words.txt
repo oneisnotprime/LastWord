@@ -66,7 +66,6 @@ barn: mass=60000 footprint=6 height=8 integrity=2000 material=wood portable=fals
 castle: mass=50000000 footprint=100 height=30 integrity=500000 hardness=8 material=stone portable=false enterable=true occupants=300 lockable=true cover=0.9 security=7 claim_radius=30 authority=5 storage_letters=2000 blocks=land,sight,projectiles comfort=8
 tent: mass=10 footprint=2 height=2 integrity=20 material=cloth enterable=true occupants=3 cover=0.1 flammability=7 comfort=1 claim_radius=2
 bank: mass=2000000 footprint=12 height=10 integrity=40000 material=stone,steel portable=false enterable=true lockable=true security=8 storage_letters=5000 trade_bonus=0.2 produce_T=0.5 needs_foundation=true
-temple: mass=5000000 footprint=30 height=20 integrity=60000 material=stone portable=false enterable=true occupants=200 recruit_rate=0.2 heals=2 res_unholy=1 needs_foundation=true comfort=2
 
 # noun fortification
 fort: mass=5000000 footprint=40 height=8 integrity=150000 hardness=7 material=stone,wood portable=false enterable=true occupants=100 lockable=true cover=0.8 security=6 claim_radius=15 blocks=land,sight,projectiles
@@ -132,7 +131,6 @@ mirror: mass=10 integrity=10 brittleness=9 material=glass reflectivity=10 res_li
 oven: mass=80 footprint=1 integrity=300 material=iron temperature=250 food_output=4 upkeep_fuel=0.05 produce_B=0.2 produce_F=0.2
 
 # noun document
-map: mass=0.1 integrity=3 flammability=9 material=paper map_reveal=200 detect_letters=500
 book: mass=1 integrity=5 flammability=8 material=paper intelligence+2 grants_adjective_slots=1 grants_slots_to=person
 
 # noun mammal
@@ -227,7 +225,6 @@ ghost: mass=0 integrity=200 alive=false sentient=true speed_land=4 speed_air=4 p
 zombie: mass=70 integrity=250 alive=false self_propelled=true aggression=10 intelligence=1 speed_land=1.5 dmg_blunt=20 dmg_disease=20 attack_rate=0.7 immune_fear=true immune_poison=true immune_sleep=true res_holy=-1 res_fire=-0.5 contagion=0.3 pack_size=5 hands=true
 god: mass=0 integrity=1000000 res_blunt=1 res_slash=1 res_pierce=1 res_crush=1 res_fire=1 res_cold=1 res_electric=1 res_acid=1 res_poison=1 res_radiation=1 res_blast=1 res_sonic=1 res_light=1 res_dark=1 res_water=1 res_wind=1 res_earth=1 res_disease=1 res_suffocation=1 res_hunger=1 alive=true sentient=true intelligence=10 loyalty=0 obedience=0 speed_land=ABS speed_air=ABS phase=true placement=sky dmg_holy=1000000 attack_rate=0.02 attack_range=ABS attack_area=50 targets=land,air,water,underground authority=10 fear_aura=10 recruit_rate=5 read_properties=10 heals=100 persistence=10
 giant: mass=8000 height=8 integrity=9000 alive=true sentient=true intelligence=3 loyalty=4 aggression=6 diet=omnivore food_need=4 speed_land=9 hands=true dmg_crush=900 attack_rate=0.4 attack_range=5 attack_area=3 knockback=10 siege=4 fear_aura=6 labor=30 strength=10
-angel: mass=70 integrity=5000 alive=true sentient=true intelligence=9 loyalty=10 speed_air=60 hover=true hands=true dmg_holy=400 attack_rate=1 heals=30 res_unholy=1 res_holy=1 luminosity=9 prevents_death=1 equip_slot=companion counters=ghost,zombie,demon
 demon: mass=300 height=3 integrity=8000 alive=true sentient=true intelligence=8 loyalty=1 aggression=9 speed_land=12 speed_air=20 hands=true dmg_unholy=600 dmg_fire=300 attack_rate=1 res_fire=1 res_unholy=1 res_holy=-1 fear_aura=9 letter_steal=3
 
 # noun leader
@@ -249,7 +246,6 @@ miner: mass=80 integrity=120 alive=true sentient=true intelligence=5 hands=true 
 smith: mass=90 integrity=130 alive=true sentient=true intelligence=6 hands=true speech=true labor=3 craft_slots=1 produce_C=0.5 produce_N=0.3 res_fire=0.3 food_need=0.03
 doctor: mass=70 integrity=90 alive=true sentient=true intelligence=9 hands=true speech=true speed_land=5 heals=10 res_disease=0.8 food_need=0.03 produce_N=0.3 counters=plague,poison field_radius=12 field_targets=owned effect_status=sick
 merchant: mass=75 integrity=90 alive=true sentient=true intelligence=7 hands=true speech=true speed_land=5 trade_bonus=0.3 charm=5 produce_T=1 produce_N=0.3 storage_letters=100
-spy: mass=70 integrity=90 alive=true sentient=true intelligence=8 loyalty=5 hands=true speech=true speed_land=6 stealth=9 read_properties=8 read_inventory=true detect_stealth=5 sight_range=100
 wizard: mass=70 integrity=100 alive=true sentient=true intelligence=10 hands=true speech=true speed_land=4 dmg_magic=300 dmg_electric=200 attack_rate=0.5 attack_range=60 attack_area=4 targets=land,air grants_adjective_slots=1 grants_slots_to=artifact,creature extends_duration=2 transmute_in=12 produce_Z=0.02
 heir: mass=50 integrity=70 alive=true sentient=true intelligence=6 loyalty=8 hands=true speech=true speed_land=5 prevents_death=1 survives_death=true food_need=0.03
 
@@ -365,17 +361,13 @@ heart: equip_slot=graft mass=0.3 integrity=30 regeneration+2 courage+2 morale+2 
 rain: placement=region field_radius=2000 field_targets=all sets_weather=rain field_duration=10 wetness+5 flammability+-3 visibility=0.7 moisture=5 growth=1.5 produce_O=1 sight_range*0.7 produce_O*2 counters=fire,drought,thirst,dearth
 storm: placement=region field_radius=3000 field_targets=all sets_weather=storm field_duration=8 wetness+6 visibility=0.4 dmg_electric=800 dmg_wind=20 attack_rate=0.05 attack_area=5 friendly_fire=true speed_air*0.3 accuracy+-0.3 produce_W=3 loudness=9
 fog: placement=region field_radius=1500 field_targets=all sets_weather=fog field_duration=15 visibility=0.1 stealth+4 sight_range*0.1 accuracy+-0.3
-snow: placement=region field_radius=2500 field_targets=all sets_weather=snow field_duration=20 temperature_delta=-20 visibility=0.6 movement_cost=2 growth=0.2 speed_land*0.6 tile_type=snow
 wind: placement=region field_radius=3000 field_targets=all field_duration=10 dmg_wind=5 speed_air*0.7 accuracy+-0.15 spread_rate+0.3 produce_W=2 clears_weather=fog
 lightning: placement=target placement_range=300 single_use=true dmg_electric=5000 dmg_fire=500 attack_area=3 inflict_stun=3 luminosity=10 loudness=10 targets=land,air,water friendly_fire=true
 
 # noun phenomenon
 flood: placement=region field_radius=500 field_duration=15 tile_type=water depth=3 dmg_water=30 dmg_suffocation=20 attack_rate=0.2 friendly_fire=true movement_cost=6 moisture=10 fertility+2 counters=fire,pit,mine
-drought: placement=region field_radius=800 field_duration=10 moisture=-10 growth=0.1 water_need*3 flammability+3 clears_weather=rain,snow,fog,storm produce_O*0 produce_A*0 produce_P*0 produce_E*0.5 counters=flood,swamp,monsoon,deluge,plenty
 
 # noun season
-winter: placement=map field_radius=ABS field_targets=all field_duration=20 temperature_delta=-25 growth=0.1 sets_weather=snow food_need*1.5 produce_A*0.2 produce_P*0.2 speed_land*0.8 counters=summer,migration,herd,flock,stampede,swarm
-summer: placement=map field_radius=ABS field_targets=all field_duration=20 temperature_delta=12 growth=2 produce_A*2 produce_P*2 water_need*1.5 clears_weather=snow counters=winter
 
 # noun affliction
 plague: placement=target placement_range=20 field_radius=10 field_targets=living field_duration=30 dmg_disease=15 attack_rate=0.2 contagion=0.4 friendly_fire=true morale+-3 labor*0.3 produce_N*0.3 produce_S*0.5 counters=army,city inflict_sick=30
@@ -473,11 +465,9 @@ brave: courage+5 morale+2 immune_fear=true
 fierce: aggression+4 attack_rate*1.4 fear_aura+3 critical+0.1
 deadly: critical+0.3 dmg_pierce*1.5 dmg_slash*1.5 dmg_poison*2 armor_pierce+0.2
 toxic: toxicity+8 dmg_poison+60 inflict_poison+20 edible=false lingering+5
-holy: dmg_holy+80 res_unholy+0.8 heals+3 luminosity+3 counters=ghost,zombie,demon
 evil: dmg_unholy+80 res_holy+-0.5 fear_aura+4 loyalty+-3 reputation+-5
 rich: value*10 produce_T*2 trade_bonus+0.2 charm+2 security+-2
 fertile: fertility+5 growth*2 reproduction*3 produce_A*2 produce_P*2 food_output*2
-secret: stealth+6 untargetable=false read_properties+-5 alarm=false
 safe: security+5 res_blast+0.3 res_fire+0.3 letter_refund+0.3
 magnetic: magnetism+8 letter_steal+1 conductivity+3 counters=steel,iron
 electric: dmg_electric+100 inflict_stun+1 conductivity+5 upkeep_power+5 upkeep_fuel*0 speed_land*1.2
@@ -490,11 +480,8 @@ double: plural_count*2 pack_size*2
 # adjective participle
 flying: speed_air+20 flight_ceiling+3000 hover=true targets=land,air terrain_ignored=water,pit,wall
 burning: temperature+600 dmg_fire+60 inflict_burn+5 luminosity+5 decay_rate+5 fear_aura+2 stealth+-5
-frozen: temperature+-80 dmg_cold+50 inflict_freeze+3 speed_land*0.3 brittleness+5 decay_rate*0
-hidden: stealth+8 untargetable=true alarm=false
 armed: dmg_pierce+60 attack_rate+0.5 attack_range+100 targets=land,air ammo_per_hit+1
 haunted: fear_aura+6 dmg_psychic+20 occupants*0 nocturnal=true
-cursed: critical+-0.5 evasion+-0.3 loyalty+-5 regeneration*0 letter_refund*0
 
 # adjective absolute
 invisible: stealth=ABS is_absolute=true absolute_side=defence
@@ -504,7 +491,6 @@ irresistible: ignores_resistance=true is_absolute=true absolute_side=attack
 unstoppable: ignores_resistance=true movement_cost=ABS is_absolute=true absolute_side=attack
 immortal: lifespan=ABS prevents_death=ABS is_absolute=true absolute_side=defence
 fireproof: res_fire=ABS immune_burn=true is_absolute=true absolute_side=defence specificity=2
-waterproof: res_water=ABS wetness=0 is_absolute=true absolute_side=defence specificity=2
 bulletproof: res_pierce=ABS is_absolute=true absolute_side=defence specificity=2
 bombproof: res_blast=ABS is_absolute=true absolute_side=defence specificity=2
 infinite: integrity=ABS range=ABS storage_letters=ABS is_absolute=true
@@ -538,7 +524,6 @@ debug: counters=insect,invertebrate event_radius=80
 grow: duration=120 mass*8 height*2 integrity*3 dmg_blunt*2 stealth+-3 food_need*4
 shrink: duration=120 mass*0.01 height*0.2 integrity*0.3 stealth+5 evasion+0.3
 burn: duration=20 temperature+500 dmg_fire+40 inflict_burn+3 luminosity+5 self_damage=0.2
-freeze: duration=20 temperature+-80 dmg_cold+40 inflict_freeze+3 speed_land*0.5 armor+20
 harden: duration=60 armor+40 hardness+4 speed_land*0.6
 glow: duration=300 luminosity+6 stealth+-4 night_vision=true fear_aura+-1
 
@@ -584,7 +569,6 @@ glut: placement=region field_radius=300 field_duration=6 deposit_factor=4 trade_
 surplus: placement=region field_radius=200 field_duration=8 trade_rate=0.67 produce_T*2 counters=shortage,scarcity
 pilgrimage: placement=self field_radius=4 field_targets=self field_duration=10 law=attack produce_J*3 produce_Q*2 speed_land*1.3 regeneration+2 morale+3 counters=heresy
 odyssey: placement=self field_radius=4 field_targets=self field_duration=15 produce_J*4 speed_land*1.5 sight_range*2 morale+2
-heresy: placement=region field_radius=200 field_duration=6 produce_Q*0 regeneration*0 morale+-2 counters=pilgrimage,crusade,procession,blessing
 bargain: placement=self field_radius=4 field_targets=self field_duration=3 trade_rate=0.34
 plunder: placement=self field_radius=4 field_targets=self field_duration=5 produce_D*3 produce_V*2 produce_X*2
 pillage: placement=self field_radius=4 field_targets=self field_duration=5 produce_D*2 produce_F*3 dmg_fire+20 inflict_burn+2
@@ -647,15 +631,12 @@ spring: placement=map field_radius=ABS field_targets=all field_duration=8 temper
 autumn: placement=map field_radius=ABS field_targets=all field_duration=8 temperature_delta=-8 growth=0.6 produce_A*3 produce_P*2 food_output*2 counters=summer,spring
 
 # noun weather
-monsoon: placement=map field_radius=ABS field_targets=all sets_weather=rain field_duration=6 growth=3 wetness+5 flammability+-5 sight_range*0.6 speed_land*0.8 produce_O*3 produce_A*2 produce_P*2 produce_W*2 counters=fire,drought,heat,wildfire,thirst,dearth
-deluge: placement=map field_radius=ABS field_targets=all sets_weather=storm field_duration=4 dmg_water=10 attack_rate=0.1 friendly_fire=true growth=2 produce_O*4 speed_land*0.6 counters=fire,drought,wildfire
 torrent: placement=map field_radius=ABS field_targets=all sets_weather=rain field_duration=4 growth=2 produce_O*2 speed_land*0.7 counters=fire,drought
 drizzle: placement=map field_radius=ABS field_targets=all sets_weather=rain field_duration=10 growth=1.5 produce_O*1.5 produce_P*1.5 counters=fire
 hurricane: placement=map field_radius=ABS field_targets=all sets_weather=storm field_duration=4 dmg_wind=15 attack_rate=0.1 friendly_fire=true clears_weather=fog speed_land*0.6 speed_air*0.2 accuracy+-0.3 produce_W*5 produce_O*2 counters=fire,wildfire
 typhoon: placement=map field_radius=ABS field_targets=all sets_weather=storm field_duration=5 dmg_wind=25 attack_rate=0.1 friendly_fire=true speed_land*0.5 speed_air*0.2 accuracy+-0.4 produce_W*6 produce_O*3 counters=fire,wildfire
 cyclone: placement=map field_radius=ABS field_targets=all sets_weather=storm field_duration=3 dmg_wind=20 attack_rate=0.1 friendly_fire=true speed_land*0.6 produce_W*4 produce_O*2 counters=fire
 tornado: placement=target placement_range=300 field_radius=24 field_duration=2 dmg_wind=60 dmg_crush=30 attack_rate=1 friendly_fire=true inflict_stun=1 deposit_factor=0 produce_W*4
-blizzard: placement=map field_radius=ABS field_targets=all sets_weather=snow field_duration=4 temperature_delta=-45 dmg_cold=5 attack_rate=0.1 friendly_fire=true inflict_slow=3 growth=0 speed_land*0.4 sight_range*0.3 produce_A*0 produce_P*0 counters=fire,heat,summer
 hail: placement=map field_radius=ABS field_targets=all sets_weather=storm field_duration=2 dmg_blunt=8 attack_rate=0.2 friendly_fire=true produce_A*0.3 produce_P*0.3
 thunderstorm: placement=map field_radius=ABS field_targets=all sets_weather=storm field_duration=4 dmg_electric=400 attack_rate=0.03 friendly_fire=true growth=1.5 produce_W*3 produce_O*2 counters=fire,drought
 sandstorm: placement=map field_radius=ABS field_targets=all sets_weather=fog field_duration=4 dmg_wind=5 attack_rate=0.1 friendly_fire=true inflict_blind=2 sight_range*0.2 produce_G*2 produce_E*0.5
@@ -682,7 +663,6 @@ nugget: mass=0.05 integrity=50 material=gold value=500 field_radius=8 lode=g lod
 
 # noun artifact
 goldmine: mass=50000 footprint=4 integrity=5000 portable=false produce_G=1 produce_X=0.05
-relic: mass=1 integrity=50 value=5000 luminosity=3 dmg_holy=20 field_radius=10 field_targets=owned produce_Q*2
 vaccine: mass=0.05 edible=true single_use=true duration=1200 res_disease+1 counters=plague,pox,epidemic,pandemic,pestilence
 sanctuary: mass=50000 footprint=6 integrity=20000 material=stone portable=false field_radius=60 law=attack,theft heals=2
 
@@ -690,7 +670,6 @@ sanctuary: mass=50000 footprint=6 integrity=20000 material=stone portable=false 
 cure: mass=0.1 edible=true potency=9 restores=500 effect_status=poison,bleed,burn,sleep,confuse,sick,rage single_use=true res_disease+1 counters=plague,pox,epidemic,pandemic,fever,disease,blight,canker,pestilence
 
 # noun building
-shrine: mass=20000 footprint=3 integrity=3000 material=stone portable=false field_radius=40 field_targets=owned heals=3 produce_Q=0.1
 
 # noun structure
 haven: mass=20000 footprint=4 integrity=8000 material=stone,wood portable=false field_radius=40 field_targets=owned law=attack,theft regeneration+2
@@ -735,7 +714,6 @@ landslide: placement=target placement_range=200 event_radius=30 event_duration=1
 avalanche: placement=target placement_range=200 event_radius=40 event_duration=1 dmg_crush=1200 dmg_cold=200 inflict_freeze=5 friendly_fire=true tile_type=snow radius=10
 eruption: placement=target placement_range=300 event_radius=40 event_duration=3 dmg_fire=300 dmg_blast=500 attack_rate=0.3 inflict_burn=10 friendly_fire=true tile_type=lava radius=6 luminosity=10 produce_F*3 produce_G*2
 procession: placement=region event_radius=40 event_duration=3 law=attack morale+4 produce_J*2
-miracle: placement=region event_radius=100 event_duration=1 deposit_factor=5 lode=q,z lode_share=0.5 lode_stock=4 effect_status=poison,bleed,burn,fear regeneration+20 morale+5
 misfortune: placement=target placement_range=100 event_radius=20 event_duration=5 harvest_bonus*0.3 critical+-0.3 evasion+-0.2
 doomsday: placement=map event_duration=3 dmg_fire=10 attack_rate=0.2 friendly_fire=true sets_hostile=true produce_K*4 produce_D*2 morale+-3
 
@@ -761,12 +739,10 @@ mobilization: placement=region event_radius=50 event_duration=3 summons=soldier 
 conscription: placement=region event_radius=100 event_duration=3 summons=soldier summon_count=4 summon_owned=true produce_N*0.5
 crusade: placement=region event_radius=300 event_duration=10 sets_hostile=true dmg_holy+50 courage+4 produce_K*2 produce_Q*2 counters=heresy
 looting: placement=region event_radius=60 event_duration=3 produce_D*3 produce_X*2
-blessing: placement=region event_radius=60 event_duration=3 regeneration+5 morale+3 harvest_bonus*1.5 produce_Q*2 counters=jinx,misfortune,heresy
 riot: placement=region event_radius=80 event_duration=3 sets_hostile=true law=trade aggression+5 morale+-1 produce_D*3 counters=curfew,lockdown,crackdown,patrol
 rebellion: placement=region event_radius=200 event_duration=5 sets_hostile=true authority+-5 obedience+-5 produce_V*3 counters=tax,tithe,toll,tariff,levy,customs,duty,tribute,curfew,lockdown,crackdown,monopoly,embargo
 uprising: placement=region event_radius=150 event_duration=4 sets_hostile=true courage+4 produce_K*2 counters=siege,blockade,curfew,crackdown
 mutiny: placement=region event_radius=60 frees_target=true counters=levy,conscription,mobilization
-exorcism: placement=region event_radius=60 event_duration=2 dmg_holy=200 attack_rate=0.5 effect_status=fear,confuse,charm counters=nightmare
 
 # noun conflict
 blockade: placement=region event_radius=200 event_duration=6 field_targets=enemies law=trade produce_O*0 produce_T*0
@@ -788,8 +764,6 @@ apocalypse: placement=map event_duration=5 sets_hostile=true dmg_fire=5 attack_r
 austerity: placement=region field_radius=300 field_duration=8 trade_rate=1.5 produce_T*0.5 food_need*0.5 morale+-2 counters=festival,carnival,glut
 
 # noun possession
-extortion: placement=self field_radius=40 field_targets=enemies field_duration=4 tax_rate=0.6 morale+-2 counters=rebellion
-bribe: placement=target placement_range=30 field_radius=8 field_targets=enemies field_duration=3 law=attack charm+3
 amnesty: placement=region field_radius=200 field_duration=3 law=attack,theft morale+2 effect_status=root,stun,silence counters=purge,massacre,inquisition,curfew,lockdown,crackdown,penalty,sentence,arrest,ban
 
 # noun phenomenon
@@ -861,7 +835,6 @@ heist: placement=region event_radius=30 event_duration=2 produce_X*3 produce_T*2
 robbery: placement=region event_radius=30 event_duration=2 produce_V*2 produce_X*2 stealth+3
 burglary: placement=region event_radius=20 event_duration=2 produce_D*2 produce_X*2 stealth+5
 piracy: placement=region event_radius=200 event_duration=5 field_targets=enemies law=trade produce_O*0 produce_X*2
-smuggling: placement=region event_radius=10 event_duration=5 trade_rate=0.5 stealth+3 counters=customs,tariff,embargo,blockade
 
 # Producers: the words PLAN.md "Letter economy" names, and their kin. What each makes and needs
 # is in tools/producers.txt.
@@ -954,11 +927,9 @@ chain: mass=10 length=5 integrity=400 hardness=7 material=steel equip_slot=held 
 # noun artifact
 
 # noun material
-frost: mass=1 integrity=1 temperature=-20 dmg_cold=40 inflict_freeze=3 attack_area=4 single_use=true counters=phoenix,fire
 firebrand: mass=1 length=0.8 integrity=10 material=wood equip_slot=held hands_required=1 dmg_fire=25 dmg_blunt=8 attack_rate=1 attack_range=1.2 inflict_burn=3 luminosity=4 counters=hydra
 
 # noun act
-blasphemy: placement=region event_target=region event_radius=80 event_duration=1 morale+-3 counters=god,angel,archangel,shrine
 
 # noun structure
 watchtower: mass=60000 footprint=2 height=20 integrity=6000 material=wood,stone portable=false cover=0.5 claim_radius=4 luminosity=4 field_radius=60 field_targets=owned sight_range*1.6
@@ -1230,7 +1201,6 @@ messenger: mass=65 integrity=80 alive=true sentient=true intelligence=6 loyalty=
 nurse: mass=65 integrity=90 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=5 heals=5 res_disease=0.6 food_need=0.03 counters=plague,poison field_radius=8 field_targets=owned effect_status=sick,bleed
 surgeon: mass=70 integrity=90 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 heals=15 res_disease=0.8 dmg_slash=15 sharpness=9 food_need=0.03 severs=1 counters=mutant,chimera
 healer: mass=65 integrity=90 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=5 heals=8 field_radius=6 field_targets=owned regeneration+1 food_need=0.03
-priest: mass=70 integrity=100 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=4 recruit_rate=0.5 heals=3 dmg_holy=40 attack_rate=0.5 res_unholy=0.6 morale+2 counters=ghost,zombie,demon food_need=0.03
 preacher: mass=70 integrity=90 alive=true sentient=true intelligence=7 loyalty=7 hands=true speech=true speed_land=4 recruit_rate=1 loudness=6 charm=6 field_radius=10 field_targets=owned morale+2 food_need=0.03
 monk: mass=65 integrity=120 alive=true sentient=true intelligence=8 loyalty=9 hands=true speech=true speed_land=5 courage=8 immune_fear=true heals=2 dmg_blunt=30 attack_rate=1.5 training=6 food_need=0.02
 teacher: mass=70 integrity=90 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=4 field_radius=8 field_targets=owned training+2 intelligence+1 food_need=0.03
@@ -1467,7 +1437,6 @@ webcam: mass=0.2 integrity=5 material=plastic portable=false sight_range=120 map
 monitor: mass=5 integrity=20 brittleness=7 material=plastic,glass portable=false map_reveal=60 detect_life=240 read_properties=4 upkeep_power=0.3 color=black
 satellite: mass=2000 integrity=800 material=aluminum portable=false sight_range=100000 map_reveal=400 detect_life=1600 sees_through=fog,night upkeep_power=1 color=silver
 sensor: mass=0.5 integrity=10 material=plastic portable=false detect_life=300 detect_stealth=6 alarm=true upkeep_power=0.05 stealth=6 color=gray
-radio: mass=2 integrity=15 material=plastic,steel loudness=6 hearing_range+3000 alarm=true command_limit+10 upkeep_power=0.05 color=black
 telephone: mass=1 integrity=10 material=plastic speech=true command_limit+5 upkeep_power=0.01 color=black
 television: mass=15 integrity=20 brittleness=7 material=plastic,glass portable=false comfort=2 map_reveal=30 upkeep_power=0.3 color=black
 computer: mass=8 integrity=30 material=plastic,steel portable=false upkeep_power=0.5 intelligence+3 read_properties=6 detect_letters=800 storage_letters=500 conductivity=6 color=gray
@@ -1743,7 +1712,6 @@ hound: mass=30 length=1 integrity=80 alive=true sentient=true intelligence=5 loy
 unmask: duration=60 detect_stealth+10 read_properties+3 counters=disguise,costume,mask,masquerade
 
 # verb perceive
-expose: duration=30 detect_stealth+8 detect_life+200 counters=disguise,camouflage,stealth
 
 # noun attribute
 disguise: mass=1 integrity=10 equip_slot=body disguise=8 stealth=2 charm+1
@@ -1944,3 +1912,306 @@ deaf: hearing_range*0 immune_charm=true immune_sleep=true immune_deaf=true res_s
 deafening: loudness+8 dmg_sonic+25 inflict_deaf+5
 shrill: loudness+5 dmg_sonic+10 inflict_confuse+1
 melodic: loudness+2 charm+3 inflict_charm+2 morale+1
+
+# Theme 16, money and trade (shared money.ts, place.ts, status.ts). Money is letters: a GIFT, a
+# WAGE or a TIP hands its speller's commonest letters (pays) to whoever is clicked; a BRIBE buys a
+# creature, wild or someone's, when what it pays beats its loyalty. DEBT is a status: the debtor
+# pays whoever put it on them a letter every 10 s, and a debtor's things have no security against
+# their creditor (FORECLOSURE takes them). A LOAN hands letters over and puts a longer debt on the
+# borrower. A BANK earns its owner interest on the letters it keeps safe, as T. Markets: trade_rate
+# (letters asked for one), T earned. Counters: BANKRUPTCY ends debts, an AUDIT exposes and fines,
+# security (a GUARD, a VAULT) resists debts.
+
+# noun currency
+coin: plural_count=10 mass=0.008 integrity=50 material=gold equip_slot=held hands_required=0 value=10 trade_bonus=0.05 charm+1 loudness=1 color=gold
+money: mass=0.1 integrity=2 material=paper flammability=9 equip_slot=held hands_required=0 value=100 trade_bonus=0.1 charm+2 color=green
+cash: mass=0.1 integrity=2 material=paper flammability=9 equip_slot=held hands_required=0 value=100 trade_bonus=0.1 charm+2 stealth+-1 color=green
+dollar: plural_count=100 mass=0.001 integrity=1 material=paper flammability=9 equip_slot=held hands_required=0 value=1 trade_bonus=0.05 charm+1 color=green
+fortune: mass=50 integrity=100 material=gold equip_slot=held hands_required=1 value=100000 trade_bonus=0.4 charm+6 speed_land*0.8 security+-4 loudness=2 color=gold
+
+# noun possession
+gift: placement=target placement_range=30 event_target=character pays=5 inflict_charm=20 loyalty+2 event_duration=1
+wage: placement=target placement_range=30 event_target=character pays=4 inflict_charm=10 event_duration=1
+tip: placement=target placement_range=20 event_target=character pays=2 inflict_charm=8 event_duration=1
+donation: placement=target placement_range=50 event_target=character pays=8 morale+3 inflict_charm=15 reputation=2 event_duration=1
+bribe: placement=target placement_range=30 event_target=creature transfers_ownership=true pays=8 contest_with=pays contested_by=loyalty counters=audit
+payoff: placement=target placement_range=30 event_target=creature transfers_ownership=true pays=14 contest_with=pays contested_by=loyalty
+kickback: placement=target placement_range=20 event_target=creature transfers_ownership=true pays=4 contest_with=pays contested_by=loyalty
+debt: placement=target placement_range=60 event_target=character inflict_debt=120 contest_with=authority contested_by=security counters=bankruptcy
+loan: placement=target placement_range=30 event_target=character pays=10 inflict_debt=300 contest_with=authority contested_by=security
+mortgage: placement=target placement_range=60 event_target=character inflict_debt=400 contest_with=authority contested_by=security
+usury: placement=target placement_range=30 event_target=character pays=4 inflict_debt=360 morale+-2 contest_with=authority contested_by=security
+lien: placement=target placement_range=60 event_target=character inflict_debt=90 contest_with=authority contested_by=security
+dividend: placement=self field_radius=4 field_targets=self field_duration=3 produce_T*3 harvest_bonus*1.2
+
+# noun act
+bankruptcy: placement=self field_radius=4 field_targets=self field_duration=1 effect_status=debt morale+-3 reputation=-5 counters=debt,loan,mortgage,usury,lien
+foreclosure: placement=target placement_range=40 event_target=object transfers_ownership=true contest_with=authority contested_by=security
+
+# noun event
+audit: placement=target placement_range=100 event_target=character read_inventory=true inflict_expose=60 letter_steal=6 contest_with=authority contested_by=stealth event_duration=1 counters=bribe,fraud,embezzlement,smuggling,forgery
+
+# noun exchange
+auction: placement=self field_radius=40 field_targets=all field_duration=3 trade_rate=0.5 produce_T*3 loudness=6
+sale: placement=self field_radius=30 field_targets=all field_duration=5 trade_rate=0.7 produce_T*2
+investment: placement=self field_radius=4 field_targets=self field_duration=10 produce_T*2 harvest_bonus*1.1 counters=recession,crash
+
+# noun event
+boom: placement=map field_radius=ABS field_targets=all field_duration=6 trade_rate=0.8 produce_T*3 produce_N*1.5 morale+2 counters=recession,depression,crash
+crash: placement=map field_radius=ABS field_targets=all field_duration=4 trade_rate=2 produce_T*0 morale+-3 counters=boom,investment
+
+# noun building
+treasury: mass=3000000 footprint=10 height=12 integrity=60000 material=stone,steel portable=false enterable=true lockable=true security=9 storage_letters=8000 interest=0.03 authority+2 needs_foundation=true
+
+# noun container
+purse: mass=0.3 integrity=10 material=leather equip_slot=held hands_required=0 storage_letters=30 trade_bonus=0.05 color=brown
+wallet: mass=0.2 integrity=10 material=leather equip_slot=held hands_required=0 storage_letters=25 trade_bonus=0.05 color=brown
+
+# noun person
+creditor: mass=75 integrity=90 alive=true sentient=true intelligence=8 loyalty=4 hands=true speech=true speed_land=5 authority=3 inflict_debt=60 attack_rate=0.2 food_need=0.03
+auditor: mass=75 integrity=90 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=5 authority=4 detect_stealth=7 read_properties=6 food_need=0.03 counters=bribe,fraud,embezzlement,forgery
+
+# verb transfer
+pay: effect_target=touched pays=3 loyalty+1 duration=1
+lend: effect_target=touched pays=6 inflict_debt=200 duration=1
+
+# verb social
+foreclose: effect_target=touched transfers_ownership=true contest_with=authority contested_by=security duration=1
+haggle: duration=60 trade_bonus+0.3 charm+2
+invest: duration=120 harvest_bonus*1.2 produce_T*2
+
+# adjective quality
+wealthy: value*20 trade_bonus+0.3 charm+3 security+-3 speed_land*0.9
+broke: value*0.1 trade_bonus+-0.2 morale+-2 stealth+2
+bankrupt: value*0 trade_bonus+-0.5 morale+-3 reputation+-3
+indebted: inflict_debt+60 morale+-1
+lucrative: produce_T*2 value*3
+expensive: value*5 trade_rate*1.5 beauty+1
+cheap: value*0.2 trade_rate*0.5 integrity*0.7
+
+# Theme 17, crime and deception (shared crime.ts). Theft takes things, creatures and letters by
+# stealth against security; a trap (trigger_radius) left on the ground is hidden from enemies who
+# cannot see its stealth and springs on the first enemy body that comes close: its blow and
+# statuses land, then it is spent. Lies are false marks (decoys) on enemies' threat arrows and
+# minimaps; extortion and blackmail are debts. Counters: detect_stealth sees traps and lies (a
+# DETECTIVE, INVESTIGATE), DISARM breaks traps, security (a LOCK, a GUARD), an ALIBI ends arrests.
+
+# noun tool
+landmine: mass=4 integrity=40 material=steel portable=false stealth=8 trigger_radius=3 dmg_blast=400 dmg_pierce=150 attack_area=4 inflict_stun=3 single_use=true friendly_fire=true loudness=10 color=green
+tripwire: mass=0.2 integrity=5 material=steel portable=false stealth=9 trigger_radius=2 inflict_stun=4 inflict_root=6 alarm=true single_use=true color=gray
+pitfall: mass=0 integrity=100 portable=false stealth=7 trigger_radius=2 dmg_crush=80 dmg_pierce=60 inflict_root=20 inflict_bleed=5 single_use=true color=brown
+mousetrap: mass=0.1 integrity=10 material=wood,steel portable=false stealth=6 trigger_radius=1 dmg_crush=15 inflict_root=5 single_use=true harvest_bonus=1.5 harvest_sources=hunting color=brown
+decoy: mass=20 height=1.7 integrity=50 material=wood,cloth portable=false decoys=3 field_radius=120 field_targets=enemies stealth=0 color=brown
+
+# noun crime
+fraud: placement=target placement_range=60 event_target=character letter_steal=10 contest_with=intelligence contested_by=intelligence counters=audit
+blackmail: placement=target placement_range=60 event_target=character inflict_debt=240 read_inventory=true contest_with=stealth contested_by=detect_stealth counters=confession,truth
+extortion: placement=target placement_range=30 event_target=character inflict_debt=150 inflict_fear=20 morale+-2 contest_with=authority contested_by=security counters=rebellion,police
+embezzlement: placement=target placement_range=100 event_target=character letter_steal=8 contest_with=stealth contested_by=detect_stealth counters=audit
+kidnapping: placement=target placement_range=8 event_target=creature transfers_ownership=true contest_with=strength contested_by=strength inflict_fear=10
+smuggling: placement=region event_radius=10 event_duration=5 trade_rate=0.5 stealth+3 counters=customs,tariff,embargo,blockade,audit
+counterfeit: placement=self field_radius=30 field_targets=all field_duration=5 trade_rate=0.6 produce_T*2 counters=audit
+hoax: placement=map field_radius=ABS field_targets=enemies field_duration=3 decoys=4 counters=truth,investigation,detective
+lie: placement=target placement_range=200 field_radius=40 field_targets=enemies field_duration=3 decoys=2 inflict_confuse=5 counters=truth,confession
+
+# noun act
+ruse: placement=target placement_range=150 field_radius=30 field_targets=enemies field_duration=2 decoys=5 stealth+4 counters=truth,investigation
+alibi: placement=self field_radius=4 field_targets=self field_duration=1 effect_status=root,expose,debt immune_expose=true counters=arrest,verdict,sentence,accusation,warrant,audit,wanted
+
+# noun event
+investigation: placement=self field_radius=40 field_targets=owned field_duration=3 detect_stealth+10 read_properties+5 counters=hoax,lie,ruse,fraud,forgery,decoy,landmine,tripwire,pitfall,trap,snare
+
+# noun criminal
+burglar: mass=70 integrity=90 alive=true sentient=true intelligence=6 loyalty=2 hands=true speech=true speed_land=7 climb=8 stealth=8 letter_steal=8 security+-4 dmg_blunt=15 attack_rate=1 food_need=0.03 nocturnal=true
+pickpocket: mass=60 integrity=70 alive=true sentient=true intelligence=7 loyalty=2 hands=true speech=true speed_land=7 agility=9 stealth=9 letter_steal=4 attack_rate=2 food_need=0.03
+smuggler: mass=75 integrity=100 alive=true sentient=true intelligence=7 loyalty=3 hands=true speech=true speed_land=6 stealth=7 trade_bonus=0.4 produce_T=0.5 food_need=0.03 carry_capacity=60
+swindler: mass=70 integrity=80 alive=true sentient=true intelligence=8 loyalty=1 hands=true speech=true speed_land=5 charm=9 disguise=5 letter_steal=6 food_need=0.03
+
+# noun device
+lock: mass=0.5 integrity=200 hardness=8 material=steel portable=false locks=true security=6 lockable=true counters=thief,burglar,pickpocket,burglary,theft
+padlock: mass=0.3 integrity=150 hardness=8 material=steel portable=false locks=true security=5 lockable=true counters=thief,burglar,theft
+alarm: mass=1 integrity=20 material=plastic,metal portable=false alarm=true loudness=10 detect_stealth=5 sight_range=40 upkeep_power=0.01 counters=burglar,thief,burglary,heist
+
+# verb transfer
+shoplift: effect_target=touched letter_steal+4 stealth+4 duration=1
+steal: effect_target=touched transfers_ownership=true contest_with=stealth contested_by=security duration=1
+
+# verb perceive
+investigate: duration=120 detect_stealth+10 read_properties+6 tracking+5 sight_range*1.2 counters=hoax,lie,ruse,decoy
+disarm: placement=self field_radius=20 field_duration=1 effect_status=root counters=landmine,tripwire,pitfall,trap,snare,mousetrap,mine
+
+# verb contact
+frame: effect_target=touched inflict_expose=60 inflict_debt=60 duration=1
+kidnap: effect_target=touched transfers_ownership=true contest_with=strength contested_by=strength duration=1
+
+# adjective quality
+fake: value*0.05 integrity*0.4 decoys+2 charm+1
+stolen: value*0.5 stealth+2 reputation+-2
+hidden: stealth+8 untargetable=true alarm=false
+criminal: stealth+3 letter_steal+3 reputation+-3 loyalty+-2
+guilty: inflict_expose+30 morale+-2
+
+# Theme 18, communication and information (shared signal.ts). See and fake what others know.
+# EXPOSE is a status: the exposed show on every enemy's threat arrows wherever they are, with no
+# stealth or disguise (a FLARE, a WANTED poster, GOSSIP, a TRACKER). read_inventory passed on a
+# person tells you every letter and thing they hold (ESPIONAGE, SNOOP, AUDIT). decoys put made-up
+# people closing in on enemies' threat arrows and minimaps (PROPAGANDA, RUMOR). jams blacks out
+# the minimap and watching things of everyone its field reaches (a JAMMER, STATIC). Counters:
+# CIPHER and ENCRYPTION (immune_expose: not exposed, not read), TRUTH (sees through decoys, ends
+# lies), a JAMMER against MAP, RADAR and CAMERA.
+
+# noun act
+espionage: placement=target placement_range=200 event_target=character read_inventory=true inflict_expose=60 contest_with=stealth contested_by=detect_stealth event_duration=1
+snooping: placement=target placement_range=40 event_target=character read_inventory=true contest_with=stealth contested_by=detect_stealth event_duration=1
+gossip: placement=target placement_range=100 event_target=character inflict_expose=90 morale+-1 event_duration=1 counters=secret
+slander: placement=target placement_range=100 event_target=character inflict_expose=40 inflict_curse=30 reputation+-3 event_duration=1 counters=truth
+propaganda: placement=map field_radius=ABS field_targets=enemies field_duration=4 decoys=3 morale+-2 loyalty+-2 counters=truth,censorship
+rumor: placement=target placement_range=300 field_radius=60 field_targets=enemies field_duration=3 decoys=3 inflict_confuse=3 counters=truth
+misinformation: placement=map field_radius=ABS field_targets=enemies field_duration=3 decoys=6 counters=truth,investigation
+censorship: placement=self field_radius=150 field_targets=enemies field_duration=5 jams=true law=trade counters=propaganda,rumor,news
+broadcast: placement=map field_radius=ABS field_targets=owned field_duration=3 morale+3 courage+2 command_limit+5 loudness=6 counters=jammer,static
+
+# noun event
+flare: placement=target placement_range=200 event_target=tile event_radius=40 event_duration=1 inflict_expose=60 inflict_blind=3 luminosity=10 counters=fog,smoke
+static: placement=target placement_range=200 field_radius=80 field_targets=enemies field_duration=3 jams=true inflict_confuse=2 counters=broadcast,radio
+interference: placement=target placement_range=300 field_radius=120 field_targets=enemies field_duration=4 jams=true counters=broadcast,radio,satellite
+
+# noun knowledge
+truth: placement=self field_radius=60 field_targets=owned field_duration=5 detect_stealth+8 immune_confuse=true read_properties+5 counters=lie,hoax,ruse,rumor,propaganda,misinformation,fraud,decoy,slander
+cipher: placement=self field_radius=30 field_targets=owned field_duration=10 immune_expose=true stealth+2 counters=espionage,snooping,gossip,audit
+encryption: placement=self field_radius=60 field_targets=owned field_duration=15 immune_expose=true counters=espionage,snooping,interception
+news: placement=map field_radius=ABS field_targets=all field_duration=2 detect_life+500 morale+1 counters=censorship
+secret: stealth+6 immune_expose=true read_properties+-5 alarm=false
+
+# noun device
+jammer: mass=10 integrity=40 material=steel,plastic portable=false field_radius=200 field_targets=enemies jams=true upkeep_power=0.5 counters=radio,radar,satellite,broadcast,transmitter color=black
+tracker: mass=0.05 integrity=5 material=plastic placement=target placement_range=10 event_target=character inflict_expose=300 stealth=8 event_duration=1
+radio: mass=2 integrity=15 material=plastic,steel loudness=6 hearing_range+3000 alarm=true command_limit+10 detect_life=300 upkeep_power=0.05 color=black
+telegraph: mass=20 integrity=60 material=wood,copper portable=false command_limit+10 detect_life=200 map_reveal=60 upkeep_power=0.1 color=brown
+
+# noun document
+map: mass=0.1 integrity=3 flammability=9 material=paper map_reveal=200 detect_letters=500
+wanted: placement=target placement_range=300 event_target=character inflict_expose=200 reputation+-3 event_duration=1 counters=pardon,alibi
+newspaper: mass=0.3 integrity=1 material=paper flammability=9 placement=map field_radius=ABS field_targets=all field_duration=1 detect_life+300 morale+1
+
+# noun worker
+informant: mass=70 integrity=80 alive=true sentient=true intelligence=7 loyalty=3 hands=true speech=true speed_land=6 stealth=7 read_inventory=true detect_life=300 food_need=0.03
+spy: mass=70 integrity=90 alive=true sentient=true intelligence=8 loyalty=5 hands=true speech=true speed_land=6 stealth=9 read_properties=8 read_inventory=true detect_stealth=5 detect_life=400 sight_range=100
+
+# verb perceive
+eavesdrop: duration=60 hearing_range+500 detect_life+200 stealth+3
+snoop: effect_target=touched read_inventory=true duration=1
+expose: effect_target=touched inflict_expose=120 duration=1
+encrypt: duration=180 immune_expose=true stealth+2
+decode: duration=60 detect_stealth+8 read_properties+5
+
+# verb contact
+signal: duration=30 command_limit+10 obedience+3 loudness+4 luminosity+3
+
+# adjective quality
+classified: stealth+5 immune_expose=true value*3
+public: stealth*0 inflict_expose+30 reputation+2
+coded: immune_expose=true stealth+2
+false: decoys+3 value*0.1 integrity*0.5
+
+# Theme 19, religion and myth (shared faith.ts). Faith is a store like food: shrines, temples,
+# priests and prayer gather it (faith_output, a minute); holy things that need belief draw it
+# (upkeep_faith: an ANGEL leaves when it runs dry), and miracles spend it (faith_cost: none
+# without). Whatever dies or is destroyed by an ALTAR or a PYRE (sacrifice) pays its owner faith,
+# and burning there pays twice the F. Blessings and curses are statuses: the BLESSed earn half again
+# as many letters, the CURSEd half. Counters: HERESY drains enemies' faith, ATHEISM makes a side
+# immune to blessings and curses, EXORCISM and BLASPHEMY end blessings and curses.
+
+# noun structure
+altar: mass=5000 footprint=1 height=1.2 integrity=4000 material=stone portable=false sacrifice=2 faith_output=0.5 res_unholy=0.5 color=white
+pyre: mass=800 footprint=2 integrity=400 material=wood portable=false flammability=10 sacrifice=3 temperature=900 luminosity=6 dmg_fire=30 attack_area=2 faith_output=0.3
+
+# noun building
+shrine: mass=20000 footprint=3 integrity=3000 material=stone portable=false field_radius=40 field_targets=owned heals=3 faith_output=2 sacrifice=1 produce_Q=0.1
+temple: mass=5000000 footprint=30 height=20 integrity=60000 material=stone portable=false enterable=true occupants=200 recruit_rate=0.2 heals=2 res_unholy=1 needs_foundation=true comfort=2 faith_output=6 sacrifice=2
+church: mass=2000000 footprint=15 height=25 integrity=30000 material=stone portable=false enterable=true occupants=300 claim_radius=6 comfort=2 heals=2 faith_output=4 field_radius=40 field_targets=owned morale+2 res_unholy+0.5 needs_foundation=true
+
+# noun artifact
+idol: mass=30 integrity=200 material=gold portable=true value=3000 faith_output=1 sacrifice=1 field_radius=20 field_targets=owned morale+2 beauty=6 color=gold
+icon: mass=1 integrity=20 material=wood equip_slot=held hands_required=1 faith_output=0.5 res_unholy+0.3 courage+2 color=gold
+relic: mass=1 integrity=50 value=5000 luminosity=3 dmg_holy=20 faith_output=1 field_radius=10 field_targets=owned produce_Q*2
+totem: mass=200 height=4 integrity=400 material=wood portable=false faith_output=1 field_radius=30 field_targets=owned courage+3 res_unholy+0.3 color=brown
+
+# noun ceremony
+prayer: placement=self field_radius=20 field_targets=owned field_duration=2 faith_output+4 morale+2 regeneration+1 counters=curse,despair
+worship: placement=self field_radius=40 field_targets=owned field_duration=3 faith_output+6 morale+3 courage+2 loudness=4
+ritual: placement=self field_radius=10 field_targets=owned field_duration=2 faith_output+8 speed_land*0.5 counters=curse
+sacrifice: placement=target placement_range=4 event_target=creature destroys_target=true dmg_fire=100 contest_with=authority contested_by=courage
+
+# noun event
+miracle: placement=region event_radius=100 event_duration=1 faith_cost=40 deposit_factor=5 lode=q,z lode_share=0.5 lode_stock=4 effect_status=poison,bleed,burn,fear,sick,curse regeneration+20 morale+5
+resurrection: placement=self field_radius=10 field_targets=owned field_duration=1 faith_cost=60 restores=1000 regeneration+50 effect_status=poison,bleed,burn,sick,curse,stun,freeze prevents_death=1
+curse: placement=target placement_range=100 event_target=character inflict_curse=120 faith_cost=10 morale+-2 event_duration=1 counters=blessing,exorcism,prayer
+hex: placement=target placement_range=60 event_target=character inflict_curse=60 inflict_confuse=10 faith_cost=6 event_duration=1 counters=exorcism,blessing
+blessing: placement=region event_radius=60 event_duration=3 field_targets=owned inflict_bless=60 regeneration+5 morale+3 harvest_bonus*1.5 produce_Q*2 effect_status=curse counters=jinx,misfortune,heresy,curse,hex
+exorcism: placement=region event_radius=60 event_duration=2 dmg_holy=200 attack_rate=0.5 effect_status=fear,confuse,charm,curse counters=nightmare,curse,hex,demon,ghost
+blasphemy: placement=region event_target=region event_radius=80 event_duration=1 effect_status=bless morale+-3 upkeep_faith+10 counters=god,angel,archangel,shrine,blessing,prayer,worship
+heresy: placement=region field_radius=200 field_targets=enemies field_duration=6 upkeep_faith+6 produce_Q*0 regeneration*0 morale+-2 counters=pilgrimage,crusade,procession,blessing,prayer,worship
+atheism: placement=self field_radius=80 field_targets=owned field_duration=10 immune_curse=true immune_bless=true res_holy+0.5 res_unholy+0.5 counters=miracle,curse,hex,blessing,prayer,worship,heresy,blasphemy
+sacrilege: placement=target placement_range=60 event_target=object destroys_target=true dmg_unholy=500 inflict_curse=60 counters=shrine,altar,idol,relic,temple
+
+# noun supernatural
+angel: mass=70 integrity=5000 alive=true sentient=true intelligence=9 loyalty=10 speed_air=60 hover=true hands=true dmg_holy=400 attack_rate=1 heals=30 res_unholy=1 res_holy=1 luminosity=9 prevents_death=1 equip_slot=companion upkeep_faith=1 counters=ghost,zombie,demon
+deity: mass=0 integrity=200000 alive=true sentient=true intelligence=10 loyalty=0 placement=sky phase=true speed_air=200 dmg_holy=20000 attack_rate=0.1 attack_range=2000 attack_area=20 heals=40 faith_cost=50 upkeep_faith=4 authority=8 fear_aura=8 res_holy=1 res_unholy=1
+
+# noun worker
+priest: mass=70 integrity=100 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=4 recruit_rate=0.5 heals=3 dmg_holy=40 attack_rate=0.5 res_unholy=0.6 morale+2 faith_output=1 counters=ghost,zombie,demon food_need=0.03
+prophet: mass=70 integrity=90 alive=true sentient=true intelligence=8 loyalty=9 hands=true speech=true speed_land=4 recruit_rate=1 faith_output=2 authority=4 morale+3 courage+2 detect_life=500 food_need=0.03
+exorcist: mass=75 integrity=100 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=5 dmg_holy=120 attack_rate=0.7 res_unholy=0.8 faith_output=0.5 counters=demon,ghost,curse,hex,poltergeist,possession food_need=0.03
+
+# verb social
+pray: duration=60 faith_output+6 morale+2 regeneration+1 speed_land*0.3
+bless: effect_target=touched inflict_bless=90 faith_cost=8 effect_status=curse duration=1
+smite: effect_target=touched dmg_holy=600 dmg_electric=300 inflict_stun=4 faith_cost=15 duration=1
+
+# adjective quality
+holy: dmg_holy+80 res_unholy+0.8 heals+3 luminosity+3 faith_output+0.5 counters=ghost,zombie,demon
+cursed: inflict_curse+60 critical+-0.5 evasion+-0.3 loyalty+-5 regeneration*0
+blessed: regeneration+2 res_unholy+0.3 harvest_bonus*1.2
+sacred: faith_output+1 security+3 res_unholy+0.6 value*3
+pious: faith_output+1 morale+2 courage+1 loyalty+2
+
+# Theme 20, weather, climate and seasons (shared weather.ts, wear.ts, place.ts). Weather words
+# are map-wide: their produce_* operations move letter yields (RAIN O, a STORM W), growth and
+# temperature (the air's cold bites below a body's temp_min). A weather word with a tile_type lays
+# it in patches near people while it lasts: SNOW and BLIZZARD cover grass and freeze shallow water
+# (walkable ice), FLOODs spill water over low ground beside lakes and rivers, DROUGHT and a
+# HEATWAVE dry shallow water to sand, a THAW or SUMMER melts snow to meadow. Counters: each other,
+# SUN and CLEAR end rain and storms, an UMBRELLA or a SHELTER keeps it off, a FORECAST prepares.
+
+# noun weather
+snow: placement=region field_radius=2500 field_targets=all sets_weather=snow field_duration=20 temperature_delta=-20 visibility=0.6 movement_cost=2 growth=0.2 speed_land*0.6 tile_type=snow produce_O*0.5
+blizzard: placement=map field_radius=ABS field_targets=all sets_weather=snow field_duration=4 temperature_delta=-45 dmg_cold=5 attack_rate=0.1 friendly_fire=true inflict_slow=3 growth=0 speed_land*0.4 sight_range*0.3 produce_A*0 produce_P*0 tile_type=snow counters=fire,heat,summer,thaw,heatwave
+frost: placement=map field_radius=ABS field_targets=all sets_weather=snow field_duration=6 temperature_delta=-15 growth=0.3 produce_A*0.5 produce_P*0.5 tile_type=snow counters=thaw,sun,summer,phoenix,fire
+heatwave: placement=map field_radius=ABS field_targets=all sets_weather=clear field_duration=6 temperature_delta=25 growth=0.5 water_need*3 flammability+3 produce_O*0.3 produce_A*0.5 tile_type=sand clears_weather=snow,rain,fog counters=snow,frost,blizzard,winter,rain
+thaw: placement=map field_radius=ABS field_targets=all sets_weather=rain field_duration=5 temperature_delta=10 growth=1.5 produce_O*2 tile_type=meadow clears_weather=snow counters=snow,frost,blizzard,winter,ice
+monsoon: placement=map field_radius=ABS field_targets=all sets_weather=rain field_duration=6 growth=3 wetness+5 flammability+-5 sight_range*0.6 speed_land*0.8 produce_O*3 produce_A*2 produce_P*2 produce_W*2 tile_type=water counters=fire,drought,heat,wildfire,thirst,dearth,heatwave
+deluge: placement=map field_radius=ABS field_targets=all sets_weather=storm field_duration=4 dmg_water=10 attack_rate=0.1 friendly_fire=true growth=2 produce_O*4 speed_land*0.6 tile_type=water counters=fire,drought,wildfire,heatwave
+drought: placement=region field_radius=800 field_duration=10 moisture=-10 growth=0.1 water_need*3 flammability+3 clears_weather=rain,snow,fog,storm produce_O*0 produce_A*0 produce_P*0 produce_E*0.5 tile_type=sand counters=flood,swamp,monsoon,deluge,plenty
+rainbow: placement=sky field_radius=ABS field_targets=all field_duration=3 clears_weather=rain,storm morale+3 luminosity+2 harvest_bonus*1.3 produce_O*1.5 counters=storm,gloom
+forecast: placement=self field_radius=60 field_targets=owned field_duration=10 res_cold+0.4 res_electric+0.5 res_wind+0.4 res_water+0.4 temp_min+-10 temp_max+10 speed_land*1.1
+
+# noun season
+winter: placement=map field_radius=ABS field_targets=all field_duration=20 temperature_delta=-25 growth=0.1 sets_weather=snow food_need*1.5 produce_A*0.2 produce_P*0.2 speed_land*0.8 tile_type=snow counters=summer,migration,herd,flock,stampede,swarm,thaw
+summer: placement=map field_radius=ABS field_targets=all field_duration=20 temperature_delta=12 growth=2 produce_A*2 produce_P*2 water_need*1.5 clears_weather=snow tile_type=meadow counters=winter,frost,blizzard
+
+# noun clothing
+umbrella: mass=0.5 integrity=12 material=nylon,steel equip_slot=held hands_required=1 res_water=0.8 res_cold=0.2 res_electric=-0.3 immune_slow=true temp_max+8 color=black
+
+# noun structure
+shelter: mass=20000 footprint=3 height=3 integrity=8000 material=wood,concrete portable=false enterable=true claim_radius=3 cover=0.6 comfort=1 res_cold+0.5 res_wind+0.6 res_water+0.6 res_electric+0.5 field_radius=8 field_targets=owned temp_min+-20
+
+# verb weather
+freeze: duration=20 temperature+-80 dmg_cold+40 inflict_freeze+3 speed_land*0.5 armor+20
+
+# adjective quality
+stormy: dmg_electric+30 dmg_wind+10 loudness+4 accuracy+-0.1
+frozen: temperature+-80 dmg_cold+50 inflict_freeze+3 speed_land*0.3 brittleness+5 decay_rate*0
+sunny: luminosity+3 morale+2 temperature+5 temp_max+5
+windy: dmg_wind+5 speed_air*1.2 accuracy+-0.1
+waterproof: res_water=ABS wetness=0 is_absolute=true absolute_side=defence specificity=2

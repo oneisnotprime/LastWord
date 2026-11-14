@@ -1,18 +1,18 @@
 {
- "count": 374,
+ "count": 391,
  "groups": {
   "physical": 45,
   "mobility": 25,
-  "offence": 60,
-  "defence": 55,
+  "offence": 64,
+  "defence": 60,
   "perception": 14,
   "life": 29,
-  "economy": 52,
+  "economy": 58,
   "spatial": 19,
   "social": 13,
   "slots": 9,
   "meta": 17,
-  "field": 14,
+  "field": 16,
   "event": 14,
   "effect": 8
  },
@@ -66,7 +66,11 @@
   "shrink",
   "sick",
   "rage",
-  "deaf"
+  "deaf",
+  "debt",
+  "curse",
+  "bless",
+  "expose"
  ],
  "properties": [
   {
@@ -934,6 +938,38 @@
    "default": 0
   },
   {
+   "id": "inflict_debt",
+   "group": "offence",
+   "type": "num",
+   "desc": "seconds of debt applied on hit (debt: pays whoever put it on them a letter every 10 s, commonest first; BANKRUPTCY ends it; a thing of a debtor's has no security against their creditor: shared money.ts)",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "inflict_curse",
+   "group": "offence",
+   "type": "num",
+   "desc": "seconds of curse applied on hit (curse: earns half the letters, aims worse, glum; EXORCISM, BLESSING end it: shared faith.ts)",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "inflict_bless",
+   "group": "offence",
+   "type": "num",
+   "desc": "seconds of bless applied on hit (bless: earns half again as many letters, heals a little, cheered: shared faith.ts)",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "inflict_expose",
+   "group": "offence",
+   "type": "num",
+   "desc": "seconds of expose applied on hit (expose: shown on every enemy's threat arrows wherever they are, no stealth or disguise; immune_expose also keeps letters from being read: shared signal.ts)",
+   "unit": "s",
+   "default": 0
+  },
+  {
    "id": "attack_rate",
    "group": "offence",
    "type": "num",
@@ -1363,6 +1399,34 @@
    "default": false
   },
   {
+   "id": "immune_debt",
+   "group": "defence",
+   "type": "bool",
+   "desc": "cannot be affected by debt",
+   "default": false
+  },
+  {
+   "id": "immune_curse",
+   "group": "defence",
+   "type": "bool",
+   "desc": "cannot be affected by curse",
+   "default": false
+  },
+  {
+   "id": "immune_bless",
+   "group": "defence",
+   "type": "bool",
+   "desc": "cannot be affected by bless",
+   "default": false
+  },
+  {
+   "id": "immune_expose",
+   "group": "defence",
+   "type": "bool",
+   "desc": "cannot be affected by expose",
+   "default": false
+  },
+  {
    "id": "armor",
    "group": "defence",
    "type": "num",
@@ -1428,6 +1492,14 @@
    "group": "defence",
    "type": "scale",
    "desc": "how hard it is to see",
+   "default": 0
+  },
+  {
+   "id": "trigger_radius",
+   "group": "defence",
+   "type": "num",
+   "desc": "a trap: lying on the ground it is hidden from enemies whose detect_stealth is below its stealth, and springs on the first enemy body that comes this close: its blow and statuses land, then it is spent (shared crime.ts)",
+   "unit": "m",
    "default": 0
   },
   {
@@ -1544,7 +1616,7 @@
    "id": "read_inventory",
    "group": "perception",
    "type": "bool",
-   "desc": "shows letters another player holds",
+   "desc": "an event passed on a person (SPY, AUDIT, ESPIONAGE): tells its speller every letter and thing they hold, unless immune_expose (shared signal.ts)",
    "default": false
   },
   {
@@ -2109,6 +2181,53 @@
    "type": "num",
    "desc": "power it supplies",
    "unit": "kW",
+   "default": 0
+  },
+  {
+   "id": "faith_output",
+   "group": "economy",
+   "type": "num",
+   "desc": "faith it gathers into its owner's faith store: shrines, temples, priests, prayer (shared faith.ts)",
+   "unit": "faith/min",
+   "default": 0
+  },
+  {
+   "id": "upkeep_faith",
+   "group": "economy",
+   "type": "num",
+   "desc": "faith it takes from its owner's faith store a minute (holy things that leave without belief; HERESY on enemies drains theirs)",
+   "unit": "faith/min",
+   "default": 0
+  },
+  {
+   "id": "faith_cost",
+   "group": "economy",
+   "type": "num",
+   "desc": "a miracle: spelling it spends this much of its speller's faith, and it cannot be spelled without (shared faith.ts)",
+   "unit": "faith",
+   "default": 0
+  },
+  {
+   "id": "sacrifice",
+   "group": "economy",
+   "type": "scale",
+   "desc": "an altar: whatever dies or is destroyed within 4 tiles of it pays its owner this many times the offering in faith, and burning there pays its burner twice the F (shared faith.ts)",
+   "default": 0
+  },
+  {
+   "id": "interest",
+   "group": "economy",
+   "type": "frac",
+   "desc": "a bank: share of the letters it keeps safe that its owner earns a minute, as T (shared money.ts)",
+   "unit": "/min",
+   "default": 0
+  },
+  {
+   "id": "pays",
+   "group": "economy",
+   "type": "num",
+   "desc": "letters handed over from its speller's commonest to whoever it lands on (a GIFT, a WAGE); a creature bought with it (a BRIBE: transfers_ownership, contest_with=pays) costs it against its loyalty (shared money.ts)",
+   "unit": "letters",
    "default": 0
   },
   {
@@ -2796,8 +2915,22 @@
    "id": "clears_weather",
    "group": "field",
    "type": "tags",
-   "desc": "weather it ends in its field",
+   "desc": "weather it ends in its field; a weather word with a tile_type lays it in patches over the land while it lasts (snow over grass and shallow water, floods beside water, drought dries shallow water to sand: shared weather.ts)",
    "default": []
+  },
+  {
+   "id": "decoys",
+   "group": "field",
+   "type": "num",
+   "desc": "false marks it puts on the threat arrows and minimaps of everyone its field reaches: that many made-up people closing in; seen through with detect_stealth 5 or more (shared signal.ts)",
+   "default": 0
+  },
+  {
+   "id": "jams",
+   "group": "field",
+   "type": "bool",
+   "desc": "its field blacks out the minimap and watching things (MAP, RADAR, CAMERA) of everyone it reaches (shared signal.ts)",
+   "default": false
   },
   {
    "id": "takes_city",

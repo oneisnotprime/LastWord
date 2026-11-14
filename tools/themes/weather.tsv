@@ -1,0 +1,136 @@
+high	5.75	adjective	quality	new	an air mass of higher than normal pressure
+season	5.48	noun	season	REGENERATE	a period of the year marked by special events or activities in some field
+low	5.33	adjective	quality	new	an air mass of lower pressure
+front	5.28	noun	weather	REGENERATE	the side that is forward or prominent
+cool	5.15	adjective	quality	REGENERATE	the quality of being at a refreshingly low temperature
+conditions	4.98	noun	weather	REGENERATE	the prevailing context that influences the performance or the outcome of a process
+weather	4.87	noun	weather	REGENERATE	the atmospheric conditions that comprise the state of the atmosphere in terms of temperatu
+heat	4.86	noun	phenomenon	REGENERATE	the presence of heat
+elements	4.7	noun	weather	REGENERATE	violent or severe weather (viewed as caused by the action of the four elements)
+smoke	4.67	noun	phenomenon	REGENERATE	a cloud of fine particles suspended in a gas
+temperature	4.64	noun	attribute	REGENERATE	the degree of hotness or coldness of a body or environment (corresponding to its molecular
+draft	4.61	noun	act	REGENERATE	a current of air (usually coming into a chimney or room or vehicle)
+shower	4.5	noun	weather	REGENERATE	a plumbing fixture that sprays water over you
+cloud	4.46	noun	weather	REGENERATE	any collection of particles (e.g., smoke or dust) or gases that is visible
+mood	4.44	noun	feeling	REGENERATE	the prevailing psychological state
+thread	4.44	noun	tool	REGENERATE	to move or cause to move in a sinuous, spiral, or circular course
+jazz	4.31	noun	knowledge	REGENERATE	empty rhetoric or insincere or exaggerated talk
+wrap	4.2	noun	clothing	REGENERATE	arrange or or coil around
+chill	4.18	noun	attribute	new	coldness due to a cold environment
+shine	4.17	verb	weather	new	the quality of being bright and sending out rays of light
+sunshine	4.16	noun	phenomenon	new	moderate weather
+curve	4.14	noun	act	new	extend in curves and turns
+hurry	4.14	verb	movement	new	overly eager speed (and possible carelessness)
+easter	4.12	noun	weather	new	a wind from the east
+flame	4.07	verb	weather	new	the process of combustion of inflammable materials producing heat and light and (often) sm
+warming	4.05	adjective	quality	new	warm weather following a freeze
+bolt	4.04	noun	weapon	REGENERATE	a discharge of lightning accompanied by thunder
+flavor	4.04	noun	knowledge	new	lend flavor to
+thermal	4.04	adjective	pertaining	new	rising current of warm air
+breeze	3.86	noun	weather	new	a slight wind (usually refreshing)
+obscure	3.85	adjective	quality	new	make less visible or unclear
+ramp	3.83	noun	device	REGENERATE	behave violently, as if in state of a great anger
+rainfall	3.82	noun	weather	new	water falling in drops from vapor condensed in the atmosphere
+scent	3.82	noun	knowledge	new	catch the scent of
+kindle	3.81	verb	weather	new	
+warmth	3.8	noun	feeling	REGENERATE	the sensation caused by heat energy
+aurora	3.73	noun	weather	new	an atmospheric phenomenon consisting of bands of light caused by charged solar particles f
+flavour	3.73	noun	knowledge	new	lend flavor to
+steer	3.72	verb	movement	new	an indication of potential opportunity
+winding	3.71	adjective	quality	new	the act of winding or twisting
+advent	3.67	noun	act	new	the season including the four Sundays preceding Christmas
+mist	3.67	noun	phenomenon	new	a thin fog with condensation near the ground
+precipitation	3.64	noun	quantity	new	the quantity of water falling to earth at a specific place within a specified period of ti
+fart	3.59	noun	act	new	a reflex that expels intestinal gas through the anus
+puff	3.55	verb	consume	REGENERATE	a short light gust of air
+turbulence	3.55	noun	phenomenon	new	instability in the atmosphere
+downfall	3.54	noun	event	new	the falling to earth of any form of water (rain or snow or hail or sleet or mist)
+dew	3.52	noun	weather	new	water that has condensed on a cool surface overnight from water vapor in the air
+haze	3.42	noun	phenomenon	new	atmospheric moisture or dust or smoke that causes reduced visibility
+elves	3.4	noun	weather	new	an acronym for emissions of light and very low frequency perturbations due to electromagne
+sprinkle	3.39	verb	contact	new	a light shower that falls in some locations and not others nearby
+fife	3.38	noun	instrument	REGENERATE	a small high-pitched flute similar to a piccolo
+haste	3.37	noun	attribute	new	overly eager speed (and possible carelessness)
+ignite	3.35	verb	weather	new	
+tempest	3.29	noun	weather	new	a violent commotion or disturbance
+simmer	3.27	verb	create	REGENERATE	temperature just below the boiling point
+inversion	3.26	noun	weather	new	the layer of air near the earth is cooler than an overlying layer
+summertime	3.25	noun	season	new	the warmest season of the year
+snowfall	3.22	noun	weather	new	precipitation falling from clouds in the form of ice crystals
+whiff	3.22	noun	weather	new	a short light gust of air
+sax	3.15	noun	instrument	REGENERATE	a single-reed woodwind with a conical bore
+saxophone	3.15	noun	instrument	REGENERATE	a single-reed woodwind with a conical bore
+clarinet	3.12	noun	instrument	REGENERATE	a single-reed instrument with a straight tube
+hoist	3.12	noun	machine	REGENERATE	raise or haul up with or as if with mechanical help
+flurry	3.11	noun	weather	new	a light brief snowfall and gust of wind (or something resembling that)
+sully	3.11	verb	contact	new	place under suspicion or cast doubt upon
+thunderbolt	3.09	noun	weather	new	a discharge of lightning accompanied by thunder
+lull	3.08	noun	weather	new	a period of calm weather
+overcast	3.05	noun	weather	new	the state of the sky when it is covered by clouds
+springtime	3.05	noun	season	new	the season of growth
+twister	3.05	noun	weather	new	a localized and violently destructive windstorm occurring over land characterized by a fun
+westerly	3.04	noun	weather	new	the winds from the west that occur in the temperate zones of the Earth
+aerosol	3.03	noun	phenomenon	new	a cloud of solid or liquid particles in a gas
+piccolo	3.03	noun	instrument	REGENERATE	a small flute
+stillness	2.98	noun	attribute	new	calmness without winds
+taint	2.98	verb	contact	new	place under suspicion or cast doubt upon
+clemency	2.97	noun	event	REGENERATE	good weather with comfortable temperatures
+farting	2.97	noun	act	new	a reflex that expels intestinal gas through the anus
+sprinkling	2.97	noun	quantity	new	a light shower that falls in some locations and not others nearby
+trombone	2.97	noun	instrument	REGENERATE	a brass instrument consisting of a long tube whose length can be varied by a U-shaped slid
+radiate	2.96	verb	weather	new	
+easterly	2.95	noun	weather	new	a wind from the east
+northerly	2.95	adjective	quality	new	a wind that blows from the north
+twine	2.93	noun	weapon	REGENERATE	arrange or or coil around
+clarion	2.92	noun	instrument	REGENERATE	a medieval brass instrument with a clear shrill tone
+firestorm	2.92	noun	weather	new	a storm in which violent winds are drawn into the column of hot air rising over a severely
+chinook	2.9	noun	weather	new	a warm dry wind blowing down the eastern slopes of the Rockies
+calmness	2.89	noun	feeling	REGENERATE	an absence of strong winds or rain
+snowstorm	2.89	noun	weather	new	a storm with widespread snowfall accompanied by strong winds
+southerly	2.89	noun	weather	new	a wind from the south
+smother	2.85	verb	contact	new	a stifling cloud of smoke
+zephyr	2.85	noun	weather	new	a slight wind (usually refreshing)
+tuba	2.84	noun	instrument	REGENERATE	the lowest brass wind instrument
+sleet	2.83	noun	weather	new	partially melted snow (or a mixture of rain and snow)
+sprites	2.83	noun	weather	new	atmospheric electricity (lasting 10 msec) appearing as globular flashes of red (pink to bl
+coolness	2.82	noun	feeling	REGENERATE	the property of being moderately cold
+cornet	2.81	noun	instrument	REGENERATE	a brass musical instrument with a brilliant tone
+duster	2.78	noun	tool	REGENERATE	a windstorm that lifts up clouds of dust or sand
+flue	2.77	noun	structure	REGENERATE	organ pipe whose tone is produced by air passing across the sharp edge of a fissure or lip
+condensate	2.76	noun	liquid	new	atmospheric moisture that has condensed because of cold
+occlusion	2.75	noun	weather	new	(meteorology) a composite front when colder air surrounds a mass of warm air and forces it
+bombard	2.74	noun	instrument	REGENERATE	a large shawm
+rekindle	2.71	verb	weather	new	
+meander	2.69	noun	natural_object	new	to move or cause to move in a sinuous, spiral, or circular course
+oboe	2.69	noun	instrument	REGENERATE	a slender double-reed instrument
+thawing	2.67	noun	weather	new	warm weather following a freeze
+cirrus	2.65	noun	plant	new	a wispy white cloud (usually of fine ice crystals) at a high altitude (4 to 8 miles)
+defile	2.65	noun	natural_object	new	place under suspicion or cast doubt upon
+hotness	2.65	noun	attribute	new	the presence of heat
+afterglow	2.64	noun	weather	new	a glow sometimes seen in the sky after sunset
+coldness	2.64	noun	knowledge	new	the sensation produced by low temperatures
+fume	2.63	noun	phenomenon	new	a cloud of fine particles suspended in a gas
+nimbus	2.62	noun	weather	new	a dark grey cloud bearing rain
+douse	2.59	verb	weather	new	
+bluster	2.58	noun	weather	new	noisy confusion and turbulence
+mistral	2.58	noun	weather	new	a strong north wind that blows in France during the winter
+cumulus	2.57	noun	weather	new	a globular cloud
+bassoon	2.53	noun	instrument	REGENERATE	a double-reed instrument
+wintertime	2.52	noun	season	new	the coldest season of the year
+outshine	2.51	verb	weather	new	
+woodwind	2.46	noun	instrument	REGENERATE	any wind instrument other than the brass instruments
+ocarina	2.45	noun	instrument	REGENERATE	egg-shaped terra cotta wind instrument with a mouthpiece and finger holes
+wester	2.45	noun	weather	new	wind that blows from west to east
+combust	2.44	verb	weather	new	
+doldrums	2.43	noun	weather	new	a belt of calms and light winds between the northern and southern trade winds of the Atlan
+stratus	2.41	noun	weather	new	a large dark low cloud
+reignite	2.4	verb	weather	new	
+airstream	2.39	noun	weather	new	a relatively well-defined prevailing wind
+drench	2.37	verb	weather	new	
+kazoo	2.35	noun	instrument	REGENERATE	a toy wind instrument that has a membrane that makes a sound when you hum into the mouthpi
+scorcher	2.34	noun	weather	new	an extremely hot day
+whiteout	2.32	noun	weather	new	an arctic atmospheric condition with clouds over snow produce a uniform whiteness and obje
+hailstorm	2.31	noun	weather	new	a storm during which hail falls
+tailwind	2.31	noun	weather	new	wind blowing in the same direction as the path of a ship or aircraft
+windstorm	2.31	noun	weather	new	a storm consisting of violent winds
+headwind	2.3	noun	weather	new	wind blowing opposite to the path of a ship or aircraft

@@ -398,7 +398,6 @@ shop	noun	artifact	building	4.88	core	n04209460	verb:transfer
 short	adjective	modifier	quality	5.33	core	a01445077	noun:artifact,verb:social,adverb:manner
 shot	noun	artifact	weapon	5.22	core	n04212826	adjective:quality
 show	verb	spell	perceive	5.68	core	v02153218	noun:act
-signal	noun	artifact	device	4.62	core	n06804229	adjective:quality,verb:communication
 silver	noun	material	metal	4.81	core	n14679133	adjective:quality,verb:contact
 similar	adjective	modifier	quality	5.21	core	a02078824	-
 single	adjective	modifier	quality	5.41	core	a00495505	noun:quantity,verb:contact
@@ -480,7 +479,7 @@ video	noun	artifact	device	5.43	core	n04541422	-
 vote	verb	spell	social	5.11	core	v02466737	noun:attribute
 wall	noun	artifact	structure	5.04	core	n04554141	verb:combat
 want	verb	spell	consume	6.04	core	v01191258	noun:natural_object
-wanted	adjective	modifier	quality	5.36	core	a02537084	-
+wanted	noun	artifact	document	5.36	core	-	adjective:quality
 watch	noun	artifact	device	5.34	core	n04563183	verb:perceive
 water	noun	material	liquid	5.52	core	n14869913	verb:transform
 ways	noun	artifact	structure	5.06	core	n04572325	-
