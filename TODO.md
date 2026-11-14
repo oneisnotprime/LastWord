@@ -100,13 +100,19 @@ by how many words set them (minds and upkeep took `sentient`, `intelligence`, `f
       the core of each hand-written in demo_words.txt, the rest generated from it
       (`tools/themes/check.py` checks a generated theme file). Still to do for batch 1: worker art beyond the
       commonest, plants spreading on their own (`spread_rate`), cover from trees.
+      Batch 2 is done (3, 4, 5, 6, 7): about 1,900 words through shared `home.ts` (comfort,
+      storage and hoards, lockups), `craft.ts` (stations craft HANDMADE things out of carried
+      materials), `tech.ts` (watching things on the minimap, automation) and `herd.ts`
+      (breeding). Still to do for batch 2: food stored cold (a FRIDGE or CELLAR slowing rot), a
+      power grid with reach (wires, pylons) instead of one pooled store, weather shelter indoors,
+      per-word art for the generated buildings and animals.
       1. [x] Professions: hired NPC workers producing N; farm, guard, build, scout
       2. [x] Plants and botany: crops, trees, herbs, fungi; P and A; medicine and poison
-      3. Buildings and rooms: claims, shelter, storage, production
-      4. Furniture and household: B, comfort, base morale
-      5. Tools and crafting: crafting stations for C; turn materials into objects
-      6. Machines and technology: power, M, map reveal, automation
-      7. Animals by family: livestock, pets, predators, birds, fish; hunting, I, mounts, food
+      3. [x] Buildings and rooms: claims, shelter, storage, production
+      4. [x] Furniture and household: B, comfort, base morale
+      5. [x] Tools and crafting: crafting stations for C; turn materials into objects
+      6. [x] Machines and technology: power, M, map reveal, automation
+      7. [x] Animals by family: livestock, pets, predators, birds, fish; hunting, I, mounts, food
       8. [x] Food and cooking: food store, temporary boosts, cures, poisons
       9. Body parts: graft wings, claws, eyes, horns onto yourself or creatures
       10. Clothing: warmth, disguise, stealth, faction look
@@ -162,7 +168,8 @@ lexicon so every related word is captured.
 - [ ] FAR moves something far away; abilities to place objects further than normal; teleporting
 - [ ] Water, air and land vehicles
 - [ ] THIRSTY and HUNGRY raise food needs, and fuel needs for vehicles
-- [ ] Technology has a purpose: COMPUTER, MONITOR, CAMERA and the like
+- [x] Technology has a purpose: COMPUTER, MONITOR, CAMERA and the like (themes batch 2: things that
+      watch show their ground on your minimap; machines with labour work your producers)
 - [ ] Ways to see more of the map: wider sight, or a zoomed-out view of the map
 - [ ] Scales such as good and evil, smart and dumb, that words move players and things along
 - [ ] Name ideas (both potential titles): a new word for war; "them's fighting words"
