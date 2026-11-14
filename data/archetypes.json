@@ -11,7 +11,7 @@
  {
   "class": "artifact",
   "archetype": "artifact",
-  "words": 1590,
+  "words": 1588,
   "groups": [
    "physical",
    "mobility",
@@ -26,7 +26,7 @@
  {
   "class": "artifact",
   "archetype": "device",
-  "words": 948,
+  "words": 951,
   "groups": [
    "physical",
    "mobility",
@@ -41,7 +41,7 @@
  {
   "class": "artifact",
   "archetype": "structure",
-  "words": 632,
+  "words": 633,
   "groups": [
    "physical",
    "mobility",
@@ -116,7 +116,7 @@
  {
   "class": "artifact",
   "archetype": "building",
-  "words": 246,
+  "words": 245,
   "groups": [
    "physical",
    "mobility",
@@ -131,7 +131,7 @@
  {
   "class": "artifact",
   "archetype": "document",
-  "words": 214,
+  "words": 204,
   "groups": [
    "physical",
    "mobility",
@@ -341,7 +341,7 @@
  {
   "class": "artifact",
   "archetype": "adornment",
-  "words": 25,
+  "words": 23,
   "groups": [
    "physical",
    "mobility",
@@ -371,7 +371,7 @@
  {
   "class": "aura",
   "archetype": "attribute",
-  "words": 3136,
+  "words": 3133,
   "groups": [
    "field"
   ]
@@ -387,7 +387,7 @@
  {
   "class": "bodypart",
   "archetype": "bodypart",
-  "words": 1238,
+  "words": 1237,
   "groups": [
    "physical",
    "slots",
@@ -400,7 +400,7 @@
  {
   "class": "consumable",
   "archetype": "food",
-  "words": 867,
+  "words": 869,
   "groups": [
    "physical",
    "effect"
@@ -409,7 +409,7 @@
  {
   "class": "consumable",
   "archetype": "drink",
-  "words": 150,
+  "words": 151,
   "groups": [
    "physical",
    "effect"
@@ -562,7 +562,7 @@
  {
   "class": "event",
   "archetype": "act",
-  "words": 3279,
+  "words": 3283,
   "groups": [
    "event",
    "offence",
@@ -572,7 +572,7 @@
  {
   "class": "event",
   "archetype": "event",
-  "words": 722,
+  "words": 727,
   "groups": [
    "event",
    "offence",
@@ -712,7 +712,7 @@
  {
   "class": "flora",
   "archetype": "plant",
-  "words": 846,
+  "words": 833,
   "groups": [
    "physical",
    "life",
@@ -723,7 +723,7 @@
  {
   "class": "flora",
   "archetype": "herb",
-  "words": 483,
+  "words": 487,
   "groups": [
    "physical",
    "life",
@@ -734,7 +734,7 @@
  {
   "class": "flora",
   "archetype": "tree",
-  "words": 369,
+  "words": 372,
   "groups": [
    "physical",
    "life",
@@ -756,7 +756,7 @@
  {
   "class": "flora",
   "archetype": "produce",
-  "words": 173,
+  "words": 175,
   "groups": [
    "physical",
    "life",
@@ -767,7 +767,7 @@
  {
   "class": "flora",
   "archetype": "flower",
-  "words": 157,
+  "words": 160,
   "groups": [
    "physical",
    "life",
@@ -789,7 +789,7 @@
  {
   "class": "institution",
   "archetype": "group",
-  "words": 763,
+  "words": 759,
   "groups": [
    "social",
    "economy",
@@ -799,7 +799,7 @@
  {
   "class": "institution",
   "archetype": "possession",
-  "words": 355,
+  "words": 359,
   "groups": [
    "social",
    "economy",
@@ -809,7 +809,7 @@
  {
   "class": "knowledge",
   "archetype": "knowledge",
-  "words": 1919,
+  "words": 1924,
   "groups": [
    "economy",
    "meta"
@@ -818,7 +818,7 @@
  {
   "class": "material",
   "archetype": "material",
-  "words": 1573,
+  "words": 1571,
   "groups": [
    "physical",
    "economy"
@@ -872,7 +872,7 @@
  {
   "class": "material",
   "archetype": "poison",
-  "words": 28,
+  "words": 27,
   "groups": [
    "physical",
    "economy"
@@ -881,7 +881,7 @@
  {
   "class": "material",
   "archetype": "gem",
-  "words": 15,
+  "words": 17,
   "groups": [
    "physical",
    "economy"
@@ -890,7 +890,7 @@
  {
   "class": "measure",
   "archetype": "quantity",
-  "words": 849,
+  "words": 848,
   "groups": [
    "meta"
   ]
@@ -906,7 +906,7 @@
  {
   "class": "modifier",
   "archetype": "quality",
-  "words": 12326,
+  "words": 12315,
   "groups": [
    "meta"
   ]
@@ -922,7 +922,7 @@
  {
   "class": "modifier",
   "archetype": "participle",
-  "words": 179,
+  "words": 191,
   "groups": [
    "meta"
   ]
@@ -938,7 +938,7 @@
  {
   "class": "person",
   "archetype": "person",
-  "words": 4400,
+  "words": 4381,
   "groups": [
    "physical",
    "life",
@@ -954,7 +954,7 @@
  {
   "class": "person",
   "archetype": "worker",
-  "words": 906,
+  "words": 925,
   "groups": [
    "physical",
    "life",
@@ -970,7 +970,7 @@
  {
   "class": "person",
   "archetype": "leader",
-  "words": 298,
+  "words": 295,
   "groups": [
    "physical",
    "life",
@@ -1018,7 +1018,7 @@
  {
   "class": "spell",
   "archetype": "transform",
-  "words": 1096,
+  "words": 1094,
   "groups": [
    "effect"
   ]
@@ -1050,7 +1050,7 @@
  {
   "class": "spell",
   "archetype": "transfer",
-  "words": 314,
+  "words": 313,
   "groups": [
    "effect"
   ]
@@ -1058,7 +1058,7 @@
  {
   "class": "spell",
   "archetype": "create",
-  "words": 271,
+  "words": 277,
   "groups": [
    "effect"
   ]
@@ -1194,7 +1194,7 @@
  {
   "class": "world_state",
   "archetype": "phenomenon",
-  "words": 268,
+  "words": 269,
   "groups": [
    "field"
   ]

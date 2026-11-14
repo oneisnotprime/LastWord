@@ -189,10 +189,23 @@ def prepare(count, dict_dir):
 
 
 def merge():
-    """Joins the chunk files written by hand or by subagents into generated_words.txt."""
+    """Joins the chunk files written by hand or by subagents into generated_words.txt. Words already
+    in generated_words.txt are kept unless a chunk writes them again; a chunk's line wins."""
     import glob
     sections = collections.defaultdict(list)
     left_out = []
+    chunked = set()
+    for path in glob.glob(os.path.join(WORK, "chunks", "out_*.txt")):
+        chunked |= {m.group(1) for m in re.finditer(r"^([a-z]+):", open(path).read(), re.M)}
+    old = os.path.join(HERE, "generated_words.txt")
+    role = arch = None
+    for line in open(old) if os.path.exists(old) else []:
+        line = line.strip()
+        m = re.fullmatch(r"# (noun|verb|adjective|adverb) (\w+)", line)
+        if m:
+            role, arch = m.groups()
+        elif line and not line.startswith("#") and role and line.partition(":")[0].strip() not in chunked:
+            sections[(role, arch)].append(line)
     for path in sorted(glob.glob(os.path.join(WORK, "chunks", "out_*.txt"))):
         role = arch = None
         for line in open(path):

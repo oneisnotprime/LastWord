@@ -22,3 +22,7 @@ export * from "./ride.js";
 export * from "./economy.js";
 export * from "./place.js";
 export * from "./produce.js";
+export * from "./material.js";
+export * from "./food.js";
+export * from "./work.js";
+export * from "./law.js";

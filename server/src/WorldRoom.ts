@@ -5,9 +5,16 @@ import {
   addLetters, afflict, placeRules, harvest, growthOf, tradeRateOf, marketRatio, type PlaceRules, aggressive, clearLine, courageOf, pluralize, auras, authorityOf, chooseTarget, commandLimit, draw, groundFood, hasAny, ignoresOrder, moraleAim, moraleGoal, needs, nextMorale, noStores, outputs, recruitRate, rerouteSeconds, startingSupply, becomes, retreats, routed, supply, theftResistance, HUNGER_LOYALTY, NORMAL, STARTING_STORES, STARVING, SUPPLIES, bodyFlags, cure, useObject, findPath, hampered, inflicts, statusDamage, statusEffects, tickStatuses, wake, GATHER_SECONDS, GATHER_REASONS, cachePrize, carcassFood, Deposits, destroyLetters, killLetters, mainland, MARKET, pickAnimal, placeSources, readTrade, regionOf, RUIN_INTEGRITY, CACHE_X, SITE_RADIUS, spawnPoint, starterHand, TEMPLE_Q, tradeProblem, generateMap, GIVE_RANGE, missing, parsePhrase, applyAdjectives, cannotCarry, improvisable, readDescription, production, resolveSpelled, SEPARATE_UP_TO, nearestWalkable, openGround, randomWalkable, resolve, Tile, tileAt, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit, cannotRide, claimOf, senseOf, combineSenses, type Sense, type Sensed,
   type Affliction, type Candidate, type Dictionary, type Stores, type Supply, type Entity, type Hampered, type Status, type Stats, type Letters, type LoadoutDetail, type Op, type Phrase, type Point, type Spelled, type Value, type WordDef, type WorldMap,
 } from "@lastword/shared";
+import {
+  LAWS, takeLetters, pactOf, breachText, BREACH_LETTERS, BREACH_LOYALTY, BREACH_MINUTES, cooked, rotted, cooks, cookable, spoils, toxin,
+  COOK_RANGE, COOK_SECONDS, jobsOf, haggled, builtBy, WORK_RANGE, SCOUT_RANGE, grow, SEEDLING, type PactSpec,
+} from "@lastword/shared";
 import { affords, botSettings, chooseWord, held, wordBook, type BotWord, type Difficulty, type Use } from "./bots.js";
 import { loadDictionary } from "./data.js";
 import { Edit, Player, Thing, WorldState, Zone } from "./state.js";
+
+/** Seconds after paying a law's fine before the same law fines the same person for the same act again. */
+const FINE_SECONDS = 10;
 
 /** Simulation steps per second. */
 export const TICK_HZ = 10;
@@ -33,7 +40,14 @@ interface Gear {
   hungerLost?: number;
   /** Room time it was made: it ages into Y for its owner from then, wherever it is kept. */
   born?: number;
+  /** Seconds it has spent by heat while raw (shared food.ts): it cooks at COOK_SECONDS. */
+  heat?: number;
+  /** For a structure raised near builders (shared work.ts): how many times sturdier it is. */
+  built?: number;
 }
+
+/** People on one side for a while (shared law.ts): a TREATY, an ALLIANCE. */
+interface Pact { id: string; word: string; members: Set<string>; until: number; penalty: string[] }
 
 /** A passing effect on bodies: a verb someone cast, or weather over everyone. */
 interface Effect { word: string; set: Record<string, Value>; ops: Op[]; until: number }
@@ -272,6 +286,8 @@ interface Producer {
   idle: string | null;
   /** What it is called in popups and the loadout. */
   name: string;
+  /** For something planted: how grown it is (shared `grow`), SEEDLING to 1. */
+  grown?: number;
 }
 
 /**
@@ -393,6 +409,12 @@ export class WorldRoom extends Room {
   private daylightEnds: { at: number; back: string } | null = null;
   /** People whose letters changed this tick and are told at its end. */
   private lettersChanged = new Set<string>();
+  /** When each person may next be fined by each law (`lawAgainst`). */
+  private fined = new Map<string, number>();
+  /** Pacts in force (shared law.ts), and when a breaker's market prices go back to normal. */
+  private pacts = new Map<string, Pact>();
+  private distrusted = new Map<string, number>();
+  private nextPact = 1;
   /** Areas each radiating thing gives off, by what radiates: a Gear, or a walker's body. */
   private radiating = new Map<object, Radiating>();
   /** What radiates from each walker or thing, by its id. */
@@ -548,6 +570,7 @@ export class WorldRoom extends Room {
       const ok = typeof target === "string" && target !== client.sessionId && this.walkers.get(target)?.master !== client.sessionId &&
         (this.walkers.has(target) || (this.grounded.has(target) && !this.grounded.get(target)!.terrain));
       walker.foe = ok ? (target as string) : null;
+      if (ok) this.breach(client.sessionId, target as string);
     },
     /**
      * Pick out a target for events without attacking it: { id } for a player, creature or thing,
@@ -1161,8 +1184,43 @@ export class WorldRoom extends Room {
       w.foe = foe && (this.walkers.has(foe) || this.grounded.has(foe)) ? foe : null;
       if (w.foe) continue;
       const apart = Math.hypot(master.player.x - w.player.x, master.player.y - w.player.y);
+      if (this.scout(w, master, apart)) continue;
       w.target = apart > 2 ? { x: master.player.x, y: master.player.y } : null;
     }
+  }
+
+  /**
+   * A scout of someone's (shared work.ts) ranges up to SCOUT_RANGE tiles from its master, toward
+   * the nearest region they have not seen; it comes back once there is none about. True if it is out.
+   */
+  private scout(w: Walker, master: Walker, apart: number): boolean {
+    if (!master.explored || !jobsOf(w.unit.body.stats).includes("scout")) return false;
+    if (w.target && apart <= SCOUT_RANGE && Math.hypot(w.target.x - w.player.x, w.target.y - w.player.y) > 1.5 && !master.explored.has(regionOf(w.target.x, w.target.y))) return true;
+    let best: Point | null = null, bestD = Infinity;
+    for (let a = 0; a < 16; a++) {
+      for (const r of [SCOUT_RANGE / 3, (2 * SCOUT_RANGE) / 3, SCOUT_RANGE]) {
+        const x = master.player.x + Math.cos((a / 16) * Math.PI * 2) * r, y = master.player.y + Math.sin((a / 16) * Math.PI * 2) * r;
+        if (x < 1 || y < 1 || x > this.map.size - 2 || y > this.map.size - 2 || master.explored.has(regionOf(x, y))) continue;
+        const d = Math.hypot(x - w.player.x, y - w.player.y);
+        if (d < bestD) { best = { x, y }; bestD = d; }
+      }
+    }
+    w.target = best;
+    return best !== null;
+  }
+
+  /**
+   * A market's price for someone: haggled down by the best trader of their side within WORK_RANGE
+   * (shared `haggled`), doubled while they are distrusted for breaking a pact.
+   */
+  private priceFor(id: string, w: Walker, ratio: number): number {
+    let bonus = w.unit.body.stats.num("trade_bonus") > 0 && jobsOf(w.unit.body.stats).includes("trade") ? w.unit.body.stats.num("trade_bonus") : 0;
+    for (const o of this.walkers.values()) {
+      if (o.master !== id || Math.hypot(o.player.x - w.player.x, o.player.y - w.player.y) > WORK_RANGE) continue;
+      if (jobsOf(o.unit.body.stats).includes("trade")) bonus = Math.max(bonus, o.unit.body.stats.num("trade_bonus"));
+    }
+    const price = haggled(ratio, bonus);
+    return (this.distrusted.get(id) ?? -Infinity) > this.elapsed ? price * 2 : price;
   }
 
   /** Bots think at most twice a second (easy ones once), spread over the ticks by their number. */
@@ -1371,7 +1429,14 @@ export class WorldRoom extends Room {
 
   /** The side a walker is on: a person's own id, a creature's master, "-" for the wild. */
   private side(id: string, w: Walker): string {
-    return w.master ?? id;
+    const person = w.master ?? id;
+    return this.pactOf(person)?.id ?? person;
+  }
+
+  /** The pact a person is in, if any. */
+  private pactOf(person: string): Pact | undefined {
+    for (const p of this.pacts.values()) if (p.members.has(person)) return p;
+    return undefined;
   }
 
   /** Walkers bucketed into cells NEAR_CELL tiles wide, built once a beat for `enemiesNear`. */
@@ -1439,6 +1504,126 @@ export class WorldRoom extends Room {
     if (w.master === "-") words.push("wild");
     const text = words.join(" ");
     if (text !== w.player.status) w.player.status = text;
+  }
+
+  /**
+   * A pact (shared law.ts): its speller and the person picked, then the nearest others in sight up
+   * to its `binds`, are one side for its minutes. Anyone already in a pact leaves it for this one.
+   */
+  private makePact(id: string, walker: Walker, phrase: Phrase, spec: PactSpec): string {
+    const word = phrase.noun.toUpperCase();
+    const picked = this.walkers.get(walker.picked ?? walker.foe ?? "");
+    const first = picked ? (picked.master === null ? picked.id : picked.master) : null;
+    if (!first || first === "-" || first === id || !this.walkers.has(first)) throw new Error(`Click the person to make ${word} with first`);
+    const reach = Math.max(walker.sight, phrase.stats.num("placement_range") / TILE_METERS);
+    const near = (o: Walker) => Math.hypot(o.player.x - walker.player.x, o.player.y - walker.player.y);
+    if (near(this.walkers.get(first)!) > reach) throw new Error(`Too far away for ${word}: come within ${Math.round(reach)} tiles`);
+    const others = this.people.filter((p) => p !== id && p !== first && near(this.walkers.get(p)!) <= reach)
+      .sort((a, b) => near(this.walkers.get(a)!) - near(this.walkers.get(b)!));
+    const members = new Set([id, first, ...others].slice(0, spec.size));
+    for (const m of members) { const old = this.pactOf(m); if (old) old.members.delete(m); }
+    for (const [pid, old] of this.pacts) if (old.members.size < 2) this.pacts.delete(pid);
+    const pact: Pact = { id: `pact${this.nextPact++}`, word: phrase.noun, members, until: this.elapsed + spec.minutes * 60, penalty: spec.penalty };
+    this.pacts.set(pact.id, pact);
+    const names = [...members].map((m) => this.walkers.get(m)!.player.name).join(", ");
+    for (const m of members) {
+      const w = this.walkers.get(m)!;
+      if (w.foe && members.has(this.walkers.get(w.foe)?.master ?? w.foe)) w.foe = null;
+      this.sendTo(m, "notice", `${word}: ${names} are one side for ${+spec.minutes.toFixed(1)} min. Attacking any of them breaks it: ${breachText(spec.penalty)}`);
+    }
+    return `binds ${names} for ${+spec.minutes.toFixed(1)} min`;
+  }
+
+  /** An attack ordered on someone in your pact breaks it, and the breaker pays its penalty. */
+  private breach(id: string, target: string) {
+    const pact = this.pactOf(id);
+    if (!pact) return;
+    const t = this.walkers.get(target);
+    const victim = t ? (t.master === null ? target : t.master) : this.state.things.get(target)?.owner;
+    if (!victim || victim === id || !pact.members.has(victim)) return;
+    this.pacts.delete(pact.id);
+    const w = this.walkers.get(id)!, word = pact.word.toUpperCase();
+    const betrayed = [...pact.members].filter((m) => m !== id && this.walkers.has(m));
+    const paid: string[] = [];
+    for (const p of pact.penalty) {
+      if (p === "letters" && betrayed.length) {
+        const taken = takeLetters(w.letters, BREACH_LETTERS, this.rng);
+        [...taken].forEach((ch, i) => { const to = betrayed[i % betrayed.length]!; addLetters(this.walkers.get(to)!.letters, ch); this.lettersChanged.add(to); this.sendTo(to, "letters", this.walkers.get(to)!.letters); });
+        if (taken) paid.push(`${taken.toUpperCase()} to those betrayed`);
+        this.lettersChanged.add(id);
+        this.sendTo(id, "letters", w.letters);
+      } else if (p === "loyalty" || p === "morale") {
+        let lost = 0;
+        for (const [cid, c] of this.walkers) {
+          if (c.master !== id) continue;
+          if (p === "morale") { c.morale = 0; continue; }
+          if (c.unit.body.stats.num("loyalty") <= BREACH_LOYALTY) { this.setMaster(cid, c, "-"); lost++; }
+        }
+        paid.push(p === "morale" ? "your creatures' nerve" : `${lost} creature${lost === 1 ? "" : "s"} that ran wild`);
+      } else if (p === "reputation") {
+        this.distrusted.set(id, this.elapsed + BREACH_MINUTES * 60);
+        paid.push(`double market prices for ${BREACH_MINUTES} min`);
+      }
+    }
+    for (const m of pact.members) this.sendTo(m, "notice", `${w.player.name} broke the ${word}${paid.length ? `: ${paid.join(", ")}` : ""}`);
+  }
+
+  /** Pacts run out; and alliances must break: one pact holding everyone left alive ends at once. */
+  private keepPacts() {
+    const alive = this.people;
+    for (const [pid, p] of this.pacts) {
+      for (const m of [...p.members]) if (!this.walkers.has(m)) p.members.delete(m);
+      const everyone = alive.length > 1 && alive.every((a) => p.members.has(a));
+      if (this.elapsed < p.until && p.members.size >= 2 && !everyone) continue;
+      this.pacts.delete(pid);
+      for (const m of p.members) this.sendTo(m, "notice", everyone ? `${p.word.toUpperCase()} is over: only its members are left, and only one can win` : `${p.word.toUpperCase()} has run out`);
+    }
+  }
+
+  /**
+   * Heat and time on food (shared food.ts), once a second: raw things by something hot enough
+   * (a thing or creature on the ground, a person, an area such as a FIRE, or whoever carries them)
+   * cook after COOK_SECONDS; things past their `shelf_life` rot.
+   */
+  private kitchen(seconds: number) {
+    const heat: Point[] = [];
+    for (const [tid, g] of this.grounded) { const t = this.state.things.get(tid); if (t && !g.terrain && cooks(this.statsOf(g))) heat.push(t); }
+    const hot = new Set<string>();
+    for (const [wid, w] of this.walkers) if (cooks(w.unit.body.stats) || w.gear.some((g) => cooks(this.statsOf(g)))) { heat.push(w.player); hot.add(wid); }
+    for (const a of this.areas.values()) if (Number(this.dict.base(a.word, "temperature")) >= 150) heat.push(a);
+    const warm = (p: Point) => heat.some((h) => Math.hypot(h.x - p.x, h.y - p.y) <= COOK_RANGE + ((h as { radius?: number }).radius ?? 0));
+    const tend = (g: Gear, at: Point, carrier?: string): boolean => {
+      const stats = this.statsOf(g);
+      let next: Spelled | null = null;
+      if (cookable(stats) && ((carrier && hot.has(carrier)) || warm(at))) {
+        g.heat = (g.heat ?? 0) + seconds;
+        if (g.heat >= COOK_SECONDS) next = cooked(this.dict, g.spelled, stats);
+      } else if (spoils(stats, (this.elapsed - (g.born ?? this.elapsed)) / 60)) next = rotted(this.dict, g.spelled);
+      if (!next) return false;
+      const was = g.phrase.toUpperCase();
+      g.spelled = next; g.heat = 0;
+      g.phrase = [...(next.states ?? []).filter((x) => x !== "cooked" || next!.noun === g.spelled.noun), ...(next.adjectives ?? []).filter((a) => !this.onlyCounts(a)), next.noun].join(" ");
+      g.born = this.elapsed; // a new thing: its shelf life starts again
+      this.resolved.delete(g);
+      const owner = carrier ?? "";
+      if (owner) this.sendTo(owner, "notice", `${was} is now ${g.phrase.toUpperCase()}`);
+      return true;
+    };
+    for (const [tid, g] of this.grounded) {
+      const t = this.state.things.get(tid);
+      if (!t || g.terrain || g.fixture) continue;
+      if (tend(g, t)) {
+        t.phrase = g.phrase;
+        this.producers.delete(tid);
+        const stats = this.statsOf(g);
+        this.addProducer(tid, t.owner, stats, t.count, g.phrase, true);
+      }
+    }
+    for (const [wid, w] of this.walkers) {
+      let changed = false;
+      for (const g of w.gear) if (tend(g, w.player, wid)) { this.carried.delete(g); changed = true; }
+      if (changed) { this.rebuild(w); this.tell(w); }
+    }
   }
 
   /** Puts a creature under someone else, or nobody ("-": wild). What it radiates changes side with it. */
@@ -1664,6 +1849,8 @@ export class WorldRoom extends Room {
    * wild creatures choose what to do.
    */
   private beat(since: number) {
+    this.keepPacts();
+    this.kitchen(since);
     this.state.alive = this.people.length;
     this.state.clock = Math.floor(this.elapsed);
     this.nearGrid = new Map();
@@ -1860,6 +2047,9 @@ export class WorldRoom extends Room {
     // Anything fertile put down (COMPOST, MANURE, a FARM) enriches the soil it lies on.
     if (phrase.stats.num("fertility") > 0) this.soil.enrich(here.x, here.y, this.elapsed, phrase.stats.num("fertility") * n);
     let worn = 0;
+    // Builders of the speller's within WORK_RANGE make a structure sturdier (shared work.ts).
+    const built = builtBy([...this.walkers.values()].filter((o) => o.master === owner && jobsOf(o.unit.body.stats).includes("build") &&
+      Math.hypot(o.player.x - here.x, o.player.y - here.y) <= WORK_RANGE).map((o) => o.unit.body.stats.num("build_speed")));
     for (let i = 0; i < copies; i++) {
       const gear = one();
       if (tile !== undefined) gear.terrain = true;
@@ -1869,8 +2059,10 @@ export class WorldRoom extends Room {
       if (problem === null) { worn++; continue; }
       if (problem && gear.vehicle) this.sendTo(owner, "notice", problem);
       const p = i === 0 ? here : at(i);
+      if (!phrase.stats.flag("portable") && built > 1) gear.built = built; // raised by builders: sturdier
       this.addThing(gear, owner, p.x, p.y); // a stack of a thousand makes a thousand's worth
     }
+    if (built > 1 && !phrase.stats.flag("portable") && worn < copies) return `made, ×${+built.toFixed(2)} sturdier for your builders`;
     return worn === copies ? "equipped" : worn ? `made; ${worn} equipped` : "made";
   }
 
@@ -1942,7 +2134,7 @@ export class WorldRoom extends Room {
 
   /** True if using this would do something (see shared `useObject`). */
   private usable(g: Gear): boolean {
-    return !g.terrain && useObject(this.dict, g.spelled.noun, g.spelled.adjectives) !== null;
+    return !g.terrain && useObject(this.dict, g.spelled.noun, g.spelled.adjectives, g.spelled.states) !== null;
   }
 
   /** Things on the ground in reach that a walker may use (or, if `only` is false, try to): its own or nobody's, nearest first. */
@@ -1986,16 +2178,22 @@ export class WorldRoom extends Room {
       gear ??= walker.gear.at(-1);
       if (!gear) throw new Error("Nothing here to use: spell something to eat, drink or take, and stand by it");
     }
-    const effect = useObject(this.dict, gear.spelled.noun, gear.spelled.adjectives);
+    const effect = useObject(this.dict, gear.spelled.noun, gear.spelled.adjectives, gear.spelled.states);
     if (!effect || gear.terrain) throw new Error(`${gear.phrase.toUpperCase()} cannot be used: ${useObject(this.dict, gear.spelled.noun, []) === null && this.dict.base(gear.spelled.noun, "edible") === true ? "eating it does nothing yet" : "it heals, cures and changes nothing"}`);
     const food = effect.stats.num("nutrition");
     let done = this.affect(walker, gear.phrase, effect.stats, effect) ?? gear.phrase.toUpperCase();
+    // Something toxic eaten (shared food.ts): poison, unless the eater is immune.
+    const sick = toxin(effect.stats);
+    if (sick > 0 && afflict(walker.statuses, [["poison", sick]], walker.unit.body.stats, walker.id).length) {
+      this.statusChanged(walker);
+      done += `; poisoned for ${sick} s`;
+    }
     if (food > 0) {
       walker.stores.food += food; // one of it eaten: its nutrition goes into your food store
       done += `; +${+food.toFixed(2)} food`;
       this.tell(walker);
     }
-    if (effect.stats.flag("single_use") || food > 0) {
+    if (effect.stats.flag("single_use") || food > 0 || sick > 0) {
       const left = (gear.spelled.count ?? 1) - 1;
       if (left > 0) {
         gear.spelled.count = left; // one of a stack at a time
@@ -2020,6 +2218,8 @@ export class WorldRoom extends Room {
    */
   private happen(id: string, walker: Walker, phrase: Phrase): string {
     const s = phrase.stats, word = phrase.noun.toUpperCase();
+    const pact = pactOf(s);
+    if (pact) return this.makePact(id, walker, phrase, pact);
     if (s.flag("transfers_ownership")) return this.steal(id, walker, phrase);
     const reach = Math.max(1.5, s.num("placement_range") / TILE_METERS);
     // A target clicked after spelling the event wins over what you are attacking.
@@ -2911,7 +3111,9 @@ export class WorldRoom extends Room {
     const gear = this.grounded.get(id)!;
     let entity = this.thingEntities.get(id);
     if (!entity) {
-      entity = spawn(gear.phrase, resolveSpelled(this.dict, gear.spelled));
+      const made = resolveSpelled(this.dict, gear.spelled);
+      if (gear.built && gear.built > 1) made.apply([["integrity", "mul", gear.built]]); // raised by builders
+      entity = spawn(gear.phrase, made);
       if (gear.integrity !== null) entity.integrity = gear.integrity;
       this.thingEntities.set(id, entity);
     }
@@ -2963,9 +3165,39 @@ export class WorldRoom extends Room {
     return { rules, areas };
   }
 
-  /** The first area whose law forbids an act to a walker where it stands, if any. */
-  private lawAgainst(act: string, wid: string, w: Walker, at: Point = w.player): string | null {
-    for (const a of this.rulesAt(at, wid, w).areas) if (a.rules!.law.includes(act)) return a.word.toUpperCase();
+  /**
+   * The first area whose law forbids an act to a walker where it stands, if any. A law with a
+   * `fine` lets the act go ahead: whoever does it (`payer`, the walker by default; a creature's
+   * master pays for it) pays the fine to the law's maker, at most once a FINE_SECONDS per law, and
+   * it is refused only if they cannot pay. The maker's own side is never fined.
+   */
+  private lawAgainst(act: string, wid: string, w: Walker, at: Point = w.player, payer: string = wid): string | null {
+    for (const a of this.rulesAt(at, wid, w).areas) {
+      if (!a.rules!.law.includes(act)) continue;
+      const fine = a.rules!.fine;
+      if (!(fine > 0)) return a.word.toUpperCase();
+      const pw = this.walkers.get(payer);
+      const pid = pw?.master && pw.master !== "-" ? pw.master : payer;
+      if (pid === a.owner || pw?.master === "-") continue; // the maker's own; the wild pay nothing
+      const p = this.walkers.get(pid);
+      if (!p) return a.word.toUpperCase();
+      const key = `${pid}|${a.word}|${a.owner}|${act}`;
+      if ((this.fined.get(key) ?? -Infinity) > this.elapsed) continue; // paid lately: let it go
+      const owe = Math.ceil(fine);
+      if (Object.values(p.letters).reduce((n, k) => n + k, 0) < owe) return a.word.toUpperCase();
+      const paid = takeLetters(p.letters, owe, this.rng);
+      this.fined.set(key, this.elapsed + FINE_SECONDS);
+      this.lettersChanged.add(pid);
+      this.sendTo(pid, "letters", p.letters);
+      this.sendTo(pid, "notice", `${a.word.toUpperCase()}: fined ${paid.toUpperCase()} for breaking its law (${LAWS[act] ?? act})`);
+      const maker = this.walkers.get(a.owner);
+      if (maker) {
+        addLetters(maker.letters, paid);
+        this.lettersChanged.add(a.owner);
+        this.sendTo(a.owner, "letters", maker.letters);
+        this.sendTo(a.owner, "notice", `${a.word.toUpperCase()}: ${p.player.name} paid you ${paid.toUpperCase()}`);
+      }
+    }
     return null;
   }
 
@@ -3078,7 +3310,7 @@ export class WorldRoom extends Room {
     const market = this.state.things.get(best)!;
     const closed = this.lawAgainst("trade", id, walker, market);
     if (closed) throw new Error(`${closed}: this market is closed`);
-    const problem = tradeProblem(give, get, marketRatio(tradeRateOf(this.rulesAt(market, id, walker).rules)));
+    const problem = tradeProblem(give, get, this.priceFor(id, walker, marketRatio(tradeRateOf(this.rulesAt(market, id, walker).rules))));
     if (problem) throw new Error(problem);
     const m = this.markets.get(best)!;
     m.stock = Math.min(MARKET.stock, m.stock + (this.elapsed - m.at) / MARKET.regen);
@@ -3155,7 +3387,7 @@ export class WorldRoom extends Room {
     };
     // Everything that belongs to someone makes its letters for them: on the ground, as a creature,
     // or carried, worn and ridden (where its owner stands).
-    type Job = { p: Producer; ownerId: string; owner: Walker; at: Point; gear?: Gear; creature?: Walker; ages: boolean };
+    type Job = { p: Producer; ownerId: string; owner: Walker; at: Point; gear?: Gear; creature?: Walker; ages: boolean; planted?: boolean };
     const jobs: Job[] = [];
     for (const [pid, p] of this.producers) {
       const thing = this.state.things.get(pid), creature = thing ? undefined : this.walkers.get(pid);
@@ -3163,7 +3395,7 @@ export class WorldRoom extends Room {
       const ownerId = thing ? thing.owner : creature ? creature.master ?? "" : p.owner;
       const owner = this.walkers.get(ownerId);
       if (!owner || owner.master !== null) { p.idle = null; p.now = {}; continue; }
-      jobs.push({ p, ownerId, owner, at: thing ?? creature?.player ?? owner.player, gear: this.grounded.get(pid), creature, ages: !!thing });
+      jobs.push({ p, ownerId, owner, at: thing ?? creature?.player ?? owner.player, gear: this.grounded.get(pid), creature, ages: !!thing, planted: !!thing });
     }
     for (const [ownerId, owner] of this.walkers) {
       if (owner.master !== null) continue;
@@ -3179,7 +3411,7 @@ export class WorldRoom extends Room {
       }
     }
     const tally = new Map<string, { lines: string[]; letters: Map<string, { rate: number; from: string[] }>; age: number; aged: number }>();
-    for (const { p, ownerId, owner, at, gear, creature, ages } of jobs) {
+    for (const { p, ownerId, owner, at, gear, creature, ages, planted } of jobs) {
       let rates: Letters = {};
       p.idle = null;
       if (Object.keys(p.spec.rates).length) {
@@ -3196,7 +3428,12 @@ export class WorldRoom extends Room {
           peace: !this.fights.some((f) => Math.hypot(f.x - at.x, f.y - at.y) <= PEACE_RADIUS),
           powered: !gear?.stalled,
           made: p.made,
+          grown: p.spec.grows > 0 ? (p.grown ?? 1) : 1,
         };
+        // Planted things grow toward full yield as fast as the place lets them (rain, summer, drought).
+        if (p.spec.grows > 0 && planted) {
+          p.grown = grow(p.grown ?? SEEDLING, 1, p.spec.grows, growthOf(this.rulesAt(at).rules) * Math.max(0.2, c.fertility));
+        }
         const out = outputOf(p.spec, c);
         rates = out.rates;
         p.idle = out.idle;
@@ -3381,8 +3618,10 @@ export class WorldRoom extends Room {
       if (!w.hamper.acts || w.fleeing) continue; // stunned, frozen, asleep, afraid or broken
       if (w.hamper.spares.includes(foeId)) { w.foe = null; continue; } // charmed: will not hurt the charmer
       // A SANCTUARY, a TRUCE: nobody it reaches strikes, or is struck, inside it.
-      const truce = this.lawAgainst("attack", id, w) ?? (foe ? this.lawAgainst("attack", foeId, foe) : null);
-      if (truce) { if (w.master === null) this.sendTo(id, "refused", `${truce}: no fighting here`); w.foe = null; continue; }
+      const truce = this.lawAgainst("attack", id, w) ?? (foe ? this.lawAgainst("attack", foeId, foe, foe.player, id) : null)
+        // A ban on hunting: wild animals may not be attacked where it reaches.
+        ?? (foe && foe.master === "-" && foe.unit.body.stats.flag("alive") ? this.lawAgainst("hunt", id, w) ?? this.lawAgainst("hunt", foeId, foe, foe.player, id) : null);
+      if (truce) { if (w.master === null) this.sendTo(id, "refused", `${truce}: no ${foe?.master === "-" ? "hunting or " : ""}fighting here`); w.foe = null; continue; }
       const attack = w.unit.attack;
       const reach = Math.max(1, attack.num("attack_range") / TILE_METERS);
       if (Math.hypot(at.x - w.player.x, at.y - w.player.y) > reach) {
@@ -3449,7 +3688,17 @@ export class WorldRoom extends Room {
         client?.send("refused", got.why);
       }
     }
-    // The first visit to each region gives a person one J.
+    // The first visit to each region gives a person one J; so does a scout of theirs reaching one (shared work.ts).
+    for (const [, w] of this.walkers) {
+      const m = w.master && w.master !== "-" ? this.walkers.get(w.master) : undefined;
+      if (!m?.explored || !jobsOf(w.unit.body.stats).includes("scout")) continue;
+      const region = regionOf(w.player.x, w.player.y);
+      if (m.explored.has(region)) continue;
+      m.explored.add(region);
+      const j = this.earn(w.master!, "j", w.player, `${w.player.name.toUpperCase()} scouted new ground`);
+      changed.add(w.master!);
+      if (j) this.sendTo(w.master!, "gathered", j);
+    }
     for (const [id, w] of this.walkers) {
       if (!w.explored) continue;
       const region = regionOf(w.player.x, w.player.y);

@@ -95,7 +95,6 @@ college	noun	artifact	building	5.27	core	n08295090	-
 come	verb	spell	movement	5.78	core	v01853188	noun:bodypart
 coming	adjective	modifier	quality	5.4	core	a01736850	noun:attribute
 common	adjective	modifier	quality	5.2	core	a00494722	noun:place
-cook	noun	person	worker	4.65	core	n09982799	verb:create
 cool	adjective	modifier	quality	5.15	core	a02540350	verb:transform,noun:attribute
 core	noun	artifact	device	4.73	core	n08259144	verb:contact
 count	noun	person	leader	4.83	core	n09988748	verb:communication
@@ -342,6 +341,7 @@ planet	noun	terrain	celestial	4.68	core	n09416900	-
 plant	noun	flora	plant	4.89	core	n03963198	verb:contact
 play	verb	spell	social	5.61	core	v01075360	noun:act
 played	adjective	modifier	participle	5.23	core	a03164026	-
+police	noun	person	worker	5.33	core	n08226608	verb:social
 pool	noun	terrain	water	4.67	core	n09420266	verb:transfer
 pop	noun	consumable	drink	4.87	core	n07943752	verb:movement,adjective:quality,adverb:manner
 port	noun	artifact	building	4.73	core	n08651532	adjective:quality,verb:movement

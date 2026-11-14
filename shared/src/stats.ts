@@ -1,5 +1,6 @@
 import type { Dictionary } from "./dictionary.js";
 import type { Degree, Op, Value, WordDef } from "./types.js";
+import { applyMaterial, isMaterial, knownMaterial } from "./material.js";
 
 /** Properties that describe an adjective itself and are not copied onto its noun. */
 const META = new Set(["is_absolute", "absolute_side", "specificity"]);
@@ -86,7 +87,7 @@ export class Stats {
  * (nouns of archetype quantity), which act exactly as adjectives do and take a slot like one.
  */
 export function isModifier(def: WordDef): boolean {
-  return def.role === "adjective" || (def.role === "noun" && def.archetype === "quantity");
+  return def.role === "adjective" || (def.role === "noun" && def.archetype === "quantity") || isMaterial(def);
 }
 
 export interface Modifier {
@@ -120,8 +121,16 @@ export function resolve(
     const adj = dict.lookup(text);
     if (!adj || !isModifier(adj.def)) throw new Error(`${text} is not an adjective`);
     const absolute = adj.def.set.is_absolute === true;
+    // A material before a noun (GLASS SWORD), or an adjective made of one (WOODEN, GOLDEN), remakes
+    // the thing out of it (shared material.ts); the material's own values are not copied over.
+    if (isMaterial(adj.def)) {
+      applyMaterial(dict, stats, adj.word);
+      continue;
+    }
+    const made = knownMaterial(dict, adj.def.set.material ?? []);
+    if (made) applyMaterial(dict, stats, made);
     for (const [id, value] of Object.entries(adj.def.set)) {
-      if (META.has(id)) continue;
+      if (META.has(id) || (made && id === "material")) continue;
       stats.set(id, value);
       if (absolute && (value === "ABS" || value === true)) {
         stats.absolutes.push({

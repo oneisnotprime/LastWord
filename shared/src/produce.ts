@@ -52,6 +52,13 @@ export interface ProducerSpec {
   age: number;
   /** Alive: it must be fed. */
   alive: boolean;
+  /**
+   * Minutes a planted thing takes to grow to full yield (`growth_time` of a rooted living thing:
+   * crops, trees, herbs, fungi); 0 for anything already grown. While it grows it yields that
+   * share of its letters, and how fast it grows follows the place's `growth` (RAIN, SUMMER,
+   * DROUGHT, WINTER) and the soil (shared `grow`).
+   */
+  grows: number;
 }
 
 export function producerOf(stats: Stats, count = 1): ProducerSpec {
@@ -68,7 +75,25 @@ export function producerOf(stats: Stats, count = 1): ProducerSpec {
     uses: tags.filter((t) => t === "vowel" || /^[a-z]$/.test(t)),
     age: Math.max(0, stats.num("produce_Y")),
     alive: stats.flag("alive"),
+    grows: rooted(stats) ? Math.max(0, stats.num("growth_time")) : 0,
   };
+}
+
+/** A living thing that does not move: it is planted where it is made. */
+const rooted = (s: Stats) => s.flag("alive") && !(Math.max(s.num("speed_land"), s.num("speed_air"), s.num("speed_water")) > 0);
+
+/** Share of full growth a planted thing starts at. */
+export const SEEDLING = 0.25;
+/** Game minutes of growth per minute of `growth_time`: an OAK (60) is grown in six minutes, WHEAT (5) in thirty seconds. */
+export const GROW_PACE = 0.1;
+
+/**
+ * How grown a planted thing is after `seconds` more, from `grown` (SEEDLING to 1): full growth
+ * takes `minutes` × GROW_PACE at a growth of 1; `growth` is the place's (shared `growthOf`) times the soil's.
+ */
+export function grow(grown: number, seconds: number, minutes: number, growth: number): number {
+  if (!(minutes > 0)) return 1;
+  return Math.min(1, grown + (Math.max(0, growth) * seconds) / (60 * minutes * GROW_PACE));
 }
 
 /** True if a spec makes any letter by itself (not counting age). */
@@ -93,6 +118,8 @@ export interface Conditions {
   powered: boolean;
   /** Letters it has given so far, for `extract`. */
   made: number;
+  /** For something planted: how grown it is, SEEDLING to 1 (1 if left out). */
+  grown?: number;
 }
 
 export const IDEAL: Conditions = {
@@ -122,9 +149,10 @@ export function outputOf(spec: ProducerSpec, c: Conditions): { rates: Letters; i
   if (has("wind")) mul *= Math.max(0, c.wind);
   if (has("tilled") || has("harvest")) mul *= Math.max(0, c.fertility);
   if (has("extract")) mul *= 0.5 ** (c.made / EXTRACT_HALF);
+  if (spec.grows > 0) mul *= Math.max(0, Math.min(1, c.grown ?? 1));
   if (has("tilled") || has("harvest") || has("labor") || has("wind") || has("flow") || spec.uses.length) mul *= labourBoost(c.labour);
   if (!(mul > 0.001)) {
-    return zero(has("water") && c.moisture <= 0 ? "too dry" : has("wind") && c.wind <= 0.001 ? "no wind" : has("extract") ? "worked out" : "barren soil");
+    return zero(spec.grows > 0 && !((c.grown ?? 1) > 0.001) ? "still growing" : has("water") && c.moisture <= 0 ? "too dry" : has("wind") && c.wind <= 0.001 ? "no wind" : has("extract") ? "worked out" : "barren soil");
   }
   const rates: Letters = {};
   for (const [ch, r] of Object.entries(spec.rates)) rates[ch] = r * mul;

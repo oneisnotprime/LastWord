@@ -56,6 +56,9 @@ edible|bool|false||can be eaten
 nutrition|num|0|food|food value when eaten
 potency|scale|0||strength of its drug, medicine or alcohol effect
 decay_rate|num|0|hp/min|integrity lost per minute on its own
+raw|bool|false||heat changes it: near something at 150 C or hotter it cooks (shared food.ts)
+cooks_into|text|||the noun heat turns it into (dough into bread); without one it becomes cooked
+shelf_life|num|0|min|minutes after it is made that it rots (0 keeps for ever)
 age|num|0|min|time since it was spelled
 beauty|scale|3||attracts and pleases; raises NPC attitude
 value|num|1|coins|price NPC markets pay
@@ -227,9 +230,10 @@ charm|scale|0||raises NPC attitude and trade prices
 intimidation|scale|0||makes NPCs yield letters or territory
 recruit_rate|num|0|/min|NPCs it draws to its owner
 tax_rate|frac|0||share of letters others earn inside its area that goes to its maker
-law|tags|||acts it forbids inside its area (attack, gather, spell, trade, theft)
-binds|num|0||players it can hold to an agreement
-bind_penalty|tags|||what breaking the agreement costs
+law|tags|||acts it forbids inside its area (attack, gather, spell, trade, theft, hunt)
+fine|num|0|letters|with a law: the act is allowed but costs whoever does it this many letters, paid to its maker
+binds|num|0||people a pact made with it puts on one side, its speller included (2 or more)
+bind_penalty|tags|||what breaking the pact costs its breaker: letters, loyalty, morale, reputation
 faction|text|||group it belongs to or creates
 reputation|num|0||standing change with NPCs while owned
 """
