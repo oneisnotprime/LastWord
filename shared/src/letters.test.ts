@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   ACTION_LETTERS, addLetters, CACHE_X, Deposits, DEPOSITS, depositsAt, destroyLetters, generateMap, killLetters, mainland, MAP_SOURCES,
-  PATCH_TILES, placeSources, production, readTrade, regionOf, resolve, seeded, SPAWN_APART, spawnPoint, Tile, tileAt, tradeProblem, walkable,
+  LETTER_GUIDE, PATCH_TILES, placeSources, production, readTrade, regionOf, resolve, seeded, SPAWN_APART, spawnPoint, Tile, tileAt, tradeProblem, walkable,
 } from "./index.js";
 import { demo } from "./testdata.js";
 
@@ -137,4 +137,26 @@ it("adds letters to a hand", () => {
   const held = { a: 1 };
   addLetters(held, "aab");
   expect(held).toEqual({ a: 3, b: 1 });
+});
+
+describe("the alphabet guide", () => {
+  it("says how to get every letter, and every word it names makes that letter", () => {
+    const dict = demo();
+    expect(Object.keys(LETTER_GUIDE).sort().join("")).toBe("abcdefghijklmnopqrstuvwxyz");
+    for (const [letter, how] of Object.entries(LETTER_GUIDE)) {
+      expect(how.how.length).toBeLessThanOrEqual(24);
+      for (const w of how.words ?? []) expect(production(resolve(dict, w, [])), `${w} makes ${letter}`).toHaveProperty(letter);
+      // A letter with no word that makes it comes from something you do.
+      if (!how.words) expect(ACTION_LETTERS + "fv").toContain(letter);
+    }
+  });
+
+  it("says why gathering would find nothing, before anyone waits for it", () => {
+    const d = new Deposits(map), rng = seeded(4);
+    expect(d.problem(0.5, 0.5, 0)).toBe("Nothing to gather here");
+    const grass = find((x, y) => depositsAt(map, x, y).length === 1 && tileAt(map, x, y) === Tile.Grass);
+    expect(d.problem(grass.x, grass.y, 0)).toBeNull();
+    for (let i = 0; i < DEPOSITS.forage.stock; i++) d.gather(grass.x, grass.y, 0, rng);
+    expect(d.problem(grass.x, grass.y, 0)).toMatch(/picked clean/);
+  });
 });

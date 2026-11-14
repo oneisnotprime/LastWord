@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/main.ts",
+    "dev": "DEBUG=1 tsx watch src/main.ts",
     "start": "tsx src/main.ts",
     "test": "ROUND_END_SECONDS=1 vitest run",
     "typecheck": "tsc -p ."

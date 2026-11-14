@@ -84,3 +84,18 @@ const GROUND_FOOD: Partial<Record<Tile, number>> = {
 
 /** Food a gathering action finds where the player stands. */
 export const groundFood = (tile: Tile): number => GROUND_FOOD[tile] ?? 0;
+
+/** Meat a hunted body gives, for each kilogram of its mass raised to MEAT_POWER. */
+export const MEAT_PER_KG = 0.3;
+/** Bigger bodies give more, but less than in proportion: a cow gives about thirty times a chicken, not three hundred. */
+export const MEAT_POWER = 0.6;
+
+/**
+ * Food a hunted creature gives the hunter's food store: from its `mass`, so a COW feeds far more
+ * than a CHICKEN, times how many it was. Nothing from things that are not alive. Rounded to tenths.
+ */
+export function carcassFood(stats: Stats, count = 1): number {
+  if (!stats.flag("alive")) return 0;
+  const mass = Math.max(0, stats.num("mass"));
+  return Math.round(MEAT_PER_KG * mass ** MEAT_POWER * Math.max(1, count) * 10) / 10;
+}

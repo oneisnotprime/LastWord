@@ -55,7 +55,24 @@ Then open `http://<host>:8080`. Put HTTPS in front of it for public play.
 | `METRICS` | off | Print load figures every ten seconds |
 | `BOTS` | 0 | Bots in a new room when its first player asks for no number (the load test, old clients) |
 
-`LETTERS`, `CROWD` and `SEED_THINGS` are for local testing only; do not set them in production.
+| `DEBUG` | off | `1`: spelling DEBUG fills every letter (999 of each). Local development only |
+
+`LETTERS`, `CROWD`, `SEED_THINGS` and `DEBUG` are for local testing only; do not set them in
+production, where DEBUG is just a word (it wipes out the insects around you).
+
+## Running locally with debug
+
+`npm run dev:server` sets `DEBUG=1`, so in the game started from `npm run dev:client` (or a build
+served by `npx vite preview` in `client/`) Enter, `debug`, Enter gives every letter. To try it
+against a production build: `DEBUG=1 BOTS=7 npm start -w server`, then open http://localhost:2567.
+
+## Fly trial accounts
+
+On 2026-11-14 the app's organisation was on Fly's free trial with no card saved
+(`billingStatus: TRIAL_ACTIVE`), and Fly stopped the machine five minutes after every start
+(`requested_stop: true`, exit 0, source flyd), dropping every game in progress; the next visit
+started it again on a fresh room. Adding a payment method to the Fly organisation ends this. The
+client now starts a new game by itself when its room is lost.
 
 ## Rounds with bots
 

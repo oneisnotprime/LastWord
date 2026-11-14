@@ -3,17 +3,22 @@ import "@fontsource/kalam/700.css";
 import "@fontsource/fredoka/500.css";
 import "@fontsource/fredoka/600.css";
 import Phaser from "phaser";
-import { aimOf, cardOf, missing, parsePhrase, readDescription, stampTerrain, Tile, tileAt, TILE_METERS, type Card, type Phrase, type WorldMap, generateMap } from "@lastword/shared";
+import { aimOf, cardOf, GATHER_REASONS, missing, parsePhrase, readDescription, SITE_RADIUS, stampTerrain, Tile, tileAt, TILE_METERS, type Card, type Phrase, type WorldMap, generateMap } from "@lastword/shared";
+import { Effects } from "./fx.js";
+import { playAgain } from "./start.js";
 import { lookOf, type Look } from "./art/look.js";
 import { CHUNK } from "./art/terrain.js";
 import type { FromWorker, ToWorker } from "./art/terrain.worker.js";
 import { dictionary } from "./data.js";
 import { Hud, type Aimed } from "./hud.js";
 import { Minimap } from "./minimap.js";
-import { connect, type Connection, type Described } from "./net.js";
+import { connect, type Connection, type Described, type Got, type Hit } from "./net.js";
 import { Painter, PX, useMade, useStandee, ZOOM } from "./paint.js";
 import { Sky } from "./sky.js";
 import { Zones } from "./zones.js";
+
+/** The fog canvas's size, and the radius of its clear middle, in canvas pixels. */
+const FOG_SIZE = 512, FOG_CLEAR = 100;
 
 /** Device pixels per CSS pixel the game draws at (sharp on high-density screens, capped for speed). */
 const DPR = Math.min(2, Math.max(1, window.devicePixelRatio || 1));
@@ -54,7 +59,21 @@ interface View {
   top: number; half: number; flies: boolean; living: boolean;
   spots: [number, number][];
   x: number; y: number; facing: 1 | -1; phase: number; moving: number;
+  /** Until when (scene time) it flashes from a blow, shakes, and shows its health bar. */
+  flashUntil: number; shakeUntil: number; barUntil: number; crit: boolean;
+  /** Until when it lunges toward `lungeTo` (an attack it made). */
+  lungeUntil: number; lungeTo: { x: number; y: number } | null;
 }
+
+/** Why a letter came that ends a gathering action. */
+const GATHERED = new Set<string>([...Object.values(GATHER_REASONS), "cache", "temple"]);
+/** Seconds a health bar stays up over something hit, and a "targeting you" mark over whoever hit you. */
+const BAR_SECONDS = 4;
+const THREAT_SECONDS = 3;
+/** Most screen space sight may fill, as a fraction of half the smaller side; the camera zooms to fit it. */
+const SIGHT_FILL = 0.92;
+/** Camera zoom limits (before the device pixel ratio): readable at night, not too many chunks by day. */
+const MIN_ZOOM = 1.5, MAX_ZOOM = 4.5;
 
 class World extends Phaser.Scene {
   private net!: Connection;
@@ -91,6 +110,21 @@ class World extends Phaser.Scene {
   private ticket = 0;
   /** Chunks asked of the worker and not back yet. */
   private pending = 0;
+  private fx!: Effects;
+  /** A gathering action under way: when it began and how long it takes (scene time, ms). */
+  private gathering: { start: number; ms: number } | null = null;
+  private gatherRing!: Phaser.GameObjects.Graphics;
+  /** Lines from attacker to target for a moment after each blow. */
+  private tracers: { from: string; to: string; fx?: number; fy?: number; until: number; ranged: boolean; mine: boolean }[] = [];
+  private tracerGfx!: Phaser.GameObjects.Graphics;
+  /** Who struck you lately, and until when they are marked as targeting you. */
+  private threats = new Map<string, number>();
+  /** What you can see, in tiles, from the loadout; the camera zooms so the screen shows that much. */
+  private sightTiles = 15;
+  private fog!: Phaser.GameObjects.Image;
+  private lastPrompt = 0;
+  /** Blows shown so far, for browser checks. */
+  hitCount = 0;
 
   async create() {
     this.hud = new Hud((text, target) => {
@@ -112,7 +146,7 @@ class World extends Phaser.Scene {
       if (!this.aiming || this.aimHow !== "describe" || !this.net) return;
       this.net.describe(this.aiming, this.net.sessionId, index);
       this.endAim();
-    });
+    }, () => { this.net?.leave(); playAgain(); });
     window.addEventListener("keydown", (e) => {
       if (e.repeat || this.hud.typing || !this.net || this.over) return;
       const key = e.key.toLowerCase();
@@ -124,13 +158,31 @@ class World extends Phaser.Scene {
     });
     await Promise.all(["700 13px Kalam", "400 13px Kalam", "600 9px Fredoka", "500 13px Fredoka"].map((f) => document.fonts.load(f).catch(() => [])));
     this.paint = new Painter(this, dictionary, DPR);
+    this.fx = new Effects((x, y) => {
+      const cam = this.cameras.main;
+      return { x: ((x * PX - cam.worldView.x) * cam.zoom) / DPR, y: ((y * PX - cam.worldView.y) * cam.zoom) / DPR };
+    });
     this.minimap = new Minimap(document.getElementById("minimap") as HTMLCanvasElement, DPR);
     try {
       this.net = await connect({
         letters: (held) => this.hud.setLetters(held),
         spelled: (text) => { const t = terse("spelled", text); if (t) this.hud.toast(t, "good"); },
-        refused: (reason) => { const t = terse("refused", reason); if (t) this.hud.toast(t, "bad"); },
-        gathered: (letter) => this.hud.toast(`+${letter.toUpperCase()}`, "good"),
+        refused: (reason) => {
+          const t = terse("refused", reason);
+          if (t) this.hud.toast(t, "bad");
+          // A gather that found nothing: a red note over you, and the ring goes.
+          if (/gather|picked clean/i.test(reason)) {
+            const me = this.net?.state.players.get(this.net.sessionId);
+            if (me) this.fx.fail(me.x, me.y - 1.2, /picked clean/.test(reason) ? "picked clean" : "nothing here");
+            this.gathering = null;
+          }
+        },
+        gathered: () => {},
+        gathering: (seconds) => { this.gathering = { start: this.time.now, ms: seconds * 1000 }; },
+        got: (g) => this.onGot(g),
+        hits: (list) => this.onHits(list),
+        dropped: () => this.hud.toast("Connection lost: reconnecting…", "bad"),
+        reconnected: () => this.hud.toast("Reconnected", "good"),
         notice: (text) => { const t = terse("notice", text); if (t) this.hud.toast(t, "good"); },
         dead: () => { this.over = true; this.endAim(); this.hud.lock(); this.hud.knockedOut(null); },
         watching: (who) => { this.watching = who.id; this.hud.knockedOut(who.name); },
@@ -149,10 +201,18 @@ class World extends Phaser.Scene {
           };
           tick();
         },
-        loadout: (detail) => { this.hud.setLoadout(detail); this.minimap.senses(detail); },
+        loadout: (detail) => {
+          this.hud.setLoadout(detail); this.minimap.senses(detail);
+          if (detail.sight > 0) this.sightTiles = detail.sight / TILE_METERS;
+        },
         described: (e) => this.burst(e),
-        // When a finished round closes, start the next one on a fresh map.
-        closed: () => (this.roundOver ? location.reload() : this.hud.status("Disconnected")),
+        // When a finished round closes, start the next one on a fresh map; a room lost for good
+        // (the server restarted) starts a new game with the same choices.
+        closed: () => {
+          if (this.roundOver) return location.reload();
+          this.hud.banner("The game server restarted\nstarting a new game…");
+          window.setTimeout(playAgain, 2500);
+        },
       });
     } catch {
       this.hud.status("Cannot reach the server");
@@ -166,6 +226,9 @@ class World extends Phaser.Scene {
     if (me) this.cameras.main.centerOn(me.x * PX, me.y * PX);
     this.startPainter();
     this.updateChunks();
+    this.gatherRing = this.add.graphics().setDepth(11000);
+    this.tracerGfx = this.add.graphics().setDepth(11001);
+    this.fog = this.makeFog();
     // enableCapture false: the keys must still reach the spelling box.
     this.keys = this.input.keyboard!.addKeys(
       { up: "UP", down: "DOWN", left: "LEFT", right: "RIGHT", w: "W", a: "A", s: "S", d: "D" }, false,
@@ -197,7 +260,7 @@ class World extends Phaser.Scene {
       });
       this.foe = hit;
       this.net.attack(hit);
-      if (!hit) this.net.move(x, y);
+      if (!hit) { this.net.move(x, y); this.gathering = null; }
     });
     this.input.mouse?.disableContextMenu();
     window.addEventListener("keydown", (e) => {
@@ -299,6 +362,143 @@ class World extends Phaser.Scene {
     this.tweens.add({ targets: mark, alpha: 0, delay: 1200, duration: 600, onComplete: () => mark.destroy() });
   }
 
+  /**
+   * Letters gained: the popup (fx), and a gathering action that found its letter is over. A
+   * hunt's food shows on the HUD with the next loadout.
+   */
+  private onGot(g: Got) {
+    this.fx.got(g);
+    if (GATHERED.has(g.why)) this.gathering = null;
+  }
+
+  /**
+   * Blows where we can see them: the struck flash, shake and show their health for a while,
+   * with a number; the striker lunges, and a line (a tracer for a shot) joins them for a moment.
+   * A blow on you reddens the screen's edge from its side and marks who struck you.
+   */
+  private onHits(list: Hit[]) {
+    const now = this.time.now, mine = this.net.sessionId;
+    for (const h of list) {
+      const target = this.views.get(h.on), attacker = this.views.get(h.by);
+      if (target && h.kind !== "miss") {
+        target.flashUntil = now + 160; target.shakeUntil = now + 260; target.crit = h.kind === "crit";
+        target.barUntil = now + BAR_SECONDS * 1000;
+      }
+      if (attacker && target) { attacker.lungeUntil = now + 220; attacker.lungeTo = { x: target.x, y: target.y }; }
+      const at = this.net.state.players.get(h.on) ?? this.net.state.things.get(h.on) ?? (target ? { x: target.x / PX, y: target.y / PX } : null);
+      this.hitCount++;
+      if (at) this.fx.number(at.x, at.y - 1.4, h.amount, h.kind, h.layer, h.on === mine);
+      this.tracers.push({ from: h.by, to: h.on, ...(h.x !== undefined ? { fx: h.x, fy: h.y } : {}), until: now + (h.ranged ? 260 : 180), ranged: h.ranged, mine: h.on === mine || h.by === mine });
+      if (h.on === mine && h.kind !== "miss") {
+        const from = this.net.state.players.get(h.by) ?? (h.x !== undefined ? { x: h.x, y: h.y } : null), me = this.net.state.players.get(mine);
+        this.fx.hurt(from && me ? Math.atan2(from.y - me.y, from.x - me.x) : null, h.kind === "crit" || h.amount >= 20);
+        if (this.views.has(h.by)) this.threats.set(h.by, now + THREAT_SECONDS * 1000);
+      }
+    }
+    if (this.tracers.length > 60) this.tracers.splice(0, this.tracers.length - 60);
+  }
+
+  /**
+   * Drawn over the world each frame: the camera zoomed to what you can see with fog past it,
+   * the gathering ring, attack lines, marks on whoever is attacking you, effects, and the hint
+   * of what you can do where you stand.
+   */
+  private overlays(time: number, delta: number) {
+    const cam = this.cameras.main, me = this.net.state.players.get(this.net.sessionId);
+    // Zoom so the screen holds your sight, easing when it changes (night, a TELESCOPE, BLIND).
+    const half = (Math.min(innerWidth, innerHeight) / 2) * SIGHT_FILL;
+    const want = DPR * Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, half / (Math.max(1, this.sightTiles) * PX)));
+    if (Math.abs(cam.zoom - want) > 1e-3) cam.setZoom(cam.zoom + (want - cam.zoom) * Math.min(1, delta / 350));
+    // Past your sight: fog. The clear circle is your sight's radius on screen.
+    const r = this.sightTiles * PX * cam.zoom;
+    this.fog.setPosition(cam.width / 2, cam.height / 2).setScale((r / FOG_CLEAR) / (cam.zoom), (r / FOG_CLEAR) / cam.zoom);
+    // Gathering: a ring filling round your feet over GATHER_SECONDS, with flicks of earth.
+    const g = this.gatherRing.clear();
+    const mv = this.views.get(this.net.sessionId);
+    if (this.gathering && mv && me) {
+      const p = Math.min(1, (time - this.gathering.start) / this.gathering.ms);
+      const R = 20, cx = mv.x, cy = mv.y + 1;
+      g.fillStyle(0x3a2a1e, 0.3).fillEllipse(cx, cy, R * 2.3, R * 1.15);
+      g.lineStyle(6, 0xfbf6ea, 0.95).strokeEllipse(cx, cy, R * 2, R);
+      g.lineStyle(4.5, 0xe9b949, 1).beginPath();
+      for (let i = 0; i <= 40 * p; i++) {
+        const a = -Math.PI / 2 + (i / 40) * Math.PI * 2;
+        const x = cx + Math.cos(a) * R, y = cy + Math.sin(a) * R * 0.5;
+        if (i === 0) g.moveTo(x, y); else g.lineTo(x, y);
+      }
+      g.strokePath();
+      for (let i = 0; i < 3; i++) {
+        const k = ((time / 380 + i / 3) % 1), a = i * 2.1 + time / 900;
+        g.fillStyle(0x7a5a3a, 1 - k).fillCircle(cx + Math.cos(a) * 10 * k, cy - 18 * Math.sin(k * Math.PI), 2);
+      }
+      if (time - this.gathering.start > this.gathering.ms + 1500) this.gathering = null; // the server never answered
+    }
+    // Attack lines: a quick ink stroke for a swing, a bright tracer for a shot.
+    const t = this.tracerGfx.clear();
+    this.tracers = this.tracers.filter((tr) => tr.until > time);
+    for (const tr of this.tracers) {
+      const a = this.views.get(tr.from), b = this.views.get(tr.to);
+      const from = a ? { x: a.x, y: a.y - a.top * 0.3 } : tr.fx !== undefined ? { x: tr.fx * PX, y: tr.fy! * PX } : null;
+      if (!from || !b) continue;
+      const to = { x: b.x, y: b.y - b.top * 0.3 }, k = (tr.until - time) / (tr.ranged ? 260 : 180);
+      if (tr.ranged) {
+        const head = 1 - k, tail = Math.max(0, head - 0.35);
+        t.lineStyle(2.2, tr.mine ? 0xffe27a : 0xfff3c4, 0.95).lineBetween(from.x + (to.x - from.x) * tail, from.y + (to.y - from.y) * tail, from.x + (to.x - from.x) * head, from.y + (to.y - from.y) * head);
+      } else {
+        t.lineStyle(1.6, tr.mine ? 0xd9573b : 0x4a3f33, 0.55 * k).lineBetween(from.x, from.y, to.x, to.y);
+        const ang = Math.atan2(to.y - from.y, to.x - from.x);
+        t.lineStyle(2.4, 0xfbf6ea, 0.9 * k).beginPath().arc(to.x, to.y, 9, ang + Math.PI - 0.9, ang + Math.PI + 0.9).strokePath();
+      }
+    }
+    // Whoever struck you lately: a red pulsing mark over them.
+    for (const [id, until] of this.threats) {
+      const v = this.views.get(id);
+      if (!v || until < time) { this.threats.delete(id); continue; }
+      const y = v.y - v.top * 0.5 - 18 + Math.sin(time / 120) * 1.5;
+      t.fillStyle(0xd9573b, 0.95).fillTriangle(v.x - 5, y - 6, v.x + 5, y - 6, v.x, y + 2);
+      t.lineStyle(1.5, 0xd9573b, 0.5 + Math.sin(time / 90) * 0.3).strokeCircle(v.x, v.y - v.top * 0.25, Math.max(10, v.half + 6));
+    }
+    this.fx.frame(performance.now());
+    if (me && time - this.lastPrompt > 200) { this.lastPrompt = time; this.promptAt(me); }
+    else if (!me) this.hud.prompt("", "");
+  }
+
+  /** The fog past your sight: one canvas, clear in the middle, paper-grey beyond; scaled to fit. */
+  private makeFog(): Phaser.GameObjects.Image {
+    const tex = this.textures.createCanvas("fog", FOG_SIZE, FOG_SIZE)!;
+    const ctx = tex.context, c = FOG_SIZE / 2;
+    const grad = ctx.createRadialGradient(c, c, FOG_CLEAR * 0.92, c, c, FOG_CLEAR * 1.18);
+    grad.addColorStop(0, "rgba(226, 216, 196, 0)");
+    grad.addColorStop(1, "rgba(226, 216, 196, 0.62)");
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, FOG_SIZE, FOG_SIZE);
+    tex.refresh();
+    return this.add.image(0, 0, "fog").setScrollFactor(0).setDepth(11500);
+  }
+
+  /**
+   * What you can do where you stand, over the letter bar: dig a cache, gather at the temple,
+   * trade at a market, claim something nobody owns that is too big to carry.
+   */
+  private promptAt(me: { x: number; y: number }) {
+    let best: { d: number; key: string; text: string } | null = null;
+    const offer = (d: number, key: string, text: string) => { if (!best || d < best.d) best = { d, key, text }; };
+    this.net.state.things.forEach((t: any) => {
+      const d = Math.hypot(t.x - me.x, t.y - me.y);
+      if (d > SITE_RADIUS + 0.5) return;
+      const name = String(t.phrase).toUpperCase();
+      if (t.fixture === "cache") offer(d, "G", "dig the buried cache: X and a prize");
+      else if (t.fixture === "temple") offer(d, "G", "pray at the TEMPLE for Q");
+      else if (t.fixture === "market") offer(d, "Enter", "trade at the MARKET: trade eee for o");
+      else if (!t.owner && d <= 2) {
+        const set = dictionary.word(lookOf(dictionary, t.phrase).noun)?.set;
+        if (set && !set.tile_type) offer(d, "E", set.portable === false ? `claim ${name}: it becomes yours` : `pick up ${name}`);
+      }
+    });
+    const b = best as { key: string; text: string } | null;
+    this.hud.prompt(b?.key ?? "", b?.text ?? "");
+  }
+
   /** Right-click: the inspect card for whoever or whatever is under the pointer; nothing there closes it. */
   private inspectAt(x: number, y: number, p: Phaser.Input.Pointer) {
     const id = this.hitAt(x, y, true);
@@ -320,6 +520,14 @@ class World extends Phaser.Scene {
       name = String(thing.phrase);
       card = read(name, thing.count);
       extra = [thing.owner ? `belongs to ${nameOf(thing.owner)}` : "belongs to nobody", `condition ${Math.round(thing.hp)}%`];
+      const how: Record<string, string> = {
+        cache: "a buried cache: stand by it and press G to dig. Each dig gives an X; the last turns up a prize of letters",
+        temple: "the map's one temple: press G beside it for Q, which comes back slowly",
+        market: "a market: Enter, then trade eee for o (three of a letter for one you want), and a T for every trade",
+        ruin: thing.owner ? "a ruin: it makes R for its owner; break it for D and X" : "a ruin nobody owns: E beside it to claim it (it makes R for you), or break it for D and X",
+      };
+      if (how[thing.fixture]) extra.unshift(how[thing.fixture]!);
+      else if (!thing.owner) extra.unshift("nobody's: E beside it to take it, or to claim it if it is too big to carry");
     } else if (who.owner) {
       name = String(who.name);
       card = read(name, who.count);
@@ -428,6 +636,7 @@ class World extends Phaser.Scene {
         bar: this.add.rectangle(0, 0, 16, 2, 0x7fbf6a).setOrigin(0, 0.5).setDepth(10002).setVisible(false),
         flames: [], badges: [], drawn: "", tagged: "", badged: "", top: 20, half: 8, flies: false, living: false, spots: [],
         x: NaN, y: NaN, facing: 1, phase: Math.random() * 10, moving: 0,
+        flashUntil: 0, shakeUntil: 0, barUntil: 0, crit: false, lungeUntil: 0, lungeTo: null,
       };
       this.views.set(id, v);
     }
@@ -487,7 +696,15 @@ class World extends Phaser.Scene {
   private place(v: View, id: string, time: number, hp: number, showBar: boolean) {
     const t = time / 1000;
     const bob = v.flies ? Math.sin(t * 2 + v.phase) * 1.5 : v.moving > 0 ? -Math.abs(Math.sin(t * 12 + v.phase)) * 1.2 : 0;
-    v.body.setPosition(v.x, v.y + bob).setDepth(100 + v.y + (v.flies ? 40 : 0)).setFlipX(v.facing < 0);
+    // Struck: a shake; striking: a lunge toward the target and back.
+    let ox = 0, oy = 0;
+    if (v.shakeUntil > time) { const k = (v.shakeUntil - time) / 260; ox += Math.sin(time * 0.09) * 2.6 * k * (v.crit ? 1.8 : 1); }
+    if (v.lungeUntil > time && v.lungeTo) {
+      const k = Math.sin(((v.lungeUntil - time) / 220) * Math.PI), dx = v.lungeTo.x - v.x, dy = v.lungeTo.y - v.y, d = Math.hypot(dx, dy) || 1;
+      ox += (dx / d) * 5 * k; oy += (dy / d) * 5 * k;
+      if (Math.abs(dx) > 0.5) v.facing = dx > 0 ? 1 : -1;
+    }
+    v.body.setPosition(v.x + ox, v.y + bob + oy).setDepth(100 + v.y + (v.flies ? 40 : 0)).setFlipX(v.facing < 0);
     v.body.setRotation(v.living ? Math.sin(t * 1.6 + v.phase) * 0.03 + (v.moving > 0 ? Math.sin(t * 12 + v.phase) * 0.05 : 0) : 0);
     v.flames.forEach((f, i) => {
       const [fx, fy] = v.spots[i]!;
@@ -496,6 +713,11 @@ class World extends Phaser.Scene {
       f.setScale(base * (0.92 + Math.sin(t * 6 + i) * 0.08), base * flick);
       f.setRotation(Math.sin(t * 4 + i * 1.7) * 0.12);
     });
+    // A blow flashes it white, then red.
+    if (v.flashUntil > time) v.body.setTint((v.flashUntil - time) > 90 ? 0xffffff : 0xff4a3a).setTintMode(Phaser.TintModes.FILL);
+    else if (v.body.tintMode !== Phaser.TintModes.MULTIPLY) v.body.setTintMode(Phaser.TintModes.MULTIPLY);
+    const fade = v.barUntil > time && v.barUntil - time < 1000 ? (v.barUntil - time) / 1000 : 1;
+    v.bar.setAlpha(fade); v.barBack.setAlpha(fade);
     const tagY = v.y + 7 + (v.flies ? 2 : 0);
     v.tag.setPosition(v.x, tagY + v.tag.displayHeight / 2 - 3);
     const barW = 18;
@@ -584,7 +806,7 @@ class World extends Phaser.Scene {
       this.dress(v, look, undefined, []);
       this.label(v, [counted(t.phrase, t.count)], t.owner === mine ? TAG_INK.mine : t.owner ? TAG_INK.theirs : TAG_INK.wild);
       v.x = t.x * PX; v.y = t.y * PX;
-      this.place(v, id, time, t.hp, t.hp < 100);
+      this.place(v, id, time, t.hp, t.hp < 100 && v.barUntil > time);
     });
     state.players.forEach((p: any, id: string) => {
       live.add(id);
@@ -610,11 +832,12 @@ class World extends Phaser.Scene {
       if (Math.abs(dx) > 0.15) v.facing = dx > 0 ? 1 : -1;
       v.moving = Math.hypot(dx, dy) > 0.3 ? 0.3 : Math.max(0, v.moving - delta / 1000);
       v.x += dx * k; v.y += dy * k;
-      this.place(v, id, time, p.hp, true);
+      this.place(v, id, time, p.hp, id === mine || (p.hp < 100 && v.barUntil > time));
       if (id === mine || (id === this.watching && !state.players.get(mine))) this.cameras.main.centerOn(v.x, v.y);
     });
     for (const [id, v] of this.views) if (!live.has(id)) this.drop(id, v);
     this.unstackTags();
+    this.overlays(time, delta);
 
     // Light at night: fires, burning and glowing things, and a lantern for you.
     const lights: { x: number; y: number; r: number; warm: boolean }[] = [];
@@ -641,6 +864,7 @@ class World extends Phaser.Scene {
     const dy = typing ? 0 : Number(keys.down.isDown || keys.s.isDown) - Number(keys.up.isDown || keys.w.isDown);
     if (dx || dy) {
       if (time - this.lastSteer > 100) { this.net.move(me.x + dx * 3, me.y + dy * 3); this.lastSteer = time; }
+      this.gathering = null;
       this.steering = true;
     } else if (this.steering) {
       this.net.stop(); // stop where the server has us, not where our older copy says

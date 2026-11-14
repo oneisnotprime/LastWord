@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
-  aggressive, authorityOf, chooseTarget, commandLimit, draw, groundFood, ignoresOrder, moraleAim, moraleGoal, needs, nextMorale,
+  aggressive, carcassFood, authorityOf, chooseTarget, commandLimit, draw, groundFood, ignoresOrder, moraleAim, moraleGoal, needs, nextMorale,
   outputs, recruitRate, startingSupply, STARTING_SUPPLY_MINUTES, rerouteSeconds, resolve, retreats, routed, seeded, strikeUnit, supply, theftResistance, Tile, UNCOMMANDED, Unit, useObject,
   type Stores,
 } from "./index.js";
@@ -115,5 +115,17 @@ describe("starting supply", () => {
     expect(startingSupply(resolve(dict, "radar"), 2)).toEqual({ food: 0, fuel: 0, power: 2 * 20 * STARTING_SUPPLY_MINUTES });
     expect(startingSupply(resolve(dict, "dragon"))).toEqual({ food: 0, fuel: 0, power: 0 });
     expect(startingSupply(resolve(dict, "sword"))).toEqual({ food: 0, fuel: 0, power: 0 });
+  });
+});
+
+describe("hunting", () => {
+  it("a hunted body feeds by its mass: a cow far more than a chicken, nothing from a car", () => {
+    const dict = demo();
+    const cow = carcassFood(resolve(dict, "cow", [])), chicken = carcassFood(resolve(dict, "chicken", []));
+    expect(cow).toBeGreaterThan(10);
+    expect(chicken).toBeGreaterThan(0);
+    expect(cow / chicken).toBeGreaterThan(20);
+    expect(carcassFood(resolve(dict, "chicken", []), 3)).toBeCloseTo(chicken * 3, 0);
+    expect(carcassFood(resolve(dict, "car", []))).toBe(0);
   });
 });

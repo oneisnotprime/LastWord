@@ -70,9 +70,9 @@ describe("strike", () => {
 describe("tick and duel", () => {
   it("strikes at the attack rate", () => {
     const wolf = make("wolf");
-    const cow = make("cow");
-    tick(wolf, cow, 1, () => 0.5); // wolf: 1.2 strikes a second, 35 pierce
-    expect(cow.integrity).toBe(450 - 70);
+    const horse = make("horse");
+    tick(wolf, horse, 1, () => 0.5); // wolf: 1.2 strikes a second, 35 pierce
+    expect(horse.integrity).toBe(400 - 70);
   });
 
   it("uses up single-use weapons", () => {
