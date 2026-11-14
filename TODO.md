@@ -226,10 +226,27 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
 - [x] M3: client connects, draws the map, walks, and spells words into objects
 - [ ] Controller input: movement, and spelling by picking from held letters
 - [ ] Spelled objects only sit on the ground; no equipping, placement rules or effects yet
-- [ ] Starter letters are a placeholder hand (SWORD plus 20 random) until letter sources exist
+- [x] Starting hand: eight letters drawn around a word that produces a letter the actions do not
+      give (DOG, FARM, MILL, LANE...); no free SWORD
 - [x] M4: gathering by hand, letter production from objects, giving letters to a nearby player
-- [ ] Letter sources are a first pass: gathering depends only on the ground, and objects pay
-      out without needing labour, water or fuel. D, F, H, K, V, J, Q, X, Z have no source yet
+- [x] Letter economy part 1 (PLAN.md): the action letters. Gathering finds E anywhere, O by
+      water, G in hills and at mountain feet, U by mountains, from 8-tile patches that run out and
+      grow back slowly; H from hunting wild animals (30 a map), D from destroying (and X from 10
+      broken ruins), K from killing people (V and K for someone's creature, H for a wild one),
+      J from each new 32-tile region, X from 12 buried caches, Q from the one temple, T from
+      trading at a market in every city (`trade eee for o`: 3 for 1, plus a T); F when fire
+      destroys a thing, V from beating another player's things. A reachability check (shared
+      `reachTable`) runs with the tests and prints the shortest chain to every letter
+- [ ] Letter economy part 2: producers need their conditions (A from crops on tilled land, I from
+      livestock, P from planted flora on a cycle, W varying with weather, M machines converting
+      vowels, C crafting stations, B base furniture, Y age of surviving objects); HOE, OX, HEDGE
+      and the other plan words are not in the dictionary yet
+- [ ] Letter economy part 3: land held (L), roads and routes (R), citizens in cities you control
+      (S), hired NPC labour (N), Z from roaming bosses and transmuting commons; a real trading
+      interface for markets and players
+- [x] Spawns: people start at least 60 tiles apart where the map allows, out of cities
+- [x] Bots keep the peace for 60 to 90 s, spell at most once every 5 to 10 s, build producers
+      first, use the action sources, and only go for people within twice their sight
 - [ ] Trading is a typed command (give player2 abc); needs a real interface and two-way offers
 - [x] M5 (part): equipping, picking up and dropping, attacking players, death and knockout,
       last one alive wins
@@ -237,6 +254,8 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
       D, K and V now have sources (destroying things, kills, beating another player's things)
 - [x] M5: verbs act on the caster for their duration (RUN, FLY, HEAL, SNEAK, HIDE); THEFT takes a
       selected thing if your stealth meets its security; sky words set day, night and weather
+- [x] Anything spelled that moves, is not ridden and is alive, sentient or self-propelled follows
+      you: GHOST, ZOMBIE and ROBOT now fight for you and need no food (a ROBOT draws power)
 - [x] M5: creatures you spell follow you, defend you and fight what you fight; ones you can
       ride are mounts instead; they outlive their master, ownerless
 - [x] Events act through their properties: MURDER, RAID, REPAIR, RESCUE, TRADE, REVOLT, AMBUSH,
