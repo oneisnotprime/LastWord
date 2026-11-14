@@ -178,7 +178,7 @@ plague	mass destruction	6	15.3	2.6	-	noun:affliction
 bomb	mass destruction	4	15.9	4.0	-	noun:weapon
 antimatter	mass destruction	10	16.3	1.6	-	noun:material
 flood	mass destruction	5	16.5	3.3	-	noun:phenomenon
-void	mass destruction	4	16.6	4.2	V	adjective:quality
+void	mass destruction	4	16.6	4.2	V	noun:quality
 inferno	mass destruction	7	16.7	2.4	-	noun:place
 war	mass destruction	3	16.9	5.6	W	noun:conflict
 famine	mass destruction	6	17.0	2.8	-	noun:disaster

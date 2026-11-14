@@ -1791,39 +1791,6 @@
    "core": false
   },
   {
-   "word": "astronaut",
-   "set": {},
-   "ops": [
-    [
-     "sight_range",
-     "mul",
-     1.3
-    ],
-    [
-     "produce_Y",
-     "mul",
-     1.5
-    ],
-    [
-     "res_suffocation",
-     "add",
-     0.5
-    ],
-    [
-     "res_radiation",
-     "add",
-     0.5
-    ],
-    [
-     "res_cold",
-     "add",
-     0.5
-    ]
-   ],
-   "letters": "jy",
-   "core": false
-  },
-  {
    "word": "physicist",
    "set": {},
    "ops": [
@@ -2561,6 +2528,23 @@
    ],
    "letters": "sy",
    "core": false
+  },
+  {
+   "word": "chairman",
+   "set": {
+    "trade_rate": 0.8,
+    "command_limit": 8.0,
+    "authority": 3
+   },
+   "ops": [
+    [
+     "produce_T",
+     "mul",
+     1.5
+    ]
+   ],
+   "letters": "ts",
+   "core": false
   }
  ],
  "buildings": [
@@ -2641,6 +2625,7 @@
   "window",
   "television",
   "garden",
+  "port",
   "museum",
   "vice",
   "restaurant",
@@ -2662,8 +2647,7 @@
   "gym",
   "lab",
   "resort",
-  "theater",
-  "arena"
+  "theater"
  ],
  "legendaries": [
   {

@@ -88,7 +88,7 @@ clear	adjective	modifier	quality	5.25	core	a00429900	verb:transform,noun:place,a
 close	adjective	modifier	quality	5.36	core	a00448955	verb:contact,noun:act,adverb:manner
 clothes	noun	artifact	clothing	4.72	core	n02731365	-
 club	noun	artifact	weapon	5.2	core	n08096490	verb:social
-coach	noun	person	leader	4.96	core	n09951098	verb:movement
+coach	noun	person	worker	4.96	core	n09950876	verb:movement
 coast	noun	terrain	landform	4.87	core	n09451197	verb:movement
 coffee	noun	consumable	drink	4.86	core	n07945759	-
 college	noun	artifact	building	5.27	core	n08295090	-
@@ -341,6 +341,7 @@ played	adjective	modifier	participle	5.23	core	a03164026	-
 police	noun	person	worker	5.33	core	n08226608	verb:social
 pool	noun	terrain	water	4.67	core	n09420266	verb:transfer
 pop	noun	consumable	drink	4.87	core	n07943752	verb:movement,adjective:quality,adverb:manner
+port	noun	artifact	building	4.73	core	n08651532	adjective:quality,verb:movement
 post	noun	artifact	structure	5.43	core	n08641960	verb:contact
 press	noun	artifact	machine	5.16	core	n04006669	verb:contact
 pretty	adjective	modifier	quality	5.38	core	a00221674	adverb:manner

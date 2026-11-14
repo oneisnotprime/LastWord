@@ -14,13 +14,19 @@ OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data")
 DAMAGE = ("blunt slash pierce crush fire cold electric acid poison radiation blast sonic light dark "
           "water wind earth psychic holy unholy disease magic suffocation hunger").split()
 MEDIA = "land water air underground space".split()
-STATUS = "stun slow blind fear burn freeze poison bleed sleep charm silence root confuse shrink sick rage deaf debt curse bless expose".split()
+STATUS = "stun slow blind fear burn freeze poison bleed sleep charm silence root confuse shrink sick rage deaf debt curse bless expose haste stasis truce chaos void doom".split()
 
 # What the newer statuses do, for the generator's prompt (the rest explain themselves).
 STATUS_MEANS = {
     "debt": " (debt: pays whoever put it on them a letter every 10 s, commonest first; BANKRUPTCY ends it; a thing of a debtor's has no security against their creditor: shared money.ts)",
     "curse": " (curse: earns half the letters, aims worse, glum; EXORCISM, BLESSING end it: shared faith.ts)",
     "bless": " (bless: earns half again as many letters, heals a little, cheered: shared faith.ts)",
+    "haste": " (haste: time runs twice as fast for them: twice the speed and attacks, their other statuses wear off twice as fast; ends slow, and slow ends it: shared time.ts)",
+    "stasis": " (stasis: time stops for them: they cannot move, strike or spell, nothing can hurt them, their other statuses wait: shared time.ts)",
+    "truce": " (truce: untouchable and harmless: no blow lands on them and they cannot strike or spell; they may walk, gather and trade: shared sport.ts)",
+    "chaos": " (chaos: a handful of their properties (speed, damage rate, armour, aim, strength, sight...) are each multiplied by a random 0.25 to 3 while it lasts: shared idea.ts)",
+    "void": " (void: nothing they carry, wear, ride or stand in does anything, and their own damage, statuses and flight are nothing: shared idea.ts)",
+    "doom": " (doom: a sealed fate: when it runs out the body takes three quarters of its full integrity as damage nothing resists, unless ended first (effect_status=doom): shared idea.ts)",
     "expose": " (expose: shown on every enemy's threat arrows wherever they are, no stealth or disguise; immune_expose also keeps letters from being read: shared signal.ts)",
 }
 
@@ -135,6 +141,9 @@ disguise|scale|0||worn: passes its wearer off as one of another side: enemies' c
 camouflage|tags|||terrain types where stealth doubles
 cover|frac|0||damage reduction it gives things behind or inside it
 untargetable|bool|false||cannot be chosen as a target
+anchored|bool|false||held fast: no pull, push, knockback or waves move or rock it, and its rider (shared space.ts, sea.ts)
+luck|scale|0||shifts its holder's dice: each point adds 3% to gathering odds and to hitting, landing criticals and dodging; negative is misfortune (shared idea.ts)
+peace|num|0|s|carried or following: gives whoever takes it a truce for this many seconds, once (untouchable, cannot strike or spell); a word that ends truce (effect_status=truce) breaks it (shared sport.ts)
 indestructible|bool|false||defence absolute: integrity cannot reach 0
 """.strip().split("\n"))
 GROUPS["perception"] = """
@@ -284,6 +293,7 @@ on_owner_death|enum|drop|drop,vanish,explode,pass_to_heir,revive_owner|what it d
 survives_death|bool|false||stays with a successor instead of becoming loot
 prevents_death|num|0||deaths it absorbs before it is used up
 locks|bool|false||its target cannot be dismantled, moved or stolen
+docks|bool|false||a port, harbour or pier on the ground: a market for anyone at it, its owner earning a T toll on others' trades, and vessels its owner spells within 30 tiles are launched at the water beside it (shared sea.ts)
 """
 GROUPS["field"] = """
 field_radius|num|0|m|reach of the aura or condition (ABS = whole map)
@@ -301,6 +311,11 @@ sets_daylight|enum|none|none,day,night|forces day or night in its field
 sets_weather|text|||weather it starts in its field
 clears_weather|tags|||weather it ends in its field; a weather word with a tile_type lays it in patches over the land while it lasts (snow over grass and shallow water, floods beside water, drought dries shallow water to sand: shared weather.ts)
 decoys|num|0||false marks it puts on the threat arrows and minimaps of everyone its field reaches: that many made-up people closing in; seen through with detect_stealth 5 or more (shared signal.ts)
+time_scale|num|1|x|how fast time runs for whoever it is on or its field reaches (field words: an operation, time_scale*0.5): movement, attacks and statuses wearing off; inside an area also letters made, crops growing and things ageing into Y run this many times as fast (shared time.ts)
+gravity|num|1|g|the pull of the ground on whoever it reaches (field words: an operation, gravity*0.2): under 1 they bound faster, shots fly farther and blows knock them back farther, under 0.3 they float over water and walls; over 1 they plod and shoot short, and from 3 nothing can fly (shared space.ts)
+pull|num|0|m/s|its field draws every body it reaches toward its centre this fast (negative pushes them out); anchored bodies stay put (shared space.ts)
+meteors|num|0|/min|its field drops this many impacts a minute near people inside it: each strikes with the word's own damage over its attack_area (a METEOR SHOWER, STARFALL) (shared space.ts)
+waves|num|0|m|rough water in its field: vessels afloat take damage by wave height against their length (a big ship rides it out) and sail slower; anchored ones are spared (shared sea.ts)
 jams|bool|false||its field blacks out the minimap and watching things (MAP, RADAR, CAMERA) of everyone it reaches (shared signal.ts)
 """
 GROUPS["event"] = """
@@ -318,6 +333,13 @@ moves_target|num|0|m|distance the target is carried toward the speller
 summons|text|||creature that appears in its area as it begins
 summon_count|num|0||how many it summons
 summon_owned|bool|false||what it summons follows its maker instead of running wild
+ages|num|0|min|ages its target at once by this many minutes: a thing or creature (or everything a person carries) yields more Y as it ages, food rots; negative makes it young again (shared time.ts)
+rewinds|num|0|s|undoes the damage whoever it lands on took in the last this many seconds: health back to the best it was, and burn, poison and bleed taken since gone (shared time.ts)
+stakes|num|0|letters|a challenge passed on a person (DUEL, WAGER): each puts this many letters into a pot and a ring (field_radius, field_duration) holds the two of them; blows inside cannot kill (the loser is left standing at a tenth), and whoever drops the other, or dealt more when time runs out, takes the pot; a word that counters it voids it and hands the stakes back (shared sport.ts)
+race_to|num|0|m|a challenge with stakes run as a race: a flag stands this far off and the first of the two to reach it takes the pot (shared sport.ts)
+forfeits|bool|false||gives up its speller's challenges: the other side takes the pot (shared sport.ts)
+swaps_owners|bool|false||passed on a thing or creature someone else owns: it becomes the speller's, and the speller's most valuable thing or creature becomes theirs (shared idea.ts)
+misspells|bool|false||passed on a thing or creature: one letter of its name changes and it becomes that word (a SWORD to a SWARD), or it breaks if no word is one letter off (shared idea.ts)
 """
 GROUPS["effect"] = """
 cast_time|num|0|s|delay between spelling and effect

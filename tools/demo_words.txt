@@ -49,7 +49,6 @@ train: mass=400000 length=200 integrity=20000 material=steel speed_land=45 self_
 wagon: mass=400 length=4 integrity=200 material=wood speed_land=0 mountable=true seats=4 carry_capacity=1500 storage_objects=1500
 
 # noun vehicle_water
-boat: mass=300 length=5 integrity=200 material=wood buoyancy=8 speed_water=4 mountable=true seats=6 carry_capacity=600 placeable_on=water
 ship: mass=2000000 length=100 integrity=30000 material=steel buoyancy=10 speed_water=12 self_propelled=true mountable=true seats=200 carry_capacity=5000000 storage_objects=5000000 upkeep_fuel=3 placeable_on=deep_water
 submarine: mass=7000000 length=110 integrity=25000 hardness=8 material=steel speed_water=15 dive_depth=400 self_propelled=true mountable=true seats=100 stealth=8 upkeep_fuel=3 placeable_on=deep_water dmg_blast=3000 attack_rate=0.05 attack_range=20000 targets=water
 
@@ -84,7 +83,6 @@ forge: mass=3000 footprint=2 integrity=4000 material=stone,iron portable=false t
 mill: mass=40000 footprint=4 height=15 integrity=3000 material=wood,stone portable=false produce_W=1.5 food_output=5 production_needs=wind
 well: mass=5000 footprint=1 depth=20 integrity=2000 material=stone portable=false produce_O=1 water_output=20
 vault: mass=50000 footprint=2 integrity=100000 hardness=10 material=steel portable=false lockable=true security=10 storage_letters=10000 res_blast=0.9 res_fire=1 survives_death=true
-lighthouse: mass=800000 footprint=2 height=40 integrity=25000 material=stone portable=false luminosity=10 sight_range+2000 map_reveal=40 night_vision=true
 
 # noun route
 road: mass=100000 footprint=10 integrity=10000 material=stone portable=false tile_type=road movement_cost=0.5 produce_R=0.5 plural_count=5
@@ -121,7 +119,6 @@ torch: mass=0.5 length=0.5 integrity=10 material=wood equip_slot=held hands_requ
 harvester: mass=12000 length=8 integrity=2500 material=steel speed_land=6 self_propelled=true mountable=true seats=1 reclaim_rate=0.5 reclaim_range=15 harvest_bonus=4 harvest_sources=field upkeep_fuel=0.5
 
 # noun device
-telescope: mass=5 length=1 integrity=15 material=glass,brass equip_slot=held sight_range+3000 read_properties=3
 radar: mass=2000 footprint=1 integrity=500 portable=false sight_range=50000 sees_through=fog,walls,night detect_stealth=6 alarm=true upkeep_power=20 targets=air
 compass: mass=0.1 integrity=10 equip_slot=held detect_letters=200 map_reveal=5
 magnet: mass=2 integrity=200 material=iron magnetism=8 letter_steal=1 attack_range=5 counters=steel,iron
@@ -380,7 +377,6 @@ hope: field_radius=50 field_targets=owned field_duration=3 morale+5 regeneration
 courage: field_radius=30 field_targets=owned courage+6 immune_fear=true morale+2
 
 # noun attribute
-luck: field_radius=0 field_targets=self critical+0.25 evasion+0.15 harvest_bonus*1.5
 
 # noun conflict
 war: placement=region placement_range=500 event_target=faction event_radius=600 event_duration=10 sets_hostile=true law=trade summons=soldier summon_count=6 summon_owned=true aggression+5 attack_rate*1.5 morale+-1 produce_K*3 produce_V*3 produce_D*2 counters=festival,carnival,holiday,parade,fiesta,gala,truce
@@ -510,7 +506,6 @@ dive: duration=60 dive_depth+50 speed_water+4 stealth+3
 sneak: duration=60 stealth+5 speed_land*0.5 loudness+-5
 dash: duration=3 speed_land*5 evasion+0.5
 vanish: duration=10 stealth=ABS untargetable=true
-float: duration=120 buoyancy+10 hover=true
 dig: duration=30 speed_underground+0.5 detect_underground=true harvest_bonus*2
 
 # verb body
@@ -574,7 +569,6 @@ plunder: placement=self field_radius=4 field_targets=self field_duration=5 produ
 pillage: placement=self field_radius=4 field_targets=self field_duration=5 produce_D*2 produce_F*3 dmg_fire+20 inflict_burn+2
 loot: placement=self field_radius=4 field_targets=self field_duration=3 produce_K*2 produce_V*2 produce_H*2
 booty: placement=self field_radius=4 field_targets=self field_duration=5 produce_X*3 produce_T*2
-jinx: placement=target placement_range=60 field_radius=8 field_targets=enemies field_duration=5 harvest_bonus*0.2 accuracy+-0.3 critical+-0.2 counters=luck,serendipity,blessing,cornucopia
 crackdown: placement=region field_radius=150 field_targets=enemies field_duration=3 law=spell,theft inflict_slow=1 counters=riot,looting,revelry,plunder,pillage,loot,booty
 nightmare: placement=target placement_range=60 field_radius=10 field_targets=enemies field_duration=2 inflict_fear=2 morale+-4 courage+-3 counters=dawn,sunrise,exorcism
 
@@ -742,7 +736,6 @@ looting: placement=region event_radius=60 event_duration=3 produce_D*3 produce_X
 riot: placement=region event_radius=80 event_duration=3 sets_hostile=true law=trade aggression+5 morale+-1 produce_D*3 counters=curfew,lockdown,crackdown,patrol
 rebellion: placement=region event_radius=200 event_duration=5 sets_hostile=true authority+-5 obedience+-5 produce_V*3 counters=tax,tithe,toll,tariff,levy,customs,duty,tribute,curfew,lockdown,crackdown,monopoly,embargo
 uprising: placement=region event_radius=150 event_duration=4 sets_hostile=true courage+4 produce_K*2 counters=siege,blockade,curfew,crackdown
-mutiny: placement=region event_radius=60 frees_target=true counters=levy,conscription,mobilization
 
 # noun conflict
 blockade: placement=region event_radius=200 event_duration=6 field_targets=enemies law=trade produce_O*0 produce_T*0
@@ -767,7 +760,7 @@ austerity: placement=region field_radius=300 field_duration=8 trade_rate=1.5 pro
 amnesty: placement=region field_radius=200 field_duration=3 law=attack,theft morale+2 effect_status=root,stun,silence counters=purge,massacre,inquisition,curfew,lockdown,crackdown,penalty,sentence,arrest,ban
 
 # noun phenomenon
-fluke: placement=self field_radius=4 field_targets=self field_duration=2 lode=q,z,x,j lode_share=0.5 lode_stock=2
+fluke: placement=self field_radius=4 field_targets=self field_duration=2 lode=q,z,x,j lode_share=0.5 lode_stock=2 luck+8
 fireball: placement=map field_radius=ABS field_targets=all field_duration=1 luminosity+5 lode=z,x lode_share=0.1 lode_stock=6 morale+-1
 
 # noun season
@@ -834,7 +827,6 @@ insurrection: placement=region event_radius=200 event_duration=4 sets_hostile=tr
 heist: placement=region event_radius=30 event_duration=2 produce_X*3 produce_T*2 stealth+4
 robbery: placement=region event_radius=30 event_duration=2 produce_V*2 produce_X*2 stealth+3
 burglary: placement=region event_radius=20 event_duration=2 produce_D*2 produce_X*2 stealth+5
-piracy: placement=region event_radius=200 event_duration=5 field_targets=enemies law=trade produce_O*0 produce_X*2
 
 # Producers: the words PLAN.md "Letter economy" names, and their kin. What each makes and needs
 # is in tools/producers.txt.
@@ -933,7 +925,6 @@ firebrand: mass=1 length=0.8 integrity=10 material=wood equip_slot=held hands_re
 
 # noun structure
 watchtower: mass=60000 footprint=2 height=20 integrity=6000 material=wood,stone portable=false cover=0.5 claim_radius=4 luminosity=4 field_radius=60 field_targets=owned sight_range*1.6
-dock: mass=50000 footprint=6 integrity=5000 material=wood portable=false placeable_on=water,land
 fountain: mass=8000 footprint=2 height=3 integrity=3000 material=stone portable=false water_output=15 beauty=8 field_radius=30 field_targets=owned morale+1
 fortress: mass=10000000 footprint=50 height=15 integrity=250000 hardness=8 material=stone portable=false enterable=true occupants=300 cover=0.85 security=7 claim_radius=14 blocks=land,sight,projectiles
 stall: mass=300 footprint=1 height=2 integrity=200 material=wood,cloth portable=false food_output=1 trade_bonus=0.15 flammability=6
@@ -947,7 +938,6 @@ garrison: mass=500000 footprint=12 height=8 integrity=40000 material=stone,wood 
 statue: mass=20000 height=6 integrity=10000 hardness=8 material=stone,bronze portable=false beauty=9 field_radius=40 field_targets=owned courage+2 morale+1
 beacon: mass=2000 height=8 integrity=1500 material=wood,iron portable=false luminosity=9 night_vision=true field_radius=70 field_targets=owned sight_range*1.4
 beehive: mass=40 integrity=30 material=wood,wax portable=false food_output=0.5 field_radius=30 field_targets=owned produce_P*1.2 inflict_poison=1
-pier: mass=40000 footprint=4 integrity=4000 material=wood portable=false placeable_on=water,land
 
 # noun fortification
 palisade: mass=30000 footprint=8 height=4 integrity=8000 material=wood portable=false blocks=land,projectiles cover=0.6 claim_radius=5 flammability=6
@@ -1216,7 +1206,7 @@ musician: mass=65 integrity=80 alive=true sentient=true intelligence=6 loyalty=6
 clerk: mass=70 integrity=80 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 labor=1 storage_letters=60 food_need=0.03
 sheriff: mass=85 integrity=220 alive=true sentient=true intelligence=6 loyalty=7 courage=8 hands=true speech=true speed_land=6 authority=5 detect_stealth=6 alarm=true dmg_pierce=60 attack_rate=1 attack_range=40 targets=land,air inflict_root=4 counters=thief,outlaw,bandit food_need=0.04
 police: pack_size=4 mass=85 integrity=200 alive=true sentient=true intelligence=6 loyalty=7 courage=6 hands=true speech=true speed_land=6 authority=3 detect_stealth=6 alarm=true dmg_pierce=40 attack_rate=1 attack_range=30 targets=land,air inflict_root=3 counters=thief,riot,looting food_need=0.04
-judge: mass=75 integrity=90 alive=true sentient=true intelligence=8 loyalty=5 hands=true speech=true speed_land=3 authority=7 read_properties=6 field_radius=10 field_targets=all law=theft,attack fine=4 food_need=0.03
+judge: mass=75 integrity=90 alive=true sentient=true intelligence=8 loyalty=5 hands=true speech=true speed_land=3 authority=7 read_properties=6 peace=120 field_radius=10 field_targets=all law=theft fine=4 food_need=0.03
 
 # Theme 15, law and government (shared place.ts, law.ts). A law over an area forbids acts
 # (attack, gather, spell, trade, theft, hunt); with a fine the act goes ahead and costs whoever
@@ -1827,7 +1817,7 @@ pacify: effect_target=touched effect_status=rage aggression+-8 duration=60
 provoke: effect_target=touched inflict_rage=10 duration=1
 
 # noun act
-taunt: placement=target placement_range=60 event_target=character inflict_rage=8 event_duration=1 aggression+3
+taunt: placement=target placement_range=60 event_target=character inflict_rage=8 effect_status=truce event_duration=1 aggression+3
 
 # noun person
 berserk: mass=90 integrity=150 alive=true sentient=true intelligence=4 loyalty=4 obedience=2 hands=true speed_land=7 aggression=10 courage=10 immune_fear=true strength=9 dmg_slash=55 attack_rate=1.6 armor=0 food_need=0.04
@@ -2217,3 +2207,376 @@ frozen: temperature+-80 dmg_cold+50 inflict_freeze+3 speed_land*0.3 brittleness+
 sunny: luminosity+3 morale+2 temperature+5 temp_max+5
 windy: dmg_wind+5 speed_air*1.2 accuracy+-0.1
 waterproof: res_water=ABS wetness=0 is_absolute=true absolute_side=defence specificity=2
+
+# Theme 21, time (shared time.ts). Time can run fast or slow: time_scale on whoever it reaches
+# multiplies their movement, attacks and how fast their statuses wear off, and inside an area also
+# letters made, crops growing and things ageing into Y. HASTE is a status (twice the time) and
+# STASIS stops time for a body (it cannot act, nothing can hurt it, its statuses wait). ages=N ages
+# a thing at once (CENTURY: more Y, food rots); REWIND undoes the damage of the last seconds.
+# Counters: HASTE and SLOW end each other, ETERNITY is immune to stasis, slowing and doom.
+
+# noun duration
+stasis: placement=target placement_range=80 field_radius=6 field_targets=all field_duration=1 inflict_stasis=12 counters=haste,acceleration,hurry,rush
+eternity: placement=self field_radius=40 field_targets=owned field_duration=6 immune_stasis=true immune_slow=true immune_doom=true effect_status=stasis,slow,doom morale+2 counters=stasis,doom,decay,delay,deceleration,century
+moment: placement=self field_radius=4 field_targets=self field_duration=1 inflict_haste=8 effect_status=slow
+instant: placement=self field_radius=4 field_targets=self field_duration=1 inflict_haste=4 cast_time*0 attack_windup*0
+century: placement=target placement_range=40 event_target=object ages=6000 integrity*0.5 counters=eternity
+millennium: placement=target placement_range=40 event_target=object ages=60000 integrity*0.2 counters=eternity
+decade: placement=target placement_range=40 event_target=object ages=600 counters=eternity
+epoch: placement=map field_radius=ABS field_targets=all field_duration=5 time_scale*1.5 growth=1.5 produce_Y*2 counters=eternity,stasis
+deadline: placement=target placement_range=100 event_target=character inflict_doom=90 event_duration=1 counters=extension,eternity,overtime,reprieve
+countdown: placement=target placement_range=100 event_target=character inflict_doom=60 event_duration=1 counters=eternity,reprieve,pause
+pause: placement=self field_radius=30 field_targets=all field_duration=1 inflict_stasis=6 counters=countdown,haste
+timeout: placement=target placement_range=60 event_target=character inflict_stasis=10 event_duration=1 counters=haste,overtime
+overtime: placement=self field_radius=4 field_targets=self field_duration=3 time_scale*1.3 effect_status=doom,stasis counters=deadline,timeout,countdown
+
+# noun attribute
+haste: placement=self field_radius=30 field_targets=owned field_duration=2 inflict_haste=15 effect_status=slow counters=slowness,delay,deceleration,stasis,lethargy
+acceleration: placement=self field_radius=40 field_targets=owned field_duration=3 time_scale*2 counters=deceleration,slowness,stasis
+deceleration: placement=target placement_range=150 field_radius=40 field_targets=enemies field_duration=3 time_scale*0.4 counters=acceleration,haste
+slowness: placement=target placement_range=100 field_radius=30 field_targets=enemies field_duration=2 inflict_slow=12 effect_status=haste counters=haste,hurry,rush,acceleration
+ageing: placement=target placement_range=60 event_target=object ages=1200 integrity*0.7 counters=rejuvenation,eternity
+
+# noun act
+delay: placement=target placement_range=120 field_radius=30 field_targets=enemies field_duration=2 time_scale*0.5 inflict_slow=8 effect_status=haste counters=haste,hurry,rush
+rush: placement=self field_radius=20 field_targets=owned field_duration=1 inflict_haste=10 effect_status=slow counters=delay,slowness
+hurry: placement=self field_radius=4 field_targets=self field_duration=1 inflict_haste=12 effect_status=slow counters=delay,slowness
+reprieve: placement=target placement_range=100 event_target=character effect_status=doom,stasis restores=50 event_duration=1 counters=deadline,countdown,doom
+
+# noun phenomenon
+rejuvenation: placement=target placement_range=40 event_target=object ages=-6000 integrity*1.5 counters=ageing,century,decay
+
+# noun device
+hourglass: mass=1 integrity=6 brittleness=9 material=glass,wood extends_duration=1.5 field_radius=12 field_targets=owned time_scale*1.2 beauty=6 color=gold
+sundial: mass=200 integrity=800 material=stone portable=false field_radius=20 field_targets=owned time_scale*1.2 produce_Y=0.3 color=gray
+stopwatch: mass=0.1 integrity=10 material=steel,glass equip_slot=held hands_required=0 time_scale*1.15 accuracy+0.05 color=silver
+timer: mass=0.2 integrity=10 material=plastic portable=false trigger_radius=2 stealth=6 inflict_stasis=8 single_use=true color=red
+calendar: mass=0.3 integrity=2 material=paper flammability=9 extends_duration=1.3 produce_Y=0.1 read_properties=2
+
+# verb contact
+rewind: effect_target=self rewinds=20 effect_status=burn,poison,bleed duration=1
+undo: effect_target=self rewinds=10 duration=1
+
+# verb transform
+quicken: effect_target=self time_scale*1.6 speed_land*1.1 duration=20
+
+# adjective quality
+ancient: age+500000 produce_Y*5 value*20 intelligence+4 integrity*2 hardness+2 speed_land*0.6 fear_aura+2 beauty+2
+timeless: immune_stasis=true immune_slow=true immune_doom=true decay_rate*0 value*5
+hasty: time_scale*1.4 accuracy+-0.1 speed_land*1.1
+sluggish: time_scale*0.6 speed_land*0.8
+
+# Theme 22, space and astronomy (shared space.ts). gravity on whoever a field reaches: under 1
+# they bound faster, their shots fly farther and blows knock them back farther, under 0.3 they float
+# over water and walls; over 1 they plod and shoot short, and from 3 nothing can fly. pull draws
+# every body toward a field's centre (a BLACK HOLE-like SINGULARITY, a VORTEX; negative pushes:
+# REPULSION). meteors drop impacts near people inside a field, a minute (a METEOR SHOWER of
+# BOLIDEs, a BOMBARDMENT from orbit). Telescopes and observatories see far. Counters: anchored
+# things stay put (an ANCHOR, MAGNETIC boots), GRAVITY and LEVITATION end each other, a shelter's
+# cover and a DOME keep impacts off.
+
+# noun phenomenon
+gravity: placement=target placement_range=150 field_radius=40 field_targets=all field_duration=2 gravity*3 speed_air*0 counters=levitation,weightlessness,flight,float,hover
+gravitation: placement=self field_radius=30 field_targets=enemies field_duration=2 pull=3 gravity*2 counters=levitation,repulsion
+levitation: placement=self field_radius=30 field_targets=owned field_duration=2 gravity*0.2 hover=true counters=gravity,gravitation,singularity
+weightlessness: placement=map field_radius=ABS field_targets=all field_duration=2 gravity*0.1 counters=gravity,gravitation
+attraction: placement=target placement_range=100 field_radius=25 field_targets=all field_duration=1 pull=4 counters=repulsion
+repulsion: placement=self field_radius=20 field_targets=enemies field_duration=1 pull=-6 counters=attraction,gravitation,singularity,vortex
+magnetism: placement=self field_radius=20 field_targets=enemies field_duration=2 pull=2 accuracy+-0.2 counters=repulsion
+radiation: placement=target placement_range=200 field_radius=30 field_targets=all field_duration=3 dmg_radiation=6 attack_rate=0.5 friendly_fire=true inflict_sick=6 counters=shield,lead,shelter
+bolide: placement=target placement_range=300 event_radius=10 event_duration=3 dmg_blast=600 dmg_fire=200 friendly_fire=true luminosity=10 tile_type=pit radius=1 lode=x,z lode_share=0.5 lode_stock=2
+starlight: placement=map field_radius=ABS field_targets=owned field_duration=5 luminosity+3 sight_range*1.3 morale+2 night_vision=true counters=eclipse,blackout
+aurora: placement=map field_radius=ABS field_targets=all field_duration=4 luminosity+4 morale+3 beauty+3 produce_Q*1.5 counters=eclipse
+
+# noun attack
+bombardment: placement=target placement_range=400 field_radius=40 field_targets=all field_duration=1 meteors=30 dmg_blast=300 dmg_fire=100 attack_area=8 friendly_fire=true siege=3 counters=dome,shelter,bunker,truce,armistice
+barrage: placement=target placement_range=300 field_radius=25 field_targets=all field_duration=1 meteors=20 dmg_blast=150 attack_area=6 friendly_fire=true counters=dome,shelter,bunker
+
+# noun weather
+shower: placement=map field_radius=ABS field_targets=all field_duration=3 meteors=6 dmg_blast=200 dmg_fire=80 attack_area=8 friendly_fire=true luminosity+2 lode=x,z,q lode_share=0.05 lode_stock=6 counters=dome,shelter,atmosphere
+
+# noun celestial
+singularity: placement=target placement_range=200 field_radius=50 field_targets=all field_duration=1 pull=8 gravity*5 dmg_crush=40 attack_rate=0.5 friendly_fire=true counters=repulsion,levitation
+supernova: placement=map field_radius=ABS field_targets=all field_duration=2 luminosity+10 inflict_blind=5 dmg_radiation=4 attack_rate=0.1 friendly_fire=true temperature_delta=15 lode=z,q,x lode_share=0.1 lode_stock=8 counters=eclipse,dome,shelter
+nebula: placement=map field_radius=ABS field_targets=all field_duration=4 sight_range*0.5 stealth+3 luminosity+1 counters=telescope,starlight
+galaxy: placement=map field_radius=ABS field_targets=owned field_duration=4 map_reveal+200 detect_life+800 morale+2 counters=nebula
+pulsar: placement=target placement_range=200 field_radius=40 field_targets=enemies field_duration=2 dmg_radiation=12 attack_rate=1 inflict_confuse=2 counters=dome,shelter,lead
+wormhole: mass=0 integrity=ABS portable=false placement=target placement_range=300 field_radius=6 field_targets=all field_duration=2 pull=10 counters=singularity
+space: placement=target placement_range=150 field_radius=40 field_targets=all field_duration=2 gravity*0.05 temperature_delta=-200 res_suffocation+-1 counters=atmosphere,spacesuit
+orbit: placement=self field_radius=6 field_targets=self field_duration=3 gravity*0.1 hover=true speed_land*1.5 map_reveal+60 counters=gravity
+
+# noun natural_object
+meteoroid: placement=map field_radius=ABS field_targets=all field_duration=2 meteors=3 dmg_blast=500 dmg_fire=200 attack_area=10 friendly_fire=true lode=z,x lode_share=0.1 lode_stock=4 counters=dome,shelter,atmosphere
+cosmos: placement=map field_radius=ABS field_targets=owned field_duration=5 map_reveal+300 sight_range*1.5 intelligence+2 morale+2
+
+# noun device
+telescope: mass=5 length=1 integrity=15 material=glass,brass equip_slot=held hands_required=1 sight_range+3000 read_properties=3 detect_stealth+2 sees_through=night
+astrolabe: mass=1 integrity=20 material=brass equip_slot=held hands_required=0 map_reveal=80 detect_letters=200 sight_range+200 color=gold
+sextant: mass=1 integrity=20 material=brass equip_slot=held hands_required=0 map_reveal=60 speed_water*1.3 color=gold
+anchor: mass=500 integrity=800 hardness=8 material=iron equip_slot=held hands_required=0 anchored=true speed_land*0.6 speed_water*0.2 dmg_crush=60 attack_rate=0.3 color=gray
+
+# noun building
+planetarium: mass=2000000 footprint=10 height=15 integrity=20000 material=steel,glass portable=false enterable=true comfort=2 field_radius=40 field_targets=owned intelligence+2 training+1 morale+2 map_reveal=100
+
+# noun structure
+dome: mass=500000 footprint=8 height=10 integrity=30000 material=glass,steel portable=false enterable=true claim_radius=8 cover=0.9 anchored=true counters=meteoroid,shower,bombardment,barrage,supernova,radiation,pulsar color=white
+
+# noun clothing
+spacesuit: mass=60 integrity=300 material=nylon,steel equip_slot=body armor=10 res_suffocation=1 res_cold=0.9 res_radiation=0.8 res_fire=0.5 anchored=true speed_land*0.6 gravity*0.5 color=white
+
+# noun vehicle_air
+spaceship: mass=100000 length=40 integrity=8000 material=aluminum,steel speed_air=400 speed_space=7000 flight_ceiling=ABS self_propelled=true mountable=true seats=8 upkeep_fuel=20 sight_range+2000 map_reveal=200 dmg_light=300 attack_rate=0.5 attack_range=600 color=silver
+
+# noun worker
+astronaut: mass=80 integrity=110 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=4 res_suffocation=1 res_cold=0.6 gravity*0.4 map_reveal=100 food_need=0.03
+astronomer: mass=70 integrity=80 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 sight_range+2000 map_reveal=150 detect_letters=300 food_need=0.03
+
+# verb movement
+levitate: effect_target=self gravity*0.2 hover=true duration=15
+float: effect_target=self gravity*0.25 speed_land*0.8 duration=20
+
+# adjective pertaining
+lunar: gravity*0.17 night_vision=true luminosity+1
+cosmic: dmg_radiation+40 sight_range*1.5 value*5
+orbital: gravity*0.1 attack_range*2 map_reveal+100
+gravitational: gravity*3 pull+2 speed_air*0.5
+
+# Theme 23, sea and ships (shared sea.ts). Anything mountable with speed on water and none on land
+# (a BOAT, a CANOE, a GALLEON) is launched on the water nearest its speller and sails: E boards it
+# from the shore, its rider then moves only on water, and R puts them ashore with the vessel left
+# moored. A wrecked vessel throws its rider ashore. waves on a weather or area word rock vessels
+# afloat (damage by wave height against the hull's length: a big ship rides it out). Fishing by
+# water with a NET, ROD or HOOK lands a catch: its fish's first letter (a TUNA gives T) and food,
+# besides the O. A PORT, HARBOR, WHARF or DOCK (docks) is a market for anyone at it, its owner
+# taking a T toll, and launches its owner's vessels. Counters: CALM and a BREAKWATER end waves,
+# an ANCHOR holds fast, a NAVY or COASTGUARD against pirates, cannon and rams against hulls.
+
+# noun vehicle_water
+boat: mass=300 length=5 integrity=200 material=wood buoyancy=8 speed_water=6 mountable=true seats=6 carry_capacity=600 placeable_on=water harvest_bonus=1.5 harvest_sources=fishing
+sailboat: mass=800 length=8 integrity=300 material=wood,cloth buoyancy=8 speed_water=9 mountable=true seats=4 carry_capacity=500 placeable_on=water color=white
+rowboat: mass=150 length=4 integrity=150 material=wood buoyancy=7 speed_water=3 mountable=true seats=3 carry_capacity=300 stealth=2 placeable_on=water harvest_bonus=1.5 harvest_sources=fishing color=brown
+dinghy: mass=60 length=3 integrity=80 material=rubber buoyancy=7 speed_water=4 mountable=true seats=2 placeable_on=water color=orange
+raft: mass=100 length=3 integrity=60 material=wood buoyancy=6 speed_water=2 mountable=true seats=2 placeable_on=water flammability=7 color=brown
+galleon: mass=500000 length=50 integrity=40000 material=wood buoyancy=9 speed_water=7 mountable=true seats=300 carry_capacity=500000 dmg_blast=400 dmg_crush=200 attack_rate=0.3 attack_range=500 attack_area=3 loudness=8 placeable_on=deep_water flammability=6 color=brown
+frigate: mass=1500000 length=60 integrity=30000 material=wood,iron buoyancy=9 speed_water=11 mountable=true seats=250 dmg_blast=300 dmg_crush=150 attack_rate=0.4 attack_range=600 attack_area=3 placeable_on=deep_water color=brown
+warship: mass=10000000 length=150 integrity=200000 hardness=9 material=steel buoyancy=10 speed_water=13 self_propelled=true mountable=true seats=1000 armor=200 dmg_blast=2000 attack_rate=0.3 attack_range=3000 attack_area=8 upkeep_fuel=4 placeable_on=deep_water color=gray
+barge: mass=200000 length=40 integrity=8000 material=steel buoyancy=9 speed_water=2 self_propelled=true mountable=true seats=10 carry_capacity=2000000 storage_letters=200 placeable_on=water color=gray
+lifeboat: mass=1000 length=7 integrity=400 material=fiberglass buoyancy=10 speed_water=5 mountable=true seats=20 res_water=1 anchored=true heals=2 placeable_on=water color=orange
+gunboat: mass=50000 length=25 integrity=6000 material=steel buoyancy=9 speed_water=12 self_propelled=true mountable=true seats=20 dmg_blast=400 attack_rate=0.5 attack_range=800 attack_area=3 upkeep_fuel=1 placeable_on=water color=gray
+shipwreck: mass=100000 length=30 integrity=500 material=wood portable=false storage_letters=40 lode=x,z,j lode_share=0.3 lode_stock=4 color=brown
+
+# noun building
+port: mass=20000000 footprint=12 height=10 integrity=80000 material=stone,wood portable=false placeable_on=land docks=true claim_radius=8 trade_bonus=0.2 storage_letters=300 produce_O=0.3 color=brown
+harbor: mass=30000000 footprint=14 integrity=100000 material=stone,concrete portable=false docks=true claim_radius=10 cover=0.4 trade_bonus=0.2 storage_letters=400 color=gray
+harbour: mass=30000000 footprint=14 integrity=100000 material=stone,concrete portable=false docks=true claim_radius=10 cover=0.4 trade_bonus=0.2 storage_letters=400 color=gray
+marina: mass=5000000 footprint=10 integrity=40000 material=wood,concrete portable=false docks=true claim_radius=6 comfort=2 trade_bonus=0.1 color=white
+
+# noun structure
+dock: mass=50000 footprint=6 integrity=5000 material=wood portable=false placeable_on=water,land docks=true claim_radius=4
+pier: mass=40000 footprint=4 integrity=4000 material=wood portable=false placeable_on=water,land docks=true claim_radius=3 harvest_bonus=1.5 harvest_sources=fishing
+wharf: mass=200000 footprint=8 integrity=15000 material=wood,stone portable=false docks=true claim_radius=5 storage_letters=150 trade_bonus=0.1
+quay: mass=300000 footprint=8 integrity=20000 material=stone portable=false docks=true claim_radius=5 storage_letters=150
+breakwater: mass=5000000 footprint=10 integrity=200000 material=stone portable=false anchored=true claim_radius=12 cover=0.5 counters=waves,swell,surf,whirlpool,maelstrom,tsunami,riptide color=gray
+shipyard: mass=8000000 footprint=12 integrity=60000 material=steel,wood portable=false docks=true crafts=vehicle_water craft_slots=2 claim_radius=8 labor=2 color=brown
+lighthouse: mass=800000 footprint=2 height=40 integrity=25000 material=stone portable=false luminosity=10 sight_range+2000 map_reveal=60 night_vision=true counters=shipwreck,fog,mist
+
+# noun event
+swell: placement=map field_radius=ABS field_targets=all field_duration=4 waves=2 produce_O*1.5 counters=calm,doldrums,breakwater
+surf: placement=region field_radius=200 field_targets=all field_duration=3 waves=1.5 speed_water*1.3 morale+2 counters=calm,breakwater
+riptide: placement=target placement_range=200 field_radius=30 field_targets=all field_duration=2 waves=2 pull=-4 friendly_fire=true counters=calm,breakwater,anchor
+whirlpool: placement=target placement_range=200 field_radius=25 field_targets=all field_duration=2 waves=4 pull=6 dmg_water=10 attack_rate=0.5 friendly_fire=true counters=calm,breakwater,anchor
+maelstrom: placement=target placement_range=300 field_radius=60 field_targets=all field_duration=3 waves=8 pull=8 dmg_water=30 dmg_crush=20 attack_rate=0.5 friendly_fire=true counters=calm,breakwater,anchor
+
+# noun weather
+tempest: placement=map field_radius=ABS field_targets=all sets_weather=storm field_duration=4 waves=6 dmg_wind=12 dmg_electric=40 attack_rate=0.05 friendly_fire=true speed_water*0.5 sight_range*0.5 produce_W*3 produce_O*2 counters=calm,doldrums,sun,clear
+doldrums: placement=map field_radius=ABS field_targets=all sets_weather=clear field_duration=5 waves*0 speed_water*0.5 produce_W*0 morale+-2 clears_weather=storm counters=tempest,gale,swell,wind,squall,hurricane,typhoon
+
+# noun tool
+trawl: mass=40 integrity=40 material=fiber portable=false harvest_bonus=4 harvest_sources=fishing labor=1 color=gray
+fishhook: mass=0.01 integrity=5 material=steel equip_slot=held hands_required=0 harvest_bonus=2 harvest_sources=fishing dmg_pierce=2 color=silver
+lure: mass=0.05 integrity=5 material=plastic equip_slot=held hands_required=0 harvest_bonus=1.8 harvest_sources=fishing,hunting charm+1 color=red
+bait: mass=0.1 integrity=1 material=meat equip_slot=held hands_required=0 harvest_bonus=1.6 harvest_sources=fishing,hunting edible=true nutrition=1 single_use=true
+oar: mass=4 length=3 integrity=40 material=wood equip_slot=held hands_required=2 dmg_blunt=12 attack_rate=0.8 speed_water*1.4 color=brown
+
+# noun conflict
+broadside: placement=target placement_range=500 event_radius=12 event_duration=1 dmg_blast=800 dmg_crush=400 dmg_fire=100 friendly_fire=true siege=3 loudness=10 counters=breakwater,harbor
+piracy: placement=region event_radius=200 event_duration=5 field_targets=enemies law=trade produce_O*0 produce_X*2 counters=navy,coastguard,admiral,warship,frigate
+mutiny: placement=region event_radius=60 frees_target=true counters=levy,conscription,mobilization,captain,admiral
+
+# noun group
+navy: placement=self field_radius=300 field_targets=owned field_duration=5 speed_water*1.4 accuracy+0.15 courage+3 counters=piracy,pirate,buccaneer,corsair,privateer,smuggling
+coastguard: placement=self field_radius=200 field_targets=owned field_duration=6 detect_stealth+5 speed_water*1.2 counters=piracy,pirate,smuggling,smuggler,shipwreck
+
+# noun criminal
+pirate: mass=80 integrity=150 alive=true sentient=true intelligence=5 loyalty=3 aggression=6 courage=7 hands=true speech=true speed_land=5 speed_water=2 dmg_slash=40 attack_rate=1 letter_steal=4 food_need=0.03
+buccaneer: mass=80 integrity=160 alive=true sentient=true intelligence=5 loyalty=3 aggression=7 courage=8 hands=true speech=true speed_land=5 speed_water=2 dmg_slash=45 dmg_pierce=30 attack_rate=1 attack_range=20 letter_steal=5 food_need=0.03
+
+# noun worker
+sailor: mass=75 integrity=110 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=5 speed_water=2 labor=1 harvest_bonus=1.5 harvest_sources=fishing food_need=0.03
+admiral: mass=80 integrity=140 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=4 authority=6 command_limit=30 courage=8 field_radius=80 field_targets=owned speed_water*1.3 accuracy+0.1 food_need=0.03
+navigator: mass=70 integrity=90 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=5 map_reveal=120 detect_letters=200 field_radius=40 field_targets=owned speed_water*1.25 food_need=0.03
+
+# verb movement
+sail: effect_target=self speed_water*1.5 duration=30
+row: effect_target=self speed_water*1.3 strength+1 duration=20
+moor: effect_target=self anchored=true duration=60
+capsize: effect_target=touched inflict_stun=4 inflict_slow=8 duration=1
+
+# adjective quality
+seaworthy: res_water+0.5 anchored=true integrity*1.3 speed_water*1.2
+nautical: speed_water*1.3 harvest_bonus*1.2
+naval: speed_water*1.2 dmg_blast*1.3 accuracy+0.1
+seasick: speed_water*0.5 accuracy+-0.2 morale+-2
+
+# Theme 24, sports and games (shared sport.ts). A challenge passed on someone stakes letters
+# (stakes): each puts that many of their commonest letters into a pot and a ring holds the two of
+# them (field_radius, field_duration). Blows inside cannot kill: the one dropped is left standing
+# at a tenth and the other takes the pot, as does whoever dealt more when time runs out (a DUEL,
+# a WAGER, a BOUT). A race (race_to) puts a flag that far off: the first of the two there takes the
+# pot. A word that counters a challenge voids it and hands the stakes back (FOUL, a REFEREE);
+# FORFEIT gives it up to the other side. Peace keepers (GAVEL, JUDGE, REFEREE, PEACEKEEPER: peace)
+# give whoever takes them a truce for a while, once: untouchable, but unable to strike or spell.
+# PROVOCATION and CONTEMPT end a truce.
+
+# noun act
+duel: placement=target placement_range=40 event_target=character stakes=10 field_radius=12 field_duration=2 counters=foul,referee,umpire
+wager: placement=target placement_range=60 event_target=character stakes=20 field_radius=16 field_duration=3 counters=foul,referee
+bet: placement=target placement_range=60 event_target=character stakes=6 field_radius=12 field_duration=2 counters=foul,referee
+gamble: placement=target placement_range=60 event_target=character stakes=30 field_radius=10 field_duration=1 luck+-1 counters=foul
+sparring: placement=target placement_range=30 event_target=character stakes=1 field_radius=8 field_duration=1 training+1
+forfeit: placement=self field_radius=4 field_targets=self field_duration=1 forfeits=true effect_status=stun,root morale+-2
+surrender: placement=self field_radius=4 field_targets=self field_duration=1 forfeits=true inflict_truce=30 morale+-3
+foul: placement=target placement_range=60 event_target=character inflict_expose=30 event_duration=1 counters=duel,wager,bet,gamble,race,bout,joust,marathon,sprint,sparring,tournament
+cheat: placement=self field_radius=4 field_targets=self field_duration=1 luck+4 accuracy+0.2 counters=referee,umpire
+provocation: placement=target placement_range=60 event_target=character effect_status=truce,charm inflict_rage=8 event_duration=1 counters=truce,peace,armistice
+
+# noun contest
+race: placement=target placement_range=40 event_target=character stakes=10 race_to=200 field_duration=3 counters=foul,referee
+marathon: placement=target placement_range=40 event_target=character stakes=25 race_to=800 field_duration=8 counters=foul
+sprint: placement=target placement_range=40 event_target=character stakes=5 race_to=80 field_duration=1 counters=foul
+regatta: placement=target placement_range=60 event_target=character stakes=15 race_to=400 field_duration=4 speed_water*1.2 counters=foul
+bout: placement=target placement_range=30 event_target=character stakes=8 field_radius=8 field_duration=1 counters=foul,referee
+joust: placement=target placement_range=60 event_target=character stakes=15 field_radius=20 field_duration=2 dmg_pierce+20 counters=foul
+tournament: placement=self field_radius=60 field_targets=owned field_duration=5 training+2 courage+2 morale+3 accuracy+0.1 counters=foul
+game: placement=target placement_range=40 event_target=character stakes=4 field_radius=10 field_duration=1 morale+1
+sport: placement=self field_radius=30 field_targets=owned field_duration=3 speed_land*1.15 strength+1 morale+2
+
+# noun exchange
+lottery: placement=self field_radius=4 field_targets=self field_duration=1 luck+6 lode=z,q,x,j lode_share=0.3 lode_stock=2
+odds: placement=self field_radius=4 field_targets=self field_duration=2 luck+3
+
+# noun tool
+gavel: mass=0.4 length=0.25 integrity=60 material=wood equip_slot=held hands_required=1 peace=90 authority+2 dmg_blunt=10 attack_rate=0.5 color=brown
+
+# noun artifact
+trophy: mass=3 integrity=60 material=gold portable=true value=2000 field_radius=20 field_targets=owned morale+3 courage+2 beauty=6 color=gold
+medal: mass=0.1 integrity=40 material=gold equip_slot=neck value=200 morale+2 courage+2 charm+1 color=gold
+
+# noun toy
+ball: mass=0.45 length=0.22 integrity=20 elasticity=10 shape=round material=rubber equip_slot=held hands_required=1 dmg_blunt=6 attack_rate=1 attack_range=30 knockback=2 inflict_stun=1 morale+1 color=white
+dice: mass=0.01 integrity=20 material=bone equip_slot=held hands_required=0 luck+2 plural_count=2 color=white
+
+# noun worker
+referee: mass=75 integrity=100 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=6 authority=6 peace=120 detect_stealth=6 counters=cheat,foul,brawl food_need=0.03
+umpire: mass=75 integrity=100 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 authority=5 peace=90 detect_stealth=5 counters=cheat,foul food_need=0.03
+athlete: mass=70 integrity=120 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=9 strength=7 agility=8 training=3 food_need=0.05
+coach: mass=80 integrity=100 alive=true sentient=true intelligence=7 loyalty=7 hands=true speech=true speed_land=5 field_radius=30 field_targets=owned training+2 courage+2 morale+2 food_need=0.03
+
+# noun fighter
+peacekeeper: mass=85 integrity=220 alive=true sentient=true intelligence=6 loyalty=8 hands=true speech=true speed_land=5 armor=20 peace=180 dmg_blunt=20 attack_rate=0.8 food_need=0.03
+champion: mass=90 integrity=300 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=7 strength=9 training=6 courage=9 dmg_slash=60 attack_rate=1.2 morale+3 food_need=0.04
+gladiator: mass=90 integrity=260 alive=true sentient=true intelligence=5 loyalty=4 hands=true speech=true speed_land=6 strength=8 training=5 courage=9 dmg_slash=55 attack_rate=1 armor=15 food_need=0.04
+
+# noun person
+mediator: mass=70 integrity=80 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=4 peace=120 charm=7 counters=feud,duel,rivalry food_need=0.03
+gambler: mass=70 integrity=80 alive=true sentient=true intelligence=6 loyalty=2 hands=true speech=true speed_land=5 luck=4 trade_bonus=0.1 food_need=0.03
+
+# noun building
+stadium: mass=50000000 footprint=40 height=30 integrity=200000 material=concrete,steel portable=false enterable=true occupants=50000 claim_radius=20 field_radius=60 field_targets=owned morale+3 training+1 produce_T=0.2
+arena: mass=10000000 footprint=25 height=20 integrity=100000 material=stone portable=false enterable=true occupants=5000 claim_radius=12 field_radius=40 field_targets=owned courage+3 training+2 strength+1
+casino: mass=5000000 footprint=15 height=15 integrity=40000 material=concrete,glass portable=false enterable=true claim_radius=8 field_radius=30 field_targets=all luck+-1 trade_rate=1.5 produce_T=0.5
+
+# noun possession
+immunity: placement=self field_radius=4 field_targets=self field_duration=2 inflict_truce=60 counters=provocation,taunt,contempt
+
+# verb social
+yield: effect_target=self forfeits=true duration=1
+concede: effect_target=self forfeits=true duration=1
+
+# adjective quality
+fair: luck*0 accuracy+0.05 reputation+2
+sporting: morale+2 courage+1 training+1
+unbeatable: evasion+0.3 luck+5 morale+3
+
+# Theme 25, abstract ideas (shared idea.ts). Meta words bend the rules through shared systems:
+# luck shifts every roll its holder makes (gathering, hitting, criticals, dodging: 3% a point);
+# CHAOS is a status that multiplies a handful of a body's properties by random amounts; NOTHING
+# (void) makes everything a body carries, wears, rides or stands in do nothing, and its own damage
+# and statuses nothing; FATE and DOOM seal an outcome (doom: when it runs out the body takes three
+# quarters of its full integrity); PARADOX swaps the owners of two things (swaps_owners); a TYPO
+# turns a thing into the word one letter off (misspells), or breaks it. Counters: ORDER and LOGIC
+# end chaos, EXISTENCE and REALITY end void, KARMA, PROVIDENCE and FREEDOM end doom, a REASON ends
+# a paradox, a DICTIONARY corrects a typo.
+
+# noun phenomenon
+chaos: placement=target placement_range=150 field_radius=30 field_targets=all field_duration=1 inflict_chaos=20 friendly_fire=true counters=order,logic,harmony,law
+entropy: placement=map field_radius=ABS field_targets=all field_duration=3 inflict_chaos=8 decay_rate*3 integrity*0.9 counters=order,harmony
+
+# noun attribute
+luck: placement=self field_radius=4 field_targets=self field_duration=3 luck+5 critical+0.15 evasion+0.1 harvest_bonus*1.3 counters=jinx,misfortune
+chance: placement=self field_radius=4 field_targets=self field_duration=2 luck+3 accuracy+-0.05
+randomness: placement=target placement_range=100 field_radius=20 field_targets=all field_duration=1 inflict_chaos=12 friendly_fire=true counters=order,logic
+jinx: placement=target placement_range=60 field_radius=8 field_targets=enemies field_duration=5 luck+-6 harvest_bonus*0.2 accuracy+-0.3 critical+-0.2 counters=luck,serendipity,blessing,cornucopia,fluke
+order: placement=self field_radius=60 field_targets=all field_duration=3 effect_status=chaos,confuse,rage immune_chaos=true counters=chaos,entropy,randomness,anarchy,havoc,pandemonium
+irony: placement=target placement_range=60 event_target=character reflect=0.8 inflict_confuse=4 event_duration=1 counters=truth
+absurdity: placement=target placement_range=80 field_radius=20 field_targets=enemies field_duration=2 inflict_confuse=8 inflict_chaos=6 counters=logic,reason
+
+# noun quantity
+nothing: placement=target placement_range=60 event_target=character inflict_void=30 event_duration=1 counters=existence,reality,everything
+zero: placement=target placement_range=40 event_target=character inflict_void=10 event_duration=1 counters=infinity,existence
+infinity: placement=self field_radius=4 field_targets=self field_duration=1 immune_void=true immune_doom=true effect_status=void,doom regeneration+10 counters=nothing,zero,void,oblivion
+
+# noun quality
+void: placement=target placement_range=100 field_radius=20 field_targets=all field_duration=1 inflict_void=20 friendly_fire=true counters=existence,reality,infinity
+null: placement=target placement_range=60 event_target=character inflict_void=15 event_duration=1 counters=existence
+
+# noun knowledge
+oblivion: placement=target placement_range=100 event_target=character inflict_void=40 morale+-3 event_duration=1 counters=existence,reality,infinity,memory
+existence: placement=self field_radius=40 field_targets=owned field_duration=4 immune_void=true effect_status=void counters=nothing,void,oblivion,zero,null
+reality: placement=self field_radius=60 field_targets=all field_duration=3 effect_status=void,chaos,confuse detect_stealth+5 counters=illusion,dream,nothing,void,chaos,decoy,hoax
+logic: placement=self field_radius=40 field_targets=owned field_duration=3 effect_status=chaos,confuse immune_chaos=true intelligence+2 counters=chaos,absurdity,paradox,randomness
+reason: placement=self field_radius=30 field_targets=owned field_duration=3 effect_status=chaos,confuse,rage intelligence+2 counters=paradox,absurdity,chaos
+illusion: placement=target placement_range=150 field_radius=40 field_targets=enemies field_duration=3 decoys=4 inflict_confuse=4 counters=reality,truth
+certainty: placement=self field_radius=4 field_targets=self field_duration=2 accuracy+0.3 luck+2 immune_chaos=true counters=randomness,chance
+
+# noun event
+fate: placement=target placement_range=150 event_target=character inflict_doom=60 event_duration=1 counters=karma,providence,freedom,eternity,infinity,reprieve
+destiny: placement=self field_radius=4 field_targets=self field_duration=3 luck+4 immune_doom=true courage+3 effect_status=doom counters=fate,doom
+doom: placement=target placement_range=100 event_target=character inflict_doom=45 inflict_fear=10 event_duration=1 counters=karma,providence,destiny,hope,reprieve,infinity
+karma: placement=target placement_range=100 event_target=character reflect=0.5 effect_status=doom,bless inflict_curse=30 event_duration=1 counters=doom,fate,fraud,theft
+providence: placement=self field_radius=30 field_targets=owned field_duration=3 effect_status=doom,curse luck+3 immune_doom=true counters=doom,fate,curse
+coincidence: placement=target placement_range=100 event_target=object swaps_owners=true counters=reason,logic
+paradox: placement=target placement_range=100 event_target=object swaps_owners=true counters=reason,logic,truth
+typo: placement=target placement_range=60 event_target=object misspells=true counters=dictionary,grammar
+mistake: placement=target placement_range=40 event_target=object misspells=true luck+-1 counters=dictionary
+accident: placement=target placement_range=80 event_radius=8 event_duration=1 luck+-4 dmg_blunt=60 inflict_stun=2 friendly_fire=true
+
+# noun document
+dictionary: mass=2 integrity=10 flammability=7 material=paper intelligence+3 training+1 grants_adjective_slots=1 grants_slots_to=person immune_chaos=true counters=typo,mistake,misprint
+nonsense: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=2 inflict_confuse=6 inflict_chaos=4 counters=logic,reason,grammar
+
+# verb transform
+erase: effect_target=touched inflict_void=10 duration=1
+nullify: effect_target=touched inflict_void=15 effect_status=bless,haste duration=1
+misprint: effect_target=touched misspells=true duration=1
+
+# adjective quality
+lucky: luck+4 critical+0.1
+unlucky: luck+-4 critical+-0.1
+fortunate: luck+3 harvest_bonus*1.2
+chaotic: inflict_chaos+10 accuracy+-0.1
+doomed: inflict_doom+30 morale+-3
+fated: luck+2 inflict_doom+20
+random: inflict_chaos+6 luck+1
+paradoxical: reflect+0.3 inflict_confuse+3
+absurd: inflict_confuse+4 charm+1

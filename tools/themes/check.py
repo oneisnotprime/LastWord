@@ -26,6 +26,9 @@ for n, line in enumerate(open(sys.argv[1]), 1):
     if w not in lex: probs.append("not in data/lexicon.tsv")
     if w in EXCLUDED: probs.append("excluded word")
     seen.add(w)
+    keys = [re.match(r"(\w+)[=*+]", t).group(1) for t in rest.split() if re.match(r"(\w+)[=*+]", t)]
+    twice = sorted({k for k in keys if keys.count(k) > 1})
+    if twice: probs.append(f"sets {', '.join(twice)} more than once")
     for t in rest.split():
         mm = re.fullmatch(r"(\w+)([=*+])(.+)", t)
         if not mm or mm.group(1) not in props: probs.append(f"bad token {t}"); continue
