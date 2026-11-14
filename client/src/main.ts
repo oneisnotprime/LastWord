@@ -371,7 +371,7 @@ class World extends Phaser.Scene {
 
   /** Tags that would overlap slide down under each other, nearest the top first. */
   private unstackTags() {
-    const tags = [...this.views.values()].map((v) => v.tag).sort((a, b) => a.y - b.y);
+    const tags = [...this.zoneView.tags(), ...[...this.views.values()].map((v) => v.tag)].sort((a, b) => a.y - b.y);
     const placed: { x0: number; x1: number; y0: number; y1: number }[] = [];
     for (const t of tags) {
       const w = t.displayWidth * 0.86, h = t.displayHeight * 0.62;
