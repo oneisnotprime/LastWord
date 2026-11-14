@@ -215,6 +215,19 @@ def main(dict_dir):
         rec = (lemma, role, cls, arch, z, tier(z), syn, others)
         rows["proper" if cls == "proper" else "inert" if cls == "inert" else "lexicon"].append(rec)
 
+    # An override names a word WordNet lacks (KRAKEN) or knows only as a name: it joins the lexicon
+    # with the override's role and archetype.
+    known = {r[0] for r in rows["lexicon"]} | {r[0] for r in rows["inert"]}
+    for lemma, (role, arch) in sorted(over.items()):
+        if lemma in known or not arch or arch not in ALL_CLASS or not re.fullmatch(r"[a-z]{2,}", lemma):
+            continue
+        if lemma in wn.index and lemma not in {r[0] for r in rows["proper"]}:
+            continue
+        rows["proper"] = [r for r in rows["proper"] if r[0] != lemma]
+        z = round(zipf_frequency(lemma, "en"), 2)
+        rows["lexicon"].append((lemma, role, ALL_CLASS[arch], arch, z, tier(z), "-", "-"))
+    rows["lexicon"].sort(key=lambda r: r[0])
+
     head = "word\trole\tclass\tarchetype\tzipf\ttier\tsynset\tother_roles\n"
     for name, rs in rows.items():
         with open(os.path.join(OUT, name + ".tsv"), "w") as f:

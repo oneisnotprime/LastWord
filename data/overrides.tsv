@@ -83,6 +83,7 @@ aircraft	noun	vehicle_air
 airport	noun	building
 alarm	noun	device
 album	noun	document
+alchemist	noun	worker
 alcohol	noun	drink
 alert	adjective	quality
 alien	noun	supernatural
@@ -129,6 +130,7 @@ anyway	adverb	manner
 anywhere	adverb	manner
 apart	adverb	manner
 apartment	noun	structure
+apiary	noun	building
 apocalypse	noun	disaster
 apparent	adjective	quality
 apparently	adverb	manner
@@ -148,6 +150,7 @@ appropriate	adjective	quality
 approval	noun	feeling
 approved	adjective	quality
 approximately	adverb	manner
+architect	noun	worker
 architecture	noun	knowledge
 area	noun	place
 arena	noun	building
@@ -250,6 +253,7 @@ banking	noun	exchange
 banned	adjective	quality
 banshee	noun	supernatural
 bar	noun	weapon
+bard	noun	worker
 barely	adverb	manner
 bargain	noun	attribute
 barn	noun	building
@@ -260,6 +264,7 @@ baseball	noun	toy
 based	adjective	participle
 basic	adjective	quality
 basically	adverb	manner
+basilisk	noun	supernatural
 basis	noun	knowledge
 basket	noun	tool
 basketball	noun	toy
@@ -273,6 +278,7 @@ battle	noun	conflict
 bay	noun	water
 bazaar	noun	artifact
 beach	noun	landform
+beacon	noun	artifact
 bear	noun	mammal
 bearing	noun	device
 beast	noun	creature
@@ -287,12 +293,14 @@ bed	noun	furniture
 bedroom	noun	structure
 bee	noun	insect
 beef	noun	food
+beehive	noun	artifact
 beer	noun	drink
 begin	verb	transform
 beginning	noun	event
 behalf	noun	attribute
 behavior	noun	attribute
 behaviour	noun	attribute
+behemoth	noun	supernatural
 behind	adverb	manner
 belief	noun	knowledge
 bell	noun	device
@@ -331,7 +339,9 @@ bitch	noun	mammal
 bite	verb	contact
 black	adjective	quality
 blackout	noun	phenomenon
+blacksmith	noun	worker
 blame	adjective	quality
+blasphemy	noun	act
 blast	noun	event
 blessed	adjective	participle
 blessing	noun	act
@@ -414,6 +424,7 @@ buddy	noun	person
 budget	noun	currency
 buffalo	noun	mammal
 build	verb	create
+builder	noun	worker
 building	noun	building
 built	adjective	participle
 bull	noun	mammal
@@ -438,6 +449,7 @@ butter	noun	food
 button	noun	device
 buy	verb	transfer
 buying	noun	exchange
+cabin	noun	structure
 cabinet	noun	furniture
 cable	noun	tool
 cactus	noun	plant
@@ -476,6 +488,7 @@ careful	adjective	quality
 carefully	adverb	manner
 caribou	noun	mammal
 carnival	noun	act
+carpenter	noun	worker
 carrier	noun	vehicle_water
 carry	verb	contact
 carter	noun	worker
@@ -487,6 +500,7 @@ cat	noun	mammal
 cataclysm	noun	phenomenon
 catch	verb	contact
 category	noun	group
+cathedral	noun	building
 cause	verb	create
 causing	noun	act
 cave	noun	depression
@@ -518,6 +532,7 @@ changed	adjective	participle
 changing	adjective	quality
 channel	noun	route
 chaos	noun	phenomenon
+chapel	noun	building
 chapter	noun	group
 character	noun	person
 charge	verb	combat
@@ -541,6 +556,7 @@ chief	adjective	quality
 child	noun	person
 china	noun	container
 chip	noun	device
+chisel	noun	tool
 chocolate	noun	food
 choice	noun	knowledge
 cholera	noun	affliction
@@ -550,6 +566,7 @@ circle	noun	group
 circuit	noun	device
 circumstances	noun	possession
 circus	noun	ceremony
+citadel	noun	structure
 citizen	noun	person
 city	noun	place
 civil	adjective	quality
@@ -605,6 +622,7 @@ college	noun	building
 colonel	noun	leader
 color	adjective	quality
 colors	noun	artifact
+colossus	noun	supernatural
 colour	noun	material
 column	noun	structure
 combat	noun	conflict
@@ -730,6 +748,7 @@ correct	adjective	quality
 corruption	noun	attribute
 cost	noun	possession
 costs	noun	possession
+cottage	noun	building
 cotton	noun	fabric
 couch	noun	furniture
 council	noun	group
@@ -773,6 +792,7 @@ critical	adjective	quality
 criticism	noun	act
 crocodile	noun	reptile
 cross	verb	movement
+crossbow	noun	weapon
 crossed	adjective	quality
 crossing	noun	travel
 crowbar	noun	weapon
@@ -953,6 +973,7 @@ divine	adjective	quality
 division	noun	group
 divorce	noun	act
 doc	noun	worker
+dock	noun	structure
 doctor	noun	worker
 document	noun	document
 documentary	adjective	pertaining
@@ -1169,6 +1190,7 @@ experiment	noun	knowledge
 experimental	adjective	pertaining
 expert	noun	person
 explanation	noun	knowledge
+explorer	noun	worker
 explosion	noun	event
 export	noun	exchange
 exposed	adjective	participle
@@ -1220,6 +1242,7 @@ far	adverb	manner
 farm	noun	structure
 farmer	noun	worker
 farmhand	noun	worker
+farmhouse	noun	building
 fashion	noun	attribute
 fast	adjective	quality
 faster	adverb	manner
@@ -1280,12 +1303,15 @@ finished	adjective	participle
 finishing	noun	material
 fire	noun	event
 fireball	noun	phenomenon
+firebrand	noun	material
 fired	adjective	quality
 fireproof	adjective	absolute
 firing	noun	attack
 firm	adjective	quality
 fiscal	adjective	pertaining
 fish	noun	fish
+fisher	noun	worker
+fisherman	noun	worker
 fishing	noun	act
 fit	verb	transform
 fitness	noun	attribute
@@ -1342,12 +1368,15 @@ former	adjective	quality
 formerly	adverb	manner
 fort	noun	fortification
 forth	adverb	manner
+fortress	noun	structure
 fortune	noun	possession
 forum	noun	group
 forward	adverb	manner
 foster	verb	social
 foundation	noun	structure
 founder	noun	person
+foundry	noun	structure
+fountain	noun	structure
 four	noun	quantity
 fourth	adjective	quality
 fox	noun	mammal
@@ -1366,6 +1395,7 @@ friend	noun	person
 friendly	adjective	quality
 frog	noun	reptile
 front	noun	weather
+frost	noun	material
 frozen	adjective	participle
 fruit	noun	produce
 fuck	noun	act
@@ -1400,6 +1430,7 @@ gang	noun	group
 gap	noun	depression
 garage	noun	building
 garden	noun	structure
+garrison	noun	artifact
 gas	noun	material
 gate	noun	structure
 gather	verb	transfer
@@ -1415,6 +1446,7 @@ generate	verb	create
 generation	noun	group
 generator	noun	artifact
 genetic	adjective	quality
+genie	noun	supernatural
 genius	noun	person
 genuine	adjective	quality
 ghost	noun	supernatural
@@ -1442,6 +1474,7 @@ going	adjective	participle
 gold	noun	metal
 golden	adjective	quality
 goldmine	noun	artifact
+golem	noun	supernatural
 golf	noun	contest
 goose	noun	bird
 gorgeous	adjective	quality
@@ -1470,6 +1503,7 @@ greek	adjective	pertaining
 green	adjective	quality
 grenade	noun	weapon
 grey	adjective	quality
+griffin	noun	supernatural
 gross	adjective	quality
 ground	noun	landform
 grounds	noun	place
@@ -1517,6 +1551,7 @@ hardly	adverb	manner
 hardware	noun	weapon
 hare	noun	mammal
 harm	noun	event
+harpoon	noun	tool
 harry	verb	combat
 harvest	noun	act
 harvester	noun	tool
@@ -1553,6 +1588,7 @@ helpful	adjective	quality
 helping	noun	food
 hen	noun	bird
 henry	noun	quantity
+herbalist	noun	worker
 herd	noun	phenomenon
 heresy	noun	attribute
 heritage	noun	knowledge
@@ -1620,6 +1656,8 @@ hunting	noun	killing
 hurricane	noun	weather
 hurt	verb	contact
 husband	noun	person
+hut	noun	structure
+hydra	noun	supernatural
 hyena	noun	mammal
 ice	noun	mineral
 idea	noun	knowledge
@@ -1778,6 +1816,7 @@ junior	noun	person
 jury	noun	group
 justice	noun	worker
 keeping	noun	possession
+kennel	noun	building
 key	noun	tool
 khan	noun	leader
 kick	verb	contact
@@ -1797,6 +1836,7 @@ knife	noun	weapon
 knight	noun	fighter
 knock	verb	contact
 knowing	adjective	quality
+kraken	noun	supernatural
 lab	noun	building
 label	noun	document
 labor	noun	group
@@ -1809,6 +1849,7 @@ lady	noun	person
 laid	adjective	participle
 lake	noun	water
 lamp	noun	device
+lance	noun	weapon
 land	noun	landform
 landed	adjective	quality
 landing	noun	structure
@@ -1819,6 +1860,7 @@ laptop	noun	machine
 large	adjective	quality
 largely	adverb	manner
 larger	adjective	quality
+lasso	noun	artifact
 late	adjective	quality
 lately	adverb	manner
 later	adverb	manner
@@ -1864,6 +1906,7 @@ letter	noun	document
 letters	noun	knowledge
 letting	noun	possession
 level	noun	attribute
+leviathan	noun	supernatural
 levy	noun	possession
 liberal	noun	person
 library	noun	building
@@ -1936,6 +1979,7 @@ lowest	adjective	quality
 loyal	adjective	quality
 luck	noun	attribute
 lucky	adjective	quality
+lumberjack	noun	worker
 lunch	noun	food
 luxury	noun	attribute
 lying	noun	act
@@ -1988,6 +2032,7 @@ marsh	noun	landform
 marshall	noun	leader
 martin	noun	bird
 mask	noun	protection
+mason	noun	worker
 mass	noun	quantity
 massacre	noun	act
 massive	adjective	quality
@@ -2185,6 +2230,7 @@ nuts	adjective	quality
 oak	noun	tree
 object	noun	artifact
 objective	noun	knowledge
+observatory	noun	building
 observed	adjective	quality
 obtain	verb	transfer
 obvious	adjective	quality
@@ -2276,6 +2322,7 @@ painted	adjective	quality
 painting	noun	artifact
 pair	noun	quantity
 palace	noun	building
+palisade	noun	fortification
 palm	noun	tree
 pan	noun	tool
 pandemic	noun	event
@@ -2348,6 +2395,7 @@ pet	noun	creature
 phantom	noun	supernatural
 pheasant	noun	bird
 philosophy	noun	knowledge
+phoenix	noun	supernatural
 phone	noun	device
 photo	noun	document
 photograph	noun	document
@@ -2361,6 +2409,7 @@ pick	noun	tool
 picking	noun	act
 picture	noun	artifact
 piece	noun	artifact
+pier	noun	artifact
 pig	noun	mammal
 pilgrim	noun	person
 pilgrimage	noun	attribute
@@ -2795,6 +2844,7 @@ sad	adjective	quality
 safe	adjective	quality
 safely	adverb	manner
 safety	noun	place
+sailor	noun	worker
 saint	noun	supernatural
 sake	noun	drink
 salamander	noun	reptile
@@ -2825,6 +2875,7 @@ scene	noun	place
 schedule	noun	knowledge
 scheduled	adjective	quality
 scheme	noun	crime
+scholar	noun	worker
 school	noun	building
 science	noun	knowledge
 scientific	adjective	pertaining
@@ -2834,6 +2885,7 @@ scores	noun	quantity
 scoring	noun	contest
 scorpion	noun	invertebrate
 scottish	adjective	pertaining
+scout	noun	worker
 screaming	noun	event
 screen	noun	protection
 screw	noun	tool
@@ -2920,6 +2972,7 @@ sheet	noun	fabric
 shelf	noun	furniture
 shell	noun	bodypart
 shelter	noun	structure
+shepherd	noun	worker
 shield	noun	protection
 shift	noun	event
 ship	noun	vehicle_water
@@ -2959,6 +3012,7 @@ significantly	adverb	manner
 silence	noun	phenomenon
 silent	adjective	absolute
 silly	adjective	quality
+silo	noun	structure
 silver	noun	metal
 similar	adjective	quality
 similarly	adverb	manner
@@ -2998,6 +3052,7 @@ smart	adjective	quality
 smell	verb	perceive
 smile	verb	body
 smith	noun	worker
+smithy	noun	artifact
 smoke	noun	phenomenon
 smoking	adjective	participle
 smooth	adjective	quality
@@ -3073,6 +3128,7 @@ stable	noun	building
 stadium	noun	structure
 staff	noun	worker
 stage	noun	structure
+stall	noun	structure
 stampede	noun	event
 stand	verb	contact
 standard	noun	knowledge
@@ -3085,6 +3141,7 @@ state	noun	place
 stated	adjective	quality
 station	noun	structure
 statistics	noun	knowledge
+statue	noun	artifact
 stay	verb	body
 stays	noun	clothing
 steady	adjective	quality
@@ -3293,6 +3350,7 @@ tiny	adjective	quality
 tip	noun	exchange
 tired	adjective	quality
 tissue	noun	bodypart
+titan	noun	supernatural
 tithe	noun	possession
 toad	noun	reptile
 today	noun	duration
@@ -3329,6 +3387,7 @@ toy	noun	toy
 track	noun	route
 tracking	noun	act
 trade	noun	exchange
+trader	noun	worker
 trading	noun	exchange
 tradition	noun	knowledge
 traditional	adjective	quality
@@ -3409,6 +3468,7 @@ understanding	noun	knowledge
 understood	adjective	participle
 unexpected	adjective	quality
 unfortunately	adverb	manner
+unicorn	noun	supernatural
 uniform	noun	clothing
 union	noun	group
 unique	adjective	quality
@@ -3499,15 +3559,18 @@ walrus	noun	mammal
 wanting	adjective	quality
 war	noun	conflict
 ward	noun	protection
+warehouse	noun	artifact
 warfare	noun	conflict
 warm	adjective	quality
 warning	noun	act
 warrant	noun	document
 warren	noun	depression
+warrior	noun	fighter
 wash	verb	body
 waste	noun	material
 watch	noun	device
 watching	noun	act
+watchtower	noun	structure
 water	noun	liquid
 waterproof	adjective	absolute
 waters	noun	water
@@ -3517,6 +3580,7 @@ wealth	noun	attribute
 weapon	noun	weapon
 wear	verb	body
 wearing	adjective	participle
+weasel	noun	mammal
 weather	noun	weather
 web	noun	natural_object
 website	noun	machine
@@ -3578,6 +3642,7 @@ workbench	noun	furniture
 worker	noun	worker
 working	adjective	participle
 works	noun	building
+workshop	noun	artifact
 world	noun	celestial
 worldwide	adjective	quality
 worn	adjective	participle
@@ -3596,6 +3661,7 @@ writer	noun	worker
 writing	noun	act
 written	adjective	participle
 wrong	adjective	quality
+wyvern	noun	supernatural
 yak	noun	mammal
 yard	noun	place
 yea	adverb	manner

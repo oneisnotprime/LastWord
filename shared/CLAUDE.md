@@ -92,6 +92,10 @@ server and the client import this, so anything here must give the same answer on
 - `unit.ts` also carries light things: anything with no `equip_slot` and no damage of its own is
   held as an improvised weapon (`improvised`: blunt damage 2 × hardness × √mass, one hand, two
   over half the limit) if it weighs at most `carryLimit` (strength × 4 kg); `cannotCarry` says why not.
+- `kits.ts` starting kits: `dealKits` (three kits, all parts different), `kitHand` (eight letters
+  around a starter word, leaning toward the job), `jobStats`/`jobBodyOps`/`jobRules` (a job as a
+  carried tool, body operations and place rules), `kitCard` lines, `unlockText`/`unlockNeed`/
+  `sealedLetters` (legendary conditions), `legendCost` (an unsealed legendary spells free), `kitScore`.
 - `tips.ts` teaching tips: `wordTip` (one line of what a word does in numbers, plus its shortest
   counter-word), `wordIdeas` (one word per `TIP_KINDS` kind, weighted by `tipWeight` toward words
   the held letters nearly spell), `RULE_TIPS` (short "did you know" lines, test-checked against the

@@ -1,0 +1,2211 @@
+{
+ "jobs": [
+  {
+   "word": "farmer",
+   "set": {
+    "harvest_sources": [
+     "field",
+     "plant"
+    ],
+    "harvest_bonus": 3.0
+   },
+   "ops": [
+    [
+     "produce_A",
+     "mul",
+     1.3
+    ],
+    [
+     "produce_P",
+     "mul",
+     1.2
+    ]
+   ],
+   "letters": "ahp",
+   "core": true
+  },
+  {
+   "word": "fisher",
+   "set": {
+    "harvest_sources": [
+     "fishing"
+    ],
+    "harvest_bonus": 3.0
+   },
+   "ops": [
+    [
+     "produce_O",
+     "mul",
+     1.25
+    ]
+   ],
+   "letters": "oo",
+   "core": true
+  },
+  {
+   "word": "fisherman",
+   "set": {
+    "harvest_sources": [
+     "fishing"
+    ],
+    "harvest_bonus": 3.0
+   },
+   "ops": [
+    [
+     "produce_O",
+     "mul",
+     1.25
+    ]
+   ],
+   "letters": "oo",
+   "core": true
+  },
+  {
+   "word": "smith",
+   "set": {},
+   "ops": [
+    [
+     "produce_C",
+     "mul",
+     1.3
+    ],
+    [
+     "produce_G",
+     "mul",
+     1.2
+    ],
+    [
+     "strength",
+     "add",
+     2.0
+    ],
+    [
+     "res_fire",
+     "add",
+     0.3
+    ]
+   ],
+   "letters": "cg",
+   "core": true
+  },
+  {
+   "word": "blacksmith",
+   "set": {},
+   "ops": [
+    [
+     "produce_C",
+     "mul",
+     1.3
+    ],
+    [
+     "produce_G",
+     "mul",
+     1.2
+    ],
+    [
+     "strength",
+     "add",
+     2.0
+    ],
+    [
+     "res_fire",
+     "add",
+     0.3
+    ]
+   ],
+   "letters": "cg",
+   "core": true
+  },
+  {
+   "word": "miner",
+   "set": {
+    "harvest_sources": [
+     "dig",
+     "mine",
+     "quarry"
+    ],
+    "harvest_bonus": 3.0
+   },
+   "ops": [
+    [
+     "produce_G",
+     "mul",
+     1.3
+    ],
+    [
+     "produce_U",
+     "mul",
+     1.3
+    ]
+   ],
+   "letters": "gu",
+   "core": true
+  },
+  {
+   "word": "hunter",
+   "set": {
+    "harvest_sources": [
+     "hunting"
+    ],
+    "harvest_bonus": 3.0
+   },
+   "ops": [
+    [
+     "produce_H",
+     "mul",
+     1.25
+    ],
+    [
+     "sight_range",
+     "mul",
+     1.2
+    ]
+   ],
+   "letters": "hk",
+   "core": true
+  },
+  {
+   "word": "priest",
+   "set": {
+    "recruit_rate": 0.3,
+    "authority": 3.0
+   },
+   "ops": [
+    [
+     "produce_Y",
+     "mul",
+     1.5
+    ],
+    [
+     "integrity",
+     "mul",
+     1.1
+    ]
+   ],
+   "letters": "y",
+   "core": true
+  },
+  {
+   "word": "merchant",
+   "set": {
+    "trade_rate": 0.75
+   },
+   "ops": [
+    [
+     "produce_T",
+     "mul",
+     1.5
+    ]
+   ],
+   "letters": "tt",
+   "core": true
+  },
+  {
+   "word": "trader",
+   "set": {
+    "trade_rate": 0.75
+   },
+   "ops": [
+    [
+     "produce_T",
+     "mul",
+     1.5
+    ]
+   ],
+   "letters": "tt",
+   "core": true
+  },
+  {
+   "word": "scout",
+   "set": {},
+   "ops": [
+    [
+     "sight_range",
+     "mul",
+     1.5
+    ],
+    [
+     "speed_land",
+     "mul",
+     1.15
+    ],
+    [
+     "produce_J",
+     "mul",
+     1.5
+    ]
+   ],
+   "letters": "j",
+   "core": true
+  },
+  {
+   "word": "explorer",
+   "set": {},
+   "ops": [
+    [
+     "sight_range",
+     "mul",
+     1.3
+    ],
+    [
+     "speed_land",
+     "mul",
+     1.1
+    ],
+    [
+     "produce_J",
+     "mul",
+     2.0
+    ]
+   ],
+   "letters": "j",
+   "core": true
+  },
+  {
+   "word": "carpenter",
+   "set": {},
+   "ops": [
+    [
+     "produce_B",
+     "mul",
+     1.3
+    ],
+    [
+     "produce_C",
+     "mul",
+     1.2
+    ],
+    [
+     "strength",
+     "add",
+     1.0
+    ]
+   ],
+   "letters": "bc",
+   "core": true
+  },
+  {
+   "word": "alchemist",
+   "set": {
+    "trade_rate": 0.9
+   },
+   "ops": [
+    [
+     "produce_M",
+     "mul",
+     1.3
+    ],
+    [
+     "produce_Z",
+     "mul",
+     1.5
+    ]
+   ],
+   "letters": "mz",
+   "core": true
+  },
+  {
+   "word": "sailor",
+   "set": {
+    "harvest_sources": [
+     "fishing"
+    ],
+    "harvest_bonus": 2.0
+   },
+   "ops": [
+    [
+     "produce_O",
+     "mul",
+     1.2
+    ],
+    [
+     "speed_land",
+     "mul",
+     1.05
+    ]
+   ],
+   "letters": "o",
+   "core": true
+  },
+  {
+   "word": "soldier",
+   "set": {},
+   "ops": [
+    [
+     "armor",
+     "add",
+     8.0
+    ],
+    [
+     "accuracy",
+     "add",
+     0.05
+    ],
+    [
+     "integrity",
+     "mul",
+     1.2
+    ],
+    [
+     "produce_K",
+     "mul",
+     1.25
+    ]
+   ],
+   "letters": "k",
+   "core": true
+  },
+  {
+   "word": "knight",
+   "set": {
+    "authority": 2.0
+   },
+   "ops": [
+    [
+     "armor",
+     "add",
+     12.0
+    ],
+    [
+     "integrity",
+     "mul",
+     1.25
+    ],
+    [
+     "produce_V",
+     "mul",
+     1.25
+    ]
+   ],
+   "letters": "kv",
+   "core": true
+  },
+  {
+   "word": "warrior",
+   "set": {},
+   "ops": [
+    [
+     "armor",
+     "add",
+     6.0
+    ],
+    [
+     "integrity",
+     "mul",
+     1.3
+    ],
+    [
+     "strength",
+     "add",
+     2.0
+    ],
+    [
+     "produce_K",
+     "mul",
+     1.25
+    ]
+   ],
+   "letters": "k",
+   "core": true
+  },
+  {
+   "word": "thief",
+   "set": {},
+   "ops": [
+    [
+     "stealth",
+     "add",
+     4.0
+    ],
+    [
+     "speed_land",
+     "mul",
+     1.1
+    ],
+    [
+     "produce_D",
+     "mul",
+     1.25
+    ]
+   ],
+   "letters": "d",
+   "core": true
+  },
+  {
+   "word": "bard",
+   "set": {
+    "authority": 2.0,
+    "command_limit": 4.0
+   },
+   "ops": [
+    [
+     "produce_T",
+     "mul",
+     1.25
+    ],
+    [
+     "produce_S",
+     "mul",
+     1.25
+    ]
+   ],
+   "letters": "s",
+   "core": true
+  },
+  {
+   "word": "herbalist",
+   "set": {
+    "harvest_sources": [
+     "plant",
+     "forage"
+    ],
+    "harvest_bonus": 3.0
+   },
+   "ops": [
+    [
+     "produce_P",
+     "mul",
+     1.3
+    ],
+    [
+     "res_poison",
+     "add",
+     0.3
+    ]
+   ],
+   "letters": "pe",
+   "core": true
+  },
+  {
+   "word": "mason",
+   "set": {},
+   "ops": [
+    [
+     "produce_G",
+     "mul",
+     1.25
+    ],
+    [
+     "produce_L",
+     "mul",
+     1.25
+    ],
+    [
+     "strength",
+     "add",
+     2.0
+    ]
+   ],
+   "letters": "gl",
+   "core": true
+  },
+  {
+   "word": "shepherd",
+   "set": {
+    "command_limit": 4.0
+   },
+   "ops": [
+    [
+     "produce_I",
+     "mul",
+     1.4
+    ]
+   ],
+   "letters": "i",
+   "core": true
+  },
+  {
+   "word": "cook",
+   "set": {},
+   "ops": [
+    [
+     "produce_E",
+     "mul",
+     1.2
+    ],
+    [
+     "produce_I",
+     "mul",
+     1.2
+    ]
+   ],
+   "letters": "e",
+   "core": true
+  },
+  {
+   "word": "scholar",
+   "set": {},
+   "ops": [
+    [
+     "produce_Y",
+     "mul",
+     1.5
+    ],
+    [
+     "produce_J",
+     "mul",
+     1.3
+    ],
+    [
+     "sight_range",
+     "mul",
+     1.1
+    ]
+   ],
+   "letters": "y",
+   "core": true
+  },
+  {
+   "word": "doctor",
+   "set": {},
+   "ops": [
+    [
+     "integrity",
+     "mul",
+     1.2
+    ],
+    [
+     "res_poison",
+     "add",
+     0.5
+    ],
+    [
+     "produce_Y",
+     "mul",
+     1.25
+    ]
+   ],
+   "letters": "y",
+   "core": true
+  },
+  {
+   "word": "guard",
+   "set": {},
+   "ops": [
+    [
+     "armor",
+     "add",
+     6.0
+    ],
+    [
+     "sight_range",
+     "mul",
+     1.2
+    ],
+    [
+     "produce_L",
+     "mul",
+     1.2
+    ]
+   ],
+   "letters": "l",
+   "core": true
+  },
+  {
+   "word": "spy",
+   "set": {},
+   "ops": [
+    [
+     "stealth",
+     "add",
+     4.0
+    ],
+    [
+     "sight_range",
+     "mul",
+     1.3
+    ]
+   ],
+   "letters": "s",
+   "core": true
+  },
+  {
+   "word": "wizard",
+   "set": {},
+   "ops": [
+    [
+     "produce_M",
+     "mul",
+     1.25
+    ],
+    [
+     "produce_Z",
+     "mul",
+     1.5
+    ],
+    [
+     "res_magic",
+     "add",
+     0.4
+    ]
+   ],
+   "letters": "mz",
+   "core": true
+  },
+  {
+   "word": "miller",
+   "set": {},
+   "ops": [
+    [
+     "produce_W",
+     "mul",
+     1.4
+    ],
+    [
+     "produce_A",
+     "mul",
+     1.1
+    ]
+   ],
+   "letters": "w",
+   "core": true
+  },
+  {
+   "word": "baker",
+   "set": {},
+   "ops": [
+    [
+     "produce_A",
+     "mul",
+     1.2
+    ],
+    [
+     "produce_C",
+     "mul",
+     1.1
+    ]
+   ],
+   "letters": "a",
+   "core": true
+  },
+  {
+   "word": "king",
+   "set": {
+    "command_limit": 10.0,
+    "authority": 5.0
+   },
+   "ops": [
+    [
+     "produce_S",
+     "mul",
+     1.5
+    ]
+   ],
+   "letters": "s",
+   "core": true
+  },
+  {
+   "word": "captain",
+   "set": {
+    "command_limit": 6.0,
+    "authority": 3.0
+   },
+   "ops": [
+    [
+     "produce_R",
+     "mul",
+     1.25
+    ]
+   ],
+   "letters": "r",
+   "core": true
+  },
+  {
+   "word": "engineer",
+   "set": {},
+   "ops": [
+    [
+     "produce_M",
+     "mul",
+     1.3
+    ],
+    [
+     "produce_W",
+     "mul",
+     1.2
+    ]
+   ],
+   "letters": "m",
+   "core": true
+  },
+  {
+   "word": "pilgrim",
+   "set": {},
+   "ops": [
+    [
+     "produce_J",
+     "mul",
+     1.5
+    ],
+    [
+     "produce_Q",
+     "mul",
+     2.0
+    ],
+    [
+     "speed_land",
+     "mul",
+     1.1
+    ]
+   ],
+   "letters": "jq",
+   "core": true
+  },
+  {
+   "word": "lumberjack",
+   "set": {
+    "harvest_sources": [
+     "tree",
+     "forage"
+    ],
+    "harvest_bonus": 3.0
+   },
+   "ops": [
+    [
+     "strength",
+     "add",
+     2.0
+    ],
+    [
+     "produce_W",
+     "mul",
+     1.1
+    ]
+   ],
+   "letters": "e",
+   "core": true
+  },
+  {
+   "word": "builder",
+   "set": {},
+   "ops": [
+    [
+     "produce_R",
+     "mul",
+     1.3
+    ],
+    [
+     "produce_L",
+     "mul",
+     1.2
+    ],
+    [
+     "strength",
+     "add",
+     1.0
+    ]
+   ],
+   "letters": "r",
+   "core": true
+  },
+  {
+   "word": "architect",
+   "set": {},
+   "ops": [
+    [
+     "produce_R",
+     "mul",
+     1.25
+    ],
+    [
+     "produce_B",
+     "mul",
+     1.25
+    ]
+   ],
+   "letters": "rb",
+   "core": true
+  },
+  {
+   "word": "bishop",
+   "set": {
+    "command_limit": 8.0,
+    "authority": 3,
+    "recruit_rate": 0.5
+   },
+   "ops": [
+    [
+     "integrity",
+     "mul",
+     1.15
+    ],
+    [
+     "res_poison",
+     "add",
+     0.3
+    ],
+    [
+     "produce_Y",
+     "mul",
+     1.5
+    ],
+    [
+     "armor",
+     "add",
+     6
+    ],
+    [
+     "res_unholy",
+     "add",
+     0.5
+    ]
+   ],
+   "letters": "syk",
+   "core": false
+  },
+  {
+   "word": "pope",
+   "set": {
+    "command_limit": 8.0,
+    "authority": 5.0,
+    "recruit_rate": 0.5
+   },
+   "ops": [
+    [
+     "integrity",
+     "mul",
+     1.15
+    ],
+    [
+     "res_poison",
+     "add",
+     0.3
+    ],
+    [
+     "produce_Y",
+     "mul",
+     1.5
+    ],
+    [
+     "armor",
+     "add",
+     6
+    ],
+    [
+     "res_unholy",
+     "add",
+     0.5
+    ]
+   ],
+   "letters": "syk",
+   "core": false
+  },
+  {
+   "word": "khan",
+   "set": {
+    "command_limit": 8.0,
+    "authority": 4,
+    "recruit_rate": 0.5
+   },
+   "ops": [
+    [
+     "speed_land",
+     "mul",
+     1.1
+    ],
+    [
+     "produce_Y",
+     "mul",
+     1.5
+    ],
+    [
+     "armor",
+     "add",
+     6
+    ],
+    [
+     "integrity",
+     "mul",
+     1.15
+    ]
+   ],
+   "letters": "syk",
+   "core": false
+  },
+  {
+   "word": "agent",
+   "set": {},
+   "ops": [
+    [
+     "speed_land",
+     "mul",
+     1.1
+    ],
+    [
+     "stealth",
+     "add",
+     4.0
+    ],
+    [
+     "produce_Y",
+     "mul",
+     1.5
+    ],
+    [
+     "sight_range",
+     "mul",
+     1.15
+    ],
+    [
+     "armor",
+     "add",
+     6
+    ],
+    [
+     "integrity",
+     "mul",
+     1.15
+    ]
+   ],
+   "letters": "dyk",
+   "core": false
+  },
+  {
+   "word": "officer",
+   "set": {
+    "command_limit": 8.0
+   },
+   "ops": [
+    [
+     "speed_land",
+     "mul",
+     1.1
+    ],
+    [
+     "sight_range",
+     "mul",
+     1.15
+    ],
+    [
+     "armor",
+     "add",
+     6
+    ],
+    [
+     "integrity",
+     "mul",
+     1.15
+    ]
+   ],
+   "letters": "k",
+   "core": false
+  },
+  {
+   "word": "hero",
+   "set": {
+    "recruit_rate": 0.5
+   },
+   "ops": [
+    [
+     "speed_land",
+     "mul",
+     1.1
+    ],
+    [
+     "strength",
+     "add",
+     2
+    ],
+    [
+     "armor",
+     "add",
+     6
+    ],
+    [
+     "integrity",
+     "mul",
+     1.15
+    ]
+   ],
+   "letters": "k",
+   "core": false
+  },
+  {
+   "word": "president",
+   "set": {
+    "command_limit": 8.0,
+    "authority": 5.0,
+    "recruit_rate": 0.5
+   },
+   "ops": [
+    [
+     "produce_Y",
+     "mul",
+     1.5
+    ]
+   ],
+   "letters": "sy",
+   "core": false
+  },
+  {
+   "word": "director",
+   "set": {
+    "command_limit": 8.0,
+    "authority": 3
+   },
+   "ops": [
+    [
+     "produce_B",
+     "mul",
+     1.25
+    ],
+    [
+     "produce_Y",
+     "mul",
+     1.5
+    ]
+   ],
+   "letters": "sby",
+   "core": false
+  },
+  {
+   "word": "leader",
+   "set": {
+    "command_limit": 8.0,
+    "authority": 4,
+    "recruit_rate": 0.5
+   },
+   "ops": [
+    [
+     "produce_Y",
+     "mul",
+     1.5
+    ]
+   ],
+   "letters": "sy",
+   "core": false
+  },
+  {
+   "word": "queen",
+   "set": {
+    "command_limit": 8.0,
+    "authority": 4,
+    "recruit_rate": 0.5
+   },
+   "ops": [
+    [
+     "produce_Y",
+     "mul",
+     1.5
+    ]
+   ],
+   "letters": "sy",
+   "core": false
+  },
+  {
+   "word": "chairman",
+   "set": {
+    "trade_rate": 0.8,
+    "command_limit": 8.0,
+    "authority": 3
+   },
+   "ops": [
+    [
+     "produce_T",
+     "mul",
+     1.5
+    ]
+   ],
+   "letters": "ts",
+   "core": false
+  },
+  {
+   "word": "criminal",
+   "set": {},
+   "ops": [
+    [
+     "speed_land",
+     "mul",
+     1.1
+    ],
+    [
+     "stealth",
+     "add",
+     4.0
+    ],
+    [
+     "armor",
+     "add",
+     6
+    ],
+    [
+     "integrity",
+     "mul",
+     1.15
+    ]
+   ],
+   "letters": "dk",
+   "core": false
+  },
+  {
+   "word": "champion",
+   "set": {},
+   "ops": [
+    [
+     "speed_land",
+     "mul",
+     1.1
+    ],
+    [
+     "strength",
+     "add",
+     2
+    ],
+    [
+     "armor",
+     "add",
+     6
+    ],
+    [
+     "integrity",
+     "mul",
+     1.15
+    ]
+   ],
+   "letters": "k",
+   "core": false
+  },
+  {
+   "word": "mayor",
+   "set": {
+    "command_limit": 8.0,
+    "authority": 4,
+    "recruit_rate": 0.5
+   },
+   "ops": [
+    [
+     "produce_B",
+     "mul",
+     1.25
+    ]
+   ],
+   "letters": "sb",
+   "core": false
+  },
+  {
+   "word": "premier",
+   "set": {
+    "command_limit": 8.0,
+    "authority": 4,
+    "recruit_rate": 0.5
+   },
+   "ops": [
+    [
+     "produce_Y",
+     "mul",
+     1.5
+    ]
+   ],
+   "letters": "sy",
+   "core": false
+  },
+  {
+   "word": "amazon",
+   "set": {},
+   "ops": [
+    [
+     "speed_land",
+     "mul",
+     1.1
+    ],
+    [
+     "strength",
+     "add",
+     2
+    ],
+    [
+     "armor",
+     "add",
+     6
+    ],
+    [
+     "integrity",
+     "mul",
+     1.15
+    ]
+   ],
+   "letters": "k",
+   "core": false
+  },
+  {
+   "word": "nurse",
+   "set": {},
+   "ops": [
+    [
+     "integrity",
+     "mul",
+     1.15
+    ],
+    [
+     "res_poison",
+     "add",
+     0.3
+    ],
+    [
+     "produce_Y",
+     "mul",
+     1.5
+    ],
+    [
+     "res_disease",
+     "add",
+     0.5
+    ]
+   ],
+   "letters": "y",
+   "core": false
+  },
+  {
+   "word": "cop",
+   "set": {},
+   "ops": [
+    [
+     "speed_land",
+     "mul",
+     1.1
+    ],
+    [
+     "sight_range",
+     "mul",
+     1.15
+    ],
+    [
+     "armor",
+     "add",
+     6
+    ],
+    [
+     "integrity",
+     "mul",
+     1.15
+    ]
+   ],
+   "letters": "k",
+   "core": false
+  },
+  {
+   "word": "fighter",
+   "set": {},
+   "ops": [
+    [
+     "speed_land",
+     "mul",
+     1.1
+    ],
+    [
+     "strength",
+     "add",
+     2
+    ],
+    [
+     "armor",
+     "add",
+     6
+    ],
+    [
+     "integrity",
+     "mul",
+     1.15
+    ]
+   ],
+   "letters": "k",
+   "core": false
+  },
+  {
+   "word": "emperor",
+   "set": {
+    "command_limit": 8.0,
+    "authority": 5.0,
+    "recruit_rate": 0.5
+   },
+   "ops": [
+    [
+     "produce_Y",
+     "mul",
+     1.5
+    ]
+   ],
+   "letters": "sy",
+   "core": false
+  },
+  {
+   "word": "general",
+   "set": {
+    "command_limit": 8.0,
+    "authority": 4
+   },
+   "ops": [
+    [
+     "produce_Y",
+     "mul",
+     1.5
+    ]
+   ],
+   "letters": "sy",
+   "core": false
+  },
+  {
+   "word": "minister",
+   "set": {
+    "command_limit": 8.0,
+    "authority": 3
+   },
+   "ops": [
+    [
+     "produce_Y",
+     "mul",
+     1.5
+    ]
+   ],
+   "letters": "sy",
+   "core": false
+  },
+  {
+   "word": "attorney",
+   "set": {
+    "trade_rate": 0.85
+   },
+   "ops": [
+    [
+     "produce_T",
+     "mul",
+     1.5
+    ],
+    [
+     "produce_Y",
+     "mul",
+     1.5
+    ]
+   ],
+   "letters": "ty",
+   "core": false
+  },
+  {
+   "word": "lawyer",
+   "set": {
+    "trade_rate": 0.8
+   },
+   "ops": [
+    [
+     "produce_T",
+     "mul",
+     1.5
+    ],
+    [
+     "produce_Y",
+     "mul",
+     1.5
+    ]
+   ],
+   "letters": "ty",
+   "core": false
+  },
+  {
+   "word": "deputy",
+   "set": {},
+   "ops": [
+    [
+     "sight_range",
+     "mul",
+     1.15
+    ],
+    [
+     "armor",
+     "add",
+     6
+    ],
+    [
+     "integrity",
+     "mul",
+     1.15
+    ]
+   ],
+   "letters": "k",
+   "core": false
+  },
+  {
+   "word": "princess",
+   "set": {
+    "command_limit": 8.0,
+    "authority": 3,
+    "recruit_rate": 0.5
+   },
+   "ops": [],
+   "letters": "s",
+   "core": false
+  },
+  {
+   "word": "commander",
+   "set": {
+    "command_limit": 8.0,
+    "authority": 4
+   },
+   "ops": [
+    [
+     "produce_Y",
+     "mul",
+     1.5
+    ]
+   ],
+   "letters": "sy",
+   "core": false
+  },
+  {
+   "word": "lieutenant",
+   "set": {
+    "command_limit": 8.0
+   },
+   "ops": [
+    [
+     "armor",
+     "add",
+     6
+    ],
+    [
+     "integrity",
+     "mul",
+     1.15
+    ]
+   ],
+   "letters": "k",
+   "core": false
+  },
+  {
+   "word": "commissioner",
+   "set": {
+    "command_limit": 8.0,
+    "authority": 3
+   },
+   "ops": [
+    [
+     "produce_Y",
+     "mul",
+     1.5
+    ]
+   ],
+   "letters": "sy",
+   "core": false
+  },
+  {
+   "word": "colonel",
+   "set": {
+    "command_limit": 8.0,
+    "authority": 3
+   },
+   "ops": [
+    [
+     "produce_Y",
+     "mul",
+     1.5
+    ]
+   ],
+   "letters": "sy",
+   "core": false
+  },
+  {
+   "word": "journalist",
+   "set": {},
+   "ops": [
+    [
+     "sight_range",
+     "mul",
+     1.3
+    ],
+    [
+     "speed_land",
+     "mul",
+     1.1
+    ],
+    [
+     "produce_Y",
+     "mul",
+     1.5
+    ]
+   ],
+   "letters": "jy",
+   "core": false
+  },
+  {
+   "word": "ambassador",
+   "set": {
+    "trade_rate": 0.8
+   },
+   "ops": [
+    [
+     "produce_T",
+     "mul",
+     1.5
+    ],
+    [
+     "produce_Y",
+     "mul",
+     1.5
+    ]
+   ],
+   "letters": "ty",
+   "core": false
+  },
+  {
+   "word": "guardian",
+   "set": {},
+   "ops": [
+    [
+     "sight_range",
+     "mul",
+     1.15
+    ],
+    [
+     "armor",
+     "add",
+     6
+    ],
+    [
+     "integrity",
+     "mul",
+     1.15
+    ]
+   ],
+   "letters": "k",
+   "core": false
+  },
+  {
+   "word": "marshall",
+   "set": {
+    "command_limit": 8.0,
+    "authority": 4
+   },
+   "ops": [
+    [
+     "produce_Y",
+     "mul",
+     1.5
+    ]
+   ],
+   "letters": "sy",
+   "core": false
+  },
+  {
+   "word": "chef",
+   "set": {},
+   "ops": [
+    [
+     "armor",
+     "add",
+     6
+    ],
+    [
+     "integrity",
+     "mul",
+     1.15
+    ],
+    [
+     "res_fire",
+     "add",
+     0.3
+    ]
+   ],
+   "letters": "k",
+   "core": false
+  },
+  {
+   "word": "lord",
+   "set": {
+    "command_limit": 8.0,
+    "authority": 4
+   },
+   "ops": [],
+   "letters": "s",
+   "core": false
+  },
+  {
+   "word": "justice",
+   "set": {
+    "authority": 4
+   },
+   "ops": [
+    [
+     "produce_Y",
+     "mul",
+     1.5
+    ]
+   ],
+   "letters": "sy",
+   "core": false
+  },
+  {
+   "word": "manager",
+   "set": {
+    "command_limit": 8.0
+   },
+   "ops": [
+    [
+     "produce_B",
+     "mul",
+     1.25
+    ]
+   ],
+   "letters": "b",
+   "core": false
+  },
+  {
+   "word": "coach",
+   "set": {
+    "command_limit": 6
+   },
+   "ops": [
+    [
+     "speed_land",
+     "mul",
+     1.1
+    ]
+   ],
+   "letters": "c",
+   "core": false
+  },
+  {
+   "word": "judge",
+   "set": {
+    "authority": 4
+   },
+   "ops": [
+    [
+     "produce_Y",
+     "mul",
+     1.5
+    ]
+   ],
+   "letters": "sy",
+   "core": false
+  },
+  {
+   "word": "teacher",
+   "set": {
+    "recruit_rate": 0.3
+   },
+   "ops": [
+    [
+     "produce_Y",
+     "mul",
+     1.5
+    ]
+   ],
+   "letters": "y",
+   "core": false
+  },
+  {
+   "word": "artist",
+   "set": {},
+   "ops": [
+    [
+     "produce_C",
+     "mul",
+     1.25
+    ],
+    [
+     "produce_Y",
+     "mul",
+     1.5
+    ]
+   ],
+   "letters": "cy",
+   "core": false
+  },
+  {
+   "word": "prince",
+   "set": {
+    "command_limit": 8.0,
+    "authority": 4
+   },
+   "ops": [],
+   "letters": "s",
+   "core": false
+  },
+  {
+   "word": "governor",
+   "set": {
+    "command_limit": 8.0,
+    "authority": 4
+   },
+   "ops": [],
+   "letters": "s",
+   "core": false
+  },
+  {
+   "word": "senator",
+   "set": {
+    "authority": 3
+   },
+   "ops": [
+    [
+     "produce_Y",
+     "mul",
+     1.5
+    ]
+   ],
+   "letters": "sy",
+   "core": false
+  },
+  {
+   "word": "marine",
+   "set": {},
+   "ops": [
+    [
+     "armor",
+     "add",
+     6
+    ],
+    [
+     "integrity",
+     "mul",
+     1.15
+    ]
+   ],
+   "letters": "k",
+   "core": false
+  },
+  {
+   "word": "duke",
+   "set": {
+    "command_limit": 8.0,
+    "authority": 4
+   },
+   "ops": [],
+   "letters": "s",
+   "core": false
+  },
+  {
+   "word": "dean",
+   "set": {
+    "command_limit": 8.0
+   },
+   "ops": [
+    [
+     "produce_Y",
+     "mul",
+     1.5
+    ]
+   ],
+   "letters": "y",
+   "core": false
+  },
+  {
+   "word": "operator",
+   "set": {},
+   "ops": [
+    [
+     "produce_C",
+     "mul",
+     1.25
+    ],
+    [
+     "produce_B",
+     "mul",
+     1.25
+    ]
+   ],
+   "letters": "cb",
+   "core": false
+  },
+  {
+   "word": "inspector",
+   "set": {},
+   "ops": [
+    [
+     "produce_Y",
+     "mul",
+     1.5
+    ],
+    [
+     "sight_range",
+     "mul",
+     1.15
+    ]
+   ],
+   "letters": "y",
+   "core": false
+  },
+  {
+   "word": "farmhand",
+   "set": {
+    "harvest_sources": [
+     "field"
+    ],
+    "harvest_bonus": 2.5
+   },
+   "ops": [],
+   "letters": "a",
+   "core": false
+  },
+  {
+   "word": "professor",
+   "set": {},
+   "ops": [
+    [
+     "produce_Y",
+     "mul",
+     1.5
+    ]
+   ],
+   "letters": "y",
+   "core": false
+  },
+  {
+   "word": "guide",
+   "set": {},
+   "ops": [
+    [
+     "sight_range",
+     "mul",
+     1.3
+    ]
+   ],
+   "letters": "j",
+   "core": false
+  },
+  {
+   "word": "writer",
+   "set": {},
+   "ops": [
+    [
+     "produce_Y",
+     "mul",
+     1.5
+    ]
+   ],
+   "letters": "y",
+   "core": false
+  },
+  {
+   "word": "editor",
+   "set": {},
+   "ops": [
+    [
+     "produce_Y",
+     "mul",
+     1.5
+    ]
+   ],
+   "letters": "y",
+   "core": false
+  },
+  {
+   "word": "pilot",
+   "set": {},
+   "ops": [
+    [
+     "produce_Y",
+     "mul",
+     1.5
+    ]
+   ],
+   "letters": "y",
+   "core": false
+  },
+  {
+   "word": "reporter",
+   "set": {},
+   "ops": [
+    [
+     "sight_range",
+     "mul",
+     1.3
+    ]
+   ],
+   "letters": "j",
+   "core": false
+  },
+  {
+   "word": "photographer",
+   "set": {},
+   "ops": [
+    [
+     "sight_range",
+     "mul",
+     1.3
+    ]
+   ],
+   "letters": "j",
+   "core": false
+  },
+  {
+   "word": "servant",
+   "set": {},
+   "ops": [
+    [
+     "produce_N",
+     "mul",
+     1.3
+    ]
+   ],
+   "letters": "n",
+   "core": false
+  },
+  {
+   "word": "aide",
+   "set": {},
+   "ops": [
+    [
+     "produce_N",
+     "mul",
+     1.3
+    ]
+   ],
+   "letters": "n",
+   "core": false
+  },
+  {
+   "word": "peasant",
+   "set": {},
+   "ops": [
+    [
+     "produce_N",
+     "mul",
+     1.3
+    ]
+   ],
+   "letters": "n",
+   "core": false
+  },
+  {
+   "word": "labourer",
+   "set": {},
+   "ops": [
+    [
+     "produce_N",
+     "mul",
+     1.3
+    ]
+   ],
+   "letters": "n",
+   "core": false
+  }
+ ],
+ "buildings": [
+  "mill",
+  "forge",
+  "shrine",
+  "watchtower",
+  "well",
+  "farmhouse",
+  "kiln",
+  "stall",
+  "lighthouse",
+  "granary",
+  "garrison",
+  "chapel",
+  "workshop",
+  "apiary",
+  "windmill",
+  "farm",
+  "house",
+  "barn",
+  "temple",
+  "fort",
+  "castle",
+  "quarry",
+  "mine",
+  "orchard",
+  "vineyard",
+  "hedge",
+  "furnace",
+  "anvil",
+  "smithy",
+  "foundry",
+  "dock",
+  "pier",
+  "citadel",
+  "fortress",
+  "palisade",
+  "fountain",
+  "silo",
+  "observatory",
+  "cathedral",
+  "cottage",
+  "hut",
+  "cabin",
+  "kennel",
+  "warehouse",
+  "statue",
+  "beacon",
+  "beehive",
+  "sanctuary",
+  "monastery",
+  "haven",
+  "bank",
+  "stable",
+  "hospital",
+  "library",
+  "museum",
+  "market",
+  "bunker",
+  "tower",
+  "court",
+  "university",
+  "college",
+  "wall",
+  "store",
+  "hotel",
+  "shop",
+  "hall",
+  "institute",
+  "prison",
+  "garden",
+  "port",
+  "restaurant",
+  "studio",
+  "apartment",
+  "kitchen",
+  "stadium",
+  "jail",
+  "facility",
+  "factory",
+  "theatre",
+  "gallery",
+  "palace",
+  "gym",
+  "lab",
+  "resort",
+  "residence",
+  "theater",
+  "arsenal",
+  "laboratory",
+  "mall",
+  "opera",
+  "garage",
+  "shelter",
+  "treasury",
+  "pub",
+  "fence",
+  "dam",
+  "generator",
+  "vault",
+  "turbine",
+  "bazaar"
+ ],
+ "legendaries": [
+  {
+   "word": "dragon",
+   "unlock": {
+    "kind": "land",
+    "need": 40
+   },
+   "counter": "lance"
+  },
+  {
+   "word": "titan",
+   "unlock": {
+    "kind": "minutes",
+    "need": 15
+   },
+   "counter": "chain"
+  },
+  {
+   "word": "phoenix",
+   "unlock": {
+    "kind": "letters"
+   },
+   "counter": "frost"
+  },
+  {
+   "word": "kraken",
+   "unlock": {
+    "kind": "regions",
+    "need": 8
+   },
+   "counter": "harpoon"
+  },
+  {
+   "word": "hydra",
+   "unlock": {
+    "kind": "hunts",
+    "need": 6
+   },
+   "counter": "firebrand"
+  },
+  {
+   "word": "golem",
+   "unlock": {
+    "kind": "producers",
+    "need": 4
+   },
+   "counter": "chisel"
+  },
+  {
+   "word": "leviathan",
+   "unlock": {
+    "kind": "trades",
+    "need": 5
+   },
+   "counter": "harpoon"
+  },
+  {
+   "word": "behemoth",
+   "unlock": {
+    "kind": "land",
+    "need": 60
+   },
+   "counter": "lasso"
+  },
+  {
+   "word": "griffin",
+   "unlock": {
+    "kind": "regions",
+    "need": 6
+   },
+   "counter": "crossbow"
+  },
+  {
+   "word": "basilisk",
+   "unlock": {
+    "kind": "letters"
+   },
+   "counter": "weasel"
+  },
+  {
+   "word": "colossus",
+   "unlock": {
+    "kind": "producers",
+    "need": 5
+   },
+   "counter": "earthquake"
+  },
+  {
+   "word": "genie",
+   "unlock": {
+    "kind": "trades",
+    "need": 4
+   },
+   "counter": "lamp"
+  },
+  {
+   "word": "unicorn",
+   "unlock": {
+    "kind": "city"
+   },
+   "counter": "lasso"
+  },
+  {
+   "word": "wyvern",
+   "unlock": {
+    "kind": "boss"
+   },
+   "counter": "lance"
+  },
+  {
+   "word": "god",
+   "unlock": {
+    "kind": "minutes",
+    "need": 20
+   },
+   "counter": "blasphemy"
+  },
+  {
+   "word": "apocalypse",
+   "unlock": {
+    "kind": "kills",
+    "need": 2
+   },
+   "counter": "armistice"
+  }
+ ]
+}

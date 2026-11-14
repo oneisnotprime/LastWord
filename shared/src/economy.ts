@@ -10,7 +10,7 @@ import { TILE_TYPES } from "./world.js";
 export const STARTING_HAND = 8;
 
 /** Letters to fill a hand with after its starter word, by how often words use them (no J, Q, X or Z). */
-const FILL = "eeeeeeeeeeeiiiiiiiiaaaaaaaarrrrrrrnnnnnnnttttttoooooosssssslllllccccuuuudddpppmmmhhggyybbffwwkv";
+export const HAND_FILL = "eeeeeeeeeeeiiiiiiiiaaaaaaaarrrrrrrnnnnnnnttttttoooooosssssslllllccccuuuudddpppmmmhhggyybbffwwkv";
 
 let starters: { dict: Dictionary; words: string[] } | null = null;
 
@@ -52,7 +52,7 @@ export function starterHand(dict: Dictionary, rng: Rng): Letters {
   const hand: Letters = {};
   const add = (ch: string) => { hand[ch] = (hand[ch] ?? 0) + 1; };
   for (const ch of word) add(ch);
-  for (let i = word.length; i < STARTING_HAND; i++) add(FILL[Math.floor(rng() * FILL.length)]!);
+  for (let i = word.length; i < STARTING_HAND; i++) add(HAND_FILL[Math.floor(rng() * HAND_FILL.length)]!);
   return hand;
 }
 

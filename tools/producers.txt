@@ -269,3 +269,23 @@ conquest: takes_city=true
 coup: takes_city=true
 election: takes_city=true
 revolution: takes_city=true
+
+# Starting kits (tools/kits.txt): buildings a player can start with.
+farmhouse: produce_B=0.2
+cottage: produce_B=0.2
+hut: produce_B=0.1
+cabin: produce_B=0.15
+chapel: produce_Y=0.2
+cathedral: produce_Y=0.3
+statue: produce_Y=0.4
+workshop: produce_C=0.8 production_needs=labor
+smithy: produce_C=0.8 production_needs=labor,g
+foundry: produce_M=1 production_needs=vowel,vowel
+apiary: produce_P=0.4 production_needs=harvest
+beehive: produce_P=0.3 production_needs=harvest
+dock: produce_O=0.8 production_needs=flow,extract
+pier: produce_O=0.6 production_needs=flow,extract
+fountain: produce_O=0.5 production_needs=extract
+kennel: produce_I=0.3 production_needs=labor
+golem: produce_N=1
+genie: produce_N=1

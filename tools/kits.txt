@@ -1,0 +1,231 @@
+# Starting kits (PLAN.md "Starting kits"): the hand-tuned core that tools/build_kits.py starts from.
+# It writes data/kits.json: 100 jobs, 100 buildings and the legendary words.
+#
+# job <word>: tokens
+#   A job is worn like an invisible tool for the whole round, so it acts only through shared
+#   properties, with the same tokens as demo_words.txt:
+#   p=v      the job's own property, read as any carried tool's is: harvest_sources and
+#            harvest_bonus (gathering success, extra letters a hunt), trade_rate (markets ask this
+#            times their price), command_limit, authority, recruit_rate
+#   p*x p+x  what it does to its holder's body (sight_range, speed_land, strength, armor,
+#            integrity, accuracy, stealth, res_*...); produce_<L>*x multiplies every L its
+#            holder earns, as an area's yields do (shared place.ts)
+#   letters=abc   letters its starting hand leans toward
+#   A core job whose word is not in the dictionary yet is skipped (the build lists it); the rest
+#   of the hundred are derived by rule from the dictionary's profession words.
+#
+# building <word>   a starting building: placed at its owner's spawn, theirs, as if spelled there
+# skip <word>       never a job or a starting building
+#
+# legend <word>: unlock=<condition> counter=<word>
+#   conditions: minutes:N (round time), letters (pay half its letters), land:N (tiles held),
+#   boss (slay a roaming boss), producers:N (things of yours making letters), regions:N (regions
+#   explored), hunts:N (wild animals hunted), trades:N (trades made), city (rule a city),
+#   kills:N (people killed). The counter must name the legendary in its `counters`.
+
+job farmer: harvest_sources=field,plant harvest_bonus=3 produce_A*1.3 produce_P*1.2 letters=ahp
+job fisher: harvest_sources=fishing harvest_bonus=3 produce_O*1.25 letters=oo
+job fisherman: harvest_sources=fishing harvest_bonus=3 produce_O*1.25 letters=oo
+job smith: produce_C*1.3 produce_G*1.2 strength+2 res_fire+0.3 letters=cg
+job blacksmith: produce_C*1.3 produce_G*1.2 strength+2 res_fire+0.3 letters=cg
+job miner: harvest_sources=dig,mine,quarry harvest_bonus=3 produce_G*1.3 produce_U*1.3 letters=gu
+job hunter: harvest_sources=hunting harvest_bonus=3 produce_H*1.25 sight_range*1.2 letters=hk
+job priest: recruit_rate=0.3 authority=3 produce_Y*1.5 integrity*1.1 letters=y
+job merchant: trade_rate=0.75 produce_T*1.5 letters=tt
+job trader: trade_rate=0.75 produce_T*1.5 letters=tt
+job scout: sight_range*1.5 speed_land*1.15 produce_J*1.5 letters=j
+job explorer: sight_range*1.3 speed_land*1.1 produce_J*2 letters=j
+job carpenter: produce_B*1.3 produce_C*1.2 strength+1 letters=bc
+job alchemist: produce_M*1.3 produce_Z*1.5 trade_rate=0.9 letters=mz
+job sailor: harvest_sources=fishing harvest_bonus=2 produce_O*1.2 speed_land*1.05 letters=o
+job soldier: armor+8 accuracy+0.05 integrity*1.2 produce_K*1.25 letters=k
+job knight: armor+12 integrity*1.25 authority=2 produce_V*1.25 letters=kv
+job warrior: armor+6 integrity*1.3 strength+2 produce_K*1.25 letters=k
+job thief: stealth+4 speed_land*1.1 produce_D*1.25 letters=d
+job bard: authority=2 command_limit=4 produce_T*1.25 produce_S*1.25 letters=s
+job herbalist: harvest_sources=plant,forage harvest_bonus=3 produce_P*1.3 res_poison+0.3 letters=pe
+job mason: produce_G*1.25 produce_L*1.25 strength+2 letters=gl
+job shepherd: produce_I*1.4 command_limit=4 letters=i
+job cook: produce_E*1.2 produce_I*1.2 letters=e
+job scholar: produce_Y*1.5 produce_J*1.3 sight_range*1.1 letters=y
+job doctor: integrity*1.2 res_poison+0.5 produce_Y*1.25 letters=y
+job guard: armor+6 sight_range*1.2 produce_L*1.2 letters=l
+job spy: stealth+4 sight_range*1.3 letters=s
+job wizard: produce_M*1.25 produce_Z*1.5 res_magic+0.4 letters=mz
+job miller: produce_W*1.4 produce_A*1.1 letters=w
+job baker: produce_A*1.2 produce_C*1.1 letters=a
+job king: command_limit=10 authority=5 produce_S*1.5 letters=s
+job captain: command_limit=6 authority=3 produce_R*1.25 letters=r
+job engineer: produce_M*1.3 produce_W*1.2 letters=m
+job pilgrim: produce_J*1.5 produce_Q*2 speed_land*1.1 letters=jq
+job lumberjack: harvest_sources=tree,forage harvest_bonus=3 strength+2 produce_W*1.1 letters=e
+job builder: produce_R*1.3 produce_L*1.2 strength+1 letters=r
+job architect: produce_R*1.25 produce_B*1.25 letters=rb
+
+building mill
+building forge
+building shrine
+building watchtower
+building well
+building farmhouse
+building kiln
+building stall
+building lighthouse
+building granary
+building garrison
+building chapel
+building workshop
+building apiary
+building tavern
+building inn
+building bakery
+building brewery
+building greenhouse
+building windmill
+building farm
+building house
+building barn
+building temple
+building fort
+building castle
+building quarry
+building mine
+building orchard
+building vineyard
+building hedge
+building furnace
+building anvil
+building smithy
+building foundry
+building dock
+building pier
+building citadel
+building fortress
+building palisade
+building fountain
+building silo
+building observatory
+building cathedral
+building cottage
+building hut
+building cabin
+building kennel
+building warehouse
+building statue
+building beacon
+building beehive
+building sanctuary
+building monastery
+building haven
+building bank
+building stable
+building hospital
+building library
+building museum
+building market
+building bunker
+building tower
+
+skip john
+skip works
+skip core
+skip seats
+skip counter
+skip institution
+skip infrastructure
+skip tap
+skip bath
+skip border
+skip post
+skip system
+skip addition
+skip building
+skip rooms
+skip story
+skip bathroom
+skip ruin
+skip grave
+skip stocks
+skip village
+skip settlement
+skip estate
+skip headquarters
+skip plow
+skip plough
+skip hoe
+skip radar
+skip memorial
+skip bedroom
+skip chamber
+skip base
+skip employer
+skip boss
+skip rep
+skip representative
+skip principal
+skip secretary
+skip executive
+skip private
+skip volunteer
+skip shed
+skip utility
+skip terminal
+skip quarters
+skip backing
+skip column
+skip dick
+skip batman
+skip bobby
+skip con
+skip don
+skip staff
+skip suspect
+skip carter
+skip cooper
+skip count
+skip doc
+skip terrorist
+skip killer
+skip server
+skip tech
+skip maker
+skip producer
+skip candidate
+skip employee
+skip worker
+skip medium
+skip major
+skip assistant
+skip door
+skip roof
+skip block
+skip cell
+skip entry
+skip bars
+skip room
+skip structure
+skip platform
+skip bell
+skip storage
+skip housing
+skip machine
+skip press
+skip study
+skip stage
+
+legend dragon: unlock=land:40 counter=lance
+legend titan: unlock=minutes:15 counter=chain
+legend phoenix: unlock=letters counter=frost
+legend kraken: unlock=regions:8 counter=harpoon
+legend hydra: unlock=hunts:6 counter=firebrand
+legend golem: unlock=producers:4 counter=chisel
+legend leviathan: unlock=trades:5 counter=harpoon
+legend behemoth: unlock=land:60 counter=lasso
+legend griffin: unlock=regions:6 counter=crossbow
+legend basilisk: unlock=letters counter=weasel
+legend colossus: unlock=producers:5 counter=earthquake
+legend genie: unlock=trades:4 counter=lamp
+legend unicorn: unlock=city counter=lasso
+legend wyvern: unlock=boss counter=lance
+legend god: unlock=minutes:20 counter=blasphemy
+legend apocalypse: unlock=kills:2 counter=armistice

@@ -78,6 +78,8 @@ export class Hud {
   private readonly win = $("spellwin");
   private toastTimer = 0;
   private detail: LoadoutDetail | null = null;
+  /** Your starting kit's lines for the HUD card (set by `KitView`). */
+  kitHtml = "";
   private open: "inventory" | "loadout" | "trade" | null = null;
   /** Sends a trading action to the server (set by the scene). */
   act: (type: "market" | "hire" | "transmute" | "offer" | "answer", payload: unknown) => void = () => {};
@@ -473,6 +475,7 @@ export class Hud {
           `<span class="chip store">${k.toUpperCase()} ${Math.round(d!.stores[k].have * 10) / 10}${flow(k)}</span>`),
         ...(d?.short ?? []).map((t) => chip("hungry").replace("HUNGRY", esc(t.toUpperCase()))),
       ];
+      if (this.kitHtml) parts.push(this.kitHtml);
       if (chips.length) parts.push(`<div class="chips">${chips.join("")}</div>`);
     }
     const html = parts.join("");
@@ -484,6 +487,11 @@ export class Hud {
   /** True if a phrase names something alive (a HORSE you ride is an animal, a CAR is not). */
   private alive(phrase: string): boolean {
     try { return parsePhrase(this.dict, phrase).stats.flag("alive"); } catch { return false; }
+  }
+
+  /** Draws the HUD card again (the kit changed). */
+  redraw() {
+    this.drawHud();
   }
 
   /** Knocked out: the HUD says so, and whom the camera now follows (null for nobody yet). */

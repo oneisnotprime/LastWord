@@ -1408,7 +1408,7 @@ alcazar	noun	artifact	structure	2.14	uncommon	n02698486	-
 alchemic	adjective	modifier	pertaining	1.51	rare	a02621020	-
 alchemical	adjective	modifier	pertaining	2.5	uncommon	a02621020	-
 alchemise	verb	spell	transform	0.0	obscure	v00139406	-
-alchemist	noun	person	person	3.07	common	n09801362	-
+alchemist	noun	person	worker	3.07	common	n09801362	-
 alchemistic	adjective	modifier	pertaining	0.0	obscure	a02621178	-
 alchemistical	adjective	modifier	pertaining	0.0	obscure	a02621178	-
 alchemize	verb	spell	transform	0.0	obscure	v00139406	-
@@ -3161,7 +3161,7 @@ arching	adjective	modifier	quality	2.71	uncommon	a02323141	-
 archipallium	noun	bodypart	bodypart	0.0	obscure	n05489522	-
 archipelagic	adjective	modifier	pertaining	1.6	rare	a02650737	-
 archipelago	noun	terrain	landform	3.33	common	n09226715	-
-architect	noun	person	person	4.08	core	n09824898	-
+architect	noun	person	worker	4.08	core	n09824898	-
 architectonic	adjective	modifier	pertaining	1.84	rare	a02909373	-
 architectonics	noun	knowledge	knowledge	1.31	rare	n06133966	-
 architectural	adjective	modifier	pertaining	3.96	common	a02909209	-
@@ -4696,7 +4696,7 @@ barbitone	noun	artifact	medicine	0.0	obscure	n02794917	-
 barbiturate	noun	artifact	medicine	2.11	uncommon	n02795072	-
 barbu	noun	creature	fish	1.61	rare	n02613924	-
 barbwire	noun	artifact	artifact	1.65	rare	n02793846	-
-bard	noun	person	person	3.34	common	n09858410	verb:create
+bard	noun	person	worker	3.34	common	n09858410	verb:create
 barde	verb	spell	create	1.44	rare	v01674210	-
 bardic	adjective	modifier	pertaining	2.05	uncommon	a03058774	-
 bardolatry	noun	event	act	0.0	obscure	n01046365	-
@@ -5212,7 +5212,7 @@ behaviouristic	adjective	modifier	pertaining	0.0	obscure	a02671356	-
 behead	verb	spell	contact	2.71	uncommon	v01574185	-
 beheaded	adjective	modifier	quality	3.22	common	a01188127	-
 beheading	noun	event	act	2.95	uncommon	n01167714	-
-behemoth	noun	person	person	2.97	uncommon	n10148446	-
+behemoth	noun	creature	supernatural	2.97	uncommon	n10148446	-
 behind	adverb	verb_modifier	manner	5.29	core	r00223465	noun:bodypart,adjective:quality
 behindhand	adjective	modifier	quality	0.0	obscure	a01907194	adverb:manner
 behold	verb	spell	perceive	3.76	common	v02134625	-
@@ -7323,7 +7323,7 @@ bugologist	noun	person	person	0.0	obscure	n10079712	-
 bugology	noun	knowledge	knowledge	0.0	obscure	n06081825	-
 buhl	noun	artifact	artifact	2.08	uncommon	n02881870	-
 build	verb	spell	create	5.04	core	v01658171	noun:attribute
-builder	noun	material	material	3.85	common	n15121776	-
+builder	noun	person	worker	3.85	common	n15121776	-
 building	noun	artifact	building	5.29	core	n02916498	-
 buildup	noun	event	act	3.37	common	n00373034	-
 built	adjective	modifier	participle	5.07	core	a01291813	-
@@ -10714,7 +10714,7 @@ colorless	adjective	modifier	quality	3.02	common	a00409108	-
 colorlessness	noun	aura	attribute	0.0	obscure	n04965811	-
 colors	noun	artifact	artifact	4.46	core	n03075927	-
 colossal	adjective	modifier	quality	3.37	common	a01387664	-
-colossus	noun	person	person	3.06	common	n10148446	-
+colossus	noun	creature	supernatural	3.06	common	n10148446	-
 colostomy	noun	event	act	2.4	uncommon	n00669795	-
 colostrum	noun	bodypart	bodypart	2.22	uncommon	n05406699	-
 colour	noun	material	material	4.49	core	n15009532	adjective:quality,verb:social
@@ -18885,7 +18885,7 @@ exploitive	adjective	modifier	quality	1.93	rare	a01873718	-
 exploration	noun	event	travel	4.19	core	n00310889	-
 explorative	adjective	modifier	quality	1.81	rare	a00880654	-
 exploratory	adjective	modifier	quality	3.18	common	a00880654	-
-explorer	noun	person	person	3.85	common	n10092496	-
+explorer	noun	person	worker	3.85	common	n10092496	-
 explosion	noun	event	event	4.22	core	n07323181	-
 explosive	adjective	modifier	quality	3.97	common	a00476610	noun:weapon
 explosively	adverb	verb_modifier	manner	2.47	uncommon	r00336120	-
@@ -19989,7 +19989,7 @@ firebird	noun	creature	bird	2.66	uncommon	n01600378	-
 fireboat	noun	artifact	vehicle_water	1.36	rare	n03349239	-
 firebomb	noun	artifact	device	2.11	uncommon	n03571171	verb:combat
 firebox	noun	artifact	structure	2.37	uncommon	n03349355	-
-firebrand	noun	material	fuel	2.52	uncommon	n15125724	-
+firebrand	noun	material	material	2.52	uncommon	n15125724	-
 firebrat	noun	creature	insect	0.0	obscure	n02273597	-
 firebreak	noun	terrain	place	1.66	rare	n08589189	-
 firebrick	noun	artifact	artifact	1.72	rare	n03349488	-
@@ -24243,7 +24243,7 @@ herb	noun	flora	herb	3.77	common	n12226211	-
 herbaceous	adjective	modifier	quality	2.79	uncommon	a02587233	-
 herbage	noun	flora	herb	1.83	rare	n12125018	-
 herbal	noun	consumable	drink	3.36	common	n07950131	adjective:pertaining
-herbalist	noun	person	person	2.35	uncommon	n10191128	-
+herbalist	noun	person	worker	2.35	uncommon	n10191128	-
 herbarium	noun	institution	group	2.67	uncommon	n07975115	-
 herbicide	noun	material	material	2.8	uncommon	n14931001	-
 herbivore	noun	creature	creature	2.39	uncommon	n01327251	-
@@ -25254,7 +25254,7 @@ hybridizing	noun	event	act	1.78	rare	n00852055	-
 hybridoma	noun	bodypart	bodypart	1.64	rare	n05477665	-
 hydantoin	noun	artifact	medicine	1.08	rare	n03555713	-
 hydathode	noun	flora	plant	0.0	obscure	n13174524	-
-hydra	noun	knowledge	knowledge	3.31	common	n05695974	-
+hydra	noun	creature	supernatural	3.31	common	n05695974	-
 hydralazine	noun	artifact	medicine	1.42	rare	n03555851	-
 hydrangea	noun	flora	shrub	2.37	uncommon	n12808961	-
 hydrant	noun	artifact	device	2.71	uncommon	n04566737	-
@@ -28838,6 +28838,7 @@ kowtow	verb	spell	movement	2.16	uncommon	v02044554	noun:communication
 kraal	noun	terrain	place	1.93	rare	n08690869	-
 kraft	noun	material	material	3.38	common	n14903131	-
 krait	noun	creature	reptile	1.85	rare	n01753677	-
+kraken	noun	creature	supernatural	2.85	uncommon	-	-
 kremlin	noun	artifact	structure	3.39	common	n03633802	-
 krigia	noun	flora	herb	0.0	obscure	n12006208	-
 krill	noun	creature	invertebrate	2.63	uncommon	n01991342	-
@@ -29708,7 +29709,7 @@ lever	noun	artifact	tool	3.64	common	n03664618	verb:contact
 leverage	noun	world_state	phenomenon	3.88	common	n11493538	verb:transfer
 leveraging	noun	event	exchange	3.02	common	n01101851	-
 leveret	noun	creature	mammal	1.27	rare	n02329415	-
-leviathan	noun	person	person	3.09	common	n10275425	-
+leviathan	noun	creature	supernatural	3.09	common	n09519933	-
 levirate	noun	knowledge	knowledge	1.43	rare	n05677462	-
 levis	noun	artifact	clothing	2.6	uncommon	n03665450	-
 levitate	verb	spell	movement	2.52	uncommon	v01948325	-
@@ -38647,7 +38648,7 @@ phocine	adjective	modifier	pertaining	0.0	obscure	a02864548	-
 phoebe	noun	creature	bird	3.38	common	n01552527	-
 phoenician	adjective	modifier	pertaining	2.69	uncommon	a02787738	noun:person
 phoenicophorium	noun	flora	plant	0.0	obscure	n12614450	-
-phoenix	noun	flora	plant	4.21	core	n12614587	-
+phoenix	noun	creature	supernatural	4.21	core	n09524068	-
 phon	noun	measure	quantity	2.05	uncommon	n13736088	-
 phone	noun	artifact	device	5.3	core	n03266479	verb:communication
 phonebook	noun	artifact	document	2.12	uncommon	n06435397	-
@@ -45472,7 +45473,7 @@ schnorr	verb	spell	transfer	1.59	rare	v02275010	-
 schnorrer	noun	person	person	0.0	obscure	n10577127	-
 schnoz	noun	bodypart	bodypart	1.43	rare	n05606462	-
 schnozzle	noun	bodypart	bodypart	0.0	obscure	n05606462	-
-scholar	noun	person	person	3.96	common	n10577282	-
+scholar	noun	person	worker	3.96	common	n10577282	-
 scholarly	adjective	modifier	quality	3.6	common	a02090761	-
 scholarship	noun	institution	possession	4.15	core	n13287193	-
 scholastic	noun	person	person	3.19	common	n10431101	adjective:pertaining
@@ -45606,7 +45607,7 @@ scourger	noun	person	person	0.0	obscure	n10116733	-
 scouring	noun	event	act	2.99	uncommon	n00995574	-
 scours	noun	affliction	affliction	2.11	uncommon	n14295849	-
 scouse	noun	consumable	food	2.31	uncommon	n07606901	-
-scout	noun	person	person	3.97	common	n10290913	verb:perceive
+scout	noun	person	worker	3.97	common	n10290913	verb:perceive
 scouter	noun	person	person	1.78	rare	n10560541	-
 scouting	noun	event	act	3.5	common	n00987192	-
 scoutmaster	noun	person	leader	2.12	uncommon	n10582742	-
@@ -46687,7 +46688,7 @@ shelve	verb	spell	contact	2.39	uncommon	v01500389	-
 shelver	noun	person	worker	0.0	obscure	n10608132	-
 shelvy	adjective	modifier	quality	0.0	obscure	a00695997	-
 shenanigan	noun	event	act	1.53	rare	n00737673	-
-shepherd	noun	person	leader	3.9	common	n10608373	verb:social
+shepherd	noun	person	worker	3.9	common	n10607013	verb:social
 shepherdess	noun	person	worker	2.2	uncommon	n10608474	-
 sherbert	noun	consumable	food	1.9	rare	n07630898	-
 sherbet	noun	consumable	food	2.5	uncommon	n07630898	-
@@ -52747,7 +52748,7 @@ tirolean	noun	artifact	clothing	0.0	obscure	n04513183	-
 tisane	noun	consumable	drink	1.51	rare	n07950272	-
 tissue	noun	bodypart	bodypart	4.32	core	n05274844	verb:create
 tit	noun	bodypart	bodypart	3.48	common	n05562038	-
-titan	noun	person	person	3.69	common	n09958449	-
+titan	noun	creature	supernatural	3.69	common	n09958449	-
 titania	noun	material	material	2.52	uncommon	n14640918	-
 titanic	adjective	modifier	quality	3.59	common	a01393617	-
 titanium	noun	material	metal	3.55	common	n14683390	-
@@ -53205,7 +53206,7 @@ tradecraft	noun	knowledge	knowledge	2.02	uncommon	n05651861	-
 trademark	noun	aura	attribute	3.89	common	n04739783	verb:contact
 trademarked	adjective	modifier	quality	2.74	uncommon	a01114530	-
 tradeoff	noun	event	act	2.66	uncommon	n01169250	-
-trader	noun	person	person	3.77	common	n10740102	-
+trader	noun	person	worker	3.77	common	n10740102	-
 tradesman	noun	person	person	2.62	uncommon	n10611560	-
 tradespeople	noun	institution	group	2.2	uncommon	n07967271	-
 trading	noun	event	exchange	4.63	core	n00080218	-
@@ -58020,7 +58021,7 @@ wearing	adjective	modifier	participle	4.85	core	a00840788	noun:act
 wearisome	adjective	modifier	quality	1.98	rare	a01348155	-
 weary	adjective	modifier	quality	3.61	common	a02441240	verb:body
 wearying	adjective	modifier	quality	1.91	rare	a00840788	-
-weasel	noun	person	person	3.19	common	n10791658	-
+weasel	noun	creature	mammal	3.19	common	n02444573	-
 weather	noun	world_state	weather	4.87	core	n11545095	adjective:quality,verb:movement
 weatherboard	noun	material	material	1.86	rare	n15127574	-
 weatherboarding	noun	material	material	0.0	obscure	n15127574	-
