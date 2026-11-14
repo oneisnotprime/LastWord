@@ -67758,8 +67758,6 @@
 "fly",
 "minnow"
 ],
-"edible":true,
-"nutrition":1.0,
 "habitat":[
 "marsh"
 ],
@@ -73921,9 +73919,6 @@
 "speed_land":3.0,
 "courage":0.0,
 "tamable":true,
-"edible":true,
-"nutrition":15.0,
-"raw":true,
 "habitat":[
 "meadow"
 ],
@@ -74243,8 +74238,6 @@
 "speed_land":2.0,
 "courage":0.0,
 "evasion":0.0,
-"edible":true,
-"nutrition":20.0,
 "habitat":[
 "forest",
 "shore"
@@ -74270,8 +74263,6 @@
 "beauty":6.0,
 "reproduction":3.0,
 "tamable":true,
-"edible":true,
-"nutrition":5.0,
 "habitat":[
 "marsh",
 "meadow"
@@ -74489,9 +74480,6 @@
 "reproduction":5.0,
 "pack_size":4.0,
 "tamable":true,
-"edible":true,
-"nutrition":6.0,
-"raw":true,
 "habitat":[
 "meadow"
 ],
@@ -74584,8 +74572,6 @@
 "loudness":8.0,
 "reproduction":2.0,
 "tamable":true,
-"edible":true,
-"nutrition":40.0,
 "habitat":[
 "meadow",
 "forest"
@@ -74737,9 +74723,6 @@
 ],
 "res_cold":0.6,
 "courage":1.0,
-"edible":true,
-"nutrition":4.0,
-"raw":true,
 "habitat":[
 "taiga",
 "hills",
@@ -75145,8 +75128,6 @@
 "pack_size":4.0,
 "reproduction":3.0,
 "tamable":true,
-"edible":true,
-"nutrition":5.0,
 "habitat":[
 "marsh",
 "meadow"
@@ -75265,8 +75246,6 @@
 "speed_land":10.0,
 "dmg_blunt":50.0,
 "attack_rate":0.6,
-"edible":true,
-"nutrition":60.0,
 "habitat":[
 "forest",
 "hills"
@@ -75530,9 +75509,6 @@
 ],
 "pack_size":8.0,
 "courage":1.0,
-"edible":true,
-"nutrition":3.0,
-"raw":true,
 "habitat":[
 "meadow",
 "hills"
@@ -75657,8 +75633,6 @@
 ],
 "res_cold":0.9,
 "temp_min":-40.0,
-"edible":true,
-"nutrition":3.0,
 "habitat":[
 "tundra",
 "hills"
@@ -76048,8 +76022,6 @@
 "swamp",
 "marsh"
 ],
-"edible":true,
-"nutrition":1.0,
 "habitat":[
 "marsh"
 ],
@@ -76220,8 +76192,6 @@
 "speed_air":25.0,
 "agility":9.0,
 "pack_size":8.0,
-"edible":true,
-"nutrition":2.0,
 "habitat":[
 "marsh"
 ],
@@ -76274,8 +76244,6 @@
 "water",
 "land"
 ],
-"edible":true,
-"nutrition":6.0,
 "habitat":[
 "marsh",
 "shore"
@@ -76303,8 +76271,6 @@
 ],
 "nocturnal":true,
 "detect_underground":true,
-"edible":true,
-"nutrition":2.0,
 "habitat":[
 "forest"
 ],
@@ -89668,8 +89634,6 @@
 "food_need":0.0001,
 "speed_underground":0.01,
 "pack_size":20.0,
-"edible":true,
-"nutrition":0.3,
 "counters":[
 "grass",
 "lawn",
@@ -89721,8 +89685,6 @@
 "attack_rate":0.5,
 "pack_size":6.0,
 "reproduction":0.5,
-"edible":true,
-"nutrition":20.0,
 "habitat":[
 "meadow",
 "savanna"
@@ -89746,8 +89708,6 @@
 "growth_time":5.0,
 "reproduction":0.0,
 "pack_size":30.0,
-"edible":true,
-"nutrition":0.1,
 "habitat":[
 "marsh",
 "forest",
@@ -89950,8 +89910,6 @@
 "alarm":true,
 "reproduction":2.0,
 "pack_size":4.0,
-"edible":true,
-"nutrition":10.0,
 "habitat":[
 "meadow",
 "savanna",
@@ -106880,9 +106838,6 @@
 "deep_water"
 ],
 "pack_size":30.0,
-"edible":true,
-"nutrition":20.0,
-"raw":true,
 "habitat":[
 "shore"
 ],
@@ -106909,9 +106864,6 @@
 ],
 "pack_size":2000.0,
 "reproduction":15.0,
-"edible":true,
-"nutrition":0.5,
-"raw":true,
 "habitat":[
 "shore"
 ],
@@ -106967,9 +106919,6 @@
 "water"
 ],
 "reproduction":3.0,
-"edible":true,
-"nutrition":4.0,
-"raw":true,
 "habitat":[
 "marsh",
 "forest",
@@ -107000,8 +106949,6 @@
 "venomous":true,
 "dmg_poison":200.0,
 "inflict_poison":30.0,
-"edible":true,
-"nutrition":2.0,
 "habitat":[
 "shore"
 ],
@@ -107029,9 +106976,6 @@
 ],
 "pack_size":10.0,
 "value":10000.0,
-"edible":true,
-"nutrition":150.0,
-"raw":true,
 "habitat":[
 "shore"
 ],
@@ -107057,8 +107001,6 @@
 ],
 "pack_size":15.0,
 "reproduction":6.0,
-"edible":true,
-"nutrition":1.0,
 "habitat":[
 "marsh",
 "forest"
@@ -107085,9 +107027,6 @@
 "deep_water"
 ],
 "pack_size":40.0,
-"edible":true,
-"nutrition":5.0,
-"raw":true,
 "habitat":[
 "shore"
 ],
@@ -107115,9 +107054,6 @@
 "water"
 ],
 "reproduction":3.0,
-"edible":true,
-"nutrition":8.0,
-"raw":true,
 "habitat":[
 "marsh"
 ],
@@ -107147,8 +107083,6 @@
 ],
 "dmg_crush":40.0,
 "attack_rate":0.8,
-"edible":true,
-"nutrition":15.0,
 "habitat":[
 "shore"
 ],
@@ -107234,9 +107168,6 @@
 "placeable_on":[
 "water"
 ],
-"edible":true,
-"nutrition":3.0,
-"raw":true,
 "habitat":[
 "shore"
 ],
@@ -107265,9 +107196,6 @@
 ],
 "dmg_crush":40.0,
 "attack_rate":0.5,
-"edible":true,
-"nutrition":40.0,
-"raw":true,
 "habitat":[
 "shore"
 ],
@@ -107321,9 +107249,6 @@
 "deep_water"
 ],
 "pack_size":20.0,
-"edible":true,
-"nutrition":5.0,
-"raw":true,
 "habitat":[
 "shore",
 "tundra"
@@ -107350,9 +107275,6 @@
 "deep_water"
 ],
 "pack_size":20.0,
-"edible":true,
-"nutrition":6.0,
-"raw":true,
 "habitat":[
 "shore"
 ],
@@ -107381,9 +107303,6 @@
 "placeable_on":[
 "deep_water"
 ],
-"edible":true,
-"nutrition":25.0,
-"raw":true,
 "habitat":[
 "shore",
 "tundra"
@@ -107411,9 +107330,6 @@
 ],
 "pack_size":500.0,
 "reproduction":10.0,
-"edible":true,
-"nutrition":2.0,
-"raw":true,
 "habitat":[
 "shore"
 ],
@@ -107499,9 +107415,6 @@
 ],
 "pack_size":200.0,
 "reproduction":8.0,
-"edible":true,
-"nutrition":3.0,
-"raw":true,
 "habitat":[
 "shore"
 ],
@@ -107647,9 +107560,6 @@
 "placeable_on":[
 "deep_water"
 ],
-"edible":true,
-"nutrition":15.0,
-"raw":true,
 "habitat":[
 "shore"
 ],
@@ -107704,9 +107614,6 @@
 "water"
 ],
 "pack_size":30.0,
-"edible":true,
-"nutrition":4.0,
-"raw":true,
 "habitat":[
 "shore",
 "marsh"
@@ -107757,9 +107664,6 @@
 ],
 "pack_size":20.0,
 "reproduction":5.0,
-"edible":true,
-"nutrition":2.0,
-"raw":true,
 "habitat":[
 "marsh",
 "forest"
@@ -107826,9 +107730,6 @@
 "placeable_on":[
 "water"
 ],
-"edible":true,
-"nutrition":3.0,
-"raw":true,
 "habitat":[
 "shore"
 ],
@@ -107857,8 +107758,6 @@
 "venomous":true,
 "dmg_poison":200.0,
 "inflict_poison":30.0,
-"edible":true,
-"nutrition":2.0,
 "habitat":[
 "shore"
 ],
@@ -107912,9 +107811,6 @@
 ],
 "pack_size":1000.0,
 "reproduction":12.0,
-"edible":true,
-"nutrition":1.0,
-"raw":true,
 "habitat":[
 "shore"
 ],
@@ -107941,9 +107837,6 @@
 ],
 "pack_size":50.0,
 "reproduction":3.0,
-"edible":true,
-"nutrition":6.0,
-"raw":true,
 "habitat":[
 "taiga",
 "tundra"
@@ -107973,9 +107866,6 @@
 "placeable_on":[
 "water"
 ],
-"edible":true,
-"nutrition":3.0,
-"raw":true,
 "habitat":[
 "shore"
 ],
@@ -108037,9 +107927,6 @@
 ],
 "food_output":0.5,
 "value":3000.0,
-"edible":true,
-"nutrition":50.0,
-"raw":true,
 "habitat":[
 "taiga",
 "shore"
@@ -108066,8 +107953,6 @@
 ],
 "beauty":6.0,
 "reproduction":5.0,
-"edible":true,
-"nutrition":1.0,
 "habitat":[
 "marsh"
 ],
@@ -108121,9 +108006,6 @@
 "water"
 ],
 "value":100.0,
-"edible":true,
-"nutrition":10.0,
-"raw":true,
 "habitat":[
 "shore"
 ],
@@ -108148,9 +108030,6 @@
 "deep_water"
 ],
 "pack_size":15.0,
-"edible":true,
-"nutrition":80.0,
-"raw":true,
 "habitat":[
 "shore"
 ],
@@ -124294,9 +124173,6 @@
 "placeable_on":[
 "water"
 ],
-"edible":true,
-"nutrition":3.0,
-"raw":true,
 "habitat":[
 "shore"
 ],
@@ -124419,10 +124295,6 @@
 ],
 "pack_size":20.0,
 "reproduction":5.0,
-"edible":true,
-"nutrition":1.0,
-"raw":true,
-"shelf_life":60.0,
 "habitat":[
 "shore"
 ],
@@ -124447,10 +124319,6 @@
 "water"
 ],
 "pack_size":40.0,
-"edible":true,
-"nutrition":0.4,
-"raw":true,
-"shelf_life":60.0,
 "habitat":[
 "shore"
 ],
@@ -124477,8 +124345,6 @@
 "placeable_on":[
 "water"
 ],
-"edible":true,
-"nutrition":3.0,
 "habitat":[
 "shore"
 ],
@@ -124507,9 +124373,6 @@
 ],
 "pack_size":30.0,
 "reproduction":8.0,
-"edible":true,
-"nutrition":0.5,
-"raw":true,
 "habitat":[
 "marsh"
 ],
@@ -124628,8 +124491,6 @@
 "pack_size":10000.0,
 "reproduction":50.0,
 "food_output":0.1,
-"edible":true,
-"nutrition":0.02,
 "habitat":[
 "shore",
 "tundra"
@@ -124684,8 +124545,6 @@
 "land"
 ],
 "reproduction":5.0,
-"edible":true,
-"nutrition":1.0,
 "habitat":[
 "shore",
 "marsh"
@@ -124714,8 +124573,6 @@
 "land"
 ],
 "reproduction":5.0,
-"edible":true,
-"nutrition":1.0,
 "habitat":[
 "shore",
 "marsh"
@@ -124832,10 +124689,6 @@
 "pack_size":20.0,
 "value":20.0,
 "reproduction":5.0,
-"edible":true,
-"nutrition":1.0,
-"raw":true,
-"shelf_life":60.0,
 "habitat":[
 "shore"
 ],
@@ -124860,10 +124713,6 @@
 ],
 "pack_size":40.0,
 "reproduction":10.0,
-"edible":true,
-"nutrition":0.5,
-"raw":true,
-"shelf_life":60.0,
 "habitat":[
 "shore"
 ],
@@ -134544,8 +134393,6 @@
 "dmg_blunt":50.0,
 "attack_rate":0.4,
 "tamable":true,
-"edible":true,
-"nutrition":15.0,
 "habitat":[
 "meadow"
 ],
@@ -134573,8 +134420,6 @@
 "reproduction":12.0,
 "tamable":true,
 "equip_slot":"companion",
-"edible":true,
-"nutrition":3.0,
 "habitat":[
 "meadow"
 ],
@@ -134762,8 +134607,6 @@
 "food_output":2.0,
 "reproduction":0.5,
 "tamable":true,
-"edible":true,
-"nutrition":15.0,
 "habitat":[
 "meadow"
 ],
@@ -134821,8 +134664,6 @@
 "mountain"
 ],
 "value":30.0,
-"edible":true,
-"nutrition":6.0,
 "habitat":[
 "hills"
 ],
@@ -135052,8 +134893,6 @@
 "courage":0.0,
 "reproduction":12.0,
 "pack_size":4.0,
-"edible":true,
-"nutrition":3.0,
 "counters":[
 "garden",
 "lettuce"
@@ -135250,8 +135089,6 @@
 "forest"
 ],
 "reproduction":0.5,
-"edible":true,
-"nutrition":9.0,
 "habitat":[
 "forest",
 "meadow"
@@ -135400,8 +135237,6 @@
 "pack_size":10.0,
 "tamable":true,
 "food_output":1.0,
-"edible":true,
-"nutrition":30.0,
 "habitat":[
 "savanna"
 ],
@@ -135715,8 +135550,6 @@
 "attack_rate":0.7,
 "pack_size":100.0,
 "reproduction":0.3,
-"edible":true,
-"nutrition":20.0,
 "habitat":[
 "savanna"
 ],
@@ -135835,8 +135668,6 @@
 "jump":2.5,
 "dmg_pierce":45.0,
 "attack_rate":0.6,
-"edible":true,
-"nutrition":15.0,
 "habitat":[
 "forest",
 "meadow"
@@ -135860,8 +135691,6 @@
 "food_output":1.0,
 "reproduction":0.5,
 "tamable":true,
-"edible":true,
-"nutrition":14.0,
 "habitat":[
 "meadow"
 ],
@@ -135886,8 +135715,6 @@
 "jump":2.0,
 "evasion":0.3,
 "reproduction":0.5,
-"edible":true,
-"nutrition":10.0,
 "habitat":[
 "forest",
 "hills"
@@ -135917,8 +135744,6 @@
 "reproduction":2.0,
 "food_output":2.0,
 "tamable":true,
-"edible":true,
-"nutrition":25.0,
 "odor":6.0,
 "habitat":[
 "meadow",
@@ -136076,8 +135901,6 @@
 "hill",
 "mountain"
 ],
-"edible":true,
-"nutrition":9.0,
 "habitat":[
 "hills"
 ],
@@ -136101,8 +135924,6 @@
 "jump":3.0,
 "evasion":0.45,
 "pack_size":20.0,
-"edible":true,
-"nutrition":8.0,
 "habitat":[
 "savanna"
 ],
@@ -136161,8 +135982,6 @@
 "hearing_range":500.0,
 "courage":0.0,
 "reproduction":6.0,
-"edible":true,
-"nutrition":4.0,
 "temp_max":48.0,
 "habitat":[
 "desert",
@@ -136194,8 +136013,6 @@
 ],
 "dmg_pierce":50.0,
 "attack_rate":0.5,
-"edible":true,
-"nutrition":20.0,
 "habitat":[
 "savanna"
 ],
@@ -136332,8 +136149,6 @@
 "food_output":1.5,
 "reproduction":0.8,
 "tamable":true,
-"edible":true,
-"nutrition":12.0,
 "habitat":[
 "meadow"
 ],
@@ -136612,8 +136427,6 @@
 "armor":15.0,
 "res_cold":0.7,
 "fear_aura":4.0,
-"edible":true,
-"nutrition":200.0,
 "habitat":[
 "taiga",
 "forest",
@@ -137014,8 +136827,6 @@
 "attack_range":1.5,
 "attack_rate":0.6,
 "pack_size":8.0,
-"edible":true,
-"nutrition":16.0,
 "habitat":[
 "desert",
 "savanna"
@@ -137098,8 +136909,6 @@
 "charm":5.0,
 "reproduction":2.0,
 "tamable":true,
-"edible":true,
-"nutrition":6.0,
 "habitat":[
 "meadow"
 ],
@@ -137125,8 +136934,6 @@
 "charm":5.0,
 "reproduction":0.5,
 "tamable":true,
-"edible":true,
-"nutrition":4.0,
 "habitat":[
 "meadow"
 ],
@@ -137416,8 +137223,6 @@
 "sight_range":6000.0,
 "evasion":0.45,
 "pack_size":10.0,
-"edible":true,
-"nutrition":7.0,
 "habitat":[
 "meadow",
 "badlands",
@@ -137571,8 +137376,6 @@
 "armor":3.0,
 "smell_range":300.0,
 "reproduction":2.0,
-"edible":true,
-"nutrition":20.0,
 "habitat":[
 "forest",
 "badlands",
@@ -137691,8 +137494,6 @@
 "dmg_pierce":20.0,
 "attack_rate":0.6,
 "loudness":5.0,
-"edible":true,
-"nutrition":6.0,
 "habitat":[
 "forest",
 "meadow"
@@ -137978,8 +137779,6 @@
 "evasion":0.45,
 "pack_size":20.0,
 "temp_max":48.0,
-"edible":true,
-"nutrition":7.0,
 "habitat":[
 "savanna",
 "desert"
@@ -138039,8 +137838,6 @@
 "attack_rate":0.6,
 "beauty":8.0,
 "loudness":7.0,
-"edible":true,
-"nutrition":18.0,
 "habitat":[
 "forest",
 "hills",
@@ -138165,8 +137962,6 @@
 "pack_size":4.0,
 "food_output":1.5,
 "tamable":true,
-"edible":true,
-"nutrition":20.0,
 "odor":5.0,
 "habitat":[
 "meadow",
@@ -138568,8 +138363,6 @@
 "evasion":0.35,
 "alarm":true,
 "reproduction":0.4,
-"edible":true,
-"nutrition":10.0,
 "habitat":[
 "forest",
 "meadow"
