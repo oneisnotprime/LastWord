@@ -45,10 +45,11 @@ describe("plural nouns", () => {
   });
 
   it("lets the plural win over a same-archetype word, and an unrelated word win over the plural", () => {
-    // ROADS, LEGS and FALLS are in the data as their own words, of the same archetype as the singular.
+    // ROADS and LEGS are in the data as their own words, of the same archetype as the singular.
     expect(readNoun(dict, "roads")).toEqual({ word: "road", plural: true });
     expect(readNoun(dict, "legs")).toEqual({ word: "leg", plural: true });
-    expect(readNoun(dict, "falls")).toEqual({ word: "fall", plural: true });
+    // FALLS is a waterfall, FALL the season: unrelated, so the waterfall stands.
+    expect(readNoun(dict, "falls")).toEqual({ word: "falls", plural: false });
     // MEN and PEOPLE are groups, not persons: their own data stands.
     expect(readNoun(dict, "men")).toEqual({ word: "men", plural: false });
     expect(readNoun(dict, "people")).toEqual({ word: "people", plural: false });

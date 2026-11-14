@@ -1,6 +1,6 @@
 import { boot, type ColyseusTestServer } from "@colyseus/testing";
 import { afterAll, afterEach, beforeAll, expect, it } from "vitest";
-import { KIT_SECONDS, STARTING_HAND, sealedLetters } from "@lastword/shared";
+import { dealKits, KIT_SECONDS, STARTING_HAND, sealedLetters } from "@lastword/shared";
 import appConfig from "./app.config.js";
 import { WorldRoom } from "./WorldRoom.js";
 
@@ -137,4 +137,34 @@ it("bots pick their kits at once", async () => {
   const bots = [...r.walkers.entries()].filter(([id]: [string, any]) => id.startsWith("bot"));
   expect(bots.length).toBe(3);
   for (const [, b] of bots) { expect(b.kit).toBeTruthy(); expect(b.picking).toBeUndefined(); }
+});
+
+it("bots pick kits by difficulty, unseal and spell their legendary, and counter an enemy's", async () => {
+  const { room, r } = await world(0, { bots: 2, difficulty: "hard" });
+  const ids = [...r.bots.keys()] as string[];
+  const [a, b] = ids.map((id) => r.walkers.get(id));
+  for (const w of [a, b]) expect(w.kit).toBeTruthy();
+  // Hard bots take the best of three (shared kitScore, a legendary they unseal by playing counting more).
+  const kits = dealKits(r.kitData, r.dict, () => 0.3);
+  const best = r.botKit(kits, "hard");
+  for (let i = 0; i < 3; i++) expect(r.botKit(kits, "hard")).toBe(best);
+  // A's legendary open: it spells it at once.
+  a.kit.state = "open";
+  r.bots.get(ids[0]).nextSpell = 0;
+  r.bots.get(ids[0]).peaceUntil = 0;
+  r.thinkBot(ids[0], a, r.bots.get(ids[0]));
+  expect(r.bots.get(ids[0]).used.legendary, JSON.stringify(r.bots.get(ids[0]).used)).toBe(1);
+  expect(a.kit.state).toBe("used");
+  // B, beside A's legendary with the letters of its counter-word, spells the counter.
+  const legend = a.kit.legend;
+  const creature = [...r.walkers.values()].find((c: any) => c.master === ids[0] && c.body.noun === legend.word);
+  const area = [...r.areas.values()].find((z: any) => z.word === legend.word);
+  expect(creature || area).toBeTruthy();
+  const at = creature ? creature.player : area;
+  b.player.x = at.x + 2; b.player.y = at.y;
+  b.letters = Object.fromEntries([...legend.counter].map((ch: string) => [ch, 3]));
+  const mind = r.bots.get(ids[1]);
+  Object.assign(mind, { nextSpell: 0, peaceUntil: 1e9 });
+  expect(r.botCounter(ids[1], b, mind, (await import("./bots.js")).held(b.letters), [])).toBe("counter");
+  void room;
 });

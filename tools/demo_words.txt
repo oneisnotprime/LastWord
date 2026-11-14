@@ -638,7 +638,7 @@ infestation: placement=target placement_range=100 field_radius=40 field_duration
 vermin: placement=region field_radius=60 field_duration=5 summons=rat summon_count=30 produce_E*0.5
 windfall: placement=region field_radius=60 field_duration=2 lode=e,a,o,i,s,t,r,n lode_share=1 lode_stock=30
 serendipity: placement=self field_radius=4 field_targets=self field_duration=5 harvest_bonus*2 lode=j,q,z,x lode_share=0.15 lode_stock=5
-anarchy: placement=map field_radius=ABS field_targets=all field_duration=3 obedience+-5 authority*0 counters=tax,tithe,toll,tariff,levy,customs,duty,tribute,ransom,curfew,lockdown,crackdown,monopoly,embargo,truce,armistice,holiday,quarantine,patrol,siege,blockade,sanctuary,haven,refuge
+anarchy: placement=map field_radius=ABS field_targets=all field_duration=3 obedience+-5 authority*0 counters=tax,tithe,toll,tariff,levy,customs,duty,tribute,ransom,curfew,lockdown,crackdown,monopoly,embargo,truce,armistice,holiday,quarantine,patrol,siege,blockade,sanctuary,haven,refuge,zone
 comet: placement=map field_radius=ABS field_targets=all field_duration=3 lode=z,q lode_share=0.05 lode_stock=10 luminosity+3 morale+-2
 cataclysm: placement=map field_radius=ABS field_targets=all field_duration=3 dmg_earth=20 attack_rate=0.05 friendly_fire=true deposit_factor=0.5 produce_G*3 produce_X*3
 
@@ -1298,8 +1298,9 @@ federation: binds=8 bind_penalty=letters,loyalty,reputation event_duration=12
 legislate: duration=60 authority+3 command_limit+5
 govern: duration=120 authority+4 command_limit+10 tax_rate+0.05
 
-# Theme 3, buildings and rooms (shared home.ts, sense.ts claimOf). A building claims ground
-# (claim_radius) where its owner's things take less damage, shelters (cover), keeps letters safe
+# Theme 3, buildings and rooms (shared home.ts, sense.ts claimOf). A HOSPITAL is the best healer
+# among buildings (6 a second; TEMPLE 2, SHRINE 3) and cures; a GARAGE mends machines, not people.
+# A building claims ground (claim_radius) where its owner's things take less damage, shelters (cover), keeps letters safe
 # (storage_letters: thieves and fines cannot reach them; at its owner's death they stay inside for
 # whoever takes or breaks it), lifts morale and healing at home (comfort), and radiates its own
 # field: a HOSPITAL heals and cures its side, a LIBRARY or SCHOOL trains it, a lockable PRISON
@@ -1311,8 +1312,8 @@ cabin: mass=20000 footprint=3 height=4 integrity=1500 material=wood portable=fal
 mansion: mass=3000000 footprint=20 height=14 integrity=40000 material=stone,brick portable=false enterable=true occupants=40 lockable=true security=5 cover=0.7 claim_radius=10 comfort=12 storage_letters=800 beauty=8 needs_foundation=true color=white
 palace: mass=50000000 footprint=60 height=30 integrity=300000 material=marble,stone portable=false enterable=true occupants=400 lockable=true security=7 cover=0.8 claim_radius=25 comfort=20 storage_letters=4000 authority=6 command_limit=25 recruit_rate=0.3 beauty=10 value=1000000 needs_foundation=true color=white
 skyscraper: mass=200000000 footprint=30 height=300 integrity=500000 material=steel,glass,concrete portable=false enterable=true occupants=5000 cover=0.7 claim_radius=15 sight_range=3000 map_reveal=80 storage_letters=3000 upkeep_power=40 needs_foundation=true color=blue
-hospital: mass=20000000 footprint=40 height=25 integrity=60000 material=concrete,glass portable=false enterable=true occupants=500 claim_radius=8 comfort=3 field_radius=60 field_targets=owned heals=25 effect_status=poison,bleed,burn,confuse regeneration+5 res_disease+0.8 upkeep_power=10 needs_foundation=true counters=plague,pestilence,epidemic,disease,infection color=white
-clinic: mass=500000 footprint=6 height=6 integrity=6000 material=brick,glass portable=false enterable=true occupants=30 claim_radius=3 field_radius=24 field_targets=owned heals=8 effect_status=poison,bleed regeneration+2 res_disease+0.4 needs_foundation=true counters=disease,infection color=white
+hospital: mass=20000000 footprint=40 height=25 integrity=60000 material=concrete,glass portable=false enterable=true occupants=500 claim_radius=8 comfort=3 field_radius=60 field_targets=owned heals=6 effect_status=poison,bleed,burn,confuse regeneration+5 res_disease+0.8 upkeep_power=10 needs_foundation=true counters=plague,pestilence,epidemic,disease,infection color=white
+clinic: mass=500000 footprint=6 height=6 integrity=6000 material=brick,glass portable=false enterable=true occupants=30 claim_radius=3 field_radius=24 field_targets=owned heals=3 effect_status=poison,bleed regeneration+2 res_disease+0.4 needs_foundation=true counters=disease,infection color=white
 prison: mass=20000000 footprint=40 height=12 integrity=200000 hardness=8 material=stone,steel portable=false enterable=true occupants=500 lockable=true security=9 cover=0.8 claim_radius=10 blocks=land,projectiles alarm=true detect_stealth=5 needs_foundation=true counters=riot,mob color=gray
 jail: mass=3000000 footprint=10 height=6 integrity=60000 hardness=8 material=stone,iron portable=false enterable=true occupants=40 lockable=true security=7 cover=0.7 claim_radius=5 blocks=land,projectiles alarm=true needs_foundation=true color=gray
 dungeon: mass=5000000 footprint=12 depth=10 integrity=150000 hardness=8 material=stone portable=false enterable=true occupants=60 lockable=true security=8 cover=0.9 claim_radius=6 fear_aura=4 stealth=5 luminosity=0 res_blast=0.6 color=black
@@ -1603,3 +1604,39 @@ jellyfish: mass=2 length=0.5 integrity=3 alive=true diet=carnivore speed_water=1
 lobster: mass=1 length=0.4 integrity=15 alive=true diet=scavenger food_need=0.001 speed_water=2 speed_land=1 armor=6 res_slash=0.5 dmg_crush=25 placeable_on=water habitat=shore color=red
 leech: mass=0.005 length=0.1 integrity=1 alive=true diet=carnivore speed_water=1 lifesteal=0.5 dmg_pierce=2 inflict_bleed=4 pack_size=20 habitat=marsh color=black
 tarantula: mass=0.08 length=0.12 integrity=3 alive=true aggression=3 diet=carnivore speed_land=1 venomous=true dmg_pierce=4 dmg_poison=8 fear_aura=3 habitat=desert,jungle color=brown
+
+# ---------------------------------------------------------------------------------------------
+# Common words whose class missed their main sense (TODO.md "Data"): ACT, ISSUE and PROCESS
+# were paper documents, DATE a fruit, FALL a waterfall, WON and SENT coins, STORY a floor and
+# STUDY a room. Each now does what a player spelling it expects. LEAD stays the metal: the
+# materials theme builds on it (BULLET, LEADEN, BATTERY are made of it).
+
+# noun act
+act: placement=region placement_range=200 field_radius=80 field_targets=enemies field_duration=8 law=theft,attack fine=6 authority+2
+process: placement=self field_radius=20 field_targets=owned field_duration=10 build_speed*1.5 labor*1.5 accuracy+0.05
+
+# noun event
+issue: placement=target placement_range=60 field_radius=15 field_targets=enemies field_duration=4 inflict_confuse=4 morale+-3 build_speed*0.5 trade_rate=1.5
+
+# noun ceremony
+date: placement=target placement_range=20 event_target=character inflict_charm=20 contest_with=charm contested_by=courage morale+3 event_duration=1
+
+# noun place
+# ZONE was generated as a law against fighting over 200 m that never ended and nothing countered.
+zone: placement=region field_radius=100 field_targets=all field_duration=5 claim_radius=20 law=attack security+2
+
+# noun season
+fall: placement=map field_radius=ABS field_targets=all field_duration=8 temperature_delta=-8 growth=0.6 produce_A*3 produce_P*2 food_output*2 counters=summer,spring
+
+# noun document
+story: mass=0.5 integrity=5 flammability=8 material=paper field_radius=12 field_targets=owned morale+3 courage+2 loyalty+1
+study: mass=1 integrity=5 flammability=8 material=paper intelligence+3 training+2 accuracy+0.1 read_properties=4
+
+# adjective quality
+technical: accuracy+0.15 build_speed*1.3 critical+0.05
+
+# verb combat
+won: duration=60 morale+8 courage+5 critical+0.25 accuracy+0.1
+
+# verb movement
+sent: duration=5 teleport_range+500 moves_target=500 effect_target=touched

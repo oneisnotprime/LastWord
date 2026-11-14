@@ -60,6 +60,24 @@ job pilgrim: produce_J*1.5 produce_Q*2 speed_land*1.1 letters=jq
 job lumberjack: harvest_sources=tree,forage harvest_bonus=3 strength+2 produce_W*1.1 letters=e
 job builder: produce_R*1.3 produce_L*1.2 strength+1 letters=r
 job architect: produce_R*1.25 produce_B*1.25 letters=rb
+# Trades a round can use, in place of narrow specialists the rule picked (dermatologist,
+# oncologist, quarterback) and near-duplicates (cowgirl, buckaroo, cosmonaut, veterinarian).
+job chef: produce_A*1.15 produce_I*1.2 produce_C*1.1 letters=ai
+job tailor: produce_C*1.3 produce_B*1.1 letters=c
+job potter: produce_C*1.2 produce_G*1.2 letters=cg
+job weaver: produce_C*1.25 produce_P*1.1 letters=c
+job brewer: produce_A*1.2 produce_P*1.2 morale+1 letters=ap
+job butcher: harvest_sources=hunting harvest_bonus=2 produce_H*1.2 produce_I*1.2 strength+1 letters=hi
+job innkeeper: produce_T*1.25 produce_B*1.25 letters=tb
+job healer: integrity*1.15 res_poison+0.4 produce_P*1.2 letters=p
+job monk: res_magic+0.3 produce_Q*1.5 produce_Y*1.25 letters=q
+job archer: accuracy+0.1 sight_range*1.2 produce_K*1.2 letters=k
+job mercenary: armor+5 strength+2 produce_K*1.2 produce_T*1.1 letters=kt
+job gardener: harvest_sources=plant,forage harvest_bonus=2 produce_P*1.3 produce_A*1.1 letters=p
+job beekeeper: produce_P*1.2 produce_A*1.2 res_poison+0.2 letters=pa
+job trapper: harvest_sources=hunting harvest_bonus=2 stealth+2 produce_H*1.2 letters=h
+job navigator: sight_range*1.2 speed_land*1.1 produce_J*1.4 produce_O*1.1 letters=jo
+job banker: trade_rate=0.85 produce_T*1.3 produce_X*1.2 letters=tx
 
 building mill
 building forge
@@ -128,6 +146,13 @@ skip counter
 skip institution
 skip infrastructure
 skip tap
+skip dermatologist
+skip oncologist
+skip quarterback
+skip cowgirl
+skip buckaroo
+skip cosmonaut
+skip veterinarian
 skip bath
 skip border
 skip post

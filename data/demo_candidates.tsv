@@ -1,7 +1,6 @@
 word	role	class	archetype	zipf	tier	synset	other_roles
 able	adjective	modifier	quality	5.43	core	a00001740	-
 above	adjective	modifier	quality	5.2	core	a00126865	adverb:manner,noun:communication
-act	noun	artifact	document	5.3	core	n06544086	verb:social
 after	adjective	modifier	quality	6.11	core	a01037224	adverb:manner
 agent	noun	person	worker	4.81	core	n10393500	-
 aid	noun	artifact	medicine	4.75	core	n05162155	verb:social
@@ -104,7 +103,6 @@ cup	noun	artifact	container	5.11	core	n03152175	verb:transform
 cut	verb	spell	contact	5.24	core	v01555301	adjective:quality,noun:possession
 cutting	noun	flora	plant	4.61	core	n13148232	adjective:quality
 cycle	noun	artifact	vehicle_land	4.6	core	n02837983	verb:movement
-date	noun	consumable	food	5.22	core	n15184543	verb:social
 day	noun	terrain	celestial	5.95	core	n15180180	-
 dead	adjective	modifier	quality	5.19	core	a00096133	noun:group,adverb:manner
 defense	noun	artifact	fortification	4.93	core	n00956422	-
@@ -137,7 +135,6 @@ english	adjective	modifier	pertaining	5.19	core	a03014852	noun:communication
 enough	adjective	modifier	quality	5.54	core	a02344113	adverb:manner,noun:quantity
 entry	noun	artifact	structure	4.67	core	n06515715	-
 every	adjective	modifier	quality	5.79	core	a02277553	-
-fall	noun	terrain	water	5.13	core	n15261656	verb:movement
 falls	noun	terrain	water	4.63	core	n09498422	-
 fan	noun	artifact	device	4.92	core	n03324991	verb:contact
 farm	noun	artifact	structure	4.75	core	n03327044	verb:social
@@ -218,7 +215,6 @@ ice	noun	material	mineral	5.0	core	n14939335	verb:contact
 include	verb	spell	social	5.21	core	v02639021	-
 iron	noun	material	metal	4.74	core	n14666595	adjective:quality,verb:contact
 island	noun	terrain	landform	5.01	core	n09339360	-
-issue	noun	artifact	document	5.23	core	n05822776	verb:social
 jack	noun	artifact	tool	4.82	core	n03594138	verb:contact
 jail	noun	artifact	building	4.62	core	n03597432	verb:social
 jersey	noun	artifact	clothing	4.66	core	n03600807	-
@@ -349,7 +345,6 @@ pretty	adjective	modifier	quality	5.38	core	a00221674	adverb:manner
 prince	noun	person	leader	4.72	core	n10492384	-
 prison	noun	artifact	building	4.8	core	n04012006	-
 private	noun	person	fighter	5.19	core	n10496052	adjective:quality
-process	noun	artifact	document	5.26	core	n06568683	verb:transform
 produce	noun	flora	produce	4.78	core	n07721456	verb:create
 profile	noun	artifact	document	4.82	core	n07015715	verb:create
 provide	verb	spell	transfer	5.15	core	v02332196	-
@@ -390,7 +385,7 @@ section	noun	terrain	landform	5.0	core	n06403644	verb:contact
 see	verb	spell	perceive	6.1	core	v02133754	noun:place
 send	verb	spell	movement	5.11	core	v01955339	-
 sense	verb	spell	perceive	5.19	core	v02110460	noun:knowledge
-sent	noun	artifact	currency	5.16	core	n13722553	adjective:quality
+sent	verb	spell	movement	5.16	core	-	noun:quantity,adjective:quality
 serious	adjective	modifier	quality	5.1	core	a02125659	-
 serving	noun	consumable	food	4.62	core	n07593928	-
 setting	noun	artifact	adornment	4.77	core	n08585785	-
@@ -431,12 +426,12 @@ stick	noun	artifact	weapon	4.76	core	n04324558	verb:contact
 stone	noun	material	mineral	4.8	core	n14720954	adjective:quality,verb:contact
 stop	verb	spell	movement	5.52	core	v01864781	noun:event
 store	noun	artifact	building	5.02	core	n04209460	verb:transfer
-story	noun	artifact	structure	5.45	core	n03370837	-
+story	noun	artifact	document	5.45	core	n07235754	-
 stream	noun	terrain	water	4.62	core	n09471510	verb:movement
 street	noun	artifact	route	5.28	core	n04341737	-
 strong	adjective	modifier	quality	5.22	core	a02328781	-
 studio	noun	artifact	building	4.66	core	n04351324	-
-study	noun	artifact	structure	5.26	core	n04352106	verb:perceive
+study	noun	artifact	document	5.26	core	n07233130	verb:perceive
 sub	noun	artifact	vehicle_water	4.66	core	n04354832	verb:transfer
 such	adjective	modifier	quality	5.84	core	a01558587	adverb:manner
 sugar	noun	consumable	food	4.68	core	n07875260	verb:perceive
@@ -497,7 +492,7 @@ whole	adjective	modifier	quality	5.46	core	a00516809	noun:knowledge,adverb:manne
 win	verb	spell	combat	5.39	core	v01102556	noun:event
 window	noun	artifact	structure	4.8	core	n04594951	-
 wine	noun	consumable	drink	4.74	core	n07907701	verb:consume
-won	noun	artifact	currency	5.2	core	n13731465	adjective:quality
+won	verb	spell	combat	5.2	core	-	noun:quantity,adjective:quality
 working	adjective	modifier	participle	5.45	core	a00867648	noun:artifact
 works	noun	artifact	building	5.29	core	n03963198	-
 world	noun	terrain	celestial	5.89	core	n09293800	adjective:quality

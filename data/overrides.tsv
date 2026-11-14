@@ -55,7 +55,7 @@ acrobat	noun	worker
 acropolis	noun	building
 across	adverb	manner
 acrylic	noun	material
-act	noun	document
+act	noun	act
 acting	adjective	participle
 action	noun	conflict
 active	adjective	quality
@@ -1843,7 +1843,7 @@ darkroom	noun	building
 dash	verb	movement
 dashboard	noun	device
 data	noun	knowledge
-date	noun	food
+date	noun	ceremony
 dated	adjective	quality
 dating	noun	act
 daughter	noun	person
@@ -2490,7 +2490,7 @@ fake	adjective	quality
 falafel	noun	food
 falcon	noun	bird
 falconer	noun	worker
-fall	noun	water
+fall	noun	season
 fallen	adjective	quality
 falling	adjective	quality
 fallout	noun	material
@@ -3602,7 +3602,7 @@ island	noun	landform
 isolated	adjective	quality
 isotope	noun	material
 israeli	adjective	pertaining
-issue	noun	document
+issue	noun	event
 item	noun	artifact
 ivory	noun	material
 ivy	noun	plant
@@ -5292,7 +5292,7 @@ probably	adverb	manner
 probation	noun	event
 problem	noun	affliction
 procedure	noun	act
-process	noun	document
+process	noun	act
 procession	noun	event
 processor	noun	device
 proclamation	noun	knowledge
@@ -6038,7 +6038,7 @@ senna	noun	shrub
 sense	verb	perceive
 sensitive	adjective	quality
 sensor	noun	device
-sent	noun	currency
+sent	verb	movement
 sentence	noun	event
 sentinel	noun	person
 sentry	noun	person
@@ -6546,7 +6546,7 @@ storeroom	noun	building
 storey	noun	structure
 stork	noun	bird
 storm	noun	weather
-story	noun	structure
+story	noun	document
 stout	adjective	quality
 stove	noun	device
 straight	adjective	quality
@@ -6587,7 +6587,7 @@ stuck	adjective	quality
 student	noun	person
 studied	adjective	quality
 studio	noun	building
-study	noun	structure
+study	noun	document
 stuff	noun	material
 stuffed	adjective	participle
 stuffing	noun	food
@@ -6798,7 +6798,7 @@ tears	noun	liquid
 teaspoon	noun	tool
 tech	noun	worker
 techie	noun	worker
-technical	noun	vehicle_land
+technical	adjective	quality
 technician	noun	worker
 technique	noun	knowledge
 technology	noun	knowledge
@@ -7495,7 +7495,7 @@ wolf	noun	mammal
 wolverine	noun	mammal
 woman	noun	person
 wombat	noun	mammal
-won	noun	currency
+won	verb	combat
 wonder	noun	feeling
 wonderful	adjective	quality
 wondering	adjective	participle

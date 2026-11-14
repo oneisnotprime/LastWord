@@ -102,7 +102,10 @@ For each word you are given, write one entry:
   property name.
 
 Word classes and what they usually set, by example below:
-- objects: mass, size, integrity, material, equip_slot, damage (dmg_*), letter output (produce_*)
+- objects: mass, size, integrity, material, equip_slot, damage (dmg_*)
+- letters: never set produce_* (p=v or p+x): which things make letters is written by hand in
+  producers.txt (a TOILET makes no J). Areas, weather and events may only scale what is earned
+  inside them (WAR: produce_K*3), and only when the word is about that letter's source
 - creatures: alive, diet, speeds, integrity, damage, senses; ridable ones mountable and seats
 - terrain: tile_type and radius; sky words placement=sky and their field
 - events: placement, event_target, contest_with and contested_by, damage, durations
