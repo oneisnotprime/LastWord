@@ -1,9 +1,12 @@
-# Fly.io: `fly launch --copy-config --no-deploy` once (pick a unique app name), then `fly deploy`.
+# Fly.io app lastword-vbqg (https://lastword-vbqg.fly.dev). See DEPLOY.md for how it was deployed.
 # One machine in one region: the game state lives in memory, so it must not be split or scaled.
-app = "lastword"
+app = "lastword-vbqg"
 primary_region = "iad"
 
 [build]
+
+[env]
+  BOTS = "7"
 
 [http_service]
   internal_port = 8080
