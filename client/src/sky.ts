@@ -16,8 +16,9 @@ const SHRINK = 6;
 interface Drift { img: Phaser.GameObjects.Image; x: number; y: number; vx: number; vy: number; spin: number; i: number; base: number }
 
 export class Sky {
-  private tex: Phaser.Textures.CanvasTexture;
+  private tex: Phaser.Textures.CanvasTexture | null = null;
   private img: Phaser.GameObjects.Image;
+  private serial = 0;
   private drifts: Drift[] = [];
   private driftKind = "";
   private fog: Phaser.GameObjects.Image[] = [];
@@ -25,8 +26,7 @@ export class Sky {
   private drawnBlank = false;
 
   constructor(private readonly scene: Phaser.Scene, private readonly paint: Painter, private readonly dict: Dictionary) {
-    this.tex = scene.textures.createCanvas("sky", 64, 64)!;
-    this.img = scene.add.image(0, 0, "sky").setDepth(9000).setOrigin(0);
+    this.img = scene.add.image(0, 0, "__WHITE").setDepth(9000).setOrigin(0).setVisible(false);
   }
 
   private made(kind: string, i: number): Made {
@@ -83,7 +83,13 @@ export class Sky {
     const w = Math.max(1, Math.ceil(cam.width / SHRINK)), h = Math.max(1, Math.ceil(cam.height / SHRINK));
     const blank = !layers.length && this.flash === 0;
     if (!blank || !this.drawnBlank) {
-      if (this.tex.width !== w || this.tex.height !== h) { this.tex.setSize(w, h); this.img.setTexture("sky"); }
+      // A new texture when the screen changes size: resizing one in place upsets the renderer.
+      if (!this.tex || this.tex.width !== w || this.tex.height !== h) {
+        const old = this.tex;
+        this.tex = this.scene.textures.createCanvas(`sky${this.serial++}`, w, h)!;
+        this.img.setTexture(this.tex.key);
+        if (old) this.scene.time.delayedCall(100, () => this.scene.textures.remove(old));
+      }
       const ctx = this.tex.context;
       ctx.clearRect(0, 0, w, h);
       for (const l of layers) { ctx.fillStyle = l; ctx.fillRect(0, 0, w, h); }

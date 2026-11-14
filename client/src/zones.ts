@@ -100,7 +100,7 @@ export class Zones {
       if (!z) {
         const style = zoneStyle(this.dict, zone.word);
         const seed = Math.floor(hash(id.length, zone.word.charCodeAt(0), 3) * 100);
-        const disc = this.scene.add.image(0, 0, "__WHITE").setDepth(50).setAlpha(0.42).setTint(num(mix(style.colour, "#ffffff", 0.35)));
+        const disc = this.scene.add.image(0, 0, "__WHITE").setDepth(50).setAlpha(0.4).setTint(num(style.colour)).setBlendMode(Phaser.BlendModes.SCREEN);
         useMade(disc, this.paint.tissue(seed % 7), this.k);
         disc.setData("s", disc.scaleX);
         const tag = this.scene.add.image(0, 0, "__WHITE").setDepth(10000);

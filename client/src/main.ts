@@ -66,6 +66,9 @@ class World extends Phaser.Scene {
   private chunks = new Map<string, { img: Phaser.GameObjects.Image; tex: Phaser.Textures.CanvasTexture; cx: number; cy: number; ticket: number }>();
   private chunkMs: number[] = [];
   private painter!: Worker;
+  /** Chunk textures no longer in view, kept to reuse: textures are never destroyed mid-game. */
+  private made = 0;
+  private spare: { img: Phaser.GameObjects.Image; tex: Phaser.Textures.CanvasTexture }[] = [];
   private ticket = 0;
   /** Chunks asked of the worker and not back yet. */
   private pending = 0;
@@ -217,9 +220,11 @@ class World extends Phaser.Scene {
     let c = this.chunks.get(key);
     const T = this.terrainRes(), size = CHUNK * T;
     if (!c) {
-      const tex = this.textures.createCanvas(`terrain${key}`, size, size)!;
+      const reuse = this.spare.pop();
+      const tex = reuse?.tex ?? this.textures.createCanvas(`terrain${++this.made}`, size, size)!;
+      const img = reuse?.img ?? this.add.image(0, 0, tex).setOrigin(0).setScale((CHUNK * PX + 1) / size).setDepth(0);
       // A hair larger than a chunk, so neighbours overlap and no seam shows between them.
-      const img = this.add.image(cx * CHUNK * PX - 0.25, cy * CHUNK * PX - 0.25, tex).setOrigin(0).setScale((CHUNK * PX + 0.5) / size).setDepth(0).setVisible(false);
+      img.setPosition(cx * CHUNK * PX - 0.5, cy * CHUNK * PX - 0.5).setVisible(false);
       c = { img, tex, cx, cy, ticket: 0 };
       this.chunks.set(key, c);
     }
@@ -244,7 +249,7 @@ class World extends Phaser.Scene {
     if (this.chunks.size > 36) {
       for (const [key, c] of this.chunks) {
         if (c.cx < x0 - 2 || c.cx > x1 + 2 || c.cy < y0 - 2 || c.cy > y1 + 2) {
-          c.img.destroy(); this.textures.remove(c.tex); this.chunks.delete(key);
+          c.img.setVisible(false); c.ticket = -1; this.spare.push({ img: c.img, tex: c.tex }); this.chunks.delete(key);
         }
       }
     }
