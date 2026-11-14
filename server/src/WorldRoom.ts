@@ -3423,6 +3423,9 @@ export class WorldRoom extends Room {
     const d = Math.hypot(dx, dy);
     if (d < 1e-6) { const t = this.rng() * Math.PI * 2; dx = Math.cos(t); dy = Math.sin(t); } else { dx /= d; dy /= d; }
     w.target = { x: clamp(w.player.x + dx * FLEE_TILES), y: clamp(w.player.y + dy * FLEE_TILES) };
+    // Running away turns you at once: a route worked out before (toward whoever you were attacking)
+    // would otherwise be walked for up to a second, straight at what you flee.
+    if (!w.routeTo || Math.hypot(w.routeTo.x - w.target.x, w.routeTo.y - w.target.y) > 2) { w.route = []; w.routeTo = null; }
   }
 
   /** THEFT: the selected thing becomes yours if your stealth meets its security. */
