@@ -126,7 +126,7 @@ telescope: mass=5 length=1 integrity=15 material=glass,brass equip_slot=held sig
 radar: mass=2000 footprint=1 integrity=500 portable=false sight_range=50000 sees_through=fog,walls,night detect_stealth=6 alarm=true upkeep_power=20 targets=air
 compass: mass=0.1 integrity=10 equip_slot=held detect_letters=200 map_reveal=5
 magnet: mass=2 integrity=200 material=iron magnetism=8 letter_steal=1 attack_range=5 counters=steel,iron
-lamp: mass=1 integrity=10 material=glass,brass luminosity=6 night_vision=true upkeep_fuel=0.01
+lamp: mass=1 integrity=10 material=glass,brass luminosity=6 night_vision=true upkeep_fuel=0.01 counters=genie
 clock: mass=3 integrity=20 material=brass,glass extends_duration=1.5 produce_Y=0.2
 mirror: mass=10 integrity=10 brittleness=9 material=glass reflectivity=10 res_light=1 reflect=0.3 duplicates=1 single_use=true
 oven: mass=80 footprint=1 integrity=300 material=iron temperature=250 food_output=4 upkeep_fuel=0.05 produce_B=0.2 produce_F=0.2
@@ -414,7 +414,7 @@ trade: placement=target placement_range=10 event_target=character trade_bonus+0.
 fire: placement=target placement_range=10 event_target=tile event_radius=2 event_duration=10 dmg_fire=40 attack_rate=1 inflict_burn=5 spread_rate=1 luminosity=7 temperature=800 friendly_fire=true produce_F=1 clears_weather=snow counters=forest,wood,ice
 
 # noun disaster
-earthquake: placement=region placement_range=1000 event_target=region event_radius=1500 event_duration=1 dmg_earth=3000 dmg_crush=1000 siege=10 targets=land,underground friendly_fire=true inflict_stun=5 deposit_factor=2 produce_G*3 produce_U*2
+earthquake: placement=region placement_range=1000 event_target=region event_radius=1500 event_duration=1 dmg_earth=3000 dmg_crush=1000 siege=10 targets=land,underground friendly_fire=true inflict_stun=5 deposit_factor=2 produce_G*3 produce_U*2 counters=colossus
 famine: placement=region placement_range=1000 event_target=region event_radius=800 event_duration=10 dmg_hunger=5 attack_rate=0.1 friendly_fire=true deposit_factor=0.5 food_output*0 produce_A*0 produce_E*0.3 produce_H*0.5 morale+-4 counters=feast,plenty,harvest
 
 # noun group
@@ -921,6 +921,66 @@ peasant: mass=65 integrity=80 alive=true sentient=true intelligence=4 loyalty=4 
 hireling: mass=75 integrity=100 alive=true sentient=true intelligence=5 loyalty=3 hands=true speech=true speed_land=5 labor=4 food_need=0.03
 
 # ---------------------------------------------------------------------------------------------
+# Starting kits (PLAN.md "Starting kits"): legendary words, the words that counter them, and
+# buildings a player can start with. Which word is which is in tools/kits.txt; what each makes
+# is in tools/producers.txt. Legendaries carry no habitat (they never roam wild) and stay above
+# the integrity of roaming bosses.
+
+# noun supernatural
+titan: mass=200000 height=30 integrity=150000 alive=true sentient=true intelligence=6 loyalty=5 aggression=5 diet=omnivore food_need=6 speed_land=12 hands=true strength=10 dmg_crush=4000 attack_rate=0.3 attack_range=10 attack_area=8 knockback=20 siege=8 armor=150 res_blunt=0.6 res_slash=0.5 fear_aura=9 labor=100 terrain_ignored=forest,hill,swamp
+phoenix: mass=60 length=4 integrity=30000 alive=true sentient=true intelligence=8 loyalty=7 aggression=4 diet=none speed_land=6 speed_air=55 flight_ceiling=8000 hover=true dmg_fire=1800 attack_rate=0.8 attack_range=30 attack_area=6 targets=land,air inflict_burn=6 res_fire=1 immune_burn=true luminosity=10 heals=40 fear_aura=6 beauty=10
+kraken: mass=300000 length=60 integrity=120000 alive=true sentient=true intelligence=6 loyalty=3 aggression=9 diet=carnivore food_need=8 speed_land=2 speed_water=25 dive_depth=3000 dmg_crush=3500 dmg_water=1500 attack_rate=0.4 attack_range=40 attack_area=10 targets=land,water,air inflict_root=8 armor=60 res_pierce=0.5 fear_aura=10
+hydra: mass=15000 length=15 integrity=80000 alive=true sentient=true intelligence=4 loyalty=3 aggression=8 diet=carnivore food_need=4 speed_land=8 speed_water=10 dmg_pierce=1200 dmg_poison=800 attack_rate=1.5 attack_range=12 attack_area=5 inflict_poison=10 regeneration=200 armor=80 res_slash=0.3 res_poison=1 immune_poison=true fear_aura=8
+golem: mass=50000 height=7 integrity=90000 hardness=9 material=clay,stone alive=false sentient=true intelligence=2 loyalty=10 aggression=3 speed_land=5 hands=true strength=10 dmg_crush=2500 attack_rate=0.4 attack_range=4 knockback=12 siege=6 armor=200 res_slash=0.8 res_pierce=0.9 res_fire=0.7 immune_fear=true immune_poison=true immune_sleep=true labor=60
+leviathan: mass=5000000 length=300 integrity=400000 alive=true sentient=true intelligence=7 loyalty=2 aggression=8 diet=carnivore food_need=20 speed_land=1 speed_water=30 dive_depth=10000 dmg_crush=8000 dmg_water=4000 attack_rate=0.2 attack_range=80 attack_area=25 targets=land,water armor=300 res_pierce=0.7 res_slash=0.7 fear_aura=10
+behemoth: mass=400000 length=25 height=12 integrity=250000 alive=true sentient=true intelligence=3 loyalty=4 aggression=6 diet=herbivore food_need=10 speed_land=9 dmg_crush=6000 attack_rate=0.3 attack_range=8 attack_area=10 knockback=25 siege=9 armor=250 res_blunt=0.7 res_pierce=0.6 fear_aura=9 terrain_ignored=forest,swamp,hill labor=80 mountable=true seats=12
+griffin: mass=500 length=4 integrity=25000 alive=true sentient=true intelligence=7 loyalty=8 aggression=5 diet=carnivore food_need=1 speed_land=14 speed_air=50 flight_ceiling=5000 mountable=true seats=2 dmg_slash=900 dmg_pierce=400 attack_rate=1 attack_range=4 targets=land,air sight_range+400 armor=40 courage=10 fear_aura=5
+basilisk: mass=800 length=12 integrity=40000 alive=true sentient=true intelligence=5 loyalty=3 aggression=7 diet=carnivore food_need=1 speed_land=8 dmg_poison=1500 dmg_pierce=600 attack_rate=0.8 attack_range=25 targets=land inflict_freeze=12 inflict_poison=8 armor=90 res_poison=1 immune_poison=true fear_aura=9
+colossus: mass=2000000 height=35 integrity=300000 hardness=9 material=bronze alive=false sentient=true intelligence=3 loyalty=8 aggression=4 speed_land=7 hands=true strength=10 dmg_crush=7000 attack_rate=0.25 attack_range=12 attack_area=10 knockback=30 siege=10 armor=400 res_slash=0.9 res_pierce=0.9 res_fire=0.8 immune_fear=true fear_aura=10 luminosity=6 sight_range+600 command_limit=20
+genie: mass=80 integrity=40000 alive=true sentient=true intelligence=10 loyalty=6 speed_air=40 hover=true phase=true hands=true dmg_magic=1200 attack_rate=1 attack_range=30 attack_area=4 targets=land,air inflict_confuse=8 heals=20 labor=50 command_limit=10 recruit_rate=2 luminosity=5 fear_aura=4
+unicorn: mass=500 length=2.5 integrity=24000 alive=true sentient=true intelligence=8 loyalty=9 aggression=2 diet=herbivore food_need=0.5 speed_land=30 mountable=true seats=1 dmg_pierce=1200 dmg_holy=800 attack_rate=1 attack_range=3 heals=60 res_poison=1 immune_poison=true immune_fear=true luminosity=7 beauty=10 courage=10
+wyvern: mass=3000 length=10 integrity=35000 alive=true sentient=true intelligence=5 loyalty=3 aggression=8 diet=carnivore food_need=2 speed_land=7 speed_air=40 flight_ceiling=4000 mountable=true seats=1 dmg_pierce=900 dmg_poison=900 attack_rate=0.8 attack_range=10 attack_area=3 targets=land,air inflict_poison=10 armor=70 res_fire=0.5 fear_aura=8
+
+# noun mammal
+
+# noun weapon
+lance: mass=8 length=4 integrity=150 hardness=7 sharpness=8 material=wood,steel equip_slot=held hands_required=2 dmg_pierce=120 attack_rate=0.5 attack_range=4 knockback=6 counters=dragon,wyvern
+crossbow: mass=4 length=0.9 integrity=60 material=wood,steel equip_slot=held hands_required=2 dmg_pierce=70 attack_rate=0.4 attack_range=80 targets=land,air ammo_per_hit=1 ammo_type=bolt accuracy=0.95 harvest_bonus=2 harvest_sources=hunting counters=griffin
+
+# noun tool
+harpoon: mass=3 length=2 integrity=80 sharpness=8 material=wood,steel equip_slot=held hands_required=2 dmg_pierce=60 attack_rate=0.6 attack_range=15 targets=land,water inflict_root=3 harvest_bonus=2 harvest_sources=fishing counters=kraken,leviathan
+chain: mass=10 length=5 integrity=400 hardness=7 material=steel equip_slot=held hands_required=2 dmg_blunt=45 attack_rate=0.8 attack_range=4 inflict_root=8 tow_capacity=20000 locks=true conductivity=8 counters=titan
+
+# noun artifact
+
+# noun material
+frost: mass=1 integrity=1 temperature=-20 dmg_cold=40 inflict_freeze=3 attack_area=4 single_use=true counters=phoenix,fire
+firebrand: mass=1 length=0.8 integrity=10 material=wood equip_slot=held hands_required=1 dmg_fire=25 dmg_blunt=8 attack_rate=1 attack_range=1.2 inflict_burn=3 luminosity=4 counters=hydra
+
+# noun act
+blasphemy: placement=region event_target=region event_radius=80 event_duration=1 morale+-3 counters=god,angel,archangel,shrine
+
+# noun structure
+watchtower: mass=60000 footprint=2 height=20 integrity=6000 material=wood,stone portable=false cover=0.5 claim_radius=4 luminosity=4 field_radius=60 field_targets=owned sight_range*1.6
+dock: mass=50000 footprint=6 integrity=5000 material=wood portable=false placeable_on=water,land
+fountain: mass=8000 footprint=2 height=3 integrity=3000 material=stone portable=false water_output=15 beauty=8 field_radius=30 field_targets=owned morale+1
+fortress: mass=10000000 footprint=50 height=15 integrity=250000 hardness=8 material=stone portable=false enterable=true occupants=300 cover=0.85 security=7 claim_radius=14 blocks=land,sight,projectiles
+stall: mass=300 footprint=1 height=2 integrity=200 material=wood,cloth portable=false food_output=1 trade_bonus=0.15 flammability=6
+
+# noun building
+farmhouse: mass=80000 footprint=4 height=6 integrity=2500 material=wood,stone portable=false enterable=true occupants=6 cover=0.5 claim_radius=4 food_output=3
+apiary: mass=500 footprint=2 integrity=200 material=wood portable=false food_output=1 field_radius=50 field_targets=owned produce_P*1.3 produce_A*1.2 inflict_poison=1
+
+# noun artifact
+garrison: mass=500000 footprint=12 height=8 integrity=40000 material=stone,wood portable=false occupants=200 cover=0.7 security=5 claim_radius=8 command_limit=6 authority=3
+statue: mass=20000 height=6 integrity=10000 hardness=8 material=stone,bronze portable=false beauty=9 field_radius=40 field_targets=owned courage+2 morale+1
+beacon: mass=2000 height=8 integrity=1500 material=wood,iron portable=false luminosity=9 night_vision=true field_radius=70 field_targets=owned sight_range*1.4
+beehive: mass=40 integrity=30 material=wood,wax portable=false food_output=0.5 field_radius=30 field_targets=owned produce_P*1.2 inflict_poison=1
+pier: mass=40000 footprint=4 integrity=4000 material=wood portable=false placeable_on=water,land
+
+# noun fortification
+palisade: mass=30000 footprint=8 height=4 integrity=8000 material=wood portable=false blocks=land,projectiles cover=0.6 claim_radius=5 flammability=6
+
 # Dictionary themes (TODO.md "Dictionary themes"). The core words of each theme, hand-written;
 # the rest of each theme is generated from these as examples (generate_words.py).
 
@@ -1246,8 +1306,8 @@ govern: duration=120 authority+4 command_limit+10 tax_rate+0.05
 # with security holds enemies rooted in its ground (root and silence last 1 + security times).
 
 # noun building
-cottage: mass=60000 footprint=3 height=5 integrity=2500 material=stone,wood portable=false enterable=true occupants=4 lockable=true cover=0.6 claim_radius=3 comfort=4 storage_letters=60 needs_foundation=true flammability=4 color=white
-cabin: mass=20000 footprint=3 height=4 integrity=1500 material=wood portable=false enterable=true occupants=4 lockable=true cover=0.5 claim_radius=3 comfort=3 storage_letters=40 flammability=7 res_cold=0.5 color=brown
+cottage: mass=60000 footprint=3 height=5 integrity=2500 material=stone,wood portable=false enterable=true occupants=4 lockable=true cover=0.6 claim_radius=3 comfort=4 storage_letters=60 needs_foundation=true flammability=4 color=white food_output=1
+cabin: mass=20000 footprint=3 height=4 integrity=1500 material=wood portable=false enterable=true occupants=4 lockable=true cover=0.5 claim_radius=3 comfort=3 storage_letters=40 flammability=7 res_cold=0.5 color=brown fuel_output=1
 mansion: mass=3000000 footprint=20 height=14 integrity=40000 material=stone,brick portable=false enterable=true occupants=40 lockable=true security=5 cover=0.7 claim_radius=10 comfort=12 storage_letters=800 beauty=8 needs_foundation=true color=white
 palace: mass=50000000 footprint=60 height=30 integrity=300000 material=marble,stone portable=false enterable=true occupants=400 lockable=true security=7 cover=0.8 claim_radius=25 comfort=20 storage_letters=4000 authority=6 command_limit=25 recruit_rate=0.3 beauty=10 value=1000000 needs_foundation=true color=white
 skyscraper: mass=200000000 footprint=30 height=300 integrity=500000 material=steel,glass,concrete portable=false enterable=true occupants=5000 cover=0.7 claim_radius=15 sight_range=3000 map_reveal=80 storage_letters=3000 upkeep_power=40 needs_foundation=true color=blue
@@ -1259,18 +1319,18 @@ dungeon: mass=5000000 footprint=12 depth=10 integrity=150000 hardness=8 material
 library: mass=500000 footprint=8 height=10 integrity=8000 material=stone,wood portable=false enterable=true occupants=60 claim_radius=5 comfort=3 storage_letters=300 field_radius=40 field_targets=owned intelligence+3 training+2 read_properties=6 flammability=8 needs_foundation=true color=brown
 school: mass=2000000 footprint=10 height=10 integrity=20000 material=brick portable=false enterable=true occupants=300 claim_radius=6 field_radius=40 field_targets=owned training+3 intelligence+1 needs_foundation=true color=red
 university: mass=20000000 footprint=40 height=20 integrity=60000 material=stone,brick portable=false enterable=true occupants=3000 claim_radius=12 storage_letters=600 field_radius=80 field_targets=owned intelligence+4 training+3 read_properties=8 needs_foundation=true color=red
-observatory: mass=800000 footprint=4 height=20 integrity=10000 material=stone,steel,glass portable=false enterable=true occupants=10 sight_range=10000 map_reveal=150 sees_through=night,fog detect_life=400 needs_foundation=true color=white
-warehouse: mass=1500000 footprint=20 height=10 integrity=20000 material=steel,brick portable=false enterable=true occupants=20 lockable=true security=4 claim_radius=4 storage_letters=3000 storage_objects=200000 flammability=6 needs_foundation=true color=gray
-silo: mass=200000 footprint=3 height=25 integrity=6000 material=concrete,steel portable=false storage_letters=600 storage_objects=500000 sight_range=200 needs_foundation=true color=gray
-cathedral: mass=80000000 footprint=60 height=90 integrity=400000 material=stone,glass portable=false enterable=true occupants=3000 claim_radius=15 comfort=4 heals=6 field_radius=100 field_targets=owned morale+4 courage+3 res_unholy+0.8 recruit_rate=1 beauty=10 loudness=8 needs_foundation=true counters=demon,ghost,zombie,vampire,curse color=white
-chapel: mass=600000 footprint=6 height=12 integrity=8000 material=stone portable=false enterable=true occupants=60 claim_radius=4 comfort=2 heals=2 field_radius=30 field_targets=owned morale+2 res_unholy+0.4 recruit_rate=0.3 needs_foundation=true counters=ghost,curse color=white
+observatory: mass=800000 footprint=4 height=20 integrity=10000 material=stone,steel,glass portable=false enterable=true occupants=10 sight_range=10000 map_reveal=150 sees_through=night,fog detect_life=400 needs_foundation=true color=white field_radius=80 field_targets=owned sight_range*2 luminosity=2
+warehouse: mass=1500000 footprint=20 height=10 integrity=20000 material=steel,brick portable=false enterable=true occupants=20 lockable=true security=4 claim_radius=4 storage_letters=3000 storage_objects=200000 flammability=6 needs_foundation=true color=gray cover=0.5
+silo: mass=200000 footprint=3 height=25 integrity=6000 material=concrete,steel portable=false storage_letters=600 storage_objects=500000 sight_range=200 needs_foundation=true color=gray food_output=2 field_radius=40 field_targets=owned produce_A*1.3
+cathedral: mass=80000000 footprint=60 height=90 integrity=400000 material=stone,glass portable=false enterable=true occupants=3000 claim_radius=15 comfort=4 heals=6 field_radius=100 field_targets=owned morale+4 courage+3 res_unholy+0.8 recruit_rate=1 beauty=10 loudness=8 needs_foundation=true counters=demon,ghost,zombie,vampire,curse color=white res_unholy=1
+chapel: mass=600000 footprint=6 height=12 integrity=8000 material=stone portable=false enterable=true occupants=60 claim_radius=4 comfort=2 heals=2 field_radius=30 field_targets=owned morale+2 res_unholy+0.4 recruit_rate=0.3 needs_foundation=true counters=ghost,curse color=white courage+2
 tavern: mass=150000 footprint=6 height=8 integrity=3000 material=wood,stone portable=false enterable=true occupants=50 claim_radius=3 comfort=5 food_output=4 field_radius=24 field_targets=all morale+3 courage+2 accuracy+-0.1 recruit_rate=0.5 loudness=6 flammability=6 color=brown
 inn: mass=200000 footprint=8 height=9 integrity=4000 material=wood,stone portable=false enterable=true occupants=40 claim_radius=3 comfort=6 food_output=3 storage_letters=60 regeneration+1 color=brown
 armory: mass=300000 footprint=4 height=6 integrity=30000 hardness=8 material=stone,iron portable=false enterable=true lockable=true security=7 claim_radius=3 storage_letters=400 crafts=weapon,protection,metal craft_slots=2 field_radius=24 field_targets=owned training+1 needs_foundation=true color=gray
 workshop: mass=60000 footprint=4 height=5 integrity=4000 material=wood,brick portable=false enterable=true occupants=8 claim_radius=2 crafts=tool,furniture,container,device,toy,weapon,wood,metal,bone craft_slots=3 build_speed=1.5 needs_foundation=true color=brown
-smithy: mass=40000 footprint=3 height=5 integrity=6000 material=stone,iron portable=false enterable=true temperature=1200 luminosity=4 crafts=weapon,tool,protection,metal craft_slots=2 upkeep_fuel=0.2 color=gray
+smithy: mass=40000 footprint=3 height=5 integrity=6000 material=stone,iron portable=false enterable=true temperature=1200 luminosity=4 crafts=weapon,tool,protection,metal craft_slots=2 upkeep_fuel=0.2 color=gray res_fire+0.2
 stable: mass=80000 footprint=8 height=5 integrity=3000 material=wood portable=false enterable=true occupants=20 claim_radius=3 comfort=1 storage_objects=20000 flammability=7 odor=5 color=brown
-kennel: mass=3000 footprint=2 height=2 integrity=500 material=wood portable=false enterable=true occupants=6 claim_radius=1 comfort=1 alarm=true loudness=5 color=brown
+kennel: mass=3000 footprint=2 height=2 integrity=500 material=wood portable=false enterable=true occupants=6 claim_radius=1 comfort=1 alarm=true loudness=5 color=brown command_limit=4
 coop: mass=800 footprint=1 height=2 integrity=200 material=wood,wire portable=false enterable=true occupants=12 claim_radius=1 food_output=0.5 flammability=7 color=brown
 garage: mass=50000 footprint=6 height=4 integrity=5000 material=concrete,steel portable=false enterable=true occupants=4 lockable=true claim_radius=2 crafts=vehicle_land,machine,device,tool,metal craft_slots=2 storage_objects=5000 color=gray
 greenhouse: mass=20000 footprint=6 height=4 integrity=1500 brittleness=8 material=glass,steel portable=false enterable=true claim_radius=3 temperature=28 field_radius=24 field_targets=objects growth=2.5 fertility=4 transparency=0.9 color=green
@@ -1279,7 +1339,7 @@ shed: mass=2000 footprint=2 height=2.5 integrity=400 material=wood portable=fals
 pyramid: mass=6000000000 footprint=230 height=140 integrity=5000000 hardness=8 material=stone portable=false claim_radius=40 storage_letters=8000 security=9 lockable=true res_blast=0.8 fear_aura=3 beauty=9 produce_Y=0.5 color=yellow
 
 # noun fortification
-citadel: mass=80000000 footprint=60 height=30 integrity=800000 hardness=8 material=stone portable=false enterable=true occupants=1000 lockable=true cover=0.9 security=8 claim_radius=35 storage_letters=3000 command_limit=40 sight_range=600 alarm=true blocks=land,sight,projectiles needs_foundation=true color=gray
+citadel: mass=80000000 footprint=60 height=30 integrity=800000 hardness=8 material=stone portable=false enterable=true occupants=1000 lockable=true cover=0.9 security=8 claim_radius=35 storage_letters=3000 command_limit=40 sight_range=600 alarm=true blocks=land,sight,projectiles needs_foundation=true color=gray authority=4
 stronghold: mass=20000000 footprint=40 height=15 integrity=400000 hardness=8 material=stone,wood portable=false enterable=true occupants=400 lockable=true cover=0.85 security=7 claim_radius=20 storage_letters=1500 blocks=land,sight,projectiles color=gray
 
 # noun structure
@@ -1365,7 +1425,7 @@ wrought: material=iron integrity*1.4 hardness+1 value*1.3
 crude: integrity*0.6 dmg_slash*0.8 dmg_pierce*0.8 sharpness+-2 value*0.3 beauty+-3
 
 # noun tool
-chisel: mass=0.3 length=0.25 integrity=80 hardness=8 sharpness=7 material=steel equip_slot=held hands_required=1 dmg_pierce=14 attack_rate=1 build_speed=1.3 harvest_bonus=1.5 harvest_sources=quarry color=silver
+chisel: mass=0.3 length=0.25 integrity=80 hardness=8 sharpness=7 material=steel equip_slot=held hands_required=1 dmg_pierce=14 attack_rate=1 build_speed=1.3 harvest_bonus=1.5 harvest_sources=quarry color=silver attack_range=0.5 counters=golem
 mallet: mass=0.8 length=0.35 integrity=80 material=wood equip_slot=held hands_required=1 dmg_blunt=16 inflict_stun=0.5 build_speed=1.2 color=brown
 wrench: mass=0.6 length=0.3 integrity=150 hardness=8 material=steel equip_slot=held hands_required=1 dmg_blunt=18 attack_rate=1.1 build_speed=1.2 color=silver
 screwdriver: mass=0.15 length=0.2 integrity=40 hardness=7 sharpness=5 material=steel,plastic equip_slot=held hands_required=1 dmg_pierce=10 attack_rate=1.5 color=yellow
@@ -1380,7 +1440,7 @@ pitchfork: mass=2 length=1.8 integrity=50 sharpness=5 material=steel,wood equip_
 hook: mass=0.05 integrity=10 sharpness=7 material=steel equip_slot=held hands_required=1 dmg_pierce=6 inflict_bleed=2 harvest_bonus=2 harvest_sources=fishing color=silver
 trap: mass=5 integrity=200 sharpness=6 material=iron portable=false stealth=7 dmg_pierce=60 inflict_root=8 inflict_bleed=6 single_use=true harvest_bonus=2 harvest_sources=hunting color=gray
 snare: mass=0.3 integrity=10 material=fiber portable=false stealth=8 inflict_root=10 harvest_bonus=1.8 harvest_sources=hunting color=brown
-lasso: mass=1 length=15 integrity=20 material=fiber equip_slot=held hands_required=1 attack_range=12 inflict_root=5 harvest_bonus=1.5 harvest_sources=hunting counters=horse,cow,bull color=brown
+lasso: mass=1 length=15 integrity=20 material=fiber equip_slot=held hands_required=1 attack_range=12 inflict_root=5 harvest_bonus=1.5 harvest_sources=hunting counters=horse,cow,bull,behemoth,unicorn color=brown attack_rate=0.5
 sieve: mass=0.5 integrity=15 material=steel,wire equip_slot=held hands_required=2 harvest_bonus=2 harvest_sources=river,dig color=silver
 tongs: mass=1 length=0.5 integrity=100 material=iron equip_slot=held hands_required=1 res_fire+0.3 craft_slots=1 color=black
 bellows: mass=8 integrity=30 material=leather,wood portable=false temperature=300 craft_slots=1 color=brown
@@ -1468,7 +1528,7 @@ kitten: mass=0.8 length=0.3 integrity=6 alive=true sentient=true intelligence=4 
 hamster: mass=0.1 length=0.15 integrity=2 alive=true diet=herbivore food_need=0.001 speed_land=2 comfort=1 reproduction=6 tamable=true color=orange
 gerbil: mass=0.07 length=0.12 integrity=2 alive=true diet=herbivore food_need=0.001 speed_land=3 jump=0.3 comfort=1 reproduction=6 tamable=true habitat=desert color=yellow
 mink: mass=1.5 length=0.5 integrity=12 alive=true diet=carnivore food_need=0.005 speed_land=6 speed_water=3 stealth=5 dmg_pierce=6 attack_rate=1.5 value=200 habitat=marsh,taiga color=brown
-weasel: mass=0.2 length=0.25 integrity=5 alive=true sentient=true intelligence=6 aggression=5 diet=carnivore food_need=0.002 speed_land=8 stealth=6 letter_steal=1 dmg_pierce=6 attack_rate=2 habitat=meadow,forest,taiga color=brown
+weasel: mass=0.2 length=0.25 integrity=5 alive=true sentient=true intelligence=6 aggression=5 diet=carnivore food_need=0.002 speed_land=8 stealth=6 letter_steal=1 dmg_pierce=6 attack_rate=2 habitat=meadow,forest,taiga color=brown immune_freeze=true courage=9 counters=basilisk
 ferret: mass=1 length=0.4 integrity=8 alive=true sentient=true intelligence=5 loyalty=6 diet=carnivore food_need=0.003 speed_land=6 speed_underground=0.3 stealth=5 dmg_pierce=6 attack_rate=1.8 tamable=true equip_slot=companion harvest_bonus=1.5 harvest_sources=hunting color=white
 chimpanzee: mass=50 length=1.2 integrity=120 alive=true sentient=true intelligence=8 aggression=5 hands=true diet=omnivore food_need=0.04 speed_land=10 climb=9 strength=12 dmg_blunt=40 dmg_pierce=20 attack_rate=1.2 habitat=jungle color=black
 orangutan: mass=80 length=1.4 integrity=150 alive=true sentient=true intelligence=8 hands=true diet=herbivore food_need=0.05 speed_land=4 climb=10 strength=14 dmg_blunt=45 attack_rate=0.8 habitat=jungle color=orange

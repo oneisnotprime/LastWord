@@ -92,6 +92,10 @@ server and the client import this, so anything here must give the same answer on
 - `unit.ts` also carries light things: anything with no `equip_slot` and no damage of its own is
   held as an improvised weapon (`improvised`: blunt damage 2 × hardness × √mass, one hand, two
   over half the limit) if it weighs at most `carryLimit` (strength × 4 kg); `cannotCarry` says why not.
+- `kits.ts` starting kits: `dealKits` (three kits, all parts different), `kitHand` (eight letters
+  around a starter word, leaning toward the job), `jobStats`/`jobBodyOps`/`jobRules` (a job as a
+  carried tool, body operations and place rules), `kitCard` lines, `unlockText`/`unlockNeed`/
+  `sealedLetters` (legendary conditions), `legendCost` (an unsealed legendary spells free), `kitScore`.
 - Dictionary themes (TODO.md), each a shared system words use by their properties:
   - `material.ts` (materials): a material noun before a noun (GLASS SWORD) or an adjective whose
     `material` names one (WOODEN) remakes the thing out of it (`applyMaterial`, called by `resolve`):

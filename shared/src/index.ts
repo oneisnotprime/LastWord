@@ -33,3 +33,4 @@ export * from "./home.js";
 export * from "./craft.js";
 export * from "./tech.js";
 export * from "./herd.js";
+export * from "./kits.js";

@@ -11,7 +11,7 @@
  {
   "class": "artifact",
   "archetype": "artifact",
-  "words": 1463,
+  "words": 1466,
   "groups": [
    "physical",
    "mobility",
@@ -56,7 +56,7 @@
  {
   "class": "artifact",
   "archetype": "structure",
-  "words": 575,
+  "words": 576,
   "groups": [
    "physical",
    "mobility",
@@ -86,7 +86,7 @@
  {
   "class": "artifact",
   "archetype": "tool",
-  "words": 353,
+  "words": 354,
   "groups": [
    "physical",
    "mobility",
@@ -101,7 +101,7 @@
  {
   "class": "artifact",
   "archetype": "building",
-  "words": 347,
+  "words": 346,
   "groups": [
    "physical",
    "mobility",
@@ -131,7 +131,7 @@
  {
   "class": "artifact",
   "archetype": "weapon",
-  "words": 219,
+  "words": 218,
   "groups": [
    "physical",
    "mobility",
@@ -206,7 +206,7 @@
  {
   "class": "artifact",
   "archetype": "machine",
-  "words": 137,
+  "words": 136,
   "groups": [
    "physical",
    "mobility",
@@ -311,7 +311,7 @@
  {
   "class": "artifact",
   "archetype": "fortification",
-  "words": 43,
+  "words": 40,
   "groups": [
    "physical",
    "mobility",
@@ -530,7 +530,7 @@
  {
   "class": "creature",
   "archetype": "supernatural",
-  "words": 124,
+  "words": 132,
   "groups": [
    "physical",
    "life",
@@ -712,7 +712,7 @@
  {
   "class": "flora",
   "archetype": "plant",
-  "words": 784,
+  "words": 783,
   "groups": [
    "physical",
    "life",
@@ -809,7 +809,7 @@
  {
   "class": "knowledge",
   "archetype": "knowledge",
-  "words": 1918,
+  "words": 1917,
   "groups": [
    "economy",
    "meta"
@@ -818,7 +818,7 @@
  {
   "class": "material",
   "archetype": "material",
-  "words": 1600,
+  "words": 1601,
   "groups": [
    "physical",
    "economy"
@@ -872,7 +872,7 @@
  {
   "class": "material",
   "archetype": "fuel",
-  "words": 29,
+  "words": 28,
   "groups": [
    "physical",
    "economy"
@@ -938,7 +938,7 @@
  {
   "class": "person",
   "archetype": "person",
-  "words": 4157,
+  "words": 4153,
   "groups": [
    "physical",
    "life",

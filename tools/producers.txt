@@ -774,10 +774,7 @@ fridge: produce_B=0.2
 refrigerator: produce_B=0.2
 vase: produce_B=0.1
 teapot: produce_B=0.1
-workshop: produce_C=0.8
-smithy: produce_C=1 production_needs=labor,g
 armory: produce_C=0.4
-foundry: produce_C=1.5 production_needs=labor,g
 grindstone: produce_C=0.4
 crucible: produce_C=0.4 production_needs=labor,g
 automaton: produce_M=0.4
@@ -916,7 +913,6 @@ creamery: produce_C=0.6
 darkroom: produce_C=0.4
 dispensary: produce_C=0.4
 distillery: produce_C=0.6
-dock: produce_C=0.4
 dockyard: produce_C=1
 drugstore: produce_C=0.6
 easel: produce_C=0.4
@@ -983,7 +979,6 @@ fulcrum: produce_M=0.3
 gear: produce_M=0.3
 gearbox: produce_M=0.3
 gearing: produce_M=0.3
-golem: produce_M=0.3
 harrow: produce_M=0.3
 heater: produce_M=0.3
 hoist: produce_M=0.3
@@ -1171,3 +1166,23 @@ conquest: takes_city=true
 coup: takes_city=true
 election: takes_city=true
 revolution: takes_city=true
+
+# Starting kits (tools/kits.txt): buildings a player can start with.
+farmhouse: produce_B=0.2
+cottage: produce_B=0.2
+hut: produce_B=0.1
+cabin: produce_B=0.15
+chapel: produce_Y=0.2
+cathedral: produce_Y=0.3
+statue: produce_Y=0.4
+workshop: produce_C=0.8 production_needs=labor
+smithy: produce_C=0.8 production_needs=labor,g
+foundry: produce_M=1 production_needs=vowel,vowel
+apiary: produce_P=0.4 production_needs=harvest
+beehive: produce_P=0.3 production_needs=harvest
+dock: produce_O=0.8 production_needs=flow,extract
+pier: produce_O=0.6 production_needs=flow,extract
+fountain: produce_O=0.5 production_needs=extract
+kennel: produce_I=0.3 production_needs=labor
+golem: produce_N=1
+genie: produce_N=1

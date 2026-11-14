@@ -230,6 +230,7 @@ apartment	noun	building
 ape	noun	mammal
 aperture	noun	device
 aphid	noun	insect
+apiary	noun	building
 apocalypse	noun	disaster
 apostle	noun	worker
 apothecary	noun	worker
@@ -518,6 +519,7 @@ basic	adjective	quality
 basically	adverb	manner
 basil	noun	herb
 basilica	noun	building
+basilisk	noun	supernatural
 basin	noun	container
 basis	noun	knowledge
 basket	noun	tool
@@ -543,7 +545,7 @@ bauxite	noun	mineral
 bay	noun	water
 bazaar	noun	artifact
 beach	noun	landform
-beacon	noun	structure
+beacon	noun	artifact
 bead	noun	adornment
 beagle	noun	mammal
 beaker	noun	container
@@ -571,6 +573,7 @@ bedroom	noun	structure
 bee	noun	insect
 beech	noun	material
 beef	noun	food
+beehive	noun	artifact
 beekeeper	noun	worker
 beer	noun	drink
 beet	noun	produce
@@ -582,6 +585,7 @@ beginning	noun	event
 behalf	noun	attribute
 behavior	noun	attribute
 behaviour	noun	attribute
+behemoth	noun	supernatural
 behind	adverb	manner
 belfry	noun	structure
 belief	noun	knowledge
@@ -662,6 +666,7 @@ blame	adjective	quality
 blanc	noun	food
 bland	adjective	quality
 blanket	noun	furniture
+blasphemy	noun	act
 blast	noun	event
 bleachers	noun	structure
 bleat	verb	contact
@@ -1143,7 +1148,7 @@ certify	verb	social
 cesium	noun	metal
 cesspool	noun	container
 cetacean	noun	mammal
-chain	noun	weapon
+chain	noun	tool
 chainsaw	noun	machine
 chair	noun	furniture
 chairman	noun	leader
@@ -1399,6 +1404,7 @@ colony	noun	place
 color	adjective	quality
 coloring	noun	food
 colors	noun	artifact
+colossus	noun	supernatural
 colour	noun	material
 colouring	noun	food
 colours	noun	artifact
@@ -1731,6 +1737,7 @@ croft	noun	building
 croissant	noun	food
 crop	noun	produce
 cross	verb	movement
+crossbow	noun	weapon
 crossed	adjective	quality
 crossing	noun	travel
 croton	noun	shrub
@@ -2618,6 +2625,7 @@ fir	noun	material
 fire	noun	event
 fireball	noun	phenomenon
 firebird	noun	supernatural
+firebrand	noun	material
 fired	adjective	quality
 firefighter	noun	worker
 firefly	noun	insect
@@ -2745,7 +2753,7 @@ formerly	adverb	manner
 fort	noun	fortification
 forth	adverb	manner
 fortification	noun	fortification
-fortress	noun	fortification
+fortress	noun	structure
 fortune	noun	possession
 forum	noun	group
 forward	adverb	manner
@@ -2870,7 +2878,7 @@ garlic	noun	food
 garnet	noun	mineral
 garnish	noun	food
 garret	noun	structure
-garrison	noun	fortification
+garrison	noun	artifact
 gas	noun	material
 gaseous	adjective	quality
 gasoline	noun	fuel
@@ -2908,6 +2916,7 @@ generic	noun	drink
 genet	noun	mammal
 genetic	adjective	quality
 geneva	noun	drink
+genie	noun	supernatural
 genius	noun	person
 gentry	noun	group
 genuine	adjective	quality
@@ -2977,7 +2986,7 @@ goldfinch	noun	bird
 goldfish	noun	fish
 goldmine	noun	artifact
 goldsmith	noun	worker
-golem	noun	machine
+golem	noun	supernatural
 golf	noun	contest
 golfer	noun	worker
 goo	noun	material
@@ -3055,6 +3064,7 @@ grey	adjective	quality
 greyhound	noun	mammal
 grid	noun	device
 griddle	noun	tool
+griffin	noun	supernatural
 grifter	noun	criminal
 grill	noun	device
 grind	verb	transform
@@ -3401,6 +3411,7 @@ hussar	noun	fighter
 hustler	noun	criminal
 hut	noun	structure
 hutch	noun	structure
+hydra	noun	supernatural
 hydrangea	noun	shrub
 hydrant	noun	device
 hydrate	noun	material
@@ -3735,6 +3746,7 @@ kola	noun	tree
 kookaburra	noun	bird
 kosher	noun	food
 kraft	noun	material
+kraken	noun	supernatural
 kremlin	noun	fortification
 krill	noun	invertebrate
 krypton	noun	gas
@@ -3870,6 +3882,7 @@ letting	noun	possession
 lettuce	noun	produce
 level	noun	attribute
 lever	noun	machine
+leviathan	noun	supernatural
 levy	noun	possession
 liana	noun	plant
 liberal	noun	person
@@ -4972,6 +4985,7 @@ pheasant	noun	bird
 philosopher	noun	worker
 philosophy	noun	knowledge
 phlox	noun	herb
+phoenix	noun	supernatural
 phone	noun	device
 phonograph	noun	device
 phosphate	noun	material
@@ -4998,7 +5012,7 @@ picnic	noun	food
 picture	noun	artifact
 pie	noun	food
 piece	noun	artifact
-pier	noun	structure
+pier	noun	artifact
 pig	noun	mammal
 pigeon	noun	bird
 piggery	noun	structure
@@ -6447,7 +6461,7 @@ stake	noun	weapon
 stale	adjective	quality
 stalk	noun	material
 stalker	noun	criminal
-stall	noun	building
+stall	noun	structure
 stallion	noun	mammal
 stamp	noun	weapon
 stampede	noun	event
@@ -6471,6 +6485,7 @@ statesman	noun	person
 station	noun	structure
 statistics	noun	knowledge
 stator	noun	device
+statue	noun	artifact
 statuette	noun	artifact
 statute	noun	knowledge
 stay	verb	body
@@ -6907,6 +6922,7 @@ tip	noun	exchange
 tire	noun	machine
 tired	adjective	quality
 tissue	noun	bodypart
+titan	noun	supernatural
 titanium	noun	metal
 tithe	noun	possession
 title	noun	possession
@@ -7144,6 +7160,7 @@ understood	adjective	participle
 undertaker	noun	worker
 unexpected	adjective	quality
 unfortunately	adverb	manner
+unicorn	noun	supernatural
 uniform	noun	clothing
 union	noun	group
 unique	adjective	quality
@@ -7352,7 +7369,7 @@ watch	noun	device
 watchdog	noun	mammal
 watching	noun	act
 watchman	noun	worker
-watchtower	noun	fortification
+watchtower	noun	structure
 water	noun	liquid
 watercolor	noun	material
 watercolour	noun	material
@@ -7537,6 +7554,7 @@ writing	noun	act
 written	adjective	participle
 wrong	adjective	quality
 wrought	adjective	quality
+wyvern	noun	supernatural
 xenon	noun	gas
 yacht	noun	vehicle_water
 yak	noun	mammal

@@ -5002,7 +5002,7 @@ beachcomber	noun	person	person	1.98	rare	n09864093	-
 beachfront	noun	terrain	landform	2.77	uncommon	n09240321	-
 beachhead	noun	terrain	place	2.4	uncommon	n08707187	-
 beachwear	noun	artifact	clothing	2.0	uncommon	n02817909	-
-beacon	noun	artifact	structure	3.74	common	n02817995	verb:perceive
+beacon	noun	artifact	artifact	3.74	common	n04049010	verb:perceive
 bead	noun	artifact	adornment	3.44	common	n02818206	verb:create
 beaded	adjective	modifier	quality	3.06	common	a01699613	-
 beading	noun	artifact	artifact	2.48	uncommon	n02818524	-
@@ -5212,7 +5212,7 @@ behaviouristic	adjective	modifier	pertaining	0.0	obscure	a02671356	-
 behead	verb	spell	contact	2.71	uncommon	v01574185	-
 beheaded	adjective	modifier	quality	3.22	common	a01188127	-
 beheading	noun	event	act	2.95	uncommon	n01167714	-
-behemoth	noun	person	person	2.97	uncommon	n10148446	-
+behemoth	noun	creature	supernatural	2.97	uncommon	n10148446	-
 behind	adverb	verb_modifier	manner	5.29	core	r00223465	noun:bodypart,adjective:quality
 behindhand	adjective	modifier	quality	0.0	obscure	a01907194	adverb:manner
 behold	verb	spell	perceive	3.76	common	v02134625	-
@@ -9069,7 +9069,7 @@ chaffy	adjective	modifier	pertaining	1.09	rare	a02701166	-
 chafing	noun	aura	feeling	2.61	uncommon	n07511306	-
 chagrin	noun	aura	feeling	2.86	uncommon	n07522981	verb:emotion
 chagrined	adjective	modifier	quality	1.95	rare	a00533833	-
-chain	noun	artifact	weapon	4.65	core	n08392981	verb:contact
+chain	noun	artifact	tool	4.65	core	n08392981	verb:contact
 chained	adjective	modifier	quality	3.37	common	a00254062	-
 chainlike	adjective	modifier	quality	0.0	obscure	a02153444	-
 chains	noun	artifact	device	4.11	core	n03590607	-
@@ -10714,7 +10714,7 @@ colorless	adjective	modifier	quality	3.02	common	a00409108	-
 colorlessness	noun	aura	attribute	0.0	obscure	n04965811	-
 colors	noun	artifact	artifact	4.46	core	n03075927	-
 colossal	adjective	modifier	quality	3.37	common	a01387664	-
-colossus	noun	person	person	3.06	common	n10148446	-
+colossus	noun	creature	supernatural	3.06	common	n10148446	-
 colostomy	noun	event	act	2.4	uncommon	n00669795	-
 colostrum	noun	bodypart	bodypart	2.22	uncommon	n05406699	-
 colour	noun	material	material	4.49	core	n15009532	adjective:quality,verb:social
@@ -19989,7 +19989,7 @@ firebird	noun	creature	supernatural	2.66	uncommon	n01600378	-
 fireboat	noun	artifact	vehicle_water	1.36	rare	n03349239	-
 firebomb	noun	artifact	device	2.11	uncommon	n03571171	verb:combat
 firebox	noun	artifact	structure	2.37	uncommon	n03349355	-
-firebrand	noun	material	fuel	2.52	uncommon	n15125724	-
+firebrand	noun	material	material	2.52	uncommon	n15125724	-
 firebrat	noun	creature	insect	0.0	obscure	n02273597	-
 firebreak	noun	terrain	place	1.66	rare	n08589189	-
 firebrick	noun	artifact	artifact	1.72	rare	n03349488	-
@@ -20857,7 +20857,7 @@ fortify	verb	spell	transform	2.9	uncommon	v00221295	-
 fortissimo	adjective	modifier	quality	1.94	rare	a01461939	adverb:manner,noun:communication
 fortitude	noun	aura	attribute	3.15	common	n05039348	-
 fortnightly	adjective	modifier	quality	2.76	uncommon	a01976103	adverb:manner
-fortress	noun	artifact	fortification	3.77	common	n03390857	-
+fortress	noun	artifact	structure	3.77	common	n03390857	-
 fortuitous	adjective	modifier	quality	2.68	uncommon	a01342240	-
 fortuitously	adverb	verb_modifier	manner	2.21	uncommon	r00042664	-
 fortuitousness	noun	aura	attribute	0.0	obscure	n04766235	-
@@ -21655,7 +21655,7 @@ garnishment	noun	artifact	document	2.21	uncommon	n06569818	-
 garotte	noun	artifact	device	1.11	rare	n03425845	verb:contact
 garpike	noun	creature	fish	0.0	obscure	n02644009	-
 garret	noun	artifact	structure	2.9	uncommon	n03691456	-
-garrison	noun	artifact	fortification	3.67	common	n03425469	verb:combat
+garrison	noun	artifact	artifact	3.67	common	n03425469	verb:combat
 garrote	noun	artifact	device	1.92	rare	n03425845	verb:contact
 garroter	noun	person	person	0.0	obscure	n10140903	-
 garrotte	noun	artifact	device	1.33	rare	n03425845	verb:contact
@@ -22477,7 +22477,7 @@ goldsmith	noun	person	worker	3.21	common	n10156135	-
 goldstone	noun	material	mineral	2.45	uncommon	n14914008	-
 goldthread	noun	flora	herb	0.0	obscure	n11752521	-
 goldworker	noun	person	person	0.0	obscure	n10156135	-
-golem	noun	artifact	machine	2.79	uncommon	n10156295	-
+golem	noun	creature	supernatural	2.79	uncommon	n10156295	-
 golf	noun	event	contest	4.56	core	n00465962	verb:combat
 golfcart	noun	artifact	vehicle_land	0.0	obscure	n03450857	-
 golfclub	noun	artifact	artifact	0.0	obscure	n03451003	-
@@ -25254,7 +25254,7 @@ hybridizing	noun	event	act	1.78	rare	n00852055	-
 hybridoma	noun	bodypart	bodypart	1.64	rare	n05477665	-
 hydantoin	noun	artifact	medicine	1.08	rare	n03555713	-
 hydathode	noun	flora	plant	0.0	obscure	n13174524	-
-hydra	noun	knowledge	knowledge	3.31	common	n05695974	-
+hydra	noun	creature	supernatural	3.31	common	n05695974	-
 hydralazine	noun	artifact	medicine	1.42	rare	n03555851	-
 hydrangea	noun	flora	shrub	2.37	uncommon	n12808961	-
 hydrant	noun	artifact	device	2.71	uncommon	n04566737	-
@@ -28838,6 +28838,7 @@ kowtow	verb	spell	movement	2.16	uncommon	v02044554	noun:communication
 kraal	noun	terrain	place	1.93	rare	n08690869	-
 kraft	noun	material	material	3.38	common	n14903131	-
 krait	noun	creature	reptile	1.85	rare	n01753677	-
+kraken	noun	creature	supernatural	2.85	uncommon	-	-
 kremlin	noun	artifact	fortification	3.39	common	n03633802	-
 krigia	noun	flora	herb	0.0	obscure	n12006208	-
 krill	noun	creature	invertebrate	2.63	uncommon	n01991342	-
@@ -29708,7 +29709,7 @@ lever	noun	artifact	machine	3.64	common	n03664618	verb:contact
 leverage	noun	world_state	phenomenon	3.88	common	n11493538	verb:transfer
 leveraging	noun	event	exchange	3.02	common	n01101851	-
 leveret	noun	creature	mammal	1.27	rare	n02329415	-
-leviathan	noun	person	person	3.09	common	n10275425	-
+leviathan	noun	creature	supernatural	3.09	common	n09519933	-
 levirate	noun	knowledge	knowledge	1.43	rare	n05677462	-
 levis	noun	artifact	clothing	2.6	uncommon	n03665450	-
 levitate	verb	spell	movement	2.52	uncommon	v01948325	-
@@ -38647,7 +38648,7 @@ phocine	adjective	modifier	pertaining	0.0	obscure	a02864548	-
 phoebe	noun	creature	bird	3.38	common	n01552527	-
 phoenician	adjective	modifier	pertaining	2.69	uncommon	a02787738	noun:person
 phoenicophorium	noun	flora	plant	0.0	obscure	n12614450	-
-phoenix	noun	flora	plant	4.21	core	n12614587	-
+phoenix	noun	creature	supernatural	4.21	core	n09524068	-
 phon	noun	measure	quantity	2.05	uncommon	n13736088	-
 phone	noun	artifact	device	5.3	core	n03266479	verb:communication
 phonebook	noun	artifact	document	2.12	uncommon	n06435397	-
@@ -38884,7 +38885,7 @@ piecework	noun	event	act	1.8	rare	n00582554	-
 pied	adjective	modifier	quality	3.02	common	a00400039	-
 piedmont	noun	terrain	landform	3.12	common	n09414537	-
 pieplant	noun	flora	produce	0.0	obscure	n07729012	-
-pier	noun	artifact	structure	3.82	common	n03939805	-
+pier	noun	artifact	artifact	3.82	common	n03939805	-
 pierce	verb	spell	contact	3.93	common	v01444980	noun:person
 pierced	adjective	modifier	quality	3.46	common	a00665326	-
 piercing	adjective	modifier	quality	3.57	common	a01748764	-
@@ -49226,7 +49227,7 @@ stalked	adjective	modifier	quality	3.21	common	a00161000	-
 stalker	noun	person	criminal	3.45	common	n10665967	-
 stalking	noun	event	act	3.64	common	n00712776	-
 stalkless	adjective	modifier	quality	1.09	rare	a00160763	-
-stall	noun	artifact	building	3.79	common	n04306508	verb:movement
+stall	noun	artifact	structure	3.79	common	n04306508	verb:movement
 stalling	noun	event	act	3.18	common	n01077649	-
 stallion	noun	creature	mammal	3.24	common	n02379833	-
 stalls	noun	artifact	building	3.51	common	n04302017	-
@@ -52747,7 +52748,7 @@ tirolean	noun	artifact	clothing	0.0	obscure	n04513183	-
 tisane	noun	consumable	drink	1.51	rare	n07950272	-
 tissue	noun	bodypart	bodypart	4.32	core	n05274844	verb:create
 tit	noun	bodypart	bodypart	3.48	common	n05562038	-
-titan	noun	person	person	3.69	common	n09958449	-
+titan	noun	creature	supernatural	3.69	common	n09958449	-
 titania	noun	material	material	2.52	uncommon	n14640918	-
 titanic	adjective	modifier	quality	3.59	common	a01393617	-
 titanium	noun	material	metal	3.55	common	n14683390	-
@@ -57907,7 +57908,7 @@ watching	noun	event	act	5.02	core	n00881437	-
 watchmaker	noun	person	person	2.59	uncommon	n10789573	-
 watchman	noun	person	worker	3.01	common	n10789727	-
 watchstrap	noun	artifact	artifact	0.0	obscure	n04563490	-
-watchtower	noun	artifact	fortification	2.85	uncommon	n04564234	-
+watchtower	noun	artifact	structure	2.85	uncommon	n04564234	-
 water	noun	material	liquid	5.52	core	n14869913	verb:transform
 waterbird	noun	creature	bird	1.44	rare	n01847773	-
 waterborne	adjective	modifier	quality	2.48	uncommon	a01529136	-

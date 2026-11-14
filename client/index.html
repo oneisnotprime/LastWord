@@ -281,6 +281,55 @@
       #status button.again { pointer-events: auto; display: block; width: 100%; margin-top: 8px; font: 700 15px var(--hand); letter-spacing: 1px; color: #4a3510; background: var(--gold);
         border: 0; border-radius: 3px; padding: 5px 8px; cursor: pointer; box-shadow: 0 2px 0 #b8902a, 0 4px 8px rgba(40, 28, 16, .3); }
       #status button.again:hover { transform: translateY(-1px) rotate(-1deg); }
+      /* Starting kits (kits.ts): the pick of three, your kit on the HUD, the map-wide call when a legendary unseals. */
+      #kits { position: fixed; inset: 0; z-index: 6; display: none; pointer-events: auto; background: rgba(28, 22, 16, .55); font: 500 13px/1.35 var(--round); color: var(--ink); }
+      #kits.show { display: flex; align-items: center; justify-content: center; }
+      #kits .sheet { width: min(1060px, 96vw); max-height: 94vh; overflow: auto; padding: 16px 22px 20px; background: var(--card); border-radius: 4px; transform: rotate(-.4deg);
+        box-shadow: 0 0 0 6px var(--paper), 0 3px 0 6px #cfc3a6, 0 22px 50px rgba(20, 14, 8, .6);
+        background-image: repeating-linear-gradient(0deg, transparent 0 27px, rgba(150, 120, 80, .08) 27px 28px); }
+      #kits .sheet.mine { width: min(400px, 94vw); }
+      #kits h2 { margin: 0; font: 700 30px var(--hand); letter-spacing: 2px; text-align: center; }
+      #kits .hint { text-align: center; color: var(--soft); margin-bottom: 12px; }
+      #kits .hint .left { color: var(--red); font: 700 16px var(--hand); margin-left: 6px; }
+      #kits .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+      #kits .kitcard { position: relative; padding: 12px 14px 12px; background: var(--paper); border-radius: 3px; box-shadow: 0 2px 0 #cfc3a6, 0 8px 18px rgba(40, 28, 16, .35); }
+      #kits .kitcard[data-pick] { cursor: pointer; transition: transform .15s, box-shadow .15s; }
+      #kits .kitcard[data-pick]:nth-child(1) { transform: rotate(-1.2deg); } #kits .kitcard[data-pick]:nth-child(3) { transform: rotate(1deg); }
+      #kits .kitcard[data-pick]:hover { transform: translateY(-6px) rotate(0); box-shadow: 0 0 0 4px var(--gold), 0 3px 0 4px #b8903a, 0 16px 30px rgba(40, 28, 16, .45); }
+      #kits .kitcard::before { content: ""; position: absolute; top: -8px; left: 50%; width: 52px; height: 15px; margin-left: -26px; background: rgba(233, 214, 160, .8); transform: rotate(-3deg); }
+      #kits .key { position: absolute; top: 8px; right: 10px; width: 24px; height: 24px; border-radius: 50%; background: var(--gold); color: #4a3510; font: 700 14px/24px var(--round); text-align: center; }
+      #kits section { padding: 6px 0 7px; border-bottom: 1px dashed var(--line); }
+      #kits section:last-child { border-bottom: 0; }
+      #kits h4 { margin: 0; font: 600 10px var(--round); color: var(--soft); text-transform: uppercase; letter-spacing: 1.5px; }
+      #kits section > b { display: block; font: 700 22px/1.1 var(--hand); letter-spacing: 1px; }
+      #kits .job > b { color: var(--blue); } #kits .building > b { color: #8a5a1a; } #kits .legend > b { color: #7a2a8a; }
+      #kits ul { list-style: none; margin: 3px 0 0; padding: 0; }
+      #kits li { display: flex; gap: 6px; font-size: 12px; line-height: 1.45; }
+      #kits li i { font-style: normal; width: 18px; text-align: center; flex: none; }
+      #kits .seal { padding: 1px 5px; border-radius: 2px; background: #3f2f4a; color: #f3e6ff; letter-spacing: 1px; margin-left: 4px; }
+      #kits .unlock { margin: 3px 0; padding: 3px 7px; background: #efe0f3; border-radius: 2px; font: 600 12px var(--round); color: #5a2a6a; transform: rotate(-.6deg); }
+      #kits .counter { margin-top: 3px; font-size: 11px; color: var(--soft); }
+      #kits .buttons { display: flex; justify-content: center; gap: 10px; margin-top: 14px; }
+      #kits button { font: 700 15px var(--hand); color: var(--ink); background: var(--paper); border: 0; border-radius: 3px; padding: 5px 14px; cursor: pointer; box-shadow: 0 1px 0 #cfc3a6, 0 3px 6px rgba(40, 28, 16, .3); }
+      #kits button.unseal { background: #b07ac9; color: #fff; }
+      #kits button:hover { transform: translateY(-1px) rotate(-1deg); background: var(--gold); }
+      #status .kitrow { pointer-events: auto; cursor: pointer; margin-top: 6px; padding-top: 5px; border-top: 1px dashed var(--line); display: grid; grid-template-columns: 62px 1fr; gap: 1px 6px; align-items: center; }
+      #status .kitrow > span { font: 600 10px var(--round); color: var(--soft); text-transform: uppercase; letter-spacing: 1px; }
+      #status .kitrow > b { font: 700 14px/18px var(--hand); text-transform: uppercase; }
+      #status .kitrow > b.legend { color: #7a2a8a; } #status .kitrow > b.legend.open { color: #c0392b; animation: legendglow 1s infinite alternate; }
+      #status .kitrow > small { grid-column: 2; font: 500 10.5px var(--round); color: var(--soft); }
+      #status .kitrow > .track, #status .kitrow > em { grid-column: 2; }
+      #status .kitrow .track i { background-color: #b07ac9; }
+      #status .kitrow em.open { font: 700 12px var(--round); font-style: normal; color: #c0392b; }
+      @keyframes legendglow { from { text-shadow: 0 0 0 rgba(233, 185, 73, 0); } to { text-shadow: 0 0 8px rgba(233, 185, 73, 1); } }
+      #legendcall { position: fixed; z-index: 7; left: 50%; top: 22%; transform: translate(-50%, -50%) scale(.6); opacity: 0; pointer-events: none; text-align: center;
+        padding: 18px 46px 16px; background: #2e2238; color: #fbeaff; border-radius: 4px; box-shadow: 0 0 0 5px var(--gold), 0 4px 0 5px #8a6a1a, 0 0 80px 20px rgba(233, 185, 73, .55); }
+      #legendcall.show { animation: legendcall 6.5s forwards; }
+      #legendcall small { display: block; font: 600 12px var(--round); letter-spacing: 3px; text-transform: uppercase; color: var(--gold); }
+      #legendcall b { display: block; font: 700 40px/1.15 var(--hand); letter-spacing: 3px; }
+      #legendcall span { display: block; font: 500 13px var(--round); color: #d9c6e6; }
+      @keyframes legendcall { 0% { opacity: 0; transform: translate(-50%, -50%) scale(.6) rotate(-4deg); } 8% { opacity: 1; transform: translate(-50%, -50%) scale(1.08) rotate(1deg); }
+        14% { transform: translate(-50%, -50%) scale(1) rotate(-1deg); } 85% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(-1deg); } 100% { opacity: 0; transform: translate(-50%, -60%) scale(.95) rotate(-1deg); } }
       /* Controller: the letter picker in the spell window (the tiles you hold) and for an offer's letters. */
       #picker, #pickhint { display: none; }
       body.pad #picker { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin: 12px auto 4px; max-width: 470px; }

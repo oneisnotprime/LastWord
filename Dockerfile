@@ -10,7 +10,7 @@ COPY server/package.json server/
 COPY client/package.json client/
 RUN npm ci
 COPY tsconfig.base.json ./
-COPY data/properties.json data/demo.json data/demo_inflections.json data/operators.json data/
+COPY data/properties.json data/demo.json data/demo_inflections.json data/operators.json data/kits.json data/
 COPY shared shared
 COPY server server
 COPY client client

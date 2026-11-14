@@ -54,7 +54,7 @@ invisible	absolute and scaling modifiers	9	25.6	2.8	V	adjective:absolute
 invincible	absolute and scaling modifiers	10	27.8	2.8	V	adjective:absolute
 max	absolute and scaling modifiers	3	37.0	12.3	X	noun:medicine
 toxic	absolute and scaling modifiers	5	38.8	7.8	X	adjective:quality
-titan	beings and forces	5	7.2	1.4	-	noun:person
+titan	beings and forces	5	7.2	1.4	-	noun:supernatural
 ogre	beings and forces	4	8.7	2.2	-	noun:person
 host	beings and forces	4	9.2	2.3	-	noun:group
 genie	beings and forces	5	9.3	1.9	-	noun:supernatural
@@ -69,19 +69,20 @@ legion	beings and forces	6	11.7	1.9	-	noun:group
 horde	beings and forces	5	11.8	2.4	-	noun:group
 deity	beings and forces	5	12.0	2.4	-	noun:supernatural
 tyrant	beings and forces	6	12.4	2.1	-	noun:leader
-golem	beings and forces	5	12.6	2.5	-	noun:machine
+golem	beings and forces	5	12.6	2.5	-	noun:supernatural
 fleet	beings and forces	5	13.6	2.7	-	noun:group
 dragon	beings and forces	6	13.8	2.3	-	noun:supernatural
 ghost	beings and forces	5	13.8	2.8	-	noun:supernatural
 emperor	beings and forces	7	13.9	2.0	-	noun:leader
-hydra	beings and forces	5	15.4	3.1	-	noun:knowledge
-colossus	beings and forces	8	15.5	1.9	-	noun:person
+hydra	beings and forces	5	15.4	3.1	-	noun:supernatural
+colossus	beings and forces	8	15.5	1.9	-	noun:supernatural
 devil	beings and forces	5	17.8	3.6	V	noun:supernatural
 navy	beings and forces	4	18.2	4.5	V	noun:group
 king	beings and forces	4	20.0	5.0	K	noun:leader
 swarm	beings and forces	5	22.4	4.5	W	noun:phenomenon
-behemoth	beings and forces	8	22.9	2.9	-	noun:person
-leviathan	beings and forces	9	24.6	2.7	V	noun:person
+behemoth	beings and forces	8	22.9	2.9	-	noun:supernatural
+leviathan	beings and forces	9	24.6	2.7	V	noun:supernatural
+kraken	beings and forces	6	30.7	5.1	K	noun:supernatural
 zombie	beings and forces	6	43.0	7.2	Z	noun:supernatural
 sphinx	beings and forces	6	44.5	7.4	X	noun:person
 wizard	beings and forces	6	51.7	8.6	WZ	noun:worker
@@ -94,7 +95,7 @@ will	death escape	4	19.0	4.8	W	noun:knowledge
 heaven	death escape	6	19.7	3.3	V	noun:place
 bunker	death escape	6	25.0	4.2	K	noun:fortification
 elixir	death escape	6	38.8	6.5	X	noun:liquid
-phoenix	death escape	7	45.3	6.5	X	noun:plant
+phoenix	death escape	7	45.3	6.5	X	noun:supernatural
 ore	economy	3	4.1	1.4	-	noun:mineral
 oil	economy	3	4.6	1.5	-	noun:liquid
 rent	economy	4	5.6	1.4	-	noun:possession

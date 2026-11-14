@@ -75,7 +75,7 @@ cell	noun	artifact	structure	4.87	core	n02995010	-
 cent	noun	artifact	currency	4.83	core	n13411799	-
 central	adjective	modifier	quality	5.12	core	a01280207	noun:artifact
 certain	adjective	modifier	quality	5.16	core	a00704329	-
-chain	noun	artifact	weapon	4.65	core	n08392981	verb:contact
+chain	noun	artifact	tool	4.65	core	n08392981	verb:contact
 chair	noun	artifact	furniture	4.69	core	n03005231	verb:social
 change	noun	artifact	currency	5.54	core	n13408862	verb:transform
 channel	noun	artifact	route	4.85	core	n03009709	verb:movement
