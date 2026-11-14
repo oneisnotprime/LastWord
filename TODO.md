@@ -318,6 +318,11 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
       mid-round until it ends
 - [ ] Labels of adjacent players overlap; fix in the art pass
 - [x] M6 (part): bots that play (gather, spell, fight) in the load test
+- [x] Server-side bots (`server/src/bots.ts`): people with no client who gather, spell useful
+      words (weapons, armour, mounts, creatures, then verbs, fields and events), eat, fight and
+      roam between cities; easy, normal and hard. Start screen: Play with bots, or join friends
+- [ ] Bots still to do: they do not trade, pick things up, use terrain, sky or region words, or
+      spell phrases (adjective + noun); they do not aim fields; they never retreat to heal
 - [x] Deploy-ready: one container serves the page and the game; Dockerfile, fly.toml and
       DEPLOY.md; image built and played locally
 - [ ] M6 (rest): deploy to Fly.io; needs the user's account

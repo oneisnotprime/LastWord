@@ -13,6 +13,7 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
 - `styles.html` + `src/styles/` art style prototypes (keys 1-5, N for night); not used by the game.
 - `src/main.ts` the Phaser scene: draws the map from the seed, markers for players and things,
   camera, movement input.
+- `src/start.ts` the start screen shown before joining (Play with bots, or join friends); `net.ts` calls it.
 - `src/net.ts` connection to the server: port 2567 under Vite (ports 5173 and 4173), else the
   page's own origin, since a deployed server serves the page. `VITE_SERVER` overrides both.
 - `src/hud.ts` the HTML overlay: status line, letter tiles, spelling box, toasts, and the

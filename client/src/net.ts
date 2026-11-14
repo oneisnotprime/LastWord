@@ -1,5 +1,6 @@
 import { Client } from "@colyseus/sdk";
 import type { Letters, LoadoutDetail } from "@lastword/shared";
+import { chooseGame } from "./start.js";
 
 export interface Connection {
   sessionId: string;
@@ -42,9 +43,16 @@ const endpoint =
   (import.meta.env.VITE_SERVER as string | undefined) ??
   (location.port === "5173" || location.port === "4173" ? `${location.protocol}//${location.hostname}:2567` : location.origin);
 
-/** Joins the world room and waits for the first state. */
+/**
+ * Asks on the start screen how to play, joins the world room and waits for the first state.
+ * Playing with bots starts a fresh room of them; friends share rooms with no bots.
+ */
 export async function connect(on: Handlers): Promise<Connection> {
-  const room: any = await new Client(endpoint).joinOrCreate("world", {});
+  const choice = await chooseGame();
+  const client = new Client(endpoint);
+  const room: any = choice.bots > 0
+    ? await client.create("world", { mode: "bots", bots: choice.bots, difficulty: choice.difficulty })
+    : await client.joinOrCreate("world", { mode: "friends", bots: 0 });
   room.onMessage("letters", on.letters);
   room.onMessage("spelled", on.spelled);
   room.onMessage("refused", on.refused);
