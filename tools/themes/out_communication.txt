@@ -1,0 +1,715 @@
+# Generated communication words (Theme 18, shared signal.ts, tech.ts, sense.ts).
+
+# noun document
+letter: mass=0.01 integrity=1 flammability=9 material=paper placement=target placement_range=1000 event_target=character event_duration=1 inflict_charm=10 loyalty+2 morale+1 color=white
+report: mass=0.1 integrity=3 flammability=9 material=paper placement=self field_radius=20 field_targets=owned field_duration=2 map_reveal=80 detect_life=300 read_properties+4 color=white
+check: placement=target placement_range=60 event_target=character read_inventory=true read_properties=5 contest_with=intelligence contested_by=stealth event_duration=1
+form: mass=0.01 integrity=1 flammability=9 material=paper placement=target placement_range=30 event_target=character inflict_slow=20 inflict_confuse=4 event_duration=1 counters=deadline
+list: mass=0.01 integrity=1 flammability=9 material=paper detect_letters=300 read_properties=2 intelligence+1 storage_letters=10
+bill: placement=target placement_range=60 event_target=character inflict_debt=90 contest_with=authority contested_by=security event_duration=1 counters=receipt,refund
+page: mass=0.005 integrity=1 flammability=9 material=paper intelligence+1 read_properties=1 plural_count=10 color=white
+album: mass=1 integrity=10 flammability=8 material=paper,cardboard detect_life=100 morale+2 comfort=1 value=20
+text: mass=0 integrity=1 placement=target placement_range=5000 event_target=character event_duration=1 command_limit+5 read_properties=2 upkeep_power=0.001 counters=jammer,static
+photo: mass=0.01 integrity=1 flammability=9 material=paper map_reveal=30 detect_life=100 read_properties=3 inflict_expose=60 placement=target placement_range=100 event_target=character event_duration=1
+contract: binds=2 bind_penalty=letters,reputation event_duration=10 placement=target placement_range=30 event_target=character
+score: mass=0.01 integrity=1 material=paper read_properties=3 morale+1 training+1
+budget: placement=self field_radius=4 field_targets=self field_duration=10 trade_bonus+0.2 trade_rate*0.9 security+2
+profile: placement=target placement_range=200 event_target=character read_properties=8 inflict_expose=60 contest_with=intelligence contested_by=stealth event_duration=1
+option: placement=self field_radius=4 field_targets=self field_duration=2 adjective_slots+1 duplicates=1
+journal: mass=0.5 integrity=5 flammability=8 material=paper intelligence+1 storage_letters=20 extends_duration=1.2 read_properties=2 immune_expose=true color=brown
+description: placement=target placement_range=150 event_target=character read_properties=6 inflict_expose=45 event_duration=1
+novel: mass=0.5 integrity=5 flammability=8 material=paper intelligence+2 morale+2 comfort=2 grants_adjective_slots=1 grants_slots_to=person
+papers: mass=0.1 integrity=2 flammability=9 material=paper disguise=5 security+2 immune_expose=true counters=customs,arrest,checkpoint,border
+ticket: mass=0.003 integrity=1 flammability=9 material=paper security+-3 counters=gate,turnstile,toll,customs
+resolution: placement=region field_radius=80 field_targets=all field_duration=8 law=attack fine=3 morale+1 authority+2
+index: mass=0.1 integrity=2 material=paper detect_letters=500 read_properties=3 intelligence+1
+legislation: placement=region field_radius=100 field_targets=enemies field_duration=12 law=trade,gather fine=4 authority+3 counters=anarchy,veto
+bible: mass=1 integrity=5 flammability=8 material=paper,leather faith_output=0.5 morale+3 courage+2 res_unholy+0.4 grants_adjective_slots=1 grants_slots_to=person counters=demon,heresy
+print: mass=0.01 integrity=1 material=paper read_properties=3 inflict_expose=90 placement=target placement_range=50 event_target=character event_duration=1 counters=alibi
+license: mass=0.01 integrity=2 material=plastic security+3 authority+1 counters=ban,fine,arrest,law
+document: mass=0.05 integrity=2 flammability=9 material=paper read_properties=4 storage_letters=10 authority+1 counters=fraud,forgery
+chart: mass=0.05 integrity=2 flammability=9 material=paper map_reveal=150 detect_letters=300 terrain_ignored=water placement_range+50
+publication: placement=map field_radius=ABS field_targets=all field_duration=2 detect_life+300 morale+1 inflict_expose=30 counters=censorship
+label: mass=0.001 integrity=1 material=paper read_properties=3 inflict_expose=30 stealth*0 disguise*0
+instructions: mass=0.01 integrity=1 material=paper obedience+3 training+2 accuracy+0.1 labor*1.2
+listing: mass=0.01 integrity=1 material=paper detect_letters=250 trade_bonus=0.1
+manual: mass=0.5 integrity=5 flammability=8 material=paper training+2 build_speed*1.3 labor*1.2 intelligence+1
+registration: placement=target placement_range=60 event_target=character read_properties=4 inflict_expose=60 authority+1 event_duration=1
+footage: mass=0 integrity=1 placement=target placement_range=300 event_target=character read_inventory=true inflict_expose=120 contest_with=detect_stealth contested_by=stealth event_duration=1 counters=alibi
+agenda: placement=self field_radius=20 field_targets=owned field_duration=5 obedience+3 labor*1.2 command_limit+3
+calendar: mass=0.2 integrity=3 material=paper extends_duration=1.3 alarm=true
+certificate: mass=0.01 integrity=2 material=paper authority+2 charm+1 reputation=2 counters=forgery,fraud
+estimate: placement=target placement_range=100 event_target=character read_properties=4 event_duration=1
+menu: mass=0.05 integrity=2 material=paper food_output*1.2 trade_bonus=0.05 morale+1
+signature: placement=target placement_range=10 event_target=character binds=2 bind_penalty=letters,reputation event_duration=6 authority+1 counters=forgery
+warrant: placement=target placement_range=200 event_target=character read_inventory=true inflict_expose=120 inflict_root=10 contest_with=authority contested_by=stealth event_duration=1 counters=alibi,pardon
+charter: placement=region field_radius=60 field_targets=owned field_duration=15 claim_radius=10 authority+3 morale+1
+essay: mass=0.05 integrity=1 material=paper intelligence+2 read_properties=2 training+1
+photograph: mass=0.01 integrity=1 flammability=9 material=paper placement=target placement_range=150 event_target=character read_properties=4 inflict_expose=90 event_duration=1 detect_life+100 counters=disguise,mask,camouflage
+permit: mass=0.01 integrity=1 material=paper security+2 counters=ban,law,curfew,checkpoint,customs
+patent: placement=self field_radius=4 field_targets=self field_duration=20 craft_slots+1 produce_T*1.5 security+3 counters=plagiarism,forgery
+assignment: placement=target placement_range=60 event_target=creature obedience+4 labor*1.3 event_duration=5
+diary: mass=0.3 integrity=4 flammability=8 material=paper,leather storage_letters=20 immune_expose=true intelligence+1 lockable=true color=red
+ballot: placement=region field_radius=100 field_targets=all field_duration=3 takes_city=true contest_with=charm contested_by=authority morale+1 counters=coup,tyranny,dictatorship
+passport: mass=0.05 integrity=3 material=paper disguise=3 security+3 terrain_ignored=road counters=border,customs,checkpoint,exile
+dictionary: mass=2 integrity=10 flammability=7 material=paper intelligence+3 training+1 grants_adjective_slots=2 grants_slots_to=person counters=jargon,cipher,cypher
+certification: mass=0.01 integrity=2 material=paper authority+1 training+1 reputation=1 counters=fraud
+licence: mass=0.01 integrity=2 material=plastic security+3 authority+1 counters=ban,fine,arrest,law
+mandate: placement=region field_radius=120 field_targets=all field_duration=10 authority+4 command_limit+10 obedience+3 counters=protest,veto
+tab: placement=target placement_range=20 event_target=character inflict_debt=60 event_duration=1
+directory: mass=1 integrity=5 material=paper detect_life=500 map_reveal=50 read_properties=2
+catalog: mass=1 integrity=5 material=paper detect_letters=400 trade_bonus=0.15
+catalogue: mass=1 integrity=5 material=paper detect_letters=400 trade_bonus=0.15
+coupon: mass=0.002 integrity=1 material=paper trade_rate*0.7 single_use=true
+handbook: mass=0.4 integrity=5 material=paper training+2 intelligence+1 labor*1.15
+textbook: mass=1.5 integrity=8 material=paper intelligence+3 training+2 grants_adjective_slots=1 grants_slots_to=person
+diploma: mass=0.02 integrity=2 material=paper authority+1 intelligence+1 reputation=2 charm+1
+specification: mass=0.05 integrity=2 material=paper build_speed*1.4 accuracy+0.1 craft_slots+1
+credentials: mass=0.02 integrity=2 material=plastic disguise=6 security+-4 counters=password,lock,checkpoint,firewall
+folder: mass=0.1 integrity=3 material=cardboard storage_letters=30 container_slots=8 immune_expose=true
+paperback: mass=0.3 integrity=3 flammability=9 material=paper intelligence+1 morale+2 comfort=1
+tally: mass=0.01 integrity=1 material=wood read_properties=2 detect_life=100
+booklet: mass=0.05 integrity=2 material=paper training+1 intelligence+1
+encyclopedia: mass=20 integrity=40 flammability=7 material=paper intelligence+5 read_properties=6 training+3 detect_letters=500 grants_adjective_slots=2 grants_slots_to=person
+encyclopaedia: mass=20 integrity=40 flammability=7 material=paper intelligence+5 read_properties=6 training+3 detect_letters=500 grants_adjective_slots=2 grants_slots_to=person
+paycheck: placement=target placement_range=30 event_target=character pays=5 loyalty+2 inflict_charm=10 event_duration=1
+primer: mass=0.2 integrity=3 material=paper training+2 intelligence+1
+cheque: placement=target placement_range=30 event_target=character pays=6 inflict_charm=10 event_duration=1 counters=debt
+summons: placement=target placement_range=500 event_target=character moves_target=200 inflict_root=10 contest_with=authority contested_by=courage event_duration=1 counters=alibi
+questionnaire: placement=target placement_range=60 event_target=character read_properties=5 inflict_slow=15 event_duration=1
+yearbook: mass=1.5 integrity=8 material=paper detect_life=200 read_properties=3 morale+1
+affidavit: placement=self field_radius=4 field_targets=self field_duration=2 immune_expose=true effect_status=expose,root reputation+2 counters=slander,accusation,lie,hoax
+brochure: mass=0.02 integrity=1 material=paper map_reveal=40 trade_bonus=0.1 charm+1
+cookbook: mass=0.8 integrity=6 material=paper food_output*1.5 craft_slots+1 nutrition*1.3
+bestseller: mass=0.5 integrity=5 material=paper morale+3 value=40 trade_bonus=0.2 charm+2
+hardcover: mass=0.8 integrity=10 material=paper,cardboard intelligence+1 dmg_blunt=5
+hardback: mass=0.8 integrity=10 material=paper,cardboard intelligence+1 dmg_blunt=5
+pamphlet: mass=0.01 integrity=1 flammability=9 material=paper placement=target placement_range=200 field_radius=40 field_targets=enemies field_duration=3 loyalty+-2 morale+-1 recruit_rate=0.3 counters=censorship
+playbook: placement=self field_radius=30 field_targets=owned field_duration=5 obedience+4 accuracy+0.1 training+2 command_limit+5
+writ: placement=target placement_range=200 event_target=character inflict_root=15 inflict_silence=10 contest_with=authority contested_by=charm event_duration=1 counters=pardon,alibi
+invoice: placement=target placement_range=60 event_target=character inflict_debt=60 contest_with=authority contested_by=security event_duration=1
+prospectus: mass=0.1 integrity=1 material=paper trade_bonus=0.15 charm+2 decoys=1 field_radius=20 field_targets=enemies
+tome: mass=4 integrity=20 flammability=7 material=paper,leather intelligence+4 read_properties=4 dmg_blunt=10 grants_adjective_slots=1 grants_slots_to=person
+glossary: mass=0.1 integrity=2 material=paper intelligence+1 counters=jargon,cipher,cypher
+folio: mass=0.5 integrity=5 material=paper storage_letters=20 read_properties=2
+almanac: mass=0.5 integrity=5 material=paper read_properties=2 detect_letters=200 harvest_bonus*1.2 extends_duration=1.1
+guidebook: mass=0.4 integrity=5 material=paper map_reveal=100 terrain_ignored=swamp,forest speed_land*1.1
+scrapbook: mass=1 integrity=6 material=paper,cardboard storage_letters=15 morale+2 comfort=2
+thesaurus: mass=1.5 integrity=8 material=paper intelligence+2 grants_adjective_slots=2 grants_slots_to=person,document
+workbook: mass=0.4 integrity=4 material=paper training+2
+catechism: mass=0.3 integrity=4 material=paper faith_output=0.3 loyalty+3 obedience+2
+probate: placement=self field_radius=4 field_targets=self field_duration=10 on_owner_death=pass_to_heir survives_death=true
+overdraft: placement=self field_radius=4 field_targets=self field_duration=1 inflict_debt=180 trade_bonus+0.2
+escrow: placement=self field_radius=4 field_targets=self field_duration=10 storage_letters=200 security+8
+gloss: mass=0 integrity=1 intelligence+1 counters=jargon,cipher,cypher,riddle
+giro: placement=target placement_range=3000 event_target=character pays=4 event_duration=1
+
+# noun knowledge
+information: placement=target placement_range=300 event_target=character read_inventory=true read_properties=5 detect_letters=200 contest_with=intelligence contested_by=stealth event_duration=1 counters=misinformation
+fact: placement=self field_radius=40 field_targets=owned field_duration=3 detect_stealth+6 immune_confuse=true counters=lie,rumor,hoax,myth,misinformation
+data: placement=target placement_range=500 event_target=character read_inventory=true read_properties=6 detect_letters=400 contest_with=intelligence contested_by=stealth event_duration=1
+reason: placement=self field_radius=20 field_targets=owned field_duration=3 effect_status=rage,confuse intelligence+2 aggression+-3 counters=madness,hysteria,rage
+example: placement=self field_radius=30 field_targets=owned field_duration=3 training+2 obedience+2
+guess: placement=target placement_range=200 event_target=character read_properties=2 accuracy+-0.1 event_duration=1
+evidence: placement=target placement_range=60 event_target=character inflict_expose=180 read_inventory=true contest_with=detect_stealth contested_by=stealth event_duration=1 counters=alibi,lie,hoax,fraud
+reading: placement=target placement_range=100 event_target=character read_properties=5 read_inventory=true contest_with=intelligence contested_by=stealth event_duration=1
+review: placement=target placement_range=100 event_target=character read_properties=5 reputation+-1 event_duration=1
+code: placement=self field_radius=30 field_targets=owned field_duration=10 immune_expose=true command_limit+5 stealth+2 counters=espionage,snooping,eavesdropping,interception
+version: placement=self field_radius=4 field_targets=self field_duration=1 duplicates=1
+opinion: placement=target placement_range=60 field_radius=20 field_targets=all field_duration=2 loyalty+-1 morale+1
+meaning: placement=self field_radius=20 field_targets=owned field_duration=3 morale+3 courage+2 immune_confuse=true
+demand: placement=target placement_range=40 event_target=character letter_steal=3 intimidation=4 inflict_fear=5 contest_with=authority contested_by=courage event_duration=1
+understanding: placement=self field_radius=30 field_targets=all field_duration=3 aggression+-4 effect_status=confuse charm+2 counters=misunderstanding,confusion
+function: placement=self field_radius=4 field_targets=self field_duration=3 labor*1.3 accuracy+0.1
+proof: placement=target placement_range=60 event_target=character inflict_expose=120 effect_status=charm,confuse contest_with=intelligence contested_by=intelligence event_duration=1 counters=lie,hoax,rumor,myth,alibi,slander
+schedule: placement=self field_radius=30 field_targets=owned field_duration=10 labor*1.25 obedience+2 extends_duration=1.2
+literature: placement=self field_radius=30 field_targets=owned field_duration=5 intelligence+2 morale+2 training+1
+theme: placement=self field_radius=20 field_targets=owned field_duration=5 morale+1 accuracy+0.05
+detail: placement=target placement_range=60 event_target=character read_properties=7 event_duration=1
+fantasy: placement=target placement_range=100 field_radius=30 field_targets=enemies field_duration=3 decoys=4 inflict_confuse=4 counters=truth,fact
+topic: placement=self field_radius=20 field_targets=all field_duration=2 intelligence+1
+discovery: placement=self field_radius=4 field_targets=self field_duration=1 map_reveal=300 detect_letters=600 deposit_factor=2
+mystery: placement=self field_radius=20 field_targets=owned field_duration=5 stealth+6 immune_expose=true decoys=2 counters=detective,investigation,evidence
+explanation: placement=self field_radius=30 field_targets=owned field_duration=2 effect_status=confuse intelligence+1 counters=mystery,riddle,enigma,confusion
+exception: placement=self field_radius=4 field_targets=self field_duration=2 immune_debt=true effect_status=root,debt counters=law,rule,ban,curfew,fine
+input: placement=self field_radius=10 field_targets=owned field_duration=3 intelligence+1 labor*1.1
+guidance: placement=self field_radius=40 field_targets=owned field_duration=5 accuracy+0.15 training+2 effect_status=confuse map_reveal=30
+symbol: placement=self field_radius=40 field_targets=owned field_duration=5 morale+2 loyalty+2 courage+1
+accounting: placement=target placement_range=60 event_target=character read_inventory=true contest_with=intelligence contested_by=stealth event_duration=1 counters=embezzlement,fraud
+consideration: placement=self field_radius=20 field_targets=owned field_duration=3 aggression+-3 charm+2
+suggestion: placement=target placement_range=30 event_target=character inflict_charm=6 obedience+2 event_duration=1
+verse: placement=self field_radius=30 field_targets=owned field_duration=2 morale+3 loudness=3 charm+1
+protocol: placement=self field_radius=40 field_targets=owned field_duration=10 obedience+4 command_limit+5 immune_expose=true
+provision: placement=self field_radius=20 field_targets=owned field_duration=10 food_output+2 water_output+2
+reminder: placement=self field_radius=10 field_targets=owned field_duration=5 alarm=true extends_duration=1.2 immune_confuse=true
+closure: placement=self field_radius=20 field_targets=owned field_duration=2 effect_status=fear,confuse morale+3 counters=grief,mystery
+confirmation: placement=self field_radius=20 field_targets=owned field_duration=2 detect_stealth+5 counters=rumor,hoax,lie
+assumption: placement=target placement_range=100 field_radius=20 field_targets=enemies field_duration=2 decoys=1 accuracy+-0.1
+apology: placement=target placement_range=40 event_target=character effect_status=rage inflict_charm=10 aggression+-5 event_duration=1 counters=insult,taunt,grievance,feud
+testament: placement=self field_radius=4 field_targets=self field_duration=30 on_owner_death=pass_to_heir survives_death=true faith_output+0.3
+speculation: placement=target placement_range=200 field_radius=40 field_targets=enemies field_duration=2 decoys=2 trade_rate*1.3
+prediction: placement=self field_radius=40 field_targets=owned field_duration=3 evasion+0.15 alarm=true map_reveal=60
+revelation: placement=target placement_range=300 event_target=character inflict_expose=200 read_inventory=true event_duration=1 counters=secret,mystery,cipher,disguise
+wit: placement=self field_radius=4 field_targets=self field_duration=3 charm+4 intelligence+2 evasion+0.1
+norm: placement=region field_radius=60 field_targets=all field_duration=10 obedience+2 aggression+-2
+demographic: placement=self field_radius=4 field_targets=self field_duration=1 detect_life=1000
+hypothesis: placement=self field_radius=4 field_targets=self field_duration=3 intelligence+2 read_properties+2
+correlation: placement=self field_radius=4 field_targets=self field_duration=3 read_properties+3 tracking+3
+critique: placement=target placement_range=60 event_target=character morale+-2 reputation+-1 strips_adjectives=1 event_duration=1
+justification: placement=self field_radius=4 field_targets=self field_duration=2 reputation+2 counters=accusation,blame,condemnation
+basics: placement=self field_radius=20 field_targets=owned field_duration=5 training+1
+stimulus: placement=self field_radius=20 field_targets=owned field_duration=2 speed_land*1.2 labor*1.2
+assurance: placement=self field_radius=30 field_targets=owned field_duration=3 morale+3 courage+3 counters=worry,fear,doubt
+precedent: placement=region field_radius=60 field_targets=all field_duration=10 authority+2
+cue: placement=self field_radius=40 field_targets=owned field_duration=1 obedience+3 attack_windup*0.5 accuracy+0.1
+specimen: mass=0.5 integrity=5 read_properties=4
+continuation: placement=self field_radius=4 field_targets=self field_duration=1 extends_duration=2
+prophecy: placement=self field_radius=50 field_targets=owned field_duration=5 faith_cost=10 alarm=true evasion+0.2 map_reveal=200 detect_life=1000 morale+3
+theorem: placement=self field_radius=4 field_targets=self field_duration=5 intelligence+3 accuracy+0.15
+alphabet: placement=self field_radius=4 field_targets=self field_duration=5 detect_letters=800 intelligence+1
+misunderstanding: placement=target placement_range=100 field_radius=20 field_targets=enemies field_duration=2 inflict_confuse=6 obedience+-3 counters=understanding,explanation,clarification
+verification: placement=self field_radius=30 field_targets=owned field_duration=3 detect_stealth+8 counters=forgery,fraud,lie,decoy,disguise,impersonation
+validation: placement=self field_radius=20 field_targets=owned field_duration=3 morale+3 detect_stealth+4
+remark: placement=target placement_range=40 event_target=character morale+-1 inflict_rage=2 event_duration=1
+chord: loudness=4 field_radius=25 field_targets=owned field_duration=1 morale+2
+tasting: placement=self field_radius=4 field_targets=self field_duration=1 read_properties+3 smell_range+50
+disrespect: placement=target placement_range=40 event_target=character inflict_rage=5 morale+-2 authority+-2 event_duration=1
+fiat: placement=map field_radius=ABS field_targets=enemies field_duration=3 law=spell,trade fine=4 authority+5 counters=revolution,rebellion,veto
+lyric: placement=self field_radius=25 field_targets=owned field_duration=2 morale+3 loudness=3 inflict_charm=2
+remembrance: placement=self field_radius=40 field_targets=owned field_duration=3 morale+2 courage+3 loyalty+2
+injunction: placement=target placement_range=100 event_target=character inflict_root=20 law=attack,trade contest_with=authority contested_by=charm event_duration=1
+psalm: placement=self field_radius=30 field_targets=owned field_duration=2 faith_output+3 morale+2 res_unholy+0.3
+portrayal: placement=target placement_range=60 event_target=character read_properties=4 inflict_expose=45 event_duration=1
+acquaintance: placement=target placement_range=30 event_target=character inflict_charm=5 loyalty+1 event_duration=1
+nuisance: placement=target placement_range=40 field_radius=10 field_targets=enemies field_duration=2 inflict_confuse=2 morale+-1 labor*0.8
+keynote: placement=self field_radius=60 field_targets=owned field_duration=2 morale+4 courage+2 command_limit+5 loudness=5
+proclamation: placement=map field_radius=ABS field_targets=owned field_duration=3 morale+3 authority+3 command_limit+10 loudness=7 counters=rumor,propaganda
+depiction: placement=target placement_range=60 event_target=character read_properties=4 inflict_expose=45 event_duration=1
+statistic: placement=self field_radius=4 field_targets=self field_duration=2 read_properties+4 detect_life=500
+appraisal: placement=target placement_range=30 event_target=object read_properties=6 trade_bonus=0.2 event_duration=1
+reinforcement: placement=self field_radius=30 field_targets=owned field_duration=3 courage+3 training+2 integrity*1.2
+enquiry: placement=target placement_range=100 event_target=character read_properties=6 detect_stealth=6 event_duration=1 counters=hoax,lie
+familiarity: placement=self field_radius=4 field_targets=self field_duration=5 terrain_ignored=forest,swamp,hill map_reveal=40
+conjecture: placement=target placement_range=150 field_radius=30 field_targets=enemies field_duration=2 decoys=1 inflict_confuse=2
+epitome: placement=self field_radius=4 field_targets=self field_duration=3 effect_multiplier=1.5 beauty+3
+reckoning: placement=target placement_range=100 event_target=character inflict_expose=120 letter_steal=6 inflict_debt=60 contest_with=authority contested_by=stealth event_duration=1
+guideline: placement=self field_radius=30 field_targets=owned field_duration=5 obedience+2 training+1
+enigma: placement=self field_radius=20 field_targets=owned field_duration=5 immune_expose=true stealth+5 read_properties+-5 counters=espionage,spy,snooping
+meteorology: placement=self field_radius=4 field_targets=self field_duration=5 alarm=true immune_confuse=true clears_weather=fog
+gist: placement=target placement_range=100 event_target=character read_properties=3 event_duration=1
+commandment: placement=region field_radius=80 field_targets=all field_duration=10 law=theft,attack fine=6 faith_output+1 authority+3
+telecommunication: placement=self field_radius=ABS field_targets=owned field_duration=5 command_limit+20 map_reveal+60 upkeep_power+2 counters=jammer,static,interference
+lexicon: placement=self field_radius=4 field_targets=self field_duration=5 intelligence+2 counters=jargon,cipher,cypher
+stimulant: placement=self field_radius=4 field_targets=self field_duration=2 speed_land*1.3 attack_rate*1.2 sleep_need*0
+pretense: placement=self field_radius=4 field_targets=self field_duration=3 disguise+5 decoys=1
+onus: placement=target placement_range=60 event_target=character inflict_expose=60 morale+-2 event_duration=1
+docket: placement=target placement_range=60 event_target=character inflict_root=10 contest_with=authority contested_by=charm event_duration=1
+connotation: placement=target placement_range=60 event_target=character inflict_charm=3 event_duration=1
+invocation: placement=self field_radius=30 field_targets=owned field_duration=2 faith_output+4 summons=spirit summon_count=1 summon_owned=true
+divination: placement=self field_radius=4 field_targets=self field_duration=3 faith_cost=6 read_inventory=true map_reveal=150 detect_letters=800 detect_life=600
+interpolation: placement=self field_radius=4 field_targets=self field_duration=2 tracking+5 read_properties+2
+technicality: placement=self field_radius=4 field_targets=self field_duration=1 effect_status=root,debt counters=arrest,warrant,verdict,sentence,fine
+verity: placement=self field_radius=50 field_targets=owned field_duration=4 detect_stealth+7 immune_confuse=true counters=lie,hoax,rumor,propaganda,misinformation,decoy
+descriptor: placement=target placement_range=60 event_target=character read_properties=3 event_duration=1
+
+# noun device
+recording: mass=0.1 integrity=3 material=plastic placement=target placement_range=100 event_target=character read_inventory=true inflict_expose=90 contest_with=detect_stealth contested_by=stealth event_duration=1 counters=alibi,lie
+beam: mass=0 integrity=1 luminosity=8 sight_range=300 inflict_blind=2 dmg_light=15 attack_range=300 state=energy inflict_expose=20
+indicator: mass=0.1 integrity=5 material=plastic alarm=true luminosity=2 read_properties=2 upkeep_power=0.01
+header: mass=0 integrity=1 read_properties=2
+token: mass=0.005 integrity=10 material=metal security+-2 counters=gate,turnstile,lock
+pointer: mass=0.05 integrity=5 material=plastic luminosity=4 accuracy+0.15 attack_range+20 inflict_blind=1
+gag: mass=0.05 integrity=5 material=cloth placement=target placement_range=2 event_target=character inflict_silence=60 loudness*0 event_duration=1 counters=scream,shout,alarm
+transcription: placement=target placement_range=300 event_target=character read_properties=5 read_inventory=true contest_with=intelligence contested_by=stealth event_duration=1
+riddle: placement=target placement_range=40 event_target=character inflict_confuse=10 inflict_stun=2 contest_with=intelligence contested_by=intelligence event_duration=1 counters=sphinx
+prod: mass=0.5 length=1 integrity=20 material=wood,steel equip_slot=held hands_required=1 dmg_electric=15 inflict_stun=1 obedience+2
+toggle: mass=0.01 integrity=5 material=plastic jams=true field_radius=20 field_targets=all upkeep_power=0.01
+intercom: mass=2 integrity=10 material=plastic portable=false command_limit+8 hearing_range+200 alarm=true upkeep_power=0.05 loudness=5
+pager: mass=0.1 integrity=5 material=plastic command_limit+4 alarm=true upkeep_power=0.001
+beeper: mass=0.1 integrity=5 material=plastic command_limit+4 alarm=true loudness=4 upkeep_power=0.001
+locator: mass=0.2 integrity=5 material=plastic placement=target placement_range=500 event_target=character inflict_expose=240 tracking=8 upkeep_power=0.01 event_duration=1 counters=jammer,stealth
+homing: mass=0.05 integrity=3 material=plastic tracking+10 accuracy+0.3 placement=target placement_range=50 event_target=character inflict_expose=180 event_duration=1
+binoculars: mass=1 integrity=15 material=glass,plastic equip_slot=held hands_required=2 sight_range+1500 detect_stealth+2 read_properties=1
+spyglass: mass=0.8 integrity=12 material=brass,glass equip_slot=held hands_required=1 sight_range+2000 read_properties=2
+lens: mass=0.05 integrity=3 brittleness=8 material=glass transparency=1 sight_range+200 read_properties+1 accuracy+0.05
+sextant: mass=1.5 integrity=15 material=brass,glass equip_slot=held map_reveal=60 detect_letters=200 terrain_ignored=water
+hologram: mass=0 integrity=1 state=energy luminosity=4 decoys=3 field_radius=60 field_targets=enemies untargetable=true upkeep_power=0.2 disguise=6 counters=truth
+telex: mass=30 integrity=60 material=steel portable=false command_limit+10 detect_life=300 map_reveal=80 upkeep_power=0.2
+firewall: placement=self field_radius=60 field_targets=owned field_duration=15 immune_expose=true res_electric+0.3 counters=virus,hacker,trojan,malware,espionage,snooping
+foghorn: mass=80 integrity=200 material=steel portable=false loudness=10 alarm=true hearing_range+500 inflict_deaf=3 dmg_sonic=4 counters=fog
+semaphore: mass=3 integrity=20 material=wood,cloth command_limit+8 obedience+2 luminosity=1 sight_range+100
+blackboard: mass=20 integrity=40 material=slate,wood portable=false field_radius=10 field_targets=owned training+2 intelligence+1
+notepad: mass=0.1 integrity=2 material=paper storage_letters=10 read_properties=1 intelligence+1
+mast: mass=2000 height=30 integrity=1500 material=steel portable=false hearing_range+5000 command_limit+15 sight_range+500 map_reveal=80 upkeep_power=1 conductivity=8
+
+# noun document
+poster: mass=0.05 integrity=1 flammability=9 material=paper portable=false placement=target placement_range=200 event_target=character inflict_expose=150 event_duration=1 charm+1 counters=disguise
+parcel: mass=5 integrity=10 material=cardboard storage_objects=5 container_slots=3 placement=target placement_range=2000 event_target=character pays=4 inflict_charm=8 event_duration=1
+disc: mass=0.02 integrity=5 material=plastic storage_letters=40 read_properties=2 upkeep_power=0.01
+leaflet: mass=0.005 integrity=1 flammability=9 material=paper placement=target placement_range=300 field_radius=60 field_targets=enemies field_duration=2 loyalty+-2 morale+-1 decoys=1 counters=censorship
+placard: mass=1 integrity=5 material=cardboard,wood placement=self field_radius=30 field_targets=owned field_duration=3 morale+2 loudness=2 dmg_blunt=5
+signboard: mass=10 integrity=40 material=wood portable=false map_reveal=30 trade_bonus=0.1 charm+1
+ledger: mass=1 integrity=8 material=paper storage_letters=50 read_properties=3 security+2 counters=fraud,embezzlement
+navigation: placement=self field_radius=20 field_targets=owned field_duration=5 map_reveal=150 speed_land*1.1 speed_water*1.2 terrain_ignored=water
+
+# noun knowledge
+cryptography: placement=self field_radius=80 field_targets=owned field_duration=15 immune_expose=true stealth+2 counters=espionage,snooping,interception,eavesdropping,wiretap
+jargon: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=2 inflict_confuse=4 obedience+-2 counters=dictionary,glossary
+grammar: placement=self field_radius=20 field_targets=owned field_duration=5 accuracy+0.1 obedience+2 adjective_slots+1
+reconnaissance: placement=region placement_range=1000 event_target=region event_radius=300 event_duration=2 map_reveal=300 detect_life=800 detect_stealth=5 inflict_expose=60
+
+# noun worker
+editor: mass=72 integrity=85 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 strips_adjectives=1 read_properties=5 attack_range=10 food_need=0.03 field_radius=40 field_targets=enemies jams=true counters=propaganda,rumor,misinformation
+journalist: mass=70 integrity=90 alive=true sentient=true intelligence=8 loyalty=5 hands=true speech=true speed_land=6 sight_range=200 read_properties=6 read_inventory=true detect_life=400 inflict_expose=90 attack_range=60 attack_rate=0.1 food_need=0.03 counters=secret,censorship
+operator: mass=70 integrity=85 alive=true sentient=true intelligence=7 loyalty=7 hands=true speech=true speed_land=4 command_limit=15 labor=2 detect_life=300 food_need=0.03
+courier: mass=65 integrity=85 alive=true sentient=true intelligence=6 loyalty=8 hands=true speech=true speed_land=10 sight_range=300 carry_capacity=40 command_limit=10 stealth=3 food_need=0.03
+columnist: mass=70 integrity=80 alive=true sentient=true intelligence=8 loyalty=5 hands=true speech=true speed_land=4 read_properties=4 inflict_expose=60 attack_range=100 attack_rate=0.05 field_radius=60 field_targets=owned morale+1 food_need=0.03
+oracle: mass=60 integrity=80 alive=true sentient=true intelligence=10 loyalty=6 hands=true speech=true speed_land=3 faith_output=1 map_reveal=200 detect_life=1500 read_inventory=true read_properties=8 alarm=true food_need=0.02
+scribe: mass=60 integrity=70 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=4 labor=1 storage_letters=80 craft_slots=1 duplicates=1 food_need=0.03
+seaman: mass=80 integrity=120 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=5 speed_water=2 labor=2 terrain_ignored=water food_need=0.04
+nun: mass=60 integrity=80 alive=true sentient=true intelligence=7 loyalty=9 hands=true speech=true speed_land=4 heals=3 faith_output=1 courage=7 morale+1 food_need=0.02
+
+# noun person
+translator: mass=65 integrity=80 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 charm=5 trade_bonus=0.2 recruit_rate=0.3 field_radius=20 field_targets=owned effect_status=confuse counters=jargon,cipher,cypher,code food_need=0.03
+interpreter: mass=65 integrity=80 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 charm=5 trade_bonus=0.2 recruit_rate=0.3 field_radius=20 field_targets=owned effect_status=confuse counters=jargon,cipher,cypher food_need=0.03
+linguist: mass=65 integrity=80 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 charm=4 read_properties=4 counters=cipher,cypher,code,jargon,encryption food_need=0.03
+analyst: mass=70 integrity=80 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 read_properties=8 detect_stealth=6 detect_letters=500 counters=decoy,misinformation,propaganda,fraud food_need=0.03
+infiltrator: mass=70 integrity=90 alive=true sentient=true intelligence=8 loyalty=4 hands=true speech=true speed_land=6 stealth=9 disguise=8 read_inventory=true letter_steal=3 food_need=0.03
+defector: mass=72 integrity=90 alive=true sentient=true intelligence=7 loyalty=1 hands=true speech=true speed_land=6 read_inventory=true read_properties=6 map_reveal=100 food_need=0.03
+tattletale: mass=40 integrity=50 alive=true sentient=true intelligence=5 loyalty=3 hands=true speech=true speed_land=6 loudness=6 alarm=true inflict_expose=60 attack_range=40 attack_rate=0.1 food_need=0.02
+newscaster: mass=70 integrity=80 alive=true sentient=true intelligence=7 loyalty=5 hands=true speech=true speed_land=4 charm=6 loudness=5 field_radius=ABS field_targets=owned detect_life+200 morale+1 upkeep_power=0.5 food_need=0.03
+announcer: mass=72 integrity=85 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 loudness=8 field_radius=80 field_targets=owned morale+2 command_limit+5 food_need=0.03
+narrator: mass=70 integrity=80 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 loudness=4 read_properties=5 field_radius=30 field_targets=owned morale+2 food_need=0.03
+storyteller: mass=70 integrity=80 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 loudness=4 charm=6 inflict_charm=3 field_radius=25 field_targets=living morale+3 aggression+-2 food_need=0.03
+publisher: mass=75 integrity=85 alive=true sentient=true intelligence=8 loyalty=5 hands=true speech=true speed_land=4 duplicates=1 trade_bonus=0.2 field_radius=ABS field_targets=owned morale+1 food_need=0.03
+leaker: mass=70 integrity=80 alive=true sentient=true intelligence=7 loyalty=1 hands=true speech=true speed_land=5 stealth=6 read_inventory=true inflict_expose=120 attack_range=200 attack_rate=0.05 food_need=0.03
+mouthpiece: mass=70 integrity=80 alive=true sentient=true intelligence=6 loyalty=9 hands=true speech=true speed_land=4 loudness=7 field_radius=60 field_targets=owned morale+2 obedience+2 food_need=0.03
+spokesman: mass=75 integrity=85 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=4 charm=6 loudness=6 field_radius=60 field_targets=owned morale+2 reputation=2 counters=rumor,gossip,slander food_need=0.03
+spokesperson: mass=72 integrity=85 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=4 charm=6 loudness=6 field_radius=60 field_targets=owned morale+2 reputation=2 counters=rumor,gossip,slander food_need=0.03
+negotiator: mass=72 integrity=85 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 charm=8 trade_bonus=0.3 field_radius=30 field_targets=all aggression+-4 effect_status=rage food_need=0.03
+herald: mass=70 integrity=90 alive=true sentient=true intelligence=6 loyalty=8 hands=true speech=true speed_land=7 loudness=8 authority=2 command_limit=10 field_radius=80 field_targets=owned morale+2 courage+2 food_need=0.03
+witness: mass=70 integrity=85 alive=true sentient=true intelligence=6 loyalty=5 hands=true speech=true speed_land=5 sight_range=60 detect_stealth=4 alarm=true inflict_expose=60 attack_range=30 attack_rate=0.1 counters=alibi,lie food_need=0.03
+whistleblower: mass=70 integrity=80 alive=true sentient=true intelligence=8 loyalty=2 hands=true speech=true speed_land=5 read_inventory=true inflict_expose=180 attack_range=300 attack_rate=0.05 loudness=6 counters=conspiracy,embezzlement,fraud,secret,collusion food_need=0.03
+correspondent: mass=70 integrity=90 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=6 sight_range=300 map_reveal=80 detect_life=400 command_limit=5 food_need=0.03
+informer: mass=68 integrity=80 alive=true sentient=true intelligence=7 loyalty=2 hands=true speech=true speed_land=6 stealth=7 read_inventory=true detect_life=300 inflict_expose=60 attack_range=100 attack_rate=0.05 food_need=0.03
+telltale: mass=50 integrity=60 alive=true sentient=true intelligence=5 loyalty=3 hands=true speech=true speed_land=6 loudness=5 alarm=true inflict_expose=45 attack_range=40 attack_rate=0.1 food_need=0.02
+proxy: mass=70 integrity=80 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=5 decoys=1 field_radius=60 field_targets=enemies disguise=5 food_need=0.03
+bearer: mass=75 integrity=100 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=5 carry_capacity=60 food_need=0.03
+compiler: mass=70 integrity=80 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 storage_letters=60 read_properties=3 food_need=0.03
+photojournalist: mass=70 integrity=90 alive=true sentient=true intelligence=7 loyalty=5 hands=true speech=true speed_land=6 sight_range=300 map_reveal=40 detect_life=300 inflict_expose=120 attack_range=150 attack_rate=0.1 food_need=0.03
+counsel: mass=75 integrity=80 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 charm=6 read_properties=5 counters=verdict,sentence,arrest,warrant,indictment,subpoena food_need=0.03
+founder: mass=75 integrity=90 alive=true sentient=true intelligence=8 loyalty=8 hands=true speech=true speed_land=4 authority=4 build_speed=2 claim_radius=4 recruit_rate=0.5 food_need=0.03
+guest: mass=70 integrity=80 alive=true sentient=true intelligence=5 loyalty=4 hands=true speech=true speed_land=4 charm=3 security+-2 food_need=0.03
+subject: mass=70 integrity=80 alive=true sentient=true intelligence=5 loyalty=7 obedience=8 hands=true speech=true speed_land=4 labor=1 food_need=0.03
+supervisor: mass=80 integrity=90 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 authority=3 command_limit=12 field_radius=15 field_targets=owned labor*1.3 obedience+2 food_need=0.03
+
+# noun criminal
+snitch: mass=60 integrity=70 alive=true sentient=true intelligence=6 loyalty=1 hands=true speech=true speed_land=7 stealth=6 read_inventory=true inflict_expose=90 attack_range=80 attack_rate=0.1 food_need=0.03
+con: placement=target placement_range=40 event_target=character letter_steal=8 contest_with=charm contested_by=intelligence disguise=5 event_duration=1 counters=audit,investigation
+
+# noun act
+writing: placement=self field_radius=4 field_targets=self field_duration=3 intelligence+2 storage_letters+20 duplicates=1
+thanks: placement=target placement_range=30 event_target=character inflict_charm=8 loyalty+2 morale+2 event_duration=1
+numbers: placement=self field_radius=40 field_targets=owned field_duration=3 decoys=2 courage+2 command_limit+5
+application: placement=self field_radius=4 field_targets=self field_duration=2 effect_multiplier=1.3
+survey: placement=region placement_range=500 event_target=region event_radius=200 event_duration=1 map_reveal=200 detect_letters=600 detect_life=400
+update: placement=self field_radius=ABS field_targets=owned field_duration=2 map_reveal+40 detect_life+200 command_limit+3
+joke: placement=target placement_range=30 field_radius=15 field_targets=all field_duration=1 morale+3 aggression+-3 inflict_stun=1 effect_status=rage counters=gloom,grief,sorrow
+abuse: placement=target placement_range=20 event_target=character morale+-4 loyalty+-3 inflict_fear=8 dmg_psychic=20 event_duration=1
+draft: placement=self field_radius=60 field_targets=all field_duration=1 recruit_rate=4 summons=soldier summon_count=4 summon_owned=true morale+-1
+instance: placement=self field_radius=4 field_targets=self field_duration=1 duplicates=1
+singing: placement=self field_radius=30 field_targets=owned field_duration=2 morale+3 loudness=5 inflict_charm=2 courage+1
+warning: placement=self field_radius=80 field_targets=owned field_duration=2 alarm=true evasion+0.2 courage+1 loudness=6 counters=ambush,surprise,trap
+excuse: placement=self field_radius=4 field_targets=self field_duration=1 effect_status=root,debt reputation+-1 counters=blame,accusation,fine
+permission: placement=self field_radius=4 field_targets=self field_duration=3 counters=ban,law,curfew,lockdown security+-3
+criticism: placement=target placement_range=60 event_target=character morale+-3 reputation+-2 authority+-2 strips_adjectives=1 event_duration=1
+lesson: placement=self field_radius=20 field_targets=owned field_duration=3 training+3 intelligence+1
+closing: placement=target placement_range=60 event_target=structure law=trade,spell event_duration=5 counters=opening
+promotion: placement=target placement_range=30 event_target=creature authority+2 loyalty+3 command_limit+5 training+2 event_duration=10
+posting: placement=target placement_range=300 event_target=character inflict_expose=60 event_duration=1
+amendment: placement=self field_radius=80 field_duration=1 counters=law,decree,edict,ordinance,regulation,statute,legislation,charter,constitution
+conspiracy: placement=target placement_range=200 field_radius=60 field_targets=enemies field_duration=4 loyalty+-4 obedience+-3 decoys=3 stealth+4 counters=whistleblower,investigation,truth,evidence
+inquiry: placement=target placement_range=150 event_target=character read_inventory=true read_properties=6 inflict_expose=60 contest_with=authority contested_by=stealth event_duration=1 counters=cover,conspiracy,collusion
+scandal: placement=target placement_range=300 event_target=character inflict_expose=180 reputation+-5 morale+-3 authority+-3 loyalty+-2 event_duration=1 counters=alibi,apology,truth
+compromise: placement=target placement_range=60 event_target=character binds=2 bind_penalty=reputation aggression+-4 event_duration=5
+instruction: placement=target placement_range=40 event_target=creature obedience+4 training+2 event_duration=5
+lecture: placement=self field_radius=20 field_targets=all field_duration=2 training+2 intelligence+1 speed_land*0.6 inflict_sleep=4
+journalism: placement=target placement_range=300 event_target=character read_inventory=true inflict_expose=120 contest_with=intelligence contested_by=stealth event_duration=1 counters=censorship,secret
+submission: placement=self field_radius=10 field_targets=self field_duration=1 aggression+-10 effect_status=rage counters=duel,challenge
+comeback: placement=self field_radius=20 field_targets=owned field_duration=2 morale+6 courage+5 regeneration+5 restores=100
+withdrawal: placement=self field_radius=30 field_targets=owned field_duration=1 speed_land*1.5 evasion+0.3 aggression+-5
+equation: placement=self field_radius=4 field_targets=self field_duration=2 intelligence+2 accuracy+0.1
+adaptation: placement=self field_radius=4 field_targets=self field_duration=10 temp_min+-10 temp_max+10 terrain_ignored=snow,sand,swamp
+insult: placement=target placement_range=40 event_target=character inflict_rage=8 morale+-2 charm+-2 event_duration=1 counters=apology
+documentation: placement=self field_radius=20 field_targets=owned field_duration=10 training+1 storage_letters+20 read_properties+2
+notification: placement=self field_radius=ABS field_targets=owned field_duration=1 alarm=true detect_life+300
+receipt: placement=self field_radius=4 field_targets=self field_duration=2 security+3 counters=bill,invoice,fraud,audit
+farewell: placement=self field_radius=20 field_targets=owned field_duration=1 morale+2 speed_land*1.3 evasion+0.2
+mapping: placement=region placement_range=500 event_target=region event_radius=300 event_duration=1 map_reveal=300 detect_letters=500
+naming: placement=target placement_range=20 event_target=creature loyalty+4 obedience+2 inflict_charm=10 event_duration=1
+compilation: placement=self field_radius=4 field_targets=self field_duration=2 storage_letters+30 read_properties+2
+revision: placement=self field_radius=4 field_targets=self field_duration=1 strips_adjectives=1 adjective_slots+1
+advancement: placement=self field_radius=20 field_targets=owned field_duration=5 training+3 speed_land*1.1
+parody: placement=target placement_range=60 event_target=character authority+-3 reputation+-2 morale+-2 disguise=4 event_duration=1
+objection: placement=self field_radius=20 field_duration=1 counters=verdict,sentence,ruling,decree,motion
+cancellation: placement=self field_radius=60 field_duration=1 counters=contract,pact,subscription,booking,law,decree,event
+dismissal: placement=target placement_range=30 event_target=creature frees_target=true contest_with=authority contested_by=loyalty event_duration=1
+contention: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=2 loyalty+-3 aggression+3 inflict_rage=3
+urging: placement=target placement_range=30 event_target=creature obedience+3 speed_land*1.2 event_duration=2
+deception: placement=target placement_range=150 field_radius=40 field_targets=enemies field_duration=3 decoys=4 inflict_confuse=4 disguise+4 counters=truth,investigation,detective
+handwriting: placement=self field_radius=4 field_targets=self field_duration=3 read_properties+2 disguise*0.5
+dissent: placement=target placement_range=100 field_radius=40 field_targets=enemies field_duration=3 obedience+-4 loyalty+-3 authority+-2 counters=censorship,propaganda
+safeguard: placement=self field_radius=30 field_targets=owned field_duration=5 security+4 armor+5 immune_expose=true
+clarification: placement=self field_radius=30 field_targets=owned field_duration=1 effect_status=confuse counters=misunderstanding,confusion,jargon,riddle
+inscription: mass=0 integrity=500 material=stone portable=false morale+1 faith_output+0.2 security+2
+characterization: placement=target placement_range=60 event_target=character read_properties=4 event_duration=1
+condemnation: placement=target placement_range=100 event_target=character inflict_expose=90 inflict_curse=30 reputation+-4 morale+-2 event_duration=1 counters=justification,pardon
+deposition: placement=target placement_range=60 event_target=character read_inventory=true inflict_root=10 contest_with=authority contested_by=charm event_duration=1
+fabrication: placement=target placement_range=150 field_radius=40 field_targets=enemies field_duration=3 decoys=4 counters=truth,evidence,proof
+notation: placement=self field_radius=4 field_targets=self field_duration=3 storage_letters+10 intelligence+1
+mitigation: placement=self field_radius=30 field_targets=owned field_duration=3 armor+5 res_blast+0.2 res_fire+0.2
+insistence: placement=target placement_range=30 event_target=character obedience+3 inflict_charm=4 event_duration=1
+insertion: placement=self field_radius=4 field_targets=self field_duration=1 teleport_range=300 stealth+5 disguise+2
+modernization: placement=self field_radius=40 field_targets=owned field_duration=10 labor*1.3 build_speed*1.3 upkeep_power+1
+authentication: placement=self field_radius=40 field_targets=owned field_duration=5 detect_stealth+6 counters=forgery,impersonation,disguise,credentials,fake
+fostering: placement=target placement_range=20 event_target=creature loyalty+4 inflict_charm=20 tamable=true event_duration=1
+mockery: placement=target placement_range=40 event_target=character inflict_rage=6 morale+-3 authority+-2 event_duration=1
+plagiarism: placement=target placement_range=60 event_target=character copies=true read_properties=5 reputation+-2 event_duration=1 counters=patent,copyright
+ploy: placement=target placement_range=100 field_radius=30 field_targets=enemies field_duration=2 decoys=3 inflict_confuse=3 counters=truth,investigation
+clipping: mass=0.002 integrity=1 material=paper read_properties=2 inflict_expose=30 placement=target placement_range=60 event_target=character event_duration=1
+solicitation: placement=target placement_range=30 event_target=character inflict_charm=6 event_duration=1
+capitalization: placement=self field_radius=4 field_targets=self field_duration=10 produce_T*1.5 trade_bonus+0.1
+sparring: placement=self field_radius=10 field_targets=owned field_duration=3 training+3 accuracy+0.1
+gambit: placement=self field_radius=4 field_targets=self field_duration=1 critical+0.5 armor+-10 evasion+-0.1
+jest: placement=target placement_range=30 field_radius=10 field_targets=all field_duration=1 morale+2 aggression+-2
+simplification: placement=self field_radius=20 field_targets=owned field_duration=3 effect_status=confuse labor*1.2
+misrepresentation: placement=target placement_range=100 field_radius=30 field_targets=enemies field_duration=2 decoys=2 disguise+3 counters=truth,audit
+trickery: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=2 decoys=3 inflict_confuse=4 letter_steal=2 counters=truth,detective
+recitation: placement=self field_radius=20 field_targets=owned field_duration=2 morale+2 training+1 loudness=4
+snub: placement=target placement_range=40 event_target=character morale+-2 charm+-2 event_duration=1
+annotation: placement=self field_radius=4 field_targets=self field_duration=3 read_properties+2 intelligence+1
+retraction: placement=self field_radius=60 field_duration=1 effect_status=expose counters=slander,gossip,rumor,scandal,libel,defamation
+impersonation: placement=self field_radius=4 field_targets=self field_duration=4 disguise+8 stealth+3 charm+2 counters=authentication,verification
+incitement: placement=target placement_range=100 field_radius=30 field_targets=enemies field_duration=2 inflict_rage=10 obedience+-4 sets_hostile=true counters=calm,peace
+falsehood: placement=target placement_range=150 field_radius=30 field_targets=enemies field_duration=2 decoys=2 inflict_confuse=3 counters=truth,fact,verity
+erasure: placement=target placement_range=60 event_target=character effect_status=expose strips_adjectives=2 read_properties+-4 event_duration=1
+vindication: placement=self field_radius=10 field_targets=self field_duration=1 effect_status=expose,root,curse reputation+4 morale+4 counters=slander,accusation,condemnation,scandal
+derision: placement=target placement_range=40 event_target=character morale+-3 inflict_rage=4 authority+-2 event_duration=1
+defamation: placement=target placement_range=150 event_target=character inflict_expose=90 reputation+-5 morale+-3 inflict_curse=20 event_duration=1 counters=truth,retraction,vindication
+deterrence: placement=self field_radius=60 field_targets=enemies field_duration=5 aggression+-4 fear_aura=4 inflict_fear=3
+
+# noun event
+episode: placement=self field_radius=20 field_targets=owned field_duration=5 morale+1 extends_duration=1.2
+target: placement=target placement_range=500 event_target=character inflict_expose=120 accuracy+0.2 event_duration=1
+appeal: placement=self field_radius=10 field_targets=self field_duration=1 effect_status=root,silence counters=verdict,sentence,ruling,fine
+drama: placement=target placement_range=60 field_radius=20 field_targets=all field_duration=2 inflict_confuse=3 morale+-1 loudness=5 aggression+2
+debut: placement=self field_radius=40 field_targets=owned field_duration=2 morale+3 charm+3 reputation+1
+protest: placement=region placement_range=200 field_radius=40 field_targets=enemies field_duration=4 law=trade,gather labor*0.3 loudness=8 authority+-3 counters=mandate,decree,tyranny,censorship
+twist: placement=target placement_range=100 field_radius=20 field_targets=enemies field_duration=1 inflict_confuse=6 inflict_stun=1
+transformation: placement=self field_radius=4 field_targets=self field_duration=5 disguise+8 strength*1.3
+plea: placement=target placement_range=30 event_target=character effect_status=rage inflict_charm=8 aggression+-5 event_duration=1
+confession: placement=self field_radius=10 field_targets=self field_duration=1 inflict_expose=60 effect_status=curse,debt reputation+2 morale+2 counters=blackmail,secret
+sequel: placement=self field_radius=4 field_targets=self field_duration=1 duplicates=1
+genesis: placement=region event_radius=60 event_duration=1 deposit_factor=3 growth=3 fertility+4
+assassination: placement=target placement_range=300 event_target=character dmg_pierce=400 armor_pierce=0.8 contest_with=stealth contested_by=detect_stealth event_duration=1 counters=bodyguard,guard
+milestone: placement=self field_radius=40 field_targets=owned field_duration=3 morale+4 courage+2
+ringing: loudness=7 field_radius=40 field_targets=enemies field_duration=1 inflict_deaf=5 alarm=true
+flashback: placement=self field_radius=4 field_targets=self field_duration=1 restores=60 effect_status=stun,confuse read_properties+3
+convergence: placement=region placement_range=300 event_target=region event_radius=50 event_duration=1 moves_target=100
+deviation: placement=self field_radius=4 field_targets=self field_duration=2 evasion+0.2 accuracy+-0.1
+blip: placement=target placement_range=500 field_radius=60 field_targets=enemies field_duration=1 decoys=1
+takedown: placement=target placement_range=10 event_target=character inflict_stun=5 inflict_root=5 contest_with=strength contested_by=agility event_duration=1
+punctuation: placement=self field_radius=4 field_targets=self field_duration=1 accuracy+0.15 critical+0.1
+whine: loudness=4 field_radius=15 field_targets=all field_duration=1 morale+-1 inflict_rage=2
+sob: placement=self field_radius=15 field_targets=all field_duration=1 aggression+-3 inflict_charm=2 loudness=3
+jingle: loudness=5 field_radius=30 field_targets=all field_duration=2 morale+1 trade_bonus+0.1 charm+1
+muttering: loudness=1 field_radius=10 field_targets=enemies field_duration=1 inflict_confuse=1 stealth+1
+grumbling: loudness=2 field_radius=20 field_targets=owned field_duration=2 morale+-1 obedience+-1
+grumble: loudness=2 field_radius=15 field_targets=owned field_duration=1 morale+-1 obedience+-1
+
+# noun group
+network: placement=self field_radius=ABS field_targets=owned field_duration=10 command_limit+20 map_reveal+40 detect_life+300 upkeep_power+1 counters=jammer,static,interference
+collection: storage_objects=50 storage_letters=60 container_slots=10 detect_letters=100
+agreement: binds=2 bind_penalty=letters,reputation event_duration=8 aggression+-3
+promise: binds=2 bind_penalty=reputation,morale event_duration=6 loyalty+2
+metadata: placement=target placement_range=500 event_target=character read_properties=4 inflict_expose=60 event_duration=1 contest_with=intelligence contested_by=stealth
+packet: mass=0 integrity=1 placement=target placement_range=3000 event_target=character command_limit+3 upkeep_power=0.001 event_duration=1
+
+# verb perceive
+sense: duration=60 detect_life+200 detect_stealth+4 hearing_range+100 smell_range+50
+note: duration=60 read_properties+3 alarm=true
+notice: duration=60 detect_stealth+5 sight_range*1.3 alarm=true
+spot: duration=30 detect_stealth+6 sight_range*1.5 inflict_expose=30
+regard: duration=30 read_properties+3 sight_range*1.2
+exhibit: effect_target=held inflict_expose=30 charm+3 value*1.5 duration=60
+preview: duration=30 map_reveal=100 read_properties+3 detect_life+200
+advert: duration=30 sight_range*1.2 read_properties+1
+intercept: duration=60 read_inventory=true hearing_range+1000 counters=messenger,courier,letter,radio,transmission,broadcast,signal
+wiretap: duration=300 hearing_range+3000 read_inventory=true detect_life+300 stealth+3 counters=telephone,phone,radio,telegraph
+disclose: effect_target=touched inflict_expose=150 read_properties+3 duration=1
+
+# verb social
+play: duration=60 morale+3 aggression+-2 loudness+3 labor*0.5
+bother: effect_target=touched inflict_confuse=3 morale+-1 duration=1
+dare: effect_target=touched inflict_rage=5 courage+4 duration=1
+invite: effect_target=touched inflict_charm=8 loyalty+1 recruit_rate+1 duration=1
+cancel: placement=self field_radius=40 field_duration=1 counters=contract,pact,subscription,booking,law,decree
+menace: effect_target=touched inflict_fear=8 intimidation+4 morale+-2 duration=1
+revise: duration=30 strips_adjectives=1 adjective_slots+1
+blacklist: effect_target=touched inflict_expose=120 trade_rate*3 reputation+-3 duration=1
+dictate: duration=60 authority+4 command_limit+10 obedience+4 loudness+3
+paragraph: duration=30 intelligence+1 storage_letters+10
+inform: effect_target=touched read_properties+4 detect_life+300 map_reveal+60 duration=1
+leak: effect_target=touched inflict_expose=120 read_inventory=true duration=1 counters=secret,classified,cipher
+publish: duration=1 placement=map field_radius=ABS field_targets=all field_duration=2 inflict_expose+60 detect_life+300 morale+1 counters=censorship
+betray: effect_target=touched read_inventory=true inflict_expose=120 loyalty+-8 letter_steal+4 duration=1
+
+# verb transfer
+offer: effect_target=touched pays=2 inflict_charm=8 duration=1
+welcome: effect_target=touched inflict_charm=10 loyalty+2 morale+2 effect_status=fear duration=1
+bid: duration=60 trade_bonus+0.2 charm+1
+collect: duration=60 harvest_bonus*1.5 carry_capacity*1.2 reclaim_rate+0.2 reclaim_range+10
+headline: duration=60 inflict_expose+60 loudness+4 charm+2 reputation+1
+caption: duration=30 read_properties+2 inflict_expose+15 charm+1
+calculate: duration=60 accuracy+0.2 intelligence+2 read_properties+2
+subtitle: duration=60 effect_status=confuse immune_confuse=true
+ftp: duration=1 effect_target=touched pays=3 range=5000
+transmit: duration=60 command_limit+15 hearing_range+2000 upkeep_power+0.1 counters=jammer
+mumble: duration=30 loudness+-3 stealth+2 charm+-1
+
+# verb create
+cause: duration=30 effect_multiplier=1.3
+programme: effect_target=touched obedience+6 labor*1.3 duration=600
+script: duration=120 obedience+3 accuracy+0.1 command_limit+3
+sketch: duration=30 map_reveal=60 read_properties+2
+cartoon: effect_target=touched authority+-2 morale+-1 charm+-1 duration=60
+prompt: effect_target=touched obedience+3 attack_windup*0.5 duration=30
+cite: duration=60 read_properties+2 authority+1
+stitch: effect_target=touched restores=40 effect_status=bleed duration=1
+gazette: duration=1 placement=map field_radius=ABS field_targets=all field_duration=1 detect_life+200 inflict_expose+30
+rhyme: duration=30 charm+3 loudness+2 morale+1
+pun: effect_target=touched inflict_confuse=2 morale+1 duration=1
+rewrite: effect_target=touched strips_adjectives=2 duration=1
+reprint: duration=1 duplicates=1
+reissue: duration=1 duplicates=1
+devise: duration=120 craft_slots+1 intelligence+2 build_speed*1.3
+footnote: duration=60 read_properties+1 intelligence+1 storage_letters+5
+sonnet: duration=30 charm+4 inflict_charm=4 morale+2
+rerun: duration=1 duplicates=1 extends_duration*0.8
+
+# verb contact
+cut: effect_target=touched dmg_slash=30 inflict_bleed=5 duration=1
+mark: effect_target=touched inflict_expose=90 duration=1
+lay: duration=5 stealth+3 speed_land*0 evasion+0.2
+insert: effect_target=touched moves_target=100 stealth+3 duration=1
+sting: effect_target=touched dmg_pierce=10 inflict_poison=10 duration=1
+put: effect_target=held moves_target=5 duration=1
+
+# verb movement
+leave: duration=10 speed_land*1.5 evasion+0.2 stealth+2
+return: duration=1 teleport_range=500 effect_status=root,slow
+roll: duration=3 speed_land*2 evasion+0.4 knockback+2
+row: duration=60 speed_water+3 labor*0.5
+steer: duration=60 agility+3 accuracy+0.1
+tilt: duration=5 evasion+0.2 accuracy+-0.1
+circulate: duration=60 speed_land*1.2 detect_life+200 charm+1
+infiltrate: duration=120 stealth+6 disguise+6 security+-4 read_inventory=true
+
+# verb transform
+add: duration=60 effect_multiplier=1.3
+resume: duration=1 extends_duration=1.5
+scroll: duration=30 read_properties+2 map_reveal+30
+interrupt: effect_target=touched inflict_silence=5 inflict_stun=1 duration=1 counters=spell,incantation,speech,lecture
+dissolve: effect_target=touched dmg_acid=40 integrity*0.7 duration=1 counters=pact,alliance,contract,league,coalition
+clutter: duration=60 movement_cost*1.5 decoys=1 stealth+2
+manifest: duration=30 luminosity+3 inflict_fear=3 summons=spirit summon_count=1
+asterisk: effect_target=touched inflict_expose=30 reputation+-1 duration=1
+
+# verb combat
+surrender: placement=self field_radius=20 field_targets=all field_duration=1 aggression+-10 effect_status=rage inflict_root=10 morale+-3
+upgrade: effect_target=held integrity*1.5 dmg_pierce*1.3 dmg_slash*1.3 adjective_slots+1 duration=600
+
+# verb body
+twitch: duration=2 evasion+0.2 accuracy+-0.2
+ache: duration=60 speed_land*0.8 morale+-1 strength*0.9
+hiccup: duration=10 loudness+3 accuracy+-0.15 stealth+-3
+gesture: effect_target=touched command_limit+3 obedience+2 duration=5 inflict_charm=2
+
+# adjective quality
+confidential: stealth+4 immune_expose=true read_properties+-4 value*2
+viral: contagion+0.6 field_radius*2 inflict_expose+30 loudness+2 morale+1
+wireless: hearing_range*3 command_limit+5 map_reveal+20 attack_range*1.5 upkeep_power+0.1 counters=cable
+mean: aggression+3 charm+-3 dmg_psychic+10 loyalty+-1
+close: attack_range*0.5 accuracy+0.2 loyalty+2 stealth+-1
+special: effect_multiplier=1.5 value*3 adjective_slots+1
+above: elevation+5 sight_range*1.5 flight_ceiling+10 cover+0.2
+average: value*0.8 beauty+-1 stealth+2 charm+-1
+natural: alive=true growth*1.3 camouflage=forest,meadow upkeep_power*0 regeneration+0.5
+modern: upkeep_power+0.2 accuracy+0.15 integrity*1.2 labor*1.3 read_properties+2
+okay: morale+1 integrity*1.1
+specific: accuracy+0.25 multi_target*0.5 critical+0.1
+funny: morale+2 aggression+-2 charm+2 inflict_charm+2
+particular: accuracy+0.15 read_properties+1
+extra: plural_count*1.5 integrity*1.2 value*1.3
+pro: training+4 accuracy+0.15 critical+0.1 value*2
+commercial: trade_bonus+0.2 value*1.5 loudness+2 beauty+-1
+latest: upkeep_power+0.1 accuracy+0.1 integrity*1.1 value*2 read_properties+2
+telling: inflict_expose+30 read_properties+3 stealth*0.5
+speaking: speech=true charm+2 command_limit+2 loudness+2
+smart: intelligence+4 accuracy+0.15 read_properties+2 detect_stealth+2
+negative: morale+-2 charm+-2 dmg_dark*1.3 integrity*0.9
+initial: attack_windup*0.5 speed_land*1.2 duration*0.7
+weekly: field_duration*2 extends_duration*1.5
+exclusive: value*4 security+3 immune_expose=true charm+2
+brief: duration*0.5 cast_time*0.5 effect_multiplier=1.3 stealth+1
+monthly: field_duration*3 extends_duration*2
+moral: loyalty+3 courage+2 res_unholy+0.3 letter_steal*0 reputation+2
+narrative: charm+2 morale+1 read_properties+2
+summary: duration*0.3 effect_multiplier=1.5 cast_time*0.3
+epic: integrity*3 dmg_blunt*2 dmg_slash*2 dmg_pierce*2 mass*2 loudness+3 beauty+3 value*10
+alert: detect_stealth+5 alarm=true evasion+0.15 sleep_need*0.5 immune_sleep=true
+bold: courage+5 immune_fear=true charm+2 stealth+-3 aggression+2
+serial: plural_count*3 duplicates+1
+dominant: authority+4 strength*1.3 intimidation+4 command_limit+5
+beta: integrity*0.7 accuracy+-0.1 value*0.5
+advisory: intelligence+2 alarm=true read_properties+2
+abstract: phase=true stealth+3 read_properties+-3 mass*0.5
+questioning: read_properties+4 detect_stealth+3 obedience+-2
+acute: sharpness+3 critical+0.2 accuracy+0.1 inflict_bleed+3
+skinny: mass*0.6 evasion+0.15 strength*0.8 integrity*0.8 stealth+1
+revealing: inflict_expose+60 stealth*0 disguise*0 beauty+2
+circular: shape=round agility+2 attack_area+2
+heroic: courage+8 immune_fear=true strength*1.3 morale+3 reputation+3 integrity*1.3
+cheering: morale+4 courage+2 loudness+3
+accidental: friendly_fire=true accuracy+-0.2 critical+0.2
+inferior: integrity*0.6 value*0.4 accuracy+-0.1 strength*0.8
+primitive: integrity*0.8 upkeep_power*0 upkeep_fuel*0 material=stone,wood value*0.5
+literal: accuracy+0.2 charm+-1 immune_confuse=true
+null: effect_multiplier=0 integrity*0.1 value*0
+directive: obedience+5 command_limit+5 authority+2
+macro: length*10 mass*100 integrity*10 attack_area*3 stealth*0
+affirmative: morale+3 courage+2 obedience+2
+pleading: inflict_charm+5 aggression+-3 charm+2
+commonplace: value*0.3 beauty+-2 stealth+2
+trojan: disguise+8 stealth+5 letter_steal+3 security+-6 decoys+1
+yielding: elasticity+5 res_blunt+0.3 hardness+-3 obedience+3
+deductible: value*0.7 trade_bonus+0.1
+exponential: effect_multiplier=2 plural_count*2 growth*2 spread_rate*3
+impromptu: cast_time*0 duration*0.6 accuracy+-0.05
+shorthand: cast_time*0.5 storage_letters*1.5 read_properties+-1
+periodical: field_duration*2 extends_duration*1.3
+shivering: temperature+-5 accuracy+-0.2 speed_land*0.8 inflict_slow+3
+consonant: morale+1 charm+1 loudness+-1
+forbidding: fear_aura+3 security+4 charm+-3 intimidation+3
+stinging: dmg_pierce+10 inflict_poison+8 dmg_acid+5
+hearsay: decoys+1 read_properties+-2 accuracy+-0.1
+inquiring: read_properties+4 detect_stealth+3 intelligence+1
+minuscule: mass*0.01 length*0.05 stealth+6 integrity*0.1 evasion+0.4
+cursive: beauty+2 charm+1 read_properties+-1
+lowercase: authority+-1 loudness+-1 stealth+1
+
+blame: inflict_expose+60 reputation+-3 morale+-2
+
+# adjective participle
+informed: read_properties+4 intelligence+2 detect_life+200 immune_confuse=true
+
+# adjective pertaining
+quarterly: field_duration*4 extends_duration*2
+gothic: luminosity+-2 fear_aura+2 beauty+2 stealth+2 color=black
+pastoral: fertility+2 comfort+2 aggression+-2 morale+1 growth*1.2
+pictorial: beauty+3 read_properties+2 charm+1
+burlesque: charm+3 morale+2 authority+-2 beauty+1
+testimonial: reputation+2 charm+2 read_properties+2
+
+# adjective absolute
+universal: field_radius=ABS is_absolute=true absolute_side=attack specificity=1
+
+# adverb manner
+daily: duration*2 extends_duration*1.5 effect_multiplier=0.8
+aside: stealth+3 loudness+-3 effect_target=self
+nay: effect_multiplier=0 counters=yea
+raving: inflict_rage+6 loudness+5 accuracy+-0.2 aggression+4
+
+# noun document
+magazine: mass=0.3 integrity=2 flammability=9 material=paper placement=map field_radius=ABS field_targets=owned field_duration=1 morale+2 detect_life+200 charm+1
+mail: mass=0.5 integrity=2 flammability=9 material=paper placement=target placement_range=3000 event_target=character pays=3 inflict_charm=6 event_duration=1 command_limit+3
+heading: mass=0 integrity=1 map_reveal=40 accuracy+0.1 speed_land*1.1
+format: placement=self field_radius=4 field_targets=self field_duration=1 strips_adjectives=1 adjective_slots+1
+log: mass=0.3 integrity=3 material=paper storage_letters=20 read_properties=2 alarm=true
+chapter: mass=0.05 integrity=1 material=paper intelligence+1 extends_duration=1.1
+edition: mass=0.3 integrity=2 material=paper duplicates=1 value=20
+series: placement=self field_radius=4 field_targets=self field_duration=1 duplicates=1
+indictment: placement=target placement_range=200 event_target=character inflict_expose=120 inflict_root=15 contest_with=authority contested_by=charm event_duration=1 counters=pardon,alibi,counsel
+subpoena: placement=target placement_range=500 event_target=character moves_target=300 read_inventory=true contest_with=authority contested_by=stealth event_duration=1 counters=alibi,counsel
+impeachment: placement=target placement_range=300 event_target=character authority+-8 command_limit+-20 inflict_expose=120 contest_with=charm contested_by=authority event_duration=1 counters=pardon,veto
+arraignment: placement=target placement_range=60 event_target=character inflict_root=15 inflict_expose=60 contest_with=authority contested_by=charm event_duration=1
+authorization: mass=0.01 integrity=1 material=paper security+-5 counters=lock,gate,checkpoint,ban,law,password,firewall
+authorisation: mass=0.01 integrity=1 material=paper security+-5 counters=lock,gate,checkpoint,ban,law,password,firewall
+covenant: binds=4 bind_penalty=letters,loyalty,reputation event_duration=15 faith_output+1
+judgement: placement=target placement_range=60 event_target=character inflict_root=15 letter_steal=6 contest_with=authority contested_by=charm event_duration=1 counters=appeal,pardon
+concession: placement=target placement_range=60 event_target=character pays=4 aggression+-4 binds=2 bind_penalty=reputation event_duration=3
+
+# noun knowledge
+enactment: placement=region field_radius=80 field_targets=all field_duration=12 law=theft fine=5 authority+2 counters=repeal,veto,amendment
+rap: placement=self field_radius=25 field_targets=owned field_duration=2 morale+3 loudness=7 charm+2 aggression+2
+command: placement=self field_radius=60 field_targets=owned field_duration=5 command_limit+20 obedience+5 authority+3 loudness=6
+
+# noun artifact
+flag: mass=1 length=1.5 integrity=10 material=cloth portable=false claim_radius=8 field_radius=40 field_targets=owned morale+3 courage+3 loyalty+2 sight_range+100 counters=surrender
+banner: mass=2 length=2 integrity=15 material=cloth portable=false claim_radius=6 field_radius=50 field_targets=owned morale+3 courage+3 command_limit+5
+portrait: mass=3 integrity=10 material=canvas,wood beauty=6 value=500 comfort=2 read_properties=2 inflict_expose=30
+memorial: mass=20000 integrity=8000 material=stone portable=false field_radius=40 field_targets=owned courage+3 morale+2 loyalty+2 beauty=5
+
+# noun tool
+cable: mass=5 length=50 integrity=40 material=copper,rubber conductivity=9 command_limit+10 immune_expose=true upkeep_power=0.01 counters=jammer,static,interference
+tag: mass=0.002 integrity=2 material=plastic placement=target placement_range=5 event_target=creature inflict_expose=200 tracking+6 event_duration=1
+marker: mass=0.02 integrity=5 material=plastic map_reveal=20 inflict_expose=60 placement=target placement_range=40 event_target=character event_duration=1 color=red
+
+# noun exchange
+advertising: placement=map field_radius=ABS field_targets=all field_duration=3 trade_rate*0.8 produce_T*1.5 loudness=5 recruit_rate=0.5 charm+2
+publishing: placement=map field_radius=ABS field_targets=all field_duration=3 detect_life+300 morale+1 inflict_expose+30 counters=censorship
+printing: placement=self field_radius=4 field_targets=self field_duration=2 duplicates=2
+
+# noun attribute
+order: placement=self field_radius=60 field_targets=owned field_duration=5 obedience+5 command_limit+15 aggression+-2 effect_status=confuse counters=chaos,anarchy,riot
+honor: placement=self field_radius=30 field_targets=owned field_duration=5 loyalty+4 courage+4 reputation+3 immune_charm=true counters=bribe,shame
+honour: placement=self field_radius=30 field_targets=owned field_duration=5 loyalty+4 courage+4 reputation+3 immune_charm=true counters=bribe,shame
+sight: placement=self field_radius=4 field_targets=self field_duration=5 sight_range*2 detect_stealth+3 night_vision=true counters=blind,blindness,fog
+standing: placement=self field_radius=4 field_targets=self field_duration=10 reputation+4 authority+2 charm+2
+
+# noun place
+address: placement=target placement_range=1000 event_target=character inflict_expose=60 map_reveal=40 event_duration=1
+grounds: placement=self field_radius=4 field_targets=self field_duration=10 claim_radius=10
+
+# noun possession
+credit: placement=self field_radius=4 field_targets=self field_duration=10 trade_bonus+0.3 inflict_debt=120
+claim: placement=target placement_range=60 event_target=object transfers_ownership=true contest_with=authority contested_by=security event_duration=1
+award: placement=target placement_range=60 event_target=character pays=4 morale+4 reputation=3 inflict_charm=8 event_duration=1
+copyright: placement=self field_radius=4 field_targets=self field_duration=20 produce_T*1.3 counters=plagiarism,copies,reprint,forgery
+trademark: placement=self field_radius=4 field_targets=self field_duration=20 trade_bonus+0.2 reputation+2 counters=counterfeit,forgery,fake
+guarantee: placement=self field_radius=4 field_targets=self field_duration=10 letter_refund=0.5 security+3
+franchise: placement=region field_radius=30 field_targets=all field_duration=15 claim_radius=8 produce_T*1.5 trade_bonus+0.1
+
+# noun feeling
+worry: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=2 morale+-3 sleep_need*1.5 accuracy+-0.1 counters=assurance,calm
+pleasure: field_radius=20 field_targets=owned field_duration=2 morale+4 regeneration+1 comfort+1
+delight: field_radius=30 field_targets=owned field_duration=2 morale+5 courage+2 counters=gloom,sorrow
+encouragement: field_radius=40 field_targets=owned field_duration=2 morale+5 courage+4 training+1 counters=despair,discouragement
+disdain: placement=target placement_range=40 field_radius=15 field_targets=enemies field_duration=1 morale+-3 charm+-3 inflict_rage=2
+disapproval: placement=target placement_range=40 field_radius=15 field_targets=enemies field_duration=1 morale+-2 reputation+-2 obedience+2
+scorn: placement=target placement_range=40 field_radius=15 field_targets=enemies field_duration=1 morale+-4 inflict_rage=4 authority+-2
+grievance: placement=target placement_range=60 event_target=character inflict_rage=4 loyalty+-3 event_duration=1 counters=apology
+
+# noun act
+ridicule: placement=target placement_range=60 event_target=character morale+-4 authority+-3 inflict_rage=4 charm+-2 event_duration=1 counters=pride
+abdication: placement=self field_radius=4 field_targets=self field_duration=1 authority+-10 frees_target=true effect_status=expose,debt morale+-3
+finale: placement=self field_radius=60 field_targets=owned field_duration=1 effect_multiplier=2 morale+5 loudness=8
+
+# noun event
+parole: placement=target placement_range=30 event_target=character effect_status=root,silence inflict_expose=120 event_duration=1 counters=sentence,arrest
+
+# noun conflict
+dispute: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=2 loyalty+-3 inflict_rage=3 obedience+-2
+
+# noun crime
+scheme: placement=target placement_range=100 field_radius=30 field_targets=enemies field_duration=3 decoys=3 letter_steal=3 stealth+3 counters=audit,investigation,whistleblower
