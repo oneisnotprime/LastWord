@@ -1,0 +1,595 @@
+# Theme 8, food and cooking: generated from the hand-written core (demo_words.txt).
+
+# noun food
+ham: mass=2 integrity=3 edible=true nutrition=12 restores=30 strength+1 duration=120 single_use=true shelf_life=0 odor=4 plural_count=1 color=pink
+burger: mass=0.25 integrity=1 edible=true nutrition=10 restores=30 strength+1 morale+2 duration=120 single_use=true shelf_life=6 odor=5 color=brown
+hamburger: mass=0.25 integrity=1 edible=true nutrition=10 restores=30 strength+1 morale+2 duration=120 single_use=true shelf_life=6 odor=5 color=brown
+cheeseburger: mass=0.3 integrity=1 edible=true nutrition=12 restores=35 strength+1 morale+3 duration=150 single_use=true shelf_life=6 odor=5 color=brown
+patty: mass=0.15 integrity=1 edible=true raw=true cooks_into=burger nutrition=6 restores=15 toxicity=1 single_use=true shelf_life=6 color=red
+pork: mass=1 integrity=2 edible=true raw=true nutrition=10 restores=25 toxicity=2 strength+1 duration=90 single_use=true shelf_life=6 odor=3 color=pink
+curry: mass=0.5 state=liquid edible=true nutrition=12 restores=40 dmg_fire+25 res_cold+0.4 temperature+30 duration=180 single_use=true shelf_life=10 odor=7 color=orange
+provisions: mass=10 integrity=10 edible=true nutrition=15 restores=40 single_use=true shelf_life=0 storage_objects=10 plural_count=1 color=brown
+nutrition: mass=0.2 integrity=1 edible=true nutrition=10 restores=20 regeneration+1 duration=300 single_use=true shelf_life=0 color=green
+organs: mass=1 integrity=1 edible=true raw=true nutrition=8 restores=20 toxicity=2 res_disease+-0.2 single_use=true shelf_life=4 odor=6 color=red
+eats: mass=0.5 integrity=1 edible=true nutrition=8 restores=20 morale+2 duration=60 single_use=true shelf_life=10
+gum: mass=0.005 integrity=1 edible=true nutrition=0 stickiness=7 morale+1 accuracy+0.05 duration=300 single_use=true shelf_life=0 plural_count=10 color=pink
+danish: mass=0.1 integrity=1 edible=true nutrition=4 restores=8 morale+2 duration=60 single_use=true shelf_life=15 color=yellow
+snack: mass=0.1 integrity=1 edible=true nutrition=3 restores=5 morale+1 duration=60 single_use=true shelf_life=30 plural_count=3
+coconut: mass=1.5 integrity=15 hardness=5 dmg_blunt=15 edible=true nutrition=5 restores=15 water_need*0.5 duration=300 single_use=true shelf_life=60 buoyancy=6 color=brown
+dessert: mass=0.3 integrity=1 edible=true nutrition=6 restores=12 morale+4 charm+1 duration=120 single_use=true shelf_life=10
+cuisine: mass=1 integrity=1 edible=true nutrition=14 restores=40 morale+4 charm+2 duration=300 single_use=true shelf_life=10 value=20
+picnic: mass=5 integrity=5 edible=true nutrition=15 restores=60 morale+4 field_radius=8 field_targets=allies field_property=regeneration field_delta=1 field_duration=5 single_use=true shelf_life=10 color=red
+peel: mass=0.02 integrity=1 edible=true nutrition=0 slipperiness=9 single_use=true shelf_life=20 color=yellow
+turnover: mass=0.15 integrity=1 edible=true nutrition=5 restores=10 morale+2 duration=60 single_use=true shelf_life=12 color=brown
+trout: mass=1 integrity=1 edible=true raw=true nutrition=7 restores=20 speed_water*1.2 duration=120 single_use=true shelf_life=5 odor=4 color=silver
+napoleon: mass=0.15 integrity=1 edible=true nutrition=5 restores=10 courage+3 morale+3 duration=120 single_use=true shelf_life=10 color=white
+jelly: mass=0.2 integrity=1 elasticity=8 edible=true nutrition=3 restores=8 morale+2 elasticity+3 duration=60 single_use=true shelf_life=0 stickiness=4 color=red
+syrup: mass=0.5 state=liquid edible=true nutrition=6 restores=10 speed_land*1.2 duration=60 stickiness=9 single_use=true shelf_life=0 color=brown
+supper: mass=1 integrity=1 edible=true nutrition=14 restores=40 regeneration+1 sleep_need*0.5 duration=600 single_use=true shelf_life=10
+chili: mass=0.5 state=liquid edible=true nutrition=10 restores=30 dmg_fire+30 res_cold+0.5 temperature+40 inflict_burn+2 duration=180 single_use=true shelf_life=10 odor=6 color=red
+mayo: mass=0.2 integrity=1 edible=true nutrition=6 restores=4 slipperiness=6 single_use=true shelf_life=8 color=white
+crisp: mass=0.03 integrity=1 brittleness=9 loudness=3 edible=true nutrition=2 restores=3 morale+1 duration=30 single_use=true shelf_life=30 plural_count=12 color=yellow
+sushi: mass=0.2 integrity=1 edible=true nutrition=6 restores=20 speed_water*1.3 breathes=both duration=120 single_use=true shelf_life=4 plural_count=8 color=white
+spaghetti: mass=0.5 integrity=1 edible=true raw=true nutrition=5 restores=15 single_use=true shelf_life=0 shape=long color=yellow
+seafood: mass=1 integrity=1 edible=true raw=true nutrition=9 restores=25 speed_water*1.3 res_water+0.3 duration=180 single_use=true shelf_life=5 odor=5
+lobster: mass=0.7 integrity=4 hardness=5 edible=true raw=true nutrition=9 restores=30 armor+3 res_slash+0.2 duration=180 single_use=true shelf_life=5 value=30 color=red
+vinegar: mass=1 state=liquid edible=true nutrition=0 corrosiveness=2 dmg_acid+10 effect_status=poison counters=rotten,mold shelf_life=0 single_use=true odor=6 color=brown
+yogurt: mass=0.2 state=liquid edible=true nutrition=4 restores=12 res_disease+0.3 effect_status=poison duration=300 single_use=true shelf_life=15 color=white
+hash: mass=0.4 integrity=1 edible=true nutrition=8 restores=20 single_use=true shelf_life=8 color=brown
+edible: mass=0.3 integrity=1 edible=true nutrition=4 restores=8 single_use=true shelf_life=15
+wedge: mass=0.2 integrity=1 edible=true nutrition=3 restores=8 single_use=true shelf_life=20 shape=pointed color=yellow
+gluten: mass=0.2 integrity=1 edible=true nutrition=3 elasticity=6 stickiness=5 single_use=true shelf_life=0 color=brown
+barbecue: mass=2 integrity=2 edible=true nutrition=15 restores=60 strength+2 morale+3 odor=8 duration=180 single_use=true shelf_life=8 field_radius=6 field_targets=allies field_property=morale field_delta=2 field_duration=3 color=brown
+pudding: mass=0.3 integrity=1 edible=true nutrition=6 restores=15 morale+3 duration=120 single_use=true shelf_life=10 color=brown
+coloring: mass=0.02 state=liquid edible=true nutrition=0 color=red single_use=true shelf_life=0
+baba: mass=0.15 integrity=1 edible=true nutrition=5 restores=10 potency=2 courage+2 morale+2 duration=120 single_use=true shelf_life=10 color=brown
+topping: mass=0.05 integrity=1 edible=true nutrition=1 restores=2 morale+1 duration=60 single_use=true shelf_life=15
+sup: mass=0.3 state=liquid edible=true nutrition=3 restores=10 single_use=true shelf_life=10
+bun: mass=0.08 integrity=1 edible=true nutrition=4 restores=8 single_use=true shelf_life=12 plural_count=6 color=brown
+salsa: mass=0.3 state=liquid edible=true nutrition=2 restores=6 dmg_fire+15 inflict_burn+1 duration=90 single_use=true shelf_life=10 color=red
+pastry: mass=0.1 integrity=1 brittleness=7 edible=true nutrition=5 restores=10 morale+2 duration=60 single_use=true shelf_life=12 plural_count=6 color=yellow
+loaf: mass=0.8 integrity=2 edible=true nutrition=10 restores=25 single_use=true shelf_life=15 color=brown
+icing: mass=0.1 integrity=1 edible=true nutrition=3 morale+2 stickiness=5 duration=60 single_use=true shelf_life=0 color=white
+cisco: mass=0.5 integrity=1 edible=true raw=true nutrition=5 restores=15 speed_water*1.2 duration=60 single_use=true shelf_life=5 color=silver
+barley: mass=1 height=1 integrity=2 alive=true diet=photosynthesis growth_time=5 edible=true raw=true nutrition=3 restores=6 single_use=true placeable_on=field plural_count=20 color=yellow
+herring: mass=0.25 integrity=1 edible=true raw=true nutrition=5 restores=15 speed_water*1.2 duration=120 single_use=true shelf_life=5 odor=6 plural_count=6 color=silver
+gravy: mass=0.3 state=liquid edible=true nutrition=4 restores=10 morale+2 duration=60 single_use=true shelf_life=8 color=brown
+caramel: mass=0.1 integrity=1 edible=true nutrition=3 restores=5 stickiness=8 morale+2 speed_land*1.1 duration=60 single_use=true shelf_life=0 color=brown
+stuffing: mass=0.4 integrity=1 edible=true nutrition=7 restores=15 morale+2 duration=120 single_use=true shelf_life=8 color=brown
+octopus: mass=3 integrity=5 edible=true raw=true nutrition=8 restores=25 agility+2 stealth+2 inflict_blind+2 duration=120 single_use=true shelf_life=5 color=purple
+ketchup: mass=0.4 state=liquid edible=true nutrition=1 restores=3 morale+1 duration=60 single_use=true shelf_life=0 color=red
+brunch: mass=1 integrity=1 edible=true nutrition=12 restores=35 morale+3 duration=300 single_use=true shelf_life=8
+cracker: mass=0.01 integrity=1 brittleness=9 edible=true nutrition=1 restores=3 water_need*1.3 single_use=true shelf_life=0 plural_count=12 color=yellow
+biscuit: mass=0.03 integrity=1 edible=true nutrition=2 restores=5 morale+1 duration=60 single_use=true shelf_life=40 plural_count=12 color=brown
+squid: mass=1 integrity=3 edible=true raw=true nutrition=7 restores=20 speed_water*1.4 inflict_blind+3 duration=120 single_use=true shelf_life=5 color=white
+roe: mass=0.1 integrity=1 edible=true nutrition=4 restores=15 regeneration+2 duration=120 single_use=true shelf_life=5 value=20 plural_count=1 color=orange
+chow: mass=0.5 integrity=1 edible=true nutrition=8 restores=20 single_use=true shelf_life=10
+malt: mass=0.5 integrity=1 edible=true raw=true nutrition=3 restores=5 single_use=true shelf_life=0 color=brown
+blanc: mass=0.3 state=liquid edible=true nutrition=3 restores=10 single_use=true shelf_life=8 color=white
+noodle: mass=0.3 integrity=1 edible=true raw=true nutrition=4 restores=12 single_use=true shelf_life=0 shape=long plural_count=20 color=yellow
+pickle: mass=0.1 integrity=1 edible=true nutrition=1 restores=5 effect_status=poison morale+-1 duration=60 single_use=true shelf_life=0 odor=4 color=green
+oatmeal: mass=0.4 state=liquid edible=true nutrition=7 restores=20 regeneration+1 strength+1 duration=600 single_use=true shelf_life=8 color=brown
+conserve: mass=0.4 integrity=2 edible=true nutrition=5 restores=10 stickiness=5 single_use=true shelf_life=0 color=red
+preserves: mass=0.4 integrity=2 edible=true nutrition=5 restores=10 stickiness=5 single_use=true shelf_life=0 color=red
+leftovers: mass=0.8 integrity=1 edible=true nutrition=7 restores=15 toxicity=1 single_use=true shelf_life=4 odor=3
+duff: mass=0.5 integrity=1 edible=true nutrition=8 restores=15 morale+2 duration=60 single_use=true shelf_life=10 color=brown
+pancake: mass=0.1 integrity=1 edible=true nutrition=4 restores=10 morale+2 duration=90 single_use=true shelf_life=8 shape=flat plural_count=6 color=yellow
+muffin: mass=0.1 integrity=1 edible=true nutrition=4 restores=10 morale+2 duration=60 single_use=true shelf_life=12 plural_count=6 color=brown
+cupcake: mass=0.08 integrity=1 edible=true nutrition=3 restores=8 morale+3 charm+1 duration=90 single_use=true shelf_life=12 plural_count=6 color=pink
+catfish: mass=2 integrity=2 edible=true raw=true nutrition=8 restores=20 speed_water*1.2 smell_range+20 duration=120 single_use=true shelf_life=5 color=gray
+fudge: mass=0.1 integrity=1 edible=true nutrition=4 restores=6 morale+3 speed_land*1.1 duration=90 single_use=true shelf_life=0 color=brown
+farce: mass=0.3 integrity=1 edible=true raw=true nutrition=5 restores=10 toxicity=1 single_use=true shelf_life=6 color=pink
+takeaway: mass=0.6 integrity=1 edible=true nutrition=10 restores=25 morale+2 duration=60 single_use=true shelf_life=8
+grinder: mass=0.5 integrity=1 edible=true nutrition=10 restores=25 strength+1 duration=120 single_use=true shelf_life=8
+luncheon: mass=1 integrity=1 edible=true nutrition=12 restores=35 morale+3 charm+1 duration=180 single_use=true shelf_life=10
+donut: mass=0.07 integrity=1 edible=true nutrition=4 restores=8 morale+3 speed_land*1.1 duration=60 single_use=true shelf_life=10 shape=round plural_count=12 color=brown
+doughnut: mass=0.07 integrity=1 edible=true nutrition=4 restores=8 morale+3 speed_land*1.1 duration=60 single_use=true shelf_life=10 shape=round plural_count=12 color=brown
+waffle: mass=0.1 integrity=1 edible=true nutrition=4 restores=10 morale+2 duration=90 single_use=true shelf_life=8 shape=flat plural_count=4 color=yellow
+tofu: mass=0.4 integrity=1 edible=true nutrition=6 restores=15 strength+1 duration=120 single_use=true shelf_life=15 color=white
+cheddar: mass=1 integrity=2 edible=true nutrition=9 restores=20 strength+1 duration=120 single_use=true shelf_life=40 odor=4 color=orange
+seasoning: mass=0.05 integrity=1 edible=true nutrition=0 nutrition*1.2 morale+1 duration=60 single_use=true shelf_life=0 odor=4
+pap: mass=0.3 state=liquid edible=true nutrition=3 restores=8 single_use=true shelf_life=8 color=white
+brittle: mass=0.1 integrity=1 brittleness=10 edible=true nutrition=3 restores=5 morale+2 duration=60 single_use=true shelf_life=0 color=brown
+kosher: mass=0.5 integrity=1 edible=true nutrition=8 restores=20 toxicity=0 single_use=true shelf_life=10
+burrito: mass=0.4 integrity=1 edible=true nutrition=12 restores=30 strength+1 morale+2 duration=120 single_use=true shelf_life=8 color=brown
+bologna: mass=0.5 integrity=1 edible=true nutrition=6 restores=12 single_use=true shelf_life=20 color=pink
+mayonnaise: mass=0.3 integrity=1 edible=true nutrition=6 restores=4 slipperiness=6 single_use=true shelf_life=8 color=white
+pollock: mass=1 integrity=1 edible=true raw=true nutrition=6 restores=18 single_use=true shelf_life=5 color=white
+eel: mass=1 integrity=3 edible=true raw=true nutrition=7 restores=20 slipperiness=8 res_electric+0.3 duration=120 single_use=true shelf_life=5 color=black
+colouring: mass=0.02 state=liquid edible=true nutrition=0 color=red single_use=true shelf_life=0
+cheesecake: mass=1 integrity=1 edible=true nutrition=11 restores=25 morale+4 charm+1 duration=150 single_use=true shelf_life=12 color=white
+partridge: mass=0.4 integrity=1 edible=true raw=true nutrition=6 restores=18 toxicity=1 single_use=true shelf_life=6 color=brown
+carp: mass=2 integrity=2 edible=true raw=true nutrition=7 restores=18 speed_water*1.2 duration=60 single_use=true shelf_life=5 color=gold
+bagel: mass=0.1 integrity=2 edible=true nutrition=5 restores=10 single_use=true shelf_life=15 shape=round plural_count=6 color=brown
+wiener: mass=0.05 integrity=1 edible=true raw=true nutrition=4 restores=8 single_use=true shelf_life=12 shape=long plural_count=8 color=pink
+custard: mass=0.3 state=liquid edible=true nutrition=5 restores=12 morale+2 duration=60 single_use=true shelf_life=8 color=yellow
+shortening: mass=0.5 integrity=1 edible=true nutrition=9 slipperiness=6 flammability=6 single_use=true shelf_life=0 color=white
+shellfish: mass=0.5 integrity=3 edible=true raw=true nutrition=6 restores=18 toxicity=1 armor+2 duration=120 single_use=true shelf_life=5 plural_count=6
+marshmallow: mass=0.007 integrity=1 elasticity=8 flammability=6 edible=true nutrition=1 restores=3 morale+2 duration=60 single_use=true shelf_life=0 plural_count=12 color=white
+lollipop: mass=0.02 integrity=1 edible=true nutrition=1 restores=2 morale+3 speed_land*1.2 duration=60 single_use=true shelf_life=0 color=pink
+halal: mass=0.5 integrity=1 edible=true nutrition=8 restores=20 toxicity=0 single_use=true shelf_life=10
+caviar: mass=0.05 integrity=1 edible=true nutrition=3 restores=20 charm+3 morale+3 duration=300 single_use=true shelf_life=10 value=100 color=black
+grouse: mass=0.6 integrity=1 edible=true raw=true nutrition=7 restores=18 toxicity=1 single_use=true shelf_life=6 color=brown
+quail: mass=0.15 integrity=1 edible=true raw=true nutrition=3 restores=10 toxicity=1 single_use=true shelf_life=6 plural_count=4 color=brown
+lasagna: mass=1.5 integrity=1 edible=true nutrition=15 restores=50 strength+1 morale+3 sleep_need*1.2 duration=180 single_use=true shelf_life=10 color=red
+grub: mass=0.5 integrity=1 edible=true nutrition=7 restores=15 single_use=true shelf_life=10
+forage: mass=0.5 integrity=1 edible=true nutrition=3 restores=5 single_use=true shelf_life=20 color=green
+porridge: mass=0.4 state=liquid edible=true nutrition=7 restores=20 regeneration+1 strength+1 res_cold+0.2 duration=600 single_use=true shelf_life=8 color=white
+mozzarella: mass=0.25 integrity=1 elasticity=7 edible=true nutrition=6 restores=15 single_use=true shelf_life=15 color=white
+whiting: mass=0.5 integrity=1 edible=true raw=true nutrition=5 restores=15 single_use=true shelf_life=5 color=white
+veal: mass=0.5 integrity=1 edible=true raw=true nutrition=10 restores=25 toxicity=1 single_use=true shelf_life=6 color=pink
+mulligan: mass=1 state=liquid edible=true nutrition=12 restores=40 regeneration+2 duration=120 single_use=true shelf_life=10 color=brown
+marge: mass=0.25 integrity=1 edible=true nutrition=6 slipperiness=7 single_use=true shelf_life=30 color=yellow
+mackerel: mass=0.4 integrity=1 edible=true raw=true nutrition=6 restores=18 intelligence+1 duration=300 single_use=true shelf_life=5 odor=6 color=silver
+draught: mass=0.5 state=liquid edible=true nutrition=2 potency=3 courage+3 accuracy+-0.1 duration=300 single_use=true color=gold
+shank: mass=1 integrity=3 edible=true raw=true nutrition=10 restores=25 strength+1 toxicity=1 duration=120 single_use=true shelf_life=6 dmg_blunt=8 color=red
+dainty: mass=0.05 integrity=1 edible=true nutrition=2 restores=5 charm+2 morale+2 duration=60 single_use=true shelf_life=10 plural_count=6
+casserole: mass=2 integrity=2 edible=true nutrition=15 restores=50 regeneration+1 morale+3 duration=180 single_use=true shelf_life=10 color=brown
+tortilla: mass=0.04 integrity=1 edible=true nutrition=2 restores=5 single_use=true shelf_life=20 shape=flat plural_count=10 color=yellow
+frosting: mass=0.1 integrity=1 edible=true nutrition=3 morale+2 stickiness=5 single_use=true shelf_life=0 color=white
+yolk: mass=0.02 state=liquid edible=true raw=true nutrition=2 restores=5 single_use=true shelf_life=8 color=yellow
+goody: mass=0.05 integrity=1 edible=true nutrition=2 restores=5 morale+3 duration=60 single_use=true shelf_life=20 plural_count=6
+garnish: mass=0.01 integrity=1 edible=true nutrition=0 beauty+2 charm+1 single_use=true shelf_life=5 color=green
+nourishment: mass=0.5 integrity=1 edible=true nutrition=12 restores=30 regeneration+1 duration=300 single_use=true shelf_life=10
+milkshake: mass=0.4 state=liquid edible=true nutrition=6 restores=12 morale+3 res_fire+0.2 temperature+-5 duration=90 single_use=true shelf_life=6 color=pink
+kebab: mass=0.3 integrity=2 sharpness=4 edible=true nutrition=9 restores=25 strength+1 dmg_pierce=5 duration=120 single_use=true shelf_life=6 shape=long color=brown
+gingerbread: mass=0.1 integrity=1 edible=true nutrition=4 restores=8 morale+3 res_cold+0.2 duration=120 single_use=true shelf_life=40 plural_count=6 color=brown
+nacho: mass=0.02 integrity=1 brittleness=8 edible=true nutrition=1 restores=3 morale+1 dmg_fire+5 duration=60 single_use=true shelf_life=20 plural_count=20 color=yellow
+mince: mass=0.5 integrity=1 edible=true raw=true nutrition=8 restores=20 toxicity=2 single_use=true shelf_life=5 color=red
+banger: mass=0.1 integrity=1 edible=true raw=true nutrition=6 restores=12 single_use=true shelf_life=12 plural_count=6 loudness=3 color=brown
+yoghurt: mass=0.2 state=liquid edible=true nutrition=4 restores=12 res_disease+0.3 effect_status=poison duration=300 single_use=true shelf_life=15 color=white
+roux: mass=0.2 integrity=1 edible=true raw=true cooks_into=gravy nutrition=3 single_use=true shelf_life=10 color=yellow
+pepperoni: mass=0.2 integrity=1 edible=true nutrition=6 restores=10 dmg_fire+10 duration=60 single_use=true shelf_life=0 plural_count=20 color=red
+mutton: mass=1 integrity=2 edible=true raw=true nutrition=11 restores=28 strength+1 res_cold+0.2 toxicity=1 duration=120 single_use=true shelf_life=6 odor=5 color=red
+pita: mass=0.06 integrity=1 edible=true nutrition=3 restores=6 single_use=true shelf_life=15 shape=flat plural_count=6 color=white
+molasses: mass=1 state=liquid edible=true nutrition=6 restores=8 stickiness=10 speed_land*0.7 single_use=true shelf_life=0 color=black
+hummus: mass=0.3 integrity=1 edible=true nutrition=5 restores=15 strength+1 duration=120 single_use=true shelf_life=10 color=yellow
+dumplings: mass=0.4 integrity=1 edible=true raw=true nutrition=8 restores=20 single_use=true shelf_life=10 plural_count=1 color=white
+dumpling: mass=0.03 integrity=1 edible=true raw=true nutrition=2 restores=6 single_use=true shelf_life=10 plural_count=8 color=white
+sustenance: mass=0.5 integrity=1 edible=true nutrition=10 restores=25 res_hunger+0.5 duration=600 single_use=true shelf_life=15
+smelt: mass=0.05 integrity=1 edible=true raw=true nutrition=1 restores=5 single_use=true shelf_life=5 plural_count=12 color=silver
+fryer: mass=1.5 integrity=2 edible=true raw=true nutrition=10 restores=25 toxicity=2 single_use=true shelf_life=6 color=pink
+pretzel: mass=0.1 integrity=2 edible=true nutrition=4 restores=8 water_need*1.3 duration=60 single_use=true shelf_life=20 color=brown
+lard: mass=0.5 integrity=1 edible=true nutrition=10 slipperiness=7 flammability=7 burn_time=600 res_cold+0.2 single_use=true shelf_life=0 color=white
+granola: mass=0.2 integrity=1 edible=true nutrition=6 restores=10 speed_land*1.1 range*1.2 duration=600 single_use=true shelf_life=0 color=brown
+mullet: mass=1 integrity=1 edible=true raw=true nutrition=6 restores=15 single_use=true shelf_life=5 color=gray
+fillet: mass=0.3 integrity=1 edible=true raw=true nutrition=7 restores=20 single_use=true shelf_life=5 shape=flat color=white
+filet: mass=0.3 integrity=1 edible=true raw=true nutrition=9 restores=25 strength+1 duration=120 single_use=true shelf_life=6 color=red
+oreo: mass=0.01 integrity=1 edible=true nutrition=1 restores=3 morale+2 duration=60 single_use=true shelf_life=0 plural_count=12 color=black
+mousse: mass=0.2 integrity=1 edible=true nutrition=4 restores=10 morale+3 charm+1 duration=90 single_use=true shelf_life=6 color=brown
+confectionery: mass=0.5 integrity=1 edible=true nutrition=4 restores=8 morale+4 speed_land*1.2 duration=90 single_use=true shelf_life=0 color=pink
+sprinkles: mass=0.02 integrity=1 edible=true nutrition=0 morale+2 beauty+1 single_use=true shelf_life=0 plural_count=1 color=pink
+takeout: mass=0.6 integrity=1 edible=true nutrition=10 restores=25 morale+2 duration=60 single_use=true shelf_life=8
+refreshment: mass=0.3 integrity=1 edible=true nutrition=3 restores=15 morale+2 temperature+-5 duration=120 single_use=true shelf_life=10
+trifle: mass=0.5 integrity=1 edible=true nutrition=6 restores=12 morale+3 duration=90 single_use=true shelf_life=8 color=red
+grits: mass=0.4 state=liquid edible=true raw=true nutrition=5 restores=12 single_use=true shelf_life=0 color=white
+curd: mass=0.2 integrity=1 edible=true nutrition=4 restores=10 single_use=true shelf_life=10 color=white
+bleu: mass=0.5 integrity=1 edible=true nutrition=8 restores=18 odor=8 single_use=true shelf_life=40 color=blue
+guacamole: mass=0.3 integrity=1 edible=true nutrition=6 restores=15 regeneration+1 duration=120 single_use=true shelf_life=4 color=green
+sweetener: mass=0.05 integrity=1 edible=true nutrition=0 morale+1 nutrition*1.1 single_use=true shelf_life=0 color=white
+venison: mass=1 integrity=2 edible=true raw=true nutrition=12 restores=30 speed_land*1.2 strength+1 toxicity=1 duration=180 single_use=true shelf_life=6 color=red
+toffee: mass=0.05 integrity=2 hardness=4 edible=true nutrition=3 restores=5 stickiness=6 morale+2 duration=60 single_use=true shelf_life=0 plural_count=8 color=brown
+marmalade: mass=0.3 integrity=1 edible=true nutrition=5 restores=10 res_disease+0.2 stickiness=6 duration=120 single_use=true shelf_life=0 color=orange
+salami: mass=0.5 integrity=2 edible=true nutrition=9 restores=15 strength+1 duration=120 single_use=true shelf_life=0 odor=4 shape=long color=red
+pesto: mass=0.2 integrity=1 edible=true nutrition=4 restores=10 morale+1 odor=5 duration=60 single_use=true shelf_life=8 color=green
+pate: mass=0.2 integrity=1 edible=true nutrition=7 restores=15 charm+1 single_use=true shelf_life=8 color=brown
+pasty: mass=0.3 integrity=2 edible=true nutrition=11 restores=30 res_cold+0.2 strength+1 duration=180 single_use=true shelf_life=10 color=brown
+gyro: mass=0.4 integrity=1 edible=true nutrition=11 restores=28 strength+1 duration=120 single_use=true shelf_life=6 color=brown
+sop: mass=0.1 integrity=1 edible=true nutrition=2 restores=5 wetness=4 single_use=true shelf_life=5
+risotto: mass=0.5 integrity=1 edible=true nutrition=9 restores=25 morale+2 duration=120 single_use=true shelf_life=8 color=white
+puree: mass=0.3 state=liquid edible=true nutrition=3 restores=10 single_use=true shelf_life=8 color=orange
+prawn: mass=0.03 integrity=1 edible=true raw=true nutrition=2 restores=6 toxicity=1 single_use=true shelf_life=5 plural_count=10 color=pink
+meatball: mass=0.05 integrity=1 edible=true raw=true nutrition=3 restores=8 strength+1 duration=60 single_use=true shelf_life=6 shape=round plural_count=10 color=brown
+brisket: mass=3 integrity=3 edible=true raw=true nutrition=15 restores=50 strength+2 toxicity=1 duration=180 single_use=true shelf_life=6 odor=5 color=brown
+ravioli: mass=0.3 integrity=1 edible=true raw=true nutrition=6 restores=15 single_use=true shelf_life=10 plural_count=12 color=yellow
+appetizer: mass=0.2 integrity=1 edible=true nutrition=3 restores=8 food_need*1.3 morale+2 duration=120 single_use=true shelf_life=8
+omelette: mass=0.2 integrity=1 edible=true nutrition=7 restores=18 strength+1 duration=120 single_use=true shelf_life=5 shape=flat color=yellow
+omelet: mass=0.2 integrity=1 edible=true nutrition=7 restores=18 strength+1 duration=120 single_use=true shelf_life=5 shape=flat color=yellow
+crayfish: mass=0.05 integrity=2 edible=true raw=true nutrition=2 restores=6 toxicity=1 armor+1 duration=60 single_use=true shelf_life=5 plural_count=8 color=red
+shad: mass=1.5 integrity=1 edible=true raw=true nutrition=7 restores=18 single_use=true shelf_life=5 color=silver
+meatloaf: mass=1 integrity=2 edible=true nutrition=13 restores=35 strength+1 duration=120 single_use=true shelf_life=8 color=brown
+poi: mass=0.3 state=liquid edible=true nutrition=4 restores=10 stickiness=4 single_use=true shelf_life=10 color=purple
+margarine: mass=0.25 integrity=1 edible=true nutrition=6 slipperiness=7 single_use=true shelf_life=30 color=yellow
+haddock: mass=1 integrity=1 edible=true raw=true nutrition=6 restores=18 single_use=true shelf_life=5 color=white
+popsicle: mass=0.07 integrity=1 edible=true nutrition=1 restores=5 temperature=-10 res_fire+0.4 temperature+-10 effect_status=burn duration=60 single_use=true shelf_life=0 melting_point=0 color=red
+jello: mass=0.2 integrity=1 elasticity=9 edible=true nutrition=2 restores=6 morale+2 elasticity+3 duration=60 single_use=true shelf_life=15 color=red
+baguette: mass=0.25 length=0.7 integrity=3 edible=true nutrition=7 restores=15 dmg_blunt=5 single_use=true shelf_life=10 shape=long color=brown
+savoury: mass=0.2 integrity=1 edible=true nutrition=4 restores=10 single_use=true shelf_life=10
+concoction: mass=0.3 state=liquid edible=true nutrition=2 potency=4 restores=20 inflict_confuse+2 duration=60 single_use=true shelf_life=10 color=green
+perishable: mass=0.5 integrity=1 edible=true nutrition=6 restores=15 single_use=true shelf_life=3
+meringue: mass=0.02 integrity=1 brittleness=9 edible=true nutrition=1 restores=3 morale+2 duration=60 single_use=true shelf_life=20 plural_count=8 color=white
+croissant: mass=0.06 integrity=1 edible=true nutrition=4 restores=8 morale+2 duration=60 single_use=true shelf_life=10 plural_count=6 color=yellow
+chowder: mass=0.5 state=liquid edible=true nutrition=10 restores=40 regeneration+2 res_cold+0.4 duration=180 single_use=true shelf_life=8 color=white
+bap: mass=0.08 integrity=1 edible=true nutrition=4 restores=8 single_use=true shelf_life=12 plural_count=6 color=brown
+miso: mass=0.3 state=liquid edible=true nutrition=3 restores=20 res_disease+0.3 regeneration+1 duration=120 single_use=true shelf_life=0 color=brown
+flavoring: mass=0.02 state=liquid edible=true nutrition=0 nutrition*1.2 morale+1 single_use=true shelf_life=0
+entree: mass=0.8 integrity=1 edible=true nutrition=12 restores=35 morale+2 duration=120 single_use=true shelf_life=8
+chorizo: mass=0.2 integrity=1 edible=true nutrition=8 restores=15 dmg_fire+10 strength+1 duration=90 single_use=true shelf_life=0 shape=long color=red
+sundae: mass=0.3 integrity=1 edible=true nutrition=6 restores=12 morale+5 res_fire+0.2 duration=90 single_use=true shelf_life=3 melting_point=5 color=white
+rind: mass=0.05 integrity=2 edible=true nutrition=0 restores=1 single_use=true shelf_life=40
+marinade: mass=0.3 state=liquid edible=true nutrition=1 shelf_life*1.5 nutrition*1.2 single_use=true shelf_life=0 color=brown
+loin: mass=1.5 integrity=2 edible=true raw=true nutrition=12 restores=30 strength+2 toxicity=1 duration=120 single_use=true shelf_life=6 color=pink
+scone: mass=0.08 integrity=1 edible=true nutrition=4 restores=8 morale+2 duration=60 single_use=true shelf_life=12 plural_count=6 color=yellow
+mussel: mass=0.02 integrity=2 hardness=5 edible=true raw=true nutrition=1 restores=4 toxicity=1 single_use=true shelf_life=5 plural_count=12 color=black
+chutney: mass=0.3 integrity=1 edible=true nutrition=3 restores=6 dmg_fire+10 duration=60 single_use=true shelf_life=0 color=brown
+canola: mass=1 state=liquid edible=true nutrition=8 slipperiness=7 flammability=6 burn_time=600 single_use=true shelf_life=0 color=yellow
+cornbread: mass=0.4 integrity=1 edible=true nutrition=6 restores=15 single_use=true shelf_life=12 color=yellow
+winkle: mass=0.01 integrity=2 edible=true raw=true nutrition=1 restores=3 single_use=true shelf_life=5 plural_count=12 color=black
+tripe: mass=0.5 integrity=1 edible=true raw=true nutrition=6 restores=12 toxicity=1 single_use=true shelf_life=5 odor=6 color=white
+taffy: mass=0.02 integrity=1 elasticity=8 stickiness=8 edible=true nutrition=1 restores=2 morale+2 duration=60 single_use=true shelf_life=0 plural_count=10 color=pink
+slop: mass=1 state=liquid edible=true nutrition=3 restores=3 morale+-2 odor=6 toxicity=1 single_use=true shelf_life=3 color=gray
+halibut: mass=5 integrity=2 edible=true raw=true nutrition=10 restores=25 single_use=true shelf_life=5 shape=flat color=white
+rusk: mass=0.02 integrity=2 hardness=4 edible=true nutrition=2 restores=4 single_use=true shelf_life=0 plural_count=10 color=brown
+condiment: mass=0.1 integrity=1 edible=true nutrition=0 nutrition*1.1 morale+1 single_use=true shelf_life=0
+barbeque: mass=2 integrity=2 edible=true nutrition=15 restores=60 strength+2 morale+3 odor=8 duration=180 single_use=true shelf_life=8 field_radius=6 field_targets=allies field_property=morale field_delta=2 field_duration=3 color=brown
+ricotta: mass=0.25 integrity=1 edible=true nutrition=5 restores=12 single_use=true shelf_life=10 color=white
+grist: mass=1 integrity=1 edible=true raw=true cooks_into=bread nutrition=1 single_use=true shelf_life=0 color=brown
+farina: mass=0.5 integrity=1 edible=true raw=true cooks_into=porridge nutrition=2 single_use=true shelf_life=0 color=white
+swordfish: mass=10 length=2 integrity=4 sharpness=5 edible=true raw=true nutrition=14 restores=35 speed_water*1.5 dmg_pierce+10 duration=180 single_use=true shelf_life=5 color=silver
+ghee: mass=0.25 integrity=1 edible=true nutrition=9 restores=8 flammability=6 single_use=true shelf_life=0 color=yellow
+sauerkraut: mass=0.3 integrity=1 edible=true nutrition=2 restores=10 res_disease+0.4 duration=300 single_use=true shelf_life=0 odor=6 color=white
+sardine: mass=0.05 integrity=1 edible=true nutrition=2 restores=6 single_use=true shelf_life=0 plural_count=12 odor=5 color=silver
+haggis: mass=1 integrity=2 edible=true nutrition=14 restores=40 courage+3 res_cold+0.4 duration=300 single_use=true shelf_life=10 odor=5 color=brown
+duckling: mass=0.8 integrity=1 edible=true raw=true nutrition=9 restores=25 toxicity=1 single_use=true shelf_life=6 color=brown
+frankfurter: mass=0.05 integrity=1 edible=true raw=true nutrition=4 restores=8 single_use=true shelf_life=12 shape=long plural_count=8 color=pink
+crawfish: mass=0.05 integrity=2 edible=true raw=true nutrition=2 restores=6 toxicity=1 armor+1 duration=60 single_use=true shelf_life=5 plural_count=8 color=red
+sorbet: mass=0.2 integrity=1 edible=true nutrition=2 restores=8 temperature=-10 res_fire+0.3 temperature+-10 effect_status=burn duration=90 single_use=true shelf_life=0 melting_point=0 color=pink
+puffer: mass=1 integrity=2 edible=true nutrition=6 restores=15 toxicity=9 dmg_poison=60 single_use=true shelf_life=5 value=40 color=yellow
+falafel: mass=0.03 integrity=1 edible=true nutrition=2 restores=6 strength+1 duration=60 single_use=true shelf_life=8 shape=round plural_count=8 color=brown
+coleslaw: mass=0.3 integrity=1 edible=true nutrition=3 restores=8 single_use=true shelf_life=6 color=white
+choc: mass=0.1 integrity=1 edible=true nutrition=5 restores=10 morale+4 speed_land*1.1 duration=120 single_use=true shelf_life=0 color=brown
+paella: mass=2 integrity=1 edible=true nutrition=15 restores=50 morale+3 field_radius=5 field_targets=allies field_property=regeneration field_delta=1 field_duration=3 single_use=true shelf_life=8 color=yellow
+applesauce: mass=0.3 state=liquid edible=true nutrition=3 restores=10 single_use=true shelf_life=15 color=yellow
+weenie: mass=0.05 integrity=1 edible=true raw=true nutrition=4 restores=8 single_use=true shelf_life=12 shape=long plural_count=8 color=pink
+vinaigrette: mass=0.2 state=liquid edible=true nutrition=2 restores=3 nutrition*1.2 single_use=true shelf_life=0 color=yellow
+tapioca: mass=0.3 integrity=1 edible=true raw=true nutrition=4 restores=8 stickiness=4 single_use=true shelf_life=0 color=white
+sashimi: mass=0.2 integrity=1 edible=true nutrition=6 restores=20 speed_water*1.3 agility+1 duration=120 single_use=true shelf_life=4 plural_count=8 color=pink
+couscous: mass=0.4 integrity=1 edible=true raw=true nutrition=5 restores=12 single_use=true shelf_life=0 color=yellow
+whitefish: mass=1 integrity=1 edible=true raw=true nutrition=6 restores=18 single_use=true shelf_life=5 color=white
+slaw: mass=0.3 integrity=1 edible=true nutrition=3 restores=8 single_use=true shelf_life=6 color=white
+fondue: mass=1 state=liquid temperature=80 edible=true nutrition=12 restores=30 morale+4 charm+2 dmg_fire=5 res_cold+0.3 duration=180 single_use=true shelf_life=8 color=yellow
+butterscotch: mass=0.05 integrity=1 edible=true nutrition=2 restores=4 morale+2 stickiness=5 duration=60 single_use=true shelf_life=0 plural_count=8 color=gold
+naan: mass=0.1 integrity=1 edible=true nutrition=5 restores=10 single_use=true shelf_life=10 shape=flat plural_count=4 color=yellow
+anchovy: mass=0.01 integrity=1 edible=true nutrition=1 restores=3 water_need*1.5 odor=7 single_use=true shelf_life=0 plural_count=12 color=silver
+tidbit: mass=0.02 integrity=1 edible=true nutrition=1 restores=3 morale+1 duration=30 single_use=true shelf_life=10 plural_count=6
+nougat: mass=0.05 integrity=1 stickiness=6 edible=true nutrition=3 restores=5 morale+2 duration=60 single_use=true shelf_life=0 color=white
+fondant: mass=0.2 integrity=1 edible=true nutrition=3 morale+2 beauty+2 single_use=true shelf_life=0 color=white
+calamari: mass=0.3 integrity=1 edible=true nutrition=6 restores=15 inflict_blind+1 duration=60 single_use=true shelf_life=5 color=white
+brioche: mass=0.3 integrity=1 edible=true nutrition=6 restores=15 morale+2 duration=60 single_use=true shelf_life=12 color=yellow
+tiffin: mass=0.8 integrity=3 edible=true nutrition=10 restores=25 single_use=true shelf_life=10 container_slots=3 material=steel
+potluck: mass=5 integrity=3 edible=true nutrition=15 restores=50 morale+3 field_radius=8 field_targets=allies field_property=morale field_delta=2 field_duration=5 single_use=true shelf_life=10
+grouper: mass=5 integrity=2 edible=true raw=true nutrition=10 restores=25 single_use=true shelf_life=5 color=brown
+bouillon: mass=0.3 state=liquid edible=true nutrition=3 restores=25 effect_status=poison,sleep res_cold+0.3 duration=120 single_use=true shelf_life=0 color=yellow
+teriyaki: mass=0.4 integrity=1 edible=true nutrition=9 restores=25 morale+2 stickiness=3 duration=90 single_use=true shelf_life=8 color=brown
+prosciutto: mass=0.2 integrity=1 edible=true nutrition=6 restores=12 charm+1 single_use=true shelf_life=0 shape=sheet color=pink
+polenta: mass=0.5 integrity=1 edible=true raw=true nutrition=6 restores=15 single_use=true shelf_life=0 color=yellow
+marmite: mass=0.25 integrity=1 edible=true nutrition=2 restores=10 morale+-1 strength+1 odor=7 duration=300 single_use=true shelf_life=0 color=black
+collation: mass=0.3 integrity=1 edible=true nutrition=4 restores=10 single_use=true shelf_life=10
+
+# noun drink
+must: mass=0.75 state=liquid edible=true nutrition=3 restores=10 single_use=true shelf_life=10 color=purple
+flip: mass=0.3 state=liquid edible=true nutrition=3 potency=3 courage+3 accuracy+-0.1 duration=240 single_use=true color=yellow
+vintage: mass=0.75 state=liquid edible=true nutrition=2 potency=5 courage+4 morale+3 charm+2 accuracy+-0.1 duration=400 single_use=true shelf_life=0 value=60 color=red
+spirits: mass=0.7 state=liquid edible=true nutrition=1 potency=7 courage+6 immune_fear=true accuracy+-0.25 duration=240 single_use=true shelf_life=0 flammability=7 color=gold
+manhattan: mass=0.15 state=liquid edible=true nutrition=1 potency=6 courage+5 charm+2 accuracy+-0.2 duration=240 single_use=true shelf_life=0 color=red
+collins: mass=0.3 state=liquid edible=true nutrition=1 potency=4 courage+3 temperature+-5 accuracy+-0.1 duration=240 single_use=true shelf_life=0 color=white
+generic: mass=0.35 state=liquid edible=true nutrition=2 single_use=true shelf_life=0
+marc: mass=0.7 state=liquid edible=true nutrition=1 potency=7 courage+5 immune_fear=true accuracy+-0.25 duration=240 single_use=true shelf_life=0 flammability=7 color=gold
+liquor: mass=0.7 state=liquid edible=true nutrition=1 potency=7 courage+6 immune_fear=true accuracy+-0.25 duration=240 single_use=true shelf_life=0 flammability=7 color=gold
+java: mass=0.3 state=liquid edible=true nutrition=0 attack_rate*1.3 speed_land*1.2 immune_sleep=true duration=300 single_use=true color=brown
+geneva: mass=0.7 state=liquid edible=true nutrition=1 potency=7 courage+5 immune_fear=true accuracy+-0.25 duration=240 single_use=true shelf_life=0 flammability=7 color=white
+champagne: mass=0.75 state=liquid edible=true nutrition=2 potency=4 morale+5 charm+3 courage+3 accuracy+-0.1 duration=300 single_use=true shelf_life=0 loudness=4 value=50 color=gold
+cocktail: mass=0.2 state=liquid edible=true nutrition=1 potency=5 courage+4 charm+2 accuracy+-0.15 duration=240 single_use=true shelf_life=0
+cola: mass=0.35 state=liquid edible=true nutrition=2 speed_land*1.15 immune_sleep=true duration=120 single_use=true shelf_life=0 color=brown
+beverage: mass=0.3 state=liquid edible=true nutrition=2 restores=8 single_use=true shelf_life=10
+gin: mass=0.7 state=liquid edible=true nutrition=1 potency=7 courage+5 immune_fear=true res_disease+0.2 accuracy+-0.25 duration=240 single_use=true shelf_life=0 flammability=7 color=white
+ale: mass=0.5 state=liquid edible=true nutrition=3 potency=3 courage+3 strength+1 accuracy+-0.1 duration=300 single_use=true shelf_life=0 plural_count=6 color=gold
+booze: mass=0.7 state=liquid edible=true nutrition=1 potency=6 courage+5 accuracy+-0.25 inflict_confuse+1 duration=240 single_use=true shelf_life=0 flammability=6 color=gold
+cocoa: mass=0.3 state=liquid temperature=60 edible=true nutrition=4 restores=15 morale+4 res_cold+0.5 duration=300 single_use=true shelf_life=0 color=brown
+brew: mass=0.5 state=liquid edible=true nutrition=2 potency=3 courage+3 accuracy+-0.1 duration=300 single_use=true shelf_life=0 color=brown
+whisky: mass=0.7 state=liquid edible=true nutrition=1 potency=7 courage+6 immune_fear=true accuracy+-0.25 duration=240 single_use=true shelf_life=0 flammability=7 color=brown
+rum: mass=0.7 state=liquid edible=true nutrition=1 potency=7 courage+6 immune_fear=true speed_water*1.2 accuracy+-0.25 duration=240 single_use=true shelf_life=0 flammability=7 color=brown
+bourbon: mass=0.7 state=liquid edible=true nutrition=1 potency=7 courage+6 immune_fear=true accuracy+-0.25 duration=240 single_use=true shelf_life=0 flammability=7 color=brown
+brandy: mass=0.7 state=liquid edible=true nutrition=1 potency=7 courage+5 res_cold+0.5 immune_fear=true accuracy+-0.2 duration=240 single_use=true shelf_life=0 flammability=7 color=brown
+cider: mass=0.5 state=liquid edible=true nutrition=3 potency=3 courage+2 morale+2 accuracy+-0.1 duration=240 single_use=true shelf_life=0 color=gold
+tequila: mass=0.7 state=liquid edible=true nutrition=1 potency=8 courage+7 immune_fear=true accuracy+-0.3 inflict_confuse+1 duration=240 single_use=true shelf_life=0 flammability=7 color=gold
+lemonade: mass=0.3 state=liquid edible=true nutrition=3 restores=10 temperature+-5 res_fire+0.2 morale+2 duration=120 single_use=true shelf_life=10 color=yellow
+mead: mass=0.5 state=liquid edible=true nutrition=4 potency=4 courage+5 strength+1 morale+3 accuracy+-0.15 duration=300 single_use=true shelf_life=0 color=gold
+sherry: mass=0.7 state=liquid edible=true nutrition=2 potency=5 courage+3 charm+1 accuracy+-0.1 duration=240 single_use=true shelf_life=0 color=gold
+tonic: mass=0.3 state=liquid edible=true nutrition=1 restores=10 res_disease+0.4 effect_status=poison duration=300 single_use=true shelf_life=0 color=white
+espresso: mass=0.05 state=liquid edible=true nutrition=0 attack_rate*1.5 speed_land*1.3 immune_sleep=true agility+2 duration=180 single_use=true shelf_life=0 color=black
+herbal: mass=0.3 state=liquid edible=true nutrition=0 restores=15 regeneration+1 effect_status=sleep,confuse duration=300 single_use=true shelf_life=0 color=green
+sling: mass=0.3 state=liquid edible=true nutrition=1 potency=4 courage+3 accuracy+-0.1 duration=240 single_use=true shelf_life=0 color=red
+margarita: mass=0.25 state=liquid edible=true nutrition=1 potency=5 courage+4 temperature+-5 accuracy+-0.15 duration=240 single_use=true shelf_life=0 color=green
+latte: mass=0.35 state=liquid edible=true nutrition=2 attack_rate*1.2 speed_land*1.1 immune_sleep=true morale+1 duration=300 single_use=true shelf_life=0 color=brown
+martini: mass=0.15 state=liquid edible=true nutrition=1 potency=6 courage+5 charm+3 accuracy+-0.2 duration=240 single_use=true shelf_life=0 color=white
+bubbly: mass=0.75 state=liquid edible=true nutrition=2 potency=4 morale+5 charm+3 courage+3 accuracy+-0.1 duration=300 single_use=true shelf_life=0 color=gold
+cordial: mass=0.3 state=liquid edible=true nutrition=3 restores=15 morale+2 charm+2 duration=180 single_use=true shelf_life=0 color=red
+bootleg: mass=0.7 state=liquid edible=true nutrition=1 potency=8 courage+6 toxicity=2 accuracy+-0.3 inflict_blind+3 duration=240 single_use=true shelf_life=0 flammability=8 color=white
+fizz: mass=0.3 state=liquid edible=true nutrition=2 speed_land*1.15 loudness=2 morale+2 duration=60 single_use=true shelf_life=0 color=white
+ade: mass=0.3 state=liquid edible=true nutrition=3 restores=10 temperature+-5 morale+1 duration=120 single_use=true shelf_life=10 color=yellow
+buttermilk: mass=1 state=liquid edible=true nutrition=4 restores=10 res_fire+0.2 effect_status=burn duration=120 single_use=true shelf_life=10 color=white
+stinger: mass=0.15 state=liquid edible=true nutrition=1 potency=6 courage+5 dmg_pierce+5 accuracy+-0.2 duration=240 single_use=true shelf_life=0 color=green
+cappuccino: mass=0.25 state=liquid edible=true nutrition=2 attack_rate*1.25 speed_land*1.15 immune_sleep=true morale+2 duration=300 single_use=true shelf_life=0 color=brown
+hock: mass=0.75 state=liquid edible=true nutrition=2 potency=4 courage+3 accuracy+-0.1 duration=300 single_use=true shelf_life=0 color=gold
+potable: mass=1 state=liquid edible=true nutrition=0 restores=5 water_need*0 duration=600 single_use=true shelf_life=0 transparency=1
+liqueur: mass=0.5 state=liquid edible=true nutrition=3 potency=5 courage+3 morale+3 accuracy+-0.15 duration=240 single_use=true shelf_life=0 flammability=6 color=green
+bock: mass=0.5 state=liquid edible=true nutrition=4 potency=4 courage+4 strength+1 accuracy+-0.15 duration=300 single_use=true shelf_life=0 color=brown
+vino: mass=0.75 state=liquid edible=true nutrition=2 potency=4 courage+4 morale+2 accuracy+-0.1 duration=300 single_use=true shelf_life=0 color=red
+cuppa: mass=0.3 state=liquid edible=true nutrition=0 restores=10 morale+3 regeneration+1 effect_status=confuse duration=300 single_use=true color=brown
+seltzer: mass=0.35 state=liquid edible=true nutrition=0 restores=5 effect_status=poison duration=60 single_use=true shelf_life=0 transparency=1
+homebrew: mass=0.5 state=liquid edible=true nutrition=2 potency=4 courage+3 toxicity=1 accuracy+-0.15 duration=300 single_use=true shelf_life=0 color=brown
+bitters: mass=0.1 state=liquid edible=true nutrition=0 potency=3 restores=5 effect_status=poison,confuse res_disease+0.2 duration=120 single_use=true shelf_life=0 color=red
+grog: mass=0.5 state=liquid edible=true nutrition=2 potency=5 courage+5 res_disease+0.3 accuracy+-0.2 duration=300 single_use=true shelf_life=0 color=brown
+rickey: mass=0.3 state=liquid edible=true nutrition=1 potency=4 courage+3 accuracy+-0.1 duration=240 single_use=true shelf_life=0 color=green
+decaf: mass=0.3 state=liquid edible=true nutrition=0 restores=5 morale+1 duration=120 single_use=true color=brown
+vermouth: mass=0.75 state=liquid edible=true nutrition=2 potency=4 courage+3 accuracy+-0.1 duration=240 single_use=true shelf_life=0 color=gold
+drinkable: mass=0.3 state=liquid edible=true nutrition=1 restores=5 single_use=true shelf_life=10
+hooch: mass=0.7 state=liquid edible=true nutrition=1 potency=8 courage+6 toxicity=2 accuracy+-0.3 inflict_confuse+2 duration=240 single_use=true shelf_life=0 flammability=8 color=white
+toddy: mass=0.3 state=liquid temperature=60 edible=true nutrition=2 potency=4 restores=20 res_cold+0.5 effect_status=sleep,poison courage+2 duration=300 single_use=true shelf_life=0 color=gold
+sidecar: mass=0.15 state=liquid edible=true nutrition=1 potency=6 courage+5 accuracy+-0.2 duration=240 single_use=true shelf_life=0 color=gold
+macon: mass=0.75 state=liquid edible=true nutrition=2 potency=4 courage+3 accuracy+-0.1 duration=300 single_use=true shelf_life=0 color=red
+
+# noun produce
+chips: mass=0.2 integrity=1 edible=true nutrition=5 restores=10 morale+2 water_need*1.3 duration=60 single_use=true shelf_life=30 plural_count=1 color=yellow
+fries: mass=0.2 integrity=1 edible=true nutrition=6 restores=12 morale+2 duration=60 single_use=true shelf_life=6 plural_count=1 color=yellow
+cherry: mass=0.008 height=4 integrity=1 alive=true diet=photosynthesis growth_time=15 edible=true nutrition=1 restores=3 morale+1 duration=60 single_use=true shelf_life=10 plural_count=20 color=red
+berry: mass=0.005 height=1 integrity=1 alive=true diet=photosynthesis growth_time=4 edible=true nutrition=1 restores=3 regeneration+1 duration=60 single_use=true shelf_life=8 plural_count=20 color=purple
+vegetable: mass=0.3 height=0.5 integrity=2 alive=true diet=photosynthesis growth_time=5 edible=true nutrition=3 restores=10 regeneration+1 duration=120 single_use=true shelf_life=15 placeable_on=field plural_count=6 color=green
+greens: mass=0.3 height=0.3 integrity=1 alive=true diet=photosynthesis growth_time=3 edible=true nutrition=2 restores=10 regeneration+1 res_disease+0.2 duration=180 single_use=true shelf_life=6 placeable_on=field plural_count=1 color=green
+peach: mass=0.15 height=4 integrity=1 alive=true diet=photosynthesis growth_time=15 edible=true nutrition=2 restores=10 morale+2 charm+1 duration=120 single_use=true shelf_life=10 plural_count=6 color=orange
+onion: mass=0.15 height=0.4 integrity=2 alive=true diet=photosynthesis growth_time=5 edible=true raw=true nutrition=2 restores=5 inflict_blind+3 res_disease+0.2 odor=6 duration=120 single_use=true shelf_life=40 placeable_on=field plural_count=6 color=white
+chile: mass=0.02 height=0.6 integrity=1 alive=true diet=photosynthesis growth_time=4 edible=true nutrition=0 dmg_fire+30 inflict_burn+2 res_cold+0.4 temperature+50 duration=60 single_use=true shelf_life=20 placeable_on=field plural_count=10 color=red
+chilli: mass=0.02 height=0.6 integrity=1 alive=true diet=photosynthesis growth_time=4 edible=true nutrition=0 dmg_fire+30 inflict_burn+2 res_cold+0.4 temperature+50 duration=60 single_use=true shelf_life=20 placeable_on=field plural_count=10 color=red
+chipotle: mass=0.01 integrity=1 edible=true nutrition=0 dmg_fire+30 inflict_burn+2 odor=4 duration=60 single_use=true shelf_life=0 plural_count=10 color=brown
+cos: mass=0.5 height=0.3 integrity=1 alive=true diet=photosynthesis growth_time=3 edible=true nutrition=1 restores=5 single_use=true shelf_life=6 placeable_on=field color=green
+romaine: mass=0.5 height=0.3 integrity=1 alive=true diet=photosynthesis growth_time=3 edible=true nutrition=1 restores=5 single_use=true shelf_life=6 placeable_on=field color=green
+lettuce: mass=0.5 height=0.3 integrity=1 alive=true diet=photosynthesis growth_time=3 edible=true nutrition=1 restores=5 sleep_need*1.2 single_use=true shelf_life=6 placeable_on=field color=green
+salmon: mass=4 integrity=2 edible=true raw=true nutrition=10 restores=25 speed_water*1.3 intelligence+1 duration=300 single_use=true shelf_life=5 color=pink
+cinnamon: mass=0.02 integrity=1 edible=true nutrition=0 morale+2 res_cold+0.2 odor=5 duration=120 single_use=true shelf_life=0 color=brown
+mustard: mass=0.2 integrity=1 edible=true nutrition=1 dmg_fire+10 inflict_blind+1 duration=60 single_use=true shelf_life=0 color=yellow
+vanilla: mass=0.01 integrity=1 edible=true nutrition=0 morale+2 charm+2 odor=4 duration=120 single_use=true shelf_life=0 color=white
+spice: mass=0.03 integrity=1 edible=true nutrition=0 dmg_fire+15 res_cold+0.2 odor=5 duration=60 single_use=true shelf_life=0 value=10 color=orange
+cereal: mass=0.4 height=1 integrity=2 alive=true diet=photosynthesis growth_time=5 edible=true raw=true nutrition=4 restores=8 single_use=true shelf_life=0 placeable_on=field plural_count=20 color=yellow
+popcorn: mass=0.05 integrity=1 edible=true nutrition=2 restores=4 morale+2 loudness=3 duration=60 single_use=true shelf_life=20 plural_count=1 color=white
+pineapple: mass=1.5 height=1 integrity=4 sharpness=2 alive=true diet=photosynthesis growth_time=12 edible=true nutrition=4 restores=15 regeneration+1 duration=120 single_use=true shelf_life=15 thorns=2 color=yellow
+rosemary: mass=0.02 height=0.8 integrity=1 alive=true diet=photosynthesis growth_time=4 edible=true restores=10 intelligence+1 sight_range*1.1 duration=300 single_use=true shelf_life=0 odor=5 plural_count=6 color=green
+walnut: mass=0.01 integrity=3 hardness=5 edible=true nutrition=2 restores=4 intelligence+2 duration=300 single_use=true shelf_life=0 plural_count=12 color=brown
+mango: mass=0.3 height=10 integrity=1 alive=true diet=photosynthesis growth_time=20 edible=true nutrition=3 restores=12 morale+2 duration=120 single_use=true shelf_life=10 plural_count=6 color=orange
+plum: mass=0.06 height=5 integrity=1 alive=true diet=photosynthesis growth_time=15 edible=true nutrition=1 restores=6 effect_status=poison duration=60 single_use=true shelf_life=10 plural_count=10 color=purple
+pea: mass=0.0003 height=1 integrity=1 alive=true diet=photosynthesis growth_time=3 edible=true raw=true nutrition=1 restores=2 single_use=true placeable_on=field plural_count=30 fertility=1 climb+1 color=green
+oyster: mass=0.1 integrity=4 hardness=6 edible=true raw=true nutrition=2 restores=8 toxicity=1 charm+2 courage+1 duration=300 single_use=true shelf_life=4 value=8 plural_count=12 color=gray
+almond: mass=0.001 height=6 integrity=1 alive=true diet=photosynthesis growth_time=15 edible=true nutrition=1 restores=3 strength+1 duration=120 single_use=true shelf_life=0 plural_count=30 color=brown
+rye: mass=1 height=1.2 integrity=2 alive=true diet=photosynthesis growth_time=5 edible=true raw=true cooks_into=bread nutrition=3 restores=5 res_cold+0.1 single_use=true placeable_on=field plural_count=20 color=brown
+raspberry: mass=0.004 height=1.5 integrity=1 alive=true diet=photosynthesis growth_time=5 edible=true nutrition=1 restores=4 regeneration+1 duration=60 single_use=true shelf_life=5 thorns=1 plural_count=20 color=red
+blackberry: mass=0.005 height=2 integrity=1 alive=true diet=photosynthesis growth_time=5 edible=true nutrition=1 restores=4 regeneration+1 duration=60 single_use=true shelf_life=5 thorns=2 spread_rate=0.2 plural_count=20 color=black
+blueberry: mass=0.002 height=1.2 integrity=1 alive=true diet=photosynthesis growth_time=5 edible=true nutrition=1 restores=4 intelligence+1 sight_range*1.1 duration=120 single_use=true shelf_life=8 plural_count=30 color=blue
+cranberry: mass=0.002 height=0.3 integrity=1 alive=true diet=photosynthesis growth_time=5 edible=true nutrition=1 restores=4 res_disease+0.3 effect_status=poison duration=120 single_use=true shelf_life=20 plural_count=30 color=red
+mulberry: mass=0.004 height=8 integrity=1 alive=true diet=photosynthesis growth_time=15 edible=true nutrition=1 restores=4 single_use=true shelf_life=5 plural_count=20 color=purple
+broccoli: mass=0.4 height=0.6 integrity=2 alive=true diet=photosynthesis growth_time=5 edible=true nutrition=2 restores=10 strength+1 res_disease+0.3 duration=300 single_use=true shelf_life=10 placeable_on=field color=green
+spinach: mass=0.3 height=0.3 integrity=1 alive=true diet=photosynthesis growth_time=3 edible=true nutrition=2 restores=10 strength+5 dmg_blunt*1.5 duration=120 single_use=true shelf_life=6 placeable_on=field color=green
+pear: mass=0.18 height=8 integrity=1 alive=true diet=photosynthesis growth_time=15 edible=true nutrition=2 restores=10 single_use=true shelf_life=12 plural_count=6 color=green
+chestnut: mass=0.01 height=20 integrity=3 alive=true diet=photosynthesis growth_time=30 edible=true raw=true nutrition=2 restores=5 res_cold+0.2 single_use=true shelf_life=40 thorns=2 plural_count=12 color=brown
+avocado: mass=0.2 height=10 integrity=1 alive=true diet=photosynthesis growth_time=20 edible=true nutrition=5 restores=12 regeneration+1 duration=180 single_use=true shelf_life=6 plural_count=4 color=green
+cucumber: mass=0.3 height=0.4 integrity=1 alive=true diet=photosynthesis growth_time=4 edible=true nutrition=1 restores=8 temperature+-10 res_fire+0.2 water_need*0.5 duration=120 single_use=true shelf_life=10 placeable_on=field climb+1 color=green
+watermelon: mass=8 height=0.4 integrity=6 alive=true diet=photosynthesis growth_time=8 edible=true nutrition=6 restores=30 water_need*0 temperature+-10 res_fire+0.3 duration=300 single_use=true shelf_life=20 placeable_on=field shape=round color=green
+melon: mass=1.5 height=0.3 integrity=3 alive=true diet=photosynthesis growth_time=8 edible=true nutrition=4 restores=15 water_need*0.5 duration=180 single_use=true shelf_life=15 placeable_on=field shape=round color=green
+kiwi: mass=0.08 height=5 integrity=1 alive=true diet=photosynthesis growth_time=10 edible=true nutrition=1 restores=6 res_disease+0.3 duration=120 single_use=true shelf_life=15 plural_count=6 color=green
+celery: mass=0.4 height=0.5 integrity=1 alive=true diet=photosynthesis growth_time=4 edible=true nutrition=0 restores=3 loudness=3 single_use=true shelf_life=15 placeable_on=field color=green
+veg: mass=0.3 height=0.5 integrity=2 alive=true diet=photosynthesis growth_time=5 edible=true nutrition=3 restores=10 regeneration+1 duration=120 single_use=true shelf_life=15 placeable_on=field plural_count=6 color=green
+veggie: mass=0.3 height=0.5 integrity=2 alive=true diet=photosynthesis growth_time=5 edible=true nutrition=3 restores=10 regeneration+1 duration=120 single_use=true shelf_life=15 placeable_on=field plural_count=6 color=green
+parsley: mass=0.02 height=0.3 integrity=1 alive=true diet=photosynthesis growth_time=3 edible=true restores=8 odor+-3 duration=120 single_use=true plural_count=6 color=green
+asparagus: mass=0.02 height=1 integrity=1 alive=true diet=photosynthesis growth_time=10 edible=true raw=true nutrition=1 restores=5 single_use=true shelf_life=6 placeable_on=field plural_count=12 shape=long color=green
+saffron: mass=0.001 integrity=1 edible=true nutrition=0 morale+3 charm+2 duration=300 single_use=true shelf_life=0 value=200 color=orange
+cauliflower: mass=0.6 height=0.5 integrity=2 alive=true diet=photosynthesis growth_time=5 edible=true raw=true nutrition=2 restores=8 single_use=true shelf_life=10 placeable_on=field color=white
+grapefruit: mass=0.4 height=6 integrity=1 alive=true diet=photosynthesis growth_time=15 edible=true nutrition=2 restores=10 res_disease+0.3 effect_status=poison duration=120 single_use=true shelf_life=20 plural_count=4 color=pink
+citrus: mass=0.15 integrity=1 edible=true nutrition=2 restores=8 res_disease+0.3 effect_status=poison duration=120 single_use=true shelf_life=20 plural_count=6 color=orange
+lime: mass=0.06 integrity=1 edible=true nutrition=1 restores=5 res_disease+0.4 effect_status=poison duration=120 single_use=true shelf_life=20 plural_count=6 color=green
+sprout: mass=0.01 height=0.1 integrity=1 alive=true diet=photosynthesis growth_time=1 edible=true nutrition=1 restores=4 growth*1.2 single_use=true shelf_life=5 plural_count=12 color=green
+dill: mass=0.02 height=0.8 integrity=1 alive=true diet=photosynthesis growth_time=3 edible=true restores=8 effect_status=poison duration=60 single_use=true plural_count=6 color=green
+thyme: mass=0.02 height=0.3 integrity=1 alive=true diet=photosynthesis growth_time=3 edible=true restores=10 courage+3 res_disease+0.2 duration=300 single_use=true plural_count=6 color=green
+peppermint: mass=0.02 height=0.5 integrity=1 alive=true diet=photosynthesis growth_time=2 edible=true restores=10 effect_status=confuse,sleep temperature+-5 duration=60 spread_rate=0.3 single_use=true plural_count=6 color=green
+soybean: mass=0.0002 height=1 integrity=1 alive=true diet=photosynthesis growth_time=4 edible=true raw=true cooks_into=tofu nutrition=2 restores=3 fertility=2 single_use=true placeable_on=field plural_count=30 color=yellow
+soy: mass=0.0002 height=1 integrity=1 alive=true diet=photosynthesis growth_time=4 edible=true raw=true cooks_into=tofu nutrition=2 restores=3 fertility=2 single_use=true placeable_on=field plural_count=30 color=yellow
+savoy: mass=1 height=0.4 integrity=3 alive=true diet=photosynthesis growth_time=5 edible=true nutrition=3 restores=8 res_cold+0.2 single_use=true shelf_life=20 placeable_on=field color=green
+beet: mass=0.2 height=0.3 integrity=2 alive=true diet=photosynthesis growth_time=4 edible=true nutrition=2 restores=8 speed_land*1.1 duration=120 single_use=true shelf_life=30 placeable_on=field color=purple
+yam: mass=1 height=2 integrity=3 alive=true diet=photosynthesis growth_time=8 edible=true raw=true nutrition=5 restores=10 single_use=true shelf_life=40 placeable_on=field color=orange
+nutmeg: mass=0.005 integrity=2 edible=true nutrition=0 morale+1 potency=2 inflict_confuse+1 duration=60 single_use=true shelf_life=0 odor=5 color=brown
+cob: mass=0.3 integrity=2 edible=true raw=true cooks_into=popcorn nutrition=3 restores=8 single_use=true shelf_life=10 shape=long color=yellow
+raisin: mass=0.001 integrity=1 edible=true nutrition=1 restores=2 speed_land*1.05 duration=60 single_use=true shelf_life=0 plural_count=30 color=brown
+prune: mass=0.01 integrity=1 edible=true nutrition=1 restores=3 effect_status=poison duration=60 single_use=true shelf_life=0 plural_count=12 color=black
+eggplant: mass=0.4 height=0.8 integrity=2 alive=true diet=photosynthesis growth_time=5 edible=true raw=true nutrition=2 restores=6 single_use=true shelf_life=12 placeable_on=field color=purple
+cumin: mass=0.01 integrity=1 edible=true nutrition=0 res_disease+0.2 odor=5 morale+1 duration=120 single_use=true shelf_life=0 color=brown
+rhubarb: mass=0.3 height=0.6 integrity=1 alive=true diet=photosynthesis growth_time=5 edible=true raw=true nutrition=1 restores=4 toxicity=2 single_use=true shelf_life=10 placeable_on=field color=red
+radish: mass=0.03 height=0.2 integrity=1 alive=true diet=photosynthesis growth_time=2 edible=true nutrition=1 restores=4 dmg_fire+5 single_use=true shelf_life=15 placeable_on=field plural_count=10 color=red
+lentil: mass=0.0001 height=0.4 integrity=1 alive=true diet=photosynthesis growth_time=4 edible=true raw=true nutrition=2 restores=5 strength+1 fertility=2 duration=120 single_use=true placeable_on=field plural_count=30 color=brown
+tater: mass=0.2 height=0.6 integrity=2 alive=true diet=photosynthesis growth_time=5 edible=true raw=true nutrition=4 restores=8 single_use=true shelf_life=40 placeable_on=field plural_count=6 color=brown
+spud: mass=0.2 height=0.6 integrity=2 alive=true diet=photosynthesis growth_time=5 edible=true raw=true nutrition=4 restores=8 single_use=true shelf_life=40 placeable_on=field plural_count=6 color=brown
+squash: mass=2 height=0.5 integrity=5 alive=true diet=photosynthesis growth_time=7 edible=true raw=true nutrition=5 restores=10 single_use=true shelf_life=40 placeable_on=field climb+1 color=yellow
+tuna: mass=10 integrity=3 edible=true raw=true nutrition=14 restores=35 speed_water*1.5 strength+1 duration=180 single_use=true shelf_life=5 color=red
+cod: mass=3 integrity=2 edible=true raw=true nutrition=8 restores=20 res_cold+0.2 single_use=true shelf_life=5 color=white
+poultry: mass=1.5 integrity=2 edible=true raw=true nutrition=10 restores=25 toxicity=2 single_use=true shelf_life=6 color=pink
+fowl: mass=1.5 integrity=2 edible=true raw=true nutrition=10 restores=25 toxicity=2 single_use=true shelf_life=6 color=pink
+clam: mass=0.05 integrity=4 hardness=6 edible=true raw=true nutrition=1 restores=5 toxicity=1 armor+1 duration=60 single_use=true shelf_life=5 plural_count=12 color=white
+apricot: mass=0.04 height=5 integrity=1 alive=true diet=photosynthesis growth_time=15 edible=true nutrition=1 restores=5 sight_range*1.1 duration=120 single_use=true shelf_life=10 plural_count=10 color=orange
+fig: mass=0.05 height=5 integrity=1 alive=true diet=photosynthesis growth_time=15 edible=true nutrition=2 restores=6 single_use=true shelf_life=8 plural_count=10 color=purple
+olive: mass=0.005 height=6 integrity=1 alive=true diet=photosynthesis growth_time=20 edible=true nutrition=1 restores=3 regeneration+1 duration=60 single_use=true shelf_life=0 plural_count=20 color=green
+nut: mass=0.005 integrity=3 hardness=5 edible=true nutrition=1 restores=3 strength+1 duration=60 single_use=true shelf_life=0 plural_count=20 color=brown
+peanut: mass=0.001 height=0.4 integrity=1 alive=true diet=photosynthesis growth_time=5 edible=true nutrition=1 restores=2 dmg_poison+5 single_use=true shelf_life=0 placeable_on=field plural_count=30 fertility=2 color=brown
+cashew: mass=0.002 integrity=1 edible=true nutrition=1 restores=3 morale+1 duration=60 single_use=true shelf_life=0 plural_count=30 color=white
+pistachio: mass=0.001 integrity=2 edible=true nutrition=1 restores=2 morale+1 duration=60 single_use=true shelf_life=0 plural_count=30 color=green
+hazelnut: mass=0.002 integrity=2 hardness=5 edible=true nutrition=1 restores=3 duration=60 single_use=true shelf_life=0 plural_count=30 color=brown
+acorn: mass=0.005 integrity=2 hardness=4 edible=true raw=true nutrition=1 restores=1 toxicity=2 single_use=true shelf_life=0 plural_count=20 color=brown
+oat: mass=0.5 height=1 integrity=2 alive=true diet=photosynthesis growth_time=5 edible=true raw=true cooks_into=porridge nutrition=3 restores=6 strength+1 duration=120 single_use=true placeable_on=field plural_count=20 color=yellow
+shrimp: mass=0.02 integrity=1 edible=true raw=true nutrition=1 restores=5 toxicity=1 single_use=true shelf_life=5 plural_count=12 color=pink
+chuck: mass=1.5 integrity=2 edible=true raw=true nutrition=12 restores=28 strength+1 toxicity=1 duration=120 single_use=true shelf_life=6 color=red
+dressing: mass=0.2 state=liquid edible=true nutrition=2 restores=3 nutrition*1.2 morale+1 single_use=true shelf_life=0 color=white
+filling: mass=0.3 integrity=1 edible=true nutrition=4 restores=8 single_use=true shelf_life=10
+mash: mass=0.4 integrity=1 edible=true nutrition=6 restores=15 res_cold+0.2 single_use=true shelf_life=8 color=white
+wafer: mass=0.01 integrity=1 brittleness=9 edible=true nutrition=1 restores=2 single_use=true shelf_life=0 shape=flat plural_count=12 color=yellow
+gelatin: mass=0.1 integrity=1 elasticity=8 edible=true nutrition=1 restores=3 single_use=true shelf_life=0 color=white
+bran: mass=0.2 integrity=1 edible=true nutrition=2 restores=5 regeneration+1 duration=300 single_use=true shelf_life=0 color=brown
+licorice: mass=0.02 integrity=1 elasticity=6 edible=true nutrition=1 restores=3 morale+1 shape=long duration=60 single_use=true shelf_life=0 plural_count=10 color=black
+sherbet: mass=0.2 integrity=1 edible=true nutrition=2 restores=8 temperature=-10 res_fire+0.3 temperature+-10 effect_status=burn duration=90 single_use=true shelf_life=0 melting_point=0 color=orange
+icecream: mass=0.2 integrity=1 edible=true nutrition=4 restores=10 morale+4 temperature=-15 res_fire+0.4 temperature+-15 effect_status=burn duration=90 single_use=true shelf_life=0 melting_point=0 color=white
+nectar: mass=0.1 state=liquid edible=true nutrition=4 restores=40 regeneration+3 morale+3 charm+2 duration=180 single_use=true shelf_life=0 color=gold
+whey: mass=0.5 state=liquid edible=true nutrition=3 restores=8 strength+2 duration=300 single_use=true shelf_life=10 color=white
+sinker: mass=0.07 integrity=1 edible=true nutrition=4 restores=8 speed_water*0.8 single_use=true shelf_life=10 color=brown
+grain: mass=1 height=1 integrity=2 alive=true diet=photosynthesis growth_time=5 edible=true raw=true cooks_into=bread nutrition=3 restores=5 single_use=true shelf_life=0 placeable_on=field plural_count=20 color=yellow
+mixture: mass=0.5 state=liquid edible=true raw=true cooks_into=cake nutrition=2 single_use=true shelf_life=8 color=yellow
+
+# noun drink
+lager: mass=0.5 state=liquid edible=true nutrition=2 potency=3 courage+3 temperature+-5 accuracy+-0.1 duration=300 single_use=true shelf_life=0 plural_count=6 color=gold
+
+# noun medicine
+elixir: mass=0.2 state=liquid edible=true potency=9 restores=300 regeneration+4 effect_status=poison,bleed,burn,fear duration=120 single_use=true shelf_life=0 value=80 color=gold
+
+# noun liquid
+brine: mass=1 state=liquid edible=true nutrition=0 wetness=8 corrosiveness=1 shelf_life*0 water_need+0.5 counters=rotten,mold single_use=true shelf_life=0 color=white
+
+# adjective quality
+bitter: nutrition*0.8 morale+-1 toxicity+1 res_poison+0.2 counters=sweet
+salty: shelf_life*0 water_need*1.5 nutrition*1.1 color=white
+savory: nutrition*1.3 restores*1.3 morale+2 odor+2
+tasty: nutrition*1.3 restores*1.3 morale+2 charm+1
+juicy: restores*1.4 water_need*0.7 wetness+3 nutrition*1.1
+crispy: brittleness+4 loudness+2 morale+1 nutrition*1.1
+greasy: slipperiness+5 flammability+3 nutrition*1.2 restores*0.9
+tender: restores*1.3 integrity*0.7 nutrition*1.1
+moldy: toxicity+4 nutrition*0.4 restores*0.3 odor+4 inflict_poison+10 color=green produce_U+0.1
+spoiled: toxicity+5 nutrition*0.2 restores*0 odor+6 value*0 color=green
+gourmet: nutrition*1.6 restores*1.6 morale+4 charm+3 value*5
+homemade: restores*1.5 morale+3 loyalty+1 value*1.5
+leftover: nutrition*0.8 restores*0.8 shelf_life*0.5 toxicity+1 value*0.5
+bland: morale+-1 charm+-1 odor*0 nutrition*0.9
+zesty: dmg_fire+10 morale+2 speed_land*1.1 odor+2
+tangy: morale+1 res_disease+0.1 inflict_confuse+1
+hearty: nutrition*1.5 restores*1.6 strength+1 res_cold+0.2 mass*1.3
+nutritious: nutrition*1.6 restores*1.3 regeneration+1
+nourishing: nutrition*1.5 restores*1.5 regeneration+1
+ripe: nutrition*1.3 restores*1.3 shelf_life*0.5 odor+2
+stout: mass*1.4 integrity*1.4 strength+1 speed_land*0.9
+famished: food_need*2 strength+-1 aggression+3 morale+-2
+starving: food_need*3 strength+-2 aggression+4 morale+-3 dmg_hunger+5
+thirsty: water_need*2 morale+-1 speed_land*0.9
+smoky: odor+5 visibility*0.8 stealth+1 shelf_life*2 color=gray
+soggy: wetness+5 brittleness*0.3 morale+-1 nutrition*0.8 flammability*0.3
+
+# adjective participle
+seasoned: nutrition*1.3 morale+1 odor+2 training+2
+stuffed: mass*1.5 nutrition*1.5 restores*1.3 speed_land*0.8 food_need*0
+glazed: shelf_life*1.5 beauty+2 slipperiness+3 reflectivity+2 nutrition*1.1
+melted: state=liquid integrity*0.3 shape=pile hardness*0.2
+sizzling: temperature+150 dmg_fire+15 loudness+2 odor+3
+steaming: temperature+80 dmg_fire+5 res_cold+0.3 odor+2
+
+# verb create
+simmer: duration=40 temperature+200 regeneration+1 odor+3
+steam: duration=20 temperature+200 wetness+3 visibility*0.7 res_cold+0.3
+poach: duration=20 temperature+200 wetness+3
+sear: duration=8 temperature+400 dmg_fire+25 luminosity+2
+saute: duration=12 temperature+300 dmg_fire+10 agility+1
+broil: duration=15 temperature+400 dmg_fire+20 luminosity+3
+braise: duration=40 temperature+250 regeneration+1 wetness+2
+scramble: duration=10 temperature+200 inflict_confuse+2 agility+2
+marinate: duration=60 odor+3 res_fire+0.2
+ferment: duration=120 potency+3 odor+5 toxicity+1
+churn: duration=30 strength+1 labor+2
+knead: duration=30 strength+2 labor+2
+stir: duration=20 temperature+150 labor+1
+whisk: duration=15 attack_rate*1.2 agility+1
+grate: duration=10 dmg_slash+10 sharpness+2
+dice: duration=10 dmg_slash+15 attack_rate*1.3
+melt: duration=20 temperature+500 dmg_fire+20 luminosity+2
+thaw: duration=30 temperature+30 res_cold+0.5 effect_status=freeze
+
+# verb transform
+preserve: duration=600 shelf_life*0 decay_rate*0 res_disease+0.3
+
+# verb consume
+chew: duration=10 restores+5 dmg_pierce+5
+devour: duration=10 restores+40 lifesteal+0.3 food_need*0 aggression+2
+gobble: duration=6 restores+20 food_need*0 loudness+3
+nibble: duration=20 restores+3 stealth+1
+gulp: duration=5 restores+10 water_need*0
+guzzle: duration=8 restores+15 water_need*0 potency+2 accuracy+-0.1
+sip: duration=20 restores+5 morale+1 charm+1
+quaff: duration=8 restores+15 courage+3 morale+2
+munch: duration=15 restores+10 loudness+2 morale+1
+dine: duration=60 restores+40 morale+3 charm+2 regeneration+1
+puff: duration=15 potency+2 odor+3 visibility*0.9
+
+# noun food
+tart: mass=0.15 integrity=1 edible=true nutrition=5 restores=10 morale+2 duration=60 single_use=true shelf_life=12 color=red
+brownie: mass=0.06 integrity=1 edible=true nutrition=4 restores=8 morale+3 duration=90 single_use=true shelf_life=15 plural_count=6 color=brown
+macaroni: mass=0.5 integrity=1 edible=true raw=true nutrition=5 restores=12 single_use=true shelf_life=0 color=yellow
+taco: mass=0.15 integrity=1 edible=true nutrition=6 restores=15 dmg_fire+10 morale+2 duration=60 single_use=true shelf_life=6 plural_count=3 color=yellow
+dahl: mass=0.4 state=liquid edible=true nutrition=8 restores=25 strength+1 res_cold+0.2 duration=120 single_use=true shelf_life=8 color=yellow
+chop: mass=0.25 integrity=1 edible=true raw=true nutrition=7 restores=18 strength+1 toxicity=1 duration=90 single_use=true shelf_life=6 color=pink
+wrap: mass=0.25 integrity=1 edible=true nutrition=7 restores=18 single_use=true shelf_life=8 color=yellow
+dish: mass=0.6 integrity=1 edible=true nutrition=10 restores=25 morale+2 duration=60 single_use=true shelf_life=8
+relish: mass=0.2 integrity=1 edible=true nutrition=1 restores=3 morale+2 duration=60 single_use=true shelf_life=0 color=green
+delicacy: mass=0.1 integrity=1 edible=true nutrition=4 restores=20 morale+4 charm+3 duration=180 single_use=true shelf_life=8 value=50
+ingredient: mass=0.2 integrity=1 edible=true raw=true nutrition=1 single_use=true shelf_life=15
+banquet: mass=20 integrity=10 edible=true nutrition=15 restores=200 morale+5 charm+3 field_radius=12 field_targets=allies field_property=regeneration field_delta=3 field_duration=10 single_use=true shelf_life=10 recruit_rate=1 portable=false
+buffet: mass=15 integrity=8 edible=true nutrition=15 restores=150 morale+4 field_radius=10 field_targets=allies field_property=regeneration field_delta=2 field_duration=8 single_use=true shelf_life=10 portable=false
+
+# noun produce
+kale: mass=0.3 height=0.5 integrity=2 alive=true diet=photosynthesis growth_time=4 edible=true nutrition=2 restores=10 strength+1 res_cold+0.3 duration=300 single_use=true shelf_life=10 placeable_on=field color=green
+swede: mass=0.8 height=0.4 integrity=3 alive=true diet=photosynthesis growth_time=6 edible=true raw=true nutrition=4 restores=8 res_cold+0.2 single_use=true shelf_life=40 placeable_on=field color=purple
+cole: mass=1 height=0.4 integrity=3 alive=true diet=photosynthesis growth_time=5 edible=true nutrition=3 restores=8 single_use=true shelf_life=20 placeable_on=field color=green
+
+# noun drink
+scotch: mass=0.7 state=liquid edible=true nutrition=1 potency=7 courage+6 res_cold+0.5 immune_fear=true accuracy+-0.25 duration=240 single_use=true shelf_life=0 flammability=7 value=30 color=brown
+smoothie: mass=0.4 state=liquid edible=true nutrition=5 restores=15 regeneration+1 speed_land*1.1 duration=120 single_use=true shelf_life=4 color=pink
+
+# verb create
+glaze: duration=20 reflectivity+3 slipperiness+3 beauty+2
+
+# noun device
+cauldron: mass=40 integrity=250 material=iron temperature=200 volume=0.2 upkeep_fuel=0.05 portable=false dmg_fire=5 container_slots=6 color=black
+skillet: mass=2.5 length=0.4 integrity=120 hardness=6 material=iron temperature=200 upkeep_fuel=0.02 equip_slot=held hands_required=1 dmg_blunt=30 inflict_stun=1 attack_rate=0.8 attack_range=1 color=black
+wok: mass=1.5 length=0.4 integrity=90 material=steel temperature=300 upkeep_fuel=0.03 equip_slot=held hands_required=1 dmg_blunt=25 block=0.3 attack_rate=0.8 color=black
+kettle: mass=1.2 integrity=60 material=steel temperature=100 volume=0.002 upkeep_fuel=0.01 loudness=5 dmg_fire=8 color=silver
+
+# noun tool
+ladle: mass=0.3 length=0.35 integrity=40 material=steel equip_slot=held hands_required=1 dmg_blunt=8 attack_rate=1.2 color=silver
+spatula: mass=0.15 length=0.3 integrity=25 material=steel shape=flat equip_slot=held hands_required=1 dmg_blunt=6 knockback=1 attack_rate=1.5 color=silver
+cleaver: mass=0.8 length=0.3 integrity=70 hardness=7 sharpness=8 material=steel equip_slot=held hands_required=1 dmg_slash=45 attack_rate=0.9 attack_range=0.8 siege=1.2 color=silver
+tray: mass=0.5 integrity=20 material=steel shape=flat equip_slot=held hands_required=1 block=0.3 dmg_blunt=8 container_slots=6 color=silver
+platter: mass=1 integrity=20 brittleness=7 material=ceramic shape=flat container_slots=8 beauty=4 color=white
+
+# noun container
+jug: mass=1 integrity=15 brittleness=7 material=clay volume=0.004 container_slots=1 color=brown
+mug: mass=0.35 integrity=15 brittleness=6 material=ceramic volume=0.0004 container_slots=1 dmg_blunt=5 color=white
+pitcher: mass=0.8 integrity=10 brittleness=8 material=glass volume=0.002 container_slots=1 transparency=0.8
+flask: mass=0.3 integrity=25 material=steel volume=0.0005 container_slots=1 equip_slot=neck color=silver
+keg: mass=60 integrity=80 material=wood,steel volume=0.05 container_slots=1 portable=true flammability=3 color=brown
+cask: mass=70 integrity=80 material=wood volume=0.2 container_slots=1 flammability=3 shape=round color=brown
+jar: mass=0.4 integrity=10 brittleness=8 material=glass volume=0.001 container_slots=1 transparency=0.9 shelf_life*0
+can: mass=0.05 integrity=15 material=tin volume=0.0004 container_slots=1 shelf_life*0 color=silver
+canteen: mass=0.5 integrity=40 material=steel volume=0.001 container_slots=1 water_output=0.1 equip_slot=neck color=green
+cooler: mass=4 integrity=40 material=plastic volume=0.05 container_slots=8 temperature=4 shelf_life*3 color=blue
+
+# noun structure
+hearth: mass=4000 footprint=1 integrity=2000 material=stone portable=false temperature=500 luminosity=5 regeneration+1 morale+2 res_cold+0.3 upkeep_fuel=0.05 color=orange
+smokehouse: mass=5000 footprint=2 integrity=800 material=wood portable=false enterable=true temperature=150 odor=7 shelf_life*0 food_output=4 upkeep_fuel=0.1 color=brown
+pantry: mass=2000 footprint=1 integrity=600 material=wood portable=false enterable=true storage_objects=200 security=3 food_output=2 color=brown
+larder: mass=2000 footprint=1 integrity=600 material=stone portable=false enterable=true temperature=8 storage_objects=200 security=3 shelf_life*2 color=gray
+cellar: mass=20000 footprint=2 integrity=3000 material=stone portable=false enterable=true depth=3 temperature=10 storage_objects=1000 security=5 cover=0.8 shelf_life*3 color=gray
+brewery: mass=20000 footprint=6 integrity=2500 material=brick portable=false enterable=true temperature=100 odor=6 food_output=4 craft_slots=2 upkeep_fuel=0.2 production_needs=labor,water morale+1
+distillery: mass=20000 footprint=6 integrity=2500 material=brick,copper portable=false enterable=true temperature=150 flammability=6 food_output=2 craft_slots=2 upkeep_fuel=0.3 production_needs=labor,water
+winery: mass=15000 footprint=6 integrity=2000 material=stone,wood portable=false enterable=true food_output=3 craft_slots=2 production_needs=labor,harvest charm+1
+dairy: mass=10000 footprint=6 integrity=1500 material=wood portable=false enterable=true food_output=8 production_needs=labor odor=4 color=white
+cafe: mass=10000 footprint=3 integrity=1200 material=brick portable=false enterable=true occupants=12 temperature=150 food_output=5 morale+2 charm+2 upkeep_fuel=0.05
+diner: mass=12000 footprint=4 integrity=1500 material=steel portable=false enterable=true occupants=20 temperature=200 food_output=8 morale+2 upkeep_fuel=0.1 luminosity=4
+tavern: mass=15000 footprint=4 integrity=1800 material=wood,stone portable=false enterable=true occupants=30 food_output=6 morale+3 courage+2 recruit_rate=1 loudness=5 upkeep_fuel=0.05
+inn: mass=25000 footprint=6 integrity=2500 material=wood,stone portable=false enterable=true occupants=40 food_output=6 regeneration+2 morale+2 recruit_rate=0.5 upkeep_fuel=0.05
+
+# noun worker
+bartender: mass=75 height=1.75 integrity=100 alive=true sentient=true hands=true speech=true diet=omnivore speed_land=4 charm=4 trade_bonus=0.1 morale+2 intelligence=5
+brewer: mass=80 height=1.75 integrity=100 alive=true sentient=true hands=true speech=true diet=omnivore speed_land=4 labor=4 food_output=1 strength=6
+vintner: mass=75 height=1.75 integrity=100 alive=true sentient=true hands=true speech=true diet=omnivore speed_land=4 labor=3 food_output=1 charm=3 trade_bonus=0.1
+grocer: mass=75 height=1.75 integrity=100 alive=true sentient=true hands=true speech=true diet=omnivore speed_land=4 trade_bonus=0.2 food_output=2 storage_objects=100
+waiter: mass=70 height=1.75 integrity=100 alive=true sentient=true hands=true speech=true diet=omnivore speed_land=6 agility=6 carry_capacity=15 charm=2 morale+1
+waitress: mass=65 height=1.7 integrity=100 alive=true sentient=true hands=true speech=true diet=omnivore speed_land=6 agility=6 carry_capacity=15 charm=2 morale+1
