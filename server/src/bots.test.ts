@@ -64,6 +64,24 @@ it("a bot attacks a player who comes near", async () => {
   expect(me.hp).toBeLessThan(1e6);
 });
 
+it("a hard bot puts out a fire set on it with a counter-word", async () => {
+  const room = (await colyseus.createRoom("world", { bots: 1, difficulty: "hard" })) as unknown as WorldRoom;
+  const a = await join(room);
+  const botId = bots(room)[0]![0];
+  const bot = walkers(room).get(botId), me = walkers(room).get(a.sessionId);
+  me.player.x = bot.player.x + 1; me.player.y = bot.player.y;
+  me.letters = { f: 1, i: 1, r: 1, e: 1 };
+  bot.letters = { r: 1, a: 1, i: 1, n: 1 };
+  bot.hp = 1e6; room.rebuild(bot);
+  a.send("pick", { x: bot.player.x, y: bot.player.y });
+  a.send("spell", "fire");
+  await wait();
+  expect([...room.state.zones.values()].map((z) => z.word)).toContain("fire");
+  for (let i = 0; i < 10; i++) room.update(0.1);
+  expect([...room.state.zones.values()].map((z) => z.word)).not.toContain("fire");
+  expect(bot.letters.n ?? 0).toBe(0); // it spelled RAIN
+});
+
 it("a round of ten bots and no humans runs to a winner", async () => {
   WorldRoom.testSeed = 12345;
   const room = (await colyseus.createRoom("world", { bots: 10, difficulty: "hard" })) as unknown as WorldRoom;

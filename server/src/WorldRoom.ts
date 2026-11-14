@@ -155,6 +155,8 @@ interface Walker {
   route: Point[];
   routeTo: Point | null;
   routeAge: number;
+  /** Searches in a row whose route it could not walk; it gives up its target after a few. */
+  blocked?: number;
   speed: number;
   /** Sight range in tiles. */
   sight: number;
@@ -843,12 +845,11 @@ export class WorldRoom extends Room {
       if (word.use === "event") w.picked = null;
     }
 
-    // Pinned against a corner it cannot pass: back to the middle of its tile, and choose again.
+    // Not getting anywhere for two seconds (a speed of nothing, a crowd): choose somewhere else.
     const moved = Math.hypot(w.player.x - mind.at.x, w.player.y - mind.at.y);
     mind.at = { x: w.player.x, y: w.player.y };
     if (w.target && !w.foe && moved < 0.05 && w.hamper.moves) {
-      const centre = { x: Math.floor(w.player.x) + 0.5, y: Math.floor(w.player.y) + 0.5 };
-      if (++mind.stuck >= 2) { w.target = null; w.route = []; w.routeTo = null; mind.stuck = 0; w.player.x = centre.x; w.player.y = centre.y; }
+      if (++mind.stuck >= 4) { w.target = null; w.route = []; w.routeTo = null; mind.stuck = 0; }
     } else mind.stuck = 0;
 
     if (w.foe || w.gathering > 0 || w.target) return;
@@ -1293,9 +1294,18 @@ export class WorldRoom extends Room {
       const arrived = stepToward(this.map, w.player, leg, w.speed, left);
       if (!arrived) return;
       if (Math.hypot(w.player.x - leg.x, w.player.y - leg.y) > 1e-3) {
-        w.routeTo = null; // blocked short of the waypoint: work the route out again next tick
+        // Blocked short of the waypoint (a corner it cannot cut): first to the middle of its own
+        // tile, from where the route's legs are clear. Already there: search again, and give up
+        // after a few searches that lead nowhere rather than search every tick.
+        const centre = { x: Math.floor(w.player.x) + 0.5, y: Math.floor(w.player.y) + 0.5 };
+        if (Math.hypot(w.player.x - centre.x, w.player.y - centre.y) > 1e-3) w.route.unshift(centre);
+        else {
+          w.routeTo = null;
+          if ((w.blocked = (w.blocked ?? 0) + 1) >= 3) { w.target = null; w.route = []; w.blocked = 0; }
+        }
         return;
       }
+      w.blocked = 0;
       w.route.shift();
       // Spend what is left of the tick on the next leg.
       const used = Math.hypot(w.player.x - before.x, w.player.y - before.y);
