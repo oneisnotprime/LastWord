@@ -143,63 +143,63 @@ scratching: placement=target event_target=tile event_duration=1 placement_range=
 clap: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=10 loudness=7 dmg_sonic=5 inflict_stun=1 inflict_confuse=1 counters=bat,ghost
 roaring: placement=target event_target=tile event_duration=1 placement_range=100 event_radius=40 loudness=10 dmg_sonic=25 inflict_fear=6 inflict_deaf=3 courage+-4 counters=silence
 bong: placement=target event_target=tile event_duration=1 placement_range=100 event_radius=30 loudness=8 dmg_sonic=12 inflict_deaf=3 inflict_stun=1
-dripping: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=4 event_duration=10 loudness=2 wetness+3 inflict_confuse=1 morale+-1
-ticking: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=6 event_duration=5 loudness=2 inflict_fear=2 morale+-1
+dripping: placement=target event_target=tile placement_range=40 event_radius=4 event_duration=10 loudness=2 wetness+3 inflict_confuse=1 morale+-1
+ticking: placement=target event_target=tile placement_range=40 event_radius=6 event_duration=5 loudness=2 inflict_fear=2 morale+-1
 beep: placement=target event_target=tile event_duration=1 placement_range=100 event_radius=20 loudness=6 alarm=true inflict_confuse=1
 rumble: placement=target event_target=tile event_duration=1 placement_range=200 event_radius=40 loudness=8 dmg_earth=30 dmg_sonic=10 inflict_fear=3 inflict_stun=1 movement_cost=1.5
 whack: placement=target event_duration=1 placement_range=10 event_target=character event_radius=0 loudness=7 dmg_blunt=50 inflict_stun=2 knockback=2
-whispering: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=15 event_duration=2 loudness=1 inflict_fear=2 inflict_confuse=2 loyalty+-2 stealth+2
+whispering: placement=target event_target=tile placement_range=40 event_radius=15 event_duration=2 loudness=1 inflict_fear=2 inflict_confuse=2 loyalty+-2 stealth+2
 scrape: placement=target event_target=tile event_duration=1 placement_range=20 event_radius=3 loudness=5 dmg_slash=10 inflict_bleed=3 morale+-1
 peep: placement=target event_target=tile event_duration=1 placement_range=30 event_radius=5 loudness=2 inflict_charm=1
-chatter: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=20 event_duration=2 loudness=5 inflict_confuse=2 accuracy+-0.1 stealth+-2
+chatter: placement=target event_target=tile placement_range=60 event_radius=20 event_duration=2 loudness=5 inflict_confuse=2 accuracy+-0.1 stealth+-2
 ting: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=10 loudness=4 alarm=true
 rattling: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=15 loudness=6 inflict_fear=2 inflict_confuse=1 counters=snake
 bray: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=25 loudness=9 dmg_sonic=10 inflict_deaf=2 inflict_confuse=2
 coo: placement=target event_target=tile event_duration=1 placement_range=30 event_radius=10 loudness=2 inflict_charm=2 inflict_sleep=1 aggression+-2
 meow: placement=target event_target=tile event_duration=1 placement_range=30 event_radius=10 loudness=3 inflict_charm=2 counters=mouse
 yelp: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=15 loudness=7 inflict_fear=1 alarm=true
-humming: placement=target event_target=tile event_duration=1 placement_range=30 event_radius=10 event_duration=2 loudness=2 morale+1 aggression+-1 inflict_sleep=1
+humming: placement=target event_target=tile placement_range=30 event_radius=10 event_duration=2 loudness=2 morale+1 aggression+-1 inflict_sleep=1
 jingle: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=12 loudness=5 morale+2 charm+1 inflict_charm=1
 whistling: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=25 loudness=6 command_limit+2 obedience+2
 thumping: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=15 loudness=8 dmg_blunt=20 inflict_fear=2 inflict_stun=1
 grunt: placement=target event_target=tile event_duration=1 placement_range=20 event_radius=6 loudness=5 inflict_fear=1 strength+1
 moo: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=20 loudness=7 inflict_confuse=1 inflict_charm=1
-throbbing: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=15 event_duration=3 loudness=7 dmg_sonic=10 inflict_confuse=3 morale+-2
+throbbing: placement=target event_target=tile placement_range=60 event_radius=15 event_duration=3 loudness=7 dmg_sonic=10 inflict_confuse=3 morale+-2
 screeching: placement=target event_target=tile event_duration=1 placement_range=80 event_radius=25 loudness=10 dmg_sonic=25 inflict_deaf=4 inflict_fear=3 inflict_confuse=2 counters=silence,earplug
 bleep: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=10 loudness=5 alarm=true inflict_silence=2
 toot: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=20 loudness=7 alarm=true inflict_confuse=1
 mew: placement=target event_target=tile event_duration=1 placement_range=20 event_radius=6 loudness=2 inflict_charm=2
 growling: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=15 loudness=7 inflict_fear=4 courage+-2 aggression+2
-rumbling: placement=target event_target=tile event_duration=1 placement_range=200 event_radius=40 event_duration=2 loudness=8 dmg_earth=20 inflict_fear=3 movement_cost=1.3
-blaring: placement=target event_target=tile event_duration=1 placement_range=150 event_radius=40 event_duration=2 loudness=10 dmg_sonic=25 inflict_deaf=5 inflict_confuse=3 counters=silence,earplug
+rumbling: placement=target event_target=tile placement_range=200 event_radius=40 event_duration=2 loudness=8 dmg_earth=20 inflict_fear=3 movement_cost=1.3
+blaring: placement=target event_target=tile placement_range=150 event_radius=40 event_duration=2 loudness=10 dmg_sonic=25 inflict_deaf=5 inflict_confuse=3 counters=silence,earplug
 honk: placement=target event_target=tile event_duration=1 placement_range=80 event_radius=20 loudness=9 dmg_sonic=8 inflict_fear=2 inflict_stun=1 alarm=true
-muttering: placement=target event_target=tile event_duration=1 placement_range=30 event_radius=10 event_duration=2 loudness=2 loyalty+-2 obedience+-2 morale+-1
+muttering: placement=target event_target=tile placement_range=30 event_radius=10 event_duration=2 loudness=2 loyalty+-2 obedience+-2 morale+-1
 baa: placement=target event_target=tile event_duration=1 placement_range=30 event_radius=15 loudness=5 inflict_charm=1 aggression+-1
-chug: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=10 event_duration=2 loudness=7 speed_land*1.1
-murmur: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=15 event_duration=2 loudness=2 inflict_sleep=1 aggression+-2 stealth+2
+chug: placement=target event_target=tile placement_range=60 event_radius=10 event_duration=2 loudness=7 speed_land*1.1
+murmur: placement=target event_target=tile placement_range=40 event_radius=15 event_duration=2 loudness=2 inflict_sleep=1 aggression+-2 stealth+2
 squeak: placement=target event_target=tile event_duration=1 placement_range=30 event_radius=8 loudness=4 alarm=true inflict_confuse=1 stealth+-3
 thud: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=8 loudness=7 dmg_blunt=30 inflict_stun=1
-grumbling: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=15 event_duration=2 loudness=3 morale+-2 obedience+-2
+grumbling: placement=target event_target=tile placement_range=40 event_radius=15 event_duration=2 loudness=3 morale+-2 obedience+-2
 swish: placement=target event_target=tile event_duration=1 placement_range=20 event_radius=4 loudness=3 dmg_slash=15 dmg_wind=5
 hissing: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=10 loudness=5 inflict_fear=3 aggression+-2 counters=mouse
 screech: placement=target event_target=tile event_duration=1 placement_range=80 event_radius=25 loudness=10 dmg_sonic=25 inflict_deaf=4 inflict_fear=3 counters=silence,earplug
 shrieking: placement=target event_target=tile event_duration=1 placement_range=80 event_radius=25 loudness=10 dmg_sonic=25 inflict_fear=5 inflict_deaf=3 counters=silence,earplug
 shriek: placement=target event_target=tile event_duration=1 placement_range=80 event_radius=25 loudness=10 dmg_sonic=25 inflict_fear=5 inflict_deaf=3 counters=silence,earplug
 sputtering: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=8 loudness=5 speed_land*0.7 inflict_confuse=1
-chattering: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=15 event_duration=2 loudness=4 temp_min+-3 inflict_confuse=1
+chattering: placement=target event_target=tile placement_range=40 event_radius=15 event_duration=2 loudness=4 temp_min+-3 inflict_confuse=1
 squeal: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=20 loudness=9 dmg_sonic=12 inflict_deaf=2 inflict_fear=1
 squish: placement=target event_target=tile event_duration=1 placement_range=20 event_radius=3 loudness=3 dmg_crush=15 stickiness+3
 yip: placement=target event_target=tile event_duration=1 placement_range=30 event_radius=10 loudness=6 alarm=true
-creaking: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=10 event_duration=2 loudness=4 inflict_fear=3 morale+-1 alarm=true
-grumble: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=15 event_duration=2 loudness=3 morale+-2 obedience+-2
+creaking: placement=target event_target=tile placement_range=40 event_radius=10 event_duration=2 loudness=4 inflict_fear=3 morale+-1 alarm=true
+grumble: placement=target event_target=tile placement_range=40 event_radius=15 event_duration=2 loudness=3 morale+-2 obedience+-2
 sizzle: placement=target event_target=tile event_duration=1 placement_range=20 event_radius=4 loudness=4 dmg_fire=25 inflict_burn=3 temperature=200
 crackle: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=8 loudness=5 dmg_electric=15 dmg_fire=10 inflict_burn=2
 zing: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=4 loudness=5 dmg_pierce=20 speed_land*1.2
 mutter: placement=target event_target=tile event_duration=1 placement_range=30 event_radius=10 loudness=2 loyalty+-2 morale+-1
-patter: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=20 event_duration=3 loudness=3 wetness+2 inflict_sleep=1 aggression+-1
+patter: placement=target event_target=tile placement_range=60 event_radius=20 event_duration=3 loudness=3 wetness+2 inflict_sleep=1 aggression+-1
 splatter: placement=target event_target=tile event_duration=1 placement_range=30 event_radius=6 loudness=5 dmg_water=10 stickiness+3 inflict_blind=2
-murmuring: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=15 event_duration=2 loudness=2 inflict_sleep=1 aggression+-2 stealth+2
-snore: placement=target event_target=tile event_duration=1 placement_range=20 event_radius=10 event_duration=5 loudness=6 inflict_sleep=3 stealth+-4
+murmuring: placement=target event_target=tile placement_range=40 event_radius=15 event_duration=2 loudness=2 inflict_sleep=1 aggression+-2 stealth+2
+snore: placement=target event_target=tile placement_range=20 event_radius=10 event_duration=5 loudness=6 inflict_sleep=3 stealth+-4
 whoosh: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=10 loudness=6 dmg_wind=20 knockback=3
 trampling: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=15 loudness=9 dmg_crush=100 inflict_stun=2 friendly_fire=true
 vroom: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=10 loudness=9 speed_land*1.5 acceleration+3 dmg_sonic=5
@@ -207,33 +207,33 @@ splat: placement=target event_target=tile event_duration=1 placement_range=30 ev
 clank: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=15 loudness=8 dmg_sonic=8 alarm=true inflict_confuse=1
 clatter: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=15 loudness=8 dmg_sonic=8 alarm=true inflict_confuse=2
 clang: placement=target event_target=tile event_duration=1 placement_range=80 event_radius=20 loudness=9 dmg_sonic=15 inflict_deaf=3 inflict_stun=1
-clamor: placement=target event_target=tile event_duration=1 placement_range=150 event_radius=40 event_duration=2 loudness=9 dmg_sonic=15 inflict_deaf=4 inflict_rage=3 inflict_confuse=3 counters=silence,hush
+clamor: placement=target event_target=tile placement_range=150 event_radius=40 event_duration=2 loudness=9 dmg_sonic=15 inflict_deaf=4 inflict_rage=3 inflict_confuse=3 counters=silence,hush
 clack: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=10 loudness=6 inflict_confuse=1
 plop: placement=target event_target=tile event_duration=1 placement_range=30 event_radius=3 loudness=3 wetness+2
 thunk: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=6 loudness=6 dmg_blunt=25 inflict_stun=1
-knell: placement=target event_target=tile event_duration=1 placement_range=300 event_radius=80 event_duration=2 loudness=9 inflict_fear=6 morale+-6 courage+-4 counters=hymn,hope
-peal: placement=target event_target=tile event_duration=1 placement_range=300 event_radius=80 event_duration=2 loudness=10 dmg_sonic=10 morale+4 courage+3 alarm=true counters=knell,despair
+knell: placement=target event_target=tile placement_range=300 event_radius=80 event_duration=2 loudness=9 inflict_fear=6 morale+-6 courage+-4 counters=hymn,hope
+peal: placement=target event_target=tile placement_range=300 event_radius=80 event_duration=2 loudness=10 dmg_sonic=10 morale+4 courage+3 alarm=true counters=knell,despair
 caw: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=20 loudness=7 inflict_fear=2 morale+-1 alarm=true
 twang: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=10 loudness=6 dmg_pierce=10 inflict_confuse=1
-hubbub: placement=target event_target=tile event_duration=1 placement_range=100 event_radius=40 event_duration=2 loudness=8 inflict_confuse=4 accuracy+-0.15 stealth+3 counters=silence
+hubbub: placement=target event_target=tile placement_range=100 event_radius=40 event_duration=2 loudness=8 inflict_confuse=4 accuracy+-0.15 stealth+3 counters=silence
 fizzle: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=10 loudness=2 dmg_fire*0.3 morale+-2
 cheep: placement=target event_target=tile event_duration=1 placement_range=30 event_radius=8 loudness=3 inflict_charm=1
 swoosh: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=10 loudness=6 dmg_wind=20 knockback=3
-whirring: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=10 event_duration=3 loudness=5 inflict_confuse=2
+whirring: placement=target event_target=tile placement_range=40 event_radius=10 event_duration=3 loudness=5 inflict_confuse=2
 squawk: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=20 loudness=8 dmg_sonic=6 inflict_confuse=2 alarm=true
 cackle: placement=target event_target=tile event_duration=1 placement_range=60 event_radius=20 loudness=7 inflict_fear=4 morale+-2
 spatter: placement=target event_target=tile event_duration=1 placement_range=30 event_radius=6 loudness=4 dmg_water=10 inflict_blind=2
 jitter: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=10 loudness=2 accuracy+-0.2 inflict_confuse=2
-echo: placement=target event_target=tile event_duration=1 placement_range=200 event_radius=50 event_duration=2 loudness=6 inflict_confuse=4 duplicates=1 counters=silence
-hum: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=15 event_duration=3 loudness=2 inflict_sleep=1 aggression+-1 morale+1
+echo: placement=target event_target=tile placement_range=200 event_radius=50 event_duration=2 loudness=6 inflict_confuse=4 duplicates=1 counters=silence
+hum: placement=target event_target=tile placement_range=40 event_radius=15 event_duration=3 loudness=2 inflict_sleep=1 aggression+-1 morale+1
 tinkle: placement=target event_target=tile event_duration=1 placement_range=30 event_radius=10 loudness=3 morale+1 inflict_charm=1
 dong: placement=target event_target=tile event_duration=1 placement_range=100 event_radius=30 loudness=8 dmg_sonic=10 inflict_deaf=2 alarm=true
-whir: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=10 event_duration=3 loudness=5 inflict_confuse=2
-whine: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=15 event_duration=2 loudness=6 morale+-2 inflict_confuse=1
-babble: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=15 event_duration=2 loudness=4 inflict_confuse=4 inflict_silence=2 command_limit*0.7
+whir: placement=target event_target=tile placement_range=40 event_radius=10 event_duration=3 loudness=5 inflict_confuse=2
+whine: placement=target event_target=tile placement_range=40 event_radius=15 event_duration=2 loudness=6 morale+-2 inflict_confuse=1
+babble: placement=target event_target=tile placement_range=40 event_radius=15 event_duration=2 loudness=4 inflict_confuse=4 inflict_silence=2 command_limit*0.7
 rustle: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=10 loudness=2 stealth+-2 inflict_confuse=1 alarm=true
 holler: placement=target event_target=tile event_duration=1 placement_range=100 event_radius=40 loudness=9 command_limit+3 obedience+2 alarm=true
-wail: placement=target event_target=tile event_duration=1 placement_range=100 event_radius=40 event_duration=2 loudness=9 dmg_sonic=10 inflict_fear=5 morale+-3
+wail: placement=target event_target=tile placement_range=100 event_radius=40 event_duration=2 loudness=9 dmg_sonic=10 inflict_fear=5 morale+-3
 sob: placement=target event_target=tile event_duration=1 placement_range=30 event_radius=10 loudness=4 morale+-2 aggression+-2 inflict_charm=1
 snap: placement=target event_target=tile event_duration=1 placement_range=30 event_radius=4 loudness=6 dmg_slash=20 inflict_stun=1 brittleness+2
 thump: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=8 loudness=7 dmg_blunt=35 inflict_stun=1 knockback=1
