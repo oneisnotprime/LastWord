@@ -94,7 +94,8 @@ export function parsePhrase(dict: Dictionary, text: string): Phrase {
   // A singular is one of the thing: the noun's own pack_size counts only for a collective.
   const solo = !head.plural && def.archetype !== "group" && def.set.pack_size !== undefined;
   const stats = resolve(dict, head.word, modifiers, [], solo ? { pack_size: 1 } : {});
-  const kind = def.class === "event" ? "event" : kindOf(stats, def.class);
+  // An agreement (TREATY, ALLIANCE: `binds`) is made with someone, as an event is (shared law.ts).
+  const kind = def.class === "event" || (stats.num("binds") >= 2 && !PHYSICAL.has(def.class)) ? "event" : kindOf(stats, def.class);
   if (head.plural && kind !== "object") throw new Error(`${last.toUpperCase()}: only things come in plurals; spell ${head.word.toUpperCase()}`);
   const count = Math.round(stats.num(head.plural ? "plural_count" : "pack_size"));
   return {

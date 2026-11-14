@@ -139,3 +139,14 @@ Node process that owns the game state. One room per map instance (from milestone
 - Ticks run through `safeUpdate`: a throw is logged and the room goes on; a tick over
   `SLOW_TICK_MS` is logged with what the room held. A dropped connection keeps its place for
   `RECONNECT_SECONDS` (`onDrop`/`onReconnect`); the client reconnects on its own.
+- Dictionary themes: `kitchen` (once a second) cooks raw things by heat and rots old ones (shared
+  food.ts), rewriting `Gear.spelled` and the thing's phrase; `use` poisons with `toxin`. Pacts
+  (`makePact`, `breach`, `keepPacts`; `side` returns a pact's id, so allies share a side) come from
+  `binds` words through `happen`. `lawAgainst` charges a law's `fine` (FINE_SECONDS apart) instead
+  of refusing; `hunt` laws stop attacks on wild animals. Events passed on a person (`onPerson`:
+  ARREST, SENTENCE, PARDON, VERDICT) give or end statuses and take letters with no blow. Scouts
+  (`scout`) range toward undiscovered regions and pay their master J; `priceFor` haggles with a
+  trader near you; builders near a new structure set `Gear.built` (integrity multiplier). Planted
+  producers keep `Producer.grown`. `alchemy` picks the transmuting ratio, a carried precious
+  material (shared `alchemyRatio`) included, which `transmute` uses up. An event reads `field_radius`/`field_duration` if it has no
+  `event_radius`/`event_duration`.

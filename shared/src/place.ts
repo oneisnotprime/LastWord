@@ -14,7 +14,9 @@ import type { Op, WordDef } from "./types.js";
  * - `tax`: the share of letters others earn inside that goes to its maker (`tax_rate`).
  * - `lode`: letters gathering inside turns up, at `lodeShare` a gathering, `lodeStock` in all.
  * - `tradeRate`: markets inside ask this times their usual letters for one.
- * - `law`: acts nobody it reaches may do inside (attack, gather, spell, trade, theft).
+ * - `law`: acts nobody it reaches may do inside (attack, gather, spell, trade, theft, hunt).
+ * - `fine`: with a fine the law does not stop an act; whoever does it pays its maker this many of
+ *   their letters (a TICKET, a PENALTY), refused only if they cannot pay.
  */
 export interface PlaceRules {
   yields: Record<string, { mul: number; add: number }>;
@@ -26,6 +28,7 @@ export interface PlaceRules {
   lodeStock: number;
   tradeRate: number;
   law: string[];
+  fine: number;
 }
 
 /** Acts a `law` can forbid, and how each reads. */
@@ -35,6 +38,7 @@ export const LAWS: Readonly<Record<string, string>> = {
   spell: "no spelling",
   trade: "markets closed",
   theft: "no stealing",
+  hunt: "no hunting wild animals",
 };
 
 /** The rules a word's area carries, or null if it changes nothing about letters or acts. */
@@ -62,6 +66,7 @@ export function placeRules(def: WordDef, s: Stats): PlaceRules | null {
     lodeStock: s.num("lode_stock"),
     tradeRate: s.num("trade_rate"),
     law: s.tags("law").filter((l) => l in LAWS),
+    fine: Math.max(0, num("fine")),
   };
   const changes = Object.keys(yields).length || rules.growth !== 1 || rules.deposits !== 1 || rules.tax > 0 ||
     (rules.lode.length && rules.lodeShare > 0) || rules.tradeRate !== 1 || rules.law.length;
@@ -128,6 +133,6 @@ export function rulesText(r: PlaceRules): string[] {
     out.push(`gathering here finds ${r.lode.map((l) => l.toUpperCase()).join("/")} ${Math.round(r.lodeShare * 100)}% of the time${r.lodeStock > 0 && Number.isFinite(r.lodeStock) ? ` (${r.lodeStock} in all)` : ""}`);
   }
   if (r.tradeRate !== 1) { const n = Math.max(1, Math.round(3 * r.tradeRate)); out.push(`markets ask ${n} letter${n === 1 ? "" : "s"} for 1`); }
-  for (const l of r.law) out.push(LAWS[l]!);
+  for (const l of r.law) out.push(r.fine > 0 ? `${LAWS[l]!}, or a fine of ${fmt(r.fine)} letters to its maker` : LAWS[l]!);
   return out;
 }

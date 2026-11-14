@@ -1,7 +1,7 @@
 {
- "count": 360,
+ "count": 364,
  "groups": {
-  "physical": 41,
+  "physical": 44,
   "mobility": 25,
   "offence": 57,
   "defence": 51,
@@ -9,7 +9,7 @@
   "life": 29,
   "economy": 51,
   "spatial": 19,
-  "social": 12,
+  "social": 13,
   "slots": 9,
   "meta": 16,
   "field": 14,
@@ -361,6 +361,28 @@
    "type": "num",
    "desc": "integrity lost per minute on its own",
    "unit": "hp/min",
+   "default": 0
+  },
+  {
+   "id": "raw",
+   "group": "physical",
+   "type": "bool",
+   "desc": "heat changes it: near something at 150 C or hotter it cooks (shared food.ts)",
+   "default": false
+  },
+  {
+   "id": "cooks_into",
+   "group": "physical",
+   "type": "text",
+   "desc": "the noun heat turns it into (dough into bread); without one it becomes cooked",
+   "default": ""
+  },
+  {
+   "id": "shelf_life",
+   "group": "physical",
+   "type": "num",
+   "desc": "minutes after it is made that it rots (0 keeps for ever)",
+   "unit": "min",
    "default": 0
   },
   {
@@ -2340,21 +2362,29 @@
    "id": "law",
    "group": "social",
    "type": "tags",
-   "desc": "acts it forbids inside its area (attack, gather, spell, trade, theft)",
+   "desc": "acts it forbids inside its area (attack, gather, spell, trade, theft, hunt)",
    "default": []
+  },
+  {
+   "id": "fine",
+   "group": "social",
+   "type": "num",
+   "desc": "with a law: the act is allowed but costs whoever does it this many letters, paid to its maker",
+   "unit": "letters",
+   "default": 0
   },
   {
    "id": "binds",
    "group": "social",
    "type": "num",
-   "desc": "players it can hold to an agreement",
+   "desc": "people a pact made with it puts on one side, its speller included (2 or more)",
    "default": 0
   },
   {
    "id": "bind_penalty",
    "group": "social",
    "type": "tags",
-   "desc": "what breaking the agreement costs",
+   "desc": "what breaking the pact costs its breaker: letters, loyalty, morale, reputation",
    "default": []
   },
   {

@@ -310,21 +310,21 @@ moon: placement=sky integrity=100000000 armor=100000 luminosity=3 field_radius=A
 star: placement=sky integrity=1000000000 armor=1000000 res_fire=1 res_light=1 luminosity=1 field_radius=ABS light_delta=1 map_reveal=30 persistence=30 detect_letters=1000 plural_count=100
 
 # noun metal
-iron: mass=7.8 density=7800 hardness=6 melting_point=1538 conductivity=7 magnetism=5 integrity=200 value=5
-steel: mass=7.8 density=7800 hardness=8 melting_point=1400 conductivity=6 magnetism=5 integrity=350 value=15
-gold: mass=19 density=19300 hardness=3 melting_point=1064 conductivity=9 integrity=60 value=5000 beauty=9 trade_bonus=0.1 charm=2 produce_T=0.2
-lead: mass=11 density=11300 hardness=2 melting_point=327 toxicity=3 res_radiation=0.9 integrity=50 value=3
+iron: mass=7.8 density=7800 hardness=6 melting_point=1538 conductivity=7 magnetism=5 integrity=200 value=5 color=gray brittleness=3
+steel: mass=7.8 density=7800 hardness=8 melting_point=1400 conductivity=6 magnetism=5 integrity=350 value=15 color=silver sharpness=8
+gold: mass=19 density=19300 hardness=3 melting_point=1064 conductivity=9 integrity=60 value=5000 beauty=9 trade_bonus=0.1 charm=2 produce_T=0.2 color=gold flammability=0
+lead: mass=11 density=11300 hardness=2 melting_point=327 toxicity=3 res_radiation=0.9 integrity=50 value=3 color=gray
 
 # noun mineral
-stone: mass=2.6 density=2600 hardness=7 brittleness=3 integrity=300 melting_point=1200 value=1
+stone: mass=2.6 density=2600 hardness=7 brittleness=3 integrity=300 melting_point=1200 value=1 color=gray flammability=0
 coal: mass=1.3 density=1300 hardness=3 flammability=8 burn_time=3600 fuel_output=2 produce_F=0.3 value=3
-glass: mass=2.5 density=2500 hardness=6 brittleness=9 transparency=0.95 integrity=10 melting_point=1400 value=4
+glass: mass=2.5 density=2500 hardness=6 brittleness=9 transparency=0.95 integrity=10 melting_point=1400 value=4 color=white sharpness=9 flammability=0
 sand: mass=1.6 density=1600 state=solid shape=pile tile_type=sand radius=2 movement_cost=1.3 res_fire=0.8 value=0
-ice: mass=0.9 density=917 hardness=2 brittleness=7 temperature=-10 melting_point=0 slipperiness=9 transparency=0.6 tile_type=snow radius=2 dmg_cold=3 integrity=40
-diamond: mass=0.001 density=3500 hardness=10 sharpness=9 integrity=2000 transparency=0.9 value=50000 beauty=10 armor_pierce+0.5
+ice: mass=0.9 density=917 hardness=2 brittleness=7 temperature=-10 melting_point=0 slipperiness=9 transparency=0.6 tile_type=snow radius=2 dmg_cold=3 integrity=40 color=blue flammability=0
+diamond: mass=0.001 density=3500 hardness=10 sharpness=9 integrity=2000 transparency=0.9 value=50000 beauty=10 armor_pierce+0.5 color=white flammability=0
 
 # noun material
-wood: mass=0.7 density=700 hardness=3 flammability=7 burn_time=1200 buoyancy=6 integrity=80 fuel_output=0.5 value=1
+wood: mass=0.7 density=700 hardness=3 flammability=7 burn_time=1200 buoyancy=6 integrity=80 fuel_output=0.5 value=1 color=brown
 lava: state=liquid temperature=1100 density=3000 tile_type=lava radius=2 dmg_fire=200 attack_rate=1 luminosity=6 blocks=land spread_rate=0.1 persistence=20 friendly_fire=true
 
 # noun liquid
@@ -423,7 +423,7 @@ army: pack_size=100 command_limit=100 authority=4 upkeep_food=5 produce_K=0.5 mo
 clan: binds=8 bind_penalty=loyalty,reputation faction=clan morale+1 command_limit=20
 
 # noun possession
-treaty: binds=2 bind_penalty=reputation,morale law=attack,theft,raid
+treaty: binds=2 bind_penalty=letters,reputation event_duration=10
 
 # noun knowledge
 science: produce_C*1.5 produce_M*1.5 build_speed*1.5 craft_slots+1 grants_adjective_slots=1 grants_slots_to=artifact
@@ -481,8 +481,8 @@ secret: stealth+6 untargetable=false read_properties+-5 alarm=false
 safe: security+5 res_blast+0.3 res_fire+0.3 letter_refund+0.3
 magnetic: magnetism+8 letter_steal+1 conductivity+3 counters=steel,iron
 electric: dmg_electric+100 inflict_stun+1 conductivity+5 upkeep_power+5 upkeep_fuel*0 speed_land*1.2
-wooden: material=wood mass*0.3 integrity*0.5 flammability+6 buoyancy+5 conductivity+-5 magnetism+-10
-golden: material=gold value*100 beauty+5 mass*2.5 hardness+-3 charm+3 produce_T+0.3
+wooden: material=wood
+golden: material=gold charm+3 produce_T+0.3
 armored: armor+60 res_pierce+0.5 res_slash+0.5 res_blast+0.3 mass*1.5 speed_land*0.8 speed_air*0.7
 hungry: food_need*2 aggression+3 attack_rate*1.2 letter_steal+1
 double: plural_count*2 pack_size*2
@@ -747,7 +747,7 @@ seance: placement=region event_radius=20 event_duration=3 summons=ghost summon_c
 
 # noun act
 harvest: placement=region event_radius=200 event_duration=5 deposit_factor=3 produce_A*3 produce_P*3 produce_E*2 morale+2 counters=famine,drought,dearth,starvation,blight,hunger
-feast: placement=region event_radius=60 event_duration=5 food_need*0 regeneration+5 morale+4 produce_I*3 counters=hunger,starvation,famine
+feast: placement=region event_radius=60 event_duration=5 food_need*0 regeneration+5 morale+4 produce_I*3 counters=hunger,starvation,famine edible=true nutrition=40
 carnival: placement=region event_radius=100 event_duration=6 law=attack trade_rate=0.5 produce_T*3 summons=clown summon_count=3 morale+4
 fiesta: placement=region event_radius=80 event_duration=5 law=attack food_need*0 regeneration+5 produce_E*2 morale+4
 gala: placement=region event_radius=40 event_duration=4 law=attack,theft charm+5 produce_T*3 trade_rate=0.5
@@ -790,7 +790,7 @@ austerity: placement=region field_radius=300 field_duration=8 trade_rate=1.5 pro
 # noun possession
 extortion: placement=self field_radius=40 field_targets=enemies field_duration=4 tax_rate=0.6 morale+-2 counters=rebellion
 bribe: placement=target placement_range=30 field_radius=8 field_targets=enemies field_duration=3 law=attack charm+3
-amnesty: placement=region field_radius=200 field_duration=3 law=attack,theft morale+2 counters=purge,massacre,inquisition
+amnesty: placement=region field_radius=200 field_duration=3 law=attack,theft morale+2 effect_status=root,stun,silence counters=purge,massacre,inquisition,curfew,lockdown,crackdown,penalty,sentence,arrest,ban
 
 # noun phenomenon
 fluke: placement=self field_radius=4 field_targets=self field_duration=2 lode=q,z,x,j lode_share=0.5 lode_stock=2
@@ -870,7 +870,7 @@ hoe: mass=1.5 length=1.5 integrity=60 material=steel,wood portable=false fertili
 plough: mass=200 length=2 integrity=200 material=steel portable=false fertility=6 food_output=2
 
 # noun produce
-potato: mass=0.3 height=0.5 integrity=2 alive=true diet=photosynthesis growth_time=5 food_output=0.6 edible=true nutrition=4 plural_count=20
+potato: mass=0.3 height=0.5 integrity=2 alive=true diet=photosynthesis growth_time=5 food_output=0.6 edible=true raw=true cooks_into=chips nutrition=4 restores=6 single_use=true shelf_life=30 plural_count=20 color=brown
 
 # noun mammal
 ox: mass=800 length=2.6 integrity=600 alive=true diet=herbivore food_need=0.3 speed_land=6 tow_capacity=4000 labor=6 dmg_blunt=60 attack_rate=0.4 tamable=true courage=6
@@ -919,3 +919,321 @@ laborer: mass=80 integrity=110 alive=true sentient=true intelligence=4 loyalty=5
 farmhand: mass=75 integrity=100 alive=true sentient=true intelligence=4 loyalty=6 hands=true speech=true speed_land=5 labor=4 harvest_bonus=1.5 harvest_sources=field food_need=0.03
 peasant: mass=65 integrity=80 alive=true sentient=true intelligence=4 loyalty=4 hands=true speech=true speed_land=5 labor=3 food_need=0.02
 hireling: mass=75 integrity=100 alive=true sentient=true intelligence=5 loyalty=3 hands=true speech=true speed_land=5 labor=4 food_need=0.03
+
+# ---------------------------------------------------------------------------------------------
+# Dictionary themes (TODO.md "Dictionary themes"). The core words of each theme, hand-written;
+# the rest of each theme is generated from these as examples (generate_words.py).
+
+# Theme 11, materials and elements (shared material.ts). A material noun before another noun, or
+# an adjective whose material= names one, remakes the thing out of it: density moves mass, blows
+# and speed; toughness (integrity) moves integrity; hardness moves armour and edges; brittleness,
+# flammability, conductivity and a low melting point decide what hurts it (GLASS SWORD shatters,
+# PAPER CASTLE burns, IRON DOG is armoured, slow and carries lightning). Its colour, value and
+# own damage, resistances and statuses come with it (an ICE sword freezes, a SILVER one hurts the
+# unholy). Materials are what transmuting to Z starts from.
+
+# noun metal
+silver: mass=10.5 density=10500 hardness=3 melting_point=962 conductivity=10 integrity=80 value=500 beauty=8 color=silver dmg_holy=40 res_unholy=0.5
+copper: mass=9 density=8960 hardness=3 melting_point=1085 conductivity=10 integrity=120 value=8 color=copper
+bronze: mass=8.8 density=8800 hardness=5 melting_point=950 conductivity=6 integrity=220 value=10 color=copper sharpness=6
+brass: mass=8.5 density=8500 hardness=4 melting_point=930 conductivity=6 integrity=180 value=8 color=gold loudness=4
+tin: mass=7.3 density=7300 hardness=2 melting_point=232 conductivity=5 integrity=40 value=4 color=silver
+platinum: mass=21.5 density=21450 hardness=4 melting_point=1768 conductivity=5 integrity=150 value=30000 beauty=9 color=silver
+titanium: mass=4.5 density=4500 hardness=7 melting_point=1668 conductivity=3 integrity=400 value=50 color=gray res_fire=0.3 res_acid=0.6
+aluminum: mass=2.7 density=2700 hardness=3 melting_point=660 conductivity=9 integrity=100 value=2 color=silver
+mercury: mass=13.5 state=liquid density=13500 hardness=0 melting_point=-39 conductivity=7 toxicity=8 integrity=5 value=20 color=silver inflict_poison=10 slipperiness=6
+uranium: mass=19 density=19000 hardness=6 melting_point=1132 radioactivity=8 integrity=150 value=1000 color=green dmg_radiation=50 luminosity=1
+tungsten: mass=19.3 density=19300 hardness=9 melting_point=3422 integrity=450 value=40 color=gray res_fire=0.6
+chrome: mass=7.2 density=7190 hardness=8 melting_point=1907 reflectivity=9 integrity=300 value=20 color=silver res_light=0.5
+
+# noun gem
+jade: mass=3.3 density=3300 hardness=6 brittleness=3 integrity=200 value=3000 beauty=9 color=green
+emerald: mass=2.8 density=2760 hardness=8 brittleness=6 integrity=200 value=40000 beauty=10 color=green transparency=0.6
+sapphire: mass=4 density=4000 hardness=9 brittleness=3 integrity=300 value=30000 beauty=10 color=blue transparency=0.6 res_cold=0.4
+ruby: mass=4 density=4000 hardness=9 brittleness=3 integrity=300 value=40000 beauty=10 color=red transparency=0.5 res_fire=0.4 luminosity=1
+pearl: mass=2.7 density=2700 hardness=3 brittleness=4 integrity=50 value=10000 beauty=9 color=white
+adamant: mass=8 density=8000 hardness=10 brittleness=0 melting_point=5000 integrity=5000 value=100000 color=gray res_slash=0.8 res_pierce=0.8 res_blunt=0.5 res_fire=0.5
+
+# noun mineral
+crystal: mass=2.7 density=2650 hardness=7 brittleness=8 sharpness=8 transparency=0.9 integrity=30 value=200 beauty=8 color=white luminosity=2 dmg_magic=20
+marble: mass=2.7 density=2700 hardness=6 brittleness=4 flammability=0 integrity=250 value=20 beauty=8 color=white
+granite: mass=2.75 density=2750 hardness=7 brittleness=3 flammability=0 integrity=400 value=5 color=gray
+obsidian: mass=2.4 density=2400 hardness=6 brittleness=9 sharpness=10 flammability=0 integrity=20 value=30 color=black
+brick: mass=1.9 density=1900 hardness=6 brittleness=4 flammability=0 integrity=300 value=0.5 color=red
+salt: mass=2.2 density=2160 hardness=2 brittleness=7 integrity=10 value=2 color=white edible=true nutrition=0 shelf_life=0 counters=slug,snail
+magma: state=liquid density=3000 temperature=1200 melting_point=700 integrity=50 luminosity=7 dmg_fire=150 inflict_burn=6 color=orange tile_type=lava radius=1
+
+# noun material
+paper: mass=0.8 density=800 hardness=1 brittleness=1 flammability=9 integrity=5 value=0.5 color=white
+cardboard: mass=0.7 density=700 hardness=1 flammability=9 integrity=6 value=0.1 color=brown
+rubber: mass=1.1 density=1100 hardness=1 elasticity=9 conductivity=0 flammability=4 melting_point=180 integrity=60 value=2 color=black res_electric=0.9 res_blunt=0.5 knockback=3
+plastic: mass=0.95 density=950 hardness=3 conductivity=0 flammability=5 melting_point=160 integrity=40 value=2 color=blue res_electric=0.6 res_water=0.5
+bone: mass=1.9 density=1900 hardness=5 brittleness=5 integrity=120 value=1 color=white dmg_unholy=10
+wax: mass=0.9 density=900 hardness=1 melting_point=60 flammability=8 burn_time=3600 integrity=8 value=1 color=yellow luminosity=1
+leather: mass=0.86 density=860 hardness=3 flammability=3 integrity=120 value=5 color=brown res_slash=0.2
+clay: mass=1.8 density=1800 hardness=1 brittleness=6 flammability=0 integrity=30 value=0.3 color=brown raw=true cooks_into=brick
+concrete: mass=2.4 density=2400 hardness=7 brittleness=4 flammability=0 integrity=500 value=0.5 color=gray
+flint: mass=2.6 density=2600 hardness=7 brittleness=7 sharpness=9 integrity=60 value=1 color=gray inflict_burn=2
+ivory: mass=1.85 density=1850 hardness=5 brittleness=4 integrity=150 value=2000 beauty=8 color=white
+tar: state=liquid density=1200 hardness=0 stickiness=9 flammability=8 integrity=20 value=1 color=black inflict_slow=4 tile_type=swamp radius=1
+fur: mass=1 density=1000 hardness=1 flammability=5 integrity=30 value=20 color=brown res_cold=0.6 stealth=1
+straw: mass=0.2 density=200 hardness=1 flammability=10 integrity=5 value=0.1 color=yellow
+cork: mass=0.24 density=240 hardness=1 buoyancy=9 flammability=5 integrity=20 value=1 color=brown
+
+# noun fabric
+silk: mass=1.3 density=1300 hardness=1 flammability=6 integrity=30 value=300 beauty=8 color=white res_pierce=0.3 stealth=1
+cotton: mass=1.5 density=1500 hardness=1 flammability=8 integrity=15 value=3 color=white
+wool: mass=1.3 density=1300 hardness=1 flammability=3 integrity=25 value=5 color=white res_cold=0.5
+velvet: mass=1.4 density=1400 hardness=1 flammability=6 integrity=20 value=30 beauty=8 color=purple
+linen: mass=1.5 density=1500 hardness=1 flammability=7 integrity=20 value=8 color=white
+
+# adjective quality
+silken: material=silk charm+2
+stony: material=stone courage+1
+glassy: material=glass
+metallic: material=steel
+crystalline: material=crystal
+leaden: material=lead speed_land*0.9
+brazen: material=brass courage+3 loudness+2
+silvery: material=silver
+rubbery: material=rubber
+bony: material=bone
+icy: material=ice temperature+-30 inflict_slow+2
+rusty: integrity*0.5 brittleness+3 value*0.2 hardness+-1 sharpness+-2 color=brown
+
+# Theme 8, food and cooking (shared food.ts). Heat cooks anything raw within 3 tiles of 150 C
+# (an OVEN, a CAMPFIRE, a FIRE, a cook who cast BAKE): it becomes its cooks_into, or COOKED.
+# What has a shelf_life rots into ROTTEN; preserving words keep it (shelf_life*0). Eating fills
+# the food store (nutrition), heals (restores), cures (effect_status), boosts for duration, and
+# toxicity poisons whoever eats it.
+
+# adjective participle
+cooked: raw=false nutrition*2 restores*1.5 toxicity*0 shelf_life*2 odor+2 color=brown
+rotten: nutrition*0.2 restores*0 toxicity+5 odor+6 shelf_life*0 value*0 color=green produce_U+0.1 counters=feast
+salted: shelf_life*0 nutrition*0.9 water_need*1.5 color=white
+smoked: shelf_life*0 nutrition*1.1 odor+3 color=brown
+dried: shelf_life*0 mass*0.3 nutrition*0.8 wetness+-6 flammability+3
+pickled: shelf_life*0 nutrition*0.9 toxicity*0 color=green
+canned: shelf_life*0 integrity*5 material=tin
+fried: nutrition*1.5 restores*1.2 raw=false toxicity*0 flammability+2 color=brown
+baked: nutrition*1.6 raw=false toxicity*0 shelf_life*1.5 color=brown
+roasted: nutrition*1.8 raw=false toxicity*0 odor+3 color=brown
+boiled: nutrition*1.4 raw=false toxicity*0 restores*1.2
+burnt: nutrition*0.3 restores*0.5 raw=false color=black flammability+-3
+
+# adjective quality
+raw: raw=true nutrition*0.5 toxicity+1 shelf_life*0.5
+fresh: shelf_life*2 nutrition*1.2 restores*1.2 toxicity*0 odor+-2
+stale: shelf_life*0.5 nutrition*0.6 restores*0.5
+spicy: dmg_fire+30 temperature+50 res_cold+0.3 inflict_burn+1
+sweet: nutrition*1.3 morale+2 charm+2 speed_land*1.1
+sour: toxicity+1 morale+-1 inflict_confuse+1
+delicious: nutrition*1.5 restores*1.5 morale+3 charm+2 value*2
+poisonous: toxicity+8 dmg_poison+40 inflict_poison+20 edible=true
+
+# noun food
+steak: mass=0.4 integrity=2 edible=true raw=true nutrition=12 restores=30 strength+2 duration=120 single_use=true shelf_life=6 odor=4 color=red
+bacon: mass=0.1 integrity=1 edible=true raw=true nutrition=6 restores=15 courage+2 duration=90 single_use=true shelf_life=10 odor=6 plural_count=6
+sausage: mass=0.1 integrity=1 edible=true raw=true nutrition=6 restores=12 single_use=true shelf_life=12 plural_count=6 color=brown
+dough: mass=0.5 integrity=1 edible=true raw=true cooks_into=bread nutrition=2 single_use=true shelf_life=10 color=white
+flour: mass=1 integrity=1 edible=true raw=true cooks_into=bread nutrition=1 single_use=true shelf_life=0 color=white
+batter: mass=0.6 state=liquid edible=true raw=true cooks_into=cake nutrition=2 single_use=true shelf_life=8 color=yellow
+cake: mass=1 integrity=1 edible=true nutrition=10 restores=20 morale+4 charm+2 duration=180 single_use=true shelf_life=12 color=white plural_count=2
+pie: mass=0.8 integrity=1 edible=true nutrition=12 restores=25 morale+3 duration=120 single_use=true shelf_life=12 color=brown
+cookie: mass=0.03 integrity=1 edible=true nutrition=2 restores=5 morale+1 duration=60 single_use=true shelf_life=30 plural_count=12 color=brown
+soup: mass=0.5 state=liquid edible=true nutrition=8 restores=40 regeneration+2 res_cold+0.3 duration=120 single_use=true shelf_life=10 effect_status=poison color=orange
+stew: mass=1 state=liquid edible=true nutrition=15 restores=50 regeneration+2 strength+1 duration=180 single_use=true shelf_life=10 color=brown
+pizza: mass=1 integrity=1 edible=true nutrition=14 restores=30 morale+3 duration=120 single_use=true shelf_life=10 color=red
+sandwich: mass=0.3 integrity=1 edible=true nutrition=8 restores=20 single_use=true shelf_life=8
+salad: mass=0.3 integrity=1 edible=true nutrition=4 restores=15 regeneration+1 speed_land*1.1 duration=120 single_use=true shelf_life=5 color=green
+pasta: mass=0.5 integrity=1 edible=true raw=true nutrition=4 restores=10 single_use=true shelf_life=0 color=yellow
+rice: mass=0.5 height=1 integrity=2 alive=true diet=photosynthesis growth_time=5 edible=true raw=true nutrition=3 restores=8 single_use=true placeable_on=field plural_count=20 color=white
+chocolate: mass=0.1 integrity=1 edible=true nutrition=5 restores=10 morale+4 speed_land*1.1 duration=120 single_use=true shelf_life=0 color=brown
+candy: mass=0.02 integrity=1 edible=true nutrition=1 restores=2 speed_land*1.3 attack_rate*1.2 morale+2 duration=30 single_use=true shelf_life=0 plural_count=10 color=pink
+sugar: mass=0.5 integrity=1 edible=true nutrition=3 speed_land*1.2 attack_rate*1.2 duration=60 single_use=true shelf_life=0 color=white
+butter: mass=0.25 integrity=1 edible=true nutrition=7 restores=5 slipperiness=7 single_use=true shelf_life=20 color=yellow
+jam: mass=0.3 integrity=1 edible=true nutrition=5 restores=10 morale+1 duration=60 single_use=true shelf_life=0 stickiness=6 color=red
+pepper: mass=0.05 integrity=1 edible=true nutrition=0 dmg_fire+20 inflict_blind+2 duration=30 single_use=true shelf_life=0 color=black
+garlic: mass=0.05 height=0.3 integrity=1 alive=true diet=photosynthesis growth_time=4 edible=true nutrition=1 restores=5 res_unholy+0.5 res_disease+0.3 odor=8 duration=300 single_use=true counters=vampire,ghoul plural_count=6 color=white
+ration: mass=0.5 integrity=5 edible=true nutrition=10 restores=10 single_use=true shelf_life=0 plural_count=5
+jerky: mass=0.1 integrity=2 edible=true nutrition=6 restores=8 single_use=true shelf_life=0 plural_count=6 color=brown
+
+# noun drink
+coffee: mass=0.3 state=liquid edible=true nutrition=0 attack_rate*1.3 speed_land*1.2 immune_sleep=true duration=300 single_use=true color=brown
+tea: mass=0.3 state=liquid edible=true nutrition=0 restores=10 morale+2 regeneration+1 effect_status=confuse duration=300 single_use=true color=brown
+wine: mass=0.75 state=liquid edible=true nutrition=2 potency=4 courage+4 morale+2 accuracy+-0.1 duration=600 single_use=true shelf_life=0 color=red
+whiskey: mass=0.7 state=liquid edible=true nutrition=1 potency=7 courage+6 immune_fear=true accuracy+-0.25 duration=240 single_use=true shelf_life=0 flammability=7 color=brown
+vodka: mass=0.7 state=liquid edible=true nutrition=1 potency=8 courage+6 res_cold+0.6 accuracy+-0.3 inflict_confuse+1 duration=240 single_use=true shelf_life=0 flammability=8 color=white
+juice: mass=0.3 state=liquid edible=true nutrition=3 restores=15 regeneration+1 duration=60 single_use=true shelf_life=10 color=orange
+soda: mass=0.35 state=liquid edible=true nutrition=2 speed_land*1.15 duration=60 single_use=true shelf_life=0 color=brown
+broth: mass=0.4 state=liquid edible=true nutrition=4 restores=30 effect_status=poison,sleep res_disease+0.4 duration=120 single_use=true shelf_life=8 color=yellow
+
+# noun device
+stove: mass=60 footprint=1 integrity=300 material=iron temperature=300 portable=false upkeep_fuel=0.05 produce_B=0.2 color=black
+grill: mass=30 footprint=1 integrity=150 material=steel temperature=350 upkeep_fuel=0.05 dmg_fire=10 color=black
+microwave: mass=15 integrity=40 material=steel temperature=150 upkeep_power=2 color=white
+
+# noun structure
+campfire: mass=20 footprint=1 integrity=20 material=wood portable=false temperature=600 luminosity=6 burn_time=1800 dmg_fire=15 attack_rate=0.5 fear_aura=1 upkeep_fuel=0.02 produce_F=0.2 color=orange
+kitchen: mass=8000 footprint=4 integrity=1500 material=wood,stone portable=false enterable=true temperature=200 food_output=6 craft_slots=1 upkeep_fuel=0.1 claim_radius=2
+bakery: mass=20000 footprint=6 integrity=3000 material=brick portable=false enterable=true temperature=250 food_output=12 craft_slots=1 upkeep_fuel=0.2 production_needs=labor
+fireplace: mass=3000 footprint=1 integrity=2000 material=stone portable=false temperature=500 luminosity=5 regeneration+1 morale+1 upkeep_fuel=0.05 produce_B=0.3
+
+# verb create
+cook: duration=20 temperature+300
+bake: duration=30 temperature+250 morale+1
+fry: duration=15 temperature+350 dmg_fire+10
+roast: duration=20 temperature+400 dmg_fire+20 luminosity+2
+boil: duration=20 temperature+200 wetness+4
+toast: duration=10 temperature+250 morale+2
+
+# Theme 2, plants (shared produce.ts `grow`): rooted living things are planted where they are
+# made and grow from a quarter to full yield over growth_time × 0.1 minutes, faster in rain,
+# summer and rich soil, slower in drought and winter. Crops on tilled land pay A, flora P, fungi
+# U (tools/producers.txt); herbs heal and cure when used, poisonous plants poison, trees give
+# cover and wood, flowers charm.
+
+# noun produce
+tomato: mass=0.15 height=1 integrity=2 alive=true diet=photosynthesis growth_time=5 edible=true nutrition=2 restores=8 regeneration+1 duration=60 single_use=true shelf_life=12 placeable_on=field plural_count=10 color=red
+carrot: mass=0.1 height=0.3 integrity=2 alive=true diet=photosynthesis growth_time=4 edible=true nutrition=2 restores=5 night_vision=true sight_range*1.3 duration=180 single_use=true shelf_life=20 placeable_on=field plural_count=10 color=orange
+cabbage: mass=1 height=0.4 integrity=3 alive=true diet=photosynthesis growth_time=5 edible=true nutrition=3 restores=8 single_use=true shelf_life=20 placeable_on=field plural_count=6 color=green
+bean: mass=0.01 height=1.5 integrity=1 alive=true diet=photosynthesis growth_time=4 edible=true raw=true nutrition=2 fertility=2 single_use=true placeable_on=field plural_count=20 climb+2 color=green
+pumpkin: mass=5 height=0.5 integrity=10 alive=true diet=photosynthesis growth_time=8 edible=true raw=true nutrition=10 restores=10 single_use=true shelf_life=40 placeable_on=field color=orange
+grape: mass=0.005 height=2 integrity=1 alive=true diet=photosynthesis growth_time=10 edible=true nutrition=1 restores=3 single_use=true shelf_life=10 plural_count=30 color=purple
+strawberry: mass=0.02 height=0.2 integrity=1 alive=true diet=photosynthesis growth_time=4 edible=true nutrition=1 restores=5 morale+1 duration=60 single_use=true shelf_life=6 plural_count=12 color=red
+banana: mass=0.12 integrity=1 edible=true nutrition=3 restores=8 speed_land*1.1 duration=60 single_use=true shelf_life=10 slipperiness=8 plural_count=6 color=yellow
+lemon: mass=0.1 integrity=1 edible=true nutrition=1 restores=5 effect_status=poison res_disease+0.3 duration=120 single_use=true shelf_life=20 plural_count=6 color=yellow
+orange: mass=0.2 integrity=1 edible=true nutrition=2 restores=10 res_disease+0.2 duration=120 single_use=true shelf_life=20 plural_count=6 color=orange
+
+# noun herb
+herb: mass=0.02 height=0.3 integrity=1 alive=true diet=photosynthesis growth_time=3 edible=true restores=20 effect_status=poison single_use=true spread_rate=0.1 plural_count=6 color=green
+basil: mass=0.02 height=0.4 integrity=1 alive=true diet=photosynthesis growth_time=3 edible=true restores=10 morale+1 duration=120 single_use=true plural_count=6 color=green
+mint: mass=0.02 height=0.3 integrity=1 alive=true diet=photosynthesis growth_time=2 edible=true restores=10 effect_status=confuse,sleep duration=60 spread_rate=0.3 single_use=true plural_count=6 color=green
+sage: mass=0.02 height=0.5 integrity=1 alive=true diet=photosynthesis growth_time=3 edible=true restores=15 intelligence+2 res_unholy+0.3 duration=300 single_use=true plural_count=6 color=green
+ginger: mass=0.05 height=0.8 integrity=1 alive=true diet=photosynthesis growth_time=4 edible=true restores=15 effect_status=poison,confuse res_cold+0.3 duration=120 single_use=true plural_count=6 color=yellow
+hemlock: mass=0.1 height=2 integrity=2 alive=true diet=photosynthesis growth_time=3 edible=true toxicity=10 dmg_poison=150 inflict_poison=60 single_use=true stealth=5 color=green
+nettle: mass=0.05 height=1 integrity=2 alive=true diet=photosynthesis growth_time=2 thorns=3 inflict_burn=2 edible=true raw=true nutrition=1 toxicity=1 spread_rate=0.3 plural_count=8 color=green
+ginseng: mass=0.05 height=0.5 integrity=1 alive=true diet=photosynthesis growth_time=10 edible=true restores=40 regeneration+3 strength+1 duration=300 single_use=true value=200 color=yellow
+
+# noun tree
+pine: mass=2000 height=25 footprint=1 integrity=2500 alive=true diet=photosynthesis material=wood portable=false flammability=8 growth_time=30 blocks=sight cover=0.4 res_cold=0.8 temp_min=-40 plural_count=6 color=green
+willow: mass=3000 height=15 footprint=2 integrity=2500 alive=true diet=photosynthesis material=wood portable=false flammability=5 growth_time=25 blocks=sight cover=0.5 moisture=3 plural_count=4 color=green
+palm: mass=1000 height=20 footprint=1 integrity=1500 alive=true diet=photosynthesis material=wood portable=false growth_time=25 temp_max=50 food_output=0.3 placeable_on=sand,land plural_count=4 color=green
+maple: mass=4000 height=25 footprint=2 integrity=4000 alive=true diet=photosynthesis material=wood portable=false growth_time=40 blocks=sight cover=0.5 food_output=0.2 plural_count=4 color=red
+birch: mass=1500 height=20 footprint=1 integrity=1800 alive=true diet=photosynthesis material=wood portable=false flammability=7 growth_time=20 blocks=sight cover=0.3 plural_count=6 color=white
+redwood: mass=500000 height=100 footprint=4 integrity=200000 alive=true diet=photosynthesis material=wood portable=false flammability=3 res_fire=0.6 growth_time=200 blocks=sight,projectiles cover=0.9 sight_range+400 color=red
+
+# noun flower
+lily: mass=0.05 height=0.8 integrity=1 alive=true diet=photosynthesis growth_time=3 beauty=9 charm+2 morale+1 placeable_on=water,land plural_count=8 color=white
+daisy: mass=0.01 height=0.2 integrity=1 alive=true diet=photosynthesis growth_time=2 beauty=7 charm+1 spread_rate=0.2 plural_count=12 color=white
+sunflower: mass=1 height=3 integrity=3 alive=true diet=photosynthesis growth_time=5 beauty=8 edible=true nutrition=3 food_output=0.2 luminosity=1 plural_count=6 color=yellow
+poppy: mass=0.02 height=0.6 integrity=1 alive=true diet=photosynthesis growth_time=3 beauty=8 potency=6 inflict_sleep=5 edible=true effect_status=fear duration=60 plural_count=10 color=red
+lotus: mass=0.1 height=0.5 integrity=1 alive=true diet=photosynthesis growth_time=5 beauty=10 heals=1 morale+2 placeable_on=water plural_count=4 color=pink
+tulip: mass=0.03 height=0.4 integrity=1 alive=true diet=photosynthesis growth_time=3 beauty=8 value=50 charm+1 plural_count=12 color=red
+
+# noun fungus
+toadstool: mass=0.05 height=0.1 integrity=1 alive=true edible=true toxicity=8 dmg_poison=60 inflict_confuse=10 growth_time=2 spread_rate=0.2 placeable_on=forest,land,swamp plural_count=8 color=red
+truffle: mass=0.1 integrity=1 alive=true edible=true nutrition=4 restores=20 value=2000 growth_time=8 placeable_on=forest odor=6 color=black
+
+# noun plant
+weed: mass=0.05 height=0.4 integrity=2 alive=true diet=photosynthesis growth_time=1 spread_rate=0.8 fertility=-2 movement_cost=1.2 plural_count=12 color=green
+moss: mass=0.01 height=0.02 integrity=2 alive=true diet=photosynthesis growth_time=2 spread_rate=0.2 moisture=2 slipperiness=3 stealth=2 color=green
+bamboo: mass=20 height=15 integrity=200 alive=true diet=photosynthesis material=wood growth_time=2 spread_rate=0.5 blocks=sight cover=0.4 hardness=5 plural_count=10 color=green
+ivy: mass=2 length=10 integrity=10 alive=true diet=photosynthesis growth_time=3 spread_rate=0.4 climb+5 cover=0.3 inflict_root=2 color=green
+
+# noun phenomenon
+herbicide: placement=region field_radius=30 field_duration=3 growth=0 fertility=-3 produce_P*0 produce_A*0.3 counters=weed,ivy,vine,moss,kudzu,bamboo,nettle,blight
+pollen: placement=region field_radius=40 field_duration=5 growth=1.5 produce_P*2 inflict_blind+1 accuracy+-0.1
+
+# Theme 1, professions (shared work.ts). Someone spelled to work for you is read for its jobs:
+# labour works your fields and stations (more yield), build_speed makes what you raise near it
+# sturdier, map_reveal or long sight make it scout ahead (new regions pay you J), trade_bonus
+# talks down market prices, heals heals your side, recruit_rate preaches the wild to you, alarm
+# and detect_stealth keep watch. Workers pay N (tools/producers.txt) and must be fed.
+
+# noun worker
+chef: mass=80 integrity=100 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=5 labor=2 craft_slots=1 food_output=4 food_need=0.04 dmg_slash=15 attack_rate=1 res_fire=0.3
+baker: mass=80 integrity=100 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 labor=2 food_output=5 food_need=0.03 res_fire=0.2
+butcher: mass=90 integrity=130 alive=true sentient=true intelligence=5 loyalty=5 hands=true speech=true speed_land=5 labor=2 food_output=3 dmg_slash=35 attack_rate=1 sharpness=7 food_need=0.04
+hunter: mass=80 integrity=140 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=6 stealth=5 tracking=8 sight_range=300 dmg_pierce=45 attack_rate=0.8 attack_range=60 targets=land,air food_output=1 food_need=0.04
+fisherman: mass=80 integrity=100 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 speed_water=2 labor=2 harvest_bonus=2 harvest_sources=fishing food_output=2 food_need=0.03
+gardener: mass=70 integrity=90 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=4 labor=3 harvest_bonus=2 harvest_sources=field,orchard fertility=2 food_need=0.03
+shepherd: mass=75 integrity=110 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=5 labor=1 command_limit=15 recruit_rate=0.3 detect_stealth=4 food_need=0.03
+builder: mass=85 integrity=140 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 labor=3 build_speed=2 strength=7 food_need=0.04
+mason: mass=90 integrity=150 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 labor=3 build_speed=2.5 strength=7 dmg_blunt=20 attack_rate=0.8 food_need=0.04
+carpenter: mass=80 integrity=120 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 labor=3 build_speed=1.8 craft_slots=1 food_need=0.04
+architect: mass=70 integrity=80 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 labor=1 build_speed=3 food_need=0.03
+engineer: mass=75 integrity=90 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 labor=2 build_speed=2 craft_slots=1 food_need=0.03
+scout: mass=65 integrity=90 alive=true sentient=true intelligence=7 loyalty=7 hands=true speech=true speed_land=8 stealth=6 sight_range=500 map_reveal=30 tracking=6 food_need=0.03
+explorer: mass=75 integrity=110 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=6 sight_range=400 map_reveal=50 climb=6 terrain_ignored=swamp,snow food_need=0.04
+messenger: mass=65 integrity=80 alive=true sentient=true intelligence=6 loyalty=8 hands=true speech=true speed_land=10 sight_range=300 food_need=0.03
+nurse: mass=65 integrity=90 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=5 heals=5 res_disease=0.6 food_need=0.03 counters=plague,poison
+surgeon: mass=70 integrity=90 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 heals=15 res_disease=0.8 dmg_slash=15 sharpness=9 food_need=0.03
+healer: mass=65 integrity=90 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=5 heals=8 field_radius=6 field_targets=owned regeneration+1 food_need=0.03
+priest: mass=70 integrity=100 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=4 recruit_rate=0.5 heals=3 dmg_holy=40 attack_rate=0.5 res_unholy=0.6 morale+2 counters=ghost,zombie,demon food_need=0.03
+preacher: mass=70 integrity=90 alive=true sentient=true intelligence=7 loyalty=7 hands=true speech=true speed_land=4 recruit_rate=1 loudness=6 charm=6 field_radius=10 field_targets=owned morale+2 food_need=0.03
+monk: mass=65 integrity=120 alive=true sentient=true intelligence=8 loyalty=9 hands=true speech=true speed_land=5 courage=8 immune_fear=true heals=2 dmg_blunt=30 attack_rate=1.5 training=6 food_need=0.02
+teacher: mass=70 integrity=90 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=4 field_radius=8 field_targets=owned training+2 intelligence+1 food_need=0.03
+trader: mass=75 integrity=90 alive=true sentient=true intelligence=7 loyalty=5 hands=true speech=true speed_land=5 trade_bonus=0.4 charm=5 storage_letters=100 food_need=0.03
+banker: mass=80 integrity=80 alive=true sentient=true intelligence=8 loyalty=4 hands=true speech=true speed_land=4 trade_bonus=0.3 storage_letters=500 security=6 food_need=0.03
+shopkeeper: mass=80 integrity=90 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 trade_bonus=0.25 storage_letters=150 food_need=0.03
+tailor: mass=65 integrity=80 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 labor=2 craft_slots=1 food_need=0.03
+weaver: mass=65 integrity=80 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 labor=2 craft_slots=1 food_need=0.03
+potter: mass=70 integrity=90 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 labor=2 craft_slots=1 temperature=20 food_need=0.03
+jeweler: mass=65 integrity=80 alive=true sentient=true intelligence=7 loyalty=5 hands=true speech=true speed_land=4 labor=1 craft_slots=1 trade_bonus=0.15 food_need=0.03
+lumberjack: mass=95 integrity=160 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=5 labor=3 harvest_bonus=2 harvest_sources=tree dmg_slash=50 attack_rate=0.7 siege=2 strength=8 food_need=0.05
+musician: mass=65 integrity=80 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 loudness=7 charm=6 field_radius=12 field_targets=owned morale+3 food_need=0.03
+clerk: mass=70 integrity=80 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 labor=1 storage_letters=60 food_need=0.03
+sheriff: mass=85 integrity=220 alive=true sentient=true intelligence=6 loyalty=7 courage=8 hands=true speech=true speed_land=6 authority=5 detect_stealth=6 alarm=true dmg_pierce=60 attack_rate=1 attack_range=40 targets=land,air inflict_root=4 counters=thief,outlaw,bandit food_need=0.04
+police: pack_size=4 mass=85 integrity=200 alive=true sentient=true intelligence=6 loyalty=7 courage=6 hands=true speech=true speed_land=6 authority=3 detect_stealth=6 alarm=true dmg_pierce=40 attack_rate=1 attack_range=30 targets=land,air inflict_root=3 counters=thief,riot,looting food_need=0.04
+judge: mass=75 integrity=90 alive=true sentient=true intelligence=8 loyalty=5 hands=true speech=true speed_land=3 authority=7 read_properties=6 field_radius=10 field_targets=all law=theft,attack fine=4 food_need=0.03
+
+# Theme 15, law and government (shared place.ts, law.ts). A law over an area forbids acts
+# (attack, gather, spell, trade, theft, hunt); with a fine the act goes ahead and costs whoever
+# does it letters, paid to the law's maker. Taxes and market prices are tax_rate and trade_rate.
+# Words with binds make a pact with the people you pick: one side for a while, and whoever
+# breaks it pays its bind_penalty. Veto, repeal, amnesty and pardon end laws (counters).
+
+# noun knowledge
+law: placement=region placement_range=200 field_radius=60 field_targets=all field_duration=10 law=attack,theft fine=5 authority+2
+decree: placement=map field_radius=ABS field_targets=enemies field_duration=4 law=trade fine=3 authority+3
+edict: placement=region field_radius=120 field_targets=enemies field_duration=6 law=gather fine=3
+ordinance: placement=region field_radius=50 field_targets=enemies field_duration=10 law=hunt,gather fine=2
+regulation: placement=region field_radius=60 field_targets=enemies field_duration=10 law=hunt fine=2 trade_rate=1.2
+statute: placement=region field_radius=80 field_targets=all field_duration=15 law=theft fine=6
+constitution: placement=map field_radius=ABS field_targets=all field_duration=10 law=theft morale+1 counters=tyranny,dictatorship,coup,anarchy
+
+# noun act
+ban: placement=region placement_range=100 field_radius=30 field_targets=enemies field_duration=5 law=spell,trade
+prohibition: placement=map field_radius=ABS field_targets=enemies field_duration=3 law=trade trade_rate=3 produce_T*0
+penalty: placement=region field_radius=40 field_targets=enemies field_duration=8 law=attack fine=8
+sanction: placement=target placement_range=200 field_radius=20 field_targets=enemies field_duration=6 trade_rate=3 law=trade produce_T*0.5
+veto: placement=self field_radius=40 field_duration=1 counters=law,decree,edict,ordinance,regulation,statute,ban,prohibition,penalty,sanction,tax,toll,tariff,curfew,embargo
+repeal: placement=self field_radius=80 field_duration=1 counters=law,decree,edict,ordinance,regulation,statute,ban,prohibition,penalty,tax,tithe,toll,tariff,levy,duty,customs,curfew,lockdown
+democracy: placement=region field_radius=100 field_targets=owned field_duration=15 morale+3 loyalty+2 trade_rate=0.8 counters=tyranny,dictatorship
+tyranny: placement=region field_radius=100 field_targets=enemies field_duration=10 tax_rate=0.3 law=gather,trade fine=4 morale+-3 counters=democracy,constitution
+dictatorship: placement=region field_radius=120 field_targets=all field_duration=10 tax_rate=0.4 law=spell fine=6 authority+5 command_limit+20 morale+-2 counters=democracy,constitution,revolution
+
+# noun event
+arrest: placement=target placement_range=20 event_target=character inflict_root=20 inflict_silence=10 contest_with=authority contested_by=stealth event_duration=1
+verdict: placement=target placement_range=30 event_target=character inflict_root=10 letter_steal=8 contest_with=authority contested_by=charm event_duration=1
+sentence: placement=target placement_range=30 event_target=character inflict_root=40 inflict_silence=20 contest_with=authority contested_by=charm event_duration=1
+exile: placement=target placement_range=30 event_target=character inflict_fear=40 contest_with=authority contested_by=courage event_duration=1
+pardon: placement=target placement_range=50 event_target=character effect_status=root,stun,silence,fear,sleep restores=50 event_duration=1 counters=sentence,arrest,verdict
+confiscation: placement=target placement_range=10 event_target=object transfers_ownership=true contest_with=authority contested_by=security
+
+# noun possession
+pact: binds=2 bind_penalty=letters,morale event_duration=8
+alliance: binds=4 bind_penalty=letters,loyalty,reputation event_duration=10
+accord: binds=3 bind_penalty=reputation event_duration=6
+deed: claim_radius=6 security+3
+title: claim_radius=4 authority+1 charm+1
+
+# noun group
+coalition: binds=6 bind_penalty=letters,reputation event_duration=8
+league: binds=5 bind_penalty=letters,loyalty event_duration=10
+federation: binds=8 bind_penalty=letters,loyalty,reputation event_duration=12
+
+# verb social
+legislate: duration=60 authority+3 command_limit+5
+govern: duration=120 authority+4 command_limit+10 tax_rate+0.05

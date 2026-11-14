@@ -93,6 +93,20 @@ Twenty-five concepts built on them, in `tools/demo_words.txt` after "# Concepts"
 | Hauntings | nightmare, seance, exorcism, apparition, poltergeist, phantom, spectre, wraith | fear that holds, ghosts that fight for you | dawn, exorcism |
 | Starfall | meteor, meteorite, asteroid, comet, cataclysm, apocalypse, doomsday | impact, a crater whose rim gives Z, X, Q and J; map-wide ends of the world | armistice (APOCALYPSE); impacts are instant |
 
+## Dictionary themes
+
+Broad concepts of a few hundred words each (TODO.md "Dictionary themes"), each built on a shared
+system in `shared/`. The core words of each are hand-written in `tools/demo_words.txt` under
+"Dictionary themes"; the rest were generated from them by `generate_words.py`'s prompt.
+
+| Theme | Shared system | What the words do | Counters |
+|---|---|---|---|
+| Materials and elements (11) | `material.ts` | A material before a noun, or an adjective naming one, remakes the thing: GLASS SWORD is sharp and shatters, IRON DOG armoured, heavy and slow, PAPER CASTLE burns, SILVER blades hurt the unholy. What a body is made of decides what hurts it (`susceptibility`). A precious material carried cuts what transmuting to Z costs, and is used up | blows on brittle things, fire on flammable and low-melting ones, lightning on conductors, ACID, RUSTY |
+| Food and cooking (8) | `food.ts` | Eating fills the food store, heals, cures and boosts for a while; raw food cooks by heat (OVEN, CAMPFIRE, FIRE, a cook who cast BAKE) into its `cooks_into` or COOKED; food rots past its `shelf_life`; toxic food poisons | ROTTEN, MOLD, rats; SALTED, SMOKED, PICKLED, CANNED keep food; antidotes cure |
+| Plants and botany (2) | `produce.ts` `grow` | Rooted living things grow from a seedling to full yield, faster in rain, summer and rich soil; crops pay A, flora P, fungi U; herbs heal and cure, poisonous plants poison | HERBICIDE, DROUGHT, WINTER, BLIGHT, locusts, fire, axes |
+| Professions (1) | `work.ts` | Workers pay N and do what their properties say: labour on fields and stations, builders make structures sturdier, scouts range ahead and pay J for new regions, traders haggle market prices down, healers heal, preachers recruit, guards keep watch | killing or stealing workers, hunger |
+| Law and government (15) | `place.ts`, `law.ts` | Laws over an area forbid acts (attack, gather, spell, trade, theft, hunt) or fine whoever does them; taxes and prices; pacts (TREATY, ALLIANCE) put people on one side until someone breaks them and pays; ARREST, SENTENCE, EXILE and PARDON land on a person | VETO, REPEAL, AMNESTY, PARDON, REVOLUTION, ANARCHY |
+
 ## Generating more words
 
 `tools/generate_words.py` gives property values to more of the lexicon with Claude, through the
@@ -106,6 +120,7 @@ python tools/generate_words.py pilot 2                           # try two reque
 python tools/generate_words.py submit                            # send the rest as one batch
 python tools/generate_words.py status
 python tools/generate_words.py collect                           # write generated_words.txt
+python tools/generate_words.py merge                             # or: add .generate/chunks/out_*.txt to it
 tools/build_all.sh <wordnet dict dir>
 ```
 
