@@ -63,31 +63,52 @@ export function landHeld(map: WorldMap, claims: readonly ClaimDisc[], now: numbe
   for (const c of claims) {
     let o = owners.indexOf(c.owner);
     if (o < 0) o = owners.push(c.owner) - 1;
-    const r = Math.max(0, c.radius), t = taper((now - c.born) / 60, LAND_HALF);
-    for (let y = Math.max(0, Math.floor(c.y - r)); y <= Math.min(n - 1, Math.floor(c.y + r)); y++) {
-      for (let x = Math.max(0, Math.floor(c.x - r)); x <= Math.min(n - 1, Math.floor(c.x + r)); x++) {
-        if (Math.hypot(x + 0.5 - c.x, y + 0.5 - c.y) > r) continue;
-        const i = y * n + x;
-        if (who[i] === -1) { who[i] = o; pay[i] = t; } else if (who[i] === o) pay[i] = Math.max(pay[i]!, t);
-        else who[i] = -2;
-      }
+    const t = taper((now - c.born) / 60, LAND_HALF);
+    for (const i of discTiles(map, c.x, c.y, c.radius)) {
+      if (who[i] === -1) { who[i] = o; pay[i] = t; } else if (who[i] === o) pay[i] = Math.max(pay[i]!, t);
+      else who[i] = -2;
     }
   }
   const out = new Map<string, Holding>();
   for (const c of claims) if (!out.has(c.owner)) out.set(c.owner, { tiles: 0, contested: 0, weight: 0, x: c.x, y: c.y });
   for (const c of claims) {
     // Contested tiles are counted for everyone whose claims meet there.
-    const h = out.get(c.owner)!, r = Math.max(0, c.radius), o = owners.indexOf(c.owner);
-    for (let y = Math.max(0, Math.floor(c.y - r)); y <= Math.min(n - 1, Math.floor(c.y + r)); y++) {
-      for (let x = Math.max(0, Math.floor(c.x - r)); x <= Math.min(n - 1, Math.floor(c.x + r)); x++) {
-        if (Math.hypot(x + 0.5 - c.x, y + 0.5 - c.y) > r || !walkable(map, x + 0.5, y + 0.5)) continue;
-        const i = y * n + x;
-        if (who[i] === o) { h.tiles++; h.weight += pay[i]!; pay[i] = 0; who[i] = -3; } // counted once
-        else if (who[i] === -2) h.contested++;
-      }
+    const h = out.get(c.owner)!, o = owners.indexOf(c.owner);
+    for (const i of discTiles(map, c.x, c.y, c.radius)) {
+      if (!walkable(map, (i % n) + 0.5, Math.floor(i / n) + 0.5)) continue;
+      if (who[i] === o) { h.tiles++; h.weight += pay[i]!; pay[i] = 0; who[i] = -3; } // counted once
+      else if (who[i] === -2) h.contested++;
     }
   }
   return out;
+}
+
+/** Discs already worked out, per map (claims stay put for minutes, and territory counts them every few seconds). */
+const DISCS = new WeakMap<WorldMap, Map<string, Int32Array>>();
+/** Discs remembered per map; the oldest is forgotten past this (claims carried by walkers move). */
+const DISC_MEMORY = 1024;
+
+/**
+ * The tiles on the map whose centres lie within `radius` of (x, y), row by row: the ground a
+ * claim covers. Remembered per map, since the answer depends only on the map's size.
+ */
+export function discTiles(map: WorldMap, x: number, y: number, radius: number): Int32Array {
+  let memo = DISCS.get(map);
+  if (!memo) DISCS.set(map, (memo = new Map()));
+  const key = `${x},${y},${radius}`;
+  const known = memo.get(key);
+  if (known) return known;
+  const n = map.size, r = Math.max(0, radius), out: number[] = [];
+  for (let ty = Math.max(0, Math.floor(y - r)); ty <= Math.min(n - 1, Math.floor(y + r)); ty++) {
+    for (let tx = Math.max(0, Math.floor(x - r)); tx <= Math.min(n - 1, Math.floor(x + r)); tx++) {
+      if (Math.hypot(tx + 0.5 - x, ty + 0.5 - y) > r) continue;
+      out.push(ty * n + tx);
+    }
+  }
+  const tiles = Int32Array.from(out);
+  if (memo.size >= DISC_MEMORY) memo.delete(memo.keys().next().value!);
+  memo.set(key, tiles);
+  return tiles;
 }
 
 /**

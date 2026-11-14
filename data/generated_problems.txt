@@ -18,7 +18,6 @@ moldy: produce_U+0.1: letters come from producers.txt alone
 paying: produce_T+1: letters come from producers.txt alone
 rare: produce_X+0.05: letters come from producers.txt alone
 rare: produce_Q+0.05: letters come from producers.txt alone
-mining: produce_X+0.05: letters come from producers.txt alone
 innovation: produce_Z+0.05: letters come from producers.txt alone
 generate: produce_E+2: letters come from producers.txt alone
 generate: produce_N+1: letters come from producers.txt alone

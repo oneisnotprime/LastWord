@@ -498,8 +498,18 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
       DOOMED, FATAL); the cheap rest do luck, fear, curses or blows. Every doom is ended by any
       word with effect_status=doom (REPRIEVE, KARMA, PROVIDENCE, ETERNITY...). EON, AEON and EPOCH
       (map-wide time) are ended by ETERNITY and DECELERATION
-- [ ] Map-wide words nothing ends by `counters` (91, mostly weather replaced by other weather,
-      and news, elections, the cosmos): check each has a way out
+- [x] Every lasting effect has a way out (polish batch 2): shared `lasting` finds every area
+      over the whole map for two minutes or more, weather, daylight, or one place for ten
+      minutes or more; its test fails if any has no word that ends it (`countersOf`), or if a
+      status given for a minute or more has no word that cures it. 178 got counters through
+      data (ECLIPSE ends the sky's wonders, ENTROPY the UNIVERSE, COUP elections, ANARCHY
+      government, INVASION the realms and districts, RECESSION business, STRIKE work, RIOT
+      celebrations, DIVORCE weddings, CURFEW journeys...); weather that ends weather says so
+      both ways; GROW ends shrinking. A word that counters the weather now ends it on the server
+- [x] Bots that launch a boat board it: a riding bot gets off first (a rider's reach is only
+      TAKE_RANGE), heads straight for the shore by the boat, and E by a vessel boards it rather
+      than remounting the horse beside you (people too)
+- [x] Room tests no longer lean on luck: every room test file uses fixed seeds (`testSeed`)
 - [x] Carried or following things whose field forbids fighting (GAVEL, JUDGE, REFEREE, PEACEKEEPER):
       ruled in themes batch 5 (shared sport.ts): `peace` gives whoever takes one a `truce` status
       once, for 90 to 180 s (untouchable, cannot strike or spell); PROVOCATION and TAUNT end it
@@ -511,6 +521,10 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
       uWebSockets.js transport
 - [x] Tick spikes: caused by many route searches in one tick; capped at 12 a tick, worst tick
       in a 5-minute playing run is now 44 ms
+- [x] Tick time (polish batch 2), a minute of 99 bots: route search 2.6 times faster (no closure
+      per heap step, a distance table), claims' ground remembered (`discTiles`), areas that only
+      change stats skip the once-a-second pulse, cheap distance tests first; average 10 to 7 ms,
+      worst 52-65 to 32-45 ms (kits on); same answers
 - [ ] M7 in PLAN.md
 - [ ] Map generator: cities, countryside, letter sources
 - [ ] Demo: one map, the 351-word dictionary, a handful of players

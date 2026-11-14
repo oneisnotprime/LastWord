@@ -94,6 +94,10 @@ Twenty-five concepts built on them, in `tools/demo_words.txt` after "# Concepts"
 | Hauntings | nightmare, seance, exorcism, apparition, poltergeist, phantom, spectre, wraith | fear that holds, ghosts that fight for you | dawn, exorcism |
 | Starfall | meteor, meteorite, asteroid, comet, cataclysm, apocalypse, doomsday | impact, a crater whose rim gives Z, X, Q and J; map-wide ends of the world | armistice (APOCALYPSE); impacts are instant |
 
+Every lasting area (over the whole map for two minutes or more, weather, night or day, or one
+place for ten minutes or more) has a word that ends it, through `counters` or `clears_weather`;
+the shared polish2 test fails if a new one has none. Weather that ends weather says so both ways.
+
 ## Dictionary themes
 
 Broad concepts of a few hundred words each (TODO.md "Dictionary themes"), each built on a shared
