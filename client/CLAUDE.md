@@ -21,5 +21,16 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
 - `window.__lw` exposes the connection and map for browser checks.
 - To check in a browser: start the server (`npm start -w server`), build and
   `npx vite preview` in `client/`, then drive it with Playwright.
-- Placeholder art: players and things are coloured squares with labels until the art pass (M7).
+- Art is Paper Diorama (style 4 of the prototypes), all drawn by code on canvases:
+  - `src/art/terrain.ts` the map as torn paper sheets with cut-outs, in 16-tile chunks drawn by
+    `terrain.worker.ts`; a terrain edit redraws only the chunks it touches.
+  - `src/art/shapes.ts` what words look like: `WORDS` (a shape for one word) wins over
+    `ARCHETYPES` (one per archetype) and `CLASSES`. Builders and units are in `build.ts`. Add a
+    word's own shape there; `gallery.html` shows every shape (`?phrases=huge wolf,red car`).
+  - `src/art/look.ts` phrase to look: colour from colour or material, size from mass, burning,
+    frozen, invisible, hidden, count. `standee.ts` renders one; `paper.ts` cut-outs, tags, badges.
+  - `src/paint.ts` caches canvases as textures; `src/zones.ts` areas as tissue paper with
+    cut-outs; `src/sky.ts` night, weather and fields over the whole map.
+  - Canvas textures are never resized or destroyed mid-game, and `maxTextures` is 1: Phaser 4.2
+    otherwise drew some standees with another texture's pixels.
 - Controller support is not built yet. Spelling on a controller will pick from held letters.
