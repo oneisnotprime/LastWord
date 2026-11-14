@@ -1,0 +1,363 @@
+# noun supernatural
+goddess: mass=0 integrity=150000 alive=true sentient=true intelligence=10 loyalty=0 placement=sky phase=true speed_air=200 dmg_holy=15000 attack_rate=0.1 attack_range=2000 attack_area=20 heals=60 faith_cost=50 upkeep_faith=4 authority=8 charm=9 beauty=10 res_holy=1 res_unholy=1 field_radius=300 field_targets=owned growth*3 morale+4
+archangel: mass=80 integrity=12000 alive=true sentient=true intelligence=9 loyalty=10 speed_air=80 hover=true hands=true dmg_holy=1000 dmg_fire=300 attack_rate=1 attack_range=3 heals=40 res_unholy=1 res_holy=1 luminosity=10 fear_aura=7 authority=6 prevents_death=1 equip_slot=companion faith_cost=30 upkeep_faith=2 counters=demon,devil,ghost,zombie,vampire,succubus,incubus
+seraph: mass=80 integrity=10000 alive=true sentient=true intelligence=9 loyalty=10 speed_air=100 hover=true dmg_fire=700 dmg_holy=600 attack_rate=0.8 attack_range=20 attack_area=4 temperature=1500 luminosity=10 res_fire=1 res_unholy=1 immune_burn=true fear_aura=6 equip_slot=companion faith_cost=25 upkeep_faith=2 counters=demon,devil,imp,ghoul
+cherub: mass=15 integrity=300 alive=true sentient=true intelligence=6 loyalty=10 speed_air=10 hover=true dmg_pierce=10 inflict_charm=20 attack_rate=1 attack_range=40 heals=5 res_unholy=1 luminosity=4 beauty=9 equip_slot=companion upkeep_faith=0.3
+devil: mass=120 height=2.2 integrity=8000 alive=true sentient=true intelligence=9 loyalty=1 aggression=7 speed_land=8 speed_air=30 hands=true speech=true dmg_unholy=500 dmg_fire=300 attack_rate=1 attack_range=2 inflict_curse=60 temperature=600 res_fire=1 res_unholy=1 res_holy=-1 fear_aura=8 charm=6 odor=6 letter_steal=4 faith_cost=40 equip_slot=companion counters=angel,saint,priest,prayer
+imp: mass=5 integrity=40 alive=true sentient=true intelligence=5 loyalty=2 aggression=6 speed_air=10 hover=true dmg_fire=15 dmg_unholy=15 attack_rate=1.5 inflict_curse=20 stealth=4 res_fire=1 res_holy=-1 pack_size=3 letter_steal=1
+succubus: mass=60 integrity=900 alive=true sentient=true intelligence=8 loyalty=1 speed_land=6 speed_air=20 hover=true dmg_unholy=80 attack_rate=1 inflict_charm=30 lifesteal=0.8 charm=9 beauty=10 nocturnal=true res_unholy=1 res_holy=-1 counters=monk,nun,priest
+incubus: mass=80 integrity=900 alive=true sentient=true intelligence=8 loyalty=1 speed_air=20 hover=true phase=true dmg_unholy=80 dmg_psychic=60 attack_rate=1 inflict_sleep=30 inflict_charm=15 lifesteal=0.8 stealth=6 nocturnal=true res_unholy=1 res_holy=-1
+daemon: mass=0 integrity=600 alive=false sentient=true intelligence=8 loyalty=9 phase=true hover=true speed_air=10 dmg_magic=50 attack_rate=1 attack_range=20 alarm=true detect_stealth=5 equip_slot=companion upkeep_faith=0.5
+soul: mass=0 integrity=50 alive=false phase=true hover=true speed_air=5 transparency=0.8 luminosity=2 faith_output=0.5 equip_slot=companion prevents_death=1 survives_death=true on_owner_death=revive_owner upkeep_faith=0.5 counters=devil,demon
+saint: mass=70 integrity=400 alive=true sentient=true intelligence=8 loyalty=10 hands=true speech=true speed_land=4 heals=20 dmg_holy=100 attack_rate=0.5 res_unholy=1 immune_curse=true luminosity=4 faith_output=3 recruit_rate=0.5 field_radius=30 field_targets=owned morale+3 food_need=0.02 counters=demon,devil,curse,hex
+demigod: mass=90 integrity=2500 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=8 strength=9 training=7 dmg_holy=250 attack_rate=1 regeneration=3 res_holy=0.5 res_unholy=0.5 authority=4 faith_output=1 faith_cost=20 food_need=0.05
+avatar: mass=75 integrity=3000 alive=true sentient=true intelligence=10 loyalty=10 hands=true speech=true speed_land=6 dmg_holy=300 attack_rate=1 heals=15 luminosity=6 res_holy=1 res_unholy=1 authority=6 recruit_rate=2 faith_output=4 faith_cost=40 upkeep_faith=2
+messiah: mass=70 integrity=600 alive=true sentient=true intelligence=9 loyalty=10 hands=true speech=true speed_land=4 heals=25 recruit_rate=3 authority=7 charm=8 faith_output=5 prevents_death=1 faith_cost=40 field_radius=60 field_targets=owned morale+5 courage+4 effect_status=curse,sick counters=devil,demon,despair
+savior: mass=70 integrity=300 alive=true sentient=true intelligence=8 loyalty=10 hands=true speech=true speed_land=5 heals=30 courage=10 immune_fear=true faith_output=2 field_radius=30 field_targets=owned morale+4 food_need=0.03 counters=curse,doom,damnation
+saviour: mass=70 integrity=300 alive=true sentient=true intelligence=8 loyalty=10 hands=true speech=true speed_land=5 heals=30 courage=10 immune_fear=true faith_output=2 field_radius=30 field_targets=owned morale+4 food_need=0.03 counters=curse,doom,damnation
+redeemer: mass=70 integrity=300 alive=true sentient=true intelligence=8 loyalty=10 hands=true speech=true speed_land=4 heals=20 faith_output=2 recruit_rate=1 field_radius=40 field_targets=owned effect_status=curse morale+3 food_need=0.03 counters=sin,curse,damnation
+creator: mass=0 integrity=250000 alive=true sentient=true intelligence=10 loyalty=0 placement=sky phase=true faith_cost=60 upkeep_faith=5 heals=30 authority=8 res_holy=1 res_unholy=1 field_radius=500 field_targets=all growth=4 fertility=8 build_speed=4 deposit_factor=3 lode=q,z,x lode_share=0.3
+reaper: mass=0 height=2.5 integrity=5000 alive=false sentient=true intelligence=8 loyalty=0 phase=true hover=true speed_land=3 speed_air=3 sharpness=10 dmg_slash=400 dmg_dark=400 attack_rate=0.5 attack_range=3 armor_pierce=1 fear_aura=10 immune_fear=true res_blunt=1 res_slash=1 res_pierce=1 res_holy=-0.5 faith_cost=30 counters=angel,resurrection
+muse: mass=0 integrity=60 alive=true sentient=true loyalty=8 phase=true hover=true speed_air=5 beauty=9 equip_slot=companion field_radius=30 field_targets=owned intelligence+3 morale+3 harvest_bonus*1.3 faith_cost=8 upkeep_faith=0.5
+nymph: mass=50 integrity=80 alive=true sentient=true intelligence=6 speed_land=6 speed_water=4 charm=8 beauty=10 inflict_charm=15 attack_rate=0.5 stealth=5 camouflage=forest,water habitat=forest,water field_radius=30 field_targets=all growth*2 fertility=5 upkeep_faith=0.3
+fairy: mass=0.05 length=0.15 integrity=10 alive=true sentient=true intelligence=7 loyalty=4 speed_air=8 hover=true luminosity=3 stealth=6 dmg_magic=10 attack_rate=1 attack_range=10 inflict_charm=5 heals=5 charm=5 beauty=8 equip_slot=companion upkeep_faith=0.2
+faerie: mass=0.05 length=0.2 integrity=30 alive=true sentient=true intelligence=8 loyalty=2 speed_air=10 hover=true phase=true luminosity=4 stealth=7 dmg_magic=40 attack_rate=1 attack_range=20 inflict_charm=10 inflict_confuse=8 letter_steal=1 beauty=9 upkeep_faith=0.3
+sprite: mass=0.05 integrity=8 alive=true sentient=true intelligence=5 speed_air=12 hover=true luminosity=2 stealth=7 dmg_magic=8 attack_rate=2 attack_range=10 inflict_confuse=3 beauty=7 equip_slot=companion
+pixie: mass=0.05 integrity=8 alive=true sentient=true intelligence=6 loyalty=3 speed_air=10 hover=true luminosity=3 stealth=6 inflict_sleep=5 inflict_charm=4 attack_rate=1 attack_range=8 letter_steal=1 pack_size=3 equip_slot=companion
+elf: mass=55 integrity=90 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=7 dmg_pierce=40 attack_rate=1 attack_range=80 targets=land,air accuracy=0.98 stealth=5 camouflage=forest night_vision=true charm=4 beauty=8 food_need=0.02 training=6
+dwarf: mass=70 height=1.3 integrity=180 alive=true sentient=true intelligence=6 loyalty=8 hands=true speech=true strength=7 training=4 speed_land=3 speed_underground=0.5 detect_underground=true night_vision=true harvest_bonus=2 harvest_sources=mine res_fire=0.3 courage=8 food_need=0.03 crafts=weapon,metal
+gnome: mass=15 height=0.6 integrity=50 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=2 speed_underground=1 detect_underground=true detect_letters=30 harvest_bonus=1.5 harvest_sources=mine labor=2 stealth=4 food_need=0.01
+goblin: mass=30 height=1 integrity=40 alive=true sentient=true intelligence=4 loyalty=2 aggression=7 hands=true speed_land=6 stealth=4 night_vision=true dmg_slash=15 attack_rate=1.5 letter_steal=1 pack_size=5 food_need=0.02 diet=omnivore
+troll: mass=600 height=3 integrity=1500 alive=true sentient=true intelligence=2 loyalty=3 aggression=7 hands=true speed_land=5 dmg_blunt=150 attack_rate=0.5 attack_range=2 regeneration=10 res_light=-0.5 food_need=0.5 diet=omnivore habitat=mountain,forest strength=9
+ogre: mass=350 height=3 integrity=2000 alive=true sentient=true intelligence=2 loyalty=3 aggression=8 hands=true speed_land=5 dmg_blunt=180 dmg_crush=100 attack_rate=0.5 attack_range=2 fear_aura=4 odor=7 food_need=1 diet=carnivore strength=9
+cyclops: mass=1500 height=6 integrity=4000 alive=true sentient=true intelligence=3 loyalty=3 aggression=7 hands=true speed_land=6 strength=10 dmg_blunt=400 attack_rate=0.4 attack_range=40 attack_area=3 accuracy=0.6 sight_range=40 fear_aura=6 food_need=2 diet=carnivore
+yeti: mass=300 height=2.8 integrity=1800 alive=true intelligence=4 aggression=5 speed_land=8 dmg_blunt=120 dmg_slash=60 attack_rate=0.7 res_cold=1 temp_min=-60 camouflage=snow stealth=4 fear_aura=4 habitat=snow,mountain,tundra food_need=0.5 diet=omnivore
+mermaid: mass=60 integrity=100 alive=true sentient=true intelligence=7 hands=true speech=true speed_water=12 dive_depth=200 breathes=both habitat=water placeable_on=water inflict_charm=20 attack_range=30 charm=8 beauty=9 loudness=3
+centaur: mass=600 integrity=900 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=18 dmg_pierce=45 attack_rate=0.8 attack_range=80 targets=land,air mountable=true seats=1 carry_capacity=150 habitat=forest,meadow food_need=0.3 diet=herbivore training=5
+sphinx: mass=2000 length=6 integrity=5000 alive=true sentient=true intelligence=10 loyalty=4 speed_land=8 speed_air=20 dmg_slash=200 attack_rate=0.5 read_properties=8 silences=30 authority=4 res_magic=0.6 habitat=desert fear_aura=5
+harpy: mass=40 integrity=80 alive=true intelligence=3 aggression=8 speed_air=20 dmg_slash=25 attack_rate=1.5 targets=land,air inflict_fear=3 letter_steal=1 odor=8 loudness=6 pack_size=3
+chimera: mass=800 integrity=2500 alive=true intelligence=3 aggression=9 speed_land=12 dmg_fire=150 dmg_slash=100 dmg_poison=50 attack_rate=0.8 attack_range=8 venomous=true fear_aura=6 res_fire=0.8 diet=carnivore food_need=1
+medusa: mass=70 integrity=300 alive=true sentient=true intelligence=7 loyalty=2 hands=true venomous=true dmg_poison=30 attack_rate=1 attack_range=20 inflict_root=30 inflict_stun=10 fear_aura=8 res_holy=-0.3 counters=mirror
+satyr: mass=70 integrity=100 alive=true sentient=true intelligence=5 hands=true speed_land=8 jump=2 loudness=5 charm=5 habitat=forest food_need=0.03 field_radius=20 field_targets=all morale+2 obedience+-2
+faun: mass=60 integrity=90 alive=true sentient=true intelligence=6 hands=true speed_land=8 jump=2 stealth=4 camouflage=forest habitat=forest charm=4 food_need=0.03 field_radius=20 field_targets=all growth*1.5
+werewolf: mass=110 integrity=800 alive=true sentient=true intelligence=4 aggression=9 nocturnal=true night_vision=true speed_land=15 dmg_slash=90 dmg_pierce=60 attack_rate=1.3 inflict_bleed=8 smell_range=500 regeneration=6 res_pierce=0.7 res_holy=-0.5 fear_aura=6 diet=carnivore food_need=0.5
+vampire: mass=70 integrity=600 alive=false sentient=true intelligence=8 loyalty=2 hands=true speech=true speed_land=10 speed_air=15 night_vision=true nocturnal=true dmg_pierce=50 dmg_unholy=40 attack_rate=1.2 lifesteal=0.8 inflict_charm=6 regeneration=5 res_unholy=1 res_holy=-1 res_light=-1 fear_aura=5 counters=priest,nun
+ghoul: mass=60 integrity=200 alive=false intelligence=2 aggression=9 speed_land=4 dmg_slash=30 dmg_disease=20 inflict_sick=30 attack_rate=1 diet=scavenger nocturnal=true night_vision=true odor=8 res_poison=1 res_holy=-1 pack_size=3
+specter: mass=0 integrity=200 alive=false sentient=true phase=true hover=true speed_air=6 transparency=0.9 stealth=8 nocturnal=true dmg_dark=40 dmg_cold=20 inflict_fear=10 attack_rate=0.5 res_blunt=1 res_slash=1 res_pierce=1 res_holy=-1 fear_aura=7 on_owner_death=vanish
+bogeyman: mass=0 integrity=300 alive=false sentient=true phase=true speed_land=5 stealth=9 nocturnal=true inflict_fear=20 dmg_psychic=40 attack_rate=0.5 fear_aura=8 res_holy=-0.5 counters=child
+boogeyman: mass=0 integrity=300 alive=false sentient=true phase=true speed_land=5 stealth=9 nocturnal=true inflict_fear=20 dmg_psychic=40 attack_rate=0.5 fear_aura=8 res_holy=-0.5 counters=child
+sandman: mass=0 integrity=200 alive=false sentient=true phase=true hover=true speed_air=5 stealth=8 nocturnal=true inflict_sleep=40 attack_rate=0.2 attack_range=30 attack_area=10 targets=land
+gremlin: mass=8 integrity=30 alive=true sentient=true intelligence=5 aggression=6 hands=true speed_land=6 stealth=6 dmg_electric=20 attack_rate=1 siege=5 pack_size=3 reproduction=2 counters=machine,device,vehicle_land,vehicle_air,computer
+doppelganger: mass=70 integrity=100 alive=true sentient=true intelligence=7 loyalty=1 copies=true disguise=9 stealth=6 hands=true speech=true speed_land=5
+djinn: mass=0 integrity=30000 alive=true sentient=true intelligence=9 loyalty=2 phase=true hover=true speed_air=40 dmg_fire=900 dmg_wind=400 attack_rate=0.5 attack_area=6 temperature=400 res_fire=1 duplicates=1 labor=40 faith_cost=30 upkeep_faith=2
+thunderbird: mass=500 length=12 integrity=6000 alive=true sentient=true intelligence=6 speed_air=60 flight_ceiling=8000 dmg_electric=600 dmg_wind=150 attack_rate=0.3 attack_area=8 targets=land,air,water sets_weather=storm field_radius=200 loudness=10 fear_aura=6 faith_cost=20 res_electric=1
+firebird: mass=10 length=1.5 integrity=1500 alive=true sentient=true intelligence=6 speed_air=40 flight_ceiling=5000 luminosity=9 temperature=900 dmg_fire=200 attack_rate=0.8 attack_range=20 inflict_burn=6 res_fire=1 immune_burn=true regeneration=5 beauty=10 value=8000
+roc: mass=5000 length=30 integrity=8000 alive=true intelligence=4 aggression=6 speed_air=40 flight_ceiling=6000 dmg_crush=500 dmg_pierce=300 attack_rate=0.4 targets=land,water carry_capacity=10000 mountable=true seats=4 fear_aura=6 diet=carnivore food_need=5
+leprechaun: mass=10 height=0.7 integrity=40 alive=true sentient=true intelligence=7 loyalty=1 hands=true speech=true speed_land=8 teleport_range=50 stealth=6 storage_letters=50 security=6 letter_steal=2 charm=4 value=500
+juggernaut: mass=200000 length=15 integrity=50000 hardness=9 self_propelled=true requires_pilot=false speed_land=6 dmg_crush=3000 attack_rate=0.3 attack_area=4 knockback=10 siege=8 res_blunt=0.8 res_pierce=0.8 immune_stun=true immune_slow=true immune_root=true immune_fear=true terrain_ignored=forest,swamp,hill loudness=9
+
+# noun leader
+pope: mass=80 integrity=110 alive=true sentient=true intelligence=8 loyalty=10 hands=true speech=true speed_land=3 authority=9 command_limit=50 recruit_rate=2 charm=7 faith_output=4 heals=3 res_unholy=0.9 immune_curse=true field_radius=60 field_targets=owned morale+3 food_need=0.03 counters=heresy,blasphemy,heretic,apostasy
+pontiff: mass=80 integrity=110 alive=true sentient=true intelligence=8 loyalty=10 hands=true speech=true speed_land=3 authority=9 command_limit=50 recruit_rate=2 charm=7 faith_output=4 heals=3 res_unholy=0.9 immune_curse=true field_radius=60 field_targets=owned morale+3 food_need=0.03 counters=heresy,blasphemy,heretic,apostasy
+cardinal: mass=75 integrity=100 alive=true sentient=true intelligence=8 loyalty=8 hands=true speech=true speed_land=4 authority=6 command_limit=20 faith_output=2.5 recruit_rate=1 intimidation=3 res_unholy=0.7 color=red food_need=0.03
+archbishop: mass=75 integrity=100 alive=true sentient=true intelligence=8 loyalty=8 hands=true speech=true speed_land=4 authority=6 command_limit=15 faith_output=3 recruit_rate=0.8 heals=3 res_unholy=0.7 food_need=0.03
+bishop: mass=75 integrity=100 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=4 authority=4 command_limit=8 faith_output=2 recruit_rate=0.5 heals=3 dmg_holy=40 attack_rate=0.5 res_unholy=0.6 food_need=0.03
+patriarch: mass=75 integrity=100 alive=true sentient=true intelligence=8 loyalty=8 hands=true speech=true speed_land=3 authority=6 command_limit=20 faith_output=2 recruit_rate=1 on_owner_death=pass_to_heir food_need=0.03
+prelate: mass=75 integrity=100 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=4 authority=4 command_limit=8 faith_output=2 res_unholy=0.6 food_need=0.03
+archdeacon: mass=75 integrity=100 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=4 authority=3 command_limit=5 faith_output=1.5 storage_letters=100 food_need=0.03
+abbot: mass=75 integrity=110 alive=true sentient=true intelligence=8 loyalty=9 hands=true speech=true speed_land=4 authority=4 command_limit=12 faith_output=2 field_radius=30 field_targets=owned labor+1 morale+1 food_need=0.02
+abbess: mass=65 integrity=100 alive=true sentient=true intelligence=8 loyalty=9 hands=true speech=true speed_land=4 authority=4 command_limit=12 faith_output=2 heals=4 field_radius=30 field_targets=owned regeneration+1 morale+1 food_need=0.02
+priestess: mass=65 integrity=100 alive=true sentient=true intelligence=8 loyalty=8 hands=true speech=true speed_land=4 heals=5 dmg_holy=40 attack_rate=0.5 res_unholy=0.6 faith_output=1.5 recruit_rate=0.5 charm=4 food_need=0.03 counters=ghost,demon,curse
+confessor: mass=70 integrity=100 alive=true sentient=true intelligence=8 loyalty=9 hands=true speech=true speed_land=4 read_properties=6 read_inventory=true faith_output=1 heals=2 food_need=0.03
+parson: mass=70 integrity=90 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=4 faith_output=1 heals=2 recruit_rate=0.3 comfort=1 food_need=0.03
+padre: mass=75 integrity=110 alive=true sentient=true intelligence=7 loyalty=9 hands=true speech=true speed_land=5 faith_output=1 heals=4 field_radius=25 field_targets=owned morale+3 courage+2 food_need=0.03
+clergyman: mass=70 integrity=90 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=4 faith_output=1 heals=2 res_unholy=0.5 food_need=0.03
+guru: mass=60 integrity=90 alive=true sentient=true loyalty=6 hands=true speech=true speed_land=3 recruit_rate=1.5 charm=6 faith_output=1.5 field_radius=15 field_targets=owned training+2 intelligence+2 food_need=0.01
+lord: mass=80 integrity=150 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 authority=7 command_limit=25 tax_rate=0.1 claim_radius=12 recruit_rate=0.5 charm=3 food_need=0.04 on_owner_death=pass_to_heir
+minister: mass=75 integrity=90 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 authority=5 command_limit=10 charm=4 faith_output=1 recruit_rate=0.5 food_need=0.03
+
+# noun worker
+pastor: mass=75 integrity=90 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=4 faith_output=1.5 heals=3 recruit_rate=0.5 field_radius=20 field_targets=owned morale+2 food_need=0.03
+reverend: mass=75 integrity=90 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=4 faith_output=1.5 heals=3 dmg_holy=30 attack_rate=0.5 res_unholy=0.6 loudness=4 recruit_rate=0.5 food_need=0.03
+vicar: mass=70 integrity=90 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=4 faith_output=1 heals=2 comfort=1 recruit_rate=0.3 food_need=0.03
+rector: mass=70 integrity=90 alive=true sentient=true intelligence=8 loyalty=8 hands=true speech=true speed_land=4 faith_output=1 authority=2 command_limit=4 food_need=0.03
+chaplain: mass=80 integrity=120 alive=true sentient=true intelligence=7 loyalty=9 hands=true speech=true speed_land=5 faith_output=1 heals=4 field_radius=30 field_targets=owned morale+3 courage+3 res_unholy+0.3 food_need=0.04
+cleric: mass=75 integrity=130 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=4 heals=10 dmg_holy=50 dmg_blunt=25 attack_rate=0.8 armor=10 res_unholy=0.7 faith_output=1 food_need=0.03 counters=zombie,ghost,ghoul
+deacon: mass=70 integrity=90 alive=true sentient=true intelligence=6 loyalty=8 hands=true speech=true speed_land=4 faith_output=1 heals=2 labor=2 food_need=0.03
+missionary: mass=70 integrity=100 alive=true sentient=true intelligence=7 loyalty=9 courage=8 hands=true speech=true speed_land=5 range=3000 recruit_rate=1.5 charm=5 faith_output=1 heals=3 food_need=0.03
+evangelist: mass=70 integrity=90 alive=true sentient=true intelligence=7 loyalty=9 hands=true speech=true speed_land=5 recruit_rate=2 charm=6 loudness=6 faith_output=1.5 food_need=0.03
+apostle: mass=70 integrity=100 alive=true sentient=true intelligence=7 loyalty=10 courage=8 hands=true speech=true speed_land=5 recruit_rate=1.5 faith_output=1.5 heals=4 range=2000 food_need=0.03
+nun: mass=60 integrity=90 alive=true sentient=true intelligence=7 loyalty=10 hands=true speech=true speed_land=4 faith_output=1 heals=6 immune_charm=true res_unholy=0.6 labor=2 food_need=0.02 counters=vampire,succubus
+friar: mass=75 integrity=100 alive=true sentient=true intelligence=7 loyalty=9 hands=true speech=true speed_land=4 faith_output=1 heals=3 charm=5 dmg_blunt=25 attack_rate=1 food_need=0.03
+novice: mass=60 integrity=80 alive=true sentient=true intelligence=5 loyalty=8 obedience=9 hands=true speech=true speed_land=5 faith_output=0.3 trainable=8 labor=2 food_need=0.02
+mystic: mass=60 integrity=80 alive=true sentient=true intelligence=9 loyalty=7 hands=true speech=true speed_land=3 faith_output=2 read_properties=5 detect_stealth=4 detect_life=200 res_psychic=0.8 food_need=0.01
+shaman: mass=65 integrity=90 alive=true sentient=true intelligence=8 loyalty=8 hands=true speech=true speed_land=4 faith_output=1.5 heals=8 detect_life=200 dmg_magic=30 attack_rate=0.5 attack_range=20 res_unholy=0.5 food_need=0.02 crafts=medicine,poison field_radius=20 field_targets=owned courage+2
+cantor: mass=70 integrity=90 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=4 loudness=6 faith_output=1 field_radius=40 field_targets=owned morale+2 res_unholy+0.2 food_need=0.03
+rabbi: mass=75 integrity=90 alive=true sentient=true loyalty=8 hands=true speech=true speed_land=4 faith_output=1.5 heals=2 field_radius=15 field_targets=owned intelligence+1 morale+1 food_need=0.03
+imam: mass=75 integrity=90 alive=true sentient=true intelligence=8 loyalty=8 hands=true speech=true speed_land=4 faith_output=1.5 loudness=6 recruit_rate=0.5 field_radius=30 field_targets=owned morale+2 food_need=0.03
+maker: mass=75 integrity=100 alive=true sentient=true intelligence=8 hands=true speech=true speed_land=4 build_speed=2 craft_slots=2 crafts=tool,furniture,device labor=4 food_need=0.03
+
+# noun person
+witch: mass=60 integrity=90 alive=true sentient=true intelligence=8 loyalty=5 hands=true speech=true speed_land=4 speed_air=15 dmg_magic=40 attack_rate=0.7 attack_range=30 inflict_curse=60 inflict_shrink=10 faith_output=0.5 crafts=medicine,poison food_need=0.03
+warlock: mass=75 integrity=100 alive=true sentient=true intelligence=8 loyalty=3 hands=true speech=true speed_land=4 dmg_unholy=60 dmg_magic=40 attack_rate=0.6 attack_range=40 inflict_curse=90 inflict_fear=5 res_unholy=0.5 res_holy=-0.3 faith_output=0.5 food_need=0.03
+magus: mass=70 integrity=90 alive=true sentient=true intelligence=10 loyalty=6 hands=true speech=true speed_land=4 dmg_magic=120 attack_rate=0.5 attack_range=50 read_properties=6 detect_letters=80 faith_output=1 food_need=0.03
+hermit: mass=60 integrity=90 alive=true sentient=true intelligence=8 loyalty=10 hands=true speech=true speed_land=3 stealth=5 immune_charm=true res_psychic=0.6 faith_output=1 food_need=0.01 temp_min=-25
+ascetic: mass=50 integrity=90 alive=true sentient=true intelligence=8 loyalty=10 courage=9 hands=true speech=true speed_land=4 res_hunger=0.8 res_cold=0.4 immune_charm=true immune_sleep=true faith_output=1.5 food_need=0.005
+penitent: mass=65 integrity=90 alive=true sentient=true intelligence=6 loyalty=9 hands=true speech=true speed_land=3 faith_output=1 obedience=9 food_need=0.02
+celibate: mass=70 integrity=90 alive=true sentient=true intelligence=7 loyalty=9 hands=true speech=true speed_land=4 immune_charm=true reproduction=0 faith_output=0.8 food_need=0.03
+believer: mass=70 integrity=90 alive=true sentient=true intelligence=5 loyalty=8 hands=true speech=true speed_land=4 faith_output=0.5 morale=7 food_need=0.03
+martyr: mass=70 integrity=90 alive=true sentient=true intelligence=6 loyalty=10 immune_fear=true hands=true speech=true speed_land=4 faith_output=1.5 field_radius=30 field_targets=owned morale+3 courage+3 food_need=0.03
+zealot: mass=75 integrity=110 alive=true sentient=true intelligence=4 loyalty=10 courage=9 aggression=8 immune_fear=true immune_charm=true hands=true speech=true speed_land=5 dmg_holy=30 dmg_blunt=30 attack_rate=1 faith_output=1 food_need=0.03 counters=heretic,heresy
+cultist: mass=70 integrity=90 alive=true sentient=true intelligence=3 loyalty=10 obedience=10 hands=true speech=true speed_land=4 dmg_unholy=20 attack_rate=1 faith_output=1 pack_size=3 food_need=0.03
+heretic: mass=70 integrity=90 alive=true sentient=true intelligence=7 loyalty=4 hands=true speech=true speed_land=4 immune_curse=true field_radius=40 field_targets=enemies upkeep_faith+2 food_need=0.03 counters=priest,bishop,pope,zealot
+worshipper: mass=70 integrity=90 alive=true sentient=true intelligence=5 loyalty=8 hands=true speech=true speed_land=4 faith_output=0.8 food_need=0.03
+agnostic: mass=70 integrity=90 alive=true sentient=true intelligence=8 loyalty=5 hands=true speech=true speed_land=4 immune_curse=true res_holy=0.5 res_unholy=0.5 faith_output=0 food_need=0.03
+assassin: mass=70 integrity=110 alive=true sentient=true intelligence=8 loyalty=4 hands=true speech=true speed_land=7 stealth=8 disguise=5 dmg_pierce=120 dmg_poison=40 critical=0.5 attack_rate=1 armor_pierce=0.5 food_need=0.03 training=8
+son: mass=60 integrity=90 alive=true sentient=true intelligence=5 loyalty=9 hands=true speech=true speed_land=5 growth_time=60 food_need=0.03 survives_death=true on_owner_death=pass_to_heir
+sister: mass=55 integrity=90 alive=true sentient=true intelligence=6 loyalty=9 hands=true speech=true speed_land=5 heals=2 food_need=0.03 faith_output=0.3
+mama: mass=65 integrity=100 alive=true sentient=true intelligence=7 loyalty=10 courage=9 hands=true speech=true speed_land=4 heals=5 comfort=3 food_output=1 field_radius=15 field_targets=owned morale+2 regeneration+1 food_need=0.03
+
+# noun building
+mosque: mass=3000000 footprint=25 height=40 integrity=50000 material=stone portable=false enterable=true occupants=1000 needs_foundation=true comfort=3 heals=2 faith_output=5 recruit_rate=0.5 loudness=6 beauty=9 field_radius=60 field_targets=owned morale+2 res_unholy+0.5
+masjid: mass=1500000 footprint=15 height=25 integrity=30000 material=stone portable=false enterable=true occupants=500 needs_foundation=true comfort=3 heals=2 faith_output=4 recruit_rate=0.3 beauty=8 field_radius=40 field_targets=owned morale+2 res_unholy+0.4
+synagogue: mass=1500000 footprint=12 height=18 integrity=30000 material=stone portable=false enterable=true occupants=400 needs_foundation=true comfort=3 heals=2 faith_output=4 storage_letters=300 field_radius=40 field_targets=owned morale+2 intelligence+1 res_unholy+0.4
+basilica: mass=40000000 footprint=50 height=60 integrity=300000 material=stone,marble portable=false enterable=true occupants=2000 needs_foundation=true comfort=4 heals=4 faith_output=6 recruit_rate=0.8 beauty=10 claim_radius=12 sacrifice=1 field_radius=80 field_targets=owned morale+3 res_unholy+0.7 counters=demon,ghost,curse
+minster: mass=30000000 footprint=40 height=60 integrity=250000 material=stone portable=false enterable=true occupants=1500 needs_foundation=true comfort=4 heals=4 faith_output=5 recruit_rate=0.6 beauty=9 claim_radius=10 loudness=7 field_radius=80 field_targets=owned morale+3 res_unholy+0.6
+abbey: mass=10000000 footprint=40 height=25 integrity=100000 material=stone portable=false enterable=true occupants=150 needs_foundation=true comfort=4 heals=3 faith_output=4 food_output=4 storage_letters=500 security=4 claim_radius=10 field_radius=50 field_targets=owned law=attack produce_Q*1.5
+kirk: mass=800000 footprint=8 height=15 integrity=10000 material=stone portable=false enterable=true occupants=150 needs_foundation=true comfort=2 heals=2 faith_output=3 claim_radius=4 field_radius=30 field_targets=owned morale+2 res_unholy+0.4
+bethel: mass=400000 footprint=5 height=10 integrity=6000 material=stone,wood portable=false enterable=true occupants=60 needs_foundation=true comfort=2 heals=1 faith_output=2 field_radius=25 field_targets=owned morale+1 res_unholy+0.3
+tabernacle: mass=2000 footprint=4 height=4 integrity=400 material=cloth,wood,gold portable=false enterable=true occupants=20 comfort=2 heals=2 faith_output=3 sacrifice=1 luminosity=3 field_radius=30 field_targets=owned res_unholy+0.5 morale+2
+pagoda: mass=2000000 footprint=8 height=50 integrity=30000 material=wood,stone portable=false enterable=true occupants=40 needs_foundation=true comfort=4 heals=3 faith_output=3 sight_range+200 beauty=10 field_radius=40 field_targets=owned regeneration+1 res_psychic+0.3
+ziggurat: mass=60000000 footprint=60 height=50 integrity=500000 material=brick,stone portable=false enterable=true occupants=300 needs_foundation=true faith_output=6 sacrifice=3 sight_range+400 authority=4 claim_radius=20 elevation=50
+
+# noun artifact
+rosary: mass=0.1 integrity=10 material=wood,silver equip_slot=neck faith_output=0.5 res_unholy+0.2 courage+1 morale+1 color=brown
+halo: mass=0 integrity=200 equip_slot=head luminosity=6 faith_output=0.5 res_unholy+0.6 regeneration+1 immune_curse=true upkeep_faith=0.5 beauty=8 color=gold
+grail: mass=1.5 integrity=500 material=gold value=30000 equip_slot=held hands_required=1 luminosity=5 faith_output=2 heals=20 regeneration+10 prevents_death=1 upkeep_faith=1 res_disease+1 effect_status=poison,sick,curse beauty=10 color=gold counters=plague,curse,death
+ark: mass=1500000 length=135 height=14 integrity=40000 material=wood buoyancy=10 placeable_on=water,land portable=false enterable=true occupants=2000 seats=1000 storage_objects=5000000 faith_output=1 reproduction*2 counters=flood,deluge,monsoon,tsunami
+scroll: mass=0.2 length=0.4 integrity=3 material=paper flammability=8 equip_slot=held hands_required=1 single_use=true dmg_magic=150 attack_range=40 attack_area=3 targets=land,air
+bible: mass=1 integrity=20 material=paper,leather flammability=6 equip_slot=held hands_required=1 faith_output=1 res_unholy+0.4 courage+2 morale+1 color=black counters=demon,vampire,devil
+testament: mass=0.1 integrity=5 material=paper flammability=8 survives_death=true on_owner_death=pass_to_heir storage_letters=200 faith_output=0.3
+juju: mass=0.2 integrity=10 material=bone,cloth equip_slot=neck res_unholy+0.3 immune_curse=true harvest_bonus*1.2 courage+1
+mojo: mass=0.1 integrity=5 equip_slot=neck charm+3 morale+2 critical+0.1 harvest_bonus*1.3
+judas: mass=0.5 integrity=5 material=brass equip_slot=none stealth=6 map_reveal=2 detect_life=10 alarm=true
+
+# noun place
+paradise: placement=region tile_type=meadow radius=15 fertility=10 growth=3 comfort=8 beauty=10 faith_cost=30 field_radius=120 field_targets=owned field_duration=10 heals=10 morale+5 regeneration+3 produce_A*3 produce_Q*2 counters=hell,purgatory,damnation,drought
+purgatory: placement=region field_radius=100 field_targets=enemies field_duration=5 faith_cost=25 dmg_fire=4 attack_rate=0.2 speed_land*0.4 regeneration*0 morale+-3 harvest_bonus*0.5 counters=paradise,salvation,heaven
+limbo: placement=target placement_range=100 event_target=character event_duration=1 faith_cost=12 inflict_stun=30 inflict_silence=30 untargetable=true counters=resurrection
+
+# noun ceremony
+rite: placement=self field_radius=15 field_targets=owned field_duration=2 faith_output+5 morale+2 counters=curse,hex
+ceremony: placement=self field_radius=30 field_targets=owned field_duration=2 faith_output+4 morale+3 loudness=4 charm+1
+liturgy: placement=self field_radius=40 field_targets=owned field_duration=3 faith_output+5 morale+2 res_unholy+0.3 loudness=4
+sacrament: placement=self field_radius=15 field_targets=owned field_duration=2 faith_output+6 regeneration+3 effect_status=curse,sick counters=curse,hex,sin
+communion: placement=self field_radius=20 field_targets=owned field_duration=3 faith_output+5 morale+3 loyalty+3 regeneration+2 food_need*0 counters=heresy,schism
+vigil: placement=self field_radius=40 field_targets=owned field_duration=8 faith_output+3 alarm=true detect_stealth+3 sleep_need*0 luminosity+2 counters=ambush,nightmare,ghost
+meditation: placement=self field_radius=3 field_targets=self field_duration=3 faith_output+3 regeneration+5 res_psychic+0.8 immune_confuse=true immune_fear=true speed_land*0 counters=rage,confusion,despair
+psalm: placement=self field_radius=25 field_targets=owned field_duration=2 faith_output+3 morale+3 regeneration+1 loudness=3 counters=curse,despair
+supplication: placement=self field_radius=10 field_targets=owned field_duration=2 faith_output+7 speed_land*0.2 morale+1
+penance: placement=self field_radius=1 field_targets=self field_duration=5 effect_status=curse faith_output+5 speed_land*0.6 morale+-1 counters=sin,curse
+funeral: placement=self field_radius=40 field_targets=owned field_duration=3 faith_output+3 morale+-1 courage+2 reclaim_rate=0.5 reclaim_range=20 loudness=2 counters=zombie,ghoul,ghost
+burial: placement=target placement_range=5 event_target=object destroys_target=true reclaim_rate=0.6 reclaim_range=5 faith_output=0.2 counters=zombie,ghoul,mummy,necromancer
+wedding: placement=target placement_range=20 event_target=character binds=2 bind_penalty=letters,loyalty,reputation event_duration=20 faith_output+2 morale+4 loyalty+4 loudness=5
+marriage: placement=target placement_range=20 event_target=character binds=2 bind_penalty=letters,loyalty,reputation event_duration=30 loyalty+5 morale+2 reproduction*2 faith_output+1
+matrimony: placement=target placement_range=20 event_target=character binds=2 bind_penalty=letters,loyalty,reputation event_duration=30 loyalty+5 morale+2 reproduction*2 faith_output+1
+nuptials: placement=target placement_range=20 event_target=character binds=2 bind_penalty=letters,loyalty,reputation event_duration=20 morale+4 loyalty+4 loudness=5 faith_output+1
+baptism: placement=target placement_range=6 event_target=character event_duration=1 inflict_bless=90 effect_status=curse,sick faith_cost=8 wetness+5 loyalty+3 counters=curse,hex,sin
+christening: placement=target placement_range=6 event_target=character event_duration=1 inflict_bless=60 effect_status=curse faith_cost=6 wetness+3 loyalty+2 counters=curse,hex
+consecration: placement=target placement_range=20 event_target=structure event_duration=60 faith_cost=10 faith_output+3 res_unholy+0.8 sacrifice+1 counters=sacrilege,blasphemy,desecration
+canonization: placement=target placement_range=50 event_target=character event_duration=30 faith_cost=30 inflict_bless=300 faith_output+3 heals+5 res_unholy+0.5 luminosity+3
+initiation: placement=target placement_range=10 event_target=character event_duration=10 loyalty+5 obedience+3 training+1 faith_output+0.5
+celebration: placement=self field_radius=40 field_targets=owned field_duration=3 morale+5 loudness=6 charm+2 faith_output+1 counters=grief,gloom,despair
+party: placement=self field_radius=30 field_targets=all field_duration=3 morale+4 loudness=7 charm+2 obedience+-2 counters=gloom,boredom
+birthday: placement=self field_radius=1 field_targets=self field_duration=10 morale+5 regeneration+2 charm+2
+rally: placement=self field_radius=60 field_targets=owned field_duration=3 morale+5 courage+4 speed_land*1.2 loudness=7 recruit_rate=1 counters=rout,despair
+reception: placement=self field_radius=30 field_targets=all field_duration=3 charm+3 trade_bonus+0.2 morale+2
+masquerade: placement=self field_radius=40 field_targets=owned field_duration=5 disguise+5 stealth+2 morale+2
+retirement: placement=self field_radius=1 field_targets=self field_duration=20 comfort+5 regeneration+3 speed_land*0.5 labor*0 morale+3
+graduation: placement=self field_radius=20 field_targets=owned field_duration=5 training+2 intelligence+1 morale+3
+commencement: placement=self field_radius=20 field_targets=owned field_duration=5 training+1 morale+3 speed_land*1.1
+commemoration: placement=self field_radius=40 field_targets=owned field_duration=5 morale+3 courage+3 faith_output+2
+observance: placement=self field_radius=30 field_targets=owned field_duration=5 faith_output+3 law=attack
+pageant: placement=self field_radius=40 field_targets=all field_duration=3 beauty+3 charm+3 loudness=5 morale+2
+introduction: placement=target placement_range=20 event_target=character event_duration=5 charm+3 loyalty+1 read_properties=2
+presentation: placement=self field_radius=30 field_targets=all field_duration=2 charm+2 read_properties=3 trade_bonus+0.1
+
+# noun event
+salvation: placement=region event_radius=60 event_duration=2 field_targets=owned faith_cost=40 restores=500 prevents_death=1 effect_status=curse,fear,poison,sick,burn inflict_bless=120 morale+5 counters=damnation,doom,curse,purgatory
+doom: placement=target placement_range=150 event_target=character event_duration=3 faith_cost=30 inflict_curse=240 dmg_dark=300 inflict_fear=20 morale+-4 counters=salvation,hope,blessing,providence
+omen: placement=sky field_radius=ABS field_targets=enemies field_duration=3 faith_cost=6 morale+-3 courage+-2 accuracy+-0.1 luminosity=4 counters=atheism,omen
+prophecy: placement=self field_radius=1 field_targets=self field_duration=10 faith_cost=15 detect_letters=500 read_properties=8 map_reveal=150 detect_stealth+4 evasion+0.2
+revelation: placement=region event_radius=200 event_duration=3 faith_cost=20 map_reveal=200 inflict_expose=90 detect_stealth=10 counters=disguise,stealth,lie,deceit,conspiracy
+epiphany: placement=self field_radius=1 field_targets=self field_duration=5 intelligence+5 read_properties=5 accuracy+0.1 faith_output+2 effect_status=confuse
+providence: placement=self field_radius=60 field_targets=owned field_duration=5 faith_cost=20 evasion+0.3 critical+0.2 harvest_bonus*1.4 prevents_death=1 counters=doom,jinx,misfortune
+destiny: placement=self field_radius=1 field_targets=self field_duration=10 faith_cost=25 prevents_death=1 critical+0.3 accuracy+0.1 courage+5 immune_fear=true counters=doom,fate
+karma: placement=map field_radius=ABS field_targets=all field_duration=5 reflect+0.3 thorns+20 law=theft fine=5 counters=theft,crime,murder,greed,avarice
+reincarnation: placement=self field_radius=1 field_targets=self field_duration=30 faith_cost=45 prevents_death=1 restores=1000 effect_status=curse,poison,sick
+apostasy: placement=target placement_range=100 event_target=character event_duration=5 effect_status=bless faith_output*0 upkeep_faith+4 loyalty+-3 counters=prophet,priest,pilgrim,saint,devotion
+summoning: placement=target placement_range=20 event_target=tile event_duration=1 faith_cost=35 summons=demon summon_count=1 summon_owned=true luminosity=5 counters=exorcism
+invocation: placement=target placement_range=20 event_target=tile event_duration=1 faith_cost=15 summons=spirit summon_count=1 summon_owned=true
+conjuring: placement=target placement_range=20 event_target=tile event_duration=1 faith_cost=10 summons=imp summon_count=3 summon_owned=true
+intercession: placement=target placement_range=100 event_target=character event_duration=1 faith_cost=10 prevents_death=1 inflict_bless=30 effect_status=curse,fear
+judgment: placement=target placement_range=200 event_target=character event_duration=1 faith_cost=25 dmg_holy=800 contest_with=faith_output contested_by=res_holy inflict_stun=5 counters=sin,heretic,demon
+judgement: placement=target placement_range=200 event_target=character event_duration=1 faith_cost=25 dmg_holy=800 contest_with=faith_output contested_by=res_holy inflict_stun=5 counters=sin,heretic,demon
+conviction: placement=target placement_range=60 event_target=character event_duration=10 inflict_root=60 fine=10 law=attack,theft reputation+-10 counters=appeal,acquittal
+appeal: placement=self field_radius=1 field_targets=self field_duration=2 effect_status=root,silence,debt,curse charm+3 counters=conviction,verdict,sentence,fine
+plea: placement=target placement_range=30 event_target=character event_duration=2 inflict_charm=15 aggression+-5 counters=wrath,rage
+echo: placement=self field_radius=60 field_targets=all field_duration=1 loudness=5 decoys=3 duplicates=1
+nativity: placement=self field_radius=40 field_targets=owned field_duration=3 faith_output+5 morale+4 reproduction*3 luminosity=4
+predestination: placement=self field_radius=1 field_targets=self field_duration=20 faith_cost=20 evasion+0.2 accuracy+0.2 immune_confuse=true immune_charm=true
+
+# noun feeling
+faith: placement=self field_radius=40 field_targets=owned field_duration=5 faith_output+5 morale+3 courage+3 res_unholy+0.3 counters=doubt,despair,heresy,atheism
+belief: placement=self field_radius=20 field_targets=owned field_duration=5 faith_output+3 morale+2 courage+2 counters=doubt
+veneration: placement=self field_radius=30 field_targets=owned field_duration=4 faith_output+6 morale+2 loyalty+2
+ire: placement=target placement_range=60 field_radius=10 field_targets=enemies field_duration=1 inflict_rage=8 dmg_fire=10 attack_rate=0.5 counters=calm,peace
+lust: placement=target placement_range=40 field_radius=10 field_targets=living field_duration=2 inflict_charm=8 reproduction*3 loyalty+-3 upkeep_faith+1 counters=chastity
+eros: placement=target placement_range=40 field_radius=20 field_targets=living field_duration=2 inflict_charm=10 reproduction*3 morale+3 loyalty+2
+suspicion: placement=self field_radius=40 field_targets=owned field_duration=5 detect_stealth+4 alarm=true charm+-2 counters=disguise,spy,impostor,doppelganger
+intuition: placement=self field_radius=1 field_targets=self field_duration=5 detect_stealth+3 evasion+0.2 detect_life=100 counters=ambush,trap
+hunch: placement=self field_radius=1 field_targets=self field_duration=3 detect_stealth+2 evasion+0.1 detect_letters=100
+anticipation: placement=self field_radius=1 field_targets=self field_duration=3 evasion+0.25 acceleration+3 counters=ambush,surprise
+
+# noun knowledge
+religion: placement=self field_radius=100 field_targets=owned field_duration=20 faith_output+4 loyalty+2 morale+2 recruit_rate+0.5 counters=atheism,nihilism
+theology: placement=self field_radius=30 field_targets=owned field_duration=10 faith_output+2 intelligence+2 res_holy+0.2 counters=heresy,blasphemy
+doctrine: placement=self field_radius=60 field_targets=owned field_duration=10 faith_output+2 loyalty+3 obedience+3 immune_charm=true counters=heresy,apostasy
+dogma: placement=self field_radius=60 field_targets=owned field_duration=10 faith_output+3 obedience+4 immune_charm=true intelligence+-1 counters=heresy,doubt
+creed: placement=self field_radius=50 field_targets=owned field_duration=10 faith_output+2 loyalty+4 courage+2 counters=heresy,apostasy
+credo: placement=self field_radius=50 field_targets=owned field_duration=10 faith_output+2 loyalty+4 courage+2 counters=heresy,apostasy
+commandment: placement=region field_radius=150 field_targets=all field_duration=10 law=attack,theft fine=10 authority=5 faith_output+1
+precept: placement=region field_radius=80 field_targets=all field_duration=10 law=theft fine=5 faith_output+1
+teaching: placement=self field_radius=20 field_targets=owned field_duration=10 training+2 intelligence+1 faith_output+1
+philosophy: placement=self field_radius=20 field_targets=owned field_duration=10 intelligence+3 res_psychic+0.4 immune_confuse=true counters=dogma,superstition
+values: placement=self field_radius=40 field_targets=owned field_duration=10 loyalty+3 morale+1 reputation+5
+superstition: placement=region field_radius=100 field_targets=enemies field_duration=5 morale+-2 courage+-2 accuracy+-0.1 harvest_bonus*0.8 counters=philosophy,atheism,science
+witchcraft: placement=self field_radius=1 field_targets=self field_duration=10 dmg_magic+60 inflict_curse+30 attack_range+20 faith_output+1 counters=exorcism,inquisitor
+sorcery: placement=self field_radius=1 field_targets=self field_duration=10 dmg_magic+100 attack_range+30 attack_area+2 extends_duration=1.5 counters=exorcism,silence
+mysticism: placement=self field_radius=20 field_targets=owned field_duration=10 faith_output+3 read_properties+3 res_psychic+0.5 detect_stealth+2
+spiritualism: placement=self field_radius=40 field_targets=owned field_duration=5 faith_output+2 sees_through=walls detect_life=200 counters=ghost,specter,poltergeist
+nihilism: placement=region field_radius=100 field_targets=enemies field_duration=5 morale+-4 faith_output*0 courage+-2 counters=religion,faith,hope,belief
+secularism: placement=region field_radius=200 field_targets=all field_duration=10 faith_output*0.5 immune_curse=true immune_bless=true trade_bonus+0.1 counters=theocracy,crusade,dogma
+pacifism: placement=self field_radius=60 field_targets=all field_duration=5 law=attack aggression+-5 morale+1 counters=war,crusade,rage,battle
+stoicism: placement=self field_radius=20 field_targets=owned field_duration=5 immune_fear=true res_psychic+0.6 morale+2 res_hunger+0.3 counters=despair,fear,grief
+monotheism: placement=self field_radius=100 field_targets=owned field_duration=10 faith_output+5 loyalty+3 counters=paganism,idolatry,pantheon
+paganism: placement=self field_radius=60 field_targets=owned field_duration=10 faith_output+3 growth*1.5 fertility+2 sacrifice+1 counters=monotheism
+creationism: placement=self field_radius=30 field_targets=owned field_duration=10 faith_output+3 intelligence+-1 build_speed*1.2
+
+# verb social
+consecrate: effect_target=touched duration=600 faith_cost=5 faith_output+2 res_unholy+0.6 dmg_holy+40 sacrifice+1
+sanctify: effect_target=touched duration=300 faith_cost=6 res_unholy+1 dmg_holy+60 immune_curse=true effect_status=curse
+ordain: effect_target=touched duration=1800 faith_output+1 heals+3 authority+2 loyalty+3 dmg_holy+30
+anoint: effect_target=touched duration=600 faith_cost=6 authority+3 morale+3 regeneration+2 inflict_bless=60 charm+2
+convert: effect_target=touched duration=1 transfers_ownership=true contest_with=charm contested_by=loyalty faith_cost=10 counters=heretic,pagan,cultist
+exorcise: effect_target=touched duration=1 dmg_holy=400 effect_status=curse,charm,fear,confuse faith_cost=8 counters=demon,ghost,specter,poltergeist,incubus,succubus,possession
+resurrect: effect_target=touched duration=1 faith_cost=60 restores=1000 prevents_death=1 effect_status=poison,bleed,burn,sick,curse,stun counters=death,reaper
+redeem: effect_target=touched duration=1 faith_cost=8 effect_status=curse,rage loyalty+3 morale+3
+atone: duration=120 faith_output+4 effect_status=curse speed_land*0.5 morale+1
+revere: duration=60 faith_output+5 morale+2 courage+1 speed_land*0.5
+glorify: effect_target=touched duration=120 morale+4 charm+3 courage+3 faith_output+1 luminosity+2
+haunt: duration=120 phase=true stealth+6 inflict_fear+6 fear_aura+5 speed_land*0.8 counters=exorcism,exorcist
+possess: effect_target=touched duration=30 transfers_ownership=true contest_with=intelligence contested_by=courage dmg_psychic=50 faith_cost=12 counters=exorcism,exorcist,priest
+
+# verb transfer
+collect: duration=60 harvest_bonus*1.5 speed_land*0.8 carry_capacity*1.2
+
+# adjective quality
+divine: dmg_holy+150 res_unholy+1 heals+5 luminosity+4 faith_output+1 beauty+3 upkeep_faith+0.5
+heavenly: luminosity+4 heals+3 res_unholy+0.6 beauty+4 speed_air+10 comfort+3 morale+2
+hallowed: res_unholy+0.8 faith_output+1 security+2 dmg_holy+40 counters=ghost,zombie,vampire
+saintly: heals+5 res_unholy+0.6 loyalty+3 faith_output+1 immune_charm=true luminosity+2
+angelic: beauty+5 charm+4 heals+4 res_unholy+0.5 luminosity+3 speed_air+8
+godly: faith_output+1 res_unholy+0.5 morale+2 loyalty+2
+devout: faith_output+1.5 loyalty+3 courage+2 immune_charm=true
+reverent: faith_output+1 loyalty+2 aggression+-2
+righteous: dmg_holy+60 courage+3 res_unholy+0.4 morale+2 immune_fear=true
+virtuous: loyalty+4 res_unholy+0.4 heals+2 reputation+5
+chaste: immune_charm=true reproduction*0 res_unholy+0.3 faith_output+0.5
+almighty: strength+5 authority+5 dmg_holy+300 integrity*3 fear_aura+5 faith_cost+20
+omnipotent: integrity*5 strength+5 authority+6 dmg_magic+500 res_magic+0.8 faith_cost+30
+omniscient: read_properties+10 sight_range*10 detect_stealth+10 read_inventory=true sees_through=walls,fog,water detect_letters=500
+miraculous: restores=300 regeneration+10 heals+5 luminosity+3 value*3 faith_cost+10
+prophetic: read_properties+5 detect_stealth+3 evasion+0.2 faith_output+0.5
+celestial: luminosity+5 speed_air+20 flight_ceiling+5000 res_unholy+0.5 beauty+4 dmg_light+40
+ethereal: phase=true transparency+0.6 mass*0.01 stealth+4 res_blunt+0.8 res_slash+0.8 res_pierce+0.8 integrity*0.5
+mythical: integrity*2 beauty+3 value*10 fear_aura+2 stealth+3
+mystical: dmg_magic+50 res_magic+0.4 luminosity+2 read_properties+2 faith_output+0.5
+supernatural: dmg_magic+80 res_magic+0.5 phase=true stealth+3 fear_aura+3
+enchanted: dmg_magic+40 res_magic+0.4 luminosity+2 value*4 grants_adjective_slots=1
+bewitched: inflict_charm+5 obedience+-4 loyalty+-4 accuracy+-0.2 inflict_confuse+3
+possessed: aggression+6 dmg_unholy+60 res_holy+-0.5 loyalty+-6 obedience+-6 strength+2 inflict_fear+3
+unholy: dmg_unholy+80 res_holy+-0.6 res_unholy+0.6 fear_aura+3 heals*0 luminosity+-2
+profane: dmg_unholy+30 faith_output*0 morale+-1 res_holy+-0.3 charm+-2
+damned: inflict_curse+60 regeneration*0 morale+-3 res_holy+-0.8 dmg_unholy+40 heals*0
+hellish: dmg_fire+120 dmg_unholy+80 temperature+400 fear_aura+5 res_fire+0.6 comfort+-5
+infernal: dmg_fire+150 dmg_unholy+60 temperature+500 luminosity+3 res_fire+0.8 res_holy+-0.4
+demonic: dmg_unholy+120 fear_aura+5 res_holy+-0.8 aggression+4 strength+2 loyalty+-3
+satanic: dmg_unholy+150 res_holy+-1 fear_aura+6 inflict_curse+60 sacrifice+2 faith_output*0
+wicked: dmg_unholy+50 loyalty+-3 critical+0.2 reputation+-5 res_holy+-0.4
+sinful: upkeep_faith+1 dmg_unholy+20 charm+2 res_holy+-0.3 harvest_bonus*1.2
+ungodly: dmg_unholy+40 res_holy+-0.5 faith_output*0 morale+-1
+godless: immune_curse=true immune_bless=true faith_output*0 res_holy+0.3 res_unholy+0.3
+faithless: loyalty+-5 faith_output*0 immune_bless=true obedience+-3
+irreverent: faith_output*0 charm+2 immune_fear=true morale+1
+sanctimonious: faith_output+0.5 charm+-3 morale+-1 intimidation+1
+impure: toxicity+3 dmg_poison+20 res_holy+-0.4 value*0.5 inflict_sick+5
+worldly: trade_bonus+0.2 charm+2 intelligence+1 faith_output*0.5
+monastic: faith_output+1 immune_charm=true food_need*0.5 loyalty+3 loudness*0.3 comfort+-1
+religious: faith_output+1 loyalty+2 morale+1 res_unholy+0.2
+mortal: lifespan=60 negates=prevents_death,regeneration res_holy+-0.2 courage+-1
+sacrificial: single_use=true sacrifice+2 dmg_holy+100 letter_refund=0.5
+ceremonial: beauty+3 value*2 faith_output+0.5 charm+2 loudness+2
+exalted: authority+3 morale+3 luminosity+2 charm+3 elevation+5
+spooky: fear_aura+3 stealth+2 inflict_fear+3 nocturnal=true
+unseen: stealth+8 transparency+0.8 untargetable=true
+wise: intelligence+3 read_properties+2 res_psychic+0.4 faith_output+0.5
+weird: inflict_confuse+4 charm+-1 stealth+1 accuracy+-0.1
+superior: integrity*1.5 strength+2 training+2 authority+1 value*2
+moody: morale+-2 aggression+3 obedience+-2 loyalty+-1
+goofy: charm+2 accuracy+-0.2 morale+2 intimidation+-3
+
+# noun attribute
+sin: placement=self field_radius=1 field_targets=self field_duration=5 upkeep_faith+3 dmg_unholy+30 strength+1 harvest_bonus*1.3 res_holy+-0.5 counters=penance,confession,atonement
+gluttony: placement=self field_radius=1 field_targets=self field_duration=5 food_need*3 integrity*1.3 mass*1.4 speed_land*0.7 upkeep_faith+1 counters=fast,famine
+avarice: placement=self field_radius=1 field_targets=self field_duration=5 harvest_bonus*1.6 letter_steal+1 loyalty+-3 charm+-2 upkeep_faith+1 counters=charity,tithe,gift
+hubris: placement=self field_radius=1 field_targets=self field_duration=5 strength+3 morale+4 evasion+-0.3 accuracy+-0.2 res_holy+-0.5 counters=humility,nemesis
+arrogance: placement=self field_radius=1 field_targets=self field_duration=5 intimidation+3 charm+-4 morale+2 evasion+-0.2 counters=humility,humiliation
+
+# noun act
+idolatry: placement=self field_radius=40 field_targets=owned field_duration=5 faith_output+6 sacrifice+1 inflict_curse=30 counters=monotheism,iconoclasm
+
+# noun supernatural
+monster: mass=2000 height=4 integrity=6000 alive=true intelligence=3 aggression=10 speed_land=10 dmg_crush=300 dmg_slash=200 attack_rate=0.7 attack_range=3 fear_aura=8 res_holy=-0.3 diet=carnivore food_need=2 loudness=7
+alien: mass=60 integrity=300 alive=true sentient=true intelligence=10 loyalty=3 hands=true speed_land=4 speed_air=300 hover=true teleport_range=100 dmg_radiation=80 attack_rate=1 attack_range=30 read_properties=6 detect_life=500 breathes=none immune_curse=true immune_bless=true res_holy=1 res_unholy=1
+
+# noun fighter
+amazon: mass=70 integrity=200 alive=true sentient=true intelligence=6 loyalty=9 courage=9 hands=true speech=true speed_land=6 dmg_pierce=60 dmg_slash=40 attack_rate=1.2 attack_range=60 targets=land,air training=7 strength=7 food_need=0.04 pack_size=3
+
+# noun bodypart
+eyes: equip_slot=graft mass=0.02 integrity=8 night_vision=true sight_range+80 detect_stealth+3 accuracy+0.08 plural_count=2
+
+# noun medicine
+placebo: mass=0.01 edible=true potency=0 restores=20 single_use=true morale+3 duration=300 counters=hypochondria
+panacea: mass=0.1 edible=true potency=10 restores=1000 effect_status=poison,bleed,burn,sleep,confuse,sick,rage,curse,fear,stun,freeze single_use=true res_disease+1 duration=600 value=20000 counters=plague,pox,epidemic,pandemic,curse,disease
+
+# noun food
+brownie: mass=0.08 integrity=1 edible=true nutrition=4 restores=15 single_use=true plural_count=6 morale+1 shelf_life=4320 color=brown
+
+# noun produce
+nut: mass=0.005 integrity=3 hardness=5 edible=true nutrition=1 restores=3 single_use=true plural_count=12 shelf_life=259200 color=brown
+
+# noun clothing
+tutu: mass=0.3 integrity=5 material=tulle equip_slot=body agility+2 charm+2 beauty=6 color=pink
+
+# noun bird
+rhea: mass=25 height=1.5 integrity=60 alive=true intelligence=2 speed_land=17 diet=omnivore food_need=0.1 habitat=savanna,meadow pack_size=6 dmg_blunt=10 attack_rate=1 tamable=true
+merlin: mass=0.2 length=0.3 integrity=8 alive=true intelligence=3 speed_air=30 flight_ceiling=2000 dmg_pierce=8 attack_rate=1.5 targets=air,land sight_range=500 diet=carnivore food_need=0.02 tamable=true trainable=6 harvest_bonus=1.5 harvest_sources=hunting
+
+# noun mammal
+primate: mass=40 integrity=80 alive=true intelligence=6 hands=true speed_land=8 climb=8 jump=4 diet=omnivore food_need=0.1 habitat=jungle,forest pack_size=6 tamable=true
+
+# noun flower
+narcissus: mass=0.05 integrity=1 alive=true beauty=8 toxicity=3 diet=photosynthesis growth_time=30 field_radius=5 field_targets=living inflict_charm=3 color=yellow
