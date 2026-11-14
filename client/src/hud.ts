@@ -461,15 +461,6 @@ export class Hud {
       </div>`;
   }
 
-  /** The paper banner naming the fields over the whole map: HEAVEN, LOVE. */
-  overMap(words: string[]) {
-    const text = words.map((w) => w.toUpperCase()).join(" · ");
-    const el = $("overmap");
-    if (el.dataset.text === text) return;
-    el.dataset.text = text;
-    el.innerHTML = text ? `<small>over the map</small>${text}` : "";
-    el.className = text ? "show" : "";
-  }
 
   /** A message that stays up: death or victory. */
   banner(text: string) {

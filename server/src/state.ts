@@ -47,6 +47,10 @@ export const Zone = schema({
   word: t.string(), x: t.float32(), y: t.float32(), radius: t.float32(),
   /** For claimed ground (HOME, CASTLE): whose it is, and the percentage of damage it takes away. 0 for anything else. */
   owner: t.string(), shelter: t.uint8(),
+  /** Round clock second it ends at (`WorldState.clock`), 0 if it lasts. */
+  until: t.uint32(),
+  /** Name of whoever made it ("" for the map's own). */
+  by: t.string(),
 }, "Zone");
 export type Zone = SchemaType<typeof Zone>;
 
@@ -67,6 +71,14 @@ export const WorldState = schema(
     daylight: t.string(),
     /** The weather word in force, or "". */
     weather: t.string(),
+    /** The word that brought the weather (MONSOON brings rain), who spelled it, and the clock second it ends (0: lasts). */
+    weatherWord: t.string(),
+    weatherBy: t.string(),
+    weatherUntil: t.uint32(),
+    /** The word that set the daylight (ECLIPSE), who spelled it, and the clock second it ends (0: lasts). */
+    daylightWord: t.string(),
+    daylightBy: t.string(),
+    daylightUntil: t.uint32(),
     /** "playing", or "over" once someone has won. */
     phase: t.string(),
     /** Name of the winner once the round is over. */

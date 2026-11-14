@@ -29,12 +29,31 @@ const BY_WORD: Record<string, ZoneStyle> = {
   fear: { colour: "#6a4a8a", ink: "#4a2a6a", decor: "word" },
   hope: { colour: "#9cc6d2", ink: "#2f5a7a", decor: "star" },
   luck: { colour: "#7fbf6a", ink: "#2f6a3a", decor: "star" },
+  drought: { colour: "#e0b060", ink: "#8a5a1a", decor: "crack" },
+  dearth: { colour: "#d9b45a", ink: "#8a6a1a", decor: "wheat" },
+  harvest: { colour: "#e9c24a", ink: "#7a5a12", decor: "wheat" },
+  plenty: { colour: "#b8d86a", ink: "#4a6a1a", decor: "wheat" },
+  blight: { colour: "#7a6a4a", ink: "#3a2a1a", decor: "skull" },
+  festival: { colour: "#f0a0d0", ink: "#8a2a6a", decor: "star" },
+  carnival: { colour: "#f0a0d0", ink: "#8a2a6a", decor: "star" },
+  truce: { colour: "#dff0f4", ink: "#2f5a7a", decor: "word" },
+  sanctuary: { colour: "#dff0f4", ink: "#2f5a7a", decor: "cloud" },
+  curfew: { colour: "#5a6a8a", ink: "#2a3a5a", decor: "word" },
+  tax: { colour: "#c8b070", ink: "#6a5a1a", decor: "word" },
+  tithe: { colour: "#c8b070", ink: "#6a5a1a", decor: "word" },
+  bonanza: { colour: "#f4d35e", ink: "#8a6a10", decor: "star" },
+  meteor: { colour: "#e0702a", ink: "#7a2a10", decor: "flame", warm: true },
+  asteroid: { colour: "#e0702a", ink: "#7a2a10", decor: "flame", warm: true },
+  eruption: { colour: "#e0502a", ink: "#a8321a", decor: "flame", warm: true },
+  riot: { colour: "#c9453f", ink: "#8a2a2a", decor: "crack" },
+  siege: { colour: "#9a5a4a", ink: "#5a2a1a", decor: "swords" },
 };
 
 const BY_ARCHETYPE: Record<string, ZoneStyle> = {
   conflict: BY_WORD.war!, attack: BY_WORD.war!, affliction: BY_WORD.disease!, disaster: BY_WORD.earthquake!, feeling: { colour: "#e0a0c0", ink: "#8a3a6a", decor: "heart" },
   attribute: { colour: "#e9c24a", ink: "#8a6a1a", decor: "star" }, killing: { colour: "#6a4a4a", ink: "#3a2a2a", decor: "skull" },
-  celestial: { colour: "#9cb6e0", ink: "#2f4a8a", decor: "star" }, phenomenon: { colour: "#a88ad9", ink: "#4a2a8a", decor: "word" },
+  celestial: { colour: "#9cb6e0", ink: "#2f4a8a", decor: "star" }, ceremony: { colour: "#f0a0d0", ink: "#8a2a6a", decor: "star" },
+  possession: { colour: "#c8b070", ink: "#6a5a1a", decor: "word" }, act: { colour: "#d8a070", ink: "#7a4a1a", decor: "word" }, phenomenon: { colour: "#a88ad9", ink: "#4a2a8a", decor: "word" },
 };
 
 export function zoneStyle(dict: Dictionary, word: string): ZoneStyle {

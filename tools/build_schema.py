@@ -174,6 +174,11 @@ GROUPS["economy"] = "\n".join(
     [f"produce_{chr(c)}|num|0|/min|letter {chr(c)} it generates" for c in range(65, 91)] + """
 production_needs|tags|||inputs it must be supplied to produce
 harvest_bonus|num|1|x|multiplier on letters gathered by hand nearby
+deposit_factor|num|1|x|ground deposits in its area are multiplied by this as it begins (0 strips them)
+lode|tags|||letters gathering inside its area turns up
+lode_share|frac|0||chance a gathering inside its area finds the lode instead
+lode_stock|num|0||lode letters it holds in all (0 = endless while it lasts)
+trade_rate|num|1|x|markets inside its area ask this times their usual letters for one
 harvest_sources|tags|||source types the bonus applies to
 upkeep_food|num|0|food/min|food to keep it working
 upkeep_fuel|num|0|fuel/min|fuel to keep it working
@@ -221,8 +226,8 @@ fear_aura|scale|0||lowers enemy morale in sight
 charm|scale|0||raises NPC attitude and trade prices
 intimidation|scale|0||makes NPCs yield letters or territory
 recruit_rate|num|0|/min|NPCs it draws to its owner
-tax_rate|frac|0||share of NPC letter income it collects
-law|tags|||acts it forbids inside its claim
+tax_rate|frac|0||share of letters others earn inside its area that goes to its maker
+law|tags|||acts it forbids inside its area (attack, gather, spell, trade, theft)
 binds|num|0||players it can hold to an agreement
 bind_penalty|tags|||what breaking the agreement costs
 faction|text|||group it belongs to or creates
@@ -267,7 +272,7 @@ field_duration|num|0|min|how long it lasts (0 = while the word exists)
 light_delta|scale|0||change to light level
 temperature_delta|num|0|C|change to ambient temperature
 visibility|num|1|x|multiplier on all sight ranges
-growth|num|1|x|multiplier on flora and creature growth
+growth|num|1|x|multiplier on flora and creature growth, and on how fast picked ground grows back
 contagion|frac|0||chance per minute it spreads to a neighbour
 sets_daylight|enum|none|none,day,night|forces day or night in its field
 sets_weather|text|||weather it starts in its field
@@ -284,6 +289,9 @@ contested_by|text|||target's property that resists it
 sets_hostile|bool|false||everything in the area fights everything not its own
 frees_target|bool|false||the target stops belonging to anyone
 moves_target|num|0|m|distance the target is carried toward the speller
+summons|text|||creature that appears in its area as it begins
+summon_count|num|0||how many it summons
+summon_owned|bool|false||what it summons follows its maker instead of running wild
 """
 GROUPS["effect"] = """
 cast_time|num|0|s|delay between spelling and effect

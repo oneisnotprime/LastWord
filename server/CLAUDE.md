@@ -86,3 +86,11 @@ Node process that owns the game state. One room per map instance (from milestone
   (`nerve`), each person's `command` limit (extras run wild), `upkeep` (stores in
   `Walker.stores`; hungry creatures turn wild, machines stall), `recruit`, and wild creatures
   `roam`. Loadouts a `rebuild` changes are sent once at the end of the tick (`toTell`).
+- Places: every letter a person gets from the world goes through `earn` (the rules of the areas
+  and weather at that spot, shared `place.ts`; then `tax_rate` areas take their share).
+  `rulesAt` lists them, `lawAgainst` checks a `law` (attack, gather, spell, trade, theft). An area
+  `begin`s once: `deposit_factor`, `summons`, an event's `tile_type`, and a notice to those inside.
+  Events carry the word's ops as an `effect` and honour `field_targets`. Sky words with a length
+  give the old daylight back (`daylightEnds`); weather rules are `weatherRules`; a sky word with a
+  `field_radius` that sets no weather (DROUGHT, ECLIPSE) also lays its field. Zones carry `until`
+  (round clock) and `by`; the state carries `weatherWord/By/Until` and `daylightWord/By/Until`.

@@ -8,6 +8,7 @@ import { lookOf, type Look } from "./art/look.js";
 import { CHUNK } from "./art/terrain.js";
 import type { FromWorker, ToWorker } from "./art/terrain.worker.js";
 import { dictionary } from "./data.js";
+import { Events } from "./events.js";
 import { Hud, type Aimed } from "./hud.js";
 import { Minimap } from "./minimap.js";
 import { connect, type Connection, type Described } from "./net.js";
@@ -61,6 +62,7 @@ class World extends Phaser.Scene {
   private map!: WorldMap;
   private hud!: Hud;
   private paint!: Painter;
+  private chips!: Events;
   private sky!: Sky;
   private zoneView!: Zones;
   private views = new Map<string, View>();
@@ -124,6 +126,7 @@ class World extends Phaser.Scene {
     });
     await Promise.all(["700 13px Kalam", "400 13px Kalam", "600 9px Fredoka", "500 13px Fredoka"].map((f) => document.fonts.load(f).catch(() => [])));
     this.paint = new Painter(this, dictionary, DPR);
+    this.chips = new Events(dictionary);
     this.minimap = new Minimap(document.getElementById("minimap") as HTMLCanvasElement, DPR);
     try {
       this.net = await connect({
@@ -660,7 +663,7 @@ class World extends Phaser.Scene {
       const p = this.input.activePointer, at = this.cameras.main.getWorldPoint(p.x, p.y);
       this.hover = this.hitAt(at.x / PX, at.y / PX, this.aimHow === "describe");
     }
-    this.hud.overMap(overMap);
+    this.chips.update(Events.at(state, me.x, me.y), state.clock ?? 0);
     this.minimap.draw(this.map, me, this.editsApplied, time);
   }
 }

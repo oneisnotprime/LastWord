@@ -295,7 +295,6 @@ anaphor	noun	inert	communication	0.0	obscure	n06298530	-
 anaphora	noun	inert	communication	1.9	rare	n07115481	-
 anaphylaxis	noun	inert	state	2.59	uncommon	n14557149	-
 anaplasia	noun	inert	state	0.0	obscure	n14392599	-
-anarchy	noun	inert	state	3.52	common	n13996506	-
 anarthria	noun	inert	state	0.0	obscure	n14123574	-
 anasarca	noun	inert	state	0.0	obscure	n14339324	-
 anastalsis	noun	inert	process	0.0	obscure	n13452742	-
@@ -470,7 +469,6 @@ aria	noun	inert	communication	3.39	common	n07063554	-
 aridness	noun	inert	state	0.0	obscure	n14560852	-
 arietta	noun	inert	communication	1.56	rare	n07063674	-
 arioso	noun	inert	communication	1.36	rare	n07101700	-
-armistice	noun	inert	state	3.22	common	n13994359	-
 arpeggio	noun	inert	communication	2.08	uncommon	n06882660	-
 arrhythmia	noun	inert	state	2.71	uncommon	n14134156	-
 arrivederci	noun	inert	communication	1.73	rare	n06642117	-
@@ -2319,7 +2317,6 @@ hives	noun	inert	state	3.12	common	n14345675	-
 hogmanay	noun	inert	time	1.94	rare	n15207559	-
 hogwash	noun	inert	communication	2.38	uncommon	n06624034	-
 hokum	noun	inert	communication	2.03	uncommon	n06619692	-
-holiday	noun	inert	time	4.66	core	n15162842	verb:stative
 holla	noun	inert	communication	2.56	uncommon	n07136069	-
 hollering	noun	inert	communication	2.7	uncommon	n07136069	-
 hollo	noun	inert	communication	1.7	rare	n07136069	verb:communication
@@ -3145,7 +3142,6 @@ micturition	noun	inert	process	1.46	rare	n13537161	-
 midafternoon	noun	inert	time	1.84	rare	n15191399	-
 midday	noun	inert	time	3.37	common	n15190537	-
 midline	noun	inert	shape	2.63	uncommon	n13884289	-
-midnight	noun	inert	time	4.31	core	n15193232	-
 midplane	noun	inert	shape	1.19	rare	n13884289	-
 midsummer	noun	inert	time	3.11	common	n15246808	-
 midterm	noun	inert	time	3.31	common	n15251421	-
@@ -3243,7 +3239,6 @@ monomania	noun	inert	motive	1.62	rare	n09205421	-
 mononeuropathy	noun	inert	state	0.0	obscure	n14232470	-
 monophony	noun	inert	communication	0.0	obscure	n07037989	-
 monoplegia	noun	inert	state	0.0	obscure	n14373428	-
-monopoly	noun	inert	state	3.84	common	n14467792	-
 monopsony	noun	inert	state	1.75	rare	n14468110	-
 monorchidism	noun	inert	state	0.0	obscure	n14115938	-
 monorchism	noun	inert	state	0.0	obscure	n14115938	-
@@ -5053,7 +5048,6 @@ trope	noun	inert	communication	3.1	common	n07120141	-
 trophobiosis	noun	inert	relation	0.0	obscure	n13865040	-
 troponym	noun	inert	communication	0.0	obscure	n06315415	-
 troth	noun	inert	communication	2.14	uncommon	n07242871	-
-truce	noun	inert	state	3.52	common	n13994359	-
 truism	noun	inert	communication	2.41	uncommon	n07168951	-
 tsk	verb	inert	communication	3.01	common	v00953943	-
 tt	noun	inert	time	3.61	common	n15181706	-

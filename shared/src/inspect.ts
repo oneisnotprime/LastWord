@@ -7,6 +7,9 @@ import { improvisable } from "./unit.js";
 import { claimOf, senseOf } from "./sense.js";
 import { needs, outputs, STARTING_SUPPLY_MINUTES, SUPPLIES } from "./upkeep.js";
 import { useObject } from "./verb.js";
+import { placeRules, rulesText } from "./place.js";
+import { resolve } from "./stats.js";
+import { pluralize } from "./plural.js";
 import { TILE_TYPES } from "./world.js";
 
 /**
@@ -217,7 +220,8 @@ export function cardOf(dict: Dictionary, p: Phrase): Card {
     if (s.num("moves_target") > 0) card.does.push("brings its target to you");
     if (s.num("restores") > 0) card.does.push("repairs a thing");
     if (s.flag("frees_target")) card.does.push("frees everything around you from its owners");
-    if (s.flag("sets_hostile")) card.does.push("everyone in it fights everyone");
+    if (s.flag("sets_hostile")) card.does.push("creatures in it attack everyone not on your side");
+    card.does.push(...placeLines(dict, p.noun, s));
     for (const [id] of s.entries()) if (id.startsWith("inflict_") && s.num(id) > 0) card.does.push(`${plain(id)} ${num(s.num(id))} s`);
     if (s.get("contest_with") && s.get("contested_by")) card.does.push(`your ${words(String(s.get("contest_with")))} against their ${words(String(s.get("contested_by")))}`);
     card.does.push(aimed ?? "lands around you");
@@ -229,6 +233,7 @@ export function cardOf(dict: Dictionary, p: Phrase): Card {
     if (s.get("sets_weather")) card.does.push(`brings ${s.get("sets_weather")}`);
     if (s.tags("clears_weather").length) card.does.push(`clears ${s.tags("clears_weather").join(", ")}`);
     card.does.push(...behaviours(s).filter((b) => !b.startsWith("lies where") && !b.startsWith("pick it up")));
+    card.does.push(...placeLines(dict, p.noun, s));
     if (aimed) card.does.push(aimed);
     return card;
   }
@@ -275,4 +280,55 @@ export function inspectText(dict: Dictionary, text: string): { card: Card } | { 
   } catch (e) {
     return { error: (e as Error).message };
   }
+}
+
+/** What a word's area does to letters, acts and the land, in short lines (shared `placeRules`), plus what it summons or lays. */
+export function placeLines(dict: Dictionary, word: string, s: Stats): string[] {
+  const def = dict.word(word);
+  const out = def ? rulesText(placeRules(def, s) ?? { yields: {}, growth: 1, deposits: 1, tax: 0, lode: [], lodeShare: 0, lodeStock: 0, tradeRate: 1, law: [] }) : [];
+  const summons = String(s.get("summons"));
+  if (summons && s.num("summon_count") > 0) {
+    const n = s.num("summon_count");
+    out.push(`brings ${num(n)} ${(n > 1 ? pluralize(summons) : summons).toUpperCase()}${s.flag("summon_owned") ? " to fight for its maker" : " (wild)"}`);
+  }
+  const tile = String(s.get("tile_type"));
+  if (def?.class === "event" && tile !== "none" && s.num("radius") > 0) out.push(`turns ${num(s.num("radius"))} tiles to ${words(tile)}`);
+  return out;
+}
+
+/** Words that end a word's area or weather: those whose `counters` name it, or that clear it as weather. */
+export function countersOf(dict: Dictionary, word: string): string[] {
+  const out: string[] = [];
+  const weather = String(dict.word(word)?.set.sets_weather ?? word);
+  // Night and day undo each other: a word that brings day ends one that brought night.
+  const light = word === "night" ? "night" : String(dict.word(word)?.set.sets_daylight ?? "none");
+  const undo = light === "night" ? "day" : light === "day" ? "night" : "";
+  for (const [w, def] of dict.words) {
+    const c = def.set.counters, clears = def.set.clears_weather;
+    if ((undo && def.set.sets_daylight === undo && def.role === "noun") || (Array.isArray(c) && c.includes(word)) || (Array.isArray(clears) && (clears.includes(word) || clears.includes(weather)))) out.push(w);
+  }
+  return out.sort((a, b) => a.length - b.length || a.localeCompare(b));
+}
+
+/**
+ * A short explanation of something in force over a place (an event, a field, weather, night),
+ * for the event chips: what it changes to bodies, letters and acts in plain numbers, and the
+ * words that end it.
+ */
+export function eventCard(dict: Dictionary, word: string): { title: string; kind: string; lines: string[]; counters: string[] } {
+  const def = dict.word(word);
+  if (!def) return { title: word.toUpperCase(), kind: "", lines: [], counters: countersOf(dict, word) };
+  const s = resolve(dict, word, []);
+  const lines: string[] = [];
+  const hit = damage(s);
+  if (hit) lines.push(`${hit}${s.num("attack_rate") > 0 ? ` every ${num(1 / s.num("attack_rate"))} s` : ""}`);
+  for (const [id] of s.entries()) if (id.startsWith("inflict_") && s.num(id) > 0) lines.push(`${plain(id)} ${num(s.num(id))} s`);
+  if (s.flag("sets_hostile")) lines.push("creatures here attack everyone not on its maker's side");
+  if (s.num("contagion") > 0) lines.push(`spreads to people inside (${Math.round(s.num("contagion") * 100)}% a minute)`);
+  if (s.get("sets_daylight") !== "none") lines.push(`makes it ${s.get("sets_daylight")}`);
+  lines.push(...placeLines(dict, word, s));
+  const body = def.ops.filter(([id]) => !/^produce_[A-Z]$/.test(id) && id !== "harvest_bonus").map(opText);
+  if (body.length) lines.push(`on everyone it reaches: ${body.slice(0, 6).join(", ")}`);
+  const kind = [def.class === "event" ? "event" : def.archetype === "weather" ? "weather" : "field", def.archetype].filter((x, i, a) => a.indexOf(x) === i).map(words).join(" · ");
+  return { title: word.toUpperCase(), kind, lines, counters: countersOf(dict, word) };
 }

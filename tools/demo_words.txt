@@ -75,7 +75,7 @@ wall: mass=20000 footprint=1 height=4 integrity=8000 hardness=7 material=stone p
 gate: mass=2000 footprint=1 height=4 integrity=3000 material=wood,iron portable=false lockable=true blocks=land,projectiles
 tower: mass=500000 footprint=2 height=25 integrity=30000 material=stone portable=false enterable=true occupants=6 sight_range+300 attack_range+30 cover=0.7 alarm=true
 bridge: mass=200000 footprint=10 height=2 integrity=20000 material=stone portable=false placeable_on=water,pit tile_type=road
-fence: mass=200 footprint=1 height=1.5 integrity=150 material=wood portable=false blocks=land plural_count=10
+fence: mass=200 footprint=1 height=1.5 integrity=150 material=wood portable=false blocks=land plural_count=10 counters=stampede,herd
 dam: mass=10000000 footprint=20 height=30 integrity=400000 material=concrete portable=false placeable_on=water blocks=water,land power_output=5000 produce_W=1 moisture=-5
 mine: mass=50000 footprint=4 depth=50 integrity=5000 portable=false enterable=true placeable_on=hill,mountain produce_G=1 produce_X=0.02 production_needs=labor
 farm: mass=20000 footprint=25 integrity=1500 portable=false placeable_on=field fertility=8 produce_A=2 food_output=10 production_needs=labor,water flammability=5
@@ -303,7 +303,7 @@ gill: equip_slot=graft mass=0.1 integrity=10 breathes=both dive_depth+200 plural
 heart: equip_slot=graft mass=0.3 integrity=30 regeneration+2 courage+2 prevents_death=1 single_use=true
 
 # noun weather
-rain: placement=region field_radius=2000 field_targets=all sets_weather=rain field_duration=10 wetness+5 flammability+-3 visibility=0.7 moisture=5 growth=1.5 produce_O=1 sight_range*0.7 counters=fire,drought
+rain: placement=region field_radius=2000 field_targets=all sets_weather=rain field_duration=10 wetness+5 flammability+-3 visibility=0.7 moisture=5 growth=1.5 produce_O=1 sight_range*0.7 produce_O*2 counters=fire,drought,thirst,dearth
 storm: placement=region field_radius=3000 field_targets=all sets_weather=storm field_duration=8 wetness+6 visibility=0.4 dmg_electric=800 dmg_wind=20 attack_rate=0.05 attack_area=5 friendly_fire=true speed_air*0.3 accuracy+-0.3 produce_W=3 loudness=9
 fog: placement=region field_radius=1500 field_targets=all sets_weather=fog field_duration=15 visibility=0.1 stealth+4 sight_range*0.1 accuracy+-0.3
 snow: placement=region field_radius=2500 field_targets=all sets_weather=snow field_duration=20 temperature_delta=-20 visibility=0.6 movement_cost=2 growth=0.2 speed_land*0.6 tile_type=snow
@@ -312,14 +312,14 @@ lightning: placement=target placement_range=300 single_use=true dmg_electric=500
 
 # noun phenomenon
 flood: placement=region field_radius=500 field_duration=15 tile_type=water depth=3 dmg_water=30 dmg_suffocation=20 attack_rate=0.2 friendly_fire=true movement_cost=6 moisture=10 fertility+2 counters=fire,pit,mine
-drought: placement=region field_radius=3000 field_duration=30 moisture=-10 growth=0.1 water_need*3 flammability+3 clears_weather=rain,snow,fog,storm produce_O*0 counters=flood,swamp
+drought: placement=region field_radius=800 field_duration=10 moisture=-10 growth=0.1 water_need*3 flammability+3 clears_weather=rain,snow,fog,storm produce_O*0 produce_A*0 produce_P*0 produce_E*0.5 counters=flood,swamp,monsoon,deluge,plenty
 
 # noun season
-winter: placement=map field_radius=ABS field_targets=all field_duration=20 temperature_delta=-25 growth=0.1 sets_weather=snow food_need*1.5 produce_A*0.2 produce_P*0.2 speed_land*0.8 counters=summer
+winter: placement=map field_radius=ABS field_targets=all field_duration=20 temperature_delta=-25 growth=0.1 sets_weather=snow food_need*1.5 produce_A*0.2 produce_P*0.2 speed_land*0.8 counters=summer,migration,herd,flock,stampede,swarm
 summer: placement=map field_radius=ABS field_targets=all field_duration=20 temperature_delta=12 growth=2 produce_A*2 produce_P*2 water_need*1.5 clears_weather=snow counters=winter
 
 # noun affliction
-plague: placement=target placement_range=20 field_radius=10 field_targets=living field_duration=30 dmg_disease=15 attack_rate=0.2 contagion=0.4 friendly_fire=true morale+-3 labor*0.3 counters=army,city
+plague: placement=target placement_range=20 field_radius=10 field_targets=living field_duration=30 dmg_disease=15 attack_rate=0.2 contagion=0.4 friendly_fire=true morale+-3 labor*0.3 produce_N*0.3 produce_S*0.5 counters=army,city
 
 # noun feeling
 love: field_radius=30 field_targets=owned loyalty+4 morale+3 reproduction*2 aggression+-2
@@ -332,8 +332,8 @@ courage: field_radius=30 field_targets=owned courage+6 immune_fear=true morale+2
 luck: field_radius=0 field_targets=self critical+0.25 evasion+0.15 harvest_bonus*1.5
 
 # noun conflict
-war: placement=region placement_range=500 event_target=faction event_radius=2000 event_duration=30 sets_hostile=true aggression+5 produce_K*3 produce_V*3 produce_S*0.3 produce_T*0 morale+-1
-siege: placement=target placement_range=200 event_target=structure event_radius=100 event_duration=20 food_output*0 water_output*0 regeneration*0 security+-3 morale+-3 contest_with=command_limit contested_by=storage_objects
+war: placement=region placement_range=500 event_target=faction event_radius=600 event_duration=10 sets_hostile=true law=trade summons=soldier summon_count=6 summon_owned=true aggression+5 attack_rate*1.5 morale+-1 produce_K*3 produce_V*3 produce_D*2 counters=festival,carnival,holiday,parade,fiesta,gala,truce
+siege: placement=target placement_range=200 event_target=structure event_radius=100 event_duration=5 field_targets=enemies law=trade,gather summons=soldier summon_count=4 summon_owned=true food_output*0 regeneration*0 security+-3 morale+-3 produce_E*0
 
 # noun crime
 theft: placement=target placement_range=5 event_target=object transfers_ownership=true contest_with=stealth contested_by=security
@@ -355,15 +355,14 @@ trade: placement=target placement_range=10 event_target=character trade_bonus+0.
 fire: placement=target placement_range=10 event_target=tile event_radius=2 event_duration=10 dmg_fire=40 attack_rate=1 inflict_burn=5 spread_rate=1 luminosity=7 temperature=800 friendly_fire=true produce_F=1 clears_weather=snow counters=forest,wood,ice
 
 # noun disaster
-earthquake: placement=region placement_range=1000 event_target=region event_radius=1500 event_duration=1 dmg_earth=3000 dmg_crush=1000 siege=10 targets=land,underground friendly_fire=true inflict_stun=5
-famine: placement=region placement_range=1000 event_target=region event_radius=3000 event_duration=30 food_output*0 produce_A*0 morale+-4 dmg_hunger=5 attack_rate=0.1 friendly_fire=true
+earthquake: placement=region placement_range=1000 event_target=region event_radius=1500 event_duration=1 dmg_earth=3000 dmg_crush=1000 siege=10 targets=land,underground friendly_fire=true inflict_stun=5 deposit_factor=2 produce_G*3 produce_U*2
+famine: placement=region placement_range=1000 event_target=region event_radius=800 event_duration=10 dmg_hunger=5 attack_rate=0.1 friendly_fire=true deposit_factor=0.5 food_output*0 produce_A*0 produce_E*0.3 produce_H*0.5 morale+-4 counters=feast,plenty,harvest
 
 # noun group
 army: pack_size=100 command_limit=100 authority=4 upkeep_food=5 produce_K=0.5 morale+2 fear_aura=6 faction=army
 clan: binds=8 bind_penalty=loyalty,reputation faction=clan morale+1 command_limit=20
 
 # noun possession
-tax: tax_rate=0.25 produce_S=2 produce_T=1 reputation=-3 morale+-1
 treaty: binds=2 bind_penalty=reputation,morale law=attack,theft,raid
 
 # noun knowledge
@@ -504,3 +503,220 @@ quickly: cast_time*0.3 duration*0.5 effect_multiplier=1.5
 slowly: cast_time*2 duration*3
 quietly: loudness+-6 stealth+3
 forever: duration=ABS
+
+# ---------------------------------------------------------------------------------------------
+# Concepts: world events, areas and the letter economy (see README "Concepts"). Each acts only
+# through shared properties: produce_* and harvest_bonus operations on an area act on letters
+# earned inside it; growth, deposit_factor, tax_rate, lode, trade_rate, law and summons are read
+# by shared place.ts and the server's areas.
+
+# noun attribute
+dearth: placement=region field_radius=300 field_duration=8 growth=0.3 produce_E*0.3 produce_A*0.3 produce_O*0.3 morale+-1 counters=plenty,abundance,glut,surplus
+scarcity: placement=region field_radius=400 field_duration=8 growth=0.5 trade_rate=2 produce_T*0.5 counters=glut,surplus,abundance
+shortage: placement=region field_radius=300 field_duration=6 trade_rate=1.5 produce_E*0.5 produce_O*0.5 produce_G*0.5 counters=surplus,glut
+hunger: placement=self field_radius=60 field_targets=enemies field_duration=5 food_need*3 produce_E*0.5 morale+-2 counters=feast,harvest
+thirst: placement=region field_radius=200 field_duration=6 water_need*3 produce_O*0 speed_land*0.8 counters=rain,monsoon,drizzle,torrent
+plenty: placement=region field_radius=300 field_duration=8 growth=4 produce_E*2 produce_O*2 produce_A*2 counters=dearth,scarcity,shortage,famine,starvation
+abundance: placement=region field_radius=400 field_duration=6 growth=3 deposit_factor=2 produce_E*1.5 produce_G*1.5 produce_U*1.5 counters=scarcity,dearth
+cornucopia: placement=self field_radius=4 field_targets=self field_duration=10 harvest_bonus*3 food_output=5
+glut: placement=region field_radius=300 field_duration=6 deposit_factor=4 trade_rate=0.34 produce_T*0.5 counters=scarcity,shortage
+surplus: placement=region field_radius=200 field_duration=8 trade_rate=0.67 produce_T*2 counters=shortage,scarcity
+pilgrimage: placement=self field_radius=4 field_targets=self field_duration=10 law=attack produce_J*3 produce_Q*2 speed_land*1.3 regeneration+2 morale+3 counters=heresy
+odyssey: placement=self field_radius=4 field_targets=self field_duration=15 produce_J*4 speed_land*1.5 sight_range*2 morale+2
+heresy: placement=region field_radius=200 field_duration=6 produce_Q*0 regeneration*0 morale+-2 counters=pilgrimage,crusade,procession,blessing
+bargain: placement=self field_radius=4 field_targets=self field_duration=3 trade_rate=0.34
+plunder: placement=self field_radius=4 field_targets=self field_duration=5 produce_D*3 produce_V*2 produce_X*2
+pillage: placement=self field_radius=4 field_targets=self field_duration=5 produce_D*2 produce_F*3 dmg_fire+20 inflict_burn+2
+loot: placement=self field_radius=4 field_targets=self field_duration=3 produce_K*2 produce_V*2 produce_H*2
+booty: placement=self field_radius=4 field_targets=self field_duration=5 produce_X*3 produce_T*2
+jinx: placement=target placement_range=60 field_radius=8 field_targets=enemies field_duration=5 harvest_bonus*0.2 accuracy+-0.3 critical+-0.2 counters=luck,serendipity,blessing,cornucopia
+crackdown: placement=region field_radius=150 field_targets=enemies field_duration=3 law=spell,theft inflict_slow=1 counters=riot,looting,revelry,plunder,pillage,loot,booty
+nightmare: placement=target placement_range=60 field_radius=10 field_targets=enemies field_duration=2 inflict_fear=2 morale+-4 courage+-3 counters=dawn,sunrise,exorcism
+
+# noun feeling
+truce: placement=region field_radius=200 field_duration=3 law=attack morale+1 counters=war,battle,skirmish,warfare,crusade,invasion,riot
+armistice: placement=map field_radius=ABS field_duration=3 law=attack morale+2 counters=war,battle,warfare,invasion,crusade,conquest,skirmish,apocalypse
+
+# noun possession
+tax: placement=self field_radius=60 field_targets=enemies field_duration=10 tax_rate=0.25 produce_S=2 produce_T=1 reputation=-3 morale+-1
+tithe: placement=self field_radius=80 field_targets=enemies field_duration=10 tax_rate=0.1 produce_Q=0.1
+toll: placement=target placement_range=40 field_radius=12 field_targets=enemies field_duration=20 tax_rate=0.5 speed_land*0.5
+tribute: placement=self field_radius=100 field_targets=enemies field_duration=5 tax_rate=0.3 counters=war,raid,invasion
+tariff: placement=region field_radius=200 field_targets=enemies field_duration=10 trade_rate=2 tax_rate=0.2
+levy: placement=region field_radius=150 field_targets=enemies field_duration=5 tax_rate=0.5 summons=soldier summon_count=2 summon_owned=true
+customs: placement=region field_radius=150 field_targets=enemies field_duration=10 tax_rate=0.25 law=theft
+duty: placement=self field_radius=50 field_targets=enemies field_duration=10 tax_rate=0.15 produce_T*0.5
+ransom: placement=target placement_range=20 field_radius=6 field_targets=enemies field_duration=3 tax_rate=1 inflict_root=2
+monopoly: placement=region field_radius=200 field_targets=enemies field_duration=8 law=trade produce_T=2
+jackpot: placement=self field_radius=4 field_targets=self field_duration=2 lode=z,q,x,j,k,v lode_share=1 lode_stock=6
+bounty: placement=region field_radius=300 field_duration=10 produce_H*3 produce_K*2 summons=deer summon_count=6
+hoard: placement=self field_radius=4 field_targets=self field_duration=10 lode=x lode_share=0.25 lode_stock=4 harvest_bonus*1.5
+treasure: placement=target placement_range=60 field_radius=6 field_duration=10 lode=x lode_share=1 lode_stock=3
+
+# noun phenomenon
+starvation: placement=region field_radius=200 field_duration=5 dmg_hunger=8 attack_rate=0.2 friendly_fire=true deposit_factor=0 produce_E*0 food_output*0 morale+-3 counters=feast,harvest,plenty
+decay: placement=region field_radius=200 field_duration=10 growth=0.5 produce_D*2 produce_U*2 produce_E*0.5 decay_rate+5 regeneration*0
+bonanza: placement=target placement_range=100 field_radius=24 field_duration=10 lode=x,z lode_share=0.5 lode_stock=12 produce_G*3
+lode: placement=target placement_range=60 field_radius=16 field_duration=15 lode=g,u lode_share=0.7 lode_stock=20
+eldorado: placement=region field_radius=200 field_duration=6 lode=x lode_share=0.2 lode_stock=10 trade_rate=2 produce_G*3 produce_X*3 produce_T*2
+prospect: placement=self field_radius=4 field_targets=self field_duration=10 lode=g,u,x lode_share=0.3 lode_stock=10
+recession: placement=region field_radius=500 field_duration=8 trade_rate=1.5 produce_T*0 produce_N*0.5 morale+-2 counters=boom,surplus,glut
+migration: placement=region field_radius=300 field_duration=10 summons=deer summon_count=10 produce_H*2
+herd: placement=region field_radius=100 field_duration=5 summons=buffalo summon_count=6 produce_H*2
+flock: placement=region field_radius=100 field_duration=5 summons=sheep summon_count=8 produce_I*2
+eclipse: placement=map field_radius=ABS field_targets=all field_duration=3 sets_daylight=night produce_U*3 produce_X*2 morale+-2 stealth+3
+blackout: placement=map field_radius=ABS field_targets=all field_duration=2 sets_daylight=night produce_M*0 produce_C*0.5 sight_range*0.5
+twilight: placement=map field_radius=ABS field_targets=all field_duration=5 sets_daylight=night produce_E*1.5 stealth+2 sight_range*0.8
+midnight: placement=map field_radius=ABS field_targets=all field_duration=8 sets_daylight=night produce_K*2 stealth+4 dmg_dark+20
+dawn: placement=map field_radius=ABS field_targets=all field_duration=10 sets_daylight=day produce_E*1.5 morale+2 stealth+-3 counters=nightmare,eclipse,blackout,twilight,midnight,darkness
+curfew: placement=region field_radius=200 field_targets=enemies field_duration=6 law=gather,trade speed_land*0.7 counters=revelry,festival
+holiday: placement=map field_radius=ABS field_targets=all field_duration=3 law=attack,gather morale+4 regeneration+3 counters=war,battle,riot,skirmish
+equinox: placement=map field_radius=ABS field_targets=all field_duration=5 growth=2 produce_W*2 harvest_bonus*1.25 counters=winter,summer,blizzard
+swarm: placement=region field_radius=200 field_duration=6 growth=0.2 summons=locust summon_count=1000 produce_A*0 produce_P*0
+infestation: placement=target placement_range=100 field_radius=40 field_duration=8 growth=0.5 summons=rat summon_count=12 produce_E*0.3 food_need*2
+vermin: placement=region field_radius=60 field_duration=5 summons=rat summon_count=30 produce_E*0.5
+windfall: placement=region field_radius=60 field_duration=2 lode=e,a,o,i,s,t,r,n lode_share=1 lode_stock=30
+serendipity: placement=self field_radius=4 field_targets=self field_duration=5 harvest_bonus*2 lode=j,q,z,x lode_share=0.15 lode_stock=5
+anarchy: placement=map field_radius=ABS field_targets=all field_duration=3 obedience+-5 authority*0 counters=tax,tithe,toll,tariff,levy,customs,duty,tribute,ransom,curfew,lockdown,crackdown,monopoly,embargo,truce,armistice,holiday,quarantine,patrol,siege,blockade,sanctuary,haven,refuge
+comet: placement=map field_radius=ABS field_targets=all field_duration=3 lode=z,q lode_share=0.05 lode_stock=10 luminosity+3 morale+-2
+cataclysm: placement=map field_radius=ABS field_targets=all field_duration=3 dmg_earth=20 attack_rate=0.05 friendly_fire=true deposit_factor=0.5 produce_G*3 produce_X*3
+
+# noun season
+spring: placement=map field_radius=ABS field_targets=all field_duration=8 temperature_delta=5 growth=3 deposit_factor=2 produce_A*1.5 produce_P*3 produce_E*1.5 fertility+4 counters=winter,blizzard,blight,drought
+autumn: placement=map field_radius=ABS field_targets=all field_duration=8 temperature_delta=-8 growth=0.6 produce_A*3 produce_P*2 food_output*2 counters=summer,spring
+
+# noun weather
+monsoon: placement=map field_radius=ABS field_targets=all sets_weather=rain field_duration=6 growth=3 wetness+5 flammability+-5 sight_range*0.6 speed_land*0.8 produce_O*3 produce_A*2 produce_P*2 produce_W*2 counters=fire,drought,heat,wildfire,thirst,dearth
+deluge: placement=map field_radius=ABS field_targets=all sets_weather=storm field_duration=4 dmg_water=10 attack_rate=0.1 friendly_fire=true growth=2 produce_O*4 speed_land*0.6 counters=fire,drought,wildfire
+torrent: placement=map field_radius=ABS field_targets=all sets_weather=rain field_duration=4 growth=2 produce_O*2 speed_land*0.7 counters=fire,drought
+drizzle: placement=map field_radius=ABS field_targets=all sets_weather=rain field_duration=10 growth=1.5 produce_O*1.5 produce_P*1.5 counters=fire
+hurricane: placement=map field_radius=ABS field_targets=all sets_weather=storm field_duration=4 dmg_wind=15 attack_rate=0.1 friendly_fire=true clears_weather=fog speed_land*0.6 speed_air*0.2 accuracy+-0.3 produce_W*5 produce_O*2 counters=fire,wildfire
+typhoon: placement=map field_radius=ABS field_targets=all sets_weather=storm field_duration=5 dmg_wind=25 attack_rate=0.1 friendly_fire=true speed_land*0.5 speed_air*0.2 accuracy+-0.4 produce_W*6 produce_O*3 counters=fire,wildfire
+cyclone: placement=map field_radius=ABS field_targets=all sets_weather=storm field_duration=3 dmg_wind=20 attack_rate=0.1 friendly_fire=true speed_land*0.6 produce_W*4 produce_O*2 counters=fire
+tornado: placement=target placement_range=300 field_radius=24 field_duration=2 dmg_wind=60 dmg_crush=30 attack_rate=1 friendly_fire=true inflict_stun=1 deposit_factor=0 produce_W*4
+blizzard: placement=map field_radius=ABS field_targets=all sets_weather=snow field_duration=4 temperature_delta=-30 dmg_cold=5 attack_rate=0.1 friendly_fire=true inflict_slow=3 growth=0 speed_land*0.4 sight_range*0.3 produce_A*0 produce_P*0 counters=fire,heat,summer
+hail: placement=map field_radius=ABS field_targets=all sets_weather=storm field_duration=2 dmg_blunt=8 attack_rate=0.2 friendly_fire=true produce_A*0.3 produce_P*0.3
+thunderstorm: placement=map field_radius=ABS field_targets=all sets_weather=storm field_duration=4 dmg_electric=400 attack_rate=0.03 friendly_fire=true growth=1.5 produce_W*3 produce_O*2 counters=fire,drought
+sandstorm: placement=map field_radius=ABS field_targets=all sets_weather=fog field_duration=4 dmg_wind=5 attack_rate=0.1 friendly_fire=true inflict_blind=2 sight_range*0.2 produce_G*2 produce_E*0.5
+gale: placement=map field_radius=ABS field_targets=all field_duration=5 speed_air*0.5 accuracy+-0.2 produce_W*3
+sunrise: placement=map field_radius=ABS field_targets=all sets_daylight=day field_duration=10 morale+2 produce_E*1.5 counters=nightmare,eclipse,blackout,twilight,midnight,darkness
+
+# noun affliction
+blight: placement=target placement_range=200 field_radius=120 field_duration=10 deposit_factor=0 growth=0 produce_E*0 produce_A*0 produce_P*0 produce_U*4 counters=harvest,plenty,abundance,spring
+pestilence: placement=region field_radius=300 field_duration=8 dmg_disease=6 attack_rate=0.2 friendly_fire=true contagion=0.3 growth=0.2 produce_A*0 produce_I*0 produce_U*2 morale+-2
+canker: placement=target placement_range=100 field_radius=40 field_duration=12 growth=0 produce_P*0 produce_A*0 regeneration*0
+pox: placement=target placement_range=30 field_radius=8 field_targets=living field_duration=10 dmg_disease=10 attack_rate=0.5 contagion=0.6 friendly_fire=true charm+-4
+pest: placement=target placement_range=50 field_radius=30 field_duration=6 growth=0.3 produce_A*0.2 produce_P*0.2
+
+# noun material
+pesticide: mass=1 toxicity=6 single_use=true field_radius=30 dmg_poison=20 attack_rate=0.5 counters=swarm,infestation,vermin,pest,locust,termite,blight
+
+# noun fungus
+mildew: mass=0.1 integrity=5 portable=false field_radius=30 produce_U=0.3 produce_E*0.5 produce_U*2
+mold: mass=0.1 integrity=3 portable=false field_radius=20 produce_U=0.2 produce_E*0.5 produce_U*2
+fungus: mass=0.5 integrity=10 edible=true nutrition=2 portable=false field_radius=16 produce_U=0.5 produce_U*2
+
+# noun natural_object
+nugget: mass=0.05 integrity=50 material=gold value=500 field_radius=8 lode=g lode_share=0.5 lode_stock=8
+
+# noun artifact
+goldmine: mass=50000 footprint=4 integrity=5000 portable=false produce_G=1 produce_X=0.05
+relic: mass=1 integrity=50 value=5000 luminosity=3 dmg_holy=20 field_radius=10 field_targets=owned produce_Q*2
+vaccine: mass=0.05 edible=true single_use=true duration=1200 res_disease+1 counters=plague,pox,epidemic,pandemic,pestilence
+sanctuary: mass=50000 footprint=6 integrity=20000 material=stone portable=false field_radius=60 law=attack,theft heals=2
+
+# noun medicine
+cure: mass=0.1 edible=true potency=9 restores=500 effect_status=poison,bleed,burn,sleep,confuse single_use=true res_disease+1 counters=plague,pox,epidemic,pandemic,fever,disease,blight,canker,pestilence
+
+# noun building
+shrine: mass=20000 footprint=3 integrity=3000 material=stone portable=false field_radius=40 field_targets=owned heals=3 produce_Q=0.1
+
+# noun structure
+haven: mass=20000 footprint=4 integrity=8000 material=stone,wood portable=false field_radius=40 field_targets=owned law=attack,theft regeneration+2
+
+# noun place
+refuge: mass=10000 footprint=4 integrity=5000 portable=false field_radius=30 law=attack regeneration+3
+
+# noun mammal
+deer: mass=90 length=1.8 integrity=150 alive=true diet=herbivore food_need=0.05 speed_land=18 edible=true nutrition=10 courage=1
+buffalo: mass=900 length=3 integrity=1200 alive=true diet=herbivore food_need=0.2 speed_land=14 dmg_blunt=60 dmg_crush=40 attack_rate=0.5 knockback=5 aggression=3 courage=6 edible=true nutrition=30
+bison: mass=800 length=3 integrity=1100 alive=true diet=herbivore food_need=0.2 speed_land=14 dmg_blunt=55 dmg_crush=35 attack_rate=0.5 knockback=5 aggression=3 courage=6 res_cold=0.6
+antelope: mass=50 length=1.5 integrity=100 alive=true diet=herbivore food_need=0.03 speed_land=24 evasion=0.3 edible=true nutrition=8 courage=1
+reindeer: mass=150 length=2 integrity=250 alive=true diet=herbivore food_need=0.06 speed_land=14 res_cold=0.8 dmg_pierce=20 attack_rate=0.5 tamable=true
+gazelle: mass=25 length=1.2 integrity=60 alive=true diet=herbivore food_need=0.02 speed_land=25 evasion=0.4 courage=1
+
+# noun insect
+locust: mass=0.002 length=0.05 integrity=1 alive=true diet=herbivore food_need=0.0001 speed_land=1 speed_air=5 plural_count=500 field_radius=20 growth=0 produce_A*0 produce_P*0
+termite: mass=0.001 length=0.01 integrity=1 alive=true diet=herbivore food_need=0.0001 speed_land=0.5 plural_count=1000 dmg_slash=1 attack_rate=1 siege=5 aggression=5
+
+# noun supernatural
+apparition: mass=0 integrity=80 alive=false sentient=true speed_land=3 speed_air=3 phase=true hover=true stealth=6 res_blunt=1 res_slash=1 res_pierce=1 res_holy=-1 fear_aura=5 dmg_psychic=15 attack_rate=0.5 aggression=6 on_owner_death=vanish
+poltergeist: mass=0 integrity=60 alive=false sentient=true speed_land=4 phase=true stealth=8 res_blunt=1 res_slash=1 res_pierce=1 res_holy=-1 dmg_blunt=20 knockback=3 attack_rate=1 aggression=8 on_owner_death=vanish
+phantom: mass=0 integrity=120 alive=false sentient=true speed_land=4 speed_air=4 phase=true hover=true stealth=7 res_blunt=1 res_slash=1 res_pierce=1 res_holy=-1 dmg_psychic=25 inflict_fear=3 attack_rate=0.5 aggression=6 on_owner_death=vanish
+spectre: mass=0 integrity=150 alive=false sentient=true speed_land=4 phase=true stealth=6 res_blunt=1 res_slash=1 res_pierce=1 res_holy=-1 dmg_cold=20 inflict_freeze=1 fear_aura=7 attack_rate=0.5 aggression=7 on_owner_death=vanish
+wraith: mass=0 integrity=180 alive=false sentient=true speed_land=5 phase=true stealth=6 res_blunt=1 res_slash=1 res_pierce=1 res_holy=-1 dmg_dark=30 attack_rate=0.7 aggression=8 nocturnal=true on_owner_death=vanish
+
+# noun person
+pilgrim: mass=70 integrity=100 alive=true sentient=true hands=true speech=true speed_land=4 food_need=0.03 loyalty=7 field_radius=20 field_targets=owned heals=1 produce_J*2
+clown: mass=70 integrity=80 alive=true sentient=true hands=true speech=true speed_land=5 food_need=0.03 charm=6 dmg_blunt=5 attack_rate=1 inflict_confuse=3
+
+# noun event
+inflation: placement=map event_duration=8 trade_rate=2 produce_T*0.5 morale+-1 counters=deflation
+deflation: placement=map event_duration=8 trade_rate=0.67 produce_T*2 counters=inflation,recession
+bust: placement=region event_radius=300 event_duration=10 trade_rate=1.5 produce_G*0.3 produce_T*0.5 counters=bonanza,eldorado,lode,jackpot,boom
+stampede: placement=region event_radius=60 event_duration=2 field_targets=enemies summons=buffalo summon_count=12 sets_hostile=true produce_H*2
+epidemic: placement=target placement_range=100 event_radius=40 event_duration=8 dmg_disease=12 attack_rate=0.3 friendly_fire=true contagion=0.8 produce_N*0.3 morale+-3
+pandemic: placement=map event_duration=5 dmg_disease=3 attack_rate=0.2 friendly_fire=true contagion=0.5 labor*0.3 produce_T*0.5 morale+-2
+quake: placement=region event_radius=300 event_duration=1 dmg_earth=800 dmg_crush=200 siege=5 inflict_stun=3 friendly_fire=true targets=land,underground deposit_factor=1.5 produce_G*2
+tremor: placement=region event_radius=150 event_duration=1 dmg_earth=100 inflict_stun=1 friendly_fire=true deposit_factor=1.5 produce_G*2
+aftershock: placement=region event_radius=200 event_duration=3 dmg_earth=150 attack_rate=0.05 friendly_fire=true inflict_stun=2 produce_G*1.5
+landslide: placement=target placement_range=200 event_radius=30 event_duration=1 dmg_crush=1500 friendly_fire=true tile_type=hill radius=8 produce_G*2
+avalanche: placement=target placement_range=200 event_radius=40 event_duration=1 dmg_crush=1200 dmg_cold=200 inflict_freeze=5 friendly_fire=true tile_type=snow radius=10
+eruption: placement=target placement_range=300 event_radius=40 event_duration=3 dmg_fire=300 dmg_blast=500 attack_rate=0.3 inflict_burn=10 friendly_fire=true tile_type=lava radius=6 luminosity=10 produce_F*3 produce_G*2
+procession: placement=region event_radius=40 event_duration=3 law=attack morale+4 produce_J*2
+miracle: placement=region event_radius=100 event_duration=1 deposit_factor=5 lode=q,z lode_share=0.5 lode_stock=4 effect_status=poison,bleed,burn,fear regeneration+20 morale+5
+misfortune: placement=target placement_range=100 event_radius=20 event_duration=5 harvest_bonus*0.3 critical+-0.3 evasion+-0.2
+doomsday: placement=map event_duration=3 dmg_fire=10 attack_rate=0.2 friendly_fire=true sets_hostile=true produce_K*4 produce_D*2 morale+-3
+
+# noun ceremony
+festival: placement=region event_radius=150 event_duration=8 law=attack trade_rate=0.67 produce_T*2 produce_E*2 morale+5 charm+3 counters=curfew,lockdown,mourning
+parade: placement=region event_radius=60 event_duration=3 law=attack produce_S*2 morale+6 courage+3
+circus: placement=region event_radius=80 event_duration=5 summons=lion summon_count=3 produce_T*2 morale+2
+seance: placement=region event_radius=20 event_duration=3 summons=ghost summon_count=3 summon_owned=true produce_Q*2
+
+# noun act
+harvest: placement=region event_radius=200 event_duration=5 deposit_factor=3 produce_A*3 produce_P*3 produce_E*2 morale+2 counters=famine,drought,dearth,starvation,blight,hunger
+feast: placement=region event_radius=60 event_duration=5 food_need*0 regeneration+5 morale+4 produce_I*3 counters=hunger,starvation,famine
+carnival: placement=region event_radius=100 event_duration=6 law=attack trade_rate=0.5 produce_T*3 summons=clown summon_count=3 morale+4
+fiesta: placement=region event_radius=80 event_duration=5 law=attack food_need*0 regeneration+5 produce_E*2 morale+4
+gala: placement=region event_radius=40 event_duration=4 law=attack,theft charm+5 produce_T*3 trade_rate=0.5
+revelry: placement=region event_radius=60 event_duration=4 courage+4 accuracy+-0.3 morale+4 produce_E*1.5
+quarantine: placement=region event_radius=100 event_duration=10 law=trade speed_land*0.3 counters=plague,epidemic,pandemic,pox,fever,disease,pestilence
+lockdown: placement=region event_radius=150 event_duration=4 law=gather,trade,theft speed_land*0.3 counters=plague,epidemic,pox,pandemic,looting,riot,plunder,pillage,loot
+patrol: placement=region event_radius=50 event_duration=5 field_targets=enemies law=theft summons=guard summon_count=3 summon_owned=true
+conquest: placement=region event_radius=150 event_duration=5 summons=soldier summon_count=3 summon_owned=true produce_L*3 produce_V*3
+skirmish: placement=region event_radius=60 event_duration=2 sets_hostile=true attack_rate*1.2 produce_K*2
+mobilization: placement=region event_radius=50 event_duration=3 summons=soldier summon_count=8 summon_owned=true morale+3 courage+3
+conscription: placement=region event_radius=100 event_duration=3 summons=soldier summon_count=4 summon_owned=true produce_N*0.5
+crusade: placement=region event_radius=300 event_duration=10 sets_hostile=true dmg_holy+50 courage+4 produce_K*2 produce_Q*2 counters=heresy
+looting: placement=region event_radius=60 event_duration=3 produce_D*3 produce_X*2
+blessing: placement=region event_radius=60 event_duration=3 regeneration+5 morale+3 harvest_bonus*1.5 produce_Q*2 counters=jinx,misfortune,heresy
+riot: placement=region event_radius=80 event_duration=3 sets_hostile=true law=trade aggression+5 morale+-1 produce_D*3 counters=curfew,lockdown,crackdown,patrol
+rebellion: placement=region event_radius=200 event_duration=5 sets_hostile=true authority+-5 obedience+-5 produce_V*3 counters=tax,tithe,toll,tariff,levy,customs,duty,tribute,curfew,lockdown,crackdown,monopoly,embargo
+uprising: placement=region event_radius=150 event_duration=4 sets_hostile=true courage+4 produce_K*2 counters=siege,blockade,curfew,crackdown
+mutiny: placement=region event_radius=60 frees_target=true counters=levy,conscription,mobilization
+exorcism: placement=region event_radius=60 event_duration=2 dmg_holy=200 attack_rate=0.5 effect_status=fear,confuse,charm counters=nightmare
+
+# noun conflict
+blockade: placement=region event_radius=200 event_duration=6 field_targets=enemies law=trade produce_O*0 produce_T*0
+encirclement: placement=target placement_range=200 event_radius=40 event_duration=3 field_targets=enemies inflict_root=1 speed_land*0.3 morale+-3
+embargo: placement=region event_radius=300 event_duration=10 law=trade produce_T*0 counters=surplus,glut
+warfare: placement=region event_radius=400 event_duration=6 sets_hostile=true law=trade attack_rate*1.3 produce_K*2 produce_V*2 produce_D*2
+
+# noun disaster
+tsunami: placement=target placement_range=400 event_radius=60 event_duration=1 dmg_water=2000 dmg_crush=500 friendly_fire=true siege=4 tile_type=water radius=5 produce_O*3
+meteor: placement=target placement_range=400 event_radius=20 event_duration=6 dmg_blast=1500 dmg_fire=500 inflict_stun=3 friendly_fire=true luminosity=10 tile_type=pit radius=3 lode=z,x,q,j lode_share=0.6 lode_stock=6
+meteorite: placement=target placement_range=300 event_radius=8 event_duration=4 dmg_blast=400 dmg_fire=100 friendly_fire=true tile_type=pit radius=1 lode=x,z lode_share=0.5 lode_stock=3
+asteroid: placement=target placement_range=600 event_radius=80 event_duration=8 dmg_blast=20000 dmg_fire=5000 friendly_fire=true siege=10 inflict_stun=5 luminosity=10 tile_type=pit radius=10 lode=z,q,x lode_share=0.8 lode_stock=15
+apocalypse: placement=map event_duration=5 sets_hostile=true dmg_fire=5 attack_rate=0.1 friendly_fire=true aggression+5 morale+-3 produce_K*3 produce_D*3 produce_F*3
+

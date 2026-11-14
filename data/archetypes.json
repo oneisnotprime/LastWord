@@ -101,7 +101,7 @@
  {
   "class": "artifact",
   "archetype": "container",
-  "words": 284,
+  "words": 283,
   "groups": [
    "physical",
    "mobility",
@@ -131,7 +131,7 @@
  {
   "class": "artifact",
   "archetype": "document",
-  "words": 216,
+  "words": 215,
   "groups": [
    "physical",
    "mobility",
@@ -371,7 +371,7 @@
  {
   "class": "aura",
   "archetype": "attribute",
-  "words": 3124,
+  "words": 3136,
   "groups": [
    "field"
   ]
@@ -379,7 +379,7 @@
  {
   "class": "aura",
   "archetype": "feeling",
-  "words": 588,
+  "words": 590,
   "groups": [
    "field"
   ]
@@ -530,7 +530,7 @@
  {
   "class": "creature",
   "archetype": "supernatural",
-  "words": 124,
+  "words": 126,
   "groups": [
    "physical",
    "life",
@@ -562,7 +562,7 @@
  {
   "class": "event",
   "archetype": "act",
-  "words": 3277,
+  "words": 3279,
   "groups": [
    "event",
    "offence",
@@ -572,7 +572,7 @@
  {
   "class": "event",
   "archetype": "event",
-  "words": 725,
+  "words": 722,
   "groups": [
    "event",
    "offence",
@@ -582,7 +582,7 @@
  {
   "class": "event",
   "archetype": "exchange",
-  "words": 155,
+  "words": 154,
   "groups": [
    "event",
    "offence",
@@ -602,7 +602,7 @@
  {
   "class": "event",
   "archetype": "travel",
-  "words": 74,
+  "words": 72,
   "groups": [
    "event",
    "offence",
@@ -621,6 +621,16 @@
  },
  {
   "class": "event",
+  "archetype": "ceremony",
+  "words": 49,
+  "groups": [
+   "event",
+   "offence",
+   "field"
+  ]
+ },
+ {
+  "class": "event",
   "archetype": "attack",
   "words": 46,
   "groups": [
@@ -631,18 +641,8 @@
  },
  {
   "class": "event",
-  "archetype": "ceremony",
-  "words": 46,
-  "groups": [
-   "event",
-   "offence",
-   "field"
-  ]
- },
- {
-  "class": "event",
   "archetype": "conflict",
-  "words": 25,
+  "words": 26,
   "groups": [
    "event",
    "offence",
@@ -682,7 +682,7 @@
  {
   "class": "event",
   "archetype": "disaster",
-  "words": 12,
+  "words": 15,
   "groups": [
    "event",
    "offence",
@@ -756,7 +756,7 @@
  {
   "class": "flora",
   "archetype": "produce",
-  "words": 174,
+  "words": 173,
   "groups": [
    "physical",
    "life",
@@ -778,7 +778,7 @@
  {
   "class": "flora",
   "archetype": "fungus",
-  "words": 54,
+  "words": 55,
   "groups": [
    "physical",
    "life",
@@ -789,7 +789,7 @@
  {
   "class": "institution",
   "archetype": "group",
-  "words": 773,
+  "words": 762,
   "groups": [
    "social",
    "economy",
@@ -799,7 +799,7 @@
  {
   "class": "institution",
   "archetype": "possession",
-  "words": 357,
+  "words": 354,
   "groups": [
    "social",
    "economy",
@@ -809,7 +809,7 @@
  {
   "class": "knowledge",
   "archetype": "knowledge",
-  "words": 1925,
+  "words": 1919,
   "groups": [
    "economy",
    "meta"
@@ -890,7 +890,7 @@
  {
   "class": "measure",
   "archetype": "quantity",
-  "words": 852,
+  "words": 850,
   "groups": [
    "meta"
   ]
@@ -938,7 +938,7 @@
  {
   "class": "person",
   "archetype": "person",
-  "words": 4404,
+  "words": 4401,
   "groups": [
    "physical",
    "life",
@@ -1034,7 +1034,7 @@
  {
   "class": "spell",
   "archetype": "social",
-  "words": 548,
+  "words": 547,
   "groups": [
    "effect"
   ]
@@ -1050,7 +1050,7 @@
  {
   "class": "spell",
   "archetype": "transfer",
-  "words": 315,
+  "words": 314,
   "groups": [
    "effect"
   ]
@@ -1106,7 +1106,7 @@
  {
   "class": "terrain",
   "archetype": "place",
-  "words": 459,
+  "words": 458,
   "groups": [
    "physical",
    "spatial",
@@ -1116,7 +1116,7 @@
  {
   "class": "terrain",
   "archetype": "natural_object",
-  "words": 257,
+  "words": 254,
   "groups": [
    "physical",
    "spatial",
@@ -1126,7 +1126,7 @@
  {
   "class": "terrain",
   "archetype": "landform",
-  "words": 112,
+  "words": 111,
   "groups": [
    "physical",
    "spatial",
@@ -1176,7 +1176,7 @@
  {
   "class": "terrain",
   "archetype": "celestial",
-  "words": 23,
+  "words": 22,
   "groups": [
    "physical",
    "spatial",
@@ -1194,7 +1194,7 @@
  {
   "class": "world_state",
   "archetype": "phenomenon",
-  "words": 247,
+  "words": 268,
   "groups": [
    "field"
   ]
@@ -1202,7 +1202,7 @@
  {
   "class": "world_state",
   "archetype": "weather",
-  "words": 139,
+  "words": 140,
   "groups": [
    "field"
   ]

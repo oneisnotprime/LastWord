@@ -45,6 +45,53 @@ Comparatives and superlatives reuse the base adjective's operations at a higher 
 (`operators.json`): a multiplier `f` becomes `f ** degree`, an added amount `a` becomes
 `a * degree`.
 
+## Areas, places and concepts
+
+Any word's area (an event, a field, weather, or an object with a `field_radius`) can change the
+letter economy and the rules where it lies, through shared `place.ts`:
+
+| Property | What it does inside the area |
+|---|---|
+| `produce_<L>` and `harvest_bonus` operations | multiply every L (or every letter) earned there: gathered, produced, from kills, deeds and trades |
+| `growth` | how fast picked ground grows back (0: never) |
+| `deposit_factor` | ground deposits multiplied as it begins (0 strips them) |
+| `tax_rate` | share of letters others earn there that goes to its maker |
+| `lode`, `lode_share`, `lode_stock` | letters gathering there turns up instead, and how many |
+| `trade_rate` | markets there ask this times their usual three letters for one |
+| `law` | acts nobody it reaches may do there: attack, gather, spell, trade, theft |
+| `summons`, `summon_count`, `summon_owned` | creatures that appear as it begins, wild or its maker's |
+| `tile_type` + `radius` on an event | the land it lays as it begins (a METEOR's crater) |
+
+Twenty-five concepts built on them, in `tools/demo_words.txt` after "# Concepts":
+
+| Concept | Words | Effect | Ended by |
+|---|---|---|---|
+| Scarcity | drought, famine, dearth, scarcity, shortage, starvation, hunger, thirst | yields fall (A, P, O ×0, E ×0.3 to 0.5), ground grows back slowly, prices rise | rain, monsoon, plenty, harvest, feast |
+| Plenty | harvest, plenty, abundance, cornucopia, glut, surplus, bounty, feast | ground refilled ×2 to ×4, yields ×2 to ×3, cheap markets | dearth, scarcity, blight, famine |
+| Blight | blight, pestilence, canker, decay, mildew, mold, fungus | ground stripped and never grows back; only U (rot) comes of it | harvest, spring, cure |
+| Gold rush | bonanza, lode, eldorado, prospect, jackpot, nugget, goldmine | lodes: gathering turns up X, Z, G, U or rarer, for a set number | bust |
+| Levies | tax, tithe, toll, tribute, tariff, levy, customs, duty, ransom | 10% to 100% of what others earn near you is yours | rebellion, anarchy |
+| Markets | inflation, deflation, recession, bargain, monopoly, embargo | market price ×0.34 to ×2, T up or down, markets closed | each other, anarchy |
+| Migration | migration, herd, flock, stampede, bounty, deer, buffalo, bison, antelope, reindeer, gazelle | herds to hunt for H; a STAMPEDE turns them on your enemies | winter, fence |
+| Pilgrimage | pilgrimage, odyssey, procession, crusade, heresy, pilgrim, shrine, relic | J ×3 to ×4 and Q ×2 while travelling; a pilgrim cannot be struck | heresy |
+| Plague | plague, epidemic, pandemic, pox, quarantine, vaccine, cure | spreading disease, labour and trade down | cure, vaccine, quarantine, lockdown |
+| Eclipse | eclipse, blackout, twilight, midnight, dawn, sunrise | night for a few minutes, then the day comes back; U, X or K up | sun, dawn, sunrise |
+| Festival | festival, carnival, parade, holiday, fiesta, gala, revelry, circus, clown | no fighting, cheap markets, T and E up; a CIRCUS lets lions loose | war, riot |
+| Martial law | curfew, lockdown, crackdown, patrol | others cannot gather, trade or spell near you; guards rally | riot, rebellion, anarchy |
+| Quakes | earthquake, quake, tremor, aftershock, landslide, avalanche, eruption | damage, then the ground holds more G and U; land turns to hill, snow or lava | none: over in a minute; BUNKER and FLYING defend |
+| Floods | monsoon, deluge, torrent, drizzle, tsunami | map-wide rain: O ×2 to ×4, crops and windmills up | drought, heat |
+| Siege | siege, blockade, encirclement | the besieged cannot trade or gather; soldiers rally to the besieger | uprising, anarchy |
+| Sanctuary | sanctuary, refuge, haven, truce, armistice | no fighting or stealing inside | war, anarchy |
+| War | war, warfare, skirmish, conquest, mobilization, conscription | creatures attack everyone not on your side, soldiers rally, kills pay K ×3, markets closed | peace, truce, armistice, holiday |
+| Storms | hurricane, typhoon, cyclone, tornado, blizzard, hail, thunderstorm, sandstorm, gale | map-wide weather that strikes; W ×3 to ×6, crops ×0 in snow | sun, calm, clear |
+| Vermin | swarm, infestation, vermin, pest, locust, termite, pesticide | locust swarms eat crops wherever they fly; rats spoil food | pesticide, winter |
+| Plunder | plunder, pillage, loot, looting, booty, hoard, treasure | destroying, burning and killing pay ×2 to ×3; buried X | lockdown, crackdown |
+| Fortune | windfall, serendipity, blessing, miracle, jinx, misfortune | letters rain down; luck multiplies or a jinx takes what someone earns | jinx and blessing |
+| Seasons | spring, autumn, equinox (winter, summer) | map-wide growth and crop yields | each other |
+| Unrest | riot, rebellion, uprising, mutiny, anarchy | hostility, D and V up; ANARCHY ends every law and levy | curfew, lockdown, crackdown, patrol |
+| Hauntings | nightmare, seance, exorcism, apparition, poltergeist, phantom, spectre, wraith | fear that holds, ghosts that fight for you | dawn, exorcism |
+| Starfall | meteor, meteorite, asteroid, comet, cataclysm, apocalypse, doomsday | impact, a crater whose rim gives Z, X, Q and J; map-wide ends of the world | armistice (APOCALYPSE); impacts are instant |
+
 ## Generating more words
 
 `tools/generate_words.py` gives property values to more of the lexicon with Claude, through the

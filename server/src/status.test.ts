@@ -133,10 +133,12 @@ it("SILENCE stops everyone inside it spelling", async () => {
 it("WAR turns creatures inside it on whoever is nearest and not its maker's, even their own master", async () => {
   const { room, a, b, wa, wb, creature } = await twoPlayers();
   b.send("spell", "wolf"); await wait();
-  wb.stores.food = 100; // a wolf left hungry through a thirty-minute war would turn wild
+  wb.stores.food = 100; // a wolf left hungry through a long war would turn wild
   const [wolfId, wolf] = creature("wolf");
   wolf.player.x = wa.player.x; wolf.player.y = wa.player.y; // right beside A, the war's maker
   a.send("spell", "war"); await wait();
+  // The soldiers WAR brings are not what this test is about.
+  for (const [cid, c] of (room as any).walkers) if (c.player.name === "soldier") { (room as any).walkers.delete(cid); room.state.players.delete(cid); }
   ticks(room, 2);
   expect(wolf.foe).toBe(b.sessionId);
   const hp = wb.hp;
