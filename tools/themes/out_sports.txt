@@ -1,0 +1,311 @@
+# noun contest
+competition: placement=target placement_range=40 event_target=character stakes=12 field_radius=14 field_duration=2 training+1 morale+1 counters=foul,referee
+championship: placement=target placement_range=60 event_target=character stakes=25 field_radius=20 field_duration=3 morale+3 courage+2 training+1 counters=foul,referee
+contest: placement=target placement_range=40 event_target=character stakes=8 field_radius=12 field_duration=2 morale+1 counters=foul,referee
+racing: placement=target placement_range=40 event_target=character stakes=12 race_to=300 field_duration=3 speed_land*1.1 acceleration+1 counters=foul,referee
+singles: placement=target placement_range=40 event_target=character stakes=6 field_radius=10 field_duration=1 accuracy+0.05 counters=foul,referee
+playoff: placement=target placement_range=50 event_target=character stakes=18 field_radius=16 field_duration=2 courage+2 morale+2 counters=foul,referee
+rematch: placement=target placement_range=50 event_target=character stakes=12 field_radius=12 field_duration=2 courage+2 inflict_rage+2 counters=foul,referee
+semifinal: placement=target placement_range=50 event_target=character stakes=15 field_radius=14 field_duration=2 courage+1 morale+1 counters=foul,referee
+quarterfinal: placement=target placement_range=50 event_target=character stakes=12 field_radius=14 field_duration=2 morale+1 counters=foul,referee
+prelim: placement=target placement_range=30 event_target=character stakes=3 field_radius=10 field_duration=1 training+1 counters=foul,referee
+tourney: placement=self field_radius=50 field_targets=owned field_duration=4 training+2 courage+2 morale+2 counters=foul
+athletics: placement=self field_radius=30 field_targets=owned field_duration=3 speed_land*1.2 jump*1.3 strength+1 agility+1 morale+1
+gymnastics: placement=self field_radius=20 field_targets=owned field_duration=3 agility+3 evasion+0.15 jump*1.5 climb+3
+decathlon: placement=self field_radius=30 field_targets=owned field_duration=5 speed_land*1.2 strength+2 jump*1.3 training+2 accuracy+0.1 morale+2
+pentathlon: placement=self field_radius=30 field_targets=owned field_duration=4 speed_land*1.15 strength+1 training+2 accuracy+0.1 speed_water*1.15
+hurdles: placement=target placement_range=40 event_target=character stakes=8 race_to=110 field_duration=1 jump+1.5 speed_land*1.1 counters=foul,referee
+steeplechase: placement=target placement_range=40 event_target=character stakes=15 race_to=600 field_duration=4 jump+2 speed_land*1.1 counters=foul,referee
+slalom: placement=target placement_range=40 event_target=character stakes=10 race_to=300 field_duration=2 agility+3 speed_land*1.2 counters=foul,referee
+ironman: placement=target placement_range=40 event_target=character stakes=25 race_to=800 field_duration=8 speed_land*1.1 speed_water*1.2 courage+3 counters=foul
+freestyle: placement=target placement_range=40 event_target=character stakes=8 race_to=200 field_duration=2 speed_water*1.4 speed_land*1.1 counters=foul,referee
+doubleheader: placement=target placement_range=40 event_target=character stakes=14 field_radius=18 field_duration=3 morale+1 training+1 counters=foul,referee
+dogfight: placement=target placement_range=100 event_target=character stakes=15 field_radius=40 field_duration=2 speed_air*1.3 agility+2 accuracy+0.1 counters=foul,referee
+diving: placement=target placement_range=40 event_target=character stakes=6 field_radius=10 field_duration=1 dive_depth+15 jump+3 agility+1 counters=foul,referee
+soccer: placement=target placement_range=50 event_target=character stakes=10 field_radius=20 field_duration=2 speed_land*1.15 knockback+1 dmg_blunt+6 counters=foul,referee
+tennis: placement=target placement_range=40 event_target=character stakes=8 field_radius=12 field_duration=2 attack_range+10 accuracy+0.1 agility+1 counters=foul,referee,umpire
+golf: placement=target placement_range=60 event_target=character stakes=10 field_radius=40 field_duration=3 accuracy+0.2 attack_range*1.5 dmg_blunt+8 counters=foul,referee
+hockey: placement=target placement_range=40 event_target=character stakes=10 field_radius=16 field_duration=2 speed_land*1.25 dmg_blunt+10 knockback+2 counters=foul,referee
+rugby: placement=target placement_range=40 event_target=character stakes=12 field_radius=18 field_duration=2 dmg_blunt+12 knockback+3 courage+2 counters=foul,referee
+ballgame: placement=target placement_range=40 event_target=character stakes=8 field_radius=18 field_duration=2 dmg_blunt+6 attack_range+10 morale+1 counters=foul,umpire
+javelin: placement=target placement_range=60 event_target=character stakes=10 field_radius=30 field_duration=1 dmg_pierce+25 attack_range+40 accuracy+0.1 counters=foul,referee
+discus: placement=target placement_range=60 event_target=character stakes=8 field_radius=25 field_duration=1 dmg_blunt+20 attack_range+30 knockback+2 counters=foul,referee
+
+# noun act
+boxing: placement=target placement_range=30 event_target=character stakes=10 field_radius=6 field_duration=1 dmg_blunt+15 inflict_stun+1 strength+1 counters=foul,referee
+wrestling: placement=target placement_range=30 event_target=character stakes=10 field_radius=6 field_duration=1 inflict_root+2 strength+2 knockback+2 counters=foul,referee
+fencing: placement=target placement_range=30 event_target=character stakes=8 field_radius=8 field_duration=1 dmg_pierce+20 agility+2 accuracy+0.1 counters=foul,referee
+archery: placement=target placement_range=60 event_target=character stakes=8 field_radius=30 field_duration=2 accuracy+0.2 dmg_pierce+12 attack_range*1.5 counters=foul,referee
+polo: placement=target placement_range=60 event_target=character stakes=12 field_radius=30 field_duration=2 speed_land*1.3 dmg_blunt+8 counters=foul,referee
+bowling: placement=target placement_range=40 event_target=character stakes=6 field_radius=14 field_duration=1 dmg_blunt+12 knockback+4 counters=foul
+bowls: placement=target placement_range=40 event_target=character stakes=5 field_radius=16 field_duration=2 accuracy+0.15 dmg_blunt+6 counters=foul
+skittles: placement=target placement_range=40 event_target=character stakes=4 field_radius=10 field_duration=1 dmg_blunt+8 knockback+3 counters=foul
+skiing: placement=target placement_range=40 event_target=character stakes=10 race_to=400 field_duration=3 speed_land*1.3 agility+1 counters=foul
+surfing: placement=target placement_range=40 event_target=character stakes=10 race_to=300 field_duration=3 speed_water*1.6 agility+2 counters=foul
+cycling: placement=target placement_range=40 event_target=character stakes=12 race_to=600 field_duration=3 speed_land*1.3 counters=foul
+bicycling: placement=target placement_range=40 event_target=character stakes=10 race_to=500 field_duration=3 speed_land*1.25 counters=foul
+motorcycling: placement=target placement_range=40 event_target=character stakes=15 race_to=800 field_duration=3 speed_land*1.5 loudness+3 counters=foul
+rowing: placement=target placement_range=60 event_target=character stakes=12 race_to=400 field_duration=4 speed_water*1.3 strength+1 counters=foul
+skating: placement=target placement_range=40 event_target=character stakes=8 race_to=300 field_duration=2 speed_land*1.25 agility+1 counters=foul
+skateboarding: placement=target placement_range=40 event_target=character stakes=8 race_to=200 field_duration=2 speed_land*1.2 jump+1 agility+2 counters=foul
+sledding: placement=target placement_range=40 event_target=character stakes=6 race_to=300 field_duration=2 speed_land*1.3 counters=foul
+curling: placement=target placement_range=40 event_target=character stakes=6 field_radius=20 field_duration=2 accuracy+0.15 slipperiness+2 counters=foul
+darts: placement=target placement_range=30 event_target=character stakes=4 field_radius=12 field_duration=1 accuracy+0.2 dmg_pierce+5 counters=foul
+billiards: placement=target placement_range=30 event_target=character stakes=5 field_radius=8 field_duration=2 accuracy+0.15 critical+0.1 counters=foul
+snooker: placement=target placement_range=30 event_target=character stakes=6 field_radius=8 field_duration=2 accuracy+0.15 critical+0.1 intelligence+1 counters=foul
+lacrosse: placement=target placement_range=40 event_target=character stakes=10 field_radius=20 field_duration=2 dmg_blunt+8 attack_range+15 speed_land*1.1 counters=foul,referee
+hurling: placement=target placement_range=40 event_target=character stakes=12 field_radius=20 field_duration=2 dmg_blunt+12 attack_range+15 courage+1 counters=foul,referee
+badminton: placement=target placement_range=30 event_target=character stakes=5 field_radius=10 field_duration=1 agility+2 accuracy+0.05 counters=foul,umpire
+netball: placement=target placement_range=30 event_target=character stakes=6 field_radius=14 field_duration=2 accuracy+0.1 agility+1 counters=foul,umpire
+croquet: placement=target placement_range=30 event_target=character stakes=5 field_radius=14 field_duration=2 dmg_blunt+6 knockback+2 counters=foul
+rounders: placement=target placement_range=30 event_target=character stakes=6 field_radius=16 field_duration=2 dmg_blunt+6 speed_land*1.1 counters=foul
+horseshoes: placement=target placement_range=30 event_target=character stakes=4 field_radius=14 field_duration=1 dmg_blunt+5 accuracy+0.1 luck+1 counters=foul
+sumo: placement=target placement_range=30 event_target=character stakes=12 field_radius=5 field_duration=1 knockback+6 strength+2 mass*1.2 counters=foul,referee
+judo: placement=target placement_range=30 event_target=character stakes=8 field_radius=6 field_duration=1 knockback+4 inflict_stun+1 agility+1 counters=foul,referee
+karate: placement=target placement_range=30 event_target=character stakes=8 field_radius=6 field_duration=1 dmg_blunt+15 critical+0.1 counters=foul,referee
+taekwondo: placement=target placement_range=30 event_target=character stakes=8 field_radius=6 field_duration=1 dmg_blunt+15 knockback+3 agility+1 counters=foul,referee
+jiujitsu: placement=target placement_range=30 event_target=character stakes=8 field_radius=6 field_duration=1 inflict_root+3 inflict_stun+1 counters=foul,referee
+grappling: placement=target placement_range=20 event_target=character stakes=6 field_radius=6 field_duration=1 inflict_root+2 strength+1 counters=foul,referee
+tussle: placement=target placement_range=20 event_target=character stakes=3 field_radius=6 field_duration=1 dmg_blunt+4 counters=foul,referee
+scuffle: placement=target placement_range=20 event_target=character stakes=2 field_radius=6 field_duration=1 dmg_blunt+3 knockback+1 counters=foul,referee
+shootout: placement=target placement_range=60 event_target=character stakes=15 field_radius=25 field_duration=1 accuracy+0.15 critical+0.2 counters=foul,referee
+gunfight: placement=target placement_range=60 event_target=character stakes=15 field_radius=25 field_duration=1 dmg_pierce+15 accuracy+0.1 courage+2 counters=foul
+chess: placement=target placement_range=40 event_target=character stakes=15 field_radius=8 field_duration=3 intelligence+3 accuracy+0.1 attack_rate*0.5 counters=foul,referee
+checkers: placement=target placement_range=40 event_target=character stakes=8 field_radius=8 field_duration=2 intelligence+1 accuracy+0.05 counters=foul
+draughts: placement=target placement_range=40 event_target=character stakes=8 field_radius=8 field_duration=2 intelligence+1 accuracy+0.05 counters=foul
+backgammon: placement=target placement_range=40 event_target=character stakes=10 field_radius=8 field_duration=2 luck+2 intelligence+1 counters=foul
+mahjong: placement=target placement_range=40 event_target=character stakes=12 field_radius=8 field_duration=2 luck+2 intelligence+1 counters=foul
+dominoes: placement=target placement_range=40 event_target=character stakes=6 field_radius=8 field_duration=2 luck+1 intelligence+1 counters=foul
+dominos: placement=target placement_range=40 event_target=character stakes=6 field_radius=8 field_duration=2 luck+1 intelligence+1 counters=foul
+ludo: placement=target placement_range=40 event_target=character stakes=5 field_radius=8 field_duration=2 luck+2 counters=foul
+nim: placement=target placement_range=30 event_target=character stakes=4 field_radius=6 field_duration=1 intelligence+2 counters=foul
+charades: placement=target placement_range=30 event_target=character stakes=4 field_radius=8 field_duration=1 charm+2 inflict_silence+2 counters=foul
+whist: placement=target placement_range=30 event_target=character stakes=6 field_radius=8 field_duration=2 intelligence+1 luck+1 counters=foul
+craps: placement=target placement_range=40 event_target=character stakes=15 field_radius=8 field_duration=1 luck+2 counters=foul
+baccarat: placement=target placement_range=40 event_target=character stakes=20 field_radius=8 field_duration=1 luck+2 charm+1 counters=foul
+faro: placement=target placement_range=40 event_target=character stakes=12 field_radius=8 field_duration=1 luck+2 counters=foul
+gambling: placement=target placement_range=50 event_target=character stakes=20 field_radius=10 field_duration=1 luck+-1 counters=foul
+parlay: placement=target placement_range=60 event_target=character stakes=20 field_radius=12 field_duration=2 luck+-2 critical+0.1 counters=foul
+doubles: placement=target placement_range=40 event_target=character stakes=8 field_radius=14 field_duration=2 accuracy+0.05 morale+1 counters=foul,referee,umpire
+rivalry: placement=target placement_range=60 event_target=character stakes=15 field_radius=16 field_duration=3 aggression+2 courage+2 inflict_rage+2 counters=foul,referee,mediator
+brawl: placement=target placement_range=30 field_radius=15 field_targets=all field_duration=1 sets_hostile=true dmg_blunt+10 aggression+4 counters=referee,peacekeeper
+bullfighting: placement=target placement_range=40 field_radius=15 field_targets=all field_duration=2 summons=bull summon_count=1 courage+3 agility+2 counters=foul
+leapfrog: placement=self field_radius=10 field_targets=owned field_duration=1 jump*2 speed_land*1.1 morale+1
+hopscotch: placement=self field_radius=4 field_targets=self field_duration=1 jump+2 agility+1 morale+1
+acrobatics: placement=self field_radius=4 field_targets=self field_duration=2 agility+3 evasion+0.2 jump*2 climb+3
+tumbling: placement=self field_radius=4 field_targets=self field_duration=1 agility+2 evasion+0.15 jump+2
+aquatics: placement=self field_radius=30 field_targets=owned field_duration=3 speed_water*1.4 dive_depth*1.5
+dressage: placement=self field_radius=30 field_targets=owned field_duration=3 obedience+3 agility+2 beauty+1
+
+# noun exchange
+bingo: placement=self field_radius=4 field_targets=self field_duration=1 luck+4 lode=b,i,n,g,o lode_share=0.3 lode_stock=5 morale+1
+lotto: placement=self field_radius=4 field_targets=self field_duration=1 luck+5 lode=z,q,x,j lode_share=0.25 lode_stock=2
+raffle: placement=self field_radius=4 field_targets=self field_duration=1 luck+4 lode=k,v,w,y lode_share=0.3 lode_stock=2
+sweepstakes: placement=self field_radius=4 field_targets=self field_duration=1 luck+6 lode=z,q,x,j lode_share=0.35 lode_stock=3
+keno: placement=self field_radius=4 field_targets=self field_duration=1 luck+3 lode=k,x lode_share=0.25 lode_stock=2
+ante: placement=target placement_range=40 event_target=character stakes=3 field_radius=10 field_duration=1 luck+1 counters=foul,referee
+stakes: placement=target placement_range=60 event_target=character stakes=15 field_radius=12 field_duration=2 courage+1 counters=foul,referee
+canfield: placement=self field_radius=4 field_targets=self field_duration=2 luck+2 intelligence+1
+klondike: placement=self field_radius=4 field_targets=self field_duration=2 luck+2 intelligence+1
+
+# noun act
+checkmate: placement=target placement_range=40 event_target=character inflict_root=6 inflict_silence=6 event_duration=1 morale+-3 counters=king,chess,queen
+stalemate: placement=self field_radius=20 field_targets=all field_duration=1 inflict_truce=20 counters=duel,wager,bet,gamble,race,bout,joust,marathon,sprint,sparring,chess,contest,competition
+disqualification: placement=target placement_range=60 event_target=character inflict_silence=6 inflict_expose=30 event_duration=1 morale+-3 counters=duel,wager,bet,race,bout,joust,cheat,doping,marathon,sprint,tournament,championship
+ejection: placement=target placement_range=40 event_target=character moves_target=-40 inflict_silence=5 event_duration=1 counters=cheat,foul,brawl
+offside: placement=target placement_range=40 event_target=character inflict_root=5 event_duration=1 counters=soccer,hockey,rugby
+fumble: placement=target placement_range=40 event_target=character inflict_confuse=4 accuracy+-0.3 event_duration=1
+handicap: placement=target placement_range=60 field_radius=4 field_targets=enemies field_duration=3 speed_land*0.8 accuracy+-0.1 luck+-2
+huddle: placement=self field_radius=10 field_targets=owned field_duration=1 courage+2 morale+2 armor+5 intelligence+1
+scrimmage: placement=target placement_range=30 event_target=character stakes=2 field_radius=12 field_duration=1 training+2
+sportsmanship: placement=self field_radius=30 field_targets=all field_duration=2 effect_status=rage aggression+-3 morale+2 reputation+3 counters=cheat,foul,taunt,provocation
+fairness: placement=self field_radius=30 field_targets=all field_duration=2 luck*0 accuracy+0.05 counters=cheat,handicap,bribe
+streak: placement=self field_radius=4 field_targets=self field_duration=3 luck+3 critical+0.15 morale+3 courage+2 counters=jinx
+touchdown: placement=self field_radius=20 field_targets=owned field_duration=1 morale+4 courage+2 loudness+5
+homer: placement=self field_radius=20 field_targets=owned field_duration=1 morale+3 critical+0.1 loudness+4
+
+# noun attack
+knockout: placement=target placement_range=2 event_target=character dmg_blunt=50 inflict_stun=4 inflict_sleep=6 contest_with=strength contested_by=integrity event_duration=1
+uppercut: placement=target placement_range=2 event_target=character dmg_blunt=35 knockback=3 inflict_stun=3 event_duration=1
+jab: placement=target placement_range=2 event_target=character dmg_blunt=12 inflict_stun=1 attack_rate=3 event_duration=1
+dunk: placement=target placement_range=3 event_target=character dmg_blunt=25 inflict_stun=2 morale+2 event_duration=1
+smash: placement=target placement_range=10 event_target=character dmg_blunt=30 knockback=4 inflict_stun=2 event_duration=1
+volley: placement=target placement_range=60 event_target=character dmg_blunt=15 multi_target=3 attack_range=60 event_duration=1
+lob: placement=target placement_range=60 event_target=character dmg_blunt=10 attack_area=3 targets=land,air event_duration=1
+
+# noun toy
+puck: mass=0.17 length=0.08 integrity=40 hardness=6 shape=flat material=rubber equip_slot=held hands_required=1 dmg_blunt=12 attack_rate=1 attack_range=30 knockback=2 slipperiness=4 color=black
+marbles: mass=0.005 integrity=10 hardness=7 shape=round material=glass plural_count=20 slipperiness=7 dmg_blunt=2 attack_range=10 beauty=5
+jacks: mass=0.005 integrity=8 material=steel plural_count=10 sharpness=2 dmg_pierce=2 trigger_radius=1 stealth=4 inflict_slow=3
+skittle: mass=1.5 length=0.4 integrity=30 material=wood plural_count=9 dmg_blunt=8 attack_range=15 knockback=1
+dart: mass=0.02 length=0.15 integrity=8 sharpness=7 material=steel equip_slot=held hands_required=1 dmg_pierce=6 attack_rate=1.5 attack_range=10 accuracy=0.95 plural_count=3
+joker: mass=0.002 integrity=1 material=paper shape=sheet copies=true luck+2 color=purple
+volleyball: mass=0.27 length=0.21 integrity=20 elasticity=10 shape=round material=leather equip_slot=held hands_required=1 dmg_blunt=6 attack_range=30 knockback=2 targets=land,air morale+1 color=white
+softball: mass=0.19 length=0.1 integrity=30 elasticity=5 shape=round material=leather equip_slot=held hands_required=1 dmg_blunt=8 attack_range=40 inflict_stun=1 color=yellow
+handball: mass=0.45 length=0.19 integrity=25 elasticity=8 shape=round material=leather equip_slot=held hands_required=1 dmg_blunt=7 attack_range=30 knockback=2 color=white
+racquetball: mass=0.04 length=0.06 integrity=10 elasticity=10 shape=round material=rubber equip_slot=held hands_required=1 dmg_blunt=4 attack_rate=2 attack_range=25 color=blue
+paintball: mass=0.003 integrity=1 material=gelatin plural_count=20 dmg_blunt=3 inflict_blind=2 attack_range=40 single_use=true inflict_expose=10 color=red
+pinata: mass=2 integrity=15 material=paper shape=hollow letter_refund=2 morale+2 beauty=6 color=pink
+pinball: mass=100 integrity=200 material=steel,glass portable=false luminosity=4 loudness=4 luck+1 morale+2
+
+# noun weapon
+epee: mass=0.77 length=1.1 integrity=60 sharpness=4 material=steel equip_slot=held hands_required=1 dmg_pierce=25 attack_rate=1.6 attack_range=1.3 accuracy=0.95 agility+1
+rapier: mass=1.1 length=1.1 integrity=80 sharpness=7 material=steel equip_slot=held hands_required=1 dmg_pierce=38 attack_rate=1.4 attack_range=1.3 critical=0.1
+saber: mass=0.9 length=0.95 integrity=90 sharpness=8 material=steel equip_slot=held hands_required=1 dmg_slash=42 attack_rate=1.2 attack_range=1.2
+sabre: mass=0.9 length=0.95 integrity=90 sharpness=8 material=steel equip_slot=held hands_required=1 dmg_slash=42 attack_rate=1.2 attack_range=1.2
+longbow: mass=1.2 length=1.9 integrity=60 material=wood equip_slot=held hands_required=2 dmg_pierce=45 attack_rate=0.5 attack_range=200 ammo_type=arrow ammo_per_hit=1
+caber: mass=80 length=6 integrity=300 material=wood shape=long equip_slot=held hands_required=2 dmg_crush=45 attack_rate=0.2 attack_range=4 knockback=5 strength+1
+
+# noun tool
+dumbbell: mass=10 length=0.4 integrity=200 material=steel equip_slot=held hands_required=1 dmg_blunt=18 attack_rate=0.6 strength+1 training+1
+barbell: mass=20 length=2.2 integrity=400 material=steel equip_slot=held hands_required=2 dmg_blunt=30 attack_rate=0.4 knockback=2 strength+2 speed_land*0.8
+dartboard: mass=3 integrity=30 material=cork portable=true field_radius=10 field_targets=owned accuracy+0.1 morale+1
+streamer: mass=0.05 integrity=1 material=paper plural_count=10 morale+1 beauty=5 color=red
+
+# noun artifact
+pennant: mass=0.3 length=1 integrity=10 material=cloth shape=sheet equip_slot=held hands_required=1 field_radius=20 field_targets=owned morale+2 courage+1 color=red
+scoreboard: mass=2000 height=8 integrity=600 material=steel,glass portable=false luminosity=5 read_properties=4 field_radius=60 field_targets=owned morale+1 accuracy+0.05
+hoop: mass=15 height=3 integrity=200 material=steel portable=false field_radius=20 field_targets=owned accuracy+0.1 jump+1 morale+1
+goalpost: mass=150 height=2.4 integrity=600 material=steel portable=false plural_count=2 field_radius=20 field_targets=owned accuracy+0.1 morale+1
+trampoline: mass=80 footprint=2 integrity=150 elasticity=10 material=steel,cloth portable=false field_radius=3 field_targets=all jump*4 evasion+0.1
+hurdle: mass=10 height=1 integrity=50 material=wood,steel portable=false plural_count=5 blocks=land movement_cost=2
+
+# noun vehicle_land
+skateboard: mass=3 length=0.8 integrity=40 material=wood seats=1 mountable=true speed_land=7 acceleration=6 agility=7 jump=1 terrain_ignored=road
+toboggan: mass=8 length=2 integrity=60 material=wood seats=3 mountable=true speed_land=12 agility=2 terrain_ignored=snow
+
+# noun vehicle_water
+surfboard: mass=6 length=2.2 integrity=40 material=foam buoyancy=7 seats=1 mountable=true speed_water=8 agility=6 color=white
+
+# noun clothing
+skate: plural_count=2 mass=1.5 integrity=40 material=leather,steel equip_slot=feet speed_land*1.5 agility+1 terrain_ignored=snow
+
+# noun medicine
+steroid: mass=0.01 edible=true potency=7 strength+3 training+1 aggression+2 integrity*1.1 duration=600 single_use=true counters=fatigue
+
+# noun worker
+ref: mass=75 integrity=100 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=6 authority=6 peace=120 detect_stealth=6 counters=cheat,foul,brawl food_need=0.03
+ump: mass=75 integrity=100 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 authority=5 peace=90 detect_stealth=5 counters=cheat,foul food_need=0.03
+linesman: mass=75 integrity=100 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=7 peace=60 detect_stealth=4 counters=offside,foul food_need=0.03
+arbitrator: mass=70 integrity=80 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=3 authority=5 peace=150 charm=5 counters=feud,duel,rivalry,wager,dispute food_need=0.03
+arbiter: mass=75 integrity=90 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=3 authority=6 peace=150 detect_stealth=5 counters=cheat,foul,duel,wager food_need=0.03
+bookmaker: mass=80 integrity=90 alive=true sentient=true intelligence=7 loyalty=3 hands=true speech=true speed_land=4 trade_bonus=0.15 field_radius=20 field_targets=enemies luck+-1 food_need=0.03
+bookie: mass=80 integrity=90 alive=true sentient=true intelligence=6 loyalty=3 hands=true speech=true speed_land=4 luck=3 trade_bonus=0.15 intimidation=3 food_need=0.03
+croupier: mass=70 integrity=80 alive=true sentient=true intelligence=7 loyalty=4 hands=true speech=true speed_land=4 field_radius=15 field_targets=all luck+-1 trade_bonus=0.1 detect_stealth=4 counters=cheat food_need=0.03
+cheerleader: mass=55 integrity=90 alive=true sentient=true intelligence=5 loyalty=8 hands=true speech=true speed_land=6 agility=7 jump=2 loudness=5 field_radius=30 field_targets=owned morale+3 courage+2 food_need=0.03
+mascot: mass=80 integrity=100 alive=true sentient=true intelligence=4 loyalty=9 hands=true speed_land=5 charm=6 field_radius=30 field_targets=owned morale+2 luck+1 food_need=0.03
+golfer: mass=80 integrity=100 alive=true sentient=true intelligence=6 loyalty=5 hands=true speech=true speed_land=4 accuracy=0.97 dmg_blunt=15 attack_rate=0.5 attack_range=60 trade_bonus=0.05 food_need=0.03
+swimmer: mass=75 integrity=110 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=5 speed_water=2.4 dive_depth=10 strength=6 agility=6 food_need=0.05
+sprinter: mass=75 integrity=110 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=11 acceleration=9 agility=7 strength=6 food_need=0.05
+gymnast: mass=55 integrity=110 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=7 agility=10 climb=6 jump=2.5 evasion=0.25 food_need=0.04
+skier: mass=75 integrity=110 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=6 agility=7 terrain_ignored=snow temp_min=-30 food_need=0.05
+skater: mass=65 integrity=100 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=9 agility=8 evasion=0.15 food_need=0.04
+skateboarder: mass=65 integrity=100 alive=true sentient=true intelligence=5 loyalty=5 hands=true speech=true speed_land=8 agility=8 jump=1.5 food_need=0.04
+diver: mass=70 integrity=100 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 speed_water=2 dive_depth=40 jump=2 food_need=0.04
+acrobat: mass=60 integrity=100 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=7 agility=10 climb=8 jump=3 evasion=0.3 food_need=0.04
+tumbler: mass=60 integrity=100 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=6 agility=9 jump=2 evasion=0.2 food_need=0.04
+weightlifter: mass=110 integrity=160 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 strength=10 carry_capacity=250 dmg_blunt=25 attack_rate=0.6 food_need=0.07
+lifter: mass=95 integrity=140 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 strength=9 carry_capacity=200 food_need=0.06
+mountaineer: mass=75 integrity=130 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 climb=8 temp_min=-30 terrain_ignored=mountain,snow courage=8 food_need=0.05
+
+# noun fighter
+quarterback: mass=95 integrity=180 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=7 strength=7 training=3 dmg_blunt=20 attack_rate=0.8 attack_range=50 accuracy=0.95 command_limit=10 food_need=0.05
+striker: mass=75 integrity=130 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=9 agility=8 training=3 dmg_blunt=25 attack_rate=1 attack_range=30 critical=0.2 food_need=0.05
+goalkeeper: mass=85 integrity=160 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=6 agility=8 block=0.5 jump=2 evasion=0.1 food_need=0.05
+goalie: mass=85 integrity=160 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=6 agility=8 block=0.5 jump=2 armor=8 food_need=0.05
+goaltender: mass=90 integrity=170 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=6 agility=7 block=0.55 armor=12 food_need=0.05
+catcher: mass=90 integrity=160 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=4 block=0.4 armor=10 res_blunt=0.3 food_need=0.05
+linebacker: mass=110 integrity=220 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=7 strength=9 training=3 dmg_blunt=30 attack_rate=0.8 knockback=4 inflict_stun=2 armor=10 food_need=0.06
+lineman: mass=130 integrity=240 alive=true sentient=true intelligence=4 loyalty=7 hands=true speech=true speed_land=5 strength=10 dmg_blunt=25 knockback=3 armor=12 block=0.3 food_need=0.07
+blocker: mass=115 integrity=220 alive=true sentient=true intelligence=4 loyalty=7 hands=true speech=true speed_land=5 strength=9 block=0.4 armor=10 knockback=3 food_need=0.06
+cornerback: mass=85 integrity=150 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=10 agility=9 evasion=0.15 dmg_blunt=15 food_need=0.05
+fullback: mass=105 integrity=200 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=7 strength=8 dmg_blunt=25 knockback=3 food_need=0.06
+halfback: mass=90 integrity=170 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=9 agility=8 evasion=0.15 food_need=0.05
+rusher: mass=95 integrity=170 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=9 strength=8 dmg_blunt=20 knockback=3 food_need=0.05
+boxer: mass=85 integrity=200 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=6 strength=8 training=5 agility=7 dmg_blunt=30 attack_rate=1.5 inflict_stun=1 food_need=0.05
+slugger: mass=95 integrity=170 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=5 strength=9 dmg_blunt=30 attack_rate=0.8 knockback=4 critical=0.2 food_need=0.05
+hitter: mass=90 integrity=160 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=5 strength=8 dmg_blunt=25 attack_rate=0.8 critical=0.15 food_need=0.05
+batsman: mass=85 integrity=150 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=5 strength=7 dmg_blunt=22 attack_rate=0.8 block=0.3 food_need=0.05
+bowman: mass=75 integrity=120 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=5 training=5 dmg_pierce=40 attack_rate=0.6 attack_range=150 accuracy=0.95 ammo_type=arrow food_need=0.04
+sharpshooter: mass=75 integrity=110 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=5 training=6 dmg_pierce=50 attack_rate=0.5 attack_range=300 accuracy=0.99 critical=0.3 stealth=3 food_need=0.04
+grandmaster: mass=70 integrity=90 alive=true sentient=true intelligence=10 loyalty=6 hands=true speech=true speed_land=3 command_limit=16 authority=5 field_radius=30 field_targets=owned accuracy+0.1 training+1 food_need=0.03
+pawn: mass=70 integrity=70 alive=true sentient=true intelligence=3 loyalty=8 obedience=9 hands=true speech=true speed_land=4 dmg_slash=15 attack_rate=0.8 plural_count=8 food_need=0.03
+victor: mass=80 integrity=200 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=6 strength=8 courage=9 training=5 dmg_slash=45 attack_rate=1 morale+3 reputation=5 food_need=0.04
+champ: mass=90 integrity=280 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=7 strength=9 training=6 courage=9 dmg_blunt=45 attack_rate=1.3 morale+3 food_need=0.04
+
+# noun person
+opponent: mass=75 integrity=100 alive=true sentient=true intelligence=6 loyalty=3 hands=true speech=true speed_land=6 aggression=6 strength=6 training=2 dmg_blunt=12 attack_rate=1 food_need=0.03
+rival: mass=75 integrity=110 alive=true sentient=true intelligence=6 loyalty=2 hands=true speech=true speed_land=6 aggression=7 courage=7 strength=6 training=3 dmg_blunt=15 attack_rate=1 inflict_rage=2 food_need=0.03
+contender: mass=80 integrity=150 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=6 strength=7 training=4 courage=8 dmg_blunt=25 attack_rate=1 food_need=0.04
+challenger: mass=80 integrity=140 alive=true sentient=true intelligence=6 loyalty=5 hands=true speech=true speed_land=6 strength=7 training=3 courage=9 aggression=5 dmg_blunt=22 attack_rate=1 inflict_rage=2 food_need=0.04
+competitor: mass=75 integrity=120 alive=true sentient=true intelligence=6 loyalty=5 hands=true speech=true speed_land=7 strength=6 training=3 agility=6 food_need=0.04
+contestant: mass=75 integrity=100 alive=true sentient=true intelligence=6 loyalty=5 hands=true speech=true speed_land=5 luck=2 charm=3 food_need=0.03
+finalist: mass=75 integrity=140 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=7 strength=7 training=5 courage=8 food_need=0.04
+semifinalist: mass=75 integrity=130 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=7 strength=7 training=4 food_need=0.04
+qualifier: mass=75 integrity=120 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=6 strength=6 training=3 food_need=0.04
+participant: mass=75 integrity=100 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=5 training=1 food_need=0.03
+underdog: mass=65 integrity=90 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=6 courage=9 luck=4 critical=0.2 food_need=0.03
+loser: mass=75 integrity=70 alive=true sentient=true intelligence=4 loyalty=4 hands=true speech=true speed_land=4 courage=3 luck=-3 morale=2 food_need=0.03
+rookie: mass=70 integrity=90 alive=true sentient=true intelligence=4 loyalty=7 hands=true speech=true speed_land=6 training=1 trainable=8 courage=6 food_need=0.04
+teammate: mass=75 integrity=110 alive=true sentient=true intelligence=6 loyalty=9 hands=true speech=true speed_land=6 strength=6 training=2 field_radius=10 field_targets=owned morale+1 food_need=0.04
+spectator: mass=75 integrity=80 alive=true sentient=true intelligence=5 loyalty=5 hands=true speech=true speed_land=4 sight_range=40 loudness=3 food_need=0.03
+sportsman: mass=80 integrity=120 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=6 strength=7 training=3 reputation=3 courage=7 food_need=0.04
+footballer: mass=78 integrity=130 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=9 agility=7 strength=7 dmg_blunt=20 attack_range=30 knockback=2 food_need=0.05
+cricketer: mass=80 integrity=120 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=6 strength=6 dmg_blunt=18 attack_range=20 accuracy=0.95 food_need=0.04
+fielder: mass=80 integrity=120 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=8 agility=7 block=0.2 dmg_blunt=12 attack_range=40 food_need=0.04
+outfielder: mass=85 integrity=120 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=9 agility=7 sight_range=40 dmg_blunt=14 attack_range=60 food_need=0.04
+infielder: mass=85 integrity=120 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=7 agility=8 block=0.3 dmg_blunt=12 attack_range=30 food_need=0.04
+shortstop: mass=80 integrity=120 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=8 agility=9 block=0.3 evasion=0.1 food_need=0.04
+pitcher: mass=90 integrity=130 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=5 strength=7 dmg_blunt=22 attack_rate=0.6 attack_range=40 accuracy=0.95 inflict_stun=1 food_need=0.04
+kicker: mass=85 integrity=120 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=6 strength=7 dmg_blunt=25 attack_range=50 knockback=4 accuracy=0.93 food_need=0.04
+punter: mass=85 integrity=120 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=6 strength=7 dmg_blunt=20 attack_range=60 knockback=3 luck=1 food_need=0.04
+winger: mass=75 integrity=120 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=10 agility=8 evasion=0.1 food_need=0.05
+flanker: mass=95 integrity=170 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=8 strength=8 dmg_blunt=20 knockback=3 food_need=0.05
+playmaker: mass=75 integrity=120 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=7 agility=7 command_limit=6 field_radius=20 field_targets=owned accuracy+0.1 morale+1 food_need=0.04
+scorer: mass=78 integrity=130 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=8 agility=7 critical=0.25 accuracy=0.95 dmg_blunt=20 food_need=0.04
+medalist: mass=72 integrity=140 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=8 strength=7 training=5 agility=7 reputation=4 charm=4 food_need=0.04
+medallist: mass=72 integrity=140 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=8 strength=7 training=5 agility=7 reputation=4 charm=4 food_need=0.04
+jock: mass=85 integrity=140 alive=true sentient=true intelligence=4 loyalty=6 hands=true speech=true speed_land=7 strength=8 aggression=4 dmg_blunt=18 attack_rate=1 food_need=0.05
+southpaw: mass=80 integrity=150 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=6 strength=7 training=4 dmg_blunt=28 attack_rate=1.3 critical=0.15 evasion=0.1 food_need=0.04
+fencer: mass=75 integrity=120 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=7 agility=9 training=5 dmg_pierce=30 attack_rate=1.5 block=0.3 food_need=0.04
+luger: mass=80 integrity=110 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=6 courage=8 terrain_ignored=snow food_need=0.04
+
+# noun building
+racetrack: mass=500000 footprint=60 integrity=20000 material=dirt portable=false tile_type=road radius=12 claim_radius=10 field_radius=60 field_targets=owned speed_land*1.3 acceleration+1
+tiltyard: mass=200000 footprint=30 height=3 integrity=10000 material=wood,dirt portable=false claim_radius=8 field_radius=30 field_targets=owned dmg_pierce+10 courage+2 training+1
+playground: mass=20000 footprint=12 height=3 integrity=3000 material=wood,steel portable=false claim_radius=6 comfort=3 field_radius=20 field_targets=all law=attack agility+1 morale+2
+ballpark: mass=40000000 footprint=120 height=30 integrity=200000 material=concrete,steel,grass portable=false enterable=true occupants=40000 claim_radius=20 loudness=9 luminosity=6 field_radius=60 field_targets=owned morale+3 training+1 accuracy+0.05
+coliseum: mass=20000000 footprint=40 height=48 integrity=250000 material=stone portable=false enterable=true occupants=50000 claim_radius=20 loudness=8 field_radius=60 field_targets=owned courage+4 training+2 strength+1 morale+2
+amphitheatre: mass=8000000 footprint=30 height=20 integrity=120000 material=stone portable=false enterable=true occupants=8000 claim_radius=12 field_radius=40 field_targets=owned morale+2 charm+2 courage+1
+amphitheater: mass=8000000 footprint=30 height=20 integrity=120000 material=stone portable=false enterable=true occupants=8000 claim_radius=12 field_radius=40 field_targets=owned morale+2 charm+2 courage+1
+raceway: mass=400000 footprint=50 integrity=15000 material=asphalt portable=false tile_type=road radius=10 claim_radius=8 field_radius=50 field_targets=owned speed_land*1.3
+
+# noun artifact
+prize: mass=2 integrity=50 material=gold portable=true value=5000 beauty=8 reputation=4 field_radius=20 field_targets=owned morale+3 courage+2
+award: mass=1 integrity=40 material=gold portable=true value=1000 beauty=6 reputation=3 field_radius=15 field_targets=owned morale+2 courage+1
+ribbon: mass=0.02 integrity=3 material=silk equip_slot=neck value=20 morale+1 courage+1 charm+1 beauty=5 color=blue
+
+# noun person
+winner: mass=75 integrity=140 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=7 courage=9 strength=7 training=4 luck=3 critical=0.2 charm=6 reputation=5 field_radius=15 field_targets=owned morale+2 food_need=0.03
+
+# verb social
+compete: effect_target=self duration=60 training+2 courage+2 accuracy+0.1 speed_land*1.1
+disqualify: effect_target=touched duration=30 accuracy+-0.3 luck+-3 morale+-2 counters=cheat,duel,wager,race,bout,marathon,sprint,doping
+adjudicate: effect_target=self duration=30 authority+3 detect_stealth+3 peace+60 counters=cheat,foul
+
+# verb combat
+tackle: duration=2 dmg_blunt+30 knockback+5 inflict_stun+2 speed_land*2
+wrestle: duration=10 inflict_root+3 strength+2 knockback+2
+dribble: duration=20 agility+3 evasion+0.2 speed_land*1.2
+equalize: duration=30 luck*0 armor+5 accuracy+0.05 counters=handicap,streak
+
+
+# adjective quality
+athletic: speed_land*1.25 strength+2 agility+2 jump*1.3
+victorious: morale+4 courage+3 critical+0.15 reputation+3
+undefeated: morale+3 courage+3 luck+3 evasion+0.1 reputation+2
+unfair: luck+3 accuracy+0.1 reputation+-3 charm+-2
+competitive: training+2 aggression+2 accuracy+0.05 speed_land*1.1
+sportsmanlike: reputation+3 charm+2 aggression+-2 morale+1
+triumphant: morale+5 courage+4 loudness+2 charm+2
+defeated: morale+-4 courage+-3 speed_land*0.8 attack_rate*0.8
