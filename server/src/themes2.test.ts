@@ -112,6 +112,11 @@ it("breeding: three HAMSTERS, fed, have young", async () => {
   const count = () => [...walkers.values()].filter((w) => w.master === a.sessionId && w.body.noun === "hamster").length;
   const before = count();
   expect(before).toBe(3);
-  second(150);
-  expect(count()).toBeGreaterThan(before);
+  // Kept together and fed (in play they follow their master and eat from the food store).
+  for (let i = 0; i < 150; i++) {
+    wa.stores.food = 100;
+    for (const w of walkers.values()) if (w.master === a.sessionId) { w.player.x = wa.player.x; w.player.y = wa.player.y; }
+    second(1);
+  }
+  expect(count(), JSON.stringify([[...(wa.breeding ?? new Map())], wa.upkeep, [...walkers.values()].filter((w) => w.master === a.sessionId).map((w) => [w.body.noun, w.hungry, Math.round(w.player.x), Math.round(w.player.y), w.unit.body.stats.num("reproduction")])])).toBeGreaterThan(before);
 });

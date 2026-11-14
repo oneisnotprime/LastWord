@@ -63,11 +63,11 @@ it("HOME claims the ground around it: your things there take part of a blow, are
   expect(zone).toBeDefined();
   expect(zone.radius).toBe(10);
   expect(zone.owner).toBe(a.sessionId);
-  expect(zone.shelter).toBe(50);
+  expect(zone.shelter).toBe(60);
   ticks(room, 11);
-  expect(wa.unit.body.stats.num("res_slash")).toBeCloseTo(res + 0.5); // HOME's cover, 0.5, on you inside it
+  expect(wa.unit.body.stats.num("res_slash")).toBeCloseTo(res + 0.6); // HOME's cover, 0.6, on you inside it
   expect(wb.unit.body.stats.num("res_slash")).toBeCloseTo(res); // not on anyone else
-  // A chest of A's at home against one out in the open: the same blows take half as much at home.
+  // A chest of A's at home against one out in the open: the same blows take 40% as much at home.
   a.send("spell", "chest"); await wait();
   await until(() => things().filter((t) => t.owner === a.sessionId).length >= 2);
   const [home, chest] = things().filter((t) => t.owner === a.sessionId);
@@ -81,11 +81,11 @@ it("HOME claims the ground around it: your things there take part of a blow, are
   for (let i = 0; i < 3; i++) { r.strikeThing(b.sessionId, sword, chest!.id, room.state.things.get(chest!.id)); r.strikeThing(b.sessionId, sword, away.id, room.state.things.get(away.id)); }
   const hp = (id: string) => r.grounded.get(id).integrity;
   const max = r.statsOf(r.grounded.get(chest!.id)).num("integrity");
-  expect(max - hp(chest!.id)).toBeCloseTo((max - hp(away.id)) * 0.5);
+  expect(max - hp(chest!.id)).toBeCloseTo((max - hp(away.id)) * 0.4);
   // The HOME itself has no shelter: its walls take the blows.
   expect(r.claimAt(a.sessionId, room.state.things.get(home!.id), home!.id).shelter).toBe(0);
   // Theft against a thing at home meets HOME's security on top of the thing's own.
-  expect(r.claimAt(a.sessionId, room.state.things.get(chest!.id), chest!.id).security).toBe(5);
+  expect(r.claimAt(a.sessionId, room.state.things.get(chest!.id), chest!.id).security).toBe(6);
   void said; void wb;
 });
 

@@ -173,12 +173,12 @@ export function chooseWord(list: readonly BotWord[] | undefined, have: Uint8Arra
   ok: (w: BotWord) => boolean = () => true): BotWord | null {
   if (!list) return null;
   if (difficulty === "easy") {
-    const can = list.filter((w) => ok(w) && affords(have, w));
+    const can = list.filter((w) => affords(have, w) && ok(w));
     return can.length ? can[Math.floor(rng() * can.length)]! : null;
   }
   const top: BotWord[] = [];
   for (const w of list) {
-    if (!ok(w) || !affords(have, w)) continue;
+    if (!affords(have, w) || !ok(w)) continue; // the cheap test first
     if (difficulty === "hard") return w;
     if (top.push(w) === 3) break;
   }

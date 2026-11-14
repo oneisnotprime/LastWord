@@ -345,6 +345,8 @@ const thingKey = (x: number, y: number) => Math.floor(x / THING_CELL) * 4096 + M
 /** What a bot remembers between thoughts. */
 interface BotMind {
   difficulty: Difficulty;
+  /** The words of each use its letters afford, kept until its letters change (the book holds thousands). */
+  affordable?: { key: string; byUse: Map<Use, BotWord[]> };
   /** Spreads bots' thinking over the ticks. */
   phase: number;
   /** Gathers left before it moves on. */
@@ -1559,8 +1561,12 @@ export class WorldRoom extends Room {
   private botWord(id: string, w: Walker, mind: BotMind, have: Uint8Array, armed: boolean, mine: number, peaceful: boolean): BotWord | null {
     const book = wordBook(this.dict);
     const ok = (x: BotWord) => !mind.tried.has(x.word);
+    const key = have.join(",");
+    if (mind.affordable?.key !== key) mind.affordable = { key, byUse: new Map() };
+    const cache = mind.affordable.byUse;
+    const listOf = (use: Use) => cache.get(use) ?? cache.set(use, (book.byUse.get(use) ?? []).filter((x) => affords(have, x))).get(use)!;
     const choose = (use: Use, also: (x: BotWord) => boolean = () => true) =>
-      chooseWord(book.byUse.get(use), have, mind.difficulty, this.rng, (x) => ok(x) && also(x));
+      chooseWord(listOf(use), have, mind.difficulty, this.rng, (x) => ok(x) && also(x));
     if (mind.difficulty === "hard") {
       for (const a of this.areas.values()) {
         if (a.owner === id || Math.hypot(a.x - w.player.x, a.y - w.player.y) > a.radius + 3) continue;
@@ -1575,10 +1581,12 @@ export class WorldRoom extends Room {
     // A producer it can run where it stands: furniture inside its own claim, a watermill by water,
     // a machine with fuel or power to hand, a crop where land can be tilled.
     const claimed = [...this.areas.values()].some((a) => a.claim && a.owner === id && Math.hypot(a.x - w.player.x, a.y - w.player.y) <= a.radius);
+    // Where it stands, worked out once (not once a candidate word: the book holds hundreds of producers).
+    let flow: boolean | undefined, soil: boolean | undefined;
     const runs = (x: BotWord) => (x.needs ?? []).every((n) =>
-      n === "claim" ? claimed : n === "flow" ? waterNear(this.map, w.player.x, w.player.y, 2)
+      n === "claim" ? claimed : n === "flow" ? (flow ??= waterNear(this.map, w.player.x, w.player.y, 2))
       : n === "fuel" || n === "power" ? w.stores[n] > 1 || !mind.producers
-      : n === "tilled" ? SOIL.includes(tileAt(this.map, w.player.x, w.player.y)) : true);
+      : n === "tilled" ? (soil ??= SOIL.includes(tileAt(this.map, w.player.x, w.player.y))) : true);
     const build = mind.producers < (peaceful ? 6 : 3) ? () => choose("producer", runs) : () => null;
     // Once it has a home, it claims the ground around it (L), if it holds none there yet.
     const homeClaimed = mind.home && [...this.areas.values()].some((a) => a.claim && a.owner === id && Math.hypot(a.x - mind.home!.x, a.y - mind.home!.y) <= a.radius);
@@ -2082,12 +2090,13 @@ export class WorldRoom extends Room {
     if (hadEyes !== JSON.stringify(eyes)) this.toTell.add(id); // the minimap comes or goes
     const { morale, regeneration } = homeComfort(comfort);
     const ops: Op[] = [...(morale > 0 ? [["morale", "add", morale] as Op] : []), ...(regeneration > 0 ? [["regeneration", "add", regeneration] as Op] : [])];
-    const word = `home ${morale}/${regeneration}`;
+    const key = `${morale}/${regeneration}`;
     for (const [wid, o] of this.walkers) {
       if (wid !== id && o.master !== id) continue;
-      const home = ops.length && inside(o.player) ? { word, set: {}, ops, until: Infinity } : null;
-      if ((home?.word ?? "") === (o.home?.word ?? "")) continue;
+      const home = ops.length && inside(o.player) ? { word: "home", set: {}, ops, until: Infinity, key } : null;
+      if ((home?.key ?? "") === ((o.home as { key?: string } | null | undefined)?.key ?? "")) continue;
       o.home = home;
+      o.fieldKey = undefined; // its comfort changed: work its fields out again
       this.fieldsDirty = true;
     }
   }
