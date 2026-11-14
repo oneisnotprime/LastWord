@@ -1,0 +1,536 @@
+# noun feeling
+fun: field_radius=30 field_targets=owned field_duration=2 morale+4 labor*1.15 speed_land*1.1 counters=boredom,tedium,ennui
+wish: field_radius=5 field_targets=self field_duration=2 morale+3 courage+2 critical+0.1 duplicates=1 counters=despair,hopelessness
+interest: field_radius=20 field_targets=owned field_duration=2 sight_range*1.2 detect_stealth+2 training+1 counters=boredom,apathy,indifference
+hate: field_radius=30 field_targets=owned field_duration=2 aggression+7 strength*1.25 attack_rate*1.2 dmg_dark*1.3 charm+-4 immune_charm=true loyalty+2 counters=love,adoration,affection,compassion
+pain: placement=target placement_range=60 field_radius=15 field_targets=enemies field_duration=1 dmg_psychic=40 inflict_stun=2 morale+-4 accuracy+-0.2 speed_land*0.7 counters=relief,comfort,solace
+respect: field_radius=30 field_targets=owned field_duration=3 obedience+4 loyalty+3 authority+2 morale+2 counters=contempt,scorn,disdain
+focus: field_radius=5 field_targets=self field_duration=2 accuracy+0.25 critical+0.15 immune_confuse=true sight_range*1.3 counters=distraction,confusion,daze
+wonder: placement=target placement_range=60 field_radius=25 field_targets=living field_duration=1 inflict_stun=2 aggression+-4 morale+2 counters=boredom,cynicism
+doubt: placement=target placement_range=60 field_radius=25 field_targets=enemies field_duration=2 courage+-4 accuracy+-0.15 obedience+-3 morale+-2 counters=faith,confidence,trust,certainty
+worry: placement=target placement_range=60 field_radius=25 field_targets=enemies field_duration=2 morale+-3 courage+-2 sleep_need*1.5 regeneration*0.7 counters=calm,relief,confidence
+faith: field_radius=40 field_targets=owned field_duration=3 courage+6 morale+5 immune_fear=true res_unholy+0.4 res_psychic+0.3 counters=doubt,despair,cynicism
+spirit: field_radius=40 field_targets=owned field_duration=2 morale+6 courage+4 speed_land*1.15 regeneration+1 counters=despair,gloom,apathy
+violence: field_radius=30 field_targets=all field_duration=2 aggression+8 strength*1.3 attack_rate*1.3 inflict_rage=6 sets_hostile=true counters=peace,calm,mercy
+feelings: field_radius=20 field_targets=living field_duration=2 morale+2 charm+2 aggression+-2 counters=apathy,indifference
+concern: field_radius=25 field_targets=owned field_duration=2 alarm=true sight_range*1.2 heals=1 morale+-1
+confidence: field_radius=30 field_targets=owned field_duration=3 courage+6 morale+4 accuracy+0.15 critical+0.1 immune_fear=true counters=doubt,insecurity,shyness,fear
+pleasure: field_radius=30 field_targets=owned field_duration=2 morale+5 regeneration+2 aggression+-2 labor*0.9 counters=pain,misery,agony
+relief: field_radius=40 field_targets=owned field_duration=1 effect_status=fear,confuse,stun morale+5 regeneration+3 restores=50 counters=worry,anxiety,dread,pain,distress
+approval: field_radius=30 field_targets=owned field_duration=2 morale+3 loyalty+3 obedience+2 training+1 counters=disapproval,scorn,contempt
+anxiety: placement=target placement_range=80 field_radius=30 field_targets=enemies field_duration=3 morale+-4 courage+-4 accuracy+-0.2 sleep_need*2 counters=calm,relief,serenity,confidence
+mood: field_radius=20 field_targets=all field_duration=2 morale+-1 aggression+2 obedience+-1
+horror: placement=target placement_range=100 field_radius=35 field_targets=enemies field_duration=1 inflict_fear=14 inflict_stun=2 morale+-8 courage+-7 dmg_psychic=20 counters=courage,bravery,faith
+anger: field_radius=25 field_targets=owned field_duration=2 aggression+5 attack_rate*1.25 strength*1.15 accuracy+-0.1 obedience+-2 counters=calm,serenity,patience,forgiveness
+comfort: field_radius=30 field_targets=owned field_duration=3 morale+4 regeneration+3 effect_status=fear comfort+3 counters=grief,sorrow,distress,pain
+inspiration: field_radius=40 field_targets=owned field_duration=3 morale+5 courage+4 training+2 labor*1.3 build_speed*1.3 counters=despair,apathy,boredom
+regret: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=2 morale+-4 aggression+-3 attack_rate*0.8 counters=pride,triumph
+humanity: field_radius=40 field_targets=all field_duration=3 aggression+-5 heals=2 charm+2 morale+2 counters=cruelty,sadism,malice,bloodlust
+romance: placement=target placement_range=40 field_radius=12 field_targets=living field_duration=2 inflict_charm=8 charm+4 aggression+-4 morale+3 counters=hate,cynicism,contempt
+favour: field_radius=20 field_targets=owned field_duration=2 loyalty+3 charm+3 trade_bonus+0.1 morale+2
+offense: placement=target placement_range=60 field_radius=15 field_targets=enemies field_duration=1 inflict_rage=6 aggression+3 loyalty+-2 counters=forgiveness,apology
+panic: placement=target placement_range=100 field_radius=35 field_targets=enemies field_duration=1 inflict_fear=10 inflict_confuse=6 obedience+-6 accuracy+-0.4 speed_land*1.3 counters=calm,composure,serenity,courage
+mercy: field_radius=40 field_targets=all field_duration=2 effect_status=rage aggression+-7 heals=3 morale+2 counters=cruelty,wrath,ruthlessness,sadism,bloodlust
+motivation: field_radius=30 field_targets=owned field_duration=3 labor*1.4 morale+4 speed_land*1.1 build_speed*1.2 counters=apathy,boredom,fatigue
+unity: field_radius=50 field_targets=owned field_duration=3 loyalty+6 obedience+4 morale+4 immune_charm=true command_limit+5 counters=discord,envy,alienation,antagonism
+caring: field_radius=25 field_targets=owned field_duration=3 heals=3 regeneration+1 morale+2 loyalty+2 counters=cruelty,indifference
+patience: field_radius=10 field_targets=self field_duration=3 accuracy+0.2 critical+0.1 immune_rage=true aggression+-3 attack_rate*0.8 counters=impatience,rage,anger
+emotion: field_radius=20 field_targets=living field_duration=1 morale+2 aggression+2 accuracy+-0.05 counters=apathy,indifference
+excitement: field_radius=30 field_targets=owned field_duration=2 morale+4 speed_land*1.25 attack_rate*1.15 accuracy+-0.1 sleep_need*0.5 counters=boredom,tedium,ennui
+satisfaction: field_radius=30 field_targets=owned field_duration=3 morale+4 regeneration+1 food_need*0.8 aggression+-2 counters=dissatisfaction,frustration,discontent
+torture: placement=target placement_range=20 field_radius=5 field_targets=enemies field_duration=1 dmg_psychic=80 inflict_stun=4 morale+-9 loyalty+-5 obedience+-3 counters=mercy,compassion
+addiction: placement=target placement_range=40 field_radius=10 field_targets=enemies field_duration=3 obedience+-4 loyalty+-4 food_need*1.5 labor*0.5 morale+-3 counters=willpower,sobriety
+urge: field_radius=10 field_targets=self field_duration=1 speed_land*1.3 aggression+3 attack_rate*1.2 accuracy+-0.1
+scare: placement=target placement_range=60 field_radius=15 field_targets=enemies field_duration=1 inflict_fear=6 morale+-3 counters=courage,bravery
+tolerance: field_radius=30 field_targets=all field_duration=3 aggression+-3 res_poison+0.3 res_psychic+0.3 immune_rage=true counters=intolerance,hatred,bigotry
+belonging: field_radius=40 field_targets=owned field_duration=3 loyalty+5 morale+4 immune_charm=true comfort+2 counters=alienation,isolation,loneliness,estrangement
+ruth: field_radius=30 field_targets=all field_duration=2 aggression+-5 heals=2 effect_status=rage counters=cruelty,ruthlessness
+sentiment: field_radius=20 field_targets=living field_duration=2 morale+2 charm+2 loyalty+1
+dignity: field_radius=20 field_targets=owned field_duration=3 morale+4 courage+3 immune_charm=true authority+2 counters=humiliation,shame,embarrassment
+ego: field_radius=5 field_targets=self field_duration=3 morale+5 courage+3 authority+2 charm+-2 immune_charm=true counters=humility,humiliation
+enthusiasm: field_radius=35 field_targets=owned field_duration=3 morale+5 labor*1.3 speed_land*1.15 build_speed*1.2 counters=apathy,boredom,ennui,indifference
+isolation: placement=target placement_range=80 field_radius=25 field_targets=enemies field_duration=3 morale+-5 loyalty+-3 command_limit*0 hearing_range*0.5 counters=belonging,togetherness,unity
+resignation: placement=target placement_range=60 field_radius=25 field_targets=enemies field_duration=2 morale+-5 aggression+-6 attack_rate*0.6 courage+-3 counters=hope,defiance,zeal
+disappointment: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=2 morale+-4 labor*0.7 counters=satisfaction,triumph,delight
+harassment: placement=target placement_range=40 field_radius=10 field_targets=enemies field_duration=2 morale+-3 inflict_confuse=3 labor*0.6 accuracy+-0.1 counters=law,protection
+sympathy: field_radius=30 field_targets=living field_duration=2 aggression+-4 heals=2 morale+2 charm+2 counters=cruelty,contempt,indifference
+liking: placement=target placement_range=30 field_radius=10 field_targets=living field_duration=1 inflict_charm=4 loyalty+1 aggression+-2
+pity: placement=target placement_range=40 field_radius=20 field_targets=living field_duration=2 aggression+-5 effect_status=rage heals=1 counters=contempt,cruelty
+delight: field_radius=40 field_targets=owned field_duration=2 morale+6 regeneration+2 speed_land*1.15 luminosity+1 counters=disappointment,misery,gloom
+frustration: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=2 accuracy+-0.2 aggression+3 labor*0.6 obedience+-2 counters=satisfaction,patience
+suspicion: field_radius=30 field_targets=owned field_duration=3 detect_stealth+4 loyalty+3 immune_charm=true trade_bonus+-0.1 counters=trust,disguise,charm
+triumph: field_radius=60 field_targets=owned field_duration=2 morale+9 courage+5 authority+3 regeneration+2 immune_fear=true counters=defeat,despair,humiliation
+compassion: field_radius=40 field_targets=all field_duration=3 heals=3 aggression+-6 effect_status=rage,fear morale+3 counters=cruelty,hatred,malice,sadism
+distress: placement=target placement_range=60 field_radius=25 field_targets=enemies field_duration=2 morale+-5 accuracy+-0.15 regeneration*0.6 counters=relief,comfort,solace
+affection: placement=target placement_range=30 field_radius=15 field_targets=living field_duration=2 inflict_charm=5 loyalty+3 aggression+-4 morale+2 counters=hate,hatred,contempt,animosity
+gratitude: field_radius=30 field_targets=owned field_duration=3 loyalty+5 obedience+3 morale+3 trade_bonus+0.1 counters=resentment,envy
+ambition: field_radius=10 field_targets=self field_duration=3 labor*1.4 authority+3 command_limit+5 morale+3 loyalty+-2 counters=complacency,apathy,resignation
+aggression: field_radius=25 field_targets=owned field_duration=2 aggression+8 attack_rate*1.3 speed_land*1.15 armor+-5 counters=calm,pacify,serenity
+esteem: field_radius=30 field_targets=owned field_duration=3 morale+4 courage+3 authority+1 obedience+2
+dislike: placement=target placement_range=40 field_radius=10 field_targets=enemies field_duration=2 loyalty+-2 charm+-2 aggression+2 counters=liking,affection
+attachment: field_radius=20 field_targets=owned field_duration=3 loyalty+6 immune_charm=true morale+1 counters=detachment,indifference
+sadness: placement=target placement_range=60 field_radius=30 field_targets=enemies field_duration=2 morale+-5 speed_land*0.85 aggression+-2 counters=happiness,joy,cheer
+appetite: field_radius=10 field_targets=self field_duration=3 food_need*2 regeneration+2 strength*1.1 aggression+2 counters=nausea,disgust
+forgiveness: field_radius=40 field_targets=all field_duration=2 effect_status=rage aggression+-6 loyalty+3 morale+2 counters=grudge,resentment,vengeance,spite,rancor
+fatigue: placement=target placement_range=80 field_radius=30 field_targets=enemies field_duration=3 speed_land*0.6 attack_rate*0.7 sleep_need*2 inflict_sleep=4 labor*0.5 counters=enthusiasm,zest,vigor
+outrage: field_radius=40 field_targets=all field_duration=2 inflict_rage=10 aggression+6 obedience+-4 loudness+5 counters=calm,composure,serenity
+humour: field_radius=30 field_targets=all field_duration=2 morale+4 aggression+-3 effect_status=fear charm+2 counters=gloom,seriousness,solemnity
+willingness: field_radius=20 field_targets=owned field_duration=3 obedience+5 labor*1.2 loyalty+1 counters=reluctance,unwillingness
+enjoyment: field_radius=30 field_targets=owned field_duration=3 morale+5 regeneration+1 labor*1.1 counters=boredom,misery
+warmth: field_radius=25 field_targets=living field_duration=3 morale+4 temperature_delta=5 temp_min+-5 charm+3 aggression+-3 counters=coldness,coolness,indifference
+encouragement: field_radius=40 field_targets=owned field_duration=2 morale+5 courage+5 training+1 counters=discouragement,despair,doubt
+oppression: placement=target placement_range=100 field_radius=50 field_targets=enemies field_duration=3 morale+-5 obedience+4 speed_land*0.8 labor*1.2 courage+-3 counters=rebellion,defiance,unity
+embarrassment: placement=target placement_range=40 field_radius=15 field_targets=enemies field_duration=1 inflict_stun=2 charm+-4 authority+-3 morale+-3 counters=confidence,pride,ego
+cruelty: field_radius=20 field_targets=owned field_duration=2 aggression+7 strength*1.2 critical+0.15 charm+-5 fear_aura+4 counters=mercy,compassion,kindness
+amusement: field_radius=30 field_targets=all field_duration=2 morale+4 aggression+-3 accuracy+-0.05 counters=boredom,gloom
+anticipation: field_radius=30 field_targets=owned field_duration=2 attack_windup*0.5 speed_land*1.15 alarm=true detect_stealth+2 morale+2
+contempt: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=2 morale+-4 charm+-4 authority+-2 loyalty+-2 counters=respect,admiration,awe
+vanity: field_radius=5 field_targets=self field_duration=3 beauty+3 charm+3 morale+3 sight_range*0.8 detect_stealth+-2 counters=humility,shame,humiliation
+yen: field_radius=10 field_targets=self field_duration=2 speed_land*1.15 morale+2 aggression+1
+empathy: field_radius=40 field_targets=living field_duration=3 aggression+-5 read_properties+3 heals=1 charm+3 counters=cruelty,apathy,indifference
+impulse: field_radius=10 field_targets=self field_duration=1 attack_windup*0 speed_land*1.4 accuracy+-0.15 attack_rate*1.3
+lust: placement=target placement_range=40 field_radius=15 field_targets=living field_duration=2 inflict_charm=8 aggression+3 obedience+-3 charm+3 counters=disgust,chastity
+temptation: placement=target placement_range=50 field_radius=15 field_targets=enemies field_duration=2 loyalty+-6 obedience+-4 inflict_charm=5 counters=faith,devotion,willpower
+thrill: field_radius=25 field_targets=owned field_duration=1 speed_land*1.4 courage+5 morale+4 accuracy+-0.1 counters=boredom,tedium
+relaxation: field_radius=30 field_targets=all field_duration=3 effect_status=rage,fear aggression+-5 regeneration+3 attack_rate*0.7 counters=stress,anxiety,tension
+enlightenment: field_radius=30 field_targets=owned field_duration=3 intelligence+4 training+2 immune_confuse=true detect_stealth+3 res_psychic+0.5 counters=ignorance,confusion,madness
+goodwill: field_radius=50 field_targets=all field_duration=3 aggression+-4 charm+3 trade_bonus+0.15 morale+2 counters=hostility,malice,animosity
+morale: field_radius=40 field_targets=owned field_duration=3 morale+6 courage+3 counters=despair,discouragement
+optimism: field_radius=40 field_targets=owned field_duration=3 morale+5 courage+3 regeneration+1 immune_fear=true counters=pessimism,despair,cynicism,gloom
+discomfort: placement=target placement_range=40 field_radius=15 field_targets=enemies field_duration=2 morale+-2 regeneration*0.6 accuracy+-0.1 comfort+-3
+loneliness: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=3 morale+-5 loyalty+-3 regeneration*0.7 counters=togetherness,belonging,friendliness,love
+intimacy: placement=target placement_range=20 field_radius=5 field_targets=living field_duration=2 inflict_charm=10 loyalty+4 aggression+-5 counters=alienation,estrangement
+nostalgia: field_radius=30 field_targets=all field_duration=2 morale+2 speed_land*0.8 aggression+-3 regeneration+1 counters=anticipation,ambition
+hostility: field_radius=30 field_targets=all field_duration=2 aggression+6 sets_hostile=true charm+-3 counters=goodwill,friendliness,amity,peace
+resentment: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=3 loyalty+-5 obedience+-4 labor*0.6 aggression+2 counters=gratitude,forgiveness
+unrest: placement=target placement_range=150 field_radius=60 field_targets=enemies field_duration=3 obedience+-5 loyalty+-4 labor*0.5 aggression+3 tax_rate*0 counters=peace,order,calm
+agony: placement=target placement_range=60 field_radius=10 field_targets=enemies field_duration=1 dmg_psychic=70 inflict_stun=3 morale+-7 attack_rate*0.5 counters=relief,alleviation,solace
+admiration: field_radius=30 field_targets=all field_duration=2 charm+4 loyalty+3 obedience+2 aggression+-3 counters=contempt,disdain,scorn
+bravery: field_radius=40 field_targets=owned field_duration=3 courage+8 morale+4 immune_fear=true strength*1.1 counters=fear,terror,cowardice,dread,fright
+compatibility: field_radius=20 field_targets=owned field_duration=3 loyalty+3 labor*1.2 morale+2
+humility: field_radius=10 field_targets=self field_duration=3 charm+3 loyalty+2 authority+-1 immune_rage=true counters=pride,vanity,ego,conceit,arrogance
+readiness: field_radius=20 field_targets=owned field_duration=2 attack_windup*0.3 alarm=true evasion+0.15 accuracy+0.05
+craving: field_radius=10 field_targets=self field_duration=2 food_need*2 aggression+3 speed_land*1.15 obedience+-2
+insecurity: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=2 courage+-5 accuracy+-0.15 authority+-2 counters=confidence,ego,pride
+seriousness: field_radius=20 field_targets=owned field_duration=3 accuracy+0.1 immune_charm=true obedience+3 charm+-1 counters=levity,humour,hilarity
+hesitation: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=1 attack_windup+2 attack_rate*0.6 speed_land*0.7 counters=confidence,impulse,resolve
+humiliation: placement=target placement_range=40 field_radius=15 field_targets=enemies field_duration=2 morale+-7 authority+-4 charm+-4 command_limit*0.5 counters=dignity,pride,triumph
+consolation: field_radius=30 field_targets=owned field_duration=2 morale+4 regeneration+2 effect_status=fear counters=grief,sorrow,disappointment
+intuition: field_radius=5 field_targets=self field_duration=3 detect_stealth+5 evasion+0.2 alarm=true read_properties+2
+nausea: placement=target placement_range=40 field_radius=15 field_targets=enemies field_duration=1 inflict_sick=10 inflict_stun=1 food_need*0 accuracy+-0.2 counters=appetite
+suspense: placement=target placement_range=60 field_radius=30 field_targets=all field_duration=2 courage+-2 alarm=true attack_windup+1 hearing_range*1.5
+turmoil: placement=target placement_range=100 field_radius=35 field_targets=enemies field_duration=2 inflict_confuse=8 obedience+-4 accuracy+-0.2 morale+-3 counters=calm,serenity,composure,equanimity
+longing: field_radius=20 field_targets=all field_duration=2 morale+-2 speed_land*1.1 loyalty+2
+expectancy: field_radius=20 field_targets=owned field_duration=2 alarm=true attack_windup*0.5 detect_stealth+2
+glee: field_radius=40 field_targets=owned field_duration=2 morale+6 speed_land*1.2 attack_rate*1.1 loudness+2 counters=gloom,misery,sadness
+remorse: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=2 aggression+-6 attack_rate*0.6 morale+-4 counters=pride,spite,malice
+disposition: field_radius=10 field_targets=self field_duration=3 morale+2 charm+1
+ecstasy: field_radius=30 field_targets=owned field_duration=2 morale+10 immune_fear=true regeneration+3 accuracy+-0.2 obedience+-2 counters=despair,agony,misery
+fascination: placement=target placement_range=60 field_radius=20 field_targets=living field_duration=1 inflict_charm=4 inflict_stun=2 speed_land*0.5 counters=boredom,indifference
+boredom: placement=target placement_range=80 field_radius=30 field_targets=enemies field_duration=3 morale+-3 labor*0.5 aggression+-3 speed_land*0.8 inflict_sleep=3 counters=fun,excitement,thrill,interest
+detachment: field_radius=10 field_targets=self field_duration=3 immune_charm=true immune_fear=true immune_rage=true charm+-3 morale+-1 counters=attachment,love,passion
+intolerance: field_radius=30 field_targets=owned field_duration=2 aggression+5 charm+-4 immune_charm=true counters=tolerance,empathy
+bitterness: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=3 morale+-3 loyalty+-3 aggression+2 charm+-3 counters=forgiveness,sweetness,joy
+fulfillment: field_radius=30 field_targets=owned field_duration=3 morale+6 regeneration+2 food_need*0.7 immune_fear=true counters=emptiness,longing,dissatisfaction
+irritation: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=2 aggression+3 accuracy+-0.15 obedience+-2 inflict_rage=2 counters=calm,patience,relaxation
+reluctance: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=2 obedience+-4 speed_land*0.8 labor*0.6 attack_windup+1 counters=willingness,eagerness,zeal
+heartbreak: placement=target placement_range=60 field_radius=20 field_targets=living field_duration=3 effect_status=charm morale+-8 speed_land*0.7 regeneration*0.5 dmg_psychic=20 counters=love,romance,consolation
+intimidation: placement=target placement_range=40 field_radius=25 field_targets=enemies field_duration=2 inflict_fear=5 morale+-4 courage+-3 intimidation+5 counters=courage,bravery,defiance
+creeps: placement=target placement_range=60 field_radius=25 field_targets=enemies field_duration=2 courage+-4 morale+-2 inflict_fear=3 stealth+-2 counters=courage,cheer
+anguish: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=2 dmg_psychic=40 morale+-7 attack_rate*0.6 counters=solace,relief,comfort
+discontent: placement=target placement_range=100 field_radius=40 field_targets=enemies field_duration=3 loyalty+-4 obedience+-3 labor*0.7 counters=contentment,satisfaction
+nirvana: field_radius=40 field_targets=all field_duration=3 immune_fear=true immune_rage=true immune_charm=true aggression+-10 regeneration+5 morale+8 res_psychic=ABS counters=rage,madness,agony
+felicity: field_radius=30 field_targets=owned field_duration=3 morale+5 regeneration+1 charm+2
+itch: placement=target placement_range=30 field_radius=8 field_targets=enemies field_duration=1 accuracy+-0.2 inflict_confuse=2 attack_rate*0.8
+temperament: field_radius=10 field_targets=self field_duration=3 aggression+2 courage+2
+torment: placement=target placement_range=60 field_radius=15 field_targets=enemies field_duration=3 dmg_psychic=15 morale+-6 sleep_need*2 regeneration*0.3 counters=relief,peace,solace
+devastation: placement=target placement_range=100 field_radius=40 field_targets=enemies field_duration=2 morale+-10 courage+-6 attack_rate*0.5 labor*0.3 counters=hope,triumph
+indifference: field_radius=10 field_targets=self field_duration=3 immune_charm=true immune_fear=true immune_rage=true aggression+-3 charm+-2 counters=passion,love,empathy,interest
+malice: field_radius=20 field_targets=owned field_duration=2 aggression+6 critical+0.2 dmg_dark*1.3 charm+-4 counters=kindness,goodwill,mercy,benevolence
+sincerity: field_radius=20 field_targets=all field_duration=2 charm+4 loyalty+3 disguise*0 counters=deceit,lie,disguise
+annoyance: placement=target placement_range=40 field_radius=15 field_targets=enemies field_duration=1 aggression+2 accuracy+-0.1 inflict_rage=2 counters=patience,calm
+disdain: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=2 charm+-4 morale+-3 authority+-2 counters=admiration,respect,reverence
+grudge: field_radius=10 field_targets=self field_duration=3 aggression+5 tracking+5 critical+0.15 loyalty+2 counters=forgiveness
+dissatisfaction: placement=target placement_range=60 field_radius=25 field_targets=enemies field_duration=3 loyalty+-3 labor*0.7 morale+-2 counters=satisfaction,fulfillment
+woe: placement=target placement_range=60 field_radius=30 field_targets=enemies field_duration=2 morale+-6 speed_land*0.8 luminosity+-1 counters=joy,mirth,cheer
+aspiration: field_radius=20 field_targets=owned field_duration=3 morale+3 training+2 labor*1.2
+fright: placement=target placement_range=50 field_radius=15 field_targets=enemies field_duration=1 inflict_fear=8 inflict_stun=1 morale+-3 counters=courage,bravery
+disapproval: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=2 morale+-3 charm+-3 obedience+-1 counters=approval,admiration
+solace: field_radius=30 field_targets=owned field_duration=3 morale+4 regeneration+3 effect_status=fear comfort+2 counters=grief,anguish,heartbreak,woe
+whim: field_radius=10 field_targets=self field_duration=1 speed_land*1.2 agility+3 obedience+-3 accuracy+-0.05
+zeal: field_radius=40 field_targets=owned field_duration=3 courage+7 morale+5 immune_fear=true attack_rate*1.2 labor*1.3 obedience+2 counters=apathy,indifference,doubt
+angst: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=3 morale+-4 courage+-3 sleep_need*1.5 counters=serenity,optimism
+apathy: placement=target placement_range=80 field_radius=40 field_targets=enemies field_duration=3 aggression+-6 morale+-3 labor*0.4 obedience+-4 attack_rate*0.6 counters=passion,zeal,enthusiasm,interest
+dismay: placement=target placement_range=60 field_radius=25 field_targets=enemies field_duration=1 morale+-5 courage+-4 inflict_stun=1 counters=hope,cheer
+aversion: placement=target placement_range=40 field_radius=15 field_targets=enemies field_duration=2 inflict_fear=3 speed_land*1.1 charm+-3 aggression+-2
+tickle: placement=target placement_range=20 field_radius=5 field_targets=living field_duration=1 inflict_stun=3 accuracy+-0.3 morale+2 aggression+-3
+yearning: field_radius=20 field_targets=all field_duration=2 morale+-1 speed_land*1.15 loyalty+2 aggression+-1
+ire: field_radius=20 field_targets=owned field_duration=2 aggression+5 attack_rate*1.2 strength*1.15 obedience+-2 counters=calm,patience
+reverence: field_radius=40 field_targets=all field_duration=3 aggression+-5 obedience+4 loyalty+3 res_unholy+0.3 counters=contempt,scorn,irreverence
+heartache: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=3 morale+-5 regeneration*0.6 speed_land*0.85 counters=solace,consolation,love
+misogyny: field_radius=20 field_targets=owned field_duration=2 charm+-6 loyalty+-2 reputation=-5 aggression+2 counters=respect,empathy
+sensibility: field_radius=10 field_targets=self field_duration=3 detect_stealth+3 hearing_range*1.5 charm+2
+agitation: placement=target placement_range=60 field_radius=25 field_targets=enemies field_duration=2 accuracy+-0.15 aggression+3 sleep_need*0.5 obedience+-2 counters=calm,serenity,composure
+indulgence: field_radius=20 field_targets=owned field_duration=2 morale+4 food_need*1.5 speed_land*0.85 regeneration+1
+repentance: field_radius=10 field_targets=self field_duration=3 effect_status=rage aggression+-5 res_holy+0.4 loyalty+3 counters=sin,pride
+zest: field_radius=30 field_targets=owned field_duration=2 morale+5 speed_land*1.2 labor*1.2 counters=fatigue,boredom,ennui,apathy
+composure: field_radius=10 field_targets=self field_duration=3 immune_fear=true immune_confuse=true immune_rage=true accuracy+0.15 counters=panic,hysteria,agitation,turmoil
+animosity: field_radius=30 field_targets=all field_duration=2 aggression+5 sets_hostile=true loyalty+-2 counters=amity,goodwill,friendliness
+alienation: placement=target placement_range=80 field_radius=25 field_targets=enemies field_duration=3 loyalty+-6 obedience+-4 command_limit*0.5 morale+-3 counters=belonging,togetherness,unity
+loathing: placement=target placement_range=40 field_radius=15 field_targets=enemies field_duration=2 inflict_fear=4 charm+-6 aggression+4 counters=love,adoration,fondness
+grievance: field_radius=20 field_targets=owned field_duration=2 aggression+3 loyalty+-2 obedience+-2 counters=forgiveness,apology
+unhappiness: placement=target placement_range=60 field_radius=30 field_targets=enemies field_duration=3 morale+-5 labor*0.7 regeneration*0.7 counters=happiness,joy,delight
+closeness: field_radius=10 field_targets=owned field_duration=3 loyalty+5 morale+3 regeneration+1 immune_charm=true counters=estrangement,distance,alienation
+displeasure: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=2 morale+-3 charm+-2 obedience+-2
+fondness: placement=target placement_range=30 field_radius=15 field_targets=living field_duration=2 inflict_charm=4 loyalty+3 aggression+-3 counters=loathing,dislike,contempt
+spleen: placement=target placement_range=40 field_radius=15 field_targets=enemies field_duration=1 inflict_rage=6 aggression+4 dmg_psychic=10 counters=calm,patience
+cynicism: field_radius=10 field_targets=self field_duration=3 immune_charm=true detect_stealth+3 morale+-2 charm+-2 counters=faith,optimism,wonder,romance
+penance: field_radius=10 field_targets=self field_duration=3 aggression+-5 res_holy+0.5 regeneration+1 speed_land*0.8 counters=sin,pride
+scorn: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=2 morale+-5 charm+-5 authority+-3 inflict_rage=3 counters=admiration,respect,reverence
+intoxication: field_radius=10 field_targets=self field_duration=3 courage+5 immune_fear=true accuracy+-0.3 agility+-2 inflict_confuse=3 morale+3 counters=sobriety
+pang: placement=target placement_range=40 field_radius=10 field_targets=enemies field_duration=1 dmg_psychic=15 inflict_stun=1 morale+-2
+apprehension: placement=target placement_range=60 field_radius=25 field_targets=enemies field_duration=2 courage+-4 attack_windup+1 morale+-2 counters=confidence,courage
+indignation: field_radius=30 field_targets=owned field_duration=2 aggression+5 courage+4 immune_charm=true obedience+-2 counters=calm,humility
+hunch: field_radius=5 field_targets=self field_duration=2 detect_stealth+4 alarm=true evasion+0.15
+penchant: field_radius=10 field_targets=self field_duration=3 training+2 morale+1
+libido: placement=target placement_range=30 field_radius=10 field_targets=living field_duration=2 inflict_charm=6 charm+3 obedience+-2
+complacency: placement=target placement_range=80 field_radius=40 field_targets=enemies field_duration=3 alarm=false detect_stealth+-4 sight_range*0.7 attack_windup+2 aggression+-3 counters=ambition,vigilance,anticipation
+contentment: field_radius=40 field_targets=owned field_duration=3 morale+4 regeneration+2 food_need*0.8 aggression+-3 comfort+2 counters=discontent,dissatisfaction,ambition,envy
+fervor: field_radius=40 field_targets=owned field_duration=3 courage+6 morale+5 attack_rate*1.2 immune_fear=true counters=apathy,indifference
+emulation: field_radius=20 field_targets=owned field_duration=3 training+3 labor*1.2 morale+2
+nervousness: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=2 accuracy+-0.2 courage+-3 loudness+2 counters=calm,composure,confidence
+desolation: placement=target placement_range=150 field_radius=60 field_targets=enemies field_duration=3 morale+-8 regeneration*0.4 growth*0.5 luminosity+-2 counters=hope,joy,togetherness
+tranquility: field_radius=50 field_targets=all field_duration=3 effect_status=rage,fear,confuse aggression+-7 regeneration+2 loudness+-3 counters=turmoil,panic,rage,hysteria
+enmity: field_radius=30 field_targets=all field_duration=3 aggression+6 sets_hostile=true loyalty+-3 counters=amity,friendliness,peace
+rhapsody: field_radius=40 field_targets=owned field_duration=2 morale+7 loudness+4 charm+3 inflict_charm=2 counters=gloom,melancholy
+amazement: placement=target placement_range=60 field_radius=25 field_targets=living field_duration=1 inflict_stun=3 aggression+-3 morale+1 counters=boredom,cynicism
+eros: placement=target placement_range=40 field_radius=15 field_targets=living field_duration=2 inflict_charm=12 charm+5 aggression+-4 counters=hate,disgust
+gusto: field_radius=30 field_targets=owned field_duration=2 morale+5 attack_rate*1.2 food_need*1.3 labor*1.2 counters=apathy,fatigue
+soreness: placement=target placement_range=40 field_radius=15 field_targets=enemies field_duration=2 speed_land*0.7 attack_rate*0.8 strength*0.85 counters=relief,massage
+enchantment: placement=target placement_range=60 field_radius=20 field_targets=living field_duration=2 inflict_charm=15 dmg_magic=10 aggression+-5 counters=disenchantment,cynicism
+impatience: field_radius=20 field_targets=owned field_duration=2 attack_windup*0.3 speed_land*1.2 accuracy+-0.15 obedience+-2 counters=patience
+fulfilment: field_radius=30 field_targets=owned field_duration=3 morale+6 regeneration+2 food_need*0.7 immune_fear=true counters=emptiness,longing,dissatisfaction
+lightness: field_radius=20 field_targets=owned field_duration=2 morale+3 mass*0.8 jump*1.5 speed_land*1.1 agility+2 counters=heaviness,gloom
+pessimism: placement=target placement_range=80 field_radius=40 field_targets=enemies field_duration=3 morale+-4 courage+-3 regeneration*0.8 counters=optimism,hope
+rejoicing: field_radius=60 field_targets=owned field_duration=2 morale+8 loudness+5 regeneration+2 courage+3 counters=mourning,grief,sorrow
+buoyancy: field_radius=30 field_targets=owned field_duration=2 morale+4 speed_land*1.1 courage+2 counters=gloom,heaviness
+hopelessness: placement=target placement_range=100 field_radius=40 field_targets=enemies field_duration=3 morale+-9 courage+-6 regeneration*0.4 obedience+-3 counters=hope,optimism,faith
+friendliness: field_radius=40 field_targets=all field_duration=3 aggression+-4 charm+4 trade_bonus+0.1 loyalty+2 counters=hostility,enmity,animosity
+pall: placement=target placement_range=100 field_radius=50 field_targets=enemies field_duration=3 morale+-4 luminosity+-3 sight_range*0.8 loudness+-2 counters=cheer,joy,mirth
+distaste: placement=target placement_range=40 field_radius=15 field_targets=enemies field_duration=1 charm+-3 food_need*0.5 aggression+-1
+eagerness: field_radius=30 field_targets=owned field_duration=2 speed_land*1.2 obedience+3 labor*1.2 attack_windup*0.5 counters=reluctance,apathy
+infatuation: placement=target placement_range=40 field_radius=10 field_targets=living field_duration=2 inflict_charm=14 obedience+-3 sight_range*0.7 counters=disgust,cynicism,heartbreak
+shyness: field_radius=5 field_targets=self field_duration=3 stealth+4 charm+-2 loudness+-4 aggression+-3 counters=confidence,ego
+amity: field_radius=50 field_targets=all field_duration=3 aggression+-6 effect_status=rage charm+3 loyalty+2 counters=enmity,hostility,animosity,antagonism
+calmness: field_radius=30 field_targets=all field_duration=3 effect_status=rage,fear immune_rage=true aggression+-5 accuracy+0.1 counters=rage,panic,agitation
+daze: placement=target placement_range=50 field_radius=15 field_targets=enemies field_duration=1 inflict_confuse=6 inflict_stun=2 accuracy+-0.3 counters=focus,alertness
+veneration: field_radius=40 field_targets=all field_duration=3 obedience+5 loyalty+4 aggression+-4 authority+2 counters=contempt,scorn
+aggressiveness: field_radius=20 field_targets=owned field_duration=2 aggression+7 attack_rate*1.25 armor+-4 counters=calm,timidity
+astonishment: placement=target placement_range=60 field_radius=30 field_targets=enemies field_duration=1 inflict_stun=4 attack_windup+2 morale+-1 counters=composure
+caprice: field_radius=15 field_targets=all field_duration=1 obedience+-4 inflict_confuse=2 agility+3
+chagrin: placement=target placement_range=40 field_radius=15 field_targets=enemies field_duration=2 morale+-4 authority+-2 charm+-2 counters=pride,triumph
+antagonism: field_radius=30 field_targets=all field_duration=2 aggression+5 sets_hostile=true loyalty+-2 counters=amity,goodwill,friendliness
+pathos: field_radius=30 field_targets=living field_duration=2 aggression+-4 morale+-1 charm+3 effect_status=rage
+conceit: field_radius=5 field_targets=self field_duration=3 morale+4 charm+-3 detect_stealth+-3 authority+1 counters=humility,humiliation
+coolness: field_radius=10 field_targets=self field_duration=3 immune_fear=true immune_rage=true accuracy+0.1 charm+-2 temperature_delta=-3 counters=warmth,rage,panic
+leniency: field_radius=40 field_targets=all field_duration=3 aggression+-4 fine*0 effect_status=root,silence loyalty+2 counters=severity,cruelty
+sensuality: placement=target placement_range=30 field_radius=10 field_targets=living field_duration=2 inflict_charm=7 beauty+3 charm+4
+consternation: placement=target placement_range=80 field_radius=30 field_targets=enemies field_duration=1 inflict_confuse=6 obedience+-4 morale+-3 counters=composure,calm
+sentimentality: field_radius=20 field_targets=all field_duration=2 morale+1 aggression+-3 charm+2 accuracy+-0.05
+ambivalence: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=2 attack_windup+2 obedience+-3 loyalty+-2 counters=resolve,zeal,conviction
+peeve: placement=target placement_range=30 field_radius=10 field_targets=enemies field_duration=1 aggression+2 inflict_rage=2 accuracy+-0.05
+togetherness: field_radius=40 field_targets=owned field_duration=3 loyalty+5 morale+4 armor+5 regeneration+1 counters=loneliness,isolation,alienation,estrangement
+exuberance: field_radius=40 field_targets=owned field_duration=2 morale+7 speed_land*1.25 loudness+3 labor*1.2 counters=gloom,melancholy,ennui
+foreboding: placement=target placement_range=100 field_radius=50 field_targets=enemies field_duration=3 courage+-4 morale+-3 luminosity+-1 counters=hope,optimism
+throes: placement=target placement_range=40 field_radius=10 field_targets=enemies field_duration=1 dmg_psychic=50 inflict_stun=3 morale+-5
+benevolence: field_radius=50 field_targets=all field_duration=3 heals=3 aggression+-5 charm+4 trade_bonus+0.15 counters=malice,cruelty,spite
+unease: placement=target placement_range=60 field_radius=30 field_targets=enemies field_duration=3 courage+-3 morale+-2 sleep_need*1.3 counters=calm,ease,confidence
+elan: field_radius=30 field_targets=owned field_duration=2 morale+5 speed_land*1.2 charm+3 agility+2
+aggravation: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=2 aggression+4 inflict_rage=4 accuracy+-0.1 counters=relief,calm
+irritability: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=3 aggression+3 obedience+-3 inflict_rage=3 counters=patience,calm
+tranquillity: field_radius=50 field_targets=all field_duration=3 effect_status=rage,fear,confuse aggression+-7 regeneration+2 loudness+-3 counters=turmoil,panic,rage,hysteria
+fervour: field_radius=40 field_targets=owned field_duration=3 courage+6 morale+5 attack_rate*1.2 immune_fear=true counters=apathy,indifference
+hilarity: field_radius=40 field_targets=all field_duration=1 inflict_stun=3 morale+5 aggression+-5 accuracy+-0.2 loudness+5 counters=gloom,solemnity,seriousness
+pining: field_radius=10 field_targets=self field_duration=3 morale+-3 loyalty+5 food_need*0.6 speed_land*0.9
+repose: field_radius=20 field_targets=owned field_duration=3 regeneration+5 sleep_need*0 speed_land*0.5 morale+3 comfort+2
+stupor: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=2 inflict_sleep=6 inflict_confuse=4 speed_land*0.4 accuracy+-0.3 counters=alertness,thrill
+trepidation: placement=target placement_range=60 field_radius=25 field_targets=enemies field_duration=2 courage+-5 speed_land*0.8 attack_windup+1 counters=courage,bravery,confidence
+revulsion: placement=target placement_range=40 field_radius=15 field_targets=enemies field_duration=1 inflict_fear=4 inflict_sick=3 food_need*0.3 charm+-4
+animus: field_radius=20 field_targets=owned field_duration=2 aggression+5 critical+0.1 charm+-3 counters=goodwill,amity
+antipathy: placement=target placement_range=40 field_radius=20 field_targets=enemies field_duration=2 loyalty+-3 charm+-4 aggression+3 counters=sympathy,fondness
+elation: field_radius=40 field_targets=owned field_duration=2 morale+8 courage+4 jump*1.5 speed_land*1.2 regeneration+2 counters=despair,dejection,gloom
+tumult: placement=target placement_range=100 field_radius=40 field_targets=all field_duration=1 inflict_confuse=8 loudness+7 obedience+-5 counters=calm,tranquility,order
+gloating: field_radius=20 field_targets=owned field_duration=2 morale+5 authority+2 charm+-4 stealth+-3 counters=humility,defeat
+letdown: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=2 morale+-4 speed_land*0.85 labor*0.7
+premonition: field_radius=5 field_targets=self field_duration=3 alarm=true evasion+0.3 detect_stealth+4 map_reveal+5
+exasperation: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=2 accuracy+-0.15 aggression+3 inflict_rage=3 labor*0.7 counters=patience
+alleviation: field_radius=30 field_targets=owned field_duration=1 restores=40 effect_status=fear,sick,stun regeneration+2 counters=agony,pain,aggravation
+contrition: field_radius=10 field_targets=self field_duration=3 aggression+-6 loyalty+4 res_holy+0.3 effect_status=rage counters=pride,spite
+gloat: field_radius=20 field_targets=owned field_duration=1 morale+5 authority+2 charm+-4 counters=humility
+mirth: field_radius=40 field_targets=owned field_duration=2 morale+6 aggression+-2 loudness+3 effect_status=fear counters=gloom,woe,sorrow,melancholy
+chafing: placement=target placement_range=30 field_radius=10 field_targets=enemies field_duration=2 speed_land*0.8 aggression+2 accuracy+-0.05
+repulsion: placement=target placement_range=40 field_radius=20 field_targets=enemies field_duration=1 knockback=10 inflict_fear=4 charm+-4 counters=attraction,charm
+levity: field_radius=30 field_targets=all field_duration=2 morale+4 aggression+-3 mass*0.9 jump*1.3 counters=seriousness,solemnity,gloom
+sexiness: field_radius=5 field_targets=self field_duration=3 beauty+5 charm+5 inflict_charm+3
+virulence: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=2 aggression+5 dmg_poison*1.5 contagion+0.2 charm+-3
+fidget: field_radius=5 field_targets=self field_duration=2 stealth+-3 accuracy+-0.1 loudness+2 speed_land*1.1
+heaviness: placement=target placement_range=60 field_radius=25 field_targets=enemies field_duration=2 speed_land*0.7 morale+-3 jump*0.5 mass*1.2 counters=lightness,levity,buoyancy
+dysphoria: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=3 morale+-5 regeneration*0.7 aggression+2
+gaiety: field_radius=40 field_targets=owned field_duration=2 morale+5 charm+2 speed_land*1.1 luminosity+1 counters=gloom,solemnity
+remoteness: field_radius=10 field_targets=self field_duration=3 stealth+4 charm+-3 immune_charm=true
+sadism: field_radius=20 field_targets=owned field_duration=2 aggression+7 critical+0.2 lifesteal+0.15 fear_aura+5 charm+-6 counters=mercy,compassion,empathy
+estrangement: placement=target placement_range=80 field_radius=25 field_targets=enemies field_duration=3 loyalty+-6 effect_status=charm morale+-3 counters=closeness,intimacy,togetherness
+perfectionism: field_radius=5 field_targets=self field_duration=3 accuracy+0.25 critical+0.15 attack_rate*0.7 build_speed*0.7
+exhilaration: field_radius=30 field_targets=owned field_duration=2 morale+7 speed_land*1.3 courage+5 immune_fear=true accuracy+-0.1 counters=boredom,ennui,fatigue
+heartstrings: placement=target placement_range=40 field_radius=15 field_targets=living field_duration=2 inflict_charm=6 aggression+-5 morale+1
+playfulness: field_radius=30 field_targets=all field_duration=2 aggression+-4 agility+2 morale+3 obedience+-2 counters=seriousness,solemnity
+sulk: field_radius=5 field_targets=self field_duration=3 morale+-3 labor*0.3 obedience+-4 speed_land*0.6 stealth+1
+tedium: placement=target placement_range=80 field_radius=40 field_targets=enemies field_duration=3 morale+-3 labor*0.5 inflict_sleep=4 attack_rate*0.8 counters=fun,excitement,thrill
+toleration: field_radius=30 field_targets=all field_duration=3 aggression+-3 immune_rage=true res_psychic+0.2 counters=intolerance
+solemnity: field_radius=40 field_targets=all field_duration=3 loudness+-4 aggression+-3 obedience+3 accuracy+0.05 counters=levity,hilarity,mirth
+discouragement: placement=target placement_range=80 field_radius=30 field_targets=enemies field_duration=2 morale+-5 courage+-4 labor*0.6 counters=encouragement,inspiration
+jubilation: field_radius=60 field_targets=owned field_duration=2 morale+8 loudness+6 courage+4 regeneration+2 counters=despair,mourning,grief
+twinge: placement=target placement_range=40 field_radius=8 field_targets=enemies field_duration=1 dmg_psychic=8 inflict_stun=0.5 morale+-1
+ruthlessness: field_radius=20 field_targets=owned field_duration=2 aggression+8 critical+0.2 immune_charm=true charm+-5 fear_aura+5 counters=mercy,compassion,pity
+unpleasantness: placement=target placement_range=40 field_radius=20 field_targets=enemies field_duration=2 morale+-3 charm+-3 comfort+-2
+hankering: field_radius=10 field_targets=self field_duration=2 food_need*1.5 speed_land*1.15 morale+-1
+merriment: field_radius=40 field_targets=owned field_duration=2 morale+6 loudness+4 charm+2 aggression+-2 counters=gloom,woe,misery
+rancor: field_radius=20 field_targets=owned field_duration=3 aggression+5 tracking+4 loyalty+2 charm+-3 counters=forgiveness,amity
+uneasiness: placement=target placement_range=60 field_radius=25 field_targets=enemies field_duration=3 courage+-3 morale+-2 sleep_need*1.3 counters=calm,ease
+disquiet: placement=target placement_range=60 field_radius=30 field_targets=enemies field_duration=3 courage+-3 morale+-3 regeneration*0.8 counters=calm,serenity,tranquility
+forbearance: field_radius=10 field_targets=self field_duration=3 immune_rage=true aggression+-4 res_psychic+0.3 armor+5 counters=provocation,rage,impatience
+gladness: field_radius=40 field_targets=owned field_duration=2 morale+5 regeneration+1 counters=sadness,sorrow
+wildness: field_radius=20 field_targets=owned field_duration=2 aggression+6 obedience+-5 speed_land*1.3 attack_rate*1.2 counters=calm,discipline
+exaltation: field_radius=50 field_targets=owned field_duration=2 morale+9 courage+6 immune_fear=true res_holy+0.3 luminosity+2 counters=despair,humiliation
+fearlessness: field_radius=20 field_targets=owned field_duration=3 immune_fear=true courage+10 morale+3 evasion+-0.05 counters=fear,terror,fright,dread
+quietness: field_radius=30 field_targets=all field_duration=3 loudness*0.2 stealth+3 aggression+-2 counters=noise,uproar,racket
+bloodlust: field_radius=25 field_targets=owned field_duration=2 aggression+10 lifesteal+0.25 attack_rate*1.4 strength*1.3 obedience+-4 immune_fear=true counters=mercy,pity,compassion
+homesickness: placement=target placement_range=80 field_radius=30 field_targets=enemies field_duration=3 morale+-5 speed_land*0.85 loyalty+-2 counters=belonging,comfort
+masochism: field_radius=5 field_targets=self field_duration=2 lifesteal+0.2 res_blunt+0.2 res_slash+0.2 morale+3 self_damage+0.1
+ennui: placement=target placement_range=80 field_radius=40 field_targets=enemies field_duration=3 aggression+-4 labor*0.5 speed_land*0.8 morale+-3 counters=zest,fun,excitement,thrill
+chafe: placement=target placement_range=30 field_radius=10 field_targets=enemies field_duration=2 speed_land*0.8 aggression+2 accuracy+-0.05
+disaffection: placement=target placement_range=100 field_radius=40 field_targets=enemies field_duration=3 loyalty+-6 obedience+-5 labor*0.6 counters=loyalty,devotion,unity
+equanimity: field_radius=10 field_targets=self field_duration=3 immune_fear=true immune_rage=true immune_confuse=true immune_charm=true accuracy+0.1 counters=turmoil,panic,agitation
+unwillingness: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=2 obedience+-5 labor*0.5 speed_land*0.85 counters=willingness,eagerness
+seclusion: field_radius=5 field_targets=self field_duration=3 stealth+5 sight_range*0.6 regeneration+2
+gratification: field_radius=20 field_targets=owned field_duration=1 morale+5 regeneration+2 food_need*0.5
+abomination: placement=target placement_range=60 field_radius=25 field_targets=enemies field_duration=1 inflict_fear=10 morale+-6 dmg_unholy=30 counters=reverence,faith
+feeling: field_radius=20 field_targets=living field_duration=2 morale+2 charm+1 aggression+-1 counters=numbness,apathy
+attention: field_radius=10 field_targets=self field_duration=3 sight_range*1.4 detect_stealth+4 hearing_range*1.5 alarm=true counters=distraction,daze,boredom
+desire: placement=target placement_range=40 field_radius=15 field_targets=living field_duration=2 inflict_charm=7 aggression+2 speed_land*1.15 counters=disgust,apathy,indifference
+attitude: field_radius=10 field_targets=self field_duration=3 morale+3 courage+2 obedience+-2 charm+-1
+danger: field_radius=40 field_targets=all field_duration=2 courage+-3 alarm=true sight_range*1.2 aggression+2 counters=safety,calm
+belief: field_radius=30 field_targets=owned field_duration=3 courage+4 morale+4 loyalty+3 res_psychic+0.3 counters=doubt,cynicism
+impression: field_radius=20 field_targets=all field_duration=2 charm+3 authority+1
+intention: field_radius=5 field_targets=self field_duration=2 accuracy+0.1 attack_windup*0.6
+intent: field_radius=5 field_targets=self field_duration=2 accuracy+0.15 critical+0.1 tracking+3
+involvement: field_radius=20 field_targets=owned field_duration=3 labor*1.2 loyalty+2
+affair: placement=target placement_range=40 field_radius=10 field_targets=living field_duration=3 inflict_charm=10 loyalty+-4 stealth+2 counters=loyalty,devotion
+privacy: field_radius=10 field_targets=owned field_duration=5 stealth+4 read_properties*0 read_inventory=false security+3 counters=surveillance,camera
+wishing: field_radius=5 field_targets=self field_duration=2 morale+3 courage+1
+pique: placement=target placement_range=40 field_radius=10 field_targets=enemies field_duration=1 inflict_rage=4 aggression+3 counters=calm
+
+# noun liquid
+blood: mass=1 volume=0.001 state=liquid color=red wetness=6 material=blood odor=4 shelf_life=60 decay_rate=1 field_radius=20 field_targets=living field_duration=1 aggression+3 smell_range+50
+
+# noun poison
+venom: mass=0.01 state=liquid toxicity=9 dmg_poison=80 inflict_poison=20 potency=8 equip_slot=held single_use=true counters=antidote,antivenom
+
+# noun food
+relish: mass=0.2 edible=true nutrition=1 material=vegetable state=liquid shelf_life=20000 value=2 morale+1 counters=disgust
+
+# noun device
+alarm: mass=1 integrity=20 material=metal,plastic portable=true alarm=true loudness=9 sight_range=60 hearing_range+100 detect_stealth=3 upkeep_power=0.005 field_radius=60 field_targets=all effect_status=sleep counters=sleep,lullaby,stealth,sneak
+
+# noun attack
+surprise: placement=target placement_range=60 event_target=character inflict_stun=4 critical+0.5 attack_windup*0 morale+-2 counters=alarm,premonition,anticipation
+
+# noun phenomenon
+shock: placement=target placement_range=60 field_radius=15 field_targets=enemies field_duration=1 inflict_stun=6 dmg_electric=30 dmg_psychic=20 morale+-3 counters=composure,calm
+
+# noun conflict
+conflict: placement=region field_radius=80 field_targets=all field_duration=3 aggression+6 sets_hostile=true loyalty+-2 produce_K*2 counters=peace,amity,unity
+defeat: placement=target placement_range=100 field_radius=40 field_targets=enemies field_duration=2 morale+-10 courage+-6 authority+-4 obedience+-3 counters=triumph,victory
+
+# noun ceremony
+worship: field_radius=50 field_targets=owned field_duration=3 loyalty+6 obedience+5 morale+4 res_unholy+0.4 authority+3 counters=blasphemy,heresy,cynicism
+
+# verb perceive
+feel: duration=60 detect_stealth+3 detect_life=40 read_properties+2 hearing_range*1.2
+taste: duration=30 read_properties+3 res_poison+0.3 detect_stealth+1
+tingle: duration=30 detect_life=30 alarm=true evasion+0.1
+
+# verb transform
+fit: duration=20 inflict_rage+6 aggression+6 attack_rate*1.3 obedience+-4 accuracy+-0.2
+affect: effect_target=touched inflict_charm=4 duration=1 morale+1
+temper: duration=60 immune_rage=true aggression+-3 hardness+2 armor+5
+
+# verb contact
+hurt: effect_target=touched duration=1 dmg_psychic+25 dmg_blunt+15 morale+-2
+
+# verb create
+stir: effect_target=touched inflict_rage=5 duration=1 aggression+3
+abandon: duration=60 loyalty+-6 morale+-3 speed_land*1.3 frees_target=true
+
+# verb combat
+surrender: duration=60 aggression+-10 untargetable=true attack_rate*0 morale+-5 loyalty+-5 effect_status=rage
+
+# verb body
+shudder: duration=3 inflict_stun=1 courage+-2 temp_min+-3
+shiver: duration=10 temp_min+-5 accuracy+-0.1 courage+-1
+quiver: duration=5 accuracy+-0.2 courage+-2 evasion+0.1
+
+# noun attribute
+charm: placement=target placement_range=40 field_radius=15 field_targets=living field_duration=2 inflict_charm=10 charm+5 aggression+-4 counters=hate,disgust,cynicism,earplug
+valor: field_radius=40 field_targets=owned field_duration=3 courage+9 morale+5 immune_fear=true strength*1.15 training+1 counters=fear,cowardice,terror
+
+# noun act
+insult: placement=target placement_range=40 event_target=character inflict_rage=8 event_duration=1 morale+-3 charm+-2 counters=apology,flattery
+ridicule: placement=target placement_range=60 event_target=character inflict_rage=5 event_duration=1 morale+-5 authority+-4 charm+-3 counters=dignity,pride
+
+# noun person
+bully: mass=90 integrity=110 alive=true sentient=true intelligence=3 hands=true speech=true speed_land=6 strength=7 aggression=8 courage=3 loyalty=3 dmg_blunt=25 attack_rate=1 intimidation=6 fear_aura=3 food_need=0.04 counters=courage,bravery
+
+# verb contact
+hug: effect_target=touched duration=10 inflict_charm+6 effect_status=fear,rage restores=20 morale+3 loyalty+2
+cuddle: effect_target=touched duration=30 inflict_charm+8 effect_status=fear restores=30 regeneration+3 morale+3
+
+# verb social
+tease: effect_target=touched inflict_rage=6 duration=1 morale+-1 charm+1
+mock: effect_target=touched inflict_rage=7 duration=1 morale+-3 authority+-2
+amuse: effect_target=touched inflict_stun=2 duration=1 aggression+-3 morale+2
+beguile: effect_target=touched inflict_charm=14 inflict_confuse=4 duration=1 charm+4
+embarrass: effect_target=touched inflict_stun=2 duration=1 morale+-4 charm+-3 authority+-2
+demoralize: effect_target=touched duration=1 morale+-8 courage+-5 obedience+-3
+depress: effect_target=touched duration=1 morale+-6 speed_land*0.7 labor*0.5
+irritate: effect_target=touched inflict_rage=4 duration=1 accuracy+-0.1
+menace: effect_target=touched inflict_fear=8 duration=1 intimidation+4 morale+-3
+
+# verb body
+weep: duration=30 morale+3 effect_status=rage sight_range*0.5 loudness+3 charm+2 aggression+-4
+sob: duration=20 morale+2 loudness+4 sight_range*0.6 charm+2 aggression+-3
+giggle: duration=10 morale+3 loudness+2 stealth+-2 aggression+-2
+grin: duration=60 morale+2 charm+3 courage+1
+frown: duration=30 charm+-2 authority+1 intimidation+1
+scowl: duration=30 intimidation+3 fear_aura+2 charm+-3
+sneer: duration=20 charm+-3 inflict_rage+2 authority+1
+glare: duration=15 fear_aura+4 intimidation+3 inflict_fear+2
+tremble: duration=10 courage+-3 accuracy+-0.2 evasion+0.1
+cower: duration=20 armor+15 cover+0.3 aggression+-5 courage+-4 stealth+2
+cringe: duration=5 armor+5 aggression+-3 morale+-1
+seethe: duration=60 aggression+5 strength*1.15 accuracy+-0.1 temperature+5
+fret: duration=60 morale+-2 accuracy+-0.1 sleep_need*1.3
+crave: duration=60 food_need*2 speed_land*1.2 aggression+2
+savor: duration=60 morale+3 regeneration+2 speed_land*0.8
+
+# verb movement
+flinch: duration=2 evasion+0.4 accuracy+-0.2
+
+# adjective quality
+joyful: morale+5 regeneration+1 speed_land*1.1 luminosity+1
+cheerful: morale+4 charm+2 labor*1.1
+merry: morale+4 charm+2 loudness+1
+jolly: morale+4 charm+2 aggression+-2
+glad: morale+3
+blissful: morale+6 immune_fear=true regeneration+2 aggression+-3 accuracy+-0.05
+ecstatic: morale+8 speed_land*1.2 immune_fear=true accuracy+-0.15
+euphoric: morale+9 immune_fear=true regeneration+2 accuracy+-0.15
+elated: morale+7 jump*1.3 speed_land*1.15
+jubilant: morale+7 courage+3 loudness+3
+giddy: morale+4 speed_land*1.15 accuracy+-0.15 agility+2
+playful: aggression+-3 agility+2 morale+2 obedience+-1
+thrilled: morale+5 speed_land*1.2 courage+2
+triumphant: morale+7 courage+5 authority+3 immune_fear=true
+optimistic: morale+4 courage+2 regeneration+0.5
+relaxed: aggression+-4 regeneration+2 attack_rate*0.8 immune_rage=true
+tranquil: aggression+-5 immune_rage=true accuracy+0.1 loudness+-2
+placid: aggression+-6 immune_rage=true speed_land*0.8 obedience+2
+stoic: immune_fear=true immune_charm=true res_psychic+0.4 morale+2 charm+-1
+sad: morale+-4 speed_land*0.85
+gloomy: morale+-3 luminosity+-2 sight_range*0.8
+miserable: morale+-6 regeneration*0.5 labor*0.6
+depressed: morale+-6 labor*0.5 speed_land*0.8 aggression+-3
+despondent: morale+-7 courage+-4 labor*0.5
+forlorn: morale+-5 loyalty+-2 speed_land*0.85
+heartbroken: morale+-7 regeneration*0.5 immune_charm=true
+grieving: morale+-5 attack_rate*0.7 aggression+-2
+mournful: morale+-4 loudness+2 aggression+-3
+tearful: morale+-2 sight_range*0.7 charm+2
+weepy: morale+-2 sight_range*0.8 charm+1
+morose: morale+-4 charm+-3 speed_land*0.85
+sullen: morale+-3 obedience+-4 charm+-3
+moody: morale+-1 obedience+-2 aggression+2
+grumpy: aggression+2 charm+-3 obedience+-1
+grouchy: aggression+2 charm+-3
+cranky: aggression+3 charm+-2 accuracy+-0.05
+irritable: aggression+3 inflict_rage+1 obedience+-2
+irritated: aggression+3 accuracy+-0.1
+annoyed: aggression+2 accuracy+-0.05
+frustrated: aggression+3 accuracy+-0.15 labor*0.7
+exasperated: aggression+3 accuracy+-0.15 obedience+-2
+irate: aggression+6 attack_rate*1.25 obedience+-3 accuracy+-0.1
+livid: aggression+7 attack_rate*1.3 strength*1.15 accuracy+-0.15 obedience+-3
+enraged: aggression+9 attack_rate*1.4 strength*1.25 armor+-8 obedience+-5 immune_fear=true
+wrathful: aggression+8 strength*1.3 dmg_fire*1.2 inflict_rage+3 fear_aura+2
+vengeful: aggression+6 tracking+5 critical+0.15 loyalty+2
+spiteful: aggression+4 inflict_rage+2 charm+-4
+resentful: loyalty+-4 obedience+-3 aggression+2
+hateful: aggression+6 charm+-5 dmg_dark*1.2 immune_charm=true
+hostile: aggression+6 charm+-4 sets_hostile=true
+cruel: aggression+6 critical+0.15 fear_aura+3 charm+-5
+greedy: letter_steal+1 loyalty+-3 charm+-2
+envious: loyalty+-4 aggression+2 obedience+-2
+frightened: courage+-5 morale+-3 speed_land*1.2 aggression+-3
+terrified: courage+-8 morale+-5 speed_land*1.4 accuracy+-0.3 aggression+-5
+horrified: courage+-6 morale+-4 inflict_stun+1
+startled: evasion+0.2 accuracy+-0.2 attack_windup+1
+fearful: courage+-5 morale+-2 stealth+2
+timid: courage+-4 aggression+-4 stealth+2 loudness+-2
+shy: stealth+3 charm+-1 loudness+-3 aggression+-2
+panicky: courage+-5 accuracy+-0.3 speed_land*1.3 obedience+-4
+anxious: courage+-3 accuracy+-0.1 sleep_need*1.5
+uneasy: courage+-2 alarm=true morale+-1
+tense: accuracy+-0.05 alarm=true evasion+0.1 regeneration*0.8
+restless: speed_land*1.15 sleep_need*0.5 obedience+-2 stealth+-1
+agitated: aggression+3 accuracy+-0.15 obedience+-2
+frantic: speed_land*1.4 attack_rate*1.3 accuracy+-0.3 obedience+-4
+hysterical: inflict_confuse+3 accuracy+-0.35 loudness+5 obedience+-5
+distraught: morale+-6 accuracy+-0.25 obedience+-3
+paranoid: detect_stealth+4 alarm=true immune_charm=true loyalty+-3 trade_bonus+-0.1
+insecure: courage+-3 authority+-2 morale+-2
+embarrassed: charm+-3 morale+-2 authority+-2
+ashamed: morale+-4 authority+-3 aggression+-3
+humble: charm+3 authority+-1 immune_rage=true
+arrogant: morale+3 charm+-3 authority+2 detect_stealth+-2
+smug: morale+3 charm+-3 alarm=false
+awed: aggression+-4 obedience+3 inflict_stun+1
+amazed: aggression+-2 inflict_stun+1 morale+1
+astonished: inflict_stun+2 accuracy+-0.1
+stunned: inflict_stun+3 accuracy+-0.3 speed_land*0.5
+disgusted: charm+-3 food_need*0.5 aggression+2
+appalled: morale+-3 charm+-3 aggression+2
+bored: morale+-2 labor*0.6 aggression+-2 sleep_need*1.3
+weary: speed_land*0.7 attack_rate*0.8 sleep_need*1.5
+jaded: immune_charm=true morale+-1 charm+-1
+apathetic: aggression+-5 labor*0.4 obedience+-3 immune_charm=true
+indifferent: immune_charm=true aggression+-3 charm+-2
+cynical: immune_charm=true detect_stealth+2 morale+-1
+pessimistic: morale+-3 courage+-2
+nostalgic: morale+2 speed_land*0.9 aggression+-2
+homesick: morale+-4 loyalty+2 speed_land*0.9
+sentimental: morale+1 charm+2 aggression+-2
+affectionate: inflict_charm+3 loyalty+3 aggression+-3 charm+2
+adoring: inflict_charm+4 loyalty+4 obedience+3 aggression+-4
+devoted: loyalty+7 obedience+4 immune_charm=true
+faithful: loyalty+8 immune_charm=true obedience+3
+amorous: inflict_charm+4 charm+3 aggression+-3
+passionate: morale+4 attack_rate*1.2 courage+3 charm+2
+lustful: inflict_charm+4 aggression+2 obedience+-3
+flirtatious: inflict_charm+3 charm+4
+seductive: inflict_charm+6 charm+5 beauty+2
+charming: charm+5 inflict_charm+2 trade_bonus+0.1
+eager: speed_land*1.15 obedience+2 attack_windup*0.6
+zealous: courage+6 morale+4 immune_fear=true obedience+3 attack_rate*1.15
+manic: speed_land*1.4 attack_rate*1.3 sleep_need*0 accuracy+-0.25 obedience+-4
+mischievous: stealth+2 letter_steal+1 obedience+-3 agility+2
+kind: aggression+-4 heals+1 charm+3 loyalty+2
