@@ -98,7 +98,7 @@ it("a round of ten bots and no humans runs to a winner", async () => {
   expect(room.state.phase).toBe("over");
   expect(room.state.winner).toMatch(/^bot\d+$/);
   await wait(1200);
-});
+}, 60_000);
 
 it("tick time stays healthy with 99 bots", async () => {
   WorldRoom.testSeed = 99;

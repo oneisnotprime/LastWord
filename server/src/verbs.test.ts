@@ -33,14 +33,14 @@ async function twoPlayers() {
   return { room, a, b, wa, wb, said, walkers, mine };
 }
 
-it("QUICKLY RUN lasts half as long as RUN and is faster while it lasts", async () => {
+it("QUICKLY RUN lasts less long than RUN and is faster while it lasts", async () => {
   const { a, wa, said } = await twoPlayers();
   a.send("spell", "run"); await wait();
-  expect(said.at(-1)).toBe("RUN for 30 seconds");
+  expect(said.at(-1)).toBe("RUN for 200 seconds");
   const run = wa.speed;
   expect(run).toBe(10);
   a.send("spell", "quickly run"); await wait();
-  expect(said.at(-1)).toBe("QUICKLY RUN for 15 seconds");
+  expect(said.at(-1)).toBe("QUICKLY RUN for 150 seconds");
   expect(wa.buffs.map((b: any) => b.word)).toEqual(["quickly run"]); // it replaces the plain RUN
   expect(wa.speed).toBeCloseTo(5 * 2 ** 1.5);
   expect(wa.speed).toBeGreaterThan(run);

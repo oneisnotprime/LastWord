@@ -150,6 +150,9 @@ export function windAt(seed: number, seconds: number): number {
 const DAMP: Partial<Record<Tile, number>> = {
   [Tile.Grass]: 0.6, [Tile.Field]: 0.7, [Tile.Forest]: 0.7, [Tile.Swamp]: 1.2, [Tile.Sand]: 0.15,
   [Tile.Snow]: 0.4, [Tile.Hill]: 0.5, [Tile.City]: 0.3, [Tile.Road]: 0.2,
+  // Biomes (shared `biome.ts`).
+  [Tile.Jungle]: 1.1, [Tile.Marsh]: 1.1, [Tile.Taiga]: 0.6, [Tile.Meadow]: 0.65, [Tile.Savanna]: 0.35,
+  [Tile.Tundra]: 0.35, [Tile.Desert]: 0.05, [Tile.Badlands]: 0.1, [Tile.Ash]: 0.1,
 };
 /** Moisture added by open water within WATER_REACH tiles, by a watering thing in reach, and by rain. */
 export const WATER_REACH = 3;
@@ -185,6 +188,9 @@ export const wetWeather = (weather: string): boolean => /rain|storm|snow|hail|dr
 export const FERTILE: Partial<Record<Tile, number>> = {
   [Tile.Grass]: 1, [Tile.Field]: 1.2, [Tile.Forest]: 1, [Tile.Swamp]: 0.9, [Tile.Sand]: 0.3,
   [Tile.Snow]: 0.2, [Tile.Hill]: 0.6, [Tile.City]: 0.3,
+  // Biomes: jungle and volcanic ash the richest, desert and badlands next to barren.
+  [Tile.Jungle]: 1.4, [Tile.Ash]: 1.3, [Tile.Meadow]: 1.15, [Tile.Marsh]: 1, [Tile.Savanna]: 0.8, [Tile.Taiga]: 0.6,
+  [Tile.Tundra]: 0.25, [Tile.Desert]: 0.1, [Tile.Badlands]: 0.15,
 };
 /** Fertility one letter grown takes from the soil of its patch, and what grows back a minute. */
 export const SOIL_DRAIN = 0.02;

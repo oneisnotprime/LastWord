@@ -8,6 +8,8 @@ let colyseus: ColyseusTestServer;
 beforeAll(async () => { WorldRoom.testBare = true; colyseus = await boot(appConfig); });
 afterAll(async () => { WorldRoom.testBare = false; await colyseus.shutdown(); });
 
+/** This room's dice always come up lucky: every gathering finds something. */
+const r0 = (room: WorldRoom) => { (room as any).rng = () => 0; };
 const wait = (ms = 120) => new Promise((r) => setTimeout(r, ms));
 const ticks = (room: WorldRoom, n: number) => { for (let i = 0; i < n; i++) room.update(0.1); };
 const TYPES = ["hits", "letters", "loadout", "dead", "won", "roundover", "gathered", "gathering", "got", "spelled", "refused", "notice", "sensed", "watching", "described"];
@@ -51,6 +53,7 @@ it("land laid around someone never boxes them into a pocket they cannot step out
 it("gathering where nothing is left says so at once; a gather tells the client how long it takes, and the letter says why", async () => {
   const { room, c, w, of } = await player();
   // Out in the water off the map's edge there is nothing; on land there is forage.
+  r0(room);
   c.send("gather"); await wait();
   expect(of("gathering")).toEqual([2]);
   ticks(room, 21); await wait();
@@ -59,7 +62,7 @@ it("gathering where nothing is left says so at once; a gather tells the client h
   expect(["forage", "fishing", "digging", "cave"]).toContain(got.why);
   // Pick the patch clean, then ask again: refused at once, with no wait.
   const deposits = (room as any).deposits;
-  for (let i = 0; i < 30; i++) deposits.gather(w.player.x, w.player.y, (room as any).elapsed, () => 0.5);
+  for (let i = 0; i < 30; i++) deposits.gather(w.player.x, w.player.y, (room as any).elapsed, () => 0);
   const before = of("gathering").length;
   c.send("gather"); await wait();
   expect(of("refused").at(-1)).toMatch(/picked clean|Nothing to gather/);
@@ -77,7 +80,7 @@ it("a starting player hunts a PIG in a few blows, and gets H and food by its mas
   expect(walkers.has(pig)).toBe(false);
   expect(t / 10).toBeLessThan(12); // six fist blows, not fifty
   await wait();
-  const hunted = of("got").find((g) => g.letters === "h");
+  const hunted = of("got").find((g) => g.letters.startsWith("hp"));
   expect(hunted.why).toMatch(/^hunted PIG \(\+\d+(\.\d)? food\)$/);
   expect(w.stores.food - food).toBeGreaterThan(5);
 });
@@ -114,7 +117,7 @@ it("DEBUG on the live server is a word: it wipes out the insects about you", asy
   expect(walkers.has(ants)).toBe(false);
   expect(walkers.has(dog)).toBe(true);
   expect(of("spelled").at(-1)).toMatch(/wiped out 1000 ANT/);
-  expect(w.letters.a).toBeLessThan(20 + 1); // no letters handed out
+  expect(w.letters.q).toBe(20); // no letters handed out (hunting the ants pays H and A)
 });
 
 it("with DEBUG=1 (local development) spelling DEBUG fills every letter instead", async () => {

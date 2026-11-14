@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
-  afflict, cure, hampered, inflicts, resolve, spawn, statusDamage, statusEffects, STATUSES, strike, tickStatuses, Unit, wake,
+  afflict, cure, effectSeconds, statusSeconds, STATUS_STRETCH, hampered, inflicts, resolve, spawn, statusDamage, statusEffects, STATUSES, strike, tickStatuses, Unit, wake,
   type Affliction, type Status,
 } from "./index.js";
 import { demo } from "./testdata.js";
@@ -43,10 +43,11 @@ describe("inflicting statuses", () => {
   it("refreshes to the longer time, and ticks down until it ends", () => {
     const list = given("stun", 5);
     afflict(list, [["stun", 2]], human(), "b");
-    expect(list[0]).toMatchObject({ left: 5, from: "attacker" });
+    expect(list[0]).toMatchObject({ left: statusSeconds("stun", 5), from: "attacker" });
     afflict(list, [["stun", 8]], human(), "b");
-    expect(list[0]).toMatchObject({ left: 8, from: "b" });
-    expect(tickStatuses(list, 7.5)).toEqual([]);
+    const eight = statusSeconds("stun", 8);
+    expect(list[0]).toMatchObject({ left: eight, from: "b" });
+    expect(tickStatuses(list, eight - 0.5)).toEqual([]);
     expect(tickStatuses(list, 1)).toEqual(["stun"]);
     expect(list).toEqual([]);
   });
@@ -59,12 +60,25 @@ describe("inflicting statuses", () => {
     const a: Affliction[] = [], b: Affliction[] = [];
     afflict(a, [["fear", 4]], coward, "x");
     afflict(b, [["fear", 4]], hero, "x");
-    expect(a[0]!.left).toBe(20);
-    expect(b[0]!.left).toBe(2);
+    expect(a[0]!.left).toBeCloseTo(statusSeconds("fear", 4) * 5);
+    expect(b[0]!.left).toBeCloseTo(statusSeconds("fear", 4) / 2);
     const brave = human();
     brave.set("courage", "ABS");
     const c: Affliction[] = [];
     expect(afflict(c, [["fear", 4]], brave, "x")).toEqual([]);
+  });
+
+  it("runs longer than the word says: helpless and hurting ones a few times, the rest about ten, long ones bent back", () => {
+    expect(statusSeconds("stun", 1)).toBeCloseTo(2.95, 1);
+    expect(statusSeconds("fear", 8)).toBeGreaterThan(40);
+    expect(statusSeconds("poison", 30)).toBeLessThan(30 * STATUS_STRETCH.poison);
+    expect(statusSeconds("root", 600)).toBe(600); // a JAIL is not made longer
+    for (const s of STATUSES) expect(statusSeconds(s, 3)).toBeGreaterThan(3);
+    // PUNCH's one second lasts about twenty; RUN's thirty a few minutes; what is already long stays.
+    expect(effectSeconds(1)).toBeCloseTo(18.75);
+    expect(effectSeconds(30)).toBe(200);
+    expect(effectSeconds(900)).toBe(900);
+    expect(effectSeconds(Infinity)).toBe(Infinity);
   });
 
   it("is removed by name, as HEAL removes poison", () => {

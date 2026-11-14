@@ -4431,7 +4431,7 @@ badge	noun	knowledge	knowledge	4.02	core	n05859658	verb:contact
 badger	noun	creature	mammal	3.48	common	n02449997	verb:emotion
 badgerer	noun	person	person	0.0	obscure	n10187158	-
 badgering	noun	event	act	2.33	uncommon	n00426281	-
-badlands	noun	terrain	natural_object	2.83	uncommon	n09235479	-
+badlands	noun	terrain	landform	2.83	uncommon	n09235479	-
 badly	adverb	verb_modifier	manner	4.44	core	r00016415	-
 badminton	noun	event	act	3.28	common	n00481519	-
 badness	noun	aura	attribute	2.47	uncommon	n05151326	-
@@ -4659,7 +4659,7 @@ baptistery	noun	artifact	container	1.93	rare	n02791595	-
 baptistic	adjective	modifier	pertaining	0.0	obscure	a02966179	-
 baptistry	noun	artifact	container	1.54	rare	n02791595	-
 baptized	adjective	modifier	quality	3.46	common	a02604644	-
-bar	noun	artifact	structure	4.94	core	n02800154	verb:contact
+bar	noun	artifact	weapon	4.94	core	n02800154	verb:contact
 baranduki	noun	creature	mammal	0.0	obscure	n02363132	-
 barb	noun	artifact	artifact	3.31	common	n02793573	verb:contact
 barbacan	noun	artifact	structure	0.0	obscure	n02794688	-
@@ -4865,7 +4865,7 @@ basipetal	adjective	modifier	quality	0.0	obscure	a00031937	-
 basis	noun	knowledge	knowledge	4.81	core	n05801562	-
 basiscopic	adjective	modifier	quality	0.0	obscure	a00002843	-
 bask	verb	spell	contact	2.93	uncommon	v01550963	-
-basket	noun	artifact	container	4.07	core	n02805104	-
+basket	noun	artifact	tool	4.07	core	n02805104	-
 basketball	noun	artifact	toy	4.56	core	n00482004	-
 basketeer	noun	person	person	0.0	obscure	n09861435	-
 basketful	noun	measure	quantity	1.41	rare	n13787347	-
@@ -5071,7 +5071,7 @@ beautiful	adjective	modifier	quality	5.22	core	a00219320	-
 beautifully	adverb	verb_modifier	manner	3.92	common	r00243465	-
 beautify	verb	spell	transform	2.51	uncommon	v00293903	-
 beauty	noun	aura	attribute	4.75	core	n04691171	-
-beaver	noun	material	material	3.61	common	n14788796	verb:social
+beaver	noun	creature	mammal	3.61	common	n02365657	verb:social
 bebop	verb	spell	movement	2.83	uncommon	v01899256	noun:communication
 becalm	verb	spell	transform	0.0	obscure	v00417496	-
 becalmed	adjective	modifier	quality	2.04	uncommon	a01568905	-
@@ -12846,7 +12846,7 @@ croupy	adjective	modifier	pertaining	0.0	obscure	a02716428	-
 crouton	noun	consumable	food	1.94	rare	n07697942	-
 crow	noun	creature	bird	3.8	common	n01581669	verb:communication
 crowbait	noun	creature	mammal	0.0	obscure	n02383771	-
-crowbar	noun	artifact	tool	2.72	uncommon	n03142995	-
+crowbar	noun	artifact	weapon	2.72	uncommon	n03142995	-
 crowberry	noun	flora	shrub	1.18	rare	n12772435	-
 crowd	noun	institution	group	4.7	core	n08199297	verb:movement
 crowded	adjective	modifier	quality	3.98	common	a00561916	-
@@ -21147,7 +21147,7 @@ frizzle	verb	spell	transform	1.9	rare	v00326448	-
 frizzly	adjective	modifier	quality	0.0	obscure	a01034017	-
 frizzy	adjective	modifier	quality	2.6	uncommon	a01034017	-
 frock	noun	artifact	clothing	2.88	uncommon	n03403064	verb:body
-frog	noun	creature	amphibian	3.89	common	n01642406	verb:contact
+frog	noun	creature	reptile	3.89	common	n01642406	verb:contact
 frogbit	noun	flora	plant	0.0	obscure	n12634169	-
 frogfish	noun	creature	fish	1.4	rare	n02551879	-
 froghopper	noun	creature	insect	0.0	obscure	n02260637	-
@@ -23166,7 +23166,7 @@ gulch	noun	terrain	depression	2.78	uncommon	n09318852	-
 gulden	noun	measure	quantity	2.06	uncommon	n13702251	-
 gulf	noun	terrain	water	4.28	core	n09319027	-
 gulfweed	noun	creature	creature	0.0	obscure	n01408499	-
-gull	noun	person	person	3.0	common	n09940867	verb:social
+gull	noun	creature	bird	3.0	common	n02043900	verb:social
 gullet	noun	bodypart	bodypart	2.42	uncommon	n05541581	-
 gullibility	noun	aura	attribute	2.12	uncommon	n04888351	-
 gullible	adjective	modifier	quality	3.1	common	a02280235	-
@@ -28330,7 +28330,7 @@ junction	noun	artifact	artifact	3.94	common	n03610935	-
 juncture	noun	event	event	3.03	common	n07431314	-
 juneberry	noun	flora	produce	0.0	obscure	n07761637	-
 jungian	adjective	modifier	pertaining	2.43	uncommon	a03045299	noun:person
-jungle	noun	terrain	place	4.12	core	n08526132	-
+jungle	noun	terrain	landform	4.12	core	n08526132	-
 jungly	adjective	modifier	quality	1.31	rare	a02584425	-
 junior	noun	person	person	4.49	core	n10803957	adjective:quality
 juniper	noun	flora	shrub	3.15	common	n12587995	-
@@ -31468,7 +31468,7 @@ marrow	noun	bodypart	bodypart	3.53	common	n05293122	-
 marrowbone	noun	bodypart	bodypart	1.34	rare	n07888891	-
 marry	verb	spell	social	4.4	core	v02494483	-
 marseille	noun	artifact	fabric	3.24	common	n03729025	-
-marsh	noun	terrain	natural_object	3.87	common	n09370676	-
+marsh	noun	terrain	landform	3.87	common	n09370676	-
 marshal	noun	person	person	3.87	common	n10315612	verb:movement
 marshall	noun	person	leader	4.24	core	n10315837	-
 marshalship	noun	event	act	0.0	obscure	n00596147	-
@@ -31742,7 +31742,7 @@ mazy	adjective	modifier	quality	1.85	rare	a02186248	-
 mazzard	noun	flora	tree	0.0	obscure	n12663361	-
 mcg	noun	measure	quantity	2.96	uncommon	n13745039	-
 mead	noun	consumable	drink	3.43	common	n07906725	-
-meadow	noun	terrain	place	3.6	common	n08588163	-
+meadow	noun	terrain	landform	3.6	common	n08588163	-
 meadowgrass	noun	flora	herb	0.0	obscure	n12152067	-
 meadowlark	noun	creature	bird	2.07	uncommon	n01575715	-
 meager	adjective	modifier	quality	3.05	common	a00107268	-
@@ -36369,7 +36369,7 @@ ostracism	noun	event	act	2.34	uncommon	n00208283	-
 ostracize	verb	spell	social	1.79	rare	v02509666	-
 ostracod	noun	creature	invertebrate	1.54	rare	n02000479	-
 ostracoderm	noun	creature	creature	0.0	obscure	n01477505	-
-ostrich	noun	person	person	3.05	common	n10405406	-
+ostrich	noun	creature	bird	3.05	common	n01521519	-
 otc	adjective	modifier	quality	3.16	common	a01421520	-
 other	adjective	modifier	quality	6.16	core	a02076759	-
 otherness	noun	aura	attribute	2.4	uncommon	n04750006	-
@@ -36392,7 +36392,7 @@ otosclerosis	noun	affliction	affliction	1.33	rare	n14184385	-
 otoscope	noun	artifact	device	1.36	rare	n03863703	-
 ototoxic	adjective	modifier	quality	1.15	rare	a02459437	-
 ottar	noun	material	material	1.23	rare	n14917140	-
-otter	noun	material	material	3.37	common	n14789964	-
+otter	noun	creature	mammal	3.37	common	n02447450	-
 otterhound	noun	creature	mammal	0.0	obscure	n02094287	-
 ottoman	noun	artifact	furniture	3.62	common	n03863938	adjective:pertaining
 oubliette	noun	artifact	structure	1.64	rare	n03864053	-
@@ -44848,7 +44848,7 @@ salade	noun	artifact	protection	1.64	rare	n04137990	-
 salah	noun	knowledge	knowledge	3.2	common	n05922953	-
 salai	noun	flora	tree	1.54	rare	n12712921	-
 salal	noun	flora	shrub	1.59	rare	n12256677	-
-salamander	noun	creature	amphibian	2.76	uncommon	n01631917	-
+salamander	noun	creature	reptile	2.76	uncommon	n01631917	-
 salamandriform	adjective	modifier	pertaining	0.0	obscure	a03156024	-
 salami	noun	consumable	food	2.88	uncommon	n07693492	-
 salaried	adjective	modifier	quality	2.95	uncommon	a00866904	-
@@ -45224,7 +45224,7 @@ savage	adjective	modifier	quality	4.05	core	a01266123	noun:person,verb:combat
 savagely	adverb	verb_modifier	manner	2.75	uncommon	r00202624	-
 savageness	noun	aura	attribute	1.5	rare	n05045406	-
 savagery	noun	aura	attribute	2.87	uncommon	n05045406	-
-savanna	noun	terrain	place	2.83	uncommon	n08663422	-
+savanna	noun	terrain	landform	2.83	uncommon	n08663422	-
 savannah	noun	terrain	place	3.62	common	n08663422	-
 savant	noun	person	person	2.71	uncommon	n10226506	-
 savarin	noun	consumable	food	1.65	rare	n07649569	-
@@ -47664,7 +47664,7 @@ slopshop	noun	artifact	structure	0.0	obscure	n04250379	-
 slosh	verb	spell	perceive	2.1	uncommon	v02191314	-
 sloshed	adjective	modifier	quality	2.19	uncommon	a00801674	-
 slot	noun	artifact	artifact	4.09	core	n04250498	verb:cognition
-sloth	noun	aura	attribute	3.1	common	n04644801	-
+sloth	noun	creature	mammal	3.1	common	n02459593	-
 slothful	adjective	modifier	quality	1.91	rare	a00295445	-
 slothfulness	noun	aura	attribute	1.16	rare	n04644801	-
 slouch	noun	person	person	2.7	uncommon	n10632161	verb:movement
@@ -48473,7 +48473,7 @@ spaciously	adverb	verb_modifier	manner	0.0	obscure	r00446725	-
 spaciousness	noun	aura	attribute	1.99	rare	n05112565	-
 spackle	noun	material	material	1.79	rare	n15073455	-
 spacy	adjective	modifier	quality	1.69	rare	a00612329	-
-spade	noun	artifact	artifact	3.33	common	n04273770	verb:contact
+spade	noun	artifact	tool	3.33	common	n04273596	verb:contact
 spadefish	noun	creature	fish	1.23	rare	n02607584	-
 spadefoot	noun	creature	amphibian	1.03	rare	n01651811	-
 spadeful	noun	measure	quantity	0.0	obscure	n13792010	-
@@ -52784,7 +52784,7 @@ titty	noun	bodypart	bodypart	3.01	common	n05562038	-
 titular	adjective	modifier	pertaining	2.9	uncommon	a02827279	-
 titulary	adjective	modifier	pertaining	0.0	obscure	a02827279	-
 tiyin	noun	measure	quantity	0.0	obscure	n13725697	-
-toad	noun	creature	amphibian	3.34	common	n01642406	-
+toad	noun	creature	reptile	3.34	common	n01642406	-
 toadfish	noun	creature	fish	1.41	rare	n02551320	-
 toadflax	noun	flora	flower	1.24	rare	n12905020	-
 toadshade	noun	flora	plant	0.0	obscure	n12489662	-
@@ -54066,7 +54066,7 @@ turps	noun	material	material	1.67	rare	n14917803	-
 turquoise	noun	material	mineral	3.33	common	n15106765	-
 turreae	noun	flora	tree	0.0	obscure	n12721756	-
 turret	noun	artifact	structure	3.42	common	n04509242	-
-turtle	noun	artifact	clothing	3.91	common	n04509492	verb:movement
+turtle	noun	creature	reptile	3.91	common	n01665425	verb:movement
 turtledove	noun	creature	bird	1.86	rare	n01816589	-
 turtlehead	noun	flora	plant	0.0	obscure	n12901865	-
 turtleneck	noun	artifact	clothing	2.62	uncommon	n04509492	-

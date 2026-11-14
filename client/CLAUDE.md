@@ -61,6 +61,15 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
   tracer, health bar for a few seconds, a mark over whoever hit you), `overlays` (the camera zoomed
   so the screen holds your sight, fog past it, the gathering ring, `promptAt` hints over the
   letters: G: dig, E: claim).
-- The spell window shows the alphabet guide (shared `LETTER_GUIDE`), lighting letters you hold.
+- The spell window shows a compact preview (`#preview`: what it makes, two or three key effects)
+  and the alphabet guide (shared `LETTER_GUIDE`), lighting letters you hold.
+- Every item in the HUD, loadout and inventory shows what it does (shared `heldText`; effects in
+  force `effectText`) and a click opens its card (`Hud.inspectWord`).
+- `src/threats.ts` arrows at the screen's edge for `threats` off screen (✈ air, ⚔ ground, distance);
+  aircraft in view get a shadow and speed streaks (`airborne`).
+- Areas' name tags say owner and kind and sit on the edge nearest you; a click on a tag, or a
+  right-click inside an area, opens its card (`Zones.tagAt`, `Events.show`).
+- A click on something nobody owns (a RUIN) walks there and claims it (`claiming`, `take` { id });
+  Shift-click attacks it. A gathering miss shows small (`missed`), a find's popup its `detail`.
 - Knocked out, the HUD card has Start new round: `playAgain` (start.ts) reloads into a fresh room
   with the same choice, past the start screen. A room lost for good (server restart) does the same.

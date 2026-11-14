@@ -199,7 +199,7 @@ build_speed|num|1|x|multiplier on placing structures
 craft_slots|num|0||stations or processes it can run at once
 """.strip().split("\n"))
 GROUPS["spatial"] = """
-tile_type|enum|none|none,water,deep_water,hill,mountain,pit,forest,field,tilled,sand,snow,swamp,lava,road,floor,wall|terrain it creates (tilled: crop land)
+tile_type|enum|none|none,water,deep_water,hill,mountain,pit,forest,field,tilled,sand,snow,swamp,lava,road,floor,wall,jungle,desert,tundra,savanna,badlands,ash,meadow,taiga,marsh|terrain it creates (tilled: crop land)
 radius|num|0|tiles|size of the terrain or area it creates
 elevation|num|0|m|height it raises the ground
 depth|num|0|m|depth it lowers the ground or holds water
