@@ -35,7 +35,11 @@ Node process that owns the game state. One room per map instance (from milestone
 - For local testing only: `LETTERS=9` gives every player nine of each letter, `CROWD=1` spawns
   everyone in one city, `SEED_THINGS=5000` scatters that many objects at start.
 - `loadtest/bots.ts` modes: `wander`, `crowd`, `play` (gathers, spells and fights).
-- Ignore options a client sends when joining. A message with no handler disconnects the sender.
+- Only the room's first client's options are read (`onCreate`: `bots`, `difficulty`, `mode`);
+  later joiners' are ignored. A message with no handler disconnects the sender.
+- Bots (`bots.ts` chooses, `thinkBot` acts): people whose id and name are `botN`, with no client.
+  They think twice a second (easy once), spread by `phase`; spelling goes through `spellWord`,
+  the same code as the `spell` message. Rooms filter by `mode` so friends never join a bot room.
 - Statuses: `Walker.statuses` (rules in shared `status.ts`). `hurtWith` gives them on a landed
   blow or an area pulse, `statusChanged` rebuilds and sets `Player.status`, `sufferStatuses`
   deals damage over time and counts down, `compel` makes the frightened flee, the confused
