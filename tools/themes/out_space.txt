@@ -1,0 +1,234 @@
+# Theme 22, space and astronomy (generated)
+
+# noun celestial
+planet: placement=map field_radius=ABS field_targets=all field_duration=4 gravity*1.5 pull=1 speed_air*0.7 map_reveal+60 produce_E*1.5 produce_O*1.5 counters=levitation,weightlessness,orbit
+sky: placement=map field_radius=ABS field_targets=all field_duration=4 sight_range*1.4 speed_air*1.3 luminosity+2 morale+1 clears_weather=fog,smog counters=nebula,fog
+nova: placement=map field_radius=ABS field_targets=all field_duration=2 luminosity+7 inflict_blind=3 dmg_radiation=2 attack_rate=0.1 friendly_fire=true temperature_delta=6 lode=z,q lode_share=0.05 lode_stock=4 counters=eclipse,dome,shelter,magnetosphere
+quasar: placement=target placement_range=300 field_radius=40 field_targets=all field_duration=2 luminosity+8 dmg_radiation=15 attack_rate=0.5 inflict_blind=3 friendly_fire=true counters=dome,shelter,lead,magnetosphere
+supergiant: placement=map field_radius=ABS field_targets=all field_duration=3 luminosity+6 temperature_delta=12 gravity*1.4 pull=1 growth=1.4 sets_daylight=day counters=eclipse,dome
+andromeda: placement=map field_radius=ABS field_targets=owned field_duration=4 map_reveal+250 detect_life+600 luminosity+1 morale+2 counters=nebula
+constellation: placement=map field_radius=ABS field_targets=owned field_duration=4 luminosity+1 map_reveal+100 sight_range*1.2 luck+1 speed_water*1.2 night_vision=true counters=nebula,fog,cloud
+planetoid: placement=target placement_range=500 event_radius=40 event_duration=6 dmg_blast=8000 dmg_fire=2000 friendly_fire=true siege=6 inflict_stun=4 luminosity=10 tile_type=pit radius=6 lode=z,q,x lode_share=0.7 lode_stock=10 counters=dome,deflector
+crescent: placement=sky integrity=100000000 armor=100000 luminosity=1 field_radius=ABS field_targets=all sets_daylight=night persistence=5 stealth+2 gravity*0.9 counters=sun,daylight
+firmament: placement=map field_radius=ABS field_targets=owned field_duration=4 sight_range*1.5 map_reveal+80 speed_air*1.3 morale+2 clears_weather=fog,rain counters=nebula
+heavens: placement=map field_radius=ABS field_targets=allies field_duration=3 luminosity+3 heals+1 morale+3 gravity*0.8 counters=eclipse,nadir
+
+# noun phenomenon
+sunspot: placement=map field_radius=ABS field_targets=all field_duration=3 luminosity+-2 jams=true temperature_delta=-3 produce_X*1.5 counters=magnetosphere
+corona: placement=self field_radius=12 field_targets=enemies field_duration=1 luminosity+6 dmg_fire=20 attack_rate=0.5 inflict_blind=2 temperature_delta=40 counters=eclipse,dome
+zenith: placement=map field_radius=ABS field_targets=owned field_duration=2 sets_daylight=day luminosity+4 morale+3 accuracy+0.1 attack_range*1.3 counters=nadir,eclipse,dusk
+nadir: placement=map field_radius=ABS field_targets=enemies field_duration=2 luminosity+-2 morale+-3 luck+-2 gravity*1.5 counters=zenith,heavens
+dusk: placement=map field_radius=ABS field_targets=all field_duration=3 sets_daylight=night luminosity+-2 stealth+2 morale+-1 temperature_delta=-4 counters=dawn,sun,zenith
+horizon: placement=self field_radius=60 field_targets=owned field_duration=3 sight_range*2 map_reveal+80 detect_life+100 counters=fog,nebula,mist
+sunlight: placement=map field_radius=ABS field_targets=all field_duration=4 sets_daylight=day luminosity+5 temperature_delta=6 growth=1.4 stealth+-2 clears_weather=fog counters=night,eclipse,fog,vampire
+daylight: placement=map field_radius=ABS field_targets=all field_duration=3 sets_daylight=day luminosity+4 detect_stealth+1 stealth+-2 counters=night,darkness,eclipse,dusk
+moonlight: placement=map field_radius=ABS field_targets=all field_duration=4 sets_daylight=night luminosity+2 stealth+1 night_vision=true gravity*0.9 produce_O*1.3 counters=sun,daylight,sunlight
+sunshine: placement=map field_radius=ABS field_targets=all field_duration=4 sets_weather=clear clears_weather=rain,fog,snow,storm luminosity+4 temperature_delta=6 morale+3 growth=1.5 counters=rain,fog,cloud,storm,eclipse
+sunburst: placement=map field_radius=ABS field_targets=all field_duration=1 sets_daylight=day clears_weather=fog,rain,storm luminosity+8 inflict_blind=2 morale+3 counters=eclipse,dusk
+ultraviolet: placement=target placement_range=150 field_radius=20 field_targets=all field_duration=2 dmg_radiation=3 attack_rate=0.5 inflict_burn=4 detect_stealth+3 friendly_fire=true counters=shade,shelter,dome,magnetosphere
+irradiation: placement=target placement_range=200 field_radius=20 field_targets=all field_duration=2 dmg_radiation=10 attack_rate=0.5 inflict_sick=8 friendly_fire=true counters=lead,shelter,bunker,magnetosphere,spacesuit
+electromagnetism: placement=self field_radius=20 field_targets=enemies field_duration=2 pull=3 dmg_electric=8 attack_rate=0.5 accuracy+-0.2 jams=true counters=repulsion,rubber
+magnetosphere: placement=map field_radius=ABS field_targets=owned field_duration=5 res_radiation+0.8 res_electric+0.3 luminosity+1 counters=radiation,pulsar,supernova,nova,quasar,irradiation,ultraviolet,sunspot
+ionosphere: placement=map field_radius=ABS field_targets=owned field_duration=4 map_reveal+120 res_radiation+0.3 hearing_range+100 counters=sunspot,jams
+troposphere: placement=map field_radius=ABS field_targets=all field_duration=3 temperature_delta=-8 speed_air*0.8 produce_W*2 sets_weather=cloud
+mesosphere: placement=map field_radius=ABS field_targets=owned field_duration=3 temperature_delta=-20 flight_ceiling*0.5 counters=meteor,meteoroid,meteorite,shower,bolide,bombardment,planetoid
+exosphere: placement=target placement_range=150 field_radius=30 field_targets=all field_duration=2 gravity*0.2 temperature_delta=-80 res_suffocation+-0.5 hover=true counters=atmosphere,spacesuit,gravity
+inertia: placement=self field_radius=6 field_targets=self field_duration=2 anchored=true speed_land*0.7 res_blunt+0.3 knockback*0 counters=repulsion,gravitation,singularity,vortex,whirlpool
+momentum: placement=self field_radius=6 field_targets=self field_duration=1 speed_land*1.6 knockback+6 dmg_blunt+25 morale+2 counters=inertia,anchor
+relativity: placement=self field_radius=20 field_targets=enemies field_duration=1 time_scale*0.5 gravity*1.5 counters=haste,inertia
+fusion: placement=target placement_range=200 field_radius=25 field_targets=all field_duration=1 dmg_fire=60 dmg_radiation=30 attack_rate=0.5 luminosity+8 temperature_delta=100 friendly_fire=true counters=dome,shelter,bunker,magnetosphere
+implosion: placement=target placement_range=200 field_radius=20 field_targets=all field_duration=1 pull=10 dmg_crush=60 attack_rate=0.5 friendly_fire=true siege=3 counters=anchor,repulsion,inertia,tether
+
+# noun light
+moonbeam: placement=target placement_range=200 field_radius=8 field_targets=all field_duration=1 luminosity+3 night_vision=true detect_stealth+3 gravity*0.6 counters=darkness,shade
+sunbeam: placement=target placement_range=200 field_radius=6 field_targets=all field_duration=1 luminosity+6 dmg_light=15 attack_rate=1 inflict_blind=1 temperature_delta=10 detect_stealth+3 counters=fog,night,shade
+sunray: placement=target placement_range=300 event_radius=3 dmg_light=80 dmg_fire=20 inflict_blind=3 inflict_burn=3 luminosity=8 counters=mirror,shade,eclipse
+ray: placement=target placement_range=300 event_radius=2 dmg_light=50 inflict_blind=2 luminosity=6 counters=mirror,shield,deflector
+photon: placement=target placement_range=500 event_radius=1 dmg_light=60 inflict_blind=2 luminosity=6 armor_pierce=0.5 counters=mirror,deflector
+radiance: placement=self field_radius=15 field_targets=allies field_duration=2 luminosity+5 morale+2 beauty+2 heals+0.5 charm+2 counters=eclipse,darkness
+luminescence: placement=self field_radius=10 field_targets=owned field_duration=3 luminosity+3 night_vision=true stealth+-1 counters=darkness
+fluorescence: placement=self field_radius=15 field_targets=all field_duration=2 luminosity+4 detect_stealth+3 stealth+-2 counters=camouflage,invisibility
+
+# noun landform
+crater: tile_type=pit radius=5 depth=30 elevation=0 movement_cost=2 lode=x,z,q lode_share=0.3 lode_stock=5 placeable_on=land,sand,desert,ash
+abyss: tile_type=pit radius=6 depth=1000 field_radius=30 field_targets=all pull=3 fear_aura=4 temperature_delta=-10 luminosity=0
+
+# noun knowledge
+astronomy: placement=self field_radius=6 field_targets=self field_duration=5 intelligence+2 map_reveal+120 sight_range*1.5 detect_letters+200 night_vision=true
+astrophysics: placement=self field_radius=6 field_targets=self field_duration=5 intelligence+3 read_properties+2 res_radiation+0.3 map_reveal+80 counters=astrology
+cosmology: placement=self field_radius=6 field_targets=self field_duration=5 intelligence+3 map_reveal+200 detect_life+300 morale+1
+astronautics: placement=self field_radius=50 field_targets=owned field_duration=5 speed_air*1.3 speed_space*1.5 upkeep_fuel*0.7 flight_ceiling*2 res_suffocation+0.5
+rocketry: placement=self field_radius=50 field_targets=owned field_duration=5 speed_air*1.4 upkeep_fuel*0.7 attack_range*1.3 dmg_blast*1.3
+zodiac: placement=self field_radius=6 field_targets=self field_duration=5 luck+3 morale+1 read_properties+1 charm+1
+astrology: placement=self field_radius=6 field_targets=self field_duration=5 luck+3 charm+2 intelligence+-1 counters=astrophysics,doubt
+
+# noun vehicle_air
+spacecraft: mass=50000 length=30 integrity=5000 material=aluminum,steel speed_air=300 speed_space=7500 flight_ceiling=ABS self_propelled=true mountable=true seats=6 upkeep_fuel=15 sight_range+1500 map_reveal=150 res_suffocation=1 res_radiation=0.7 gravity*0.1 color=silver
+starship: mass=1000000 length=120 integrity=30000 armor=200 material=steel,titanium speed_air=500 speed_space=30000 flight_ceiling=ABS self_propelled=true mountable=true seats=100 upkeep_fuel=60 dmg_light=600 attack_rate=0.5 attack_range=1000 attack_area=5 sight_range+5000 map_reveal=400 shield_pool=5000 shield_regen=20 res_suffocation=1 color=white
+lander: mass=15000 length=7 integrity=1500 material=aluminum speed_air=40 speed_space=2000 flight_ceiling=5000 hover=true self_propelled=true mountable=true seats=2 upkeep_fuel=8 anchored=true map_reveal=60 res_suffocation=1 color=gold
+orbiter: mass=5000 length=10 integrity=1000 material=aluminum portable=false speed_space=7800 flight_ceiling=ABS requires_pilot=false sight_range=50000 map_reveal=300 detect_life=1000 sees_through=night,fog upkeep_power=1 color=silver
+sputnik: mass=84 length=1 integrity=100 material=aluminum portable=false speed_space=7800 flight_ceiling=ABS requires_pilot=false sight_range=30000 map_reveal=200 alarm=true loudness=3 shape=round color=silver
+
+# noun vehicle_land
+rover: mass=1000 length=3 integrity=600 material=aluminum speed_land=2 self_propelled=true mountable=true seats=2 requires_pilot=false terrain_ignored=sand,ash,badlands,desert,pit,snow detect_letters=150 map_reveal=40 res_cold=0.8 res_radiation=0.6 upkeep_power=1 anchored=true color=silver
+
+# noun structure
+launchpad: mass=2000000 footprint=8 integrity=50000 material=concrete,steel portable=false crafts=vehicle_air craft_slots=1 claim_radius=6 field_radius=60 field_targets=owned speed_air*1.5 upkeep_fuel*0.8 res_fire=0.8 color=gray
+biosphere: mass=1000000 footprint=10 height=12 integrity=30000 material=glass,steel portable=false enterable=true occupants=20 comfort=3 cover=0.8 food_output=5 water_output=20 fertility=8 field_radius=40 field_targets=owned res_suffocation+1 temp_min+-40 counters=space,exosphere,radiation,irradiation,ultraviolet color=white
+
+# noun machine
+thruster: mass=20 integrity=80 material=steel equip_slot=back speed_air=30 flight_ceiling=500 hover=true agility=6 upkeep_fuel=2 loudness=6 dmg_fire=15 color=gray
+booster: mass=60 integrity=120 material=aluminum,steel equip_slot=back speed_air=80 flight_ceiling=3000 upkeep_fuel=6 loudness=9 dmg_fire=40 attack_range=3 single_use=true color=white
+centrifuge: mass=800 integrity=400 material=steel portable=false field_radius=10 field_targets=all gravity*3 pull=-4 labor=1 upkeep_power=10 loudness=4 counters=levitation,weightlessness,float
+transporter: mass=800 integrity=400 material=steel,glass portable=false teleport_range=500 occupants=6 upkeep_power=20 luminosity=3 color=silver
+deflector: mass=100 integrity=500 material=steel portable=false field_radius=20 field_targets=owned res_blast+0.5 res_light+0.5 reflect+0.2 upkeep_power=5 counters=meteoroid,shower,bombardment,barrage,meteor,meteorite,bolide,photon,ray,planetoid color=blue
+
+# noun device
+reflector: mass=30 length=2 integrity=40 material=glass,steel equip_slot=held hands_required=2 sight_range+4000 sees_through=night detect_stealth+2 reflect=0.3 read_properties=2 color=white
+spectroscope: mass=3 integrity=15 material=glass,brass equip_slot=held hands_required=1 read_properties=4 sight_range+500 detect_stealth+2 detect_letters=150 color=gold
+spectrometer: mass=20 integrity=30 material=steel,glass equip_slot=held hands_required=2 read_properties=5 detect_letters=250 detect_life=100 upkeep_power=0.2 color=gray
+magnetometer: mass=2 integrity=20 material=steel equip_slot=held hands_required=1 detect_underground=true detect_letters=200 detect_stealth+1 counters=stealth color=gray
+gyroscope: mass=1 integrity=20 material=steel equip_slot=held hands_required=0 anchored=true accuracy=0.97 agility=6 counters=confusion,dizziness,whirlpool color=silver
+orrery: mass=10 integrity=20 material=brass portable=true map_reveal=100 detect_letters=150 beauty=6 value=200 field_radius=10 field_targets=owned intelligence+1 color=gold
+
+# noun tool
+tether: mass=5 length=30 integrity=60 material=fiber equip_slot=held hands_required=1 anchored=true res_suffocation=0.2 counters=singularity,wormhole,vortex,repulsion,implosion,gravitation color=yellow
+
+# noun mineral
+lodestone: mass=5 integrity=100 hardness=6 material=stone magnetism=6 letter_steal=1 attack_range=5 equip_slot=held hands_required=0 anchored=true counters=iron,steel,compass color=black
+
+# noun material
+antimatter: mass=0.001 integrity=1 state=energy dmg_blast=5000 dmg_radiation=1000 attack_area=20 single_use=true friendly_fire=true self_damage=0.5 luminosity=10 value=100000 counters=matter
+
+# noun weapon
+blaster: mass=2 integrity=40 material=steel,plastic equip_slot=held hands_required=1 dmg_light=45 attack_rate=1.5 attack_range=60 upkeep_power=0.1 loudness=4 color=silver
+skyrocket: mass=0.5 length=1 integrity=5 material=paper single_use=true speed_air=100 luminosity=8 dmg_fire=20 dmg_blast=15 attack_range=150 attack_area=3 loudness=7 inflict_blind=1 color=red
+projectile: mass=1 integrity=5 material=steel single_use=true dmg_pierce=35 attack_range=150 knockback=2 shape=pointed
+
+# noun document
+horoscope: mass=0.01 integrity=1 material=paper equip_slot=held hands_required=0 luck=2 read_properties=1 color=white
+
+# noun person
+stargazer: mass=70 integrity=80 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 sight_range=3000 night_vision=true map_reveal=80 detect_letters=150 food_need=0.03
+
+# noun worker
+cosmonaut: mass=80 integrity=110 alive=true sentient=true intelligence=8 loyalty=8 courage=8 hands=true speech=true speed_land=4 res_suffocation=1 res_cold=0.6 res_radiation=0.3 gravity*0.4 map_reveal=100 food_need=0.03
+spaceman: mass=80 integrity=110 alive=true sentient=true intelligence=7 loyalty=7 hands=true speech=true speed_land=4 res_suffocation=1 res_cold=0.6 gravity*0.4 hover=true map_reveal=80 food_need=0.03
+astrophysicist: mass=70 integrity=80 alive=true sentient=true intelligence=10 loyalty=6 hands=true speech=true speed_land=4 sight_range+1500 map_reveal=150 detect_letters=300 read_properties=3 food_need=0.03
+voyager: mass=70 integrity=100 alive=true sentient=true intelligence=6 loyalty=6 courage=8 hands=true speech=true speed_land=5 speed_water=1 range=500 map_reveal=120 sight_range+300 food_need=0.03
+
+# noun creature
+extraterrestrial: mass=40 integrity=150 alive=true sentient=true intelligence=10 hands=true speed_land=5 hover=true teleport_range=50 dmg_light=30 attack_rate=1 attack_range=40 inflict_confuse=3 breathes=none res_radiation=0.8 res_cold=0.6 detect_life=200 read_properties=3 aggression=4 gravity*0.5 color=green
+martian: mass=50 integrity=150 alive=true sentient=true intelligence=8 hands=true speed_land=5 dmg_light=40 attack_rate=1 attack_range=60 res_cold=0.8 temp_min=-100 breathes=none aggression=7 pack_size=3 gravity*0.4 color=red
+
+# noun fighter
+invader: mass=70 integrity=130 alive=true sentient=true intelligence=5 hands=true speed_land=5 hover=true dmg_light=35 attack_rate=1 attack_range=50 aggression=8 courage=7 pack_size=5 breathes=none color=green
+
+# noun act
+spacewalk: placement=self field_radius=4 field_targets=self field_duration=2 gravity*0.05 hover=true res_suffocation+1 speed_land*1.3 map_reveal+60 counters=gravity
+liftoff: placement=self field_radius=6 field_targets=self field_duration=1 gravity*0.1 hover=true speed_air+30 flight_ceiling+2000 loudness+8 counters=gravity,anchor
+blastoff: placement=self field_radius=12 field_targets=enemies field_duration=1 dmg_fire=60 dmg_blast=40 attack_rate=1 knockback=10 loudness=10 luminosity+6 pull=-6 counters=anchor,inertia
+
+# noun event
+reentry: placement=target placement_range=400 event_radius=10 event_duration=1 dmg_fire=400 dmg_blast=300 luminosity=8 friendly_fire=true tile_type=pit radius=1 lode=x,z lode_share=0.3 lode_stock=2 counters=dome,deflector,mesosphere
+splashdown: placement=target placement_range=300 event_radius=10 event_duration=1 dmg_blunt=150 knockback=8 friendly_fire=true tile_type=water radius=4 counters=dome
+collision: placement=target placement_range=300 event_radius=15 event_duration=1 dmg_crush=300 dmg_blast=200 knockback=20 inflict_stun=3 friendly_fire=true counters=anchor,deflector,dome
+conjunction: placement=map field_radius=ABS field_targets=all field_duration=3 luck+2 morale+2 gravity*1.2 produce_Q*2 produce_Z*2 counters=nebula,retrograde
+
+# noun attack
+salvo: placement=target placement_range=300 field_radius=20 field_targets=all field_duration=1 meteors=15 dmg_blast=120 attack_area=5 friendly_fire=true counters=dome,shelter,bunker,deflector
+volley: placement=target placement_range=200 field_radius=20 field_targets=all field_duration=1 meteors=12 dmg_pierce=60 attack_area=4 friendly_fire=true counters=shield,dome,shelter
+shrapnel: placement=target placement_range=200 field_radius=15 field_targets=all field_duration=1 meteors=10 dmg_pierce=80 dmg_slash=40 attack_area=4 inflict_bleed=5 friendly_fire=true counters=dome,shelter,bunker,armor
+pelting: placement=target placement_range=150 field_radius=20 field_targets=all field_duration=1 meteors=20 dmg_blunt=20 attack_area=4 inflict_stun=1 friendly_fire=true counters=dome,shelter,umbrella
+
+# noun structure
+counterweight: mass=2000 integrity=3000 hardness=7 material=iron,concrete portable=false anchored=true counters=repulsion,implosion,singularity,gravitation color=gray
+
+# noun device
+telemetry: mass=5 integrity=30 material=steel,plastic portable=false map_reveal=150 detect_life=300 read_properties=2 alarm=true upkeep_power=0.5 color=gray
+lidar: mass=8 integrity=30 material=steel,glass portable=false sight_range=2000 sees_through=night,fog detect_stealth+3 map_reveal=80 upkeep_power=0.5 color=black
+ejector: mass=30 integrity=100 material=steel equip_slot=body speed_air=60 flight_ceiling=300 single_use=true hover=true res_blast=0.4 color=orange
+
+# noun affliction
+grounding: placement=target placement_range=150 field_radius=25 field_targets=enemies field_duration=2 gravity*3 speed_air*0 hover=false flight_ceiling*0 counters=liftoff,levitation,float,hover,soar
+sunstroke: placement=target placement_range=100 field_radius=10 field_targets=all field_duration=1 temperature_delta=20 inflict_confuse=4 inflict_sick=6 dmg_fire=3 attack_rate=0.5 counters=shade,shelter,dusk,water
+
+# adjective pertaining
+stellar: luminosity+3 dmg_fire+30 value*3 beauty+2 integrity*1.5
+astral: phase=true stealth+3 mass*0.1 dmg_psychic+20 gravity*0.2
+interstellar: speed_space*3 range*10 speed_air*1.5 flight_ceiling+20000 res_suffocation+0.5
+interplanetary: speed_space*2 range*5 flight_ceiling+10000 res_cold+0.4
+intergalactic: speed_space*5 range*20 value*5 res_radiation+0.5 res_suffocation+1
+galactic: integrity*3 mass*10 map_reveal+150 value*10 attack_area*2
+planetary: integrity*3 mass*5 field_radius*3 pull+1 gravity*1.5
+cometary: speed_air*2 speed_space*2 luminosity+3 dmg_cold+20
+meteoric: speed_land*2 speed_air*2 dmg_blast+40 dmg_fire+20 luminosity+2
+nebular: stealth+3 transparency+0.5 luminosity+1 sight_range*0.7
+heliocentric: luminosity+2 temperature+20 morale+1 field_radius*1.5
+terrestrial: gravity*1.2 speed_land*1.2 speed_air*0 anchored=true
+earthbound: gravity*2 flight_ceiling*0 speed_air*0 anchored=true res_earth+0.3
+centrifugal: pull+-3 knockback*2 attack_area*1.3
+centripetal: pull+3 accuracy+0.1
+
+# adjective quality
+starry: luminosity+2 beauty+3 night_vision=true
+starlit: luminosity+1 sight_range*1.3 beauty+2 night_vision=true
+moonlit: luminosity+1 stealth+2 beauty+2 night_vision=true gravity*0.8
+sunlit: luminosity+3 temperature+10 beauty+1 growth*1.3
+starlike: luminosity+4 beauty+2 value*2
+moonless: luminosity*0 stealth+3 sight_range*0.7
+sunless: luminosity*0 temperature+-15 stealth+2 growth*0.5
+starless: luminosity*0 stealth+2 morale+-1
+unearthly: dmg_psychic+25 fear_aura+3 beauty+2 gravity*0.5 inflict_fear+3
+otherworldly: phase=true dmg_magic+25 beauty+3 res_magic+0.3 gravity*0.6
+airless: res_suffocation+-1 temperature+-40 hearing_range*0 loudness*0
+rarefied: gravity*0.6 res_suffocation+-0.3 speed_air*1.3 value*3
+nebulous: stealth+3 transparency+0.4 accuracy+-0.2
+astronomical: mass*20 integrity*4 value*20 sight_range*3
+radiant: luminosity+5 beauty+3 dmg_light+30 heals+0.5
+luminous: luminosity+4 beauty+2 night_vision=true stealth+-2
+incandescent: luminosity+6 temperature+800 dmg_fire+40 inflict_blind+1
+infrared: night_vision=true detect_life+80 sees_through=night,smoke dmg_fire+10
+ionized: dmg_electric+30 conductivity+4 luminosity+2
+ferromagnetic: magnetism+5 conductivity+2 letter_steal+1
+retrograde: luck+-3 accuracy+-0.1 speed_land*0.8 time_scale*0.9
+boundless: field_radius*3 range*10 attack_range*2 value*3
+primordial: integrity*3 mass*3 strength+3 value*5
+stranded: speed_land*0.3 speed_water*0 speed_air*0 morale+-2
+marooned: speed_water*0 speed_land*0.6 morale+-3 stealth+1
+ballistic: attack_range*2 dmg_blast+60 knockback+4 aggression+3
+moonstruck: intelligence*0.6 loyalty+3 charm+2 courage+2
+
+# verb movement
+hover: effect_target=self gravity*0.3 hover=true speed_air=3 flight_ceiling=10 duration=20
+gravitate: effect_target=self gravity*2 anchored=true res_blunt+0.2 speed_land*0.8 duration=20
+ascend: effect_target=self gravity*0.3 jump+10 flight_ceiling+30 speed_air=6 duration=10
+soar: effect_target=self speed_air=20 flight_ceiling=500 gravity*0.5 sight_range*1.5 duration=20
+plummet: effect_target=self gravity*4 speed_air*3 dmg_crush+60 knockback+6 duration=3
+plunge: effect_target=self gravity*3 dmg_pierce+40 dive_depth+20 speed_water*1.5 duration=4
+hurtle: effect_target=self speed_land*2.5 knockback+5 dmg_blunt+30 agility*0.5 duration=6
+revolve: effect_target=self evasion+0.3 speed_land*1.3 attack_area+2 duration=12
+drift: effect_target=self gravity*0.4 speed_land*0.6 stealth+2 hover=true duration=20
+moonwalk: effect_target=self gravity*0.17 jump+4 charm+2 speed_land*1.2 duration=20
+spiral: effect_target=self evasion+0.25 agility+3 speed_air*1.5 attack_area+1 duration=10
+teleport: effect_target=self teleport_range=300 duration=10
+warp: effect_target=self teleport_range=150 speed_land*2 time_scale*1.3 duration=10
+eject: effect_target=mount speed_air=60 flight_ceiling=300 hover=true gravity*0.3 duration=6
+jettison: effect_target=self mass*0.5 speed_land*1.5 speed_air*1.5 carry_capacity*0.3 duration=30
+
+# verb perceive
+stargaze: effect_target=self sight_range*3 night_vision=true map_reveal+100 detect_letters+200 speed_land*0.5 duration=30
+
+# verb contact
+abduct: effect_target=touched moves_target=40 inflict_stun=4 inflict_confuse=8 duration=5
+
+# verb transform
+magnetize: effect_target=held magnetism+6 letter_steal+1 pull+2 duration=30
+irradiate: effect_target=held dmg_radiation+30 inflict_sick+6 luminosity+2 duration=30
+twinkle: effect_target=self luminosity+2 beauty+3 charm+2 stealth+1 duration=20
+
+# adverb manner
+skyward: jump*3 speed_air*1.5 gravity*0.5 flight_ceiling*2
+heavenward: jump*2 gravity*0.6 morale+1 dmg_holy+10
+upward: jump*2 flight_ceiling*1.5 gravity*0.8
+astronomically: duration*3 attack_range*2 value*5
