@@ -62,6 +62,33 @@ it("walks a player toward the point it asks for", async () => {
   expect(room.clients.length).toBe(1);
 });
 
+it("turns to a new destination at once and stops where it stands, never walking back", async () => {
+  const room = (await colyseus.createRoom("world", {})) as unknown as WorldRoom;
+  const a: any = await colyseus.connectTo(room as never);
+  const p = room.state.players.get(a.sessionId)!;
+  const city = room.map.cities[0]!;
+  p.x = city.x + 0.5; p.y = city.y + 0.5;
+  const x0 = p.x;
+  // Steering: three tiles ahead, then a new aim one tile short of it (as a later key press sends).
+  a.send("move", { x: x0 + 3, y: p.y });
+  await new Promise((r) => setTimeout(r, 100));
+  room.update(0.1);
+  a.send("move", { x: x0 + 1, y: p.y });
+  await new Promise((r) => setTimeout(r, 100));
+  for (let i = 0; i < 60; i++) room.update(0.1);
+  expect(p.x).toBeCloseTo(x0 + 1, 2); // went to the new aim, not on to the old one
+  // Released keys: stop where the server has you, with no walk back to an older position.
+  a.send("move", { x: x0 + 4, y: p.y });
+  await new Promise((r) => setTimeout(r, 100));
+  for (let i = 0; i < 3; i++) room.update(0.1);
+  a.send("stop");
+  await new Promise((r) => setTimeout(r, 100));
+  const at = p.x;
+  expect(at).toBeGreaterThan(x0 + 1);
+  for (let i = 0; i < 30; i++) room.update(0.1);
+  expect(p.x).toBe(at);
+});
+
 it("spells a word into an object, spends the letters, and refuses what it cannot make", async () => {
   const room = (await colyseus.createRoom("world", {})) as unknown as WorldRoom;
   const a: any = await colyseus.connectTo(room as never);
@@ -622,7 +649,7 @@ it("events act through their properties: murder, raid, repair, rescue, trade, re
   const chair = thingNamed("chair");
   wa.foe = null;
   a.send("spell", "fire"); await wait();
-  expect(said("a")).toBe("Aim FIRE first: right-click where it should go");
+  expect(said("a")).toBe("Aim FIRE: spell it, then click where it should go");
   a.send("pick", { x: wa.player.x + 50, y: wa.player.y }); await wait();
   a.send("spell", "fire"); await wait();
   expect(said("a")).toBe("Too far away for FIRE");

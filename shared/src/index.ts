@@ -16,3 +16,4 @@ export * from "./aura.js";
 export * from "./mind.js";
 export * from "./upkeep.js";
 export * from "./describe.js";
+export * from "./inspect.js";

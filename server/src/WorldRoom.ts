@@ -1,7 +1,7 @@
 import { Room, type Client } from "colyseus";
 import { StateView } from "@colyseus/schema";
 import {
-  addLetters, afflict, aggressive, clearLine, courageOf, pluralize, auras, authorityOf, chooseTarget, commandLimit, draw, groundFood, hasAny, ignoresOrder, moraleAim, moraleGoal, needs, nextMorale, noStores, outputs, recruitRate, rerouteSeconds, retreats, routed, supply, theftResistance, HUNGER_LOYALTY, NORMAL, STARTING_STORES, STARVING, SUPPLIES, bodyFlags, cure, useObject, findPath, hampered, inflicts, statusDamage, statusEffects, tickStatuses, wake, GATHER_SECONDS, gatherLetter, generateMap, GIVE_RANGE, missing, parsePhrase, applyAdjectives, cannotCarry, improvisable, readDescription, production, resolveSpelled, SEPARATE_UP_TO, nearestWalkable, randomWalkable, resolve, Tile, tileAt, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit,
+  addLetters, afflict, aggressive, clearLine, courageOf, pluralize, auras, authorityOf, chooseTarget, commandLimit, draw, groundFood, hasAny, ignoresOrder, moraleAim, moraleGoal, needs, nextMorale, noStores, outputs, recruitRate, rerouteSeconds, startingSupply, becomes, retreats, routed, supply, theftResistance, HUNGER_LOYALTY, NORMAL, STARTING_STORES, STARVING, SUPPLIES, bodyFlags, cure, useObject, findPath, hampered, inflicts, statusDamage, statusEffects, tickStatuses, wake, GATHER_SECONDS, gatherLetter, generateMap, GIVE_RANGE, missing, parsePhrase, applyAdjectives, cannotCarry, improvisable, readDescription, production, resolveSpelled, SEPARATE_UP_TO, nearestWalkable, randomWalkable, resolve, Tile, tileAt, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit,
   type Affliction, type Candidate, type Dictionary, type Stores, type Supply, type Entity, type Hampered, type Status, type Stats, type Letters, type LoadoutDetail, type Op, type Phrase, type Point, type Spelled, type Value, type WordDef, type WorldMap,
 } from "@lastword/shared";
 import { affords, botSettings, chooseWord, held, wordBook, type BotWord, type Difficulty, type Use } from "./bots.js";
@@ -319,8 +319,24 @@ export class WorldRoom extends Room {
       if (!walker || !p || !Number.isFinite(p.x) || !Number.isFinite(p.y)) return;
       const clamp = (v: number) => Math.min(this.map.size, Math.max(0, v));
       walker.target = { x: clamp(p.x!), y: clamp(p.y!) };
+      // A person's new destination replaces the old route at once. Kept, it would walk on to where
+      // the last key press aimed and then turn back (the route is otherwise only searched again
+      // once the target has drifted two tiles, which suits chasing, not steering).
+      // Open ground (the usual case for steering) needs no search.
+      const open = walker.flying || clearLine(this.map, walker.player, walker.target);
+      walker.route = open ? [walker.target] : [];
+      walker.routeTo = open ? { ...walker.target } : null;
+      walker.routeAge = 0;
       walker.gathering = 0;
       walker.foe = null; // walking away breaks off an attack
+    },
+    /** Stop where you stand now (arrow keys released). The server's position, not the client's older copy. */
+    stop: (client: Client) => {
+      const walker = this.walkers.get(client.sessionId);
+      if (!walker) return;
+      walker.target = null;
+      walker.route = [];
+      walker.routeTo = null;
     },
     /** Stand still and gather a letter from the ground. */
     gather: (client: Client) => {
@@ -1460,7 +1476,7 @@ export class WorldRoom extends Room {
       integrity: null,
     });
     // Living things that can move act on their own; ones you can ride are gear instead.
-    if (phrase.stats.flag("alive") && !phrase.stats.flag("mountable") && Math.max(phrase.stats.num("speed_land"), phrase.stats.num("speed_air")) > 0) {
+    if (becomes(phrase.stats) === "creature") {
       for (let i = 0; i < copies; i++) { const p = at(i); this.addCreature(one(), owner, p.x, p.y, each); }
       const wild = this.command(owner);
       if (wild >= copies) return "runs wild: you cannot command more";
@@ -1469,6 +1485,8 @@ export class WorldRoom extends Room {
     const here = { x: walker.player.x, y: walker.player.y }; // laying terrain may move the speller
     const tile = TILE_TYPES[String(phrase.stats.get("tile_type"))];
     if (tile !== undefined) this.reshape(walker.player.x, walker.player.y, phrase.stats.num("radius") * Math.sqrt(n), tile);
+    // A machine arrives ready to run: its owner's stores get half an hour of what it draws.
+    supply(walker.stores, startingSupply(phrase.stats, n), 60);
     let worn = 0;
     for (let i = 0; i < copies; i++) {
       const gear = one();
@@ -1632,7 +1650,7 @@ export class WorldRoom extends Room {
     const s = phrase.stats, word = phrase.noun.toUpperCase();
     if (s.flag("transfers_ownership")) return this.steal(id, walker, phrase);
     const reach = Math.max(1.5, s.num("placement_range") / TILE_METERS);
-    // A target picked with right-click wins over what you are attacking.
+    // A target clicked after spelling the event wins over what you are attacking.
     const selected = walker.picked ?? walker.foe ?? "";
     const other = this.walkers.get(selected);
     const thing = this.state.things.get(selected), gear = this.grounded.get(selected);
@@ -1739,7 +1757,7 @@ export class WorldRoom extends Room {
     // a picked spot, else the picked or attacked target. It must be in reach.
     const regional = s.get("placement") === "region" || s.get("placement") === "map";
     const aimed = walker.aim ?? (other ? other.player : thing ?? null);
-    if (!regional && !aimed) throw new Error(`Aim ${word} first: right-click where it should go`);
+    if (!regional && !aimed) throw new Error(`Aim ${word}: spell it, then click where it should go`);
     if (!regional && !near(aimed!)) throw new Error(`Too far away for ${word}`);
     const at = regional ? walker.player : aimed!;
     const area: Area = {
@@ -1792,7 +1810,7 @@ export class WorldRoom extends Room {
       const reach = Math.max(1.5, s.num("placement_range") / TILE_METERS);
       const picked = walker.picked ?? walker.foe;
       const target = walker.aim ?? (picked ? this.walkers.get(picked)?.player ?? this.state.things.get(picked) : undefined);
-      if (!target) throw new Error(`Aim ${word} first: right-click where it should go`);
+      if (!target) throw new Error(`Aim ${word}: spell it, then click where it should go`);
       if (Math.hypot(target.x - walker.player.x, target.y - walker.player.y) > reach) throw new Error(`Too far away for ${word}`);
       at = { x: target.x, y: target.y };
     }

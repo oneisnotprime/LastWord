@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   aggressive, authorityOf, chooseTarget, commandLimit, draw, groundFood, ignoresOrder, moraleAim, moraleGoal, needs, nextMorale,
-  outputs, recruitRate, rerouteSeconds, resolve, retreats, routed, seeded, strikeUnit, supply, theftResistance, Tile, UNCOMMANDED, Unit, useObject,
+  outputs, recruitRate, startingSupply, STARTING_SUPPLY_MINUTES, rerouteSeconds, resolve, retreats, routed, seeded, strikeUnit, supply, theftResistance, Tile, UNCOMMANDED, Unit, useObject,
   type Stores,
 } from "./index.js";
 import { demo } from "./testdata.js";
@@ -106,5 +106,14 @@ describe("upkeep", () => {
     expect(groundFood(Tile.Forest)).toBeGreaterThan(0);
     expect(groundFood(Tile.City)).toBe(0);
     expect(useObject(dict, "wheat")?.stats.num("nutrition")).toBe(4);
+  });
+});
+
+describe("starting supply", () => {
+  it("a made machine comes with half an hour of what it draws; a living thing brings nothing", () => {
+    expect(startingSupply(resolve(dict, "car"))).toEqual({ food: 0, fuel: 0.1 * STARTING_SUPPLY_MINUTES, power: 0 });
+    expect(startingSupply(resolve(dict, "radar"), 2)).toEqual({ food: 0, fuel: 0, power: 2 * 20 * STARTING_SUPPLY_MINUTES });
+    expect(startingSupply(resolve(dict, "dragon"))).toEqual({ food: 0, fuel: 0, power: 0 });
+    expect(startingSupply(resolve(dict, "sword"))).toEqual({ food: 0, fuel: 0, power: 0 });
   });
 });

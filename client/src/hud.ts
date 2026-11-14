@@ -1,4 +1,4 @@
-import { missing, type Dictionary, type Letters, type LoadoutDetail } from "@lastword/shared";
+import { inspectText, missing, type Card, type Dictionary, type Letters, type LoadoutDetail } from "@lastword/shared";
 import { BADGE } from "./art/paper.js";
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
@@ -39,6 +39,16 @@ function bar(label: string, now: number, max: number, kind = "") {
   return `<div class="bar"><span>${label}</span><div class="track"><i class="${tone}" style="width:${pct}%"></i><em>${Math.round(now)} / ${Math.round(max)}</em></div></div>`;
 }
 
+/** A card: what something is, its numbers and what it does (the spell preview and the inspect card). */
+export function cardHtml(card: Card, extra: string[] = []): string {
+  const list = (items: string[], cls: string) => (items.length ? `<ul class="${cls}">${items.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>` : "");
+  return `<div class="title">${esc(card.title)}</div>${card.kind ? `<div class="kind">${esc(card.kind)}</div>` : ""}` +
+    list(extra, "extra") + list(card.stats, "stats") + list(card.does, "does");
+}
+
+/** Something a spelling is aimed at before it is cast: a person, creature or thing, by id. */
+export interface Aimed { id: string; name: string }
+
 /** A coloured paper chip, in a status badge's colours. */
 function chip(status: string, left?: number) {
   const b = BADGE[status] ?? { ink: "#4a3f33", paper: "#e6d3a3", text: status.toUpperCase() };
@@ -58,9 +68,15 @@ export class Hud {
   private place = "";
   /** Adjectives spelled alone waiting for a target, or null. */
   private aiming: string | null = null;
+  /** No spelling: dead, spectating, or the round is over. */
+  private locked = false;
+  /** What the spell window is aimed at (from an inspect card's Add adjective), or null. */
+  private target: Aimed | null = null;
+  /** Called with what is being inspected's "Add adjective". */
+  private inspected: Aimed | null = null;
 
   constructor(
-    onSpell: (text: string) => void,
+    onSpell: (text: string, target: Aimed | null) => void,
     private readonly dict: Dictionary,
     private readonly onDrop: (index: number) => void,
     /** Use something carried (its index) or on the ground (its thing id). */
@@ -95,16 +111,23 @@ export class Hud {
       e.stopPropagation(); // no hotkey, movement or screen sees a key typed here
       if (e.key === "Enter") {
         e.preventDefault();
-        const text = this.input.value;
+        const text = this.input.value, target = this.target;
         this.closeSpell();
-        if (text.trim()) onSpell(text);
+        if (text.trim()) onSpell(text, target);
       } else if (e.key === "Escape") {
         e.preventDefault();
         this.closeSpell();
       }
     });
     this.input.addEventListener("keyup", (e) => e.stopPropagation());
-    this.input.addEventListener("input", () => this.drawLetters());
+    this.input.addEventListener("input", () => { this.drawLetters(); this.drawPreview(); });
+    $("inspect").addEventListener("click", (e) => {
+      const el = (e.target as HTMLElement).closest("button");
+      if (!el) return;
+      const target = this.inspected;
+      this.closeInspect();
+      if (el.dataset.adjective !== undefined && target) this.openSpell("", target);
+    });
     // A click outside the card keeps the window open and the cursor in it.
     this.win.addEventListener("mousedown", (e) => { if (e.target !== this.input) { e.preventDefault(); this.input.focus(); } });
     this.input.addEventListener("blur", () => { if (this.typing) setTimeout(() => this.typing && this.input.focus(), 0); });
@@ -115,20 +138,78 @@ export class Hud {
     return this.win.classList.contains("show");
   }
 
-  /** Opens the spell window, optionally with a word already in it. */
-  openSpell(text = "") {
+  /** Opens the spell window, optionally with a word already in it and aimed at something. Not while you cannot spell. */
+  openSpell(text = "", target: Aimed | null = null) {
+    if (this.locked) return;
     this.show(null);
+    this.closeInspect();
+    this.target = target;
+    $("spellfor").innerHTML = target ? `aimed at <b>${esc(target.name.toUpperCase())}</b>: spell adjectives (WORST) or an event` : "";
     this.win.className = "show";
     this.input.value = text;
     this.input.focus();
     this.drawLetters();
+    this.drawPreview();
   }
 
   closeSpell() {
     this.win.className = "";
     this.input.value = "";
+    this.target = null;
     this.input.blur();
     this.drawLetters();
+  }
+
+  /** Stops all spelling for good (dead, spectating, round over), closing the window if open. */
+  lock() {
+    if (this.locked) return;
+    this.locked = true;
+    if (this.typing) this.closeSpell();
+    this.closeInspect();
+  }
+
+  /** The live preview under the spelling: what it would make, and whether you hold the letters. */
+  private drawPreview() {
+    const el = $("preview"), text = this.input.value.trim();
+    if (!text) { el.innerHTML = ""; el.className = ""; return; }
+    const give = /^give\s+(\S+)\s+([a-z]*)$/i.exec(text);
+    if (give) { el.innerHTML = `<div class="kind">trade</div><ul class="does"><li>gives ${esc(give[2]!.toUpperCase())} to ${esc(give[1]!)}</li></ul>`; el.className = "show"; return; }
+    const r = inspectText(this.dict, text);
+    if ("error" in r) { el.innerHTML = `<div class="why">${esc(r.error)}</div>`; el.className = "show"; return; }
+    const lacking = missing(this.held, r.card.letters);
+    const letters = lacking
+      ? `<div class="need short">You need ${esc(lacking.toUpperCase().split("").join(" "))}</div>`
+      : `<div class="need ok">You hold the letters</div>`;
+    el.innerHTML = cardHtml(r.card) + letters;
+    el.className = "show";
+  }
+
+  /** The inspect card (right-click): what something in the world is, by the pointer, with Add adjective. */
+  inspect(card: Card, extra: string[], target: Aimed, x: number, y: number) {
+    const el = $("inspect");
+    this.inspected = target;
+    el.innerHTML = cardHtml(card, extra) + (this.locked ? "" : `<button data-adjective>Add adjective</button>`) + `<button data-close>Close</button>`;
+    el.className = "show";
+    const w = el.offsetWidth, h = el.offsetHeight;
+    el.style.left = `${Math.max(8, Math.min(window.innerWidth - w - 8, x + 14))}px`;
+    el.style.top = `${Math.max(8, Math.min(window.innerHeight - h - 8, y - 10))}px`;
+  }
+
+  closeInspect() {
+    this.inspected = null;
+    $("inspect").className = "";
+  }
+
+  /** The id being inspected, to ring it. */
+  get inspecting(): string | null {
+    return this.inspected?.id ?? null;
+  }
+
+  /** Bottom-left: the ground under you and your tile. */
+  corner(ground: string, x: number, y: number) {
+    const html = `<b>${esc(ground.replace(/([a-z])([A-Z])/g, "$1 $2"))}</b><span>tile ${x}, ${y}</span>`;
+    const el = $("corner");
+    if (el.innerHTML !== html) el.innerHTML = html;
   }
 
   /** Letters held right now. */
@@ -136,14 +217,22 @@ export class Hud {
     return this.held;
   }
 
-  /** Shows that adjectives are waiting for a click on a target, or (null) that they are not. */
-  aim(words: string | null) {
-    this.aiming = words;
+  /**
+   * Shows that a spelling waits for a click on its target, or (null) that none does: adjectives
+   * (`describe`), or an event aimed at `someone` or `anywhere`.
+   */
+  aim(words: string | null, how: "describe" | "someone" | "anywhere" = "describe") {
+    this.aiming = how === "describe" ? words : null;
     const banner = $("aim"), cursor = $("aimcursor");
     document.body.classList.toggle("aiming", !!words);
     banner.className = cursor.className = words ? "show" : "";
     if (words) {
-      banner.innerHTML = `${esc(words.toUpperCase())} — click something to describe <small>a thing, a creature, a person, yourself · L for your own gear · Esc cancels</small>`;
+      const W = esc(words.toUpperCase());
+      banner.innerHTML = how === "describe"
+        ? `${W} — click something to describe <small>a thing, a creature, a person, yourself · L for your own gear · Esc cancels</small>`
+        : how === "someone"
+          ? `${W} — click whom or what it acts on <small>a person, a creature or a thing · Esc cancels</small>`
+          : `${W} — click where it lands <small>a spot, or someone · Esc cancels</small>`;
       cursor.textContent = words.toUpperCase();
     }
     this.drawPanel();

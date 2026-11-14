@@ -23,7 +23,10 @@ Node process that owns the game state. One room per map instance (from milestone
   `applyFields` runs once a second and on every cast. A word ends areas it `counters` whatever
   its kind.
 - Room test files share one port, so `vitest.config.ts` runs them one at a time.
-- Events use `Walker.picked` (right-click) before `Walker.foe`; area events use `Walker.aim`.
+- Events use `Walker.picked` before `Walker.foe`; area events use `Walker.aim`. The client sets them
+  with `pick` just before spelling an aimed event and clears them just after (spell, then click).
+- `move` replaces the route at once (no walking on to an old aim); `stop` halts where the server
+  has you. Released arrow keys send `stop`, not a position, which would be stale.
 - Events (`happen`) pick what to do from the word's properties, not its name; areas they
   leave behind are `Area`s ticked by `burn` and sent to clients as `Zone`s.
 - A creature is a `Walker` with no client: `master` is its owner's id, `think()` gives it a
@@ -45,6 +48,7 @@ Node process that owns the game state. One room per map instance (from milestone
   deals damage over time and counts down, `compel` makes the frightened flee, the confused
   wander and creatures in `sets_hostile` areas attack. Areas `pulse` once a second (statuses
   from harmless areas, cures, `contagion`).
+- `make` sorts a spelling with shared `becomes`, and adds shared `startingSupply` to the owner's stores.
 - Objects are made by `make`: up to `SEPARATE_UP_TO` (12) creatures or things each, more as one
   with `count` (`Player.count`, `Thing.count`, `Spelled.count`; stats via shared `massed`).
 - `cast` applies a verb with its adverbs (shared `castVerb`); touched verbs with event properties

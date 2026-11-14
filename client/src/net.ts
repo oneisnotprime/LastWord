@@ -7,6 +7,8 @@ export interface Connection {
   /** Live server state: seed, size, players, things. Read it each frame. */
   state: any;
   move(x: number, y: number): void;
+  /** Stop walking where the server has you now. */
+  stop(): void;
   spell(text: string): void;
   gather(): void;
   give(to: string, letters: string): void;
@@ -80,6 +82,7 @@ export async function connect(on: Handlers): Promise<Connection> {
     sessionId: room.sessionId,
     get state() { return room.state; },
     move: (x, y) => room.send("move", { x, y }),
+    stop: () => room.send("stop"),
     spell: (text) => room.send("spell", text),
     gather: () => room.send("gather"),
     give: (to, letters) => room.send("give", { to, letters }),
