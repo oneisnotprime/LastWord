@@ -62,6 +62,9 @@ it("a bot attacks a player who comes near", async () => {
   Object.assign(bots(room)[0]![1], { peaceUntil: 0, nextSpell: 0 }); // past its peaceful start
   for (let i = 0; i < 10; i++) room.update(0.1); // it spells its weapon
   expect(bot.unit.weapon).toBeTruthy();
+  // No game to hunt instead: the wild animals and citizens are taken off the map.
+  for (const [id, w] of [...walkers(room)]) if (w.master === "-") (room as any).removeWalker(id);
+  bot.foe = null;
   me.player.x = bot.player.x + 1; me.player.y = bot.player.y;
   me.hp = 1e6; room.rebuild(me);
   for (let i = 0; i < 30; i++) room.update(0.1);

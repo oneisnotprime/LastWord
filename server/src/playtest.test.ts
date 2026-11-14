@@ -9,6 +9,8 @@ beforeAll(async () => { colyseus = await boot(appConfig); });
 afterAll(async () => { await colyseus.shutdown(); });
 
 const wait = (ms = 120) => new Promise((r) => setTimeout(r, ms));
+/** Waits until the server has acted on what was sent (a slow machine takes longer than `wait`), up to two seconds. */
+const until = async (done: () => boolean) => { for (let i = 0; i < 40 && !done(); i++) await wait(50); };
 const all = () => Object.fromEntries([..."abcdefghijklmnopqrstuvwxyz"].map((ch) => [ch, 99]));
 const ticks = (room: WorldRoom, n: number) => { for (let i = 0; i < n; i++) room.update(0.1); };
 
@@ -67,10 +69,12 @@ it("HOME claims the ground around it: your things there take part of a blow, are
   expect(wb.unit.body.stats.num("res_slash")).toBeCloseTo(res); // not on anyone else
   // A chest of A's at home against one out in the open: the same blows take half as much at home.
   a.send("spell", "chest"); await wait();
+  await until(() => things().filter((t) => t.owner === a.sessionId).length >= 2);
   const [home, chest] = things().filter((t) => t.owner === a.sessionId);
   expect(home!.phrase).toBe("home");
   wa.player.x += wa.player.x > 128 ? -25 : 25; wa.player.x = nearestWalkable(room.map, wa.player).x;
   a.send("spell", "chest"); await wait();
+  await until(() => things().filter((t) => t.phrase === "chest").length >= 2);
   const away = things().find((t) => t.phrase === "chest" && t.id !== chest!.id)!;
   const r = room as any, sword = r.dict ? (await import("@lastword/shared")).resolve(r.dict, "sword") : null;
   sword!.set("accuracy", "ABS"); sword!.set("critical", 0); // every blow lands the same

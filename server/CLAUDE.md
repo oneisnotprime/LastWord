@@ -105,6 +105,14 @@ Node process that owns the game state. One room per map instance (from milestone
   is kept. The loadout's `producing` lines say what each makes or why not, and `income` (letters a
   minute by letter, with their producers) feeds the top-left HUD; told when it changes. Bots go `home` to their
   first producer half the time they move on.
+- Territory (`territory`, every TERRITORY_EVERY seconds; shared `territory.ts`): claims' land
+  pays L, `roads` (tiles a route word laid, by owner) pay R, cities pay their `rulers` S per
+  citizen (citizens are walkers with `citizenOf`, kept in their city by `roam`). `rule` makes a
+  ruler and tells everyone; `takes_city` words take the city they are spelled in. `hire`,
+  `transmute`, `offer`/`answer` (messages `market`, `hire`, `transmute`, `offer`, `answer`; typed
+  "offer name abc for de", "transmute ...", "hire"); `offers` lists a person's offers. Workers
+  find a job (`jobFor`). Bosses rise at BOSS_TIMES (`riseBoss`; `Player.boss`) and drop Z.
+  `state.cities` carries each city's ruler and citizens. For local testing only: `BOSS_AT=20`.
 - Letters gained go through `award`, which sends `got` { letters, why, x, y } for the client's
   letter popup ("E · forage", "H · hunted COW (+12 food)", "D · broke RUIN", "A · FARM").
   `gathered` is still sent for a gathered letter. `gather` refuses at once where nothing is left

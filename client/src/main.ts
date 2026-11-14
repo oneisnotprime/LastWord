@@ -3,7 +3,7 @@ import "@fontsource/kalam/700.css";
 import "@fontsource/fredoka/500.css";
 import "@fontsource/fredoka/600.css";
 import Phaser from "phaser";
-import { aimOf, cardOf, GATHER_REASONS, missing, parsePhrase, readDescription, SITE_RADIUS, stampTerrain, Tile, tileAt, TILE_METERS, type Card, type Phrase, type WorldMap, generateMap } from "@lastword/shared";
+import { TRADE_RANGE, aimOf, cardOf, GATHER_REASONS, missing, parsePhrase, readDescription, SITE_RADIUS, stampTerrain, Tile, tileAt, TILE_METERS, type Card, type Phrase, type WorldMap, generateMap } from "@lastword/shared";
 import { Effects } from "./fx.js";
 import { playAgain } from "./start.js";
 import { lookOf, type Look } from "./art/look.js";
@@ -156,6 +156,17 @@ class World extends Phaser.Scene {
       this.net.describe(this.aiming, this.net.sessionId, index);
       this.endAim();
     }, () => { this.net?.leave(); playAgain(); });
+    // Trading: what the trade screen and offer cards send, and the people near enough to trade with.
+    this.hud.act = (type, payload) => this.net?.act(type, payload);
+    this.hud.people = () => {
+      const out: { id: string; name: string }[] = [];
+      const me = this.net?.state.players.get(this.net.sessionId);
+      if (!me) return out;
+      this.net.state.players.forEach((p: any, id: string) => {
+        if (id !== this.net.sessionId && p.owner === "" && Math.hypot(p.x - me.x, p.y - me.y) <= TRADE_RANGE) out.push({ id, name: String(p.name) });
+      });
+      return out;
+    };
     window.addEventListener("keydown", (e) => {
       if (e.repeat || this.hud.typing || !this.net || this.over) return;
       const key = e.key.toLowerCase();
@@ -192,6 +203,7 @@ class World extends Phaser.Scene {
         got: (g) => this.onGot(g),
         missed: (m) => { this.fx.fail(m.x, m.y - 1.2, m.text, true); this.gathering = null; },
         hits: (list) => this.onHits(list),
+        offers: (list) => this.hud.setOffers(list),
         threats: (list) => this.threatList.set(list),
         dropped: () => this.hud.toast("Connection lost: reconnecting…", "bad"),
         reconnected: () => this.hud.toast("Reconnected", "good"),
@@ -548,7 +560,7 @@ class World extends Phaser.Scene {
       const name = String(t.phrase).toUpperCase();
       if (t.fixture === "cache") offer(d, "G", "dig the buried cache: X and a prize");
       else if (t.fixture === "temple") offer(d, "G", "pray at the TEMPLE for Q");
-      else if (t.fixture === "market") offer(d, "Enter", "trade at the MARKET: trade eee for o");
+      else if (t.fixture === "market") offer(d, "T", "trade at the MARKET, hire a worker");
       else if (!t.owner && d <= 2) {
         const set = dictionary.word(lookOf(dictionary, t.phrase).noun)?.set;
         if (set && !set.tile_type) offer(d, "E", set.portable === false ? `claim ${name}: it becomes yours` : `pick up ${name}`);
@@ -588,7 +600,7 @@ class World extends Phaser.Scene {
       const how: Record<string, string> = {
         cache: "a buried cache: stand by it and press G to dig. Each dig gives an X; the last turns up a prize of letters",
         temple: "the map's one temple: press G beside it for Q, which comes back slowly",
-        market: "a market: Enter, then trade eee for o (three of a letter for one you want), and a T for every trade",
+        market: "a market: T to trade (three of a letter for one you want, and a T for every trade) or hire a worker",
         ruin: thing.owner ? "a ruin: it makes R for its owner; break it for D and X" : "a ruin nobody owns: E beside it to claim it (it makes R for you), or break it for D and X",
       };
       if (how[thing.fixture]) extra.unshift(how[thing.fixture]!);
@@ -853,7 +865,7 @@ class World extends Phaser.Scene {
       const stamps: { x: number; y: number; radius: number }[] = [];
       for (; this.editsApplied < state.edits.length; this.editsApplied++) {
         const e = state.edits[this.editsApplied];
-        stampTerrain(this.map, { x: e.x, y: e.y, radius: e.radius, tile: e.tile, soil: e.soil });
+        stampTerrain(this.map, { x: e.x, y: e.y, radius: e.radius, tile: e.tile, soil: e.soil, x2: e.x2, y2: e.y2 });
         stamps.push(e);
       }
       this.sendMap();
@@ -886,8 +898,11 @@ class World extends Phaser.Scene {
       const creature = p.owner !== "";
       const statuses: string[] = p.status ? p.status.split(" ").filter(Boolean) : [];
       if (creature) {
-        this.dress(v, lookOf(dictionary, p.name, p.count), undefined, statuses);
-        this.label(v, [counted(p.name, p.count)], p.owner === mine ? TAG_INK.mine : p.owner === "-" ? TAG_INK.wild : TAG_INK.theirs);
+        // A roaming boss stands half again as tall, with a red tag saying what it drops.
+        const look = lookOf(dictionary, p.name, p.count);
+        this.dress(v, p.boss ? { ...look, scale: look.scale * 1.6 } : look, undefined, statuses);
+        this.label(v, p.boss ? [`${counted(p.name, p.count)} · BOSS`, "slay it for Z Z Z"] : [counted(p.name, p.count)],
+          p.boss ? TAG_INK.person : p.owner === mine ? TAG_INK.mine : p.owner === "-" ? TAG_INK.wild : TAG_INK.theirs);
       } else {
         const colour = id === mine ? "#3f6fa8" : PEOPLE[[...String(p.name)].reduce((n, c) => n + c.charCodeAt(0), 0) % PEOPLE.length]!;
         // Adjectives someone put on a person (WORST, HUGE) change their look like any other body's.
@@ -946,7 +961,11 @@ class World extends Phaser.Scene {
     state.players.forEach((p: any, id: string) => { if (id !== mine && p.owner === "") others++; });
     this.myName = String(me.name);
     this.hud.hud({ name: this.myName, hp: me.hp, alive: state.alive || others + 1, clock: state.clock ?? 0 });
-    this.hud.corner(Tile[tileAt(this.map, me.x, me.y)] ?? "", Math.floor(me.x), Math.floor(me.y), state.wind ?? 0);
+    let city = "";
+    state.cities?.forEach((c: any) => {
+      if (Math.hypot(c.x - me.x, c.y - me.y) <= c.radius + 1) city = `${c.ruler ? `ruled by ${c.ruler}` : "nobody rules it"} · ${c.citizens} citizen${c.citizens === 1 ? "" : "s"}`;
+    });
+    this.hud.corner(Tile[tileAt(this.map, me.x, me.y)] ?? "", Math.floor(me.x), Math.floor(me.y), state.wind ?? 0, city);
     this.hud.where(
       `${Tile[tileAt(this.map, me.x, me.y)]} · ${Math.round(me.x * TILE_METERS)}, ${Math.round(me.y * TILE_METERS)} m · ` +
       `${others} other${others === 1 ? "" : "s"} in sight${state.daylight === "night" ? " · night" : ""}${state.weather ? ` · ${state.weather}` : ""}`,

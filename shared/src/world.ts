@@ -51,7 +51,11 @@ export const TILE_TYPES: Record<string, Tile> = {
 };
 
 /** A change a word made to the map: a disc of one kind of tile. */
-export interface Stamp { x: number; y: number; radius: number; tile: Tile; soil?: boolean }
+/**
+ * A change a word made to the map: a disc of one kind of tile, or with a second end (`x2`, `y2`)
+ * a run between two points `radius` wide (a ROAD). `soil` changes only soil (tilling).
+ */
+export interface Stamp { x: number; y: number; radius: number; tile: Tile; soil?: boolean; x2?: number; y2?: number }
 
 /** Ground that can be tilled into crop land: a `soil` stamp changes only these. */
 export const SOIL: readonly Tile[] = [
@@ -61,15 +65,27 @@ export const SOIL: readonly Tile[] = [
 
 /** Applies a stamp. Server and client both do this, in the same order, so their maps agree. */
 export function stampTerrain(map: WorldMap, s: Stamp): void {
-  const r = Math.max(0, s.radius);
+  for (const i of stampTiles(map, s)) {
+    if (s.soil && !SOIL.includes(map.tiles[i]! as Tile)) continue;
+    map.tiles[i] = s.tile;
+  }
+}
+
+/** The tiles a stamp covers, by index: a disc, or a run between its two ends. */
+export function stampTiles(map: WorldMap, s: Stamp): number[] {
+  const r = Math.max(0, s.radius), out: number[] = [];
+  const line = s.x2 !== undefined && s.y2 !== undefined && (s.x2 !== 0 || s.y2 !== 0);
+  const x2 = line ? s.x2! : s.x, y2 = line ? s.y2! : s.y;
+  const lx = x2 - s.x, ly = y2 - s.y, len2 = lx * lx + ly * ly;
   // Only tiles on the map are visited, so a stamp far larger than the map costs no more than the map.
-  for (let y = Math.max(0, Math.floor(s.y - r)); y <= Math.min(map.size - 1, Math.floor(s.y + r)); y++) {
-    for (let x = Math.max(0, Math.floor(s.x - r)); x <= Math.min(map.size - 1, Math.floor(s.x + r)); x++) {
-      if (Math.hypot(x + 0.5 - s.x, y + 0.5 - s.y) > r + 0.5) continue;
-      if (s.soil && !SOIL.includes(map.tiles[y * map.size + x]! as Tile)) continue;
-      map.tiles[y * map.size + x] = s.tile;
+  for (let y = Math.max(0, Math.floor(Math.min(s.y, y2) - r)); y <= Math.min(map.size - 1, Math.floor(Math.max(s.y, y2) + r)); y++) {
+    for (let x = Math.max(0, Math.floor(Math.min(s.x, x2) - r)); x <= Math.min(map.size - 1, Math.floor(Math.max(s.x, x2) + r)); x++) {
+      const t = len2 > 0 ? Math.max(0, Math.min(1, ((x + 0.5 - s.x) * lx + (y + 0.5 - s.y) * ly) / len2)) : 0;
+      if (Math.hypot(x + 0.5 - (s.x + t * lx), y + 0.5 - (s.y + t * ly)) > r + 0.5) continue;
+      out.push(y * map.size + x);
     }
   }
+  return out;
 }
 
 /** The nearest point a walker can stand on, searching outward in rings. */

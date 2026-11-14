@@ -1082,7 +1082,8 @@
 "enterable":true,
 "occupants":3.0,
 "cover":0.1,
-"flammability":7.0
+"flammability":7.0,
+"claim_radius":2.0
 },
 "ops":[]
 },
@@ -1305,7 +1306,8 @@
 "counters":[
 "stampede",
 "herd"
-]
+],
+"claim_radius":3.0
 },
 "ops":[]
 },
@@ -1515,7 +1517,8 @@
 "portable":false,
 "tile_type":"road",
 "movement_cost":0.5,
-"plural_count":5.0
+"plural_count":5.0,
+"radius":1.0
 },
 "ops":[]
 },
@@ -14100,7 +14103,8 @@
 "event_duration":5.0,
 "summons":"soldier",
 "summon_count":3.0,
-"summon_owned":true
+"summon_owned":true,
+"takes_city":true
 },
 "ops":[
 [
@@ -15753,7 +15757,8 @@
 "levy",
 "curfew",
 "monopoly"
-]
+],
+"takes_city":true
 },
 "ops":[]
 },
@@ -45967,7 +45972,8 @@
 "event_duration":10.0,
 "transfers_ownership":true,
 "contest_with":"charm",
-"contested_by":"authority"
+"contested_by":"authority",
+"takes_city":true
 },
 "ops":[]
 },
@@ -56760,7 +56766,8 @@
 "sets_hostile":true,
 "transfers_ownership":true,
 "contest_with":"recruit_rate",
-"contested_by":"authority"
+"contested_by":"authority",
+"takes_city":true
 },
 "ops":[
 [
@@ -81468,7 +81475,7 @@
 "portable":false,
 "placement":"region",
 "tile_type":"road",
-"radius":2.0,
+"radius":3.0,
 "movement_cost":0.3
 },
 "ops":[
@@ -81611,7 +81618,8 @@
 "portable":false,
 "tile_type":"road",
 "movement_cost":0.4,
-"placement":"region"
+"placement":"region",
+"radius":2.0
 },
 "ops":[]
 },
@@ -81630,7 +81638,7 @@
 "portable":false,
 "placement":"region",
 "tile_type":"road",
-"radius":1.0,
+"radius":2.0,
 "movement_cost":0.2,
 "counters":[
 "train"
@@ -81678,7 +81686,8 @@
 "tile_type":"road",
 "movement_cost":0.6,
 "map_reveal":30.0,
-"plural_count":4.0
+"plural_count":4.0,
+"radius":1.0
 },
 "ops":[]
 },
@@ -81697,7 +81706,8 @@
 "tile_type":"road",
 "movement_cost":0.5,
 "luminosity":3.0,
-"plural_count":4.0
+"plural_count":4.0,
+"radius":1.0
 },
 "ops":[]
 },
@@ -82645,7 +82655,8 @@
 "land"
 ],
 "tow_capacity":5000.0,
-"plural_count":10.0
+"plural_count":10.0,
+"claim_radius":2.0
 },
 "ops":[]
 },
