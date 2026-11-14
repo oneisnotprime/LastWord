@@ -496,7 +496,9 @@ const game = new Phaser.Game({
   width: window.innerWidth * DPR,
   height: window.innerHeight * DPR,
   scale: { mode: Phaser.Scale.NONE, zoom: 1 / DPR },
-  render: { antialias: true, roundPixels: false },
+  // One texture per batch: with more, Phaser 4.2 sometimes draws a standee with another texture's
+  // pixels (seen in headless Chrome once canvas textures are made mid-game). ?units=N overrides.
+  render: { antialias: true, roundPixels: false, maxTextures: Number(new URLSearchParams(location.search).get("units")) || 1 },
   scene: World,
 });
 window.addEventListener("resize", () => game.scale.resize(window.innerWidth * DPR, window.innerHeight * DPR));

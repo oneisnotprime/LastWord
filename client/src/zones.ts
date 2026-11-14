@@ -113,7 +113,7 @@ export class Zones {
       // The tissue's radius is 124 units, 62 world pixels, at its base scale.
       const s = (z.disc.getData("s") as number) * (z.r / 62);
       z.disc.setPosition(z.x, z.y).setScale(s * (1 + Math.sin(t * 1.3) * 0.01), s * 0.9 * (1 + Math.cos(t * 1.1) * 0.01));
-      z.tag.setPosition(z.x, z.y + z.r * 0.9 + 9);
+      z.tag.setPosition(z.x, z.y - z.r * 0.85 - 8);
       for (const d of z.decor) {
         let x = z.x + Math.cos(d.a) * d.d * z.r, y = z.y + Math.sin(d.a) * d.d * z.r * 0.85;
         switch (z.style.decor) {
