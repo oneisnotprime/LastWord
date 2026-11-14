@@ -1,0 +1,328 @@
+# noun furniture
+seat: mass=8 integrity=40 material=wood comfort=1 occupants=1 plural_count=4 color=brown
+counter: mass=150 footprint=1 integrity=200 material=wood,stone portable=false storage_objects=100 container_slots=6 cover=0.5 crafts=food craft_slots=1 color=white
+furniture: mass=200 footprint=2 integrity=200 material=wood comfort=3 storage_letters=60 storage_objects=200 container_slots=10 cover=0.4 flammability=6 color=brown
+console: mass=20 footprint=1 integrity=60 material=wood storage_objects=20 container_slots=2 beauty=5 comfort=0.5 color=brown
+wheelchair: mass=15 integrity=60 material=steel,cloth comfort=2 occupants=1 mountable=true seats=1 speed_land=2 requires_pilot=true color=gray
+checkout: mass=200 footprint=1 integrity=200 material=steel portable=false storage_letters=40 trade_bonus=0.1 upkeep_power=0.2 color=gray
+ottoman: mass=15 integrity=40 material=cloth,wood comfort=2 occupants=1 storage_objects=20 storage_letters=15 color=red
+sectional: mass=120 footprint=2 integrity=120 material=cloth,wood comfort=4 occupants=5 regeneration+0.5 morale+1 flammability=6 color=gray
+pew: mass=80 footprint=1 integrity=200 material=wood comfort=1 occupants=5 res_unholy+0.1 morale+1 plural_count=6 color=brown
+davenport: mass=70 footprint=1 integrity=80 material=cloth,wood comfort=3 occupants=3 regeneration+0.5 flammability=6 color=green
+chesterfield: mass=90 footprint=1 integrity=100 material=leather,wood comfort=3.5 occupants=3 regeneration+0.5 charm+1 beauty=7 value=800 color=brown
+deathbed: mass=60 footprint=1 integrity=50 material=wood,cloth comfort=2 occupants=1 regeneration+-0.5 morale+-2 fear_aura=1 color=white
+chaise: mass=40 footprint=1 integrity=60 material=cloth,wood comfort=3.5 occupants=1 regeneration+0.5 beauty=7 charm+1 color=red
+drape: mass=4 integrity=8 material=cloth comfort=0.5 blocks=sight stealth=3 flammability=8 beauty=5 color=red
+carpeting: mass=60 footprint=3 integrity=40 material=wool comfort=2 loudness=0 stealth=1 flammability=6 color=beige
+drapery: mass=8 integrity=12 material=velvet comfort=1 blocks=sight stealth=4 beauty=7 flammability=8 color=red
+armoire: mass=100 footprint=1 height=2 integrity=180 material=wood lockable=true security=2 storage_letters=100 storage_objects=250 container_slots=14 stealth=3 cover=0.5 beauty=7 color=brown
+highboy: mass=70 footprint=1 height=1.8 integrity=130 material=wood storage_letters=70 storage_objects=150 container_slots=10 beauty=6 color=brown
+lowboy: mass=35 footprint=1 integrity=90 material=wood storage_letters=35 storage_objects=60 container_slots=4 beauty=6 color=brown
+bassinet: mass=6 integrity=20 material=wicker,cloth comfort=1.5 occupants=1 regeneration+0.5 sleep_need*0.7 color=white
+divan: mass=50 footprint=1 integrity=70 material=cloth,wood comfort=3 occupants=2 sleep_need*0.8 regeneration+0.5 beauty=6 color=purple
+loveseat: mass=40 footprint=1 integrity=70 material=cloth,wood comfort=3 occupants=2 regeneration+0.5 charm+1 morale+1 color=red
+settee: mass=40 footprint=1 integrity=70 material=cloth,wood comfort=2.5 occupants=2 regeneration+0.5 beauty=6 color=green
+footstool: mass=4 integrity=25 material=wood,cloth comfort=1 jump+0.4 color=brown
+hassock: mass=6 integrity=25 material=cloth comfort=1 occupants=1 color=red
+lectern: mass=20 integrity=60 material=wood charm+1 authority=1 intelligence+1 color=brown
+futon: mass=30 footprint=1 integrity=40 material=cotton,wood comfort=3 occupants=2 sleep_need*0.7 regeneration+0.5 color=white
+cot: mass=8 integrity=30 material=canvas,steel comfort=2 occupants=1 sleep_need*0.8 regeneration+0.3 color=green
+highchair: mass=7 integrity=30 material=wood,plastic comfort=1 occupants=1 color=white
+headboard: mass=20 integrity=60 material=wood comfort=0.5 cover=0.2 beauty=6 color=brown
+bookshelf: mass=40 footprint=1 height=1.8 integrity=80 material=wood storage_letters=50 intelligence+1 comfort=1 flammability=7 color=brown
+sideboard: mass=60 footprint=1 integrity=110 material=wood storage_letters=50 storage_objects=100 container_slots=8 beauty=6 food_output=0.2 color=brown
+hutch: mass=70 footprint=1 height=2 integrity=110 material=wood storage_letters=50 storage_objects=100 container_slots=10 beauty=6 color=brown
+closet: mass=300 footprint=1 height=2.2 integrity=300 material=wood portable=false enterable=true occupants=1 storage_letters=90 storage_objects=300 container_slots=16 stealth=6 cover=0.5 color=white
+commode: mass=30 integrity=60 material=wood,porcelain storage_letters=20 storage_objects=30 comfort=1 odor=3 color=white
+vanity: mass=30 integrity=50 material=wood,glass storage_objects=20 container_slots=4 beauty=7 charm+1 color=white
+playpen: mass=12 footprint=1 integrity=50 material=wood,mesh occupants=1 comfort=1 blocks=land counters=baby,toddler,puppy color=white
+easel: mass=4 integrity=20 material=wood crafts=artifact craft_slots=1 beauty=5 color=brown
+podium: mass=60 footprint=1 integrity=200 material=wood elevation=0.5 authority=2 charm+1 recruit_rate=0.1 color=brown
+rack: mass=20 integrity=80 material=steel storage_objects=60 container_slots=10 color=gray
+coatrack: mass=6 integrity=30 material=wood storage_objects=15 container_slots=6 color=brown
+partition: mass=40 integrity=100 material=wood,cloth portable=false blocks=sight cover=0.3 stealth=3 color=white
+banister: mass=30 integrity=150 material=wood portable=false cover=0.2 climb+1 color=brown
+stepladder: mass=6 length=1.8 integrity=40 material=aluminum climb+4 elevation=1.5 jump+1 color=silver
+mantelpiece: mass=200 integrity=600 material=stone,wood portable=false storage_objects=20 beauty=7 comfort=1.5 color=white
+mantel: mass=150 integrity=500 material=stone,wood portable=false storage_objects=15 beauty=6 comfort=1 color=white
+bedpost: mass=5 length=1.5 integrity=60 material=wood equip_slot=held hands_required=2 dmg_blunt=35 attack_rate=0.7 attack_range=1.5 knockback=1.5 color=brown
+
+# noun container
+can: mass=0.05 integrity=15 material=tin volume=0.0004 storage_objects=0.5 equip_slot=held hands_required=1 dmg_blunt=3 loudness=3 plural_count=6 color=silver
+cup: mass=0.25 integrity=6 brittleness=7 material=porcelain volume=0.0003 storage_objects=0.3 comfort=0.3 plural_count=4 color=white
+supply: mass=50 integrity=40 material=wood,cloth storage_objects=100 container_slots=10 food_output=0.5 fuel_output=0.2 color=brown
+till: mass=10 integrity=200 hardness=7 material=steel lockable=true security=4 storage_letters=150 trade_bonus=0.05 loudness=4 color=gray
+pack: mass=2 integrity=40 material=canvas equip_slot=back storage_objects=30 container_slots=8 carry_capacity=30 storage_letters=20 color=green
+bowl: mass=0.4 integrity=8 brittleness=7 material=ceramic volume=0.001 storage_objects=1 comfort=0.3 plural_count=4 color=white
+bottle: mass=0.4 integrity=6 brittleness=8 material=glass volume=0.001 storage_objects=1 equip_slot=held hands_required=1 dmg_blunt=12 dmg_slash=10 inflict_bleed=2 self_damage=0.5 transparency=0.8 color=green
+pocket: mass=0.05 integrity=10 material=cloth storage_objects=1 container_slots=2 storage_letters=5 stealth=2 color=blue
+package: mass=3 integrity=10 material=cardboard storage_objects=10 container_slots=3 flammability=7 color=brown
+bath: mass=80 footprint=1 integrity=200 material=porcelain portable=false volume=0.2 water_output=3 temperature=40 comfort=3 regeneration+1 effect_status=burn,poison counters=dirt,mud,stench color=white
+kit: mass=3 integrity=30 material=plastic storage_objects=8 container_slots=10 heals=1 crafts=repair craft_slots=1 color=red
+bin: mass=8 integrity=60 material=plastic storage_objects=60 container_slots=6 odor=4 counters=junk,trash,litter color=green
+jar: mass=0.5 integrity=8 brittleness=8 material=glass volume=0.001 storage_objects=1 transparency=0.9 shelf_life*3 plural_count=4 color=clear
+pitcher: mass=0.8 integrity=10 brittleness=7 material=ceramic volume=0.002 water_output=0.5 storage_objects=2 dmg_blunt=6 color=white
+mug: mass=0.35 integrity=15 brittleness=6 material=ceramic volume=0.0004 temperature=70 comfort=0.5 equip_slot=held hands_required=1 dmg_blunt=6 dmg_fire=3 plural_count=4 color=white
+jug: mass=1.5 integrity=15 brittleness=7 material=clay volume=0.004 storage_objects=4 water_output=0.5 equip_slot=held hands_required=1 dmg_blunt=12 color=brown
+flask: mass=0.3 integrity=25 material=steel volume=0.0005 storage_objects=0.5 equip_slot=held hands_required=1 temp_min+-3 morale+1 color=silver
+keg: mass=60 integrity=120 material=wood,steel volume=0.05 storage_objects=50 morale+2 accuracy+-0.1 flammability=4 color=brown
+cask: mass=80 integrity=140 material=oak volume=0.2 storage_objects=200 flammability=5 color=brown
+portfolio: mass=1 integrity=10 material=leather storage_letters=30 storage_objects=2 intelligence+1 trade_bonus=0.05 color=black
+wallet: mass=0.1 integrity=15 material=leather storage_letters=40 stealth=3 security=1 trade_bonus=0.05 color=brown
+basin: mass=4 integrity=40 material=porcelain volume=0.01 storage_objects=10 water_output=1 counters=dirt color=white
+container: mass=5 integrity=60 material=plastic storage_objects=40 container_slots=6 storage_letters=20 color=gray
+purse: mass=0.4 integrity=15 material=leather storage_letters=30 storage_objects=2 container_slots=4 equip_slot=held hands_required=1 dmg_blunt=4 charm+1 color=red
+showcase: mass=60 footprint=1 integrity=50 brittleness=8 material=glass,wood lockable=true security=3 storage_letters=60 storage_objects=40 transparency=0.9 beauty=8 charm+1 color=clear
+sack: mass=0.5 integrity=10 material=burlap storage_objects=40 container_slots=4 carry_capacity=40 inflict_blind=3 color=brown
+envelope: mass=0.01 integrity=1 material=paper storage_letters=5 stealth=4 flammability=9 plural_count=5 color=white
+tub: mass=60 footprint=1 integrity=150 material=porcelain portable=false volume=0.2 water_output=2 temperature=38 comfort=2.5 regeneration+0.5 effect_status=burn color=white
+coffin: mass=60 length=2 integrity=200 material=oak lockable=true security=3 occupants=1 storage_letters=100 stealth=6 fear_aura=3 counters=vampire,zombie color=black
+font: mass=600 integrity=1000 material=stone portable=false water_output=1 heals=2 res_unholy+0.4 counters=demon,curse,ghost beauty=7 color=white
+luggage: mass=20 integrity=50 material=leather,canvas storage_objects=60 container_slots=12 storage_letters=30 lockable=true security=1 color=black
+backpack: mass=1.5 integrity=40 material=nylon equip_slot=back storage_objects=25 container_slots=10 carry_capacity=25 storage_letters=20 color=blue
+baggage: mass=30 integrity=50 material=leather,canvas storage_objects=80 container_slots=14 speed_land*0.85 color=brown
+capsule: mass=50 integrity=500 hardness=8 material=steel lockable=true security=4 storage_letters=150 res_fire=0.6 res_blast=0.5 persistence=0 color=silver
+toby: mass=0.6 integrity=8 brittleness=8 material=ceramic volume=0.0005 beauty=6 morale+1 color=brown
+stein: mass=1.2 integrity=25 material=stoneware,pewter volume=0.001 equip_slot=held hands_required=1 dmg_blunt=14 inflict_stun=0.5 morale+1 color=gray
+bale: mass=250 integrity=60 material=straw cover=0.5 flammability=9 food_output=0.5 comfort=0.5 color=yellow
+suitcase: mass=4 integrity=60 material=plastic,steel storage_objects=25 container_slots=10 lockable=true security=2 storage_letters=40 equip_slot=held hands_required=1 dmg_blunt=12 color=black
+vat: mass=300 footprint=1 integrity=300 material=steel portable=false volume=1 storage_objects=1000 crafts=drink,dye craft_slots=1 color=silver
+hopper: mass=200 footprint=1 integrity=300 material=steel portable=false storage_objects=1500 labor=1 color=gray
+crate: mass=15 integrity=80 material=wood storage_objects=200 container_slots=10 storage_letters=30 cover=0.4 stackable=true color=brown
+bathtub: mass=100 footprint=1 integrity=250 material=porcelain,iron portable=false volume=0.25 water_output=3 temperature=40 comfort=3 regeneration+1 effect_status=burn,poison cover=0.5 color=white
+pouch: mass=0.1 integrity=8 material=leather storage_letters=15 storage_objects=1 equip_slot=back stealth=2 color=brown
+handbag: mass=0.6 integrity=20 material=leather storage_letters=30 storage_objects=3 container_slots=5 equip_slot=held hands_required=1 dmg_blunt=8 knockback=0.5 charm+1 value=300 color=black
+cassette: mass=0.05 integrity=3 material=plastic storage_letters=10 loudness=4 morale+1 color=black
+magnum: mass=3 integrity=6 brittleness=8 material=glass volume=0.0015 morale+3 accuracy+-0.15 value=80 color=green
+mailbox: mass=10 integrity=80 material=steel portable=false lockable=true security=2 storage_letters=40 color=blue
+tote: mass=0.4 integrity=15 material=canvas storage_objects=10 container_slots=4 equip_slot=held hands_required=1 color=beige
+casket: mass=50 integrity=150 material=wood,brass lockable=true security=4 storage_letters=150 occupants=1 beauty=7 value=1500 fear_aura=1 color=black
+fob: mass=0.02 integrity=10 material=steel,leather storage_letters=2 security=1 color=black
+vial: mass=0.02 integrity=2 brittleness=9 material=glass volume=0.00002 storage_objects=0.05 transparency=0.9 plural_count=6 color=clear
+briefcase: mass=2.5 integrity=80 material=leather,steel lockable=true security=3 storage_letters=60 storage_objects=6 container_slots=4 equip_slot=held hands_required=1 dmg_blunt=14 block=0.3 trade_bonus=0.05 color=black
+dispenser: mass=5 integrity=30 material=plastic storage_objects=5 food_output=0.2 upkeep_power=0.05 color=white
+sandbox: mass=500 footprint=2 integrity=200 material=wood,sand portable=false tile_type=sand radius=1 comfort=1 morale+1 color=yellow
+chalice: mass=0.5 integrity=60 material=gold,silver volume=0.0003 beauty=9 value=2000 heals=1 res_unholy+0.3 charm+1 color=gold
+manger: mass=40 integrity=60 material=wood storage_objects=40 food_output=0.5 comfort=1 occupants=1 color=brown
+toolbox: mass=10 integrity=150 material=steel storage_objects=20 container_slots=12 storage_letters=20 crafts=repair,tool craft_slots=1 equip_slot=held hands_required=1 dmg_blunt=20 color=red
+tun: mass=500 integrity=300 material=oak portable=false volume=1 storage_objects=1000 color=brown
+caddy: mass=0.5 integrity=20 material=tin storage_objects=1 container_slots=6 color=silver
+inhaler: mass=0.05 integrity=5 material=plastic res_suffocation=0.5 heals=1 single_use=false plural_count=2 color=blue
+satchel: mass=0.8 integrity=25 material=leather equip_slot=back storage_objects=8 container_slots=5 storage_letters=20 color=brown
+retort: mass=0.6 integrity=5 brittleness=9 material=glass temperature=200 crafts=medicine,poison craft_slots=1 color=clear
+goblet: mass=0.3 integrity=10 brittleness=7 material=silver,glass volume=0.0003 beauty=8 value=100 charm+1 color=silver
+locket: mass=0.02 integrity=20 material=gold equip_slot=neck storage_letters=3 morale+2 courage+1 beauty=7 value=300 color=gold
+receptacle: mass=3 integrity=40 material=plastic storage_objects=20 container_slots=4 color=gray
+dipper: mass=0.3 length=0.4 integrity=20 material=tin storage_objects=0.5 water_output=0.3 equip_slot=held hands_required=1 dmg_blunt=4 color=silver
+gourd: mass=0.5 integrity=10 material=gourd volume=0.002 water_output=0.2 storage_objects=2 buoyancy=6 color=yellow
+beaker: mass=0.1 integrity=4 brittleness=9 material=glass volume=0.0005 transparency=0.95 res_acid=0.9 crafts=medicine craft_slots=1 color=clear
+pail: mass=1 integrity=30 material=tin equip_slot=held hands_required=1 storage_objects=10 water_output=1 counters=fire,flame color=gray
+sarcophagus: mass=3000 length=2.5 integrity=8000 hardness=8 material=stone portable=false lockable=true security=7 occupants=1 storage_letters=500 fear_aura=4 beauty=8 value=10000 counters=mummy color=yellow
+duffel: mass=1.2 integrity=30 material=canvas equip_slot=back storage_objects=30 container_slots=10 carry_capacity=30 color=green
+ashtray: mass=0.4 integrity=10 brittleness=7 material=glass storage_objects=0.2 equip_slot=held hands_required=1 dmg_blunt=10 inflict_stun=0.5 odor=4 counters=cigarette,cigar color=clear
+creamer: mass=0.2 integrity=6 brittleness=8 material=porcelain volume=0.0002 food_output=0.1 color=white
+sump: mass=0 integrity=500 portable=false depth=1 storage_objects=300 odor=6 water_output=1 color=brown
+scuttle: mass=4 integrity=40 material=iron storage_objects=15 fuel_output=0.3 color=black
+cesspool: mass=0 footprint=2 depth=3 integrity=2000 portable=false odor=9 toxicity=5 dmg_disease=5 lingering=60 movement_cost=3 color=brown
+matchbox: mass=0.02 integrity=2 material=cardboard storage_objects=0.05 flammability=9 dmg_fire=2 luminosity=2 burn_time=10 plural_count=3 color=red
+airbrush: mass=0.3 integrity=10 material=steel equip_slot=held hands_required=1 crafts=artifact craft_slots=1 inflict_blind=1 beauty=5 color=silver
+thermos: mass=0.5 integrity=40 material=steel volume=0.0007 temperature=80 temp_min+-5 morale+1 color=silver
+rucksack: mass=1.5 integrity=40 material=canvas equip_slot=back storage_objects=30 container_slots=10 carry_capacity=30 color=green
+
+# noun tool
+fork: mass=0.05 length=0.2 integrity=20 sharpness=5 material=steel equip_slot=held hands_required=1 dmg_pierce=10 attack_rate=2 attack_range=0.5 inflict_bleed=1 plural_count=4 color=silver
+spoon: mass=0.04 length=0.18 integrity=20 material=steel equip_slot=held hands_required=1 dmg_blunt=2 attack_range=0.4 plural_count=4 color=silver
+silverware: mass=1.5 integrity=40 material=silver equip_slot=held hands_required=1 dmg_pierce=8 dmg_slash=8 attack_rate=2 value=400 beauty=7 res_unholy+0.1 color=silver
+crockery: mass=10 integrity=20 brittleness=9 material=ceramic storage_objects=5 equip_slot=held hands_required=1 dmg_blunt=15 attack_range=10 single_use=true comfort=0.5 color=white
+glassware: mass=3 integrity=8 brittleness=10 material=glass equip_slot=held hands_required=1 dmg_slash=15 inflict_bleed=3 attack_range=8 single_use=true transparency=0.9 color=clear
+saucer: mass=0.2 integrity=5 brittleness=8 material=porcelain equip_slot=held hands_required=1 dmg_slash=8 attack_range=12 single_use=true plural_count=4 color=white
+teaspoon: mass=0.02 length=0.13 integrity=15 material=steel equip_slot=held hands_required=1 dmg_blunt=1 plural_count=6 color=silver
+tablespoon: mass=0.05 length=0.2 integrity=20 material=steel equip_slot=held hands_required=1 dmg_blunt=3 plural_count=4 color=silver
+teacup: mass=0.2 integrity=4 brittleness=9 material=porcelain volume=0.0002 temperature=70 comfort=0.5 beauty=6 charm+1 plural_count=4 color=white
+blender: mass=3 integrity=40 material=plastic,steel portable=false sharpness=7 dmg_slash=50 attack_rate=5 attack_range=0.3 inflict_bleed=4 loudness=7 upkeep_power=0.5 crafts=food,drink craft_slots=1 color=silver
+griddle: mass=4 length=0.5 integrity=200 hardness=8 material=iron temperature=200 dmg_fire=20 dmg_blunt=25 inflict_burn=3 equip_slot=held hands_required=2 crafts=food craft_slots=2 upkeep_fuel=0.02 color=black
+saucepan: mass=1.5 length=0.4 integrity=150 hardness=7 material=steel equip_slot=held hands_required=1 dmg_blunt=25 inflict_stun=1 attack_rate=1 knockback=1 crafts=food craft_slots=1 loudness=5 color=silver
+frypan: mass=1.8 length=0.45 integrity=180 hardness=7 material=iron equip_slot=held hands_required=1 dmg_blunt=30 inflict_stun=1.5 attack_rate=1 knockback=1 loudness=6 crafts=food craft_slots=1 color=black
+colander: mass=0.5 integrity=40 material=steel equip_slot=head armor=2 res_blunt=0.1 water_output=0 color=silver
+strainer: mass=0.3 integrity=20 material=steel equip_slot=held hands_required=1 counters=poison,sludge res_poison+0.1 color=silver
+grater: mass=0.4 integrity=40 sharpness=6 material=steel equip_slot=held hands_required=1 dmg_slash=10 inflict_bleed=3 attack_rate=1.5 color=silver
+corkscrew: mass=0.1 length=0.12 integrity=30 sharpness=6 material=steel equip_slot=held hands_required=1 dmg_pierce=12 inflict_bleed=3 attack_rate=1.2 color=silver
+peeler: mass=0.05 integrity=20 sharpness=7 material=steel equip_slot=held hands_required=1 dmg_slash=6 inflict_bleed=2 attack_rate=2 color=silver
+hairbrush: mass=0.2 integrity=20 material=wood,bristle equip_slot=held hands_required=1 dmg_blunt=4 beauty=5 charm+1 color=brown
+comb: mass=0.03 integrity=10 material=plastic charm+1 beauty=5 counters=lice,flea plural_count=2 color=black
+razor: mass=0.05 length=0.15 integrity=20 sharpness=10 material=steel equip_slot=held hands_required=1 dmg_slash=25 inflict_bleed=6 attack_rate=2 critical=0.2 stealth=2 color=silver
+mop: mass=1.5 length=1.4 integrity=25 material=wood,cotton equip_slot=held hands_required=2 dmg_blunt=8 attack_range=1.6 knockback=1 wetness=5 slipperiness=5 counters=mud,slime,blood,filth color=gray
+dustpan: mass=0.3 integrity=15 material=plastic equip_slot=held hands_required=1 dmg_blunt=3 counters=dust,ash color=red
+duster: mass=0.2 integrity=5 material=feather equip_slot=held hands_required=1 inflict_blind=1 counters=dust,cobweb beauty=4 color=white
+scrubber: mass=0.1 integrity=10 material=steel equip_slot=held hands_required=1 counters=rust,mold,slime,grime corrosiveness=1 color=yellow
+hanger: mass=0.1 integrity=10 material=wire equip_slot=held hands_required=1 dmg_pierce=3 storage_objects=2 plural_count=6 color=silver
+clothespin: mass=0.005 integrity=3 material=wood inflict_root=1 plural_count=12 color=brown
+peg: mass=0.02 integrity=10 material=wood storage_objects=3 inflict_root=2 plural_count=6 color=brown
+
+# noun device
+toaster: mass=1.5 integrity=40 material=steel,plastic portable=false temperature=200 upkeep_power=0.9 crafts=food craft_slots=1 dmg_fire=10 dmg_electric=60 inflict_burn=2 conductivity=9 comfort=0.5 color=silver
+dishwasher: mass=45 footprint=1 integrity=120 material=steel portable=false temperature=65 water_output=1 upkeep_power=1.5 loudness=4 counters=grime,filth comfort=1 color=white
+washer: mass=70 footprint=1 integrity=150 material=steel portable=false temperature=40 upkeep_power=1 water_output=1 loudness=6 counters=mud,blood,stain comfort=1 color=white
+dryer: mass=40 footprint=1 integrity=120 material=steel portable=false temperature=60 upkeep_power=2 loudness=5 wetness*0 comfort=1 flammability=4 color=white
+vacuum: mass=7 integrity=60 material=plastic upkeep_power=1.2 loudness=8 equip_slot=held hands_required=2 counters=dust,ash,sand,bug,cobweb moves_target=2 color=red
+heater: mass=5 integrity=60 material=steel portable=false temperature=70 temperature_delta=10 field_radius=5 field_targets=all upkeep_power=2 comfort=1.5 counters=frost,cold,chill flammability=2 color=gray
+radiator: mass=50 integrity=300 material=iron portable=false temperature=70 temperature_delta=8 field_radius=6 field_targets=all upkeep_fuel=0.05 comfort=1.5 counters=frost,cold color=white
+boiler: mass=300 footprint=1 integrity=600 material=steel portable=false temperature=180 temperature_delta=10 field_radius=20 field_targets=all water_output=2 upkeep_fuel=0.3 dmg_blast=200 attack_area=3 loudness=5 color=gray
+freezer: mass=70 footprint=1 integrity=200 material=steel portable=false temperature=-18 storage_objects=100 shelf_life*20 dmg_cold=10 upkeep_power=1 comfort=0.5 color=white
+cushion: mass=0.8 integrity=8 material=cloth comfort=1.5 res_blunt=0.2 equip_slot=held hands_required=1 dmg_blunt=1 inflict_sleep=1 plural_count=4 color=red
+shutter: mass=10 integrity=100 material=wood portable=false blocks=sight,projectiles cover=0.6 stealth=3 res_wind+0.5 color=green
+hourglass: mass=1 integrity=6 brittleness=9 material=glass,wood extends_duration=1.5 beauty=7 intelligence+1 color=gold
+faucet: mass=1 integrity=80 material=brass portable=false water_output=6 counters=fire,thirst color=silver
+thermostat: mass=0.3 integrity=20 material=plastic portable=false temperature_delta=5 field_radius=10 field_targets=all comfort=1 upkeep_power=0.01 color=white
+doorbell: mass=0.2 integrity=10 material=plastic portable=false alarm=true loudness=5 hearing_range+20 color=white
+clockwork: mass=2 integrity=40 material=brass,steel labor=0.5 self_propelled=true requires_pilot=false loudness=2 color=gold
+bookend: mass=1.5 integrity=60 material=marble equip_slot=held hands_required=1 dmg_blunt=18 inflict_stun=0.8 plural_count=2 color=white
+candlestick: mass=1.5 length=0.35 integrity=100 material=brass equip_slot=held hands_required=1 dmg_blunt=25 inflict_stun=1 luminosity=3 burn_time=3600 comfort=0.5 beauty=6 color=gold
+candelabra: mass=5 length=0.6 integrity=150 material=silver equip_slot=held hands_required=2 dmg_blunt=35 dmg_fire=8 inflict_burn=2 luminosity=6 burn_time=3600 beauty=8 comfort=1 color=silver
+lampshade: mass=0.5 integrity=5 material=cloth luminosity*0.6 comfort=0.5 beauty=5 flammability=7 color=beige
+sconce: mass=2 integrity=60 material=brass portable=false luminosity=5 burn_time=3600 comfort=1 beauty=6 color=gold
+andiron: mass=10 length=0.5 integrity=500 hardness=8 material=iron equip_slot=held hands_required=2 dmg_blunt=45 inflict_stun=1.5 attack_rate=0.6 res_fire=0.9 plural_count=2 color=black
+pendulum: mass=4 length=1.5 integrity=200 material=brass dmg_slash=30 dmg_blunt=30 attack_rate=0.5 attack_range=1.5 inflict_sleep=4 beauty=6 color=gold
+
+# noun machine
+turntable: mass=6 integrity=40 material=wood,steel portable=false loudness=5 upkeep_power=0.05 morale+1 comfort=1 beauty=5 color=black
+phonograph: mass=10 integrity=40 material=wood,brass loudness=6 morale+2 comfort=1 beauty=6 color=brown
+gramophone: mass=12 integrity=40 material=wood,brass loudness=6 morale+2 comfort=1 beauty=7 value=600 color=gold
+stereo: mass=8 integrity=40 material=plastic,steel loudness=9 upkeep_power=0.2 morale+2 dmg_sonic=5 field_radius=20 field_targets=all color=black
+
+# noun light
+flash: luminosity=10 placement=target placement_range=20 inflict_blind=4 attack_area=4 duration=1 light_delta=8 single_use=true
+spectrum: luminosity=6 light_delta=3 beauty=9 sees_through=fog,dark dmg_light=20 attack_area=3 color=rainbow
+spotlight: mass=15 integrity=60 material=steel,glass portable=false luminosity=9 sight_range+100 inflict_blind=2 detect_stealth=4 upkeep_power=1 color=white
+flashlight: mass=0.3 integrity=30 material=aluminum equip_slot=held hands_required=1 luminosity=6 night_vision=true inflict_blind=1 detect_stealth=2 dmg_blunt=8 upkeep_power=0.005 color=black
+limelight: luminosity=9 placement=target placement_range=50 charm+3 stealth*0 morale+2 duration=60 color=white
+headlight: mass=1 integrity=20 material=glass,steel luminosity=8 sight_range+60 inflict_blind=2 upkeep_power=0.06 plural_count=2 color=white
+searchlight: mass=80 integrity=100 material=steel,glass portable=false luminosity=10 sight_range+800 detect_stealth=6 inflict_blind=3 alarm=true upkeep_power=3 color=white
+lightbulb: mass=0.05 integrity=1 brittleness=10 material=glass luminosity=5 upkeep_power=0.06 comfort=0.5 intelligence+1 plural_count=4 color=white
+bulb: mass=0.05 integrity=1 brittleness=10 material=glass luminosity=5 upkeep_power=0.06 comfort=0.5 plural_count=4 color=white
+ray: placement=target placement_range=500 single_use=true dmg_light=600 dmg_fire=150 attack_area=1 inflict_blind=5 luminosity=10 accuracy=1 targets=land,air,water
+
+# noun artifact
+flag: mass=1 length=1.5 integrity=10 material=cloth claim_radius=10 morale+3 field_radius=50 field_targets=owned courage+2 recruit_rate=0.2 color=red
+colors: mass=1 length=1.5 integrity=10 material=silk claim_radius=8 field_radius=50 field_targets=owned morale+3 courage+3 recruit_rate=0.2 color=red
+colours: mass=1 length=1.5 integrity=10 material=silk claim_radius=8 field_radius=50 field_targets=owned morale+3 courage+3 recruit_rate=0.2 color=red
+banner: mass=2 length=2 integrity=12 material=cloth claim_radius=10 field_radius=60 field_targets=owned morale+3 courage+2 recruit_rate=0.3 beauty=6 color=red
+ensign: mass=1 length=1.5 integrity=10 material=cloth claim_radius=8 field_radius=40 field_targets=owned morale+2 authority=1 color=blue
+tattoo: equip_slot=graft fear_aura=1 charm+1 intimidation=2 beauty=5 color=black
+decoration: mass=0.5 integrity=5 material=paper,glass beauty=7 comfort=1 morale+1 color=gold
+ornament: mass=0.2 integrity=4 brittleness=8 material=glass beauty=8 comfort=0.5 value=40 plural_count=4 color=red
+ornamentation: mass=2 integrity=20 material=gilt beauty=8 comfort=1 charm+1 value=200 color=gold
+embellishment: beauty+2 value*1.5 charm+1 mass*1.05
+decor: mass=10 integrity=20 material=wood,cloth beauty=7 comfort=1.5 morale+1 color=beige
+graffiti: placement=target placement_range=3 beauty+-2 claim_radius=2 intimidation=2 reputation=-1 color=rainbow
+trim: beauty+1 value*1.2 mass*1.02
+trimming: beauty+1 value*1.2 mass*1.02
+afghan: mass=1.5 integrity=10 material=wool comfort=2 equip_slot=back res_cold=0.4 temp_min+-10 beauty=6 color=orange
+bedding: mass=4 integrity=12 material=cotton comfort=2.5 occupants=1 sleep_need*0.8 regeneration+0.3 res_cold=0.3 color=white
+duvet: mass=2 integrity=10 material=down,cotton comfort=3 equip_slot=back res_cold=0.6 temp_min+-15 sleep_need*0.8 color=white
+eiderdown: mass=1.5 integrity=10 material=down comfort=3 equip_slot=back res_cold=0.7 temp_min+-18 sleep_need*0.8 value=300 color=white
+bolster: mass=1.5 length=1 integrity=10 material=cloth comfort=1.5 equip_slot=held hands_required=2 dmg_blunt=3 knockback=1 inflict_sleep=1 color=white
+pillowcase: mass=0.2 integrity=4 material=cotton storage_objects=5 comfort=0.5 inflict_blind=2 color=white
+tablecloth: mass=1 integrity=6 material=linen beauty=6 comfort=0.5 stealth=2 flammability=7 color=white
+napkin: mass=0.02 integrity=1 material=linen comfort=0.2 counters=stain,crumb plural_count=6 color=white
+mat: mass=2 integrity=15 material=rubber comfort=0.5 slipperiness*0.3 res_blunt+0.1 color=gray
+doormat: mass=3 integrity=20 material=coir comfort=0.5 alarm=true counters=mud,dirt color=brown
+coaster: mass=0.02 integrity=3 material=cork equip_slot=held hands_required=1 dmg_slash=2 attack_range=10 plural_count=6 color=brown
+wick: mass=0.001 integrity=1 material=cotton flammability=9 burn_time=1800 luminosity=1 plural_count=6 color=white
+figurine: mass=0.3 integrity=5 brittleness=9 material=porcelain beauty=7 value=60 comfort=0.5 color=white
+statuette: mass=1 integrity=20 material=bronze beauty=7 value=150 equip_slot=held hands_required=1 dmg_blunt=14 comfort=0.5 color=copper
+paperweight: mass=0.8 integrity=40 material=glass equip_slot=held hands_required=1 dmg_blunt=12 inflict_stun=0.5 attack_range=12 beauty=6 color=clear
+metronome: mass=0.5 integrity=15 material=wood,brass loudness=3 training+1 accuracy+0.05 inflict_sleep=1 color=brown
+centerpiece: mass=3 integrity=10 material=glass,flower beauty=9 comfort=1 charm+2 morale+1 color=gold
+centrepiece: mass=3 integrity=10 material=glass,flower beauty=9 comfort=1 charm+2 morale+1 color=gold
+mandala: mass=0.5 integrity=5 material=sand,paper beauty=9 comfort=1.5 res_psychic+0.3 morale+1 color=rainbow
+frieze: mass=500 integrity=800 material=stone portable=false beauty=8 comfort=1 value=2000 color=white
+rosette: mass=0.02 integrity=2 material=silk beauty=6 morale+1 charm+1 reputation=1 color=blue
+tassel: mass=0.02 integrity=2 material=silk beauty=6 plural_count=4 color=gold
+tinsel: mass=0.05 integrity=1 material=foil reflectivity=8 beauty=6 comfort=0.5 luminosity=1 color=silver
+ruffle: beauty+1 charm+1 mass*1.05
+plume: mass=0.05 integrity=2 material=feather equip_slot=head beauty=8 charm+2 authority=1 color=white
+gargoyle: mass=500 integrity=3000 hardness=8 material=stone portable=false fear_aura=3 alarm=true res_unholy+0.3 counters=demon,ghost,evil beauty=5 water_output=1 color=gray
+crucifix: mass=0.3 integrity=40 material=wood,silver equip_slot=neck res_unholy=0.6 dmg_holy=20 fear_aura=2 counters=vampire,demon,ghost courage+2 color=silver
+totem: mass=400 length=6 integrity=600 material=wood portable=false claim_radius=6 field_radius=40 field_targets=owned morale+2 courage+2 beauty=7 color=red
+emblem: mass=0.1 integrity=20 material=brass equip_slot=neck morale+1 authority=1 reputation=1 color=gold
+motif: beauty+1 charm+1
+patchwork: mass=2 integrity=12 material=cotton comfort=2 beauty=6 equip_slot=back res_cold=0.3 color=rainbow
+potty: mass=1 integrity=10 material=plastic storage_objects=1 odor=4 comfort=0.5 color=blue
+signet: mass=0.02 integrity=40 material=gold equip_slot=finger authority=2 trade_bonus=0.1 value=600 beauty=7 color=gold
+inlay: beauty+2 value*1.6 hardness+1
+molding: mass=3 length=2 integrity=30 material=wood portable=false beauty=6 comfort=0.5 color=white
+moulding: mass=3 length=2 integrity=30 material=wood portable=false beauty=6 comfort=0.5 color=white
+decal: beauty+1 charm+1 faction=decal
+glaze: beauty+2 brittleness+1 res_water+0.3 reflectivity+2 value*1.3
+
+# noun adornment
+jewelry: mass=0.1 integrity=40 material=gold,gem equip_slot=neck beauty=9 charm+3 value=3000 color=gold
+jewellery: mass=0.1 integrity=40 material=gold,gem equip_slot=neck beauty=9 charm+3 value=3000 color=gold
+necklace: mass=0.05 integrity=25 material=gold equip_slot=neck beauty=8 charm+2 value=800 color=gold
+bracelet: mass=0.04 integrity=25 material=silver equip_slot=hands beauty=7 charm+1 value=300 plural_count=2 color=silver
+jewel: mass=0.01 integrity=200 hardness=9 material=gem beauty=10 charm+2 value=5000 reflectivity=9 color=red
+bead: mass=0.002 integrity=3 material=glass beauty=5 value=1 plural_count=30 color=blue
+pendant: mass=0.03 integrity=25 material=silver equip_slot=neck beauty=7 charm+1 value=250 color=silver
+earring: mass=0.005 integrity=10 material=gold equip_slot=face beauty=7 charm+1 value=150 plural_count=2 color=gold
+brooch: mass=0.02 integrity=20 material=gold equip_slot=neck beauty=7 charm+1 value=400 sharpness=5 color=gold
+broach: mass=0.02 integrity=20 material=gold equip_slot=neck beauty=7 charm+1 value=400 sharpness=5 color=gold
+bling: mass=0.3 integrity=30 material=gold,diamond equip_slot=neck beauty=8 charm+2 intimidation=2 value=5000 stealth+-3 color=gold
+pin: mass=0.01 integrity=10 material=steel,gold equip_slot=neck beauty=6 value=50 sharpness=6 charm+1
+lei: mass=0.2 integrity=3 material=flower equip_slot=neck beauty=8 charm+2 morale+1 odor=3 decay_rate=0.1 color=pink
+collar: mass=0.2 integrity=20 material=leather equip_slot=neck obedience+3 loyalty+2 color=red
+
+# noun furniture
+bureau: mass=60 footprint=1 integrity=120 material=wood lockable=true security=2 storage_letters=90 storage_objects=100 container_slots=10 intelligence+1 color=brown
+
+# noun food
+dish: mass=0.6 integrity=1 edible=true nutrition=10 restores=25 morale+2 single_use=true shelf_life=480
+buffet: mass=15 integrity=8 edible=true nutrition=15 restores=150 morale+4 comfort=2 field_radius=10 field_targets=allies regeneration+2 single_use=true shelf_life=600 portable=false
+casserole: mass=2 integrity=2 edible=true nutrition=14 restores=40 temperature=80 comfort=1 morale+2 single_use=true shelf_life=1440 plural_count=2
+topping: nutrition+2 beauty+1 morale+1 mass*1.1
+icing: mass=0.2 integrity=1 edible=true nutrition=3 restores=5 stickiness=4 morale+1 single_use=true color=white
+frosting: mass=0.2 integrity=1 edible=true nutrition=3 restores=5 stickiness=4 morale+1 single_use=true color=pink
+meringue: mass=0.1 integrity=1 brittleness=9 edible=true nutrition=2 restores=4 morale+1 single_use=true plural_count=6 color=white
+garnish: beauty+2 nutrition+0.5 value*1.2 charm+1
+
+# noun material
+junk: mass=30 integrity=40 brittleness=5 flammability=3 conductivity=4 material=scrap value=0.1 beauty=0 cover=0.3 movement_cost=1.5 crafts=repair craft_slots=1 color=brown
+
+# noun flower
+bouquet: mass=0.5 integrity=2 material=flower beauty=9 charm+3 odor=3 inflict_charm=3 decay_rate=0.05 comfort=0.5 color=red
+wreath: mass=1 integrity=5 material=flower,leaf beauty=8 comfort=1 morale+1 res_unholy+0.1 decay_rate=0.02 color=green
+
+# noun plant
+foliage: mass=5 integrity=10 material=leaf stealth=4 camouflage=forest,jungle cover=0.2 blocks=sight comfort=0.5 color=green
+
+# noun weapon
+arms: mass=20 length=1 integrity=200 hardness=7 material=steel,wood equip_slot=held hands_required=2 dmg_pierce=60 dmg_slash=40 attack_rate=1 attack_range=100 targets=land,air ammo_per_hit=1 ammo_type=bullet loudness=8 plural_count=10
+magazine: mass=0.4 integrity=30 material=steel equip_slot=held container_slots=30 ammo_type=bullet attack_rate+1
+
+# noun criminal
+corsair: mass=85 integrity=170 alive=true sentient=true intelligence=6 loyalty=3 hands=true speech=true speed_land=5 speed_water=2.5 letter_steal=6 dmg_slash=45 attack_rate=1.2 intimidation=6 food_need=0.04
+
+# noun vehicle_water
+sub: mass=1500000 length=60 integrity=15000 hardness=8 material=steel speed_water=12 dive_depth=300 self_propelled=true mountable=true seats=40 stealth=8 upkeep_fuel=2 placeable_on=deep_water dmg_blast=2500 attack_rate=0.05 attack_range=10000 targets=water breathes=none
+houseboat: mass=20000 length=15 integrity=2000 material=wood,steel buoyancy=8 speed_water=2 self_propelled=true mountable=true seats=6 enterable=true occupants=6 comfort=4 storage_letters=60 claim_radius=2 placeable_on=water color=white
+yacht: mass=50000 length=25 integrity=4000 material=fiberglass buoyancy=9 speed_water=15 self_propelled=true mountable=true seats=12 comfort=5 charm+2 value=1000000 beauty=9 upkeep_fuel=1 placeable_on=water,deep_water color=white
+canoe: mass=30 length=5 integrity=60 material=wood buoyancy=7 speed_water=2 mountable=true seats=2 carry_capacity=200 stealth=3 placeable_on=water color=red
+kayak: mass=20 length=4 integrity=50 material=plastic buoyancy=7 speed_water=2.5 mountable=true seats=1 carry_capacity=100 stealth=3 agility=6 placeable_on=water color=yellow
+lifeboat: mass=1500 length=8 integrity=400 material=steel buoyancy=10 speed_water=3 mountable=true seats=40 prevents_death=1 placeable_on=water,deep_water color=orange
+ferry: mass=1000000 length=80 integrity=20000 material=steel buoyancy=10 speed_water=10 self_propelled=true mountable=true seats=800 carry_capacity=2000000 upkeep_fuel=2 placeable_on=water,deep_water color=white
+battleship: mass=45000000 length=250 integrity=500000 hardness=9 material=steel buoyancy=10 speed_water=15 self_propelled=true mountable=true seats=2000 armor=300 dmg_blast=8000 attack_rate=0.05 attack_range=35000 attack_area=20 siege=5 loudness=10 upkeep_fuel=20 placeable_on=deep_water color=gray
+
+# verb movement
+lower: duration=30 height*0.3 stealth+4 cover+0.3 speed_underground+0.3
+launch: duration=3 jump+30 speed_air+40 knockback+10
+settle: duration=300 speed_land*0 regeneration+5 armor+20 claim_radius+5 comfort+3 build_speed*2
+
+# verb contact
+cover: duration=60 cover+0.6 stealth+5 armor+15 res_pierce+0.4 block+0.3 speed_land*0.5
+
+# verb transform
+flourish: duration=120 growth*3 beauty+3 charm+2 morale+2 regeneration+1
+churn: duration=20 dmg_water+30 attack_area+4 inflict_confuse+3
+
+# adjective quality
+upper: elevation+10 height*1.5 sight_range*1.3 attack_range+5 cover+0.1 authority+1
