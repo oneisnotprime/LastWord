@@ -1,0 +1,489 @@
+# Theme 2, plants and botany.
+
+# noun produce
+cherry: mass=0.008 height=6 integrity=1 alive=true diet=photosynthesis growth_time=25 edible=true nutrition=1 restores=4 morale+1 duration=60 single_use=true shelf_life=8 plural_count=20 color=red
+fig: mass=0.05 height=5 integrity=1 alive=true diet=photosynthesis growth_time=20 edible=true nutrition=2 restores=8 regeneration+1 duration=60 single_use=true shelf_life=8 temp_max=45 plural_count=10 color=purple
+olive: mass=0.005 height=8 integrity=1 alive=true diet=photosynthesis growth_time=40 edible=true nutrition=1 restores=5 res_disease+0.1 duration=300 single_use=true shelf_life=60 temp_max=45 plural_count=30 color=green
+nut: mass=0.01 integrity=3 hardness=5 edible=true nutrition=2 restores=4 single_use=true shelf_life=600 plural_count=20 color=brown
+berry: mass=0.003 height=1 integrity=1 alive=true diet=photosynthesis growth_time=4 edible=true nutrition=1 restores=4 single_use=true shelf_life=6 plural_count=30 color=red
+vegetable: mass=0.3 height=0.4 integrity=2 alive=true diet=photosynthesis growth_time=5 edible=true raw=true nutrition=3 restores=8 res_disease+0.1 duration=120 single_use=true shelf_life=20 placeable_on=field plural_count=6 color=green
+peanut: mass=0.002 height=0.4 integrity=1 alive=true diet=photosynthesis growth_time=5 edible=true raw=true nutrition=1 restores=3 fertility=2 single_use=true shelf_life=300 placeable_on=field plural_count=40 toxicity=1 color=brown
+onion: mass=0.15 height=0.4 integrity=2 alive=true diet=photosynthesis growth_time=5 edible=true raw=true nutrition=1 restores=4 odor=6 inflict_blind=3 single_use=true shelf_life=200 placeable_on=field plural_count=8 color=white
+peach: mass=0.15 height=6 integrity=1 alive=true diet=photosynthesis growth_time=20 edible=true nutrition=2 restores=10 charm+1 duration=60 single_use=true shelf_life=8 plural_count=8 color=orange
+cereal: mass=0.3 height=1 integrity=2 alive=true diet=photosynthesis flammability=8 growth_time=5 food_output=0.5 edible=true raw=true nutrition=3 placeable_on=field plural_count=20 tile_type=field color=yellow
+grain: mass=0.3 height=1 integrity=2 alive=true diet=photosynthesis flammability=8 growth_time=5 food_output=0.5 edible=true raw=true nutrition=3 shelf_life=2000 placeable_on=field plural_count=20 tile_type=field color=yellow
+popcorn: mass=0.05 integrity=1 edible=true nutrition=1 restores=3 loudness=4 morale+1 duration=60 single_use=true plural_count=6 color=white
+squash: mass=2 height=0.5 integrity=6 alive=true diet=photosynthesis growth_time=6 edible=true raw=true nutrition=6 restores=8 single_use=true shelf_life=60 placeable_on=field movement_cost=1.5 spread_rate=0.1 color=yellow
+blackberry: mass=0.005 height=2 integrity=3 alive=true diet=photosynthesis growth_time=5 edible=true nutrition=1 restores=5 thorns=4 spread_rate=0.3 movement_cost=1.8 single_use=true shelf_life=5 plural_count=30 color=black
+soy: mass=0.001 height=0.8 integrity=1 alive=true diet=photosynthesis growth_time=5 edible=true raw=true nutrition=2 restores=4 fertility=2 single_use=true shelf_life=600 placeable_on=field plural_count=40 color=yellow
+pineapple: mass=1.5 height=1 integrity=3 alive=true diet=photosynthesis growth_time=10 edible=true nutrition=3 restores=12 thorns=2 effect_status=poison duration=60 single_use=true shelf_life=15 temp_min=10 placeable_on=field,sand color=yellow
+citrus: mass=0.15 height=5 integrity=1 alive=true diet=photosynthesis growth_time=20 edible=true nutrition=1 restores=8 res_disease+0.3 duration=180 single_use=true shelf_life=25 plural_count=8 color=orange
+walnut: mass=0.01 integrity=4 hardness=6 edible=true nutrition=2 restores=5 intelligence+1 duration=120 single_use=true shelf_life=600 plural_count=20 color=brown
+mango: mass=0.3 height=15 integrity=1 alive=true diet=photosynthesis growth_time=25 edible=true nutrition=3 restores=12 morale+1 duration=60 single_use=true shelf_life=10 temp_min=5 plural_count=6 color=orange
+lettuce: mass=0.4 height=0.2 integrity=1 alive=true diet=photosynthesis growth_time=3 edible=true nutrition=1 restores=5 inflict_sleep=2 single_use=true shelf_life=10 placeable_on=field plural_count=6 color=green
+plum: mass=0.06 height=6 integrity=1 alive=true diet=photosynthesis growth_time=20 edible=true nutrition=1 restores=6 single_use=true shelf_life=10 plural_count=12 color=purple
+pea: mass=0.0003 height=1 integrity=1 alive=true diet=photosynthesis growth_time=4 edible=true raw=true nutrition=1 restores=3 fertility=2 climb+2 single_use=true shelf_life=10 placeable_on=field plural_count=50 color=green
+rye: mass=0.3 height=1.5 integrity=2 alive=true diet=photosynthesis flammability=8 growth_time=5 food_output=0.4 edible=true raw=true nutrition=3 temp_min=-30 placeable_on=field plural_count=20 tile_type=field color=brown
+raspberry: mass=0.004 height=1.5 integrity=2 alive=true diet=photosynthesis growth_time=5 edible=true nutrition=1 restores=5 thorns=2 spread_rate=0.2 single_use=true shelf_life=4 plural_count=30 color=red
+broccoli: mass=0.5 height=0.6 integrity=2 alive=true diet=photosynthesis growth_time=5 edible=true raw=true nutrition=2 restores=8 res_disease+0.2 strength+1 duration=180 single_use=true shelf_life=15 placeable_on=field color=green
+barley: mass=0.3 height=1 integrity=2 alive=true diet=photosynthesis flammability=8 growth_time=5 food_output=0.5 edible=true raw=true nutrition=3 placeable_on=field plural_count=20 tile_type=field color=yellow
+spinach: mass=0.2 height=0.3 integrity=1 alive=true diet=photosynthesis growth_time=3 edible=true raw=true nutrition=2 restores=8 strength+3 duration=120 single_use=true shelf_life=8 placeable_on=field color=green
+pear: mass=0.18 height=8 integrity=1 alive=true diet=photosynthesis growth_time=20 edible=true nutrition=2 restores=9 single_use=true shelf_life=15 plural_count=8 color=green
+sesame: mass=0.00001 height=1 integrity=1 alive=true diet=photosynthesis growth_time=5 edible=true nutrition=1 restores=3 single_use=true shelf_life=1000 placeable_on=field plural_count=100 color=white
+chestnut: mass=0.01 integrity=3 edible=true raw=true nutrition=2 restores=5 thorns=2 single_use=true shelf_life=300 plural_count=20 color=brown
+avocado: mass=0.2 height=12 integrity=2 alive=true diet=photosynthesis growth_time=25 edible=true nutrition=5 restores=15 regeneration+1 duration=120 single_use=true shelf_life=6 plural_count=6 color=green
+cucumber: mass=0.3 height=0.3 integrity=2 alive=true diet=photosynthesis growth_time=4 edible=true nutrition=1 restores=6 temperature+-5 res_fire+0.1 duration=120 single_use=true shelf_life=10 climb+2 placeable_on=field color=green
+watermelon: mass=8 height=0.4 integrity=8 alive=true diet=photosynthesis growth_time=7 edible=true nutrition=4 restores=25 water_output=0.5 res_fire+0.2 duration=180 single_use=true shelf_life=20 brittleness=6 placeable_on=field,sand color=green
+kiwi: mass=0.08 height=5 integrity=1 alive=true diet=photosynthesis growth_time=15 edible=true nutrition=1 restores=6 res_disease+0.2 duration=120 single_use=true shelf_life=15 climb+3 plural_count=10 color=green
+melon: mass=1.5 height=0.3 integrity=4 alive=true diet=photosynthesis growth_time=6 edible=true nutrition=3 restores=15 single_use=true shelf_life=12 placeable_on=field,sand color=yellow
+celery: mass=0.5 height=0.5 integrity=2 alive=true diet=photosynthesis growth_time=5 edible=true raw=true nutrition=1 restores=3 loudness=3 single_use=true shelf_life=15 placeable_on=field color=green
+asparagus: mass=0.02 height=1.5 integrity=1 alive=true diet=photosynthesis growth_time=8 edible=true raw=true nutrition=1 restores=5 odor=3 single_use=true shelf_life=6 placeable_on=field plural_count=12 color=green
+cauliflower: mass=0.8 height=0.5 integrity=2 alive=true diet=photosynthesis growth_time=6 edible=true raw=true nutrition=2 restores=6 single_use=true shelf_life=15 placeable_on=field color=white
+spelt: mass=0.3 height=1.2 integrity=2 alive=true diet=photosynthesis flammability=8 growth_time=6 food_output=0.4 edible=true raw=true nutrition=3 placeable_on=field plural_count=20 tile_type=field color=brown
+grapefruit: mass=0.4 height=8 integrity=1 alive=true diet=photosynthesis growth_time=20 edible=true nutrition=2 restores=8 res_disease+0.2 duration=120 single_use=true shelf_life=25 plural_count=6 color=pink
+cranberry: mass=0.001 height=0.2 integrity=1 alive=true diet=photosynthesis growth_time=5 edible=true nutrition=1 restores=4 res_disease+0.3 effect_status=poison duration=180 single_use=true shelf_life=30 placeable_on=swamp,water plural_count=50 color=red
+soybean: mass=0.001 height=0.8 integrity=1 alive=true diet=photosynthesis growth_time=5 edible=true raw=true nutrition=2 restores=4 fertility=2 food_output=0.3 single_use=true placeable_on=field plural_count=40 color=yellow
+acorn: mass=0.004 integrity=1 alive=true diet=photosynthesis growth_time=60 edible=true raw=true nutrition=1 toxicity=2 single_use=true placeable_on=land,forest,field plural_count=20 color=brown
+beet: mass=0.2 height=0.3 integrity=2 alive=true diet=photosynthesis growth_time=5 edible=true raw=true nutrition=2 restores=6 speed_land*1.1 duration=180 single_use=true shelf_life=60 placeable_on=field color=red
+yam: mass=1 height=0.5 integrity=3 alive=true diet=photosynthesis growth_time=7 edible=true raw=true nutrition=5 restores=8 single_use=true shelf_life=200 placeable_on=field color=brown
+eggplant: mass=0.3 height=0.8 integrity=2 alive=true diet=photosynthesis growth_time=6 edible=true raw=true nutrition=2 restores=6 single_use=true shelf_life=12 placeable_on=field color=purple
+aubergine: mass=0.3 height=0.8 integrity=2 alive=true diet=photosynthesis growth_time=6 edible=true raw=true nutrition=2 restores=6 single_use=true shelf_life=12 placeable_on=field color=purple
+millet: mass=0.2 height=1.5 integrity=2 alive=true diet=photosynthesis flammability=8 growth_time=4 food_output=0.4 edible=true raw=true nutrition=3 temp_max=50 placeable_on=field,sand plural_count=20 tile_type=field color=yellow
+apricot: mass=0.04 height=8 integrity=1 alive=true diet=photosynthesis growth_time=20 edible=true nutrition=1 restores=6 single_use=true shelf_life=8 plural_count=12 color=orange
+zucchini: mass=0.3 height=0.6 integrity=2 alive=true diet=photosynthesis growth_time=4 edible=true raw=true nutrition=1 restores=5 reproduction=6 spread_rate=0.2 single_use=true shelf_life=10 placeable_on=field color=green
+sugarcane: mass=3 height=5 integrity=10 alive=true diet=photosynthesis flammability=8 growth_time=8 food_output=0.6 edible=true nutrition=3 restores=5 speed_land*1.2 duration=60 blocks=sight placeable_on=field plural_count=20 tile_type=field color=green
+taro: mass=1 height=1 integrity=3 alive=true diet=photosynthesis growth_time=7 edible=true raw=true nutrition=4 restores=6 toxicity=3 single_use=true shelf_life=100 placeable_on=field,swamp color=purple
+tangerine: mass=0.1 height=5 integrity=1 alive=true diet=photosynthesis growth_time=20 edible=true nutrition=1 restores=7 res_disease+0.2 duration=120 single_use=true shelf_life=15 plural_count=8 color=orange
+pomegranate: mass=0.3 height=6 integrity=2 alive=true diet=photosynthesis growth_time=20 edible=true nutrition=2 restores=15 regeneration+2 duration=120 single_use=true shelf_life=40 plural_count=6 color=red
+pecan: mass=0.006 integrity=3 hardness=5 edible=true nutrition=2 restores=4 single_use=true shelf_life=600 plural_count=20 color=brown
+oat: mass=0.2 height=1 integrity=2 alive=true diet=photosynthesis flammability=8 growth_time=4 food_output=0.5 edible=true raw=true nutrition=3 placeable_on=field plural_count=20 tile_type=field color=yellow
+clementine: mass=0.07 height=5 integrity=1 alive=true diet=photosynthesis growth_time=20 edible=true nutrition=1 restores=6 res_disease+0.2 duration=120 single_use=true shelf_life=15 plural_count=10 color=orange
+papaya: mass=1 height=8 integrity=2 alive=true diet=photosynthesis growth_time=10 edible=true nutrition=3 restores=12 effect_status=poison duration=60 single_use=true shelf_life=8 temp_min=10 color=orange
+leek: mass=0.3 height=0.6 integrity=2 alive=true diet=photosynthesis growth_time=6 edible=true raw=true nutrition=1 restores=5 odor=3 temp_min=-15 single_use=true shelf_life=30 placeable_on=field color=green
+quince: mass=0.3 height=6 integrity=3 alive=true diet=photosynthesis growth_time=20 edible=true raw=true nutrition=2 restores=6 odor=4 single_use=true shelf_life=60 color=yellow
+turnip: mass=0.3 height=0.3 integrity=2 alive=true diet=photosynthesis growth_time=4 edible=true raw=true nutrition=2 restores=5 temp_min=-15 single_use=true shelf_life=200 placeable_on=field color=white
+sorghum: mass=0.3 height=3 integrity=3 alive=true diet=photosynthesis flammability=7 growth_time=6 food_output=0.5 edible=true raw=true nutrition=3 temp_max=50 blocks=sight placeable_on=field,sand plural_count=20 tile_type=field color=red
+buckwheat: mass=0.2 height=1 integrity=2 alive=true diet=photosynthesis flammability=7 growth_time=3 food_output=0.4 edible=true raw=true nutrition=3 fertility=1 placeable_on=field plural_count=20 tile_type=field color=brown
+hazelnut: mass=0.003 integrity=3 hardness=5 edible=true nutrition=1 restores=3 single_use=true shelf_life=600 plural_count=30 color=brown
+pistachio: mass=0.001 integrity=2 hardness=4 edible=true nutrition=1 restores=3 value=5 single_use=true shelf_life=600 plural_count=40 color=green
+beetroot: mass=0.2 height=0.3 integrity=2 alive=true diet=photosynthesis growth_time=5 edible=true raw=true nutrition=2 restores=6 speed_land*1.1 duration=180 single_use=true shelf_life=60 placeable_on=field color=red
+cashew: mass=0.002 integrity=2 edible=true raw=true nutrition=1 restores=3 toxicity=3 single_use=true shelf_life=600 plural_count=40 color=white
+huckleberry: mass=0.002 height=1.5 integrity=1 alive=true diet=photosynthesis growth_time=6 edible=true nutrition=1 restores=4 single_use=true shelf_life=5 plural_count=30 color=purple
+artichoke: mass=0.3 height=1.5 integrity=3 alive=true diet=photosynthesis growth_time=7 edible=true raw=true nutrition=2 restores=6 thorns=1 single_use=true shelf_life=15 placeable_on=field color=green
+chard: mass=0.3 height=0.5 integrity=2 alive=true diet=photosynthesis growth_time=4 edible=true raw=true nutrition=1 restores=5 single_use=true shelf_life=10 placeable_on=field color=red
+horseradish: mass=0.5 height=1 integrity=3 alive=true diet=photosynthesis growth_time=6 edible=true nutrition=1 restores=3 odor=7 inflict_blind=4 res_cold+0.2 spread_rate=0.2 duration=60 single_use=true shelf_life=100 placeable_on=field color=white
+okra: mass=0.02 height=2 integrity=2 alive=true diet=photosynthesis growth_time=5 edible=true raw=true nutrition=1 restores=4 stickiness=3 temp_max=45 single_use=true shelf_life=6 placeable_on=field plural_count=12 color=green
+guava: mass=0.2 height=8 integrity=2 alive=true diet=photosynthesis growth_time=15 edible=true nutrition=2 restores=10 res_disease+0.3 duration=120 single_use=true shelf_life=8 temp_min=5 plural_count=8 color=green
+durian: mass=2 height=30 integrity=8 alive=true diet=photosynthesis growth_time=40 edible=true nutrition=6 restores=20 odor=10 thorns=10 dmg_pierce=20 fear_aura=1 single_use=true shelf_life=6 color=yellow
+persimmon: mass=0.2 height=10 integrity=2 alive=true diet=photosynthesis growth_time=25 edible=true nutrition=2 restores=8 single_use=true shelf_life=20 plural_count=8 color=orange
+macadamia: mass=0.003 integrity=5 hardness=8 edible=true nutrition=2 restores=4 value=10 single_use=true shelf_life=600 plural_count=30 color=white
+gooseberry: mass=0.005 height=1.2 integrity=2 alive=true diet=photosynthesis growth_time=6 edible=true nutrition=1 restores=4 thorns=3 single_use=true shelf_life=8 plural_count=30 color=green
+cantaloupe: mass=1.2 height=0.3 integrity=3 alive=true diet=photosynthesis growth_time=6 edible=true nutrition=3 restores=14 single_use=true shelf_life=10 placeable_on=field,sand color=orange
+chickpea: mass=0.0005 height=0.5 integrity=1 alive=true diet=photosynthesis growth_time=5 edible=true raw=true nutrition=2 restores=3 fertility=2 single_use=true shelf_life=1000 placeable_on=field plural_count=50 color=yellow
+rapeseed: mass=0.3 height=1.5 integrity=2 alive=true diet=photosynthesis flammability=8 growth_time=5 food_output=0.3 fuel_output=0.3 beauty=6 placeable_on=field plural_count=20 tile_type=field color=yellow
+parsnip: mass=0.2 height=0.4 integrity=2 alive=true diet=photosynthesis growth_time=6 edible=true raw=true nutrition=2 restores=5 temp_min=-20 single_use=true shelf_life=100 placeable_on=field color=white
+mung: mass=0.0001 height=0.5 integrity=1 alive=true diet=photosynthesis growth_time=3 edible=true raw=true nutrition=1 restores=3 fertility=2 single_use=true shelf_life=1000 placeable_on=field plural_count=100 color=green
+amaranth: mass=0.2 height=2 integrity=2 alive=true diet=photosynthesis growth_time=4 food_output=0.4 edible=true raw=true nutrition=3 beauty=6 spread_rate=0.2 placeable_on=field plural_count=20 color=red
+shallot: mass=0.03 height=0.3 integrity=1 alive=true diet=photosynthesis growth_time=5 edible=true raw=true nutrition=1 restores=3 odor=4 single_use=true shelf_life=200 placeable_on=field plural_count=12 color=purple
+mangold: mass=1 height=0.6 integrity=3 alive=true diet=photosynthesis growth_time=6 edible=true raw=true nutrition=3 food_output=0.4 single_use=true placeable_on=field color=orange
+satsuma: mass=0.08 height=4 integrity=1 alive=true diet=photosynthesis growth_time=20 edible=true nutrition=1 restores=6 res_disease+0.2 duration=120 single_use=true shelf_life=15 temp_min=-8 plural_count=10 color=orange
+mandarin: mass=0.1 height=5 integrity=1 alive=true diet=photosynthesis growth_time=20 edible=true nutrition=1 restores=7 res_disease+0.2 duration=120 single_use=true shelf_life=15 plural_count=8 color=orange
+crop: mass=0.5 height=1 integrity=2 alive=true diet=photosynthesis flammability=7 growth_time=5 food_output=0.6 edible=true raw=true nutrition=3 placeable_on=field plural_count=20 tile_type=field color=green
+cocoa: mass=0.5 height=6 integrity=2 alive=true diet=photosynthesis growth_time=25 edible=true nutrition=3 restores=10 morale+2 potency=2 duration=180 value=20 temp_min=15 color=brown
+muscat: mass=0.006 height=2 integrity=1 alive=true diet=photosynthesis growth_time=10 edible=true nutrition=1 restores=4 odor=4 single_use=true shelf_life=10 plural_count=30 color=green
+samara: mass=0.0005 integrity=1 alive=true diet=photosynthesis growth_time=30 speed_air=2 hover=true spread_rate=0.5 placeable_on=land,forest plural_count=40 color=brown
+
+
+# noun tree
+holly: mass=800 height=10 footprint=1 integrity=1200 alive=true diet=photosynthesis material=wood portable=false flammability=4 growth_time=25 thorns=6 blocks=sight cover=0.5 toxicity=4 beauty=6 plural_count=6 color=green
+cedar: mass=6000 height=35 footprint=2 integrity=6000 alive=true diet=photosynthesis material=wood portable=false flammability=6 growth_time=50 hardness=5 odor=5 res_disease=0.6 blocks=sight cover=0.6 plural_count=4 color=green
+laurel: mass=1500 height=12 footprint=1 integrity=1500 alive=true diet=photosynthesis material=wood portable=false flammability=5 growth_time=25 blocks=sight cover=0.5 toxicity=3 charm+1 morale+1 plural_count=6 color=green
+hazel: mass=600 height=6 footprint=1 integrity=800 alive=true diet=photosynthesis material=wood portable=false flammability=6 growth_time=15 food_output=0.2 elasticity=6 cover=0.3 plural_count=6 color=brown
+almond: mass=1200 height=8 footprint=1 integrity=1200 alive=true diet=photosynthesis material=wood portable=false flammability=6 growth_time=25 food_output=0.3 beauty=7 temp_max=45 cover=0.3 plural_count=6 color=pink
+fir: mass=3000 height=40 footprint=1 integrity=3000 alive=true diet=photosynthesis material=wood portable=false flammability=8 growth_time=35 blocks=sight cover=0.5 temp_min=-40 res_cold=0.8 placeable_on=land,snow,forest plural_count=6 color=green
+spruce: mass=3000 height=40 footprint=1 integrity=3000 alive=true diet=photosynthesis material=wood portable=false flammability=8 growth_time=35 blocks=sight cover=0.5 temp_min=-45 res_cold=0.8 placeable_on=land,snow,forest plural_count=6 color=green
+aspen: mass=1000 height=20 footprint=1 integrity=1500 alive=true diet=photosynthesis material=wood portable=false flammability=4 growth_time=15 spread_rate=0.3 loudness=2 cover=0.3 temp_min=-40 plural_count=10 color=white
+elm: mass=6000 height=30 footprint=2 integrity=6000 alive=true diet=photosynthesis material=wood portable=false flammability=5 growth_time=40 blocks=sight cover=0.6 plural_count=4 color=green
+evergreen: mass=3000 height=25 footprint=1 integrity=3000 alive=true diet=photosynthesis material=wood portable=false flammability=7 growth_time=30 blocks=sight cover=0.5 temp_min=-35 stealth=3 camouflage=forest,snow plural_count=6 color=green
+rowan: mass=800 height=12 footprint=1 integrity=1000 alive=true diet=photosynthesis material=wood portable=false flammability=5 growth_time=20 res_magic=0.5 res_unholy=0.6 cover=0.3 food_output=0.1 plural_count=6 color=red
+mahogany: mass=8000 height=40 footprint=2 integrity=8000 alive=true diet=photosynthesis material=wood portable=false flammability=4 growth_time=60 hardness=7 value=2000 blocks=sight cover=0.6 temp_min=10 color=red
+beech: mass=5000 height=35 footprint=2 integrity=5000 alive=true diet=photosynthesis material=wood portable=false flammability=6 growth_time=45 hardness=6 blocks=sight cover=0.8 food_output=0.1 plural_count=4 color=green
+cypress: mass=4000 height=30 footprint=1 integrity=4000 alive=true diet=photosynthesis material=wood portable=false flammability=4 growth_time=40 res_disease=0.6 res_water=0.6 placeable_on=land,swamp blocks=sight cover=0.4 fear_aura=1 plural_count=6 color=green
+magnolia: mass=2000 height=20 footprint=2 integrity=2000 alive=true diet=photosynthesis material=wood portable=false flammability=5 growth_time=30 beauty=9 odor=5 charm+2 blocks=sight cover=0.5 plural_count=4 color=white
+linden: mass=5000 height=30 footprint=2 integrity=5000 alive=true diet=photosynthesis material=wood portable=false flammability=5 growth_time=40 odor=4 morale+1 inflict_sleep=2 blocks=sight cover=0.6 plural_count=4 color=green
+mulberry: mass=1500 height=12 footprint=1 integrity=1500 alive=true diet=photosynthesis material=wood portable=false flammability=5 growth_time=20 food_output=0.3 stickiness=2 cover=0.4 plural_count=4 color=purple
+hickory: mass=6000 height=30 footprint=2 integrity=7000 alive=true diet=photosynthesis material=wood portable=false flammability=5 growth_time=50 hardness=8 elasticity=6 food_output=0.2 blocks=sight cover=0.6 plural_count=4 color=brown
+poplar: mass=2000 height=35 footprint=1 integrity=2000 alive=true diet=photosynthesis material=wood portable=false flammability=6 growth_time=15 spread_rate=0.1 blocks=sight cover=0.3 plural_count=8 color=green
+nutmeg: mass=1500 height=15 footprint=1 integrity=1500 alive=true diet=photosynthesis material=wood portable=false growth_time=35 edible=true potency=5 inflict_confuse=10 odor=6 value=300 temp_min=15 plural_count=4 color=brown
+yew: mass=3000 height=15 footprint=2 integrity=4000 alive=true diet=photosynthesis material=wood portable=false flammability=4 growth_time=60 lifespan=0 elasticity=8 toxicity=9 dmg_poison=120 inflict_poison=60 blocks=sight cover=0.7 fear_aura=1 color=green
+eucalyptus: mass=6000 height=60 footprint=2 integrity=5000 alive=true diet=photosynthesis material=wood portable=false flammability=10 burn_time=1200 growth_time=15 odor=7 res_disease+0.2 temp_max=48 blocks=sight cover=0.4 plural_count=6 color=green
+acacia: mass=1500 height=12 footprint=2 integrity=1800 alive=true diet=photosynthesis material=wood portable=false flammability=6 growth_time=20 thorns=12 temp_max=50 placeable_on=land,sand cover=0.4 plural_count=4 color=green
+rosewood: mass=4000 height=25 footprint=2 integrity=4500 alive=true diet=photosynthesis material=wood portable=false flammability=4 growth_time=60 hardness=7 odor=4 value=3000 beauty=7 cover=0.5 color=red
+blackwood: mass=4000 height=20 footprint=1 integrity=5000 alive=true diet=photosynthesis material=wood portable=false flammability=4 growth_time=60 hardness=8 value=2000 cover=0.5 color=black
+alder: mass=1500 height=20 footprint=1 integrity=1500 alive=true diet=photosynthesis material=wood portable=false flammability=5 growth_time=15 res_water=0.7 fertility=3 placeable_on=land,swamp cover=0.4 plural_count=6 color=green
+sycamore: mass=8000 height=35 footprint=2 integrity=7000 alive=true diet=photosynthesis material=wood portable=false flammability=5 growth_time=40 blocks=sight cover=0.7 spread_rate=0.05 plural_count=4 color=green
+mangrove: mass=2000 height=10 footprint=3 integrity=4000 alive=true diet=photosynthesis material=wood portable=false growth_time=30 placeable_on=water,swamp,sand res_water=0.9 dmg_water*0.3 movement_cost=4 cover=0.6 breathes=both habitat=swamp,water plural_count=6 color=green
+teak: mass=5000 height=35 footprint=2 integrity=6000 alive=true diet=photosynthesis material=wood portable=false flammability=3 growth_time=50 hardness=6 res_water=0.8 res_disease=0.8 value=1500 blocks=sight cover=0.6 color=brown
+cacao: mass=800 height=7 footprint=1 integrity=800 alive=true diet=photosynthesis material=wood portable=false growth_time=25 food_output=0.3 morale+1 value=300 temp_min=15 cover=0.4 plural_count=4 color=brown
+sequoia: mass=1500000 height=90 footprint=5 integrity=300000 alive=true diet=photosynthesis material=wood portable=false flammability=2 res_fire=0.8 growth_time=300 blocks=sight,projectiles cover=0.9 sight_range+400 fear_aura=1 color=red
+cottonwood: mass=6000 height=30 footprint=2 integrity=4000 alive=true diet=photosynthesis material=wood portable=false flammability=6 growth_time=15 spread_rate=0.2 inflict_blind+1 placeable_on=land,swamp cover=0.5 plural_count=4 color=green
+bonsai: mass=5 height=0.4 integrity=20 alive=true diet=photosynthesis material=wood growth_time=100 beauty=9 value=2000 morale+2 intelligence+1 color=green
+palmyra: mass=2000 height=30 footprint=1 integrity=2000 alive=true diet=photosynthesis material=wood portable=false growth_time=40 food_output=0.3 temp_max=50 placeable_on=land,sand cover=0.3 plural_count=4 color=green
+palmetto: mass=400 height=6 footprint=1 integrity=800 alive=true diet=photosynthesis material=wood portable=false flammability=4 growth_time=20 res_wind=0.7 placeable_on=land,sand,swamp cover=0.4 sharpness=4 plural_count=6 color=green
+mimosa: mass=500 height=10 footprint=1 integrity=600 alive=true diet=photosynthesis material=wood portable=false growth_time=15 beauty=8 odor=4 charm+1 cover=0.3 plural_count=4 color=pink
+butternut: mass=3000 height=20 footprint=2 integrity=3000 alive=true diet=photosynthesis material=wood portable=false growth_time=35 food_output=0.2 cover=0.5 plural_count=4 color=brown
+ponderosa: mass=10000 height=50 footprint=2 integrity=9000 alive=true diet=photosynthesis material=wood portable=false flammability=7 res_fire=0.5 growth_time=60 odor=3 blocks=sight cover=0.6 plural_count=6 color=green
+rattan: mass=30 length=100 integrity=150 alive=true diet=photosynthesis material=wood growth_time=10 thorns=6 climb+6 inflict_root=5 elasticity=7 spread_rate=0.3 movement_cost=2 color=brown
+tamarind: mass=4000 height=25 footprint=2 integrity=5000 alive=true diet=photosynthesis material=wood portable=false growth_time=50 food_output=0.3 temp_min=5 res_wind=0.8 cover=0.6 plural_count=4 color=brown
+conifer: mass=3000 height=30 footprint=1 integrity=3000 alive=true diet=photosynthesis material=wood portable=false flammability=8 growth_time=30 blocks=sight cover=0.5 temp_min=-40 res_cold=0.7 plural_count=6 color=green
+banyan: mass=200000 height=25 footprint=12 integrity=50000 alive=true diet=photosynthesis material=wood portable=false growth_time=150 spread_rate=0.05 blocks=sight,land cover=0.9 occupants=30 morale+2 inflict_root=5 color=green
+dogwood: mass=600 height=8 footprint=1 integrity=900 alive=true diet=photosynthesis material=wood portable=false growth_time=20 hardness=7 beauty=8 cover=0.3 plural_count=4 color=white
+larch: mass=3000 height=40 footprint=1 integrity=3500 alive=true diet=photosynthesis material=wood portable=false flammability=6 growth_time=35 res_cold=0.9 temp_min=-50 res_water=0.6 cover=0.4 plural_count=6 color=yellow
+kola: mass=1000 height=15 footprint=1 integrity=1200 alive=true diet=photosynthesis material=wood portable=false growth_time=30 edible=true potency=4 speed_land*1.2 sleep_need*0 duration=600 temp_min=15 color=green
+ironwood: mass=10000 height=15 footprint=1 integrity=15000 alive=true diet=photosynthesis material=wood portable=false flammability=2 growth_time=100 hardness=9 density=1300 res_slash=0.7 cover=0.7 color=black
+neem: mass=2000 height=18 footprint=1 integrity=2000 alive=true diet=photosynthesis material=wood portable=false growth_time=20 res_disease=0.8 heals=1 field_radius=15 counters=locust,pest,blight,mildew,termite odor=4 cover=0.4 color=green
+ginkgo: mass=4000 height=30 footprint=1 integrity=6000 alive=true diet=photosynthesis material=wood portable=false growth_time=80 lifespan=0 res_disease=0.9 res_radiation=0.8 res_fire=0.4 intelligence+1 odor=5 color=yellow
+sassafras: mass=1500 height=20 footprint=1 integrity=1500 alive=true diet=photosynthesis material=wood portable=false growth_time=20 odor=6 toxicity=2 cover=0.4 plural_count=4 color=orange
+bergamot: mass=600 height=8 footprint=1 integrity=600 alive=true diet=photosynthesis material=wood portable=false growth_time=20 odor=7 charm+1 morale+1 temp_min=0 cover=0.3 color=yellow
+cassia: mass=800 height=12 footprint=1 integrity=900 alive=true diet=photosynthesis material=wood portable=false growth_time=20 odor=5 edible=true restores=5 temp_min=10 cover=0.3 color=brown
+sapling: mass=10 height=2 integrity=40 alive=true diet=photosynthesis material=wood growth_time=5 elasticity=6 placeable_on=land,field,forest plural_count=10 color=green
+
+# noun herb
+cole: mass=1 height=0.5 integrity=3 alive=true diet=photosynthesis growth_time=5 edible=true raw=true nutrition=2 restores=6 temp_min=-10 single_use=true placeable_on=field color=green
+mustard: mass=0.05 height=1.5 integrity=1 alive=true diet=photosynthesis growth_time=3 edible=true restores=5 odor=6 inflict_blind=3 res_cold+0.2 duration=60 spread_rate=0.3 single_use=true plural_count=10 color=yellow
+rosemary: mass=0.05 height=1 integrity=2 alive=true diet=photosynthesis growth_time=4 edible=true restores=12 intelligence+2 sight_range*1.2 duration=300 odor=5 single_use=true plural_count=6 color=green
+rue: mass=0.05 height=0.6 integrity=1 alive=true diet=photosynthesis growth_time=3 edible=true restores=10 effect_status=poison res_poison+0.4 res_magic+0.3 toxicity=2 duration=300 single_use=true color=green
+parsley: mass=0.02 height=0.3 integrity=1 alive=true diet=photosynthesis growth_time=3 edible=true nutrition=1 restores=6 odor*0.5 duration=120 single_use=true plural_count=8 color=green
+dill: mass=0.02 height=1 integrity=1 alive=true diet=photosynthesis growth_time=2 edible=true restores=8 effect_status=confuse odor=4 duration=60 single_use=true plural_count=8 color=green
+peppermint: mass=0.02 height=0.5 integrity=1 alive=true diet=photosynthesis growth_time=2 edible=true restores=10 effect_status=confuse,sleep res_fire+0.1 sight_range*1.1 duration=120 spread_rate=0.3 odor=5 single_use=true plural_count=6 color=green
+spearmint: mass=0.02 height=0.5 integrity=1 alive=true diet=photosynthesis growth_time=2 edible=true restores=10 effect_status=confuse duration=60 spread_rate=0.3 odor=4 single_use=true plural_count=6 color=green
+angelica: mass=0.5 height=2 integrity=2 alive=true diet=photosynthesis growth_time=4 edible=true restores=25 res_unholy+0.6 res_disease+0.4 effect_status=poison,fear duration=600 single_use=true odor=4 color=green
+thyme: mass=0.01 height=0.3 integrity=1 alive=true diet=photosynthesis growth_time=3 edible=true restores=12 courage+3 res_disease+0.3 duration=300 single_use=true odor=4 spread_rate=0.1 plural_count=8 color=green
+cumin: mass=0.01 height=0.4 integrity=1 alive=true diet=photosynthesis growth_time=3 edible=true restores=6 odor=6 temp_max=45 single_use=true plural_count=10 color=brown
+savory: mass=0.02 height=0.4 integrity=1 alive=true diet=photosynthesis growth_time=3 edible=true restores=8 morale+1 duration=120 single_use=true plural_count=8 color=green
+fennel: mass=0.3 height=2 integrity=2 alive=true diet=photosynthesis growth_time=4 edible=true raw=true nutrition=1 restores=8 sight_range*1.2 duration=300 odor=4 single_use=true color=green
+coriander: mass=0.02 height=0.5 integrity=1 alive=true diet=photosynthesis growth_time=2 edible=true restores=6 effect_status=poison odor=5 single_use=true plural_count=8 color=green
+cilantro: mass=0.02 height=0.5 integrity=1 alive=true diet=photosynthesis growth_time=2 edible=true restores=6 effect_status=poison odor=5 single_use=true plural_count=8 color=green
+primrose: mass=0.02 height=0.2 integrity=1 alive=true diet=photosynthesis growth_time=3 beauty=7 charm+1 restores=5 edible=true temp_min=-15 plural_count=12 color=yellow
+woodruff: mass=0.01 height=0.3 integrity=1 alive=true diet=photosynthesis growth_time=3 edible=true restores=8 inflict_sleep=4 odor=4 placeable_on=forest,land spread_rate=0.2 plural_count=10 color=white
+dandelion: mass=0.01 height=0.3 integrity=1 alive=true diet=photosynthesis growth_time=1 edible=true nutrition=1 restores=5 spread_rate=0.8 beauty=4 fertility=-1 plural_count=20 color=yellow
+wort: mass=0.05 height=0.6 integrity=1 alive=true diet=photosynthesis growth_time=3 edible=true restores=12 effect_status=poison morale+1 duration=300 single_use=true plural_count=6 color=green
+turmeric: mass=0.05 height=1 integrity=1 alive=true diet=photosynthesis growth_time=5 edible=true restores=15 regeneration+1 res_disease+0.3 duration=300 single_use=true temp_min=10 color=orange
+shamrock: mass=0.005 height=0.1 integrity=1 alive=true diet=photosynthesis growth_time=2 critical+0.1 evasion+0.05 morale+2 duration=600 single_use=true spread_rate=0.2 plural_count=12 color=green
+licorice: mass=0.1 height=1 integrity=1 alive=true diet=photosynthesis growth_time=4 edible=true restores=10 effect_status=poison loudness*0.8 duration=120 single_use=true color=black
+liquorice: mass=0.1 height=1 integrity=1 alive=true diet=photosynthesis growth_time=4 edible=true restores=10 effect_status=poison loudness*0.8 duration=120 single_use=true color=black
+alfalfa: mass=0.1 height=0.8 integrity=1 alive=true diet=photosynthesis growth_time=3 food_output=0.4 fertility=4 edible=true nutrition=2 spread_rate=0.2 placeable_on=field plural_count=20 tile_type=field color=green
+oregano: mass=0.01 height=0.5 integrity=1 alive=true diet=photosynthesis growth_time=3 edible=true restores=10 res_disease+0.4 duration=300 odor=5 single_use=true plural_count=8 color=green
+lucerne: mass=0.1 height=0.8 integrity=1 alive=true diet=photosynthesis growth_time=3 food_output=0.4 fertility=4 edible=true nutrition=2 spread_rate=0.2 placeable_on=field plural_count=20 color=green
+buttercup: mass=0.01 height=0.4 integrity=1 alive=true diet=photosynthesis growth_time=2 beauty=6 toxicity=4 dmg_poison=20 spread_rate=0.3 plural_count=12 color=yellow
+clary: mass=0.1 height=1 integrity=1 alive=true diet=photosynthesis growth_time=3 edible=true restores=10 sight_range*1.3 effect_status=blind duration=300 single_use=true odor=4 color=purple
+wasabi: mass=0.1 height=0.4 integrity=1 alive=true diet=photosynthesis growth_time=8 edible=true restores=4 inflict_blind=5 inflict_confuse=3 odor=7 value=100 placeable_on=water,swamp single_use=true color=green
+pansy: mass=0.01 height=0.2 integrity=1 alive=true diet=photosynthesis growth_time=2 beauty=7 charm+1 courage+-1 temp_min=-15 plural_count=12 color=purple
+cardamom: mass=0.01 height=3 integrity=1 alive=true diet=photosynthesis growth_time=6 edible=true restores=6 odor=6 value=60 temp_min=10 single_use=true plural_count=12 color=green
+catnip: mass=0.02 height=0.8 integrity=1 alive=true diet=photosynthesis growth_time=2 edible=true inflict_charm=20 odor=6 spread_rate=0.2 counters=cat,lion,tiger,panther,leopard,lynx plural_count=8 color=green
+salvia: mass=0.05 height=0.8 integrity=1 alive=true diet=photosynthesis growth_time=3 edible=true potency=7 inflict_confuse=30 read_properties+3 duration=120 beauty=6 single_use=true color=purple
+plantain: mass=0.2 height=4 integrity=2 alive=true diet=photosynthesis growth_time=8 edible=true raw=true nutrition=4 restores=10 effect_status=bleed,poison single_use=true shelf_life=15 temp_min=10 plural_count=6 color=green
+anise: mass=0.01 height=0.6 integrity=1 alive=true diet=photosynthesis growth_time=3 edible=true restores=6 odor=7 effect_status=confuse duration=60 single_use=true color=white
+collard: mass=0.5 height=0.6 integrity=2 alive=true diet=photosynthesis growth_time=4 edible=true raw=true nutrition=2 restores=6 temp_min=-10 single_use=true placeable_on=field color=green
+chamomile: mass=0.01 height=0.4 integrity=1 alive=true diet=photosynthesis growth_time=2 edible=true restores=15 effect_status=fear,confuse inflict_sleep=10 morale+2 duration=300 single_use=true odor=3 plural_count=12 color=white
+legume: mass=0.001 height=0.8 integrity=1 alive=true diet=photosynthesis growth_time=4 edible=true raw=true nutrition=2 fertility=4 placeable_on=field plural_count=30 color=green
+geranium: mass=0.1 height=0.5 integrity=1 alive=true diet=photosynthesis growth_time=3 beauty=7 odor=4 counters=mosquito,gnat,fly plural_count=8 color=red
+sorrel: mass=0.02 height=0.5 integrity=1 alive=true diet=photosynthesis growth_time=2 edible=true nutrition=1 restores=5 toxicity=1 spread_rate=0.2 single_use=true color=green
+stevia: mass=0.01 height=0.6 integrity=1 alive=true diet=photosynthesis growth_time=3 edible=true restores=4 morale+1 duration=60 single_use=true color=green
+yarrow: mass=0.02 height=0.6 integrity=1 alive=true diet=photosynthesis growth_time=2 edible=true restores=30 effect_status=bleed regeneration+2 duration=120 single_use=true spread_rate=0.2 plural_count=10 color=white
+belladonna: mass=0.2 height=1.5 integrity=2 alive=true diet=photosynthesis growth_time=3 edible=true toxicity=10 dmg_poison=180 inflict_poison=60 inflict_confuse=30 beauty=5 stealth=5 single_use=true color=black
+watercress: mass=0.02 height=0.1 integrity=1 alive=true diet=photosynthesis growth_time=2 edible=true nutrition=1 restores=6 res_disease+0.2 duration=120 placeable_on=water,swamp spread_rate=0.3 single_use=true color=green
+cress: mass=0.01 height=0.1 integrity=1 alive=true diet=photosynthesis growth_time=1 edible=true nutrition=1 restores=4 spread_rate=0.3 single_use=true plural_count=12 color=green
+canna: mass=0.5 height=2 integrity=2 alive=true diet=photosynthesis growth_time=4 beauty=7 edible=true raw=true nutrition=2 placeable_on=land,swamp color=red
+arugula: mass=0.02 height=0.3 integrity=1 alive=true diet=photosynthesis growth_time=2 edible=true nutrition=1 restores=4 odor=3 single_use=true plural_count=10 color=green
+milkweed: mass=0.3 height=1.2 integrity=1 alive=true diet=photosynthesis growth_time=3 toxicity=5 dmg_poison=30 spread_rate=0.4 summons=butterfly summon_count=3 color=green
+caraway: mass=0.01 height=0.6 integrity=1 alive=true diet=photosynthesis growth_time=3 edible=true restores=6 odor=5 single_use=true plural_count=10 color=brown
+wintergreen: mass=0.01 height=0.15 integrity=1 alive=true diet=photosynthesis growth_time=3 edible=true restores=15 res_cold+0.3 temperature+-3 effect_status=burn duration=120 single_use=true temp_min=-30 color=green
+phlox: mass=0.02 height=0.6 integrity=1 alive=true diet=photosynthesis growth_time=3 beauty=7 odor=4 spread_rate=0.2 plural_count=12 color=pink
+wheatgrass: mass=0.02 height=0.3 integrity=1 alive=true diet=photosynthesis growth_time=1 edible=true restores=10 regeneration+1 duration=120 single_use=true color=green
+violet: mass=0.005 height=0.15 integrity=1 alive=true diet=photosynthesis growth_time=2 beauty=7 stealth=3 edible=true restores=4 charm+1 spread_rate=0.1 plural_count=12 color=purple
+
+# noun shrub
+marijuana: mass=1 height=2 integrity=3 alive=true diet=photosynthesis growth_time=6 edible=true potency=6 inflict_confuse=20 morale+2 accuracy+-0.15 speed_land*0.8 duration=600 odor=7 value=50 color=green
+cannabis: mass=1 height=2 integrity=3 alive=true diet=photosynthesis growth_time=6 edible=true potency=6 inflict_confuse=20 morale+2 accuracy+-0.15 speed_land*0.8 duration=600 odor=7 value=50 material=fabric color=green
+ganja: mass=0.1 height=2 integrity=1 alive=true diet=photosynthesis growth_time=6 edible=true potency=7 morale+3 courage+2 accuracy+-0.2 speed_land*0.7 duration=900 odor=8 value=60 color=green
+heather: mass=0.5 height=0.6 integrity=2 alive=true diet=photosynthesis flammability=7 growth_time=10 beauty=6 spread_rate=0.3 temp_min=-25 movement_cost=1.3 plural_count=10 color=purple
+heath: mass=0.5 height=0.6 integrity=2 alive=true diet=photosynthesis flammability=7 growth_time=10 spread_rate=0.3 movement_cost=1.3 tile_type=field radius=4 color=purple
+coca: mass=2 height=2.5 integrity=5 alive=true diet=photosynthesis growth_time=12 edible=true potency=6 speed_land*1.3 sleep_need*0 food_need*0.5 courage+2 duration=900 value=100 temp_min=10 color=green
+jasmine: mass=1 height=3 integrity=3 alive=true diet=photosynthesis growth_time=10 beauty=8 odor=8 charm+2 inflict_sleep=3 climb+3 nocturnal=true color=white
+blueberry: mass=2 height=1.5 integrity=5 alive=true diet=photosynthesis growth_time=10 edible=true nutrition=1 restores=6 sight_range*1.2 intelligence+1 duration=300 food_output=0.2 single_use=true color=blue
+thrift: mass=0.1 height=0.2 integrity=2 alive=true diet=photosynthesis growth_time=8 beauty=6 res_wind=0.8 temp_min=-30 placeable_on=sand,land,hill color=pink
+myrtle: mass=10 height=4 integrity=40 alive=true diet=photosynthesis growth_time=15 beauty=7 odor=5 charm+2 morale+1 cover=0.3 color=green
+hawthorn: mass=150 height=6 integrity=300 alive=true diet=photosynthesis material=wood portable=false growth_time=15 thorns=15 blocks=land cover=0.5 res_unholy=0.5 restores=10 beauty=6 color=white
+daphne: mass=3 height=1.2 integrity=10 alive=true diet=photosynthesis growth_time=12 beauty=8 odor=8 toxicity=9 dmg_poison=100 inflict_poison=40 color=pink
+juniper: mass=50 height=4 integrity=200 alive=true diet=photosynthesis material=wood portable=false growth_time=20 odor=6 flammability=8 res_cold=0.7 temp_min=-40 res_disease+0.2 placeable_on=land,hill,snow,sand cover=0.4 color=blue
+lilac: mass=40 height=5 integrity=150 alive=true diet=photosynthesis material=wood portable=false growth_time=15 beauty=8 odor=8 charm+2 morale+1 cover=0.4 color=purple
+azalea: mass=10 height=2 integrity=40 alive=true diet=photosynthesis growth_time=12 beauty=9 toxicity=6 dmg_poison=40 charm+1 cover=0.3 color=pink
+senna: mass=5 height=2 integrity=20 alive=true diet=photosynthesis growth_time=10 edible=true potency=5 effect_status=poison food_need*1.5 duration=300 color=yellow
+paprika: mass=0.05 integrity=1 edible=true restores=4 odor=4 inflict_blind=2 color=red
+cayenne: mass=0.02 height=0.6 integrity=1 alive=true diet=photosynthesis growth_time=4 edible=true restores=3 temperature+10 res_cold+0.3 inflict_burn=3 inflict_blind=4 duration=60 single_use=true plural_count=12 color=red
+caper: mass=0.001 height=1 integrity=2 alive=true diet=photosynthesis growth_time=8 edible=true nutrition=1 restores=3 thorns=2 climb+3 placeable_on=land,hill,wall plural_count=30 color=green
+briar: mass=20 height=2 integrity=60 alive=true diet=photosynthesis growth_time=6 thorns=12 inflict_bleed=3 inflict_root=3 movement_cost=3 spread_rate=0.3 blocks=land cover=0.3 color=green
+hibiscus: mass=8 height=3 integrity=30 alive=true diet=photosynthesis growth_time=12 beauty=9 edible=true restores=8 charm+1 temp_min=5 cover=0.3 color=red
+mesquite: mass=400 height=8 integrity=800 alive=true diet=photosynthesis material=wood portable=false growth_time=20 thorns=10 water_output=0.5 temp_max=55 flammability=6 burn_time=2400 placeable_on=sand,land cover=0.4 color=green
+yucca: mass=20 height=3 integrity=80 alive=true diet=photosynthesis growth_time=15 sharpness=7 thorns=8 temp_max=55 placeable_on=sand,land edible=true raw=true nutrition=2 color=green
+fuchsia: mass=3 height=1.5 integrity=10 alive=true diet=photosynthesis growth_time=10 beauty=9 edible=true restores=3 summons=hummingbird summon_count=2 color=pink
+absinthe: mass=0.5 height=1 integrity=2 alive=true diet=photosynthesis growth_time=6 edible=true potency=8 toxicity=3 inflict_confuse=40 courage+3 accuracy+-0.2 duration=600 color=green
+honeysuckle: mass=5 length=6 integrity=15 alive=true diet=photosynthesis growth_time=8 beauty=7 odor=7 edible=true restores=3 climb+4 spread_rate=0.3 inflict_root=2 color=yellow
+wormwood: mass=0.5 height=1 integrity=2 alive=true diet=photosynthesis growth_time=6 edible=true toxicity=4 dmg_poison=30 potency=6 counters=worm,parasite,moth,flea odor=6 color=silver
+sagebrush: mass=5 height=2 integrity=20 alive=true diet=photosynthesis growth_time=10 flammability=9 odor=6 temp_max=50 spread_rate=0.1 placeable_on=sand,land,hill camouflage=sand color=silver
+jalapeno: mass=0.02 height=0.8 integrity=1 alive=true diet=photosynthesis growth_time=4 edible=true restores=3 temperature+8 inflict_burn=2 res_cold+0.2 courage+1 duration=60 single_use=true plural_count=12 color=green
+althea: mass=5 height=3 integrity=20 alive=true diet=photosynthesis growth_time=10 beauty=8 restores=10 edible=true cover=0.3 color=pink
+rhododendron: mass=100 height=5 integrity=300 alive=true diet=photosynthesis material=wood portable=false growth_time=20 beauty=9 toxicity=7 dmg_poison=60 spread_rate=0.1 blocks=sight cover=0.6 color=purple
+camellia: mass=20 height=4 integrity=60 alive=true diet=photosynthesis growth_time=15 beauty=9 edible=true restores=6 intelligence+1 duration=300 cover=0.4 color=red
+capsicum: mass=0.15 height=0.8 integrity=1 alive=true diet=photosynthesis growth_time=5 edible=true raw=true nutrition=1 restores=6 res_disease+0.2 duration=120 single_use=true placeable_on=field color=red
+tarragon: mass=0.05 height=1 integrity=1 alive=true diet=photosynthesis growth_time=4 edible=true restores=6 odor=5 single_use=true color=green
+croton: mass=2 height=2 integrity=8 alive=true diet=photosynthesis growth_time=10 beauty=8 toxicity=5 dmg_poison=30 temp_min=10 color=orange
+patchouli: mass=0.5 height=0.8 integrity=2 alive=true diet=photosynthesis growth_time=8 odor=9 charm+1 counters=moth smell_range*0.5 temp_min=10 color=green
+japonica: mass=20 height=2 integrity=60 alive=true diet=photosynthesis growth_time=12 thorns=8 beauty=7 edible=true restores=4 cover=0.3 color=red
+gardenia: mass=10 height=2 integrity=40 alive=true diet=photosynthesis growth_time=12 beauty=9 odor=9 charm+2 morale+1 temp_min=0 color=white
+artemisia: mass=0.5 height=1 integrity=2 alive=true diet=photosynthesis growth_time=6 edible=true potency=5 effect_status=poison res_disease+0.4 inflict_sleep=5 duration=300 odor=6 color=silver
+periwinkle: mass=0.3 height=0.2 integrity=2 alive=true diet=photosynthesis growth_time=4 beauty=6 toxicity=4 spread_rate=0.4 placeable_on=land,forest stealth=2 color=blue
+mallow: mass=1 height=1.5 integrity=3 alive=true diet=photosynthesis growth_time=5 edible=true nutrition=1 restores=12 effect_status=burn spread_rate=0.2 color=pink
+hydrangea: mass=15 height=2 integrity=50 alive=true diet=photosynthesis growth_time=12 beauty=9 toxicity=3 cover=0.4 color=blue
+gorse: mass=20 height=2 integrity=60 alive=true diet=photosynthesis growth_time=8 thorns=14 flammability=10 burn_time=600 spread_rate=0.3 movement_cost=3 blocks=land fertility=2 color=yellow
+shrub: mass=20 height=2 integrity=60 alive=true diet=photosynthesis material=wood growth_time=12 blocks=sight cover=0.4 stealth=3 flammability=6 plural_count=6 color=green
+
+# noun flower
+vanilla: mass=0.5 length=10 integrity=3 alive=true diet=photosynthesis growth_time=30 beauty=7 odor=8 value=400 morale+1 charm+1 climb+3 temp_min=15 color=white
+orchid: mass=0.2 height=0.5 integrity=1 alive=true diet=photosynthesis growth_time=20 beauty=10 value=300 charm+3 morale+1 temp_min=10 plural_count=4 color=purple
+marguerite: mass=0.02 height=0.6 integrity=1 alive=true diet=photosynthesis growth_time=3 beauty=7 charm+1 spread_rate=0.2 plural_count=12 color=white
+dahlia: mass=0.2 height=1.2 integrity=1 alive=true diet=photosynthesis growth_time=5 beauty=9 charm+2 value=40 temp_min=0 plural_count=8 color=red
+columbine: mass=0.02 height=0.6 integrity=1 alive=true diet=photosynthesis growth_time=4 beauty=8 toxicity=3 summons=hummingbird summon_count=1 plural_count=8 color=blue
+aster: mass=0.02 height=0.8 integrity=1 alive=true diet=photosynthesis growth_time=3 beauty=7 charm+1 temp_min=-10 spread_rate=0.1 plural_count=12 color=purple
+marigold: mass=0.03 height=0.5 integrity=1 alive=true diet=photosynthesis growth_time=2 beauty=7 odor=5 edible=true restores=6 counters=aphid,pest,mosquito,nematode plural_count=12 color=orange
+snapdragon: mass=0.03 height=0.8 integrity=1 alive=true diet=photosynthesis growth_time=3 beauty=8 charm+1 fear_aura=1 plural_count=10 color=red
+carnation: mass=0.03 height=0.5 integrity=1 alive=true diet=photosynthesis growth_time=3 beauty=8 charm+2 morale+1 odor=5 plural_count=12 color=pink
+campion: mass=0.02 height=0.6 integrity=1 alive=true diet=photosynthesis growth_time=3 beauty=6 spread_rate=0.2 courage+1 plural_count=12 color=pink
+wallflower: mass=0.03 height=0.5 integrity=1 alive=true diet=photosynthesis growth_time=3 beauty=6 odor=5 stealth=4 charm+-1 placeable_on=land,wall plural_count=12 color=yellow
+petunia: mass=0.02 height=0.3 integrity=1 alive=true diet=photosynthesis growth_time=3 beauty=7 charm+1 spread_rate=0.2 plural_count=12 color=purple
+peony: mass=0.3 height=1 integrity=2 alive=true diet=photosynthesis growth_time=10 beauty=10 odor=6 charm+3 value=60 temp_min=-30 plural_count=6 color=pink
+anemone: mass=0.02 height=0.4 integrity=1 alive=true diet=photosynthesis growth_time=3 beauty=8 toxicity=4 res_wind=0.3 plural_count=10 color=red
+calla: mass=0.1 height=0.8 integrity=1 alive=true diet=photosynthesis growth_time=5 beauty=9 toxicity=5 dmg_poison=20 placeable_on=land,swamp,water plural_count=6 color=white
+verbena: mass=0.02 height=0.6 integrity=1 alive=true diet=photosynthesis growth_time=3 beauty=7 restores=8 effect_status=fear morale+1 duration=120 spread_rate=0.2 plural_count=10 color=purple
+valerian: mass=0.05 height=1.5 integrity=1 alive=true diet=photosynthesis growth_time=4 edible=true potency=5 inflict_sleep=30 effect_status=fear restores=10 odor=6 single_use=true color=pink
+calypso: mass=0.01 height=0.2 integrity=1 alive=true diet=photosynthesis growth_time=10 beauty=9 placeable_on=forest stealth=3 value=100 color=pink
+vanda: mass=0.2 height=0.6 integrity=1 alive=true diet=photosynthesis growth_time=20 beauty=10 value=200 charm+2 temp_min=12 placeable_on=forest,land color=blue
+bloomer: mass=0.05 height=0.5 integrity=1 alive=true diet=photosynthesis growth_time=3 beauty=7 charm+1 plural_count=12 color=yellow
+veronica: mass=0.02 height=0.5 integrity=1 alive=true diet=photosynthesis growth_time=3 beauty=7 restores=5 spread_rate=0.2 plural_count=12 color=blue
+iris: mass=0.05 height=0.8 integrity=1 alive=true diet=photosynthesis growth_time=4 beauty=9 charm+2 toxicity=3 placeable_on=land,swamp plural_count=10 color=purple
+bluebell: mass=0.01 height=0.3 integrity=1 alive=true diet=photosynthesis growth_time=3 beauty=8 toxicity=4 spread_rate=0.3 placeable_on=forest,land plural_count=20 color=blue
+daffodil: mass=0.03 height=0.4 integrity=1 alive=true diet=photosynthesis growth_time=3 beauty=8 morale+2 toxicity=5 dmg_poison=20 temp_min=-15 plural_count=12 color=yellow
+narcissus: mass=0.03 height=0.4 integrity=1 alive=true diet=photosynthesis growth_time=3 beauty=9 inflict_charm=10 toxicity=5 inflict_sleep=4 plural_count=10 color=white
+crocus: mass=0.01 height=0.1 integrity=1 alive=true diet=photosynthesis growth_time=2 beauty=7 temp_min=-20 morale+1 plural_count=20 color=purple
+chrysanthemum: mass=0.1 height=1 integrity=1 alive=true diet=photosynthesis growth_time=5 beauty=8 counters=flea,tick,louse,mosquito,aphid toxicity=2 plural_count=10 color=yellow
+saffron: mass=0.01 height=0.2 integrity=1 alive=true diet=photosynthesis growth_time=5 edible=true restores=8 morale+2 value=1000 plural_count=20 color=purple
+edelweiss: mass=0.01 height=0.15 integrity=1 alive=true diet=photosynthesis growth_time=8 beauty=8 value=200 temp_min=-40 res_cold=0.9 placeable_on=mountain,hill,snow courage+2 color=white
+trillium: mass=0.02 height=0.4 integrity=1 alive=true diet=photosynthesis growth_time=10 beauty=8 placeable_on=forest stealth=2 plural_count=8 color=white
+wildflower: mass=0.02 height=0.4 integrity=1 alive=true diet=photosynthesis growth_time=2 beauty=7 spread_rate=0.4 morale+1 fertility=1 plural_count=20 color=purple
+lupin: mass=0.2 height=1 integrity=1 alive=true diet=photosynthesis growth_time=3 beauty=8 fertility=3 toxicity=3 spread_rate=0.3 plural_count=10 color=blue
+mariposa: mass=0.02 height=0.4 integrity=1 alive=true diet=photosynthesis growth_time=4 beauty=8 temp_max=45 placeable_on=sand,land plural_count=10 color=white
+bouquet: mass=0.5 integrity=2 beauty=9 charm+4 morale+2 odor=5 value=30 duration=600 single_use=true color=pink
+garland: mass=0.5 integrity=3 equip_slot=neck beauty=8 charm+3 morale+1 odor=4 value=20 color=yellow
+wreath: mass=1 integrity=5 equip_slot=head beauty=7 charm+2 courage+2 res_unholy+0.2 value=30 color=green
+blossom: mass=0.005 height=4 integrity=1 alive=true diet=photosynthesis growth_time=3 beauty=9 odor=4 charm+2 morale+1 plural_count=30 color=pink
+rosebud: mass=0.005 height=0.4 integrity=1 alive=true diet=photosynthesis growth_time=2 beauty=8 charm+2 thorns=1 plural_count=12 color=red
+
+# noun plant
+reed: mass=0.2 height=3 integrity=2 alive=true diet=photosynthesis growth_time=3 spread_rate=0.4 placeable_on=water,swamp blocks=sight stealth=4 camouflage=swamp,water movement_cost=2 plural_count=20 color=green
+bud: mass=0.001 integrity=1 alive=true diet=photosynthesis growth_time=1 edible=true nutrition=0.2 growth*1.5 plural_count=20 color=green
+bloom: mass=0.01 height=0.4 integrity=1 alive=true diet=photosynthesis growth_time=2 beauty=9 charm+2 morale+1 odor=4 plural_count=20 color=pink
+bark: mass=2 integrity=40 material=wood hardness=5 flammability=6 equip_slot=body armor=8 res_slash=0.2 res_fire+-0.1 camouflage=forest stealth=2 color=brown
+pod: mass=0.05 length=0.15 integrity=2 alive=true diet=photosynthesis growth_time=4 edible=true nutrition=1 shape=long container_slots=1 plural_count=10 color=green
+bulb: mass=0.05 integrity=2 alive=true diet=photosynthesis growth_time=4 placeable_on=land,field temp_min=-25 res_cold=0.8 spread_rate=0.1 plural_count=12 color=brown
+kernel: mass=0.0003 integrity=1 alive=true diet=photosynthesis growth_time=5 edible=true raw=true nutrition=0.5 cooks_into=popcorn placeable_on=field plural_count=100 color=yellow
+perennial: mass=1 height=0.6 integrity=5 alive=true diet=photosynthesis growth_time=4 lifespan=0 regeneration=0.5 spread_rate=0.1 temp_min=-25 color=green
+stalk: mass=0.5 height=2 integrity=4 alive=true diet=photosynthesis growth_time=3 shape=long elasticity=5 tracking=4 stealth=3 color=green
+stump: mass=300 height=0.6 footprint=1 integrity=800 material=wood portable=false flammability=4 movement_cost=2 cover=0.2 produce_U*1.5 color=brown
+foliage: mass=5 height=2 integrity=10 alive=true diet=photosynthesis growth_time=3 blocks=sight stealth=5 camouflage=forest,swamp cover=0.2 spread_rate=0.2 color=green
+burr: mass=0.001 integrity=1 alive=true diet=photosynthesis growth_time=3 stickiness=8 thorns=1 spread_rate=0.5 inflict_slow=3 plural_count=30 color=brown
+bur: mass=0.001 integrity=1 alive=true diet=photosynthesis growth_time=3 stickiness=8 thorns=1 spread_rate=0.5 inflict_slow=3 plural_count=30 color=brown
+fern: mass=0.5 height=1 integrity=2 alive=true diet=photosynthesis growth_time=3 spread_rate=0.3 stealth=4 camouflage=forest,swamp placeable_on=forest,land,swamp blocks=sight color=green
+thistle: mass=0.3 height=1.5 integrity=3 alive=true diet=photosynthesis growth_time=2 thorns=6 spread_rate=0.6 movement_cost=1.6 beauty=4 courage+2 fertility=-1 color=purple
+bittersweet: mass=3 length=8 integrity=10 alive=true diet=photosynthesis growth_time=4 climb+5 spread_rate=0.4 inflict_root=4 toxicity=5 dmg_poison=20 color=orange
+climber: mass=2 length=8 integrity=8 alive=true diet=photosynthesis growth_time=4 climb+6 spread_rate=0.3 inflict_root=2 cover=0.2 color=green
+sprout: mass=0.005 height=0.05 integrity=1 alive=true diet=photosynthesis growth_time=1 edible=true nutrition=0.5 restores=2 growth*1.5 plural_count=20 color=green
+aloe: mass=1 height=0.6 integrity=4 alive=true diet=photosynthesis growth_time=8 restores=40 effect_status=burn res_fire+0.3 regeneration+2 duration=300 temp_max=50 placeable_on=sand,land thorns=1 color=green
+petal: mass=0.0005 integrity=1 beauty=8 charm+1 odor=2 speed_air=1 hover=true plural_count=100 color=pink
+twig: mass=0.05 length=0.3 integrity=1 material=wood flammability=9 burn_time=60 loudness=3 shape=long fuel_output=0.1 plural_count=20 color=brown
+succulent: mass=0.5 height=0.2 integrity=4 alive=true diet=photosynthesis growth_time=6 water_output=0.2 temp_max=55 placeable_on=sand,land res_fire=0.3 color=green
+spore: mass=0.000001 integrity=1 alive=true growth_time=2 speed_air=1 hover=true spread_rate=1 contagion=0.3 stealth=8 placeable_on=forest,swamp,land plural_count=1000 color=brown
+tiller: mass=0.2 height=0.8 integrity=1 alive=true diet=photosynthesis growth_time=2 spread_rate=0.3 food_output=0.1 placeable_on=field color=green
+creeper: mass=2 length=10 integrity=10 alive=true diet=photosynthesis growth_time=3 climb+5 spread_rate=0.5 stealth=4 inflict_root=3 movement_cost=1.5 cover=0.2 color=green
+clove: mass=0.001 integrity=1 edible=true restores=4 odor=7 res_disease+0.2 counters=toothache duration=120 plural_count=20 color=brown
+cinnamon: mass=0.02 integrity=2 edible=true restores=6 odor=7 morale+1 res_disease+0.2 temperature+3 duration=120 value=40 color=brown
+greenery: mass=10 height=1 integrity=10 alive=true diet=photosynthesis growth_time=3 beauty=6 morale+1 stealth=3 cover=0.1 spread_rate=0.2 color=green
+mistletoe: mass=1 integrity=3 alive=true diet=photosynthesis growth_time=8 toxicity=5 inflict_charm=15 charm+2 climb+6 placeable_on=forest,land color=green
+bracken: mass=1 height=1.5 integrity=2 alive=true diet=photosynthesis growth_time=2 spread_rate=0.6 flammability=8 toxicity=3 blocks=sight stealth=4 camouflage=forest movement_cost=1.5 color=green
+seedling: mass=0.01 height=0.1 integrity=1 alive=true diet=photosynthesis growth_time=2 placeable_on=field,land,forest plural_count=20 color=green
+agave: mass=40 height=2 integrity=200 alive=true diet=photosynthesis growth_time=40 sharpness=8 thorns=10 water_output=0.3 temp_max=55 placeable_on=sand,land edible=true potency=4 color=blue
+deadwood: mass=100 integrity=50 material=wood flammability=9 burn_time=1800 fuel_output=0.5 decay_rate=0.5 portable=false movement_cost=2 color=gray
+bough: mass=40 length=4 integrity=80 material=wood flammability=6 shape=long cover=0.2 dmg_blunt=30 attack_range=3 knockback=2 color=brown
+sandalwood: mass=500 height=8 integrity=800 alive=true diet=photosynthesis material=wood portable=false growth_time=50 odor=8 value=5000 charm+1 res_unholy=0.4 color=brown
+thorn: mass=0.002 length=0.03 integrity=2 sharpness=8 hardness=5 thorns=8 dmg_pierce=6 inflict_bleed=3 shape=pointed plural_count=30 color=brown
+sap: mass=0.5 state=liquid stickiness=7 edible=true nutrition=2 restores=4 flammability=5 inflict_slow=4 color=yellow
+frond: mass=0.3 length=2 integrity=2 alive=true diet=photosynthesis growth_time=2 shape=sheet cover=0.2 stealth=3 camouflage=forest,swamp temperature+-3 color=green
+kudzu: mass=10 length=30 integrity=30 alive=true diet=photosynthesis growth_time=1 spread_rate=2 climb+7 inflict_root=6 movement_cost=3 blocks=sight cover=0.4 fertility=2 stealth=4 color=green
+seaweed: mass=1 length=3 integrity=3 alive=true diet=photosynthesis growth_time=3 edible=true nutrition=1 restores=4 slipperiness=6 placeable_on=water,deep_water,sand spread_rate=0.3 inflict_slow=2 breathes=water color=green
+kelp: mass=20 length=30 integrity=20 alive=true diet=photosynthesis growth_time=2 edible=true nutrition=1 spread_rate=0.5 placeable_on=water,deep_water inflict_root=4 stealth=4 camouflage=water,deep_water breathes=water blocks=sight color=brown
+algae: mass=0.1 integrity=1 alive=true diet=photosynthesis growth_time=1 spread_rate=1.5 slipperiness=7 placeable_on=water,swamp,deep_water edible=true nutrition=0.5 toxicity=1 transparency*0.5 breathes=water color=green
+lichen: mass=0.01 height=0.01 integrity=3 alive=true diet=photosynthesis growth_time=10 lifespan=0 temp_min=-60 temp_max=70 res_cold=0.9 res_radiation=0.7 placeable_on=land,hill,mountain,snow stealth=3 color=gray
+nectar: mass=0.05 state=liquid edible=true nutrition=3 restores=20 morale+2 speed_air*1.3 duration=120 stickiness=4 odor=4 single_use=true summons=bee summon_count=3 color=gold
+husk: mass=0.02 integrity=1 flammability=9 burn_time=30 shape=hollow edible=false container_slots=1 plural_count=20 color=brown
+tuber: mass=0.3 integrity=3 alive=true diet=photosynthesis growth_time=5 edible=true raw=true nutrition=4 restores=6 shelf_life=300 temp_min=-15 placeable_on=field,land plural_count=8 color=brown
+rhizome: mass=0.3 length=1 integrity=10 alive=true diet=photosynthesis growth_time=3 spread_rate=0.8 detect_underground=true speed_underground=0.001 temp_min=-25 regeneration=1 color=brown
+bramble: mass=30 height=2 integrity=80 alive=true diet=photosynthesis growth_time=4 thorns=14 inflict_bleed=4 inflict_root=4 movement_cost=4 spread_rate=0.5 blocks=land edible=true nutrition=1 cover=0.3 color=green
+mycelium: mass=5 integrity=30 alive=true growth_time=3 spread_rate=0.8 fertility=4 detect_life=50 read_properties+2 placeable_on=forest,swamp,land stealth=9 color=white
+wisteria: mass=200 length=20 integrity=400 alive=true diet=photosynthesis material=wood growth_time=20 beauty=10 odor=7 climb+6 dmg_crush=40 siege=2 toxicity=5 spread_rate=0.2 color=purple
+clematis: mass=5 length=8 integrity=15 alive=true diet=photosynthesis growth_time=6 beauty=8 climb+5 toxicity=4 spread_rate=0.2 color=purple
+sedge: mass=0.1 height=1 integrity=2 alive=true diet=photosynthesis growth_time=2 sharpness=3 spread_rate=0.4 placeable_on=swamp,water,land stealth=3 camouflage=swamp movement_cost=1.5 color=green
+sumac: mass=40 height=5 integrity=100 alive=true diet=photosynthesis growth_time=8 spread_rate=0.3 edible=true restores=4 beauty=6 color=red
+mandrake: mass=0.5 height=0.3 integrity=4 alive=true diet=photosynthesis growth_time=8 toxicity=8 dmg_poison=80 inflict_sleep=30 loudness=10 dmg_sonic=100 inflict_fear=10 attack_area=10 single_use=true value=500 color=brown
+madder: mass=0.5 height=1 integrity=2 alive=true diet=photosynthesis growth_time=5 climb+3 thorns=1 value=30 color=red
+nightshade: mass=0.3 height=1 integrity=2 alive=true diet=photosynthesis growth_time=3 edible=true toxicity=9 dmg_poison=120 inflict_poison=45 inflict_confuse=20 stealth=6 nocturnal=true color=purple
+peyote: mass=0.1 height=0.06 integrity=2 alive=true diet=photosynthesis growth_time=30 edible=true potency=9 inflict_confuse=60 read_properties+5 sees_through=walls duration=900 temp_max=55 placeable_on=sand single_use=true color=green
+tumbleweed: mass=0.5 height=1 integrity=2 alive=true diet=photosynthesis growth_time=3 speed_land=6 self_propelled=true spread_rate=1 flammability=10 burn_time=60 placeable_on=sand,land,field shape=round movement_cost=1.3 color=brown
+liana: mass=50 length=40 integrity=100 alive=true diet=photosynthesis growth_time=8 climb+8 spread_rate=0.3 inflict_root=5 mountable=false elasticity=7 placeable_on=forest,land color=green
+betel: mass=0.02 integrity=1 edible=true potency=4 courage+2 speed_land*1.1 duration=600 color=red single_use=true
+boll: mass=0.005 integrity=1 alive=true diet=photosynthesis growth_time=5 material=cotton flammability=8 placeable_on=field plural_count=30 color=white
+greenbrier: mass=10 length=5 integrity=30 alive=true diet=photosynthesis growth_time=4 thorns=10 inflict_bleed=3 inflict_root=3 climb+4 spread_rate=0.4 movement_cost=3 color=green
+bryony: mass=2 length=4 integrity=6 alive=true diet=photosynthesis growth_time=3 climb+4 toxicity=8 dmg_poison=60 spread_rate=0.3 color=red
+strangler: mass=500 length=30 integrity=1500 alive=true diet=photosynthesis material=wood growth_time=40 climb+8 dmg_crush=100 attack_rate=0.01 inflict_root=60 counters=tree,oak,palm,pine,maple color=green
+sprig: mass=0.005 integrity=1 alive=true edible=true restores=4 odor=2 single_use=true plural_count=10 color=green
+burl: mass=50 integrity=300 material=wood hardness=7 value=500 beauty=7 portable=true color=brown
+chicory: mass=0.2 height=1 integrity=1 alive=true diet=photosynthesis growth_time=3 edible=true raw=true nutrition=1 restores=5 sleep_need*0.8 duration=600 spread_rate=0.3 beauty=6 single_use=true color=blue
+arum: mass=0.3 height=0.5 integrity=1 alive=true diet=photosynthesis growth_time=4 toxicity=6 dmg_poison=40 odor=6 placeable_on=forest,swamp stealth=3 color=white
+myrrh: mass=0.1 integrity=2 odor=7 value=500 restores=20 res_disease+0.4 res_unholy+0.3 regeneration+1 duration=600 single_use=true color=brown
+balsam: mass=0.2 state=liquid stickiness=4 odor=6 restores=30 regeneration+2 effect_status=bleed res_disease+0.2 duration=300 single_use=true color=brown
+woodbine: mass=4 length=10 integrity=10 alive=true diet=photosynthesis growth_time=4 climb+6 spread_rate=0.4 beauty=6 odor=5 inflict_root=2 color=red
+chives: mass=0.01 height=0.3 integrity=1 alive=true diet=photosynthesis growth_time=2 edible=true restores=4 odor=4 spread_rate=0.1 single_use=true plural_count=12 color=green
+beanstalk: mass=5000 height=500 footprint=1 integrity=8000 alive=true diet=photosynthesis growth_time=5 climb+10 flight_ceiling+500 sight_range+800 map_reveal=30 portable=false color=green
+balsa: mass=500 height=25 integrity=300 alive=true diet=photosynthesis material=wood portable=false growth_time=8 density=150 buoyancy=9 hardness=1 flammability=7 color=white
+snag: mass=1500 height=15 footprint=1 integrity=600 material=wood portable=false flammability=9 decay_rate=2 cover=0.2 sight_range+100 summons=woodpecker summon_count=1 color=gray
+coconut: mass=1.4 integrity=30 hardness=7 edible=true nutrition=5 restores=15 water_output=0.3 dmg_blunt=30 shelf_life=200 single_use=true plural_count=4 color=brown
+pip: mass=0.0002 integrity=1 alive=true diet=photosynthesis growth_time=20 placeable_on=land,field plural_count=20 color=brown
+hemp: mass=1 height=3 integrity=4 alive=true diet=photosynthesis growth_time=5 material=fabric elasticity=4 food_output=0.2 fertility=1 blocks=sight placeable_on=field plural_count=20 color=green
+
+# noun fungus
+morel: mass=0.03 height=0.1 integrity=1 alive=true edible=true raw=true nutrition=2 restores=10 value=150 growth_time=4 placeable_on=forest,land stealth=4 camouflage=forest plural_count=8 color=brown
+puffball: mass=0.5 integrity=1 alive=true edible=true nutrition=2 growth_time=2 placeable_on=forest,land,field single_use=true inflict_blind=6 attack_area=3 visibility*0.5 plural_count=6 color=white
+chanterelle: mass=0.03 integrity=1 alive=true edible=true nutrition=2 restores=10 value=80 growth_time=4 placeable_on=forest odor=3 plural_count=10 color=gold
+shiitake: mass=0.02 integrity=1 alive=true edible=true nutrition=2 restores=10 res_disease+0.3 duration=300 growth_time=3 placeable_on=forest,land single_use=true plural_count=10 color=brown
+yeast: mass=0.01 integrity=1 alive=true growth_time=1 reproduction=60 spread_rate=0.5 edible=true nutrition=1 potency=2 placeable_on=land,swamp color=yellow
+
+# noun food
+spice: mass=0.02 integrity=1 edible=true restores=4 odor=6 value=50 morale+1 res_cold+0.1 duration=120 single_use=true color=red
+rind: mass=0.05 integrity=2 edible=true nutrition=0.5 shape=sheet slipperiness=4 color=yellow
+peel: mass=0.03 integrity=1 edible=true nutrition=0.2 slipperiness=8 shape=sheet color=yellow
+hay: mass=20 integrity=5 flammability=10 burn_time=120 edible=true nutrition=3 food_output=1 elasticity=6 stealth=4 shape=pile color=yellow
+
+# noun poison
+opium: mass=0.01 integrity=1 edible=true potency=9 toxicity=4 inflict_sleep=60 restores=40 effect_status=fear,bleed speed_land*0.5 accuracy+-0.3 duration=900 value=300 single_use=true color=brown
+weedkiller: mass=2 state=liquid toxicity=6 dmg_poison=30 placement=region field_radius=30 field_duration=5 growth=0 fertility=-3 counters=weed,ivy,vine,kudzu,bramble,nettle,thistle,dandelion,bracken,creeper single_use=true
+defoliant: mass=5 state=liquid toxicity=8 dmg_poison=40 placement=region field_radius=100 field_duration=10 growth=0 fertility=-4 cover*0 stealth*0.2 counters=forest,jungle,foliage,tree,shrub,canopy,thicket,undergrowth friendly_fire=true single_use=true
+
+# noun material
+latex: mass=1 state=liquid elasticity=9 stickiness=6 conductivity=0 res_electric+0.6 color=white
+pith: mass=0.01 integrity=1 density=100 buoyancy=6 material=wood edible=true nutrition=0.5 color=white
+resin: mass=0.5 state=liquid stickiness=8 flammability=9 burn_time=300 inflict_slow=5 odor=5 value=20 color=gold
+timber: mass=500 length=6 integrity=400 material=wood flammability=6 build_speed=1.5 hardness=5 portable=false shape=long value=50 color=brown
+lumber: mass=300 length=4 integrity=300 material=wood flammability=6 build_speed=1.5 hardness=5 shape=long value=40 color=brown
+jute: mass=1 integrity=10 material=fabric flammability=7 elasticity=4 color=brown
+sisal: mass=1 integrity=15 material=fabric flammability=6 elasticity=5 hardness=4 color=white
+peat: mass=50 integrity=10 flammability=7 burn_time=3600 fuel_output=0.5 moisture=4 fertility=3 placeable_on=swamp,land shape=pile color=brown
+turf: mass=30 integrity=10 alive=true diet=photosynthesis growth_time=2 tile_type=field radius=2 fertility=2 fuel_output=0.2 slipperiness=2 color=green
+fertilizer: mass=20 integrity=5 odor=5 placement=region field_radius=20 field_duration=10 fertility=6 growth=2.5 food_output*2 counters=barren,famine single_use=true
+mulch: mass=20 integrity=5 fertility=3 moisture=3 placement=region field_radius=10 field_duration=20 growth=1.5 temp_min*0.5 odor=2 single_use=true color=brown
+
+# noun landform
+grove: tile_type=forest radius=4 movement_cost=1.5 blocks=sight cover=0.4 stealth=3 flammability=6 portable=false fertility=5 beauty=6 morale+1
+meadow: tile_type=field radius=10 fertility=6 beauty=7 movement_cost=1 morale+1 food_output=1 portable=false flammability=6 spread_rate=0.02
+jungle: tile_type=forest radius=20 movement_cost=4 blocks=sight cover=0.6 stealth=6 moisture=8 fertility=9 temperature_delta=8 dmg_disease=1 portable=false spread_rate=0.05 sight_range*0.3
+thicket: tile_type=forest radius=3 movement_cost=4 blocks=sight,land cover=0.6 stealth=6 thorns=5 flammability=7 portable=false
+copse: tile_type=forest radius=2 movement_cost=1.5 blocks=sight cover=0.4 stealth=3 flammability=6 portable=false
+woodland: tile_type=forest radius=15 movement_cost=2 blocks=sight cover=0.4 stealth=3 flammability=6 fertility=6 portable=false spread_rate=0.01
+rainforest: tile_type=forest radius=40 movement_cost=5 blocks=sight cover=0.7 stealth=7 moisture=10 fertility=10 temperature_delta=10 sets_weather=rain field_radius=400 portable=false sight_range*0.3 flammability=2
+prairie: tile_type=field radius=40 fertility=7 movement_cost=1 visibility=1.5 flammability=8 spread_rate=0.05 portable=false food_output=2
+savanna: tile_type=field radius=40 fertility=4 flammability=9 temperature_delta=8 visibility=1.5 movement_cost=1 portable=false
+pasture: tile_type=field radius=8 fertility=6 food_output=3 portable=false flammability=6 morale+1
+paddy: tile_type=swamp radius=4 depth=0.2 moisture=9 fertility=8 food_output=4 placeable_on=land,field,swamp movement_cost=3 portable=false production_needs=tilled,water
+undergrowth: tile_type=forest radius=4 movement_cost=2.5 stealth=6 camouflage=forest cover=0.2 flammability=8 spread_rate=0.1 portable=false
+canopy: height=30 radius=8 blocks=sight,air cover=0.6 light_delta=-3 stealth=5 temperature_delta=-4 moisture=4 portable=false
+lawn: tile_type=field radius=5 beauty=5 fertility=3 morale+1 movement_cost=1 portable=false
+
+# noun structure
+plantation: mass=50000 footprint=36 integrity=3000 portable=false placeable_on=field,land food_output=12 fertility=5 claim_radius=4 production_needs=labor,water flammability=6 value=8000 tile_type=tilled radius=6
+greenhouse: mass=3000 footprint=6 integrity=400 material=glass portable=false enterable=true transparency=0.9 temperature=28 growth*2.5 fertility=6 food_output=3 brittleness=8 field_radius=6 temp_min*0 claim_radius=1
+nursery: mass=2000 footprint=6 integrity=300 portable=false placeable_on=field,land fertility=7 growth*2 field_radius=8 beauty=5 food_output=1
+trellis: mass=20 height=2.5 integrity=40 material=wood portable=false climb+4 growth*1.3 field_radius=2 beauty=4 cover=0.1
+arbor: mass=100 height=3 integrity=150 material=wood portable=false enterable=true occupants=4 beauty=7 cover=0.3 morale+2 charm+1 field_radius=3
+hedgerow: mass=2000 height=2.5 length=40 integrity=1500 alive=true diet=photosynthesis growth_time=20 portable=false blocks=land,sight cover=0.6 stealth=4 thorns=4 flammability=5 claim_radius=3 color=green
+shrubbery: mass=300 height=2 footprint=4 integrity=400 alive=true diet=photosynthesis growth_time=12 portable=false blocks=sight cover=0.4 stealth=5 beauty=5 color=green
+
+# noun phenomenon
+flora: placement=region field_radius=60 field_duration=10 growth=2 fertility=4 beauty=5 morale+1 spread_rate=0.1
+
+# noun tool
+rake: mass=1.2 length=1.6 integrity=40 material=steel,wood equip_slot=held hands_required=2 dmg_pierce=10 attack_range=1.6 harvest_bonus=1.5 harvest_sources=field,orchard fertility=1
+spade: mass=1.8 length=1 integrity=60 material=steel,wood equip_slot=held hands_required=2 dmg_blunt=18 dmg_slash=8 speed_underground=0.2 harvest_bonus=1.5 harvest_sources=dig,field
+sickle: mass=0.5 length=0.5 integrity=40 sharpness=8 material=steel,wood equip_slot=held hands_required=1 dmg_slash=25 attack_rate=1.2 harvest_bonus=2 harvest_sources=field counters=wheat,grass,weed,crop,hay
+scythe: mass=3 length=1.8 integrity=50 sharpness=8 material=steel,wood equip_slot=held hands_required=2 dmg_slash=55 attack_rate=0.7 attack_range=2 attack_area=2 multi_target=3 harvest_bonus=3 harvest_sources=field fear_aura=2 counters=wheat,grass,weed,crop
+machete: mass=0.7 length=0.6 integrity=50 sharpness=8 material=steel equip_slot=held hands_required=1 dmg_slash=35 attack_rate=1.2 counters=vine,kudzu,bramble,jungle,undergrowth,thicket,liana,creeper,briar
+chainsaw: mass=6 length=0.8 integrity=80 sharpness=9 material=steel equip_slot=held hands_required=2 dmg_slash=90 attack_rate=4 siege=3 loudness=10 upkeep_fuel=0.05 fear_aura=4 counters=tree,oak,pine,redwood,sequoia,forest,timber,hedge
+hatchet: mass=0.8 length=0.4 integrity=50 sharpness=7 material=steel,wood equip_slot=held hands_required=1 dmg_slash=30 attack_rate=1 siege=1.5 counters=sapling,shrub,twig,bough
+
+# verb transform
+wilt: duration=120 strength+-3 speed_land*0.6 morale+-3 height*0.7 integrity*0.8
+wither: duration=180 integrity*0.5 strength+-4 regeneration*0 beauty+-4 mass*0.7
+germinate: duration=60 growth*3 regeneration+3 fertility+2
+flourish: duration=600 growth*2 regeneration+4 morale+3 strength+2 food_output*2
+
+# verb create
+sow: duration=30 fertility+3 growth*2 food_output*1.5 spread_rate+0.3
+reap: duration=30 harvest_bonus*3 food_output*2 dmg_slash+20 attack_area+2
+graft: duration=600 effect_target=touched regeneration+5 integrity*1.3 restores=100
+pollinate: duration=300 growth*3 reproduction*3 food_output*2 fertility+2
+transplant: duration=10 teleport_range+50 effect_target=touched
+
+# verb combat
+prune: duration=20 effect_target=touched strips_adjectives=1 dmg_slash+15 growth*1.5
+uproot: duration=10 effect_target=touched dmg_crush+200 siege*3 knockback+10 counters=tree,stump,root,weed,shrub
+
+# adjective quality
+leafy: cover+0.2 stealth+3 camouflage=forest nutrition*1.2 beauty+1
+thorny: thorns+15 inflict_bleed+3 sharpness+3 charm+-1
+lush: fertility+4 growth*2 beauty+3 food_output*1.5 moisture+3 stealth+2
+verdant: fertility+4 growth*2.5 beauty+3 morale+1 regeneration+1
+mossy: slipperiness+3 stealth+3 moisture+2 camouflage=forest age+1000 speed_land*0.9
+overgrown: movement_cost*2 stealth+4 cover+0.2 growth*1.5 beauty+-1 value*0.6
+barren: fertility+-8 growth*0 food_output*0 water_output*0 morale+-2 counters=lush,verdant,fertile
+arid: moisture+-8 wetness*0 temperature+10 growth*0.3 water_output*0.2 flammability+3
+bountiful: food_output*3 nutrition*2 growth*2 morale+2 value*1.5
+ripe: nutrition*1.5 restores*1.5 odor+2 shelf_life*0.5 beauty+1
+herbal: restores+15 res_disease+0.3 regeneration+1 odor+3 toxicity*0.5
+floral: beauty+4 odor+4 charm+2 morale+1
+fragrant: odor+6 charm+2 beauty+2 stealth+-3
+wooded: cover+0.3 stealth+3 blocks=sight movement_cost*1.5 fertility+2
+fungal: decay_rate+1 spread_rate+0.2 toxicity+2 dmg_disease+5 odor+2 luminosity+1
+leafless: cover*0.2 stealth+-3 beauty+-2 sight_range*1.3
+deciduous: beauty+2 regeneration+1 cover*0.7
+woody: hardness+2 integrity*1.5 material=wood flammability+2 mass*1.3
+grassy: fertility+2 food_output*1.3 movement_cost*0.9 beauty+1 flammability+1
+flowery: beauty+4 charm+2 odor+3 morale+1
+fruity: nutrition*1.3 odor+3 restores*1.2 charm+1
+fruitful: food_output*2.5 reproduction*3 growth*1.5 nutrition*1.5
+seedy: value*0.5 charm+-2 stealth+2 reputation+-2
+rooted: immune_root=true knockback*0 speed_land*0.2 res_crush+0.4 res_wind+0.8 block+0.3
+budding: growth*2 beauty+2 training+1 regeneration+1
+unripe: nutrition*0.5 restores*0.5 toxicity+1 shelf_life*2 hardness+2
+
+# adjective participle
+blooming: beauty+5 charm+3 odor+3 morale+2 regeneration+1
+withered: integrity*0.4 strength+-3 beauty+-4 flammability+3 nutrition*0.3 value*0.3
+wilted: integrity*0.7 strength+-2 beauty+-3 speed_land*0.8 morale+-1
+blighted: growth*0 food_output*0 nutrition*0 toxicity+3 dmg_disease+5 contagion+0.2 beauty+-4
