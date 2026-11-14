@@ -115,8 +115,7 @@ def systems(v):
     """The shared systems a fixed thing acts on, or [] if none."""
     s = v["set"]
     out = [k for k in ("claim_radius", "field_radius", "luminosity", "heals", "food_output", "water_output",
-                       "power_output", "fuel_output", "fear_aura", "command_limit", "recruit_rate", "cover", "security",
-                       "map_reveal", "trade_bonus", "authority", "craft_slots") if s.get(k)]
+                       "power_output", "fuel_output", "fear_aura", "command_limit", "recruit_rate") if s.get(k)]
     return out + [k for k in s if k.startswith("produce_") and s[k]]
 
 

@@ -116,14 +116,9 @@ building beehive
 building sanctuary
 building monastery
 building haven
-building bank
 building stable
 building hospital
-building library
-building museum
 building market
-building bunker
-building tower
 
 skip john
 skip works

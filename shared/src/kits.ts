@@ -1,7 +1,7 @@
 import type { Dictionary } from "./dictionary.js";
 import { HAND_FILL, STARTING_HAND, starterWords } from "./economy.js";
 import { HARVEST_SOURCES, TOOL_POINTS } from "./biome.js";
-import { keyStats, opText } from "./inspect.js";
+import { eventCard, keyStats, opText } from "./inspect.js";
 import { parsePhrase, type Letters } from "./phrase.js";
 import { placeRules, rulesText, type PlaceRules } from "./place.js";
 import { needsText, producerOf } from "./produce.js";
@@ -120,6 +120,7 @@ export function buildingLines(dict: Dictionary, word: string): KitLine[] {
     const needs = needsText(spec);
     out.push({ icon: "🔤", text: `makes ${rates.map(([ch, n]) => `${ch.toUpperCase()} ${fmt(n)}/min`).join(", ")}${needs ? ` (${needs})` : ""}` });
   }
+  if (spec.age > 0) out.push({ icon: "⏳", text: `ages into Y faster (+${fmt(spec.age)})` });
   const claim = claimOf(s);
   if (claim) out.push({ icon: "🚩", text: `claims ${fmt(claim.radius)} tiles, ${Math.round(claim.shelter * 100)}% shelter` });
   if (s.num("field_radius") > 0) {
@@ -166,8 +167,10 @@ export function unlockNeed(l: LegendDef): number {
 
 /** A legendary's card lines: its key numbers. */
 export function legendLines(dict: Dictionary, word: string): KitLine[] {
-  const s = parsePhrase(dict, word).stats;
-  return keyStats(s).slice(0, 3).map((text) => ({ icon: "⚔", text }));
+  const p = parsePhrase(dict, word);
+  // An event or field says what it does; a creature or thing, its key numbers.
+  if (p.kind !== "object") return eventCard(dict, word).lines.slice(0, 3).map((text) => ({ icon: "🌋", text }));
+  return keyStats(p.stats).slice(0, 3).map((text) => ({ icon: "⚔", text }));
 }
 
 let starterMakes: { dict: Dictionary; makes: Map<string, string> } | null = null;

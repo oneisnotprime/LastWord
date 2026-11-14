@@ -38,7 +38,8 @@ describe("kit tables (data/kits.json)", () => {
       expect(["ground", "terrain"], b).toContain(becomes(p.stats));
       if (becomes(p.stats) === "terrain") expect(p.stats.get("tile_type"), b).toBe("tilled");
       expect(p.stats.flag("portable"), b).toBe(false);
-      expect(buildingLines(dict, b).length, b).toBeGreaterThan(0);
+      // Something besides its integrity.
+      expect(buildingLines(dict, b).length, b).toBeGreaterThan(1);
     }
   });
 
