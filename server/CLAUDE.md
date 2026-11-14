@@ -216,3 +216,12 @@ Node process that owns the game state. One room per map instance (from milestone
   Combat: tempo times time, ranged reach times `range`, `knockbackOf` after a landed blow. A thing
   that `docks` joins `markets` (its owner takes PORT_TOLL T); `helpOf` adds luck to gathering; a
   fishing find with gear lands a catch (`fishes`).
+- Polish batch 1: bots use the themes (`botThemes`: tries in random order, by `SKILL.themes`;
+  `botCure` first when ailing or cold, by `SKILL.cures`; `botBoat` takes a launched vessel out and
+  back; `botCast` aims a word at a walker, a spot or itself; bots.ts `themeUses` sorts words into
+  `ThemeUse`s and `THEME_SYSTEMS` lists what the tournament reports). Summoned vessels go on the
+  nearest water (`launchSpot` with PORT_TILES) or not at all. `home` blinds eyes inside an enemy
+  jam (`jammedAt`). `sell` (message `sell` { index, get }; `marketInfo.sells`) sells carried things
+  by shared `salePrice`. `spellWord` reads stand-ins (shared `standIn`: WORD WOLF pays W O R D);
+  `meta` skips a typo where the owner's side has something that `spellchecks` (`spellchecker`).
+  `dismountWalker` is the R key for people and bots.

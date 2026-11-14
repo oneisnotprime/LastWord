@@ -30,12 +30,12 @@ export interface Connection {
   pick(what: { id: string } | { x: number; y: number } | null): void;
   /** Leaves the room for good (a new round elsewhere). */
   leave(): void;
-  /** Trading and the like: "market" { give, get }, "hire" {}, "transmute" { give }, "offer" { to, give, get }, "answer" { id, accept }. */
+  /** Trading and the like: "market" { give, get }, "sell" { index, get }, "hire" {}, "transmute" { give }, "offer" { to, give, get }, "answer" { id, accept }. */
   /** Pick a starting kit by its index among those offered. */
   pickKit(index: number): void;
   /** Pay a sealed legendary's letters to unseal it. */
   unseal(): void;
-  act(type: "market" | "hire" | "transmute" | "offer" | "answer", payload: unknown): void;
+  act(type: "market" | "sell" | "hire" | "transmute" | "offer" | "answer", payload: unknown): void;
 }
 
 /** Letters gained and why ("forage", "hunted COW (+12 food)"), and where they came from. */

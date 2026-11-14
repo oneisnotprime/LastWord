@@ -294,6 +294,22 @@ export function marketRatio(rate: number): number {
   return Math.max(1, Math.round(MARKET.ratio * (Number.isFinite(rate) ? rate : 1)));
 }
 
+/** The most letters a market pays for one thing sold. */
+export const SALE_MAX = 6;
+
+/**
+ * Letters a market pays for a thing sold (`value` each, `count` of them), at the market's ratio:
+ * a letter for every tenfold of its worth at the usual ratio (ten for one, a hundred for two,
+ * a CROWN at 5,000 for three), fewer where prices are dear (INFLATION), up to SALE_MAX. Nothing for
+ * a thing of no worth.
+ */
+export function salePrice(value: number, count: number, ratio: number): number {
+  const worth = Math.max(0, value) * Math.max(1, count);
+  if (!Number.isFinite(worth)) return worth > 0 ? SALE_MAX : 0;
+  if (!(worth >= 10)) return 0;
+  return Math.min(SALE_MAX, Math.floor((Math.log10(worth) * MARKET.ratio) / Math.max(1, ratio)));
+}
+
 /** Reads "trade eee for o": what is given and what is wanted. Null if the text is not a trade. */
 export function readTrade(text: string): { give: string; get: string } | null {
   const m = /^\s*trade\s+([a-z]+)\s+for\s+([a-z]+)\s*$/i.exec(text);

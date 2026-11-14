@@ -128,7 +128,7 @@ mirror: mass=10 integrity=10 brittleness=9 material=glass reflectivity=10 res_li
 oven: mass=80 footprint=1 integrity=300 material=iron temperature=250 food_output=4 upkeep_fuel=0.05 produce_B=0.2 produce_F=0.2
 
 # noun document
-book: mass=1 integrity=5 flammability=8 material=paper intelligence+2 grants_adjective_slots=1 grants_slots_to=person
+book: mass=1 integrity=5 flammability=8 material=paper intelligence+2 grants_adjective_slots=1 grants_slots_to=person stands_for=document
 
 # noun mammal
 fox: mass=6 length=0.9 integrity=30 alive=true sentient=true intelligence=7 loyalty=3 aggression=3 diet=omnivore food_need=0.01 speed_land=14 agility=9 jump=2 dmg_pierce=12 attack_rate=1.5 stealth=7 night_vision=true nocturnal=true smell_range=300 hearing_range=400 speed_underground=0.1 letter_steal=2 camouflage=forest,snow,field equip_slot=companion tamable=true counters=chicken,duck,rat habitat=meadow,forest,tundra
@@ -2227,7 +2227,7 @@ rejuvenation: placement=target placement_range=40 event_target=object ages=-6000
 
 # noun duration
 stasis: placement=target placement_range=80 field_radius=6 field_targets=all field_duration=1 inflict_stasis=12 counters=haste,acceleration,hurry,rush
-eternity: placement=self field_radius=40 field_targets=owned field_duration=6 immune_stasis=true immune_slow=true immune_doom=true effect_status=stasis,slow,doom morale+2 counters=stasis,doom,decay,delay,deceleration,century
+eternity: placement=self field_radius=40 field_targets=owned field_duration=6 immune_stasis=true immune_slow=true immune_doom=true effect_status=stasis,slow,doom morale+2 counters=stasis,doom,decay,delay,deceleration,century,eon,aeon,epoch
 moment: placement=self field_radius=4 field_targets=self field_duration=1 inflict_haste=8 effect_status=slow
 instant: placement=self field_radius=4 field_targets=self field_duration=1 inflict_haste=4 cast_time*0 attack_windup*0
 epoch: placement=map field_radius=ABS field_targets=all field_duration=5 time_scale*1.5 growth=1.5 produce_Y*2 counters=eternity,stasis
@@ -2237,7 +2237,7 @@ overtime: placement=self field_radius=4 field_targets=self field_duration=3 time
 # noun attribute
 haste: placement=self field_radius=30 field_targets=owned field_duration=2 inflict_haste=15 effect_status=slow counters=slowness,delay,deceleration,stasis,lethargy
 acceleration: placement=self field_radius=40 field_targets=owned field_duration=3 time_scale*2 counters=deceleration,slowness,stasis
-deceleration: placement=target placement_range=150 field_radius=40 field_targets=enemies field_duration=3 time_scale*0.4 counters=acceleration,haste
+deceleration: placement=target placement_range=150 field_radius=40 field_targets=enemies field_duration=3 time_scale*0.4 counters=acceleration,haste,eon,aeon,epoch
 slowness: placement=target placement_range=100 field_radius=30 field_targets=enemies field_duration=2 inflict_slow=12 effect_status=haste counters=haste,hurry,rush,acceleration
 
 # noun act
@@ -2569,7 +2569,7 @@ mistake: placement=target placement_range=40 event_target=object misspells=true 
 accident: placement=target placement_range=80 event_radius=8 event_duration=1 luck+-4 dmg_blunt=60 inflict_stun=2 friendly_fire=true
 
 # noun document
-dictionary: mass=2 integrity=10 flammability=7 material=paper intelligence+3 training+1 grants_adjective_slots=1 grants_slots_to=person immune_chaos=true counters=typo,mistake,misprint
+dictionary: mass=2 integrity=10 flammability=7 material=paper intelligence+3 training+1 grants_adjective_slots=1 grants_slots_to=person immune_chaos=true spellchecks=40 field_radius=30 field_targets=enemies inflict_expose=20 counters=typo,mistake,misprint
 nonsense: placement=target placement_range=60 field_radius=20 field_targets=enemies field_duration=2 inflict_confuse=6 inflict_chaos=4 counters=logic,reason,grammar
 
 # verb transform
@@ -2583,7 +2583,56 @@ unlucky: luck+-4 critical+-0.1
 fortunate: luck+3 harvest_bonus*1.2
 chaotic: inflict_chaos+10 accuracy+-0.1
 doomed: inflict_doom+30 morale+-3
-fated: luck+2 inflict_doom+20
+fated: luck+2 courage+1
 random: inflict_chaos+6 luck+1
 paradoxical: reflect+0.3 inflict_confuse+3
 absurd: inflict_confuse+4 charm+1
+
+# Doom thinned (polish batch 1): only the iconic words seal a fate (FATE, DOOM, DEADLINE, COUNTDOWN,
+# MORTALITY, INEVITABILITY, DOOMED, FATAL); every one is ended by anything with effect_status=doom
+# (REPRIEVE, KARMA, PROVIDENCE, ETERNITY, DESTINY, INFINITY, REBIRTH) and kept off by immune_doom.
+# The cheap rest do something milder: luck, fear, a curse, a blow.
+
+# noun event
+kismet: placement=self field_radius=4 field_targets=self field_duration=2 luck+3 courage+1
+portent: placement=target placement_range=120 event_target=character inflict_fear=6 inflict_expose=20 morale+-1 event_duration=1 counters=providence,hope
+voodoo: placement=target placement_range=100 event_target=character inflict_curse=45 luck+-4 event_duration=1 counters=exorcism,blessing,karma
+retribution: placement=target placement_range=100 event_target=character dmg_holy=150 inflict_curse=20 event_duration=1 counters=mercy,forgiveness,pardon
+fatality: placement=target placement_range=100 event_target=character dmg_blunt=180 inflict_fear=6 event_duration=1 counters=reprieve,medic
+
+# noun attribute
+finality: placement=target placement_range=100 event_target=character inflict_root=10 morale+-3 event_duration=1 counters=rebirth,resurrection
+
+# noun destruction
+extermination: placement=target placement_range=120 event_radius=10 event_duration=1 dmg_poison=250 friendly_fire=true counters=sanctuary,miracle
+
+# verb transform
+expire: effect_target=touched effect_status=haste,bless,truce duration=1
+perish: effect_target=touched inflict_sick=20 duration=1
+
+# adjective absolute
+foregone: accuracy+0.1 luck+1
+ineluctable: accuracy+0.15 courage+1
+inescapable: inflict_root+2
+inexorable: knockback+2 courage+2
+unavoidable: accuracy+0.2
+
+# adjective quality
+eventual: cast_time*1.5 critical+0.1
+fateful: luck+2 morale+1
+ominous: inflict_fear+4 morale+-1
+predestined: accuracy+0.1 luck+1
+tragic: inflict_fear+2 morale+-2 charm+2
+
+# adverb manner
+inevitably: accuracy+0.2
+
+# Words about words (polish batch 1): a word that stands for others. Spelled before another word,
+# WORD stands for any four-letter word and LETTER for any six-letter one (their own length), BOOK
+# for any document (its own kind): you pay the stand-in's letters, not the word's (stands_for).
+
+# noun knowledge
+word: placement=self field_radius=4 field_targets=self field_duration=2 stands_for=4 intelligence+2 read_properties+3
+
+# noun document
+letter: mass=0.01 integrity=1 flammability=9 material=paper placement=target placement_range=1000 event_target=character event_duration=1 inflict_charm=10 loyalty+2 morale+1 stands_for=6 color=white

@@ -119,8 +119,8 @@ by how many words set them (minds and upkeep took `sentient`, `intelligence`, `f
       capabilities, extra hands, costs, severing), `wear.ts` (worn things lend, air temperature
       and cold or heat, disguise), `disease.ts` (the sick status, contagion between bodies,
       immunity, quarantine), `emotion.ts` (rage, charm wins creatures over, temper) and
-      `sound.ts` (noise on threat arrows, deafness). Still to do for batch 3: bots dressing for
-      the cold and using disguises, a disguised person's name tag showing their disguise to
+      `sound.ts` (noise on threat arrows, deafness). Bots now dress for the cold and use
+      disguises (polish batch 1). Still to do for batch 3: a disguised person's name tag showing their disguise to
       others, stealth hiding people from view (only theft reads it), shelter from cold indoors,
       per-word art for the generated body parts, clothes and instruments.
       Batch 4 is done (16 to 20): about 1,900 words through shared `money.ts` (pays, bribes,
@@ -128,10 +128,11 @@ by how many words set them (minds and upkeep took `sentient`, `intelligence`, `f
       `signal.ts` (the expose status, reading what someone holds, decoys on threat arrows and
       minimaps, jamming), `faith.ts` (faith as a store, miracles' faith cost, altars' offerings,
       bless and curse statuses on letters earned) and `weather.ts` (weather lays snow, floods,
-      dries water and melts snow in patches). Still to do for batch 4: bots using money,
-      traps, lies and faith; a player's own view of decoys as fakes once seen through; selling
-      objects at markets for their `value`; jamming watching things (cameras) of the jammed;
-      per-word art for the generated words.
+      dries water and melts snow in patches). Done in polish batch 1: bots using money, traps,
+      lies and faith; selling objects at markets for their `value` (shared `salePrice`, the
+      trade screen's Sell); jamming blinds the jammed side's cameras inside the jam. Still to do
+      for batch 4: a player's own view of decoys as fakes once seen through; per-word art for
+      the generated words.
       1. [x] Professions: hired NPC workers producing N; farm, guard, build, scout
       2. [x] Plants and botany: crops, trees, herbs, fungi; P and A; medicine and poison
       3. [x] Buildings and rooms: claims, shelter, storage, production
@@ -185,8 +186,11 @@ lexicon so every related word is captured.
 - [ ] Brainstorm a few hundred cool systems, then search the dictionary for each one's words
 - [ ] Every system and power has an opposing system and power
 - [ ] Every mechanic is modifiable by words: player total HP, anything, maybe even graphics
-- [ ] Meta words: TYPO makes something break (done in themes batch 5: `misspells` turns a thing
-      into the word one letter off, or breaks it); DICTIONARY gives a full list of words (open)
+- [x] Meta words: TYPO makes something break (done in themes batch 5: `misspells` turns a thing
+      into the word one letter off, or breaks it); DICTIONARY counters it (polish batch 1:
+      `spellchecks`: no typo touches its holder's side's things within 40 m) and reads enemies near
+      it (an expose field). A full list of words in the client stays open: it is a screen, not a word
+- [ ] DICTIONARY shows a full list of words (a client screen; not a word's effect)
 - [ ] FAILED, BROKEN, PATHETIC, COWARDLY do what they say
 - [ ] INVISIBLE does what it says
 - [ ] Tiny things have uses (TINY and related adjectives, bugs, swirls): high stealth, slipping
@@ -205,8 +209,12 @@ lexicon so every related word is captured.
 - [ ] Word idea: AI. AI and GENIE need something special of their own
 - [ ] A lexicon of extremely powerful words: CTHULHU, GOLEM, BEAST, QUETZALCOATL and the like
       (mythic beings, legendary creatures, cosmic horrors), with matching counter-words
-- [ ] WORD lets you substitute it into any other four-letter word; LETTER, BOOK and similar
-      words do the same for their own length or kind
+- [x] WORD lets you substitute it into any other four-letter word; LETTER, BOOK and similar
+      words do the same for their own length or kind (polish batch 1: `stands_for`, shared
+      `standIn`: WORD WOLF spells WOLF for W O R D, LETTER any six-letter word, BOOK any document;
+      alone each is still its own word)
+- [ ] More stand-ins: SYLLABLE, VOWEL, RUNE, GLYPH, ALPHABET (`stands_for` takes a length or an
+      archetype; one letter or a sound is not yet a kind it can name)
 
 ## Data
 
@@ -477,6 +485,21 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
       areas, weather and creatures, running when badly hurt; kits picked by difficulty, working
       toward their legendary's unlock, spelling it, countering enemies' legendaries. `loadtest/tournament.ts` reports it
 - [ ] Bots still to do: use terrain words on purpose, form pacts
+- [x] Bots use the themes' systems of batches 3 to 5 (polish batch 1, `botThemes`, `botCure`,
+      `botBoat`, `SKILL.themes`/`cures`): dress for cold, disguises, grafts on themselves and their
+      creatures, cures and calm (any status a word ends), keep away from the sick, statuses on
+      foes (doom, curse, chaos, rage, exposure, debt, stasis), music and morale, gifts and bribes
+      for creatures, loans, traps, lies, jamming, shrines and altars, miracles, weather, haste,
+      rewind, gravity on flyers, fishing gear, boat trips, duels when well ahead, luck, selling
+      valuables. `loadtest/tournament.ts` lists them apart
+- [x] FLEET (and any summons of a vessel) puts its ships on the nearest water, or none; vessels
+      are never launched off the map's edge
+- [x] Doom thinned to eight words (FATE, DOOM, DEADLINE, COUNTDOWN, MORTALITY, INEVITABILITY,
+      DOOMED, FATAL); the cheap rest do luck, fear, curses or blows. Every doom is ended by any
+      word with effect_status=doom (REPRIEVE, KARMA, PROVIDENCE, ETERNITY...). EON, AEON and EPOCH
+      (map-wide time) are ended by ETERNITY and DECELERATION
+- [ ] Map-wide words nothing ends by `counters` (91, mostly weather replaced by other weather,
+      and news, elections, the cosmos): check each has a way out
 - [x] Carried or following things whose field forbids fighting (GAVEL, JUDGE, REFEREE, PEACEKEEPER):
       ruled in themes batch 5 (shared sport.ts): `peace` gives whoever takes one a `truce` status
       once, for 90 to 180 s (untouchable, cannot strike or spell); PROVOCATION and TAUNT end it

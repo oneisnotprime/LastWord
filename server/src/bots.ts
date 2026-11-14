@@ -1,4 +1,4 @@
-import { ACTION_LETTERS, becomes, cooks, parsePhrase, placeRules, pluralize, producerOf, TILE_METERS, TILE_TYPES, type Dictionary, type Letters, type Op, type Stats } from "@lastword/shared";
+import { ACTION_LETTERS, becomes, cooks, GRAFT_CAPABILITIES, GROUNDED_FROM, isBoon, isGraft, isTrap, parsePhrase, placeRules, pluralize, producerOf, sails, STATUSES, TILE_METERS, TILE_TYPES, WORN_SLOTS, type Dictionary, type Letters, type Op, type Stats, type Status } from "@lastword/shared";
 
 /**
  * Server-side bot players: what a bot knows about words, and how hard it plays. The room
@@ -29,11 +29,17 @@ export function botSettings(options: unknown, capacity: number, env = process.en
  * on what it spells (GLASS SWORD) and plurals (WOLVES), aims fields and adjectives at its foes,
  * counters words used against it, and how hurt it must be to run (0: never).
  */
-export interface Skill { systems: number; phrases: number; aims: boolean; counters: number; flee: number; offers: number }
+export interface Skill { systems: number; phrases: number; aims: boolean; counters: number; flee: number; offers: number; themes: number; cures: number }
+/**
+ * `themes`: the chance a bot considers the dictionary themes' systems at a thought (`botThemes`:
+ * dress, disguise, grafts, traps, lies, jamming, faith, music, money, time, gravity, boats, duels,
+ * luck, statuses on its foes); `cures`: the chance it ends a status on itself that a word it can
+ * afford ends (sickness, rage, fear, doom, curses, debts...). Easy bots only treat sickness and cold.
+ */
 export const SKILL: Readonly<Record<Difficulty, Skill>> = {
-  easy: { systems: 0.25, phrases: 0, aims: false, counters: 0, flee: 0, offers: 0 },
-  normal: { systems: 0.6, phrases: 0.5, aims: true, counters: 0.6, flee: 0.25, offers: 0.3 },
-  hard: { systems: 1, phrases: 1, aims: true, counters: 1, flee: 0.35, offers: 0.6 },
+  easy: { systems: 0.25, phrases: 0, aims: false, counters: 0, flee: 0, offers: 0, themes: 0.15, cures: 0.3 },
+  normal: { systems: 0.6, phrases: 0.5, aims: true, counters: 0.6, flee: 0.25, offers: 0.3, themes: 0.5, cures: 0.7 },
+  hard: { systems: 1, phrases: 1, aims: true, counters: 1, flee: 0.35, offers: 0.6, themes: 0.9, cures: 1 },
 };
 
 /**
@@ -45,7 +51,29 @@ export const SKILL: Readonly<Record<Difficulty, Skill>> = {
  * land), `cook` (heat that cooks raw food).
  */
 export type Use = "weapon" | "armor" | "mount" | "creature" | "producer" | "claim" | "heal" | "boost" | "field" | "event" | "food"
-  | "buff" | "debuff" | "aimed" | "boon" | "levy" | "hinder" | "refuge" | "war" | "route" | "city" | "tiller" | "cook";
+  | "buff" | "debuff" | "aimed" | "boon" | "levy" | "hinder" | "refuge" | "war" | "route" | "city" | "tiller" | "cook"
+  | ThemeUse;
+
+/**
+ * Uses from the dictionary themes (batches 3 to 5), each read from shared properties: `warm`
+ * (worn things that lower `temp_min`), `disguise` (worn `disguise`), `graft` (a body part that makes
+ * a fighter better), `cure` (ends statuses on its speller's side: `effect_status`), `hex` (passes
+ * statuses on a foe: doom, curse, chaos, rage, expose, debt, stasis...), `duel` (`stakes`), `gift`
+ * (`pays` with charm), `loan` (`pays` and a debt), `bribe` (buys a creature), `trap` (`trigger_radius`),
+ * `lie` (`decoys`), `jam` (`jams`), `shrine` (gathers faith or takes sacrifices), `miracle` (spends
+ * faith to heal), `morale` (lifts its side's morale or courage; music when it is loud), `haste`
+ * (time runs faster for it), `rewind` (`rewinds`), `gravity` (grounds flyers), `vessel` (sails),
+ * `fishing` (a tool that fishes), `luck` (luck for itself).
+ */
+export type ThemeUse = "warm" | "disguise" | "graft" | "cure" | "hex" | "duel" | "gift" | "loan" | "bribe" | "trap" | "lie" | "jam"
+  | "shrine" | "miracle" | "morale" | "haste" | "rewind" | "gravity" | "vessel" | "fishing" | "luck";
+
+/** What the bot tournament lists as the themes' systems (`botUsed` names), in order. */
+export const THEME_SYSTEMS = [
+  "warm", "disguise", "graft self", "graft creature", "cure", "calm", "avoid sick", "hex", "hex rage", "hex doom", "hex curse",
+  "hex chaos", "hex expose", "hex debt", "hex stasis", "hex void", "hex sick", "morale", "music", "gift", "bribe", "loan", "trap", "lie", "jam",
+  "shrine", "sacrifice", "miracle", "weather", "haste", "rewind", "gravity", "vessel", "sail", "fishing", "catch", "duel", "luck", "sell",
+] as const;
 
 export interface BotWord {
   word: string;
@@ -64,6 +92,18 @@ export interface BotWord {
   raw?: boolean;
   /** For area words: a field that follows its maker (placement self) or one dropped at a spot. */
   placement?: string;
+  /** For hexes the statuses it passes on; for cures the statuses it ends. */
+  statuses?: string[];
+  /** How it is aimed: at a person or creature clicked (`walker`), at a spot (`spot`), or at its speller's side (`self`). */
+  aim?: "walker" | "spot" | "self";
+  /** Faith it spends (shared faith.ts), checked before spelling. */
+  faith?: number;
+  /** A sky word (weather, the season): counted as weather. */
+  sky?: boolean;
+  /** Loud (an instrument, a song): counted as music. */
+  loud?: boolean;
+  /** An adjective, put on its speller's own body (`describe`). */
+  adjective?: boolean;
 }
 
 const A = "a".charCodeAt(0);
@@ -95,10 +135,32 @@ function damage(s: Stats): number {
 const dps = (s: Stats) => damage(s) * Math.max(0.1, s.num("attack_rate") || 1);
 
 /** Properties whose rise makes a fighter better. */
-const GOOD = /^(speed_land|speed_air|armor|accuracy|integrity|attack_rate|evasion|morale|courage|block|dmg_.*)$/;
+const GOOD = /^(speed_land|speed_air|armor|accuracy|integrity|attack_rate|evasion|morale|courage|block|luck|critical|dmg_.*)$/;
+
+/** How much a bot wants each status on a foe: a sealed fate, stopped time and nothing at all most. */
+const HEX_WEIGHT: Partial<Record<Status, number>> = { doom: 5, stasis: 4, void: 4, chaos: 3, curse: 3, rage: 3, sick: 3, debt: 2, expose: 2, fear: 2, sleep: 2, root: 2, confuse: 2, silence: 2 };
+
+/** Statuses a stats sheet passes on (`inflict_*`), boons and charm left out. */
+function harms(s: Stats): Status[] {
+  return STATUSES.filter((st) => s.num(`inflict_${st}`) > 0 && !isBoon(st) && st !== "charm");
+}
+
+/** The sum an operation list adds to a property (its `add` operations). */
+function added(ops: readonly Op[], prop: string): number {
+  let n = 0;
+  for (const [p, op, v] of ops) if (p === prop && op === "add" && typeof v === "number") n += v;
+  return n;
+}
+
+/** The product an operation list multiplies a property by (its `mul` operations). */
+function multiplied(ops: readonly Op[], prop: string): number {
+  let n = 1;
+  for (const [p, op, v] of ops) if (p === prop && op === "mul" && typeof v === "number") n *= v;
+  return n;
+}
 
 /** How many of a verb's ops help its caster fight; -1 if any makes it worse. */
-function helps(ops: Op[]): number {
+function helps(ops: readonly Op[]): number {
   let n = 0;
   for (const [prop, op, v] of ops) {
     if (!GOOD.test(prop) || typeof v !== "number") continue;
@@ -150,6 +212,9 @@ export function wordBook(dict: Dictionary) {
     if (def.role === "adjective") {
       // Adjectives: put on your own things or body (buff), or on a foe (debuff), or spelled before a noun.
       const e = adjectiveEffect(def.ops);
+      // An adjective that keeps a status off whatever it describes (CALM: no rage, no fear), put on the bot itself.
+      const immune = STATUSES.filter((st) => def.set[`immune_${st}`] === true && !isBoon(st));
+      if (immune.length && e >= 0) words.push({ word, use: "cure", score: immune.length / word.length, cost: costOf(word), slot: "", reach: 0, statuses: immune, aim: "self", adjective: true });
       if (e > 0) words.push({ word, use: "buff", score: e, cost: costOf(word), slot: "", reach: 0 });
       else if (e < 0) words.push({ word, use: "debuff", score: -e, cost: costOf(word), slot: "", reach: 0 });
       continue;
@@ -159,7 +224,7 @@ export function wordBook(dict: Dictionary) {
     try { p = parsePhrase(dict, word); } catch { continue; }
     const s = p.stats;
     const add = (use: Use, score: number, extra: Partial<BotWord> = {}) => {
-      if (score > 0) words.push({ word, use, score, cost: costOf(p.letters), slot: "", reach: 0, ...extra });
+      if (score > 0) words.push({ word, use, score, cost: costOf(p.letters), slot: "", reach: 0, ...(p.kind === "sky" ? { sky: true } : {}), ...extra });
     };
     const against = def.set.counters;
     // Anything that ends what it counters (RAIN a FIRE, VETO a LAW, PESTICIDE locusts) is a counter-word.
@@ -171,6 +236,7 @@ export function wordBook(dict: Dictionary) {
     }
     const placement = String(s.get("placement"));
     const targets = String(s.get("field_targets"));
+    themeUses(word, def.archetype, def.ops, p, s, placement, targets, add);
     // Area words: what their place rules do (shared place.ts), for whom.
     const areaUses = () => {
       const rules = placeRules(def, s);
@@ -258,6 +324,71 @@ export function wordBook(dict: Dictionary) {
 }
 
 /**
+ * The dictionary themes' uses of one word (`ThemeUse`), from its shared properties only: how it
+ * is aimed (at someone clicked, a spot, or its speller's side) and what it does there.
+ */
+function themeUses(word: string, archetype: string, ops: readonly Op[], p: ReturnType<typeof parsePhrase>, s: Stats, placement: string, targets: string,
+  add: (use: Use, score: number, extra?: Partial<BotWord>) => void) {
+  const touched = p.kind === "verb" && s.get("effect_target") === "touched";
+  const atWalker = (p.kind === "event" && placement === "target" && (s.get("event_target") === "character" || s.get("event_target") === "creature")) || touched;
+  const atSpot = p.kind === "field" && placement === "target";
+  const ownSide = targets === "self" || targets === "owned" || targets === "allies" || targets === "all" || targets === "living" || targets === "undefined" || targets === "";
+  const atSelf = (p.kind === "verb" && !touched) || ((p.kind === "field" || p.kind === "event" || p.kind === "sky") && placement !== "target" && ownSide);
+  const bad = harms(s);
+  const faith = s.num("faith_cost") > 0 ? s.num("faith_cost") : undefined;
+  const damaging = s.entries().some(([k, v]) => k.startsWith("dmg_") && typeof v === "number" && v > 0);
+  const loud = s.num("loudness") > 0 || /instrument|music/.test(archetype);
+  // Ends statuses on its speller's side (CURE, CALM, REPRIEVE, EXORCISM, BANKRUPTCY, ORDER): passed on itself or spread over its side.
+  const ends = s.tags("effect_status").filter((st) => (STATUSES as readonly string[]).includes(st) && !isBoon(st as Status));
+  if (ends.length && !bad.length && !damaging && (atSelf || (p.kind === "event" && s.get("event_target") === "character") || (p.kind === "object" && s.flag("edible")))) {
+    add("cure", ends.length / p.letters.length, { statuses: ends, aim: atSelf || p.kind === "object" ? "self" : "walker", faith });
+  }
+  if (p.kind === "object") {
+    const slot = String(s.get("equip_slot"));
+    const worn = WORN_SLOTS.includes(slot) && slot !== "graft";
+    if (worn && added(ops, "temp_min") < 0) add("warm", -added(ops, "temp_min") / p.letters.length);
+    if (worn && s.num("disguise") > 0) add("disguise", s.num("disguise"));
+    if (isGraft(s)) {
+      const can = GRAFT_CAPABILITIES.filter((c) => s.flag(c)).length;
+      const dmg = s.entries().reduce((n, [k, v]) => n + (k.startsWith("dmg_") && typeof v === "number" ? Math.max(0, v) : 0), 0);
+      const score = Math.max(0, adjectiveEffect(ops)) + can + dmg / 20;
+      if (score > 0 && adjectiveEffect(ops) >= 0) add("graft", score, { aim: "walker" });
+    }
+    if (isTrap(s) && !s.flag("mountable")) add("trap", (damaging ? 2 : 0) + bad.length + s.num("stealth") / 5);
+    if (s.flag("jams") && s.get("portable") === false) add("jam", 1);
+    if (s.get("portable") === false && (s.num("faith_output") > 0 || s.num("sacrifice") > 0)) add("shrine", s.num("faith_output") + s.num("sacrifice"));
+    if (s.flag("mountable") && sails(s)) add("vessel", s.num("speed_water") + s.num("integrity") / 1000);
+    if (!s.flag("mountable") && String(s.get("harvest_sources")).split(",").includes("fishing") && slot === "held") add("fishing", s.num("harvest_bonus"));
+    return;
+  }
+  // Statuses passed on a foe, at them or at their spot (FATE, CURSE, CHAOS, PROVOCATION, WANTED, DEBT, STASIS).
+  if (bad.length && (atWalker || (atSpot && targets !== "owned" && targets !== "self")) && !s.num("stakes") && !s.flag("transfers_ownership") && !(s.num("pays") > 0)) {
+    add("hex", bad.reduce((n, st) => n + (HEX_WEIGHT[st] ?? 1), 0), { statuses: bad, aim: atWalker ? "walker" : "spot", faith, reach: Math.max(1.5, s.num("placement_range") / TILE_METERS) });
+  }
+  if (atWalker && s.num("stakes") > 0 && !s.num("race_to")) add("duel", s.num("stakes"), { aim: "walker", reach: Math.max(1.5, s.num("placement_range") / TILE_METERS) });
+  if (atWalker && s.num("pays") > 0) {
+    const reach = Math.max(1.5, s.num("placement_range") / TILE_METERS);
+    if (s.flag("transfers_ownership") && s.get("event_target") === "creature") add("bribe", s.num("pays"), { aim: "walker", reach });
+    else if (s.num("inflict_debt") > 0) add("loan", s.num("inflict_debt") / Math.max(1, s.num("pays")), { aim: "walker", reach });
+    else if (s.num("inflict_charm") > 0) add("gift", s.num("inflict_charm") / Math.max(1, s.num("pays")), { aim: "walker", reach });
+  }
+  if (s.num("decoys") > 0 && (p.kind === "field" || p.kind === "event")) add("lie", s.num("decoys"), { aim: atSpot ? "spot" : "self", reach: Math.max(1.5, s.num("placement_range") / TILE_METERS) });
+  if (s.flag("jams") && p.kind === "field") add("jam", 1, { aim: atSpot ? "spot" : "self", reach: Math.max(1.5, s.num("placement_range") / TILE_METERS) });
+  if (atSelf && !bad.length && !damaging) {
+    const heals = s.num("heals") + s.num("restores") + Math.max(0, added(ops, "regeneration")) * 5;
+    if (faith && heals > 0) add("miracle", heals / faith, { aim: "self", faith });
+    const lift = Math.max(0, added(ops, "morale")) + Math.max(0, added(ops, "courage"));
+    if (lift > 0 && p.kind !== "verb" && targets !== "self" && helps(ops) >= 0) add("morale", lift, { aim: "self", loud });
+    const faster = Math.max(multiplied(ops, "time_scale"), s.num("inflict_haste") > 0 ? 2 : 1);
+    if (faster > 1 && targets !== "all") add("haste", faster, { aim: "self" });
+    if (s.num("rewinds") > 0) add("rewind", s.num("rewinds"), { aim: "self" });
+    const luck = added(ops, "luck");
+    if (luck > 0 && targets !== "all" && !faith) add("luck", luck, { aim: "self" });
+  }
+  if (atSpot && multiplied(ops, "gravity") >= GROUNDED_FROM) add("gravity", multiplied(ops, "gravity"), { aim: "spot", reach: Math.max(1.5, s.num("placement_range") / TILE_METERS) });
+}
+
+/**
  * The word a bot spells from a list (best first), or null if it can afford none. Easy bots
  * take any word they can afford, normal bots one of the best three, hard bots the best.
  */
@@ -335,7 +466,8 @@ export function phraseFor(dict: Dictionary, w: BotWord, have: Uint8Array, skill:
 /**
  * Where letters came from, from the reason the room gives with them (`award`'s `why`), for the
  * bot tournament's letter shares: gathering, caches and the temple, hunting, breaking things,
- * markets and offers, kills (K) and the letters of the knocked out (loot), bosses, exploring, taxes and events, transmuting, or producers
+ * markets and offers, kills (K) and the letters of the knocked out (loot), bosses, exploring, taxes and events, transmuting, fishing catches,
+ * money (gifts, loans and debts paid), or producers
  * (land, roads and cities are territory).
  */
 export function sourceOf(why: string): string {
@@ -350,6 +482,8 @@ export function sourceOf(why: string): string {
   if (why.startsWith("kill ")) return "kill";
   if (why.startsWith("slew ") || why.endsWith("'s hoard")) return "boss";
   if (why === "transmuted") return "transmute";
+  if (why.startsWith("caught ")) return "fish";
+  if (/ from /.test(why)) return "money";
   if (why.includes("new ground") || why.includes("scouted")) return "explore";
   if (why === "LAND" || why === "ROADS" || why === "CITY") return "territory";
   if (/ on /.test(why)) return "levy";

@@ -171,7 +171,9 @@ server and the client import this, so anything here must give the same answer on
     FLAG_TILES), `peaceOf` (`peace` gives the `truce` status: helpless, `untouchable`), `sportText`.
   - `idea.ts` (abstract ideas): `luckOps` (`luck`, LUCK_POINT; `Unit` applies it), `chaosOps` (the
     `chaos` status's random ops, on `Affliction.ops`), the `void` status (`nulls`: `hampered.nulled`),
-    the `doom` status (`fated`, `doomDamage`), `typoOf` (`misspells`), `ideaText`.
+    the `doom` status (`fated`, `doomDamage`), `typoOf` (`misspells`), `spellchecked` (`spellchecks`),
+    `standsFor`/`standIn` (`stands_for`: a stand-in pays for another word), `ideaText`.
+- `letters.ts` `salePrice`: what a market pays for a thing sold, by its `value` (SALE_MAX).
 - `tips.ts` teaching tips: `wordTip` (one line of what a word does in numbers, plus its shortest
   counter-word), `wordIdeas` (one word per `TIP_KINDS` kind, weighted by `tipWeight` toward words
   the held letters nearly spell), `RULE_TIPS` (short "did you know" lines, test-checked against the

@@ -128,7 +128,7 @@ library	letter and word meta	7	17.7	2.5	-	noun:building
 verb	letter and word meta	4	18.3	4.6	V	noun:inert
 glyph	letter and word meta	5	19.3	3.9	-	noun:artifact
 alphabet	letter and word meta	8	20.3	2.5	-	noun:knowledge
-word	letter and word meta	4	20.5	5.1	W	noun:inert
+word	letter and word meta	4	20.5	5.1	W	noun:knowledge
 dictionary	letter and word meta	10	20.6	2.1	-	noun:document
 book	letter and word meta	4	21.1	5.3	K	noun:document
 vowel	letter and word meta	5	29.0	5.8	VW	noun:inert

@@ -1,14 +1,14 @@
 {
  "words": 77550,
  "rows": {
-  "lexicon": 59268,
-  "inert": 5357,
+  "lexicon": 59269,
+  "inert": 5356,
   "proper": 12925
  },
  "demo_candidates": 499,
  "inflections": 404,
  "lexicon_by_role": {
-  "noun": 35880,
+  "noun": 35881,
   "adjective": 16225,
   "verb": 3930,
   "adverb": 3233
@@ -24,7 +24,7 @@
   "creature": 2613,
   "flora": 2410,
   "material": 2217,
-  "knowledge": 1858,
+  "knowledge": 1859,
   "bodypart": 1226,
   "institution": 1062,
   "consumable": 981,
@@ -38,13 +38,13 @@
   "obscure": 14203,
   "rare": 14080,
   "common": 10519,
-  "core": 4757
+  "core": 4758
  },
  "noun_archetypes": {
   "person": 4062,
   "act": 3242,
   "attribute": 3029,
-  "knowledge": 1858,
+  "knowledge": 1859,
   "material": 1590,
   "artifact": 1357,
   "bodypart": 1226,
@@ -134,7 +134,7 @@
   "quality": 2
  },
  "inert_by_category": {
-  "communication": 2109,
+  "communication": 2108,
   "state": 1705,
   "process": 434,
   "time": 396,

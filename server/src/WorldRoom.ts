@@ -21,6 +21,7 @@ import {
   walkable as walkableAt, timeOf, timeAt, rewound, agedBorn, REWIND_WINDOW, gravityOf, gravitySpeed, gravityRange, floats, grounded, knockbackOf, impacts, impactNear,
   sails, SAIL_COST, LAUNCH_TILES, BOARD_TILES, PORT_TILES, PORT_TOLL, waveDamage, waveSlow, fishTable, catchOf,
   LUCK_POINT, RING_FLOOR, FLAG_TILES, STAKES_MAX, CHALLENGE_MINUTES, ahead, pot, backInRing, peaceOf, chaosOps, doomDamage, typoOf, type Challenge,
+  standIn, spellchecked, salePrice,
 } from "@lastword/shared";
 import { affords, botSettings, chooseWord, held, phraseFor, SKILL, wordBook, type BotWord, type Difficulty, type Use } from "./bots.js";
 import { loadDictionary, loadKits } from "./data.js";
@@ -460,6 +461,15 @@ interface BotMind {
   /** Roads it has laid, and when it last made an offer. */
   roads: number;
   offeredAt: number;
+  /** The themes' systems (`botThemes`, `botCure`, `botBoat`): traps laid, shrines built, aimed words that missed, when it last stepped away from the sick, a boat trip. */
+  traps?: number;
+  shrines?: number;
+  misses?: Map<string, number>;
+  avoidedAt?: number;
+  /** When it last looked over the themes' systems and its own ailments. */
+  themedAt?: number;
+  curedAt?: number;
+  boat?: { thing: string; phase: "board" | "sail"; until: number; dock?: Point };
 }
 
 /** Round seconds after which bots hunt roaming bosses. */
@@ -673,24 +683,7 @@ export class WorldRoom extends Room {
     dismount: (client: Client) => {
       const walker = this.walkers.get(client.sessionId);
       if (!walker) return;
-      const at = walker.gear.findIndex((g) => g.vehicle);
-      if (at < 0) return void client.send("refused", "You are not riding anything");
-      // Off a vessel (shared sea.ts): only with the shore close by; it stays moored where it floats.
-      const afloat = walker.sailing ? { x: walker.player.x, y: walker.player.y } : null;
-      if (afloat) {
-        const shore = nearestWalkable(this.map, afloat);
-        if (Math.hypot(shore.x - afloat.x, shore.y - afloat.y) > BOARD_TILES) return void client.send("refused", "No shore near: sail to land first");
-      }
-      const [ride] = walker.gear.splice(at, 1);
-      this.rebuild(walker);
-      const { x, y } = afloat ?? walker.player;
-      if (this.statsOf(ride!).flag("alive")) {
-        this.addCreature(ride!, client.sessionId, x + 0.6, y, ride!.spelled.count ?? 1, ride!.integrity ?? undefined);
-        this.command(client.sessionId);
-      } else this.addThing(ride!, client.sessionId, afloat ? x : x + 0.6, y);
-      this.tell(walker);
-      client.send("notice", `Off ${ride!.phrase.toUpperCase()} (E: back on)`);
-      this.refreshViews();
+      try { client.send("notice", this.dismountWalker(client.sessionId, walker)); } catch (e) { client.send("refused", (e as Error).message); }
     },
     /** Put down something you carry: the one at `index`, or the last thing equipped. */
     drop: (client: Client, index: unknown) => {
@@ -793,6 +786,12 @@ export class WorldRoom extends Room {
       if (!d || typeof d.give !== "string" || typeof d.get !== "string" || !/^[a-z]{1,60}$/.test(d.give) || !/^[a-z]{1,20}$/.test(d.get)) throw new Error("Choose letters to give and to get");
       return this.trade(id, w, d.give, d.get);
     }),
+    /** Sell something you carry at the market you stand at: { index, get } (the gear's index, the letter wanted). */
+    sell: (client: Client, deal: unknown) => this.attempt(client, (id, w) => {
+      const d = deal as { index?: unknown; get?: unknown } | null;
+      if (!d || !Number.isInteger(d.index) || typeof d.get !== "string" || !/^[a-z]$/.test(d.get)) throw new Error("Choose a thing to sell and a letter to be paid in");
+      return this.sell(id, w, d.index as number, d.get);
+    }),
     /** Hire a citizen at a market as your worker: { pay? } letters, else your commonest. */
     hire: (client: Client, what: unknown) => this.attempt(client, (id, w) => {
       const pay = (what as { pay?: unknown } | null)?.pay;
@@ -845,6 +844,32 @@ export class WorldRoom extends Room {
   };
 
   /** Picks up the nearest thing of a person's own, or nobody's, in reach (or the one named), gets back on a mount, or claims a fixed ownerless thing. Throws why not. */
+  /**
+   * Gets a walker off what they ride (R). It stays theirs: a machine (a CAR, a TRAIN) stays on the
+   * ground where they got off, a living mount (a HORSE, an ASS) walks with them as a creature, a
+   * vessel stays moored where it floats (only with the shore close by). Throws why not.
+   */
+  dismountWalker(id: string, walker: Walker): string {
+    const at = walker.gear.findIndex((g) => g.vehicle);
+    if (at < 0) throw new Error("You are not riding anything");
+    // Off a vessel (shared sea.ts): only with the shore close by; it stays moored where it floats.
+    const afloat = walker.sailing ? { x: walker.player.x, y: walker.player.y } : null;
+    if (afloat) {
+      const shore = nearestWalkable(this.map, afloat);
+      if (Math.hypot(shore.x - afloat.x, shore.y - afloat.y) > BOARD_TILES) throw new Error("No shore near: sail to land first");
+    }
+    const [ride] = walker.gear.splice(at, 1);
+    this.rebuild(walker);
+    const { x, y } = afloat ?? walker.player;
+    if (this.statsOf(ride!).flag("alive")) {
+      this.addCreature(ride!, id, x + 0.6, y, ride!.spelled.count ?? 1, ride!.integrity ?? undefined);
+      this.command(id);
+    } else this.addThing(ride!, id, afloat ? x : x + 0.6, y);
+    this.tell(walker);
+    this.refreshViews();
+    return `Off ${ride!.phrase.toUpperCase()} (E: back on)`;
+  }
+
   takeNear(id: string, walker: Walker, named: string | null): string {
     let best: string | null = null, bestDistance = Infinity;
     this.state.things.forEach((t, tid) => {
@@ -979,10 +1004,12 @@ export class WorldRoom extends Room {
     if (hiring) return this.hire(id, walker, hiring[1]?.toLowerCase());
     const hushed = this.lawAgainst("spell", id, walker);
     if (hushed) throw new Error(`${hushed}: no spelling here`);
-    const phrase = parsePhrase(this.dict, text);
+    // A stand-in (shared idea.ts `standIn`: WORD WOLF, BOOK MAP) spells the word after it for its own letters.
+    const stood = standIn(this.dict, text);
+    const phrase = parsePhrase(this.dict, stood ? stood.word : text);
     // An unsealed legendary is spelled free, once: only its adjectives and a plural cost.
     const free = walker.kit?.state === "open" ? legendCost(phrase.letters, phrase.noun, walker.kit.legend.word) : null;
-    const cost = free ?? phrase.letters;
+    const cost = stood ? stood.letters : free ?? phrase.letters;
     const lacking = missing(walker.letters, cost);
     if (lacking) throw new Error(`You need ${lacking.toUpperCase().split("").join(" ")}`);
     // A miracle spends faith (shared faith.ts); a word that pays needs the letters too (money.ts).
@@ -1011,15 +1038,16 @@ export class WorldRoom extends Room {
       spend(walker.letters, cost);
       this.spendFaith(walker, phrase.stats);
       this.settlePay(id, walker);
-      if (free !== null) this.legendSpelled(id, walker);
+      if (free !== null && !stood) this.legendSpelled(id, walker);
       this.sendTo(id, "letters", walker.letters);
+      if (stood) done = `${stood.stand.toUpperCase()} stands for ${stood.word.toUpperCase()}: ${done}`;
       this.sendTo(id, "spelled", done);
       return done;
     }
     if (phrase.count < 1) throw new Error(`${spelledAs} is none at all`);
     spend(walker.letters, cost);
     this.spendFaith(walker, phrase.stats);
-    if (free !== null) this.legendSpelled(id, walker);
+    if (free !== null && !stood) this.legendSpelled(id, walker);
     const countered = this.counter(phrase.noun);
     if (countered) this.sendTo(id, "notice", `${phrase.noun.toUpperCase()} ended ${countered} area${countered === 1 ? "" : "s"}`);
     const culled = this.exterminate(phrase.noun, id, walker);
@@ -1027,8 +1055,8 @@ export class WorldRoom extends Room {
     const done = this.make(id, walker, phrase);
     this.sendTo(id, "letters", walker.letters);
     const many = phrase.count > 1 || phrase.plural;
-    const said = many ? `${spelledAs} (${phrase.count}) ${done.replace(/^is /, "are ").replace(/^runs /, "run ")}`
-      : `${[...phrase.adjectives.filter((a) => !this.onlyCounts(a)), phrase.noun].join(" ").toUpperCase()} ${done}`;
+    const said = (stood ? `${stood.stand.toUpperCase()} stands for ${stood.word.toUpperCase()}: ` : "") + (many ? `${spelledAs} (${phrase.count}) ${done.replace(/^is /, "are ").replace(/^runs /, "run ")}`
+      : `${[...phrase.adjectives.filter((a) => !this.onlyCounts(a)), phrase.noun].join(" ").toUpperCase()} ${done}`);
     this.sendTo(id, "spelled", said);
     this.tell(walker); // what is now in reach to use
     this.refreshViews();
@@ -1823,8 +1851,12 @@ export class WorldRoom extends Room {
     type Seen = { id: string; d: number; hp: number; person: boolean };
     const people: Seen[] = [], attackers: Seen[] = [], game: Seen[] = [];
     let mine = 0;
+    // The sick close by (shared disease.ts): a bot that plays well keeps its distance.
+    let sick: Walker | null = null;
+    const wary = !easy && !w.statuses.some((a) => a.status === "sick") && !recovered(w.recovered, this.elapsed);
     for (const [oid, o] of this.walkers) {
       if (oid === id) continue;
+      if (wary && !sick && o.statuses.length && o.statuses.some((a) => a.status === "sick") && Math.hypot(o.player.x - w.player.x, o.player.y - w.player.y) <= CONTACT_TILES + 1.5) sick = o;
       if (o.master === id) { mine++; continue; }
       const d = Math.hypot(o.player.x - w.player.x, o.player.y - w.player.y);
       if (d > w.sight * 2 || (o.flying && !w.flying)) continue;
@@ -1843,6 +1875,11 @@ export class WorldRoom extends Room {
       return;
     }
     mind.running = false;
+
+    // A sickness, a rage, a sealed fate, a curse on it, or the cold: a word that ends it comes first.
+    if (canSpell()) { const cured = this.botCure(id, w, mind, have); if (cured) spelled(cured); }
+    // Out on a boat (`botBoat`): it sails a while, then comes back to shore.
+    if (mind.boat && !attackers.length && this.botBoat(id, w, mind)) return;
 
     const pick = (list: Seen[]) => list.reduce<Seen | null>((best, e) => !best ? e
       : hard ? (e.person !== best.person ? (e.person ? e : best) : e.hp < best.hp ? e : best)
@@ -1889,6 +1926,15 @@ export class WorldRoom extends Room {
       for (const [oid, o] of this.walkers) if (o.boss && Math.hypot(o.player.x - w.player.x, o.player.y - w.player.y) <= far) { foe = oid; break; }
     }
     if (foe !== w.foe) { w.foe = foe; if (foe) { w.gathering = 0; mind.fetch = undefined; } }
+    // Someone sick within reach of catching it, and nobody to fight: it steps away (not easy).
+    if (sick && !attackers.length && (!w.foe || w.foe === sick.id)) {
+      const dx = w.player.x - sick.player.x, dy = w.player.y - sick.player.y, len = Math.hypot(dx, dy) || 1;
+      const clamp = (v: number) => Math.min(this.map.size - 1, Math.max(0, v));
+      w.foe = null; w.gathering = 0;
+      w.target = nearestWalkable(this.map, { x: clamp(w.player.x + (dx / len) * 6), y: clamp(w.player.y + (dy / len) * 6) });
+      if (this.elapsed - (mind.avoidedAt ?? -Infinity) > 20) this.botUsed(mind, "avoid sick");
+      mind.avoidedAt = this.elapsed;
+    }
 
     // Things lying near: picked up or claimed (a free weapon, armour, food, an abandoned producer).
     this.botPickUp(id, w, mind, armed);
@@ -1899,8 +1945,12 @@ export class WorldRoom extends Room {
       // Now and then (more often the better it plays) another system comes before the next word.
       const systems = () => this.rng() < skill.systems ? this.botSystems(id, w, mind, have, people.map((e) => e.id), mine) : null;
       const first = !peaceful && this.rng() < skill.systems * 0.4;
+      // The themes' systems: now and then, and nearly always in a fight with a person (statuses on them, a duel, lies, haste).
+      const versus = !!w.foe && this.walkers.get(w.foe)?.master === null;
+      const themes = () => this.rng() < skill.themes * (versus ? 1 : 0.35) ? this.botThemes(id, w, mind, have, people.map((e) => e.id), attackers.map((e) => e.id), mine, peaceful) : null;
       const done = this.botLegend(id, w, mind)
         ?? this.botCounter(id, w, mind, have, attackers.map((e) => e.id))
+        ?? themes()
         ?? (first ? systems() : null)
         ?? this.botSpell(id, w, mind, have, armed, mine, peaceful)
         ?? (first ? null : systems())
@@ -2013,9 +2063,10 @@ export class WorldRoom extends Room {
     if (!canSpell) return null;
     const book = wordBook(this.dict);
     const ok = (x: BotWord) => !mind.tried.has(x.word);
-    for (const use of ["refuge", "heal", "armor"] as Use[]) {
+    for (const use of ["refuge", "rewind", "miracle", "heal", "armor"] as Use[]) {
       const slots = new Set(w.gear.map((g) => this.slotOf(g)));
-      const word = chooseWord(book.byUse.get(use), have, mind.difficulty, this.rng, (x) => ok(x) && (use !== "armor" || !slots.has(x.slot)));
+      const word = chooseWord(book.byUse.get(use), have, mind.difficulty, this.rng, (x) => ok(x) && (use !== "armor" || !slots.has(x.slot))
+        && (x.faith ?? 0) <= w.stores.faith && (use !== "rewind" || (w.past ?? []).some((hp) => hp > w.hp + 10)));
       if (!word) continue;
       try { this.spellWord(id, w, word.word); return use; } catch { mind.tried.add(word.word); }
     }
@@ -2153,7 +2204,7 @@ export class WorldRoom extends Room {
     const owns = (x: BotWord) => [...this.areas.values()].some((a) => a.owner === id && a.word === x.word) || (this.state.weatherWord ?? "").toLowerCase() === x.word;
     const spell = (use: string, x: BotWord | null): string | null => {
       if (!x) return null;
-      try { this.spellWord(id, w, x.word); return use; } catch { mind.tried.add(x.word); return null; }
+      try { this.spellWord(id, w, x.word); if (x.sky) this.botUsed(mind, "weather"); return use; } catch { mind.tried.add(x.word); return null; }
     };
     const foe = w.foe ? this.walkers.get(w.foe) : undefined;
     const near = (d: number) => people.filter((p) => { const o = this.walkers.get(p); return o && Math.hypot(o.player.x - w.player.x, o.player.y - w.player.y) <= d; });
@@ -2205,6 +2256,7 @@ export class WorldRoom extends Room {
         return spell("cook", choose("cook"));
       },
       () => this.rng() < skill.offers ? this.botOffer(id, w, mind, have) : null,
+      () => this.rng() < skill.themes ? this.botThemes(id, w, mind, have, people, [], mine, this.elapsed < mind.peaceUntil) : null,
     ];
     // Each part checks whether the moment calls for it; which comes first changes from thought to thought.
     const start = Math.floor(this.rng() * tries.length);
@@ -2213,6 +2265,237 @@ export class WorldRoom extends Room {
       if (done) return done;
     }
     return null;
+  }
+
+  /**
+   * Spells a word of the themes' kind `use` (bots.ts `ThemeUse`) as its aim asks: at a walker
+   * (`target`, picked as if clicked), at a spot (`spot`), or on itself; an adjective is put on its
+   * own body. A word aimed at someone that fails three times is not tried again. True if spelled.
+   */
+  private botCast(id: string, w: Walker, mind: BotMind, x: BotWord, target?: string, spot?: Point): boolean {
+    w.picked = x.aim === "walker" ? target ?? id : null;
+    w.aim = x.aim === "spot" && spot ? { x: spot.x, y: spot.y } : null;
+    try {
+      if (x.adjective) this.describeWord(id, w, x.word, id);
+      else this.spellWord(id, w, x.word);
+      // Something to eat or drink that cures (a CURE, MEDICINE): taken at once (U).
+      if (x.use === "cure" && this.dict.base(x.word, "edible") === true) {
+        const i = w.gear.findIndex((g) => g.spelled.noun === x.word);
+        const near = i < 0 ? this.usableNear(w).find(([, g]) => g.spelled.noun === x.word) : undefined;
+        if (i >= 0) this.use(w, i); else if (near) this.use(w, near[0]);
+      }
+      return true;
+    } catch {
+      if (x.aim === "walker" || x.aim === "spot") {
+        const misses = (mind.misses ??= new Map()).get(x.word) ?? 0;
+        if (misses >= 2) mind.tried.add(x.word); else mind.misses.set(x.word, misses + 1);
+      } else mind.tried.add(x.word);
+      return false;
+    } finally {
+      w.picked = null; w.aim = null;
+    }
+  }
+
+  /**
+   * Ends what ails a bot with a word that ends it (bots.ts `cure`, by `SKILL.cures`): sickness,
+   * rage and fear (calm), a sealed fate, a curse, a debt, chaos, the void, exposure; and in the cold
+   * (shared wear.ts) something warm to wear. Easy bots only treat sickness and cold. Returns
+   * "cure", "calm" or "warm" if it spelled one.
+   */
+  private botCure(id: string, w: Walker, mind: BotMind, have: Uint8Array): string | null {
+    if ((!w.statuses.length && w.exposed !== "cold") || this.elapsed - (mind.curedAt ?? -Infinity) < 1) return null;
+    mind.curedAt = this.elapsed;
+    if (this.rng() >= SKILL[mind.difficulty].cures) return null;
+    const book = wordBook(this.dict);
+    const easy = mind.difficulty === "easy";
+    if (w.exposed === "cold") {
+      const slots = new Set(w.gear.map((g) => this.slotOf(g)));
+      const x = chooseWord(book.byUse.get("warm"), have, mind.difficulty, this.rng, (x) => !mind.tried.has(x.word) && !slots.has(String(this.dict.base(x.word, "equip_slot"))));
+      if (x && this.botCast(id, w, mind, x)) return "warm";
+    }
+    if (!w.statuses.length) return null;
+    // The worst first: a sealed fate, then whatever hampers it most.
+    const order: Status[] = ["doom", "void", "stasis", "sick", "rage", "fear", "chaos", "curse", "debt", "expose", "poison", "burn", "bleed", "confuse", "slow", "root", "blind", "silence"];
+    const ails = w.statuses.map((a) => a.status).filter((st) => !isBoon(st) && order.includes(st) && (!easy || st === "sick" || st === "poison"))
+      .sort((a, b) => order.indexOf(a) - order.indexOf(b));
+    for (const st of ails) {
+      const x = chooseWord(book.byUse.get("cure"), have, mind.difficulty, this.rng, (x) => !mind.tried.has(x.word) && x.statuses!.includes(st) && (x.faith ?? 0) <= w.stores.faith);
+      if (!x || !this.botCast(id, w, mind, x, id)) continue;
+      const calm = st === "rage" || st === "fear";
+      if (!calm) this.botUsed(mind, `cure ${st}`);
+      return calm ? "calm" : "cure";
+    }
+    return null;
+  }
+
+  /**
+   * The dictionary themes' systems (batches 3 to 5), each when the moment calls for it, starting
+   * from a different one each time and scaled by `SKILL.themes`: a disguise, a body part grafted on
+   * itself or a creature, statuses passed on its foe (doom, curse, chaos, rage, exposure, debt,
+   * stasis), a duel when it is well ahead, a gift or bribe for a creature, a loan to someone near,
+   * a trap at home, lies and jamming against people, a shrine, a miracle, music and morale, haste,
+   * rewinding, gravity on a flyer, a boat and fishing by water, luck. Only shared properties choose
+   * the words (`wordBook`). Returns the system used, or null.
+   */
+  private botThemes(id: string, w: Walker, mind: BotMind, have: Uint8Array, people: string[], attackers: string[], mine: number, peaceful: boolean): string | null {
+    // Looked over at most every two seconds: the lists are long and most thoughts find nothing to do.
+    if (this.elapsed - (mind.themedAt ?? -Infinity) < 2) return null;
+    mind.themedAt = this.elapsed;
+    const book = wordBook(this.dict);
+    const easy = mind.difficulty === "easy", hard = mind.difficulty === "hard";
+    const choose = (use: Use, also: (x: BotWord) => boolean = () => true) =>
+      chooseWord(book.byUse.get(use), have, mind.difficulty, this.rng, (x) => !mind.tried.has(x.word) && (x.faith ?? 0) <= w.stores.faith && also(x));
+    const dist = (p: Point) => Math.hypot(p.x - w.player.x, p.y - w.player.y);
+    const owns = (x: BotWord) => { for (const a of this.areas.values()) if (a.owner === id && a.word === x.word) return true; return false; };
+    const foe = w.foe ? this.walkers.get(w.foe) : undefined;
+    const person = foe && foe.master === null && !foe.hamper.untouchable ? foe : undefined;
+    const maxHp = w.unit.body.stats.num("integrity");
+    const total = Object.values(w.letters).reduce((n, v) => n + Math.max(0, v), 0);
+    const atHome = !!mind.home && dist(mind.home) <= 8;
+    const slots = new Set(w.gear.map((g) => this.slotOf(g)));
+    const free = (x: BotWord) => !slots.has(String(this.dict.base(x.word, "equip_slot")));
+    const cast = (use: string, x: BotWord | null, target?: string, spot?: Point) => x && this.botCast(id, w, mind, x, target, spot) ? use : null;
+    const tries: (() => string | null)[] = [
+      // A disguise once the peace is over: enemies' creatures, wild animals and bots take it for one of theirs.
+      () => !easy && !peaceful && !(w.unit.body.stats.num("disguise") > 0) ? cast("disguise", choose("disguise", free)) : null,
+      // A body part on itself, or on one of its creatures in sight.
+      () => {
+        if (easy || w.gear.filter((g) => isGraft(this.statsOf(g))).length >= 2) return null;
+        let host = id;
+        if (mine > 0 && this.rng() < 0.5) for (const [cid, c] of this.walkers) if (c.master === id && dist(c.player) <= w.sight) { host = cid; break; }
+        const done = cast("graft", choose("graft"), host);
+        if (done) this.botUsed(mind, host === id ? "graft self" : "graft creature");
+        return done ? "graft" : null;
+      },
+      // Statuses on the person it fights: a sealed fate, a curse, chaos, rage, exposure, a debt, stasis.
+      () => {
+        if (!person || !SKILL[mind.difficulty].aims) return null;
+        const has = new Set(person.statuses.map((a) => a.status as string));
+        const x = choose("hex", (x) => dist(person.player) <= x.reach && x.statuses!.some((st) => !has.has(st)));
+        if (!cast("hex", x, person.id, person.player)) return null;
+        const weights = ["doom", "stasis", "void", "chaos", "curse", "rage", "sick", "debt", "expose"];
+        const main = weights.find((st) => x!.statuses!.includes(st));
+        if (main) this.botUsed(mind, `hex ${main}`);
+        return "hex";
+      },
+      // A duel or a wager when it is well ahead of the person it fights: their letters for the taking.
+      () => {
+        if (!person || easy || w.hp < maxHp * 0.7 || person.hp > w.hp * 0.7 || this.challengeOf(id, person.id)) return null;
+        return cast("duel", choose("duel", (x) => dist(person.player) <= x.reach && x.score * 3 <= total), person.id);
+      },
+      // A creature coming for it, or a fierce wild one close by: bought (BRIBE) or won over (GIFT).
+      () => {
+        let target: Walker | undefined;
+        for (const a of attackers) { const c = this.walkers.get(a); if (c && c.master !== null) { target = c; break; } }
+        if (!target) for (const [, c] of this.walkers) if (c.master === "-" && c.citizenOf === undefined && !c.boss && aggressive(c.unit.body.stats) && dist(c.player) <= 6) { target = c; break; }
+        if (!target) return null;
+        const t = target;
+        return cast("bribe", choose("bribe", (x) => dist(t.player) <= x.reach), t.id) ?? cast("gift", choose("gift", (x) => dist(t.player) <= x.reach), t.id);
+      },
+      // Rich, and someone near it is not fighting it: a loan (they pay it back, a letter at a time).
+      () => {
+        if (easy || total < 30) return null;
+        for (const pid of people) {
+          const o = this.walkers.get(pid);
+          if (!o || o.foe === id || w.foe === pid || o.statuses.some((a) => a.status === "debt")) continue;
+          return cast("loan", choose("loan", (x) => dist(o.player) <= x.reach), pid);
+        }
+        return null;
+      },
+      // A trap or two at home once others are about (hidden from enemies who cannot see it).
+      () => atHome && !peaceful && (mind.traps ?? 0) < (hard ? 2 : 1) ? (() => { const d = cast("trap", choose("trap")); if (d) mind.traps = (mind.traps ?? 0) + 1; return d; })() : null,
+      // Lies and jamming against people near: made-up threats, blacked-out minimaps and cameras.
+      () => !easy && (person || people.some((p) => { const o = this.walkers.get(p); return !!o && dist(o.player) <= 15; }))
+        ? cast("lie", choose("lie", (x) => !owns(x) && (x.aim !== "spot" || !!person && dist(person.player) <= x.reach)), undefined, person?.player) : null,
+      () => person && !easy ? cast("jam", choose("jam", (x) => !owns(x) && (x.aim !== "spot" || dist(person.player) <= x.reach)), undefined, person.player) : null,
+      // Faith: a shrine or an altar at home, once (deaths by an altar are offerings).
+      () => atHome && mind.producers > 0 && !mind.shrines ? (() => { const d = cast("shrine", choose("shrine")); if (d) mind.shrines = 1; return d; })() : null,
+      () => w.hp < maxHp * 0.6 ? cast("miracle", choose("miracle")) : null,
+      // Music and morale for its side in a fight, or when its spirits are low.
+      () => {
+        if (!((foe && mine > 0) || w.morale < 3)) return null;
+        const x = choose("morale", (x) => !owns(x));
+        const done = cast("morale", x);
+        if (done && x!.loud) this.botUsed(mind, "music");
+        return done;
+      },
+      // Time: haste in a fight; rewinding the harm it just took.
+      () => foe && !easy && !w.statuses.some((a) => a.status === "haste") ? cast("haste", choose("haste", (x) => !owns(x))) : null,
+      () => w.hp < maxHp * 0.5 && (w.past ?? []).some((hp) => hp > w.hp + 10) ? cast("rewind", choose("rewind")) : null,
+      // Gravity on a flyer it cannot reach: brought down.
+      () => foe && foe.flying && !w.flying && !easy ? cast("gravity", choose("gravity", (x) => dist(foe.player) <= x.reach), undefined, foe.player) : null,
+      // By the water: a rod or a net to fish with; now and then (not easy) a boat to sail.
+      () => {
+        if (w.gear.some((g) => String(this.statsOf(g).get("harvest_sources")).split(",").includes("fishing")) || !waterNear(this.map, w.player.x, w.player.y, 2)) return null;
+        return cast("fishing", choose("fishing"));
+      },
+      () => {
+        if (easy || mind.boat || attackers.length || this.rng() > 0.3) return null;
+        const water = this.launchSpot(id, w.player);
+        if (!water || dist(water) > 6) return null;
+        const before = new Set<string>();
+        this.state.things.forEach((t, tid) => { if (t.owner === id) before.add(tid); });
+        const x = choose("vessel");
+        if (!cast("vessel", x)) return null;
+        let launched = "";
+        this.state.things.forEach((t, tid) => { if (!launched && t.owner === id && !before.has(tid) && this.grounded.get(tid)?.vehicle) launched = tid; });
+        if (launched) mind.boat = { thing: launched, phase: "board", until: this.elapsed + 90 };
+        return "vessel";
+      },
+      // Luck before a stretch of gathering.
+      () => (peaceful || w.gathering > 0) && this.rng() < 0.5 ? cast("luck", choose("luck", (x) => !owns(x))) : null,
+    ];
+    const start = Math.floor(this.rng() * tries.length);
+    for (let i = 0; i < tries.length; i++) {
+      const done = tries[(start + i) % tries.length]!();
+      if (done) return done;
+    }
+    return null;
+  }
+
+  /**
+   * A bot's boat trip (shared sea.ts): it walks to the shore by its new vessel and boards it (E),
+   * sails to open water near by, and after a while comes back to where it boarded and goes ashore
+   * (R). True while the trip takes its thought.
+   */
+  private botBoat(id: string, w: Walker, mind: BotMind): boolean {
+    const b = mind.boat!;
+    const water = (p: Point, r: number): Point | null => {
+      for (let i = 0; i < 12; i++) {
+        const t = this.rng() * Math.PI * 2, d = 2 + this.rng() * r;
+        const q = { x: Math.floor(p.x + Math.cos(t) * d) + 0.5, y: Math.floor(p.y + Math.sin(t) * d) + 0.5 };
+        if (q.x > 0 && q.y > 0 && q.x < this.map.size && q.y < this.map.size && walkableAt(this.map, q.x, q.y, SAIL_COST)) return q;
+      }
+      return null;
+    };
+    if (b.phase === "board") {
+      const t = this.state.things.get(b.thing);
+      if (!t || t.owner !== id || this.elapsed > b.until) { mind.boat = undefined; return false; }
+      if (Math.hypot(t.x - w.player.x, t.y - w.player.y) <= BOARD_TILES) {
+        try { this.takeNear(id, w, b.thing); } catch { mind.boat = undefined; return false; }
+        if (!w.sailing) { mind.boat = undefined; return false; }
+        b.phase = "sail"; b.dock = { x: w.player.x, y: w.player.y }; b.until = this.elapsed + 30 + this.rng() * 30;
+        w.target = water(w.player, 10); w.route = []; w.routeTo = null;
+        this.botUsed(mind, "sail");
+        return true;
+      }
+      if (!w.target) w.target = nearestWalkable(this.map, { x: t.x, y: t.y });
+      return true;
+    }
+    if (!w.sailing) { mind.boat = undefined; return false; } // wrecked, and thrown ashore
+    w.foe = null; w.gathering = 0;
+    if (this.elapsed < b.until) {
+      if (!w.target) w.target = water(b.dock ?? w.player, 10);
+      return true;
+    }
+    if (b.dock && Math.hypot(b.dock.x - w.player.x, b.dock.y - w.player.y) > 1.2 && this.elapsed < b.until + 40) {
+      if (!w.target) w.target = { ...b.dock };
+      return true;
+    }
+    try { this.dismountWalker(id, w); } catch { if (this.elapsed < b.until + 60) { w.target = b.dock ? { ...b.dock } : null; return true; } }
+    mind.boat = undefined;
+    w.target = null;
+    return false;
   }
 
   /** The nearest of the map's fixtures of a kind within `tiles` of a walker, by thing id. */
@@ -2265,6 +2548,13 @@ export class WorldRoom extends Room {
     const total = Object.values(w.letters).reduce((n, v) => n + v, 0);
     if (mind.producers > 0 && hands < (mind.difficulty === "hard" ? 3 : 2) && total >= info.hire + 10) {
       try { this.hire(id, w); return "hire"; } catch { /* nobody to hire, or too dear */ }
+    }
+    // A valuable it carries that does not help it fight (a CROWN, a GEM): sold for a letter it lacks.
+    const sale = info.sells?.find((x) => { const g = w.gear[x.index], st = g && this.statsOf(g); return !!st && !(st.num("armor") > 0) && !st.entries().some(([k, v]) => k.startsWith("dmg_") && Number(v) > 0) && x.price >= 2; });
+    if (sale && mind.difficulty !== "easy") {
+      const letter = this.botWant(mind, have, w)?.letter;
+      const get = letter && !MARKET.refuses.includes(letter) ? letter : [..."aeiourstln"].sort((a, b) => (w.letters[a] ?? 0) - (w.letters[b] ?? 0))[0]!;
+      try { this.sell(id, w, sale.index, get); return "sell"; } catch { /* not today */ }
     }
     const spare = Object.entries(w.letters).filter(([, n]) => n > 0).sort((a, b) => b[1] - a[1])[0];
     if (!spare || spare[1] < info.ratio + 1) return null;
@@ -2430,6 +2720,12 @@ export class WorldRoom extends Room {
       p.threatsSent = key;
       c.send("threats", out);
     }
+  }
+
+  /** True if a field that jams covers a point and is meant for a walker: their camera or tower there sees nothing (shared signal.ts). */
+  private jammedAt(id: string, w: Walker, p: Point): boolean {
+    for (const a of this.areas.values()) if (a.jams && Math.hypot(p.x - a.x, p.y - a.y) <= a.radius && this.aims(a, id, w)) return true;
+    return false;
   }
 
   /** True if a field that jams reaches a walker (shared signal.ts). */
@@ -2871,7 +3167,8 @@ export class WorldRoom extends Room {
       const s = this.statsOf(g);
       if (claims.length && inside(t)) comfort += comfortOf(s, t.count);
       if (!g.stalled) stored += storageOf(s, t.count);
-      const r = g.stalled ? 0 : eyeOf(s);
+      // A jamming field over it that reaches its owner blinds it too (shared signal.ts: a JAMMER against CAMERA).
+      const r = g.stalled || this.jammedAt(id, w, t) ? 0 : eyeOf(s);
       if (r > 0) eyes.push({ x: Math.round(t.x * 10) / 10, y: Math.round(t.y * 10) / 10, r: Number.isFinite(r) ? r : this.map.size * 2, word: g.spelled.noun });
     }
     for (const [, c] of h.creatures) if (claims.length && inside(c.player)) comfort += comfortOf(c.unit.body.stats, c.player.count);
@@ -3908,8 +4205,14 @@ export class WorldRoom extends Room {
     }
     if (s.flag("misspells")) {
       const noun = gear?.spelled.noun ?? creature!.body.noun;
-      const next = typoOf(this.dict, noun, this.rng);
       const owner = thing ? thing.owner : creature!.master ?? "";
+      // Its owner's side keeps a DICTIONARY close by (shared idea.ts `spellchecks`): no typo touches it.
+      const checker = this.spellchecker(owner, at);
+      if (checker) {
+        if (owner && owner !== id) this.sendTo(owner, "notice", `${walker.player.name}'s ${word} on your ${name}: your ${checker} corrected it`);
+        return `${word}: ${name} is spellchecked by ${checker}: nothing changes`;
+      }
+      const next = typoOf(this.dict, noun, this.rng);
       if (!next) {
         if (thing) { this.removeThing(targetId); this.refreshViews(); }
         else this.kill(targetId, id);
@@ -3977,14 +4280,21 @@ export class WorldRoom extends Room {
       const separate = Math.min(summons.count, SEPARATE_UP_TO);
       const each = summons.count > SEPARATE_UP_TO ? summons.count : 1;
       const phrase = summons.word;
+      const made = resolve(this.dict, phrase, []);
+      // A vessel (shared sea.ts) appears on the water nearest the area, by its owner's port if one is near; none where no water is.
+      const afloat = sails(made);
+      let placed = 0;
       for (let i = 0; i < (each > 1 ? 1 : separate); i++) {
-        const p = spot(i);
-        const gear: Gear = { spelled: { noun: phrase, adjectives: [], ...(each > 1 ? { count: each } : {}) }, phrase, vehicle: false, integrity: null };
-        if (becomes(resolve(this.dict, phrase, [])) !== "creature") { this.addThing(gear, summons.owned ? a.owner : "", p.x, p.y); continue; }
+        const p = afloat ? this.launchSpot(summons.owned ? a.owner : "", spot(i), PORT_TILES) ?? this.launchSpot(summons.owned ? a.owner : "", a, PORT_TILES) : spot(i);
+        if (!p) continue;
+        placed++;
+        const gear: Gear = { spelled: { noun: phrase, adjectives: [], ...(each > 1 ? { count: each } : {}) }, phrase, vehicle: made.flag("mountable"), integrity: null };
+        if (becomes(made) !== "creature") { this.addThing(gear, summons.owned ? a.owner : "", p.x, p.y); continue; }
         this.addCreature(gear, summons.owned ? a.owner : "-", p.x, p.y, each);
       }
-      if (summons.owned) this.command(a.owner);
-      notes.push(`${summons.count} ${(summons.count > 1 ? pluralize(phrase) : phrase).toUpperCase()} ${summons.owned ? "rally to you" : "appear"}`);
+      if (summons.owned && placed) this.command(a.owner);
+      const name = (summons.count > 1 ? pluralize(phrase) : phrase).toUpperCase();
+      notes.push(placed ? `${summons.count} ${name} ${afloat ? "lie on the water nearby" : summons.owned ? "rally to you" : "appear"}` : `no water near: no ${name}`);
     }
     const tile = TILE_TYPES[String(s.get("tile_type"))];
     if (tile !== undefined && s.num("radius") > 0 && this.dict.word(a.word)?.class === "event") {
@@ -4730,6 +5040,8 @@ export class WorldRoom extends Room {
       const owner = this.walkers.get(t.owner);
       if (!owner || paid.has(t.owner)) continue;
       paid.add(t.owner);
+      const priest = this.bots.get(t.owner);
+      if (priest) this.botUsed(priest, "sacrifice");
       const faith = offering(stats) * k;
       owner.stores.faith += faith;
       this.toTell.add(t.owner);
@@ -4821,14 +5133,14 @@ export class WorldRoom extends Room {
 
   /**
    * Where a new vessel of `owner`'s is launched (shared sea.ts): beside a port of theirs within
-   * PORT_TILES, else the water nearest `at` within LAUNCH_TILES, or null with no water near.
+   * PORT_TILES, else the water nearest `at` within `tiles` (LAUNCH_TILES), or null with no water near.
    */
-  private launchSpot(owner: string, at: Point): Point | null {
+  private launchSpot(owner: string, at: Point, tiles = LAUNCH_TILES): Point | null {
     const water = (p: Point, r: number): Point | null => {
       let best: Point | null = null, bestD = Infinity;
       for (let dy = -r; dy <= r; dy++) for (let dx = -r; dx <= r; dx++) {
         const x = Math.floor(p.x) + dx + 0.5, y = Math.floor(p.y) + dy + 0.5, d = Math.hypot(dx, dy);
-        if (d > r || d >= bestD || !walkableAt(this.map, x, y, SAIL_COST)) continue;
+        if (d > r || d >= bestD || x < 0 || y < 0 || x >= this.map.size || y >= this.map.size || !walkableAt(this.map, x, y, SAIL_COST)) continue;
         best = { x, y }; bestD = d;
       }
       return best;
@@ -4839,7 +5151,7 @@ export class WorldRoom extends Room {
       const d = Math.hypot(t.x - at.x, t.y - at.y);
       if (d <= portD) { port = t; portD = d; }
     });
-    return (port ? water(port, LAUNCH_TILES) : null) ?? water(at, LAUNCH_TILES);
+    return (port ? water(port, LAUNCH_TILES) : null) ?? water(at, tiles);
   }
 
   /**
@@ -4959,6 +5271,25 @@ export class WorldRoom extends Room {
     if (p) p.born = agedBorn(p.born, this.elapsed, minutes);
     for (const g of w.gear) shift(g, g);
     return w.player.name.toUpperCase();
+  }
+
+  /**
+   * What of `owner`'s side guards a point against typos (shared idea.ts `spellchecks`): a thing they
+   * or their creatures carry, or one of theirs on the ground, close enough. Its name, or "".
+   */
+  private spellchecker(owner: string, at: Point): string {
+    if (!owner || owner === "-") return "";
+    for (const [wid, o] of this.walkers) {
+      if (wid !== owner && o.master !== owner) continue;
+      const d = Math.hypot(o.player.x - at.x, o.player.y - at.y);
+      for (const g of o.gear) if (spellchecked(this.statsOf(g).num("spellchecks"), d, TILE_METERS)) return g.phrase.toUpperCase();
+    }
+    let found = "";
+    this.state.things.forEach((t, tid) => {
+      const g = this.grounded.get(tid);
+      if (!found && g && t.owner === owner && spellchecked(this.statsOf(g).num("spellchecks"), Math.hypot(t.x - at.x, t.y - at.y), TILE_METERS)) found = g.phrase.toUpperCase();
+    });
+    return found;
   }
 
   /** The speller's most valuable thing on the ground or creature, for a PARADOX (shared idea.ts `swaps_owners`). */
@@ -5485,10 +5816,18 @@ export class WorldRoom extends Room {
     const stock = Math.min(MARKET.stock, m.stock + (this.elapsed - m.at) / MARKET.regen);
     const ratio = marketRatio(tradeRateOf(this.rulesAt(t, id, w).rules));
     const city = this.cityAt(t);
+    // What it would buy of what you carry, for its worth (shared `salePrice`): not what you ride.
+    const sells: { index: number; phrase: string; price: number }[] = [];
+    w.gear.forEach((g, index) => {
+      if (g.vehicle) return;
+      const price = salePrice(this.statsOf(g).num("value"), g.spelled.count ?? 1, ratio);
+      if (price > 0) sells.push({ index, phrase: g.phrase, price });
+    });
     return {
       ratio, stock: Math.floor(stock), refuses: MARKET.refuses, closed: this.lawAgainst("trade", id, w, t) ?? "",
       hire: ratio * HIRE_PRICE, citizens: city >= 0 ? this.citizensOf(city).length : 0,
       ruler: city >= 0 ? this.state.cities[city]?.ruler ?? "" : "",
+      ...(sells.length ? { sells } : {}),
     };
   }
 
@@ -5651,6 +5990,44 @@ export class WorldRoom extends Room {
     if (yes && mind.difficulty === "hard" && o.give.length === o.get.length && !(want && o.give.includes(want.letter))) yes = false;
     this.botUsed(mind, yes ? "accept offer" : "decline offer");
     try { this.answer(id, offerId, yes); } catch { /* the offer fell through */ }
+  }
+
+  /**
+   * Sells a thing you carry at the market you stand at (shared `salePrice`: by its `value`, at the
+   * market's ratio): it is gone, and you are paid that many of the letter you want (not one markets
+   * refuse), and a T for the trade. Uses the market's stock like a trade.
+   */
+  private sell(id: string, walker: Walker, index: number, get: string): string {
+    const info = this.marketInfo(id, walker);
+    if (!info) throw new Error("Sell at a MARKET: there is one in the middle of every city");
+    if (info.closed) throw new Error(`${info.closed}: this market is closed`);
+    if (MARKET.refuses.includes(get)) throw new Error(`No market pays in ${get.toUpperCase()}`);
+    const gear = walker.gear[index];
+    if (!gear) throw new Error("You do not carry that");
+    if (gear.vehicle) throw new Error("Get off it first");
+    const price = info.sells?.find((x) => x.index === index)?.price ?? 0;
+    if (!(price > 0)) throw new Error(`The market will not buy ${gear.phrase.toUpperCase()}: it is worth nothing to them`);
+    const mid = this.marketNear(walker)!, m = this.markets.get(mid)!, market = this.state.things.get(mid)!;
+    m.stock = Math.min(MARKET.stock, m.stock + (this.elapsed - m.at) / MARKET.regen);
+    m.at = this.elapsed;
+    if (m.stock < 1) throw new Error(`This market has traded all it can for now: ${Math.ceil((1 - m.stock) * MARKET.regen)} s`);
+    m.stock = Math.max(0, m.stock - 1);
+    walker.gear.splice(index, 1);
+    this.resolved.delete(gear);
+    this.carried.delete(gear);
+    this.rebuild(walker);
+    this.award(id, walker, get.repeat(price), "trade");
+    const t = this.earn(id, "t", market, "trade");
+    if (market.owner && market.owner !== id) {
+      const toll = this.earn(market.owner, "t".repeat(PORT_TOLL), market, `toll at your ${this.grounded.get(mid)?.phrase.toUpperCase() ?? "PORT"}`);
+      if (toll) this.lettersChanged.add(market.owner);
+    }
+    this.deed(walker, "trades");
+    this.tell(walker);
+    this.sendTo(id, "letters", walker.letters);
+    const done = `Sold ${gear.phrase.toUpperCase()} for ${get.repeat(price).toUpperCase()}${t ? `, and ${t.toUpperCase()} for the trade` : ""}`;
+    this.sendTo(id, "spelled", done);
+    return done;
   }
 
   private trade(id: string, walker: Walker, give: string, get: string): string {
@@ -6225,6 +6602,8 @@ export class WorldRoom extends Room {
         const caught = catchOf(this.fishes ??= fishTable(this.dict), this.dict, this.rng);
         if (caught) {
           w.stores.food += caught.food;
+          const fisher = this.bots.get(id);
+          if (fisher) this.botUsed(fisher, "catch");
           this.award(id, w, caught.letter, `caught ${caught.fish.toUpperCase()}`, w.player);
           changed.add(id);
         }

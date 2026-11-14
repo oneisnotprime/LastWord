@@ -13,7 +13,11 @@ import type { Op } from "./types.js";
  * - The `doom` status (FATE) seals an outcome: when it runs out the body takes DOOM_SHARE of its
  *   full integrity, which nothing resists.
  * - `swaps_owners` (PARADOX): a thing someone else owns and the speller's most valuable trade owners.
- * - `misspells` (TYPO): a thing becomes the word one letter off (`typoOf`), or breaks.
+ * - `misspells` (TYPO): a thing becomes the word one letter off (`typoOf`), or breaks, unless
+ *   something of its owner's side that `spellchecks` (a DICTIONARY) is close by (`spellchecked`).
+ * - `stands_for` (WORD, LETTER, BOOK): spelled before another word it stands for it, and its own
+ *   letters are paid instead (`standIn`): a length (WORD: any four-letter word) or an archetype
+ *   (BOOK: any document).
  */
 
 /** Chance each point of luck adds to a roll. */
@@ -67,6 +71,37 @@ export function typoOf(dict: Dictionary, noun: string, rng: Rng): string | null 
   return out.length ? out[Math.floor(rng() * out.length)]! : null;
 }
 
+/** True if a thing `tiles` away from something that `spellchecks` that many metres (and tiles of `metresPerTile`) is safe from typos. */
+export function spellchecked(spellchecks: number, tiles: number, metresPerTile: number): boolean {
+  return spellchecks > 0 && tiles * metresPerTile <= spellchecks;
+}
+
+/** What a word with `stands_for` stands for: any word of a length, or any of an archetype. */
+export function standsFor(value: unknown): { length: number } | { archetype: string } | null {
+  if (value === undefined || value === null || value === "") return null;
+  const n = Number(value);
+  if (Number.isInteger(n) && n > 0) return { length: n };
+  return typeof value === "string" ? { archetype: value } : null;
+}
+
+/**
+ * A spelling of a stand-in followed by one word it stands for ("word wolf", "book map"): the
+ * stand-in, the word spelled, and the letters paid (the stand-in's). Null if the spelling is not
+ * one, or the word does not fit (wrong length or kind, the same word, not in the dictionary).
+ */
+export function standIn(dict: Dictionary, text: string): { stand: string; word: string; letters: string } | null {
+  const words = text.toLowerCase().trim().split(/\s+/).filter(Boolean);
+  if (words.length !== 2) return null;
+  const [stand, word] = words as [string, string];
+  const def = dict.word(stand);
+  const rule = def ? standsFor(def.set.stands_for) : null;
+  if (!rule || stand === word || !/^[a-z]+$/.test(word)) return null;
+  const other = dict.word(word);
+  if (!other) return null;
+  if ("length" in rule ? word.length !== rule.length : other.archetype !== rule.archetype) return null;
+  return { stand, word, letters: stand };
+}
+
 /** What a meta word does, in short lines for its card. */
 export function ideaText(s: Stats): string[] {
   const out: string[] = [];
@@ -77,5 +112,8 @@ export function ideaText(s: Stats): string[] {
   if (s.num("inflict_doom") > 0) out.push(`doom: ${Math.round(DOOM_SHARE * 100)}% of full health when it runs out`);
   if (s.flag("swaps_owners")) out.push("swaps the owners of a thing and your most valuable");
   if (s.flag("misspells")) out.push("turns a thing into the word one letter off, or breaks it");
+  if (s.num("spellchecks") > 0) out.push(`no typo touches your things within ${Math.round(s.num("spellchecks"))} m`);
+  const stands = standsFor(s.get("stands_for"));
+  if (stands) out.push("length" in stands ? `before any ${stands.length}-letter word: spells it for these letters` : `before any ${stands.archetype}: spells it for these letters`);
   return out;
 }

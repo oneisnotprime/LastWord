@@ -58740,6 +58740,7 @@ wooly	adjective	modifier	quality	2.49	uncommon	a01157854	-
 woosh	verb	spell	movement	1.86	rare	v02073048	-
 woozy	adjective	modifier	quality	2.4	uncommon	a02554818	-
 wop	noun	person	person	2.87	uncommon	n09735835	-
+word	noun	knowledge	knowledge	5.26	core	n06297048	verb:communication
 wordbook	noun	artifact	document	0.0	obscure	n06430336	-
 wordfinder	noun	artifact	document	0.0	obscure	n06432797	-
 wordily	adverb	verb_modifier	manner	0.0	obscure	r00494741	-

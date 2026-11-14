@@ -9,7 +9,7 @@
  */
 import { boot } from "@colyseus/testing";
 import appConfig from "../src/app.config.js";
-import { sourceOf, type Difficulty } from "../src/bots.js";
+import { sourceOf, THEME_SYSTEMS, type Difficulty } from "../src/bots.js";
 import { WorldRoom } from "../src/WorldRoom.js";
 
 const [rooms = 4, bots = 8] = process.argv.slice(2, 4).map(Number);
@@ -21,6 +21,7 @@ const used = new Map<Difficulty, Map<string, number>>();
 const sources = new Map<string, number>();
 const rounds: { minutes: number; winner: string; difficulty: string }[] = [];
 const wins = new Map<string, number>();
+const themedUsers = new Map<string, number>();
 
 for (let r = 0; r < rooms; r++) {
   WorldRoom.testSeed = 1000 + r * 7919;
@@ -36,7 +37,7 @@ for (let r = 0; r < rooms; r++) {
   const report = room.botReport();
   for (const b of report) {
     const m = used.get(b.difficulty) ?? used.set(b.difficulty, new Map()).get(b.difficulty)!;
-    for (const [k, n] of Object.entries(b.used)) m.set(k, (m.get(k) ?? 0) + n);
+    for (const [k, n] of Object.entries(b.used)) { m.set(k, (m.get(k) ?? 0) + n); if (n > 0) themedUsers.set(k, (themedUsers.get(k) ?? 0) + 1); }
   }
   const winner = room.state.winner || "(none)";
   const level = report.find((b) => b.id === winner)?.difficulty ?? "-";
@@ -54,6 +55,14 @@ const systems = [...new Set([...used.values()].flatMap((m) => [...m.keys()]))].s
 const levels = (["easy", "normal", "hard"] as const).filter((d) => used.has(d));
 console.log(`\nSystems used (count per difficulty):\n${["system".padEnd(16), ...levels.map((l) => l.padStart(8))].join("")}`);
 for (const s of systems) console.log([s.padEnd(16), ...levels.map((l) => String(used.get(l)?.get(s) ?? 0).padStart(8))].join(""));
+const themed = [...THEME_SYSTEMS, ...systems.filter((k) => k.startsWith("cure ") && !(THEME_SYSTEMS as readonly string[]).includes(k))];
+console.log(`\nThemes' systems (count per difficulty; bots that used each at least once):\n${["system".padEnd(16), ...levels.map((l) => l.padStart(8)), "  bots"].join("")}`);
+for (const k of themed) {
+  const users = themedUsers.get(k) ?? 0;
+  console.log([k.padEnd(16), ...levels.map((l) => String(used.get(l)?.get(k) ?? 0).padStart(8)), String(users).padStart(6)].join(""));
+}
+const unused = themed.filter((k) => !(themedUsers.get(k) ?? 0));
+console.log(`Themes' systems used: ${themed.length - unused.length} of ${themed.length}${unused.length ? `; never: ${unused.join(", ")}` : ""}`);
 const total = [...sources.values()].reduce((n, v) => n + v, 0);
 console.log(`\nLetter sources (${total} letters):`);
 for (const [k, n] of [...sources].sort((a, b) => b[1] - a[1])) console.log(`${k.padEnd(12)}${String(n).padStart(7)}  ${((n / total) * 100).toFixed(1)}%`);

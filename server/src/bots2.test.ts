@@ -144,6 +144,7 @@ it("uses area words: plenty over its producers, taxes and laws where others are,
   a!.mind.home = { x: a!.w.player.x, y: a!.w.player.y };
   a!.mind.producers = 1;
   a!.mind.roads = 9; // no roads in this test
+  R.botThemes = () => null; // nor the themes' systems (bots3.test.ts)
   const tryUse = (use: Use, people: string[], mine = 0) => {
     const word = book.byUse.get(use)!.find((x) => x.placement !== "object")!;
     a!.w.letters = letters(word.word);
