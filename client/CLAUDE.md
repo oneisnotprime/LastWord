@@ -64,3 +64,11 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
 - The spell window shows the alphabet guide (shared `LETTER_GUIDE`), lighting letters you hold.
 - Knocked out, the HUD card has Start new round: `playAgain` (start.ts) reloads into a fresh room
   with the same choice, past the start screen. A room lost for good (server restart) does the same.
+- The top-left HUD lists letters coming in a minute by letter and what makes them (loadout
+  `income`), and food, fuel and power in and out; the loadout screen's Producing lines say why a
+  producer is idle. The corner shows the wind and the city you stand in (ruler, citizens).
+- The trade screen (T, `Hud.trade`): the market you stand at (choose a letter; you pay with your
+  commonest), hiring, transmuting into Z, and offers to people within TRADE_RANGE. Offers made
+  and received are cards at the right (`#offers`: Accept, Counter, Decline, Withdraw). Inputs on a
+  screen count as typing (`Hud.typing`), so their letters are not commands.
+- A roaming boss (`Player.boss`) stands 1.6 times as tall with a red tag.

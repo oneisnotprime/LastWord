@@ -36,6 +36,11 @@ server and the client import this, so anything here must give the same answer on
   ("needs tilled land", "no wind"); `windAt` (map wind), `moistureAt`, `Soil` (fertility per
   8-tile patch, worn by crops), `ageRate` (Y from age), `needsText`, `producingLine`.
   `Tile.Field` is tilled land; a `soil` stamp changes only `SOIL` tiles.
+- `territory.ts` land, roads, cities, trades and bosses: `landHeld` (tiles per owner, contested,
+  weighted by claim age `taper`), `roadRun` (a road word's run), `readOffer`, `readTransmute`,
+  `transmuteProblem`, `bossWords` (bosses from the data), and the rates (`LAND_RATE`,
+  `ROAD_RATE`, `CITIZEN_S`...). `stampTiles` in world.ts gives a stamp's tiles; a stamp with
+  `x2`, `y2` is a run between two points.
 - `economy.ts` `starterHand` (eight letters around a word that produces something, `starterWords`)
   and `reachability`/`reachTable`: the shortest chain from the action letters to every letter,
   through producers whose needs are reached (a crop needs a tilling word, furniture a claim);

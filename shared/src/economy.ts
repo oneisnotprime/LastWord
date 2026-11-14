@@ -76,7 +76,7 @@ export interface Route {
 }
 
 /** Letters a later part of the economy gives that no word reaches yet: none once they are built. */
-export const PENDING_SOURCES = "lrsz";
+export const PENDING_SOURCES = "";
 
 /**
  * Walks the dictionary from the action letters: any word spelled only from reached letters
@@ -157,6 +157,19 @@ export function reachability(dict: Dictionary, pending = PENDING_SOURCES): { rou
   const unreached = [..."abcdefghijklmnopqrstuvwxyz"].filter((ch) => !routes.has(ch));
   return { routes, unreached };
 }
+/**
+ * True if a word gives a letter by itself once spelled, by the same rules as `reachability`:
+ * it produces it, claims ground (L, and S around a city's middle), lays road (R), or ages (Y).
+ */
+export function makesLetter(dict: Dictionary, word: string, letter: string): boolean {
+  const p = parsePhrase(dict, word), s = p.stats;
+  if (letter in producerOf(s).rates) return true;
+  if (p.kind !== "object") return false;
+  if ((letter === "l" || letter === "s") && s.num("claim_radius") > 0) return true;
+  if (letter === "r" && String(s.get("tile_type")) === "road") return true;
+  return letter === "y" && (s.num("produce_Y") > 0 || ["ground", "terrain"].includes(becomes(s)));
+}
+
 /** The reachability table as text, one letter a line, for the test log and the docs. */
 export function reachTable(dict: Dictionary): string {
   const { routes, unreached } = reachability(dict);

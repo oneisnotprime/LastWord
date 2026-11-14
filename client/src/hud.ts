@@ -1,4 +1,4 @@
-import { LETTER_GUIDE, missing, parsePhrase, type Card, type Dictionary, type Letters, type LoadoutDetail } from "@lastword/shared";
+import { LETTER_GUIDE, missing, parsePhrase, type Card, type Dictionary, type Letters, type LoadoutDetail, type Offer } from "@lastword/shared";
 import { BADGE } from "./art/paper.js";
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
@@ -14,6 +14,12 @@ const nearby = (d: LoadoutDetail | null) =>
 /** How a creature is doing, if it is not well: hungry, fleeing. */
 const mood = (c: LoadoutDetail["creatures"][number]) =>
   [c.hungry ? "hungry" : "", c.fleeing ? "fleeing" : ""].filter(Boolean).map((m) => `<span class="slot status">${m}</span>`).join("");
+
+/** Letters as little tiles: "EEE". */
+const tiles = (letters: string) => `<span class="tiles">${[...letters].map((c) => `<i>${c.toUpperCase()}</i>`).join("") || "<i>-</i>"}</span>`;
+
+/** Tiles apart two people may trade (shared TRADE_RANGE). */
+const TRADE_TILES = 6;
 
 /** A store as shown: what is held, and what is drawn and made a minute. */
 const store = (s: LoadoutDetail["stores"]["food"]) =>
@@ -62,7 +68,15 @@ export class Hud {
   private readonly win = $("spellwin");
   private toastTimer = 0;
   private detail: LoadoutDetail | null = null;
-  private open: "inventory" | "loadout" | null = null;
+  private open: "inventory" | "loadout" | "trade" | null = null;
+  /** Sends a trading action to the server (set by the scene). */
+  act: (type: "market" | "hire" | "transmute" | "offer" | "answer", payload: unknown) => void = () => {};
+  /** People near enough to trade with (set by the scene). */
+  people: () => { id: string; name: string }[] = () => [];
+  /** On the trade screen: the letter you want from the market, and whom an offer goes to. */
+  private want = "";
+  private offerTo: string | null = null;
+  private offerList: Offer[] = [];
   private frame: HudFrame | null = null;
   private drawnHud = "";
   private place = "";
@@ -100,6 +114,7 @@ export class Hud {
       if (this.typing || e.repeat) return;
       const key = e.key.toLowerCase();
       if (key === "i") this.show(this.open === "inventory" ? null : "inventory");
+      else if (key === "t") this.show(this.open === "trade" ? null : "trade");
       else if (key === "l") this.show(this.open === "loadout" ? null : "loadout");
       else if (key === "escape") {
         // Esc closes what is open first (a screen, the menu, an aim, an inspect card), else opens the menu.
@@ -109,6 +124,10 @@ export class Hud {
       }
     });
     $("resume").addEventListener("click", () => this.menu(false));
+    $("offers").addEventListener("click", (e) => {
+      const el = (e.target as HTMLElement).closest("button");
+      if (el) this.tradeClick(el);
+    });
     $("panel").addEventListener("click", (e) => {
       const el = (e.target as HTMLElement).closest("button");
       if (!el) return;
@@ -117,6 +136,7 @@ export class Hud {
       if (el.dataset.useThing !== undefined) this.onUse(el.dataset.useThing);
       if (el.dataset.aimGear !== undefined) { this.onAimGear(Number(el.dataset.aimGear)); this.show(null); }
       if (el.dataset.word) { this.show(null); this.openSpell(el.dataset.word); }
+      this.tradeClick(el);
     });
     // Enter opens the spell window. While it is open every key goes to it and nothing else.
     window.addEventListener("keydown", (e) => {
@@ -145,6 +165,7 @@ export class Hud {
       const target = this.inspected;
       this.closeInspect();
       if (el.dataset.adjective !== undefined && target) this.openSpell("", target);
+      if (el.dataset.tradeWith !== undefined) { this.offerTo = el.dataset.tradeWith; this.show("trade"); }
     });
     // A click outside the card keeps the window open and the cursor in it.
     this.win.addEventListener("mousedown", (e) => { if (e.target !== this.input) { e.preventDefault(); this.input.focus(); } });
@@ -174,6 +195,13 @@ export class Hud {
     // "trade eee for o" at a market: only the letters handed over.
     const trade = /^trade\s+(\S*)/.exec(t);
     if (trade) return trade[1]!.replace(/[^a-z]/g, "");
+    // "offer bot3 eee for a", "transmute eeeeeeeeee", "hire": only the letters you hand over (hire picks its own).
+    if (t && ["offer", "transmute", "hire"].some((w) => w.startsWith(t.trim()))) return "";
+    const offer = /^offer(?:\s+\S+(?:\s+(\S*))?)?/.exec(t);
+    if (offer) return (offer[1] ?? "").replace(/[^a-z]/g, "");
+    const alchemy = /^transmute\s*(\S*)/.exec(t);
+    if (alchemy) return alchemy[1]!.replace(/[^a-z]/g, "");
+    if (/^hire\b/.test(t)) return "";
     return t.replace(/[^a-z]/g, "");
   }
 
@@ -203,7 +231,8 @@ export class Hud {
 
   /** True while the spell window is open: every key goes to it. */
   get typing(): boolean {
-    return this.win.classList.contains("show");
+    // The spell window, or a box on a screen (an offer's letters): keys are letters, not commands.
+    return this.win.classList.contains("show") || (document.activeElement?.tagName === "INPUT" && document.activeElement !== this.input);
   }
 
   /** Opens the spell window, optionally with a word already in it and aimed at something. Not while you cannot spell. */
@@ -241,7 +270,9 @@ export class Hud {
   inspect(card: Card, extra: string[], target: Aimed, x: number, y: number) {
     const el = $("inspect");
     this.inspected = target;
-    el.innerHTML = cardHtml(card, extra) + (this.locked ? "" : `<button data-adjective>Add adjective</button>`) + `<button data-close>Close</button>`;
+    const person = !this.locked && this.people().some((p) => p.id === target.id);
+    el.innerHTML = cardHtml(card, extra) + (this.locked ? "" : `<button data-adjective>Add adjective</button>`) +
+      (person ? `<button data-trade-with="${esc(target.id)}">Offer trade</button>` : "") + `<button data-close>Close</button>`;
     el.className = "show";
     const w = el.offsetWidth, h = el.offsetHeight;
     el.style.left = `${Math.max(8, Math.min(window.innerWidth - w - 8, x + 14))}px`;
@@ -259,8 +290,8 @@ export class Hud {
   }
 
   /** Bottom-left: the ground under you and your tile. */
-  corner(ground: string, x: number, y: number, wind = 0) {
-    const html = `<b>${esc(ground === "Field" ? "Tilled land" : ground.replace(/([a-z])([A-Z])/g, "$1 $2"))}</b><span>tile ${x}, ${y} · wind ${wind}%</span>`;
+  corner(ground: string, x: number, y: number, wind = 0, city = "") {
+    const html = `<b>${esc(ground === "Field" ? "Tilled land" : ground.replace(/([a-z])([A-Z])/g, "$1 $2"))}</b>${city ? `<span>${esc(city)}</span>` : ""}<span>tile ${x}, ${y} · wind ${wind}%</span>`;
     const el = $("corner");
     if (el.innerHTML !== html) el.innerHTML = html;
   }
@@ -394,7 +425,86 @@ export class Hud {
     return this.open !== null;
   }
 
-  private show(which: "inventory" | "loadout" | null) {
+  /** Offers you have made and been made: the cards at the right, with Accept, Counter, Decline. */
+  setOffers(list: Offer[]) {
+    this.offerList = list;
+    const el = $("offers");
+    el.innerHTML = list.map((o) => o.mine
+      ? `<div class="offer mine"><b>You offer ${esc(o.to)}</b> ${tiles(o.give)} for ${tiles(o.get)} <small>${o.left}s</small><button data-answer="${o.id}" data-accept="0">Withdraw</button></div>`
+      : `<div class="offer"><b>${esc(o.from)} offers</b> ${tiles(o.give)} for your ${tiles(o.get)} <small>${o.left}s</small>` +
+        `<button data-answer="${o.id}" data-accept="1">Accept</button><button data-counter="${o.id}">Counter</button><button data-answer="${o.id}" data-accept="0">Decline</button></div>`).join("");
+    el.className = list.length ? "show" : "";
+    if (this.open === "trade") this.drawPanel();
+  }
+
+  /** Buttons on the trade screen and the offer cards. */
+  private tradeClick(el: HTMLElement) {
+    const d = el.dataset;
+    if (d.want !== undefined) { this.want = d.want; this.drawPanel(); }
+    if (d.marketTrade !== undefined && this.want) this.act("market", { give: this.payFor(this.want), get: this.want });
+    if (d.hire !== undefined) this.act("hire", {});
+    if (d.transmute !== undefined) this.act("transmute", { give: this.commons(this.detail?.transmute ?? 10, "") });
+    if (d.offerTo !== undefined) { this.offerTo = d.offerTo; this.drawPanel(); }
+    if (d.sendOffer !== undefined && this.offerTo) {
+      const give = ($<HTMLInputElement>("offer-give").value || "").toLowerCase().replace(/[^a-z]/g, "");
+      const get = ($<HTMLInputElement>("offer-get").value || "").toLowerCase().replace(/[^a-z]/g, "");
+      if (give || get) this.act("offer", { to: this.offerTo, give, get });
+    }
+    if (d.answer !== undefined) this.act("answer", { id: d.answer, accept: d.accept === "1" });
+    if (d.counter !== undefined) {
+      const o = this.offerList.find((x) => x.id === d.counter);
+      if (!o) return;
+      this.act("answer", { id: o.id, accept: false });
+      this.offerTo = o.fromId;
+      this.show("trade");
+      // A counter starts from their offer turned round: you give what they asked, ask what they gave.
+      $<HTMLInputElement>("offer-give").value = o.get.toUpperCase();
+      $<HTMLInputElement>("offer-get").value = o.give.toUpperCase();
+    }
+  }
+
+  /** `n` of your commonest letters, not `except` and not ones markets refuse: what you pay with. */
+  private commons(n: number, except: string): string {
+    const have = { ...this.held };
+    let out = "";
+    for (let i = 0; i < n; i++) {
+      const ch = Object.entries(have).filter(([c, k]) => k > 0 && c !== except && !"jqxz".includes(c)).sort((a, b) => b[1] - a[1])[0]?.[0];
+      if (!ch) break;
+      out += ch; have[ch]!--;
+    }
+    return out;
+  }
+
+  private payFor(letter: string): string {
+    return this.commons(this.detail?.market?.ratio ?? 3, letter);
+  }
+
+  /** The trade screen (T): the market you stand at, transmuting into Z, and offers to people close by. */
+  private trade(): string {
+    const d = this.detail, m = d?.market;
+    const parts = [`<h2>TRADE</h2><div class="hint">T or Esc to close · a trade completed pays a T</div>`];
+    if (m) {
+      const letters = [..."abcdefghijklmnopqrstuvwxyz"].filter((c) => !m.refuses.includes(c));
+      const pay = this.want ? this.payFor(this.want) : "";
+      parts.push(`<h3>Market</h3><div class="hint">${m.closed ? `<b class="bad">${esc(m.closed)}: closed</b> · ` : ""}${m.ratio} letters for 1 · ${m.stock} trades in hand · ${m.citizens} citizen${m.citizens === 1 ? "" : "s"}${m.ruler ? ` · ruled by ${esc(m.ruler)}` : " · nobody rules this city"}</div>
+        <div class="words">${letters.map((c) => `<button data-want="${c}" class="${c === this.want ? "aim" : ""}">${c.toUpperCase()}</button>`).join("")}</div>
+        <div class="row">${this.want ? `You give ${tiles(pay)} for ${tiles(this.want)} and a T` : "Choose a letter to buy"}
+          <button data-market-trade ${!this.want || pay.length < m.ratio ? "disabled" : ""}>Trade</button></div>
+        <div class="row">Hire a ${m.citizens ? "citizen" : "worker (none left)"} for ${m.hire} of your letters: they work your fields and stations and pay N<button data-hire ${m.citizens ? "" : "disabled"}>Hire</button></div>`);
+    } else parts.push(`<h3>Market</h3><div class="hint">Stand by a city's MARKET to buy letters or hire workers.</div>`);
+    const n = d?.transmute ?? 10;
+    parts.push(`<h3>Transmute</h3><div class="row">${tiles(this.commons(n, ""))} into ${tiles("z")}: ${n} common letters for one Z, anywhere<button data-transmute>Transmute</button></div>`);
+    const people = this.people();
+    const to = people.find((p) => p.id === this.offerTo) ?? people[0];
+    this.offerTo = to?.id ?? null;
+    parts.push(`<h3>Offer a trade</h3>${people.length ? `<div class="words">${people.map((p) =>
+      `<button data-offer-to="${esc(p.id)}" class="${p.id === to?.id ? "aim" : ""}">${esc(p.name)}</button>`).join("")}</div>
+      <div class="row">You give <input id="offer-give" maxlength="40" placeholder="EEE"> for their <input id="offer-get" maxlength="40" placeholder="A"><button data-send-offer>Offer to ${esc(to!.name)}</button></div>`
+      : `<div class="hint">Nobody within ${TRADE_TILES} tiles to trade with.</div>`}`);
+    return parts.join("");
+  }
+
+  private show(which: "inventory" | "loadout" | "trade" | null) {
     this.open = which;
     $("panel").className = which ? "show" : "";
     this.drawPanel();
@@ -402,7 +512,15 @@ export class Hud {
 
   private drawPanel() {
     if (!this.open) return;
-    $("panel").innerHTML = this.open === "inventory" ? this.inventory() : this.loadout();
+    // Keep what is being typed into an offer while the screen redraws.
+    const give = document.getElementById("offer-give") as HTMLInputElement | null, get = document.getElementById("offer-get") as HTMLInputElement | null;
+    const kept = [give?.value ?? "", get?.value ?? ""], focus = document.activeElement?.id;
+    $("panel").innerHTML = this.open === "inventory" ? this.inventory() : this.open === "trade" ? this.trade() : this.loadout();
+    if (this.open === "trade") {
+      const g = document.getElementById("offer-give") as HTMLInputElement | null, w = document.getElementById("offer-get") as HTMLInputElement | null;
+      if (g) g.value = kept[0]!; if (w) w.value = kept[1]!;
+      if (focus) document.getElementById(focus)?.focus();
+    }
   }
 
   /** Words the player holds the letters for right now, shortest first. */

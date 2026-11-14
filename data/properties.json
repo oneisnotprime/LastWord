@@ -1,5 +1,5 @@
 {
- "count": 359,
+ "count": 360,
  "groups": {
   "physical": 41,
   "mobility": 25,
@@ -13,7 +13,7 @@
   "slots": 9,
   "meta": 16,
   "field": 14,
-  "event": 13,
+  "event": 14,
   "effect": 8
  },
  "damage_types": [
@@ -2683,6 +2683,13 @@
    "type": "tags",
    "desc": "weather it ends in its field",
    "default": []
+  },
+  {
+   "id": "takes_city",
+   "group": "event",
+   "type": "bool",
+   "desc": "makes its speller the ruler of a city it reaches (conquest, coup, election)",
+   "default": false
   },
   {
    "id": "event_target",

@@ -7,7 +7,7 @@ const dict = demo();
 describe("Dictionary", () => {
   it("loads the demo words and the property schema", () => {
     expect(dict.size).toBeGreaterThanOrEqual(352);
-    expect(dict.properties.size).toBe(359);
+    expect(dict.properties.size).toBe(360);
   });
 
   it("returns a word's own value, else the default", () => {

@@ -1,13 +1,15 @@
 import { Room, type Client } from "colyseus";
 import { StateView } from "@colyseus/schema";
 import {
-  producerOf, outputOf, ageRate, SOIL, windAt, moistureAt, waterNear, wateringReach, wetWeather, producingLine, Soil, LABOUR_RANGE, CYCLE_SECONDS, PEACE_RADIUS, PEACE_SECONDS, VOWELS, type ProducerSpec, type Conditions,
+  producerOf, outputOf, ageRate, SOIL, landHeld, roadRun, readOffer, readTransmute, transmuteProblem, bossWords, taper, stampTiles, TRANSMUTE_RATIO,
+  LAND_RATE, ROAD_RATE, ROAD_HALF, CLAIMED_ROAD, CITIZEN_S, CITIZENS, CITIZEN_LEAVE, CITIZEN_RETURN, HIRE_PRICE, HIRED, TRADE_RANGE, OFFER_SECONDS, PAIR_COOLDOWN, BOSS_TIMES, BOSS_Z, BOSS_HOARD,
+  type ClaimDisc, windAt, moistureAt, waterNear, wateringReach, wetWeather, producingLine, Soil, LABOUR_RANGE, CYCLE_SECONDS, PEACE_RADIUS, PEACE_SECONDS, VOWELS, type ProducerSpec, type Conditions,
   addLetters, afflict, placeRules, harvest, growthOf, tradeRateOf, marketRatio, type PlaceRules, aggressive, clearLine, courageOf, pluralize, auras, authorityOf, chooseTarget, commandLimit, draw, groundFood, hasAny, ignoresOrder, moraleAim, moraleGoal, needs, nextMorale, noStores, outputs, recruitRate, rerouteSeconds, startingSupply, becomes, retreats, routed, supply, theftResistance, HUNGER_LOYALTY, NORMAL, STARTING_STORES, STARVING, SUPPLIES, bodyFlags, cure, useObject, findPath, hampered, inflicts, statusDamage, statusEffects, tickStatuses, wake, GATHER_SECONDS, GATHER_REASONS, cachePrize, carcassFood, Deposits, destroyLetters, killLetters, mainland, MARKET, pickAnimal, placeSources, readTrade, regionOf, RUIN_INTEGRITY, CACHE_X, SITE_RADIUS, spawnPoint, starterHand, TEMPLE_Q, tradeProblem, generateMap, GIVE_RANGE, missing, parsePhrase, applyAdjectives, cannotCarry, improvisable, readDescription, production, resolveSpelled, SEPARATE_UP_TO, nearestWalkable, openGround, randomWalkable, resolve, Tile, tileAt, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit, cannotRide, claimOf, senseOf, combineSenses, type Sense, type Sensed,
   type Affliction, type Candidate, type Dictionary, type Stores, type Supply, type Entity, type Hampered, type Status, type Stats, type Letters, type LoadoutDetail, type Op, type Phrase, type Point, type Spelled, type Value, type WordDef, type WorldMap,
 } from "@lastword/shared";
 import { affords, botSettings, chooseWord, held, wordBook, type BotWord, type Difficulty, type Use } from "./bots.js";
 import { loadDictionary } from "./data.js";
-import { Edit, Player, Thing, WorldState, Zone } from "./state.js";
+import { City, Edit, Player, Thing, WorldState, Zone } from "./state.js";
 
 /** Simulation steps per second. */
 export const TICK_HZ = 10;
@@ -37,6 +39,12 @@ interface Gear {
 
 /** A passing effect on bodies: a verb someone cast, or weather over everyone. */
 interface Effect { word: string; set: Record<string, Value>; ops: Op[]; until: number }
+
+/** Tiles a worker looks for work within. */
+const JOB_RANGE = 40;
+
+/** Seconds between counts of land, roads and cities. */
+const TERRITORY_EVERY = 5;
 
 /** Seconds between a win and everyone being sent on to a new round. ROUND_END_SECONDS overrides. */
 const ROUND_END_SECONDS = Number(process.env.ROUND_END_SECONDS ?? 15);
@@ -89,7 +97,7 @@ interface Area {
    * are `security` harder to steal; `source` is the thing on the ground that claims it, which is
    * not sheltered itself (its walls take the blows), or "" for a claim someone carries.
    */
-  claim?: { shelter: number; security: number; source: string };
+  claim?: { shelter: number; security: number; source: string; born: number };
 }
 
 /** What areas start with before a word's own properties say otherwise. */
@@ -156,6 +164,15 @@ const COUNTER_TILES = 12;
 interface Walker {
   /** Session id for a person, creature id for a creature. */
   id: string;
+  /** For a person: the way they last walked, which a ROAD they spell runs. */
+  facing?: Point;
+  /** For a citizen: the city (index into the map's cities) it lives in. */
+  citizenOf?: number;
+  /** A roaming boss: slay it for Z. */
+  boss?: boolean;
+  /** For a worker: the producer of its master's it works at, and when it may next look for one. */
+  job?: string;
+  jobAt?: number;
   player: Player;
   /** What the body is: a human for a person, the spelled creature for a pet. */
   body: Spelled;
@@ -312,6 +329,9 @@ interface BotMind {
   home?: Point;
 }
 
+/** Round seconds after which bots hunt roaming bosses. */
+const BOT_BOSS_AFTER = 600;
+
 /** Seconds a bot keeps the peace at the start: between these two. */
 const BOT_PEACE: [number, number] = [60, 90];
 /** Seconds between a bot's spellings: between these two. */
@@ -362,10 +382,28 @@ export class WorldRoom extends Room {
   private soil!: Soil;
   /** Blows struck lately, where and when: producers near one make nothing (shared PEACE_RADIUS). */
   private fights: { x: number; y: number; t: number }[] = [];
+  /** When each claiming thing first claimed ground: its land tires from then, wherever it goes. */
+  private claimBorn = new WeakMap<object, number>();
+  /** Road tiles laid by people: tile index -> who laid it and when (round seconds). */
+  private roads = new Map<number, { owner: string; laid: number }>();
+  /** Territory's letters built up per person and letter, and what it paid a minute at the last count, for the HUD. */
+  private territoryBuilt = new Map<string, Letters>();
+  private territoryIncome = new Map<string, { lines: string[]; letters: { letter: string; rate: number; from: string }[] }>();
+  /** Each city's ruler (session id, "" for none), and the round second its citizens last left or came back. */
+  private rulers: { ruler: string; changed: number }[] = [];
+  /** Offers between players, by id: who offers whom what for what, until when. */
+  private offers = new Map<string, { id: string; from: string; to: string; give: string; get: string; until: number }>();
+  private nextOffer = 1;
+  /** When two players' trades last paid T, by "a|b". */
+  private paired = new Map<string, number>();
+  /** Bosses risen so far. */
+  private bossesRisen = 0;
   /** Producers carried, worn or ridden, by the gear (it makes letters for whoever has it). */
   private carried = new WeakMap<Gear, Producer>();
   /** What each person's producers made a minute at the last count (`producing`), and what was last told. */
   private income = new Map<string, { lines: string[]; letters: { letter: string; rate: number; from: string }[]; shown: string }>();
+  /** Seconds toward the next count of territory. */
+  private territoryClock = 0;
   /** Seconds toward the next second of production. */
   private produceClock = 0;
   /** Things that water the ground around them (`water_output`): thing id -> tiles they reach. */
@@ -422,6 +460,8 @@ export class WorldRoom extends Room {
       if (!walker || !p || !Number.isFinite(p.x) || !Number.isFinite(p.y)) return;
       const clamp = (v: number) => Math.min(this.map.size - 1e-3, Math.max(0, v));
       walker.target = { x: clamp(p.x!), y: clamp(p.y!) };
+      const dx = walker.target.x - walker.player.x, dy = walker.target.y - walker.player.y;
+      if (Math.hypot(dx, dy) > 0.2) walker.facing = { x: dx, y: dy };
       // A person's new destination replaces the old route at once. Kept, it would walk on to where
       // the last key press aimed and then turn back (the route is otherwise only searched again
       // once the target has drifted two tiles, which suits chasing, not steering).
@@ -607,6 +647,36 @@ export class WorldRoom extends Room {
         client.send("refused", (e as Error).message);
       }
     },
+    /** A market trade from the market panel: { give, get } (the same as typing "trade eee for o"). */
+    market: (client: Client, deal: unknown) => this.attempt(client, (id, w) => {
+      const d = deal as { give?: unknown; get?: unknown } | null;
+      if (!d || typeof d.give !== "string" || typeof d.get !== "string" || !/^[a-z]{1,60}$/.test(d.give) || !/^[a-z]{1,20}$/.test(d.get)) throw new Error("Choose letters to give and to get");
+      return this.trade(id, w, d.give, d.get);
+    }),
+    /** Hire a citizen at a market as your worker: { pay? } letters, else your commonest. */
+    hire: (client: Client, what: unknown) => this.attempt(client, (id, w) => {
+      const pay = (what as { pay?: unknown } | null)?.pay;
+      return this.hire(id, w, typeof pay === "string" && /^[a-z]{1,40}$/.test(pay) ? pay : undefined);
+    }),
+    /** Transmute common letters into a Z: { give }. */
+    transmute: (client: Client, what: unknown) => this.attempt(client, (id, w) => {
+      const give = (what as { give?: unknown } | null)?.give;
+      if (typeof give !== "string" || !/^[a-z]{1,40}$/.test(give)) throw new Error("Choose the common letters to transmute");
+      return this.transmute(id, w, give);
+    }),
+    /** Offer a nearby player letters for letters: { to: id, give, get }. */
+    offer: (client: Client, what: unknown) => this.attempt(client, (id, w) => {
+      const o = what as { to?: unknown; give?: unknown; get?: unknown } | null;
+      if (!o || typeof o.to !== "string" || typeof o.give !== "string" || typeof o.get !== "string" ||
+        !/^[a-z]{0,40}$/.test(o.give) || !/^[a-z]{0,40}$/.test(o.get) || !(o.give || o.get)) throw new Error("Offer what for what?");
+      return this.offer(id, w, o.to, o.give, o.get);
+    }),
+    /** Accept or decline an offer made to you, or withdraw your own: { id, accept }. */
+    answer: (client: Client, what: unknown) => this.attempt(client, (id) => {
+      const a = what as { id?: unknown; accept?: unknown } | null;
+      if (!a || typeof a.id !== "string") throw new Error("Answer which offer?");
+      return this.answer(id, a.id, a.accept === true);
+    }),
     /** Spend letters to make an object where the player stands. */
     spell: (client: Client, text: unknown) => {
       const walker = this.walkers.get(client.sessionId);
@@ -618,6 +688,18 @@ export class WorldRoom extends Room {
       }
     },
   };
+
+  /** Runs an action for a client's person (it tells them what happened); a refusal goes back as `refused`. */
+  private attempt(client: Client, act: (id: string, w: Walker) => string) {
+    const w = this.walkers.get(client.sessionId);
+    if (!w || w.master !== null) return;
+    try {
+      act(client.sessionId, w);
+      this.tell(w);
+    } catch (e) {
+      client.send("refused", (e as Error).message);
+    }
+  }
 
   /** Sends a message to a person if they have a client; bots and creatures have none. */
   private sendTo(id: string, type: string, message: unknown) {
@@ -662,6 +744,16 @@ export class WorldRoom extends Room {
     }
     const deal = readTrade(text);
     if (deal) return this.trade(id, walker, deal.give, deal.get);
+    const offered = readOffer(text);
+    if (offered) {
+      const to = [...this.walkers].find(([oid, o]) => oid !== id && o.master === null && o.player.name.toLowerCase() === offered.to.toLowerCase());
+      if (!to) throw new Error(`${offered.to} is not here`);
+      return this.offer(id, walker, to[0], offered.give, offered.get);
+    }
+    const alchemy = readTransmute(text);
+    if (alchemy) return this.transmute(id, walker, alchemy);
+    const hiring = /^\s*hire(?:\s+([a-z]+))?\s*$/i.exec(text);
+    if (hiring) return this.hire(id, walker, hiring[1]?.toLowerCase());
     const hushed = this.lawAgainst("spell", id, walker);
     if (hushed) throw new Error(`${hushed}: no spelling here`);
     const phrase = parsePhrase(this.dict, text);
@@ -670,12 +762,19 @@ export class WorldRoom extends Room {
     const name = [...phrase.adverbs, ...phrase.adjectives, phrase.noun].join(" ");
     const spelledAs = text.toLowerCase().trim().split(/\s+/).join(" ").toUpperCase();
     if (phrase.kind !== "object") {
+      // A word that takes a city (CONQUEST, COUP, ELECTION) takes the one it is spelled in.
+      const city = phrase.stats.flag("takes_city") ? this.cityAt(walker.player) : -1;
+      if (phrase.stats.flag("takes_city") && city < 0) throw new Error(`${phrase.noun.toUpperCase()} takes a city: spell it in one`);
+      const taking = () => {
+        try { return this.happen(id, walker, phrase); } catch (e) { if (city < 0) throw e; return ""; }
+      };
       // These throw if they cannot happen, before any letters are spent.
       let done =
         phrase.kind === "verb" ? this.cast(id, walker, phrase)
-        : phrase.kind === "event" ? this.happen(id, walker, phrase)
+        : phrase.kind === "event" ? taking()
         : phrase.kind === "field" ? this.field(id, walker, phrase)
         : this.sky(id, phrase, name);
+      if (city >= 0) { this.rule(city, id, phrase.noun); done = done ? `${done}; the city is yours` : "The city is yours"; }
       if (phrase.kind !== "sky") done = this.withCounters(phrase.noun, done, id, walker);
       spend(walker.letters, phrase.letters);
       this.sendTo(id, "letters", walker.letters);
@@ -829,6 +928,8 @@ export class WorldRoom extends Room {
     this.soil = new Soil(this.map);
     this.land = mainland(this.map);
     this.bare = WorldRoom.testBare;
+    this.rulers = this.map.cities.map(() => ({ ruler: "", changed: 0 }));
+    for (const c of this.map.cities) this.state.cities.push(Object.assign(new City(), { x: c.x + 0.5, y: c.y + 0.5, radius: c.radius, ruler: "", citizens: 0 }));
     if (this.bare) return;
     const places = placeSources(this.map, this.rng, this.land);
     const fixture = (noun: string, kind: NonNullable<Gear["fixture"]>, p: Point, integrity: number | null = null) =>
@@ -848,6 +949,33 @@ export class WorldRoom extends Room {
       const noun = pickAnimal(this.rng);
       this.addCreature({ spelled: { noun }, phrase: noun, vehicle: false, integrity: null }, "-", p.x, p.y);
     }
+    // Every city has its citizens (PLAN.md: S per citizen of a city you rule).
+    this.map.cities.forEach((_, i) => { for (let k = 0; k < CITIZENS; k++) this.addCitizen(i); });
+  }
+
+  /** One more citizen in a city: an NPC person who lives there, nobody's. */
+  private addCitizen(city: number): string {
+    const c = this.map.cities[city]!;
+    const at = nearestWalkable(this.map, { x: c.x + 0.5 + (this.rng() - 0.5) * c.radius, y: c.y + 0.5 + (this.rng() - 0.5) * c.radius });
+    const id = this.addCreature({ spelled: { noun: "citizen" }, phrase: "citizen", vehicle: false, integrity: null }, "-", at.x, at.y);
+    this.walkers.get(id)!.citizenOf = city;
+    const shown = this.state.cities[city];
+    if (shown) shown.citizens = this.citizensOf(city).length;
+    return id;
+  }
+
+  /** Citizens of a city still living there, by id. */
+  private citizensOf(city: number): [string, Walker][] {
+    return [...this.walkers].filter(([, w]) => w.citizenOf === city && w.master === "-");
+  }
+
+  /** A citizen leaves the world (moved away, or hired off). */
+  private removeWalker(id: string) {
+    this.unradiateAll(id);
+    this.walkers.delete(id);
+    this.state.players.delete(id);
+    this.producers.delete(id);
+    for (const o of this.walkers.values()) { if (o.foe === id) o.foe = null; if (o.picked === id) o.picked = null; }
   }
 
   /** Where a person starts: far from everyone else (shared `spawnPoint`), on ground that reaches them. */
@@ -1095,6 +1223,8 @@ export class WorldRoom extends Room {
       senses: (walker.senses ?? []).map((x) => ({ ...x })),
       producing: this.producing(walker.id),
       income: this.income.get(walker.id)?.letters ?? [],
+      market: this.marketInfo(walker.id, walker),
+      transmute: this.transmuteRatio(walker.id, walker),
     };
     client.send("loadout", detail);
   }
@@ -1160,6 +1290,13 @@ export class WorldRoom extends Room {
       const foe = order ?? this.choose(w, threats);
       w.foe = foe && (this.walkers.has(foe) || this.grounded.has(foe)) ? foe : null;
       if (w.foe) continue;
+      // A worker goes to work: the producer of its master's that most needs hands, and stays by it.
+      const job = this.jobFor(id, w);
+      if (job) {
+        const d = Math.hypot(job.x - w.player.x, job.y - w.player.y);
+        w.target = d > 1.5 ? { x: job.x + 0.8, y: job.y + 0.4 } : null;
+        continue;
+      }
       const apart = Math.hypot(master.player.x - w.player.x, master.player.y - w.player.y);
       w.target = apart > 2 ? { x: master.player.x, y: master.player.y } : null;
     }
@@ -1203,7 +1340,7 @@ export class WorldRoom extends Room {
       const e = { id: oid, d, hp: o.hp, person: o.master === null };
       if (o.foe === id) attackers.push(e);
       else if (o.master === null) people.push(e);
-      else if (o.master === "-" && d <= w.sight && !aggressive(o.unit.body.stats)) game.push(e);
+      else if (o.master === "-" && o.citizenOf === undefined && d <= w.sight && !aggressive(o.unit.body.stats)) game.push(e);
     }
     const pick = (list: Seen[]) => list.reduce<Seen | null>((best, e) => !best ? e
       : hard ? (e.person !== best.person ? (e.person ? e : best) : e.hp < best.hp ? e : best)
@@ -1218,6 +1355,10 @@ export class WorldRoom extends Room {
     // Hunting (H) and breaking ruins (D, X) when nobody needs fighting.
     if (!foe && game.length && (armed || w.unit.attack.num("dmg_blunt") > 0)) foe = pick(game.filter((e) => e.hp <= 100 || armed));
     if (!foe) foe = this.nearFixture(w, "ruin", w.sight);
+    // Late in the round, an armed bot goes after a roaming boss it hears of nearby, for its Z.
+    if (!foe && armed && !easy && this.elapsed > BOT_BOSS_AFTER) {
+      for (const [oid, o] of this.walkers) if (o.boss && Math.hypot(o.player.x - w.player.x, o.player.y - w.player.y) <= w.sight * 3) { foe = oid; break; }
+    }
     if (foe !== w.foe) { w.foe = foe; if (foe) w.gathering = 0; }
 
     // One word every few seconds, the most useful it can afford; or a trade at a market.
@@ -1287,6 +1428,12 @@ export class WorldRoom extends Room {
    */
   private botTrade(id: string, w: Walker, mind: BotMind, have: Uint8Array): boolean {
     if (!this.nearFixture(w, "market", MARKET.range)) return false;
+    // With producers to work and letters to spare, it hires a hand (N, and work for its fields).
+    const hands = [...this.walkers.values()].filter((c) => c.master === id && c.unit.body.stats.num("labor") > 0).length;
+    const total = Object.values(w.letters).reduce((n, v) => n + v, 0);
+    if (mind.producers > 0 && hands < 2 && total >= 20) {
+      try { this.hire(id, w); return true; } catch { /* nobody to hire, or too dear */ }
+    }
     const book = wordBook(this.dict);
     const spare = Object.entries(w.letters).filter(([, n]) => n > 0).sort((a, b) => b[1] - a[1])[0];
     if (!spare || spare[1] < MARKET.ratio + 1) return false;
@@ -1333,7 +1480,11 @@ export class WorldRoom extends Room {
       : n === "fuel" || n === "power" ? w.stores[n] > 1 || !mind.producers
       : n === "tilled" ? SOIL.includes(tileAt(this.map, w.player.x, w.player.y)) : true);
     const build = mind.producers < (peaceful ? 6 : 3) ? () => choose("producer", runs) : () => null;
-    return (peaceful ? build() : null)
+    // Once it has a home, it claims the ground around it (L), if it holds none there yet.
+    const homeClaimed = mind.home && [...this.areas.values()].some((a) => a.claim && a.owner === id && Math.hypot(a.x - mind.home!.x, a.y - mind.home!.y) <= a.radius);
+    const stake = mind.home && !homeClaimed && Math.hypot(w.player.x - mind.home.x, w.player.y - mind.home.y) < 6 ? () => choose("claim") : () => null;
+    return (peaceful ? build() ?? stake() : null)
+      ?? stake()
       ?? (!armed ? choose("weapon") : null)
       ?? choose("armor", (x) => !slots.has(x.slot))
       ?? (!slots.has("ride") ? choose("mount") : null)
@@ -1651,6 +1802,16 @@ export class WorldRoom extends Room {
       w.foe = this.choose(w, prey);
       if (w.foe) return;
     } else w.foe = null;
+    // A citizen keeps to its city; a boss roams the whole map.
+    if (!w.target && w.hamper.moves && w.citizenOf !== undefined && this.rng() < 0.2) {
+      const c = this.map.cities[w.citizenOf]!;
+      w.target = nearestWalkable(this.map, { x: c.x + 0.5 + (this.rng() - 0.5) * c.radius * 1.6, y: c.y + 0.5 + (this.rng() - 0.5) * c.radius * 1.6 });
+      return;
+    }
+    if (!w.target && w.hamper.moves && w.boss && this.rng() < 0.2) {
+      w.target = nearestWalkable(this.map, { x: Math.min(this.map.size - 1, Math.max(1, w.player.x + (this.rng() - 0.5) * 60)), y: Math.min(this.map.size - 1, Math.max(1, w.player.y + (this.rng() - 0.5) * 60)) });
+      return;
+    }
     if (!w.target && w.hamper.moves && this.rng() < 0.3) {
       const clamp = (v: number) => Math.min(this.map.size, Math.max(0, v));
       const to = { x: clamp(w.player.x + (this.rng() * 2 - 1) * CONFUSED_TILES), y: clamp(w.player.y + (this.rng() * 2 - 1) * CONFUSED_TILES) };
@@ -1697,6 +1858,43 @@ export class WorldRoom extends Room {
     for (const [id, w] of [...this.walkers]) if (w.master === "-") this.roam(id, w);
     for (const [id, w] of this.walkers) if (w.senses?.length) this.sendSensed(id, w);
     this.nearGrid = null; // walkers move between beats
+    // Offers lapse, or fall through when either side is gone or walks off.
+    for (const o of [...this.offers.values()]) {
+      const a = this.walkers.get(o.from), b = this.walkers.get(o.to);
+      if (this.elapsed < o.until && a && b && Math.hypot(a.player.x - b.player.x, a.player.y - b.player.y) <= TRADE_RANGE * 2) continue;
+      this.offers.delete(o.id);
+      this.sendOffers(o.from); this.sendOffers(o.to);
+    }
+    // Roaming bosses rise as the round goes on (PLAN.md: Z from roaming boss drops).
+    // BOSS_AT=20 (local testing only) brings the first one on at 20 s, and the rest as many seconds apart.
+    const early = Number(process.env.BOSS_AT);
+    const due = early > 0 ? early * (this.bossesRisen + 1) : BOSS_TIMES[this.bossesRisen];
+    if (!this.bare && due !== undefined && this.bossesRisen < BOSS_TIMES.length && this.elapsed >= due) this.riseBoss();
+  }
+
+  /**
+   * A roaming boss rises somewhere on the mainland away from everyone: one of the data's boss
+   * creatures (shared `bossWords`), wild and hungry for a fight. Everyone is told where; slaying it
+   * pays BOSS_Z Z and its hoard.
+   */
+  private riseBoss() {
+    this.bossesRisen++;
+    const words = bossWords(this.dict);
+    if (!words.length) return;
+    const noun = words[Math.floor(this.rng() * words.length)]!;
+    const people = [...this.walkers.values()].filter((w) => w.master === null).map((w) => w.player);
+    let at = this.spawnSpot();
+    for (let i = 0; i < 20 && people.some((p) => Math.hypot(p.x - at.x, p.y - at.y) < 25); i++) at = this.spawnSpot();
+    // CROWD=1 (load tests and browser checks): it rises in sight of the crowd in the first city.
+    const city = this.map.cities[0];
+    if (process.env.CROWD && city) at = nearestWalkable(this.map, { x: city.x + city.radius + 6, y: city.y + 0.5 });
+    const id = this.addCreature({ spelled: { noun }, phrase: noun, vehicle: false, integrity: null }, "-", at.x, at.y);
+    const boss = this.walkers.get(id)!;
+    boss.boss = true;
+    boss.player.boss = true;
+    const n = this.map.size, ns = at.y < n / 3 ? "north" : at.y > (2 * n) / 3 ? "south" : "", ew = at.x < n / 3 ? "west" : at.x > (2 * n) / 3 ? "east" : "";
+    const where = ns && ew ? `${ns}-${ew}` : ns || ew || "middle";
+    for (const c of this.clients) c.send("notice", `A ${noun.toUpperCase()} rises in the ${where}: slay it for ${"Z".repeat(BOSS_Z)}`);
   }
 
   /**
@@ -1856,7 +2054,15 @@ export class WorldRoom extends Room {
     const here = { x: walker.player.x, y: walker.player.y }; // laying terrain may move the speller
     const tile = TILE_TYPES[String(phrase.stats.get("tile_type"))];
     // Tilling (HOE, FARM) turns only soil to crop land: never water, roads, cities or rock.
-    if (tile !== undefined) this.reshape(walker.player.x, walker.player.y, phrase.stats.num("radius") * Math.sqrt(n), tile, tile === Tile.Field);
+    // A route (LANE, ROAD, HIGHWAY) lays a run of road the way its speller faces, theirs while it lasts.
+    const route = tile === Tile.Road && this.dict.word(phrase.noun)?.archetype === "route";
+    if (route) {
+      const f = walker.facing ?? { x: Math.cos(this.rng() * 7), y: Math.sin(this.rng() * 7) };
+      for (let i = 0; i < Math.min(n, SEPARATE_UP_TO); i++) {
+        const turn = i * 0.9, c = Math.cos(turn), s = Math.sin(turn); // ROADS: several runs fanning out
+        this.layRoad(owner, roadRun(walker.player.x, walker.player.y, f.x * c - f.y * s, f.x * s + f.y * c, phrase.stats.num("radius"), this.map.size));
+      }
+    } else if (tile !== undefined) this.reshape(walker.player.x, walker.player.y, phrase.stats.num("radius") * Math.sqrt(n), tile, tile === Tile.Field);
     // Anything fertile put down (COMPOST, MANURE, a FARM) enriches the soil it lies on.
     if (phrase.stats.num("fertility") > 0) this.soil.enrich(here.x, here.y, this.elapsed, phrase.stats.num("fertility") * n);
     let worn = 0;
@@ -2380,7 +2586,7 @@ export class WorldRoom extends Room {
       const ops: Op[] = [...this.dict.properties.keys()].filter((k) => k.startsWith("res_")).map((k) => [k, "add", claim.shelter]);
       made.push([{
         word: spelled.noun, owner, x: at.x, y: at.y, radius, until: Infinity, attack: null, cooldown: 0, friendlyFire: false,         spread: 0, effect: { word: spelled.noun, set: {}, ops, until: Infinity }, targets: "owned", follows, ...AREA_DEFAULTS,
-        baseRadius: radius, lasts: Infinity, claim: { shelter: claim.shelter, security: claim.security, source: follows ? "" : holder },
+        baseRadius: radius, lasts: Infinity, claim: { shelter: claim.shelter, security: claim.security, source: follows ? "" : holder, born: this.claimBorn.get(source) ?? (this.claimBorn.set(source, this.elapsed), this.elapsed) },
       }, true]);
     }
     for (const aura of auras(s, sightM)) {
@@ -2844,7 +3050,8 @@ export class WorldRoom extends Room {
       const kc = this.clients.find((c) => c.sessionId === payId);
       // K comes from kills of people, V from beating someone's creature, H from hunting the wild;
       // the place's rules multiply them (a WAR over it: K ×3, a SAFARI: H ×3).
-      const kind = dead.master === null ? "person" : dead.master === "-" ? "wild" : "owned";
+      // A citizen is an NPC person: killing one is a kill (K), not a hunt.
+      const kind = dead.master === null || dead.citizenOf !== undefined ? "person" : dead.master === "-" ? "wild" : "owned";
       const base = killLetters(kind, dead.unit.body.stats.flag("sentient"));
       let spoils = "";
       const name = dead.player.name.toUpperCase(), at = { x: dead.player.x, y: dead.player.y };
@@ -2857,6 +3064,12 @@ export class WorldRoom extends Room {
           : ch === "v" ? `beat ${owner ? `${owner}'s ` : ""}${name}`
           : `kill ${name}`;
         spoils += this.earn(payId, base.split("").filter((c) => c === ch).join(""), at, why);
+      }
+      if (dead.boss) {
+        // A roaming boss drops Z and its hoard of everyday letters (PLAN.md: Z from roaming bosses).
+        spoils += this.earn(payId, "z".repeat(BOSS_Z), at, `slew ${name}`);
+        this.award(payId, killer, cachePrize(this.rng) + cachePrize(this.rng), `${name}'s hoard`, at);
+        for (const c of this.clients) c.send("notice", `${killer.player.name} slew the ${name}: ${"Z".repeat(BOSS_Z)}`);
       }
       if (kind === "wild") kc?.send("letters", killer.letters);
       if (meat) this.toTell.add(payId); // the food store on the HUD
@@ -3066,6 +3279,163 @@ export class WorldRoom extends Room {
    * for (not the rare ones), and a T for every trade. A market has MARKET.stock trades in hand
    * and takes on one more every MARKET.regen seconds.
    */
+  /** The market within MARKET.range of a walker, by thing id, or null. */
+  private marketNear(w: Walker): string | null {
+    let best: string | null = null, bestD = MARKET.range;
+    for (const mid of this.markets.keys()) {
+      const t = this.state.things.get(mid);
+      const d = t ? Math.hypot(t.x - w.player.x, t.y - w.player.y) : Infinity;
+      if (d <= bestD) { best = mid; bestD = d; }
+    }
+    return best;
+  }
+
+  /** What a market near a walker offers, for the market panel (in the loadout), or undefined if none is near. */
+  private marketInfo(id: string, w: Walker): LoadoutDetail["market"] {
+    const mid = this.marketNear(w);
+    if (!mid) return undefined;
+    const t = this.state.things.get(mid)!, m = this.markets.get(mid)!;
+    const stock = Math.min(MARKET.stock, m.stock + (this.elapsed - m.at) / MARKET.regen);
+    const ratio = marketRatio(tradeRateOf(this.rulesAt(t, id, w).rules));
+    const city = this.cityAt(t);
+    return {
+      ratio, stock: Math.floor(stock), refuses: MARKET.refuses, closed: this.lawAgainst("trade", id, w, t) ?? "",
+      hire: ratio * HIRE_PRICE, citizens: city >= 0 ? this.citizensOf(city).length : 0,
+      ruler: city >= 0 ? this.state.cities[city]?.ruler ?? "" : "",
+    };
+  }
+
+  /** Common letters a transmutation takes for one Z: TRANSMUTE_RATIO, or the `transmute_in` of the best thing you own (a LAB). */
+  private transmuteRatio(id: string, w: Walker): number {
+    let best = TRANSMUTE_RATIO;
+    const ratios = [...w.gear.map((g) => this.statsOf(g).num("transmute_in"))];
+    for (const [tid, g] of this.grounded) if (this.state.things.get(tid)?.owner === id) ratios.push(this.statsOf(g).num("transmute_in"));
+    for (const r of ratios) if (r > 0 && r < best) best = r;
+    return Math.max(2, Math.round(best));
+  }
+
+  /** Transmutes common letters into one Z (PLAN.md: Z from transmuting commons at a steep ratio). */
+  private transmute(id: string, w: Walker, give: string): string {
+    const ratio = this.transmuteRatio(id, w);
+    const problem = transmuteProblem(give, ratio);
+    if (problem) throw new Error(problem);
+    const lacking = missing(w.letters, give);
+    if (lacking) throw new Error(`You need ${lacking.toUpperCase().split("").join(" ")}`);
+    spend(w.letters, give);
+    const z = this.earn(id, "z", w.player, "transmuted");
+    this.sendTo(id, "letters", w.letters);
+    const done = `Transmuted ${give.toUpperCase()} into ${z ? "Z" : "nothing: the place took it"}`;
+    this.sendTo(id, "spelled", done);
+    return done;
+  }
+
+  /**
+   * Hires a citizen of the city whose market you stand at: it leaves the city as your worker
+   * (HIRED), who must be fed, works your producers and pays N. Costs the market's price HIRE_PRICE
+   * times over: `pay` if given, else your commonest letters.
+   */
+  private hire(id: string, w: Walker, pay?: string): string {
+    const info = this.marketInfo(id, w);
+    if (!info) throw new Error("Hire workers at a city's MARKET");
+    if (info.closed) throw new Error(`${info.closed}: this market is closed`);
+    const city = this.cityAt(this.state.things.get(this.marketNear(w)!)!);
+    const citizens = city >= 0 ? this.citizensOf(city) : [];
+    if (!citizens.length) throw new Error("Nobody is left in this city to hire");
+    let price = pay ?? "";
+    if (!pay) {
+      const have = { ...w.letters };
+      for (let i = 0; i < info.hire; i++) {
+        const ch = Object.entries(have).filter(([c, n]) => n > 0 && !MARKET.refuses.includes(c)).sort((a, b) => b[1] - a[1])[0]?.[0];
+        if (!ch) break;
+        price += ch; have[ch]!--;
+      }
+    }
+    if (price.length !== info.hire) throw new Error(`Hiring takes ${info.hire} letters here`);
+    const lacking = missing(w.letters, price);
+    if (lacking) throw new Error(`You need ${lacking.toUpperCase().split("").join(" ")}`);
+    spend(w.letters, price);
+    const [cid, c] = citizens[0]!;
+    const at = { x: c.player.x, y: c.player.y };
+    this.removeWalker(cid);
+    this.addCreature({ spelled: { noun: HIRED }, phrase: HIRED, vehicle: false, integrity: null }, id, at.x, at.y);
+    const wild = this.command(id);
+    this.sendTo(id, "letters", w.letters);
+    const done = `Hired a ${HIRED.toUpperCase()} for ${price.toUpperCase()}${wild ? `; ${wild} ran wild` : ""}: feed them; they work your fields and stations and pay N`;
+    this.sendTo(id, "spelled", done);
+    this.refreshViews();
+    return done;
+  }
+
+  /** Offers another person letters for letters; they accept, decline or counter (`answer`). */
+  private offer(id: string, w: Walker, to: string, give: string, get: string): string {
+    const other = this.walkers.get(to);
+    if (!other || other.master !== null || to === id) throw new Error("Offer trades to another person");
+    if (Math.hypot(other.player.x - w.player.x, other.player.y - w.player.y) > TRADE_RANGE) throw new Error(`${other.player.name} is too far away to trade`);
+    if (/[^a-z]/.test(give + get)) throw new Error("Offer letters");
+    const lacking = missing(w.letters, give);
+    if (lacking) throw new Error(`You need ${lacking.toUpperCase().split("").join(" ")}`);
+    const offerId = `o${this.nextOffer++}`;
+    this.offers.set(offerId, { id: offerId, from: id, to, give, get, until: this.elapsed + OFFER_SECONDS });
+    this.sendOffers(id); this.sendOffers(to);
+    this.sendTo(to, "notice", `${w.player.name} offers ${give.toUpperCase() || "nothing"} for your ${get.toUpperCase() || "nothing"}`);
+    const done = `Offered ${give.toUpperCase() || "nothing"} to ${other.player.name} for ${get.toUpperCase() || "nothing"}`;
+    this.sendTo(id, "spelled", done);
+    if (this.bots.has(to)) this.botAnswer(to, offerId);
+    return done;
+  }
+
+  /** Accepts or declines an offer made to you, or withdraws one you made. */
+  private answer(id: string, offerId: string, accept: boolean): string {
+    const o = this.offers.get(offerId);
+    if (!o || (o.to !== id && o.from !== id)) throw new Error("That offer is gone");
+    this.offers.delete(offerId);
+    const from = this.walkers.get(o.from), to = this.walkers.get(o.to);
+    const fromName = from?.player.name ?? "someone", toName = to?.player.name ?? "someone";
+    let done: string;
+    if (!accept || o.from === id) {
+      done = o.from === id ? "Offer withdrawn" : `Declined ${fromName}'s offer`;
+      this.sendTo(o.from, "notice", o.from === id ? "Offer withdrawn" : `${toName} declined your offer`);
+    } else {
+      if (!from || !to) throw new Error("They are gone");
+      if (Math.hypot(from.player.x - to.player.x, from.player.y - to.player.y) > TRADE_RANGE) throw new Error(`${fromName} is too far away now`);
+      const a = missing(from.letters, o.give), b = missing(to.letters, o.get);
+      if (a) throw new Error(`${fromName} no longer has ${a.toUpperCase()}`);
+      if (b) throw new Error(`You need ${b.toUpperCase().split("").join(" ")}`);
+      spend(from.letters, o.give); spend(to.letters, o.get);
+      this.award(o.to, to, o.give, `from ${fromName}`, from.player);
+      this.award(o.from, from, o.get, `from ${toName}`, to.player);
+      // A trade completed pays each side a T (PLAN.md), not more often than PAIR_COOLDOWN for one pair.
+      const pair = [o.from, o.to].sort().join("|");
+      if (o.give && o.get && this.elapsed - (this.paired.get(pair) ?? -Infinity) >= PAIR_COOLDOWN) {
+        this.paired.set(pair, this.elapsed);
+        this.earn(o.from, "t", from.player, "trade"); this.earn(o.to, "t", to.player, "trade");
+      }
+      for (const [pid, p] of [[o.from, from], [o.to, to]] as const) this.sendTo(pid, "letters", p.letters);
+      done = `Traded ${o.get.toUpperCase() || "nothing"} for ${fromName}'s ${o.give.toUpperCase() || "nothing"}`;
+      this.sendTo(o.from, "notice", `${toName} accepted: ${o.give.toUpperCase() || "nothing"} for ${o.get.toUpperCase() || "nothing"}`);
+    }
+    this.sendOffers(o.from); this.sendOffers(o.to);
+    if (id === o.to || id === o.from) this.sendTo(id, "spelled", done);
+    return done;
+  }
+
+  /** Tells a person the offers they have made and been made, with seconds left. */
+  private sendOffers(id: string) {
+    const list = [...this.offers.values()].filter((o) => o.from === id || o.to === id).map((o) => ({
+      id: o.id, from: this.walkers.get(o.from)?.player.name ?? "", fromId: o.from, to: this.walkers.get(o.to)?.player.name ?? "", toId: o.to,
+      give: o.give, get: o.get, left: Math.max(0, Math.round(o.until - this.elapsed)), mine: o.from === id,
+    }));
+    this.sendTo(id, "offers", list);
+  }
+
+  /** A bot answers an offer: yes if it gets at least as many letters as it gives and has them. */
+  private botAnswer(id: string, offerId: string) {
+    const o = this.offers.get(offerId), w = this.walkers.get(id);
+    if (!o || !w) return;
+    const yes = o.give.length >= o.get.length && !missing(w.letters, o.get);
+    try { this.answer(id, offerId, yes); } catch { /* the offer fell through */ }
+  }
+
   private trade(id: string, walker: Walker, give: string, get: string): string {
     let best: string | null = null, bestD = MARKET.range;
     for (const mid of this.markets.keys()) {
@@ -3097,6 +3467,15 @@ export class WorldRoom extends Room {
   }
 
   /** Lays terrain and moves anyone now standing where they cannot onto the nearest ground. */
+  /** Lays a run of road between two points, one tile wide, and notes each tile as `owner`'s (R while it lasts). */
+  private layRoad(owner: string, run: { x: number; y: number; x2: number; y2: number }) {
+    const stamp = { ...run, radius: 0, tile: Tile.Road, soil: false };
+    for (const i of stampTiles(this.map, stamp)) this.roads.set(i, { owner, laid: this.elapsed });
+    stampTerrain(this.map, stamp);
+    this.state.edits.push(Object.assign(new Edit(), stamp));
+    for (const w of this.walkers.values()) w.routeTo = null; // roads are quicker: routes are worked out again
+  }
+
   reshape(x: number, y: number, radius: number, tile: number, soil = false) {
     const stamp = { x, y, radius, tile, soil };
     stampTerrain(this.map, stamp);
@@ -3120,6 +3499,136 @@ export class WorldRoom extends Room {
     this.producers.delete(id);
     this.waterers.delete(id);
     this.thingEntities.delete(id);
+  }
+
+  /**
+   * Where a worker (anything sentient of a person's that works: `labor`) works: its job, kept while
+   * it lasts, else the producer of its master's within JOB_RANGE that needs working (stations,
+   * fields, harvests, mills, machines) with the fewest workers already at it. Null: it follows.
+   */
+  private jobFor(id: string, w: Walker): Point | null {
+    if (!w.unit.body.stats.flag("sentient") || !(w.unit.body.stats.num("labor") > 0) || !w.master) return null;
+    const at = (pid: string) => this.state.things.get(pid);
+    const worked = (pid: string) => {
+      const p = this.producers.get(pid), t = at(pid);
+      return !!p && !!t && t.owner === w.master && p.spec.needs.some((n) => n === "labor" || n === "harvest" || n === "tilled" || n === "wind" || n === "flow" || n === "water");
+    };
+    if (w.job && worked(w.job)) return at(w.job)!;
+    w.job = undefined;
+    if (this.elapsed < (w.jobAt ?? 0)) return null; // looked lately: no work about
+    w.jobAt = this.elapsed + 3;
+    const count = new Map<string, number>();
+    for (const o of this.walkers.values()) if (o.master === w.master && o.job) count.set(o.job, (count.get(o.job) ?? 0) + 1);
+    let best: string | undefined, bestScore = Infinity;
+    for (const pid of this.producers.keys()) {
+      if (!worked(pid)) continue;
+      const t = at(pid)!, d = Math.hypot(t.x - w.player.x, t.y - w.player.y);
+      if (d > JOB_RANGE) continue;
+      const score = (count.get(pid) ?? 0) * 100 + d;
+      if (score < bestScore) { best = pid; bestScore = score; }
+    }
+    w.job = best;
+    return best ? at(best)! : null;
+  }
+
+  /**
+   * Territory, every TERRITORY_EVERY seconds (shared `territory.ts`): land held pays L (contested
+   * tiles pay nobody, claims tire), roads laid pay R (wearing as they age; map roads inside your
+   * claim count too), and cities pay their rulers S per citizen. A city nobody rules goes to whoever
+   * alone claims its middle; a ruled one loses a citizen every CITIZEN_LEAVE seconds (four times as
+   * fast while fighting goes on in it), one nobody rules gets them back.
+   */
+  private territory(seconds: number) {
+    const claims: ClaimDisc[] = [];
+    for (const a of this.areas.values()) {
+      if (!a.claim) continue;
+      const owner = this.walkers.get(a.owner);
+      if (owner?.master === null) claims.push({ owner: a.owner, x: a.x, y: a.y, radius: a.radius, born: a.claim.born });
+    }
+    const held = landHeld(this.map, claims, this.elapsed);
+    const income = new Map<string, { lines: string[]; letters: { letter: string; rate: number; from: string }[]; at: Point }>();
+    const pay = (owner: string, letter: string, rate: number, from: string, line: string, at: Point) => {
+      const i = income.get(owner) ?? income.set(owner, { lines: [], letters: [], at }).get(owner)!;
+      i.lines.push(line);
+      if (rate > 0) i.letters.push({ letter, rate: Math.round(rate * 100) / 100, from });
+      const built = this.territoryBuilt.get(owner) ?? this.territoryBuilt.set(owner, {}).get(owner)!;
+      built[letter] = (built[letter] ?? 0) + (rate * seconds) / 60;
+      const whole = Math.floor(built[letter]!);
+      if (whole > 0) { built[letter]! -= whole; this.earn(owner, letter.repeat(whole), at, from); }
+    };
+    for (const [owner, h] of held) {
+      const rate = h.weight * LAND_RATE;
+      pay(owner, "l", rate, "LAND", `LAND: ${h.tiles} tiles${h.contested ? `, ${h.contested} contested` : ""}: L ${+rate.toFixed(2)}/min`, { x: h.x, y: h.y });
+    }
+    // Roads: what each person laid, while it is still road; map roads in their claims at CLAIMED_ROAD.
+    const roadPay = new Map<string, { weight: number; tiles: number; at: Point }>();
+    for (const [i, r] of this.roads) {
+      if (this.map.tiles[i] !== Tile.Road || this.walkers.get(r.owner)?.master !== null) { this.roads.delete(i); continue; }
+      const e = roadPay.get(r.owner) ?? roadPay.set(r.owner, { weight: 0, tiles: 0, at: { x: (i % this.map.size) + 0.5, y: Math.floor(i / this.map.size) + 0.5 } }).get(r.owner)!;
+      e.weight += taper((this.elapsed - r.laid) / 60, ROAD_HALF);
+      e.tiles++;
+    }
+    for (const c of claims) {
+      const e = roadPay.get(c.owner) ?? roadPay.set(c.owner, { weight: 0, tiles: 0, at: { x: c.x, y: c.y } }).get(c.owner)!;
+      for (const i of stampTiles(this.map, { x: c.x, y: c.y, radius: c.radius - 0.5, tile: Tile.Road })) {
+        if (this.map.tiles[i] === Tile.Road && !this.roads.has(i)) { e.weight += CLAIMED_ROAD; e.tiles++; }
+      }
+    }
+    for (const [owner, e] of roadPay) {
+      if (!e.tiles) continue;
+      const rate = e.weight * ROAD_RATE;
+      pay(owner, "r", rate, "ROADS", `ROADS: ${e.tiles} tiles: R ${+rate.toFixed(2)}/min`, e.at);
+    }
+    // Cities.
+    this.map.cities.forEach((city, i) => {
+      const r = this.rulers[i]!, shown = this.state.cities[i];
+      if (!shown) return;
+      const centre = { x: city.x + 0.5, y: city.y + 0.5 };
+      if (r.ruler && this.walkers.get(r.ruler)?.master !== null) { r.ruler = ""; r.changed = this.elapsed; }
+      if (!r.ruler) {
+        const over = new Set(claims.filter((c) => Math.hypot(c.x - centre.x, c.y - centre.y) <= c.radius).map((c) => c.owner));
+        if (over.size === 1) this.rule(i, [...over][0]!, "claims");
+      }
+      let citizens = this.citizensOf(i);
+      if (!this.bare) {
+        const fighting = this.fights.some((f) => Math.hypot(f.x - centre.x, f.y - centre.y) <= city.radius + 2);
+        const since = this.elapsed - r.changed;
+        if (r.ruler && citizens.length && since >= CITIZEN_LEAVE / (fighting ? 4 : 1)) {
+          // Taxed (or frightened) out: one citizen leaves for good.
+          this.removeWalker(citizens.pop()![0]);
+          r.changed = this.elapsed;
+          this.sendTo(r.ruler, "notice", `A citizen left your city${fighting ? ": the fighting drove them out" : ""}`);
+        } else if (!r.ruler && citizens.length < CITIZENS && since >= CITIZEN_RETURN) {
+          this.addCitizen(i);
+          r.changed = this.elapsed;
+        }
+        citizens = this.citizensOf(i);
+      }
+      shown.citizens = citizens.length;
+      shown.ruler = r.ruler ? this.walkers.get(r.ruler)?.player.name ?? "" : "";
+      if (r.ruler) {
+        const rate = citizens.length * CITIZEN_S;
+        pay(r.ruler, "s", rate, "CITY", `CITY: ${citizens.length} citizen${citizens.length === 1 ? "" : "s"}: S ${+rate.toFixed(2)}/min`, centre);
+      }
+    });
+    this.territoryIncome = new Map([...income].map(([k, v]) => [k, { lines: v.lines, letters: v.letters }]));
+  }
+
+  /** Makes someone ruler of a city and tells everyone. `how`: "claims" (an empty city's middle) or the word that took it. */
+  private rule(city: number, id: string, how: string) {
+    const r = this.rulers[city], w = this.walkers.get(id);
+    if (!r || !w || r.ruler === id) return;
+    const before = r.ruler ? this.walkers.get(r.ruler)?.player.name : undefined;
+    r.ruler = id;
+    r.changed = this.elapsed;
+    if (this.state.cities[city]) this.state.cities[city]!.ruler = w.player.name;
+    const said = how === "claims" ? `${w.player.name} claims a city: its citizens pay S` : `${how.toUpperCase()}: ${w.player.name} takes ${before ? `${before}'s` : "a"} city`;
+    for (const c of this.clients) c.send("notice", said);
+  }
+
+  /** The city whose ground (with a margin) holds a point, by index, or -1. */
+  private cityAt(p: Point, margin = 3): number {
+    return this.map.cities.findIndex((c) => Math.hypot(c.x + 0.5 - p.x, c.y + 0.5 - p.y) <= c.radius + margin);
   }
 
   /**
@@ -3269,12 +3778,13 @@ export class WorldRoom extends Room {
     // Each person's income, told when it changes (to a tenth of a letter a minute).
     for (const [id, w] of this.walkers) {
       if (w.master !== null) continue;
-      const t = tally.get(id);
+      const t = tally.get(id), land = this.territoryIncome.get(id);
       const letters = t ? [...t.letters].map(([letter, l]) => ({ letter, rate: Math.round(l.rate * 100) / 100, from: l.from.join(", ") })) : [];
+      if (land) letters.push(...land.letters);
       if (t?.aged) letters.push({ letter: "y", rate: Math.round(t.age * 100) / 100, from: `age of ${t.aged} thing${t.aged === 1 ? "" : "s"}` });
       letters.sort((a, b) => b.rate - a.rate);
-      const lines = [...(t?.lines ?? []), ...(t?.aged ? [producingLine(`AGE (${t.aged} thing${t.aged === 1 ? "" : "s"})`, { y: t.age }, null)] : [])];
-      const shown = JSON.stringify([letters.map((l) => [l.letter, Math.round(l.rate * 10), l.from]), lines.map((l) => l.replace(/[\d.]+\/min/g, ""))]);
+      const lines = [...(land?.lines ?? []), ...(t?.lines ?? []), ...(t?.aged ? [producingLine(`AGE (${t.aged} thing${t.aged === 1 ? "" : "s"})`, { y: t.age }, null)] : [])];
+      const shown = JSON.stringify([this.marketInfo(id, w), letters.map((l) => [l.letter, Math.round(l.rate * 10), l.from]), lines.map((l) => l.replace(/[\d.]+\/min/g, ""))]);
       const was = this.income.get(id);
       this.income.set(id, { lines, letters, shown });
       if (was?.shown !== shown) this.toTell.add(id);
@@ -3460,7 +3970,10 @@ export class WorldRoom extends Room {
       if (j) this.sendTo(id, "gathered", j);
     }
     // Once a second, everything that makes letters pays its owner (shared `produce.ts`).
-    for (this.produceClock += seconds; this.produceClock >= 1; this.produceClock--) this.produce(1);
+    for (this.produceClock += seconds; this.produceClock >= 1; this.produceClock--) {
+      if ((this.territoryClock += 1) >= TERRITORY_EVERY) { this.territoryClock = 0; this.territory(TERRITORY_EVERY); }
+      this.produce(1);
+    }
     for (const id of this.lettersChanged) changed.add(id);
     this.lettersChanged.clear();
     for (const id of changed) {

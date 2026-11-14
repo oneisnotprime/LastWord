@@ -43,6 +43,30 @@ export interface LoadoutDetail {
    * carried, worn and ridden.
    */
   income?: { letter: string; rate: number; from: string }[];
+  /**
+   * The market you stand at, for the market panel: letters it asks for one (`ratio`), trades it
+   * has in hand, letters it never sells, why it is closed ("" if open), what hiring a worker costs
+   * in letters, citizens left to hire, and who rules its city ("" for nobody).
+   */
+  market?: { ratio: number; stock: number; refuses: string; closed: string; hire: number; citizens: number; ruler: string };
+  /** Common letters a transmutation into Z takes for you now. */
+  transmute?: number;
+}
+
+/** An offer between two players, as each of them is told it (`offers`). */
+export interface Offer {
+  id: string;
+  from: string;
+  fromId: string;
+  to: string;
+  toId: string;
+  /** What the offerer gives, and what they want back. */
+  give: string;
+  get: string;
+  /** Seconds before it lapses. */
+  left: number;
+  /** True if you made it. */
+  mine: boolean;
 }
 
 /** What a player's senses pick up, sent about once a second while they have any: map positions in tiles. */

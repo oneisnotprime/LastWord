@@ -1,5 +1,5 @@
 import { Client } from "@colyseus/sdk";
-import type { Letters, LoadoutDetail, Sensed } from "@lastword/shared";
+import type { Letters, LoadoutDetail, Offer, Sensed } from "@lastword/shared";
 import { chooseGame } from "./start.js";
 
 export interface Connection {
@@ -27,6 +27,8 @@ export interface Connection {
   pick(what: { id: string } | { x: number; y: number } | null): void;
   /** Leaves the room for good (a new round elsewhere). */
   leave(): void;
+  /** Trading and the like: "market" { give, get }, "hire" {}, "transmute" { give }, "offer" { to, give, get }, "answer" { id, accept }. */
+  act(type: "market" | "hire" | "transmute" | "offer" | "answer", payload: unknown): void;
 }
 
 /** Letters gained and why ("forage", "hunted COW (+12 food)"), and where they came from. */
@@ -61,6 +63,8 @@ export interface Handlers {
   reconnected(): void;
   /** Blows struck where we can see them. */
   hits(list: Hit[]): void;
+  /** Trade offers you have made and been made. */
+  offers(list: Offer[]): void;
 }
 
 /** One blow, as the server tells it (server `Hit`). */
@@ -100,6 +104,7 @@ export async function connect(on: Handlers): Promise<Connection> {
   room.onMessage("watching", on.watching);
   room.onMessage("sensed", on.sensed);
   room.onMessage("hits", on.hits);
+  room.onMessage("offers", on.offers);
   room.onLeave(on.closed);
   room.onDrop(on.dropped);
   room.onReconnect(on.reconnected);
@@ -122,6 +127,7 @@ export async function connect(on: Handlers): Promise<Connection> {
     use: (which) => room.send("use", which),
     attack: (target) => room.send("attack", target),
     pick: (what) => room.send("pick", what),
+    act: (type, payload) => room.send(type, payload),
     leave: () => { room.onLeave.clear?.(); void room.leave(true); },
     describe: (text, target, gear) => room.send("describe", { text, target, ...(gear !== undefined ? { gear } : {}) }),
   };

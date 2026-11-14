@@ -70,9 +70,17 @@ by how many words set them (minds and upkeep took `sentient`, `intelligence`, `f
       claim, a harvest cycle, running down, vowels or a letter used up. Nothing works near a fight;
       the hungry and the unpowered make nothing; crops and flora wear out the soil. Plan words
       added: HOE, PLOUGH, OX, GOAT, HEN, HEDGE, AIDE, KILN, PRESS, WINDMILL, ANVIL, WORKBENCH...
-- [ ] Letter economy part 3: land held (L), roads and routes (R), citizens in cities you control
-      (S), hired NPC labour (N), Z from roaming bosses and transmuting commons; a real trading
-      interface for markets and players
+- [x] Letter economy part 3 (shared `territory.ts`): L per tile of land you alone hold (claims;
+      contested where claims meet; claims tire), R per road tile you laid (LANE, ROAD, HIGHWAY lay
+      a run the way you face; roads wear; map roads in your claim count at half), S per citizen of a
+      city you rule (claim its middle, or CONQUEST, COUP, ELECTION, REVOLUTION; citizens leave a
+      ruled city, faster while fighting goes on there; killing one is a K), N from workers hired at
+      markets (a citizen leaves its city) who work their master's fields, stations and harvests,
+      T per trade (a trade screen on T: market, hiring, transmuting, offers to players with
+      accept, counter and decline; typed shortcuts kept), Z from three roaming bosses (data:
+      wild-hearted creatures of 2,000 to 20,000 integrity) and transmuting ten common letters.
+      Producers make letters while they belong to you, carried too; the HUD lists your income
+- [ ] Letter economy: tune rates from playtests (pacing table in the part 3 pull request)
 - [ ] Replace the live "xxx" shortcut (999 of every letter, `CHEAT` in `WorldRoom.ts`) with a
       real debug server (its own app or a password), then take the shortcut off the live game.
 
@@ -283,8 +291,8 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
 - [x] Spawns: people start at least 60 tiles apart where the map allows, out of cities
 - [x] Bots keep the peace for 60 to 90 s, spell at most once every 5 to 10 s, build producers
       first, use the action sources, and only go for people within twice their sight
-- [ ] Trading is a typed command (give player2 abc); needs a real interface and two-way offers
-      (part of letter economy part 3)
+- [x] Trading is a typed command (give player2 abc); needs a real interface and two-way offers
+      (letter economy part 3: the trade screen, T)
 - [x] M5 (part): equipping, picking up and dropping, attacking players, death and knockout,
       last one alive wins
 - [x] M5: terrain words reshape the map; things on the ground can be attacked and destroyed;

@@ -21,6 +21,8 @@ export const Player = schema(
     count: t.float64(),
     /** For a person: adjectives someone put on their body, space separated: "worst". "" when none. */
     traits: t.string(),
+    /** A roaming boss: slay it for Z. */
+    boss: t.boolean(),
   },
   "Player",
 );
@@ -56,9 +58,13 @@ export const Zone = schema({
 }, "Zone");
 export type Zone = SchemaType<typeof Zone>;
 
+/** A city: where it is, who rules it (name, "" for nobody) and how many citizens it has left. */
+export const City = schema({ x: t.float32(), y: t.float32(), radius: t.float32(), ruler: t.string(), citizens: t.uint8() }, "City");
+export type City = SchemaType<typeof City>;
+
 /** A disc of terrain a word laid down. Everyone gets these, in order, to keep maps in step. */
-/** `soil`: only soil is changed (tilling never turns water, roads, cities or rock to crop land). */
-export const Edit = schema({ x: t.float32(), y: t.float32(), radius: t.float32(), tile: t.uint8(), soil: t.boolean() }, "Edit");
+/** `x2`, `y2`: the far end of a run (a ROAD), 0 for a disc. `soil`: only soil is changed (tilling never turns water, roads, cities or rock to crop land). */
+export const Edit = schema({ x: t.float32(), y: t.float32(), radius: t.float32(), tile: t.uint8(), soil: t.boolean(), x2: t.float32(), y2: t.float32() }, "Edit");
 export type Edit = SchemaType<typeof Edit>;
 
 export const WorldState = schema(
@@ -69,6 +75,7 @@ export const WorldState = schema(
     players: t.map(Player).view(),
     things: t.map(Thing).view(),
     edits: t.array(Edit),
+    cities: t.array(City),
     zones: t.map(Zone),
     /** "day" or "night". */
     daylight: t.string(),

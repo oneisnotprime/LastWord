@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   ACTION_LETTERS, addLetters, CACHE_X, Deposits, DEPOSITS, depositsAt, destroyLetters, generateMap, killLetters, mainland, MAP_SOURCES,
-  LETTER_GUIDE, PATCH_TILES, PENDING_SOURCES, placeSources, production, readTrade, regionOf, resolve, seeded, SPAWN_APART, spawnPoint, Tile, tileAt, tradeProblem, walkable,
+  LETTER_GUIDE, makesLetter, parsePhrase, PATCH_TILES, PENDING_SOURCES, placeSources, production, readTrade, regionOf, resolve, seeded, SPAWN_APART, spawnPoint, Tile, tileAt, tradeProblem, walkable,
 } from "./index.js";
 import { demo } from "./testdata.js";
 
@@ -145,9 +145,9 @@ describe("the alphabet guide", () => {
     expect(Object.keys(LETTER_GUIDE).sort().join("")).toBe("abcdefghijklmnopqrstuvwxyz");
     for (const [letter, how] of Object.entries(LETTER_GUIDE)) {
       expect(how.how.length).toBeLessThanOrEqual(24);
-      for (const w of how.words ?? []) expect(production(resolve(dict, w, [])), `${w} makes ${letter}`).toHaveProperty(letter);
+      for (const w of how.words ?? []) expect(makesLetter(dict, w, letter) || (letter === "s" && parsePhrase(dict, w).stats.flag("takes_city")), `${w} makes ${letter}`).toBe(true);
       // A letter with no word that makes it comes from something you do.
-      if (!how.words) expect(ACTION_LETTERS + "fv" + PENDING_SOURCES).toContain(letter);
+      if (!how.words) expect(ACTION_LETTERS + "fvz" + PENDING_SOURCES).toContain(letter);
       if (how.later) expect(PENDING_SOURCES).toContain(letter);
     }
   });
