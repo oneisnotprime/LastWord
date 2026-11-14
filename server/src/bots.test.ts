@@ -51,15 +51,20 @@ it("bots join with the first client's options, count as people, gather, spell an
 });
 
 it("a bot attacks a player who comes near", async () => {
+  WorldRoom.testSeed = 18;
   const room = (await colyseus.createRoom("world", { bots: 1, difficulty: "normal" })) as unknown as WorldRoom;
   const a = await join(room);
   const botId = bots(room)[0]![0];
   const bot = walkers(room).get(botId), me = walkers(room).get(a.sessionId);
-  for (let i = 0; i < 10; i++) room.update(0.1); // it spells its first weapon
+  // Only a SWORD's letters: with a random hand it may also spell a creature (a GOD) that kills
+  // the player first, which ends the round and leaves the bot no foe.
+  bot.letters = { s: 1, w: 1, o: 1, r: 1, d: 1 };
+  for (let i = 0; i < 10; i++) room.update(0.1); // it spells its weapon
   expect(bot.unit.weapon).toBeTruthy();
   me.player.x = bot.player.x + 1; me.player.y = bot.player.y;
   me.hp = 1e6; room.rebuild(me);
   for (let i = 0; i < 30; i++) room.update(0.1);
+  expect(room.state.phase).toBe("playing");
   expect(bot.foe).toBe(a.sessionId);
   expect(me.hp).toBeLessThan(1e6);
 });
