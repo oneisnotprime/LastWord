@@ -1,6 +1,7 @@
 import { effectText, heldText, tipOfTheMoment, inspectText, LETTER_GUIDE, missing, parsePhrase, readTrade, type Card, type Dictionary, type Letters, type LoadoutDetail, type Offer } from "@lastword/shared";
 import { BADGE } from "./art/paper.js";
 import { ideasHtml, setTipsOn, tipRng, tipsOn } from "./tips.js";
+import { keyGlyph, only, pad, padGlyph } from "./pad.js";
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 
@@ -109,8 +110,15 @@ export class Hud {
   /** Knocked out, and whom you are watching. */
   private out: string | null = null;
 
+  /** On a controller: the letter box the field picker types into (an offer's letters), by id. */
+  private field: string | null = null;
+  /** The controller is on the offer cards at the right. */
+  private onOffers = false;
+  /** The inspect card was opened by the controller's focus on a screen item. */
+  private focusCard = false;
+
   constructor(
-    onSpell: (text: string, target: Aimed | null) => void,
+    private readonly onSpell: (text: string, target: Aimed | null) => void,
     private readonly dict: Dictionary,
     private readonly onDrop: (index: number) => void,
     /** Use something carried (its index) or on the ground (its thing id). */
@@ -121,6 +129,7 @@ export class Hud {
     private readonly onAgain: () => void = () => {},
   ) {
     $("abc").innerHTML = alphabet();
+    $("padmap").innerHTML = PAD_MAP.map(([what, how]) => `<dt>${what}</dt><dd>${how}</dd>`).join("");
     // The knocked out card's button (pointer events are off on the rest of the HUD).
     $("status").addEventListener("click", (e) => {
       if ((e.target as HTMLElement).closest("button.again")) this.onAgain();
@@ -173,9 +182,7 @@ export class Hud {
       e.stopPropagation(); // no hotkey, movement or screen sees a key typed here
       if (e.key === "Enter") {
         e.preventDefault();
-        const text = this.input.value, target = this.target;
-        this.closeSpell();
-        if (text.trim()) onSpell(text, target);
+        this.cast();
       } else if (e.key === "Escape") {
         e.preventDefault();
         this.closeSpell();
@@ -194,6 +201,148 @@ export class Hud {
     // A click outside the card keeps the window open and the cursor in it.
     this.win.addEventListener("mousedown", (e) => { if (e.target !== this.input) { e.preventDefault(); this.input.focus(); } });
     this.input.addEventListener("blur", () => { if (this.typing) setTimeout(() => this.typing && this.input.focus(), 0); });
+    $("picker").addEventListener("click", (e) => {
+      const tile = (e.target as HTMLElement).closest<HTMLElement>("[data-pick]");
+      if (tile) this.pick(tile.dataset.pick!);
+    });
+    $("pickhint").innerHTML = `${padGlyph("a")}add ${padGlyph("b")}delete ${padGlyph("x")}clear ${padGlyph("rb")}space ${padGlyph("y")}cast`;
+    this.padScopes();
+  }
+
+  /**
+   * The screens a controller moves around in: the letter picker in the spell window, the field
+   * picker for an offer's letters, the inventory, loadout and trade screens, the offer cards.
+   */
+  private padScopes() {
+    pad.add({
+      rank: 10, el: () => (this.win.classList.contains("show") ? $("picker") : null),
+      press: (b, f) => {
+        if (b === "a") { if (f?.dataset.pick !== undefined) this.pick(f.dataset.pick); }
+        else if (b === "b") { if (this.input.value) this.pick("back"); else this.closeSpell(); }
+        else if (b === "x") this.pick("clear");
+        else if (b === "rb") this.pick(" ");
+        else if (b === "lb") this.pick("back");
+        else if (b === "y" || b === "start") this.cast();
+        else return false;
+        return true;
+      },
+    });
+    pad.add({
+      rank: 15, el: () => (this.field ? $("fieldpick") : null),
+      press: (b, f) => {
+        const box = this.field ? document.getElementById(this.field) as HTMLInputElement | null : null;
+        if (!box) { this.closeField(); return true; }
+        if (b === "a" && f?.dataset.pick) box.value += f.dataset.pick.toUpperCase();
+        else if (b === "b") { if (box.value) box.value = box.value.slice(0, -1); else this.closeField(); }
+        else if (b === "x") box.value = "";
+        else if (b === "y" || b === "start") this.closeField();
+        else return false;
+        this.drawField();
+        return true;
+      },
+    });
+    pad.add({
+      rank: 30, el: () => (this.open ? $("panel") : null),
+      press: (b, f) => {
+        // An offer's letter box: pick letters for it.
+        if (b === "a" && f instanceof HTMLInputElement && f.type !== "checkbox") { this.openField(f); return true; }
+        // A on an item: its card is already up beside it.
+        if (b === "a" && f?.dataset.inspect !== undefined) return true;
+        return false;
+      },
+      focus: (el) => this.focusDetails(el),
+    });
+    pad.add({
+      rank: 60, el: () => (this.onOffers && this.offerList.length ? $("offers") : null),
+      press: (b) => { if (b === "b") { this.onOffers = false; return true; } return false; },
+    });
+  }
+
+  /** Controller: moves onto the offer cards at the right (B leaves them). False if there are none. */
+  focusOffers(): boolean {
+    this.onOffers = this.offerList.length > 0;
+    return this.onOffers;
+  }
+
+  /**
+   * Controller focus on a screen item shows its card (shared `inspectText`, as a click does), on
+   * the side of the screen away from the item; on anything else the card goes.
+   */
+  private focusDetails(el: HTMLElement | null) {
+    const phrase = el?.dataset.inspect ?? el?.dataset.word;
+    if (!el || !phrase) {
+      if (this.focusCard) { this.focusCard = false; this.closeInspect(); }
+      return;
+    }
+    const r = el.getBoundingClientRect(), p = $("panel").getBoundingClientRect();
+    const left = r.left + r.width / 2 < p.left + p.width / 2;
+    const x = left ? p.left + p.width / 2 + 10 : p.left + 20;
+    this.inspectWord(phrase, x - 14, r.top + 10, !!el.dataset.effect);
+    this.focusCard = true;
+  }
+
+  /** Casts what is in the spell window (Enter, or Y on a controller). */
+  private cast() {
+    const text = this.input.value, target = this.target;
+    this.closeSpell();
+    if (text.trim()) this.onSpell(text, target);
+  }
+
+  /**
+   * The letter picker (controller): adds a letter you hold to the spelling, a space, or takes
+   * one back (`back`) or all (`clear`). A letter you do not hold is refused as typing it is.
+   */
+  private pick(what: string) {
+    const v = this.input.value;
+    if (what === "back") this.input.value = v.slice(0, -1);
+    else if (what === "clear") this.input.value = "";
+    else if (what === " ") { if (v && !v.endsWith(" ")) this.input.value = v + " "; }
+    else this.input.value = v + what;
+    this.input.setSelectionRange(this.input.value.length, this.input.value.length);
+    this.typed();
+  }
+
+  /**
+   * The picker's tiles: each letter you hold, with how many are left after the spelling so far
+   * (spent ones stay, greyed, so the grid does not jump), and a space.
+   */
+  private drawPicker() {
+    const need: Letters = {};
+    for (const ch of this.typing ? this.spends(this.input.value) : "") need[ch] = (need[ch] ?? 0) + 1;
+    const letters = Object.keys(this.held).filter((c) => this.held[c]! > 0).sort();
+    $("picker").innerHTML = letters.map((ch) => {
+      const left = this.held[ch]! - (need[ch] ?? 0);
+      return `<div class="tile${left <= 0 ? " spent" : ""}" data-pick="${ch}">${ch.toUpperCase()}<small>${left}</small></div>`;
+    }).join("") + `<div class="tile space" data-pick=" ">␣<small>space</small></div>`;
+  }
+
+  /** Controller: picks letters for an offer's box (yours for what you give, any for what you ask). */
+  private openField(box: HTMLInputElement) {
+    this.field = box.id;
+    this.drawField();
+  }
+
+  private closeField() {
+    this.field = null;
+    $("fieldpick").className = "";
+  }
+
+  private drawField() {
+    const box = this.field ? document.getElementById(this.field) as HTMLInputElement | null : null;
+    const el = $("fieldpick");
+    if (!box) return this.closeField();
+    const mine = box.id === "offer-give";
+    const typed: Letters = {};
+    for (const ch of box.value.toLowerCase()) typed[ch] = (typed[ch] ?? 0) + 1;
+    const letters = mine ? Object.keys(this.held).filter((c) => this.held[c]! > 0).sort() : [..."abcdefghijklmnopqrstuvwxyz"];
+    el.innerHTML = `<div class="head">${mine ? "You give" : "You ask for"} <b>${esc(box.value.toUpperCase()) || "…"}</b></div><div class="grid">${letters.map((ch) => {
+      const left = mine ? this.held[ch]! - (typed[ch] ?? 0) : 0;
+      return `<div class="tile${mine && left <= 0 ? " spent" : ""}" data-pick="${mine && left <= 0 ? "" : ch}">${ch.toUpperCase()}${mine ? `<small>${left}</small>` : ""}</div>`;
+    }).join("")}</div><div class="hint">${padGlyph("a")}add ${padGlyph("b")}delete ${padGlyph("x")}clear ${padGlyph("y")}done</div>`;
+    const r = box.getBoundingClientRect();
+    el.className = "show";
+    el.style.left = `${Math.max(8, Math.min(innerWidth - el.offsetWidth - 8, r.left))}px`;
+    el.style.top = `${Math.max(8, Math.min(innerHeight - el.offsetHeight - 8, r.bottom + 6))}px`;
   }
 
   /** True while the Esc menu is up. */
@@ -340,8 +489,9 @@ export class Hud {
     const el = $("inspect");
     this.inspected = target;
     const person = !this.locked && this.people().some((p) => p.id === target.id);
-    el.innerHTML = cardHtml(card, extra) + (this.locked ? "" : `<button data-adjective>Add adjective</button>`) +
-      (person ? `<button data-trade-with="${esc(target.id)}">Offer trade</button>` : "") + `<button data-close>Close</button>`;
+    el.innerHTML = cardHtml(card, extra) + (this.locked ? "" : `<button data-adjective>${padGlyph("a")}Add adjective</button>`) +
+      (person ? `<button data-trade-with="${esc(target.id)}">${padGlyph("x")}Offer trade</button>` : "") +
+      `<button data-close>${padGlyph("b")}Close</button><div class="ponly hint">${padGlyph("lb")}${padGlyph("rb")} next target · right stick moves the cursor</div>`;
     el.className = "show";
     const w = el.offsetWidth, h = el.offsetHeight;
     el.style.left = `${Math.max(8, Math.min(window.innerWidth - w - 8, x + 14))}px`;
@@ -365,8 +515,14 @@ export class Hud {
     el.style.top = `${Math.max(8, Math.min(window.innerHeight - h - 8, y - 10))}px`;
   }
 
+  /** True while the inspect card is up. */
+  get inspectOpen(): boolean {
+    return $("inspect").classList.contains("show");
+  }
+
   closeInspect() {
     this.inspected = null;
+    this.focusCard = false;
     $("inspect").className = "";
   }
 
@@ -399,7 +555,8 @@ export class Hud {
     banner.className = cursor.className = words ? "show" : "";
     if (words) {
       const W = esc(words.toUpperCase());
-      banner.innerHTML = `${W} <small>${how === "anywhere" ? "click where" : "click a target"}${how === "describe" ? " · L: your gear" : ""} · Esc cancels</small>`;
+      banner.innerHTML = `${W} <small>${only(how === "anywhere" ? "click where" : "click a target",
+        `${padGlyph("a")}${how === "anywhere" ? "here" : "on target"} · ${padGlyph("lb")}${padGlyph("rb")} next · right stick moves`)}${how === "describe" ? ` · ${keyGlyph("L")} your gear` : ""} · ${keyGlyph("Esc")} cancels</small>`;
       cursor.textContent = words.toUpperCase();
     }
     this.drawPanel();
@@ -450,7 +607,7 @@ export class Hud {
       const rows: [string, string][] = [
         ["Hands", list(["held"])],
         ["Wears", list(["head", "face", "neck", "body", "back", "hands", "feet", "finger", "graft"])],
-        ["Rides", rides.length ? `${list(["ride"])} <small>R: off</small>` : ""],
+        ["Rides", rides.length ? `${list(["ride"])} <small>${keyGlyph("R")} off</small>` : ""],
         ["Creatures", creatures],
       ];
       const shown = rows.filter(([, text]) => text).map(([label, text]) => `<span>${label}</span><b>${text}</b>`).join("");
@@ -573,7 +730,7 @@ export class Hud {
   /** The trade screen (T): the market you stand at, transmuting into Z, and offers to people close by. */
   private trade(): string {
     const d = this.detail, m = d?.market;
-    const parts = [`<h2>TRADE</h2><div class="hint">T or Esc to close · a trade completed pays a T</div>`];
+    const parts = [`<h2>TRADE</h2><div class="hint">${keyGlyph("T")} or ${keyGlyph("Esc")} to close · a trade completed pays a T${only("", ` · ${padGlyph("a")} on a letter box picks its letters`)}</div>`];
     if (m) {
       const letters = [..."abcdefghijklmnopqrstuvwxyz"].filter((c) => !m.refuses.includes(c));
       const pay = this.want ? this.payFor(this.want) : "";
@@ -597,6 +754,8 @@ export class Hud {
 
   private show(which: "inventory" | "loadout" | "trade" | null) {
     this.open = which;
+    this.onOffers = false;
+    if (!which) this.closeField();
     $("panel").className = which ? "show" : "";
     this.drawPanel();
   }
@@ -632,7 +791,7 @@ export class Hud {
       words.filter((w) => w.role === role).slice(0, 80).map((w) => `<button data-word="${w.word}">${w.word}</button>`).join("") ||
       `<span class="hint">Nothing yet</span>`;
     return `
-      <h2>INVENTORY</h2><div class="hint">I or Esc to close · click a word to open it in the spell window · U uses the last thing you can eat, drink or take</div>
+      <h2>INVENTORY</h2><div class="hint">${keyGlyph("I")} or ${keyGlyph("Esc")} to close · ${only("click", padGlyph("a"))} a word to open it in the spell window · ${keyGlyph("U")} uses the last thing you can eat, drink or take</div>
       <h3>Letters held (${total})</h3>
       <div class="bag">${letters.map(([ch, n]) => `<div class="tile">${ch.toUpperCase()}<small>${n}</small></div>`).join("") || `<span class="hint">None</span>`}</div>
       <div class="cols">
@@ -658,7 +817,7 @@ export class Hud {
     const damage = Object.entries(d.attack.damage).map(([type, n]) => `${n} ${type}`).join(", ") || "none";
     const stat = (name: string, value: string) => `<div class="stat"><span>${name}</span><b>${value}</b></div>`;
     return `
-      <h2>LOADOUT</h2><div class="hint">L or Esc to close · damage lands on what you ride, then armor and shield, then you${this.aiming ? ` · click "${esc(this.aiming.toUpperCase())} here" to put it on your own gear` : ""}</div>
+      <h2>LOADOUT</h2><div class="hint">${keyGlyph("L")} or ${keyGlyph("Esc")} to close · damage lands on what you ride, then armor and shield, then you${this.aiming ? ` · click "${esc(this.aiming.toUpperCase())} here" to put it on your own gear` : ""}</div>
       <div class="cols">
         <div><h3>Worn, held and ridden</h3>${rows.join("")}
           <h3>Within reach</h3>${nearby(d)}</div>
@@ -699,7 +858,7 @@ export class Hud {
   /** What you can do where you stand, over the letters ("G: dig the cache"), or nothing. */
   prompt(key: string, text: string) {
     const el = $("prompt");
-    const html = text ? `<kbd>${esc(key)}</kbd>${esc(text)}` : "";
+    const html = text ? `${keyGlyph(esc(key))}${esc(text)}` : "";
     if (el.innerHTML !== html) el.innerHTML = html;
   }
 
@@ -740,10 +899,29 @@ export class Hud {
       else for (let i = 0; i < n; i++) tile(ch, i < used ? "used" : "");
     }
     $("letters").replaceChildren(...tiles);
+    this.drawPicker();
     // The alphabet guide lights the letters you hold.
     for (const el of $("abc").children) el.classList.toggle("have", (this.held[(el as HTMLElement).dataset.letter!] ?? 0) > 0);
   }
 }
+
+/** The controls on a controller, for the Esc menu. */
+const PAD_MAP: [string, string][] = [
+  ["Move", "left stick"],
+  ["Cursor", "right stick: a cursor that snaps to what is near it"],
+  ["Attack", `${padGlyph("rt")} what the cursor is on, else the nearest foe`],
+  ["Inspect", `${padGlyph("lt")} the nearest (or what the cursor is on) · ${padGlyph("lb")}${padGlyph("rb")} next · ${padGlyph("a")} add adjective`],
+  ["Spell", `${padGlyph("y")} letter picker: ${padGlyph("a")} add · ${padGlyph("b")} delete · ${padGlyph("x")} clear · ${padGlyph("rb")} space · ${padGlyph("y")} cast`],
+  ["Aim", `adjectives alone and events: ${padGlyph("lb")}${padGlyph("rb")} or right stick to choose, ${padGlyph("a")} cast, ${padGlyph("b")} put away`],
+  ["Gather", padGlyph("a")],
+  ["Pick up / get on", padGlyph("x")],
+  ["Get off", padGlyph("b")],
+  ["Drop", padGlyph("lb")],
+  ["Use", padGlyph("rb")],
+  ["Screens", `${padGlyph("up")} loadout · ${padGlyph("down")} inventory · ${padGlyph("right")} trade · ${padGlyph("left")} offers · ${padGlyph("back")} inventory`],
+  ["On a screen", `D-pad or left stick to move · ${padGlyph("a")} choose · ${padGlyph("b")} back · an item shows its card`],
+  ["Menu", padGlyph("start")],
+];
 
 /** A letter held more often than this shows as one tile with a count. */
 const COPIES_SHOWN = 4;

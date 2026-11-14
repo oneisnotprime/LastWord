@@ -13,6 +13,7 @@ import { dictionary } from "./data.js";
 import { Events } from "./events.js";
 import { Hud, type Aimed } from "./hud.js";
 import { Minimap } from "./minimap.js";
+import { pad, type Pad } from "./pad.js";
 import { connect, type Connection, type Described, type Got, type Hit } from "./net.js";
 import { Threats } from "./threats.js";
 import { Painter, PX, useMade, useStandee, ZOOM } from "./paint.js";
@@ -132,6 +133,15 @@ class World extends Phaser.Scene {
   private sightTiles = 15;
   private fog!: Phaser.GameObjects.Image;
   private lastPrompt = 0;
+  /**
+   * Controller: a cursor on the map (tiles) moved by the right stick or snapped to a target, the
+   * target it is on, when the stick last moved it, and whether LT's inspect card is up.
+   */
+  private cursor: { x: number; y: number } | null = null;
+  private cursorOn: string | null = null;
+  private cursorMoved = 0;
+  private padInspect = false;
+  private reticle!: Phaser.GameObjects.Graphics;
   /** Blows shown so far, for browser checks. */
   hitCount = 0;
 
@@ -253,6 +263,8 @@ class World extends Phaser.Scene {
     this.gatherRing = this.add.graphics().setDepth(11000);
     this.tracerGfx = this.add.graphics().setDepth(11001);
     this.fog = this.makeFog();
+    this.reticle = this.add.graphics().setDepth(11600);
+    pad.world = (p, dt) => this.padFrame(p, dt);
     // enableCapture false: the keys must still reach the spelling box.
     this.keys = this.input.keyboard!.addKeys(
       { up: "UP", down: "DOWN", left: "LEFT", right: "RIGHT", w: "W", a: "A", s: "S", d: "D" }, false,
@@ -314,7 +326,7 @@ class World extends Phaser.Scene {
     const forget = () => { this.input.keyboard?.resetKeys(); if (this.steering) { this.net.stop(); this.steering = false; } };
     window.addEventListener("blur", forget);
     document.addEventListener("visibilitychange", () => { if (document.hidden) forget(); });
-    (window as any).__lw = { net: this.net, map: this.map, dictionary, scene: this, PX, game: this.game, chunkMs: this.chunkMs }; // for browser checks
+    (window as any).__lw = { net: this.net, map: this.map, dictionary, scene: this, PX, game: this.game, chunkMs: this.chunkMs, pad }; // for browser checks
   }
 
   /** The player, creature or thing under a map point, by id; `self` counts you too. */
@@ -337,6 +349,12 @@ class World extends Phaser.Scene {
     this.hud.aim(words, how);
     const p = this.input.activePointer;
     this.hud.pointer(p.x / DPR, p.y / DPR);
+    // On a controller the cursor starts on the nearest thing the spelling can go on.
+    if (pad.mode === "pad") {
+      const first = this.targets(how === "describe" ? "describe" : how === "someone" ? "someone" : "any")[0];
+      const me = this.net.state.players.get(this.net.sessionId);
+      this.snap(first?.id ?? null, first ?? (me ? { x: me.x, y: me.y } : null));
+    }
   }
 
   private endAim(cancelled = false) {
@@ -516,6 +534,14 @@ class World extends Phaser.Scene {
       t.fillStyle(0xd9573b, 0.95).fillTriangle(v.x - 5, y - 6, v.x + 5, y - 6, v.x, y + 2);
       t.lineStyle(1.5, 0xd9573b, 0.5 + Math.sin(time / 90) * 0.3).strokeCircle(v.x, v.y - v.top * 0.25, Math.max(10, v.half + 6));
     }
+    // The controller's cursor: a ring with a cross, gold on a target.
+    const rg = this.reticle.clear();
+    if (pad.mode === "pad" && this.cursor && me) {
+      const cx = this.cursor.x * PX, cy = this.cursor.y * PX, on = !!this.cursorOn, R = on ? 11 : 8;
+      rg.lineStyle(3.5, 0xfbf6ea, 0.9).strokeCircle(cx, cy, R);
+      rg.lineStyle(2, on ? 0xe9b949 : 0x2f8aa8, 1).strokeCircle(cx, cy, R);
+      for (const [ax, ay] of [[1, 0], [-1, 0], [0, 1], [0, -1]] as const) rg.lineBetween(cx + ax * (R - 3), cy + ay * (R - 3), cx + ax * (R + 5), cy + ay * (R + 5));
+    }
     this.fx.frame(performance.now());
     if (me && time - this.lastPrompt > 200) { this.lastPrompt = time; this.promptAt(me); }
     else if (!me) this.hud.prompt("", "");
@@ -580,6 +606,11 @@ class World extends Phaser.Scene {
       if (zone) this.chips.show(zone);
       return;
     }
+    this.inspectId(id, p.x / DPR, p.y / DPR);
+  }
+
+  /** The inspect card for a player, creature or thing, by id, beside a point on screen. */
+  private inspectId(id: string, sx: number, sy: number) {
     const state = this.net.state, mine = this.net.sessionId;
     const nameOf = (owner: string) => (owner === mine ? "you" : String(state.players.get(owner)?.name ?? "someone"));
     const read = (phrase: string, count: number): Card => {
@@ -619,7 +650,140 @@ class World extends Phaser.Scene {
       card.does = who.gear ? [`carries ${String(who.gear).toUpperCase()}`] : ["carries nothing"];
       extra = [`health ${Math.round(who.hp)}%`];
     }
-    this.hud.inspect(card, extra, { id, name } satisfies Aimed, p.x / DPR, p.y / DPR);
+    this.hud.inspect(card, extra, { id, name } satisfies Aimed, sx, sy);
+  }
+
+  // -------------------------------------------------------------------------------------------
+  // Controller (pad.ts calls `padFrame` each frame no screen is open)
+
+  /** A map point (tiles) on screen, in CSS pixels. */
+  private toScreen(x: number, y: number) {
+    const cam = this.cameras.main;
+    return { x: ((x * PX - cam.worldView.x) * cam.zoom) / DPR, y: ((y * PX - cam.worldView.y) * cam.zoom) / DPR };
+  }
+
+  /**
+   * What the controller can point at, nearest you first, within sight: `describe` anything
+   * including you; `someone` anyone or anything but you; `foe` what a click would attack (other
+   * people, creatures not yours, things someone else owns); `any` everything, you last.
+   */
+  private targets(kind: "any" | "describe" | "someone" | "foe"): { id: string; x: number; y: number; d: number }[] {
+    const state = this.net.state, mine = this.net.sessionId, me = state.players.get(mine);
+    if (!me) return [];
+    const out: { id: string; x: number; y: number; d: number }[] = [];
+    const reach = this.sightTiles + 1;
+    state.things.forEach((t: any, id: string) => {
+      if (kind === "foe" && (!t.owner || t.owner === mine || dictionary.word(lookOf(dictionary, t.phrase).noun)?.set.tile_type)) return;
+      const d = Math.hypot(t.x - me.x, t.y - me.y);
+      if (d <= reach) out.push({ id, x: t.x, y: t.y, d });
+    });
+    state.players.forEach((o: any, id: string) => {
+      if (id === mine) { if (kind === "describe" || kind === "any") out.push({ id, x: o.x, y: o.y, d: kind === "any" ? 1e6 : 0.5 }); return; }
+      if (kind === "foe" && o.owner === mine) return;
+      const d = Math.hypot(o.x - me.x, o.y - me.y);
+      if (d <= reach) out.push({ id, x: o.x, y: o.y, d });
+    });
+    return out.sort((a, b) => a.d - b.d);
+  }
+
+  /** Puts the controller's cursor on a target (or a spot, with no target). */
+  private snap(id: string | null, at: { x: number; y: number } | null) {
+    this.cursorOn = id;
+    this.cursor = at ? { x: at.x, y: at.y } : null;
+    this.cursorMoved = performance.now();
+  }
+
+  /** The next target after the cursor's (LB back, RB on), in nearest-first order. */
+  private cycle(list: { id: string; x: number; y: number }[], by: number) {
+    if (!list.length) return null;
+    const i = list.findIndex((t) => t.id === this.cursorOn);
+    return list[(((i < 0 ? (by > 0 ? -1 : 0) : i) + by) % list.length + list.length) % list.length]!;
+  }
+
+  /**
+   * One controller frame with no screen open. Left stick walks (in `update`). The right stick
+   * moves a cursor that snaps to whatever is nearest it. Then by state:
+   * - aiming (adjectives or an event): LB/RB next target, A casts on it (or at the spot), B puts
+   *   it away, D-pad up opens your gear;
+   * - inspecting (LT): LB/RB or the stick change what the card is about, A adds an adjective,
+   *   X offers a trade, B or LT closes;
+   * - otherwise the buttons press the keys they stand for (A gather, X take, B get off, LB drop,
+   *   RB use, Y spell, Start menu, D-pad screens), RT attacks and LT inspects.
+   */
+  private padFrame(p: Pad, dt: number) {
+    if (!this.net || !this.map) return;
+    const state = this.net.state, me = state.players.get(this.net.sessionId), now = performance.now();
+    if (p.pressed("start")) p.key("Escape");
+    if (p.pressed("up")) p.key("l");
+    if (p.pressed("down") || p.pressed("back")) p.key("i");
+    if (p.pressed("right")) p.key("t");
+    if (p.pressed("left") && !this.hud.focusOffers()) this.hud.toast("No offers", "bad");
+    if (!me) return;
+    const kind = this.aiming ? (this.aimHow === "describe" ? "describe" : this.aimHow === "someone" ? "someone" : "any") : this.padInspect ? "any" : "foe";
+    // The right stick: move the cursor from where it is (or from you), snapping to what is near.
+    const rs = p.stick(1);
+    if (rs.m > 0) {
+      const from = this.cursor ?? { x: me.x, y: me.y }, speed = 9 * dt;
+      let x = from.x + rs.x * speed, y = from.y + rs.y * speed;
+      const off = Math.hypot(x - me.x, y - me.y), max = this.sightTiles;
+      if (off > max) { x = me.x + ((x - me.x) / off) * max; y = me.y + ((y - me.y) / off) * max; }
+      let near: string | null = null, best = 1.1;
+      for (const t of this.targets(this.padInspect ? "any" : kind === "foe" ? "any" : kind)) {
+        const d = Math.hypot(t.x - x, t.y - y);
+        if (d < best) { best = d; near = t.id; }
+      }
+      this.cursor = { x, y };
+      this.cursorOn = near;
+      this.cursorMoved = now;
+      if (this.padInspect && near && near !== this.hud.inspecting) this.padInspectAt(near);
+    } else if (this.cursorOn) {
+      // On a target: follow it.
+      const t = state.players.get(this.cursorOn) ?? state.things.get(this.cursorOn);
+      if (t) this.cursor = { x: t.x, y: t.y }; else this.cursorOn = null;
+    }
+    if (this.aiming) {
+      if (p.pressed("lb") || p.pressed("rb")) { const t = this.cycle(this.targets(kind), p.pressed("rb") ? 1 : -1); if (t) this.snap(t.id, t); }
+      if (this.cursor) { const s = this.toScreen(this.cursor.x, this.cursor.y); this.hud.pointer(s.x, s.y); }
+      if (p.pressed("a") && this.cursor) {
+        const target = this.cursorOn && (this.aimHow !== "someone" || this.cursorOn !== this.net.sessionId) ? this.cursorOn : null;
+        if (!target && this.aimHow === "describe") return this.hud.toast("Move the cursor onto a thing, a creature, a person or you", "bad");
+        if (!target && this.aimHow === "someone") return this.hud.toast("Move the cursor onto a person, a creature or a thing", "bad");
+        this.release(this.aiming, this.aimHow, target ?? { ...this.cursor });
+        this.cursor = null; this.cursorOn = null;
+      } else if (p.pressed("b")) { this.endAim(true); this.cursor = null; this.cursorOn = null; }
+      return;
+    }
+    if (this.padInspect) {
+      if (!this.hud.inspectOpen) { this.padInspect = false; return; }
+      if (p.pressed("lb") || p.pressed("rb")) { const t = this.cycle(this.targets("any"), p.pressed("rb") ? 1 : -1); if (t) { this.snap(t.id, t); this.padInspectAt(t.id); } }
+      if (p.pressed("a")) { const b = document.querySelector<HTMLElement>("#inspect [data-adjective]"); if (b) p.click(b); this.padInspect = false; }
+      else if (p.pressed("x")) { const b = document.querySelector<HTMLElement>("#inspect [data-trade-with]"); if (b) { p.click(b); this.padInspect = false; } }
+      else if (p.pressed("b") || p.pressed("lt")) { this.hud.closeInspect(); this.padInspect = false; this.cursor = null; this.cursorOn = null; }
+      return;
+    }
+    // The cursor fades a while after the stick lets go.
+    if (this.cursor && now - this.cursorMoved > 3000) { this.cursor = null; this.cursorOn = null; }
+    if (p.pressed("lt")) {
+      const list = this.targets("any");
+      const t = (this.cursorOn && list.find((x) => x.id === this.cursorOn)) || list[0];
+      if (t) { this.snap(t.id, t); this.padInspect = true; this.padInspectAt(t.id); }
+    }
+    if (p.pressed("rt")) {
+      const foes = this.targets("foe");
+      const t = (this.cursorOn && foes.find((x) => x.id === this.cursorOn)) || foes[0];
+      if (t) { this.claiming = null; this.foe = t.id; this.net.attack(t.id); this.snap(t.id, t); }
+      else { this.foe = null; this.net.attack(null); this.hud.toast("Nothing to attack in sight", "bad"); }
+    }
+    const keys: [Parameters<Pad["pressed"]>[0], string][] = [["a", "g"], ["x", "e"], ["b", "r"], ["lb", "q"], ["rb", "u"], ["y", "Enter"]];
+    for (const [b, k] of keys) if (p.pressed(b)) p.key(k);
+  }
+
+  /** LT's inspect card for a target, beside it on screen. */
+  private padInspectAt(id: string) {
+    const t = this.net.state.players.get(id) ?? this.net.state.things.get(id);
+    if (!t) return;
+    const s = this.toScreen(t.x, t.y);
+    this.inspectId(id, s.x + 20, s.y - 40);
   }
 
   // -------------------------------------------------------------------------------------------
@@ -947,8 +1111,10 @@ class World extends Phaser.Scene {
     const keys = this.keys, typing = this.hud.typing;
     // Opening or closing the spell window (or any key it swallowed) must not leave an arrow held down.
     if (typing !== this.wasTyping) { this.input.keyboard?.resetKeys(); this.wasTyping = typing; }
-    const dx = typing ? 0 : Number(keys.right.isDown || keys.d.isDown) - Number(keys.left.isDown || keys.a.isDown);
-    const dy = typing ? 0 : Number(keys.down.isDown || keys.s.isDown) - Number(keys.up.isDown || keys.w.isDown);
+    let dx = typing ? 0 : Number(keys.right.isDown || keys.d.isDown) - Number(keys.left.isDown || keys.a.isDown);
+    let dy = typing ? 0 : Number(keys.down.isDown || keys.s.isDown) - Number(keys.up.isDown || keys.w.isDown);
+    // The left stick walks the same way, in any direction.
+    if (!dx && !dy && !typing && (pad.walk.x || pad.walk.y)) { const m = Math.hypot(pad.walk.x, pad.walk.y); dx = pad.walk.x / m; dy = pad.walk.y / m; }
     if (dx || dy) {
       if (time - this.lastSteer > 100) { this.net.move(me.x + dx * 3, me.y + dy * 3); this.lastSteer = time; }
       this.gathering = null;
@@ -971,10 +1137,11 @@ class World extends Phaser.Scene {
       `${others} other${others === 1 ? "" : "s"} in sight${state.daylight === "night" ? " · night" : ""}${state.weather ? ` · ${state.weather}` : ""}`,
     );
     // While aiming, ring whatever the pointer is over.
-    if (this.aiming) {
+    if (pad.mode === "pad") this.hover = this.cursor ? this.cursorOn : null;
+    else if (this.aiming) {
       const p = this.input.activePointer, at = this.cameras.main.getWorldPoint(p.x, p.y);
       this.hover = this.hitAt(at.x / PX, at.y / PX, this.aimHow === "describe");
-    }
+    } else this.hover = null;
     this.chips.update(Events.at(state, me.x, me.y), state.clock ?? 0);
     this.minimap.draw(this.map, me, this.editsApplied, time);
   }
