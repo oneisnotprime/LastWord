@@ -170,6 +170,47 @@
       .tile.used small { color: #7a5a20; }
       .tile.short { background: #e88a80; color: #5a1a14; }
       .tile.short small { color: #7a2a24; }
+      /* Effects over the game (fx.ts): letter popups, damage numbers, the red edge when you are hit. */
+      #fx { position: fixed; inset: 0; pointer-events: none; z-index: 5; overflow: hidden; }
+      #fx .pop { position: absolute; display: flex; flex-direction: column; align-items: center; transform: translate(-50%, -50%); will-change: transform; }
+      #fx .pop .big { min-width: 58px; height: 74px; padding: 0 8px; box-sizing: border-box; display: flex; align-items: center; justify-content: center;
+        font: 700 46px/1 var(--round); color: #4a3510; background: var(--gold); border-radius: 5px;
+        box-shadow: 0 0 0 4px #fffdf6, 0 4px 0 4px #b8902a, 0 14px 24px rgba(40, 28, 16, .55); }
+      #fx .pop .why { margin-top: 12px; padding: 3px 12px 4px; white-space: nowrap; font: 700 17px var(--hand); letter-spacing: 1px; color: #4a3f33; background: var(--paper);
+        border-radius: 2px; box-shadow: var(--shadow); transform: rotate(-2deg); }
+      #fx .spark { position: absolute; width: 9px; height: 6px; border-radius: 1px; box-shadow: 0 1px 1px rgba(0, 0, 0, .25); }
+      #fx .num { position: absolute; white-space: nowrap; font: 700 17px/1 var(--round); color: #fff3e6; -webkit-text-stroke: 3px #7a1f1a; paint-order: stroke fill; }
+      #fx .num.me { color: #ffd6cf; -webkit-text-stroke-color: #a3201a; font-size: 20px; }
+      #fx .num.crit { font-size: 27px; color: #ffd84a; -webkit-text-stroke: 4px #8a3a0a; }
+      #fx .num.layer, #fx .num.blocked { color: #e8e4dc; -webkit-text-stroke-color: #5a5a62; font-size: 14px; }
+      #fx .num.miss { color: #fbf7ec; -webkit-text-stroke-color: #8a7a60; font-size: 13px; font-style: italic; }
+      #fx .fail { position: absolute; white-space: nowrap; padding: 3px 10px 4px; font: 700 16px var(--hand); color: var(--red); background: var(--paper); border-radius: 2px;
+        box-shadow: var(--shadow); }
+      #hurt { position: fixed; inset: 0; pointer-events: none; z-index: 4; opacity: 0; transition: opacity .35s;
+        background: radial-gradient(ellipse at center, transparent 55%, rgba(201, 40, 30, .55) 100%); }
+      #hurt.aimed { background: radial-gradient(ellipse at center, transparent 55%, rgba(201, 40, 30, .35) 100%),
+        conic-gradient(from calc(var(--a) - 50deg) at 50% 50%, transparent 0deg, rgba(220, 40, 30, .6) 50deg, transparent 100deg, transparent 360deg);
+        -webkit-mask: radial-gradient(ellipse at center, transparent 45%, #000 80%); mask: radial-gradient(ellipse at center, transparent 45%, #000 80%); }
+      #hurt.show { opacity: 1; transition: opacity .05s; }
+      #hurt.heavy { filter: saturate(1.6); }
+      /* A tile the letter popup lands on bounces. */
+      .tile.landed { animation: landed .5s cubic-bezier(.2, 1.8, .4, 1); background: #fff3c4; }
+      @keyframes landed { 0% { transform: translateY(0) scale(1); } 30% { transform: translateY(-16px) scale(1.25) rotate(-8deg); } 100% { transform: translateY(0) scale(1); } }
+      /* Under the spell box: the alphabet, and how to get each letter. */
+      #abc { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(7, auto); grid-auto-flow: column; gap: 1px 10px; margin-top: 10px; text-align: left; font: 500 10.5px/1.45 var(--round); color: var(--soft); }
+      #abc div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      #abc b { display: inline-block; width: 15px; margin-right: 4px; text-align: center; font: 700 12px var(--round); color: var(--ink); }
+      #abc em { font-style: normal; color: #8a5a1a; font-weight: 600; }
+      #abc small { color: #b9ab90; font-size: 9.5px; }
+      #abc .have b { background: var(--gold); border-radius: 2px; text-align: center; color: #4a3510; }
+      #abc .have { color: var(--ink); }
+      /* A hint of what you can do here: G: dig the cache, E: claim RUIN. */
+      #prompt { padding: 3px 12px 4px; background: #fff3c4; border-radius: 2px; box-shadow: var(--shadow); font: 700 15px var(--hand); color: #6a4a10; letter-spacing: .5px; transform: rotate(-1deg); }
+      #prompt:empty { display: none; }
+      #prompt kbd { font: 700 12px var(--round); background: var(--gold); border-radius: 3px; padding: 0 6px; box-shadow: 0 1px 0 #b8902a; color: #4a3510; margin-right: 4px; }
+      #status button.again { pointer-events: auto; display: block; width: 100%; margin-top: 8px; font: 700 15px var(--hand); letter-spacing: 1px; color: #4a3510; background: var(--gold);
+        border: 0; border-radius: 3px; padding: 5px 8px; cursor: pointer; box-shadow: 0 2px 0 #b8902a, 0 4px 8px rgba(40, 28, 16, .3); }
+      #status button.again:hover { transform: translateY(-1px) rotate(-1deg); }
     </style>
   </head>
   <body>
@@ -184,6 +225,7 @@
       <div id="corner"></div>
       <div id="bottom">
         <div id="toast"></div>
+        <div id="prompt"></div>
         <div id="letters"></div>
       </div>
     </div>
@@ -191,6 +233,7 @@
       <h2>SPELL</h2>
       <div id="spellfor"></div>
       <input id="spell" autocomplete="off" spellcheck="false" maxlength="80" />
+      <div id="abc"></div>
     </div></div>
     <div id="menu"><div class="card">
       <h2>MENU</h2>
@@ -211,6 +254,7 @@
       </dl>
       <button id="resume">Resume</button>
     </div></div>
+    <div id="hurt"></div>
     <div id="aimcursor"></div>
     <div id="inspect"></div>
     <script type="module" src="/src/main.ts"></script>

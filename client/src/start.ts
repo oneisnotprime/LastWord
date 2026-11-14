@@ -9,6 +9,31 @@ export type Difficulty = "easy" | "normal" | "hard";
 export interface Choice { bots: number; difficulty: Difficulty }
 
 const KEY = "lastword.start";
+/** A game to start without asking, set just before the page reloads (a new round, a lost connection). */
+const NEXT = "lastword.next";
+
+/** The choice the current game was started with. */
+let current: Choice | null = null;
+
+/**
+ * Starts a fresh game with the same choice as this one (bots and difficulty, or friends): the
+ * page reloads straight into a new room, past the start screen. Others in the old room play on.
+ */
+export function playAgain(): void {
+  try { sessionStorage.setItem(NEXT, JSON.stringify(current ?? remembered())); } catch { /* the start screen asks again */ }
+  location.reload();
+}
+
+/** A choice set by `playAgain`, used once. */
+function queued(): Choice | null {
+  try {
+    const raw = sessionStorage.getItem(NEXT);
+    sessionStorage.removeItem(NEXT);
+    const c = JSON.parse(raw ?? "null") as Partial<Choice> | null;
+    if (c && Number.isInteger(c.bots) && ["easy", "normal", "hard"].includes(c.difficulty as string)) return c as Choice;
+  } catch { /* none */ }
+  return null;
+}
 
 function remembered(): Choice {
   try {
@@ -38,6 +63,8 @@ const CSS = `
 
 /** Shows the start screen and resolves with the choice once the player clicks. */
 export function chooseGame(): Promise<Choice> {
+  const next = queued();
+  if (next) return Promise.resolve((current = next));
   const last = remembered();
   const style = document.createElement("style");
   style.textContent = CSS;
@@ -64,6 +91,7 @@ export function chooseGame(): Promise<Choice> {
       try { localStorage.setItem(KEY, JSON.stringify(choice.bots ? choice : { ...choice, bots: last.bots })); } catch { /* not remembered */ }
       root.remove();
       style.remove();
+      current = choice;
       done(choice);
     };
     root.querySelector("#start-play")!.addEventListener("click", () => {

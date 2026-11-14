@@ -42,12 +42,25 @@ class Heap {
   }
 }
 
-/** True if a straight walk from a to b crosses only walkable tiles. */
+/**
+ * True if a straight walk from a to b crosses only walkable tiles: every tile the line touches
+ * (sampling it, as before, could skip a corner the walker then ran into). A line through a
+ * corner exactly needs both tiles beside it open, as routes do.
+ */
 export function clearLine(map: WorldMap, a: Point, b: Point): boolean {
-  const steps = Math.ceil(Math.hypot(b.x - a.x, b.y - a.y) * 3);
-  for (let i = 1; i <= steps; i++) {
-    const t = i / steps;
-    if (!walkable(map, a.x + (b.x - a.x) * t, a.y + (b.y - a.y) * t)) return false;
+  const dx = b.x - a.x, dy = b.y - a.y;
+  let x = Math.floor(a.x), y = Math.floor(a.y);
+  const sx = Math.sign(dx), sy = Math.sign(dy);
+  const tdx = dx ? Math.abs(1 / dx) : Infinity, tdy = dy ? Math.abs(1 / dy) : Infinity;
+  let tx = dx > 0 ? (x + 1 - a.x) * tdx : dx < 0 ? (a.x - x) * tdx : Infinity;
+  let ty = dy > 0 ? (y + 1 - a.y) * tdy : dy < 0 ? (a.y - y) * tdy : Infinity;
+  while (Math.min(tx, ty) < 1) {
+    if (Math.abs(tx - ty) < 1e-9) {
+      if (!walkable(map, x + sx + 0.5, y + 0.5) || !walkable(map, x + 0.5, y + sy + 0.5)) return false;
+      x += sx; y += sy; tx += tdx; ty += tdy;
+    } else if (tx < ty) { x += sx; tx += tdx; }
+    else { y += sy; ty += tdy; }
+    if (!walkable(map, x + 0.5, y + 0.5)) return false;
   }
   return true;
 }

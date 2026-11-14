@@ -72,6 +72,49 @@ export interface WorldMap {
 
 export interface Point { x: number; y: number }
 
+/** Tiles of ground a walker must be able to reach from where it is put, or it is boxed in. */
+export const OPEN_GROUND = 24;
+
+/** How many tiles can be walked to from `p` (side to side, as routes go), counted up to `need`. */
+export function roomAround(map: WorldMap, p: Point, need = OPEN_GROUND): number {
+  if (!walkable(map, p.x, p.y)) return 0;
+  const seen = new Set<number>(), stack = [Math.floor(p.y) * map.size + Math.floor(p.x)];
+  while (stack.length && seen.size < need) {
+    const i = stack.pop()!;
+    if (seen.has(i)) continue;
+    const x = i % map.size, y = (i - x) / map.size;
+    if (!walkable(map, x + 0.5, y + 0.5)) continue;
+    seen.add(i);
+    if (x > 0) stack.push(i - 1);
+    if (x < map.size - 1) stack.push(i + 1);
+    if (y > 0) stack.push(i - map.size);
+    if (y < map.size - 1) stack.push(i + map.size);
+  }
+  return seen.size;
+}
+
+/**
+ * The nearest ground with room to move (`roomAround` at least `need`): where someone goes when the
+ * land changes under or around them. Plain `nearestWalkable` could leave them in a one-tile pocket
+ * between new pits and walls, unable to take a step.
+ */
+export function openGround(map: WorldMap, p: Point, need = OPEN_GROUND): Point {
+  if (roomAround(map, p, need) >= need) return p;
+  for (let ring = 1; ring < map.size; ring++) {
+    let best: Point | null = null, bestDistance = Infinity;
+    for (let dy = -ring; dy <= ring; dy++) {
+      const edge = dy === -ring || dy === ring;
+      for (let dx = -ring; dx <= ring; dx += edge ? 1 : 2 * ring) {
+        const q = { x: Math.floor(p.x) + dx + 0.5, y: Math.floor(p.y) + dy + 0.5 };
+        const d = Math.hypot(q.x - p.x, q.y - p.y);
+        if (d < bestDistance && roomAround(map, q, need) >= need) { best = q; bestDistance = d; }
+      }
+    }
+    if (best) return best;
+  }
+  return nearestWalkable(map, p);
+}
+
 export function tileAt(map: WorldMap, x: number, y: number): Tile {
   const tx = Math.floor(x), ty = Math.floor(y);
   if (tx < 0 || ty < 0 || tx >= map.size || ty >= map.size) return Tile.DeepWater;
@@ -162,13 +205,44 @@ export function stepToward(map: WorldMap, pos: Point, target: Point, speed: numb
   const dx = target.x - pos.x, dy = target.y - pos.y;
   const distance = Math.hypot(dx, dy);
   if (distance < 1e-6) return true;
+  // Somehow standing where nobody can (land laid under you): out to the nearest ground first.
+  if (!flying && !walkable(map, pos.x, pos.y)) {
+    const ground = nearestWalkable(map, pos);
+    pos.x = ground.x;
+    pos.y = ground.y;
+    return false;
+  }
   // In the air the ground below does not matter, but the map still has edges.
   const cost = flying ? 1 : WALK_COST[tileAt(map, pos.x, pos.y)];
   const reach = (speed / TILE_METERS / cost) * seconds;
   const step = Math.min(distance, reach);
-  const nx = pos.x + (dx / distance) * step, ny = pos.y + (dy / distance) * step;
+  const ux = dx / distance, uy = dy / distance;
+  const nx = pos.x + ux * step, ny = pos.y + uy * step;
   const inside = nx >= 0 && ny >= 0 && nx < map.size && ny < map.size;
-  if (flying ? !inside : !walkable(map, nx, ny)) return true;
+  if (flying) {
+    if (!inside) {
+      // Along the map's edge rather than stopped by it.
+      const edge = (v: number) => Math.min(map.size - 1e-3, Math.max(0, v));
+      const x0 = pos.x, y0 = pos.y;
+      pos.x = edge(nx);
+      pos.y = edge(ny);
+      return Math.hypot(pos.x - x0, pos.y - y0) < 1e-4;
+    }
+  } else if (!walkable(map, nx, ny)) {
+    // Blocked: walk up to the edge, then slide along it on whichever axis is open. Stopping dead
+    // at the first corner left a player holding a key going nowhere.
+    const x0 = pos.x, y0 = pos.y;
+    let left = step;
+    for (const cut = Math.min(0.05, step); left >= cut && walkable(map, pos.x + ux * cut, pos.y + uy * cut); left -= cut) {
+      pos.x += ux * cut;
+      pos.y += uy * cut;
+    }
+    if (left > 1e-6) {
+      if (Math.abs(ux) > 1e-6 && walkable(map, pos.x + ux * left, pos.y)) pos.x += ux * left;
+      else if (Math.abs(uy) > 1e-6 && walkable(map, pos.x, pos.y + uy * left)) pos.y += uy * left;
+    }
+    return Math.hypot(pos.x - x0, pos.y - y0) < 1e-4;
+  }
   pos.x = nx;
   pos.y = ny;
   return step >= distance;
