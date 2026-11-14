@@ -94,6 +94,14 @@ Node process that owns the game state. One room per map instance (from milestone
   give the old daylight back (`daylightEnds`); weather rules are `weatherRules`; a sky word with a
   `field_radius` that sets no weather (DROUGHT, ECLIPSE) also lays its field. Zones carry `until`
   (round clock) and `by`; the state carries `weatherWord/By/Until` and `daylightWord/By/Until`.
+- Production (`produce`, once a second; shared `produce.ts`): every thing on the ground and every
+  creature that makes letters is a `Producer`; its owner is read afresh (thing owner, creature
+  master). Conditions are measured where it stands (tilled `Tile.Field`, moisture with
+  `waterers`, `soil`, workers' `labor` of the owner's side, `state.wind`, water beside it, the
+  owner's claim, hunger, `stalled`, `fights` within PEACE_RADIUS). Flora pays once a
+  CYCLE_SECONDS to its owner's side close by; machines take the letters they convert from their
+  owner. The loadout's `producing` lines say what each makes or why not. Bots go `home` to their
+  first producer half the time they move on.
 - Letters gained go through `award`, which sends `got` { letters, why, x, y } for the client's
   letter popup ("E · forage", "H · hunted COW (+12 food)", "D · broke RUIN", "A · FARM").
   `gathered` is still sent for a gathered letter. `gather` refuses at once where nothing is left

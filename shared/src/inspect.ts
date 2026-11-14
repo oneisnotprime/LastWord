@@ -1,5 +1,5 @@
 import type { Dictionary } from "./dictionary.js";
-import { production } from "./letters.js";
+import { needsText, producerOf } from "./produce.js";
 import { parsePhrase, type Phrase } from "./phrase.js";
 import type { Stats } from "./stats.js";
 import type { Op, Value } from "./types.js";
@@ -164,8 +164,12 @@ export function behaviours(s: Stats, count = 1): string[] {
     if (need[k] > 0) out.push(`draws ${num(need[k])} ${k} a minute${s.flag("alive") ? "" : ` (comes with ${STARTING_SUPPLY_MINUTES} min)`}`);
   }
   for (const k of SUPPLIES) if (make[k] > 0) out.push(`makes ${num(make[k])} ${k} a minute`);
-  const letters = Object.entries(production(s));
-  if (letters.length) out.push(`makes letters: ${letters.map(([ch, n]) => `${ch.toUpperCase()} ${num(n * count)}`).join(", ")} a minute`);
+  const spec = producerOf(s, count);
+  const letters = Object.entries(spec.rates);
+  if (letters.length) {
+    const needs = needsText(spec);
+    out.push(`makes letters: ${letters.map(([ch, n]) => `${ch.toUpperCase()} ${num(n)}`).join(", ")} a minute${needs ? `, ${needs}` : ""}`);
+  }
   if (s.flag("phase")) out.push("passes through walls");
   if (s.flag("hover") || s.num("speed_air") > 0) out.push("flies");
   if (s.flag("edible") || s.num("nutrition") > 0) out.push(`edible (${num(s.num("nutrition"))} food)`);

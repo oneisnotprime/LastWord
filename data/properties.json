@@ -1924,7 +1924,7 @@
    "id": "production_needs",
    "group": "economy",
    "type": "tags",
-   "desc": "inputs it must be supplied to produce",
+   "desc": "what it needs to produce: tilled, water, labor, wind, flow, claim, harvest, extract, vowel or a letter it uses up",
    "default": []
   },
   {
@@ -2113,7 +2113,7 @@
    "id": "tile_type",
    "group": "spatial",
    "type": "enum",
-   "desc": "terrain it creates",
+   "desc": "terrain it creates (tilled: crop land)",
    "values": [
     "none",
     "water",
@@ -2123,6 +2123,7 @@
     "pit",
     "forest",
     "field",
+    "tilled",
     "sand",
     "snow",
     "swamp",

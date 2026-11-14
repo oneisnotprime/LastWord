@@ -39,6 +39,8 @@ const SHEETS: Sheet[] = [
   { test: (t) => !water(t), colour: "#e6d3a3", depth: 3, blur: 3 },
   { test: (t) => !water(t) && t !== Tile.Sand, colour: "#a3b86f", depth: 3, blur: 3 },
   { test: (t) => t === Tile.Swamp, colour: "#7f8a55", depth: 1, blur: 3 },
+  // Tilled crop land: a dark soil sheet, furrowed by marks.
+  { test: (t) => t === Tile.Field, colour: "#8a6a45", depth: 1, blur: 1 },
   { test: (t) => t === Tile.Forest, colour: "#7f9b5a", depth: 2, blur: 2 },
   { test: (t) => t === Tile.City, colour: "#ddd0b6", depth: 2, blur: 3 },
   { test: (t) => t === Tile.Road, colour: "#c9a77a", depth: 2, blur: 1 },
@@ -266,6 +268,19 @@ function decorate(ctx: Ctx, at: (tx: number, ty: number) => Tile, tx0: number, t
     } else if (k === Tile.Grass && r(0) < 0.12) {
       const x = tx * S + r(1) * S, y = ty * S + r(2) * S;
       marks.push({ y, draw: () => cutout(ctx, [[x - 4, y], [x - 2, y - 6], [x, y - 2], [x + 2, y - 7], [x + 4, y]], "#7f9b52", 1.5, 0.6) });
+    } else if (k === Tile.Field) {
+      // Furrows across the soil, with green shoots along them.
+      const x = tx * S, y = ty * S;
+      marks.push({ y: y + 4, draw: () => {
+        ctx.strokeStyle = "rgba(60,40,24,0.55)"; ctx.lineWidth = 1.6;
+        ctx.beginPath();
+        for (let row = 0; row < 4; row++) { ctx.moveTo(x + 2, y + 5 + row * 8); ctx.lineTo(x + S - 2, y + 5 + row * 8); }
+        ctx.stroke();
+        for (let row = 0; row < 4; row++) for (let i = 0; i < 3; i++) {
+          const sx = x + 5 + i * 10 + r(row * 3 + i) * 4, sy = y + 4 + row * 8;
+          cutout(ctx, [[sx - 2, sy], [sx, sy - 5], [sx + 2, sy]], "#8fb35a", 0.8, 0.4);
+        }
+      } });
     } else if (k === Tile.Swamp) {
       const x = tx * S + 6 + r(1) * 20, y = ty * S + 8 + r(2) * 18;
       if (r(3) < 0.55) marks.push({ y: y - 40, draw: () => { ctx.fillStyle = "#4f5a3a"; ctx.beginPath(); ctx.ellipse(x, y, 7 + r(4) * 5, 3 + r(5) * 2, 0, 0, 7); ctx.fill(); ctx.fillStyle = "rgba(200,220,180,0.35)"; ctx.fillRect(x - 3, y - 1, 4, 1); } });

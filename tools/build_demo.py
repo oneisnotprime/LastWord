@@ -14,6 +14,12 @@ D = os.path.join(HERE, "..", "data")
 
 SOURCES = (("demo_words.txt", True), ("generated_words.txt", False))
 
+# PLAN.md "Letter economy": the letters a thing you own may produce (producers.txt), and what each
+# needs when a line gives no production_needs of its own (shared produce.ts reads them).
+PRODUCED = "ABCIMNPWYOGU"
+NEEDS = {"A": ["tilled", "water"], "P": ["water", "harvest"], "W": ["wind"], "M": ["vowel", "vowel"],
+         "C": ["labor"], "B": ["claim"], "O": ["extract"], "G": ["extract"], "U": ["extract"]}
+
 def parse(name="demo_words.txt"):
     path = os.path.join(HERE, name)
     if not os.path.exists(path):
@@ -37,6 +43,47 @@ def entries_all():
                 continue
             seen.add(w)
             yield (f"{name}:{n}", w, role, arch, toks, strict)
+
+def producers(out, props, errors):
+    """Every word's produce_* values come from producers.txt alone (PLAN.md "Letter economy")."""
+    for v in out.values():
+        for k in [k for k in v["set"] if k.startswith("produce_") or k == "production_needs"]:
+            del v["set"][k]
+    lines = {}
+    for n, line in enumerate(open(os.path.join(HERE, "producers.txt")), 1):
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        w, _, rest = line.partition(":")
+        w = w.strip()
+        if w not in out:
+            errors.append(f"producers.txt:{n} {w}: not in the dictionary"); continue
+        for t in rest.split():
+            m = re.fullmatch(r"(\w+)=(.+)", t)
+            if not m or m.group(1) not in props:
+                errors.append(f"producers.txt:{n} {w}: bad token {t}"); continue
+            pid, val = m.groups()
+            p = props[pid]
+            if pid == "produce_T" and out[w]["archetype"] != "exchange":
+                errors.append(f"producers.txt:{n} {w}: only an exchange completes a trade for T"); continue
+            if pid.startswith("produce_") and pid[-1] not in PRODUCED + "T":
+                errors.append(f"producers.txt:{n} {w}: {pid[-1]} does not come from things (PLAN.md)"); continue
+            if p["type"] in ("num", "scale", "frac"):
+                val = float(val)
+            elif p["type"] == "bool":
+                val = val == "true"
+            elif p["type"] == "tags":
+                val = val.split(",")
+            elif p["type"] == "enum" and val not in p["values"]:
+                errors.append(f"producers.txt:{n} {w}: {t}: not one of {p['values']}"); continue
+            lines.setdefault(w, {})[pid] = val
+    for w, sets in lines.items():
+        out[w]["set"].update(sets)
+        made = [k[-1] for k in sets if k.startswith("produce_")]
+        if made and "production_needs" not in sets:
+            needs = [n for ch in made for n in NEEDS.get(ch, [])]
+            if needs:
+                out[w]["set"]["production_needs"] = list(dict.fromkeys(needs)) if "vowel" not in needs else needs
 
 def main():
     entries = [e[:5] for e in entries_all()]
@@ -114,6 +161,7 @@ def main():
                     err(f"{t}: {val} is not a property"); continue
                 sets[pid] = val
         out[w] = {"role": role, "class": lex[w][1], "archetype": arch, "set": sets, "ops": ops}
+    producers(out, props, errors)
     if dropped or skipped:
         with open(os.path.join(HERE, "..", "data", "generated_problems.txt"), "w") as f:
             f.write("# Words skipped and tokens dropped from generated_words.txt by build_demo.py\n")

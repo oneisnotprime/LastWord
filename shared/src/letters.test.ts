@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   ACTION_LETTERS, addLetters, CACHE_X, Deposits, DEPOSITS, depositsAt, destroyLetters, generateMap, killLetters, mainland, MAP_SOURCES,
-  LETTER_GUIDE, PATCH_TILES, placeSources, production, readTrade, regionOf, resolve, seeded, SPAWN_APART, spawnPoint, Tile, tileAt, tradeProblem, walkable,
+  LETTER_GUIDE, PATCH_TILES, PENDING_SOURCES, placeSources, production, readTrade, regionOf, resolve, seeded, SPAWN_APART, spawnPoint, Tile, tileAt, tradeProblem, walkable,
 } from "./index.js";
 import { demo } from "./testdata.js";
 
@@ -124,12 +124,12 @@ it("the action letters are the plan's eleven", () => {
 describe("production", () => {
   const dict = demo();
   it("reads what an object generates each minute", () => {
-    expect(production(resolve(dict, "farm"))).toEqual({ a: 2 });
-    expect(production(resolve(dict, "mine"))).toEqual({ g: 1, x: 0.02 });
+    expect(production(resolve(dict, "farm"))).toEqual({ a: 1.6 });
+    expect(production(resolve(dict, "mine"))).toEqual({ g: 1 });
     expect(production(resolve(dict, "sword"))).toEqual({});
   });
   it("scales with adjectives", () => {
-    expect(production(resolve(dict, "farm", ["fertile"])).a).toBe(4);
+    expect(production(resolve(dict, "farm", ["fertile"])).a).toBeCloseTo(3.2);
   });
 });
 
@@ -147,7 +147,8 @@ describe("the alphabet guide", () => {
       expect(how.how.length).toBeLessThanOrEqual(24);
       for (const w of how.words ?? []) expect(production(resolve(dict, w, [])), `${w} makes ${letter}`).toHaveProperty(letter);
       // A letter with no word that makes it comes from something you do.
-      if (!how.words) expect(ACTION_LETTERS + "fv").toContain(letter);
+      if (!how.words) expect(ACTION_LETTERS + "fv" + PENDING_SOURCES).toContain(letter);
+      if (how.later) expect(PENDING_SOURCES).toContain(letter);
     }
   });
 

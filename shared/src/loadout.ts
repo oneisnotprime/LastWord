@@ -35,6 +35,8 @@ export interface LoadoutDetail {
   creatures: { name: string; health: number; hungry?: boolean; fleeing?: boolean }[];
   /** Words that are part of your screen (shared `senseOf`): a MAP's minimap. Empty: no minimap. */
   senses: { word: string; reveal: number; letters: number; life: number }[];
+  /** What each of your producers is making a minute, or why it is not (shared `producingLine`). */
+  producing?: string[];
 }
 
 /** What a player's senses pick up, sent about once a second while they have any: map positions in tiles. */

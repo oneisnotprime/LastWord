@@ -257,8 +257,8 @@ export class Hud {
   }
 
   /** Bottom-left: the ground under you and your tile. */
-  corner(ground: string, x: number, y: number) {
-    const html = `<b>${esc(ground.replace(/([a-z])([A-Z])/g, "$1 $2"))}</b><span>tile ${x}, ${y}</span>`;
+  corner(ground: string, x: number, y: number, wind = 0) {
+    const html = `<b>${esc(ground === "Field" ? "Tilled land" : ground.replace(/([a-z])([A-Z])/g, "$1 $2"))}</b><span>tile ${x}, ${y} · wind ${wind}%</span>`;
     const el = $("corner");
     if (el.innerHTML !== html) el.innerHTML = html;
   }
@@ -453,6 +453,12 @@ export class Hud {
           ${stat("Fuel", store(d.stores.fuel))}
           ${stat("Power", store(d.stores.power))}
           ${d.short.map((t) => stat("SHORT", t).replace('class="stat"', 'class="stat status"')).join("")}
+          <h3>Producing</h3>
+          ${(d.producing ?? []).map((line) => {
+            const [what, how] = [line.slice(0, line.indexOf(":")), line.slice(line.indexOf(":") + 1).trim()];
+            const idle = !/\/min/.test(how);
+            return stat(esc(what), esc(how)).replace('class="stat"', `class="stat${idle ? " status" : ""}"`);
+          }).join("") || `<div class="hint">Nothing yet: HOE, DOG, HEDGE, MILL, KILN make letters</div>`}
           <h3>Attack</h3>
           ${stat("With", d.attack.with.toUpperCase())}
           ${stat("Damage a strike", damage)}

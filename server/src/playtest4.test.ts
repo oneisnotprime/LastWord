@@ -87,9 +87,9 @@ it("E by a ruin nobody owns makes it yours, and it then makes its letters for yo
   const id = r.addThing({ spelled: { noun: "ruin" }, phrase: "ruin", vehicle: false, integrity: null, fixture: "ruin" }, "", w.player.x + 1, w.player.y);
   c.send("take"); await wait();
   expect(room.state.things.get(id)!.owner).toBe(c.sessionId);
-  expect(of("spelled").at(-1)).toBe("RUIN is yours: it makes R");
-  ticks(room, 60 * 10 * 4); await wait(); // four minutes: 0.3 R a minute
-  expect(of("got").some((g) => g.letters === "r" && g.why === "RUIN")).toBe(true);
+  expect(of("spelled").at(-1)).toBe("RUIN is yours: it ages into Y");
+  ticks(room, 60 * 10 * 4); await wait(); // four minutes standing: a ruin is old, and ages fast
+  expect(of("got").some((g) => g.letters === "y" && g.why === "RUIN")).toBe(true);
 });
 
 it("UNIT is a band of soldiers who follow you; MOUNT is something to ride", async () => {
