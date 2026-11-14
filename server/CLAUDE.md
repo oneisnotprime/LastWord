@@ -58,6 +58,16 @@ Node process that owns the game state. One room per map instance (from milestone
 - People start far apart (`spawnSpot`). Bots keep the peace for 60 to 90 s (`peaceUntil`), spell
   at most once every 5 to 10 s (`nextSpell`), build producers first, hunt, break ruins, dig caches,
   trade at markets, explore, and only go for people within twice their sight.
+- Bots play every system through the same code as people, choosing by word data only (`bots.ts`
+  `wordBook` sorts words by use from shared rules: `buff`/`debuff` adjectives, `aimed` fields,
+  area words by their place rules: `boon`, `levy`, `hinder`, `refuge`, `war`; `route`, `city`,
+  `tiller`, `cook`). `thinkBot` calls one part per system: `botFlee` (hurt: run, refuge, cure),
+  `botPickUp` (`takeNear`, the same as E), `botCounter`, `botSpell` (`phraseFor`: adjective
+  phrases and plurals), `botSystems` (adjectives on foes and own gear, area words, roads, cities,
+  crop land, cooking, `botOffer`), `botTrade` (market, hiring), `botAnswer`. `SKILL` scales each
+  by difficulty. `mind.used` counts what each used; `botReport` and `onAward` feed
+  `loadtest/tournament.ts` (`npx tsx loadtest/tournament.ts 4 8 mixed 60`: rounds of bots, the
+  systems they used, letter sources by `sourceOf`, round lengths).
 - Objects are made by `make`: up to `SEPARATE_UP_TO` (12) creatures or things each, more as one
   with `count` (`Player.count`, `Thing.count`, `Spelled.count`; stats via shared `massed`).
 - `cast` applies a verb with its adverbs (shared `castVerb`); touched verbs with event properties

@@ -175,12 +175,15 @@ lexicon so every related word is captured.
 
 ## Data
 
-- [ ] Odd producers in generated data: JOHN (a toilet) makes J, ARMY-like collectives make K.
-      Review `produce_J/K/X/Q/Z` across `tools/generated_words.txt` (fix the prompt/examples).
-- [ ] Common nouns whose main sense the class misses (from the playtest-5 scan of the 500 most
-      common): STORY and STUDY are structures, ACT/ISSUE/PROCESS documents, DATE food, FALL
-      water, LEAD metal, WON/SENT currency. Art now draws STORY/STUDY as books; the data still
-      needs overrides with fitting properties.
+- [x] Odd producers in generated data: JOHN (a toilet) makes J, ARMY-like collectives make K.
+      Only producers.txt sets `produce_*`; a generated word's `produce_*` additions are dropped
+      (build_demo.py, listed in generated_problems.txt) and the prompt says so
+- [x] Common nouns whose main sense the class misses (scan of the 2,000 commonest): ACT (a law),
+      PROCESS (work goes faster), ISSUE (a dispute that confuses), DATE (charms), FALL (the
+      season), STORY and STUDY (books), WON and SENT (verbs: overrides may now give a role
+      WordNet lacks), TECHNICAL (an adjective). LEAD stays the metal the materials theme needs
+      ZONE (a generated law against fighting over 200 m that never ended; bot rounds stalled in
+      it) lasts five minutes and ANARCHY ends it
 
 - [x] Word lists by role, class and archetype (59,232 with a role, 5,385 inert)
 - [x] Property schema (349 properties, 14 groups)
@@ -394,8 +397,10 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
       them (README "Areas, places and concepts"). WAR's K ×3 is now one of these
 - [x] Event chips at the top middle: weather, night and every zone you stand in, with time left;
       a click shows what it changes (shared `eventCard`) and the words that end it
-- [ ] Places still to do: `tax_rate` and `law` on an object's claim; `law` does not stop an
-      area's own damage; bots do not use the new concept words on purpose
+- [ ] Places still to do: `tax_rate` and `law` on an object's claim
+- [x] A law covers an area's harm as it covers a blow: damage, statuses and contagion from any
+      area (FIRE inside a SANCTUARY, a TRUCE), the area's own law too, and events landing on a
+      person (MURDER, ARREST) where a law stands; bots use the concept words on purpose
 - [ ] Sky and weather change sight, speed, growth and letter yields so far; their other effects (wetness, growth,
       crop output) wait on the tile systems
 - [x] Field words (120: LOVE, FEAR, HOPE, CHAOS, DISEASE, HEAVEN, PLANET, GALAXY...) are auras
@@ -426,8 +431,13 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
 - [x] Server-side bots (`server/src/bots.ts`): people with no client who gather, spell useful
       words (weapons, armour, mounts, creatures, then verbs, fields and events), eat, fight and
       roam between cities; easy, normal and hard. Start screen: Play with bots, or join friends
-- [ ] Bots still to do: they do not trade, pick things up, use terrain, sky or region words, or
-      spell phrases (adjective + noun); they do not aim fields; they never retreat to heal
+- [x] Bots play every system (easy, normal, hard by `SKILL`): market trades, hiring, offers made
+      and answered, picking up and claiming, adjective phrases and plurals, adjectives on foes and
+      their own gear, aimed fields and events, area words by their place rules (plenty, taxes,
+      laws, war, refuges, weather), roads, taking cities, crop land, cooking, counter-words to
+      areas, weather and creatures, running when badly hurt. `loadtest/tournament.ts` reports it
+- [ ] Bots still to do: unseal legendaries (once starting kits land), use terrain words on
+      purpose, form pacts
 - [x] Deploy-ready: one container serves the page and the game; Dockerfile, fly.toml and
       DEPLOY.md; image built and played locally
 - [ ] M6 (rest): deploy to Fly.io; needs the user's account

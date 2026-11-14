@@ -638,7 +638,7 @@ infestation: placement=target placement_range=100 field_radius=40 field_duration
 vermin: placement=region field_radius=60 field_duration=5 summons=rat summon_count=30 produce_E*0.5
 windfall: placement=region field_radius=60 field_duration=2 lode=e,a,o,i,s,t,r,n lode_share=1 lode_stock=30
 serendipity: placement=self field_radius=4 field_targets=self field_duration=5 harvest_bonus*2 lode=j,q,z,x lode_share=0.15 lode_stock=5
-anarchy: placement=map field_radius=ABS field_targets=all field_duration=3 obedience+-5 authority*0 counters=tax,tithe,toll,tariff,levy,customs,duty,tribute,ransom,curfew,lockdown,crackdown,monopoly,embargo,truce,armistice,holiday,quarantine,patrol,siege,blockade,sanctuary,haven,refuge
+anarchy: placement=map field_radius=ABS field_targets=all field_duration=3 obedience+-5 authority*0 counters=tax,tithe,toll,tariff,levy,customs,duty,tribute,ransom,curfew,lockdown,crackdown,monopoly,embargo,truce,armistice,holiday,quarantine,patrol,siege,blockade,sanctuary,haven,refuge,zone
 comet: placement=map field_radius=ABS field_targets=all field_duration=3 lode=z,q lode_share=0.05 lode_stock=10 luminosity+3 morale+-2
 cataclysm: placement=map field_radius=ABS field_targets=all field_duration=3 dmg_earth=20 attack_rate=0.05 friendly_fire=true deposit_factor=0.5 produce_G*3 produce_X*3
 
@@ -1253,6 +1253,10 @@ issue: placement=target placement_range=60 field_radius=15 field_targets=enemies
 
 # noun ceremony
 date: placement=target placement_range=20 event_target=character inflict_charm=20 contest_with=charm contested_by=courage morale+3 event_duration=1
+
+# noun place
+# ZONE was generated as a law against fighting over 200 m that never ended and nothing countered.
+zone: placement=region field_radius=100 field_targets=all field_duration=5 claim_radius=20 law=attack security+2
 
 # noun season
 fall: placement=map field_radius=ABS field_targets=all field_duration=8 temperature_delta=-8 growth=0.6 produce_A*3 produce_P*2 food_output*2 counters=summer,spring
