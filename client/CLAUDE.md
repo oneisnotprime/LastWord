@@ -76,3 +76,6 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
 - Themes batch 1 art: `ARCHETYPES` has `herb` and `gem`; `WORDS` has the common professions (chef,
   nurse, judge, scout, mason...). Materials, cooked and rotten things take their colour from the
   data (`color`), through `look.ts`.
+- `src/tips.ts` teaching tips (shared `tips.ts`): rotating word cards on the start screen, one
+  line (`#tip`) in the spell window while it is empty, and Word ideas with a reroll in the Esc
+  menu, where Show tips turns them off (`lastword.tips` in localStorage).

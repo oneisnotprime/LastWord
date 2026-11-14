@@ -124,7 +124,9 @@ by how many words set them (minds and upkeep took `sentient`, `intelligence`, `f
       cheaper than writing it with Claude (image generation pipelines, pixel/paper-style
       generators, local models, asset packs). Art must scale to a few hundred thousand words,
       each with its own look; not base shapes per kind with modifiers on top
-- [ ] Tooltips that show random words and how each one changes properties, to teach the game
+- [x] Tooltips that show random words and how each one changes properties, to teach the game
+      (shared `tips.ts`: word cards on the start screen, one tip in the idle spell window, word
+      ideas in the Esc menu with a reroll; tips can be turned off in the menu)
 - [ ] Tiered winners' rounds (for later, high importance): a round winner goes into a round of
       100 against 99 other winners; winners of those eventually join a round of 10,000 against
       other winners of rounds of 100. Each tier won earns a distinct avatar look (gold,

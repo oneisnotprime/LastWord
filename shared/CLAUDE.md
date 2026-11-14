@@ -103,3 +103,7 @@ server and the client import this, so anything here must give the same answer on
   - `law.ts` (law): `pactOf` (`binds`: a pact with people you pick, `bind_penalty` for breaking
     it), `breachText`, `takeLetters` (fines, commonest letters first). `place.ts` adds `fine` and
     the `hunt` law.
+- `tips.ts` teaching tips: `wordTip` (one line of what a word does in numbers, plus its shortest
+  counter-word), `wordIdeas` (one word per `TIP_KINDS` kind, weighted by `tipWeight` toward words
+  the held letters nearly spell), `RULE_TIPS` (short "did you know" lines, test-checked against the
+  data), `tipOfTheMoment` (either, for the idle spell window).
