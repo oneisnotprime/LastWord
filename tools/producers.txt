@@ -1249,3 +1249,11 @@ seating: produce_B=0.5 production_needs=claim
 reservoir: produce_O=1 production_needs=extract
 brook: produce_O=0.5 production_needs=extract
 vegetation: produce_P=0.6
+
+# Frequency batch 3: hired hands pay N (an APPLICANT, a PLANNER, an ORGANIZER, a HANDLER); a gas
+# BURNER is a station (C) that burns a G for each letter.
+applicant: produce_N=0.3
+planner: produce_N=0.3
+organizer: produce_N=0.35
+handler: produce_N=0.3
+burner: produce_C=0.4 production_needs=labor,g

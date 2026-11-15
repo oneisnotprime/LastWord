@@ -240,3 +240,55 @@ into `tools/generated_words.txt`, letters in `tools/producers.txt`). Art is draw
   death 153 s and 125 s, unchanged; rounds at the time cap 0 -> 0 (batch 1's run had 1 in 48).
 - Remaining: `tools/freq_todo.txt` (3,000 words, rank order) starts at NEEDLESS (rank 11,920), NERD,
   NOVELTY, OPTIMIZATION, PINT, POOP, PREVALENCE.
+
+## Frequency batch 3: the next eleven hundred most common words
+
+- Added 1,091 words, every missing word from wordfreq rank 11,920 to 15,808 (NEEDLESS, NERD,
+  NOVELTY, OPTIMIZATION, PINT... to DISRUPTIVE, ENDLESSLY): 495 nouns, 415 adjectives, 109 verbs,
+  72 adverbs; the dictionary is now 15,777 words. Twelve core words are hand-written in
+  demo_words.txt (PARACHUTE, AMMO, WATERFALL, STAIRCASE, CHIMNEY, BLITZ, MELTDOWN, DEMOLITION,
+  PLATOON, GIGANTIC, SUMMON, WITHSTAND); the rest went through chunk files and `generate_words.py
+  merge`. New producers: hired hands pay N (APPLICANT, PLANNER, ORGANIZER, HANDLER); a gas BURNER is
+  a station (C) that burns G.
+- Gap after this batch (`tools/freq_gap.py`): top 10k 0, top 20k 1,268 (626 n, 99 v, 462 adj, 81
+  adv; was 2,439), top 30k 4,099 (1,972, 351, 1,498, 278; was 5,270).
+- Left out on purpose and not counted: names WordNet also lists lower-case (LEONE, MALIK, BENNY,
+  WEBER, DEXTER, BOOKER, CHEVY, JONAH, DICKENS, WATERLOO, THATCHER, SKINNER, MERCER, COCO...:
+  `freq_gap.py` NAMES), abbreviations and misread forms (VAR, DIVERS, MEG, ALA, WEN, AIN, RBI, RPM:
+  NOT_WORDS), crude words added to tools/crude.txt (POOP, FART, PISSING, PRICK, DUMBASS, CRAPPY,
+  ERECTION, TIT, FANNY and two slurs), and words about groups of people, religion, politics,
+  sexuality or atrocities added to `EXCLUDED` (APARTHEID, CASTE, SEGREGATION, GYPSY, APACHE, NORDIC,
+  BRIT, ARGENTINE, ATHEIST, PAGAN, SECT, SHARIA, JIHAD, LAMA, FASCISM, LIBERALISM, LEFTIST,
+  LIBERTARIAN, SEXIST, HOMOPHOBIC, VIRGINITY, BONDAGE, PUBERTY, BIPOLAR, SCHIZOPHRENIA...).
+- Notable effects, all through shared systems: BLITZ drops a dozen bombs on a region; MELTDOWN
+  burns, irradiates and lays lava (CONTAINMENT ends it); DEMOLITION, SMASHING and OVERLOAD destroy a
+  building, a thing or a machine outright; RESONANCE and VIBRATION are sonic siege; GUNSHOT,
+  CONCUSSION, CHOKING and SWIPE are blows aimed at someone; EXECUTING is a 900-damage sentence
+  against courage; PLATOON (8 soldiers), VANGUARD (4 knights), CARAVAN (camels), HAMLET (peasants)
+  and SLAIN (ghosts) muster where they land; GRAVEYARD raises wild zombies against enemies;
+  OVERTHROW takes the city and ends fealty; ABOLITION and DISSOLUTION end laws and pacts; REVERSAL
+  swaps your most valuable thing with someone's; RETROSPECTIVE rewinds 20 s; SHUTDOWN and MALWARE
+  jam; SECRECY hides a side from exposure. Adjectives by meaning: GIGANTIC (mass ×12) and TITANIC
+  (×20) tower, POWERLESS strips damage and power, STATIONARY and WRECKED stop a ride, NEEDLESS needs
+  no food or fuel, MYRIAD is twenty of anything, SUICIDAL is a blast that hurts its owner. Adverbs
+  bend verbs from DRASTICALLY and RIDICULOUSLY (×2.5) to INDEFINITELY and ENDLESSLY (six times as
+  long). Fields last at most six minutes in one place, so no new lasting area lacks an ender; no
+  word seals a fate; no object radiates past 200 m. Counter-words were checked for direction
+  (`counters` names what a word ends): MEDIATION and RECONCILE end FEUD, CONTAINMENT a MELTDOWN,
+  LEGITIMACY a USURPATION, SANITATION a PLAGUE.
+- Pitfalls (shared CLAUDE.md): a terrain-class word with a `field_radius` and no `tile_type` is an
+  object, not a field (ROOFTOP, SKYLINE, LATITUDE moved to attribute); `summons` acts only on areas
+  (fields and events), so a verb or an object that names one summons nothing (SUMMON recruits
+  instead); `summons` must name a creature or person (SKELETON is the key).
+- Drawn: a WORDS shape for each of the 142 new concrete words without one (CHIMNEY had one; people as bipeds by what they do, a
+  crowd for KIN and FOLLOWER, a mannequin DUMMY, a green MUTATION; new shapes for a parachute, a
+  pile of rounds, a waterfall and cascade, stairs, a stage curtain, a gas burner, a cog, a tea cosy, a
+  mosaic, a rotor, a slab, scaffolding, a chevron stripe, a tyre, a vase, a wicket, a wrapped present,
+  a tooth, an antibody, a timber frame, a pedal and a tor; landforms as signs), checked in the
+  gallery with headless Playwright.
+- Tournament (48 rooms, 8 mixed bots, 30 min cap, same seeds; main's dictionary against this
+  batch's): mean round 8.6 -> 8.4 min; median first death 153 -> 145 s; rounds at the time cap 0 -> 0
+  (longest 25.7 and 24.8 min). Bots spelled new words 110 times (29 different; PEP 16, NAN 15, SIC
+  13, FOE 12, AVAIL 7, MONO 6), 1.8% of 5,989 spellings, from about 0.9% of racks.
+- Remaining: `tools/freq_todo.txt` (3,000 words, rank order) starts at ENTHUSIAST (rank 15,809),
+  EPILEPSY, ESTIMATION, EXCAVATION, EXTREMIST, FEEDER, FLATTERING, FORCIBLY.

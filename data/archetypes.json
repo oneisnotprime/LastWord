@@ -2,7 +2,7 @@
  {
   "class": "affliction",
   "archetype": "affliction",
-  "words": 428,
+  "words": 431,
   "groups": [
    "field",
    "offence"
@@ -176,7 +176,7 @@
  {
   "class": "artifact",
   "archetype": "vehicle_land",
-  "words": 167,
+  "words": 166,
   "groups": [
    "physical",
    "mobility",
@@ -371,7 +371,7 @@
  {
   "class": "aura",
   "archetype": "attribute",
-  "words": 3042,
+  "words": 3044,
   "groups": [
    "field"
   ]
@@ -434,7 +434,7 @@
  {
   "class": "creature",
   "archetype": "bird",
-  "words": 456,
+  "words": 455,
   "groups": [
    "physical",
    "life",
@@ -450,7 +450,7 @@
  {
   "class": "creature",
   "archetype": "creature",
-  "words": 414,
+  "words": 415,
   "groups": [
    "physical",
    "life",
@@ -562,7 +562,7 @@
  {
   "class": "event",
   "archetype": "act",
-  "words": 3371,
+  "words": 3387,
   "groups": [
    "event",
    "offence",
@@ -572,7 +572,7 @@
  {
   "class": "event",
   "archetype": "event",
-  "words": 822,
+  "words": 827,
   "groups": [
    "event",
    "offence",
@@ -582,7 +582,7 @@
  {
   "class": "event",
   "archetype": "exchange",
-  "words": 169,
+  "words": 167,
   "groups": [
    "event",
    "offence",
@@ -622,7 +622,7 @@
  {
   "class": "event",
   "archetype": "contest",
-  "words": 57,
+  "words": 58,
   "groups": [
    "event",
    "offence",
@@ -651,7 +651,7 @@
  },
  {
   "class": "event",
-  "archetype": "destruction",
+  "archetype": "repair",
   "words": 21,
   "groups": [
    "event",
@@ -661,8 +661,8 @@
  },
  {
   "class": "event",
-  "archetype": "repair",
-  "words": 20,
+  "archetype": "destruction",
+  "words": 21,
   "groups": [
    "event",
    "offence",
@@ -789,7 +789,7 @@
  {
   "class": "institution",
   "archetype": "group",
-  "words": 733,
+  "words": 728,
   "groups": [
    "social",
    "economy",
@@ -799,7 +799,7 @@
  {
   "class": "institution",
   "archetype": "possession",
-  "words": 350,
+  "words": 348,
   "groups": [
    "social",
    "economy",
@@ -809,7 +809,7 @@
  {
   "class": "knowledge",
   "archetype": "knowledge",
-  "words": 1911,
+  "words": 1960,
   "groups": [
    "economy",
    "meta"
@@ -890,7 +890,7 @@
  {
   "class": "measure",
   "archetype": "quantity",
-  "words": 776,
+  "words": 778,
   "groups": [
    "meta"
   ]
@@ -898,7 +898,7 @@
  {
   "class": "measure",
   "archetype": "duration",
-  "words": 57,
+  "words": 65,
   "groups": [
    "meta"
   ]
@@ -906,7 +906,7 @@
  {
   "class": "modifier",
   "archetype": "quality",
-  "words": 12183,
+  "words": 12185,
   "groups": [
    "meta"
   ]
@@ -922,7 +922,7 @@
  {
   "class": "modifier",
   "archetype": "participle",
-  "words": 376,
+  "words": 375,
   "groups": [
    "meta"
   ]
@@ -1002,7 +1002,7 @@
  {
   "class": "person",
   "archetype": "fighter",
-  "words": 103,
+  "words": 102,
   "groups": [
    "physical",
    "life",
@@ -1018,7 +1018,7 @@
  {
   "class": "spell",
   "archetype": "transform",
-  "words": 1108,
+  "words": 1109,
   "groups": [
    "effect"
   ]
@@ -1026,7 +1026,7 @@
  {
   "class": "spell",
   "archetype": "social",
-  "words": 657,
+  "words": 687,
   "groups": [
    "effect"
   ]
@@ -1050,7 +1050,7 @@
  {
   "class": "spell",
   "archetype": "create",
-  "words": 299,
+  "words": 298,
   "groups": [
    "effect"
   ]
@@ -1082,7 +1082,7 @@
  {
   "class": "spell",
   "archetype": "combat",
-  "words": 126,
+  "words": 125,
   "groups": [
    "effect"
   ]
@@ -1106,7 +1106,7 @@
  {
   "class": "terrain",
   "archetype": "place",
-  "words": 410,
+  "words": 405,
   "groups": [
    "physical",
    "spatial",
@@ -1186,7 +1186,7 @@
  {
   "class": "verb_modifier",
   "archetype": "manner",
-  "words": 3233,
+  "words": 3232,
   "groups": [
    "effect"
   ]
@@ -1194,7 +1194,7 @@
  {
   "class": "world_state",
   "archetype": "phenomenon",
-  "words": 284,
+  "words": 286,
   "groups": [
    "field"
   ]
