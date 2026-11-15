@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { BIOMES, generateMap, huntYield, pickWild, resolve, roll, rollText, seeded, Tile, toolHelp, wildlife, WALK_COST } from "./index.js";
+import { biomeAt, BIOMES, forageOdds, generateMap, INTERIOR, pool, huntYield, pickWild, resolve, roll, rollText, seeded, Tile, toolHelp, wildlife, WALK_COST } from "./index.js";
 import { demo } from "./testdata.js";
 
 const dict = demo();
@@ -16,7 +16,64 @@ describe("biomes", () => {
     }
     expect(BIOMES[Tile.Desert]!.forage).toBeLessThan(BIOMES[Tile.Jungle]!.forage);
     for (const t of [Tile.Grass, Tile.Meadow, Tile.Forest, Tile.Jungle]) expect(BIOMES[t]!.forage).toBeGreaterThanOrEqual(0.6);
-    expect(new Set(BIOMES[Tile.Jungle]!.finds).size).toBeGreaterThan(new Set(BIOMES[Tile.Desert]!.finds).size);
+    expect(new Set(BIOMES[Tile.Jungle]!.finds).size).toBeGreaterThan(new Set(BIOMES[Tile.Grass]!.finds).size);
+  });
+
+  it("each biome has its own pool: E about a third, then letters that fit the ground", () => {
+    const share = (t: Tile, ch: string) => forageOdds(BIOMES[t]!).find((o) => o.letter === ch)?.pct ?? 0;
+    const seen = new Set<string>();
+    for (const [t, b] of Object.entries(BIOMES)) {
+      const odds = forageOdds(b!);
+      expect(b!.finds.length, b!.name).toBe(100);
+      expect(b!.finds[0], b!.name).toBe("e"); // the first find is E (tests roll 0)
+      expect(odds[0]!.letter, b!.name).toBe("e");
+      expect(odds[0]!.pct, b!.name).toBeGreaterThanOrEqual(30);
+      expect(odds[0]!.pct, b!.name).toBeLessThanOrEqual(40);
+      expect(odds.length, b!.name).toBeGreaterThanOrEqual(6);
+      const key = odds.map((o) => o.letter).join("");
+      expect(seen.has(key), `${b!.name} ${Tile[Number(t)]}`).toBe(false);
+      seen.add(key);
+    }
+    expect(share(Tile.Forest, "p")).toBeGreaterThan(10);
+    expect(share(Tile.Desert, "s")).toBeGreaterThan(20);
+    expect(share(Tile.Swamp, "u") + share(Tile.Swamp, "m")).toBeGreaterThan(30);
+    expect(share(Tile.Hill, "g")).toBeGreaterThan(20);
+    expect(share(Tile.Grass, "a") + share(Tile.Grass, "l") + share(Tile.Grass, "i")).toBeGreaterThan(40);
+    expect(share(Tile.Sand, "o")).toBeGreaterThan(20);
+    expect(share(Tile.Taiga, "w")).toBeGreaterThan(10);
+    expect(() => pool({ e: 50, a: 40 })).toThrow(/90/);
+  });
+
+  it("inside any room is its own biome, whatever the ground: household letters, no rare ones, a little under open ground's odds", () => {
+    const map = generateMap(7);
+    const at = { x: map.size / 2 + 0.5, y: map.size / 2 + 0.5 };
+    expect(biomeAt(map, at.x, at.y, true)).toBe(INTERIOR);
+    expect(biomeAt(map, at.x, at.y)).toBe(BIOMES[map.tiles[Math.floor(at.y) * map.size + Math.floor(at.x)] as Tile]);
+    const odds = forageOdds(INTERIOR);
+    expect(INTERIOR.finds.length).toBe(100);
+    expect(odds[0]).toEqual({ letter: "e", pct: 32 });
+    expect(odds.map((o) => o.letter).join("")).toBe("ebcymnt");
+    expect(INTERIOR.finds).not.toMatch(/[jkqvxz]/);
+    expect(INTERIOR.forage).toBeGreaterThan(BIOMES[Tile.Snow]!.forage);
+    expect(INTERIOR.forage).toBeLessThan(BIOMES[Tile.Grass]!.forage);
+    for (const b of Object.values(BIOMES)) expect(b!.finds, b!.name).not.toBe(INTERIOR.finds);
+  });
+
+  it("rare letters only on hostile ground, which finds less often; Z only on ash, and never Q", () => {
+    const RARE = /[jkvxz]/;
+    const hostile = [Tile.Desert, Tile.Badlands, Tile.Tundra, Tile.Snow, Tile.Ash];
+    const rare = (t: Tile) => [...BIOMES[t]!.finds].filter((c) => RARE.test(c)).length / 100;
+    for (const [t, b] of Object.entries(BIOMES)) {
+      expect(b!.finds, b!.name).not.toMatch(/q/);
+      if (hostile.includes(Number(t))) {
+        expect(rare(Number(t)), b!.name).toBeGreaterThan(0.05);
+        expect(b!.forage, b!.name).toBeLessThanOrEqual(0.3);
+      } else expect(b!.finds, b!.name).not.toMatch(RARE);
+    }
+    for (const [t, b] of Object.entries(BIOMES)) if (Number(t) !== Tile.Ash) expect(b!.finds, b!.name).not.toMatch(/z/);
+    expect(forageOdds(BIOMES[Tile.Ash]!).find((o) => o.letter === "z")!.pct).toBe(1);
+    // The harshest ground gives the most: snow's rare share beats the desert's.
+    expect(rare(Tile.Snow)).toBeGreaterThan(rare(Tile.Desert));
   });
 
   it("a map is laid out in large regions of each biome", () => {

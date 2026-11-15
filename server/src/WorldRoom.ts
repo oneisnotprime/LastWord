@@ -4,7 +4,7 @@ import {
   producerOf, outputOf, ageRate, SOIL, landHeld, roadRun, readOffer, readTransmute, transmuteProblem, bossWords, taper, stampTiles, TRANSMUTE_RATIO,
   LAND_RATE, ROAD_RATE, ROAD_HALF, CLAIMED_ROAD, CITIZEN_S, CITIZENS, CITIZEN_LEAVE, CITIZEN_RETURN, HIRE_PRICE, HIRED, TRADE_RANGE, OFFER_SECONDS, PAIR_COOLDOWN, BOSS_TIMES, BOSS_Z, BOSS_HOARD,
   type ClaimDisc, discTiles, windAt, moistureAt, waterNear, wateringReach, wetWeather, producingLine, Soil, LABOUR_RANGE, CYCLE_SECONDS, PEACE_RADIUS, PEACE_SECONDS, VOWELS, type ProducerSpec, type Conditions,
-  addLetters, afflict, placeRules, harvest, growthOf, tradeRateOf, marketRatio, type PlaceRules, aggressive, clearLine, courageOf, pluralize, auras, authorityOf, chooseTarget, commandLimit, draw, groundFood, hasAny, ignoresOrder, moraleAim, moraleGoal, needs, nextMorale, noStores, outputs, recruitRate, rerouteSeconds, startingSupply, becomes, retreats, routed, supply, theftResistance, HUNGER_LOYALTY, NORMAL, STARTING_STORES, STARVING, SUPPLIES, bodyFlags, cure, useObject, findPath, hampered, inflicts, statusDamage, statusEffects, tickStatuses, wake, GATHER_SECONDS, GATHER_REASONS, chestPrize, rackSwap, exploredSight, carcassFood, Deposits, destroyLetters, killLetters, mainland, MARKET, pickAnimal, placeSources, readTrade, regionOf, RUIN_INTEGRITY, CHEST_X, SITE_RADIUS, spawnPoint, starterHand, TEMPLE_Q, tradeProblem, generateMap, GIVE_RANGE, missing, parsePhrase, applyAdjectives, cannotCarry, improvisable, readDescription, production, resolveSpelled, SEPARATE_UP_TO, nearestWalkable, openGround, randomWalkable, resolve, Tile, tileAt, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit, cannotRide, claimOf, senseOf, combineSenses, type Sense, type Sensed,
+  addLetters, afflict, placeRules, harvest, growthOf, tradeRateOf, marketRatio, type PlaceRules, aggressive, clearLine, courageOf, pluralize, auras, authorityOf, chooseTarget, commandLimit, draw, groundFood, hasAny, ignoresOrder, moraleAim, moraleGoal, needs, nextMorale, noStores, outputs, recruitRate, rerouteSeconds, startingSupply, becomes, retreats, routed, supply, theftResistance, HUNGER_LOYALTY, NORMAL, STARTING_STORES, STARVING, SUPPLIES, bodyFlags, cure, useObject, findPath, hampered, inflicts, statusDamage, statusEffects, tickStatuses, wake, GATHER_SECONDS, GATHER_REASONS, chestPrize, rackSwap, exploredSight, carcassFood, INTERIOR, Deposits, destroyLetters, killLetters, mainland, MARKET, pickAnimal, placeSources, readTrade, regionOf, RUIN_INTEGRITY, CHEST_X, SITE_RADIUS, spawnPoint, starterHand, TEMPLE_Q, tradeProblem, generateMap, GIVE_RANGE, missing, parsePhrase, applyAdjectives, cannotCarry, improvisable, readDescription, production, resolveSpelled, SEPARATE_UP_TO, nearestWalkable, openGround, randomWalkable, resolve, Tile, tileAt, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit, cannotRide, claimOf, senseOf, combineSenses, type Sense, type Sensed,
   dealKits, kitOptions, bestOption, kitHands, KIT_STEPS, jobBodyOps, jobRules, jobStats, kitCard, kitScore, KIT_SECONDS,
   type JobDef, type Kit, type StarterHand, type KitCard, type KitData,
   effectSeconds, biomeAt, huntYield, pickWild, rollText, toolHelp, wildlife, RUIN_X_CHANCE, type Help,
@@ -7454,7 +7454,7 @@ export class WorldRoom extends Room {
       const lode = place.areas.find((a) => a.rules!.lode.length && a.rules!.lodeShare > 0 && a.lodeLeft >= 1);
       const got = lode && this.rng() < lode.rules!.lodeShare
         ? { letter: lode.rules!.lode[Math.floor(this.rng() * lode.rules!.lode.length)]!, from: lode.word }
-        : this.deposits.gather(w.player.x, w.player.y, this.elapsed, this.rng, growthOf(place.rules), this.helpOf(w));
+        : this.deposits.gather(w.player.x, w.player.y, this.elapsed, this.rng, growthOf(place.rules), this.helpOf(w), !!w.inside);
       if (lode && "from" in got && got.from === lode.word) lode.lodeLeft--;
       // Fishing with gear lands a catch (shared sea.ts): its fish's first letter, and food.
       if (got.letter && "from" in got && got.from === "fish" && this.helpOf(w)("fish").some((h) => h.by !== "luck" && h.by !== "bad luck")) {
@@ -7467,7 +7467,7 @@ export class WorldRoom extends Room {
           changed.add(id);
         }
       }
-      w.stores.food += groundFood(tileAt(this.map, w.player.x, w.player.y)); // a little forage where things grow
+      w.stores.food += w.inside ? INTERIOR.food : groundFood(tileAt(this.map, w.player.x, w.player.y)); // a little forage where things grow
       if (got.letter) {
         const from = "from" in got ? got.from : "", site = this.state.things.get(from);
         const why = lode && from === lode.word ? lode.word.toUpperCase()

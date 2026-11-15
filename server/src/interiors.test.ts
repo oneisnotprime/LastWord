@@ -170,3 +170,18 @@ it("a bot puts a valuable it carries away inside its own building", async () => 
   expect(R.roomOfThing.get(tid)).toBe(hid);
   void second;
 });
+
+it("gathering inside a room forages the room's own pool (shared INTERIOR), not the ground under it", async () => {
+  const { R, a, wa, hid, second, last } = await setup();
+  expect(wa.inside).toBe(hid);
+  const got: string[] = [];
+  a.onMessage("gathered", (m: string) => got.push(m));
+  const dice = R.rng;
+  R.rng = () => 0; // every roll finds something, and the pool's first letter
+  a.send("gather"); await wait();
+  second(3); await wait();
+  R.rng = dice;
+  expect(got).toEqual(["e"]);
+  expect((last("a", "got") as { detail?: string }).detail).toMatch(/^INDOORS 45%/); // the popup names the room's odds
+  expect(R.deposits.gather(wa.player.x, wa.player.y, R.elapsed, () => 0.5, 1, () => [], true).roll?.place).toBe("indoors");
+});

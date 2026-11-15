@@ -2,7 +2,7 @@ import type { Rng } from "./rng.js";
 import type { Stats } from "./stats.js";
 import type { Letters } from "./phrase.js";
 import { Tile, tileAt, walkable, type Point, type WorldMap } from "./world.js";
-import { BIOMES, forageLetter, GATHER_CHANCE, roll, type Help, type Roll } from "./biome.js";
+import { biomeAt, BIOMES, forageLetter, GATHER_CHANCE, roll, type Help, type Roll } from "./biome.js";
 
 /** Letters to fill a hand with after its starter word (and a market's rack swap), by how often words use them (no J, Q, X or Z). */
 export const HAND_FILL = "eeeeeeeeeeeiiiiiiiiaaaaaaaarrrrrrrnnnnnnnttttttoooooosssssslllllccccuuuudddpppmmmhhggyybbffwwkv";
@@ -213,8 +213,9 @@ export class Deposits {
    * One gathering action at a point: a site in reach first, else a deposit here, weighted, that
    * has stock left. Most tries find nothing (shared `biome.ts`: the biome's forage chance, or
    * `GATHER_CHANCE`, plus what `help` says the gatherer's tools add); a miss takes nothing.
+   * `indoors` (inside any building's room): only foraging, from biome.ts INTERIOR.
    */
-  gather(x: number, y: number, now: number, rng: Rng, growth = 1, help: GatherHelp = () => []): Gathered {
+  gather(x: number, y: number, now: number, rng: Rng, growth = 1, help: GatherHelp = () => [], indoors = false): Gathered {
     const site = this.siteAt(x, y, now);
     if (site) {
       const r = site.letter === "x" ? roll(CHEST_CHANCE, "chest", help("chest"), rng) : undefined;
@@ -224,7 +225,8 @@ export class Deposits {
       if (gone) this.sites.delete(site.id);
       return { letter: site.letter, from: site.id, ...(gone ? { emptied: site.id } : {}), ...(r ? { roll: r } : {}) };
     }
-    const here = depositsAt(this.map, x, y);
+    // Inside a room only foraging, from the room's pool (biome.ts INTERIOR): no water, hill or cave in reach.
+    const here: Deposit[] = indoors ? ["forage"] : depositsAt(this.map, x, y);
     if (!here.length) return { letter: "", why: "Nothing to gather here" };
     const p = this.patch(x, y, now, growth);
     const open = here.filter((k) => p.stock[KINDS.indexOf(k)]! >= 1);
@@ -232,7 +234,7 @@ export class Deposits {
     const total = open.reduce((n, k) => n + DEPOSITS[k].weight, 0);
     let pick = rng() * total;
     const kind = open.find((k) => (pick -= DEPOSITS[k].weight) < 0) ?? open.at(-1)!;
-    const biome = BIOMES[tileAt(this.map, x, y)];
+    const biome = biomeAt(this.map, x, y, indoors);
     const r = kind === "forage"
       ? roll(biome?.forage ?? 0.2, biome?.name ?? "ground", help("forage"), rng)
       : roll(GATHER_CHANCE[kind], kind === "fish" ? "water" : kind === "dig" ? "digging" : "cave", help(kind), rng);
@@ -487,12 +489,12 @@ export const LETTER_GUIDE: Readonly<Record<string, LetterHow>> = {
   b: { how: "furniture, claimed", words: ["bed", "chair"] },
   c: { how: "crafting, worked", words: ["kiln", "forge"] },
   d: { how: "destroy things" },
-  e: { how: "forage (G), most biomes" },
+  e: { how: "forage (G), every biome" },
   f: { how: "burn things" },
   g: { how: "dig hills (G)" },
   h: { how: "hunt animals" },
   i: { how: "livestock, pets", words: ["dog", "cow"] },
-  j: { how: "first into new land" },
+  j: { how: "new land; harsh ground" },
   k: { how: "kill people" },
   l: { how: "land held: claims", words: ["hedge", "fence"] },
   m: { how: "machines eat vowels", words: ["press", "engine"] },

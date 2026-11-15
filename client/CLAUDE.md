@@ -30,7 +30,7 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
 - Right-click is only inspect: `inspectAt` shows the inspect card (shared `cardOf`) with Add
   adjective, which opens the spell window aimed at that target. `Hud.lock` stops spelling once
   you are dead, spectating or the round is over. Bottom left (`#corner`): ground and tile.
-- The corner (`#corner`) also shows what foraging here gives: chance and each letter's share (shared `forageOdds`).
+- The corner (`#corner`) also shows what foraging here gives: chance and each letter's share (shared `forageOdds`); indoors, the shared `INTERIOR` pool.
 - Messages are terse (`terse` in `main.ts`): routine success is not toasted. The top-left HUD
   shows only rows you have; knocked out, it says KNOCKED OUT and whom the camera follows.
 - Esc closes what is open (screen, aim, inspect), else opens the menu (`#menu`) with the controls.
