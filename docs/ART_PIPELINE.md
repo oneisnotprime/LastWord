@@ -10,7 +10,7 @@ Run on 2026-11-14. **Result:** 2,964 of 3,000 words have an image (2,795 from th
 keep a placard or rosette (1,537 adjectives, 791 events, 574 verbs, 405 auras, 251 knowledge,
 247 institutions, 215 adverbs, 116 weather and phenomena, 99 terrain places and depressions,
 63 afflictions, 61 measures, 3 spells) and 27 plurals use their singular's image.
-The images take **1.66 MB** in all (about 560 bytes each, lossless WebP), and each one loads
+The images take **1.69 MB** in all (about 570 bytes each, lossless WebP), and each one loads
 the first time its word is drawn.
 
 | | |
@@ -19,7 +19,7 @@ the first time its word is drawn.
 | Candidates | 12,820 (3,000 × 4, then 205 retries × 4) at 640², $0.0035 each |
 | Judged | 300 contact sheets of 10 words by five Claude sessions, 21 retry sheets by a sixth |
 | Cut-out | BiRefNet for 2,942 picks. The fal balance ran out after the first 1,021; on 2026-11-15 the other 1,943 were cut again with BiRefNet, each compared with the local cut-out (`ART_CUT=local`) by alpha coverage and on contact sheets. BiRefNet won where white parts touch the white background (bottles, jars, foam, white clothes). 22 keep the local cut-out because BiRefNet punched holes where grey details sit on the grey background (coins, clear liquids, keys, lines on paper). `tools/art/picks.tsv` says which |
-| fal cost | ≈ $48.5 (estimated from list prices: trainer $2.26, LoRA generation $45.0, validation $0.5, BiRefNet ≈ $1.0), plus $0.79 for the BiRefNet redo of 1,943 cut-outs (read from the fal balance: about $0.0004 an image) |
+| fal cost | ≈ $48.5 (estimated from list prices: trainer $2.26, LoRA generation $45.0, validation $0.5, BiRefNet ≈ $1.0), plus $0.79 for the BiRefNet redo of 1,943 cut-outs (read from the fal balance: about $0.0004 an image), plus $7.07 for the people redo (below) |
 | Frame rate | headless Chromium, software GL, 12 generated words on screen: 3.9 fps before, 4.5 after (two runs each, noise ±0.4) |
 
 ![Sample of 100 accepted words, drawn in game style](art-pipeline/sample-100.jpg)
@@ -28,10 +28,30 @@ Rejects (second-round candidates): [rejects.jpg](art-pipeline/rejects.jpg). They
 parts and soft or abstract things that have no clear silhouette (skin, hip, nerve, tendon,
 scar, cyst, residue, fabric, silk) and ship parts (keel, rudder, jetty).
 
-Known weaknesses: people come out as faceless pictograms in costume (the style of the hand-made
-shapes the LoRA learned from), which reads well at game size but makes many jobs look alike;
-image size follows the drawn shape it replaces, so a few words (SALMONELLA) are larger than
-life.
+Known weaknesses: image size follows the drawn shape it replaces, so a few words (SALMONELLA)
+are larger than life. People first came out as faceless pictograms in costume, alike from job to
+job; 333 of them were redone on 2026-11-15 (below).
+
+## People redo (2026-11-15)
+
+648 of the generated words are persons (class `person` in `words.tsv`: 269 plain persons, 244
+workers, 71 leaders, 42 fighters, 22 criminals). Most came out as the same standing pictogram
+holding a small prop, so many jobs looked alike at 128 px.
+
+- **Look-alikes**: each person image as a 32 px silhouette plus an 8×8 colour layout; a word's
+  score is the mean distance to its 5 nearest persons. The 360 lowest (most alike) were redone.
+- **Subjects** rewritten with the person rule below; same template, LoRA and settings, seeds 11
+  and 22 (2 candidates a word), then seeds 33 and 44 with a second subject for 46 that failed.
+- **Judged** on contact sheets (old image, two candidates, game-size copies): a new image only
+  where it clearly reads better as the role. 333 replaced (`picks.tsv` round 3), 27 keep the old
+  image (where the old one was already fine, or the new one lost the role: QUACK and BULLY came
+  out as a duck and a bear).
+- **Result**: persons scoring under 7 (the look-alike band) went from 284 to 4; the median score
+  rose from 7.2 to 9.4. [Before and after, 40 of them](art-pipeline/people.jpg) (old above, new below).
+- **Cost** (read from the fal balance): $7.07 for 816 candidates and 333 BiRefNet cut-outs.
+  Generation is billed **$0.0085 an image** at 640², not the per-megapixel $0.0035 that
+  `pipeline.py` used to estimate: fal bills at least one megapixel. That is why the first run
+  spent more than estimated; `pipeline.py` now estimates with the one-megapixel floor.
 
 ## In the game
 
@@ -107,8 +127,14 @@ python3 -I tools/art/pipeline.py finish       # BiRefNet, crop, snap, WebP, mani
    game data wins.
 2. One concrete object, creature or figure, whole and alone, recognisable at about 50 px. No
    scene, text, logo or frame.
-3. People: one standing person whose costume and one held prop show the role. Never a real
-   person's likeness.
+3. People: the role must read from the silhouette alone at 128 px, with no face. Give each one
+   **one signature prop, oversized** (as big as the torso or longer: chef a big ladle, farmer a
+   pitchfork, knight a sword, official a giant rubber stamp), **distinctive headgear or pose**
+   (toque, straw hat, plumed helm, mortarboard; kneeling, saluting, riding, pushing a pram) and a
+   **costume colour**, all taken from the game meaning, not just "a person in a uniform holding
+   X". Near-synonyms get different props and colours (the clergy: a tall cross, a censer, a
+   bicycle, a pulpit, a crook). Avoid a white first colour (grey background, weaker cut-out) and
+   words that the model reads as animals (QUACK, BULLY). Never a real person's likeness.
 4. Materials: a lump, pile, ingot, sack, jar, barrel or crystal; liquids and gases in a bottle
    or flask; food and drink as the dish or drink.
 5. Body parts: the part alone, cartoon, not gory. Rude words: their game meaning, inoffensive.
