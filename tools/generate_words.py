@@ -51,6 +51,10 @@ welsh indigenous tribal lesbian transgender sexuality sexually disability autism
 slavery raped genocide pregnancy
 holocaust calif protestant fascist aboriginal queer migrant moron homosexuality homosexual
 ethnicity negro oriental nationality prostitution bisexual ghetto
+argentine leftist atheist bipolar sexist homo apartheid caste segregation evangelical fetish
+intercourse brit fascism prostitute libertarian pagan gypsy raj schizophrenia apache nordic
+sexism sect bohemian homophobic liberalism sharia jihad ecclesiastical lama baptized virginity
+bondage puberty
 """.split())
 
 

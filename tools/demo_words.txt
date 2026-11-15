@@ -2825,3 +2825,43 @@ prosperity: placement=region placement_range=80 field_radius=30 field_targets=al
 
 # noun rescue
 redemption: placement=target placement_range=40 event_target=character event_duration=1 effect_status=curse,doom,debt inflict_bless=60 restores=200
+
+# Frequency batch 3 (tools/freq_todo.txt from NEEDLESS): the next eleven hundred or so most common
+# words that had no data. Core words of each kind below; the rest are generated from these and the lines above.
+# A blitz drops bombs across a region; a meltdown lays lava and radiation; a platoon musters soldiers.
+
+# noun artifact
+parachute: mass=8 integrity=40 material=nylon equip_slot=back speed_air*0.2 hover=true res_blunt+0.6 knockback*0.5 color=orange
+
+# noun weapon
+ammo: mass=1 integrity=10 material=lead,brass single_use=true plural_count=60 ammo_per_hit*0.5 dmg_pierce*1.2 color=gold
+
+# noun water
+waterfall: placement=region tile_type=deep_water radius=3 depth=20 portable=false loudness=8 water_output=200 dmg_water=60 knockback=6 moisture=8 beauty=9 power_output=10
+
+# noun route
+staircase: mass=2000 integrity=1500 material=stone portable=false elevation=4 climb+8 speed_land+1 counters=wall,cliff,ledge
+
+# noun route
+chimney: mass=3000 height=8 integrity=1200 material=brick portable=false clears_weather=smoke dmg_suffocation*0 temperature_delta=8 field_radius=6 field_targets=owned comfort+2
+
+# noun attack
+blitz: placement=region placement_range=150 event_radius=15 event_duration=1 meteors=12 dmg_blast=500 dmg_fire=150 inflict_fear=10 loudness=10 siege=4
+
+# noun disaster
+meltdown: placement=target placement_range=60 event_target=tile event_radius=20 event_duration=3 dmg_radiation=400 dmg_fire=300 inflict_sick=40 temperature=2000 tile_type=lava radius=4 friendly_fire=true
+
+# noun event
+demolition: placement=target placement_range=40 event_target=structure event_duration=1 dmg_blast=1500 siege=8 destroys_target=true loudness=10 counters=house,wall,building,tower
+
+# noun group
+platoon: placement=region placement_range=80 field_radius=15 field_targets=owned field_duration=4 summons=soldier summon_count=8 summon_owned=true courage+2 loudness=5
+
+# adjective quality
+gigantic: mass*12 height*3 integrity*8 dmg_blunt*4 dmg_crush*4 speed_land*0.8 fear_aura+4 stealth+-10
+
+# verb create
+summon: duration=30 recruit_rate+8 command_limit+10 obedience+5 loudness+6 charm+4
+
+# verb combat
+withstand: duration=20 armor+30 res_blunt+0.4 res_slash+0.4 res_pierce+0.4 knockback*0 immune_stun=true speed_land*0.6

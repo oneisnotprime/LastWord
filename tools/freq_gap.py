@@ -33,10 +33,12 @@ mr mrs ms dr st co inc ltd re la ii iii iv vi vii viii ix xi xii etc thou thee t
 NAMES = set("""google josh franklin wright turner ken benjamin costa murphy brad warner harper
 shanghai superman troy chad randy gilbert ana easter thanksgiving
 beth burke donna ira rand tucker chapman timothy somerset jenny molly benedict brent monte
-clarence maxwell lambert silva dell congo beck""".split())
+clarence maxwell lambert silva dell congo beck
+leone kat malik benny weber dexter amelia erica milo booker bolivia burgess bach chevy jonah
+kylie dickens waterloo ling marcel skinner thatcher mercer cummings coco""".split())
 # Headwords whose common use is an inflection or an abbreviation WordNet reads as something else
 # (LIED as a German song, SHOOK as a sheaf, MPH, GEN, CHI): left out of the gap.
-NOT_WORDS = set("lied shook tops mph neo gen sen chi col sang wont dug comp para mil das sol tore".split())
+NOT_WORDS = set("lied shook tops mph neo gen sen chi col sang wont dug comp para mil das sol tore var divers meg ala wen ain rbi rpm".split())
 
 
 

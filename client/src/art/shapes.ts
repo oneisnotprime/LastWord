@@ -470,6 +470,35 @@ const shaftShape = s([part(band([[0, 2], [0, -48]], 2.6), "body"), glue(R(-2, -4
 const pentagonShape = s([part(P(0, -30, 30, -18, 20, 0, -20, 0, -30, -18), "body", 1), dot(P(0, -22, 18, -15, 12, -4, -12, -4, -18, -15), "#d9d2c6"), dot(P(0, -14, 7, -10, 4, -6, -4, -6, -7, -10), "#7fae5a")], "#9aa3a8", { flat: true });
 const bump = (colour: string) => s([part(E(0, -4, 8, 5, 14), "body", 1), dot(E(-2, -6, 2.4, 1.6, 8), "light")], colour, { flat: true });
 
+// Frequency batch 3: the next eleven hundred most common words. People are bipeds by what they
+// do; new things: a parachute, a pile of rounds, a waterfall, stairs, a curtain, a gas burner, a
+// cog, a tea cosy, a mosaic, a rotor, a slab, scaffolding, a chevron, a tyre, a vase, a wicket, a
+// wrapped present, a tooth, an antibody, a timber frame and a pedal.
+const parachuteShape = s([part([...E(0, -40, 18, 12, 18, Math.PI, Math.PI * 2)] as Pt[], "body", 1), ...[-12, -4, 4, 12].map((x) => dot(band([[x, -40], [x * 0.8, -41]], 1.4), "dark")),
+  ...[-17, -6, 6, 17].map((x) => glue(band([[x, -40], [0, -16]], 0.6), "#4a3f33")), ...moved(biped({ colour: "#5f8a4a", hat: "helmet", arms: "up" }), 0, -2, 0.42).pieces], "#e8892e", { flies: true });
+const ammoShape = s([...[-7, 0, 7].map((x) => part([...R(x - 2.6, -14, x + 2.6, 0).slice(0, 2), [x + 2.6, -14], [x, -19], [x - 2.6, -14]] as Pt[], "body", 1)), ...[-7, 0, 7].map((x) => dot(R(x - 2.6, -4, x + 2.6, 0), "#9a7a3a"))], "#c9a24a");
+const waterfallShape = (colour = "#7fb4d8") => s([part(P(-26, 0, -26, -40, -10, -44, -6, -36, -6, 0), "#8d877c", 1), part(P(-8, -38, 6, -38, 8, -4, -8, -4), "body"),
+  ...[-4, 0, 4].map((x) => dot(band([[x, -34], [x + 1, -8]], 0.8), "light")), part(E(4, -3, 18, 4, 14), "body"), part(P(6, 0, 6, -24, 22, -26, 26, 0), "#8d877c", 1)], colour);
+const stairsShape = s([...[0, 1, 2, 3, 4].map((i) => part(R(-20 + i * 8, -8 - i * 8, 20, -i * 8), "body", 1)), ...[0, 1, 2, 3, 4].map((i) => dot(R(-20 + i * 8, -8 - i * 8, 20, -6.6 - i * 8), "light"))], "#bfb3a0");
+const curtainShape = s([part(R(-24, -44, 24, -40), "#e3b341"), ...[-18, -6, 6, 18].map((x) => part(P(x - 7, -40, x + 7, -40, x + 6, 0, x - 6, 0), "body", 1)), ...[-18, -6, 6, 18].map((x) => dot(band([[x, -38], [x, -2]], 0.8), "dark"))], "#b5354a");
+const burnerShape = s([part(R(-14, -8, 14, 0), "#4a4a52", 1), part(E(0, -9, 10, 2.5, 14), "#2b2a28"), ...[-6, 0, 6].map((x) => glue(P(x - 2.4, -10, x, -18, x + 2.4, -10), "#5f8ac9")), ...[-6, 0, 6].map((x) => dot(P(x - 1.2, -10, x, -14, x + 1.2, -10), "#bfe3f2"))], "#4a4a52");
+const cogShape = (colour = "#8e98a0") => s([part(Array.from({ length: 24 }, (_, i) => { const a = (i / 24) * Math.PI * 2, r = i % 3 === 0 ? 13 : 10.5; return [Math.cos(a) * r, -14 + Math.sin(a) * r] as Pt; }), "body", 0), dot(E(0, -14, 4, 4, 10), "#2b2a28")], colour);
+const cozyShape = s([part([...E(0, -2, 14, 18, 18, Math.PI, Math.PI * 2), [14, 0], [-14, 0]] as Pt[], "body", 2), glue(E(0, -21, 3, 3, 8), "light"), ...[-8, 0, 8].map((x) => dot(band([[x, -2], [x * 0.8, -15]], 1.2), "dark"))], "#c9553f");
+const mosaicShape = s([part(R(-16, -32, 16, 0), "#bfb3a0", 1), ...[0, 1, 2, 3].flatMap((r) => [0, 1, 2, 3].map((c) => dot(R(-14 + c * 7, -30 + r * 7, -8.5 + c * 7, -24.5 + r * 7), ["#c9553f", "#3f6fa8", "#e3b341", "#5f8a4a", "#8a5ac9"][(r * 3 + c * 2) % 5]!)))]);
+const rotorShape = s([part(R(-2, -24, 2, 0), "#5a5a5a"), ...[0, 1, 2].map((i) => glue(turn(P(0, -1.5, 18, -3, 18, 3, 0, 1.5), (i * Math.PI * 2) / 3).map(([x, y]) => [x, y - 26] as Pt), "body")), glue(E(0, -26, 3, 3, 8), "dark")], "#8e98a0");
+const slabShape = (colour = "#9a948a") => s([part(P(-24, 0, -24, -10, -18, -16, 24, -16, 24, -6, 18, 0), "body", 1), dot(P(-24, -10, -18, -16, 24, -16, 18, -10), "light")], colour);
+const scaffoldShape = s([...[-18, 0, 18].map((x) => part(R(x - 1.4, -48, x + 1.4, 0), "body")), ...[-34, -18].map((y) => part(R(-22, y, 22, y + 3), "#a8703c")), ...[-1, 1].map((d) => dot(band([[-18, d > 0 ? -2 : -18], [0, d > 0 ? -18 : -2]], 1), "dark"))], "#8e98a0");
+const chevronShape = (colour = "#e3b341") => s([part(P(-12, -10, 0, -20, 12, -10, 12, -4, 0, -14, -12, -4), "body", 1), part(P(-12, -2, 0, -12, 12, -2, 12, 4, 0, -6, -12, 4).map(([x, y]) => [x, y - 4] as Pt), "body", 1)], colour);
+const tyreShape = s([part(E(0, -14, 13, 13, 18), "#2b2a28", 0), dot(E(0, -14, 6, 6, 14), "#8e98a0"), ...Array.from({ length: 8 }, (_, i) => { const a = (i / 8) * Math.PI * 2; return dot(turn(R(-1, -13, 1, -10.5), a).map(([x, y]) => [x, y - 14] as Pt), "#4a4a52"); })]);
+const vaseShape = (colour = "#c9773a") => s([part(P(-4, -30, 4, -30, 3, -26, 9, -18, 9, -8, 5, 0, -5, 0, -9, -8, -9, -18, -3, -26), "body", 2), dot(band([[-8, -14], [8, -14]], 1), "dark")], colour);
+const wicketShape = s([...[-6, 0, 6].map((x) => part(R(x - 1.2, -26, x + 1.2, 0), "body")), glue(R(-7, -28, 7, -26), "#a8703c")], "#f3ead8");
+const giftShape = (colour = "#d4476a") => s([part(R(-12, -20, 12, 0), "body", 1), part(R(-14, -24, 14, -18), "light", 1), dot(R(-2, -24, 2, 0), "#f4d35e"), glue(E(-4, -27, 4, 2.6, 8), "#f4d35e"), glue(E(4, -27, 4, 2.6, 8), "#f4d35e")], colour);
+const toothShape = s([part(P(-8, -20, -6, -26, 0, -24, 6, -26, 8, -20, 6, -10, 4, 0, 1, -6, -1, -6, -4, 0, -6, -10), "body", 2)], "#f6f1e6");
+const antibodyShape = s([part(band([[0, 0], [0, -14]], 2.4), "body"), part(band([[0, -14], [-9, -26]], 2.4), "body"), part(band([[0, -14], [9, -26]], 2.4), "body"), glue(E(-10, -27, 3, 3, 8), "light"), glue(E(10, -27, 3, 3, 8), "light")], "#7fae5a");
+const frameShape = s([part(R(-20, -24, -17, 0), "body"), part(R(17, -24, 20, 0), "body"), part(R(-1.5, -24, 1.5, 0), "body"), part(P(-23, -23, 0, -40, 23, -23, 20, -21, 0, -36, -20, -21), "body"), dot(band([[-18, -2], [0, -22]], 1.2), "dark"), dot(band([[18, -2], [0, -22]], 1.2), "dark")], "#c9a77a");
+const pedalShape = s([part(band([[0, -30], [0, -16]], 2.6), "#8e98a0"), glue(E(0, -30, 3.4, 3.4, 10), "#5a5a5a"), part(R(-11, -18, 11, -10), "body", 1), ...[-7, -2.5, 2, 6.5].map((x) => dot(R(x, -16.5, x + 2.2, -11.5), "#5a5a5a")), part(R(-1.5, -10, 1.5, 0), "#5a5a5a")], "#2b2a28");
+const torShape = s([part(E(0, -8, 22, 9, 16), "body", 2), part(E(-4, -22, 14, 7, 14), "body", 2), part(E(2, -33, 9, 5, 12), "body", 2), dot(E(-8, -10, 6, 2, 8), "light"), dot(E(-8, -24, 4, 1.6, 8), "light")], "#8d877c");
+
 export const WORDS: Record<string, Silhouette> = {
   // Animals.
   wolf, dog, fox, cat, lion, tiger, bear, horse, cow, bull, pig, sheep, goat, deer, elephant, camel, rat, mouse: rat, rabbit, monkey, boar, donkey, ass: donkey, bat, whale,
@@ -888,6 +917,35 @@ export const WORDS: Record<string, Silhouette> = {
   countryside: s(grass.pieces, "#8ab45a"), hometown: house({ w: 38, h: 26, roof: "gable", windows: 2, sign: "#5f8a4a" }), landmark: tower, backyard: fence, suburb: house({ w: 40, h: 24, roof: "gable", windows: 2, wall: "#e9e2d0" }),
   reservoir: s(puddle.pieces, "#5f8ac9"), brook: s(puddle.pieces, "#7fb4d8"), vegetation: tree({ kind: "bush" }), isle: sign(icon.island()), slope: sign(icon.mountain()), glen: sign(icon.hole()), apex: sign(icon.mountain(), "#fbf6ea", "#8e98a0"),
   notch: sign(icon.mountain(), "#fbf6ea", "#a8916a"), strand: sign(icon.wave(), "#fbf6ea", "#e6d3a3"), riverside: sign(icon.wave()), downhill: sign(icon.mountain(), "#fbf6ea", "#7fae5a"),
+  // Frequency batch 3.
+  nerd: job("#7a8a9a", "hair", { legs: "#4a5a6a", arms: "forward", belt: "#3f6fa8" }), incompetent: job("#c9a24a", "cap", { arms: "up", legs: "#5a4636" }), kin: crowd(job("#8a6a4a", "hair"), 4),
+  sonny: biped({ h: 28, colour: "#5f8ac9", legs: "#3a3633", hat: "cap" }), dummy: biped({ colour: "#d9c6a0", skin: "#d9c6a0", legs: "#d9c6a0", hat: "none" }), applicant: job("#4a5a6a", "hair", { belt: "#3a3633" }),
+  lender: job("#3a3633", "tophat", { belt: "#c9a24a" }), mutation: s(monster.pieces, "#7fae5a"), groom: job("#2f2c33", "hair", { belt: "#f4f1ea" }), heavyweight: biped({ h: 46, w: 13, colour: "#c9553f", legs: "#2f2c33", hat: "none", arms: "up" }),
+  militant: soldierOf("#6b7a4a", "spear", "hood"), caller: job("#c9775a", "cap", { arms: "up" }), casualty: job("#e9e2d0", "none", { legs: "#c9553f", belt: "#c9553f" }), chap: job("#6b5a3a", "cap"),
+  geek: job("#5a8a5a", "hair", { arms: "forward", legs: "#3f4a5a" }), granny: job("#a88aa8", "bun", { robe: true, held: "staff", h: 36 }), sibling: job("#e6a24a", "hair", { h: 34 }),
+  granddaughter: biped({ h: 28, hat: "bun", colour: "#e9a8b8", legs: "#5f8ac9", robe: true }), referral: job("#f3f1ea", "hair", { legs: "#5a7a8a" }), authoritarian: lord("#2f2c33", "cap", "#5a2a2a"),
+  barker: job("#c9553f", "tophat", { arms: "up", belt: "#e3b341" }), buff: job("#8a6a4a", "hair", { arms: "forward" }), madam: job("#6b3a5a", "bun", { robe: true }), fundraiser: job("#3f8a6a", "hair", { arms: "forward", belt: "#e3b341" }),
+  adolescent: biped({ h: 36, colour: "#8a5ac9", legs: "#3f4a5a", hat: "hair" }), beau: job("#3f6fa8", "hair", { cloak: "#d4476a" }), eccentric: job("#8a5ac9", "tophat", { cloak: "#e6a24a", held: "staff" }),
+  flyer: job("#5f8ac9", "helmet", { arms: "up", cloak: "#c9553f" }), orphan: biped({ h: 28, colour: "#8e8b80", legs: "#5a4636", hat: "cap" }), traveler: job("#a8805a", "hood", { held: "staff", belt: "#6b4a2e" }),
+  traveller: job("#a8805a", "cap", { held: "staff", belt: "#6b4a2e" }), sweetie: job("#e9a8b8", "bun", { robe: true }), organizer: job("#3f8a8a", "hair", { arms: "up", belt: "#3a3633" }), flop: job("#9aa3a8", "hair", { legs: "#6b6a66" }),
+  follower: crowd(job("#7a8a9a", "hood"), 3), playboy: job("#f4f1ea", "hair", { legs: "#2f2c33", belt: "#c9a24a" }), promoter: job("#c9553f", "hair", { arms: "up", belt: "#e3b341" }), bloke: job("#5a6a7a", "cap", { legs: "#3a3633" }),
+  blond: biped({ colour: "#5f8ac9", hair: "#f4d35e", legs: "#3a3633" }), comrade: soldierOf("#a8323a", "spear", "cap"), outsider: job("#5a5a62", "hood", { cloak: "#3a3633" }), spoiler: job("#2f2c33", "hood", { arms: "forward" }),
+  heroine: job("#c9553f", "bun", { cloak: "#3f6fa8", held: "spear" }), planner: job("#3f6fa8", "hair", { arms: "forward", belt: "#e3b341" }), beginner: job("#7fae5a", "cap", { h: 36 }), bilingual: job("#e6a24a", "hair", { arms: "forward" }),
+  examiner: job("#f3f1ea", "hair", { legs: "#3a3633", arms: "forward" }), flirt: job("#d4476a", "bun", { robe: true, cloak: "#e9a8b8" }), listener: job("#5a7a6a", "hair"), subscriber: job("#7a8a9a", "cap"),
+  interviewer: job("#3a3633", "hair", { arms: "forward", belt: "#c9553f" }), foe: soldierOf("#5a2a2a", "spear", "helmet"), pivot: job("#3f8a5a", "cap", { arms: "up" }), fella: job("#8a6440", "cap"),
+  nan: job("#9a8aa8", "bun", { robe: true, h: 36 }), buster: biped({ h: 44, w: 11, colour: "#5a5a62", legs: "#3a3633", hat: "cap" }), mater: job("#8a5ac9", "bun", { robe: true }), reviewer: job("#4a4a52", "hair", { arms: "forward" }),
+  voucher: job("#5a6a4a", "hair", { belt: "#c9a24a" }), changer: job("#c9773a", "hair", { arms: "up" }), teaser: job("#e6a24a", "cap", { arms: "up" }), handler: job("#6b5a3a", "cap", { held: "staff", belt: "#5a3a20" }),
+  parachute: parachuteShape, ammo: ammoShape, waterfall: waterfallShape(), cascade: waterfallShape("#9cc6d2"), staircase: stairsShape, backdrop: flatShape, backstage: curtainShape, burner: burnerShape,
+  carving: sculptureShape("#a8703c"), connector: plugShape, constituent: cogShape(), cozy: cozyShape, disposable: s(cup.pieces, "#f4f1ea"), dolly: s(cartShape.pieces, "#8e98a0"), duplicate: letter, flap: s(cloak.pieces, "#8a6440"),
+  fore: boat({ kind: "boat", colour: "#8a6440" }), frontal: s(crown.pieces, "#e3b341"), garner: barn, interchange: road, mosaic: mosaicShape, mound: s(mound.pieces, "#8a6a4a"), mural: picture("#e6a24a", "#bfb3a0"),
+  overlapping: s(armor.pieces, "#8e98a0"), plumbing: pipelineShape, rotary: rotorShape, slab: slabShape(), slit: s(dotShape.pieces, "#2b2a28"), spectacle: stage, staging: scaffoldShape, stripe: chevronShape(), tracing: s(map.pieces, "#f4f1ea"),
+  tread: tyreShape, trivia: card, ventilation: s(radiator.pieces, "#9aa3a8"), ware: vaseShape(), wicket: wicketShape, wrapping: giftShape(), anterior: toothShape, chassis: s(armor.pieces, "#5a5a62"), womb: bump("#d98a8a"),
+  fetus: bump("#f3c6b0"), organism: bug({ kind: "worm", colour: "#7fae5a" }), blockbuster: bomb, doorstep: slabShape("#bfb3a0"), footing: brickWall(30, 1, "#9a948a"), pragmatic: scroll, knob: s(ball.pieces, "#c9a24a"),
+  framing: frameShape, obstruction: s(rock.pieces, "#8e8b80"), rodeo: fence, pedal: pedalShape, doorway: door, driveway: s(road.pieces, "#8a8a8a"), freeway: road,
+  antibody: antibodyShape, digestive: s(potion.pieces, "#c9a24a"), formulation: s(potion.pieces, "#5f8ac9"), rinse: s(bottle.pieces, "#7fb4d8"), substrate: s(pile.pieces, "#6b4a2e"), testosterone: s(potion.pieces, "#e9e2d0"),
+  botanical: s(potion.pieces, "#7fae5a"), meth: s(crystal.pieces, "#cfeaf2"), preventive: s(bottle.pieces, "#f4f1ea"), fragment: s(pebbles.pieces, "#9a948a"), shaving: s(pile.pieces, "#e6c89a"), calculus: s(pebbles.pieces, "#d9c26a"), tor: torShape,
+  cavity: sign(icon.hole()), vale: sign(icon.mountain(), "#fbf6ea", "#7fae5a"), rift: sign(icon.hole(), "#fbf6ea", "#8d877c"), ness: sign(icon.island()), wonderland: sign(icon.star("#d4476a")), graveyard: grave(),
+  midfield: s(grass.pieces, "#7fae5a"), savannah: s(grass.pieces, "#d9c26a"), subdivision: house({ w: 38, h: 24, roof: "gable", windows: 2, wall: "#e9e2d0" }), waterfront: sign(icon.wave()), watershed: sign(icon.wave(), "#fbf6ea", "#7fae5a"), lea: s(grass.pieces, "#8ab45a"),
   // Stuff.
   stone: rock, rock, crystal, diamond: s(crystal.pieces, "#cfeaf2"), iron: s(ingot.pieces, "#7d7f80"), steel: s(ingot.pieces, "#b8c2c8"), copper: s(ingot.pieces, "#c9773a"),
   water: puddle, oil: s(puddle.pieces, "#2f2c33"), lava: s(puddle.pieces, "#e0663a"), blood: s(puddle.pieces, "#a8323a"), wood: s([...[[-8, -4], [8, -4], [0, -12]].map(([x, y]) => part(E(x!, y!, 10, 4.5, 12), "body")), ...[[-16, -4], [0, -4], [-8, -12]].map(([x, y]) => dot(E(x! - 1, y!, 3, 3.6, 8), "#e6c89a"))], "#8a6440"),
