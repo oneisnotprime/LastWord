@@ -10,7 +10,7 @@ import { TILE_METERS } from "./world.js";
  * - An area wider than CELL_FROM tiles (weather over the map, a big quake) strikes in cells: spots
  *   CELL_TILES across or the word's `attack_area`, near the people inside, each marked on the
  *   ground CELL_WARNING seconds before it lands, so whoever sees it can step out.
- * - Under a roof (an `enterable` building within ROOF_TILES) nothing from an area lands; on your
+ * - Indoors (a walk-in building, interior.ts) or under a roof (an `enterable` building within ROOF_TILES) nothing from an area lands; on your
  *   own side's claimed ground its `shelter` share is kept off.
  */
 export const AREA_WARNING = 3;

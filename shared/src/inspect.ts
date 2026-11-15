@@ -1,4 +1,5 @@
 import { homeText } from "./home.js";
+import { interiorText } from "./interior.js";
 import { craftText } from "./craft.js";
 import { techText } from "./tech.js";
 import { herdText } from "./herd.js";
@@ -261,7 +262,7 @@ export function behaviours(s: Stats, count = 1, cls?: string): string[] {
   if (s.num("luminosity") > 0) out.push("gives off light");
   if (s.num("fear_aura") > 0) out.push(`frightens enemies (fear ${num(s.num("fear_aura"))})`);
   if (s.num("heals") > 0) out.push(`heals allies ${num(s.num("heals"))} a second`);
-  out.push(...homeText(s), ...craftText(s), ...techText(s), ...herdText(s), ...bodyText(s), ...wearText(s), ...diseaseText(s), ...emotionText(s), ...soundText(s), ...moneyText(s), ...crimeText(s), ...signalText(s), ...faithText(s), ...weatherText(s), ...batch5(s));
+  out.push(...interiorText(s, count), ...homeText(s), ...craftText(s), ...techText(s), ...herdText(s), ...bodyText(s), ...wearText(s), ...diseaseText(s), ...emotionText(s), ...soundText(s), ...moneyText(s), ...crimeText(s), ...signalText(s), ...faithText(s), ...weatherText(s), ...batch5(s));
   const need = needs(s, count), make = outputs(s, count);
   for (const k of SUPPLIES) {
     if (need[k] > 0) out.push(`draws ${num(need[k])} ${k} a minute${s.flag("alive") ? "" : ` (comes with ${STARTING_SUPPLY_MINUTES} min)`}`);

@@ -3,7 +3,7 @@ import "@fontsource/kalam/700.css";
 import "@fontsource/fredoka/500.css";
 import "@fontsource/fredoka/600.css";
 import Phaser from "phaser";
-import { DODGE_TILES, TRADE_RANGE, aimOf, cardOf, GATHER_REASONS, missing, parsePhrase, readDescription, SITE_RADIUS, stampTerrain, Tile, tileAt, TILE_METERS, type Card, type Phrase, type WorldMap, generateMap } from "@lastword/shared";
+import { DODGE_TILES, doorAt, TRADE_RANGE, aimOf, cardOf, GATHER_REASONS, missing, parsePhrase, readDescription, SITE_RADIUS, stampTerrain, Tile, tileAt, TILE_METERS, type Card, type Phrase, type WorldMap, generateMap } from "@lastword/shared";
 import { Effects } from "./fx.js";
 import { playAgain } from "./start.js";
 import { lookOf, type Look } from "./art/look.js";
@@ -22,6 +22,7 @@ import { Threats } from "./threats.js";
 import { Painter, PX, useMade, useStandee, ZOOM } from "./paint.js";
 import { Sky } from "./sky.js";
 import { Zones } from "./zones.js";
+import { RoomView } from "./rooms.js";
 
 /** The fog canvas's size, and the radius of its clear middle, in canvas pixels. */
 const FOG_SIZE = 512, FOG_CLEAR = 100;
@@ -100,6 +101,9 @@ class World extends Phaser.Scene {
   private chips!: Events;
   private sky!: Sky;
   private zoneView!: Zones;
+  private roomView!: RoomView;
+  /** The walk-in building you stand in, by name, or "". */
+  private indoors = "";
   private views = new Map<string, View>();
   private keys!: Record<"up" | "down" | "left" | "right" | "w" | "a" | "s" | "d", Phaser.Input.Keyboard.Key>;
   private steering = false;
@@ -297,6 +301,7 @@ class World extends Phaser.Scene {
     this.map = generateMap(this.net.state.seed, this.net.state.size);
     this.sky = new Sky(this, this.paint, dictionary);
     this.zoneView = new Zones(this, this.paint, dictionary);
+    this.roomView = new RoomView(this);
     this.cameras.main.setZoom(ZOOM * DPR).setBounds(0, 0, this.map.size * PX, this.map.size * PX).setBackgroundColor("#4d7b8c");
     const me = this.net.state.players.get(this.net.sessionId);
     if (me) this.cameras.main.centerOn(me.x * PX, me.y * PX);
@@ -338,7 +343,9 @@ class World extends Phaser.Scene {
       this.visiting = null;
       this.net.state.things.forEach((thing: any, id: string) => {
         const land = dictionary.word(lookOf(dictionary, thing.phrase).noun)?.set.tile_type;
-        if (thing.owner === mine || land || Math.hypot(thing.x - x, thing.y - y) >= 0.6) return;
+        // A walk-in building is struck at its door (shared interior.ts), as well as at its middle.
+        const door = thing.room > 0 && thing.door > 0 ? doorAt(thing.x, thing.y, thing.room) : null;
+        if (thing.owner === mine || land || (Math.hypot(thing.x - x, thing.y - y) >= 0.6 && !(door && Math.hypot(door.x - x, door.y - y) < 0.6))) return;
         // Nobody's (a RUIN, something dropped): walk over and claim it. Shift-click attacks it instead.
         // A chest, the temple or a market: walk there, then dig, pray or trade (`visiting`).
         if (/market|temple|chest/.test(thing.fixture ?? "")) { site = { id, act: thing.fixture === "market" ? "trade" : "gather" }; hit = null; claim = null; }
@@ -1285,11 +1292,20 @@ class World extends Phaser.Scene {
     }
 
     const k = Math.min(1, delta / 100);
+    const rooms = new Set<string>();
+    let indoors = "";
     state.things.forEach((t: any, id: string) => {
       live.add(id);
       const v = this.view(id);
       const look = lookOf(dictionary, t.phrase, t.count);
       this.dress(v, look, undefined, []);
+      // A walk-in building (shared interior.ts): its floor plan and door; the roof cut away for you inside or beside it.
+      if (t.room > 0) {
+        rooms.add(id);
+        const open = !!me0 && RoomView.near(me0, t);
+        v.body.setAlpha(v.body.alpha * this.roomView.draw(id, t, look.colour, open));
+        if (me0 && Math.hypot(me0.x - t.x, me0.y - t.y) < t.room) indoors = String(t.phrase).toUpperCase();
+      }
       this.label(v, [counted(t.phrase, t.count)], t.owner === mine ? TAG_INK.mine : t.owner ? TAG_INK.theirs : TAG_INK.wild);
       v.x = t.x * PX; v.y = t.y * PX;
       this.place(v, id, time, t.hp, t.hp < 100 && v.barUntil > time);
@@ -1336,6 +1352,8 @@ class World extends Phaser.Scene {
       if (id === mine || (id === this.watching && !state.players.get(mine))) this.cameras.main.centerOn(v.x, v.y);
     });
     for (const [id, v] of this.views) if (!live.has(id)) this.drop(id, v);
+    this.roomView.keep(rooms);
+    this.indoors = indoors;
     this.unstackTags();
     this.overlays(time, delta);
 
@@ -1382,7 +1400,9 @@ class World extends Phaser.Scene {
     state.cities?.forEach((c: any) => {
       if (Math.hypot(c.x - me.x, c.y - me.y) <= c.radius + 1) city = `${c.ruler ? `ruled by ${c.ruler}` : "nobody rules it"} · ${c.citizens} citizen${c.citizens === 1 ? "" : "s"}`;
     });
-    this.hud.corner(Tile[tileAt(this.map, me.x, me.y)] ?? "", Math.floor(me.x), Math.floor(me.y), state.wind ?? 0, city);
+    // Indoors (shared interior.ts): say where, and that outsiders cannot see you.
+    if (this.indoors) this.hud.corner(`In ${this.indoors}`, Math.floor(me.x), Math.floor(me.y), state.wind ?? 0, "hidden from outside");
+    else this.hud.corner(Tile[tileAt(this.map, me.x, me.y)] ?? "", Math.floor(me.x), Math.floor(me.y), state.wind ?? 0, city);
     this.hud.where(
       `${Tile[tileAt(this.map, me.x, me.y)]} · ${Math.round(me.x * TILE_METERS)}, ${Math.round(me.y * TILE_METERS)} m · ` +
       `${others} other${others === 1 ? "" : "s"} in sight${state.daylight === "night" ? " · night" : ""}${state.weather ? ` · ${state.weather}` : ""}`,
