@@ -66,3 +66,60 @@ into `tools/generated_words.txt`, letters in `tools/producers.txt`). Art is draw
   up 0 -> 29 (mostly easy bots' EGGs), new words spelled 35 of 973 spellings -> 50 of 792, raids
   6 -> 3 (fewer hopeless doors), siege 0 -> 0 (1 in a 4-room run), borer 0 -> 0. Siege and borers stay rare for the same reason: few enemy walk-in or
   wooden buildings in sight when a bot is not fighting, and long words with rare letters.
+
+## Batch 3: traps and dungeons; heraldry, courts and fealty
+
+- Themes: 30 traps and dungeons (69 words: re-arming and capturing traps, restraints and torture
+  passed on a person, small lockups, earthworks, gaolers and prisoners, breakouts); 31 heraldry,
+  courts and fealty (79 words: oaths and fealty pacts, betrayals, court sentences and laws, a
+  challenge, knighthood, banners and charges, nobles, vassals and rebels, heraldic adjectives). 148
+  words in all; the dictionary is now 12,481 words. Existing words gained rules: SNARE is now a trap
+  (it had no trigger); DISARM breaks the new traps; REBELLION and REVOLUTION end fealty pacts; VETO,
+  REPEAL and REVOLUTION end UKASE, INTERDICT and ASSIZE.
+- New shared rules: crime.ts `rearms` (a trap with no `single_use` stays set and re-arms 20 s after
+  it springs, shown to everyone meanwhile: MANTRAP, MINEFIELD, BARBWIRE, CRUSHER, QUICKSAND) and
+  `capturesInto` (new property `captures`: a sprung MANTRAP or CHUTE, or INCARCERATION, INTERNMENT,
+  CAPTIVITY, REMAND passed on a person, drops the victim into its owner's nearest walk-in lockup
+  within 40 tiles); interior.ts `holds` (a walk-in lockup, home.ts `holdFactor`, keeps enemies inside
+  until its door is broken, and their blows from inside land on the door; a KEY or a LIBERATOR still
+  opens it at a touch, JAILBREAK and BREAKOUT break it round their speller). law.ts `tribute` (a pact
+  word with `tax_rate` makes its speller the liege: FEALTY 30%, VILLEINAGE 40%, FEUDALISM binds six
+  at 15%; every letter the others earn, a city's S included, pays the liege its share) and `endsPact`
+  (a word whose `counters` names the pact's word frees its speller with no penalty: BETRAYAL,
+  TREACHERY, PERFIDY, REBELLION, USURPATION). Attacking a member still breaks a pact with its penalty.
+- Interactions through existing systems: a CHALLENGE is a duel with stakes; KNIGHTHOOD summons four
+  knights; USURP and USURPATION take a city; ATTAINDER, OUTLAWRY and AMERCEMENT fine, expose and curse
+  through events on a person; INTERDICT, UKASE and ASSIZE are laws over an area; DISLOYALTY buys a
+  creature against its loyalty; nobles carry their own levy; PANOPTICON sees through walls.
+- Drawn: every new concrete word. New shapes: steel jaws, wire on posts, a minefield, an abatis, a
+  crusher in its frame, a trapdoor, cuffs, a garrote, a scourge, a thumbscrew, a muzzle, a blindfold,
+  a straitjacket, a gibbet, stone lockups with barred windows, earthworks, a foxhole, a maze, a sewer's
+  mouth, a hooded headsman with his axe, striped prisoners, banners with a charge (BLAZON, ORIFLAMME,
+  TRICOLOR, SALTIRE, ROUNDEL, QUARTERING), a sceptre, a dais and nobles; rosettes for oaths, betrayals
+  and breakouts.
+- Bots: `antiair` (weapons and creatures whose blows reach the air, armed mounts that fly): a bot with
+  a flyer coming for it, or one of the last left, that it cannot strike spells anti-air first, saves
+  up for it, and gets off a mount whose guns cannot reach the flyer to use what it carries; a bot with
+  anti-air now sees flyers as foes (before, every bot on the ground ignored them). `target` (the
+  general affordability change): a bot keeps one word it is two or three letters short of (anti-air
+  first, then a theme word it wants, a weapon if unarmed, armour, a creature, a mount, a producer) for
+  up to two minutes, walks to the nearest market to trade for its missing letters, keeps the letters it
+  needs out of trades, and spells it first once it can. `fealty` and `rebel` (a vassal ends its pact
+  with a counter-word), `held` and `breakout` (a captured bot breaks out or batters the door).
+- Stalemates (TODO): the time-up rounds had four causes, none of them the rules leaving no answer:
+  bots on the ground ignored flyers; easy or unarmed bots never sought anyone out; a bot standing in
+  its own walk-in building dropped a foe outside instead of walking out to it; and a far beast's fear
+  aura (CERBERUS saw 600 m, PTERODACTYL 2 km) broke every bot's nerve for the rest of the round, so
+  they stood frozen. Fixes: anti-air above; the endgame (with two left, or after 25 minutes, every
+  bot fights whoever it finds and goes after the nearest person, breaking the door if they hide
+  indoors, past any disguise); a bot indoors walks out after its foe; a bot with broken nerve and
+  nothing near to run from goes on thinking; and by data, the three beasts' sight is 100 to 200 m.
+- Tournament (32 rooms, 8 mixed bots, 30 min cap, same seeds, batch 3 dictionary; main's bots against
+  this batch's): rounds that hit the time cap 4 -> 0; mean round 13.3 -> 8.0 min; anti-air spelled
+  0 -> 159 times; words saved up for and spelled 24. Watched words (batches 1 to 3, 846) spelled:
+  172 of 4,519 spellings (3.8%) -> 103 of 3,448 (3.0%); a paired run without saving up gave 146 of
+  3,737 (3.9%) with the same bots otherwise. Saving up did not lift the share of long new words: bots
+  mostly save for armour, weapons and producers, which they spell a few seconds sooner, and the share
+  of racks that can spell a watched word is about 1% in rounds that are now half as long (4.5% before,
+  inflated by the time-up rounds' big racks). Traps sprang once; fealty was sworn 2 to 3 times a
+  tournament; no bot was captured (they rarely own a lockup and a capturing trap together).

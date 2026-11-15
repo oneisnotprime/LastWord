@@ -54,7 +54,6 @@ acclamation	noun	inert	communication	2.4	uncommon	n06704429	-
 acclimation	noun	inert	process	2.09	uncommon	n13445816	-
 acclimatisation	noun	inert	process	1.87	rare	n13445816	-
 acclimatization	noun	inert	process	2.01	uncommon	n13445816	-
-accolade	noun	inert	communication	2.82	uncommon	n06709228	-
 accost	verb	inert	communication	1.96	rare	v00992687	-
 accouchement	noun	inert	process	1.01	rare	n13469507	-
 account	noun	inert	communication	5.21	core	n06526084	verb:transfer
@@ -843,7 +842,6 @@ canto	noun	inert	communication	2.81	uncommon	n07045123	-
 canvassing	noun	inert	communication	2.88	uncommon	n07260545	-
 capriccio	noun	inert	communication	1.77	rare	n07295129	-
 captivate	verb	inert	emotion	2.52	uncommon	v01810472	-
-captivity	noun	inert	state	3.56	common	n14022691	-
 carbonation	noun	inert	process	2.4	uncommon	n13464171	-
 carbonisation	noun	inert	process	1.01	rare	n13464543	-
 carbonization	noun	inert	process	1.88	rare	n13464543	-
@@ -907,7 +905,6 @@ cerebrate	verb	inert	cognition	0.0	obscure	v00630153	-
 cervicitis	noun	inert	state	1.16	rare	n14363496	-
 chait	noun	inert	time	1.98	rare	n15244490	-
 chalazion	noun	inert	state	1.14	rare	n14226002	-
-challenge	verb	inert	communication	4.88	core	v00870790	noun:state
 chancre	noun	inert	state	1.22	rare	n14207549	-
 chancroid	noun	inert	state	1.22	rare	n14235785	-
 channels	noun	inert	communication	4.38	core	n06272117	-
@@ -2559,7 +2556,6 @@ impute	verb	inert	cognition	1.92	rare	v00728262	-
 inaction	noun	inert	state	3.13	common	n14033619	-
 inapplicability	noun	inert	relation	1.01	rare	n13818265	-
 incantation	noun	inert	communication	2.56	uncommon	n07174767	-
-incarceration	noun	inert	state	3.36	common	n14022691	-
 incipience	noun	inert	time	0.0	obscure	n15167972	-
 incipiency	noun	inert	time	0.0	obscure	n15167972	-
 incisura	noun	inert	shape	0.0	obscure	n13928127	-
@@ -2641,7 +2637,6 @@ inrush	noun	inert	process	1.83	rare	n13521640	-
 insaneness	noun	inert	state	0.0	obscure	n14418644	-
 insanity	noun	inert	state	3.72	common	n14418422	-
 insecureness	noun	inert	state	0.0	obscure	n14567761	-
-insignia	noun	inert	communication	3.15	common	n06896123	-
 insist	verb	inert	communication	4.03	core	v00820635	-
 insisting	noun	inert	communication	3.55	common	n07206437	-
 insobriety	noun	inert	state	0.0	obscure	n14042038	-
@@ -2683,7 +2678,6 @@ interrelatedness	noun	inert	relation	1.35	rare	n13866409	-
 interrelation	noun	inert	relation	1.89	rare	n13866409	-
 interrelationship	noun	inert	relation	2.04	uncommon	n13866409	-
 interrogate	verb	inert	communication	2.9	uncommon	v00975562	-
-interrogation	noun	inert	communication	3.56	common	n07211342	-
 interview	verb	inert	communication	4.86	core	v00810517	noun:communication
 intestacy	noun	inert	state	1.64	rare	n13959474	-
 intimidate	verb	inert	emotion	3.31	common	v01784999	-
@@ -3431,7 +3425,6 @@ numbering	noun	inert	communication	3.27	common	n06502878	-
 nyctophobia	noun	inert	state	0.0	obscure	n14407446	-
 nycturia	noun	inert	process	0.0	obscure	n13543688	-
 nympholepsy	noun	inert	state	0.0	obscure	n14114500	-
-oath	noun	inert	communication	3.96	common	n07139804	-
 obbligato	noun	inert	communication	1.63	rare	n07043068	-
 obfuscate	verb	inert	communication	2.28	uncommon	v00942245	-
 obit	noun	inert	communication	2.41	uncommon	n06760847	-
@@ -4390,8 +4383,6 @@ scandalise	verb	inert	emotion	1.05	rare	v01814414	-
 scandalize	verb	inert	emotion	1.65	rare	v01814414	-
 scansion	noun	inert	communication	1.46	rare	n07109174	-
 scaphocephaly	noun	inert	state	0.0	obscure	n14492092	-
-scepter	noun	inert	state	2.73	uncommon	n14467142	-
-sceptre	noun	inert	state	2.61	uncommon	n14467142	-
 scet	noun	inert	time	0.0	obscure	n15156400	-
 schemozzle	noun	inert	state	0.0	obscure	n14000354	-
 scherzo	noun	inert	communication	2.18	uncommon	n07060975	-
@@ -5232,7 +5223,6 @@ voiceprint	noun	inert	communication	1.69	rare	n06658785	-
 voiding	noun	inert	process	2.32	uncommon	n13494300	-
 volvulus	noun	inert	state	1.72	rare	n14597559	-
 vouch	verb	inert	communication	3.13	common	v01017113	-
-vow	verb	inert	communication	3.56	common	v00888280	noun:communication
 vowel	noun	inert	communication	3.33	common	n07127258	-
 vowelise	verb	inert	communication	0.0	obscure	v00985667	-
 vowelize	verb	inert	communication	0.0	obscure	v00985667	-

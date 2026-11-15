@@ -196,9 +196,13 @@ by how many words set them (minds and upkeep took `sentient`, `intelligence`, `f
           walk-in building's door (PORTCULLIS, DRAWBRIDGE), breaches, polearms, guns, armour; 128 words
       29. [x] Mythic beasts and prehistoric giants (expansion batch 2): hatching, young beasts that grow
           into dragons and dinosaurs, the old stories' counters; 152 words
+      30. [x] Traps and dungeons (expansion batch 3): re-arming traps, captures into a lockup, lockups that
+          hold enemies until the door breaks; 69 words (docs/EXPANSION_LOG.md)
+      31. [x] Heraldry, courts and fealty (expansion batch 3): fealty pacts that pay their liege tribute,
+          pacts ended free by BETRAYAL and REBELLION, courts, challenges, banners and nobles; 79 words
       - [ ] Bots spell siege words and borers only rarely (EXPANSION_LOG batch 2): few enemy walk-in or
-          wooden buildings in sight, long words with rare letters; a bot riding a JET with no air-capable
-          weapon on the other side can stall a round to time-up
+          wooden buildings in sight, long words with rare letters. (The JET stall is fixed in batch 3: bots facing a
+          flyer seek anti-air, and with two left or late in a round every bot hunts.)
 
 - [x] Before the next art pass: research external tools that make per-word art faster and
       cheaper than writing it with Claude (image generation pipelines, pixel/paper-style

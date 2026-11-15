@@ -296,3 +296,15 @@ Node process that owns the game state. One room per map instance (from milestone
   gone indoors turns into a raid on the door (`raid`, `break in`, then in after them), `botFlee`
   hides in its own building (`hide`), `botShelter` goes in from striking areas (`shelter`),
   `botStore` puts carried valuables down inside (`store`), and home is sometimes indoors.
+- Expansion batch 3: traps that re-arm (`sprung`: shown to all until set again) and capture
+  (`capture`: into the captor's side's nearest lockup, `heldIn`; `bar` holds an enemy inside a lockup,
+  its blows from inside land on the door in `strikeThing`); events on a person with `captures` do the
+  same. Pacts carry `liege` and `tribute` (`earn` pays the liege its share; `freePact` in
+  `withCounters` and the object path ends a pact a word counters). Bots: `held` (a breakout word, else
+  it batters the door), `fealty` and `rebel` tries in `botThemes`, `antiair` (bots.ts: weapons and
+  creatures that target the air, flying armed mounts; `reachesAir`, `needsAir`, `BotMind.air`: a flyer
+  it cannot strike sends it after one first, and a rider whose mount cannot reach a flyer gets off to
+  use what it carries), `BotMind.target` (`botTarget`: a word a few letters short, TARGET_SHORT, kept
+  TARGET_SECONDS; `botWant` trades and offers toward it and `botTrade` keeps its letters; spelled
+  first once affordable), and the endgame (`endgame`: with two left or after 25 min every bot fights
+  whoever it finds and goes after the nearest). `loadtest/tournament.ts` prints who was left at time-up.

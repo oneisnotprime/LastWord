@@ -1,3 +1,4 @@
+import { holdFactor } from "./home.js";
 import type { Stats } from "./stats.js";
 
 /**
@@ -58,6 +59,15 @@ export const opensDoors = (s: Stats): boolean => s.tags("counters").some((c) => 
 /** Whether its sight passes walls (`sees_through` walls: a RADAR, a SIXTH sense). */
 export const seesThroughWalls = (s: Stats): boolean => s.tags("sees_through").includes("walls");
 
+/**
+ * Lockups hold (theme 30, traps and dungeons): a walk-in building that is a lockup (shared home.ts
+ * `holdFactor`: lockable, security HOLD_FROM or more, no comfort: a JAIL, a DUNGEON, a PANOPTICON)
+ * keeps enemies who are inside from walking out until its door is broken, and their blows from
+ * inside land on the door. A door counter they carry (a KEY, a LIBERATOR) still opens it at a touch;
+ * a breaching event spelled inside (JAILBREAK, BREAKOUT) breaks it.
+ */
+export const holds = (s: Stats, count = 1): boolean => !!interiorOf(s, count) && holdFactor(s) > 1;
+
 /** A room's lines for a card. */
 export function interiorText(s: Stats, count = 1): string[] {
   const room = interiorOf(s, count);
@@ -65,6 +75,7 @@ export function interiorText(s: Stats, count = 1): string[] {
   if (room) {
     out.push(`walk-in: ${Math.round(room.radius * 2)} tiles across; inside, outsiders cannot see or strike you, and what you put down is safe from thieves`);
     out.push(`door ${Math.round(room.door)} HP: enemies must break it to get in (blows land on it first)`);
+    if (holds(s, count)) out.push("a lockup: enemies inside cannot walk out until the door is broken (their blows land on it)");
   }
   if (opensDoors(s)) out.push("breaks an enemy's door at a touch: walk in");
   if (seesThroughWalls(s)) out.push("sees who hides inside buildings");

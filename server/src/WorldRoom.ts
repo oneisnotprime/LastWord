@@ -18,7 +18,7 @@ import {
   comfortOf, homeComfort, storageOf, keepSafe, exposed, hoards, eyeOf, automates, breedRate, HERD_RANGE, craftPlan, craftsOf, CRAFT_RANGE, CRAFTED,
   isGraft, severing, airAt, exposure, disguised, UNMASKED_SECONDS, WARM_FROM, WARM_RANGE, catchChance, recovered, CONTACT_TILES, SICK_CONTAGION, IMMUNE_SECONDS,
   wonOver, spoiling, earshot, HEARD_FROM, CAUGHT_SECONDS, Stats as Sheet,
-  earnFactor, isBoon, isExposed, debtDue, owesTo, contestOf, canPay, interestDue, isTrap, springReach, hiddenFrom, EXPOSED_TILES,
+  earnFactor, isBoon, isExposed, debtDue, owesTo, contestOf, canPay, interestDue, isTrap, springReach, hiddenFrom, rearms, capturesInto, REARM_SECONDS, CAPTURE_TILES, holds, endsPact, EXPOSED_TILES,
   fooledByDecoys, decoyAt, readout, offering, faithProblem, ALTAR_TILES, weatherTile, patchNear, PATCH_SECONDS, PATCHES,
   walkable as walkableAt, timeOf, timeAt, rewound, agedBorn, REWIND_WINDOW, gravityOf, gravitySpeed, gravityRange, floats, grounded, knockbackOf, impacts, impactNear,
   sails, SAIL_COST, LAUNCH_TILES, BOARD_TILES, PORT_TILES, PORT_TOLL, waveDamage, waveSlow, fishTable, catchOf,
@@ -69,7 +69,7 @@ interface Gear {
 }
 
 /** People on one side for a while (shared law.ts): a TREATY, an ALLIANCE. */
-interface Pact { id: string; word: string; members: Set<string>; until: number; penalty: string[] }
+interface Pact { id: string; word: string; members: Set<string>; until: number; penalty: string[]; liege: string; tribute: number }
 
 /** A passing effect on bodies: a verb someone cast, or weather over everyone. */
 interface Effect { word: string; set: Record<string, Value>; ops: Op[]; until: number }
@@ -517,6 +517,16 @@ interface BotMind {
   given?: Set<string>;
   /** A theme word it has a target for but cannot yet afford (borers for an enemy's wooden house, a siege word for a door): what it trades toward first. */
   wants?: { use: Use; eats?: string };
+  /**
+   * A word it saves up for across thinks (`botTarget`): the best it is a few letters short of
+   * (TARGET_SHORT at most), kept until it is spelled, given up, or TARGET_SECONDS pass. It trades
+   * at markets and makes offers for its missing letters, and keeps the letters it needs.
+   */
+  target?: { word: BotWord; until: number };
+  /** When it last met a foe in the air it had nothing to strike flyers with: it seeks anti-air (bots.ts `antiair`). */
+  air?: number;
+  /** When it last looked for a word to save up for. */
+  targetAt?: number;
   /** The themes' systems (`botThemes`, `botCure`, `botBoat`): traps laid, shrines built, aimed words that missed, when it last stepped away from the sick, a boat trip. */
   traps?: number;
   shrines?: number;
@@ -534,6 +544,11 @@ interface BotMind {
 const BOT_BOSS_AFTER = 600;
 /** Round seconds after which (or once three or fewer are left) armed bots seek out the others, however far. */
 const BOT_HUNT_AFTER = 1200;
+/** Letters short a bot's target word may be (`BotMind.target`), and how long it saves up for one. */
+const TARGET_SHORT = 3;
+const TARGET_SECONDS = 120;
+/** Seconds a foe in the air it cannot strike keeps a bot looking for anti-air. */
+const AIR_MEMORY = 60;
 
 /** Seconds a bot keeps the peace at the start: between these two. */
 const BOT_PEACE: [number, number] = [60, 90];
@@ -629,6 +644,8 @@ export class WorldRoom extends Room {
   private waterers = new Map<string, number>();
   /** Traps on the ground (shared crime.ts), by thing id: tiles at which each springs. */
   private traps = new Map<string, number>();
+  /** Traps that re-arm (shared crime.ts `rearms`), sprung: when each is set again. Shown to all until then. */
+  private sprung = new Map<string, number>();
   /** Explosives lying on the ground (`single_use` with damage, not a trap) and when each goes off. */
   private fuses = new Map<string, number>();
   /** Altars on the ground (shared faith.ts `sacrifice`), by thing id: their multiplier. */
@@ -1141,6 +1158,7 @@ export class WorldRoom extends Room {
     if (countered) this.sendTo(id, "notice", `${phrase.noun.toUpperCase()} ended ${countered} area${countered === 1 ? "" : "s"}`);
     const culled = this.exterminate(phrase.noun, id, walker);
     if (culled) this.sendTo(id, "notice", `${phrase.noun.toUpperCase()} wiped out ${culled}`);
+    this.freePact(id, phrase.noun);
     const done = this.make(id, walker, phrase);
     this.sendTo(id, "letters", walker.letters);
     const many = phrase.count > 1 || phrase.plural;
@@ -1920,7 +1938,10 @@ export class WorldRoom extends Room {
    * how often and how well each difficulty does each.
    */
   private thinkBot(id: string, w: Walker, mind: BotMind) {
-    if (this.state.phase === "over" || w.fleeing || w.hamper.flees.length || w.hamper.random) return;
+    if (this.state.phase === "over" || w.hamper.flees.length || w.hamper.random) return;
+    // Broken nerve with nothing near to run from (a far beast's fear, a DESPAIR): it does not stand frozen
+    // all round; it looks for a word that steadies it and goes on (else a round stalls to the time cap).
+    if (w.fleeing && (w.fleeFrom || this.elapsed < (this.bots.get(id)?.peaceUntil ?? 0))) return;
     const skill = SKILL[mind.difficulty];
     const hard = mind.difficulty === "hard", easy = mind.difficulty === "easy";
     const have = held(w.letters);
@@ -1932,11 +1953,14 @@ export class WorldRoom extends Room {
     };
     if (canSpell() && (w.hungry || w.stores.food < 0.5)) { const ate = this.botEat(id, w, mind, have); if (ate) spelled(ate); }
     const peaceful = this.elapsed < mind.peaceUntil;
+    const endgame = this.state.alive <= 2 || this.elapsed > BOT_HUNT_AFTER * 1.25;
 
     // Who is about: people (and their creatures) who attack it, people to hunt down, wild game.
     type Seen = { id: string; d: number; hp: number; person: boolean };
     const people: Seen[] = [], attackers: Seen[] = [], game: Seen[] = [];
     let mine = 0;
+    // Whether its blows reach flyers: it flies, or what it strikes with targets the air (a BOW, a JET, a NET).
+    const airArmed = this.reachesAir(id, w);
     // The sick close by (shared disease.ts): a bot that plays well keeps its distance.
     let sick: Walker | null = null;
     const wary = !easy && !w.statuses.some((a) => a.status === "sick") && !recovered(w.recovered, this.elapsed);
@@ -1947,11 +1971,13 @@ export class WorldRoom extends Room {
       const dx = o.player.x - w.player.x, dy = o.player.y - w.player.y, far = w.sight * 2;
       if (Math.abs(dx) > far || Math.abs(dy) > far) continue; // past twice its sight either way: no need for Math.hypot
       const d = Math.hypot(dx, dy);
-      if (d > far || (o.flying && !w.flying)) continue;
+      if (d > far) continue;
+      // A flyer it cannot strike: not a foe to chase, but one coming for it (or one of the last left) sends it after anti-air.
+      if (o.flying && !w.flying && !airArmed) { if (o.master === null || o.foe === id) { if (o.foe === id || this.state.alive <= 3) mind.air = this.elapsed; } continue; }
       if (o.inside && this.walkerHidden(id, w, o)) continue; // indoors, out of its sight (shared interior.ts)
       const e = { id: oid, d, hp: o.hp, person: o.master === null };
       if (o.foe === id) attackers.push(e);
-      else if (o.master === null) { if (!this.fooled(w, o, d)) people.push(e); } // a disguise passes (shared wear.ts)
+      else if (o.master === null) { if (endgame || !this.fooled(w, o, d)) people.push(e); } // a disguise passes (shared wear.ts), but not with the round at its end
       else if (o.master === "-" && o.citizenOf === undefined && d <= w.sight && !aggressive(o.unit.body.stats)) game.push(e);
     }
 
@@ -1964,6 +1990,17 @@ export class WorldRoom extends Room {
       return;
     }
     mind.running = false;
+
+    // Held in an enemy's lockup (shared interior.ts `holds`): a breakout word if it has one, else it batters the door from inside.
+    if (w.inside && this.heldIn(id, w, w.inside)) {
+      if (canSpell()) {
+        const out = chooseWord(wordBook(this.dict).byUse.get("breakout"), have, mind.difficulty, this.rng, (x) => !mind.tried.has(x.word));
+        if (out) { try { this.spellWord(id, w, out.word); spelled("breakout"); return; } catch { mind.tried.add(out.word); } }
+      }
+      w.foe = w.inside; w.gathering = 0;
+      this.botUsed(mind, "held");
+      return;
+    }
 
     // Strikes from the sky or an area on it, and a building of its own near: it goes indoors (shared interior.ts).
     if (this.rooms.size && !attackers.length && this.botShelter(id, w, mind)) return;
@@ -2013,7 +2050,8 @@ export class WorldRoom extends Room {
       }
     }
     if (!foe && attackers.length) foe = pick(attackers.filter(strikable));
-    else if (!foe && !peaceful && (!easy || armed)) foe = pick(people.filter((e) => e.d <= (easy ? 5 : w.sight * 2) && strikable(e)));
+    // The end of a round (two left, or late): every bot fights whoever it finds, armed or not.
+    else if (!foe && !peaceful && (!easy || armed || endgame)) foe = pick(people.filter((e) => e.d <= (easy && !endgame ? 5 : w.sight * 2) && strikable(e)));
     // Hunting (H) and breaking ruins (D, X) when nobody needs fighting.
     if (!foe && game.length && (armed || w.unit.attack.num("dmg_blunt") > 0)) foe = pick(game.filter((e) => (e.hp <= 100 || armed) && strikable(e) && !this.lawBars("hunt", id, w, w.player)));
     if (!foe) {
@@ -2036,6 +2074,9 @@ export class WorldRoom extends Room {
       for (const [oid, o] of this.walkers) if (o.boss && Math.hypot(o.player.x - w.player.x, o.player.y - w.player.y) <= far) { foe = oid; break; }
     }
     if (foe !== w.foe) { w.foe = foe; if (foe) { w.gathering = 0; mind.fetch = undefined; } }
+    // Its foe flies and its mount's guns cannot reach it, but something it carries can: it gets off to use that.
+    const flyer = w.foe ? this.walkers.get(w.foe) : undefined;
+    if (flyer?.flying && w.unit.riding && !w.flying && !w.unit.attack.tags("targets").includes("air") && airArmed) { try { this.dismountWalker(id, w); this.botUsed(mind, "antiair"); } catch { /* cannot get off here */ } }
     // Someone sick within reach of catching it, and nobody to fight: it steps away (not easy).
     if (sick && !attackers.length && (!w.foe || w.foe === sick.id)) {
       const dx = w.player.x - sick.player.x, dy = w.player.y - sick.player.y, len = Math.hypot(dx, dy) || 1;
@@ -2053,6 +2094,8 @@ export class WorldRoom extends Room {
 
     // One word every few seconds: a counter to what is used against it, the most useful word it
     // can afford, else another system (adjectives, areas, roads, cities, cooking, trade).
+    // Every few seconds (not easy) it looks again at the word it is saving up for (`botTarget`).
+    if (!easy && this.elapsed - (mind.targetAt ?? -Infinity) >= 5) { mind.targetAt = this.elapsed; this.botTarget(mind, have, w); }
     if (canSpell()) {
       // Now and then (more often the better it plays) another system comes before the next word.
       const systems = () => this.rng() < skill.systems ? this.botSystems(id, w, mind, have, people.map((e) => e.id), mine) : null;
@@ -2086,14 +2129,22 @@ export class WorldRoom extends Room {
       mind.goal = undefined;
     }
     // Late in a round with few left (not easy, armed): go and find the nearest of them, wherever they are.
-    if (!easy && armed && !peaceful && (this.elapsed > BOT_HUNT_AFTER || this.state.alive <= 3)) {
+    // With only two left, every bot goes, armed or not: a round must end in a fight, not at the time cap.
+    if (!peaceful && ((!easy && armed && (this.elapsed > BOT_HUNT_AFTER || this.state.alive <= 3)) || endgame)) {
       let near: Walker | null = null, best = Infinity;
       for (const [oid, o] of this.walkers) {
         if (oid === id || o.master !== null) continue;
         const d = Math.hypot(o.player.x - w.player.x, o.player.y - w.player.y);
         if (d < best) { best = d; near = o; }
       }
-      if (near && best > w.sight) { w.target = nearestWalkable(this.map, { x: near.player.x, y: near.player.y }); return; }
+      if (near && near.flying && !airArmed) mind.air = this.elapsed;
+      // Hiding indoors from it at the end of a round: it breaks the door (a raid) rather than waiting all round outside.
+      if (near && near.inside && this.walkerHidden(id, w, near) && !this.homeSide(id, w, near.inside) && this.rooms.has(near.inside)) {
+        const r = this.rooms.get(near.inside)!;
+        if (r.broken) { w.target = { x: r.x, y: r.y }; return; }
+        w.foe = near.inside; w.gathering = 0; this.botUsed(mind, "raid"); return;
+      }
+      if (near && best > w.sight * (near.flying && !airArmed ? 0.5 : 1)) { w.target = nearestWalkable(this.map, { x: near.player.x, y: near.player.y }); return; }
     }
     // A chest in sight is worth the walk; otherwise gather here while there is something to find.
     const chest = this.nearFixture(w, "chest", w.sight);
@@ -2121,6 +2172,12 @@ export class WorldRoom extends Room {
         w.target = { ...mind.goal };
         return;
       }
+    }
+    // Saving up for a word with letters to spare: to the nearest market, to trade for what it lacks.
+    if (mind.target && total >= 8 && this.rng() < 0.6) {
+      const m = this.nearFixture(w, "market", 80);
+      const t = m ? this.state.things.get(m) : undefined;
+      if (t && Math.hypot(t.x - w.player.x, t.y - w.player.y) > MARKET.range * 0.8) { w.target = nearestWalkable(this.map, { x: t.x, y: t.y }); return; }
     }
     if (c && total >= 12 && this.rng() < 0.4) {
       w.target = { x: c.x + 0.5 + (this.rng() - 0.5) * 2, y: c.y + 0.5 + (this.rng() - 0.5) * 2 };
@@ -2476,6 +2533,26 @@ export class WorldRoom extends Room {
     const free = (x: BotWord) => !slots.has(String(this.dict.base(x.word, "equip_slot")));
     const cast = (use: string, x: BotWord | null, target?: string, spot?: Point) => x && this.botCast(id, w, mind, x, target, spot) ? use : null;
     const tries: (() => string | null)[] = [
+      // A vassal (shared law.ts fealty) breaks free with a word that ends its pact (BETRAYAL, REBELLION), aimed at its liege.
+      () => {
+        const pact = this.pactOf(id);
+        if (!pact || !(pact.tribute > 0) || pact.liege === id || easy) return null;
+        const liege = this.walkers.get(pact.liege);
+        const x = chooseWord(book.counters.get(pact.word), have, mind.difficulty, this.rng, (x) => !mind.tried.has(x.word));
+        if (!x) return null;
+        w.picked = liege ? pact.liege : null;
+        try { this.spellWord(id, w, x.word); return "rebel"; } catch { mind.tried.add(x.word); return null; } finally { w.picked = null; }
+      },
+      // Fealty on someone near who is not fighting it, when it is in no pact: they pay it tribute (shared law.ts).
+      () => {
+        if (easy || this.pactOf(id)) return null;
+        for (const pid of people) {
+          const o = this.walkers.get(pid);
+          if (!o || o.foe === id || this.pactOf(pid)) continue;
+          return cast("fealty", choose("fealty", (x) => dist(o.player) <= x.reach), pid);
+        }
+        return null;
+      },
       // A disguise once the peace is over: enemies' creatures, wild animals and bots take it for one of theirs.
       () => !easy && !peaceful && !(w.unit.body.stats.num("disguise") > 0) ? cast("disguise", choose("disguise", free)) : null,
       // A body part on itself, or on one of its creatures in sight.
@@ -2706,6 +2783,65 @@ export class WorldRoom extends Room {
         if (count === 1) return { word, letter: String.fromCharCode(97 + short) };
       }
     }
+    // Nothing one letter off: the word it is saving up for, a few letters off, and one it lacks.
+    const target = w ? this.botTarget(mind, have, w) : null;
+    if (target) for (let i = 0; i < 26; i++) if (target.cost[i]! > have[i]! && !MARKET.refuses.includes(String.fromCharCode(97 + i))) return { word: target, letter: String.fromCharCode(97 + i) };
+    return null;
+  }
+
+  /** Whether a bot met a foe in the air lately and has nothing that strikes flyers. */
+  private needsAir(w: Walker, mind: BotMind): boolean {
+    return mind.air !== undefined && this.elapsed - mind.air < AIR_MEMORY && !this.reachesAir(w.id, w);
+  }
+
+  /**
+   * Whether anything of a person's reaches flyers: it flies, what it strikes with targets the air,
+   * it carries a weapon that does (a BOW kept beside a land mount's guns), or a creature of its flies
+   * or strikes the air (an EAGLE, a GRYPHON).
+   */
+  private reachesAir(id: string, w: Walker): boolean {
+    if (w.flying || w.unit.attack.tags("targets").includes("air")) return true;
+    for (const g of w.gear) { const st = this.statsOf(g); if (st.tags("targets").includes("air") && hasDamage(st)) return true; }
+    for (const c of this.walkers.values()) if (c.master === id && (c.flying || c.unit.attack.tags("targets").includes("air"))) return true;
+    return false;
+  }
+
+  /**
+   * The word a bot saves up for (`BotMind.target`): kept until spelled or TARGET_SECONDS pass; else
+   * the best word of the uses it wants (anti-air against a flyer, a theme word it has a target for,
+   * then a weapon if unarmed, armour, a creature, a mount, a producer) that it is TARGET_SHORT letters
+   * or fewer short of, none of them a letter markets will not sell. Ranked by worth for the letters
+   * still missing, so a long word a couple of letters off is worth saving for.
+   */
+  private botTarget(mind: BotMind, have: Uint8Array, w: Walker): BotWord | null {
+    const t = mind.target;
+    if (t && this.elapsed < t.until && !mind.tried.has(t.word.word)) return t.word;
+    mind.target = undefined;
+    if (mind.difficulty === "easy") return null;
+    const book = wordBook(this.dict);
+    const uses: Use[] = [...(this.needsAir(w, mind) ? ["antiair" as Use] : []), ...(mind.wants ? [mind.wants.use] : []),
+      ...(w.unit.weapon ? [] : ["weapon" as Use]), "armor", "creature", "mount", "producer"];
+    for (const use of uses) {
+      let best: BotWord | null = null, bestScore = 0;
+      const list = book.byUse.get(use) ?? [];
+      for (let k = 0; k < Math.min(list.length, 400); k++) {
+        const word = list[k]!;
+        if (mind.tried.has(word.word)) continue;
+        let short = 0, refused = false;
+        for (let i = 0; i < 26 && short <= TARGET_SHORT; i++) {
+          const lack = word.cost[i]! - have[i]!;
+          if (lack > 0) { short += lack; if (MARKET.refuses.includes(String.fromCharCode(97 + i))) refused = true; }
+        }
+        if (short < 2 || short > TARGET_SHORT || refused) continue;
+        const score = word.score / short;
+        if (score > bestScore) { best = word; bestScore = score; }
+      }
+      if (best) {
+        mind.target = { word: best, until: this.elapsed + TARGET_SECONDS };
+        this.botUsed(mind, "target");
+        return best;
+      }
+    }
     return null;
   }
 
@@ -2731,9 +2867,11 @@ export class WorldRoom extends Room {
       const get = letter && !MARKET.refuses.includes(letter) ? letter : [..."aeiourstln"].sort((a, b) => (w.letters[a] ?? 0) - (w.letters[b] ?? 0))[0]!;
       try { this.sell(id, w, sale.index, get); return "sell"; } catch { /* not today */ }
     }
-    const spare = Object.entries(w.letters).filter(([, n]) => n > 0).sort((a, b) => b[1] - a[1])[0];
-    if (!spare || spare[1] < info.ratio + 1) return null;
     const want = this.botWant(mind, have, w);
+    // Its spare letters: what it holds beyond what the word it wants takes.
+    const extra = ([ch, n]: [string, number]) => n - (want ? want.word.cost[ch.charCodeAt(0) - 97]! : 0);
+    const spare = Object.entries(w.letters).filter((e) => extra(e) > 0).sort((a, b) => extra(b) - extra(a))[0];
+    if (!spare || extra(spare) < info.ratio + 1) return null;
     if (!want || MARKET.refuses.includes(want.letter) || want.letter === spare[0]) {
       // Nothing to buy, a lopsided rack (half of it one letter), and this market's swap unused: swap the lot.
       if (!info.swapped && total >= 6 && spare[1] * 2 >= total && mind.difficulty !== "easy") {
@@ -2797,7 +2935,11 @@ export class WorldRoom extends Room {
     const homeClaimed = mind.home && [...this.areas.values()].some((a) => a.claim && a.owner === id && Math.hypot(a.x - mind.home!.x, a.y - mind.home!.y) <= a.radius);
     const stake = (mind.home && !homeClaimed && Math.hypot(w.player.x - mind.home.x, w.player.y - mind.home.y) < 6) ? () => choose("claim") : () => null;
     const inReach = (x: BotWord) => !!foe && Math.hypot(foe.player.x - w.player.x, foe.player.y - w.player.y) <= x.reach;
-    return (peaceful ? build() ?? stake() : null)
+    // A foe in the air it cannot strike (a JET): something that reaches flyers comes first (bots.ts `antiair`).
+    const skyward = this.needsAir(w, mind) ? () => choose("antiair") : () => null;
+    // The word it has been saving up for (`botTarget`), once it can pay for it.
+    const saved = () => { const t = mind.target && affords(have, mind.target.word) && ok(mind.target.word) ? mind.target.word : null; if (t) { mind.target = undefined; this.botUsed(mind, "target spelled"); } return t; };
+    return skyward() ?? saved() ?? (peaceful ? build() ?? stake() : null)
       ?? stake()
       ?? (!armed ? choose("weapon") : null)
       ?? choose("armor", (x) => !slots.has(x.slot))
@@ -3052,15 +3194,28 @@ export class WorldRoom extends Room {
     const members = new Set([id, first, ...others].slice(0, spec.size));
     for (const m of members) { const old = this.pactOf(m); if (old) old.members.delete(m); }
     for (const [pid, old] of this.pacts) if (old.members.size < 2) this.pacts.delete(pid);
-    const pact: Pact = { id: `pact${this.nextPact++}`, word: phrase.noun, members, until: this.elapsed + spec.minutes * 60, penalty: spec.penalty };
+    const pact: Pact = { id: `pact${this.nextPact++}`, word: phrase.noun, members, until: this.elapsed + spec.minutes * 60, penalty: spec.penalty, liege: id, tribute: spec.tribute };
     this.pacts.set(pact.id, pact);
     const names = [...members].map((m) => this.walkers.get(m)!.player.name).join(", ");
     for (const m of members) {
       const w = this.walkers.get(m)!;
       if (w.foe && members.has(this.walkers.get(w.foe)?.master ?? w.foe)) w.foe = null;
-      this.sendTo(m, "notice", `${word}: ${names} are one side for ${+spec.minutes.toFixed(1)} min. Attacking any of them breaks it: ${breachText(spec.penalty)}`);
+      this.sendTo(m, "notice", `${word}: ${names} are one side for ${+spec.minutes.toFixed(1)} min. Attacking any of them breaks it: ${breachText(spec.penalty)}${spec.tribute > 0 ? (m === id ? `. Your vassals pay you ${Math.round(spec.tribute * 100)}% of what they earn` : `. You pay ${walker.player.name} ${Math.round(spec.tribute * 100)}% of what you earn`) : ""}`);
     }
-    return `binds ${names} for ${+spec.minutes.toFixed(1)} min`;
+    return `binds ${names} for ${+spec.minutes.toFixed(1)} min${spec.tribute > 0 ? `; ${Math.round(spec.tribute * 100)}% of what the others earn is yours` : ""}`;
+  }
+
+  /**
+   * A word whose `counters` names the word of the pact its speller is in (BETRAYAL, REBELLION,
+   * USURPATION: shared law.ts `endsPact`) ends that pact with no penalty. Returns the pact's word, or "".
+   */
+  private freePact(id: string, word: string): string {
+    const pact = this.pactOf(id), tags = this.dict.word(word)?.set.counters;
+    if (!pact || !Array.isArray(tags) || !endsPact(tags as string[], pact.word)) return "";
+    this.pacts.delete(pact.id);
+    const name = this.walkers.get(id)?.player.name ?? id;
+    for (const m of pact.members) this.sendTo(m, "notice", `${word.toUpperCase()}: ${name} broke free of the ${pact.word.toUpperCase()}`);
+    return pact.word;
   }
 
   /** An attack ordered on someone in your pact breaks it, and the breaker pays its penalty. */
@@ -4344,6 +4499,7 @@ export class WorldRoom extends Room {
       const ended = cure(victim.statuses, s.tags("effect_status"));
       if (ended.length) { this.statusChanged(victim); said.push(`no longer ${ended.join(", ")}`); }
       if (s.num("restores") > 0) { this.restore(victim, s.num("restores")); said.push("restored"); }
+      if (capturesInto(s) && victim.id !== id) { const held = this.capture(victim, id, walker.player); if (held) said.push(`dropped into ${held}`); }
       if (s.num("rewinds") > 0 && this.rewind(victim, s.num("rewinds"))) { this.tell(victim); said.push(`the last ${Math.round(Math.min(REWIND_WINDOW, s.num("rewinds")))} s of harm undone`); }
       said.push(...this.informAndPay(id, walker, victim, s, word));
       const payer = this.walkers.get(victim.master && victim.master !== "-" ? victim.master : victim.id);
@@ -4632,7 +4788,8 @@ export class WorldRoom extends Room {
   private withCounters(word: string, done: string, id: string, walker: Walker): string {
     const n = this.counter(word);
     const culled = this.exterminate(word, id, walker);
-    return `${done}${n ? `; ${n} ${n === 1 ? "area" : "areas"} ended` : ""}${culled ? `; wiped out ${culled}` : ""}`;
+    const freed = this.freePact(id, word);
+    return `${done}${n ? `; ${n} ${n === 1 ? "area" : "areas"} ended` : ""}${culled ? `; wiped out ${culled}` : ""}${freed ? `; free of the ${freed.toUpperCase()}` : ""}`;
   }
 
   /**
@@ -5110,6 +5267,42 @@ export class WorldRoom extends Room {
     return (o ? this.side(owner, o) : owner) === this.side(id, w);
   }
 
+  /** Whether a walker inside a lockup is held there: an enemy of its living owner's side, its door whole. */
+  private heldIn(id: string, w: Walker, bid: string): boolean {
+    if (this.mayEnter(id, w, bid)) return false;
+    const g = this.grounded.get(bid), t = this.state.things.get(bid);
+    return !!g && !!t && holds(this.statsOf(g), t.count || 1);
+  }
+
+  /**
+   * Drops a walker into the nearest walk-in lockup (shared interior.ts `holds`) of its captor's side
+   * within CAPTURE_TILES of a spot, behind the door. Returns the lockup's name, or "" if none is near.
+   */
+  private capture(victim: Walker, captor: string, at: Point): string {
+    const c = this.walkers.get(captor);
+    const side = c ? this.side(captor, c) : captor;
+    let best = "", bestD = CAPTURE_TILES;
+    for (const [bid, r] of this.rooms) {
+      const t = this.state.things.get(bid), g = this.grounded.get(bid);
+      if (!t || !g || r.broken || !t.owner) continue;
+      const o = this.walkers.get(t.owner);
+      if (!o || this.side(t.owner, o) !== side || !holds(this.statsOf(g), t.count || 1)) continue;
+      const d = Math.hypot(r.x - at.x, r.y - at.y);
+      if (d <= bestD) { best = bid; bestD = d; }
+    }
+    if (!best || victim.flying || victim.unit.riding) return "";
+    const r = this.rooms.get(best)!;
+    victim.player.x = r.x; victim.player.y = r.y + r.r * 0.3;
+    victim.inside = best; victim.target = null; victim.route = []; victim.routeTo = null; victim.foe = null;
+    const name = this.grounded.get(best)!.phrase.toUpperCase();
+    if (victim.master === null) this.sendTo(victim.id, "notice", `Dropped into ${c?.player.name ?? "an enemy"}'s ${name}: break the door to get out`);
+    this.sendTo(captor, "notice", `${victim.player.name.toUpperCase()} is held in your ${name}`);
+    const cm = this.bots.get(captor);
+    if (cm) this.botUsed(cm, "captured");
+    this.refreshViews();
+    return name;
+  }
+
   /** Whether a walker may walk into a room: its side's, nobody's (or a dead owner's), or its door is broken. */
   private mayEnter(id: string, w: Walker, bid: string): boolean {
     const r = this.rooms.get(bid), owner = this.state.things.get(bid)?.owner ?? "";
@@ -5171,6 +5364,20 @@ export class WorldRoom extends Room {
   private bar(w: Walker, from: Point) {
     const bid = this.roomAt(w.player);
     if (bid === w.inside) return;
+    // A lockup holds the enemies inside it until its door is broken (shared interior.ts `holds`).
+    if (w.inside && this.heldIn(w.id, w, w.inside)) {
+      const breaker = this.doorBreaker(w, this.rooms.get(w.inside));
+      if (breaker) { this.breakDoor(w.inside, w.id, breaker); w.inside = bid; return; }
+      w.player.x = from.x; w.player.y = from.y;
+      const r = this.rooms.get(w.inside)!;
+      if (!inRoom(w.player, r.x, r.y, r.r)) { w.player.x = r.x; w.player.y = r.y + r.r * 0.3; }
+      w.target = null; w.route = []; w.routeTo = null;
+      if (w.master === null && !this.bots.has(w.id) && this.elapsed - (this.shutTold.get(w.id) ?? -Infinity) >= SHUT_SECONDS) {
+        this.shutTold.set(w.id, this.elapsed);
+        this.sendTo(w.id, "refused", `${this.grounded.get(w.inside)?.phrase.toUpperCase() ?? "It"}: you are held · attack the door to break out`);
+      }
+      return;
+    }
     if (!bid || this.mayEnter(w.id, w, bid)) { w.inside = bid; return; }
     const breaker = this.doorBreaker(w, this.rooms.get(bid));
     if (breaker) { this.breakDoor(bid, w.id, breaker); w.inside = bid; return; }
@@ -5703,7 +5910,9 @@ export class WorldRoom extends Room {
   private springTraps() {
     for (const [tid, reach] of [...this.traps]) {
       const t = this.state.things.get(tid), g = this.grounded.get(tid);
-      if (!t || !g) { this.traps.delete(tid); continue; }
+      if (!t || !g) { this.traps.delete(tid); this.sprung.delete(tid); continue; }
+      const armedAt = this.sprung.get(tid);
+      if (armedAt !== undefined) { if (this.elapsed < armedAt) continue; this.sprung.delete(tid); this.refreshViews(); }
       let victimId = "";
       const owner = this.walkers.get(t.owner), ownerSide = owner ? this.side(t.owner, owner) : t.owner;
       for (const [wid, w] of this.walkers) {
@@ -5718,7 +5927,8 @@ export class WorldRoom extends Room {
       const area = Math.max(0, stats.num("attack_area") / TILE_METERS);
       const hit = area > 0 ? [...this.walkers].filter(([, w]) => !w.flying && Math.hypot(w.player.x - t.x, w.player.y - t.y) <= area + reach) : [[victimId, victim] as [string, Walker]];
       const name = g.phrase.toUpperCase();
-      this.removeThing(tid);
+      // A trap that is not single-use stays and re-arms (shared crime.ts `rearms`); the rest are spent.
+      if (rearms(stats)) this.sprung.set(tid, this.elapsed + REARM_SECONDS); else this.removeThing(tid);
       for (const [wid, w] of hit) {
         if (!this.walkers.has(wid)) continue;
         if (hasDamage(stats)) {
@@ -5731,8 +5941,12 @@ export class WorldRoom extends Room {
         const given = inflicts(stats);
         if (given.length) this.hurtWith(w, given, t.owner, tid, true);
         if (w.master === null) this.sendTo(wid, "notice", `A hidden ${name} sprang on you`);
+        // A trap that captures drops whoever it caught into its owner's lockup (shared crime.ts).
+        if (wid === victimId && capturesInto(stats) && t.owner) this.capture(w, t.owner, t);
       }
       if (t.owner) this.sendTo(t.owner, "notice", `Your ${name} sprang on ${victim.player.name.toUpperCase()}`);
+      const om = t.owner ? this.bots.get(t.owner) : undefined;
+      if (om) this.botUsed(om, "trap sprung");
       this.refreshViews();
     }
   }
@@ -6278,7 +6492,8 @@ export class WorldRoom extends Room {
    */
   private strikeThing(attackerId: string, attack: Stats, id: string, thing: Thing, ranged = false, space = this.walkers.get(attackerId)?.inside ?? "") {
     const room = this.rooms.get(id);
-    if (room && !room.broken && space !== id) return this.strikeDoor(attackerId, attack, id, thing, room, ranged);
+    const prisoner = room && !room.broken && space === id ? this.walkers.get(attackerId) : undefined;
+    if (room && !room.broken && (space !== id || (prisoner && this.heldIn(attackerId, prisoner, id)))) return this.strikeDoor(attackerId, attack, id, thing, room, ranged);
     const gear = this.grounded.get(id)!;
     let entity = this.thingEntities.get(id);
     if (!entity) {
@@ -6406,6 +6621,20 @@ export class WorldRoom extends Room {
       this.award(a.owner, taxer, taken, `${a.word.toUpperCase()} on ${w.player.name}`, at);
       this.lettersChanged.add(a.owner);
       this.sendTo(id, "notice", `${a.word.toUpperCase()}: ${taken.toUpperCase()} went to ${taxer.player.name}`);
+    }
+    // Fealty (shared law.ts): a vassal pays its liege its share of every letter it earns.
+    const pact = w.master === null ? this.pactOf(id) : undefined;
+    const liege = pact && pact.tribute > 0 && pact.liege !== id ? this.walkers.get(pact.liege) : undefined;
+    if (pact && liege && got) {
+      let kept = "", taken = "";
+      for (const ch of got) (this.rng() < pact.tribute ? (taken += ch) : (kept += ch));
+      if (taken) {
+        got = kept;
+        this.award(pact.liege, liege, taken, `${pact.word.toUpperCase()} from ${w.player.name}`, at);
+        const lm = this.bots.get(pact.liege);
+        if (lm) this.botUsed(lm, "tribute");
+        this.lettersChanged.add(pact.liege);
+      }
     }
     this.award(id, w, got, why, at, detail);
     this.lettersChanged.add(id);
@@ -7354,6 +7583,8 @@ export class WorldRoom extends Room {
         // Nobody strikes across a wall. A bot whose quarry went indoors raids: it goes for the door.
         const bid = foe?.inside, mind = this.bots.get(id);
         if (bid && mind && !w.inside && !this.homeSide(id, w, bid) && !this.rooms.get(bid)!.broken) { w.foe = bid; this.botUsed(mind, "raid"); }
+        // Indoors and free to leave, its foe outside: it keeps the foe and walks out after it (it used to stand inside all round).
+        else if (w.inside && !foe?.inside && !this.heldIn(id, w, w.inside) && !this.rooms.has(foeId)) w.target = { x: at.x, y: at.y };
         else w.foe = null;
         continue;
       }
@@ -7544,7 +7775,7 @@ export class WorldRoom extends Room {
 
   /** True if a trap is hidden from a viewer: not theirs, and its stealth beats their eyes (shared crime.ts). */
   private trapHidden(id: string, t: Thing, viewer: Walker): boolean {
-    if (!this.traps.has(id) || t.owner === viewer.id) return false;
+    if (!this.traps.has(id) || t.owner === viewer.id || this.sprung.has(id)) return false;
     const owner = this.walkers.get(t.owner);
     if (owner && this.side(t.owner, owner) === this.side(viewer.id, viewer)) return false;
     return hiddenFrom(this.statsOf(this.grounded.get(id)!), viewer.unit.body.stats);

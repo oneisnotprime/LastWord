@@ -8,7 +8,7 @@
  */
 import {
   at, band, behind, biped, bird, boat, brickWall, bug, car, dino, dot, dragon, E, engine, eye, fish, flower, glue, house, icon, moved, P, part, plane, polearm, quad, R,
-  rosette, sign, snake, sym, tank, train, tree, wheel, type Piece, type Pt, type Silhouette,
+  rosette, sign, snake, sym, tank, train, tree, turn, wheel, type Piece, type Pt, type Silhouette,
 } from "./build.js";
 
 const s = (pieces: Piece[], colour?: string, extra: Partial<Silhouette> = {}): Silhouette => ({ pieces, colour, ...extra });
@@ -365,6 +365,69 @@ const multiHead = (base: Silhouette, hx: number, hy: number, r: number): Silhoue
 const twoHeaded = (base: Silhouette): Silhouette => ({ ...base, pieces: [...base.pieces, part(E(-22, -6, 3.6, 3, 10)), eye(-23, -7, 0.9)] });
 const stinger = (base: Silhouette, x: number, y: number): Silhouette => ({ ...base, pieces: [...base.pieces, part(band([[x, y], [x - 8, y - 12], [x - 2, y - 22], [x + 6, y - 20]], 2.6, 1.4), "deep"), glue(P(x + 6, y - 22, x + 11, y - 19, x + 6, y - 17), "#3d2a1e")] });
 
+
+// Theme 30 (traps and dungeons) and theme 31 (heraldry, courts and fealty).
+/** Steel jaws open on the ground, teeth up: a MANTRAP. */
+const jaws = (colour = "#7d7f80") => {
+  const arc = (k: number) => E(k * 13, -2, 12, 13, 12, -Math.PI, 0);
+  const teeth = (k: number): Piece[] => arc(k).slice(1, -1).map(([x, y]) => { const a = Math.atan2(y + 2, x - k * 13); return dot(P(x - Math.sin(a) * 1.6, y + Math.cos(a) * 1.6, x - Math.cos(a) * 4.5, y - Math.sin(a) * 4.5, x + Math.sin(a) * 1.6, y - Math.cos(a) * 1.6), "light"); });
+  return s([part(R(-27, -3, 27, 0), "dark"), part(E(0, -2, 6, 3.4, 10), "body"), glue(band(arc(1), 2.2), "body"), glue(band(arc(-1), 2.2), "body"), ...teeth(1), ...teeth(-1),
+    dot(band([[0, -2], [8, 4], [16, 2]], 0.9), "dark")], colour);
+};
+/** Wire coiled along posts: BARBWIRE. */
+const wire = (colour = "#8e98a0") => s([
+  ...[-20, 0, 20].map((x) => part(R(x - 1.4, -20, x + 1.4, 0), "#6b4a2e")),
+  ...Array.from({ length: 7 }, (_, i) => glue(band(E(-18 + i * 6, -13, 4.5, 6, 12), 0.9), "body")),
+  ...Array.from({ length: 10 }, (_, i) => dot(at(turn(R(-1.6, -0.4, 1.6, 0.4), i), -20 + i * 4.4, -13 + (i % 2 ? 5 : -5)), "dark")),
+], colour);
+/** Mines half buried in a patch of dirt: a MINEFIELD. */
+const mines = s([part(E(0, -2, 26, 6, 18), "#8a7656"), ...[[-15, -3], [-4, -5], [8, -2], [17, -4], [2, 1], [-10, 1]].map(([x, y]) => glue(E(x!, y!, 3.4, 2.2, 10), "body")), ...[[-15, -5], [-4, -7], [8, -4], [17, -6]].map(([x, y]) => dot(R(x! - 0.6, y! - 2, x! + 0.6, y!), "#c9553f"))], "#4a5a3a", { flat: true });
+/** Felled, sharpened logs crossed: an ABATIS. */
+const abatisShape = s([...[-14, -4, 6].map((x, i) => part(band([[x - 8, 0], [x + 10, -18 - i * 2]], 3, 2), "body")), ...[-10, 0, 10].map((x) => glue(band([[x + 8, 0], [x - 8, -16]], 2.6, 1.6), "dark")), ...[-14, 0, 14].map((x) => dot(P(x - 2, -18, x, -24, x + 2, -18), "#e6c89a"))], "#8a6440");
+/** A stone block hanging in a frame over a pit: a CRUSHER. */
+const crusherShape = s([part(R(-18, -44, -14, 0), "#6b4a2e"), part(R(14, -44, 18, 0), "#6b4a2e"), part(R(-18, -46, 18, -42), "#6b4a2e"), dot(band([[0, -42], [0, -34]], 0.8), "#3a3633"), glue(R(-12, -34, 12, -18), "body", 1), dot(R(-12, -22, 12, -18), "dark"), part(E(0, -1, 14, 3, 14), "#2e241c")], "#8d877c");
+/** A trapdoor in the ground, its lid hanging open over the dark: a CHUTE. */
+const trapdoor = s([part(R(-14, -6, 14, 0), "#8a6440"), dot(R(-11, -5, 11, -1), "#1e1a16"), glue(P(-11, -6, 11, -6, 13, -20, -9, -20), "body", 0), dot(band([[-8, -13], [10, -13]], 0.8), "dark")], "#a8805a", { flat: true });
+/** Two cuffs on a chain: FETTERS. */
+const cuffs = (colour = "#5a5a62") => s([glue(band(E(-11, -7, 6, 6, 14), 2.4), "body"), glue(band(E(11, -7, 6, 6, 14), 2.4), "body"), ...[-4, 0, 4].map((x) => dot(band(E(x, -7, 2.6, 1.6, 8), 0.9), "dark"))], colour, { flat: true });
+/** A wire with a wooden grip at each end: a GARROTE. */
+const garroteShape = s([part(R(-18, -10, -12, -6), "#8a6440", 1), part(R(12, -10, 18, -6), "#8a6440", 1), dot(band([[-12, -8], [-4, -2], [4, -2], [12, -8]], 0.7), "body")], "#b8c2c8", { flat: true });
+/** A handle with knotted tails: a SCOURGE. */
+const scourgeShape = s([part(band([[0, 0], [0, -12]], 3), "#5a3a20"), ...[-8, 0, 8].map((dx) => part(band([[0, -12], [dx * 0.6, -22], [dx, -32]], 1.2, 0.8), "body")), ...[-8, 0, 8].map((dx) => dot(E(dx, -32, 1.6, 1.6, 6), "#8e98a0"))], "#7a4a2e");
+/** A long thin cane tube: a BLOWGUN. */
+const blowgunShape = s([part(band([[-24, -10], [24, -14]], 2.4), "body"), dot(band([[-22, -10.2], [-14, -11]], 2.6), "dark"), dot(E(24, -14, 1.2, 1.2, 6), "#2b2a28")], "#a8805a");
+/** A clamp with a screw: a THUMBSCREW. */
+const screwClamp = s([part(R(-10, -10, 10, -4), "body"), part(R(-10, -22, 10, -16), "body"), part(R(-2, -30, 2, -10), "dark"), glue(R(-7, -32, 7, -29), "dark"), dot(R(-10, -16, 10, -10), "#2e2a26")], "#5a5a62");
+/** A strapped cage over a snout: a MUZZLE. */
+const muzzleShape = s([glue(band(E(0, -12, 10, 8, 14), 1.6), "body"), dot(band([[-10, -12], [10, -12]], 1.2), "body"), dot(band([[0, -20], [0, -4]], 1.2), "body"), part(band([[-10, -12], [-18, -16]], 1.6), "body"), part(band([[10, -12], [18, -16]], 1.6), "body")], "#7a4a2e");
+/** A band of cloth with its knot: a BLINDFOLD. */
+const blindfoldShape = s([part(P(-16, -14, 16, -14, 14, -6, -14, -6), "body", 1), glue(P(14, -12, 22, -16, 20, -8, 15, -9), "body"), glue(P(14, -10, 20, -4, 16, -2, 14, -7), "dark")], "#2b2a28");
+/** A white coat with long sleeves strapped round: a STRAITJACKET. */
+const straitjacketShape = s([part(P(-12, -34, 12, -34, 10, -4, -10, -4), "body", 1), part(band([[-12, -30], [10, -18], [14, -22]], 3.4), "light"), part(band([[12, -30], [-10, -20], [-14, -24]], 3.4), "pale"), ...[-24, -14].map((y) => dot(R(-10, y, 10, y + 1.6), "#8a6440"))], "#f4f1ea");
+/** A post with an arm and a hanging cage: a GIBBET. */
+const gibbetShape = s([part(R(-14, -52, -10, 0), "#6b4a2e"), part(R(-14, -52, 10, -48), "#6b4a2e"), part(band([[-12, -38], [-2, -50]], 1.6), "#6b4a2e"), dot(band([[6, -48], [6, -40]], 0.7), "#3a3633"),
+  glue(band(E(6, -32, 5, 8, 12), 1), "#3a3633"), ...[3, 6, 9].map((x) => dot(R(x - 0.4, -39, x + 0.4, -25), "#3a3633")), part(R(-20, -2, -4, 0), "#6b4a2e")], "#6b4a2e");
+/** Earth heaped low with a row of stakes: a BREASTWORK. */
+const earthwork = (colour = "#8a7656", crescent = false) => s([part(crescent ? P(-28, 0, -24, -10, -10, -16, 10, -16, 24, -10, 28, 0, 18, 0, 10, -8, -10, -8, -18, 0) : P(-28, 0, -22, -12, 22, -12, 28, 0), "body", 2), ...[-18, -9, 0, 9, 18].map((x) => glue(P(x - 1.6, crescent ? -14 : -11, x, crescent ? -22 : -19, x + 1.6, crescent ? -14 : -11), "#8a6440"))], colour);
+/** A dark hole with a lip of earth: a FOXHOLE. */
+const foxholeShape = s([part(E(0, -2, 16, 6, 16), "#8a7656"), dot(E(0, -2, 11, 3.6, 14), "#2e241c"), glue(R(-18, -6, -10, -2), "#c9b07a"), glue(R(10, -6, 18, -2), "#c9b07a")], "#8a7656", { flat: true });
+/** Hedges in a grid: a MAZE. */
+const mazeShape = s([part(R(-26, -14, 26, 0), "dark"), ...[[-26, -14, 26, -11], [-26, -3, 10, 0], [-26, -14, -23, 0], [23, -14, 26, 0], [-12, -11, -9, -3], [2, -14, 5, -6], [14, -8, 17, 0]].map(([a, b, c, d]) => glue(R(a!, b!, c!, d!), "body"))], "#5f8a4a", { flat: true });
+/** A pipe's mouth in a stone wall: a SEWER. */
+const pipeMouth = (colour = "#7d7f80") => s([part(R(-18, -20, 18, 0), "#9a948a", 1), glue(E(0, -9, 9, 8, 16), "body"), dot(E(0, -9, 6.5, 5.6, 14), "#1e1a16"), dot(P(-5, -4, 5, -4, 3, -1, -3, -1), "#6b7a4a")], colour);
+/** A banner on a crossbar with a pattern: heraldry. */
+const banneret = (field: string, charge: Piece[], tail = false) => s([part(band([[0, 0], [0, -50]], 2), "#6b4a2e"), part(R(-12, -48, 12, -46), "#6b4a2e"), glue(tail ? P(-11, -46, 11, -46, 11, -24, 0, -18, -11, -24) : R(-11, -46, 11, -22), field, 0), ...charge.map((p) => ({ ...p, pts: at(p.pts, 0, -34, 0.7), detail: true, glued: false })), glue(E(0, -52, 2.2, 2.2, 8), "#e3b341")]);
+const scepterShape = s([part(band([[0, 0], [0, -34]], 2.2), "body"), glue(E(0, -38, 4.5, 4.5, 12), "body"), dot(E(0, -38, 2, 2, 8), "#c9553f"), glue(R(-4, -6, 4, -3), "dark"), glue(P(-1.4, -43, 0, -48, 1.4, -43), "body")], "#e3b341");
+const daisShape = s([part(R(-26, -6, 26, 0), "body", 0), part(R(-20, -12, 20, -6), "light"), dot(R(-26, -4, 26, -2), "#e3b341"), glue(R(-6, -14, 6, -12), "#e3b341")], "#a8323a");
+const lord = (colour: string, hat: "crown" | "hair" | "cap" | "helmet" = "crown", cloak = "#a8323a") => biped({ hat, colour, cloak, belt: "#e3b341", legs: "#3d3a40" });
+/** A stone block of a jail with barred windows: a CHOKEY, a SLAMMER. */
+const lockup = (wall = "#9a948a", w = 40, h = 28) => s([...house({ w, h, roof: "flat", wall, windows: 0 }).pieces,
+  ...[-w / 4, w / 4].flatMap((x) => [dot(R(x - 5, -h + 6, x + 5, -h + 15), "#2e2a26"), ...[-3, 0, 3].map((d) => dot(R(x + d - 0.6, -h + 6, x + d + 0.6, -h + 15), "#c9d1d6"))])], wall);
+/** A hooded executioner with a broad axe. */
+const headsmanShape = (() => { const b = biped({ hat: "hood", colour: "#1e1a16", legs: "#2b2a28", arms: "up" }); const [hx, hy] = b.hand!;
+  return s([...b.pieces, glue(band([[hx, hy + 14], [hx, hy - 14]], 2), "#8a6440"), glue(P(hx + 1, hy - 14, hx + 11, hy - 18, hx + 12, hy - 6, hx + 1, hy - 8), "#c9d1d6", 1)], "#1e1a16", { living: true }); })();
+const convict = (colour = "#d9d2c0") => s([...biped({ colour, legs: "#8a8478", hat: "hair" }).pieces, ...[-24, -19, -14].map((y) => dot(R(-8, y, 8, y + 1.6), "#4a4a52"))], colour, { living: true });
+
 export const WORDS: Record<string, Silhouette> = {
   // Animals.
   wolf, dog, fox, cat, lion, tiger, bear, horse, cow, bull, pig, sheep, goat, deer, elephant, camel, rat, mouse: rat, rabbit, monkey, boar, donkey, ass: donkey, bat, whale,
@@ -698,6 +761,37 @@ export const WORDS: Record<string, Silhouette> = {
   batholith: rocky, pluton: rocky, boulder: s(rock.pieces.map((p) => ({ ...p, pts: p.pts.map(([x, y]) => [x * 2.2, y * 2.2] as Pt) }))), pebble: pebbles, outcrop: rocky, bedrock: s(brickWall(64, 2, "#7d7f80").pieces),
   cobble: s(rock.pieces.map((p) => ({ ...p, pts: p.pts.map(([x, y]) => [x * 0.6, y * 0.6] as Pt) }))), geode: geodeShape, stalagmite: stalagmiteShape, quicksand: s(puddle.pieces, "#d9c08a", { flat: true }), pitman: digger, mineralogist: wizard,
   assayer: s(human.pieces, "#8a6440"), spelunker: s(digger.pieces, "#c9773a"), gelignite: s([part(R(-4, -22, 4, 0), "body", 1), dot(R(-4, -16, 4, -12), "#f4f1ea"), glue(band([[0, -22], [3, -28], [6, -28]], 0.9), "#c9a77a"), glue(P(5, -32, 8, -28, 5, -26, 8, -25, 4, -24), "#f4c95d")], "#c9453f"), detonator: s(box.pieces, "#c9453f"), seismograph: s(machine.pieces, "#7d8a99"), crust: rocky, cinder: s(pile.pieces, "#3a3633"),
+  // Theme 30: traps and dungeons.
+  mantrap: jaws(), flytrap: s(letter.pieces, "#f4d35e", { flat: true }), rattrap: s(box.pieces, "#a8805a"), minefield: mines, abatis: abatisShape, barbwire: wire(),
+  fetter: cuffs(), hobble: cuffs("#7a4a2e"), crusher: crusherShape, chute: trapdoor, leash: s(rope.pieces, "#7a4a2e"), lariat: s(rope.pieces, "#c9a77a"),
+  garrote: garroteShape, garrotte: garroteShape, scourge: scourgeShape, blowgun: blowgunShape, thumbscrew: screwClamp, muzzle: muzzleShape, blindfold: blindfoldShape,
+  straitjacket: straitjacketShape, gibbet: gibbetShape, quicklime: s(pile.pieces, "#f4f1ea"),
+  panopticon: house({ w: 46, h: 36, roof: "dome", wall: "#9a948a", roofInk: "#6b6660", windows: 4, floors: 2 }), chokey: lockup(), choky: lockup(), bullpen: lockup("#8e8b80", 46, 24),
+  hoosegow: lockup("#a8805a"), pokey: lockup("#8e8b80", 36, 26), slammer: lockup("#7d7f80", 46, 32),
+  lazaretto: house({ w: 44, h: 26, roof: "gable", wall: "#f4f1ea", roofInk: "#5f8a8a", windows: 3 }), reformatory: house({ w: 46, h: 30, roof: "flat", wall: "#b0553f", windows: 4, floors: 2 }), borstal: house({ w: 46, h: 30, roof: "flat", wall: "#9a4a3a", windows: 4, floors: 2 }),
+  breastwork: earthwork(), fieldwork: earthwork("#9a8660"), retrenchment: earthwork("#8d877c"), lunette: earthwork("#8a7656", true), foxhole: foxholeShape, crenel: merlons("#c9bca4"),
+  entrenchment: s(foxholeShape.pieces, "#7a6646", { flat: true }), intrenchment: s(foxholeShape.pieces, "#7a6646", { flat: true }),
+  maze: mazeShape, sewer: pipeMouth(), culvert: pipeMouth("#9a948a"),
+  gaoler: soldierOf("#4a4a52", "none", "cap"), warder: soldierOf("#3d4a5a", "none", "cap"), gatekeeper: soldierOf("#6b5a3a", "spear", "helmet"), doorkeeper: soldierOf("#7a5a3a", "none", "cap"),
+  torturer: biped({ hat: "hood", colour: "#2b2a28", legs: "#3a3633", arms: "forward" }), headsman: headsmanShape,
+  liberator: biped({ colour: "#5f8a4a", cloak: "#e3b341", arms: "up" }), detainee: convict(), internee: convict("#c9c2b0"), lifer: convict("#e6a24a"), escapee: s(convict("#e6a24a").pieces, "#e6a24a", { living: true }),
+  // Theme 31: heraldry, courts and fealty.
+  blazon: banneret("#3f6fa8", icon.crown(), true), pennon: s(flag.pieces, "#c9553f"), oriflamme: banneret("#d9573b", icon.flame(), true), tricolor: banneret("#f4f1ea", [dot(R(-16, -13, -5, 13), "#3f6fa8"), dot(R(5, -13, 16, 13), "#c9553f")]),
+  tricolour: banneret("#f4f1ea", [dot(R(-16, -13, -5, 13), "#3f6fa8"), dot(R(5, -13, 16, 13), "#c9553f")]), saltire: banneret("#3f6fa8", [dot(band([[-14, -12], [14, 12]], 2.6), "#f4f1ea"), dot(band([[14, -12], [-14, 12]], 2.6), "#f4f1ea")]),
+  chevron: s([part(P(-12, -6, 0, -18, 12, -6, 12, -1, 0, -13, -12, -1), "body")], "#e3b341"), roundel: banneret("#f4f1ea", [dot(E(0, 0, 10, 10, 16), "#3f6fa8"), dot(E(0, 0, 6, 6, 14), "#f4f1ea"), dot(E(0, 0, 3, 3, 10), "#c9553f")]),
+  quartering: banneret("#c9553f", [dot(R(-16, -13, 0, 0), "#e3b341"), dot(R(0, 0, 16, 13), "#e3b341")], true), insignia: s(icon.star().map((p) => ({ ...p, pts: at(p.pts, 0, -12, 1.1), detail: false })), "#e3b341"),
+  scepter: scepterShape, sceptre: scepterShape, dais: daisShape,
+  liege: lord("#7a2a4a"), thane: lord("#5a4a3a", "helmet", "#3d4a5a"), marquess: lord("#3f6fa8", "crown", "#e3b341"), margrave: lord("#4a6a4a", "helmet"), seigneur: lord("#6b3a5a", "cap"),
+  baronet: lord("#3d4a5a", "cap", "#5a3a5a"), banneret: s(knight.pieces, "#c9553f"), potentate: lord("#8a3a8a", "crown", "#e3b341"), landgrave: lord("#5a6a3a", "crown", "#3d4a5a"), palatine: lord("#7a3a2a", "crown", "#e3b341"),
+  grandee: lord("#2b2a28", "cap", "#a8323a"), princeling: biped({ hat: "crown", colour: "#5f8ac9", h: 32 }), noblewoman: biped({ hat: "bun", robe: true, colour: "#8a3a6a", cloak: "#e3b341" }),
+  liegeman: soldierOf("#7a2a4a"), feudatory: biped({ colour: "#8a7656", hat: "cap" }), villein: biped({ colour: "#a8925a", hat: "hood", held: "staff" }), armiger: s(knight.pieces, "#3f6fa8"),
+  gallant: biped({ colour: "#3f8a8a", hat: "cap", cloak: "#c9553f", held: "spear" }), patrician: biped({ robe: true, colour: "#f4f1ea", cloak: "#8a3a8a" }),
+  regicide: biped({ hat: "hood", colour: "#2b2a28", cloak: "#5a1e1e", arms: "forward" }), perjurer: s(spy.pieces, "#6b6a40"), recreant: s(human.pieces, "#c9b07a"), apostate: biped({ robe: true, colour: "#5a5a62", hat: "hood" }),
+  mutineer: s(pirate.pieces, "#8a4a3a"), insurgent: soldierOf("#6b7a4a", "spear", "hood"),
+  fealty: rosette(icon.crown(), "#7a2a4a"), homage: rosette(icon.crown(), "#a8323a"), allegiance: rosette(icon.flag(), "#3f6fa8"), oath: rosette(icon.scroll(), "#c9553f"), vow: rosette(icon.heart(), "#8a3a6a"),
+  betrayal: rosette([dot(P(-1.5, -9, 1.5, -9, 1.5, 3, 0, 8, -1.5, 3), "#8e98a0"), dot(R(-5, 3, 5, 5), "#6b4a2e")], "#2b2a28"), treachery: rosette(icon.mask(), "#3a2a3a"), perfidy: rosette(icon.mask(), "#4a2a2a"),
+  knighthood: rosette(icon.swords(), "#3f6fa8"), heraldry: rosette(icon.flag("#3f6fa8"), "#e3b341"), challenge: rosette(icon.swords(), "#c9553f"), melee: rosette(icon.bang(), "#c9553f"),
+  jailbreak: rosette(icon.key(), "#e6a24a"), breakout: rosette(icon.bang(), "#e6a24a"), liberation: rosette(icon.chain(), "#5f8a4a"), incarceration: rosette(icon.chain(), "#4a4a52"), captivity: rosette(icon.chain(), "#5a5a62"),
   // Stuff.
   stone: rock, rock, crystal, diamond: s(crystal.pieces, "#cfeaf2"), iron: s(ingot.pieces, "#7d7f80"), steel: s(ingot.pieces, "#b8c2c8"), copper: s(ingot.pieces, "#c9773a"),
   water: puddle, oil: s(puddle.pieces, "#2f2c33"), lava: s(puddle.pieces, "#e0663a"), blood: s(puddle.pieces, "#a8323a"), wood: s([...[[-8, -4], [8, -4], [0, -12]].map(([x, y]) => part(E(x!, y!, 10, 4.5, 12), "body")), ...[[-16, -4], [0, -4], [-8, -12]].map(([x, y]) => dot(E(x! - 1, y!, 3, 3.6, 8), "#e6c89a"))], "#8a6440"),

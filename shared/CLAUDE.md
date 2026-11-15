@@ -201,6 +201,13 @@ server and the client import this, so anything here must give the same answer on
   - mythic beasts and prehistoric giants (theme 29): bug.ts `hatches` (a thing that `matures_into` a
     creature hatches where it lies or is carried: EGG, COCOON, PUPA); counters are `counters` read by
     the server's `exterminate`.
+  - traps and dungeons (theme 30): crime.ts `rearms` (a trap with no `single_use` re-arms after
+    REARM_SECONDS), `capturesInto` (`captures`: a sprung trap or an event on a person drops its victim
+    into its owner's nearest lockup within CAPTURE_TILES); interior.ts `holds` (a walk-in lockup, home.ts
+    `holdFactor`, keeps enemies inside until its door is broken).
+  - heraldry, courts and fealty (theme 31): law.ts `PactSpec.tribute` (a pact word's `tax_rate`: the
+    others pay the speller, the liege, that share of every letter they earn), `endsPact` (a word whose
+    `counters` names a pact's word frees its speller with no penalty), `tributeText`.
   - stone and ore (theme 27): food.ts `heatNeeded` (a raw thing's `smelts_at`: ore smelts into its
     `cooks_into` metal only by that much heat); rocks, minerals and landforms are data on the
     material, terrain and trap systems.

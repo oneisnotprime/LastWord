@@ -1,4 +1,4 @@
-import { ACTION_LETTERS, becomes, doorGuard, hatches, matured, opensDoors, resolveSpelled, cooks, GRAFT_CAPABILITIES, GROUNDED_FROM, isBoon, isGraft, isTrap, parsePhrase, placeRules, pluralize, producerOf, sails, STATUSES, TILE_METERS, TILE_TYPES, WORN_SLOTS, type Dictionary, type Letters, type Op, type Stats, type Status } from "@lastword/shared";
+import { ACTION_LETTERS, becomes, cannotRide, pactOf, doorGuard, hatches, matured, opensDoors, resolveSpelled, cooks, GRAFT_CAPABILITIES, GROUNDED_FROM, isBoon, isGraft, isTrap, parsePhrase, placeRules, pluralize, producerOf, sails, STATUSES, TILE_METERS, TILE_TYPES, WORN_SLOTS, type Dictionary, type Letters, type Op, type Stats, type Status } from "@lastword/shared";
 
 /**
  * Server-side bot players: what a bot knows about words, and how hard it plays. The room
@@ -68,10 +68,15 @@ export type Use = "weapon" | "armor" | "mount" | "creature" | "producer" | "clai
  * of what it `bores`: TERMITES on an enemy's wooden house; shared bug.ts), `siege` (against an enemy's
  * walk-in building: a door counter carried or ridden, a weapon or engine whose `siege` multiplies its
  * blows on buildings, or an event aimed at the building that breaks doors or batters it: a RAM, a
- * TREBUCHET, a BREACH; shared interior.ts), `guard` (a door guard for its own building: a PORTCULLIS).
+ * TREBUCHET, a BREACH; shared interior.ts), `guard` (a door guard for its own building: a PORTCULLIS),
+ * `breakout` (an event round itself that breaks doors: out of an enemy's lockup, JAILBREAK), `fealty`
+ * (a pact with tribute passed on someone: FEALTY, HOMAGE; shared law.ts), `rebel` (a word that ends a
+ * pact it is a vassal in: BETRAYAL, REBELLION), `antiair` (reaches flyers: a weapon or creature that
+ * targets air, a mount that flies, an event or field that grounds them; against a foe in the air).
  */
 export type ThemeUse = "warm" | "disguise" | "graft" | "cure" | "hex" | "duel" | "gift" | "loan" | "bribe" | "trap" | "lie" | "jam"
-  | "shrine" | "miracle" | "morale" | "haste" | "rewind" | "gravity" | "vessel" | "fishing" | "luck" | "borer" | "siege" | "guard";
+  | "shrine" | "miracle" | "morale" | "haste" | "rewind" | "gravity" | "vessel" | "fishing" | "luck" | "borer" | "siege" | "guard"
+  | "breakout" | "fealty" | "rebel" | "antiair";
 
 /** What the bot tournament lists as the themes' systems (`botUsed` names), in order. */
 export const THEME_SYSTEMS = [
@@ -79,6 +84,7 @@ export const THEME_SYSTEMS = [
   "hex chaos", "hex expose", "hex debt", "hex stasis", "hex void", "hex sick", "morale", "music", "gift", "bribe", "loan", "trap", "lie", "jam",
   "shrine", "sacrifice", "miracle", "weather", "haste", "rewind", "gravity", "vessel", "sail", "fishing", "catch", "duel", "luck", "sell",
   "hide", "shelter", "store", "raid", "break in", "borer", "siege", "bolt door", "grow up",
+  "trap sprung", "captured", "held", "breakout", "fealty", "tribute", "rebel", "antiair", "target", "target spelled",
 ] as const;
 
 export interface BotWord {
@@ -385,6 +391,11 @@ function themeUses(word: string, archetype: string, ops: readonly Op[], p: Retur
       if (opensDoors(s) || batter > 0) add("siege", (opensDoors(s) ? 500 : 0) + batter, { aim: "self" });
     }
     if (doorGuard(s)) add("guard", s.num("integrity") / 100 + s.tags("counters").length, { aim: "self" });
+    // Against a foe in the air: a held weapon or a creature whose blows reach flyers, or a mount that flies.
+    const air = s.tags("targets").includes("air");
+    if ((slot === "held" && air && damage(s) > 0) || (becomes(s) === "creature" && !s.flag("mountable") && (air || s.num("speed_air") > 0) && damage(s) > 0))
+      add("antiair", dps(s) * p.count * (s.num("attack_range") > 6 ? 1.5 : 1) * (s.flag("single_use") ? 0.2 : 1) + 1, { slot });
+    if (s.flag("mountable") && s.num("speed_air") > 0 && !cannotRide(s, word) && damage(s) > 0) add("antiair", dps(s) + s.num("speed_air") / 20, { slot: "ride" });
     if (isTrap(s) && !s.flag("mountable")) add("trap", (damaging ? 2 : 0) + bad.length + s.num("stealth") / 5);
     if (s.flag("jams") && s.get("portable") === false) add("jam", 1);
     if (s.get("portable") === false && (s.num("faith_output") > 0 || s.num("sacrifice") > 0)) add("shrine", s.num("faith_output") + s.num("sacrifice"));
@@ -420,6 +431,9 @@ function themeUses(word: string, archetype: string, ops: readonly Op[], p: Retur
     const luck = added(ops, "luck");
     if (luck > 0 && targets !== "all" && !faith) add("luck", luck, { aim: "self" });
   }
+  if (p.kind === "event" && placement !== "target" && opensDoors(s)) add("breakout", 10 / p.letters.length, { aim: "self" });
+  const pact = pactOf(s);
+  if (pact && pact.tribute > 0) add("fealty", pact.tribute * 10 + pact.size, { aim: "walker", reach: Math.max(1.5, s.num("placement_range") / TILE_METERS) });
   if (atSpot && multiplied(ops, "gravity") >= GROUNDED_FROM) add("gravity", multiplied(ops, "gravity"), { aim: "spot", reach: Math.max(1.5, s.num("placement_range") / TILE_METERS) });
 }
 

@@ -119,6 +119,14 @@ for (let r = 0; r < rooms; r++) {
       }
     }
   }
+  if (room.state.phase !== "over") {
+    // Time up: who was left, and could they reach each other (a JET with nothing on the ground that hits flyers).
+    for (const [id, w] of anyRoom.walkers) {
+      if (w.master !== null) continue;
+      const atk = w.unit.attack;
+      console.log(`  left: ${id} ${w.flying ? "flying" : "on foot"}${w.unit.riding ? ` riding ${w.unit.riding.name}` : ""}, weapon ${w.unit.weapon?.name ?? "-"} targets ${atk ? atk.tags("targets").join(",") || "land" : "-"}, hp ${Math.round(w.hp)}, foe ${w.foe ?? "-"}`);
+    }
+  }
   const report = room.botReport();
   for (const b of report) {
     const m = used.get(b.difficulty) ?? used.set(b.difficulty, new Map()).get(b.difficulty)!;
