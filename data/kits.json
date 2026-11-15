@@ -1666,6 +1666,39 @@
    "core": false
   },
   {
+   "word": "ranger",
+   "set": {},
+   "ops": [
+    [
+     "sight_range",
+     "mul",
+     1.3
+    ],
+    [
+     "speed_land",
+     "mul",
+     1.1
+    ],
+    [
+     "stealth",
+     "add",
+     4.0
+    ],
+    [
+     "armor",
+     "add",
+     6
+    ],
+    [
+     "integrity",
+     "mul",
+     1.15
+    ]
+   ],
+   "letters": "jdk",
+   "core": false
+  },
+  {
    "word": "ninja",
    "set": {},
    "ops": [
@@ -2560,23 +2593,6 @@
     ]
    ],
    "letters": "sby",
-   "core": false
-  },
-  {
-   "word": "minister",
-   "set": {
-    "command_limit": 5,
-    "authority": 2,
-    "recruit_rate": 0.5
-   },
-   "ops": [
-    [
-     "produce_Y",
-     "mul",
-     2
-    ]
-   ],
-   "letters": "sy",
    "core": false
   }
  ],

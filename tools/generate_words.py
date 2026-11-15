@@ -49,6 +49,8 @@ japanese spanish canadian asian christ muslim italian jewish catholic irish kore
 mexican gay disabled suicide rape racist racism nazi slave abortion
 welsh indigenous tribal lesbian transgender sexuality sexually disability autism immigrant
 slavery raped genocide pregnancy
+holocaust calif protestant fascist aboriginal queer migrant moron homosexuality homosexual
+ethnicity negro oriental nationality prostitution bisexual ghetto
 """.split())
 
 

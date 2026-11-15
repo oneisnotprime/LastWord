@@ -9,13 +9,13 @@
   "letter": "I",
   "class": "vowel",
   "source": "livestock and pets",
-  "lexicon_share": 0.088
+  "lexicon_share": 0.0881
  },
  {
   "letter": "A",
   "class": "vowel",
   "source": "crop fields on tilled land",
-  "lexicon_share": 0.0846
+  "lexicon_share": 0.0845
  },
  {
   "letter": "R",
@@ -27,13 +27,13 @@
   "letter": "N",
   "class": "core",
   "source": "hired NPC labour",
-  "lexicon_share": 0.0706
+  "lexicon_share": 0.0707
  },
  {
   "letter": "T",
   "class": "core",
   "source": "per completed trade",
-  "lexicon_share": 0.0693
+  "lexicon_share": 0.0694
  },
  {
   "letter": "O",
@@ -75,13 +75,13 @@
   "letter": "P",
   "class": "made",
   "source": "planted flora, harvested on a cycle",
-  "lexicon_share": 0.03
+  "lexicon_share": 0.0301
  },
  {
   "letter": "M",
   "class": "made",
   "source": "machines that convert vowels",
-  "lexicon_share": 0.0296
+  "lexicon_share": 0.0297
  },
  {
   "letter": "H",
