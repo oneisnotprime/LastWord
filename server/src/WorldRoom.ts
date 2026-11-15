@@ -13,7 +13,7 @@ import {
 } from "@lastword/shared";
 import { grand, grandeur } from "@lastword/shared";
 import {
-  speechOf, speechFromSet, speechSet, combineSpeech, priceOf, readMisspelt, helpful, NO_RULES, type SpeechRule, type SpeechRules, type Price,
+  speechOf, speechFromSet, speechSet, combineSpeech, lettersOf, priceOf, readMisspelt, helpful, NO_RULES, type SpeechRule, type SpeechRules, type Price,
   stormPlan, stormAt, outsideBy, stormDamage, stormBendOf, bentClock, STORM_WEATHER_STAGE, type StormPlan, type Storm,
   livesOf, lastStandOf, raisesOf, revivesOf, graveSplit, REBORN_SHARE, REBORN_SECONDS, GHOST_GAP, GHOST_SPEED, GHOST_SIGHT, REVIVE_TILES, REVIVE_COOLDOWN,
   FEAR_LOYALTY, loyaltyLeft, mutinies,
@@ -890,6 +890,7 @@ export class WorldRoom extends Room {
       // Nothing indoors can be picked from outside (shared interior.ts).
       const indoors = (id: string) => { const o = this.walkers.get(id); return o ? this.walkerHidden(client.sessionId, walker, o) : this.thingHidden(client.sessionId, walker, id); };
       if (w && typeof w.id === "string" && (this.walkers.has(w.id) || this.state.things.has(w.id)) && !indoors(w.id)) walker.picked = w.id;
+      else if (w && typeof w.id === "string" && this.ghosts.has(w.id)) walker.picked = w.id; // a ghost, to revive (shared death.ts)
       else if (w && Number.isFinite(w.x) && Number.isFinite(w.y)) {
         const clamp = (v: number) => Math.min(this.map.size, Math.max(0, v));
         walker.aim = { x: clamp(w.x as number), y: clamp(w.y as number) };
@@ -8124,6 +8125,8 @@ export class WorldRoom extends Room {
 
   /** Puts a word's spelling rule on someone for a while (an act passed on them, a verb on its caster). */
   private bindSpeech(target: Walker, word: string, rule: SpeechRule, seconds: number, by: string) {
+    // "top" is their commonest letter as it is put on them: a GAG holds that letter, whatever they gather after.
+    if (rule.ban === "top") rule = { ...rule, ban: lettersOf("top", target.letters).join("") };
     target.speech = (target.speech ?? []).filter((p) => p.word !== word && p.until > this.elapsed);
     target.speech.push({ word, rule, until: this.elapsed + seconds, by });
     this.tell(target);
@@ -8134,7 +8137,12 @@ export class WorldRoom extends Room {
     let n = (w.lives ?? []).reduce((a, l) => a + l.n, 0);
     for (const g of w.gear) n += Math.max(0, livesOf(this.statsOf(g)) - (g.livesUsed ?? 0));
     this.state.things.forEach((t, tid) => { const g = t.owner === id && w.master === null ? this.grounded.get(tid) : undefined; if (g && !g.terrain) n += Math.max(0, livesOf(this.statsOf(g)) - (g.livesUsed ?? 0)); });
-    return n + Math.max(0, livesOf(w.unit.body.stats) - (w.bodyLivesUsed ?? 0));
+    return n + Math.max(0, livesOf(this.ownBody(w)) - (w.bodyLivesUsed ?? 0));
+  }
+
+  /** A body as spelled (its noun and the adjectives on it), without what verbs and fields lend it for a while: lives words lend are granted apart. */
+  private ownBody(w: Walker): Stats {
+    try { return resolveSpelled(this.dict, w.body); } catch { return w.unit.body.stats; }
   }
 
   /** Uses one extra life, granted ones first, then carried things, things owned, the body. Returns what gave it, or null. */
@@ -8157,7 +8165,7 @@ export class WorldRoom extends Room {
         if (livesOf(s) > (g.livesUsed ?? 0)) { g.livesUsed = (g.livesUsed ?? 0) + 1; if (s.flag("single_use")) this.removeThing(tid); return g.phrase; }
       }
     }
-    if (livesOf(w.unit.body.stats) > (w.bodyLivesUsed ?? 0)) { w.bodyLivesUsed = (w.bodyLivesUsed ?? 0) + 1; return w.player.name; }
+    if (livesOf(this.ownBody(w)) > (w.bodyLivesUsed ?? 0)) { w.bodyLivesUsed = (w.bodyLivesUsed ?? 0) + 1; return w.player.name; }
     return null;
   }
 
@@ -8355,6 +8363,7 @@ export class WorldRoom extends Room {
     const w = this.addPerson(gid, name, spot);
     this.everJoined--; // the same person back, not a new one
     this.forgetSeen(gid);
+    this.state.alive = this.people.length;
     w.letters = {};
     const grave = g.grave ? this.grounded.get(g.grave) : undefined;
     if (grave?.hoard) { addLetters(w.letters, grave.hoard); grave.hoard = ""; if (grave.graveOf === gid && grave.spelled.noun === "grave") this.removeThing(g.grave!); }

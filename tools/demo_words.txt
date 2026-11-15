@@ -2865,3 +2865,17 @@ summon: duration=30 recruit_rate+8 command_limit+10 obedience+5 loudness+6 charm
 
 # verb combat
 withstand: duration=20 armor+30 res_blunt+0.4 res_slash+0.4 res_pierce+0.4 knockback*0 immune_stun=true speed_land*0.6
+
+# ---------------------------------------------------------------- Concept rules (the round's systems)
+# Core words of the four round systems; tools/rules.txt gives the same properties to every word
+# whose meaning matches. Spelling rules (shared speech.ts), command (mind.ts), death (death.ts),
+# the storm wall (round.ts).
+
+# noun act
+gag: placement=target placement_range=10 event_target=character event_duration=1.5 ban_letters=top haunts=true counters=scream,shout,alarm,freedom
+stutter: placement=target placement_range=40 event_target=character event_duration=1.5 word_limit=4 inflict_confuse=3 haunts=true counters=eloquence,fluency,poem
+stammer: placement=target placement_range=40 event_target=character event_duration=1 word_limit=3 inflict_confuse=2 haunts=true counters=eloquence,fluency,poem
+desertion: placement=region event_radius=80 mutiny=6 morale+-2 counters=loyalty,allegiance,discipline,fealty
+
+# noun attribute
+charisma: placement=self field_radius=30 field_targets=owned field_duration=3 command_limit+6 morale+2 charm+3 counters=scandal,disgrace,shame

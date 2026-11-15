@@ -1,23 +1,23 @@
 {
  "words": 77628,
  "rows": {
-  "lexicon": 59781,
-  "inert": 4936,
+  "lexicon": 59783,
+  "inert": 4934,
   "proper": 12911
  },
  "demo_candidates": 509,
  "inflections": 405,
  "lexicon_by_role": {
-  "noun": 36249,
+  "noun": 36251,
   "adjective": 16235,
   "verb": 4065,
   "adverb": 3232
  },
  "lexicon_by_class": {
   "modifier": 16237,
-  "artifact": 6877,
+  "artifact": 6876,
   "person": 5632,
-  "event": 4846,
+  "event": 4849,
   "spell": 4075,
   "aura": 3698,
   "verb_modifier": 3232,
@@ -34,7 +34,7 @@
   "affliction": 431
  },
  "lexicon_by_tier": {
-  "uncommon": 15740,
+  "uncommon": 15742,
   "obscure": 14226,
   "rare": 14118,
   "common": 10744,
@@ -42,14 +42,14 @@
  },
  "noun_archetypes": {
   "person": 4065,
-  "act": 3386,
+  "act": 3389,
   "attribute": 3044,
   "knowledge": 1959,
   "material": 1589,
   "artifact": 1327,
   "bodypart": 1222,
   "worker": 1036,
-  "device": 998,
+  "device": 997,
   "food": 829,
   "event": 827,
   "quantity": 778,
@@ -134,7 +134,7 @@
   "quality": 2
  },
  "inert_by_category": {
-  "communication": 1864,
+  "communication": 1862,
   "state": 1650,
   "process": 418,
   "time": 371,

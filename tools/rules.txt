@@ -14,16 +14,19 @@ when role=noun class=event,aura,world_state,institution,affliction,knowledge und
 when role=noun class=event,aura,world_state,institution,affliction,knowledge word=censorship,silence,hush,prohibition,ban,banning,suppression,repression,oppression,tyranny,boycott,embargo,interdict,blackout,muteness,silencing,dictatorship,omerta,taboo,curfew,crackdown,lockdown,containment,filibuster,quarantine
 when role=verb is=effect_target:touched word=gag,silence,hush,muzzle,censor,mute,stifle,muffle,shush,suppress,quash,ban,forbid,prohibit,outlaw,bar,redact,bleep,smother,blacklist,deafen,quell,squelch,throttle
 not is=field_targets:owned|self|allies
+not class=aura,world_state,institution,knowledge,affliction,measure no=field_radius
 set ban_letters=top
 
 # Taxes and price rises on others' spelling.
 rule cost x2: inflation and ransom
 when word=inflation,hyperinflation,extortion,ransom,profiteering,gouging,stagflation,surcharge,usury
+not class=aura,world_state,institution,knowledge,affliction,measure no=field_radius
 set spell_cost=2
 rule cost x1.5: taxes, tolls and red tape over an area
 when role=noun class=event,aura,world_state,institution,knowledge under=tax,levy,duty,fee,toll,tariff,excise,tithe,customs,surcharge,bureaucracy,red_tape,formality,regulation,paperwork,price_increase,cost_of_living,austerity,overhead,penalty
 when role=noun class=event,aura,world_state,institution,knowledge word=tax,taxation,tithe,toll,tariff,levy,duty,customs,excise,bureaucracy,paperwork,regulation,protocol,formality,austerity,recession,depression,scarcity,shortage,dearth,famine,poverty,expense,overhead,premium,markup,tribute,ransom
 not is=field_targets:owned|self|allies
+not class=aura,world_state,institution,knowledge,affliction,measure no=field_radius
 set spell_cost=1.5
 rule cost x0.6: discounts, plenty and bargains for oneself
 when role=noun class=event,aura,world_state,institution,knowledge under=discount,bargain,rebate,subsidy,reduction,sale,concession,grant,bonus,windfall,bounty,abundance,plenty,surplus
@@ -45,6 +48,7 @@ when role=noun class=event,aura,affliction,world_state under=stammer,stutter,hes
 when role=noun class=event,aura,affliction,world_state word=hiccup,hiccups,stutter,stammer,hesitation,babble,gibberish,amnesia,forgetfulness,dementia,delirium,stupor,daze,muddle,confusion,brainfog,concussion,ignorance,illiteracy,idiocy,stupidity,dyslexia
 when role=verb is=effect_target:touched word=stun,daze,confuse,befuddle,bewilder,muddle,stupefy,dumbfound,hypnotize,mesmerize,silence,shush,interrupt,heckle
 not is=field_targets:owned|self|allies
+not class=aura,world_state,institution,knowledge,affliction,measure no=field_radius
 set word_limit=4
 rule limit 5: brevity, an abstract word laid round its speller on enemies
 when role=noun class=aura,knowledge,world_state,measure word=brevity,shortness,conciseness,terseness,curtness,succinctness,laconism,abbreviation,acronym,shorthand,summary,synopsis,haiku,epigram,aphorism,slogan,soundbite,headline,caption,telegram,tweet,abridgement,digest,precis,abstract,minimalism
@@ -146,12 +150,14 @@ rule haunts by status: acts and fields that frighten, curse or bewilder
 when role=noun class=event,aura,affliction,world_state has=inflict_fear,inflict_curse,inflict_confuse,inflict_blind,inflict_sleep,inflict_doom
 when role=verb is=effect_target:touched has=inflict_fear,inflict_curse,inflict_confuse,inflict_blind,inflict_sleep,inflict_doom
 not has=destroys_target,summons,transfers_ownership,takes_city,binds,stakes,faith_cost
+not class=aura,world_state,institution,knowledge,affliction,measure no=field_radius
 set haunts=true
 rule haunts by meaning: hauntings, curses, chills and wails
 when role=noun class=event,aura,affliction,world_state,knowledge under=haunting,apparition,curse,hex,jinx,malediction,fright,fear,terror,horror,dread,nightmare,omen,portent,premonition,foreboding,chill,shiver,shudder,whisper,wail,moan,scream,shriek,howl,possession,spookiness,eeriness,gloom,darkness,shadow,despair,grief,sorrow,mourning,lament,dirge,requiem,elegy
 when word=haunt,haunting,boo,scare,spook,fright,wail,moan,howl,shriek,scream,whisper,curse,hex,jinx,chill,shiver,possess,possession,poltergeist,apparition,phantom,spectre,specter,wraith,banshee,nightmare,seance,omen,doom,gloom,dread,terror,horror,haunt,creep,lurk,stalk,glare,stare,frighten,terrify,startle,petrify,bewitch,enchant,mesmerize,hypnotize,befuddle,confuse,blind,silence,unnerve,rattle,taunt,mock,jeer,heckle,blight,wither,rot,decay,mourn,lament,grieve,vanish,flicker,shadow,darken,cloud,fog,mist
 not has=destroys_target,summons,transfers_ownership,takes_city,binds,stakes,faith_cost
 not class=artifact,creature,person,flora,material,consumable,bodypart,terrain
+not class=aura,world_state,institution,knowledge,affliction,measure no=field_radius
 set haunts=true
 rule raises zombies: the undead make more of themselves
 when word=zombie,ghoul,revenant,undead,wight,draugr,plague,pandemic,epidemic,infection,outbreak,contagion,virus,rabies,graveyard,cemetery,necropolis,voodoo,hoodoo,curse,bokor
