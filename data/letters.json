@@ -9,13 +9,13 @@
   "letter": "I",
   "class": "vowel",
   "source": "livestock and pets",
-  "lexicon_share": 0.0881
+  "lexicon_share": 0.088
  },
  {
   "letter": "A",
   "class": "vowel",
   "source": "crop fields on tilled land",
-  "lexicon_share": 0.0845
+  "lexicon_share": 0.0846
  },
  {
   "letter": "R",
@@ -33,7 +33,7 @@
   "letter": "T",
   "class": "core",
   "source": "per completed trade",
-  "lexicon_share": 0.0694
+  "lexicon_share": 0.0693
  },
  {
   "letter": "O",
@@ -57,13 +57,13 @@
   "letter": "C",
   "class": "made",
   "source": "crafting stations",
-  "lexicon_share": 0.0454
+  "lexicon_share": 0.0453
  },
  {
   "letter": "U",
   "class": "vowel",
   "source": "caves and fungus",
-  "lexicon_share": 0.0366
+  "lexicon_share": 0.0365
  },
  {
   "letter": "D",
@@ -105,7 +105,7 @@
   "letter": "B",
   "class": "made",
   "source": "base furniture",
-  "lexicon_share": 0.0204
+  "lexicon_share": 0.0203
  },
  {
   "letter": "F",
@@ -123,7 +123,7 @@
   "letter": "K",
   "class": "made",
   "source": "kills of NPCs or players",
-  "lexicon_share": 0.0086
+  "lexicon_share": 0.0085
  },
  {
   "letter": "W",

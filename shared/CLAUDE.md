@@ -218,6 +218,9 @@ server and the client import this, so anything here must give the same answer on
   past 200 m (the map is about 1 km across).
 - Frequency batch 2 (`freq2.test.ts`): data only, the same rules. Units (REGIMENT, LEGION) are fields
   that `summons` soldiers; counter adjectives act by meaning (HARMLESS, UNARMED, PARKED, SUNK).
+- Frequency batch 3 (`freq3.test.ts`): data only, the same rules. Terrain-class words with a
+  `field_radius` and no `tile_type` are objects (`kindOf`), so self fields such as ROOFTOP and
+  SKYLINE are attributes; `summons` acts only on areas (fields and events), not on objects or verbs.
 - `combat.ts` `shown`: damage, HP and integrity as cards and tips show them (felt).
 - `letters.ts` `salePrice`: what a market pays for a thing sold, by its `value` (SALE_MAX).
 - `tips.ts` teaching tips: `wordTip` (one line of what a word does in numbers, plus its shortest
