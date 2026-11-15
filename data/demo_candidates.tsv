@@ -10,8 +10,10 @@ album	noun	artifact	document	5.02	core	n02697938	-
 alcohol	noun	consumable	drink	4.61	core	n07900542	-
 alone	adjective	modifier	quality	5.16	core	a02257510	adverb:manner
 amazing	adjective	modifier	quality	5.1	core	a02368344	-
+animal	noun	creature	creature	4.81	core	n00015568	adjective:quality
 annual	noun	flora	plant	4.94	core	n11573257	adjective:quality
 another	adjective	modifier	quality	5.74	core	a02077592	-
+answer	verb	spell	social	5.17	core	v00817348	noun:communication
 any	adjective	modifier	quality	6.07	core	a02275443	adverb:manner
 apple	noun	flora	produce	4.76	core	n07755101	-
 arms	noun	artifact	weapon	4.82	core	n04573543	-
@@ -32,6 +34,7 @@ bear	noun	creature	mammal	4.71	core	n02134305	verb:body
 become	verb	spell	transform	5.4	core	v00149403	-
 bed	noun	artifact	furniture	5.07	core	n02821967	verb:transfer
 beer	noun	consumable	drink	4.7	core	n07902824	-
+believe	verb	spell	social	5.51	core	v00685199	-
 ben	noun	terrain	elevation	4.69	core	n09241548	-
 best	adjective	modifier	quality	5.84	core	a00229099	noun:person,adverb:manner,verb:combat
 better	adjective	modifier	quality	5.76	core	a00231927	adverb:manner,noun:attribute,verb:combat
@@ -237,6 +240,7 @@ late	adjective	modifier	quality	5.34	core	a00820050	adverb:manner
 lawyer	noun	person	worker	4.67	core	n10269647	-
 lead	noun	material	metal	5.2	core	n14667645	verb:movement
 leader	noun	person	leader	4.95	core	n09646208	-
+learn	verb	spell	perceive	5.17	core	v00599310	-
 least	adjective	modifier	quality	5.44	core	a01560454	noun:knowledge,adverb:manner
 leave	verb	spell	movement	5.34	core	v02013448	noun:act
 less	adjective	modifier	quality	5.49	core	a01559809	adverb:manner
@@ -250,6 +254,7 @@ line	noun	artifact	tool	5.49	core	n08447525	verb:contact
 link	noun	artifact	device	4.99	core	n03679297	verb:contact
 list	noun	artifact	document	5.28	core	n06492991	verb:social
 little	adjective	modifier	quality	5.75	core	a01394303	noun:quantity,adverb:manner
+live	verb	spell	body	5.54	core	v02655932	adjective:quality,adverb:manner
 local	adjective	modifier	quality	5.43	core	a01110098	noun:vehicle_land
 long	adjective	modifier	quality	5.81	core	a01440837	adverb:manner,verb:emotion
 look	verb	spell	perceive	5.81	core	v02134989	noun:attribute
@@ -290,6 +295,7 @@ moon	noun	terrain	celestial	4.7	core	n09381255	verb:social
 more	adjective	modifier	quality	6.36	core	a01559526	adverb:manner,noun:person
 most	adjective	modifier	quality	6.0	core	a01561513	adverb:manner
 move	verb	spell	movement	5.35	core	v01839438	noun:act
+movie	noun	artifact	document	5.16	core	n06626039	-
 much	adjective	modifier	quality	6.0	core	a01557986	noun:quantity,adverb:manner
 museum	noun	artifact	building	4.71	core	n03806085	-
 must	noun	consumable	drink	5.68	core	n07940895	adjective:quality
@@ -354,6 +360,7 @@ public	adjective	modifier	quality	5.57	core	a01867145	noun:group
 put	verb	spell	contact	5.66	core	v01496967	noun:document
 queen	noun	person	leader	4.86	core	n10518940	verb:social
 radio	noun	artifact	device	5.01	core	n06287788	adjective:pertaining,verb:communication
+read	verb	spell	perceive	5.54	core	v00626756	noun:communication
 ready	adjective	modifier	quality	5.28	core	a01936911	verb:create,noun:state
 real	adjective	modifier	quality	5.6	core	a01939402	adverb:manner,noun:quantity
 record	noun	artifact	device	5.21	core	n03930191	verb:communication
@@ -449,6 +456,7 @@ tea	noun	consumable	drink	4.73	core	n07949514	-
 teacher	noun	person	worker	4.88	core	n10713754	-
 tech	noun	person	worker	4.69	core	n08302167	-
 text	noun	artifact	document	5.01	core	n06426015	-
+thank	verb	spell	social	5.48	core	v00893836	-
 third	adjective	modifier	quality	5.32	core	a02209976	noun:quantity,adverb:manner
 ticket	noun	artifact	document	4.61	core	n06530710	verb:social
 till	noun	artifact	container	4.79	core	n02980398	verb:create
@@ -466,6 +474,7 @@ trust	verb	spell	social	5.13	core	v00690278	noun:possession
 try	verb	spell	social	5.5	core	v02535833	noun:act
 trying	adjective	modifier	quality	5.47	core	a00752569	-
 turn	verb	spell	movement	5.32	core	v01911251	noun:act
+tv	noun	artifact	device	5.2	core	n04413042	-
 under	adjective	modifier	quality	5.73	core	a01210218	adverb:manner
 united	adjective	modifier	quality	5.47	core	a02485330	-
 use	verb	spell	consume	5.81	core	v01161188	noun:attribute
@@ -477,6 +486,7 @@ vehicle	noun	artifact	vehicle_land	4.76	core	n04531608	-
 vice	noun	artifact	tool	4.71	core	n04861104	-
 video	noun	artifact	device	5.43	core	n04541422	-
 vote	verb	spell	social	5.11	core	v02466737	noun:attribute
+wait	verb	spell	social	5.35	core	v02644022	noun:act
 wall	noun	artifact	structure	5.04	core	n04554141	verb:combat
 want	verb	spell	consume	6.04	core	v01191258	noun:natural_object
 watch	noun	artifact	device	5.34	core	n04563183	verb:perceive

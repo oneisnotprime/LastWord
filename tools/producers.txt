@@ -1212,3 +1212,16 @@ landfill: produce_U=0.5 production_needs=extract
 aquifer: produce_O=0.8 production_needs=extract
 maar: produce_O=0.4 production_needs=extract
 pitman: produce_N=0.4
+
+# Frequency batch 1 (tools/freq_gap.py): people hired for their work pay N; FARMING lays a crop
+# field; a MANUFACTURER is a machine works turning vowels into M; a WORKPLACE is a station.
+developer: produce_N=0.35
+contractor: produce_N=0.45
+consultant: produce_N=0.3
+colleague: produce_N=0.3
+provider: produce_N=0.35
+workforce: produce_N=1.5
+administrator: produce_N=0.3
+farming: produce_A=1.2 tile_type=tilled radius=4
+manufacturer: produce_M=1.2
+workplace: produce_C=0.6 production_needs=labor
