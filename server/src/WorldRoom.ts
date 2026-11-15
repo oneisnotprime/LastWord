@@ -5,8 +5,8 @@ import {
   LAND_RATE, ROAD_RATE, ROAD_HALF, CLAIMED_ROAD, CITIZEN_S, CITIZENS, CITIZEN_LEAVE, CITIZEN_RETURN, HIRE_PRICE, HIRED, TRADE_RANGE, OFFER_SECONDS, PAIR_COOLDOWN, BOSS_TIMES, BOSS_Z, BOSS_HOARD,
   type ClaimDisc, discTiles, windAt, moistureAt, waterNear, wateringReach, wetWeather, producingLine, Soil, LABOUR_RANGE, CYCLE_SECONDS, PEACE_RADIUS, PEACE_SECONDS, VOWELS, type ProducerSpec, type Conditions,
   addLetters, afflict, placeRules, harvest, growthOf, tradeRateOf, marketRatio, type PlaceRules, aggressive, clearLine, courageOf, pluralize, auras, authorityOf, chooseTarget, commandLimit, draw, groundFood, hasAny, ignoresOrder, moraleAim, moraleGoal, needs, nextMorale, noStores, outputs, recruitRate, rerouteSeconds, startingSupply, becomes, retreats, routed, supply, theftResistance, HUNGER_LOYALTY, NORMAL, STARTING_STORES, STARVING, SUPPLIES, bodyFlags, cure, useObject, findPath, hampered, inflicts, statusDamage, statusEffects, tickStatuses, wake, GATHER_SECONDS, GATHER_REASONS, cachePrize, carcassFood, Deposits, destroyLetters, killLetters, mainland, MARKET, pickAnimal, placeSources, readTrade, regionOf, RUIN_INTEGRITY, CACHE_X, SITE_RADIUS, spawnPoint, starterHand, TEMPLE_Q, tradeProblem, generateMap, GIVE_RANGE, missing, parsePhrase, applyAdjectives, cannotCarry, improvisable, readDescription, production, resolveSpelled, SEPARATE_UP_TO, nearestWalkable, openGround, randomWalkable, resolve, Tile, tileAt, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit, cannotRide, claimOf, senseOf, combineSenses, type Sense, type Sensed,
-  dealKits, legendOf, jobBodyOps, jobRules, jobStats, kitCard, kitScore, legendCost, sealedLetters, unlockNeed, unlockText, makesLetters, KIT_SECONDS,
-  type JobDef, type Kit, type KitCard, type KitData, type LegendDef,
+  dealKits, legendOf, kitOptions, bestOption, kitHands, KIT_STEPS, jobBodyOps, jobRules, jobStats, kitCard, kitScore, legendCost, sealedLetters, unlockNeed, unlockText, makesLetters, KIT_SECONDS,
+  type JobDef, type Kit, type StarterHand, type KitCard, type KitData, type LegendDef,
   effectSeconds, biomeAt, huntYield, pickWild, rollText, toolHelp, wildlife, RUIN_X_CHANCE, type Help,
   type Affliction, type Candidate, type Dictionary, type Stores, type Supply, type Entity, type Hampered, type Status, type Stats, type Letters, type LoadoutDetail, type Op, type Phrase, type Point, type Spelled, type Value, type WordDef, type WorldMap,
 } from "@lastword/shared";
@@ -335,8 +335,12 @@ interface Walker {
   paying?: { to: string; n: number; why: string };
   /** T its stores' interest has come to, short of a whole letter (shared money.ts). */
   interest?: number;
-  /** For a person choosing a starting kit: the kits offered and the room time it is picked for them. */
-  picking?: { kits: Kit[]; until: number };
+  /**
+   * For a person choosing a starting kit: the kits offered and the room time the current choice
+   * is made for them. People pick in steps (shared KIT_STEPS: `step`, what is `chosen` so far,
+   * the `hands` dealt for their job); bots take a whole kit at once. Untouchable meanwhile.
+   */
+  picking?: { kits: Kit[]; until: number; step?: number; chosen?: Partial<Kit>; hands?: StarterHand[] };
   /** For a person: the starting kit they picked (PLAN.md "Starting kits"). */
   kit?: PersonKit;
   /** For a person: deeds counted toward a legendary's unlock. */
@@ -828,11 +832,12 @@ export class WorldRoom extends Room {
       if (!a || typeof a.id !== "string") throw new Error("Answer which offer?");
       return this.answer(id, a.id, a.accept === true);
     }),
-    /** Pick a starting kit: the index of one of the kits offered. */
-    kit: (client: Client, index: unknown) => {
+    /** Pick one of the current step's three choices: { step, index } (a step already past is ignored). */
+    kit: (client: Client, what: unknown) => {
       const walker = this.walkers.get(client.sessionId);
-      if (!walker?.picking || !Number.isInteger(index) || !walker.picking.kits[index as number]) return;
-      this.chooseKit(client.sessionId, walker, index as number);
+      const pick = typeof what === "number" ? { step: walker?.picking?.step, index: what } : what as { step?: unknown; index?: unknown } | null;
+      if (!walker?.picking || walker.picking.step === undefined || !pick || pick.step !== walker.picking.step || !Number.isInteger(pick.index)) return;
+      this.pickStep(client.sessionId, walker, pick.index as number);
     },
     /** The client is listening: send its kits to pick from, or its kit as it stands. */
     ready: (client: Client) => {
@@ -1276,7 +1281,7 @@ export class WorldRoom extends Room {
     for (let i = 0; i < n; i++) {
       const id = `bot${++this.botCount}`;
       const bot = this.addPerson(id, id, this.spawnSpot());
-      if (this.kitsOn) { this.offerKits(id, bot); this.chooseKit(id, bot, this.botKit(bot.picking!.kits, difficulty)); }
+      if (this.kitsOn) { this.offerKits(id, bot, false); this.chooseKit(id, bot, this.botKit(bot.picking!.kits, difficulty)); }
       this.bots.set(id, {
         difficulty, phase: this.botCount, stay: 3 + Math.floor(this.rng() * 6), tried: new Set(), gathered: 0, spelled: 0, at: { x: 0, y: 0 }, stuck: 0,
         peaceUntil: this.elapsed + BOT_PEACE[0] + this.rng() * (BOT_PEACE[1] - BOT_PEACE[0]), nextSpell: this.elapsed + this.rng() * BOT_SPELL_GAP[1], producers: 0,
@@ -1299,18 +1304,57 @@ export class WorldRoom extends Room {
     if (this.kitsOn) this.offerKits(client.sessionId, walker);
   }
 
-  /** Deals a person three kits and tells them (bots choose at once). */
-  private offerKits(id: string, w: Walker) {
-    w.picking = { kits: dealKits(this.kitData, this.dict, this.rng), until: this.elapsed + KIT_SECONDS };
+  /**
+   * Deals a person three kits (bots choose a whole one at once). A person picks a job, a building,
+   * a legendary and letters in turn, KIT_SECONDS each, untouchable until they are done.
+   */
+  private offerKits(id: string, w: Walker, person = true) {
+    w.picking = { kits: dealKits(this.kitData, this.dict, this.rng), until: this.elapsed + KIT_SECONDS, ...(person ? { step: 0, chosen: {} } : {}) };
+    if (person) w.hamper.untouchable = true;
     this.sendKits(id, w);
   }
 
+  /** Tells a person the step they are on: its choices, the time left and what they chose before. */
   private sendKits(id: string, w: Walker) {
-    if (!w.picking) return;
+    const p = w.picking;
+    if (!p || p.step === undefined) return;
+    const c = p.chosen ?? {};
     this.sendTo(id, "kits", {
-      cards: w.picking.kits.map((k) => kitCard(this.kitData, this.dict, k)),
-      seconds: Math.max(0, Math.ceil(w.picking.until - this.elapsed)),
+      step: p.step,
+      options: kitOptions(this.kitData, this.dict, p.step, p.kits, p.hands),
+      seconds: Math.max(0, Math.ceil(p.until - this.elapsed)),
+      chosen: [c.job, c.building, c.legend].filter((x): x is string => !!x),
     });
+  }
+
+  /** Takes a person's choice for the step they are on; after the letters, gives them the kit. */
+  private pickStep(id: string, w: Walker, index: number) {
+    const p = w.picking;
+    if (!p || p.step === undefined) return;
+    const step = KIT_STEPS[p.step], c = (p.chosen ??= {});
+    if (step === "letters") {
+      const hand = p.hands?.[index];
+      if (!hand) return;
+      p.kits = [{ job: c.job!, building: c.building!, legend: c.legend!, hand: { ...hand.hand } }];
+      return this.chooseKit(id, w, 0);
+    }
+    const kit = p.kits[index];
+    if (!kit) return;
+    if (step === "job") c.job = kit.job;
+    else if (step === "building") c.building = kit.building;
+    else {
+      c.legend = kit.legend;
+      p.hands = kitHands(this.dict, this.kitData.jobs.find((j) => j.word === c.job)!, this.rng);
+    }
+    p.step++;
+    p.until = this.elapsed + KIT_SECONDS;
+    this.sendKits(id, w);
+  }
+
+  /** The choice taken for a person out of time on their step (shared `bestOption`). */
+  private bestStep(w: Walker): number {
+    const p = w.picking!;
+    return bestOption(this.kitData, this.dict, p.step ?? 0, p.kits, p.hands);
   }
 
   /**
@@ -1342,6 +1386,7 @@ export class WorldRoom extends Room {
     const kit = w.picking?.kits[index];
     if (!kit) return;
     w.picking = undefined;
+    w.hamper = hampered(w.statuses); // no longer untouchable
     const job = this.kitData.jobs.find((j) => j.word === kit.job)!;
     const legend = this.kitData.legendaries.find((l) => l.word === kit.legend)!;
     w.kit = {
@@ -1361,7 +1406,6 @@ export class WorldRoom extends Room {
       console.error(`starting building ${kit.building}:`, e);
     }
     this.sendTo(id, "letters", w.letters);
-    this.sendTo(id, "notice", `${job.word.toUpperCase()}: your ${kit.building.toUpperCase()} stands here. ${kit.legend.toUpperCase()} is sealed: ${unlockText(legend)}`);
     this.legendProgress(id, w);
     this.tell(w);
     this.refreshViews();
@@ -3461,7 +3505,10 @@ export class WorldRoom extends Room {
     this.weatherPatches(since);
     for (const [id, w] of [...this.walkers]) {
       if (w.master !== null) continue;
-      if (w.picking && this.elapsed >= w.picking.until) this.chooseKit(id, w, this.bestKit(w.picking.kits));
+      if (w.picking && this.elapsed >= w.picking.until) {
+        if (w.picking.step !== undefined) this.pickStep(id, w, this.bestStep(w));
+        else this.chooseKit(id, w, this.bestKit(w.picking.kits));
+      }
       if (w.kit) this.legendProgress(id, w);
     }
     for (const [id, w] of this.walkers) if (w.senses?.length || w.eyes?.length) this.sendSensed(id, w);
@@ -4867,6 +4914,8 @@ export class WorldRoom extends Room {
   /** Statuses came or went: work out again what the walker may do, and rebuild it if the set changed. */
   private statusChanged(w: Walker) {
     w.hamper = hampered(w.statuses);
+    if (w.picking) w.hamper.untouchable = true; // choosing a kit: nothing lands
+
     const key = [...new Set(w.statuses.map((a) => a.status))].join(" ");
     if (key !== w.statusKey) {
       w.statusKey = key;
