@@ -72,6 +72,8 @@ interface ZoneView {
   title?: string;
   /** Claimed ground (HOME, CASTLE): a fence of stakes around its edge, redrawn as it changes size. */
   fence?: Phaser.GameObjects.Graphics; fencedFor?: number;
+  /** A strike shown before it lands (server `Zone.warn`): a red ring closing until `until` (scene ms), then a flash. */
+  warning?: { ring: Phaser.GameObjects.Graphics; from: number; until: number };
 }
 
 /** Claimed ground: green for yours, red for someone else's. */
@@ -151,6 +153,7 @@ export class Zones {
         z = { disc, tag, decor: [], word: zone.word, style, x: 0, y: 0, r: 0, laidFor: 0,
           info: { by: String(zone.by ?? ""), until: Number(zone.until ?? 0), owner: String(zone.owner ?? ""), shelter: Number(zone.shelter ?? 0), mine: zone.owner === mine } };
         if (claim) { z.fence = this.scene.add.graphics().setDepth(51).setScale(1, 0.9); disc.setAlpha(0.2); }
+        if (Number(zone.warn) > 0) z.warning = { ring: this.scene.add.graphics().setDepth(52), from: time, until: time + Number(zone.warn) * 1000 };
         this.views.set(id, z);
       }
       // The tag follows a change of owner (a claimed RUIN, a swap).
@@ -168,6 +171,15 @@ export class Zones {
       // The tag stays with the zone, a little above its middle (over a claim's building), never
       // following you about: standing inside a big one, the event chips say where you are.
       z.tag.setPosition(z.x, z.y - Math.min(z.r * 0.9, ZONE_TAG_RISE * PX) - 8);
+      if (z.warning) {
+        // Coming: a red ring with an inner ring closing on it; landed: a bright flash fading out.
+        const w = z.warning, g = w.ring.clear(), k = (time - w.from) / Math.max(1, w.until - w.from);
+        if (k < 1) {
+          g.fillStyle(0xc0392b, 0.1 + 0.2 * k + 0.08 * Math.sin(time / 70)).fillEllipse(z.x, z.y, z.r * 2, z.r * 1.8);
+          g.lineStyle(3, 0xc0392b, 0.95).strokeEllipse(z.x, z.y, z.r * 2, z.r * 1.8);
+          g.lineStyle(2, 0xfff0e0, 0.9).strokeEllipse(z.x, z.y, z.r * 2 * (1 - k), z.r * 1.8 * (1 - k));
+        } else if (k < 1.6) g.fillStyle(0xfff3c4, 0.85 * (1.6 - k) / 0.6).fillEllipse(z.x, z.y, z.r * 2.1, z.r * 1.9);
+      }
       for (const d of z.decor) {
         let x = z.x + Math.cos(d.a) * d.d * z.r, y = z.y + Math.sin(d.a) * d.d * z.r * 0.85;
         switch (z.style.decor) {
@@ -192,7 +204,7 @@ export class Zones {
     });
     for (const [id, z] of this.views) {
       if (live.has(id)) continue;
-      z.disc.destroy(); z.tag.destroy(); z.decor.forEach((d) => d.img.destroy()); z.fence?.destroy();
+      z.disc.destroy(); z.tag.destroy(); z.decor.forEach((d) => d.img.destroy()); z.fence?.destroy(); z.warning?.ring.destroy();
       this.views.delete(id);
     }
     return overMap;

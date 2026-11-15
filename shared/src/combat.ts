@@ -28,13 +28,13 @@ export const destroyed = (e: Entity): boolean => e.integrity <= 0;
 
 /**
  * How blows and bodies are felt: in full up to FELT_KNEE (about a person's scale), and by the
- * square root of how far past it they go. A COLOSSUS's 7,000 crush is felt as 529, not 7,000; a
- * BEHEMOTH's 250,000 integrity as 3,162. The order stays (bigger still wins), but a fight is no
+ * square root of how far past it they go. A COLOSSUS's 7,000 crush is felt as 837, not 7,000; a
+ * BEHEMOTH's 250,000 integrity as 5,000. The order stays (bigger still wins), but a fight is no
  * longer a lookup across five orders of magnitude.
  */
-export const FELT_KNEE = 40;
+export const FELT_KNEE = 100;
 /** Share of a blow's felt size that lands: what sets how long fights last (5 to 15 s between people). */
-export const FIGHT_PACE = 0.25;
+export const FIGHT_PACE = 0.5;
 
 /** A blow's or a body's felt size (see FELT_KNEE). */
 export function felt(x: number): number {

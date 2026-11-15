@@ -1,6 +1,6 @@
 import { boot, type ColyseusTestServer } from "@colyseus/testing";
 import { afterAll, beforeAll, beforeEach, expect, it } from "vitest";
-import { roomAround, stampTerrain, Tile, tileAt, walkable } from "@lastword/shared";
+import { landed, roomAround, stampTerrain, Tile, tileAt, walkable } from "@lastword/shared";
 import appConfig from "./app.config.js";
 import { WorldRoom } from "./WorldRoom.js";
 
@@ -80,9 +80,9 @@ it("a starting player hunts a PIG in a few blows, and gets H and food by its mas
   const pig = r.addCreature({ spelled: { noun: "pig" }, phrase: "pig", vehicle: false, integrity: null }, "-", w.player.x + 1, w.player.y);
   c.send("attack", pig); await wait();
   let t = 0;
-  for (; t < 200 && walkers.has(pig); t++) room.update(0.1);
+  for (; t < 300 && walkers.has(pig); t++) room.update(0.1);
   expect(walkers.has(pig)).toBe(false);
-  expect(t / 10).toBeLessThan(12); // six fist blows, not fifty
+  expect(t / 10).toBeLessThan(20); // a dozen fist blows (shared FIGHT_PACE), not fifty
   await wait();
   const hunted = of("got").find((g) => g.letters.startsWith("hp"));
   expect(hunted.why).toMatch(/^hunted PIG \(\+\d+(\.\d)? food\)$/);
@@ -150,7 +150,7 @@ it("blows are sent as compact hits to whoever can see them, merged per attacker 
   expect(hits.length).toBeGreaterThan(0);
   const mine = hits.find((h: any) => h.by === c.sessionId && h.kind !== "miss");
   expect(mine).toMatchObject({ on: pig, layer: "", ranged: false });
-  expect(mine.amount).toBe(5); // a bare hand
+  expect(mine.amount).toBe(Math.round(landed(5, 30))); // a bare hand, felt (shared combat.ts `landed`)
   expect(["hit", "crit"]).toContain(mine.kind);
   for (const h of hits) expect(Object.keys(h).sort()).toEqual(["amount", "by", "kind", "layer", "on", "ranged"]);
 });

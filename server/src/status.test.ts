@@ -1,5 +1,6 @@
 import { boot, type ColyseusTestServer } from "@colyseus/testing";
 import { afterAll, beforeAll, expect, it } from "vitest";
+import { landed } from "@lastword/shared";
 import appConfig from "./app.config.js";
 import { WorldRoom } from "./WorldRoom.js";
 
@@ -97,7 +98,7 @@ it("poison from a SNAKE bite keeps hurting after the bite, and HEAL ends it", as
   wb.foe = null; snake.foe = null; snake.player.x += 30; // no more bites
   const hp = wb.hp;
   ticks(room, 30);
-  expect(hp - wb.hp).toBeGreaterThanOrEqual(10); // five a second
+  expect(hp - wb.hp).toBeGreaterThanOrEqual(2 * landed(5, 100) - 0.01); // five a second, felt (shared combat.ts `landed`)
   b.send("spell", "heal"); await wait();
   expect(has(wb, "poison")).toBe(false);
   expect(wb.player.status).toBe("");

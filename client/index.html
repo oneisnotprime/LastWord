@@ -252,6 +252,30 @@
       #fx .num.crit { font-size: 27px; color: #ffd84a; -webkit-text-stroke: 4px #8a3a0a; }
       #fx .num.layer, #fx .num.blocked { color: #e8e4dc; -webkit-text-stroke-color: #5a5a62; font-size: 14px; }
       #fx .num.miss { color: #fbf7ec; -webkit-text-stroke-color: #8a7a60; font-size: 13px; font-style: italic; }
+      #fx .num.dodged { color: #fff3c4; -webkit-text-stroke-color: #2f5a8e; font-size: 15px; font-style: italic; }
+      /* A heavy blow coming for you: the screen's edge pulses red. Knocked out: a beat of slow grey. */
+      body.incoming::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 4; animation: incoming .45s infinite alternate;
+        background: radial-gradient(ellipse at center, transparent 58%, rgba(201, 40, 30, .45) 100%); }
+      @keyframes incoming { from { opacity: .35; } to { opacity: 1; } }
+      body.deathbeat canvas { filter: grayscale(.85) brightness(.8); transition: filter 1s; }
+      /* Kill feed (recap.ts): a few terse lines at the top right. */
+      #killfeed { position: fixed; top: 10px; right: 12px; z-index: 5; display: flex; flex-direction: column; align-items: flex-end; gap: 3px; pointer-events: none; }
+      #killfeed div { padding: 2px 9px; background: rgba(40, 30, 22, .72); color: #fbf6ea; border-radius: 3px; font: 600 12px var(--round); transition: opacity .6s; }
+      #killfeed div.mine { background: rgba(160, 40, 30, .85); }
+      #killfeed div.gone { opacity: 0; }
+      #killfeed i { font-style: normal; color: #f2a39b; margin: 0 2px; }
+      /* Death recap and end-of-round recap (recap.ts). */
+      #recap { position: fixed; left: 50%; top: 26%; transform: translate(-50%, -50%) rotate(-.6deg); z-index: 6; display: none; min-width: 300px; max-width: 92vw; padding: 12px 20px 10px;
+        background: var(--paper); color: var(--ink); border-radius: 4px; box-shadow: 0 0 0 4px var(--red), 0 3px 0 4px #8a2a2a, 0 18px 40px rgba(20, 14, 8, .5); pointer-events: none; text-align: center; }
+      #recap.show { display: block; animation: recapin .5s; } #recap.dim { opacity: .55; }
+      #recap.round { box-shadow: 0 0 0 4px var(--gold), 0 3px 0 4px #8a6a1a, 0 18px 40px rgba(20, 14, 8, .5); }
+      #recap h3 { margin: 0 0 6px; font: 700 24px/1.15 var(--hand); letter-spacing: 1px; }
+      #recap ul { list-style: none; margin: 0 auto 6px; padding: 0; max-width: 320px; }
+      #recap li { display: flex; justify-content: space-between; gap: 14px; font: 500 13px var(--round); border-bottom: 1px dashed var(--line); padding: 2px 0; }
+      #recap li b { color: var(--red); }
+      #recap small { color: var(--soft); font: 500 12px var(--round); }
+      @keyframes recapin { from { opacity: 0; transform: translate(-50%, -50%) scale(.8) rotate(-3deg); } to { opacity: 1; } }
+      #preview .warn { color: var(--red); font-weight: 700; }
       #fx .fail { position: absolute; white-space: nowrap; padding: 3px 10px 4px; font: 700 16px var(--hand); color: var(--red); background: var(--paper); border-radius: 2px;
         box-shadow: var(--shadow); }
       #fx .fail.small { font: 600 12px var(--round); padding: 2px 8px 3px; opacity: .92; }

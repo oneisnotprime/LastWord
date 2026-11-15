@@ -91,7 +91,7 @@ it("space: GRAVITY grounds B's wings; LEVITATION floats A; a SINGULARITY pulls B
   expect(Math.hypot(wb.player.x - mid.x, wb.player.y - mid.y)).toBeLessThan(before - 1);
   const hits = (room as any).hits.length;
   const hp = wb.hp;
-  a.send("pick", { x: wb.player.x, y: wb.player.y }); a.send("spell", "bombardment"); a.send("pick", null); await wait(); second(5);
+  a.send("pick", { x: wb.player.x, y: wb.player.y }); a.send("spell", "bombardment"); a.send("pick", null); await wait(); second(15); // shown where they fall first (shared hazard.ts)
   expect(wb.hp).toBeLessThan(hp);
   void hits;
 });

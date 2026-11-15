@@ -57,7 +57,7 @@ for (let r = 0; r < rooms; r++) {
       const t = f ? seconds - f.from : 0;
       (w.master === null ? ttk.person : ttk.creature).push(t);
       if (w.master === null && !firstDeath) { firstDeath = seconds; firstDeaths.push(seconds); }
-      if (w.master === null) { const k = anyRoom.walkers.get(killerId); const what = k ? (k.master === null ? (k.unit?.weapon ?? "fists") : k.body?.noun ?? k.player.name) : "area/other"; killers.set(String(what), (killers.get(String(what)) ?? 0) + 1); }
+      if (w.master === null) { const what = String(anyRoom.recap(w, killerId).what).toLowerCase(); killers.set(what, (killers.get(what) ?? 0) + 1); }
     }
     fightFrom.delete(id);
     return kill(id, killerId);

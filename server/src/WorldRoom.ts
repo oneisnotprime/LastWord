@@ -614,6 +614,8 @@ export class WorldRoom extends Room {
   private everJoined = 0;
   /** People killed by each person this round, by name, for the end-of-round recap. */
   private tally = new Map<string, number>();
+  /** Whether each bot tries to dodge each strike shown coming (`botDodge`), decided once. */
+  private dodgeTried = new Map<string, boolean>();
   /** Things on the ground that have been attacked, with the damage they carry. */
   private thingEntities = new Map<string, Entity>();
   /** Seconds this room has run. */
@@ -1122,7 +1124,7 @@ export class WorldRoom extends Room {
       this.carried.delete(ownGear);
       ownGear.phrase = shown(done.spelled.adjectives!, done.spelled.noun);
       ownGear.integrity = null;
-      try { this.rebuild(walker); } catch (e) { Object.assign(ownGear, old); this.resolved.delete(ownGear); this.rebuild(walker); throw e; }
+      try { this.rebuild(walker, true); } catch (e) { Object.assign(ownGear, old); this.resolved.delete(ownGear); this.rebuild(walker); throw e; }
       const layer = walker.unit.entityFor(ownGear.spelled);
       if (layer && kept !== null) { layer.integrity = kept * layer.stats.num("integrity"); ownGear.integrity = layer.integrity; }
       return this.described(id, walker, read, target, at, old.phrase, done.changes, id);
@@ -1132,7 +1134,7 @@ export class WorldRoom extends Room {
       const done = applyAdjectives(this.dict, other.body, read.adjectives);
       const old = other.body;
       other.body = done.spelled;
-      try { this.rebuild(other); } catch (e) { other.body = old; this.rebuild(other); throw e; }
+      try { this.rebuild(other, true); } catch (e) { other.body = old; this.rebuild(other); throw e; }
       other.hp = (other.hp / max) * other.unit.body.stats.num("integrity");
       other.unit.body.integrity = other.hp;
       const what = other.player.name;
@@ -1536,7 +1538,7 @@ export class WorldRoom extends Room {
     }
     walker.gear.push(gear);
     try {
-      this.rebuild(walker);
+      this.rebuild(walker, true);
       this.keepPeace(walker, gear);
       return null;
     } catch (e) {
@@ -1546,16 +1548,42 @@ export class WorldRoom extends Room {
     }
   }
 
-  /** Rebuilds a walker's unit from its gear, keeping the damage each piece has taken. */
-  rebuild(walker: Walker) {
+  /** A walker's unit from its body, the given gear (its own by default), and what is in force on it. */
+  private unitOf(walker: Walker, gear: readonly Gear[] = walker.gear): Unit {
     // In the void (shared idea.ts) nothing it carries, wears, rides or stands in does anything.
     const nulled = !!walker.hamper?.nulled;
-    const unit = new Unit(this.dict, {
+    return new Unit(this.dict, {
       body: walker.body,
-      items: nulled ? [] : walker.gear.filter((g) => !g.vehicle).map((g) => g.spelled),
-      riding: nulled ? undefined : walker.gear.find((g) => g.vehicle)?.spelled,
+      items: nulled ? [] : gear.filter((g) => !g.vehicle).map((g) => g.spelled),
+      riding: nulled ? undefined : gear.find((g) => g.vehicle)?.spelled,
       effects: nulled ? statusEffects(walker.statuses) : [...(walker.kit ? [walker.kit.effect] : []), ...(this.weather ? [this.weather] : []), ...(walker.fields ?? []), ...walker.buffs, ...statusEffects(walker.statuses)],
     });
+  }
+
+  /**
+   * Gear that no longer fits (a grafted hand cut off, a status that weakens, an adjective that made
+   * a thing too heavy) falls to the ground at the walker's feet, still theirs: kept in the order
+   * carried, each piece only if it still fits with those before it. Returns the unit of what is kept.
+   */
+  private shedGear(walker: Walker): Unit {
+    const kept: Gear[] = [], dropped: Gear[] = [];
+    for (const g of [...walker.gear.filter((x) => !x.vehicle), ...walker.gear.filter((x) => x.vehicle)]) {
+      try { this.unitOf(walker, [...kept, g]); kept.push(g); } catch { dropped.push(g); }
+    }
+    walker.gear = walker.gear.filter((g) => kept.includes(g));
+    const owner = walker.master === null ? walker.id : walker.master === "-" ? "" : walker.master;
+    for (const g of dropped) this.addThing(g, owner, walker.player.x, walker.player.y);
+    if (dropped.length && walker.master === null) this.sendTo(walker.id, "notice", `Dropped ${dropped.map((g) => g.phrase.toUpperCase()).join(", ")}: no free hand`);
+    return this.unitOf(walker);
+  }
+
+  /**
+   * Rebuilds a walker's unit from its gear, keeping the damage each piece has taken. Gear that no
+   * longer fits is dropped (`shedGear`); with `strict` it throws instead (equipping, describing).
+   */
+  rebuild(walker: Walker, strict = false) {
+    let unit: Unit;
+    try { unit = this.unitOf(walker); } catch (e) { if (strict) throw e; unit = this.shedGear(walker); }
     unit.body.integrity = walker.hp;
     for (const g of walker.gear) {
       const layer = unit.entityFor(g.spelled);
@@ -2604,6 +2632,38 @@ export class WorldRoom extends Room {
       if (o) candidates.push({ id: oid, distance: Math.hypot(o.player.x - w.player.x, o.player.y - w.player.y), health: o.hp });
     }
     return chooseTarget(w.intelligence, candidates);
+  }
+
+  /**
+   * Bots see strikes shown coming as people do (shared hazard.ts, combat.ts `windupOf`): a heavy
+   * blow's ring on them, an area or cell not yet struck around them. By `SKILL.dodges`, decided
+   * once a strike, a bot steps out of it, away from its middle.
+   */
+  private botDodge() {
+    const out = (w: Walker, x: number, y: number, r: number) => {
+      const dx = w.player.x - x, dy = w.player.y - y, d = Math.hypot(dx, dy) || 1;
+      const ux = d < 1e-3 ? 1 : dx / d, uy = d < 1e-3 ? 0 : dy / d;
+      w.target = nearestWalkable(this.map, { x: x + ux * (r + 1.5), y: y + uy * (r + 1.5) });
+      w.route = []; w.routeTo = null;
+    };
+    const tries = (key: string, id: string, mind: BotMind) => {
+      const k = `${key}|${id}`;
+      if (!this.dodgeTried.has(k)) this.dodgeTried.set(k, this.rng() < SKILL[mind.difficulty].dodges);
+      return this.dodgeTried.get(k)!;
+    };
+    for (const [id, mind] of this.bots) {
+      const w = this.walkers.get(id);
+      if (!w || !w.hamper.moves) continue;
+      for (const [aid, o] of this.walkers) {
+        if (o.windup?.on === id && Math.hypot(w.player.x - o.windup.x, w.player.y - o.windup.y) <= DODGE_TILES + 0.3 && tries(`${aid}@${o.windup.at}`, id, mind)) out(w, o.windup.x, o.windup.y, DODGE_TILES);
+      }
+      for (const [key, a] of this.areas) {
+        if (!a.attack || a.armed === undefined || a.armed <= this.elapsed || a.radius > CELL_FROM) continue;
+        if (!this.harms(a, id, w) || !tries(key, id, mind)) continue;
+        out(w, a.x, a.y, a.radius);
+      }
+    }
+    if (this.dodgeTried.size > 2000) this.dodgeTried.clear();
   }
 
   /** True for a bot keeping its opening peace (`peaceUntil`), and for its creatures. */
@@ -4739,9 +4799,9 @@ export class WorldRoom extends Room {
         const hull = w.unit.riding.stats;
         const hurt = waveDamage(a.waves, hull.num("length"), this.anchored(w)) * since;
         if (hurt > 0) {
+          const name = w.unit.riding.name; // read before the blow: a wrecked hull is no longer `riding`
           w.unit.riding.integrity -= hurt;
-          this.blow(key, wid, { hit: true, critical: false, damage: hurt }, w.unit.riding.name, false, a);
-          const name = w.unit.riding.name;
+          this.blow(key, wid, { hit: true, critical: false, damage: hurt }, name, false, a);
           this.settle(wid, w);
           if (!w.unit.riding) this.sendTo(wid, "notice", `The waves wrecked your ${name.toUpperCase()}: you are thrown ashore`);
         }
@@ -6606,6 +6666,7 @@ export class WorldRoom extends Room {
     }
     this.think();
     this.thinkBots();
+    if (this.bots.size) this.botDodge();
     this.compel();
     // Combat: each attacker strikes its foe whenever the foe is in reach.
     for (const [id, w] of [...this.walkers]) {

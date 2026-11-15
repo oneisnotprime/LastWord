@@ -3,7 +3,7 @@ import "@fontsource/kalam/700.css";
 import "@fontsource/fredoka/500.css";
 import "@fontsource/fredoka/600.css";
 import Phaser from "phaser";
-import { TRADE_RANGE, aimOf, cardOf, GATHER_REASONS, missing, parsePhrase, readDescription, SITE_RADIUS, stampTerrain, Tile, tileAt, TILE_METERS, type Card, type Phrase, type WorldMap, generateMap } from "@lastword/shared";
+import { DODGE_TILES, TRADE_RANGE, aimOf, cardOf, GATHER_REASONS, missing, parsePhrase, readDescription, SITE_RADIUS, stampTerrain, Tile, tileAt, TILE_METERS, type Card, type Phrase, type WorldMap, generateMap } from "@lastword/shared";
 import { Effects } from "./fx.js";
 import { playAgain } from "./start.js";
 import { lookOf, type Look } from "./art/look.js";
@@ -16,7 +16,8 @@ import { KitView } from "./kits.js";
 import { Hud, type Aimed } from "./hud.js";
 import { Minimap } from "./minimap.js";
 import { pad, type Pad } from "./pad.js";
-import { connect, type Connection, type Described, type Got, type Hit } from "./net.js";
+import { connect, type Connection, type Described, type Got, type Hit, type Windup } from "./net.js";
+import { RecapView } from "./recap.js";
 import { Threats } from "./threats.js";
 import { Painter, PX, useMade, useStandee, ZOOM } from "./paint.js";
 import { Sky } from "./sky.js";
@@ -122,6 +123,10 @@ class World extends Phaser.Scene {
   private gatherRing!: Phaser.GameObjects.Graphics;
   /** Lines from attacker to target for a moment after each blow. */
   private tracers: { from: string; to: string; fx?: number; fy?: number; until: number; ranged: boolean; mine: boolean }[] = [];
+  /** Heavy blows winding up (server `windups`): a red ring where each will land, closing until it does. */
+  private windups: { by: string; on: string; x: number; y: number; from: number; until: number; mine: boolean }[] = [];
+  /** Kill feed, death recap and the end-of-round recap. */
+  private recapView = new RecapView();
   private tracerGfx!: Phaser.GameObjects.Graphics;
   /** Who struck you lately, and until when they are marked as targeting you. */
   private threats = new Map<string, number>();
@@ -222,6 +227,8 @@ class World extends Phaser.Scene {
         got: (g) => this.onGot(g),
         missed: (m) => { this.fx.fail(m.x, m.y - 1.2, m.text, true); this.gathering = null; },
         hits: (list) => this.onHits(list),
+        windups: (list) => this.onWindups(list),
+        killed: (line) => this.recapView.feed(line, this.net.state.players.get(this.net.sessionId)?.name ?? ""),
         offers: (list) => this.hud.setOffers(list),
         threats: (list) => this.threatList.set(list),
         kits: (offer) => this.kits.offer(offer),
@@ -229,22 +236,25 @@ class World extends Phaser.Scene {
         dropped: () => this.hud.toast("Connection lost: reconnecting…", "bad"),
         reconnected: () => this.hud.toast("Reconnected", "good"),
         notice: (text) => { const t = terse("notice", text); if (t) this.hud.toast(t, "good"); },
-        dead: () => { this.over = true; this.endAim(); this.hud.lock(); this.hud.knockedOut(null); },
+        dead: (recap) => {
+          this.over = true; this.endAim(); this.hud.closeScreens(); this.hud.lock(); this.hud.knockedOut(null);
+          // A beat to take it in: the world slows and greys, then the recap says what did it.
+          this.deathBeat();
+          this.recapView.death(recap);
+        },
         watching: (who) => { this.watching = who.id; this.hud.knockedOut(who.name); },
         sensed: (what) => this.minimap.picked(what),
         won: () => {},
-        roundover: ({ winner, seconds }) => {
+        roundover: (info) => {
+          const { winner } = info;
           this.roundOver = true;
           this.endAim();
           this.hud.lock();
           const mine = winner === this.net.state.players.get(this.net.sessionId)?.name;
-          const end = Date.now() + seconds * 1000;
-          const tick = () => {
-            const left = Math.max(0, Math.ceil((end - Date.now()) / 1000));
-            this.hud.banner(`${mine ? "YOU WIN" : `${winner.toUpperCase()} WINS`}\nnew map in ${left}`);
-            if (left > 0) setTimeout(tick, 250);
-          };
-          tick();
+          this.hud.closeScreens();
+          this.hud.ended = true;
+          this.hud.redraw();
+          this.recapView.round(info, mine);
         },
         loadout: (detail) => {
           this.hud.setLoadout(detail); this.minimap.senses(detail);
@@ -471,11 +481,29 @@ class World extends Phaser.Scene {
    * with a number; the striker lunges, and a line (a tracer for a shot) joins them for a moment.
    * A blow on you reddens the screen's edge from its side and marks who struck you.
    */
+  /** Heavy blows shown coming: their rings, and a shake if one is on you. */
+  private onWindups(list: Windup[]) {
+    const now = this.time.now, mine = this.net.sessionId;
+    for (const w of list) {
+      this.windups.push({ ...w, from: now, until: now + w.seconds * 1000, mine: w.on === mine });
+      if (w.on === mine) { this.hud.closeScreens(); this.fx.warn(w.seconds); }
+    }
+  }
+
+  /** Knocked out: a second of slow grey, the camera drifting in on where you fell. */
+  private deathBeat() {
+    document.body.classList.add("deathbeat");
+    const cam = this.cameras.main;
+    this.tweens.add({ targets: cam, zoom: cam.zoom * 1.25, duration: 1200, ease: "Sine.easeOut" });
+    this.time.timeScale = 0.25;
+    window.setTimeout(() => { this.time.timeScale = 1; document.body.classList.remove("deathbeat"); }, 1300);
+  }
+
   private onHits(list: Hit[]) {
     const now = this.time.now, mine = this.net.sessionId;
     for (const h of list) {
       const target = this.views.get(h.on), attacker = this.views.get(h.by);
-      if (target && h.kind !== "miss") {
+      if (target && h.kind !== "miss" && h.kind !== "dodged") {
         target.flashUntil = now + 160; target.shakeUntil = now + 260; target.crit = h.kind === "crit";
         target.barUntil = now + BAR_SECONDS * 1000;
       }
@@ -484,7 +512,8 @@ class World extends Phaser.Scene {
       this.hitCount++;
       if (at) this.fx.number(at.x, at.y - 1.4, h.amount, h.kind, h.layer, h.on === mine);
       this.tracers.push({ from: h.by, to: h.on, ...(h.x !== undefined ? { fx: h.x, fy: h.y } : {}), until: now + (h.ranged ? 260 : 180), ranged: h.ranged, mine: h.on === mine || h.by === mine });
-      if (h.on === mine && h.kind !== "miss") {
+      if (h.on === mine && h.amount > 0 && h.kind !== "miss" && h.kind !== "dodged") this.hud.closeScreens(); // a fight is never hidden behind a screen
+      if (h.on === mine && h.kind !== "miss" && h.kind !== "dodged") {
         const from = this.net.state.players.get(h.by) ?? (h.x !== undefined ? { x: h.x, y: h.y } : null), me = this.net.state.players.get(mine);
         this.fx.hurt(from && me ? Math.atan2(from.y - me.y, from.x - me.x) : null, h.kind === "crit" || h.amount >= 20);
         if (this.views.has(h.by)) this.threats.set(h.by, now + THREAT_SECONDS * 1000);
@@ -543,6 +572,20 @@ class World extends Phaser.Scene {
         t.lineStyle(1.6, tr.mine ? 0xd9573b : 0x4a3f33, 0.55 * k).lineBetween(from.x, from.y, to.x, to.y);
         const ang = Math.atan2(to.y - from.y, to.x - from.x);
         t.lineStyle(2.4, 0xfbf6ea, 0.9 * k).beginPath().arc(to.x, to.y, 9, ang + Math.PI - 0.9, ang + Math.PI + 0.9).strokePath();
+      }
+    }
+    // Heavy blows winding up: a red ring on the ground where each lands, closing as it comes, and a
+    // "!" over whoever swings. Step out of the ring (shared DODGE_TILES) and it misses.
+    this.windups = this.windups.filter((w) => w.until > time);
+    for (const w of this.windups) {
+      const k = Math.min(1, (time - w.from) / Math.max(1, w.until - w.from)), cx = w.x * PX, cy = w.y * PX + 2;
+      const R = DODGE_TILES * PX;
+      t.fillStyle(0xc0392b, 0.12 + 0.18 * k).fillEllipse(cx, cy, R * 2, R);
+      t.lineStyle(w.mine ? 3.5 : 2.5, 0xc0392b, 0.9).strokeEllipse(cx, cy, R * 2, R);
+      t.lineStyle(2, 0xffe0d8, 0.9).strokeEllipse(cx, cy, R * 2 * (1 - k), R * (1 - k));
+      const a = this.views.get(w.by);
+      if (a) {
+        t.fillStyle(0xc0392b, 1).fillRoundedRect(a.x - 5, a.y - a.top - 26, 10, 16, 3).fillCircle(a.x, a.y - a.top - 5, 3);
       }
     }
     // Aircraft: a shadow on the ground below and speed streaks behind, so a PLANE is seen coming.

@@ -99,7 +99,7 @@ describe("tick and duel", () => {
 describe("felt size", () => {
   it("counts blows and bodies in full up to a person's scale and by the square root past it, keeping their order", () => {
     expect(felt(30)).toBe(30);
-    expect(felt(4000)).toBeCloseTo(400);
+    expect(felt(4000)).toBeCloseTo(100 * Math.sqrt(40));
     expect(felt(250_000)).toBeGreaterThan(felt(60_000));
     // A COLOSSUS's crush still kills a person outright, but a gun on a BEHEMOTH takes tens of shots, not thousands.
     expect(landed(7000, 100)).toBeGreaterThan(100);
