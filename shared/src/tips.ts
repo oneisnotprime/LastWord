@@ -351,7 +351,7 @@ function meritOf(dict: Dictionary, word: string): Merit | null {
     hit *= p.count;
     const rates = Object.values(producerOf(s, p.count).rates).reduce((n, r) => n + r, 0);
     const heals = s.num("restores") > 0 || s.num("heals") > 0;
-    const hp = s.num("integrity") * p.count, speed = Math.max(s.num("speed_land"), s.num("speed_air"));
+    const hp = s.num("integrity") * p.count, speed = Math.max(s.num("speed_land"), s.num("speed_air"), s.num("speed_water"));
     let power = 0, why = "";
     switch (group) {
       case "weapons": {

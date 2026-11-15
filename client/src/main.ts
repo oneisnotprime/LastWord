@@ -346,6 +346,8 @@ class World extends Phaser.Scene {
       this.net.state.players.forEach((other: any, id: string) => {
         if (id === mine || other.owner === mine) return;
         const depth = this.onStandee(id, at.x, at.y) ?? (Math.hypot(other.x - x, other.y - y) < 0.8 ? -1e6 : null);
+        // A click on a market crowded with citizens is for the market; on a person there, for them.
+        if (site && other.owner !== "") return;
         if (depth !== null && depth > front) { front = depth; hit = id; claim = null; site = null; }
       });
       if (site) {
