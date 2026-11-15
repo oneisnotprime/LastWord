@@ -227,3 +227,16 @@ into `tools/generated_words.txt`, letters in `tools/producers.txt`). Art is draw
   cone, a saddle, a coil, a drawer, a sculpture, an oil rig, a robot arm, a shotgun, a quad bike,
   carriages, a stage flat, a sticker, a pixel, a runway, a pentagon; landforms as signs), checked in
   the gallery with headless Playwright.
+- Stalemate (TODO: rounds at the time cap with the last two bots riding vehicles, no foe in sight):
+  a ridden machine that runs out of fuel or power has speed nothing, so the endgame hunt's route
+  never got anywhere. Now, late in a round (after 20 minutes, or with two left), a riding bot whose
+  ride has stopped dead, or made no headway for 30 s toward where it is going, gets off and goes on
+  foot (`BotMind.ride`). Scenario test (`server/src/freq2.test.ts`: the last two bots in dry CABs
+  119 tiles apart, a minute of play): before, both still riding and still 119 tiles apart; after,
+  both on foot and 15 tiles apart. Tournaments with this batch's dictionary did not hit the cap
+  either way: 0 time-ups in 96 rooms before and after; bots got off a dead ride 9 times.
+- Tournament (8 mixed bots, 30 min cap, two sets of 48 rooms: the usual seeds and `SEED_BASE=500000`,
+  main's bots against this batch's): mean round 8.4 -> 8.6 min and 7.5 -> 7.5 min; median first
+  death 153 s and 125 s, unchanged; rounds at the time cap 0 -> 0 (batch 1's run had 1 in 48).
+- Remaining: `tools/freq_todo.txt` (3,000 words, rank order) starts at NEEDLESS (rank 11,920), NERD,
+  NOVELTY, OPTIMIZATION, PINT, POOP, PREVALENCE.
