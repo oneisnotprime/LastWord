@@ -357,11 +357,11 @@ it("casts verbs, steals with THEFT once stealthy enough, and changes the sky", a
   a.send("spell", "run");
   await wait();
   expect(last("a", "spelled")).toBe("RUN for 200 seconds");
-  expect(wa.speed).toBe(10);
+  expect(wa.speed).toBe(16); // 5 m/s × 2, on foot × FOOT_PACE (1.6)
   expect(wa.player.gear).toBe("RUN");
   room.update(201);
   await wait();
-  expect(wa.speed).toBe(5);
+  expect(wa.speed).toBe(8); // 5 m/s on foot × FOOT_PACE
   expect(last("a", "notice")).toBe("RUN wore off");
 
   // FLY crosses water; landing on water puts you ashore.

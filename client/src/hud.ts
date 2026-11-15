@@ -1,4 +1,4 @@
-import { effectText, heldText, spellableNow, SPELL_GROUPS, type SpellGroup, tipOfTheMoment, inspectText, LETTER_GUIDE, missing, parsePhrase, readTrade, standIn, standsFor, type Card, type Dictionary, type Letters, type LoadoutDetail, type Offer } from "@lastword/shared";
+import { bestWords, effectText, heldText, spellableNow, SPELL_GROUPS, type SpellGroup, tipOfTheMoment, inspectText, LETTER_GUIDE, missing, parsePhrase, readTrade, standIn, standsFor, type Card, type Dictionary, type Letters, type LoadoutDetail, type Offer } from "@lastword/shared";
 import { BADGE } from "./art/paper.js";
 import { ideasHtml, setTipsOn, tipRng, tipsOn } from "./tips.js";
 import { keyGlyph, only, pad, padGlyph } from "./pad.js";
@@ -60,11 +60,14 @@ function bar(label: string, now: number, max: number, kind = "") {
 export function cardHtml(card: Card, extra: string[] = []): string {
   const list = (items: string[], cls: string) => (items.length ? `<ul class="${cls}">${items.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>` : "");
   return `<div class="title">${esc(card.title)}</div>${card.kind ? `<div class="kind">${esc(card.kind)}</div>` : ""}` +
-    list(extra, "extra") + list(card.stats, "stats") + list(card.does, "does");
+    list(card.stats, "stats") + list(extra, "extra") + list(card.does, "does");
 }
 
 /** Something a spelling is aimed at before it is cast: a person, creature or thing, by id. */
 export interface Aimed { id: string; name: string }
+
+/** How many times each line comes up, in first-seen order. */
+const countEach = (lines: string[]) => lines.reduce((m, t) => m.set(t, (m.get(t) ?? 0) + 1), new Map<string, number>());
 
 /** A coloured paper chip, in a status badge's colours. */
 function chip(status: string, left?: number) {
@@ -86,6 +89,8 @@ export class Hud {
   /** The spell window's open group of words you can spell now, or null (all closed). */
   private group: SpellGroup | null = null;
   private spellable: { key: string; groups: Record<SpellGroup, string[]> } | null = null;
+  /** What the strip of best words beside the rack was last drawn for. */
+  private bestKey = "";
   /** Sends a trading action to the server (set by the scene). */
   act: (type: "market" | "sell" | "hire" | "transmute" | "offer" | "answer", payload: unknown) => void = () => {};
   /** People near enough to trade with (set by the scene). */
@@ -210,6 +215,11 @@ export class Hud {
       const el = (e.target as HTMLElement).closest<HTMLElement>("button");
       if (el?.dataset.group) { this.group = this.group === el.dataset.group ? null : el.dataset.group as SpellGroup; this.drawSpellable(); }
       else if (el?.dataset.word) { this.input.value = el.dataset.word; this.typed(); }
+    });
+    // The best words beside the rack: a click opens the spell window with that word in it.
+    $("best").addEventListener("click", (e) => {
+      const el = (e.target as HTMLElement).closest<HTMLElement>("[data-word]");
+      if (el) this.openSpell(el.dataset.word);
     });
     $("picker").addEventListener("click", (e) => {
       const tile = (e.target as HTMLElement).closest<HTMLElement>("[data-pick]");
@@ -443,8 +453,12 @@ export class Hud {
     const read = inspectText(this.dict, stood ? stood.word : t);
     if (!("card" in read)) return hide();
     const c = stood ? { ...read.card, title: `${stood.stand.toUpperCase()} → ${read.card.title}` } : read.card;
-    const key = [...c.does.filter((d) => !/^equip slot|^lies where/.test(d)).slice(0, 2), ...c.stats.slice(0, 2)].slice(0, 3);
-    el.innerHTML = `<div><b>${esc(c.title)}</b>${c.kind ? ` <span class="kind">${esc(c.kind)}</span>` : ""}</div>${key.length ? `<div class="key">${esc(key.join(" · "))}</div>` : ""}`;
+    // The numbers that matter for its kind first (shared `leadStats`: a weapon's damage and reach,
+    // a creature's HP, a ride's speed, an event's radius and how long it lasts), then what it does.
+    const stats = c.stats.filter((t) => !/^mass /.test(t)).slice(0, 4);
+    const does = c.does.filter((d) => !/^lies where|^held in|^worn: /.test(d)).slice(0, stats.length ? 2 : 3);
+    el.innerHTML = `<div><b>${esc(c.title)}</b>${c.kind ? ` <span class="kind">${esc(c.kind)}</span>` : ""}</div>` +
+      (stats.length ? `<div class="lead">${esc(stats.join(" · "))}</div>` : "") + (does.length ? `<div class="key">${esc(does.join(" · "))}</div>` : "");
     el.className = "show";
   }
 
@@ -471,6 +485,7 @@ export class Hud {
     this.target = target;
     $("spellfor").innerHTML = target ? `on <b>${esc(target.name.toUpperCase())}</b>` : "";
     this.win.className = "show";
+    document.body.classList.add("spelling"); // map-wide calls wait off screen while you spell
     this.input.value = text;
     this.lastText = text;
     this.input.focus();
@@ -481,6 +496,7 @@ export class Hud {
 
   closeSpell() {
     this.win.className = "";
+    document.body.classList.remove("spelling");
     this.input.value = "";
     this.lastText = "";
     this.target = null;
@@ -494,6 +510,7 @@ export class Hud {
   lock() {
     if (this.locked) return;
     this.locked = true;
+    $("best").innerHTML = "";
     if (this.typing) this.closeSpell();
     this.closeInspect();
   }
@@ -592,8 +609,34 @@ export class Hud {
 
   /** The top-left HUD, redrawn only when what it shows changes. */
   hud(frame: HudFrame) {
+    const hurt = (this.frame?.hp ?? 100) < 60;
     this.frame = frame;
     this.drawHud();
+    if (hurt !== frame.hp < 60) this.drawBest();
+  }
+
+  /**
+   * Beside the letter tiles: the few best words the rack spells right now (shared `bestWords`),
+   * ranked for where you stand (a weapon with empty hands, a ride on foot, a producer early,
+   * healing when hurt), each with why in a word or two. A click puts it in the spell window.
+   */
+  private drawBest() {
+    const el = $("best"), d = this.detail;
+    if (this.locked || this.out !== null) { el.innerHTML = ""; this.bestKey = ""; return; }
+    const gear = d?.gear ?? [];
+    const at = {
+      armed: gear.some((g) => g.slot === "held"),
+      riding: gear.some((g) => g.slot === "ride"),
+      income: (d?.income ?? []).reduce((n, l) => n + l.rate, 0),
+      creatures: d?.creatures.length ?? 0,
+      health: (this.frame?.hp ?? 100) / 100,
+    };
+    const held = Object.entries(this.held).filter(([, n]) => n > 0).sort().map(([c, n]) => `${c}${n}`).join("");
+    const key = `${held}|${+at.armed}${+at.riding}${+(at.income >= 2)}${+(at.creatures > 0)}${+(at.health < 0.6)}`;
+    if (key === this.bestKey) return;
+    this.bestKey = key;
+    const best = held ? bestWords(this.dict, this.held, at) : [];
+    el.innerHTML = best.map((b) => `<button data-word="${b.word}" title="${esc(GROUP_NAME[b.group])}"><b>${b.word.toUpperCase()}</b><small>${esc(b.why)}</small></button>`).join("");
   }
 
   private drawHud() {
@@ -642,7 +685,8 @@ export class Hud {
         ...(d?.effects ?? []).map((e) => `<span class="chip effect item" data-inspect="${esc(e.word)}" data-effect="1" title="${esc(effectText(this.dict, e.word))}">${esc(e.word.toUpperCase())}${e.left > 0 ? `<small>${e.left}s</small>` : ""}</span>`),
         ...(["food", "fuel", "power", "faith"] as const).filter((k) => (d?.stores[k].have ?? 0) > 0 || (d?.stores[k].need ?? 0) > 0 || (d?.stores[k].make ?? 0) > 0).map((k) =>
           `<span class="chip store">${k.toUpperCase()} ${Math.round(d!.stores[k].have * 10) / 10}${flow(k)}</span>`),
-        ...(d?.short ?? []).map((t) => chip("hungry").replace("HUNGRY", esc(t.toUpperCase()))),
+        // Eight hungry wolves are one chip: WOLF IS HUNGRY (NO FOOD) ×8.
+        ...[...countEach(d?.short ?? [])].map(([t, n]) => chip("hungry").replace("HUNGRY", esc(t.toUpperCase()) + (n > 1 ? ` ×${n}` : ""))),
       ];
       if (this.kitHtml) parts.push(this.kitHtml);
       if (chips.length) parts.push(`<div class="chips">${chips.join("")}</div>`);
@@ -680,12 +724,14 @@ export class Hud {
     this.held = held;
     this.drawLetters();
     this.drawPanel();
+    this.drawBest();
   }
 
   setLoadout(detail: LoadoutDetail) {
     this.detail = detail;
     this.drawPanel();
     this.drawHud();
+    this.drawBest();
   }
 
   /** True while a screen is open, so clicks on it do not walk the player. */
@@ -781,7 +827,20 @@ export class Hud {
     this.onOffers = false;
     if (!which) this.closeField();
     $("panel").className = which ? "show" : "";
+    // One sheet at a time: a screen hides the HUD card it repeats and closes your kit's card.
+    document.body.classList.toggle("onscreen", !!which);
+    if (which) document.querySelector<HTMLElement>("#kits.show .sheet.mine button.close")?.click();
     this.drawPanel();
+  }
+
+  /** Opens the trade screen (a click on a market you walked to). */
+  openTrade() {
+    if (!this.locked) this.show("trade");
+  }
+
+  /** Closes the inventory or trade screen if one is open (your kit's card is opening). */
+  closeScreen() {
+    if (this.open) this.show(null);
   }
 
   private drawPanel() {
@@ -879,6 +938,11 @@ export class Hud {
     const el = $("banner");
     el.textContent = text;
     el.className = "show";
+    // The round's end or your death is the one thing on screen: screens and cards give way.
+    this.closeScreen();
+    this.closeInspect();
+    document.querySelector<HTMLElement>("#kits.show .sheet.mine button.close")?.click();
+    document.body.classList.add("bannered");
   }
 
   /** True while toasts are dropped (the kit pick is up; set by the scene). */

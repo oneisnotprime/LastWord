@@ -131,3 +131,17 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
   with the existing builders (rosette and sign icons for acts and events).
 - Themes batch 5: `WORDS` has the core time, space, sea, sports and abstract words (rosettes and
   signs for acts and events, boats for vessels, bridges for docks, existing builders elsewhere).
+- Fun batch C2: `#best` beside the letter tiles: the 3-5 best words the rack spells now (shared
+  `bestWords`, for your situation from the loadout), a click opens the spell window with it
+  (`Hud.drawBest`, redrawn on letters, loadout and health crossing 60%). The preview leads with
+  the card's numbers (shared `leadStats`) then two things it does; the inspect card puts numbers
+  before belongs-to and condition. `main.ts` `formation`: creatures within FAN_NEAR of a pile's
+  first fan out round it (outside a rider's mount), and a pile of one kind and owner shows one tag
+  ("WOLF ×5"); `unstackTags` hides a non-person tag (and its badges) that would slide more than
+  MAX_SLIDE tags. A ridden mount is drawn at its own size and image (`standee.ts` `ride.scale`,
+  `ride.raster`). `entrance`: `#bigcast` map-wide call (yours too, others' at most every CALL_GAP s),
+  and in sight a camera shake and a full-size reveal. A click on a chest, the temple or a market
+  walks there, then digs or opens the trade screen (`visiting`). Threat labels keep clear of the
+  HUD card, chips, minimap, corner and letter bar (`threats.ts`). Body classes keep one sheet at a
+  time: `onscreen` (a screen hides the HUD card, chips and calls; it closes your kit's card),
+  `spelling` (calls wait), `bannered` (death or round end: screens and cards close).

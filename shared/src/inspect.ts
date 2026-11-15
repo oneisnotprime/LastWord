@@ -22,7 +22,7 @@ import { GROW_PACE, needsText, producerOf, SEEDLING } from "./produce.js";
 import { parsePhrase, type Phrase } from "./phrase.js";
 import type { Stats } from "./stats.js";
 import type { Op, Value } from "./types.js";
-import { improvisable } from "./unit.js";
+import { CARRY_PER_STRENGTH, IMPROVISED_DAMAGE, improvisable } from "./unit.js";
 import { claimOf, senseOf } from "./sense.js";
 import { needs, outputs, STARTING_SUPPLY_MINUTES, SUPPLIES } from "./upkeep.js";
 import { bodyFlags, useObject } from "./verb.js";
@@ -134,34 +134,89 @@ function damage(s: Stats): string | null {
   return parts.length === 1 ? `damage ${num(total)} ${parts[0]![0]}` : `damage ${num(total)} (${parts.map(([t, n]) => `${num(n)} ${t}`).join(", ")})`;
 }
 
-/** The numbers worth knowing about a body or a thing, in plain words. */
-export function keyStats(s: Stats): string[] {
-  const out: string[] = [];
-  const add = (id: string, unit = "") => {
+/** One number worth knowing, with the property it comes from (for ordering by what matters). */
+interface StatLine { id: string; text: string }
+
+/** The numbers worth knowing about a body or a thing, each with the property it comes from. */
+function statLines(s: Stats): StatLine[] {
+  const out: StatLine[] = [];
+  const add = (id: string, unit = "", name = plain(id)) => {
     const n = s.num(id);
-    if (n > 0) out.push(`${plain(id)} ${num(n)}${unit && Number.isFinite(n) ? ` ${unit}` : ""}`);
+    if (n > 0) out.push({ id, text: `${name} ${num(n)}${unit && Number.isFinite(n) ? ` ${unit}` : ""}` });
   };
-  add("integrity");
+  // A living body has HP; a thing has integrity (the same property, said as players say it).
+  add("integrity", "", s.flag("alive") ? "HP" : "integrity");
   const hit = damage(s);
   if (hit) {
-    out.push(hit);
+    out.push({ id: "damage", text: hit });
     add("attack_rate", "a second");
     if (s.num("attack_range") > 1) add("attack_range", "m");
   }
   add("armor");
-  if (s.num("evasion") > 0) out.push(`evasion ${Math.round(s.num("evasion") * 100)}%`);
+  if (s.num("evasion") > 0) out.push({ id: "evasion", text: `evasion ${Math.round(s.num("evasion") * 100)}%` });
   add("mass", "kg");
   add("speed_land", "m/s");
   add("speed_air", "m/s");
   add("speed_water", "m/s");
   if (s.num("sight_range") !== 10) add("sight_range", "m");
-  for (const [id] of s.entries()) if (id.startsWith("res_") && s.num(id) > 0) out.push(`${plain(id)} ${Math.round(s.num(id) * 100)}%`);
-  for (const [id] of s.entries()) if (id.startsWith("inflict_") && s.num(id) > 0) out.push(`${plain(id)} ${num(statusSeconds(id.slice(8) as Status, s.num(id)))} s`);
+  for (const [id] of s.entries()) if (id.startsWith("res_") && s.num(id) > 0) out.push({ id: "res", text: `${plain(id)} ${Math.round(s.num(id) * 100)}%` });
+  for (const [id] of s.entries()) if (id.startsWith("inflict_") && s.num(id) > 0) out.push({ id: "inflict", text: `${plain(id)} ${num(statusSeconds(id.slice(8) as Status, s.num(id)))} s` });
   return out;
 }
 
+/** The numbers worth knowing about a body or a thing, in plain words. */
+export function keyStats(s: Stats): string[] {
+  return statLines(s).map((l) => l.text);
+}
+
+/**
+ * What an object is for, as a player would sort it: a weapon (held, deals damage), other gear
+ * (worn or held), a ride, a creature, a building (fixed on the ground), terrain, or an item.
+ */
+export type ObjectKind = "weapon" | "gear" | "ride" | "creature" | "building" | "terrain" | "item";
+
+export function objectKind(s: Stats): ObjectKind {
+  const to = becomes(s);
+  if (to === "creature") return "creature";
+  if (to === "terrain") return "terrain";
+  if (s.flag("mountable")) return "ride";
+  if (to === "worn") return s.get("equip_slot") === "held" && damage(s) ? "weapon" : "gear";
+  if (s.get("portable") === false) return "building";
+  // A thing that goes off on its own (a BOMB) is a weapon wherever it lies.
+  return damage(s) && s.flag("single_use") ? "weapon" : "item";
+}
+
+/** The numbers each kind leads with, most important first; the rest follow in their usual order. */
+const LEADS: Record<ObjectKind, string[]> = {
+  weapon: ["damage", "attack_range", "attack_rate", "integrity"],
+  creature: ["integrity", "damage", "speed_land", "speed_air", "speed_water", "attack_range", "armor"],
+  ride: ["speed_land", "speed_air", "speed_water", "integrity", "armor", "damage"],
+  gear: ["armor", "res", "evasion", "integrity", "damage"],
+  building: ["integrity", "armor", "damage"],
+  terrain: [],
+  item: ["integrity", "damage"],
+};
+
+/** An object's numbers, in the order its kind cares about: a weapon's damage and reach first, a ride's speed. */
+export function leadStats(s: Stats, kind = objectKind(s)): string[] {
+  const lead = LEADS[kind], rank = (id: string) => (lead.includes(id) ? lead.indexOf(id) : lead.length);
+  return statLines(s).map((l, i) => ({ ...l, i })).sort((a, b) => rank(a.id) - rank(b.id) || a.i - b.i).map((l) => l.text);
+}
+
+/**
+ * Lines that are flavour more than function (what it is made of, how loud it is): a card puts
+ * them after the lines that change a fight.
+ */
+export const trivia = (line: string): boolean => /^made of |^loud \(|^burns: |^brittle|^conducts|^melts/.test(line);
+
+/** Word classes a thing must be for the card to offer swinging it (a STONE, a CHAIR, a BOMB). */
+const SWUNG_CLASSES = new Set(["artifact", "material", "consumable", "flora", "bodypart"]);
+
+/** An ordinary person's strength (the property's default): what the cards measure lifting by. */
+const PERSON_STRENGTH = 5;
+
 /** What a body or thing does in the world, from its properties: follows you, worn, radiates, needs fuel. */
-export function behaviours(s: Stats, count = 1): string[] {
+export function behaviours(s: Stats, count = 1, cls?: string): string[] {
   const out: string[] = [];
   switch (becomes(s)) {
     case "creature":
@@ -175,15 +230,26 @@ export function behaviours(s: Stats, count = 1): string[] {
       break;
     case "worn":
       if (s.flag("mountable")) out.push("you ride it: it moves and takes hits for you");
-      else out.push(`equip slot: ${words(String(s.get("equip_slot")))}`);
+      else if (s.get("equip_slot") === "held") out.push(`held in ${s.num("hands_required") > 1 ? `${num(s.num("hands_required"))} hands` : "one hand"}`);
+      else out.push(`worn: ${words(String(s.get("equip_slot")))}`);
       break;
     case "ground":
       out.push(Math.max(s.num("speed_land"), s.num("speed_air")) > 0 && !s.flag("alive")
         ? "stays where it is made (not alive, sentient or self-propelled, so it does not follow you)"
         : "lies where it is made");
-      if (improvisable(s) && s.flag("portable")) out.push("pick it up (E) to swing it");
+      // Only a made or natural object is a club: an ARMY or a fish lying on the ground is not.
+      if (improvisable(s) && s.flag("portable") && (cls === undefined || SWUNG_CLASSES.has(cls))) {
+        // Carried, a thing with no slot is swung (shared unit.ts `improvised`): say so only where
+        // an ordinary person can lift it and it hits harder than a fist.
+        const lift = PERSON_STRENGTH * CARRY_PER_STRENGTH, own = !!damage(s);
+        const blow = IMPROVISED_DAMAGE * Math.max(0, s.num("hardness")) * Math.sqrt(Math.max(0, s.num("mass")));
+        if (s.num("mass") > lift) out.push(`too heavy to carry (${num(s.num("mass"))} kg; a person lifts ${lift})`);
+        else if (own) out.push("pick it up (E) to wield it");
+        else if (blow >= 5) out.push(`pick it up (E) to swing it (${num(blow)} blunt)`);
+      }
       break;
   }
+  if (s.flag("single_use") && damage(s)) out.push(`goes off once${s.num("attack_windup") > 0 ? `, ${num(s.num("attack_windup"))} s after it is set` : ""}${s.num("attack_area") > 0 ? `, hitting everything within ${num(s.num("attack_area"))} m` : ""}`);
   if (s.num("aggression") > 0) out.push(`aggression ${num(s.num("aggression"))}: attacks on its own when wild`);
   if (s.num("field_radius") > 0) {
     const what = String(s.get("field_property"));
@@ -231,7 +297,7 @@ function useText(dict: Dictionary, noun: string, adjectives: readonly string[]):
 /** The kind line: role, class and archetype. */
 const kindOf = (dict: Dictionary, noun: string, label = "") => {
   const def = dict.word(noun);
-  return [label, def?.class ?? "", def?.archetype ?? ""].filter((x, i, a) => x && a.indexOf(x) === i).map(words).join(" · ");
+  return [label === "terrain" ? "land" : label, def?.archetype || def?.class || ""].filter((x, i, a) => x && a.indexOf(x) === i).map(words).join(" · ");
 };
 
 /** A card for a phrase already parsed. */
@@ -275,16 +341,22 @@ export function cardOf(dict: Dictionary, p: Phrase): Card {
     return card;
   }
   if (p.kind === "sky" || p.kind === "field") {
-    card.kind = kindOf(dict, p.noun, p.kind);
+    card.kind = kindOf(dict, p.noun, p.kind === "field" ? "area" : "sky");
+    const hit = damage(s);
+    if (hit) card.stats.push(`${hit}${s.num("attack_rate") > 0 ? ` every ${num(1 / s.num("attack_rate"))} s` : ""}`);
+    const r = s.num("field_radius");
+    if (r > 0) card.stats.push(Number.isFinite(r) ? `radius ${num(r)} m` : "the whole map");
+    if (s.num("field_duration") > 0) card.stats.push(`lasts ${num(s.num("field_duration"))} min`);
     if (s.get("sets_daylight") !== "none") card.does.push(`makes it ${s.get("sets_daylight")}`);
     if (s.get("sets_weather")) card.does.push(`brings ${s.get("sets_weather")}`);
     if (s.tags("clears_weather").length) card.does.push(`clears ${s.tags("clears_weather").join(", ")}`);
-    card.does.push(...behaviours(s).filter((b) => !b.startsWith("lies where") && !b.startsWith("pick it up")));
+    card.does.push(...behaviours(s).filter((b) => !/^lies where|^pick it up|^too heavy/.test(b)));
     card.does.push(...placeLines(dict, p.noun, s));
     if (aimed) card.does.push(aimed);
     return card;
   }
-  card.kind = kindOf(dict, p.noun);
+  const kind = objectKind(s);
+  card.kind = kindOf(dict, p.noun, kind);
   const sense = senseOf(dict, p.noun, s);
   if (sense) {
     const reach = (n: number) => (Number.isFinite(n) ? `${num(n)} tiles` : "the whole map");
@@ -295,13 +367,15 @@ export function cardOf(dict: Dictionary, p: Phrase): Card {
     ].filter(Boolean)];
     return card;
   }
-  card.stats = becomes(s) === "terrain" ? [] : keyStats(s);
+  // The numbers that matter for its kind lead: a weapon's damage and reach, a ride's speed.
+  card.stats = kind === "terrain" ? [] : leadStats(s, kind);
   // What heat, time or a new material do to it come first: they are why it was spelled so.
   const remade = p.adjectives.some((a) => isMaterial(dict.lookup(a)?.def) || dict.lookup(a)?.def.set.material !== undefined);
-  card.does = [...(remade ? materialText(dict, s) : []), ...foodText(dict, s), ...behaviours(s, p.count)];
+  const does = [...foodText(dict, s), ...behaviours(s, p.count, dict.word(p.noun)?.class)];
   const use = useText(dict, p.noun, p.adjectives);
-  if (use) card.does.push(use);
-  if (!remade) card.does.push(...materialText(dict, s));
+  if (use) does.push(use);
+  // Flavour (made of steel, loud) after what changes a fight, unless an adjective made it so.
+  card.does = [...(remade ? materialText(dict, s) : []), ...does.filter((d) => !trivia(d)), ...does.filter(trivia), ...(remade ? [] : materialText(dict, s))];
   return card;
 }
 
@@ -497,3 +571,20 @@ export function effectText(dict: Dictionary, word: string): string {
 function batch5(s: Stats): string[] {
   return [...timeText(s), ...spaceText(s), ...seaText(s), ...sportText(s), ...ideaText(s)];
 }
+
+/** How grand a spelling is, for its entrance (`grand`): the most of its damage and a fifth of its integrity, times how many. */
+export function grandeur(p: Phrase): number {
+  if (p.kind === "verb") return 0;
+  const s = p.stats;
+  let hit = 0;
+  for (const [id] of s.entries()) if (id.startsWith("dmg_")) hit += Math.max(0, s.num(id));
+  const body = p.kind === "object" ? s.num("integrity") / 5 : 0;
+  const n = Math.max(1, p.count);
+  return Math.max(hit, Number.isFinite(body) ? body : 1e9) * n;
+}
+
+/** Grandeur from which a spelling makes an entrance: a camera shake, a full-size reveal and a map-wide call. */
+export const GRAND_FROM = 1000;
+
+/** True for a spelling big enough to make an entrance: a DRAGON, a GIANT, a METEOR; not a WOLF or a SWORD. */
+export const grand = (p: Phrase): boolean => grandeur(p) >= GRAND_FROM;

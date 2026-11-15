@@ -28,24 +28,24 @@ const B = (name: string, habitat: string, forage: number, finds: string, food: n
  * (jungle the most varied, desert next to nothing). Water and walls have none.
  */
 export const BIOMES: Partial<Record<Tile, BiomeInfo>> = {
-  [Tile.Sand]: B("shore", "shore", 0.25, "eeeoo", 0.02),
-  [Tile.Grass]: B("grassland", "meadow", 0.3, "eeeeeea", 0.1),
-  [Tile.Meadow]: B("meadow", "meadow", 0.35, "eeeeeapl", 0.12),
-  [Tile.Forest]: B("forest", "forest", 0.3, "eeeeppn", 0.15),
-  [Tile.Taiga]: B("taiga", "taiga", 0.25, "eeeppuy", 0.08),
-  [Tile.Jungle]: B("jungle", "jungle", 0.35, "eeeaaiopprnu", 0.2),
-  [Tile.Savanna]: B("savanna", "savanna", 0.25, "eeeeaa", 0.06),
-  [Tile.Desert]: B("desert", "desert", 0.12, "eees", 0.01),
-  [Tile.Badlands]: B("badlands", "badlands", 0.15, "eegg", 0.01),
-  [Tile.Tundra]: B("tundra", "tundra", 0.15, "eeeu", 0.02),
-  [Tile.Marsh]: B("marsh", "marsh", 0.3, "eeeoou", 0.08),
-  [Tile.Swamp]: B("swamp", "marsh", 0.3, "eeoouu", 0.05),
-  [Tile.Ash]: B("volcanic", "volcanic", 0.1, "egg", 0),
-  [Tile.Hill]: B("hills", "hills", 0.25, "eeeeg", 0.04),
-  [Tile.Snow]: B("snow", "tundra", 0.08, "eu", 0),
-  [Tile.City]: B("city", "city", 0.2, "eeee", 0),
-  [Tile.Road]: B("road", "meadow", 0.2, "eeee", 0),
-  [Tile.Field]: B("tilled land", "meadow", 0.3, "eeeea", 0.2),
+  [Tile.Sand]: B("shore", "shore", 0.5, "eeeoo", 0.02),
+  [Tile.Grass]: B("grassland", "meadow", 0.6, "eeeeeea", 0.1),
+  [Tile.Meadow]: B("meadow", "meadow", 0.65, "eeeeeapl", 0.12),
+  [Tile.Forest]: B("forest", "forest", 0.6, "eeeeppn", 0.15),
+  [Tile.Taiga]: B("taiga", "taiga", 0.5, "eeeppuy", 0.08),
+  [Tile.Jungle]: B("jungle", "jungle", 0.7, "eeeaaiopprnu", 0.2),
+  [Tile.Savanna]: B("savanna", "savanna", 0.5, "eeeeaa", 0.06),
+  [Tile.Desert]: B("desert", "desert", 0.25, "eees", 0.01),
+  [Tile.Badlands]: B("badlands", "badlands", 0.3, "eegg", 0.01),
+  [Tile.Tundra]: B("tundra", "tundra", 0.3, "eeeu", 0.02),
+  [Tile.Marsh]: B("marsh", "marsh", 0.6, "eeeoou", 0.08),
+  [Tile.Swamp]: B("swamp", "marsh", 0.55, "eeoouu", 0.05),
+  [Tile.Ash]: B("volcanic", "volcanic", 0.2, "egg", 0),
+  [Tile.Hill]: B("hills", "hills", 0.5, "eeeeg", 0.04),
+  [Tile.Snow]: B("snow", "tundra", 0.15, "eu", 0),
+  [Tile.City]: B("city", "city", 0.4, "eeee", 0),
+  [Tile.Road]: B("road", "meadow", 0.4, "eeee", 0),
+  [Tile.Field]: B("tilled land", "meadow", 0.6, "eeeea", 0.2),
 };
 
 /** The biome of a point on the map, or undefined where nobody can stand. */
@@ -54,7 +54,7 @@ export function biomeAt(map: WorldMap, x: number, y: number): BiomeInfo | undefi
 }
 
 /** Success chances of gathering that is not foraging (fishing, digging, caves), before tools. */
-export const GATHER_CHANCE = { fish: 0.5, dig: 0.4, cave: 0.3 } as const;
+export const GATHER_CHANCE = { fish: 0.6, dig: 0.55, cave: 0.45 } as const;
 
 /**
  * What a tool's `harvest_sources` must name for its `harvest_bonus` to help each kind of
