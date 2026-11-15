@@ -24,7 +24,8 @@ import {
   sails, SAIL_COST, LAUNCH_TILES, BOARD_TILES, PORT_TILES, PORT_TOLL, waveDamage, waveSlow, fishTable, catchOf,
   LUCK_POINT, RING_FLOOR, FLAG_TILES, STAKES_MAX, CHALLENGE_MINUTES, ahead, pot, backInRing, peaceOf, chaosOps, doomDamage, typoOf, type Challenge,
   standIn, spellchecked, salePrice,
-  interiorOf, doorAt, within as inRoom, opensDoors, seesThroughWalls, DOOR_MEND, DOOR_QUIET,
+  interiorOf, doorAt, within as inRoom, opensDoors, seesThroughWalls, DOOR_MEND, DOOR_QUIET, doorGuard, opensPast, GUARD_SHARE, BESIDE_TILES,
+  hatches,
 } from "@lastword/shared";
 import { affords, botSettings, chooseWord, held, phraseFor, SKILL, wordBook, type BotWord, type Difficulty, type Use } from "./bots.js";
 import { loadDictionary, loadKits } from "./data.js";
@@ -389,7 +390,7 @@ interface Walker {
  * A walk-in building on the ground (shared interior.ts): its centre, room radius in tiles, and door
  * left and full. A broken door stands open until it has mended all the way.
  */
-interface Indoors { x: number; y: number; r: number; door: number; max: number; broken?: boolean; struck?: number }
+interface Indoors { x: number; y: number; r: number; door: number; max: number; broken?: boolean; struck?: number; guards?: Map<string, number> }
 
 /** Seconds between telling a person a door is shut. */
 const SHUT_SECONDS = 3;
@@ -3138,11 +3139,37 @@ export class WorldRoom extends Room {
       for (const [tid, g] of [...this.grounded]) {
         const t = this.state.things.get(tid);
         if (!t || g.terrain || g.fixture === "ruin" || (w.master !== "-" && t.owner === w.master)) continue;
-        if (Math.hypot(t.x - w.player.x, t.y - w.player.y) > BORE_TILES + 0.5) continue;
+        // From a walk-in building's wall, not its middle: a CASTLE is eaten from outside too.
+        if (Math.hypot(t.x - w.player.x, t.y - w.player.y) > BORE_TILES + 0.5 + (this.rooms.get(tid)?.r ?? 0)) continue;
         if (!bores(this.dict, stats, this.statsOf(g))) continue;
         this.strikeThing(id, bite, tid, t, false, "");
         break;
       }
+    }
+    // Hatching (shared bug.ts `hatches`): an EGG, a COCOON or a CLUTCH lying or carried becomes its creature, its owner's.
+    const hatch = (g: Gear, owner: string, at: Point): string | null => {
+      const stats = this.statsOf(g);
+      if (!stats.get("matures_into") || !hatches(this.dict, stats) || this.elapsed - (g.born ?? this.elapsed) < matureSeconds(stats)) return null;
+      const next = matured(this.dict, g.spelled, stats);
+      if (!next) return null;
+      const young: Gear = { spelled: next, phrase: [...(next.adjectives ?? []), next.noun].join(" "), vehicle: false, integrity: null };
+      if (becomes(resolveSpelled(this.dict, next)) !== "creature") return null;
+      const master = owner && this.walkers.has(owner) ? owner : "-";
+      this.addCreature(young, master, at.x, at.y, next.count ?? 1);
+      if (master !== "-") { this.sendTo(master, "notice", `${g.phrase.toUpperCase()} hatched: ${young.phrase.toUpperCase()}`); this.command(master); }
+      return master;
+    };
+    for (const [tid, g] of [...this.grounded]) {
+      const t = this.state.things.get(tid);
+      if (!t || g.terrain || g.fixture) continue;
+      if (hatch(g, t.owner, t) === null) continue;
+      this.removeThing(tid);
+      changed = true;
+    }
+    for (const [wid, w] of [...this.walkers]) {
+      const before = w.gear.length;
+      w.gear = w.gear.filter((g) => hatch(g, wid, w.player) === null);
+      if (w.gear.length !== before) { this.rebuild(w); this.tell(w); changed = true; }
     }
     if (changed) this.refreshViews();
   }
@@ -4398,8 +4425,10 @@ export class WorldRoom extends Room {
     const key = this.addArea(area, true);
     const began = this.begin(area, s);
     this.burn(key, area, 0);
+    // A breach (shared interior.ts: `counters` door, gate or lockable) breaks every enemy door in its reach, past the bolts it counters.
+    const breached = opensDoors(s) ? this.breachDoors(id, walker, phrase, at, radius) : 0;
     const span = minutes >= 1 ? `${minutes} minute${minutes === 1 ? "" : "s"}` : "a moment";
-    return `${word} for ${span}${began ? `: ${began}` : ""}`;
+    return `${word} for ${span}${began ? `: ${began}` : ""}${breached ? `; ${breached} door${breached === 1 ? "" : "s"} broken` : ""}`;
   }
 
   /**
@@ -4939,6 +4968,7 @@ export class WorldRoom extends Room {
   private placeInRoom(id: string, gear: Gear, thing: Thing) {
     const room = gear.fixture || gear.terrain ? null : interiorOf(this.statsOf(gear), thing.count);
     if (!room) {
+      if (this.hangGuard(id, gear, thing)) return;
       const bid = this.roomAt(thing);
       if (!bid) return;
       this.roomOfThing.set(id, bid);
@@ -4955,8 +4985,50 @@ export class WorldRoom extends Room {
     for (const w of this.walkers.values()) if (!w.inside && inRoom(w.player, thing.x, thing.y, room.radius)) w.inside = id;
   }
 
+  /**
+   * A door guard (shared interior.ts `doorGuard`: a PORTCULLIS, a DRAWBRIDGE) put down in or beside
+   * a walk-in building of its owner's side is hung on its door: the door gains its integrity and is
+   * bolted against what it counters. True if it was hung.
+   */
+  private hangGuard(id: string, gear: Gear, thing: Thing): boolean {
+    const stats = this.statsOf(gear);
+    if (!thing.owner || !doorGuard(stats)) return false;
+    const owner = this.walkers.get(thing.owner);
+    for (const [bid, r] of this.rooms) {
+      if (Math.hypot(thing.x - r.x, thing.y - r.y) > r.r + BESIDE_TILES) continue;
+      if (!owner || !this.homeSide(thing.owner, owner, bid)) continue;
+      const add = Math.max(1, stats.num("integrity") * (thing.count || 1) * GUARD_SHARE);
+      (r.guards ??= new Map()).set(id, add);
+      r.max += add;
+      if (!r.broken) r.door += add;
+      this.roomOfThing.set(id, bid);
+      const b = this.state.things.get(bid);
+      if (b && !r.broken) b.door = Math.max(1, Math.ceil((r.door / r.max) * 100));
+      const name = this.grounded.get(bid)?.phrase.toUpperCase() ?? "the building";
+      this.sendTo(thing.owner, "notice", `${gear.phrase.toUpperCase()} hung on ${name}'s door: +${Math.round(add)} HP`);
+      const mind = this.bots.get(thing.owner);
+      if (mind) this.botUsed(mind, "bolt door");
+      return true;
+    }
+    return false;
+  }
+
+  /** The guards hung on a room's door, by noun with their properties. */
+  private guardsOf(r: Indoors): { noun: string; stats: Stats }[] {
+    const out: { noun: string; stats: Stats }[] = [];
+    for (const gid of r.guards?.keys() ?? []) { const g = this.grounded.get(gid); if (g) out.push({ noun: g.spelled.noun, stats: this.statsOf(g) }); }
+    return out;
+  }
+
   /** Forgets a thing taken off the ground: a room's walls are gone, and whoever was inside is outdoors. */
   private leaveRoom(id: string) {
+    for (const r of this.rooms.values()) {
+      const add = r.guards?.get(id);
+      if (add === undefined) continue;
+      r.guards!.delete(id);
+      r.max = Math.max(1, r.max - add);
+      r.door = Math.min(r.door, r.max);
+    }
     this.roomOfThing.delete(id);
     if (!this.rooms.delete(id)) return;
     this.doorEntities.delete(id);
@@ -4990,10 +5062,15 @@ export class WorldRoom extends Room {
     for (const g of w.gear) yield this.statsOf(g);
   }
 
-  /** A door counter on it (shared `opensDoors`: a KEY, a RAM, a THIEF): the word that breaks doors at a touch. */
-  private doorBreaker(w: Walker): string | null {
-    if (opensDoors(w.unit.body.stats)) return w.player.name;
-    for (const g of w.gear) if (opensDoors(this.statsOf(g))) return g.phrase;
+  /**
+   * A door counter on it (shared `opensDoors`: a KEY, a RAM, a THIEF): the word that breaks doors at
+   * a touch, unless a guard hung on that door bolts it against that word (shared `opensPast`).
+   */
+  private doorBreaker(w: Walker, r?: Indoors): string | null {
+    const guards = r ? this.guardsOf(r) : [];
+    const past = (noun: string, s: Stats) => opensPast({ noun, archetype: this.dict.word(noun)?.archetype ?? "", counters: s.tags("counters") }, guards);
+    if (opensDoors(w.unit.body.stats) && past(w.body.noun, w.unit.body.stats)) return w.player.name;
+    for (const g of w.gear) { const s = this.statsOf(g); if (opensDoors(s) && past(g.spelled.noun, s)) return g.phrase; }
     return null;
   }
 
@@ -5035,7 +5112,7 @@ export class WorldRoom extends Room {
     const bid = this.roomAt(w.player);
     if (bid === w.inside) return;
     if (!bid || this.mayEnter(w.id, w, bid)) { w.inside = bid; return; }
-    const breaker = this.doorBreaker(w);
+    const breaker = this.doorBreaker(w, this.rooms.get(bid));
     if (breaker) { this.breakDoor(bid, w.id, breaker); w.inside = bid; return; }
     const r = this.rooms.get(bid)!, target = w.target;
     const step = Math.hypot(w.player.x - from.x, w.player.y - from.y);
@@ -5070,6 +5147,8 @@ export class WorldRoom extends Room {
     r.door = 0;
     r.broken = true;
     t.door = 0;
+    // The guards hung on it (a PORTCULLIS) break with it.
+    for (const gid of [...(r.guards?.keys() ?? [])]) this.removeThing(gid);
     const name = g.phrase.toUpperCase(), who = this.walkers.get(by);
     const payer = this.payee(by)?.[0] ?? by;
     this.sendTo(payer, "notice", `${name} door broken${how ? ` by ${how.toUpperCase()}` : ""}: walk in`);
@@ -5082,6 +5161,19 @@ export class WorldRoom extends Room {
       bot.gathering = 0;
       bot.target = { x: r.x, y: r.y }; bot.route = []; bot.routeTo = null;
     }
+  }
+
+  /** Breaks the doors of enemies' walk-in buildings within `radius` tiles of a spot, unless a guard bolts them against the word. */
+  private breachDoors(id: string, walker: Walker, phrase: Phrase, at: Point, radius: number): number {
+    const s = phrase.stats, breaker = { noun: phrase.noun, archetype: this.dict.word(phrase.noun)?.archetype ?? "", counters: s.tags("counters") };
+    let n = 0;
+    for (const [bid, r] of [...this.rooms]) {
+      if (r.broken || Math.hypot(r.x - at.x, r.y - at.y) > radius + r.r || this.homeSide(id, walker, bid)) continue;
+      if (!opensPast(breaker, this.guardsOf(r))) continue;
+      this.breakDoor(bid, id, phrase.noun);
+      n++;
+    }
+    return n;
   }
 
   /** A blow from outside on a walk-in building lands on its door while the door stands. */

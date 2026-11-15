@@ -68,5 +68,53 @@ export function interiorText(s: Stats, count = 1): string[] {
   }
   if (opensDoors(s)) out.push("breaks an enemy's door at a touch: walk in");
   if (seesThroughWalls(s)) out.push("sees who hides inside buildings");
+  if (s.num("siege") > 1) out.push(`siege ×${+s.num("siege").toPrecision(2)}: its blows on buildings, walls and doors${s.num("attack_range") > 6 ? ", from afar" : ""}`);
+  out.push(...guardText(s));
   return out;
+}
+
+/**
+ * Door guards (theme 28, siege and arms): a thing that bars the way and locks (`lockable`, `blocks`
+ * land; not a room itself, not alive, not carried: a PORTCULLIS, a DRAWBRIDGE, a GATE) put down in
+ * its owner's walk-in building, or within BESIDE_TILES of its wall, is hung on that building's door:
+ *
+ * - the door gains the guard's integrity (GUARD_SHARE of it): blows must break the guard too;
+ * - the door is bolted against the door counters the guard `counters` (a PORTCULLIS counters RAM:
+ *   a RAM carried no longer opens it at a touch, it must batter); a breaker that `counters` the
+ *   guard itself (a PETARD against a PORTCULLIS) still opens it at a touch;
+ * - when the door breaks the guards hung on it break with it.
+ *
+ * Breaching events (`counters` door, gate or lockable, aimed at a spot: BREACH, ESCALADE) break
+ * every enemy door within their reach the same way, bolts and all.
+ */
+export const GUARD_SHARE = 1;
+
+/** Whether a thing is hung on a door when put down by a building of its owner's (see above). */
+export function doorGuard(s: Stats): boolean {
+  if (!s.flag("lockable") || s.flag("alive") || s.flag("portable") || s.flag("enterable")) return false;
+  if (String(s.get("tile_type") ?? "none") !== "none") return false;
+  return s.tags("blocks").includes("land");
+}
+
+/** The words (nouns and archetypes) a guard bolts its door against: those it `counters`. */
+export const boltsAgainst = (guard: Stats): string[] => guard.tags("counters").map((c) => c.toLowerCase());
+
+/**
+ * Whether a breaker (named by its noun and archetype, with its own `counters`) opens a door at a
+ * touch past the guards hung on it: every guard that bolts against it is one it counters itself.
+ */
+export function opensPast(breaker: { noun: string; archetype: string; counters: readonly string[] }, guards: readonly { noun: string; stats: Stats }[]): boolean {
+  const mine = new Set(breaker.counters.map((c) => c.toLowerCase()));
+  return guards.every((g) => {
+    const bolts = boltsAgainst(g.stats);
+    const barred = bolts.includes(breaker.noun) || bolts.includes(breaker.archetype);
+    return !barred || mine.has(g.noun);
+  });
+}
+
+/** A door guard's lines for a card. */
+export function guardText(s: Stats): string[] {
+  if (!doorGuard(s)) return [];
+  const bolts = boltsAgainst(s);
+  return [`hung on your walk-in building's door when put down in it: +${Math.round(s.num("integrity") * GUARD_SHARE)} door HP${bolts.length ? `; bolted against ${bolts.map((b) => b.toUpperCase()).join(", ")}` : ""}`];
 }

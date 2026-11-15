@@ -1484,6 +1484,7 @@ algorithm	noun	knowledge	knowledge	4.02	core	n05855965	-
 algorithmic	adjective	modifier	quality	2.77	uncommon	a00093544	-
 alias	adverb	verb_modifier	manner	3.46	common	r00271877	noun:communication
 alibi	noun	event	act	3.1	common	n06753794	verb:communication
+alicorn	noun	creature	supernatural	1.52	rare	-	-
 alidad	noun	artifact	device	0.0	obscure	n02699881	-
 alidade	noun	artifact	device	1.08	rare	n02699881	-
 alien	noun	creature	supernatural	4.29	core	n09507595	adjective:quality,verb:transfer
@@ -3053,8 +3054,9 @@ araroba	noun	artifact	medicine	0.0	obscure	n02735701	-
 araucaria	noun	flora	tree	1.78	rare	n11666365	-
 arawakan	adjective	modifier	pertaining	1.14	rare	a02648188	noun:person
 arb	noun	person	person	2.61	uncommon	n09823223	-
-arbalest	noun	artifact	device	1.13	rare	n02985366	-
-arbalist	noun	artifact	device	0.0	obscure	n02985366	-
+arbalest	noun	artifact	weapon	1.13	rare	n02985366	-
+arbalester	noun	person	person	0.0	obscure	-	-
+arbalist	noun	artifact	weapon	0.0	obscure	n02985366	-
 arbiter	noun	person	worker	2.98	uncommon	n09823476	-
 arbitrable	adjective	modifier	quality	1.28	rare	a00141501	-
 arbitrage	noun	event	exchange	2.81	uncommon	n01095889	verb:transfer
@@ -3320,6 +3322,7 @@ aroused	adjective	modifier	quality	3.35	common	a02021728	-
 arouser	noun	person	worker	0.0	obscure	n10783653	-
 arpent	noun	measure	quantity	0.0	obscure	n13635424	-
 arquebus	noun	artifact	weapon	1.49	rare	n02745075	-
+arquebusier	noun	person	person	0.0	obscure	-	-
 arrack	noun	consumable	drink	1.63	rare	n07919177	-
 arraign	verb	spell	social	1.77	rare	v02503641	-
 arraignment	noun	artifact	document	2.8	uncommon	n07250596	-
@@ -3352,6 +3355,7 @@ arrogator	noun	person	person	0.0	obscure	n09829769	-
 arrow	noun	artifact	weapon	4.13	core	n02745758	-
 arrowhead	noun	artifact	artifact	2.86	uncommon	n02746055	-
 arrowroot	noun	material	material	1.92	rare	n15078914	-
+arrowslit	noun	artifact	fortification	0.0	obscure	-	-
 arrowsmith	noun	person	worker	2.06	uncommon	n09830038	-
 arrowworm	noun	creature	invertebrate	0.0	obscure	n01926531	-
 arroyo	noun	terrain	depression	2.95	uncommon	n09229784	-
@@ -4138,7 +4142,7 @@ avenge	verb	spell	combat	3.25	common	v01155952	-
 avenged	adjective	modifier	participle	2.96	uncommon	a03159292	-
 avenger	noun	person	person	3.09	common	n09845476	-
 avens	noun	flora	shrub	1.32	rare	n12652092	-
-aventail	noun	artifact	clothing	0.0	obscure	n02945300	-
+aventail	noun	artifact	protection	0.0	obscure	n02945300	-
 aventurine	noun	material	mineral	1.65	rare	n15089127	-
 avenue	noun	artifact	route	4.43	core	n02766477	-
 average	adjective	modifier	quality	5.16	core	a01598728	noun:knowledge,verb:social
@@ -4387,7 +4391,7 @@ backstroke	noun	event	act	2.65	uncommon	n00572320	verb:movement
 backstroker	noun	person	person	0.0	obscure	n09850549	-
 backswept	adjective	modifier	quality	0.0	obscure	a00203314	-
 backswimmer	noun	creature	insect	0.0	obscure	n02243660	-
-backsword	noun	artifact	tool	0.0	obscure	n04230245	-
+backsword	noun	artifact	weapon	0.0	obscure	n02774755	-
 backtrack	verb	spell	movement	2.72	uncommon	v02008542	-
 backup	noun	person	person	4.21	core	n10667676	-
 backward	adjective	modifier	quality	3.71	common	a00202946	adverb:manner
@@ -4459,12 +4463,13 @@ baguet	noun	consumable	food	0.0	obscure	n07703126	-
 baguette	noun	consumable	food	2.82	uncommon	n07703126	-
 bahai	adjective	modifier	pertaining	1.92	rare	a02668671	noun:person
 bahamian	adjective	modifier	pertaining	2.55	uncommon	a03057378	noun:person
+bahamut	noun	creature	supernatural	1.91	rare	-	-
 bahraini	adjective	modifier	pertaining	2.71	uncommon	a03057570	noun:person
 baht	noun	measure	quantity	2.94	uncommon	n13685925	-
 bail	noun	institution	possession	4.01	core	n13371991	verb:social
 bailable	adjective	modifier	quality	1.85	rare	a01768195	-
 bailee	noun	person	person	2.15	uncommon	n09852338	-
-bailey	noun	artifact	structure	4.06	core	n02778818	-
+bailey	noun	artifact	fortification	4.06	core	n02778818	-
 bailiff	noun	person	person	3.0	common	n09852471	-
 bailiffship	noun	event	act	0.0	obscure	n00590355	-
 bailiwick	noun	terrain	place	2.15	uncommon	n08568239	-
@@ -4535,7 +4540,7 @@ balletic	adjective	modifier	pertaining	1.72	rare	a02668748	-
 balletomane	noun	person	person	0.0	obscure	n09854541	-
 balletomania	noun	knowledge	knowledge	0.0	obscure	n05678459	-
 ballgame	noun	event	contest	2.69	uncommon	n13955772	-
-ballista	noun	artifact	device	2.02	uncommon	n02985366	-
+ballista	noun	artifact	weapon	2.02	uncommon	n02985366	-
 ballistic	adjective	modifier	quality	3.48	common	a02668893	-
 ballistics	noun	world_state	phenomenon	2.84	uncommon	n11501887	-
 ballistocardiograph	noun	artifact	device	0.0	obscure	n02784787	-
@@ -4700,6 +4705,7 @@ barbwire	noun	artifact	artifact	1.65	rare	n02793846	-
 bard	noun	person	worker	3.34	common	n09858410	verb:create
 barde	verb	spell	create	1.44	rare	v01674210	-
 bardic	adjective	modifier	pertaining	2.05	uncommon	a03058774	-
+bardiche	noun	artifact	weapon	0.0	obscure	-	-
 bardolatry	noun	event	act	0.0	obscure	n01046365	-
 bare	adjective	modifier	quality	4.18	core	a00460031	verb:contact
 bareback	adjective	modifier	quality	2.75	uncommon	a00462657	adverb:manner
@@ -4808,6 +4814,7 @@ bars	noun	artifact	structure	4.45	core	n03894302	-
 bartender	noun	person	worker	3.5	common	n09860576	-
 barter	noun	event	exchange	3.05	common	n01111592	verb:transfer
 barterer	noun	person	person	0.0	obscure	n09860788	-
+bartizan	noun	artifact	fortification	0.0	obscure	-	-
 bartlett	noun	flora	produce	3.39	common	n07784206	-
 bartonia	noun	flora	flower	0.0	obscure	n12056376	-
 barunduki	noun	creature	mammal	0.0	obscure	n02363132	-
@@ -5236,7 +5243,7 @@ beldam	noun	person	person	1.37	rare	n10175045	-
 beldame	noun	person	person	1.08	rare	n10175045	-
 beleaguer	verb	spell	combat	1.11	rare	v01129837	-
 beleaguering	noun	event	conflict	0.0	obscure	n01077041	-
-belemnite	noun	creature	creature	1.14	rare	n01976364	-
+belemnite	noun	creature	invertebrate	1.14	rare	n01976364	-
 belemnitic	adjective	modifier	pertaining	0.0	obscure	a02671804	-
 belfry	noun	artifact	structure	2.56	uncommon	n02949582	-
 belgian	adjective	modifier	pertaining	3.82	common	a02972052	noun:person
@@ -5593,6 +5600,7 @@ bigarade	noun	flora	tree	0.0	obscure	n12729414	-
 bigeminal	adjective	modifier	quality	0.0	obscure	a02224577	-
 bigeneric	adjective	modifier	quality	0.0	obscure	a01910550	-
 bigeye	noun	creature	fish	1.66	rare	n02574283	-
+bigfoot	noun	creature	supernatural	3.16	common	-	-
 bigger	adjective	modifier	quality	4.74	core	a01386690	-
 biggin	noun	artifact	clothing	2.03	uncommon	n02840523	-
 biggish	adjective	modifier	quality	1.61	rare	a01386791	-
@@ -5647,7 +5655,7 @@ billed	adjective	modifier	quality	3.59	common	a00208342	-
 billet	noun	artifact	structure	2.75	uncommon	n02842429	verb:stative
 billfish	noun	creature	fish	1.73	rare	n02644009	-
 billfold	noun	artifact	container	1.86	rare	n04555648	-
-billhook	noun	artifact	tool	1.31	rare	n02842193	-
+billhook	noun	artifact	weapon	1.31	rare	n02842193	-
 billiard	adjective	modifier	pertaining	2.86	uncommon	a02674920	-
 billiards	noun	event	act	2.84	uncommon	n00500935	-
 billion	adjective	modifier	quality	4.75	core	a02207011	noun:quantity
@@ -6211,7 +6219,7 @@ blubber	noun	material	material	2.53	uncommon	n14806148	verb:body
 blubberer	noun	person	person	0.0	obscure	n09880346	-
 blubbery	adjective	modifier	quality	1.61	rare	a00989802	-
 blucher	noun	artifact	artifact	2.04	uncommon	n02858981	-
-bludgeon	noun	artifact	tool	2.38	uncommon	n02859073	verb:social
+bludgeon	noun	artifact	weapon	2.38	uncommon	n02859073	verb:social
 bludgeoner	noun	person	person	0.0	obscure	n09880465	-
 blue	adjective	modifier	quality	5.13	core	a00371931	noun:attribute,verb:transform
 bluebell	noun	flora	flower	2.53	uncommon	n12479780	-
@@ -6341,6 +6349,7 @@ bogartian	adjective	modifier	pertaining	0.0	obscure	a03040788	-
 bogbean	noun	flora	plant	0.0	obscure	n12505289	-
 bogey	noun	creature	supernatural	2.92	uncommon	n09565369	verb:contact
 bogeyman	noun	creature	supernatural	2.5	uncommon	n09511247	-
+boggart	noun	creature	supernatural	1.84	rare	-	-
 boggle	verb	spell	movement	2.27	uncommon	v01914772	-
 boggy	adjective	modifier	quality	2.42	uncommon	a02558836	-
 bogie	noun	creature	supernatural	2.46	uncommon	n09565369	-
@@ -6361,6 +6370,7 @@ boisterous	adjective	modifier	quality	2.86	uncommon	a01670742	-
 boisterously	adverb	verb_modifier	manner	1.73	rare	r00222767	-
 boisterousness	noun	world_state	weather	1.21	rare	n14547271	-
 bola	noun	artifact	weapon	2.65	uncommon	n02868691	-
+bolas	noun	artifact	weapon	2.11	uncommon	-	-
 bold	adjective	modifier	quality	4.26	core	a00250587	noun:communication
 boldface	verb	spell	create	2.25	uncommon	v01752724	noun:communication
 boldly	adverb	verb_modifier	manner	3.28	common	r00186537	-
@@ -6739,6 +6749,7 @@ bowse	verb	spell	contact	0.0	obscure	v01457724	-
 bowsprit	noun	artifact	tool	1.94	rare	n02886245	-
 bowstring	noun	artifact	artifact	1.97	rare	n02886342	-
 bowtie	noun	artifact	clothing	2.4	uncommon	n02886446	-
+bowyer	noun	person	worker	2.58	uncommon	-	-
 box	noun	artifact	container	5.04	core	n02886585	verb:contact
 boxberry	noun	flora	plant	0.0	obscure	n12689278	-
 boxcar	noun	artifact	vehicle_land	2.45	uncommon	n02888349	-
@@ -6905,7 +6916,7 @@ brazier	noun	artifact	structure	2.53	uncommon	n02896680	-
 brazil	noun	flora	produce	4.58	core	n07787707	-
 brazilian	adjective	modifier	pertaining	4.23	core	a02978374	noun:person
 brazilwood	noun	flora	plant	1.04	rare	n12510029	-
-breach	noun	terrain	natural_object	4.13	core	n09251708	verb:social
+breach	noun	event	attack	4.13	core	n00069721	verb:social
 bread	noun	consumable	food	4.5	core	n07695101	verb:contact
 breadbasket	noun	terrain	place	2.02	uncommon	n08534045	-
 breadboard	noun	artifact	artifact	2.04	uncommon	n02897062	-
@@ -7021,7 +7032,7 @@ bridge	noun	artifact	structure	4.77	core	n02901994	verb:contact
 bridgeable	adjective	modifier	quality	1.06	rare	a00279132	-
 bridgehead	noun	terrain	place	2.25	uncommon	n08706766	-
 bridgework	noun	artifact	device	1.64	rare	n02902852	-
-bridle	noun	artifact	weapon	2.78	uncommon	n02903443	verb:contact
+bridle	noun	artifact	tool	2.78	uncommon	n02903443	verb:contact
 bridoon	noun	artifact	artifact	0.0	obscure	n02903877	-
 brief	adjective	modifier	quality	4.52	core	a01445717	noun:document,verb:communication
 briefcase	noun	artifact	container	3.09	common	n02903988	-
@@ -7435,6 +7446,7 @@ buntal	noun	material	material	0.0	obscure	n14891841	-
 bunter	noun	person	person	2.03	uncommon	n09899804	-
 bunting	noun	creature	bird	3.04	common	n01539775	-
 bunyavirus	noun	creature	creature	0.0	obscure	n01334163	-
+bunyip	noun	creature	supernatural	1.58	rare	-	-
 buoy	noun	artifact	device	3.0	common	n07280883	verb:movement
 buoyancy	noun	aura	feeling	2.95	uncommon	n07546111	-
 buoyant	adjective	modifier	quality	2.98	uncommon	a01190615	-
@@ -7926,7 +7938,7 @@ calyptrate	adjective	modifier	pertaining	0.0	obscure	a02687120	-
 calyx	noun	flora	plant	2.45	uncommon	n11711992	-
 cam	noun	artifact	device	4.1	core	n02945171	-
 camachile	noun	flora	tree	0.0	obscure	n11784947	-
-camail	noun	artifact	clothing	0.0	obscure	n02945300	-
+camail	noun	artifact	protection	0.0	obscure	n02945300	-
 camaraderie	noun	aura	attribute	2.99	uncommon	n04660984	-
 camarilla	noun	institution	group	1.67	rare	n08258719	-
 camas	noun	flora	plant	2.14	uncommon	n12469801	-
@@ -8154,7 +8166,7 @@ capacitate	verb	spell	transform	0.0	obscure	v00527012	-
 capacitive	adjective	modifier	pertaining	2.63	uncommon	a02688738	-
 capacitor	noun	artifact	device	3.17	common	n02958683	-
 capacity	noun	aura	attribute	4.71	core	n05210665	-
-caparison	noun	artifact	artifact	1.29	rare	n02958976	verb:create
+caparison	noun	artifact	protection	1.29	rare	n02958976	verb:create
 caparisoned	adjective	modifier	quality	1.2	rare	a00457223	-
 cape	noun	artifact	clothing	4.3	core	n02959203	-
 capelan	noun	creature	fish	0.0	obscure	n02543888	-
@@ -8516,6 +8528,7 @@ casebook	adjective	modifier	quality	2.32	uncommon	a02303186	noun:communication
 cased	adjective	modifier	quality	2.58	uncommon	a02162469	-
 caseful	noun	measure	quantity	0.0	obscure	n13788576	-
 casein	noun	material	material	2.54	uncommon	n14759526	-
+casemate	noun	artifact	fortification	1.81	rare	-	-
 casement	noun	artifact	structure	2.68	uncommon	n02979809	-
 caseous	adjective	modifier	quality	0.0	obscure	a01179085	-
 casern	noun	artifact	structure	0.0	obscure	n02980011	-
@@ -8556,6 +8569,7 @@ castanets	noun	artifact	instrument	2.01	uncommon	n02872589	-
 castaway	noun	person	criminal	2.61	uncommon	n10406011	-
 caste	noun	institution	group	3.6	common	n08323124	-
 casteless	adjective	modifier	quality	1.1	rare	a02538761	-
+castellan	noun	person	person	2.04	uncommon	-	-
 castellated	adjective	modifier	quality	1.78	rare	a01800618	-
 caster	noun	person	worker	3.1	common	n09632776	-
 castigate	verb	spell	social	1.92	rare	v02505793	-
@@ -8623,7 +8637,7 @@ cataphyll	noun	flora	plant	0.0	obscure	n11706664	-
 cataplasia	noun	event	event	0.0	obscure	n07442857	-
 cataplasm	noun	artifact	artifact	0.0	obscure	n03999761	-
 cataplastic	adjective	modifier	pertaining	0.0	obscure	a02694052	-
-catapult	noun	artifact	toy	3.01	common	n04247204	verb:contact
+catapult	noun	artifact	weapon	3.01	common	n04247204	verb:contact
 catapultian	adjective	modifier	pertaining	0.0	obscure	a02694156	-
 catapultic	adjective	modifier	pertaining	0.0	obscure	a02694156	-
 cataract	noun	affliction	affliction	2.97	uncommon	n14278052	-
@@ -8707,6 +8721,7 @@ catling	noun	artifact	device	1.45	rare	n02988961	-
 catmint	noun	flora	herb	1.18	rare	n12880746	-
 catnap	noun	event	act	1.78	rare	n00860015	verb:body
 catnip	noun	flora	herb	2.68	uncommon	n12880746	-
+catoblepas	noun	creature	supernatural	0.0	obscure	-	-
 catoptric	adjective	modifier	pertaining	0.0	obscure	a02695294	-
 catoptrical	adjective	modifier	pertaining	0.0	obscure	a02695294	-
 catoptrics	noun	knowledge	knowledge	0.0	obscure	n06110787	-
@@ -8764,7 +8779,7 @@ cautious	adjective	modifier	quality	3.79	common	a00326179	noun:group
 cautiously	adverb	verb_modifier	manner	3.32	common	r00283532	-
 cautiousness	noun	aura	attribute	1.69	rare	n04671415	-
 cavalcade	noun	institution	group	2.52	uncommon	n08444875	-
-cavalier	noun	person	leader	3.17	common	n09921709	adjective:quality
+cavalier	noun	person	person	3.17	common	n09921709	adjective:quality
 cavalierly	adverb	verb_modifier	manner	1.74	rare	r00284129	-
 cavalla	noun	creature	fish	1.31	rare	n02628481	-
 cavalry	noun	institution	group	3.8	common	n08414813	-
@@ -8972,6 +8987,7 @@ ceratopsian	noun	creature	reptile	1.06	rare	n01706210	-
 ceratosaur	noun	creature	reptile	0.0	obscure	n01715393	-
 ceratosaurus	noun	creature	reptile	0.0	obscure	n01715393	-
 ceratozamia	noun	flora	plant	0.0	obscure	n11622929	-
+cerberus	noun	creature	supernatural	2.77	uncommon	-	-
 cercaria	noun	creature	creature	0.0	obscure	n01928557	-
 cercarial	adjective	modifier	pertaining	0.0	obscure	a02699260	-
 cere	noun	bodypart	bodypart	2.0	uncommon	n01761278	verb:contact
@@ -9073,6 +9089,7 @@ chagrined	adjective	modifier	quality	1.95	rare	a00533833	-
 chain	noun	artifact	tool	4.65	core	n08392981	verb:contact
 chained	adjective	modifier	quality	3.37	common	a00254062	-
 chainlike	adjective	modifier	quality	0.0	obscure	a02153444	-
+chainmail	noun	artifact	protection	2.13	uncommon	-	-
 chains	noun	artifact	device	4.11	core	n03590607	-
 chainsaw	noun	artifact	machine	3.2	common	n03004288	-
 chair	noun	artifact	furniture	4.69	core	n03005231	verb:social
@@ -9246,6 +9263,7 @@ chartless	adjective	modifier	quality	0.0	obscure	a01380183	-
 chartreuse	noun	aura	attribute	2.44	uncommon	n04975434	adjective:quality
 charwoman	noun	person	worker	1.67	rare	n09930684	-
 chary	adjective	modifier	quality	1.64	rare	a00326517	-
+charybdis	noun	creature	supernatural	2.04	uncommon	-	-
 chase	verb	spell	movement	4.44	core	v02005890	noun:structure
 chased	noun	person	person	3.74	common	n10514363	-
 chaser	noun	person	person	3.13	common	n10514520	-
@@ -9772,6 +9790,7 @@ chunk	noun	institution	group	3.64	common	n07977630	verb:contact
 chunking	noun	knowledge	knowledge	2.0	uncommon	n05739513	-
 chunky	adjective	modifier	quality	3.31	common	a02148436	-
 chunnel	noun	artifact	route	1.49	rare	n03031618	-
+chupacabra	noun	creature	supernatural	2.2	uncommon	-	-
 church	noun	artifact	building	5.16	core	n03031762	verb:movement
 churchgoer	noun	person	person	1.82	rare	n09941943	-
 churchgoing	adjective	modifier	quality	1.85	rare	a01787961	-
@@ -9894,6 +9913,7 @@ circumstances	noun	institution	possession	4.59	core	n13350511	-
 circumstantial	adjective	modifier	quality	3.14	common	a01107369	-
 circumstantially	adverb	verb_modifier	manner	1.69	rare	r00501538	-
 circumvallate	verb	spell	combat	0.0	obscure	v01133484	-
+circumvallation	noun	event	act	1.21	rare	-	-
 circumvent	verb	spell	combat	3.15	common	v01129837	-
 circumvention	noun	event	act	2.3	uncommon	n00742983	-
 circumvolution	noun	event	act	0.0	obscure	n00343250	-
@@ -11226,6 +11246,7 @@ condom	noun	artifact	device	3.6	common	n03092620	-
 condominium	noun	artifact	building	3.1	common	n03093036	-
 condonation	noun	event	act	1.19	rare	n01229840	-
 condor	noun	creature	bird	2.96	uncommon	n01622177	-
+condottiere	noun	person	person	1.35	rare	-	-
 conduce	verb	spell	social	1.47	rare	v02561616	-
 conducive	adjective	modifier	quality	3.24	common	a00324324	-
 conduct	verb	spell	social	4.52	core	v02450374	noun:attribute
@@ -12658,9 +12679,9 @@ crenate	adjective	modifier	quality	1.38	rare	a02254040	-
 crenated	adjective	modifier	quality	0.0	obscure	a02254040	-
 crenel	noun	artifact	artifact	0.0	obscure	n03134991	verb:transfer
 crenelate	verb	spell	transfer	0.0	obscure	v02340625	-
-crenelation	noun	artifact	structure	0.0	obscure	n02815071	-
+crenelation	noun	artifact	fortification	0.0	obscure	n02815071	-
 crenellate	verb	spell	transfer	1.02	rare	v02340625	-
-crenellation	noun	artifact	structure	0.0	obscure	n02815071	-
+crenellation	noun	artifact	fortification	0.0	obscure	n02815071	-
 crenelle	noun	artifact	artifact	0.0	obscure	n03134991	-
 crenulate	adjective	modifier	quality	1.55	rare	a02254154	-
 crenulated	adjective	modifier	quality	1.5	rare	a02254154	-
@@ -12797,6 +12818,7 @@ crossbench	noun	artifact	device	1.92	rare	n03140702	-
 crossbencher	noun	person	leader	1.37	rare	n09999805	-
 crossbill	noun	creature	bird	1.53	rare	n01536534	-
 crossbow	noun	artifact	weapon	3.05	common	n03141020	-
+crossbowman	noun	person	person	1.09	rare	-	-
 crossbred	adjective	modifier	quality	1.94	rare	a01910335	-
 crossbreed	noun	creature	creature	2.05	uncommon	n01329963	verb:contact
 crossbreeding	noun	event	act	2.02	uncommon	n00852055	-
@@ -13014,7 +13036,7 @@ cuddlesome	adjective	modifier	quality	0.0	obscure	a01463188	-
 cuddling	noun	event	act	3.11	common	n00855630	-
 cuddly	adjective	modifier	quality	3.14	common	a01463188	-
 cuddy	noun	artifact	structure	2.53	uncommon	n03149943	-
-cudgel	noun	artifact	tool	2.26	uncommon	n03150050	verb:contact
+cudgel	noun	artifact	weapon	2.26	uncommon	n03150050	verb:contact
 cudweed	noun	flora	flower	0.0	obscure	n11993228	-
 cue	noun	knowledge	knowledge	3.75	common	n05837537	verb:communication
 cuff	noun	artifact	clothing	3.51	common	n03150509	verb:contact
@@ -13054,7 +13076,7 @@ culturati	noun	institution	group	0.0	obscure	n08404226	-
 culture	noun	institution	group	5.03	core	n08304765	verb:transform
 cultured	adjective	modifier	quality	3.3	common	a01954376	-
 cultus	noun	knowledge	knowledge	1.96	rare	n05957131	-
-culverin	noun	artifact	artifact	1.29	rare	n03151822	-
+culverin	noun	artifact	weapon	1.29	rare	n03151750	-
 culvert	noun	artifact	route	2.55	uncommon	n03151946	-
 cum	noun	bodypart	bodypart	4.04	core	n05411679	-
 cumarone	noun	material	material	0.0	obscure	n14922252	-
@@ -16343,9 +16365,10 @@ draggled	adjective	modifier	quality	0.0	obscure	a00421806	-
 dragnet	noun	artifact	tool	2.48	uncommon	n08450871	-
 dragoman	noun	person	person	1.67	rare	n10049154	-
 dragon	noun	creature	supernatural	4.41	core	n09517519	-
-dragonet	noun	creature	fish	1.17	rare	n02621457	-
+dragonet	noun	creature	supernatural	1.17	rare	n02621457	-
 dragonfly	noun	creature	insect	3.03	common	n02271095	-
 dragonhead	noun	flora	herb	1.09	rare	n12867095	-
+dragonslayer	noun	person	person	1.85	rare	-	-
 dragoon	noun	person	fighter	2.65	uncommon	n10049556	verb:social
 drain	noun	artifact	route	4.07	core	n03236861	verb:movement
 drainage	noun	event	act	3.77	common	n00396837	-
@@ -17088,6 +17111,7 @@ effusion	noun	event	act	2.41	uncommon	n00330769	-
 effusive	adjective	modifier	quality	2.45	uncommon	a00809634	-
 effusively	adverb	verb_modifier	manner	1.8	rare	r00328245	-
 effusiveness	noun	aura	attribute	0.0	obscure	n04658366	-
+efreet	noun	creature	supernatural	0.0	obscure	-	-
 eft	noun	creature	amphibian	2.55	uncommon	n01634304	-
 egalitarian	noun	person	person	3.06	common	n10066678	adjective:quality
 egalitarianism	noun	knowledge	knowledge	2.52	uncommon	n05976455	-
@@ -17166,6 +17190,7 @@ elapid	noun	creature	reptile	0.0	obscure	n01747766	-
 elapse	verb	spell	body	2.03	uncommon	v02076777	-
 elapsed	adjective	modifier	participle	2.95	uncommon	a03160735	-
 elasmobranch	noun	creature	fish	1.27	rare	n01484712	-
+elasmotherium	noun	creature	mammal	0.0	obscure	-	-
 elastance	noun	world_state	phenomenon	0.0	obscure	n11453812	-
 elastase	noun	material	material	1.78	rare	n14873710	-
 elastic	adjective	modifier	quality	3.59	common	a00846685	noun:device
@@ -17392,7 +17417,7 @@ embrace	noun	event	act	4.16	core	n00418410	verb:contact
 embracement	noun	event	act	1.36	rare	n00418410	-
 embracing	noun	event	act	3.67	common	n00418410	-
 embrangle	verb	spell	transform	0.0	obscure	v00403738	-
-embrasure	noun	artifact	artifact	1.62	rare	n03991266	-
+embrasure	noun	artifact	fortification	1.62	rare	n03991266	-
 embrittle	verb	spell	transform	0.0	obscure	v00506701	-
 embrocate	verb	spell	body	0.0	obscure	v00085379	-
 embrocation	noun	artifact	medicine	1.04	rare	n03678920	-
@@ -18332,6 +18357,7 @@ estimator	noun	person	person	2.76	uncommon	n09906486	-
 estival	adjective	modifier	quality	1.32	rare	a01258094	-
 estivate	verb	spell	body	0.0	obscure	v00016176	-
 estivation	noun	institution	group	0.0	obscure	n07963655	-
+estoc	noun	artifact	weapon	0.0	obscure	-	-
 estonian	adjective	modifier	pertaining	3.1	common	a02733894	noun:communication
 estradiol	noun	material	material	2.73	uncommon	n14774495	-
 estragon	noun	flora	shrub	1.76	rare	n11950672	-
@@ -18423,6 +18449,7 @@ etiologist	noun	person	worker	0.0	obscure	n10085866	-
 etiology	noun	event	event	2.61	uncommon	n07342208	-
 etna	noun	artifact	artifact	2.65	uncommon	n02924413	-
 etodolac	noun	artifact	medicine	1.07	rare	n03305852	-
+ettin	noun	creature	supernatural	1.09	rare	-	-
 etui	noun	artifact	container	1.21	rare	n03306236	-
 etymological	adjective	modifier	pertaining	2.45	uncommon	a03033517	-
 etymologist	noun	person	person	1.35	rare	n10086121	-
@@ -18993,6 +19020,7 @@ exteroceptive	adjective	modifier	pertaining	0.0	obscure	a02879333	-
 exteroceptor	noun	bodypart	bodypart	0.0	obscure	n05307313	-
 exterritorial	adjective	modifier	quality	0.0	obscure	a02418089	-
 extinct	adjective	modifier	participle	3.66	common	a00932405	-
+extinction	noun	event	killing	3.76	common	n14035644	-
 extinguish	verb	spell	transform	3.04	common	v00479148	-
 extinguishable	adjective	modifier	quality	0.0	obscure	a00950996	-
 extinguished	adjective	modifier	quality	3.19	common	a00739564	-
@@ -20290,6 +20318,7 @@ flesh	noun	bodypart	bodypart	4.2	core	n05275611	verb:transfer
 fleshiness	noun	aura	attribute	1.08	rare	n05007507	-
 fleshly	adjective	modifier	quality	1.96	rare	a01783117	-
 fleshy	adjective	modifier	quality	2.99	uncommon	a00990957	-
+fletcher	noun	person	worker	3.8	common	-	-
 flex	verb	spell	body	3.73	common	v02040822	noun:act
 flexibility	noun	aura	attribute	4.02	core	n05029623	-
 flexible	adjective	modifier	quality	4.13	core	a01027688	-
@@ -21414,7 +21443,7 @@ fuselage	noun	artifact	structure	3.09	common	n03412964	-
 fusible	adjective	modifier	quality	1.97	rare	a01510064	-
 fusiform	adjective	modifier	quality	2.22	uncommon	a01815898	-
 fusil	noun	artifact	weapon	1.56	rare	n03413174	-
-fusilier	noun	person	worker	2.15	uncommon	n10136236	-
+fusilier	noun	person	person	2.15	uncommon	n10136236	-
 fusillade	noun	event	attack	1.85	rare	n00990406	verb:combat
 fusion	noun	world_state	phenomenon	4.02	core	n07388202	-
 fuss	noun	event	event	3.62	common	n07387165	verb:social
@@ -21551,6 +21580,7 @@ galvanometer	noun	artifact	device	1.73	rare	n03418174	-
 galwegian	adjective	modifier	pertaining	0.0	obscure	a02989880	-
 gam	noun	institution	group	2.77	uncommon	n08011194	-
 gamba	noun	artifact	instrument	2.28	uncommon	n04543890	-
+gambeson	noun	artifact	protection	0.0	obscure	-	-
 gambian	adjective	modifier	pertaining	2.27	uncommon	a03078581	noun:person
 gambist	noun	person	person	0.0	obscure	n10138400	-
 gambit	noun	event	act	3.1	common	n00173311	-
@@ -21674,6 +21704,7 @@ garrulous	adjective	modifier	quality	2.11	uncommon	a02392645	-
 garrulously	adverb	verb_modifier	manner	0.0	obscure	r00394779	-
 garrulousness	noun	aura	attribute	0.0	obscure	n04658739	-
 garter	noun	artifact	clothing	2.97	uncommon	n03426027	verb:contact
+garuda	noun	creature	supernatural	2.53	uncommon	-	-
 gas	noun	material	material	5.01	core	n14504664	verb:combat
 gasbag	noun	person	person	1.47	rare	n10141124	-
 gaseous	adjective	modifier	quality	2.93	uncommon	a02270298	-
@@ -22159,6 +22190,7 @@ glacially	adverb	verb_modifier	manner	1.88	rare	r00142936	-
 glaciate	verb	spell	contact	0.0	obscure	v01211328	-
 glaciated	adjective	modifier	quality	2.11	uncommon	a01082620	-
 glacier	noun	terrain	landform	3.58	common	n09312237	-
+glacis	noun	artifact	fortification	1.79	rare	-	-
 glad	adjective	modifier	quality	4.9	core	a01364330	noun:plant
 gladdened	adjective	modifier	quality	1.49	rare	a00708780	-
 gladdon	noun	flora	plant	0.0	obscure	n12434147	-
@@ -22172,6 +22204,7 @@ gladly	adverb	verb_modifier	manner	3.67	common	r00349906	-
 gladness	noun	aura	feeling	2.48	uncommon	n07542406	-
 gladsome	adjective	modifier	quality	1.28	rare	a01364621	-
 gladsomeness	noun	aura	feeling	0.0	obscure	n07542406	-
+glaive	noun	artifact	weapon	1.94	rare	-	-
 glamor	noun	aura	attribute	2.34	uncommon	n04692544	-
 glamorisation	noun	event	act	0.0	obscure	n00262815	-
 glamorise	verb	spell	transform	1.28	rare	v00533966	-
@@ -22382,6 +22415,7 @@ glycoside	noun	material	material	1.92	rare	n14911456	-
 glyoxaline	noun	material	material	0.0	obscure	n14940821	-
 glyph	noun	artifact	artifact	2.7	uncommon	n03447088	-
 glyptics	noun	artifact	artifact	0.0	obscure	n03447411	-
+glyptodont	noun	creature	mammal	0.0	obscure	-	-
 glyptography	noun	artifact	artifact	0.0	obscure	n03447212	-
 gm	noun	measure	quantity	4.16	core	n13745822	-
 gnarl	verb	spell	contact	1.23	rare	v01283411	noun:shape
@@ -22563,6 +22597,7 @@ gorgeously	adverb	verb_modifier	manner	2.44	uncommon	r00351959	-
 gorger	noun	person	person	0.0	obscure	n10581041	-
 gorgerin	noun	artifact	artifact	0.0	obscure	n03453435	-
 gorget	noun	artifact	protection	1.73	rare	n03453534	-
+gorgon	noun	creature	supernatural	2.62	uncommon	-	-
 gorgonian	noun	creature	invertebrate	1.26	rare	n01918828	-
 gorgonzola	noun	consumable	food	2.22	uncommon	n07868352	-
 gorilla	noun	creature	mammal	3.62	common	n02483486	-
@@ -22837,6 +22872,7 @@ greatest	adjective	modifier	quality	4.79	core	a02351683	-
 greathearted	adjective	modifier	quality	0.0	obscure	a01593452	-
 greatly	adverb	verb_modifier	manner	4.33	core	r00057077	-
 greatness	noun	aura	attribute	3.71	common	n05177128	-
+greatsword	noun	artifact	weapon	1.46	rare	-	-
 greave	noun	artifact	protection	1.2	rare	n03462393	-
 greaves	noun	material	material	2.8	uncommon	n14701646	-
 grebe	noun	creature	bird	2.21	uncommon	n02052658	-
@@ -23165,6 +23201,7 @@ guilty	adjective	modifier	quality	4.61	core	a01323940	-
 guimpe	noun	artifact	fabric	0.0	obscure	n03472312	-
 guinea	noun	artifact	currency	4.06	core	n13413861	-
 guinean	adjective	modifier	pertaining	2.61	uncommon	a03082629	noun:person
+guisarme	noun	artifact	weapon	0.0	obscure	-	-
 guise	noun	aura	attribute	3.47	common	n04686265	-
 guitar	noun	artifact	instrument	4.48	core	n03472449	-
 guitarfish	noun	creature	fish	0.0	obscure	n01500379	-
@@ -24088,6 +24125,7 @@ heirloom	noun	institution	possession	2.98	uncommon	n13285693	-
 heist	noun	event	crime	3.39	common	n00784717	verb:social
 hejira	noun	event	escape	1.12	rare	n00061234	-
 held	adjective	modifier	participle	5.24	core	a03161358	-
+helepolis	noun	artifact	weapon	0.0	obscure	-	-
 heliac	adjective	modifier	pertaining	0.0	obscure	a02749943	-
 heliacal	adjective	modifier	pertaining	1.36	rare	a02749943	-
 helianthemum	noun	flora	shrub	0.0	obscure	n12396035	-
@@ -24514,6 +24552,7 @@ hippoboscid	noun	creature	insect	0.0	obscure	n02201184	-
 hippocampus	noun	bodypart	bodypart	2.99	uncommon	n05503912	-
 hippocratic	adjective	modifier	pertaining	2.42	uncommon	a03084244	-
 hippodrome	noun	artifact	building	2.37	uncommon	n03527166	-
+hippogriff	noun	creature	supernatural	1.68	rare	-	-
 hippopotamus	noun	creature	mammal	2.56	uncommon	n02401173	-
 hippy	noun	person	person	3.0	common	n10196106	-
 hipster	noun	person	person	3.35	common	n10196106	-
@@ -24785,7 +24824,7 @@ homotherm	noun	creature	creature	0.0	obscure	n01317821	-
 homothermic	adjective	modifier	quality	0.0	obscure	a02543153	-
 homozygote	noun	bodypart	bodypart	1.26	rare	n05439996	-
 homozygous	adjective	modifier	quality	2.47	uncommon	a01204248	-
-homunculus	noun	person	person	2.25	uncommon	n10311241	-
+homunculus	noun	creature	supernatural	2.25	uncommon	n10311241	-
 homy	adjective	modifier	quality	1.42	rare	a00479651	-
 honcho	noun	person	leader	2.41	uncommon	n10123978	-
 honduran	adjective	modifier	pertaining	2.86	uncommon	a02980786	noun:person
@@ -25623,6 +25662,7 @@ idyllic	adjective	modifier	quality	3.04	common	a01755963	-
 idyllically	adverb	verb_modifier	manner	0.0	obscure	r00125152	-
 ie	adverb	verb_modifier	manner	3.8	common	r00193186	noun:communication
 iffy	adjective	modifier	quality	2.78	uncommon	a00342553	-
+ifrit	noun	creature	supernatural	2.06	uncommon	-	-
 igloo	noun	artifact	structure	2.64	uncommon	n03565610	-
 iglu	noun	artifact	structure	1.08	rare	n03565610	-
 igneous	adjective	modifier	pertaining	2.81	uncommon	a02863150	-
@@ -26546,6 +26586,7 @@ indorse	verb	spell	social	1.21	rare	v02459338	-
 indorser	noun	person	person	0.0	obscure	n10690107	-
 indrawn	adjective	modifier	quality	1.1	rare	a01995106	-
 indri	noun	creature	mammal	1.68	rare	n02502898	-
+indricothere	noun	creature	mammal	0.0	obscure	-	-
 indris	noun	creature	mammal	0.0	obscure	n02502898	-
 indubitability	noun	aura	attribute	0.0	obscure	n04762117	-
 indubitable	adjective	modifier	quality	1.65	rare	a01924940	-
@@ -28164,6 +28205,7 @@ jingoism	noun	aura	attribute	2.18	uncommon	n04885841	-
 jingoist	noun	person	person	1.33	rare	n09931307	-
 jingoistic	adjective	modifier	quality	2.18	uncommon	a01744607	-
 jinks	noun	event	act	2.42	uncommon	n00511061	-
+jinn	noun	creature	supernatural	2.58	uncommon	-	-
 jinnee	noun	creature	supernatural	0.0	obscure	n09567562	-
 jinni	noun	creature	supernatural	1.66	rare	n09567562	-
 jinrikisha	noun	artifact	vehicle_land	1.01	rare	n03604679	-
@@ -28696,6 +28738,7 @@ kiosk	noun	artifact	building	3.0	common	n02877081	-
 kip	noun	measure	quantity	3.04	common	n13703053	verb:body
 kiplingesque	adjective	modifier	pertaining	0.0	obscure	a03045706	-
 kipper	noun	consumable	food	2.32	uncommon	n07801114	-
+kirin	noun	creature	supernatural	2.68	uncommon	-	-
 kirk	noun	artifact	building	3.85	common	n03624191	-
 kirpan	noun	artifact	weapon	1.66	rare	n03624259	-
 kirsch	noun	consumable	drink	2.45	uncommon	n07920312	-
@@ -28717,6 +28760,7 @@ kitembilla	noun	flora	tree	0.0	obscure	n12399480	-
 kith	noun	institution	group	2.36	uncommon	n07986748	-
 kitsch	noun	artifact	artifact	2.69	uncommon	n03627144	-
 kitschy	adjective	modifier	quality	2.21	uncommon	a00857592	-
+kitsune	noun	creature	supernatural	2.32	uncommon	-	-
 kittee	noun	event	act	0.0	obscure	n00424225	-
 kitten	noun	creature	mammal	3.64	common	n02125600	verb:body
 kittenish	adjective	modifier	quality	1.28	rare	a02130305	-
@@ -28816,6 +28860,7 @@ knucks	noun	artifact	weapon	1.28	rare	n02896189	-
 koala	noun	creature	mammal	3.04	common	n01885355	-
 kob	noun	creature	mammal	2.01	uncommon	n02430116	-
 kobo	noun	measure	quantity	2.63	uncommon	n13711283	-
+kobold	noun	creature	supernatural	2.07	uncommon	-	-
 kohl	noun	artifact	artifact	2.85	uncommon	n03633362	-
 kohleria	noun	flora	plant	0.0	obscure	n12853582	-
 kohlrabi	noun	flora	herb	1.83	rare	n11897752	-
@@ -29042,6 +29087,7 @@ lambrequin	noun	artifact	clothing	0.0	obscure	n03640527	-
 lambskin	noun	material	material	2.03	uncommon	n14789195	-
 lame	adjective	modifier	quality	3.95	common	a02333032	noun:person,verb:body
 lamella	noun	flora	plant	1.77	rare	n13032439	-
+lamellar	noun	artifact	protection	2.08	uncommon	-	-
 lamellibranch	noun	creature	invertebrate	0.0	obscure	n01958574	adjective:quality
 lamely	adverb	verb_modifier	manner	1.89	rare	r00387593	-
 lamentable	adjective	modifier	quality	2.47	uncommon	a01130672	-
@@ -29116,6 +29162,7 @@ landscaper	noun	person	person	2.3	uncommon	n10265560	-
 landscaping	noun	event	exchange	3.22	common	n00922974	-
 landscapist	noun	person	person	1.1	rare	n10265873	-
 landside	noun	artifact	artifact	1.73	rare	n03645770	-
+landsknecht	noun	person	person	1.09	rare	-	-
 landslide	noun	event	event	3.47	common	n07489325	-
 landslip	noun	event	event	1.87	rare	n07420011	-
 landsman	noun	person	person	2.08	uncommon	n10265204	-
@@ -29802,6 +29849,7 @@ licentiate	noun	person	person	2.08	uncommon	n10278483	-
 licentious	adjective	modifier	quality	2.07	uncommon	a00363349	-
 licentiously	adverb	verb_modifier	manner	0.0	obscure	r00390848	-
 licentiousness	noun	aura	attribute	1.91	rare	n04858946	-
+lich	noun	creature	supernatural	2.51	uncommon	-	-
 lichee	noun	flora	tree	0.0	obscure	n12765147	-
 lichen	noun	flora	plant	2.77	uncommon	n14252885	-
 lichgate	noun	artifact	structure	0.0	obscure	n03704149	-
@@ -29972,6 +30020,7 @@ lincolnian	adjective	modifier	pertaining	0.0	obscure	a03046094	-
 lincomycin	noun	artifact	medicine	0.0	obscure	n03675948	-
 lindane	noun	material	material	1.48	rare	n14959002	-
 linden	noun	material	material	3.2	common	n12223848	-
+lindworm	noun	creature	supernatural	0.0	obscure	-	-
 lindy	noun	event	act	2.84	uncommon	n00533604	-
 line	noun	artifact	tool	5.49	core	n08447525	verb:contact
 lineage	noun	institution	group	3.46	common	n08118903	-
@@ -30391,6 +30440,7 @@ longshoreman	noun	person	worker	1.96	rare	n10674608	-
 longshot	noun	artifact	artifact	2.48	uncommon	n03693642	-
 longsighted	adjective	modifier	quality	0.0	obscure	a02165009	-
 longstanding	adjective	modifier	quality	3.19	common	a01444145	-
+longsword	noun	artifact	weapon	1.92	rare	-	-
 longtime	adjective	modifier	quality	3.73	common	a01644403	-
 longways	noun	event	act	1.37	rare	n00540547	adverb:manner
 longwise	adverb	verb_modifier	manner	0.0	obscure	r00390113	-
@@ -30412,7 +30462,7 @@ loonie	noun	measure	quantity	2.06	uncommon	n13694899	-
 loony	noun	person	person	2.78	uncommon	n09995813	adjective:quality
 loop	noun	artifact	tool	4.29	core	n03137089	verb:movement
 looper	noun	creature	creature	2.5	uncommon	n02290920	-
-loophole	noun	artifact	artifact	3.24	common	n03694769	-
+loophole	noun	artifact	fortification	3.24	common	n06616901	-
 loopy	adjective	modifier	pertaining	2.67	uncommon	a02767872	-
 loose	adjective	modifier	quality	4.46	core	a00505233	verb:social,adverb:manner
 looseleaf	adjective	modifier	quality	1.6	rare	a00258445	-
@@ -30816,7 +30866,7 @@ macaroni	noun	consumable	food	3.11	common	n07716709	-
 macaronic	adjective	modifier	pertaining	1.17	rare	a02769100	-
 macaroon	noun	consumable	food	2.05	uncommon	n07652143	-
 macaw	noun	creature	bird	2.33	uncommon	n01821156	-
-mace	noun	person	worker	3.33	common	n10298153	-
+mace	noun	artifact	weapon	3.33	common	n10298153	-
 macebearer	noun	person	worker	0.0	obscure	n10298153	-
 macedoine	noun	consumable	food	0.0	obscure	n07887311	-
 macedonian	adjective	modifier	pertaining	3.08	common	a03093681	noun:person
@@ -31240,7 +31290,7 @@ mangler	noun	person	person	1.75	rare	n10361686	-
 manglietia	noun	flora	tree	0.0	obscure	n11732440	-
 mango	noun	flora	produce	3.56	common	n07780131	-
 mangold	noun	flora	produce	2.36	uncommon	n11853368	-
-mangonel	noun	artifact	device	1.06	rare	n02985366	-
+mangonel	noun	artifact	weapon	1.06	rare	n02985366	-
 mangosteen	noun	flora	tree	1.84	rare	n12387192	-
 mangrove	noun	flora	tree	2.89	uncommon	n12366416	-
 mangy	adjective	modifier	quality	2.1	uncommon	a02592707	-
@@ -31326,7 +31376,7 @@ mantispid	noun	creature	insect	0.0	obscure	n02270135	-
 mantle	noun	artifact	clothing	3.62	common	n02959203	verb:movement
 mantled	adjective	modifier	quality	1.98	rare	a01699958	-
 mantlepiece	noun	artifact	device	1.52	rare	n03724882	-
-mantlet	noun	artifact	structure	1.47	rare	n03725141	-
+mantlet	noun	artifact	protection	1.47	rare	n03725141	-
 mantrap	noun	person	person	1.48	rare	n10633512	-
 mantua	noun	artifact	clothing	2.55	uncommon	n03725402	-
 manual	noun	artifact	document	4.32	core	n06433328	adjective:pertaining
@@ -31919,7 +31969,9 @@ megalith	noun	artifact	structure	1.68	rare	n03748507	-
 megalithic	adjective	modifier	pertaining	2.24	uncommon	a03096822	-
 megaloblast	noun	bodypart	bodypart	0.0	obscure	n05457373	-
 megaloblastic	adjective	modifier	pertaining	1.37	rare	a03024107	-
+megaloceros	noun	creature	mammal	0.0	obscure	-	-
 megalocyte	noun	bodypart	bodypart	0.0	obscure	n05457237	-
+megalodon	noun	creature	fish	2.12	uncommon	-	-
 megalomaniac	noun	person	person	2.32	uncommon	n10326163	-
 megalomaniacal	adjective	modifier	quality	1.84	rare	a01588977	-
 megalomanic	adjective	modifier	quality	0.0	obscure	a01588977	-
@@ -31935,6 +31987,7 @@ megasporophyll	noun	flora	plant	0.0	obscure	n11708022	-
 megathere	noun	creature	mammal	0.0	obscure	n02461453	-
 megatherian	noun	creature	mammal	0.0	obscure	n02461148	-
 megatheriid	noun	creature	mammal	0.0	obscure	n02461148	-
+megatherium	noun	creature	mammal	1.38	rare	-	-
 megaton	noun	measure	quantity	2.33	uncommon	n13668971	-
 megawatt	noun	measure	quantity	2.68	uncommon	n13666373	-
 megestrol	noun	material	material	1.16	rare	n14770449	-
@@ -32137,7 +32190,7 @@ meritoriousness	noun	aura	attribute	0.0	obscure	n04814129	-
 merl	noun	creature	bird	1.98	rare	n01561235	-
 merle	noun	creature	bird	3.04	common	n01561235	-
 merlin	noun	creature	bird	3.42	common	n01614916	-
-merlon	noun	artifact	structure	1.14	rare	n03756105	-
+merlon	noun	artifact	fortification	1.14	rare	n03756105	-
 mermaid	noun	creature	supernatural	3.47	common	n09512731	-
 merman	noun	creature	supernatural	2.41	uncommon	n09512827	-
 merovingian	adjective	modifier	pertaining	2.03	uncommon	a02772227	noun:person
@@ -32734,6 +32787,7 @@ minocycline	noun	artifact	medicine	1.78	rare	n03776599	-
 minor	adjective	modifier	quality	4.62	core	a01476226	noun:person,verb:cognition
 minority	noun	institution	group	4.41	core	n07983184	-
 minors	noun	institution	group	3.69	common	n08248599	-
+minotaur	noun	creature	supernatural	2.76	uncommon	-	-
 minoxidil	noun	artifact	medicine	1.99	rare	n03777353	-
 minster	noun	artifact	building	2.95	uncommon	n03777610	-
 minstrel	noun	person	worker	2.79	uncommon	n10118862	verb:create
@@ -32828,6 +32882,7 @@ misdo	verb	spell	social	0.0	obscure	v02568929	-
 miser	noun	person	person	2.56	uncommon	n10341742	-
 miserable	adjective	modifier	quality	4.07	core	a01153708	-
 miserably	adverb	verb_modifier	manner	3.17	common	r00404848	-
+misericorde	noun	artifact	weapon	0.0	obscure	-	-
 miserliness	noun	aura	attribute	1.35	rare	n04841459	-
 miserly	adjective	modifier	quality	2.33	uncommon	a01117549	-
 misery	noun	aura	feeling	3.89	common	n07549366	-
@@ -33406,6 +33461,7 @@ morgue	noun	artifact	building	3.08	common	n03791032	-
 moribund	adjective	modifier	quality	2.57	uncommon	a00814333	-
 morion	noun	artifact	protection	1.29	rare	n03791254	-
 mormon	adjective	modifier	pertaining	3.67	common	a02967352	noun:person
+morningstar	noun	artifact	weapon	2.63	uncommon	-	-
 moroccan	adjective	modifier	pertaining	3.47	common	a03035934	noun:person
 morocco	noun	material	material	3.8	common	n14787238	-
 moron	noun	person	person	3.75	common	n10217144	-
@@ -33449,6 +33505,7 @@ mortmain	noun	institution	possession	1.54	rare	n13271143	-
 mortuary	noun	artifact	building	3.04	common	n03791032	adjective:pertaining
 morula	noun	creature	creature	1.52	rare	n01465444	-
 mosaic	noun	artifact	artifact	3.58	common	n03793292	adjective:pertaining
+mosasaur	noun	creature	reptile	1.5	rare	-	-
 mosey	verb	spell	movement	2.18	uncommon	v01922176	-
 mosh	verb	spell	movement	2.66	uncommon	v01901878	-
 moshav	noun	institution	group	1.55	rare	n08243759	-
@@ -33522,6 +33579,7 @@ motorman	noun	person	person	1.99	rare	n10353968	-
 motormouth	noun	person	person	1.83	rare	n10354048	-
 motortruck	noun	artifact	vehicle_land	0.0	obscure	n04497386	-
 motorway	noun	artifact	route	3.46	common	n03311555	-
+motte	noun	artifact	structure	2.5	uncommon	-	-
 mottle	noun	aura	attribute	1.75	rare	n04966042	verb:create
 mottled	adjective	modifier	quality	2.76	uncommon	a01792782	-
 mottling	noun	event	act	1.96	rare	n00264790	-
@@ -34031,11 +34089,12 @@ nadir	noun	world_state	phenomenon	2.86	uncommon	n14510223	-
 nadolol	noun	artifact	medicine	1.32	rare	n03809851	-
 nafcillin	noun	artifact	medicine	0.0	obscure	n03810033	-
 nag	noun	creature	mammal	3.18	common	n02384856	verb:communication
+naga	noun	creature	supernatural	2.97	uncommon	-	-
 nagami	noun	flora	tree	0.0	obscure	n12734281	-
 nagger	noun	person	person	1.33	rare	n10581289	-
 nagging	adjective	modifier	quality	3.27	common	a01142110	-
 nagi	noun	flora	tree	2.17	uncommon	n11678036	-
-naiad	noun	flora	plant	1.77	rare	n12632401	-
+naiad	noun	creature	supernatural	1.77	rare	n09573572	-
 naiant	adjective	modifier	quality	0.0	obscure	a01236098	-
 naif	noun	person	person	1.97	rare	n10363852	adjective:quality
 nail	noun	artifact	weapon	4.21	core	n05589324	verb:contact
@@ -34443,6 +34502,7 @@ nepotism	noun	event	act	2.93	uncommon	n01157387	-
 nepotist	noun	person	person	0.0	obscure	n10373174	-
 neptunium	noun	material	metal	1.77	rare	n14670581	-
 nerd	noun	person	person	3.66	common	n10704113	-
+nereid	noun	creature	supernatural	1.44	rare	-	-
 nerita	noun	creature	invertebrate	1.03	rare	n01949271	-
 neritic	adjective	modifier	pertaining	1.25	rare	a02985381	-
 neritid	noun	creature	invertebrate	0.0	obscure	n01948918	-
@@ -34776,6 +34836,7 @@ nitweed	noun	flora	shrub	0.0	obscure	n12389154	-
 nitwit	noun	person	person	2.14	uncommon	n10032859	-
 nitwitted	adjective	modifier	quality	0.0	obscure	a00443382	-
 nix	noun	event	event	3.0	common	n13762308	verb:communication
+nixie	noun	creature	supernatural	1.88	rare	-	-
 nm	noun	measure	quantity	3.82	common	n13679972	-
 no	adjective	modifier	quality	6.35	core	a02276242	adverb:manner,noun:communication
 noachian	adjective	modifier	pertaining	1.21	rare	a02779622	-
@@ -35930,7 +35991,7 @@ omphalos	noun	bodypart	bodypart	1.44	rare	n05564228	-
 omphaloskepsis	noun	knowledge	knowledge	0.0	obscure	n05795853	-
 omphalus	noun	bodypart	bodypart	0.0	obscure	n05564228	-
 on	adverb	verb_modifier	manner	6.91	core	r00068768	adjective:quality
-onager	noun	artifact	device	1.4	rare	n02985366	-
+onager	noun	artifact	weapon	1.4	rare	n02985366	-
 onanism	noun	event	act	1.4	rare	n00857303	-
 onanist	noun	person	person	0.0	obscure	n10319367	-
 once	adverb	verb_modifier	manner	5.53	core	r00119765	-
@@ -36557,7 +36618,7 @@ outwards	adverb	verb_modifier	manner	2.99	uncommon	r00260109	-
 outwear	verb	spell	body	1.76	rare	v00074774	-
 outweigh	verb	spell	combat	3.27	common	v01109955	-
 outwit	verb	spell	combat	2.48	uncommon	v01107263	-
-outwork	noun	artifact	structure	1.91	rare	n03867899	-
+outwork	noun	artifact	fortification	1.91	rare	n03867899	-
 ouzel	noun	creature	bird	1.46	rare	n01561235	-
 ouzo	noun	consumable	drink	1.96	rare	n07921174	-
 oval	adjective	modifier	quality	3.98	common	a02053619	noun:shape
@@ -37747,6 +37808,7 @@ patternmaker	noun	person	person	1.25	rare	n10428554	-
 patty	noun	consumable	food	3.58	common	n07679644	-
 patzer	noun	person	person	1.35	rare	n10428684	-
 paucity	noun	aura	attribute	2.61	uncommon	n05124440	-
+pauldron	noun	artifact	protection	1.03	rare	-	-
 pauline	adjective	modifier	pertaining	3.48	common	a02786125	-
 paunch	noun	bodypart	bodypart	2.02	uncommon	n05563550	-
 paunchiness	noun	aura	attribute	0.0	obscure	n05007129	-
@@ -37941,6 +38003,7 @@ peevishness	noun	aura	feeling	1.11	rare	n07568195	-
 peewee	noun	person	person	2.4	uncommon	n10563101	-
 peewit	noun	creature	bird	0.0	obscure	n02027417	-
 peg	noun	artifact	weapon	3.49	common	n03911659	verb:social
+pegasus	noun	creature	supernatural	3.15	common	-	-
 pegboard	noun	artifact	artifact	2.01	uncommon	n03912343	-
 pegleg	noun	artifact	device	1.26	rare	n03912225	-
 pegmatite	noun	material	mineral	1.67	rare	n14956879	-
@@ -38434,6 +38497,7 @@ pervert	noun	person	person	3.32	common	n10438792	verb:social
 perverted	adjective	modifier	quality	3.19	common	a01602091	-
 pervious	adjective	modifier	quality	1.97	rare	a01777779	-
 perviousness	noun	aura	attribute	0.0	obscure	n04947907	-
+peryton	noun	creature	supernatural	0.0	obscure	-	-
 pes	noun	bodypart	bodypart	3.01	common	n05570899	-
 pesantran	noun	institution	group	0.0	obscure	n08300787	-
 pesantren	noun	institution	group	1.45	rare	n08300787	-
@@ -38473,7 +38537,7 @@ petalless	adjective	modifier	quality	0.0	obscure	a01781077	-
 petallike	adjective	modifier	quality	0.0	obscure	a01707180	-
 petaloid	adjective	modifier	pertaining	1.23	rare	a02787303	-
 petalous	adjective	modifier	quality	0.0	obscure	a01780085	-
-petard	noun	artifact	device	1.98	rare	n03925824	-
+petard	noun	artifact	weapon	1.98	rare	n03925824	-
 petchary	noun	creature	bird	0.0	obscure	n01551694	-
 petcock	noun	artifact	device	1.33	rare	n03925930	-
 petfood	noun	consumable	food	1.12	rare	n07821707	-
@@ -38777,6 +38841,7 @@ phycobilin	noun	creature	creature	0.0	obscure	n01401877	-
 phycocyanin	noun	creature	creature	1.12	rare	n01402091	-
 phycoerythrin	noun	creature	creature	1.16	rare	n01402007	-
 phycology	noun	knowledge	knowledge	1.46	rare	n06084057	-
+phylactery	noun	artifact	adornment	1.34	rare	n06869239	-
 phyle	noun	institution	group	0.0	obscure	n08390896	-
 phyletic	adjective	modifier	pertaining	1.28	rare	a02954295	-
 phylliform	adjective	modifier	quality	0.0	obscure	a02156485	-
@@ -38952,7 +39017,8 @@ pigweed	noun	flora	herb	1.4	rare	n11849046	-
 pika	noun	creature	mammal	2.57	uncommon	n02331081	-
 pike	noun	creature	fish	3.68	common	n02563739	-
 pikeblenny	noun	creature	fish	0.0	obscure	n02617112	-
-pikestaff	noun	artifact	tool	1.04	rare	n03942065	-
+pikeman	noun	person	person	1.13	rare	-	-
+pikestaff	noun	artifact	weapon	1.04	rare	n03942065	-
 pilaf	noun	consumable	food	2.17	uncommon	n07889440	-
 pilaff	noun	consumable	food	0.0	obscure	n07889440	-
 pilar	adjective	modifier	pertaining	2.82	uncommon	a02789246	-
@@ -38997,6 +39063,7 @@ pilothouse	noun	artifact	structure	1.69	rare	n03945953	-
 piloting	noun	event	act	3.02	common	n00817462	-
 pilotless	adjective	modifier	quality	1.74	rare	a01483387	-
 pilous	adjective	modifier	quality	0.0	obscure	a00216679	-
+pilum	noun	artifact	weapon	1.29	rare	-	-
 pilus	noun	bodypart	bodypart	1.48	rare	n05261857	-
 pimento	noun	flora	shrub	2.2	uncommon	n12922024	-
 pimiento	noun	flora	shrub	1.48	rare	n12922024	-
@@ -39688,8 +39755,8 @@ polarographic	adjective	modifier	pertaining	0.0	obscure	a02792231	-
 polarography	noun	event	act	0.0	obscure	n00648390	-
 polder	noun	terrain	natural_object	1.85	rare	n09419876	-
 pole	noun	artifact	tool	4.23	core	n03983015	verb:contact
-poleax	noun	artifact	tool	0.0	obscure	n03983788	verb:contact
-poleaxe	noun	artifact	tool	1.14	rare	n03983788	verb:contact
+poleax	noun	artifact	weapon	0.0	obscure	n03983788	verb:contact
+poleaxe	noun	artifact	weapon	1.14	rare	n03983788	verb:contact
 polecat	noun	creature	mammal	2.01	uncommon	n02448346	-
 polemic	noun	person	person	2.64	uncommon	n10468244	adjective:quality
 polemical	adjective	modifier	quality	2.49	uncommon	a00605207	-
@@ -39904,6 +39971,7 @@ pooch	noun	creature	mammal	2.97	uncommon	n02087384	verb:transform
 pood	noun	measure	quantity	1.34	rare	n13740943	-
 poodle	noun	creature	mammal	3.02	common	n02115987	-
 poof	noun	person	person	2.94	uncommon	n10095821	-
+pooka	noun	creature	supernatural	1.73	rare	-	-
 pool	noun	terrain	water	4.67	core	n09420266	verb:transfer
 pooler	noun	person	person	1.86	rare	n10472617	-
 poolroom	noun	artifact	structure	1.4	rare	n03988689	-
@@ -41396,6 +41464,7 @@ psyllid	noun	creature	insect	1.57	rare	n02258824	-
 psyllium	noun	flora	herb	1.91	rare	n12620635	-
 psyop	noun	event	act	2.07	uncommon	n00986068	-
 ptarmigan	noun	creature	bird	2.05	uncommon	n01798981	-
+pteranodon	noun	creature	reptile	1.64	rare	-	-
 pteridological	adjective	modifier	pertaining	0.0	obscure	a02774080	-
 pteridologist	noun	person	person	0.0	obscure	n10509915	-
 pteridology	noun	knowledge	knowledge	0.0	obscure	n06084163	-
@@ -41822,6 +41891,7 @@ qat	noun	artifact	medicine	1.86	rare	n03614083	-
 qatari	adjective	modifier	pertaining	2.91	uncommon	a03119053	noun:person
 qepiq	noun	measure	quantity	0.0	obscure	n13721941	-
 qibla	noun	terrain	place	1.92	rare	n08699387	-
+qilin	noun	creature	supernatural	1.36	rare	-	-
 qindarka	noun	measure	quantity	0.0	obscure	n13706840	-
 qintar	noun	measure	quantity	0.0	obscure	n13706840	-
 quack	noun	person	person	3.06	common	n10516787	adjective:quality,verb:body
@@ -41924,7 +41994,7 @@ quarterly	adjective	modifier	pertaining	3.99	common	a03009554	adverb:manner,noun
 quartermaster	noun	person	worker	3.04	common	n10518571	-
 quartern	noun	measure	quantity	0.0	obscure	n13759620	-
 quarters	noun	terrain	place	4.23	core	n03684710	-
-quarterstaff	noun	artifact	tool	1.51	rare	n04038985	-
+quarterstaff	noun	artifact	weapon	1.51	rare	n04038985	-
 quartervine	noun	flora	plant	0.0	obscure	n12834763	-
 quartet	noun	institution	group	3.54	common	n08264172	-
 quartette	noun	institution	group	1.59	rare	n08264172	-
@@ -42284,6 +42354,7 @@ rakehell	noun	person	person	0.0	obscure	n10525535	-
 rakish	adjective	modifier	quality	2.01	uncommon	a00975112	-
 rakishly	adverb	verb_modifier	manner	1.28	rare	r00222610	-
 rakishness	noun	aura	attribute	0.0	obscure	n04892190	-
+rakshasa	noun	creature	supernatural	1.74	rare	-	-
 rale	noun	event	event	1.65	rare	n07405840	-
 rallentando	adjective	modifier	quality	0.0	obscure	a02549225	adverb:manner
 rally	noun	event	ceremony	4.34	core	n08375259	verb:contact
@@ -42492,6 +42563,7 @@ ravaging	noun	event	act	2.49	uncommon	n00969261	adjective:quality
 rave	noun	event	act	3.52	common	n07464276	verb:social
 ravehook	noun	artifact	tool	0.0	obscure	n04063711	-
 ravel	noun	event	event	2.71	uncommon	n07457610	verb:contact
+ravelin	noun	artifact	fortification	1.29	rare	-	-
 raveling	noun	material	material	1.42	rare	n15027526	-
 ravelling	noun	material	material	0.0	obscure	n15027526	-
 raven	noun	creature	bird	3.79	common	n01581901	verb:contact
@@ -42858,7 +42930,7 @@ redbrick	adjective	modifier	quality	1.89	rare	a01540540	-
 redbrush	noun	flora	tree	0.0	obscure	n12968304	-
 redbud	noun	flora	tree	1.78	rare	n12534438	-
 redbug	noun	creature	invertebrate	0.0	obscure	n01783712	-
-redcap	noun	person	person	1.77	rare	n10533102	-
+redcap	noun	creature	supernatural	1.77	rare	n10533102	-
 redcoat	noun	person	worker	1.85	rare	n10049710	-
 redden	verb	spell	body	2.29	uncommon	v00103071	-
 reddened	adjective	modifier	quality	2.13	uncommon	a00396687	-
@@ -43869,7 +43941,7 @@ reverting	noun	event	act	2.9	uncommon	n00069153	adjective:quality
 revery	noun	knowledge	knowledge	1.1	rare	n05708758	-
 revet	verb	spell	contact	0.0	obscure	v01274222	-
 revetement	noun	artifact	protection	0.0	obscure	n04092985	-
-revetment	noun	artifact	structure	1.55	rare	n04093178	-
+revetment	noun	artifact	fortification	1.55	rare	n04093178	-
 review	noun	knowledge	knowledge	5.12	core	n05755527	verb:cognition
 reviewer	noun	person	person	3.47	common	n10546502	-
 revise	verb	spell	social	3.48	common	v00998147	noun:communication
@@ -44904,7 +44976,8 @@ salivate	verb	spell	body	2.12	uncommon	v00102545	-
 sallet	noun	artifact	protection	1.26	rare	n04137990	-
 sallow	noun	flora	tree	2.16	uncommon	n12748061	adjective:quality,verb:transform
 sallowness	noun	aura	attribute	0.0	obscure	n04985213	-
-sally	noun	event	conflict	3.97	common	n00973413	-
+sally	noun	event	act	3.97	common	n00803627	-
+sallyport	noun	artifact	structure	0.0	obscure	-	-
 salmagundi	noun	institution	group	1.56	rare	n08415730	-
 salmi	noun	consumable	food	1.59	rare	n07608493	-
 salmon	noun	creature	fish	4.01	core	n02537365	adjective:quality
@@ -45170,6 +45243,7 @@ sash	noun	artifact	adornment	3.23	common	n04143593	-
 sashay	noun	event	travel	2.07	uncommon	n00312635	verb:movement
 sashimi	noun	consumable	food	2.61	uncommon	n07895326	-
 saskatoon	noun	flora	produce	2.92	uncommon	n07761637	-
+sasquatch	noun	creature	supernatural	2.68	uncommon	-	-
 sassaby	noun	creature	mammal	0.0	obscure	n02425037	-
 sassafras	noun	flora	tree	2.32	uncommon	n11727698	-
 sassy	adjective	modifier	quality	3.21	common	a00206887	-
@@ -45791,6 +45865,7 @@ scut	noun	bodypart	bodypart	1.75	rare	n02161391	-
 scutcheon	noun	artifact	protection	0.0	obscure	n03347207	-
 scute	noun	creature	creature	1.59	rare	n01905987	-
 scuttle	noun	artifact	container	2.69	uncommon	n04165063	verb:movement
+scylla	noun	creature	supernatural	2.45	uncommon	-	-
 scyphozoan	noun	creature	invertebrate	0.0	obscure	n01913704	-
 scyphus	noun	artifact	container	0.0	obscure	n04165199	-
 scythe	noun	artifact	tool	2.78	uncommon	n04165311	verb:contact
@@ -46057,6 +46132,7 @@ selflessness	noun	aura	attribute	2.62	uncommon	n04840507	-
 selfsame	adjective	modifier	quality	1.91	rare	a02076350	-
 selfsameness	noun	aura	attribute	0.0	obscure	n04750726	-
 seljuk	adjective	modifier	pertaining	1.95	rare	a02981905	noun:group
+selkie	noun	creature	supernatural	1.84	rare	-	-
 sell	verb	spell	transfer	4.98	core	v02247246	noun:exchange
 sellable	adjective	modifier	quality	1.99	rare	a02069537	-
 seller	noun	person	person	4.01	core	n10596736	-
@@ -47255,6 +47331,7 @@ simultaneity	noun	aura	attribute	1.95	rare	n05055274	-
 simultaneous	adjective	modifier	quality	3.53	common	a02387064	-
 simultaneously	adverb	verb_modifier	manner	4.17	core	r00120979	-
 simultaneousness	noun	aura	attribute	0.0	obscure	n05055274	-
+simurgh	noun	creature	supernatural	1.44	rare	-	-
 simvastatin	noun	artifact	medicine	1.98	rare	n04229061	-
 sin	noun	aura	attribute	4.37	core	n04835188	verb:social
 sinapism	noun	artifact	artifact	0.0	obscure	n03808340	-
@@ -47454,7 +47531,7 @@ skipjack	noun	creature	fish	2.04	uncommon	n02631230	-
 skipper	noun	person	worker	3.54	common	n10318579	verb:social
 skirl	noun	event	event	1.31	rare	n07408588	verb:perceive
 skirmish	noun	event	act	3.06	common	n00961487	verb:combat
-skirmisher	noun	person	fighter	1.59	rare	n10625256	-
+skirmisher	noun	person	person	1.59	rare	n10625256	-
 skirret	noun	flora	plant	0.0	obscure	n12966309	-
 skirt	noun	artifact	artifact	3.96	common	n04238334	verb:movement
 skirting	adjective	modifier	quality	2.78	uncommon	a00332989	-
@@ -47639,7 +47716,7 @@ sling	noun	consumable	drink	3.34	common	n07933858	verb:contact
 slingback	noun	artifact	artifact	1.53	rare	n04246893	-
 slinger	noun	person	person	2.36	uncommon	n10631504	-
 slinging	noun	event	act	2.78	uncommon	n00107836	-
-slingshot	noun	artifact	toy	2.95	uncommon	n04247204	-
+slingshot	noun	artifact	weapon	2.95	uncommon	n04247204	-
 slink	verb	spell	movement	2.38	uncommon	v01921116	-
 slip	verb	spell	movement	4.28	core	v01892288	noun:material
 slipcover	noun	artifact	artifact	1.83	rare	n04247880	-
@@ -47796,6 +47873,7 @@ smiler	noun	person	person	2.13	uncommon	n10633879	-
 smiling	adjective	modifier	quality	4.15	core	a00364111	noun:communication
 smilingly	adverb	verb_modifier	manner	1.74	rare	r00461334	-
 smilo	noun	flora	herb	0.0	obscure	n12147253	-
+smilodon	noun	creature	mammal	1.47	rare	-	-
 smirch	noun	aura	attribute	1.16	rare	n04701789	verb:contact
 smirk	verb	spell	body	3.04	common	v00029329	noun:communication
 smirker	noun	person	person	0.0	obscure	n10634023	-
@@ -48364,7 +48442,7 @@ sorry	adjective	modifier	quality	5.18	core	a01153978	-
 sort	noun	knowledge	knowledge	5.0	core	n05847533	verb:social
 sorted	adjective	modifier	quality	3.83	common	a02232367	-
 sorter	noun	person	worker	2.29	uncommon	n10646229	-
-sortie	noun	event	conflict	2.61	uncommon	n00973413	-
+sortie	noun	event	act	2.61	uncommon	n00973413	-
 sorting	noun	knowledge	knowledge	3.61	common	n05740701	-
 sortition	noun	event	act	1.19	rare	n00180903	-
 sorus	noun	flora	plant	0.0	obscure	n13115032	-
@@ -48798,6 +48876,7 @@ spinnbarkeit	noun	aura	attribute	0.0	obscure	n04728155	-
 spinner	noun	person	worker	3.36	common	n10655738	-
 spinney	noun	institution	group	1.99	rare	n08454960	-
 spinning	noun	event	act	3.98	common	n00910891	-
+spinosaurus	noun	creature	reptile	2.03	uncommon	-	-
 spinose	adjective	modifier	quality	1.26	rare	a02255755	-
 spinous	adjective	modifier	quality	1.77	rare	a02286487	-
 spinster	noun	person	person	2.69	uncommon	n10655886	-
@@ -48946,6 +49025,7 @@ spontaneity	noun	aura	attribute	2.85	uncommon	n04793991	-
 spontaneous	adjective	modifier	quality	3.71	common	a02290110	-
 spontaneously	adverb	verb_modifier	manner	3.34	common	r00193599	-
 spontaneousness	noun	aura	attribute	0.0	obscure	n04793991	-
+spontoon	noun	artifact	weapon	0.0	obscure	-	-
 spook	noun	person	person	2.88	uncommon	n09996447	verb:emotion
 spookily	adverb	verb_modifier	manner	1.61	rare	r00327195	-
 spooky	adjective	modifier	quality	3.53	common	a00922269	-
@@ -49025,6 +49105,7 @@ sprightliness	noun	aura	attribute	1.09	rare	n04639514	-
 sprightly	adjective	modifier	quality	2.49	uncommon	a02288555	-
 sprigtail	noun	creature	bird	0.0	obscure	n01800809	-
 spring	noun	world_state	season	4.92	core	n15261841	verb:movement
+springald	noun	artifact	weapon	0.0	obscure	-	-
 springboard	noun	artifact	artifact	2.99	uncommon	n04295811	-
 springbok	noun	creature	mammal	2.56	uncommon	n02426235	-
 springbuck	noun	creature	mammal	0.0	obscure	n02426235	-
@@ -50792,7 +50873,7 @@ sura	noun	bodypart	bodypart	2.56	uncommon	n05581963	-
 surbase	noun	artifact	artifact	0.0	obscure	n04368888	-
 surcease	noun	event	event	1.42	rare	n07376675	-
 surcharge	noun	event	exchange	3.12	common	n13346527	verb:transfer
-surcoat	noun	artifact	clothing	1.38	rare	n04370864	-
+surcoat	noun	artifact	protection	1.38	rare	n04370864	-
 surd	adjective	modifier	quality	1.46	rare	a02294026	noun:communication
 sure	adjective	modifier	quality	5.67	core	a00337729	adverb:manner
 surefooted	adjective	modifier	quality	1.38	rare	a02310622	-
@@ -51060,6 +51141,7 @@ swordlike	adjective	modifier	quality	0.0	obscure	a02175805	-
 swordplay	noun	event	act	2.16	uncommon	n00042206	-
 swordsman	noun	person	fighter	2.83	uncommon	n10104986	-
 swordsmanship	noun	knowledge	knowledge	2.24	uncommon	n05648184	-
+swordsmith	noun	person	worker	1.54	rare	-	-
 swordtail	noun	creature	fish	0.0	obscure	n01450932	-
 sworn	adjective	modifier	quality	3.9	common	a00520474	-
 swosh	verb	spell	perceive	0.0	obscure	v02192644	-
@@ -51086,7 +51168,7 @@ syllogism	noun	knowledge	knowledge	2.12	uncommon	n05787113	-
 syllogist	noun	person	person	0.0	obscure	n10704606	-
 syllogistic	adjective	modifier	pertaining	1.6	rare	a02921957	-
 syllogizer	noun	person	person	0.0	obscure	n10704606	-
-sylph	noun	person	person	1.98	rare	n10704881	-
+sylph	noun	creature	supernatural	1.98	rare	n10704783	-
 sylphic	adjective	modifier	quality	0.0	obscure	a00994908	-
 sylphlike	adjective	modifier	quality	0.0	obscure	a00994908	-
 sylva	noun	terrain	landform	2.08	uncommon	n09458309	-
@@ -51258,7 +51340,7 @@ systole	noun	event	event	1.77	rare	n07416009	-
 systolic	adjective	modifier	pertaining	2.72	uncommon	a03133664	-
 syzygy	noun	world_state	phenomenon	1.69	rare	n11538763	-
 tab	noun	artifact	document	3.96	common	n06529933	-
-tabard	noun	artifact	clothing	2.08	uncommon	n04385576	-
+tabard	noun	artifact	protection	2.08	uncommon	n04385576	-
 tabasco	noun	flora	produce	2.63	uncommon	n07737797	-
 tabbouleh	noun	consumable	food	1.63	rare	n07824880	-
 tabby	noun	creature	mammal	2.79	uncommon	n02125697	adjective:quality
@@ -51549,6 +51631,7 @@ tar	noun	material	material	3.63	common	n14935855	verb:contact
 tarantella	noun	event	act	1.8	rare	n00534842	-
 tarantelle	noun	event	act	0.0	obscure	n00534842	-
 tarantula	noun	creature	invertebrate	2.72	uncommon	n01778011	-
+tarasque	noun	creature	supernatural	0.0	obscure	-	-
 tarboosh	noun	artifact	clothing	0.0	obscure	n03336022	-
 tardigrade	noun	creature	invertebrate	1.64	rare	n01786934	-
 tardily	adverb	verb_modifier	manner	1.26	rare	r00162829	-
@@ -51556,6 +51639,7 @@ tardiness	noun	event	event	2.43	uncommon	n05055107	-
 tardive	adjective	modifier	quality	1.85	rare	a00823278	-
 tardy	adjective	modifier	quality	2.69	uncommon	a01907298	-
 tare	noun	institution	possession	2.33	uncommon	n13296160	-
+targe	noun	artifact	protection	1.78	rare	-	-
 target	noun	event	event	4.82	core	n07276776	verb:combat
 tariff	noun	institution	possession	3.49	common	n13337021	verb:transfer
 tarmac	noun	material	material	3.04	common	n15001747	verb:contact
@@ -51941,6 +52025,7 @@ tenebrous	adjective	modifier	quality	1.44	rare	a00277221	-
 tenement	noun	artifact	building	2.86	uncommon	n04416519	-
 tenfold	adjective	modifier	quality	2.8	uncommon	a02228065	adverb:manner
 tenge	noun	measure	quantity	1.86	rare	n13725036	-
+tengu	noun	creature	supernatural	2.19	uncommon	-	-
 tenia	noun	artifact	artifact	1.47	rare	n04390783	-
 tenner	noun	artifact	currency	2.61	uncommon	n13416580	-
 tennis	noun	event	contest	4.35	core	n00483309	-
@@ -53519,6 +53604,7 @@ tread	noun	artifact	artifact	3.52	common	n04484326	verb:movement
 treadle	noun	artifact	tool	1.89	rare	n03909502	verb:movement
 treadmill	noun	artifact	device	3.35	common	n04484622	-
 treadwheel	noun	artifact	machine	0.0	obscure	n04484454	-
+treant	noun	creature	supernatural	1.05	rare	-	-
 treason	noun	event	crime	3.84	common	n00783726	-
 treasonable	adjective	modifier	quality	1.98	rare	a00966128	-
 treasonably	adverb	verb_modifier	manner	0.0	obscure	r00337533	-
@@ -53535,7 +53621,7 @@ treater	noun	person	person	1.68	rare	n10371605	-
 treatment	noun	aura	attribute	5.01	core	n04937153	-
 treaty	noun	institution	possession	4.31	core	n06786235	-
 treble	adjective	modifier	quality	3.33	common	a01217513	noun:attribute,verb:transform
-trebuchet	noun	artifact	device	2.07	uncommon	n02985366	-
+trebuchet	noun	artifact	weapon	2.07	uncommon	n02985366	-
 trebucket	noun	artifact	device	0.0	obscure	n02985366	-
 tree	noun	flora	tree	4.85	core	n13124818	verb:movement
 treed	adjective	modifier	quality	1.92	rare	a01068602	-
@@ -54208,6 +54294,7 @@ typeset	verb	spell	create	2.21	uncommon	v01748696	-
 typesetter	noun	person	worker	1.89	rare	n09969425	-
 typewriter	noun	artifact	device	3.26	common	n04512331	-
 typhoid	noun	affliction	affliction	2.94	uncommon	n14167898	-
+typhon	noun	creature	supernatural	2.14	uncommon	-	-
 typhoon	noun	world_state	weather	3.59	common	n11541578	-
 typhus	noun	affliction	affliction	2.76	uncommon	n14164544	-
 typic	adjective	modifier	quality	1.46	rare	a02478360	-
@@ -54894,6 +54981,7 @@ underlying	adjective	modifier	quality	4.17	core	a00945209	-
 undermanned	adjective	modifier	quality	2.1	uncommon	a00052671	-
 undermentioned	adjective	modifier	quality	1.21	rare	a00128705	-
 undermine	verb	spell	social	3.65	common	v02549304	-
+undermining	noun	event	act	3.32	common	-	-
 underneath	adverb	verb_modifier	manner	4.08	core	r00489821	-
 undernourish	verb	spell	consume	0.0	obscure	v01181573	-
 undernourished	adjective	modifier	quality	2.29	uncommon	a02308861	-
@@ -57655,6 +57743,7 @@ vouchee	noun	person	person	0.0	obscure	n10780290	-
 voucher	noun	person	person	3.47	common	n10780431	-
 vouchsafe	verb	spell	transfer	1.73	rare	v02260523	-
 vouge	noun	artifact	weapon	0.0	obscure	n04549507	-
+voulge	noun	artifact	weapon	0.0	obscure	-	-
 voussoir	noun	artifact	artifact	0.0	obscure	n04549615	-
 vowellike	adjective	modifier	quality	0.0	obscure	a02295242	-
 vower	noun	person	person	0.0	obscure	n10780619	-
@@ -57840,6 +57929,7 @@ warehouser	noun	person	worker	0.0	obscure	n10787187	-
 warehousing	noun	event	act	2.97	uncommon	n00373415	-
 warfare	noun	event	conflict	4.05	core	n00975181	-
 warfarin	noun	artifact	medicine	2.64	uncommon	n04558491	-
+warhammer	noun	artifact	weapon	2.74	uncommon	-	-
 warhead	noun	artifact	artifact	3.03	common	n04558661	-
 warhorse	noun	artifact	artifact	2.22	uncommon	n04558924	-
 warily	adverb	verb_modifier	manner	2.39	uncommon	r00227750	-
@@ -58159,6 +58249,7 @@ welwitschia	noun	flora	plant	1.2	rare	n11619775	-
 wench	noun	person	person	2.67	uncommon	n10008583	verb:contact
 wencher	noun	person	person	0.0	obscure	n10793891	-
 wend	verb	spell	movement	2.12	uncommon	v01845289	-
+wendigo	noun	creature	supernatural	2.15	uncommon	-	-
 werewolf	noun	creature	supernatural	3.33	common	n09526253	-
 wesleyan	adjective	modifier	pertaining	3.05	common	a02967108	noun:person
 west	noun	terrain	place	5.29	core	n08579372	adjective:quality,adverb:manner
@@ -58913,6 +59004,7 @@ wryneck	noun	creature	bird	1.35	rare	n01844320	-
 wulfenite	noun	material	mineral	0.0	obscure	n15130300	-
 wurtzite	noun	material	mineral	1.32	rare	n15130416	-
 wuss	noun	person	person	2.49	uncommon	n10791304	-
+wyrm	noun	creature	supernatural	1.7	rare	-	-
 wysiwyg	adjective	modifier	pertaining	2.1	uncommon	a03156813	-
 wyvern	noun	creature	supernatural	2.31	uncommon	n09526618	-
 xanthate	noun	material	material	1.14	rare	n15137395	-
@@ -59121,6 +59213,7 @@ youth	noun	person	person	4.75	core	n10824010	-
 youthful	adjective	modifier	quality	3.58	common	a01654162	-
 youthfully	adverb	verb_modifier	manner	1.39	rare	r00499860	-
 youthfulness	noun	aura	attribute	2.21	uncommon	n04935762	-
+yowie	noun	creature	supernatural	1.47	rare	-	-
 ytterbite	noun	material	mineral	0.0	obscure	n14699730	-
 ytterbium	noun	material	metal	1.79	rare	n14685661	-
 yttrium	noun	material	metal	2.14	uncommon	n14685919	-
@@ -59207,6 +59300,7 @@ zit	noun	affliction	affliction	2.4	uncommon	n14357711	-
 zither	noun	artifact	instrument	2.01	uncommon	n04622583	-
 zithern	noun	artifact	instrument	0.0	obscure	n04622583	-
 ziti	noun	consumable	food	1.99	rare	n07716000	-
+ziz	noun	creature	supernatural	1.57	rare	-	-
 zizz	noun	event	event	0.0	obscure	n07494939	-
 zloty	noun	measure	quantity	2.05	uncommon	n13732882	-
 zodiac	noun	knowledge	knowledge	3.41	common	n08702926	-
