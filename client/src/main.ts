@@ -16,7 +16,7 @@ import { KitView } from "./kits.js";
 import { Hud, type Aimed } from "./hud.js";
 import { Minimap } from "./minimap.js";
 import { pad, type Pad } from "./pad.js";
-import { connect, type Connection, type Described, type Got, type Hit } from "./net.js";
+import { connect, type Connection, type Described, type Entrance, type Got, type Hit } from "./net.js";
 import { Threats } from "./threats.js";
 import { Painter, PX, useMade, useStandee, ZOOM } from "./paint.js";
 import { Sky } from "./sky.js";
@@ -24,6 +24,17 @@ import { Zones } from "./zones.js";
 
 /** The fog canvas's size, and the radius of its clear middle, in canvas pixels. */
 const FOG_SIZE = 512, FOG_CLEAR = 100;
+
+/** A pile is whatever stands within this many tiles of its first; its creatures fan out this far apart (tiles). */
+const FAN_NEAR = 1.5, FAN_STEP = 0.6;
+/** How many tags' heights a tag may slide down out of a pile before it is hidden instead. */
+const MAX_SLIDE = 2.5;
+
+/** Seconds between two map-wide calls of other people's grand words. */
+const CALL_GAP = 4;
+
+/** Text safe to put in HTML. */
+const esc = (t: string) => t.replace(/[&<>"]/g, (c) => `&#${c.charCodeAt(0)};`);
 
 /** Device pixels per CSS pixel the game draws at (sharp on high-density screens, capped for speed). */
 const DPR = Math.min(2, Math.max(1, window.devicePixelRatio || 1));
@@ -127,6 +138,14 @@ class World extends Phaser.Scene {
   private threats = new Map<string, number>();
   /** Something nobody owns that a click asked to claim: walk to it, then take it. */
   private claiming: string | null = null;
+  /** A chest, the temple or a market a click asked for: walk to it, then dig, pray or trade. */
+  private visiting: { id: string; act: "gather" | "trade" } | null = null;
+  /** Tags never hidden in a pile: people's and bosses', this frame. */
+  private keepTags = new Set<Phaser.GameObjects.Image>();
+  /** Whose tag each tag is, to hide its badges with it. */
+  private tagOwner = new WeakMap<Phaser.GameObjects.Image, View>();
+  /** The last entrance called out on screen (scene time), so bots' grand words do not drown each other. */
+  private lastCall = -1e9;
   /** What is coming for you, from the server (arrows at the screen's edge for what is off screen). */
   private threatList = new Threats();
   /** Whether a person's gear text has them flying (riding something with air speed), by gear text. */
@@ -232,6 +251,7 @@ class World extends Phaser.Scene {
           this.kits.announce(call, call.name === this.net?.state.players.get(this.net.sessionId)?.name);
           this.cameras.main.shake(call.spelled ? 700 : 450, call.spelled ? 0.012 : 0.006);
         },
+        entrance: (e) => this.entrance(e),
         dropped: () => this.hud.toast("Connection lost: reconnecting…", "bad"),
         reconnected: () => this.hud.toast("Reconnected", "good"),
         notice: (text) => { const t = terse("notice", text); if (t) this.hud.toast(t, "good"); },
@@ -309,12 +329,16 @@ class World extends Phaser.Scene {
       let hit: string | null = null;
       const mine = this.net.sessionId;
       let claim: string | null = null;
+      let site: { id: string; act: "gather" | "trade" } | null = null;
+      this.visiting = null;
       this.net.state.things.forEach((thing: any, id: string) => {
         const land = dictionary.word(lookOf(dictionary, thing.phrase).noun)?.set.tile_type;
         if (thing.owner === mine || land || Math.hypot(thing.x - x, thing.y - y) >= 0.6) return;
         // Nobody's (a RUIN, something dropped): walk over and claim it. Shift-click attacks it instead.
-        if (!thing.owner && !thing.fixture?.match(/market|temple|chest/) && !(p.event as MouseEvent).shiftKey) { claim = id; hit = null; }
-        else { hit = id; claim = null; }
+        // A chest, the temple or a market: walk there, then dig, pray or trade (`visiting`).
+        if (/market|temple|chest/.test(thing.fixture ?? "")) { site = { id, act: thing.fixture === "market" ? "trade" : "gather" }; hit = null; claim = null; }
+        else if (!thing.owner && !(p.event as MouseEvent).shiftKey) { claim = id; hit = null; site = null; }
+        else { hit = id; claim = null; site = null; }
       });
       // A person or creature is hit anywhere on its standee (its drawn bounds), not only at its feet;
       // of several, the one drawn in front.
@@ -322,8 +346,19 @@ class World extends Phaser.Scene {
       this.net.state.players.forEach((other: any, id: string) => {
         if (id === mine || other.owner === mine) return;
         const depth = this.onStandee(id, at.x, at.y) ?? (Math.hypot(other.x - x, other.y - y) < 0.8 ? -1e6 : null);
-        if (depth !== null && depth > front) { front = depth; hit = id; claim = null; }
+        // A click on a market crowded with citizens is for the market; on a person there, for them.
+        if (site && other.owner !== "") return;
+        if (depth !== null && depth > front) { front = depth; hit = id; claim = null; site = null; }
       });
+      if (site) {
+        const t = this.net.state.things.get((site as { id: string }).id);
+        this.visiting = site;
+        this.foe = null;
+        this.net.attack(null);
+        this.gathering = null;
+        this.net.move(t.x, t.y);
+        return;
+      }
       if (claim) {
         const t = this.net.state.things.get(claim);
         this.claiming = claim;
@@ -433,6 +468,49 @@ class World extends Phaser.Scene {
     label.setAlpha(0).setAngle(-2);
     this.tweens.add({ targets: label, y: y - 44, alpha: 1, duration: 450, ease: "Back.easeOut" });
     this.tweens.add({ targets: label, y: y - 64, alpha: 0, delay: 3400, duration: 700, onComplete: () => label.destroy() });
+  }
+
+  /**
+   * A grand spelling somewhere (a DRAGON, a GIANT, a METEOR; shared `grand`): a map-wide call
+   * naming who and what, yours too. In sight it also shakes the camera, harder the grander, and
+   * the word stands up full size where it was made for a moment, with a burst of paper, before
+   * the world draws it as usual. Calls from others come at most every CALL_GAP seconds.
+   */
+  private entrance(e: Entrance) {
+    const me = this.net.state.players.get(this.net.sessionId), mine = e.name === me?.name;
+    const near = me && Math.hypot(e.x - me.x, e.y - me.y) <= this.sightTiles + 4;
+    const now = this.time.now;
+    const legend = document.getElementById("legendcall")?.classList.contains("show");
+    if ((mine || now - this.lastCall > CALL_GAP * 1000) && !legend && !this.kits.choosing) {
+      this.lastCall = now;
+      const el = document.getElementById("bigcast") ?? Object.assign(document.body.appendChild(document.createElement("div")), { id: "bigcast" });
+      const what = e.kind === "event" ? "brought down" : e.kind === "object" ? "spelled" : "called up";
+      el.innerHTML = `<small>${mine ? "you" : esc(e.name)} ${what}</small><b>${esc(e.word.toUpperCase())}</b>`;
+      el.className = "";
+      void el.offsetWidth; // restart the animation
+      el.className = "show";
+    }
+    if (!near && !mine) return;
+    const k = Math.min(1, Math.log10(Math.max(10, e.grandeur)) / 6);
+    this.cameras.main.shake(350 + 500 * k, 0.004 + 0.012 * k);
+    const x = e.x * PX, y = e.y * PX;
+    // A ring of gold paper and a flash where it lands.
+    const ring = this.add.image(x, y, "__WHITE").setDepth(12001);
+    useMade(ring, this.paint.ring(40), DPR);
+    ring.setTint(0xd9573b);
+    const base = ring.scaleX;
+    ring.setScale(base * 0.3);
+    this.tweens.add({ targets: ring, scaleX: base * 3.2, scaleY: base * 3.2, alpha: 0, duration: 1100, ease: "Cubic.easeOut", onComplete: () => ring.destroy() });
+    const flash = this.add.circle(x, y, 26, 0xfff3c4, 0.85).setDepth(12000);
+    this.tweens.add({ targets: flash, scale: 3.5, alpha: 0, duration: 600, ease: "Quad.easeOut", onComplete: () => flash.destroy() });
+    // The word itself, full size, rising out of the ground and settling, then fading into its standee.
+    const look = lookOf(dictionary, e.word.toLowerCase());
+    const reveal = this.add.image(x, y, "__WHITE").setDepth(12002);
+    useStandee(reveal, this.paint.standee(look));
+    const s = reveal.scaleX;
+    reveal.setScale(s * 0.2).setAlpha(0.2);
+    this.tweens.add({ targets: reveal, scaleX: s * 1.25, scaleY: s * 1.25, alpha: 1, duration: 420, ease: "Back.easeOut" });
+    this.tweens.add({ targets: reveal, scaleX: s, scaleY: s, alpha: 0, delay: 1300, duration: 700, ease: "Quad.easeIn", onComplete: () => reveal.destroy() });
   }
 
   /**
@@ -940,6 +1018,7 @@ class World extends Phaser.Scene {
         flashUntil: 0, shakeUntil: 0, barUntil: 0, crit: false, lungeUntil: 0, lungeTo: null,
       };
       this.views.set(id, v);
+      this.tagOwner.set(v.tag, v);
     }
     return v;
   }
@@ -947,7 +1026,7 @@ class World extends Phaser.Scene {
   /** Redraws a standee when what it is changes: its look, what it holds, its statuses. */
   private dress(v: View, look: Look, held: string | undefined, statuses: string[], ride?: string) {
     const shrink = statuses.includes("shrink");
-    const key = `${look.noun}|${look.colour}|${look.scale}|${look.count}|${held ?? ""}|${ride ?? ""}|${statuses.includes("burn")}|${shrink}|${look.burning}|${look.frozen}|${look.invisible}|${rasterOf(look.noun) ? 1 : 0}`;
+    const key = `${look.noun}|${look.colour}|${look.scale}|${look.count}|${held ?? ""}|${ride ?? ""}|${statuses.includes("burn")}|${shrink}|${look.burning}|${look.frozen}|${look.invisible}|${rasterOf(look.noun) ? 1 : 0}|${ride && rasterOf(lookOf(dictionary, ride).noun) ? 1 : 0}`;
     if (key !== v.drawn) {
       v.drawn = key;
       const shown: Look = shrink ? { ...look, scale: look.scale * 0.55 } : look;
@@ -1044,21 +1123,72 @@ class World extends Phaser.Scene {
     this.views.delete(id);
   }
 
-  /** Tags that would overlap slide down under each other, nearest the top first. */
+  /**
+   * Tags that would overlap slide down under each other: people's and bosses' first, then the
+   * rest nearest the top first. A tag that would slide more than MAX_SLIDE tags from its owner is
+   * hidden instead, so a crowd's tags do not pile into a column over the fight.
+   */
   private unstackTags() {
-    const tags = [...this.zoneView.tags(), ...[...this.views.values()].map((v) => v.tag)].sort((a, b) => a.y - b.y);
+    for (const t of this.zoneView.tags()) this.keepTags.add(t); // areas' tags are not hidden here
+    const all = [...this.zoneView.tags(), ...[...this.views.values()].map((v) => v.tag)].filter((t) => t.visible);
+    const tags = all.sort((a, b) => Number(this.keepTags.has(b)) - Number(this.keepTags.has(a)) || a.y - b.y);
     const placed: { x0: number; x1: number; y0: number; y1: number }[] = [];
     for (const t of tags) {
       const w = t.displayWidth * 0.86, h = t.displayHeight * 0.62;
-      let y = t.y;
+      const y0 = t.y;
+      let y = y0;
       for (let pass = 0; pass < 8; pass++) {
         const hit = placed.find((r) => t.x + w / 2 > r.x0 && t.x - w / 2 < r.x1 && y + h / 2 > r.y0 && y - h / 2 < r.y1);
         if (!hit) break;
         y = hit.y1 + h / 2;
       }
+      if (y - y0 > h * MAX_SLIDE && !this.keepTags.has(t)) { t.setVisible(false); this.tagOwner.get(t)?.badges.forEach((b) => b.setVisible(false)); continue; }
       t.y = y;
       placed.push({ x0: t.x - w / 2, x1: t.x + w / 2, y0: y - h / 2, y1: y + h / 2 });
     }
+  }
+
+  /**
+   * Creatures standing close together (within FAN_NEAR tiles of a pile's first), spread into a
+   * small formation around it: a person there keeps the middle and the ring starts outside what
+   * they ride, the rest go round in a sunflower, FAN_STEP apart. Of several of one kind and owner
+   * in a pile, the first's tag says how many ("WOLF ×5") and the rest are hidden. Only how they
+   * are drawn: the server's positions are untouched.
+   */
+  private formation(state: any): Map<string, { dx: number; dy: number; label?: string; hidden?: boolean }> {
+    const piles: { x: number; y: number; members: [string, any][] }[] = [];
+    const all: [string, any][] = [];
+    state.players.forEach((p: any, id: string) => all.push([id, p]));
+    // People first, so a pile forms around a person; then by id, so piles stay the same frame to frame.
+    all.sort((a, b) => Number(a[1].owner !== "") - Number(b[1].owner !== "") || (a[0] < b[0] ? -1 : 1));
+    for (const [id, p] of all) {
+      const pile = piles.find((q) => Math.abs(q.x - p.x) < FAN_NEAR && Math.abs(q.y - p.y) < FAN_NEAR);
+      if (pile) pile.members.push([id, p]); else piles.push({ x: p.x, y: p.y, members: [[id, p]] });
+    }
+    const out = new Map<string, { dx: number; dy: number; label?: string; hidden?: boolean }>();
+    for (const pile of piles) {
+      const list = pile.members;
+      if (list.length < 2) continue;
+      const person = list.find(([, p]) => p.owner === "");
+      // Around a rider, the ring starts outside the mount (a HUGE DRAGON's creatures stand clear of it).
+      const inner = person ? Math.min(3, Math.max(FAN_STEP, ((this.views.get(person[0])?.half ?? 0) / PX) * 0.8)) : 0;
+      let slot = 0;
+      const kinds = new Map<string, string[]>();
+      for (const [id, p] of list) {
+        if (p.owner === "") continue; // a person stays where they are
+        const r = inner + FAN_STEP * Math.sqrt(slot), a = slot * 2.39996;
+        out.set(id, { dx: pile.x + Math.cos(a) * r - p.x, dy: pile.y + Math.sin(a) * r * 0.75 - p.y });
+        slot++;
+        if (!p.boss) { const k = `${p.name}|${p.owner}`; (kinds.get(k) ?? kinds.set(k, []).get(k)!).push(id); }
+      }
+      for (const ids of kinds.values()) {
+        if (ids.length < 2) continue;
+        const total = ids.reduce((n, id) => n + (state.players.get(id)?.count || 1), 0);
+        out.get(ids[0]!)!.label = counted(String(state.players.get(ids[0]!)!.name), total);
+        for (const id of ids.slice(1)) out.get(id)!.hidden = true;
+      }
+    }
+    return out;
   }
 
   /** The first thing a person carries in a slot: "held" in the hand, "ride" under them. */
@@ -1106,6 +1236,17 @@ class World extends Phaser.Scene {
       else if (Math.hypot(t.x - me0.x, t.y - me0.y) <= 1.8) { this.net.take(this.claiming); this.net.stop(); this.claiming = null; }
     }
 
+    // A chest, the temple or a market on its way: once there, dig, pray or open the trade screen.
+    if (this.visiting) {
+      const t = state.things.get(this.visiting.id);
+      if (!t || !me0) this.visiting = null;
+      else if (Math.hypot(t.x - me0.x, t.y - me0.y) <= SITE_RADIUS * 0.8) {
+        this.net.stop();
+        if (this.visiting.act === "trade") this.hud.openTrade(); else this.net.gather();
+        this.visiting = null;
+      }
+    }
+
     const k = Math.min(1, delta / 100);
     state.things.forEach((t: any, id: string) => {
       live.add(id);
@@ -1115,18 +1256,24 @@ class World extends Phaser.Scene {
       this.label(v, [counted(t.phrase, t.count)], t.owner === mine ? TAG_INK.mine : t.owner ? TAG_INK.theirs : TAG_INK.wild);
       v.x = t.x * PX; v.y = t.y * PX;
       this.place(v, id, time, t.hp, t.hp < 100 && v.barUntil > time);
+      v.tag.setVisible(true); // shown again each frame; `unstackTags` may hide it in a pile
     });
+    // Several creatures on one spot fan out into a small formation, and a pile of one kind shows one tag.
+    const fan = this.formation(state);
+    this.keepTags.clear();
     state.players.forEach((p: any, id: string) => {
       live.add(id);
       const v = this.view(id);
       const creature = p.owner !== "";
+      const f = fan.get(id);
       const statuses: string[] = p.status ? p.status.split(" ").filter(Boolean) : [];
       if (creature) {
         // A roaming boss stands half again as tall, with a red tag saying what it drops.
         const look = lookOf(dictionary, p.name, p.count);
         this.dress(v, p.boss ? { ...look, scale: look.scale * 1.6 } : look, undefined, statuses);
-        this.label(v, p.boss ? [`${counted(p.name, p.count)} · BOSS`, "slay it for Z Z Z"] : [counted(p.name, p.count)],
+        this.label(v, p.boss ? [`${counted(p.name, p.count)} · BOSS`, "slay it for Z Z Z"] : [f?.label ?? counted(p.name, p.count)],
           p.boss ? TAG_INK.person : p.owner === mine ? TAG_INK.mine : p.owner === "-" ? TAG_INK.wild : TAG_INK.theirs);
+        if (p.boss) this.keepTags.add(v.tag);
       } else {
         const colour = id === mine ? "#3f6fa8" : PEOPLE[[...String(p.name)].reduce((n, c) => n + c.charCodeAt(0), 0) % PEOPLE.length]!;
         // Adjectives someone put on a person (WORST, HUGE) change their look like any other body's.
@@ -1135,15 +1282,20 @@ class World extends Phaser.Scene {
         this.dress(v, { ...look, colour: look.colour === lookOf(dictionary, "human").colour ? colour : look.colour }, this.slotOf(p.gear, "held"), statuses, this.slotOf(p.gear, "ride"));
         const name = traits ? `${String(p.name).toUpperCase()} · ${traits.toUpperCase()}` : String(p.name).toUpperCase();
         this.label(v, p.gear ? [name, `+ ${p.gear}`] : [name], id === mine ? TAG_INK.me : TAG_INK.person);
+        this.keepTags.add(v.tag); // people's tags are never hidden in a pile
       }
-      // Ease toward the server's position so ten updates a second look smooth.
-      const tx = p.x * PX, ty = p.y * PX;
+      // Ease toward the server's position (fanned out of a pile) so ten updates a second look smooth.
+      const tx = (p.x + (f?.dx ?? 0)) * PX, ty = (p.y + (f?.dy ?? 0)) * PX;
       if (Number.isNaN(v.x)) { v.x = tx; v.y = ty; }
       const dx = tx - v.x, dy = ty - v.y;
       if (Math.abs(dx) > 0.15) v.facing = dx > 0 ? 1 : -1;
       v.moving = Math.hypot(dx, dy) > 0.3 ? 0.3 : Math.max(0, v.moving - delta / 1000);
       v.x += dx * k; v.y += dy * k;
       this.place(v, id, time, p.hp, id === mine || (p.hp < 100 && v.barUntil > time));
+      // In a pile of one kind, only the first carries the tag ("WOLF ×5") and the badges.
+      const shown = !f?.hidden;
+      v.tag.setVisible(shown);
+      for (const b of v.badges) b.setVisible(shown);
       if (id === mine || (id === this.watching && !state.players.get(mine))) this.cameras.main.centerOn(v.x, v.y);
     });
     for (const [id, v] of this.views) if (!live.has(id)) this.drop(id, v);
@@ -1178,6 +1330,7 @@ class World extends Phaser.Scene {
     if (dx || dy) {
       if (time - this.lastSteer > 100) { this.net.move(me.x + dx * 3, me.y + dy * 3); this.lastSteer = time; }
       this.foe = null; // walking away breaks off the attack (the server's move does the same)
+      this.visiting = null; this.claiming = null;
       this.gathering = null;
       this.steering = true;
     } else if (this.steering) {

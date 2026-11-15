@@ -16,10 +16,10 @@ const [rooms = 4, bots = 8] = process.argv.slice(2, 4).map(Number);
 const mode = (process.argv[4] ?? "mixed") as Difficulty | "mixed";
 const cap = Number(process.argv[5] ?? 60);
 
-const server = await boot(appConfig);
+const server = await boot(appConfig, Number(process.env.PORT ?? 2568)); // PORT=2600 runs beside another tournament
 const used = new Map<Difficulty, Map<string, number>>();
 const sources = new Map<string, number>();
-const rounds: { minutes: number; winner: string; difficulty: string }[] = [];
+const rounds: { minutes: number; winner: string; difficulty: string; firstDeath: number }[] = [];
 const wins = new Map<string, number>();
 const themedUsers = new Map<string, number>();
 
@@ -32,8 +32,12 @@ for (let r = 0; r < rooms; r++) {
     if (process.env.WHY && sourceOf(why) === process.env.WHY) console.log(why);
     sources.set(sourceOf(why), (sources.get(sourceOf(why)) ?? 0) + letters.length);
   };
-  let seconds = 0;
-  while (room.state.phase !== "over" && seconds < cap * 60) { room.update(0.1); seconds += 0.1; }
+  let seconds = 0, firstDeath = NaN;
+  // First death: the first second someone is knocked out (the pace of the opening).
+  while (room.state.phase !== "over" && seconds < cap * 60) {
+    room.update(0.1); seconds += 0.1;
+    if (Number.isNaN(firstDeath) && seconds > 5 && room.state.alive < bots) firstDeath = Math.round(seconds);
+  }
   const report = room.botReport();
   for (const b of report) {
     const m = used.get(b.difficulty) ?? used.set(b.difficulty, new Map()).get(b.difficulty)!;
@@ -42,14 +46,16 @@ for (let r = 0; r < rooms; r++) {
   const winner = room.state.winner || "(none)";
   const level = report.find((b) => b.id === winner)?.difficulty ?? "-";
   wins.set(level, (wins.get(level) ?? 0) + 1);
-  rounds.push({ minutes: +(seconds / 60).toFixed(1), winner, difficulty: level });
-  console.log(`room ${r + 1}: ${winner} (${level}) won after ${(seconds / 60).toFixed(1)} min${room.state.phase === "over" ? "" : " (time up)"}`);
+  rounds.push({ minutes: +(seconds / 60).toFixed(1), winner, difficulty: level, firstDeath });
+  console.log(`room ${r + 1}: ${winner} (${level}) won after ${(seconds / 60).toFixed(1)} min${room.state.phase === "over" ? "" : " (time up)"}; first death ${firstDeath} s`);
   room.onAward = undefined;
   await room.disconnect().catch(() => {});
 }
 WorldRoom.testSeed = null;
 
 console.log(`\nRounds: ${rounds.length}; minutes ${rounds.map((r) => r.minutes).join(", ")}; mean ${(rounds.reduce((n, r) => n + r.minutes, 0) / rounds.length).toFixed(1)}`);
+const deaths = rounds.map((r) => r.firstDeath).filter((n) => !Number.isNaN(n)).sort((a, b) => a - b);
+console.log(`First death (s): ${deaths.join(", ")}; median ${deaths[Math.floor(deaths.length / 2)] ?? "-"}`);
 console.log(`Wins by difficulty: ${[...wins].map(([k, n]) => `${k} ${n}`).join(", ")}`);
 const systems = [...new Set([...used.values()].flatMap((m) => [...m.keys()]))].sort();
 const levels = (["easy", "normal", "hard"] as const).filter((d) => used.has(d));

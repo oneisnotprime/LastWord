@@ -1,5 +1,5 @@
 import type { Dictionary } from "./dictionary.js";
-import { becomes, countersOf, eventCard, heldText, keyStats, opText, cardOf } from "./inspect.js";
+import { becomes, countersOf, eventCard, heldText, keyStats, objectKind, opText, cardOf } from "./inspect.js";
 import { missing, parsePhrase, readNoun, type Letters, type Phrase } from "./phrase.js";
 import { needsText, producerOf } from "./produce.js";
 import type { Rng } from "./rng.js";
@@ -290,13 +290,11 @@ export function spellGroup(dict: Dictionary, word: string): SpellGroup | null {
   if (p.kind === "event") return "events";
   if (p.kind === "field") return "areas";
   if (p.kind === "sky") return "sky";
-  const s = p.stats, to = becomes(s);
-  if (to === "creature") return "creatures";
-  if (s.flag("mountable")) return "rides";
-  if (to === "worn") return s.get("equip_slot") === "held" && keyStats(s).some((k) => k.startsWith("damage")) ? "weapons" : "gear";
-  if (to === "ground" && s.get("portable") === false) return "buildings";
-  return "other";
+  return OBJECT_GROUP[objectKind(p.stats)];
 }
+
+/** The spell window's group for each kind of object (shared inspect.ts `objectKind`). */
+const OBJECT_GROUP = { weapon: "weapons", gear: "gear", ride: "rides", creature: "creatures", building: "buildings", terrain: "other", item: "other" } as const;
 
 const groupsKnown = new WeakMap<Dictionary, Map<string, SpellGroup | null>>();
 
@@ -313,5 +311,114 @@ export function spellableNow(dict: Dictionary, held: Letters): Record<SpellGroup
     const g = known.get(w);
     if (g) out[g].push(w);
   }
+  return out;
+}
+
+/** Where a speller stands, for ranking the words they could spell now (`bestWords`). */
+export interface Situation {
+  /** Holding a weapon. */
+  armed: boolean;
+  /** Riding something. */
+  riding: boolean;
+  /** Letters a minute coming in from what they own. */
+  income: number;
+  /** Creatures following them. */
+  creatures: number;
+  /** Health, 0 to 1. */
+  health: number;
+}
+
+/** A word worth spelling now, the group it falls in, and a few words on why. */
+export interface BestWord { word: string; group: SpellGroup; why: string }
+
+/** What a word is good for, measured once per dictionary: its group, a power score, and its short reason. */
+interface Merit { group: SpellGroup; power: number; makes: boolean; heals: boolean; why: string }
+const merits = new WeakMap<Dictionary, Map<string, Merit | null>>();
+
+const log = (n: number) => Math.log10(1 + Math.max(0, n));
+const short = (n: number) => (!Number.isFinite(n) ? "∞" : n >= 1e6 ? `${+(n / 1e6).toPrecision(2)}M` : n >= 1000 ? `${+(n / 1000).toPrecision(2)}k` : String(Math.round(n)));
+
+function meritOf(dict: Dictionary, word: string): Merit | null {
+  let known = merits.get(dict);
+  if (!known) merits.set(dict, (known = new Map()));
+  if (known.has(word)) return known.get(word)!;
+  let merit: Merit | null = null;
+  const group = spellGroup(dict, word);
+  if (group) {
+    const p = parsePhrase(dict, word), s = p.stats;
+    let hit = 0;
+    for (const [id] of s.entries()) if (id.startsWith("dmg_")) hit += Math.max(0, s.num(id));
+    hit *= p.count;
+    const rates = Object.values(producerOf(s, p.count).rates).reduce((n, r) => n + r, 0);
+    const heals = s.num("restores") > 0 || s.num("heals") > 0;
+    const hp = s.num("integrity") * p.count, speed = Math.max(s.num("speed_land"), s.num("speed_air"), s.num("speed_water"));
+    let power = 0, why = "";
+    switch (group) {
+      case "weapons": {
+        const per = s.flag("single_use") ? hit / 4 : hit * Math.max(0.2, s.num("attack_rate") || 1);
+        power = 1 + log(per); why = `${short(hit)} dmg`; break;
+      }
+      case "creatures": power = 1 + (log(hp) + log(hit)) / 2; why = `${short(hp)} HP`; break;
+      case "rides": power = 1 + log(speed) + log(hp) / 3; why = `${short(speed)} m/s`; break;
+      case "gear": power = 0.5 + log(s.num("armor")) + log(hp) / 4; why = s.num("armor") > 0 ? `armor ${short(s.num("armor"))}` : "gear"; break;
+      case "events": power = 1 + log(hit) / 1.2 + (inflictsAny(s) ? 0.5 : 0); why = hit ? `${short(hit)} dmg` : "event"; break;
+      case "areas": case "sky": power = 1.2; why = group === "sky" ? "sky" : "area"; break;
+      case "verbs": power = 0.8 + (heals ? 0.8 : 0); why = heals ? "heals" : "verb"; break;
+      default: power = 0.5 + log(hp) / 4; why = group === "buildings" ? "building" : "thing";
+    }
+    // Letters coming in for good are worth a lot early: a minute's worth adds up over the round.
+    if (rates > 0) {
+      power = Math.max(power, 1.5) + Math.min(2, rates);
+      if (group !== "weapons" && group !== "rides" && group !== "creatures") {
+        const top = Object.entries(producerOf(s, p.count).rates).sort((a, b) => b[1] - a[1])[0]!;
+        why = `makes ${top[0].toUpperCase()}`;
+      }
+    }
+    if (heals && (group === "other" || group === "gear")) why = "heals";
+    merit = { group, power, makes: rates > 0, heals, why };
+  }
+  known.set(word, merit);
+  return merit;
+}
+
+const inflictsAny = (s: Phrase["stats"]) => s.entries().some(([id, v]) => id.startsWith("inflict_") && typeof v === "number" && v > 0);
+
+/**
+ * The few best words the held letters spell right now, for the strip beside the letter tiles:
+ * each word's power for its kind (a weapon's damage a second, a ride's speed, a creature's HP and
+ * bite, a producer's letters a minute), weighted by what the speller lacks: a weapon if they hold
+ * none, a ride on foot, a producer while little comes in, healing when hurt. At most two of a
+ * group, so the strip offers a choice.
+ */
+export function bestWords(dict: Dictionary, held: Letters, at: Situation, n = 5): BestWord[] {
+  const groups = spellableNow(dict, held), scored: { w: string; m: Merit; score: number }[] = [];
+  for (const g of SPELL_GROUPS) {
+    for (const w of groups[g]) {
+      const m = meritOf(dict, w);
+      if (!m) continue;
+      // What the speller lacks adds to a word's own power: an empty hand wants a weapon most.
+      let need = 0;
+      if (m.group === "weapons" && !at.armed) need += 3;
+      if (m.group === "rides" && !at.riding) need += 2;
+      if (m.makes && at.income < 2) need += 1.5;
+      if (m.heals) need += at.health < 0.6 ? 3 : -0.5;
+      if (m.group === "creatures" && at.creatures === 0) need += 1;
+      scored.push({ w, m, score: m.power + need });
+    }
+  }
+  scored.sort((a, b) => b.score - a.score || a.w.length - b.w.length || a.w.localeCompare(b.w));
+  const out: BestWord[] = [], per = new Map<string, number>();
+  // At most two of a group, and one thing to heal with.
+  const take = (w: string, m: Merit) => { out.push({ word: w, group: m.group, why: m.why }); per.set(m.group, (per.get(m.group) ?? 0) + 1); if (m.heals) per.set("heals", 1); };
+  for (const { w, m } of scored) {
+    if (out.length >= n - 1) break;
+    if ((per.get(m.group) ?? 0) >= 2 || (m.heals && per.has("heals"))) continue;
+    take(w, m);
+  }
+  // The last place goes to the biggest word on offer, whatever the need: the spectacle (a METEOR, a TROLL).
+  const open = (x: { w: string; m: Merit }) => !out.some((o) => o.word === x.w) && (per.get(x.m.group) ?? 0) < 2 && !(x.m.heals && per.has("heals"));
+  const big = [...scored].sort((a, b) => b.m.power - a.m.power).find(open), next = scored.find(open);
+  const last = big && big.m.power >= 3 ? big : next;
+  if (last && out.length < n) take(last.w, last.m);
   return out;
 }

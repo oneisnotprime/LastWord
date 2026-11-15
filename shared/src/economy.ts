@@ -1,6 +1,6 @@
 import type { Dictionary } from "./dictionary.js";
 import { ACTION_LETTERS, ACTION_SOURCES, DEED_SOURCES, HAND_FILL } from "./letters.js";
-import { becomes } from "./inspect.js";
+import { becomes, objectKind } from "./inspect.js";
 import { producerOf } from "./produce.js";
 import { parsePhrase, type Letters } from "./phrase.js";
 import type { Rng } from "./rng.js";
@@ -40,9 +40,55 @@ export function starterWords(dict: Dictionary): string[] {
   return words;
 }
 
+let weapons: { dict: Dictionary; words: string[] } | null = null;
+
+/** Damage a weapon a starting hand leans toward deals at least: a CLUB, a BOW, a SPEAR, not a SPOON. */
+export const STARTER_WEAPON_DAMAGE = 20;
+
+/**
+ * Short weapons a starting hand can also spell (held, at least STARTER_WEAPON_DAMAGE, no J, Q, X
+ * or Z): SWORD, BOW, CLUB, GUN, SPEAR. Worked out once per dictionary.
+ */
+export function starterWeapons(dict: Dictionary): string[] {
+  if (weapons?.dict === dict) return weapons.words;
+  const words: string[] = [];
+  for (const [word, def] of dict.words) {
+    if (def.role !== "noun" || !/^[a-z]{2,5}$/.test(word) || /[jqxz]/.test(word)) continue;
+    let p;
+    try { p = parsePhrase(dict, word); } catch { continue; }
+    const s = p.stats;
+    if (p.kind !== "object" || p.count !== 1 || objectKind(s) !== "weapon" || s.flag("single_use")) continue;
+    let hit = 0;
+    for (const [id] of s.entries()) if (id.startsWith("dmg_")) hit += Math.max(0, s.num(id));
+    if (hit >= STARTER_WEAPON_DAMAGE) words.push(word);
+  }
+  words.sort();
+  weapons = { dict, words };
+  return words;
+}
+
+/**
+ * The letters a weapon adds to a hand that holds `hand`, for a weapon picked at random among
+ * those that fit in `room` more letters (the fewest extra letters first, so most hands can have
+ * one); "" if none fits. A first fight should not be fists against a WOLF.
+ */
+export function weaponLetters(dict: Dictionary, hand: Letters, room: number, rng: Rng): string {
+  const extra = (w: string) => {
+    const have: Letters = { ...hand };
+    let out = "";
+    for (const ch of w) { if ((have[ch] ?? 0) > 0) have[ch]!--; else out += ch; }
+    return out;
+  };
+  const fits = starterWeapons(dict).map((w) => extra(w)).filter((e) => e.length <= room);
+  if (!fits.length) return "";
+  const least = Math.min(...fits.map((e) => e.length)), best = fits.filter((e) => e.length <= Math.max(least, 2));
+  return best[Math.floor(rng() * best.length)]!;
+}
+
 /**
  * A starting hand of STARTING_HAND letters: one starter word's letters (`starterWords`), the
- * rest drawn by how common each letter is. So every hand can spell at least one producer.
+ * letters of a weapon where one fits (`weaponLetters`), the rest drawn by how common each letter
+ * is. So every hand can spell at least one producer, and most a weapon.
  */
 export function starterHand(dict: Dictionary, rng: Rng): Letters {
   const words = starterWords(dict);
@@ -50,7 +96,8 @@ export function starterHand(dict: Dictionary, rng: Rng): Letters {
   const hand: Letters = {};
   const add = (ch: string) => { hand[ch] = (hand[ch] ?? 0) + 1; };
   for (const ch of word) add(ch);
-  for (let i = word.length; i < STARTING_HAND; i++) add(HAND_FILL[Math.floor(rng() * HAND_FILL.length)]!);
+  for (const ch of weaponLetters(dict, hand, STARTING_HAND - word.length, rng)) add(ch);
+  for (let n = Object.values(hand).reduce((a, b) => a + b, 0); n < STARTING_HAND; n++) add(HAND_FILL[Math.floor(rng() * HAND_FILL.length)]!);
   return hand;
 }
 

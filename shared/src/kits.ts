@@ -1,5 +1,5 @@
 import type { Dictionary } from "./dictionary.js";
-import { STARTING_HAND, starterWords } from "./economy.js";
+import { STARTING_HAND, starterWords, weaponLetters } from "./economy.js";
 import { HAND_FILL, MARKET, marketRatio } from "./letters.js";
 import { HARVEST_SOURCES, TOOL_POINTS } from "./biome.js";
 import { eventCard, keyStats, opText } from "./inspect.js";
@@ -196,12 +196,17 @@ function handWords(dict: Dictionary, job: JobDef): { pool: string[]; lean: strin
   return { pool: fits.length ? fits : words, lean };
 }
 
-/** STARTING_HAND letters around `word`: half the rest from the job's letters, the rest by how common each letter is. */
-function handAround(word: string, lean: string[], rng: Rng): Letters {
+/**
+ * STARTING_HAND letters around `word`: a weapon's letters where one fits (shared economy.ts
+ * `weaponLetters`), then half the rest from the job's letters, the rest by how common each letter is.
+ */
+function handAround(dict: Dictionary, word: string, lean: string[], rng: Rng): Letters {
   const hand: Letters = {};
   const add = (ch: string) => { hand[ch] = (hand[ch] ?? 0) + 1; };
   for (const ch of word) add(ch);
-  const rest = STARTING_HAND - word.length, leaned = lean.length ? Math.ceil(rest / 2) : 0;
+  const armed = weaponLetters(dict, hand, STARTING_HAND - word.length, rng);
+  for (const ch of armed) add(ch);
+  const rest = STARTING_HAND - word.length - armed.length, leaned = lean.length ? Math.ceil(rest / 2) : 0;
   for (let i = 0; i < rest; i++) add(i < leaned ? lean[i % lean.length]! : HAND_FILL[Math.floor(rng() * HAND_FILL.length)]!);
   return hand;
 }
@@ -214,7 +219,7 @@ function handAround(word: string, lean: string[], rng: Rng): Letters {
  */
 export function kitHand(dict: Dictionary, job: JobDef, rng: Rng): Letters {
   const { pool, lean } = handWords(dict, job);
-  return handAround(pool[Math.floor(rng() * pool.length)] ?? "", lean, rng);
+  return handAround(dict, pool[Math.floor(rng() * pool.length)] ?? "", lean, rng);
 }
 
 /** `n` starting hands for a job to choose from, each around a different starter word where there are enough. */
@@ -222,7 +227,7 @@ export function kitHands(dict: Dictionary, job: JobDef, rng: Rng, n = KIT_CHOICE
   const { pool, lean } = handWords(dict, job);
   const words = distinct(pool, n, rng);
   while (words.length < n) words.push(pool[Math.floor(rng() * pool.length)] ?? "");
-  return words.map((word) => ({ word, hand: handAround(word, lean, rng) }));
+  return words.map((word) => ({ word, hand: handAround(dict, word, lean, rng) }));
 }
 
 /** `n` picks from a list, all different (fewer if the list is shorter). */

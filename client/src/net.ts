@@ -42,6 +42,9 @@ export interface Connection {
 /** Letters gained: what, why ("forage"), where, and the small print under the popup ("JUNGLE 35% · +10% SHOVEL"). */
 export interface Got { letters: string; why: string; x: number; y: number; detail?: string }
 
+/** A grand spelling somewhere on the map (shared `grand`): who, what, what kind, where. */
+export interface Entrance { name: string; word: string; kind: string; x: number; y: number; grandeur: number }
+
 /** Adjectives put on something, as everyone in sight of it is told. */
 export interface Described { target: string; x: number; y: number; words: string; what: string; changes: string[] }
 
@@ -84,6 +87,8 @@ export interface Handlers {
   kit(state: KitState): void;
   /** A legendary unsealed or spelled somewhere on the map. */
   legend(call: LegendCall): void;
+  /** A grand spelling somewhere on the map (a DRAGON, a METEOR): it makes an entrance. */
+  entrance(e: Entrance): void;
 }
 
 /** One blow, as the server tells it (server `Hit`). */
@@ -130,6 +135,7 @@ export async function connect(on: Handlers): Promise<Connection> {
   room.onMessage("kits", on.kits);
   room.onMessage("kit", on.kit);
   room.onMessage("legend", on.legend);
+  room.onMessage("entrance", on.entrance);
   room.onLeave(on.closed);
   room.onDrop(on.dropped);
   // Listening now: the server sends the kits to pick from (or your kit), here and after a reconnect.

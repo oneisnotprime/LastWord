@@ -80,6 +80,9 @@ it("clothing: wild wolves leave someone in a COSTUME be, until they strike", asy
   expect(wa.unit.body.stats.num("disguise")).toBeGreaterThan(0);
   second(3);
   expect(wolf.foe).not.toBe(a.sessionId);
+  // Left alone it ambles at random: back beside A, so only the disguise decides (a random amble
+  // could take it out of sight, and how far depends on every roll the room made before).
+  wolf.player.x = wa.player.x + 2; wolf.player.y = wa.player.y; wolf.target = null; wolf.route = [];
   wa.unmasked = (room as any).elapsed + 30; // A struck someone: shown for what they are
   second(3);
   expect(wolf.foe).toBe(a.sessionId);

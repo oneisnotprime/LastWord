@@ -38,7 +38,8 @@ export class Painter {
    */
   standee(look: Look, held?: string, ride?: string): Standee & { key: string } {
     const raster = rasterOf(look.noun);
-    const id = lookKey(look, `${held ?? ""}|${ride ?? ""}|${raster ? "img" : ""}`);
+    const rideImg = ride ? !!rasterOf(lookOf(this.dict, ride).noun) : false;
+    const id = lookKey(look, `${held ?? ""}|${ride ?? ""}|${raster ? "img" : ""}|${rideImg ? "rimg" : ""}`);
     let st = this.standees.get(id);
     if (!st) {
       let heldArt: { sil: Silhouette; colour: string } | undefined;
@@ -46,10 +47,11 @@ export class Painter {
         const h = lookOf(this.dict, held);
         heldArt = { sil: h.shape, colour: h.colour };
       }
-      let rideArt: { sil: Silhouette; colour: string } | undefined;
+      let rideArt: { sil: Silhouette; colour: string; scale: number; raster?: ReturnType<typeof rasterOf> } | undefined;
       if (ride) {
+        // The mount at its own size and in its own image, as it would stand alone.
         const r = lookOf(this.dict, ride);
-        rideArt = { sil: r.shape, colour: r.colour };
+        rideArt = { sil: r.shape, colour: r.colour, scale: r.scale, raster: rasterOf(r.noun) ?? undefined };
       }
       const s = renderStandee(look, { k: this.k, held: heldArt, ride: rideArt, raster });
       st = { ...s, key: this.add(s.canvas) };

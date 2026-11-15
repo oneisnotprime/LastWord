@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { knowsWord, RULE_TIPS, seeded, spellableNow, spellGroup, TIP_KINDS, tipText, tipWeight, wordIdeas, wordTip } from "./index.js";
+import { bestWords, knowsWord, RULE_TIPS, seeded, spellableNow, spellGroup, TIP_KINDS, tipText, tipWeight, wordIdeas, wordTip } from "./index.js";
 import { demo } from "./testdata.js";
 
 const dict = demo();
@@ -74,5 +74,25 @@ describe("rule tips", () => {
       }
       for (const p of t.properties) expect(dict.properties.has(p), p).toBe(true);
     }
+  });
+});
+
+describe("the best words to spell now", () => {
+  const hand = (t: string) => [...t].reduce<Record<string, number>>((h, c) => ({ ...h, [c]: (h[c] ?? 0) + 1 }), {});
+  const fresh = { armed: false, riding: false, income: 0, creatures: 0, health: 1 };
+  it("offers a weapon to empty hands and a ride to someone on foot, at most five, two of a group", () => {
+    const best = bestWords(dict, hand("swordhorsee"), fresh);
+    expect(best.length).toBeLessThanOrEqual(5);
+    expect(best.map((b) => b.word)).toEqual(expect.arrayContaining(["sword", "horse"]));
+    expect(best.find((b) => b.word === "sword")!.why).toBe("40 dmg");
+    for (const g of new Set(best.map((b) => b.group))) expect(best.filter((b) => b.group === g).length).toBeLessThanOrEqual(2);
+  });
+  it("keeps a place for the biggest word on offer (the playtester's METEOR)", () => {
+    expect(bestWords(dict, hand("meteortrollsa"), fresh).map((b) => b.word)).toContain("meteor");
+  });
+  it("once armed and mounted, weapons and rides give way; hurt, something that heals comes in", () => {
+    const set = bestWords(dict, hand("swordhorsee"), { armed: true, riding: true, income: 5, creatures: 2, health: 0.3 });
+    expect(set.some((b) => b.why === "heals")).toBe(true);
+    expect(bestWords(dict, {}, fresh)).toEqual([]);
   });
 });

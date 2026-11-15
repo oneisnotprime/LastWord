@@ -33,8 +33,14 @@ export class Threats {
    */
   frame(toScreen: (x: number, y: number) => { x: number; y: number }, me: { x: number; y: number } | null, metresPerTile: number) {
     const keep = new Set<string>();
-    // The edge they are pinned to: clear of the HUD card (top left) and the letter bar (bottom).
+    // The edge they are pinned to, above the letter bar; labels then keep clear of the HUD card,
+    // the event chips, the minimap and the corner, and of each other.
     const W = innerWidth, H = innerHeight, top = 18, bottom = 96, side = 18;
+    const blocked: DOMRect[] = [];
+    for (const id of ["status", "events", "minimap", "corner", "best", "letters", "prompt"]) {
+      const r = document.getElementById(id)?.getBoundingClientRect();
+      if (r && r.width > 0 && r.height > 0) blocked.push(r);
+    }
     for (const t of me ? this.list : []) {
       const p = toScreen(t.x, t.y);
       const on = p.x > side && p.y > top && p.x < W - side && p.y < H - bottom;
@@ -60,9 +66,20 @@ export class Threats {
       // The arrow on the edge pointing out at it; the label just inside, kept wholly on screen.
       a.tip.style.left = `${ex}px`; a.tip.style.top = `${ey}px`; a.tip.style.transform = `translate(-50%, -50%) rotate(${angle}rad)`;
       const w = a.label.offsetWidth || 120, h = a.label.offsetHeight || 30;
-      const lx = Math.max(w / 2 + 6, Math.min(W - w / 2 - 6, ex - Math.cos(angle) * (w / 2 + 14)));
-      const ly = Math.max(top + h / 2, Math.min(H - bottom - h / 2, ey - Math.sin(angle) * (h / 2 + 14)));
+      let lx = Math.max(w / 2 + 6, Math.min(W - w / 2 - 6, ex - Math.cos(angle) * (w / 2 + 14)));
+      let ly = Math.max(top + h / 2, Math.min(H - bottom - h / 2, ey - Math.sin(angle) * (h / 2 + 14)));
+      // On a side edge slide down past what is in the way; on the top or bottom edge, sideways.
+      const sideways = Math.abs(ex - side) > 1 && Math.abs(ex - (W - side)) > 1;
+      for (let pass = 0; pass < 6; pass++) {
+        const hit = blocked.find((r) => lx + w / 2 > r.left - 4 && lx - w / 2 < r.right + 4 && ly + h / 2 > r.top - 4 && ly - h / 2 < r.bottom + 4);
+        if (!hit) break;
+        if (sideways) lx = lx < W / 2 ? hit.right + 6 + w / 2 : hit.left - 6 - w / 2;
+        else ly = Math.min(H - bottom - h / 2, hit.bottom + 6 + h / 2);
+      }
       a.label.style.left = `${lx}px`; a.label.style.top = `${ly}px`;
+      blocked.push(new DOMRect(lx - w / 2, ly - h / 2, w, h));
+      // The arrow itself stays clear of the HUD card too: hidden where the card covers it.
+      a.tip.style.visibility = blocked.slice(0, -1).some((r) => ex > r.left && ex < r.right && ey > r.top && ey < r.bottom) ? "hidden" : "";
     }
     for (const [id, a] of this.arrows) if (!keep.has(id)) { a.label.remove(); a.tip.remove(); this.arrows.delete(id); }
   }

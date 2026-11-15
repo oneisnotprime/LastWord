@@ -178,6 +178,7 @@ it("lays a road from home toward a city, tills crop land and cooks raw food", as
   w.player.x = spot!.x; w.player.y = spot!.y;
   mind.home = { ...spot! }; mind.producers = 1;
   w.letters = letters(book.byUse.get("route")![0]!.word);
+  mind.themedAt = Infinity; // the themes' tries (a disguise from the same letters) wait: this is about roads
   expect(R.botSystems(id, w, mind, held(w.letters), [], 0)).toBe("route");
   expect(mind.roads).toBe(1);
   w.player.x = spots[1]!.x; w.player.y = spots[1]!.y;
