@@ -26,7 +26,7 @@ describe("place rules", () => {
     expect(rules("tithe").tax).toBe(0.1);
     expect(rules("bonanza")).toMatchObject({ lode: ["x", "z"], lodeShare: 0.5, lodeStock: 12 });
     expect(tradeRateOf([rules("inflation")])).toBe(2);
-    expect(marketRatio(tradeRateOf([rules("inflation")]))).toBe(6);
+    expect(marketRatio(tradeRateOf([rules("inflation")]))).toBe(8);
     expect(marketRatio(tradeRateOf([rules("bargain")]))).toBe(1);
     expect(tradeProblem("eee", "o", 6)).toMatch(/takes 6 letters/);
     expect(forbids([rules("truce")], "attack")).toBe(true);

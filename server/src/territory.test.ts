@@ -147,12 +147,18 @@ it("the market panel trades; players offer, counter, accept or decline, and a tr
   void r;
 });
 
-it("transmuting ten common letters makes a Z; a roaming boss rises and drops Z when slain", async () => {
+it("transmuting needs alchemy (an ALCHEMIST makes it four for a Z); a roaming boss rises and drops Z when slain", async () => {
   const { room, r, clients, me, of, got } = await world();
-  me().letters = { e: 12, q: 3 };
+  me().letters = { e: 20, q: 3 };
   clients[0].send("spell", `transmute ${"e".repeat(TRANSMUTE_RATIO)}`); await wait();
+  expect(me().letters.z ?? 0).toBe(0);
+  expect(of(0, "refused").at(-1)).toMatch(/needs alchemy/);
+  Object.assign(me().letters, { a: 1, l: 1, c: 1, h: 1, m: 1, i: 1, s: 1, t: 1 });
+  clients[0].send("spell", "alchemist"); await wait();
+  expect(r.transmuteRatio(clients[0].sessionId, me())).toBe(4);
+  clients[0].send("spell", "transmute eeee"); await wait();
   expect(me().letters.z).toBe(1);
-  clients[0].send("transmute", { give: "qqq" + "e".repeat(TRANSMUTE_RATIO - 3) }); await wait();
+  clients[0].send("transmute", { give: "qqqe" }); await wait();
   expect(of(0, "refused").at(-1)).toMatch(/Only common letters/);
   while (r.elapsed < BOSS_TIMES[0]) room.update(1);
   room.update(1); await wait();

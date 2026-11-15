@@ -59,7 +59,7 @@ letter economy and the rules where it lies, through shared `place.ts`:
 | `deposit_factor` | ground deposits multiplied as it begins (0 strips them) |
 | `tax_rate` | share of letters others earn there that goes to its maker |
 | `lode`, `lode_share`, `lode_stock` | letters gathering there turns up instead, and how many |
-| `trade_rate` | markets there ask this times their usual three letters for one |
+| `trade_rate` | markets there ask this times their usual four letters for one, rounded |
 | `law` | acts nobody it reaches may do there: attack, gather, spell, trade, theft |
 | `summons`, `summon_count`, `summon_owned` | creatures that appear as it begins, wild or its maker's |
 | `tile_type` + `radius` on an event | the land it lays as it begins (a METEOR's crater) |

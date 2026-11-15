@@ -137,8 +137,8 @@ it("sea: R off a boat by the shore leaves it moored; a PORT is a market whose ow
   const p = room.state.things.get(pid)!;
   wb.player.x = p.x; wb.player.y = p.y;
   const t = wa.letters.t;
-  b.send("spell", "trade eee for o"); await wait(); second(1);
-  expect(said("b", "spelled").join(" ")).toMatch(/Traded EEE for O/);
+  b.send("spell", "trade eeee for o"); await wait(); second(1);
+  expect(said("b", "spelled").join(" ")).toMatch(/Traded EEEE for O/);
   expect(wa.letters.t).toBeGreaterThan(t);
   // Fishing with a rod: a catch's first letter comes with the O.
   wa.player.x = land.x; wa.player.y = land.y;

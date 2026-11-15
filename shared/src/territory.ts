@@ -5,7 +5,7 @@ import { walkable, type WorldMap } from "./world.js";
 /**
  * Territory and people (PLAN.md "Letter economy"): L per tile of land held, R per road tile held,
  * S per citizen of a city you rule, N from hired labour, T per trade, Z from roaming bosses and
- * transmuting. All of it runs down over a round (claims tire, roads wear, citizens leave), so the
+ * alchemy. All of it runs down over a round (claims tire, roads wear, citizens leave), so the
  * map starves and what is left becomes worth fighting over.
  */
 

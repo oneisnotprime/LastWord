@@ -71,7 +71,7 @@ interface View {
 }
 
 /** Why a letter came that ends a gathering action. */
-const GATHERED = new Set<string>([...Object.values(GATHER_REASONS), "cache", "temple"]);
+const GATHERED = new Set<string>([...Object.values(GATHER_REASONS), "chest", "temple"]);
 /** Seconds a health bar stays up over something hit, and a "targeting you" mark over whoever hit you. */
 const BAR_SECONDS = 4;
 const THREAT_SECONDS = 3;
@@ -219,6 +219,7 @@ class World extends Phaser.Scene {
         gathering: (seconds) => { this.gathering = { start: this.time.now, ms: seconds * 1000 }; },
         got: (g) => this.onGot(g),
         missed: (m) => { this.fx.fail(m.x, m.y - 1.2, m.text, true); this.gathering = null; },
+        sight: (m) => this.fx.note(m.x, m.y - 1.2, "+sight"),
         hits: (list) => this.onHits(list),
         offers: (list) => this.hud.setOffers(list),
         threats: (list) => this.threatList.set(list),
@@ -309,7 +310,7 @@ class World extends Phaser.Scene {
         const land = dictionary.word(lookOf(dictionary, thing.phrase).noun)?.set.tile_type;
         if (thing.owner === mine || land || Math.hypot(thing.x - x, thing.y - y) >= 0.6) return;
         // Nobody's (a RUIN, something dropped): walk over and claim it. Shift-click attacks it instead.
-        if (!thing.owner && !thing.fixture?.match(/market|temple|cache/) && !(p.event as MouseEvent).shiftKey) { claim = id; hit = null; }
+        if (!thing.owner && !thing.fixture?.match(/market|temple|chest/) && !(p.event as MouseEvent).shiftKey) { claim = id; hit = null; }
         else { hit = id; claim = null; }
       });
       this.net.state.players.forEach((other: any, id: string) => {
@@ -587,7 +588,7 @@ class World extends Phaser.Scene {
   }
 
   /**
-   * What you can do where you stand, over the letter bar: dig a cache, gather at the temple,
+   * What you can do where you stand, over the letter bar: dig a chest, gather at the temple,
    * trade at a market, claim something nobody owns that is too big to carry.
    */
   private promptAt(me: { x: number; y: number }) {
@@ -597,9 +598,9 @@ class World extends Phaser.Scene {
       const d = Math.hypot(t.x - me.x, t.y - me.y);
       if (d > SITE_RADIUS + 0.5) return;
       const name = String(t.phrase).toUpperCase();
-      if (t.fixture === "cache") offer(d, "G", "dig the buried cache: X and a prize");
+      if (t.fixture === "chest") offer(d, "G", "dig the buried chest: X and a prize");
       else if (t.fixture === "temple") offer(d, "G", "pray at the TEMPLE for Q");
-      else if (t.fixture === "market") offer(d, "T", "trade at the MARKET, hire a worker");
+      else if (t.fixture === "market") offer(d, "T", "trade at the MARKET");
       else if (!t.owner && d <= 2) {
         const set = dictionary.word(lookOf(dictionary, t.phrase).noun)?.set;
         if (set && !set.tile_type) offer(d, "E", set.portable === false ? `claim ${name}: it becomes yours` : `pick up ${name}`);
@@ -642,9 +643,9 @@ class World extends Phaser.Scene {
       card = read(name, thing.count);
       extra = [thing.owner ? `belongs to ${nameOf(thing.owner)}` : "belongs to nobody", `condition ${Math.round(thing.hp)}%`];
       const how: Record<string, string> = {
-        cache: "a buried cache: stand by it and press G to dig. Each dig gives an X; the last turns up a prize of letters",
+        chest: "a buried chest: stand by it and press G to dig. One X, and a prize of letters with it",
         temple: "the map's one temple: press G beside it for Q, which comes back slowly",
-        market: "a market: T to trade (three of a letter for one you want, and a T for every trade) or hire a worker",
+        market: "a market: T to trade (any four letters for one you want, and a T for every trade), swap your rack once, or hire a worker",
         ruin: thing.owner ? "a ruin: it makes R for its owner; break it for D and X" : "a ruin nobody owns: E beside it to claim it (it makes R for you), or break it for D and X",
       };
       if (how[thing.fixture]) extra.unshift(how[thing.fixture]!);

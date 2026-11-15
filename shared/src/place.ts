@@ -2,6 +2,7 @@ import type { Rng } from "./rng.js";
 import type { Stats } from "./stats.js";
 import type { Op, WordDef } from "./types.js";
 import { areaTime } from "./time.js";
+import { MARKET, marketRatio } from "./letters.js";
 
 /**
  * What an area does to the letters earned and the acts done inside it (PLAN.md "Letter
@@ -143,7 +144,7 @@ export function rulesText(r: PlaceRules): string[] {
   if (r.lode.length && r.lodeShare > 0) {
     out.push(`gathering here finds ${r.lode.map((l) => l.toUpperCase()).join("/")} ${Math.round(r.lodeShare * 100)}% of the time${r.lodeStock > 0 && Number.isFinite(r.lodeStock) ? ` (${r.lodeStock} in all)` : ""}`);
   }
-  if (r.tradeRate !== 1) { const n = Math.max(1, Math.round(3 * r.tradeRate)); out.push(`markets ask ${n} letter${n === 1 ? "" : "s"} for 1`); }
+  if (marketRatio(r.tradeRate) !== MARKET.ratio) { const n = marketRatio(r.tradeRate); out.push(`markets ask ${n} letter${n === 1 ? "" : "s"} for 1`); }
   for (const l of r.law) out.push(r.fine > 0 ? `${LAWS[l]!}, or a fine of ${fmt(r.fine)} letters to its maker` : LAWS[l]!);
   return out;
 }

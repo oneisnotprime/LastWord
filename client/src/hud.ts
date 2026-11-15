@@ -83,11 +83,12 @@ export class Hud {
   kitHtml = "";
   private open: "inventory" | "loadout" | "trade" | null = null;
   /** Sends a trading action to the server (set by the scene). */
-  act: (type: "market" | "sell" | "hire" | "transmute" | "offer" | "answer", payload: unknown) => void = () => {};
+  act: (type: "market" | "sell" | "hire" | "swap" | "transmute" | "offer" | "answer", payload: unknown) => void = () => {};
   /** People near enough to trade with (set by the scene). */
   people: () => { id: string; name: string }[] = () => [];
-  /** On the trade screen: the letter you want from the market, and whom an offer goes to. */
+  /** On the trade screen: the letter you want from the market, the letters picked to pay for it, and whom an offer goes to. */
   private want = "";
+  private pay = "";
   private offerTo: string | null = null;
   private offerList: Offer[] = [];
   private frame: HudFrame | null = null;
@@ -379,7 +380,7 @@ export class Hud {
   }
 
   /**
-   * The letters a spelling spends: all of it, or for "give player2 abc" and "trade eee for o"
+   * The letters a spelling spends: all of it, or for "give player2 abc" and "trade eeee for o"
    * only the letters handed over (the name, "give", "trade" and what you ask for cost nothing).
    */
   private spends(text: string): string {
@@ -389,11 +390,11 @@ export class Hud {
     const give = /^give\s+\S+\s+(.*)$/.exec(t);
     if (give) return give[1]!.replace(/[^a-z]/g, "");
     if (/^give(\s+\S*)?\s*$/.test(t) || (t && ("give".startsWith(t) || "trade".startsWith(t)))) return "";
-    // "trade eee for o" at a market: only the letters handed over.
+    // "trade eeee for o" at a market: only the letters handed over.
     const trade = /^trade\s+(\S*)/.exec(t);
     if (trade) return trade[1]!.replace(/[^a-z]/g, "");
-    // "offer bot3 eee for a", "transmute eeeeeeeeee", "hire": only the letters you hand over (hire picks its own).
-    if (t && ["offer", "transmute", "hire"].some((w) => w.startsWith(t.trim()))) return "";
+    // "offer bot3 eee for a", "transmute eeeeeeeeee", "hire", "swap": only the letters you hand over (hire picks its own).
+    if (t && ["offer", "transmute", "hire", "swap"].some((w) => w.startsWith(t.trim()))) return "";
     const offer = /^offer(?:\s+\S+(?:\s+(\S*))?)?/.exec(t);
     if (offer) return (offer[1] ?? "").replace(/[^a-z]/g, "");
     const alchemy = /^transmute\s*(\S*)/.exec(t);
@@ -430,7 +431,7 @@ export class Hud {
   private drawPreview() {
     const el = $("preview"), t = this.input.value.trim().toLowerCase();
     const hide = () => { el.className = ""; el.innerHTML = ""; };
-    if (!t || readTrade(t) || /^(give|trade)\b/.test(t) || "xxx".startsWith(t)) return hide();
+    if (!t || readTrade(t) || /^(give|trade|swap)\b/.test(t) || "xxx".startsWith(t)) return hide();
     const stood = standIn(this.dict, t);
     const read = inspectText(this.dict, stood ? stood.word : t);
     if (!("card" in read)) return hide();
@@ -701,10 +702,13 @@ export class Hud {
   private tradeClick(el: HTMLElement) {
     const d = el.dataset;
     if (d.want !== undefined) { this.want = d.want; this.drawPanel(); }
-    if (d.marketTrade !== undefined && this.want) this.act("market", { give: this.payFor(this.want), get: this.want });
+    if (d.payAdd !== undefined && this.paying().length < (this.detail?.market?.ratio ?? 4) && this.unpaid(d.payAdd) > 0) { this.pay += d.payAdd; this.drawPanel(); }
+    if (d.payDrop !== undefined) { const i = Number(d.payDrop); this.pay = this.pay.slice(0, i) + this.pay.slice(i + 1); this.drawPanel(); }
+    if (d.marketTrade !== undefined && this.want) { this.act("market", { give: this.paying(), get: this.want }); this.pay = ""; }
+    if (d.swap !== undefined) this.act("swap", {});
     if (d.hire !== undefined) this.act("hire", {});
     if (d.sell !== undefined && this.want) this.act("sell", { index: Number(d.sell), get: this.want });
-    if (d.transmute !== undefined) this.act("transmute", { give: this.commons(this.detail?.transmute ?? 10, "") });
+    if (d.transmute !== undefined && this.detail?.transmute) this.act("transmute", { give: this.commons(this.detail.transmute, "") });
     if (d.offerTo !== undefined) { this.offerTo = d.offerTo; this.drawPanel(); }
     if (d.sendOffer !== undefined && this.offerTo) {
       const give = ($<HTMLInputElement>("offer-give").value || "").toLowerCase().replace(/[^a-z]/g, "");
@@ -736,28 +740,43 @@ export class Hud {
     return out;
   }
 
-  private payFor(letter: string): string {
-    return this.commons(this.detail?.market?.ratio ?? 3, letter);
+  /** The letters picked to pay a market with, cut to what you still hold. */
+  private paying(): string {
+    const have = { ...this.held };
+    let out = "";
+    for (const ch of this.pay) if ((have[ch] ?? 0) > 0) { out += ch; have[ch]!--; }
+    return out;
   }
 
-  /** The trade screen (T): the market you stand at, transmuting into Z, and offers to people close by. */
+  /** Copies of a letter you hold not yet picked to pay with. */
+  private unpaid(ch: string): number {
+    return (this.held[ch] ?? 0) - [...this.paying()].filter((c) => c === ch).length;
+  }
+
+  /** The trade screen (T): the market you stand at (pick the letters you pay; a rack swap), alchemy into Z, and offers to people close by. */
   private trade(): string {
     const d = this.detail, m = d?.market;
     const parts = [`<h2>TRADE</h2><div class="hint">${keyGlyph("T")} or ${keyGlyph("Esc")} to close · a trade completed pays a T${only("", ` · ${padGlyph("a")} on a letter box picks its letters`)}</div>`];
     if (m) {
       const letters = [..."abcdefghijklmnopqrstuvwxyz"].filter((c) => !m.refuses.includes(c));
-      const pay = this.want ? this.payFor(this.want) : "";
-      parts.push(`<h3>Market</h3><div class="hint">${m.closed ? `<b class="bad">${esc(m.closed)}: closed</b> · ` : ""}${m.ratio} letters for 1 · ${m.stock} trades in hand · ${m.citizens} citizen${m.citizens === 1 ? "" : "s"}${m.ruler ? ` · ruled by ${esc(m.ruler)}` : " · nobody rules this city"}</div>
-        <div class="words">${letters.map((c) => `<button data-want="${c}" class="${c === this.want ? "aim" : ""}">${c.toUpperCase()}</button>`).join("")}</div>
-        <div class="row">${this.want ? `You give ${tiles(pay)} for ${tiles(this.want)} and a T` : "Choose a letter to buy"}
-          <button data-market-trade ${!this.want || pay.length < m.ratio ? "disabled" : ""}>Trade</button></div>
+      const pay = this.paying();
+      this.pay = pay;
+      const held = Object.keys(this.held).filter((c) => this.held[c]! > 0).sort();
+      const total = held.reduce((n, c) => n + this.held[c]!, 0);
+      parts.push(`<h3>Market</h3><div class="hint">${m.closed ? `<b class="bad">${esc(m.closed)}: closed</b> · ` : ""}any ${m.ratio} for 1 · ${m.stock} in stock · ${m.citizens} citizen${m.citizens === 1 ? "" : "s"}${m.ruler ? ` · ruled by ${esc(m.ruler)}` : ""}</div>
+        <div class="row"><span class="slot">Pay</span><div class="words">${held.map((c) => `<button data-pay-add="${c}" ${this.unpaid(c) > 0 && pay.length < m.ratio ? "" : "disabled"}>${c.toUpperCase()}<small>${this.unpaid(c)}</small></button>`).join("") || "<i>no letters</i>"}</div></div>
+        <div class="row"><span class="slot">Get</span><div class="words">${letters.map((c) => `<button data-want="${c}" class="${c === this.want ? "aim" : ""}">${c.toUpperCase()}</button>`).join("")}</div></div>
+        <div class="row"><span class="words paying">${[...pay].map((c, i) => `<button data-pay-drop="${i}" class="aim" title="Take back">${c.toUpperCase()}</button>`).join("")}${"<i>·</i>".repeat(Math.max(0, m.ratio - pay.length))}</span> for ${tiles(this.want)}
+          <button data-market-trade ${!this.want || pay.length !== m.ratio ? "disabled" : ""}>Trade</button></div>
+        <div class="row">Swap all ${total} letters for ${total} random · once here<button data-swap ${m.swapped || !total ? "disabled" : ""}>${m.swapped ? "Swapped" : "Swap"}</button></div>
         <div class="row">Hire a ${m.citizens ? "citizen" : "worker (none left)"} for ${m.hire} of your letters: they work your fields and stations and pay N<button data-hire ${m.citizens ? "" : "disabled"}>Hire</button></div>
         <h3>Sell</h3>${m.sells?.length ? `<div class="hint">${this.want ? `Paid in ${tiles(this.want)}, and a T` : "Choose a letter above to be paid in"}</div>${m.sells.map((x) =>
           `<div class="row">${esc(x.phrase.toUpperCase())} for ${x.price} letter${x.price === 1 ? "" : "s"}<button data-sell="${x.index}" ${this.want ? "" : "disabled"}>Sell</button></div>`).join("")}`
           : `<div class="hint">Nothing you carry is worth anything to the market (things sell for their value).</div>`}`);
     } else parts.push(`<h3>Market</h3><div class="hint">Stand by a city's MARKET to buy letters or hire workers.</div>`);
-    const n = d?.transmute ?? 10;
-    parts.push(`<h3>Transmute</h3><div class="row">${tiles(this.commons(n, ""))} into ${tiles("z")}: ${n} common letters for one Z, anywhere<button data-transmute>Transmute</button></div>`);
+    // Transmuting into Z needs alchemy (something that transmutes, or a precious material): shown only then.
+    const n = d?.transmute;
+    if (n) parts.push(`<h3>Transmute</h3><div class="row">${tiles(this.commons(n, ""))} into ${tiles("z")}: ${n} common letters for one Z<button data-transmute>Transmute</button></div>`);
     const people = this.people();
     const to = people.find((p) => p.id === this.offerTo) ?? people[0];
     this.offerTo = to?.id ?? null;
@@ -872,7 +891,7 @@ export class Hud {
   }
 
 
-  /** What you can do where you stand, over the letters ("G: dig the cache"), or nothing. */
+  /** What you can do where you stand, over the letters ("G: dig the chest"), or nothing. */
   prompt(key: string, text: string) {
     const el = $("prompt");
     const html = text ? `${keyGlyph(esc(key))}${esc(text)}` : "";

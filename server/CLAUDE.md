@@ -41,8 +41,10 @@ Node process that owns the game state. One room per map instance (from milestone
   gets them again); `kit` picks, else the best (`bestKit`) after KIT_SECONDS; bots pick at once.
   `chooseKit` sets `Walker.kit`: the job's effect in `rebuild`, its stats in `helpOf`, hunting
   tools and `sources`, its rules in `rulesAt`; the hand; the building through `make`. Legendary
-  progress is counted in `beat` (`legendProgress`, `deeds`), unsealed with a `legend` call to
-  everyone, `unseal` pays the "letters" condition, and `spellWord` waives its letters once.
+  progress is counted in `beat` (`legendProgress`, `deeds`); `unlockLegend` unseals it and makes it
+  at once through `spellWord` (letters waived once; an aimed one at the holder's foe), with one
+  `legend` call to everyone (`spelled` true if made, else it stays open to spell free once, with
+  no second call). `unseal` pays the "letters" condition. Bots go through the same path.
   Room tests run with kits off (`WorldRoom.kits`, off under Vitest) unless they turn them on.
 - `loadtest/bots.ts` modes: `wander`, `crowd`, `play` (gathers, spells and fights).
 - Only the room's first client's options are read (`onCreate`: `bots`, `difficulty`, `mode`);
@@ -56,11 +58,14 @@ Node process that owns the game state. One room per map instance (from milestone
   wander and creatures in `sets_hostile` areas attack. Areas `pulse` once a second (statuses
   from harmless areas, cures, `contagion`).
 - `make` sorts a spelling with shared `becomes`, and adds shared `startingSupply` to the owner's stores.
-- Letter sources (`placeSources`): a `market` Thing in every city, one `temple`, `chest` caches and
-  broken `ruin`s, all ownerless with `Gear.fixture` set (markets, temple and caches are also
+- Letter sources (`placeSources`): a `market` Thing in every city, one `temple`, `chest`s and
+  broken `ruin`s, all ownerless with `Gear.fixture` set (markets, temple and chests are also
   `terrain`, so they cannot be taken or attacked), and wild animals (`master` "-"). Gathering goes
-  through `deposits` (shared `Deposits`); a dug-out cache is removed. `trade eee for o` typed as a
-  spelling is a market trade (`trade`). Kills and destroyed things pay through `payee` (a creature's
+  through `deposits` (shared `Deposits`); a dug-out chest is removed, and its X and prize come in
+  one `got` ("chest"). `trade eeee for o` typed as a spelling is a market trade (`trade`): any
+  letters, `marketPrice` of them (place rules and haggling, whole letters) for each one asked.
+  `swap` (message or typed) is `swapRack`: the whole rack for as many random letters, once per
+  market per person (`markets` remembers `swapped`). Kills and destroyed things pay through `payee` (a creature's
   master). `WorldRoom.testBare` gives tests of other systems a map without any of this.
 - People start far apart (`spawnSpot`). Bots keep the peace for 60 to 90 s (`peaceUntil`), spell
   at most once every 5 to 10 s (`nextSpell`), build producers first, hunt, break ruins, dig caches,
@@ -71,7 +76,8 @@ Node process that owns the game state. One room per map instance (from milestone
   `tiller`, `cook`). `thinkBot` calls one part per system: `botFlee` (hurt: run, refuge, cure),
   `botPickUp` (`takeNear`, the same as E), `botCounter`, `botSpell` (`phraseFor`: adjective
   phrases and plurals), `botSystems` (adjectives on foes and own gear, area words, roads, cities,
-  crop land, cooking, `botOffer`), `botTrade` (market, hiring), `botAnswer`. `SKILL` scales each
+  crop land, cooking, `botOffer`), `botTrade` (market, hiring, selling,
+  a rack swap when it wants nothing and half its rack is one letter), `botAnswer`. `SKILL` scales each
   by difficulty. Kits: `botKit` picks one by difficulty, `botQuest` steers normal and hard bots toward
   their legendary's unlock (producers, land, hunts, trades, regions, a city, a boss, kills, letters),
   `botLegend` spells it once unsealed, and `botCounter` aims counter-words at enemies' legendaries. `mind.used` counts what each used; `botReport` and `onAward` feed
@@ -128,8 +134,10 @@ Node process that owns the game state. One room per map instance (from milestone
   pays L, `roads` (tiles a route word laid, by owner) pay R, cities pay their `rulers` S per
   citizen (citizens are walkers with `citizenOf`, kept in their city by `roam`). `rule` makes a
   ruler and tells everyone; `takes_city` words take the city they are spelled in. `hire`,
-  `transmute`, `offer`/`answer` (messages `market`, `hire`, `transmute`, `offer`, `answer`; typed
-  "offer name abc for de", "transmute ...", "hire"); `offers` lists a person's offers. Workers
+  `transmute`, `offer`/`answer` (messages `market`, `swap`, `hire`, `transmute`, `offer`, `answer`;
+  typed "offer name abc for de", "transmute ...", "swap", "hire"); transmuting needs alchemy
+  (`alchemy`: a `transmute_in` on the person, their gear, things or creatures, or a precious
+  material carried), else it is refused; `offers` lists a person's offers. Workers
   find a job (`jobFor`). Bosses rise at BOSS_TIMES (`riseBoss`; `Player.boss`) and drop Z.
   `state.cities` carries each city's ruler and citizens. For local testing only: `BOSS_AT=20`.
 - Letters gained go through `award`, which sends `got` { letters, why, x, y } for the client's
@@ -142,7 +150,9 @@ Node process that owns the game state. One room per map instance (from milestone
   a wild kill pays shared `huntYield` (H, its first letter, bonuses) with the reasons as `detail`.
 - Gathering rolls (shared `biome.ts`): a miss sends `missed` { x, y, text } ("nothing · DESERT
   12%"); a find's `got` carries `detail` (the odds and the tools that helped, `helpOf`).
-- J: the first person into each 64-tile region (`discovered`), once a map. Ruins have their X one
+- J: the first person into each 64-tile region (`discovered`), once a map. Every region a person
+  enters (`explore`, their own `explored`, scouts' included) widens their sight in `rebuild`
+  (shared `exploredSight`); the J popup's detail says "+sight", else a `sight` message does. Ruins have their X one
   time in four. Wild animals are drawn from the biome they stand in (`wild`, shared `wildlife`).
 - Nobody strikes past their sight: reach is the weapon's `attack_range` up to the striker's sight.
 - `sendThreats` (twice a second): `threats` [{ id, x, y, name, air, targeting, reach }] to each
