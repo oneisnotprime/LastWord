@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Last Word · words</title>
+    <link rel="icon" href="data:," />
+    <style>
+      :root { --paper: #fbf6ea; --card: #f3ead6; --ink: #4a3f33; --soft: #8a7a60; --line: #d9cbb0; --gold: #e9b949; --red: #c9453f; --green: #4f8a3a; --blue: #2f5a8e; --brown: #8a5a1a;
+        --hand: 'Kalam', 'Comic Sans MS', cursive; --round: 'Fredoka', 'Trebuchet MS', sans-serif; --shadow: 0 2px 0 #cfc3a6, 0 6px 14px rgba(40, 28, 16, .35); }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; height: 100%; background: #dccaa6; color: var(--ink); font: 500 13px/1.35 var(--round); }
+      body { display: grid; grid-template-rows: auto auto 1fr; overflow: hidden; }
+      button, input, select { font: inherit; color: inherit; }
+      header { display: flex; align-items: center; gap: 14px; padding: 12px 18px 6px; }
+      header h1 { margin: 0; font: 700 26px/1 var(--hand); letter-spacing: 3px; color: var(--brown); }
+      header h1::before { content: "✎ "; color: var(--gold); }
+      #search { flex: 0 1 380px; padding: 7px 12px; border: 0; border-radius: 3px; background: var(--paper); box-shadow: var(--shadow); font: 600 15px var(--round); outline: none; }
+      #search:focus { box-shadow: 0 0 0 3px var(--gold), var(--shadow); }
+      #count { margin-left: auto; font: 600 12px var(--round); color: var(--soft); white-space: nowrap; }
+      #count b { color: var(--ink); font-size: 15px; }
+      #filters { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin: 4px 18px 10px; padding: 8px 12px; background: var(--paper); border-radius: 3px; box-shadow: var(--shadow);
+        background-image: linear-gradient(90deg, transparent 0 8px, rgba(201, 69, 63, .18) 8px 9px, transparent 9px); }
+      #filters label { display: inline-flex; align-items: center; gap: 4px; font: 600 10.5px var(--round); text-transform: uppercase; letter-spacing: .8px; color: var(--soft); }
+      #filters select, #filters input[type=text], #filters input:not([type]) { max-width: 170px; padding: 3px 5px; border: 1px solid var(--line); border-radius: 3px; background: var(--card);
+        font: 500 12px var(--round); text-transform: none; letter-spacing: 0; color: var(--ink); }
+      #filters select.on, #filters input.on { border-color: var(--gold); background: #fbefc8; }
+      #filters .sep { width: 1px; height: 20px; background: var(--line); }
+      #filters button { padding: 3px 10px; border: 0; border-radius: 3px; background: var(--card); box-shadow: 0 1px 0 #cfc3a6; cursor: pointer; font: 600 12px var(--round); }
+      #filters button:hover { background: var(--gold); }
+      .picker { position: relative; }
+      #propIn { width: 150px; }
+      #propList { position: absolute; z-index: 5; top: 100%; left: 0; display: none; width: 420px; max-height: 360px; overflow-y: auto; margin-top: 3px; padding: 4px 0; background: var(--paper);
+        border-radius: 3px; box-shadow: 0 0 0 2px var(--gold), 0 12px 28px rgba(30, 20, 10, .4); text-transform: none; letter-spacing: 0; }
+      #propList.show { display: block; }
+      #propList div { padding: 3px 10px; cursor: pointer; font: 500 12px/1.3 var(--round); color: var(--ink); }
+      #propList div b { font-weight: 600; }
+      #propList div i { float: right; font-style: normal; font-size: 10px; color: var(--soft); text-transform: uppercase; }
+      #propList div span { display: block; color: var(--soft); font-size: 11px; }
+      #propList div.hi, #propList div:hover { background: #fbefc8; }
+      main { display: grid; grid-template-columns: 1fr; min-height: 0; margin: 0 18px 14px; gap: 14px; }
+      body.open main { grid-template-columns: minmax(520px, 1fr) 520px; }
+      #list { position: relative; min-height: 0; display: grid; grid-template-rows: auto 1fr; background: var(--paper); border-radius: 3px; box-shadow: var(--shadow); }
+      .row { display: grid; grid-template-columns: 170px 92px 130px minmax(160px, 1.1fr) minmax(160px, 1.4fr); align-items: center; gap: 10px; height: 32px; padding: 0 12px;
+        border-bottom: 1px solid #efe5cf; white-space: nowrap; }
+      .row > * { overflow: hidden; text-overflow: ellipsis; }
+      #head { font: 600 10.5px var(--round); text-transform: uppercase; letter-spacing: .8px; color: var(--soft); border-bottom: 2px solid var(--line); height: 30px; }
+      #head span[data-sort] { cursor: pointer; } #head span[data-sort]:hover { color: var(--ink); }
+      #head span.sorted { color: var(--brown); }
+      #scroller { overflow-y: auto; min-height: 0; position: relative; }
+      #rows { position: relative; }
+      #rows .row { position: absolute; left: 0; right: 0; cursor: pointer; }
+      #rows .row:hover { background: #fbefc8; }
+      #rows .row.sel { background: #f6e3a8; box-shadow: inset 4px 0 0 var(--gold); }
+      .row .w { font: 700 16px/1 var(--hand); letter-spacing: .5px; text-transform: uppercase; }
+      .row .w small { font: 600 10px var(--round); color: var(--soft); letter-spacing: 0; margin-left: 4px; text-transform: none; }
+      .row .r { font-size: 11px; color: var(--soft); }
+      .row .a { font-size: 12px; }
+      .row .s { font-size: 12px; color: var(--brown); }
+      .row .e { font-size: 12px; color: var(--ink); }
+      .role { display: inline-block; padding: 0 6px; border-radius: 8px; font: 600 10px/16px var(--round); text-transform: uppercase; letter-spacing: .5px; color: #fff; }
+      .role.noun { background: #6d8c4a; } .role.verb { background: #2f6a8a; } .role.adjective { background: #b0703a; } .role.adverb { background: #8a5a9a; }
+      #empty { padding: 30px; text-align: center; font: 700 18px var(--hand); color: var(--soft); }
+      /* The detail panel: the inspect card's paper, larger. */
+      #detail { display: none; min-height: 0; overflow-y: auto; padding: 14px 18px 18px; background: var(--paper); border-radius: 3px;
+        box-shadow: 0 0 0 3px #2f8aa8, 0 3px 0 3px #1f6a88, 0 14px 30px rgba(30, 20, 10, .45); }
+      body.open #detail { display: block; }
+      #detail .top { display: grid; grid-template-columns: 1fr auto; gap: 10px; }
+      #detail h2 { margin: 0; font: 700 32px/1 var(--hand); letter-spacing: 2px; }
+      #detail .kind { margin-top: 3px; font: 600 11px var(--round); text-transform: uppercase; letter-spacing: 1px; color: var(--soft); }
+      #detail .gloss { margin: 8px 0 0; font: 400 15px/1.3 var(--hand); color: #5a4a36; }
+      #detail .freq { margin-top: 4px; font-size: 11px; color: var(--soft); }
+      #detail .close { align-self: start; border: 0; background: var(--card); border-radius: 3px; box-shadow: 0 1px 0 #cfc3a6; padding: 3px 10px; cursor: pointer; font: 600 12px var(--round); }
+      #art { display: flex; justify-content: center; margin: 10px 0 4px; min-height: 40px; }
+      #art canvas { background: #a3b86f; border-radius: 4px; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .05); }
+      #art .src { align-self: end; margin-left: 8px; font-size: 10px; color: var(--soft); }
+      #detail h3 { margin: 14px 0 4px; padding-bottom: 2px; border-bottom: 1px dashed var(--line); font: 600 11px var(--round); text-transform: uppercase; letter-spacing: 1px; color: var(--soft); }
+      #detail h3 small { text-transform: none; letter-spacing: 0; font-weight: 500; }
+      .gamecard { padding: 8px 12px 10px; background: var(--card); border-radius: 3px; transform: rotate(-0.4deg); box-shadow: inset 0 1px 3px rgba(60, 40, 20, .15); }
+      .gamecard .title { font: 700 19px/1.1 var(--hand); letter-spacing: 1px; }
+      .gamecard .kind { margin-bottom: 4px; }
+      .gamecard ul { margin: 3px 0 0; padding: 0; list-style: none; font: 500 12.5px/1.45 var(--round); }
+      .gamecard ul.stats { display: flex; flex-wrap: wrap; gap: 2px 12px; color: var(--brown); font-weight: 600; }
+      .gamecard ul.does li::before { content: "• "; color: var(--gold); }
+      .gamecard .err { color: var(--red); font-style: italic; }
+      .lines { margin: 0; padding: 0; list-style: none; }
+      .lines li { padding: 1px 0; }
+      .lines li code { margin-left: 6px; font: 11px ui-monospace, monospace; color: var(--soft); }
+      .words { display: flex; flex-wrap: wrap; gap: 4px; }
+      .words a, .chip { display: inline-block; padding: 1px 7px; border-radius: 3px; background: var(--card); box-shadow: 0 1px 0 #cfc3a6; font: 700 13px var(--hand); letter-spacing: .5px;
+        text-transform: uppercase; color: var(--ink); text-decoration: none; cursor: pointer; }
+      .words a:hover { background: var(--gold); }
+      .none { color: var(--soft); font-style: italic; }
+      table.props { width: 100%; border-collapse: collapse; font-size: 12px; }
+      table.props td { padding: 2px 6px 2px 0; vertical-align: top; border-bottom: 1px solid #f1e8d4; }
+      table.props td.id { width: 34%; font: 600 12px var(--round); white-space: nowrap; }
+      table.props td.id a { color: var(--blue); text-decoration: none; cursor: pointer; }
+      table.props td.id a:hover { text-decoration: underline; }
+      table.props td.v { width: 22%; color: var(--brown); font-weight: 600; word-break: break-word; }
+      table.props td.d { color: var(--soft); }
+      table.props tr.g td { padding-top: 8px; border-bottom: 0; font: 600 10px var(--round); text-transform: uppercase; letter-spacing: 1px; color: #2f6a8a; }
+      kbd { font: 600 11px var(--round); background: var(--card); border-radius: 3px; padding: 0 5px; box-shadow: 0 1px 0 #cfc3a6; }
+      #help { font-size: 11px; color: var(--soft); }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>WORDS</h1>
+      <input id="search" placeholder="Search words…" autocomplete="off" spellcheck="false" autofocus />
+      <span id="help"><kbd>/</kbd> search · <kbd>↑</kbd><kbd>↓</kbd> move · <kbd>Esc</kbd> close</span>
+      <span id="count"></span>
+    </header>
+    <div id="filters">
+      <label>match <select id="mode"><option value="contains">contains</option><option value="starts">starts with</option><option value="ends">ends with</option><option value="exact">exact</option></select></label>
+      <label title="Also search the WordNet meaning"><input type="checkbox" id="gloss" /> meanings</label>
+      <span class="sep"></span>
+      <label>role <select id="role"></select></label>
+      <label>class <select id="cls"></select></label>
+      <label>archetype <select id="arch"></select></label>
+      <label>group <select id="group"></select></label>
+      <label>dimension <select id="dim"></select></label>
+      <span class="sep"></span>
+      <label class="picker">has property <input id="propIn" placeholder="any" autocomplete="off" spellcheck="false" /><div id="propList"></div></label>
+      <select id="cmp"><option value="has">is set</option><option>&gt;</option><option>&gt;=</option><option>&lt;</option><option>&lt;=</option><option>=</option><option>!=</option></select>
+      <input id="val" placeholder="value" size="7" autocomplete="off" />
+      <span class="sep"></span>
+      <label>sort <select id="sort"></select></label>
+      <button id="dir" title="Reverse the order">↑</button>
+      <button id="reset">Clear</button>
+    </div>
+    <main>
+      <section id="list">
+        <div class="row" id="head"><span data-sort="word">word</span><span>role</span><span>archetype</span><span>lead stats</span><span>what it does</span></div>
+        <div id="scroller"><div id="rows"></div><div id="empty" hidden>No word matches.</div></div>
+      </section>
+      <aside id="detail"></aside>
+    </main>
+    <script type="module" src="/src/words/page.ts"></script>
+  </body>
+</html>
