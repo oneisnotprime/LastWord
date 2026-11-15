@@ -79,8 +79,6 @@ export class Hud {
   private readonly win = $("spellwin");
   private toastTimer = 0;
   private detail: LoadoutDetail | null = null;
-  /** Your starting kit's lines for the HUD card (set by `KitView`). */
-  kitHtml = "";
   private open: "inventory" | "loadout" | "trade" | null = null;
   /** Sends a trading action to the server (set by the scene). */
   act: (type: "market" | "sell" | "hire" | "transmute" | "offer" | "answer", payload: unknown) => void = () => {};
@@ -636,7 +634,6 @@ export class Hud {
           `<span class="chip store">${k.toUpperCase()} ${Math.round(d!.stores[k].have * 10) / 10}${flow(k)}</span>`),
         ...(d?.short ?? []).map((t) => chip("hungry").replace("HUNGRY", esc(t.toUpperCase()))),
       ];
-      if (this.kitHtml) parts.push(this.kitHtml);
       if (chips.length) parts.push(`<div class="chips">${chips.join("")}</div>`);
     }
     const html = parts.join("");

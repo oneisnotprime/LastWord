@@ -7,6 +7,8 @@ export interface DictionaryData {
   inflections?: Record<string, [string, Degree]>;
   /** Degree name -> strength; see operators.json. */
   degrees?: Record<Degree, number>;
+  /** Crude or sexual words (data/crude.json, from tools/crude.txt): never offered as tips or spelled by bots. */
+  crude?: string[];
 }
 
 export interface Lookup {
@@ -21,12 +23,14 @@ export class Dictionary {
   readonly words: ReadonlyMap<string, WordDef>;
   readonly degrees: Record<Degree, number>;
   private readonly inflections: ReadonlyMap<string, [string, Degree]>;
+  private readonly crudeWords: ReadonlySet<string>;
 
   constructor(data: DictionaryData) {
     this.properties = new Map(data.properties.properties.map((p) => [p.id, p]));
     this.words = new Map(Object.entries(data.words));
     this.inflections = new Map(Object.entries(data.inflections ?? {}));
     this.degrees = data.degrees ?? { positive: 1, comparative: 1.5, superlative: 2 };
+    this.crudeWords = new Set(data.crude ?? []);
     for (const [word, def] of this.words) {
       for (const id of [...Object.keys(def.set), ...def.ops.map((o) => o[0])]) {
         if (!this.properties.has(id)) throw new Error(`${word}: unknown property ${id}`);
@@ -35,6 +39,14 @@ export class Dictionary {
     for (const [form, [base]] of this.inflections) {
       if (!this.words.has(base)) throw new Error(`${form}: unknown base word ${base}`);
     }
+  }
+
+  /** True for a crude or sexual word (`DictionaryData.crude`), in any form: PORN, PORNS, SEXIER. */
+  crude(word: string): boolean {
+    if (!this.crudeWords.size) return false;
+    const w = word.toLowerCase();
+    const base = this.lookup(w)?.word ?? w;
+    return this.crudeWords.has(w) || this.crudeWords.has(base) || (w.endsWith("s") && this.crudeWords.has(w.replace(/e?s$/, "")));
   }
 
   get size(): number {

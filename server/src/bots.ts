@@ -209,6 +209,7 @@ export function wordBook(dict: Dictionary) {
   const words: BotWord[] = [];
   const counters = new Map<string, BotWord[]>();
   for (const [word, def] of dict.words) {
+    if (dict.crude(word)) continue; // never spelled by a bot (tools/crude.txt)
     if (def.role === "adjective") {
       // Adjectives: put on your own things or body (buff), or on a foe (debuff), or spelled before a noun.
       const e = adjectiveEffect(def.ops);

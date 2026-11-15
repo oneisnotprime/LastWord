@@ -1,0 +1,44 @@
+# Crude or sexual words: kept out of teaching tips, words of the moment and what bots spell.
+# They stay in the dictionary and anyone may still spell them. tools/build_crude.py writes the
+# ones the dictionary knows to data/crude.json; a word here that the dictionary lacks is skipped.
+# One word per line; a word also covers its plural and inflected forms.
+porn
+porno
+pornography
+sex
+sexy
+sexual
+naked
+nude
+erotic
+orgasm
+horny
+fuck
+shit
+crap
+piss
+bitch
+bastard
+dick
+cock
+pussy
+ass
+arse
+butt
+boob
+tits
+whore
+slut
+hooker
+pimp
+brothel
+rape
+rapist
+dildo
+condom
+lingerie
+thong
+wank
+twat
+cum
+semen

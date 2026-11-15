@@ -1,5 +1,6 @@
 # Starting kits (PLAN.md "Starting kits"): the hand-tuned core that tools/build_kits.py starts from.
-# It writes data/kits.json: 100 jobs, 100 buildings and the legendary words.
+# It writes data/kits.json: 100 jobs and 100 buildings. A kit gives no legendary word: those are
+# ordinary words, spelled with letters.
 #
 # job <word>: tokens
 #   A job is worn like an invisible tool for the whole round, so it acts only through shared
@@ -17,11 +18,6 @@
 # building <word>   a starting building: placed at its owner's spawn, theirs, as if spelled there
 # skip <word>       never a job or a starting building
 #
-# legend <word>: unlock=<condition> counter=<word>
-#   conditions: minutes:N (round time), letters (pay half its letters), land:N (tiles held),
-#   boss (slay a roaming boss), producers:N (things of yours making letters), regions:N (regions
-#   explored), hunts:N (wild animals hunted), trades:N (trades made), city (rule a city),
-#   kills:N (people killed). The counter must name the legendary in its `counters`.
 
 job farmer: harvest_sources=field,plant harvest_bonus=3 produce_A*1.3 produce_P*1.2 letters=ahp
 job fisher: harvest_sources=fishing harvest_bonus=3 produce_O*1.25 letters=oo
@@ -232,21 +228,5 @@ skip press
 skip study
 skip stage
 
-legend dragon: unlock=land:40 counter=lance
-legend titan: unlock=minutes:15 counter=chain
-legend phoenix: unlock=letters counter=frost
-legend kraken: unlock=regions:8 counter=harpoon
-legend hydra: unlock=hunts:6 counter=firebrand
-legend golem: unlock=producers:4 counter=chisel
-legend leviathan: unlock=trades:5 counter=harpoon
-legend behemoth: unlock=land:60 counter=lasso
-legend griffin: unlock=regions:6 counter=crossbow
-legend basilisk: unlock=letters counter=weasel
-legend colossus: unlock=producers:5 counter=earthquake
-legend genie: unlock=trades:4 counter=lamp
-legend unicorn: unlock=city counter=lasso
-legend wyvern: unlock=boss counter=lance
-legend god: unlock=minutes:20 counter=blasphemy
-legend apocalypse: unlock=kills:2 counter=armistice
 skip police
 skip doge

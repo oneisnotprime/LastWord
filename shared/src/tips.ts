@@ -127,7 +127,7 @@ export function wordTip(dict: Dictionary, word: string): WordTip | null {
   }
   parts = parts.filter(Boolean);
   if (!parts.length) return null;
-  const counter = countersOf(dict, word).find((w) => w !== word && dict.word(w)?.role === "noun");
+  const counter = countersOf(dict, word).find((w) => w !== word && dict.word(w)?.role === "noun" && !dict.crude(w));
   return { word, kind, does: parts.join(", "), ...(counter ? { counter } : {}) };
 }
 
@@ -138,7 +138,7 @@ function poolOf(dict: Dictionary): Map<TipKind, string[]> {
   if (pool) return pool;
   pool = new Map(TIP_KINDS.map((k) => [k, []]));
   for (const word of dict.words.keys()) {
-    if (!/^[a-z]+$/.test(word) || word.length > 9) continue;
+    if (!/^[a-z]+$/.test(word) || word.length > 9 || dict.crude(word)) continue;
     const kind = tipKind(dict, word);
     if (kind) pool.get(kind)!.push(word);
   }

@@ -76,6 +76,9 @@ interface ZoneView {
 const CLAIM_MINE: ZoneStyle = { colour: "#8ccf7a", ink: "#2f6a3a", decor: "word" };
 const CLAIM_THEIRS: ZoneStyle = { colour: "#e08a7a", ink: "#8a2a2a", decor: "word" };
 
+/** Tiles above a zone's middle its name tag sits (less for a small zone: its top edge). */
+const ZONE_TAG_RISE = 2.5;
+
 export class Zones {
   private views = new Map<string, ZoneView>();
   private k: number;
@@ -117,9 +120,8 @@ export class Zones {
   }
 
   /**
-   * Draws the zones in `zones`; returns the words over the whole map. `focus` (world pixels, you)
-   * puts each name tag on the edge nearest you, so a big circle's tag is on screen; `nameOf`
-   * names an owner for claimed ground's tag.
+   * Draws the zones in `zones`; returns the words over the whole map. Each name tag stays with its
+   * zone (`ZONE_TAG_RISE`); `nameOf` names an owner for claimed ground's tag. `focus` is unused.
    */
   update(zones: any, time: number, mine = "", focus?: { x: number; y: number }, nameOf: (id: string) => string = () => ""): string[] {
     const t = time / 1000;
@@ -155,12 +157,9 @@ export class Zones {
       // The tissue's radius is 124 units, 62 world pixels, at its base scale.
       const s = (z.disc.getData("s") as number) * (z.r / 62);
       z.disc.setPosition(z.x, z.y).setScale(s * (1 + Math.sin(t * 1.3) * 0.01), s * 0.9 * (1 + Math.cos(t * 1.1) * 0.01));
-      // The tag sits on the edge nearest you, or, standing well inside a big one, a few tiles
-      // from you toward that edge, so it is on screen; the top when you are at its middle.
-      const fx = focus ? focus.x - z.x : 0, fy = focus ? focus.y - z.y : -1, fd = Math.hypot(fx, fy);
-      const ux = fd > z.r * 0.25 ? fx / fd : 0, uy = fd > z.r * 0.25 ? fy / fd : -1;
-      const along = fd < z.r ? Math.min(z.r * 0.92, fd + 6 * PX) : z.r * 0.92;
-      z.tag.setPosition(z.x + ux * along, z.y + uy * along * 0.9 - 8);
+      // The tag stays with the zone, a little above its middle (over a claim's building), never
+      // following you about: standing inside a big one, the event chips say where you are.
+      z.tag.setPosition(z.x, z.y - Math.min(z.r * 0.9, ZONE_TAG_RISE * PX) - 8);
       for (const d of z.decor) {
         let x = z.x + Math.cos(d.a) * d.d * z.r, y = z.y + Math.sin(d.a) * d.d * z.r * 0.85;
         switch (z.style.decor) {

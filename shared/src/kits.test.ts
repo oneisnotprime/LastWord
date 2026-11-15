@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { demo, kitData } from "./testdata.js";
 import {
-  buildingLines, dealKits, jobBodyOps, jobLines, jobRules, jobStats, kitCard, kitHand, legendCost, sealedLetters, unlockNeed, unlockText,
+  buildingLines, dealKits, jobBodyOps, jobLines, jobRules, jobStats, kitCard, kitHand,
   type KitData,
 } from "./kits.js";
 import { starterWords, STARTING_HAND } from "./economy.js";
@@ -43,27 +43,25 @@ describe("kit tables (data/kits.json)", () => {
     }
   });
 
-  it("every legendary has a counter that names it and an unlock condition", () => {
-    expect(data.legendaries.length).toBeGreaterThanOrEqual(12);
-    for (const l of data.legendaries) {
-      expect(dict.word(l.word), l.word).toBeTruthy();
-      expect(dict.word(l.counter)?.set.counters, l.word).toContain(l.word);
-      expect(unlockText(l), l.word).toMatch(/\w/);
-      expect(unlockNeed(l), l.word).toBeGreaterThan(0);
+  it("a kit is a job, a building and letters: no legendary comes free (they are ordinary words)", () => {
+    expect(Object.keys(data).sort()).toEqual(["buildings", "jobs"]);
+    expect(Object.keys(dealKits(data, dict, seeded(1))[0]!).sort()).toEqual(["building", "hand", "job"]);
+    // Legendary creatures stay in the dictionary, spelled with letters, each with a word that counters it.
+    for (const w of ["dragon", "behemoth", "colossus", "kraken"]) {
+      expect(parsePhrase(dict, w).letters).toBe(w);
+      expect([...dict.words.values()].some((d) => (d.set.counters as string[] | undefined)?.includes(w)), w).toBe(true);
     }
-    expect(new Set(data.legendaries.map((l) => l.unlock.kind)).size).toBeGreaterThanOrEqual(8);
   });
 });
 
 describe("kits", () => {
-  it("deals three kits with different jobs, buildings and legendaries", () => {
+  it("deals three kits with different jobs and buildings", () => {
     for (let seed = 1; seed < 50; seed++) {
       const kits = dealKits(data, dict, seeded(seed));
       expect(kits).toHaveLength(3);
-      for (const k of ["job", "building", "legend"] as const) expect(new Set(kits.map((x) => x[k])).size).toBe(3);
+      for (const k of ["job", "building"] as const) expect(new Set(kits.map((x) => x[k])).size).toBe(3);
       const card = kitCard(data, dict, kits[0]!);
       expect(card.letters).toHaveLength(STARTING_HAND);
-      expect(card.legend.unlock).toMatch(/\w/);
     }
   });
 
@@ -101,11 +99,4 @@ describe("kits", () => {
     expect(tradeRateOf([jobRules(dict, merchant)!])).toBe(0.75);
   });
 
-  it("an unsealed legendary spells free; adjectives and plurals still cost", () => {
-    expect(legendCost("dragon", "dragon", "dragon")).toBe("");
-    expect([...legendCost("hugedragon", "dragon", "dragon")!].sort().join("")).toBe("eghu");
-    expect(legendCost("dragons", "dragon", "dragon")).toBe("s");
-    expect(legendCost("wolf", "wolf", "dragon")).toBeNull();
-    expect(sealedLetters("dragon")).toBe("rgn");
-  });
 });

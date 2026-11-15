@@ -11,6 +11,7 @@ export function loadDictionary(): Dictionary {
     words: read("demo.json"),
     inflections: read("demo_inflections.json"),
     degrees: read("operators.json").degrees,
+    crude: read("crude.json"),
   });
 }
 

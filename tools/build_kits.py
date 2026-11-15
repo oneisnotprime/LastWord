@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Write ../data/kits.json: the jobs, starting buildings and legendary words of starting kits
+"""Write ../data/kits.json: the jobs and starting buildings of starting kits
 (PLAN.md "Starting kits") from tools/kits.txt and ../data/demo.json.
 
 - Jobs: the core in kits.txt first (a word not in the dictionary yet is skipped), then the rest of
@@ -7,8 +7,6 @@
   criminals), their perks derived by rule from the word's own properties.
 - Buildings: the buildings in kits.txt that are in the dictionary, then other fixed things that
   act on a shared system (letters, claims, fields, light, healing, supplies), most common first.
-- Legendaries: kits.txt, checked: in the dictionary, a known unlock condition, and a counter word
-  whose `counters` names it.
 Fails if there are fewer than JOBS jobs or BUILDINGS buildings.
 """
 import json, os, re, sys
@@ -18,8 +16,6 @@ D = os.path.join(HERE, "..", "data")
 JOBS, BUILDINGS = 100, 100
 # Properties a job holds as its own (a carried tool's), not changes to its holder's body.
 OWN = {"harvest_sources", "harvest_bonus", "trade_rate", "command_limit", "authority", "recruit_rate"}
-UNLOCKS = {"minutes": True, "letters": False, "land": True, "boss": False, "producers": True,
-           "regions": True, "hunts": True, "trades": True, "city": False, "kills": True}
 PEOPLE = {"worker", "leader", "fighter", "criminal"}
 # What each gathering source leans a starting hand toward.
 SOURCE_LETTERS = {"fishing": "o", "river": "o", "field": "a", "plant": "p", "crop": "a", "orchard": "p",
@@ -135,7 +131,7 @@ def main():
         try: zipf[f[0]] = float(f[4])
         except (IndexError, ValueError): pass
     errors, missing = [], []
-    jobs, buildings, legends, skip = {}, [], [], set()
+    jobs, buildings, skip = {}, [], set()
     for n, line in enumerate(open(os.path.join(HERE, "kits.txt")), 1):
         line = line.strip()
         if not line or line.startswith("#"):
@@ -159,17 +155,6 @@ def main():
                 errors.append(f"{where}: not a fixed thing on the ground"); continue
             if word not in buildings:
                 buildings.append(word)
-        elif kind == "legend":
-            opts = dict(t.split("=", 1) for t in body.split() if "=" in t)
-            unlock, counter = opts.get("unlock", ""), opts.get("counter", "")
-            what, _, amount = unlock.partition(":")
-            if word not in words:
-                errors.append(f"{where}: not in the dictionary"); continue
-            if what not in UNLOCKS or UNLOCKS[what] != bool(amount) or (amount and not amount.isdigit()):
-                errors.append(f"{where}: bad unlock {unlock}"); continue
-            if counter not in words or word not in (words[counter]["set"].get("counters") or []):
-                errors.append(f"{where}: {counter} does not counter it"); continue
-            legends.append({"word": word, "unlock": {"kind": what, **({"need": int(amount)} if amount else {})}, "counter": counter})
         else:
             errors.append(f"{where}: unknown line")
     # The rest of the jobs: profession words, perks by rule, those with the most to them and the
@@ -192,12 +177,12 @@ def main():
     if len(buildings) < BUILDINGS: errors.append(f"only {len(buildings)} buildings")
     if errors:
         print("\n".join(errors)); sys.exit(1)
-    out = {"jobs": list(jobs.values())[:JOBS], "buildings": buildings[:BUILDINGS], "legendaries": legends}
+    out = {"jobs": list(jobs.values())[:JOBS], "buildings": buildings[:BUILDINGS]}
     with open(os.path.join(D, "kits.json"), "w") as f:
         json.dump(out, f, indent=1)
         f.write("\n")
     core = sum(1 for j in out["jobs"] if j["core"])
-    print(f"kits: {len(out['jobs'])} jobs ({core} hand-tuned), {len(out['buildings'])} buildings, {len(legends)} legendaries"
+    print(f"kits: {len(out['jobs'])} jobs ({core} hand-tuned), {len(out['buildings'])} buildings"
           + (f"; not in the dictionary yet: {' '.join(missing)}" if missing else ""))
 
 

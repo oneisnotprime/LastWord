@@ -57,3 +57,15 @@ describe("rule tips", () => {
     }
   });
 });
+
+describe("crude words (tools/crude.txt)", () => {
+  it("are never offered as tips, words of the moment or counter-words", () => {
+    const dict = demo();
+    expect(dict.crude("porn")).toBe(true);
+    expect(dict.crude("PORNS")).toBe(true);
+    expect(dict.crude("wolf")).toBe(false);
+    const seen = new Set<string>();
+    for (let seed = 1; seed < 40; seed++) for (const t of wordIdeas(dict, {}, seeded(seed), 8)) { seen.add(t.word); if (t.counter) seen.add(t.counter); }
+    expect([...seen].filter((w) => dict.crude(w))).toEqual([]);
+  }, 30000);
+});

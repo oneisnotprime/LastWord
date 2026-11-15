@@ -22,6 +22,12 @@ const sources = new Map<string, number>();
 const rounds: { minutes: number; winner: string; difficulty: string }[] = [];
 const wins = new Map<string, number>();
 const themedUsers = new Map<string, number>();
+// Time to kill: from the first blow of the fight that ended in a death (a gap of ENGAGE_GAP seconds
+// with no damage starts a new fight) to the death, for people and for creatures; and what killed.
+const ENGAGE_GAP = 10;
+const ttk = { person: [] as number[], creature: [] as number[] };
+const firstDeaths: number[] = [];
+const killers = new Map<string, number>();
 
 for (let r = 0; r < rooms; r++) {
   WorldRoom.testSeed = 1000 + r * 7919;
@@ -33,6 +39,29 @@ for (let r = 0; r < rooms; r++) {
     sources.set(sourceOf(why), (sources.get(sourceOf(why)) ?? 0) + letters.length);
   };
   let seconds = 0;
+  const fightFrom = new Map<string, { from: number; last: number }>();
+  const anyRoom = room as any;
+  const blow = anyRoom.blow.bind(room), kill = anyRoom.kill.bind(room);
+  let firstDeath = 0;
+  anyRoom.blow = (by: string, on: string, r: { hit: boolean; damage: number }, ...rest: unknown[]) => {
+    if (r.hit && r.damage > 0 && anyRoom.walkers.has(on)) {
+      const f = fightFrom.get(on);
+      if (!f || seconds - f.last > ENGAGE_GAP) fightFrom.set(on, { from: seconds, last: seconds }); else f.last = seconds;
+    }
+    return blow(by, on, r, ...rest);
+  };
+  anyRoom.kill = (id: string, killerId: string) => {
+    const w = anyRoom.walkers.get(id);
+    if (w && w.master !== "-" && w.citizenOf === undefined) {
+      const f = fightFrom.get(id);
+      const t = f ? seconds - f.from : 0;
+      (w.master === null ? ttk.person : ttk.creature).push(t);
+      if (w.master === null && !firstDeath) { firstDeath = seconds; firstDeaths.push(seconds); }
+      if (w.master === null) { const k = anyRoom.walkers.get(killerId); const what = k ? (k.master === null ? (k.unit?.weapon ?? "fists") : k.body?.noun ?? k.player.name) : "area/other"; killers.set(String(what), (killers.get(String(what)) ?? 0) + 1); }
+    }
+    fightFrom.delete(id);
+    return kill(id, killerId);
+  };
   while (room.state.phase !== "over" && seconds < cap * 60) { room.update(0.1); seconds += 0.1; }
   const report = room.botReport();
   for (const b of report) {
@@ -51,6 +80,10 @@ WorldRoom.testSeed = null;
 
 console.log(`\nRounds: ${rounds.length}; minutes ${rounds.map((r) => r.minutes).join(", ")}; mean ${(rounds.reduce((n, r) => n + r.minutes, 0) / rounds.length).toFixed(1)}`);
 console.log(`Wins by difficulty: ${[...wins].map(([k, n]) => `${k} ${n}`).join(", ")}`);
+const pct = (a: number[], q: number) => { const b = [...a].sort((x, y) => x - y); return b.length ? b[Math.min(b.length - 1, Math.floor(q * b.length))]!.toFixed(1) : "-"; };
+for (const [k, a] of Object.entries(ttk)) console.log(`Time to kill (${k}s, ${a.length}): median ${pct(a, 0.5)} s, p25 ${pct(a, 0.25)}, p75 ${pct(a, 0.75)}, under 2 s ${a.filter((t) => t < 2).length}`);
+console.log(`First person dead at: ${firstDeaths.map((t) => (t / 60).toFixed(2)).join(", ")} min`);
+console.log(`People killed by: ${[...killers].sort((a, b) => b[1] - a[1]).slice(0, 12).map(([k, n]) => `${k} ${n}`).join(", ")}`);
 const systems = [...new Set([...used.values()].flatMap((m) => [...m.keys()]))].sort();
 const levels = (["easy", "normal", "hard"] as const).filter((d) => used.has(d));
 console.log(`\nSystems used (count per difficulty):\n${["system".padEnd(16), ...levels.map((l) => l.padStart(8))].join("")}`);

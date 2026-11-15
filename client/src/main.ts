@@ -135,7 +135,7 @@ class World extends Phaser.Scene {
   private sightTiles = 15;
   private fog!: Phaser.GameObjects.Image;
   private lastPrompt = 0;
-  /** Starting kits: the pick, the HUD lines, the legendary calls. */
+  /** Starting kits: the pick. */
   private kits!: KitView;
   /**
    * Controller: a cursor on the map (tiles) moved by the right stick or snapped to a target, the
@@ -172,7 +172,7 @@ class World extends Phaser.Scene {
       this.net.describe(this.aiming, this.net.sessionId, index);
       this.endAim();
     }, () => { this.net?.leave(); playAgain(); });
-    this.kits = new KitView((i) => this.net?.pickKit(i), () => this.net?.unseal(), () => { this.hud.kitHtml = this.kits.hudHtml(); this.hud.redraw(); });
+    this.kits = new KitView((i) => this.net?.pickKit(i));
     // Trading: what the trade screen and offer cards send, and the people near enough to trade with.
     this.hud.act = (type, payload) => this.net?.act(type, payload);
     this.hud.people = () => {
@@ -224,10 +224,6 @@ class World extends Phaser.Scene {
         threats: (list) => this.threatList.set(list),
         kits: (offer) => this.kits.offer(offer),
         kit: (state) => this.kits.set(state),
-        legend: (call) => {
-          this.kits.announce(call, call.name === this.net?.state.players.get(this.net.sessionId)?.name);
-          this.cameras.main.shake(call.spelled ? 700 : 450, call.spelled ? 0.012 : 0.006);
-        },
         dropped: () => this.hud.toast("Connection lost: reconnecting…", "bad"),
         reconnected: () => this.hud.toast("Reconnected", "good"),
         notice: (text) => { const t = terse("notice", text); if (t) this.hud.toast(t, "good"); },
@@ -730,7 +726,7 @@ class World extends Phaser.Scene {
     if (p.pressed("up")) p.key("l");
     if (p.pressed("down")) p.key("i");
     // View: your starting kit's card when you have one, else the inventory.
-    if (p.pressed("back")) { const kit = document.querySelector<HTMLElement>("[data-kit]"); if (kit) p.click(kit); else p.key("i"); }
+    if (p.pressed("back")) p.key("i");
     if (p.pressed("right")) p.key("t");
     if (p.pressed("left") && !this.hud.focusOffers()) this.hud.toast("No offers", "bad");
     if (!me) return;
