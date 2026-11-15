@@ -267,6 +267,12 @@ lexicon so every related word is captured.
 
 ## Data
 
+- [ ] Frequency batches: `tools/freq_todo.txt` lists the next most common words with no data
+      (`tools/freq_gap.py`); batch 1 covered wordfreq ranks to about 7,800. Next: CONSIST,
+      OVERHEAD, PIERCE, PRONE, READILY...
+- [ ] Bots riding a vehicle with no foe in sight can wander out a round (2 time-ups in 48 rooms on
+      main, 1 after frequency batch 1): the endgame hunt does not reach a rider who never meets
+      anyone
 - [x] Odd producers in generated data: JOHN (a toilet) makes J, ARMY-like collectives make K.
       Only producers.txt sets `produce_*`; a generated word's `produce_*` additions are dropped
       (build_demo.py, listed in generated_problems.txt) and the prompt says so
