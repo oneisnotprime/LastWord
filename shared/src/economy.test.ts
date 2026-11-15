@@ -30,13 +30,13 @@ describe("reachability", () => {
   it("every action letter is reached by its action, and keeps the words that need it in play", () => {
     for (const ch of ACTION_LETTERS) expect(routes.get(ch)?.how).toBe("action");
   });
-  it("every letter is reached: land, roads and cities through claims and roads, Z by transmuting", () => {
+  it("every letter is reached: land, roads and cities through claims and roads, Z from bosses or what makes it", () => {
     expect(unreached).toEqual([]);
     expect(PENDING_SOURCES).toBe("");
     expect(routes.get("l")!.how).toBe("claims");
     expect(routes.get("s")!.how).toBe("claims");
     expect(routes.get("r")!.how).toBe("lays road");
-    expect(routes.get("z")!.how).toBe("transmutes");
+    expect(["deed", "produces"]).toContain(routes.get("z")!.how);
     expect(routes.get("f")?.how).toBe("burns");
   });
   it("chains go through the plan's producers: crops on tilled land, livestock, flora, labour, stations, machines", () => {

@@ -1699,7 +1699,7 @@
 "harvest_bonus":2.0,
 "harvest_sources":[
 "dig",
-"cache"
+"chest"
 ]
 },
 "ops":[]
@@ -1833,7 +1833,7 @@
 "harvest_bonus":2.0,
 "harvest_sources":[
 "dig",
-"cache"
+"chest"
 ]
 },
 "ops":[]
@@ -3273,7 +3273,7 @@
 "detect_underground":true,
 "harvest_bonus":1.5,
 "harvest_sources":[
-"cache"
+"chest"
 ],
 "equip_slot":"companion"
 },

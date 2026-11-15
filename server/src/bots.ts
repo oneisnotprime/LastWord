@@ -467,18 +467,19 @@ export function phraseFor(dict: Dictionary, w: BotWord, have: Uint8Array, skill:
 
 /**
  * Where letters came from, from the reason the room gives with them (`award`'s `why`), for the
- * bot tournament's letter shares: gathering, caches and the temple, hunting, breaking things,
+ * bot tournament's letter shares: gathering, chests and the temple, hunting, breaking things,
  * markets and offers, kills (K) and the letters of the knocked out (loot), bosses, exploring, taxes and events, transmuting, fishing catches,
  * money (gifts, loans and debts paid), or producers
  * (land, roads and cities are territory).
  */
 export function sourceOf(why: string): string {
   if (/^(forage|fishing|digging|cave|gathered)$/.test(why)) return "gather";
-  if (why === "cache" || why === "cache prize") return "cache";
+  if (why === "chest") return "chest";
   if (why === "temple") return "temple";
   if (why.startsWith("hunted ")) return "hunt";
   if (/^(broke|beat|burned) /.test(why)) return "destroy";
   if (why === "trade") return "trade";
+  if (why === "swap") return "swap";
   if (why.startsWith("from ")) return "offer";
   if (why.endsWith("'s letters")) return "loot";
   if (why.startsWith("kill ")) return "kill";

@@ -384,7 +384,7 @@ LETTERS = {
     "W": ("made", "windmills and watermills, varying with weather"),
     "V": ("made", "winning fights against player-owned objects"),
     "K": ("made", "kills of NPCs or players"),
-    "J": ("rare", "exploring undiscovered tiles"), "X": ("rare", "buried caches and ruins"),
+    "J": ("rare", "exploring undiscovered tiles"), "X": ("rare", "buried chests and ruins"),
     "Q": ("rare", "one unique site per map"), "Z": ("rare", "boss drops and transmutation"),
 }
 

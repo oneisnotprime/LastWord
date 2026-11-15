@@ -1,5 +1,6 @@
 import type { Dictionary } from "./dictionary.js";
-import { HAND_FILL, STARTING_HAND, starterWords } from "./economy.js";
+import { STARTING_HAND, starterWords } from "./economy.js";
+import { HAND_FILL, MARKET, marketRatio } from "./letters.js";
 import { HARVEST_SOURCES, TOOL_POINTS } from "./biome.js";
 import { opText } from "./inspect.js";
 import { parsePhrase, type Letters } from "./phrase.js";
@@ -67,7 +68,7 @@ export function jobRules(dict: Dictionary, job: JobDef): PlaceRules | null {
 }
 
 const KIND_TEXT: Record<string, [string, string]> = {
-  fish: ["🎣", "fishing"], forage: ["🌿", "foraging"], dig: ["⛏", "digging"], cave: ["🕳", "caves"], cache: ["🗝", "caches"],
+  fish: ["🎣", "fishing"], forage: ["🌿", "foraging"], dig: ["⛏", "digging"], cave: ["🕳", "caves"], chest: ["🗝", "chests"],
 };
 const fmt = (n: number) => String(+n.toFixed(2));
 const pct = (n: number) => `${n >= 0 ? "+" : "−"}${Math.round(Math.abs(n) * 100)}%`;
@@ -91,7 +92,7 @@ export function jobLines(job: JobDef): KitLine[] {
   const yields = job.ops.filter(yieldOp).map(([id, op, n]) => `${id === "harvest_bonus" ? "all letters" : id.slice(8)} ${op === "mul" ? `×${fmt(n)}` : `+${fmt(n)}`}`);
   if (yields.length) out.push({ icon: "🔤", text: `${yields.join(" · ")} income` });
   const rate = Number(job.set.trade_rate ?? 1);
-  if (rate !== 1) out.push({ icon: "⚖", text: `market prices ${pct(rate - 1)}` });
+  if (marketRatio(rate) !== MARKET.ratio) out.push({ icon: "⚖", text: `market prices ${pct(rate - 1)}` }); // only where it changes the whole-letter price
   if (Number(job.set.command_limit) > 0) out.push({ icon: "👥", text: `+${fmt(Number(job.set.command_limit))} creatures follow you` });
   if (Number(job.set.authority) > 0) out.push({ icon: "👑", text: `authority +${fmt(Number(job.set.authority))}` });
   if (Number(job.set.recruit_rate) > 0) out.push({ icon: "🙌", text: "draws wild creatures to you" });
