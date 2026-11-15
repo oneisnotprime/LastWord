@@ -201,3 +201,8 @@ server and the client import this, so anything here must give the same answer on
   (power for its kind plus what the speller lacks; two a group; the last place for the biggest).
   economy.ts `starterWeapons`/`weaponLetters`: starting hands (`starterHand`, kits' `kitHand`) add a
   weapon's letters where they fit.
+- Walk-in buildings: `interior.ts` `interiorOf` (the rule: `enterable`, not `portable`, `occupants` 1
+  or more, `footprint` at least INTERIOR_FROM 3 tiles, times `count`; radius 0.5 + √footprint / 2
+  tiles; door DOOR_SHARE 0.1 of integrity), `doorAt` (south wall), `within`, `opensDoors` (`counters`
+  door, lockable or gate: KEY, THIEF, RAM), `seesThroughWalls` (RADAR), DOOR_MEND, DOOR_QUIET,
+  BESIDE_TILES, `interiorText` (on `cardOf` through `behaviours`).

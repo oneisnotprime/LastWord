@@ -74,6 +74,7 @@ export const THEME_SYSTEMS = [
   "warm", "disguise", "graft self", "graft creature", "cure", "calm", "avoid sick", "hex", "hex rage", "hex doom", "hex curse",
   "hex chaos", "hex expose", "hex debt", "hex stasis", "hex void", "hex sick", "morale", "music", "gift", "bribe", "loan", "trap", "lie", "jam",
   "shrine", "sacrifice", "miracle", "weather", "haste", "rewind", "gravity", "vessel", "sail", "fishing", "catch", "duel", "luck", "sell",
+  "hide", "shelter", "store", "raid", "break in",
 ] as const;
 
 export interface BotWord {

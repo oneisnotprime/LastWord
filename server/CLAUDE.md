@@ -266,3 +266,15 @@ Node process that owns the game state. One room per map instance (from milestone
   throwing; `rebuild(w, true)` throws (equipping, describing). Bots skip crude words (`wordBook`).
   `loadtest/tournament.ts` also prints time to kill (first blow of a fight to the death), the first
   death of each round and what killed people (the recap).
+- Walk-in buildings (shared interior.ts): `placeInRoom` (in `addThing`) makes a walk-in building a
+  room (`rooms`, `Thing.room` radius, `Thing.door` percent, 0 broken) and notes things lying inside
+  (`roomOfThing`); `leaveRoom` (in `removeThing`). `Walker.inside` is kept by `walk` (`stride`
+  moves, then `bar`: an enemy is slid round the wall, told "door shut"; a door counter carried
+  breaks it, `breakDoor`). `mayEnter`: the owner's side, nobody's, or a broken door (open until
+  mended all the way, `mendDoors` in `beat`). `walkerHidden`/`thingHidden` keep the inside out of
+  `refreshViews`, `pick`, bots' people; `walled`: no blows across a wall (combat loop, fuses);
+  `strikeThing` from outside lands on the door (`strikeDoor`); `shelterOf` is 1 indoors; area
+  blows skip things indoors; `steal` and `takeNear` reach inside only from inside. Bots: a quarry
+  gone indoors turns into a raid on the door (`raid`, `break in`, then in after them), `botFlee`
+  hides in its own building (`hide`), `botShelter` goes in from striking areas (`shelter`),
+  `botStore` puts carried valuables down inside (`store`), and home is sometimes indoors.

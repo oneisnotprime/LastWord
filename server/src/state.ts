@@ -41,6 +41,10 @@ export const Thing = schema(
     count: t.float64(),
     /** One of the map's own letter sources ("market", "temple", "chest", "ruin"), else "". */
     fixture: t.string(),
+    /** A walk-in building (shared interior.ts): its room's radius in tiles, 0 for anything else. */
+    room: t.float32(),
+    /** A walk-in building's door, as a percentage of its integrity: 0 once broken (anyone may enter). */
+    door: t.uint8(),
   },
   "Thing",
 );

@@ -144,6 +144,16 @@ Playtests found power arriving in huge, invisible jumps and fights ending before
   and a round recap (winner, round length, who killed most). Screens close when you are hit.
 - A bot's opening peace covers its creatures: they only defend.
 
+## Buildings you walk into
+
+Large buildings have rooms (shared `interior.ts`; rule and numbers in TODO.md "Decided"): a floor
+plan on the map round the building with a door on its south wall. Walls hide whoever and whatever
+is inside from everyone outside but the building's own side, and no blow crosses them. Its side
+walks in; raiders break the door first (a tenth of the building's integrity, struck before the
+building), then anyone may enter until it mends. KEY, THIEF and RAM (door counters) break a door
+at a touch; RADAR sees through walls. In paper: from outside a closed building with its door; from
+inside or beside it the roof turns see-through over a planked floor.
+
 ## Map conditions
 
 Each map can start with five random adjectives applied to the whole map (FROZEN, FERTILE,

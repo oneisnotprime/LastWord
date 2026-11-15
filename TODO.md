@@ -55,9 +55,20 @@
 - Fights are felt, paced and telegraphed (PLAN.md "Fights you can see"): compression of blows and
   bodies in shared `strike`, wind-ups on heavy blows that can be stepped out of, sky and area harm
   in marked local cells with shelter, death and round recaps, a kill feed.
-- Buildings with interiors (not built yet; a later batch): large buildings get a walk-in interior
-  footprint on the map; entering hides you from outside sight; stored things sit inside, safe from
-  theft; raiders must break the door first.
+- Buildings with interiors (done; option 2, walk-in, built in the interiors batch, shared
+  `interior.ts`): a building is walk-in if it is `enterable`, not `portable`, shelters people
+  (`occupants` 1 or more) and has a `footprint` of at least 3 tiles (HOUSE, COTTAGE, BARN, INN,
+  CASTLE; not HUT, SHED, TENT, nor workplaces like BAKERY or SMITHY, which stay roofs to duck
+  under). Its room is a disc of 0.5 + √footprint / 2 tiles round it with a door on the south wall.
+  Inside, outsiders cannot see or strike you (no blows cross a wall either way) and you see out;
+  things put down inside are hidden and only someone inside can take, steal or break them; nothing
+  from the sky lands. The owner's side walks in freely; anyone else must break the door (a tenth of
+  the building's integrity; blows from outside land on it first, `siege` counts). A broken door
+  stays open until it has mended all the way (2% a second, with its side inside, no enemy, and no
+  blow for 5 s). Counters: a door counter carried (`counters` door or lockable: KEY, THIEF,
+  BURGLAR, RAM) breaks the door at a touch; sight through walls (RADAR) sees in; breaking the
+  building ends it. Bots raid (a quarry gone indoors: break the door, go in), hide when hurt,
+  shelter from striking areas, and put valuables down inside.
 - Statuses and temporary effects last several times their word's seconds (`statusSeconds`,
   `effectSeconds`): stuns about three times, most twenty, damage over time twice.
 - Nobody strikes past their sight: a weapon's reach is cut to its wielder's sight (TELESCOPE,

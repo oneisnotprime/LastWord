@@ -24,6 +24,7 @@ import {
   sails, SAIL_COST, LAUNCH_TILES, BOARD_TILES, PORT_TILES, PORT_TOLL, waveDamage, waveSlow, fishTable, catchOf,
   LUCK_POINT, RING_FLOOR, FLAG_TILES, STAKES_MAX, CHALLENGE_MINUTES, ahead, pot, backInRing, peaceOf, chaosOps, doomDamage, typoOf, type Challenge,
   standIn, spellchecked, salePrice,
+  interiorOf, doorAt, within as inRoom, opensDoors, seesThroughWalls, DOOR_MEND, DOOR_QUIET,
 } from "@lastword/shared";
 import { affords, botSettings, chooseWord, held, phraseFor, SKILL, wordBook, type BotWord, type Difficulty, type Use } from "./bots.js";
 import { loadDictionary, loadKits } from "./data.js";
@@ -378,7 +379,18 @@ interface Walker {
   windup?: { on: string; at: number; x: number; y: number };
   /** Harm taken in the last RECAP_SECONDS, oldest first: for the death recap. */
   harm?: Harm[];
+  /** The walk-in building it is inside (shared interior.ts), by thing id, or undefined outdoors. */
+  inside?: string;
 }
+
+/**
+ * A walk-in building on the ground (shared interior.ts): its centre, room radius in tiles, and door
+ * left and full. A broken door stands open until it has mended all the way.
+ */
+interface Indoors { x: number; y: number; r: number; door: number; max: number; broken?: boolean; struck?: number }
+
+/** Seconds between telling a person a door is shut. */
+const SHUT_SECONDS = 3;
 
 /** One source of harm on a walker: who (named), with what, the damage type, how much, when. */
 interface Harm { who: string; what: string; kind: string; amount: number; t: number }
@@ -501,6 +513,8 @@ interface BotMind {
   themedAt?: number;
   curedAt?: number;
   boat?: { thing: string; phase: "board" | "sail"; until: number; dock?: Point };
+  /** When it last went indoors from a storm (shared interior.ts). */
+  shelteredAt?: number;
 }
 
 /** Round seconds after which bots hunt roaming bosses. */
@@ -629,6 +643,12 @@ export class WorldRoom extends Room {
   private dodgeTried = new Map<string, boolean>();
   /** Things on the ground that have been attacked, with the damage they carry. */
   private thingEntities = new Map<string, Entity>();
+  /** Walk-in buildings (shared interior.ts) by thing id; things lying inside one (thing id -> building id); doors as struck. */
+  private rooms = new Map<string, Indoors>();
+  private roomOfThing = new Map<string, string>();
+  private doorEntities = new Map<string, Entity>();
+  /** When each person was last told a door is shut. */
+  private shutTold = new Map<string, number>();
   /** Seconds this room has run. */
   private elapsed = 0;
   private routesLeft = ROUTES_PER_TICK;
@@ -772,7 +792,9 @@ export class WorldRoom extends Room {
       const w = what as { id?: unknown; x?: unknown; y?: unknown } | null;
       walker.picked = null;
       walker.aim = null;
-      if (w && typeof w.id === "string" && (this.walkers.has(w.id) || this.state.things.has(w.id))) walker.picked = w.id;
+      // Nothing indoors can be picked from outside (shared interior.ts).
+      const indoors = (id: string) => { const o = this.walkers.get(id); return o ? this.walkerHidden(client.sessionId, walker, o) : this.thingHidden(client.sessionId, walker, id); };
+      if (w && typeof w.id === "string" && (this.walkers.has(w.id) || this.state.things.has(w.id)) && !indoors(w.id)) walker.picked = w.id;
       else if (w && Number.isFinite(w.x) && Number.isFinite(w.y)) {
         const clamp = (v: number) => Math.min(this.map.size, Math.max(0, v));
         walker.aim = { x: clamp(w.x as number), y: clamp(w.y as number) };
@@ -932,7 +954,7 @@ export class WorldRoom extends Room {
       // A vessel moored on the water is boarded from the shore (shared sea.ts BOARD_TILES).
       const g = this.grounded.get(tid);
       const reach = g?.vehicle && !walker.gear.some((x) => x.vehicle) && sails(this.statsOf(g)) ? BOARD_TILES : TAKE_RANGE;
-      if (free && d <= reach && d < bestDistance && g && !g.terrain) { best = tid; bestDistance = d; }
+      if (free && d <= reach && d < bestDistance && g && !g.terrain && (this.rooms.has(tid) || (this.roomOfThing.get(tid) ?? "") === (walker.inside ?? ""))) { best = tid; bestDistance = d; }
     });
     if (named && !best) throw new Error("Too far away to claim: walk up to it");
     // A mount of your own walking with you: get back on it, unless a thing was named or a vessel is
@@ -1912,6 +1934,7 @@ export class WorldRoom extends Room {
       if (Math.abs(dx) > far || Math.abs(dy) > far) continue; // past twice its sight either way: no need for Math.hypot
       const d = Math.hypot(dx, dy);
       if (d > far || (o.flying && !w.flying)) continue;
+      if (o.inside && this.walkerHidden(id, w, o)) continue; // indoors, out of its sight (shared interior.ts)
       const e = { id: oid, d, hp: o.hp, person: o.master === null };
       if (o.foe === id) attackers.push(e);
       else if (o.master === null) { if (!this.fooled(w, o, d)) people.push(e); } // a disguise passes (shared wear.ts)
@@ -1927,6 +1950,9 @@ export class WorldRoom extends Room {
       return;
     }
     mind.running = false;
+
+    // Strikes from the sky or an area on it, and a building of its own near: it goes indoors (shared interior.ts).
+    if (this.rooms.size && !attackers.length && this.botShelter(id, w, mind)) return;
 
     // A sickness, a rage, a sealed fate, a curse on it, or the cold: a word that ends it comes first.
     if (canSpell()) { const cured = this.botCure(id, w, mind, have); if (cured) spelled(cured); }
@@ -1961,6 +1987,14 @@ export class WorldRoom extends Room {
       return !law;
     };
     let foe = keep && (!current || !("player" in current) || strikable({ id: w.foe!, d: 0, hp: 0, person: true })) ? w.foe : null;
+    // A raid (shared interior.ts): its quarry went indoors, or it is at a door already; it keeps at
+    // the door unless someone attacks it.
+    if (!foe && !attackers.length && w.foe && this.rooms.size) {
+      const quarry = this.walkers.get(w.foe);
+      const door = quarry?.inside && this.walkerHidden(id, w, quarry) ? quarry.inside : w.foe;
+      const r = this.rooms.get(door);
+      if (r && !r.broken && !this.homeSide(id, w, door)) { if (door !== w.foe) this.botUsed(mind, "raid"); foe = door; }
+    }
     if (!foe && attackers.length) foe = pick(attackers.filter(strikable));
     else if (!foe && !peaceful && (!easy || armed)) foe = pick(people.filter((e) => e.d <= (easy ? 5 : w.sight * 2) && strikable(e)));
     // Hunting (H) and breaking ruins (D, X) when nobody needs fighting.
@@ -1973,6 +2007,13 @@ export class WorldRoom extends Room {
       else if (ruin && t?.owner !== id) foe = ruin;
     }
     // Late in the round, an armed bot goes after a roaming boss it hears of nearby, for its Z.
+    // A raid (not easy): an enemy's walk-in building in sight, door still standing, now and then; it breaks the door and goes in.
+    if (!foe && armed && !easy && !peaceful && this.rooms.size && this.rng() < skill.systems * 0.04) {
+      for (const [bid, r] of this.rooms) {
+        const owner = this.state.things.get(bid)?.owner;
+        if (!r.broken && owner && this.walkers.has(owner) && !this.homeSide(id, w, bid) && Math.hypot(r.x - w.player.x, r.y - w.player.y) <= w.sight) { foe = bid; this.botUsed(mind, "raid"); break; }
+      }
+    }
     if (!foe && armed && !easy && this.elapsed > BOT_BOSS_AFTER) {
       const far = w.sight * 3;
       for (const [oid, o] of this.walkers) if (o.boss && Math.hypot(o.player.x - w.player.x, o.player.y - w.player.y) <= far) { foe = oid; break; }
@@ -1990,6 +2031,8 @@ export class WorldRoom extends Room {
 
     // Things lying near: picked up or claimed (a free weapon, armour, food, an abandoned producer).
     this.botPickUp(id, w, mind, armed);
+    // Valuables it carries and does not use: put away in a building of its own (shared interior.ts).
+    if (!w.foe && this.rooms.size && this.rng() < skill.systems * 0.3) this.botStore(id, w, mind);
 
     // One word every few seconds: a counter to what is used against it, the most useful word it
     // can afford, else another system (adjectives, areas, roads, cities, cooking, trade).
@@ -2066,13 +2109,49 @@ export class WorldRoom extends Room {
       w.target = { x: c.x + 0.5 + (this.rng() - 0.5) * 2, y: c.y + 0.5 + (this.rng() - 0.5) * 2 };
       return;
     }
-    // Often back home to its producers: to work them and bring in their harvest.
+    // Often back home to its producers: to work them and bring in their harvest; indoors, if it has a building to walk into.
+    const house = this.rooms.size ? this.ownRoom(id, w, w.sight * 4) : null;
+    if (house && this.rng() < 0.25) { w.target = { x: house[1].x + (this.rng() - 0.5) * house[1].r, y: house[1].y + (this.rng() - 0.5) * house[1].r }; return; }
     if (mind.home && this.rng() < 0.5) {
       w.target = nearestWalkable(this.map, { x: clamp(mind.home.x + (this.rng() - 0.5) * 6), y: clamp(mind.home.y + (this.rng() - 0.5) * 6) });
       return;
     }
     const angle = this.rng() * Math.PI * 2, far = 10 + this.rng() * 20;
     w.target = nearestWalkable(this.map, { x: clamp(w.player.x + Math.cos(angle) * far), y: clamp(w.player.y + Math.sin(angle) * far) });
+  }
+
+  /**
+   * Indoors from a storm (shared interior.ts): an area that strikes covers it (a cell marked, weather,
+   * a fire) and a walk-in building of its side is near: it goes in, as well as it dodges. True if it goes.
+   */
+  private botShelter(id: string, w: Walker, mind: BotMind): boolean {
+    if (w.inside || w.flying) return false;
+    const struck = [...this.areas.values()].some((a) => a.attack && this.harms(a, id, w));
+    if (!struck || this.rng() >= SKILL[mind.difficulty].dodges) return false;
+    const house = this.ownRoom(id, w, 20);
+    if (!house) return false;
+    w.foe = null; w.gathering = 0;
+    w.target = { x: house[1].x, y: house[1].y };
+    if (this.elapsed - (mind.shelteredAt ?? -Infinity) > 10) this.botUsed(mind, "shelter");
+    mind.shelteredAt = this.elapsed;
+    return true;
+  }
+
+  /**
+   * Valuables (a thing of `value` carried loose in a hand, not its weapon) go indoors: inside a
+   * building of its own it puts them down, where only someone inside can take them; else it walks there.
+   */
+  private botStore(id: string, w: Walker, mind: BotMind) {
+    const i = w.gear.findIndex((g) => !g.vehicle && this.slotOf(g) === "held" && this.statsOf(g).num("value") >= 10 && !hasDamage(this.statsOf(g)));
+    if (i < 0) return;
+    if (w.inside && this.homeSide(id, w, w.inside)) {
+      const [g] = w.gear.splice(i, 1);
+      this.rebuild(w);
+      this.addThing(g!, id, w.player.x, w.player.y); // counted as stored by `placeInRoom`
+      return;
+    }
+    const house = this.ownRoom(id, w, w.sight * 2);
+    if (house && !w.target) w.target = { x: house[1].x, y: house[1].y };
   }
 
   /**
@@ -2088,7 +2167,10 @@ export class WorldRoom extends Room {
       const dx = w.player.x - o.player.x, dy = w.player.y - o.player.y, len = Math.hypot(dx, dy) || 1;
       const clamp = (v: number) => Math.min(this.map.size - 1, Math.max(0, v));
       const away = { x: clamp(w.player.x + (dx / len) * 12), y: clamp(w.player.y + (dy / len) * 12) };
-      w.target = nearestWalkable(this.map, mind.home && this.rng() < 0.5 ? mind.home : away);
+      // A building of its own to hide in (shared interior.ts): out of their sight and reach until they break the door.
+      const house = this.rooms.size && !w.inside ? this.ownRoom(id, w, 30) : null;
+      if (house) { w.target = { x: house[1].x, y: house[1].y }; this.botUsed(mind, "hide"); }
+      else w.target = nearestWalkable(this.map, mind.home && this.rng() < 0.5 ? mind.home : away);
     }
     if (!canSpell) return null;
     const book = wordBook(this.dict);
@@ -3458,6 +3540,7 @@ export class WorldRoom extends Room {
       if (past.length > REWIND_WINDOW) past.shift();
     }
     this.kitchen(since);
+    if (this.rooms.size) this.mendDoors(since);
     this.state.alive = this.people.length;
     this.state.clock = Math.floor(this.elapsed);
     this.nearGrid = new Map();
@@ -3608,7 +3691,14 @@ export class WorldRoom extends Room {
   }
 
   /** Moves a walker along a route to its target, going around anything it cannot cross. */
+  /** Walks a walker toward its target; walls of rooms it may not enter stop it (shared interior.ts). */
   private walk(w: Walker, seconds: number) {
+    const from = { x: w.player.x, y: w.player.y };
+    this.stride(w, seconds);
+    if (this.rooms.size && (w.player.x !== from.x || w.player.y !== from.y)) this.bar(w, from);
+  }
+
+  private stride(w: Walker, seconds: number) {
     const target = w.target!;
     // A wild creature that is only wandering ambles; it runs only to chase or to flee. At full
     // speed a grazing PIG, as fast as a person, could never be caught.
@@ -4741,8 +4831,8 @@ export class WorldRoom extends Room {
     }
     this.state.things.forEach((t, tid) => {
       const g = this.grounded.get(tid);
-      if (!g || g.terrain || !inside(t) || (!a.friendlyFire && t.owner === a.owner) || this.areaLaw(a, t)) return;
-      this.strikeThing(a.owner, a.attack!, tid, t);
+      if (!g || g.terrain || !inside(t) || (!a.friendlyFire && t.owner === a.owner) || this.roomOfThing.has(tid) || this.areaLaw(a, t)) return;
+      this.strikeThing(a.owner, a.attack!, tid, t, false, "");
     });
   }
 
@@ -4776,11 +4866,209 @@ export class WorldRoom extends Room {
     }, true);
   }
 
+  // -------------------------------------------------------------------------------------------
+  // Walk-in buildings (shared interior.ts): rooms, doors, hiding, storage.
+
+  /** Makes a thing just put down a room if it is a walk-in building, or notes the room it lies in. */
+  private placeInRoom(id: string, gear: Gear, thing: Thing) {
+    const room = gear.fixture || gear.terrain ? null : interiorOf(this.statsOf(gear), thing.count);
+    if (!room) {
+      const bid = this.roomAt(thing);
+      if (!bid) return;
+      this.roomOfThing.set(id, bid);
+      // A bot putting a thing of its own away indoors (spelled or set down in its building): stored.
+      const mind = this.bots.get(thing.owner), owner = this.walkers.get(thing.owner);
+      if (mind && owner && this.homeSide(thing.owner, owner, bid)) this.botUsed(mind, "store");
+      return;
+    }
+    this.rooms.set(id, { x: thing.x, y: thing.y, r: room.radius, door: room.door, max: room.door });
+    thing.room = room.radius;
+    thing.door = 100;
+    // Whatever already stands or lies there is inside it now.
+    this.state.things.forEach((t, tid) => { if (tid !== id && !this.rooms.has(tid) && !this.roomOfThing.has(tid) && inRoom(t, thing.x, thing.y, room.radius)) this.roomOfThing.set(tid, id); });
+    for (const w of this.walkers.values()) if (!w.inside && inRoom(w.player, thing.x, thing.y, room.radius)) w.inside = id;
+  }
+
+  /** Forgets a thing taken off the ground: a room's walls are gone, and whoever was inside is outdoors. */
+  private leaveRoom(id: string) {
+    this.roomOfThing.delete(id);
+    if (!this.rooms.delete(id)) return;
+    this.doorEntities.delete(id);
+    for (const [tid, bid] of [...this.roomOfThing]) if (bid === id) this.roomOfThing.delete(tid);
+    for (const w of this.walkers.values()) if (w.inside === id) w.inside = this.roomAt(w.player);
+  }
+
+  /** The walk-in building whose room holds a point, if any. */
+  private roomAt(p: Point): string | undefined {
+    for (const [id, r] of this.rooms) if (inRoom(p, r.x, r.y, r.r)) return id;
+    return undefined;
+  }
+
+  /** Whether a building is on a walker's side: its owner's side is theirs. */
+  private homeSide(id: string, w: Walker, bid: string): boolean {
+    const owner = this.state.things.get(bid)?.owner;
+    if (!owner) return false;
+    const o = this.walkers.get(owner);
+    return (o ? this.side(owner, o) : owner) === this.side(id, w);
+  }
+
+  /** Whether a walker may walk into a room: its side's, nobody's (or a dead owner's), or its door is broken. */
+  private mayEnter(id: string, w: Walker, bid: string): boolean {
+    const r = this.rooms.get(bid), owner = this.state.things.get(bid)?.owner ?? "";
+    return !r || r.broken || !owner || !this.walkers.has(owner) || this.homeSide(id, w, bid);
+  }
+
+  /** What a walker is and carries: its body and every thing of its gear. */
+  private *carriedStats(w: Walker): Generator<Stats> {
+    yield w.unit.body.stats;
+    for (const g of w.gear) yield this.statsOf(g);
+  }
+
+  /** A door counter on it (shared `opensDoors`: a KEY, a RAM, a THIEF): the word that breaks doors at a touch. */
+  private doorBreaker(w: Walker): string | null {
+    if (opensDoors(w.unit.body.stats)) return w.player.name;
+    for (const g of w.gear) if (opensDoors(this.statsOf(g))) return g.phrase;
+    return null;
+  }
+
+  /** Whether a viewer cannot see into a room: not inside it, not on its side, and no sight through walls. */
+  private hiddenIn(viewerId: string, viewer: Walker, bid: string | undefined): boolean {
+    if (!bid || viewer.inside === bid || this.homeSide(viewerId, viewer, bid)) return false;
+    for (const s of this.carriedStats(viewer)) if (seesThroughWalls(s)) return false;
+    return true;
+  }
+
+  /** Whether a walker is hidden indoors from a viewer (its own creatures and itself it always sees). */
+  private walkerHidden(viewerId: string, viewer: Walker, target: Walker): boolean {
+    return !!target.inside && target.id !== viewerId && target.master !== viewerId && this.hiddenIn(viewerId, viewer, target.inside);
+  }
+
+  /** Whether a thing is put away indoors out of a viewer's sight (its owner sees their own). */
+  private thingHidden(viewerId: string, viewer: Walker, tid: string): boolean {
+    const bid = this.roomOfThing.get(tid);
+    return !!bid && this.state.things.get(tid)?.owner !== viewerId && this.hiddenIn(viewerId, viewer, bid);
+  }
+
+  /**
+   * Whether a wall stands between a walker and what it would strike: nobody strikes across one.
+   * A building itself is struck from outside (its door first) or from within its own room.
+   */
+  private walled(w: Walker, foeId: string, foe: Walker | undefined): boolean {
+    const here = w.inside ?? "";
+    if (foe) return here !== (foe.inside ?? "");
+    if (this.rooms.has(foeId)) return here !== "" && here !== foeId;
+    return here !== (this.roomOfThing.get(foeId) ?? "");
+  }
+
+  /**
+   * After a walker moved from `from`: into a room it may enter, it is inside; a door counter on it
+   * breaks the door at a touch; else the wall stops it, sliding it round toward where it was going
+   * (a person is told the door is shut).
+   */
+  private bar(w: Walker, from: Point) {
+    const bid = this.roomAt(w.player);
+    if (bid === w.inside) return;
+    if (!bid || this.mayEnter(w.id, w, bid)) { w.inside = bid; return; }
+    const breaker = this.doorBreaker(w);
+    if (breaker) { this.breakDoor(bid, w.id, breaker); w.inside = bid; return; }
+    const r = this.rooms.get(bid)!, target = w.target;
+    const step = Math.hypot(w.player.x - from.x, w.player.y - from.y);
+    const a0 = Math.atan2(from.y - r.y, from.x - r.x);
+    let a = a0;
+    const outside = target && !inRoom(target, r.x, r.y, r.r);
+    if (outside) {
+      let da = Math.atan2(target.y - r.y, target.x - r.x) - a0;
+      while (da > Math.PI) da -= Math.PI * 2;
+      while (da < -Math.PI) da += Math.PI * 2;
+      const most = step / r.r;
+      a += Math.max(-most, Math.min(most, da));
+      w.route = [{ x: target.x, y: target.y }]; // around the wall, then straight on
+    } else {
+      w.target = null; w.route = []; w.routeTo = null;
+      if (w.master === null && !this.bots.has(w.id) && this.elapsed - (this.shutTold.get(w.id) ?? -Infinity) >= SHUT_SECONDS) {
+        this.shutTold.set(w.id, this.elapsed);
+        const name = this.grounded.get(bid)?.phrase.toUpperCase() ?? "It";
+        this.sendTo(w.id, "refused", `${name}: door shut · attack it to break in`);
+      }
+    }
+    const spot = { x: r.x + Math.cos(a) * (r.r + 0.02), y: r.y + Math.sin(a) * (r.r + 0.02) };
+    if (walkableAt(this.map, spot.x, spot.y) && !this.roomAt(spot)) { w.player.x = spot.x; w.player.y = spot.y; }
+    else { w.player.x = from.x; w.player.y = from.y; }
+    w.inside = this.roomAt(w.player);
+  }
+
+  /** A door broken (by blows, or at a touch by a door counter): anyone may walk in until it mends. */
+  private breakDoor(bid: string, by: string, how: string) {
+    const r = this.rooms.get(bid), t = this.state.things.get(bid), g = this.grounded.get(bid);
+    if (!r || !t || !g) return;
+    r.door = 0;
+    r.broken = true;
+    t.door = 0;
+    const name = g.phrase.toUpperCase(), who = this.walkers.get(by);
+    const payer = this.payee(by)?.[0] ?? by;
+    this.sendTo(payer, "notice", `${name} door broken${how ? ` by ${how.toUpperCase()}` : ""}: walk in`);
+    if (t.owner && t.owner !== payer) this.sendTo(t.owner, "notice", `Your ${name}'s door was broken${who ? ` by ${who.player.name.toUpperCase()}` : ""}`);
+    const mind = this.bots.get(payer), bot = this.walkers.get(payer);
+    if (mind && bot) {
+      this.botUsed(mind, "break in");
+      // In it goes, after whoever hid there.
+      if (bot.foe === bid) bot.foe = null;
+      bot.gathering = 0;
+      bot.target = { x: r.x, y: r.y }; bot.route = []; bot.routeTo = null;
+    }
+  }
+
+  /** A blow from outside on a walk-in building lands on its door while the door stands. */
+  private strikeDoor(attackerId: string, attack: Stats, id: string, thing: Thing, room: Indoors, ranged: boolean) {
+    const gear = this.grounded.get(id)!;
+    let door = this.doorEntities.get(id);
+    if (!door) {
+      const made = resolveSpelled(this.dict, gear.spelled);
+      made.apply([["integrity", "mul", room.max / Math.max(1, made.num("integrity"))]]);
+      door = spawn(`${gear.phrase} door`, made);
+      this.doorEntities.set(id, door);
+    }
+    door.integrity = room.door;
+    room.struck = this.elapsed;
+    const r = strike(attack, door, this.rng);
+    // On its owner's claimed ground the door takes only part of the blow, as the building would.
+    const { shelter } = this.claimAt(thing.owner, thing, id);
+    const dealt = Math.max(0, room.door - door.integrity) * (1 - Math.min(1, shelter));
+    this.blow(attackerId, id, { ...r, damage: dealt }, "door", ranged);
+    room.door = Math.max(0, room.door - dealt);
+    thing.door = Math.max(room.door > 0 ? 1 : 0, Math.ceil((room.door / room.max) * 100));
+    if (room.door <= 0) this.breakDoor(id, attackerId, "");
+  }
+
+  /** Once a second: a door mends while its owner's side is inside, no enemy is, and nobody has struck it for DOOR_QUIET seconds. */
+  private mendDoors(since: number) {
+    const home = new Set<string>(), enemy = new Set<string>();
+    for (const [wid, w] of this.walkers) if (w.inside) (this.homeSide(wid, w, w.inside) ? home : enemy).add(w.inside);
+    for (const [bid, r] of this.rooms) {
+      if (r.door >= r.max || !home.has(bid) || enemy.has(bid) || this.elapsed - (r.struck ?? -Infinity) < DOOR_QUIET) continue;
+      r.door = Math.min(r.max, r.door + r.max * DOOR_MEND * since);
+      if (r.door >= r.max) r.broken = false; // hung again
+      const t = this.state.things.get(bid);
+      if (t && !r.broken) t.door = Math.max(1, Math.ceil((r.door / r.max) * 100));
+    }
+  }
+
+  /** The nearest walk-in building of a walker's side within `far` tiles. */
+  private ownRoom(id: string, w: Walker, far: number): [string, Indoors] | null {
+    let best: [string, Indoors] | null = null, bestD = far;
+    for (const [bid, r] of this.rooms) {
+      const d = Math.hypot(r.x - w.player.x, r.y - w.player.y);
+      if (d <= bestD && this.homeSide(id, w, bid)) { best = [bid, r]; bestD = d; }
+    }
+    return best;
+  }
+
   /**
    * Share of an area's blow a walker is sheltered from (shared hazard.ts `shelterShare`): all of it
    * under a roof (an `enterable` building within ROOF_TILES), else its side's claim's shelter there.
    */
   private shelterOf(id: string, w: Walker): number {
+    if (w.inside) return 1; // indoors: the roof keeps everything off
     if (w.flying) return 0;
     let roof = false;
     for (let dx = -1; dx <= 1 && !roof; dx++) for (let dy = -1; dy <= 1 && !roof; dy++) {
@@ -5233,9 +5521,10 @@ export class WorldRoom extends Room {
       attack.set("accuracy", "ABS");
       const area = Math.max(1, stats.num("attack_area") / TILE_METERS), owner = t.owner, x = t.x, y = t.y;
       const maker = this.walkers.get(owner), mine = maker ? this.side(owner, maker) : owner, all = stats.flag("friendly_fire");
+      const space = this.roomOfThing.get(tid) ?? ""; // a blast does not cross walls (shared interior.ts)
       this.removeThing(tid);
       for (const [wid, w] of [...this.walkers]) {
-        if (w.flying || w.hamper.untouchable || Math.hypot(w.player.x - x, w.player.y - y) > area) continue;
+        if (w.flying || w.hamper.untouchable || Math.hypot(w.player.x - x, w.player.y - y) > area || (w.inside ?? "") !== space) continue;
         if (!all && this.side(wid, w) === mine) continue;
         const outer = w.unit.outer, r = strike(attack, outer, this.rng);
         this.blow(owner || tid, wid, r, outer === w.unit.body ? "" : outer.name, false);
@@ -5246,7 +5535,8 @@ export class WorldRoom extends Room {
       }
       for (const [oid, o] of [...this.state.things]) {
         if (o.fixture && o.fixture !== "ruin") continue; // markets, the temple and buried chests stand
-        if (this.grounded.has(oid) && Math.hypot(o.x - x, o.y - y) <= area) this.strikeThing(owner || tid, attack, oid, o);
+        if (!this.rooms.has(oid) && (this.roomOfThing.get(oid) ?? "") !== space) continue;
+        if (this.grounded.has(oid) && Math.hypot(o.x - x, o.y - y) <= area) this.strikeThing(owner || tid, attack, oid, o, false, space);
       }
       this.refreshViews();
     }
@@ -5492,6 +5782,9 @@ export class WorldRoom extends Room {
     if (thing.owner === id) throw new Error("That is already yours");
     const reach = Math.max(1.5, phrase.stats.num("placement_range") / TILE_METERS);
     if (Math.hypot(thing.x - walker.player.x, thing.y - walker.player.y) > reach) throw new Error(`Too far away for ${word}`);
+    // Put away indoors: only someone inside can reach it (shared interior.ts).
+    const indoors = this.roomOfThing.get(targetId);
+    if (indoors && walker.inside !== indoors) throw new Error(`${gear.phrase.toUpperCase()} is inside ${this.grounded.get(indoors)?.phrase.toUpperCase() ?? "a building"}: break the door and go in`);
     // The speller's own stat against the thing's: stealth against security for a theft.
     const mine = contestOf(walker.unit.body.stats, phrase.stats, String(phrase.stats.get("contest_with")));
     // Claimed ground (HOME, CASTLE) adds its security to what lies on it; a debtor's things have
@@ -5747,7 +6040,13 @@ export class WorldRoom extends Room {
   }
 
   /** One strike on a thing lying on the ground. Destroying things is where D comes from. */
-  private strikeThing(attackerId: string, attack: Stats, id: string, thing: Thing, ranged = false) {
+  /**
+   * `space`: the room the blow comes from ("" outdoors); by default the attacker's. A walk-in
+   * building struck from outside takes the blow on its door while the door stands.
+   */
+  private strikeThing(attackerId: string, attack: Stats, id: string, thing: Thing, ranged = false, space = this.walkers.get(attackerId)?.inside ?? "") {
+    const room = this.rooms.get(id);
+    if (room && !room.broken && space !== id) return this.strikeDoor(attackerId, attack, id, thing, room, ranged);
     const gear = this.grounded.get(id)!;
     let entity = this.thingEntities.get(id);
     if (!entity) {
@@ -6369,6 +6668,7 @@ export class WorldRoom extends Room {
     const t = this.state.things.get(id);
     if (!t) return;
     this.unradiateAll(id);
+    this.leaveRoom(id);
     const cell = this.thingGrid.get(thingKey(t.x, t.y));
     if (cell) cell.splice(cell.indexOf(id), 1);
     this.state.things.delete(id);
@@ -6731,6 +7031,7 @@ export class WorldRoom extends Room {
     this.state.things.set(id, thing);
     const k = thingKey(x, y);
     (this.thingGrid.get(k) ?? this.thingGrid.set(k, []).get(k)!).push(id);
+    this.placeInRoom(id, gear, thing);
     // A thing on the ground radiates around itself, by its own sight, while it lies there.
     const sight = Number(this.dict.base(gear.spelled.noun, "sight_range"));
     this.radiate(gear, gear.spelled, id, owner, { x, y }, null, sight);
@@ -6813,8 +7114,17 @@ export class WorldRoom extends Room {
       if (!foeId || !this.walkers.has(id)) continue;
       const foe = this.walkers.get(foeId);
       const thing = foe ? undefined : this.state.things.get(foeId);
-      const at = foe?.player ?? thing;
+      // A walk-in building is struck at its door from outside (shared interior.ts).
+      const room = thing ? this.rooms.get(foeId) : undefined;
+      const at = foe?.player ?? (room && w.inside !== foeId && !room.broken ? doorAt(room.x, room.y, room.r) : thing);
       if (!at) { w.foe = null; continue; }
+      if (this.rooms.size && this.walled(w, foeId, foe)) {
+        // Nobody strikes across a wall. A bot whose quarry went indoors raids: it goes for the door.
+        const bid = foe?.inside, mind = this.bots.get(id);
+        if (bid && mind && !w.inside && !this.homeSide(id, w, bid) && !this.rooms.get(bid)!.broken) { w.foe = bid; this.botUsed(mind, "raid"); }
+        else w.foe = null;
+        continue;
+      }
       if (!w.hamper.acts || w.fleeing) continue; // stunned, frozen, asleep, afraid or broken
       if (foe?.hamper.untouchable) { w.foe = null; continue; } // in stasis or a truce: nothing to strike
       if (w.hamper.spares.includes(foeId)) { w.foe = null; continue; } // charmed: will not hurt the charmer
@@ -6890,8 +7200,9 @@ export class WorldRoom extends Room {
         const push = knockbackOf(attack.num("knockback"), foe.gravity ?? 1, this.anchored(foe));
         if (push > 0) {
           const dx = foe.player.x - w.player.x, dy = foe.player.y - w.player.y, d = Math.hypot(dx, dy) || 1;
-          const tiles = push / TILE_METERS;
+          const tiles = push / TILE_METERS, was = { x: foe.player.x, y: foe.player.y };
           stepToward(this.map, foe.player, { x: foe.player.x + (dx / d) * tiles, y: foe.player.y + (dy / d) * tiles }, push, 1, foe.flying, foe.sailing ? SAIL_COST : undefined);
+          if (this.rooms.size) this.bar(foe, was);
         }
         // A blade that severs (a SCALPEL, a SURGEON's hand) cuts a graft off with each blow (shared body.ts).
         if (attack.num("severs") > 0) this.sever(foe, attack.num("severs"));
@@ -7024,12 +7335,14 @@ export class WorldRoom extends Room {
       const me = own ?? (watching && this.walkers.get(watching.watch));
       if (!me || !client.view) continue;
       const seenBy = own ?? watching!;
-      const now = new Set([own ? client.sessionId : watching!.watch]);
+      const meId = own ? client.sessionId : watching!.watch;
+      const now = new Set([meId]);
       for (let dx = -1; dx <= 1; dx++) {
         for (let dy = -1; dy <= 1; dy++) {
           for (const id of grid.get(key(me.player.x + dx * cell, me.player.y + dy * cell)) ?? []) {
-            const other = this.walkers.get(id)!.player;
-            if (Math.hypot(other.x - me.player.x, other.y - me.player.y) <= me.sight) now.add(id);
+            const o = this.walkers.get(id)!, other = o.player;
+            // Indoors is out of sight from outside (shared interior.ts).
+            if (Math.hypot(other.x - me.player.x, other.y - me.player.y) <= me.sight && !(o.inside && this.walkerHidden(meId, me, o))) now.add(id);
           }
         }
       }
@@ -7048,7 +7361,7 @@ export class WorldRoom extends Room {
         for (let dy = -reach; dy <= reach; dy++) {
           for (const id of this.thingGrid.get(thingKey(me.player.x + dx * THING_CELL, me.player.y + dy * THING_CELL)) ?? []) {
             const t = this.state.things.get(id);
-            if (t && Math.hypot(t.x - me.player.x, t.y - me.player.y) <= me.sight && !this.trapHidden(id, t, me)) things.add(id);
+            if (t && Math.hypot(t.x - me.player.x, t.y - me.player.y) <= me.sight && !this.trapHidden(id, t, me) && !(this.roomOfThing.has(id) && this.thingHidden(meId, me, id))) things.add(id);
           }
         }
       }

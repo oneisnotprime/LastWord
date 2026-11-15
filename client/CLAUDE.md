@@ -151,3 +151,9 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
   HUD card, chips, minimap, corner and letter bar (`threats.ts`). Body classes keep one sheet at a
   time: `onscreen` (a screen hides the HUD card, chips and calls; it closes your kit's card),
   `spelling` (calls wait), `bannered` (death or round end: screens and cards close).
+- Walk-in buildings: `src/rooms.ts` (`RoomView`) draws a room's floor plan (an octagon) and its
+  door on the south wall under the standee: from outside the walls' footing and a shut door
+  (darker the stronger, a red crack when struck); inside or within BESIDE_TILES the floor's paper
+  planks show and the standee (the roof) drops to ROOF_CUT alpha; a broken door hangs askew with
+  splinters. The corner says "In HOUSE · hidden from outside". A click on an enemy's door attacks
+  the building. Those indoors and what they put down never reach outsiders' views (server).

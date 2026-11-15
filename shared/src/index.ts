@@ -45,6 +45,7 @@ export * from "./signal.js";
 export * from "./faith.js";
 export * from "./weather.js";
 export * from "./hazard.js";
+export * from "./interior.js";
 export * from "./time.js";
 export * from "./space.js";
 export * from "./sea.js";
