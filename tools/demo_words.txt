@@ -362,7 +362,7 @@ wind: placement=region field_radius=3000 field_targets=all field_duration=10 dmg
 lightning: placement=target placement_range=300 single_use=true dmg_electric=5000 dmg_fire=500 attack_area=3 inflict_stun=3 luminosity=10 loudness=10 targets=land,air,water friendly_fire=true
 
 # noun phenomenon
-flood: placement=region field_radius=500 field_duration=15 tile_type=water depth=3 dmg_water=30 dmg_suffocation=20 attack_rate=0.2 friendly_fire=true movement_cost=6 moisture=10 fertility+2 counters=fire,pit,mine
+flood: placement=region field_radius=200 field_duration=15 tile_type=water depth=3 dmg_water=30 dmg_suffocation=20 attack_rate=0.2 friendly_fire=true movement_cost=6 moisture=10 fertility+2 counters=fire,pit,mine
 
 # noun season
 
@@ -2084,7 +2084,7 @@ telegraph: mass=20 integrity=60 material=wood,copper portable=false command_limi
 
 # noun document
 map: mass=0.1 integrity=3 flammability=9 material=paper map_reveal=200 detect_letters=500
-newspaper: mass=0.3 integrity=1 material=paper flammability=9 placement=map field_radius=ABS field_targets=all field_duration=1 detect_life+300 morale+1
+newspaper: mass=0.3 integrity=1 material=paper flammability=9 placement=map field_radius=60 field_targets=all field_duration=1 detect_life+300 morale+1
 
 # noun worker
 informant: mass=70 integrity=80 alive=true sentient=true intelligence=7 loyalty=3 hands=true speech=true speed_land=6 stealth=7 read_inventory=true detect_life=300 food_need=0.03
@@ -2745,3 +2745,43 @@ solution: state=liquid mass=1 density=1050 wetness=6 corrosiveness=3 toxicity=2 
 
 # noun feeling
 fatigue: placement=target placement_range=40 field_radius=8 field_targets=living field_duration=3 inflict_slow=15 inflict_sleep=3 friendly_fire=true speed_land*0.6 labor*0.5 attack_rate*0.7 counters=coffee,rest,sleep,pacing
+
+# Frequency batch 1 (tools/freq_gap.py): the most common words that had no data. The rest of
+# the batch, about a thousand words, is generated from these and the lines above. Time words set
+# daylight or stretch durations, abstract nouns are fields and events, verbs are cast on the speller.
+
+# noun duration
+year: extends_duration=8760 persistence*8760 field_duration*8760 age+525600
+
+# noun phenomenon
+night: placement=map field_radius=ABS field_targets=all field_duration=6 sets_daylight=night light_delta=-5 temperature_delta=-6 stealth+4 sight_range*0.5 produce_K*1.5 counters=dawn,day,morning,noon,sunrise,sun
+
+# noun phenomenon
+morning: placement=map field_radius=ABS field_targets=all field_duration=6 sets_daylight=day light_delta=3 morale+2 regeneration+1 stealth+-3 clears_weather=fog counters=night,evening,midnight,dusk,nightmare
+
+# noun creature
+animal: mass=60 integrity=120 alive=true intelligence=3 speed_land=10 diet=omnivore aggression=4 smell_range=80 dmg_slash=25 dmg_pierce=20 attack_rate=1.2 tamable=true food_need=0.04 habitat=meadow,taiga,savanna
+
+# noun knowledge
+knowledge: placement=self field_radius=30 field_targets=owned field_duration=4 intelligence+4 read_properties+5 training+2 detect_stealth+3 counters=ignorance,amnesia,propaganda
+
+# noun attribute
+health: placement=self field_radius=20 field_targets=owned field_duration=3 regeneration+4 res_disease+0.4 integrity*1.2 effect_status=sick,poison counters=disease,plague,illness,infection
+
+# noun act
+question: placement=target placement_range=60 event_target=character event_duration=1 read_properties=6 inflict_confuse=4 contest_with=intelligence contested_by=intelligence
+
+# noun attribute
+freedom: placement=self field_radius=20 field_targets=owned field_duration=2 effect_status=root,stun,slow,silence,charm,stasis immune_root=true speed_land*1.2 counters=prison,jail,chain,captivity,slavery,tyranny
+
+# verb social
+believe: duration=60 faith_output+1 courage+4 morale+3 immune_fear=true
+
+# verb perceive
+remember: duration=30 rewinds=10 tracking+6 map_reveal+60
+
+# verb perceive
+learn: duration=120 trainable+4 training+2 intelligence+2
+
+# verb perceive
+understand: duration=60 intelligence+4 read_properties+5 immune_confuse=true

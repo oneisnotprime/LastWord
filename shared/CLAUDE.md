@@ -211,6 +211,11 @@ server and the client import this, so anything here must give the same answer on
   - stone and ore (theme 27): food.ts `heatNeeded` (a raw thing's `smelts_at`: ore smelts into its
     `cooks_into` metal only by that much heat); rocks, minerals and landforms are data on the
     material, terrain and trap systems.
+- Frequency batch 1 (`freq1.test.ts`): data only. A noun's archetype decides how it acts (`phrase.ts`
+  `kindOf`): an act aimed at someone needs an event archetype (act, event, crime...); a knowledge,
+  feeling or attribute word with a `field_radius` is a field; a physical class (artifact, person...)
+  is an object whose field radiates from it. No object or creature radiates fear, healing or a field
+  past 200 m (the map is about 1 km across).
 - `combat.ts` `shown`: damage, HP and integrity as cards and tips show them (felt).
 - `letters.ts` `salePrice`: what a market pays for a thing sold, by its `value` (SALE_MAX).
 - `tips.ts` teaching tips: `wordTip` (one line of what a word does in numbers, plus its shortest

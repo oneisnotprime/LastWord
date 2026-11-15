@@ -47,6 +47,8 @@ EXCLUDED = set("""
 american english british french european chinese russian german indian african christian
 japanese spanish canadian asian christ muslim italian jewish catholic irish korean islamic
 mexican gay disabled suicide rape racist racism nazi slave abortion
+welsh indigenous tribal lesbian transgender sexuality sexually disability autism immigrant
+slavery raped genocide pregnancy
 """.split())
 
 

@@ -168,3 +168,8 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
   `trapdoor`, `cuffs`, `lockup` jails with barred windows, `earthwork`, `pipeMouth`, `mazeShape`, a
   hooded `headsmanShape`, striped `convict`s) and of heraldry and courts (`banneret` banners with a
   charge, `lord` nobles, sceptre, dais), and rosettes for the oaths, betrayals and breakouts.
+- Frequency batch 1: `WORDS` has the new concrete words without a generated image: people as `job`
+  bipeds by what they do (TOURIST in a cap, WIDOW hooded in black, BRIDE in white, MENTOR with a
+  staff), crowds for INFANTRY and WORKFORCE, and new things (`ceilingShape`, `plugShape`,
+  `cylinderShape`, `dollShape`, `skirtShape`, `picture` for PIC and ARTWORK, `radiator` for HEATING,
+  `grave` for CEMETERY, `pipelineShape`, a cart, a drain); landforms are signs.

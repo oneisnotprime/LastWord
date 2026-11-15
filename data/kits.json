@@ -1584,6 +1584,36 @@
    "core": false
   },
   {
+   "word": "canon",
+   "set": {
+    "authority": 2
+   },
+   "ops": [
+    [
+     "produce_Y",
+     "mul",
+     2
+    ],
+    [
+     "armor",
+     "add",
+     6
+    ],
+    [
+     "integrity",
+     "mul",
+     1.15
+    ],
+    [
+     "res_unholy",
+     "add",
+     0.5
+    ]
+   ],
+   "letters": "syk",
+   "core": false
+  },
+  {
    "word": "cardinal",
    "set": {
     "command_limit": 8.0,
@@ -2548,23 +2578,6 @@
    ],
    "letters": "sy",
    "core": false
-  },
-  {
-   "word": "leader",
-   "set": {
-    "command_limit": 8.0,
-    "authority": 4,
-    "recruit_rate": 0.5
-   },
-   "ops": [
-    [
-     "produce_Y",
-     "mul",
-     2
-    ]
-   ],
-   "letters": "sy",
-   "core": false
   }
  ],
  "buildings": [
@@ -2631,6 +2644,7 @@
   "office",
   "university",
   "college",
+  "tv",
   "church",
   "website",
   "store",
@@ -2666,7 +2680,6 @@
   "palace",
   "gym",
   "lab",
-  "resort",
-  "theater"
+  "resort"
  ]
 }

@@ -46,7 +46,6 @@ acarophobia	noun	inert	state	0.0	obscure	n14405137	-
 acataphasia	noun	inert	state	0.0	obscure	n14119605	-
 acathexia	noun	inert	state	0.0	obscure	n14037896	-
 acathexis	noun	inert	motive	0.0	obscure	n09208762	-
-accent	noun	inert	communication	4.14	core	n07146219	verb:communication
 accentuate	verb	inert	communication	2.76	uncommon	v01015376	-
 acciaccatura	noun	inert	communication	0.0	obscure	n06885033	-
 acclaim	verb	inert	communication	3.29	common	v00863389	noun:communication
@@ -56,7 +55,6 @@ acclimatisation	noun	inert	process	1.87	rare	n13445816	-
 acclimatization	noun	inert	process	2.01	uncommon	n13445816	-
 accost	verb	inert	communication	1.96	rare	v00992687	-
 accouchement	noun	inert	process	1.01	rare	n13469507	-
-account	noun	inert	communication	5.21	core	n06526084	verb:transfer
 accurse	verb	inert	communication	0.0	obscure	v00866574	-
 accusal	noun	inert	communication	0.0	obscure	n07248890	-
 accusation	noun	inert	communication	3.6	common	n07248890	-
@@ -74,7 +72,6 @@ achylia	noun	inert	state	0.0	obscure	n14078124	-
 acidemia	noun	inert	state	1.41	rare	n14044224	-
 acidification	noun	inert	process	2.73	uncommon	n13447411	-
 acidosis	noun	inert	state	2.44	uncommon	n14043071	-
-acknowledge	verb	inert	communication	4.18	core	v00818972	-
 acknowledgement	noun	inert	state	3.32	common	n14435385	-
 acknowledgment	noun	inert	state	3.11	common	n14435385	-
 acorea	noun	inert	state	0.0	obscure	n14045324	-
@@ -139,8 +136,6 @@ advertize	verb	inert	communication	1.3	rare	v00978685	-
 advertizement	noun	inert	communication	0.0	obscure	n07263469	-
 advertizing	noun	inert	communication	1.57	rare	n07263469	-
 advertorial	noun	inert	communication	1.75	rare	n07263848	-
-advice	noun	inert	communication	4.88	core	n06684229	-
-advise	verb	inert	communication	4.09	core	v00874568	-
 aerodontalgia	noun	inert	state	0.0	obscure	n14347508	-
 aerogram	noun	inert	communication	0.0	obscure	n06638567	-
 aerogramme	noun	inert	communication	0.0	obscure	n06638567	-
@@ -155,7 +150,6 @@ affrication	noun	inert	communication	0.0	obscure	n07131349	-
 affricative	noun	inert	communication	0.0	obscure	n07133698	-
 afibrinogenemia	noun	inert	state	0.0	obscure	n14194105	-
 afterlife	noun	inert	time	3.36	common	n15168824	-
-afternoon	noun	inert	time	4.72	core	n15191238	-
 afterpains	noun	inert	state	0.0	obscure	n14354397	-
 afterpiece	noun	inert	communication	1.12	rare	n07021660	-
 agalactia	noun	inert	state	0.0	obscure	n14045670	-
@@ -182,7 +176,6 @@ agranulocytosis	noun	inert	state	1.47	rare	n14095378	-
 agranulosis	noun	inert	state	0.0	obscure	n14095378	-
 agrapha	noun	inert	communication	0.0	obscure	n07169468	-
 agraphia	noun	inert	state	1.31	rare	n14119430	-
-agree	verb	inert	communication	4.97	core	v00807038	-
 agromania	noun	inert	motive	0.0	obscure	n09204786	-
 ahem	noun	inert	communication	3.25	common	n07141229	-
 ahimsa	noun	inert	communication	2.1	uncommon	n06802658	-
@@ -328,16 +321,12 @@ anhidrosis	noun	inert	state	1.12	rare	n14047275	-
 anhydrosis	noun	inert	state	0.0	obscure	n14047275	-
 animadversion	noun	inert	communication	0.0	obscure	n06722937	-
 animadvert	verb	inert	communication	0.0	obscure	v01029677	-
-animal	noun	inert	Tops	4.81	core	n00015568	adjective:quality
 aniseikonia	noun	inert	state	0.0	obscure	n14120644	-
 anisogamy	noun	inert	process	0.0	obscure	n13453422	-
 anisometropia	noun	inert	state	0.0	obscure	n14579152	-
 ankyloglossia	noun	inert	state	0.0	obscure	n14495695	-
 ankylosis	noun	inert	state	1.33	rare	n14045991	-
 annals	noun	inert	communication	3.37	common	n06609970	-
-anniversary	noun	inert	time	4.53	core	n15274610	-
-announce	verb	inert	communication	4.26	core	v00976399	-
-announcement	noun	inert	communication	4.31	core	n06738907	-
 annoy	verb	inert	emotion	3.46	common	v01791774	-
 annum	noun	inert	time	3.23	common	n15228997	-
 annunciate	verb	inert	communication	1.16	rare	v00976205	-
@@ -360,7 +349,6 @@ anosmia	noun	inert	state	1.68	rare	n14576069	-
 anovulation	noun	inert	process	1.46	rare	n13453616	-
 anoxemia	noun	inert	state	0.0	obscure	n14526836	-
 anoxia	noun	inert	state	1.96	rare	n14066725	-
-answer	verb	inert	communication	5.17	core	v00817348	noun:communication
 antecede	verb	inert	stative	0.0	obscure	v02718318	-
 antepenult	noun	inert	communication	0.0	obscure	n06316213	-
 antepenultima	noun	inert	communication	0.0	obscure	n06316213	-
@@ -405,7 +393,6 @@ apocope	noun	inert	communication	0.0	obscure	n07105947	-
 apogamy	noun	inert	process	0.0	obscure	n13454635	-
 apologia	noun	inert	communication	2.36	uncommon	n06753614	-
 apologise	verb	inert	communication	3.66	common	v00896259	-
-apologize	verb	inert	communication	4.16	core	v00894444	-
 apologue	noun	inert	communication	0.0	obscure	n06383718	-
 apomixis	noun	inert	process	1.3	rare	n13454900	-
 apophasis	noun	inert	communication	0.0	obscure	n07116315	-
@@ -435,7 +422,6 @@ appraise	verb	inert	cognition	2.54	uncommon	v00683348	-
 apprisal	noun	inert	communication	0.0	obscure	n07227084	-
 appro	noun	inert	state	1.86	rare	n14435968	-
 approbate	verb	inert	communication	0.0	obscure	v00805477	-
-approve	verb	inert	communication	4.08	core	v00808164	-
 apr	noun	inert	time	4.02	core	n15235985	-
 apraxia	noun	inert	state	1.94	rare	n14114608	-
 april	noun	inert	time	5.19	core	n15235985	-
@@ -459,10 +445,7 @@ arctan	noun	inert	relation	1.38	rare	n13810394	-
 arctangent	noun	inert	relation	1.09	rare	n13810394	-
 areflexia	noun	inert	state	0.0	obscure	n14429869	-
 argot	noun	inert	communication	1.94	rare	n07171981	-
-argue	verb	inert	communication	4.46	core	v00774234	-
 argufy	verb	inert	communication	0.0	obscure	v00777201	-
-arguing	noun	inert	communication	4.25	core	n07197811	-
-argument	noun	inert	communication	4.64	core	n06661469	-
 aria	noun	inert	communication	3.39	common	n07063554	-
 aridness	noun	inert	state	0.0	obscure	n14560852	-
 arietta	noun	inert	communication	1.56	rare	n07063674	-
@@ -478,10 +461,8 @@ arteriosclerosis	noun	inert	state	1.96	rare	n14131806	-
 arteritis	noun	inert	state	1.78	rare	n14282111	-
 arthralgia	noun	inert	state	1.62	rare	n14347981	-
 arthropathy	noun	inert	state	1.41	rare	n14047767	-
-article	noun	inert	communication	5.09	core	n06278749	verb:communication
 articulation	noun	inert	communication	3.09	common	n07146562	-
 artifact	noun	inert	Tops	3.41	common	n00022119	-
-artwork	noun	inert	communication	4.11	core	n07011408	-
 asadha	noun	inert	time	0.0	obscure	n15245063	-
 asarh	noun	inert	time	0.0	obscure	n15245063	-
 ascariasis	noun	inert	state	1.26	rare	n14476641	-
@@ -495,7 +476,6 @@ ascribe	verb	inert	cognition	2.75	uncommon	v00728262	-
 asepsis	noun	inert	state	1.14	rare	n14518814	-
 asin	noun	inert	time	2.34	uncommon	n15245421	-
 ask	verb	inert	communication	5.34	core	v00754499	-
-asking	noun	inert	communication	4.96	core	n07199985	-
 asperse	verb	inert	communication	0.0	obscure	v00848188	-
 asphyxia	noun	inert	state	2.41	uncommon	n14065905	-
 aspire	verb	inert	cognition	3.47	common	v00707283	-
@@ -510,7 +490,6 @@ assimilation	noun	inert	state	3.19	common	n13953961	-
 assoil	verb	inert	communication	0.0	obscure	v00905999	-
 assonance	noun	inert	communication	1.75	rare	n07112012	-
 assonate	verb	inert	stative	0.0	obscure	v02756517	-
-assure	verb	inert	communication	4.06	core	v00892111	-
 astasia	noun	inert	state	0.0	obscure	n14573958	-
 astereognosis	noun	inert	state	0.0	obscure	n14079625	-
 asthenia	noun	inert	state	1.57	rare	n14571568	-
@@ -650,7 +629,6 @@ befit	verb	inert	stative	2.07	uncommon	v02705783	-
 befooling	noun	inert	communication	0.0	obscure	n06729931	-
 befoulment	noun	inert	state	0.0	obscure	n14521988	-
 beggary	noun	inert	communication	1.5	rare	n07202656	-
-begging	noun	inert	communication	3.93	common	n07202656	-
 begrudge	verb	inert	emotion	2.57	uncommon	v01831006	-
 behest	noun	inert	communication	2.99	uncommon	n07185223	-
 behoove	verb	inert	stative	2.09	uncommon	v02674167	-
@@ -658,7 +636,6 @@ behove	verb	inert	stative	1.37	rare	v02674167	-
 being	noun	inert	state	5.95	core	n13977471	-
 beingness	noun	inert	state	1.3	rare	n13977471	-
 belie	verb	inert	stative	2.45	uncommon	v02669219	-
-believe	verb	inert	cognition	5.51	core	v00685199	-
 belling	noun	inert	communication	2.02	uncommon	n07068162	-
 bellow	verb	inert	communication	2.79	uncommon	v01050441	noun:communication
 bellowing	noun	inert	communication	2.53	uncommon	n07136069	-
@@ -722,7 +699,6 @@ blat	verb	inert	communication	1.94	rare	v01050202	-
 blather	noun	inert	communication	2.25	uncommon	n06622685	verb:communication
 blatherskite	noun	inert	communication	0.0	obscure	n06622685	-
 bleakness	noun	inert	state	2.09	uncommon	n14549150	-
-bleeding	noun	inert	state	4.08	core	n14311737	-
 blepharism	noun	inert	state	0.0	obscure	n14385480	-
 blepharitis	noun	inert	state	1.62	rare	n14284746	-
 blepharospasm	noun	inert	state	1.27	rare	n14384469	-
@@ -732,11 +708,9 @@ blindness	noun	inert	state	3.44	common	n14150142	-
 bliss	noun	inert	state	3.78	common	n14011390	-
 blissfulness	noun	inert	state	1.07	rare	n14011390	-
 blither	verb	inert	communication	0.0	obscure	v01039522	-
-blog	noun	inert	communication	4.73	core	n06413845	verb:communication
 bloodguilt	noun	inert	state	0.0	obscure	n14014606	-
 blossoming	noun	inert	process	2.9	uncommon	n13460743	-
 bloviate	verb	inert	communication	1.16	rare	v00830675	-
-blowing	noun	inert	process	4.2	core	n13460980	-
 blues	noun	inert	communication	4.34	core	n07065225	-
 blurb	noun	inert	communication	2.79	uncommon	n07262728	-
 blurt	verb	inert	communication	2.48	uncommon	v00983976	-
@@ -770,7 +744,6 @@ breathlessness	noun	inert	state	2.15	uncommon	n14393527	-
 breve	noun	inert	communication	2.11	uncommon	n06835711	-
 briefing	noun	inert	communication	3.74	common	n07232442	-
 brinkmanship	noun	inert	communication	1.84	rare	n06673988	-
-broadcasting	noun	inert	communication	4.02	core	n06274829	-
 broadsheet	noun	inert	communication	2.32	uncommon	n07265007	-
 browbeat	verb	inert	emotion	1.92	rare	v01785339	-
 brownout	noun	inert	state	1.77	rare	n14007567	-
@@ -886,7 +859,6 @@ causality	noun	inert	relation	2.92	uncommon	n13802818	-
 causerie	noun	inert	communication	0.0	obscure	n07149788	-
 caveat	noun	inert	communication	3.15	common	n07239827	-
 cavil	noun	inert	communication	2.04	uncommon	n06774509	verb:communication
-cease	verb	inert	stative	4.03	core	v02686624	noun:time
 cecity	noun	inert	state	0.0	obscure	n14150142	-
 cedilla	noun	inert	communication	0.0	obscure	n06835838	-
 cellularity	noun	inert	state	1.29	rare	n14084944	-
@@ -945,7 +917,6 @@ chilblain	noun	inert	state	0.0	obscure	n14207004	-
 chilblains	noun	inert	state	1.61	rare	n14207004	-
 childbed	noun	inert	state	1.38	rare	n14071923	-
 childbirth	noun	inert	process	3.42	common	n13469507	-
-childhood	noun	inert	time	4.51	core	n15172057	-
 childlessness	noun	inert	state	1.87	rare	n13956136	-
 chiralgia	noun	inert	state	0.0	obscure	n14349385	-
 chirk	verb	inert	communication	1.81	rare	v01051012	-
@@ -963,7 +934,6 @@ cholangitis	noun	inert	state	1.8	rare	n14364139	-
 cholecystitis	noun	inert	state	1.64	rare	n14364227	-
 cholelithiasis	noun	inert	state	1.09	rare	n14138727	-
 cholestasis	noun	inert	state	1.65	rare	n14077947	-
-choose	verb	inert	cognition	4.91	core	v00676526	-
 chorale	noun	inert	communication	2.51	uncommon	n07050074	-
 chorditis	noun	inert	state	0.0	obscure	n14364406	-
 chorioretinitis	noun	inert	state	0.0	obscure	n14378252	-
@@ -996,7 +966,6 @@ clamouring	noun	inert	communication	2.43	uncommon	n07136826	-
 clapping	noun	inert	communication	3.36	common	n06704734	-
 claptrap	noun	inert	communication	2.22	uncommon	n07101969	-
 claudication	noun	inert	state	1.52	rare	n14573529	-
-clause	noun	inert	communication	3.99	common	n06325134	-
 claustrophobia	noun	inert	state	2.56	uncommon	n14406657	-
 claver	verb	inert	communication	1.69	rare	v01040538	-
 clavus	noun	inert	state	1.47	rare	n14388207	-
@@ -1009,7 +978,6 @@ clerihew	noun	inert	communication	0.0	obscure	n06390250	-
 cliche	noun	inert	communication	3.16	common	n07168754	-
 clientage	noun	inert	relation	0.0	obscure	n13859550	-
 climacteric	noun	inert	time	1.45	rare	n15179606	-
-climate	noun	inert	state	4.71	core	n14542968	-
 clime	noun	inert	state	1.94	rare	n14542968	-
 clinocephalism	noun	inert	state	0.0	obscure	n14182635	-
 clinocephaly	noun	inert	state	0.0	obscure	n14182635	-
@@ -1057,27 +1025,20 @@ colpocystitis	noun	inert	state	0.0	obscure	n14364739	-
 colpocystocele	noun	inert	state	0.0	obscure	n14320468	-
 colpoxerosis	noun	inert	state	0.0	obscure	n14081938	-
 columella	noun	inert	shape	2.19	uncommon	n13923607	-
-comedy	noun	inert	communication	4.51	core	n07028624	-
 comity	noun	inert	state	2.11	uncommon	n13993301	-
 commemorate	verb	inert	cognition	3.49	common	v00614139	-
 commendation	noun	inert	communication	3.0	common	n06718888	-
 commensalism	noun	inert	relation	1.25	rare	n13864440	-
 commensurateness	noun	inert	relation	0.0	obscure	n13839491	-
-comment	noun	inert	communication	4.88	core	n06777755	verb:communication
-commentary	noun	inert	communication	4.19	core	n06775422	-
 commentate	verb	inert	communication	2.23	uncommon	v00963618	-
 comminate	verb	inert	communication	0.0	obscure	v00866574	-
 commination	noun	inert	communication	0.0	obscure	n07204439	-
 commiserate	verb	inert	emotion	2.21	uncommon	v01826198	-
 communicating	noun	inert	communication	3.77	common	n06262268	-
-communication	noun	inert	communication	4.68	core	n06262268	-
 communique	noun	inert	communication	2.7	uncommon	n06695539	-
 comp	noun	inert	communication	3.85	common	n07212549	-
 companionship	noun	inert	state	3.19	common	n13952621	-
-compare	verb	inert	cognition	4.45	core	v00654571	noun:attribute
 compendium	noun	inert	communication	3.05	common	n06603723	-
-complain	verb	inert	communication	4.23	core	v00909100	-
-complaint	noun	inert	state	4.32	core	n14078890	-
 complect	verb	inert	stative	0.0	obscure	v02629050	-
 complementarity	noun	inert	relation	2.29	uncommon	n13879511	-
 complicity	noun	inert	state	3.03	common	n14014730	-
@@ -1098,7 +1059,6 @@ conciseness	noun	inert	communication	1.82	rare	n07103216	-
 concision	noun	inert	communication	1.77	rare	n07103216	-
 conclude	verb	inert	cognition	3.9	common	v00636134	-
 concordance	noun	inert	state	2.5	uncommon	n13992690	-
-condition	noun	inert	state	4.86	core	n13943868	verb:social
 conditionality	noun	inert	state	2.06	uncommon	n13947102	-
 condole	verb	inert	emotion	1.65	rare	v01826486	-
 condolence	noun	inert	communication	2.78	uncommon	n06646199	-
@@ -1122,8 +1082,6 @@ connivance	noun	inert	communication	2.16	uncommon	n07191622	-
 connote	verb	inert	communication	1.97	rare	v00931801	-
 conoid	noun	inert	shape	1.29	rare	n13895231	-
 consanguinity	noun	inert	relation	1.98	rare	n13835803	-
-consensus	noun	inert	state	4.1	core	n13995348	-
-consent	noun	inert	communication	4.36	core	n06702412	verb:communication
 consist	verb	inert	stative	3.94	common	v02659476	-
 conspectus	noun	inert	communication	1.46	rare	n06479999	-
 conspire	verb	inert	cognition	2.81	uncommon	v00708804	-
@@ -1137,9 +1095,7 @@ contemporize	verb	inert	stative	0.0	obscure	v02745129	-
 contend	verb	inert	communication	3.56	common	v00758943	-
 contentedness	noun	inert	state	1.5	rare	n14436286	-
 contestation	noun	inert	communication	1.93	rare	n07197811	-
-context	noun	inert	communication	4.63	core	n06295551	-
 continuative	noun	inert	communication	1.13	rare	n06336819	-
-continue	verb	inert	stative	5.08	core	v02690747	-
 continuo	noun	inert	communication	2.26	uncommon	n07046043	-
 continuum	noun	inert	time	3.42	common	n15148671	-
 contradict	verb	inert	stative	3.35	common	v02669219	-
@@ -1149,14 +1105,11 @@ contradistinguish	verb	inert	cognition	0.0	obscure	v00663502	-
 contraindicate	verb	inert	communication	0.0	obscure	v00930437	-
 contraindication	noun	inert	communication	1.89	rare	n06810805	-
 contrariety	noun	inert	relation	1.29	rare	n13880589	-
-controversy	noun	inert	communication	4.26	core	n07197811	-
 controvert	verb	inert	communication	1.21	rare	v00778104	-
 contumely	noun	inert	communication	1.25	rare	n06728162	-
 conundrum	noun	inert	communication	3.0	common	n06798080	-
 convalescence	noun	inert	process	2.38	uncommon	n13473520	-
 convection	noun	inert	process	3.22	common	n13473787	-
-conversation	noun	inert	communication	4.75	core	n07148409	-
-convince	verb	inert	communication	4.26	core	v00771598	-
 convoke	verb	inert	communication	1.62	rare	v00794699	-
 convulsion	noun	inert	state	2.14	uncommon	n14106270	-
 cooccur	verb	inert	stative	0.0	obscure	v02666520	-
@@ -1254,7 +1207,6 @@ cupid	noun	inert	communication	3.2	common	n06894274	-
 curdling	noun	inert	process	2.27	uncommon	n13475652	-
 curing	noun	inert	process	3.26	common	n13512263	-
 curlicue	noun	inert	shape	1.39	rare	n13898609	-
-curriculum	noun	inert	communication	4.12	core	n06689161	-
 cyanosis	noun	inert	state	1.91	rare	n14326529	-
 cyberphobia	noun	inert	state	0.0	obscure	n14406849	-
 cybersex	noun	inert	state	2.02	uncommon	n14061298	-
@@ -1277,7 +1229,6 @@ daleth	noun	inert	communication	0.0	obscure	n06850087	-
 damnation	noun	inert	communication	2.95	uncommon	n07248202	-
 dampness	noun	inert	state	2.48	uncommon	n14559507	-
 dankness	noun	inert	state	1.24	rare	n14559687	-
-database	noun	inert	communication	4.31	core	n06650349	-
 datemark	verb	inert	cognition	0.0	obscure	v00737229	-
 dative	noun	inert	communication	2.43	uncommon	n06322713	-
 daunt	verb	inert	emotion	2.04	uncommon	v01789567	-
@@ -1292,7 +1243,6 @@ dealignment	noun	inert	process	0.0	obscure	n13477079	-
 deamination	noun	inert	process	1.59	rare	n13477244	-
 deaminization	noun	inert	process	0.0	obscure	n13477244	-
 deathrate	noun	inert	time	0.0	obscure	n15302104	-
-debate	noun	inert	communication	4.64	core	n07155686	verb:cognition
 debility	noun	inert	state	1.81	rare	n14571235	-
 debrief	verb	inert	communication	2.45	uncommon	v00833137	-
 debriefing	noun	inert	communication	2.56	uncommon	n07235126	-
@@ -1309,12 +1259,9 @@ december	noun	inert	time	5.07	core	n15238570	-
 decennary	noun	inert	time	0.0	obscure	n15229779	-
 decennium	noun	inert	time	1.03	rare	n15229779	-
 decentalisation	noun	inert	process	0.0	obscure	n13478354	-
-decide	verb	inert	cognition	4.78	core	v00699355	-
 decipher	verb	inert	communication	3.14	common	v00996499	-
 declaim	verb	inert	communication	1.57	rare	v01053236	-
 declamation	noun	inert	communication	1.89	rare	n07256984	-
-declaration	noun	inert	communication	4.1	core	n06738626	-
-declare	verb	inert	communication	4.05	core	v01012145	-
 decoction	noun	inert	process	2.1	uncommon	n13478838	-
 deconsecrate	verb	inert	communication	0.0	obscure	v00868726	-
 deconstruct	verb	inert	communication	2.53	uncommon	v00940779	-
@@ -1329,8 +1276,6 @@ defecation	noun	inert	process	2.51	uncommon	n13480291	-
 defectiveness	noun	inert	state	1.14	rare	n14495883	-
 defer	verb	inert	stative	3.2	common	v02648898	-
 defilement	noun	inert	state	2.07	uncommon	n14521988	-
-define	verb	inert	stative	4.31	core	v02617665	-
-defining	noun	inert	process	3.96	common	n13576649	-
 deflagration	noun	inert	process	1.49	rare	n13471590	-
 defunctness	noun	inert	state	0.0	obscure	n13986368	-
 defy	verb	inert	stative	3.42	common	v02712676	-
@@ -1360,7 +1305,6 @@ demyelination	noun	inert	state	1.88	rare	n14082252	-
 demythologisation	noun	inert	communication	0.0	obscure	n06781823	-
 demythologization	noun	inert	communication	0.0	obscure	n06781823	-
 denazification	noun	inert	process	1.65	rare	n13482925	-
-denial	noun	inert	communication	3.99	common	n07219061	-
 denigrate	verb	inert	communication	2.59	uncommon	v00866139	-
 denominate	verb	inert	communication	1.45	rare	v01032165	-
 denotatum	noun	inert	communication	0.0	obscure	n06616169	-
@@ -1368,7 +1312,6 @@ denote	verb	inert	communication	3.29	common	v00934123	-
 denouncement	noun	inert	communication	1.8	rare	n07247648	-
 denunciation	noun	inert	communication	2.61	uncommon	n07247648	-
 deossification	noun	inert	process	0.0	obscure	n13483287	-
-depend	verb	inert	stative	4.2	core	v02670312	-
 dependance	noun	inert	state	1.72	rare	n14086207	-
 dependence	noun	inert	state	3.66	common	n14024833	-
 deplore	verb	inert	communication	2.43	uncommon	v00827994	-
@@ -1389,7 +1332,6 @@ descensus	noun	inert	state	0.0	obscure	n14582800	-
 desensitisation	noun	inert	process	1.45	rare	n13484458	-
 desensitization	noun	inert	process	2.32	uncommon	n13484458	-
 desertification	noun	inert	process	2.45	uncommon	n13484192	-
-deserve	verb	inert	stative	4.59	core	v02652462	-
 deshabille	noun	inert	state	0.0	obscure	n14481286	-
 desiccation	noun	inert	state	2.21	uncommon	n14560433	-
 designatum	noun	inert	communication	0.0	obscure	n06616280	-
@@ -1410,7 +1352,6 @@ detainment	noun	inert	state	2.35	uncommon	n14023148	-
 deter	verb	inert	communication	3.48	common	v00910052	-
 deterioration	noun	inert	state	3.43	common	n14585210	-
 determent	noun	inert	communication	1.1	rare	n07268725	-
-determine	verb	inert	communication	4.63	core	v00920843	-
 detest	verb	inert	emotion	2.87	uncommon	v01778057	-
 detumescence	noun	inert	process	0.0	obscure	n13485643	-
 deuteranopia	noun	inert	state	0.0	obscure	n14177650	-
@@ -1423,7 +1364,6 @@ diagnose	verb	inert	cognition	3.41	common	v00647205	-
 diakinesis	noun	inert	process	0.0	obscure	n13486467	-
 dialect	noun	inert	communication	3.54	common	n07170369	-
 dialog	noun	inert	communication	3.46	common	n07150914	-
-dialogue	noun	inert	communication	4.29	core	n07150914	-
 diaphoresis	noun	inert	process	1.28	rare	n13556464	-
 diarrhea	noun	inert	state	3.55	common	n14395318	-
 diarrhoea	noun	inert	state	3.02	common	n14395318	-
@@ -1449,7 +1389,6 @@ dieresis	noun	inert	communication	0.0	obscure	n06836790	-
 diesis	noun	inert	communication	0.0	obscure	n06841712	-
 diestrum	noun	inert	state	0.0	obscure	n14062225	-
 diestrus	noun	inert	state	0.0	obscure	n14062225	-
-differ	verb	inert	stative	4.03	core	v02672316	-
 differentiate	verb	inert	cognition	3.62	common	v00652006	-
 digram	noun	inert	communication	0.0	obscure	n06843888	-
 digraph	noun	inert	communication	1.89	rare	n06843888	-
@@ -1473,7 +1412,6 @@ disabuse	verb	inert	communication	2.01	uncommon	v00993609	-
 disaccord	verb	inert	stative	0.0	obscure	v02724418	-
 disaffect	verb	inert	emotion	0.0	obscure	v01827478	-
 disaffirmation	noun	inert	communication	0.0	obscure	n07218900	-
-disagree	verb	inert	communication	4.09	core	v00806464	-
 disallow	verb	inert	communication	2.57	uncommon	v00797525	-
 disambiguate	verb	inert	communication	1.62	rare	v00959210	-
 disambiguation	noun	inert	communication	2.26	uncommon	n07186164	-
@@ -1490,7 +1428,6 @@ discant	noun	inert	communication	1.02	rare	n07045513	-
 disceptation	noun	inert	communication	0.0	obscure	n07197811	-
 disclaim	verb	inert	communication	2.43	uncommon	v00760242	-
 disclaimer	noun	inert	communication	3.46	common	n07222340	-
-disclosure	noun	inert	communication	4.0	core	n07228055	-
 discography	noun	inert	communication	3.03	common	n06500061	-
 discombobulate	verb	inert	emotion	1.25	rare	v01795261	-
 discomfit	verb	inert	emotion	1.22	rare	v01793821	-
@@ -1503,8 +1440,6 @@ discourage	verb	inert	communication	3.57	common	v00910052	-
 discourse	noun	inert	communication	3.83	common	n06295430	verb:communication
 discredit	noun	inert	state	3.36	common	n14463211	verb:cognition
 discreteness	noun	inert	state	1.28	rare	n14437907	-
-discuss	verb	inert	communication	4.66	core	v01036184	-
-discussion	noun	inert	communication	4.71	core	n07152793	-
 disembroil	verb	inert	stative	0.0	obscure	v02683880	-
 disenchant	verb	inert	emotion	1.36	rare	v01821722	-
 disequilibrium	noun	inert	state	2.1	uncommon	n13957307	-
@@ -1654,7 +1589,6 @@ ecumenicalism	noun	inert	communication	0.0	obscure	n06803092	-
 ecumenicism	noun	inert	communication	0.0	obscure	n06803092	-
 edema	noun	inert	state	2.95	uncommon	n14340141	-
 edify	verb	inert	communication	1.96	rare	v00993417	-
-editing	noun	inert	communication	4.27	core	n06439501	-
 editorialise	verb	inert	communication	0.0	obscure	v01029933	-
 editorialize	verb	inert	communication	1.56	rare	v01029933	-
 efflorescence	noun	inert	time	1.81	rare	n15320288	-
@@ -1688,7 +1622,6 @@ elucidate	verb	inert	communication	2.7	uncommon	v00941888	-
 elucidation	noun	inert	communication	2.29	uncommon	n07247315	-
 elul	noun	inert	time	1.63	rare	n15241556	-
 elution	noun	inert	process	2.09	uncommon	n13495039	-
-email	noun	inert	communication	4.68	core	n06289979	verb:communication
 embank	verb	inert	stative	0.0	obscure	v02717250	-
 embitter	verb	inert	emotion	1.19	rare	v01777456	-
 embitterment	noun	inert	state	0.0	obscure	n14012356	-
@@ -1747,7 +1680,6 @@ enrage	verb	inert	emotion	2.38	uncommon	v01799899	-
 enrapture	verb	inert	emotion	1.2	rare	v01821281	-
 ensky	verb	inert	communication	0.0	obscure	v00862864	-
 ensue	verb	inert	stative	2.91	uncommon	v02640346	-
-ensure	verb	inert	communication	4.7	core	v00892111	-
 entasis	noun	inert	shape	1.06	rare	n13887163	-
 entelechy	noun	inert	state	1.2	rare	n13978438	-
 enteritis	noun	inert	state	1.81	rare	n14368402	-
@@ -1761,7 +1693,6 @@ enthuse	verb	inert	emotion	1.92	rare	v01834134	-
 entice	verb	inert	communication	3.15	common	v00784574	-
 entireness	noun	inert	state	0.0	obscure	n14484815	-
 entirety	noun	inert	state	3.69	common	n14484815	-
-entity	noun	inert	Tops	4.12	core	n00001740	-
 entomophobia	noun	inert	state	0.0	obscure	n14408565	-
 entreat	verb	inert	communication	2.32	uncommon	v00761702	-
 entreaty	noun	inert	communication	1.87	rare	n07201488	-
@@ -1812,7 +1743,6 @@ epsilon	noun	inert	communication	2.88	uncommon	n06847615	-
 equilibrise	verb	inert	stative	0.0	obscure	v02678923	-
 equilibrize	verb	inert	stative	0.0	obscure	v02678923	-
 equivocate	verb	inert	communication	1.72	rare	v00837185	-
-era	noun	inert	time	4.67	core	n15273375	-
 erethism	noun	inert	state	0.0	obscure	n14117205	-
 ergotism	noun	inert	state	1.33	rare	n14534557	-
 eroding	noun	inert	process	2.85	uncommon	n13496741	-
@@ -1848,24 +1778,19 @@ euphemism	noun	inert	communication	2.92	uncommon	n06617399	-
 euphemize	verb	inert	communication	0.0	obscure	v00935069	-
 euphuism	noun	inert	communication	0.0	obscure	n07083557	-
 eutrophication	noun	inert	process	2.16	uncommon	n13497793	-
-evaluate	verb	inert	cognition	4.01	core	v00683348	-
 evangel	noun	inert	communication	1.96	rare	n06466808	-
 evangelism	noun	inert	communication	2.85	uncommon	n07259273	-
 evaporation	noun	inert	process	3.08	common	n13593639	-
 evenfall	noun	inert	time	0.0	obscure	n15194468	-
-evening	noun	inert	time	4.86	core	n15191509	-
 evensong	noun	inert	time	2.04	uncommon	n15254976	-
 eventide	noun	inert	time	2.11	uncommon	n15191509	-
 eventration	noun	inert	state	0.0	obscure	n14319644	-
 eventuate	verb	inert	stative	2.1	uncommon	v02617037	-
 evince	verb	inert	communication	1.98	rare	v00945869	-
-evolution	noun	inert	process	4.41	core	n13486023	-
 exalt	verb	inert	communication	2.6	uncommon	v00862284	-
-exam	noun	inert	communication	4.26	core	n07211681	-
 exanthem	noun	inert	state	0.0	obscure	n14345241	-
 exanthema	noun	inert	state	0.0	obscure	n14345241	-
 excel	verb	inert	stative	3.73	common	v02679754	-
-except	verb	inert	communication	5.02	core	v00809603	-
 excerpt	noun	inert	communication	3.51	common	n06412153	verb:cognition
 excerption	noun	inert	communication	0.0	obscure	n06412153	-
 exclaim	verb	inert	communication	2.82	uncommon	v00914001	-
@@ -1881,7 +1806,6 @@ exemplify	verb	inert	stative	2.73	uncommon	v02729608	-
 exhilarate	verb	inert	emotion	1.36	rare	v01816291	-
 exhort	verb	inert	communication	2.23	uncommon	v00860463	-
 exhortation	noun	inert	communication	2.58	uncommon	n07154408	-
-exist	verb	inert	stative	4.73	core	v02609706	-
 exode	noun	inert	communication	0.0	obscure	n07031325	-
 exogamy	noun	inert	state	1.58	rare	n13988623	-
 exomphalos	noun	inert	state	0.0	obscure	n14319756	-
@@ -1891,22 +1815,18 @@ exordium	noun	inert	communication	1.79	rare	n06408814	-
 exotropia	noun	inert	state	1.01	rare	n14581165	-
 expatiate	verb	inert	communication	1.16	rare	v00957633	-
 expatiation	noun	inert	communication	0.0	obscure	n07153859	-
-expect	verb	inert	cognition	5.01	core	v00721658	-
 expelling	noun	inert	process	2.78	uncommon	n13487789	-
-explain	verb	inert	communication	4.89	core	v00941308	-
 explanandum	noun	inert	communication	0.0	obscure	n06751572	-
 explanans	noun	inert	communication	0.0	obscure	n06751762	-
 expletive	noun	inert	communication	2.54	uncommon	n07139804	-
 explicandum	noun	inert	communication	0.0	obscure	n06751572	-
 explicate	verb	inert	communication	1.84	rare	v00941308	-
 explication	noun	inert	communication	2.15	uncommon	n07247471	-
-explore	verb	inert	cognition	4.31	core	v00649877	-
 exposit	verb	inert	communication	0.0	obscure	v01003339	-
 expostulate	verb	inert	communication	1.22	rare	v00775330	-
 expostulation	noun	inert	communication	0.0	obscure	n07261402	-
 expound	verb	inert	communication	2.49	uncommon	v00957633	-
 expounding	noun	inert	communication	2.16	uncommon	n06755121	-
-express	verb	inert	communication	4.68	core	v00945869	noun:vehicle_land,adjective:quality,adverb:manner
 extenuate	verb	inert	communication	1.24	rare	v00907990	-
 extol	verb	inert	communication	2.3	uncommon	v00862284	-
 extolment	noun	inert	communication	0.0	obscure	n06705943	-
@@ -1928,7 +1848,6 @@ fado	noun	inert	communication	2.01	uncommon	n07065481	-
 fairytale	noun	inert	communication	3.21	common	n07237241	-
 falloff	noun	inert	process	1.9	rare	n13577712	-
 falsity	noun	inert	state	2.32	uncommon	n13983750	-
-fame	noun	inert	state	4.34	core	n14460852	-
 familiarise	verb	inert	communication	2.23	uncommon	v00875857	-
 familiarize	verb	inert	communication	2.79	uncommon	v00875857	-
 famishment	noun	inert	state	0.0	obscure	n14063792	-
@@ -1952,7 +1871,6 @@ febricity	noun	inert	state	0.0	obscure	n14388761	-
 febrility	noun	inert	state	0.0	obscure	n14388761	-
 february	noun	inert	time	5.03	core	n15235282	-
 feculence	noun	inert	state	0.0	obscure	n14511702	-
-feedback	noun	inert	process	4.32	core	n13500583	-
 felicitate	verb	inert	communication	1.72	rare	v00883519	-
 felicitation	noun	inert	communication	1.67	rare	n07155056	-
 feminisation	noun	inert	process	1.51	rare	n13500808	-
@@ -1969,7 +1887,6 @@ fibrinolysis	noun	inert	process	1.5	rare	n13501379	-
 fibromyositis	noun	inert	state	0.0	obscure	n14369485	-
 fibrosis	noun	inert	state	3.19	common	n14231291	-
 fibrositis	noun	inert	state	0.0	obscure	n14369363	-
-fiction	noun	inert	communication	4.44	core	n06378552	-
 fifties	noun	inert	time	3.21	common	n15174723	-
 filename	noun	inert	communication	2.66	uncommon	n06346543	-
 filiate	verb	inert	cognition	0.0	obscure	v00701928	-
@@ -2021,10 +1938,8 @@ foretell	verb	inert	communication	2.31	uncommon	v00976205	-
 forewarn	verb	inert	communication	1.69	rare	v00872604	-
 forewarning	noun	inert	communication	2.03	uncommon	n07240110	-
 foreword	noun	inert	communication	3.13	common	n06409546	-
-forget	verb	inert	cognition	5.06	core	v00611721	-
 formatting	noun	inert	communication	3.31	common	n06649331	-
 formication	noun	inert	state	0.0	obscure	n14348415	-
-formula	noun	inert	communication	4.45	core	n06744551	-
 formularise	verb	inert	communication	0.0	obscure	v00983115	-
 formularize	verb	inert	communication	0.0	obscure	v00983115	-
 forsake	verb	inert	cognition	2.91	uncommon	v00615748	-
@@ -2035,17 +1950,14 @@ fortnight	noun	inert	time	3.41	common	n15195378	-
 fortunetelling	noun	inert	communication	1.27	rare	n06762182	-
 fracas	noun	inert	communication	2.38	uncommon	n07199205	-
 frailness	noun	inert	state	0.0	obscure	n14571235	-
-freedom	noun	inert	state	4.86	core	n14015308	-
 freemail	noun	inert	communication	0.0	obscure	n06290458	-
 freemasonry	noun	inert	state	2.73	uncommon	n13953106	-
 freeware	noun	inert	communication	2.57	uncommon	n06580041	-
-freezing	noun	inert	process	4.05	core	n13505847	-
 frenzy	noun	inert	state	3.44	common	n14415281	-
 frequence	noun	inert	time	0.0	obscure	n15303267	-
 frequentative	noun	inert	communication	1.14	rare	n06484712	-
 fri	noun	inert	time	3.42	common	n15189510	-
 friday	noun	inert	time	4.96	core	n15189510	-
-friendship	noun	inert	state	4.39	core	n13954178	-
 frighten	verb	inert	emotion	3.08	common	v01783082	-
 frimaire	noun	inert	time	0.0	obscure	n15201366	-
 frostbite	noun	inert	state	2.85	uncommon	n14318180	-
@@ -2123,10 +2035,8 @@ gmt	noun	inert	time	3.65	common	n15155157	-
 goading	noun	inert	communication	2.25	uncommon	n07267046	-
 gobbledygook	noun	inert	communication	1.96	rare	n07084361	-
 goodby	noun	inert	communication	1.89	rare	n06642117	-
-goodbye	noun	inert	communication	4.3	core	n06642117	-
 google	verb	inert	cognition	4.86	core	v00650417	noun:communication
 gooseneck	noun	inert	shape	1.98	rare	n13891768	-
-gospel	noun	inert	communication	4.18	core	n06737072	-
 gossiping	noun	inert	communication	2.79	uncommon	n07150158	-
 gossipmongering	noun	inert	communication	0.0	obscure	n07150158	-
 grandiloquence	noun	inert	communication	1.27	rare	n07084469	-
@@ -2150,7 +2060,6 @@ groan	verb	inert	communication	3.12	common	v01047291	noun:communication
 grok	verb	inert	cognition	1.88	rare	v00589616	-
 groundspeed	noun	inert	time	1.3	rare	n15308893	-
 groupware	noun	inert	communication	1.79	rare	n06580136	-
-growth	noun	inert	process	5.03	core	n13510240	-
 grubbiness	noun	inert	state	0.0	obscure	n14522427	-
 grunge	noun	inert	state	3.02	common	n14521680	-
 gruntle	verb	inert	emotion	0.0	obscure	v01769244	-
@@ -2222,7 +2131,6 @@ hazardousness	noun	inert	state	0.0	obscure	n14565140	-
 he	noun	inert	communication	6.69	core	n06850196	-
 headlinese	noun	inert	communication	0.0	obscure	n07084819	-
 headword	noun	inert	communication	1.13	rare	n06302934	-
-health	noun	inert	state	5.44	core	n14471374	-
 healthiness	noun	inert	state	2.0	uncommon	n14073193	-
 heartburn	noun	inert	state	2.87	uncommon	n14358628	-
 hearten	verb	inert	emotion	1.54	rare	v01821905	-
@@ -2350,7 +2258,6 @@ humidness	noun	inert	state	0.0	obscure	n14559245	-
 humification	noun	inert	process	1.02	rare	n13515395	-
 humiliate	verb	inert	emotion	3.08	common	v01803805	-
 hurrah	noun	inert	communication	2.94	uncommon	n06705718	verb:communication
-hurting	noun	inert	state	4.11	core	n14346126	-
 hyalinisation	noun	inert	state	0.0	obscure	n14100291	-
 hyalinization	noun	inert	state	0.0	obscure	n14100291	-
 hydatid	noun	inert	state	1.47	rare	n14225601	-
@@ -2369,7 +2276,6 @@ hydronephrosis	noun	inert	state	1.59	rare	n14489706	-
 hydrops	noun	inert	state	1.49	rare	n14340141	-
 hydrothorax	noun	inert	state	0.0	obscure	n14344029	-
 hypallage	noun	inert	communication	0.0	obscure	n07118337	-
-hype	noun	inert	communication	4.03	core	n07263175	verb:communication
 hyperactivity	noun	inert	state	2.86	uncommon	n14083738	-
 hyperacusia	noun	inert	state	0.0	obscure	n14574913	-
 hyperacusis	noun	inert	state	1.44	rare	n14574913	-
@@ -2497,7 +2403,6 @@ ictus	noun	inert	state	1.47	rare	n14105423	-
 idealise	verb	inert	cognition	1.53	rare	v00694673	-
 idealize	verb	inert	cognition	2.09	uncommon	v00694673	-
 identifier	noun	inert	communication	3.12	common	n07285306	-
-identify	verb	inert	cognition	4.56	core	v00620568	-
 ideogram	noun	inert	communication	1.62	rare	n06853698	-
 ideograph	noun	inert	communication	1.07	rare	n06853698	-
 ideography	noun	inert	communication	0.0	obscure	n06373579	-
@@ -2580,8 +2485,6 @@ indentation	noun	inert	shape	2.64	uncommon	n13931035	-
 indention	noun	inert	communication	1.19	rare	n06401396	-
 independency	noun	inert	state	1.78	rare	n14017633	-
 indicant	noun	inert	communication	0.0	obscure	n06810027	-
-indicate	verb	inert	communication	4.35	core	v00923271	-
-indication	noun	inert	communication	4.06	core	n06810027	-
 indictability	noun	inert	state	0.0	obscure	n14015173	-
 indiction	noun	inert	time	1.37	rare	n15319174	-
 indigence	noun	inert	state	1.57	rare	n14517300	-
@@ -2597,7 +2500,6 @@ infancy	noun	inert	time	3.38	common	n15170546	-
 infarct	noun	inert	state	2.06	uncommon	n14231043	-
 infarction	noun	inert	state	2.84	uncommon	n14231043	-
 infatuate	verb	inert	emotion	1.3	rare	v01764521	-
-infection	noun	inert	state	4.33	core	n14198031	-
 infer	verb	inert	cognition	3.16	common	v00638236	-
 infertility	noun	inert	state	3.18	common	n14068989	-
 infinitive	noun	inert	communication	2.57	uncommon	n06329897	-
@@ -2607,7 +2509,6 @@ inflexion	noun	inert	relation	1.65	rare	n13825994	-
 inflict	verb	inert	communication	3.34	common	v00750288	-
 inflow	noun	inert	process	2.89	uncommon	n13520985	-
 influx	noun	inert	process	3.58	common	n13520985	-
-info	noun	inert	communication	4.6	core	n06646883	-
 infolding	noun	inert	process	0.0	obscure	n13523144	-
 infomercial	noun	inert	communication	2.53	uncommon	n07264866	-
 informercial	noun	inert	communication	1.17	rare	n07264866	-
@@ -2637,7 +2538,6 @@ inrush	noun	inert	process	1.83	rare	n13521640	-
 insaneness	noun	inert	state	0.0	obscure	n14418644	-
 insanity	noun	inert	state	3.72	common	n14418422	-
 insecureness	noun	inert	state	0.0	obscure	n14567761	-
-insist	verb	inert	communication	4.03	core	v00820635	-
 insisting	noun	inert	communication	3.55	common	n07206437	-
 insobriety	noun	inert	state	0.0	obscure	n14042038	-
 insolvency	noun	inert	state	3.18	common	n14501875	-
@@ -2651,7 +2551,6 @@ intactness	noun	inert	state	1.21	rare	n14483991	-
 integrality	noun	inert	state	1.15	rare	n14484815	-
 intellectualisation	noun	inert	process	0.0	obscure	n13522262	-
 intellectualization	noun	inert	process	1.39	rare	n13522262	-
-intend	verb	inert	cognition	4.09	core	v00710367	-
 intensifier	noun	inert	communication	1.97	rare	n06332047	-
 intension	noun	inert	communication	1.85	rare	n06615288	-
 intercalation	noun	inert	time	1.9	rare	n15197711	-
@@ -2678,7 +2577,6 @@ interrelatedness	noun	inert	relation	1.35	rare	n13866409	-
 interrelation	noun	inert	relation	1.89	rare	n13866409	-
 interrelationship	noun	inert	relation	2.04	uncommon	n13866409	-
 interrogate	verb	inert	communication	2.9	uncommon	v00975562	-
-interview	verb	inert	communication	4.86	core	v00810517	noun:communication
 intestacy	noun	inert	state	1.64	rare	n13959474	-
 intimidate	verb	inert	emotion	3.31	common	v01784999	-
 intonate	verb	inert	communication	0.0	obscure	v01052185	-
@@ -2699,7 +2597,6 @@ invalidism	noun	inert	state	0.0	obscure	n14085972	-
 invective	noun	inert	communication	2.41	uncommon	n06734353	-
 inveigh	verb	inert	communication	1.38	rare	v00913214	-
 inveigle	verb	inert	communication	1.51	rare	v00770823	-
-involve	verb	inert	stative	4.28	core	v02682907	-
 iodination	noun	inert	process	0.0	obscure	n13523759	-
 ionisation	noun	inert	state	2.0	uncommon	n14601014	-
 ionization	noun	inert	state	3.03	common	n14601014	-
@@ -2810,7 +2707,6 @@ kinship	noun	inert	relation	3.13	common	n13833622	-
 kislev	noun	inert	time	1.74	rare	n15239636	-
 kleptomania	noun	inert	motive	1.79	rare	n09205170	-
 know	verb	inert	cognition	6.1	core	v00596016	noun:knowledge
-knowledge	noun	inert	Tops	4.96	core	n00023451	-
 koan	noun	inert	communication	2.06	uncommon	n06798697	-
 koine	noun	inert	communication	1.9	rare	n06918892	-
 kotow	noun	inert	communication	0.0	obscure	n07289980	verb:communication
@@ -2826,7 +2722,6 @@ labialize	verb	inert	communication	0.0	obscure	v00982371	-
 labiodental	noun	inert	communication	1.27	rare	n07131901	-
 labyrinthitis	noun	inert	state	1.16	rare	n14372162	-
 lachrymation	noun	inert	process	0.0	obscure	n13527046	-
-lack	noun	inert	state	4.92	core	n14472871	verb:stative
 laconicism	noun	inert	communication	0.0	obscure	n07103723	-
 laconism	noun	inert	communication	0.0	obscure	n07103723	-
 lacrimation	noun	inert	process	1.22	rare	n13527046	-
@@ -2843,7 +2738,6 @@ laminitis	noun	inert	state	1.86	rare	n14372300	-
 lammas	noun	inert	time	1.78	rare	n15215063	-
 lammastide	noun	inert	time	0.0	obscure	n15215259	-
 lampoon	verb	inert	communication	2.33	uncommon	v00854367	noun:communication
-language	noun	inert	communication	5.1	core	n06293304	-
 laparocele	noun	inert	state	0.0	obscure	n14320908	-
 larn	verb	inert	cognition	1.59	rare	v00599310	-
 laryngitis	noun	inert	state	2.37	uncommon	n14372448	-
@@ -2854,14 +2748,11 @@ laryngotracheobronchitis	noun	inert	state	0.0	obscure	n14372716	-
 latency	noun	inert	time	3.31	common	n15322312	-
 laud	verb	inert	communication	2.6	uncommon	v00862284	-
 laurels	noun	inert	communication	2.85	uncommon	n06709228	-
-laying	noun	inert	process	4.16	core	n13527680	-
 leaching	noun	inert	process	2.72	uncommon	n13527790	-
 leafing	noun	inert	process	2.12	uncommon	n13504393	-
 leakiness	noun	inert	state	1.13	rare	n14601417	-
-learn	verb	inert	cognition	5.17	core	v00599310	-
 lede	noun	inert	communication	2.18	uncommon	n06281532	-
 legalese	noun	inert	communication	2.13	uncommon	n07085406	-
-legend	noun	inert	communication	4.44	core	n06383036	-
 leishmaniasis	noun	inert	state	2.18	uncommon	n14201559	-
 leishmaniosis	noun	inert	state	0.0	obscure	n14201559	-
 leitmotif	noun	inert	communication	2.04	uncommon	n07042284	-
@@ -2891,12 +2782,10 @@ lexicalize	verb	inert	communication	0.0	obscure	v00964222	-
 liaise	verb	inert	communication	2.51	uncommon	v00763001	-
 liaison	noun	inert	state	3.58	common	n13954922	-
 libel	noun	inert	communication	3.34	common	n06733120	verb:communication
-liberty	noun	inert	state	4.34	core	n14015999	-
 libration	noun	inert	process	1.68	rare	n13528820	-
 libretto	noun	inert	communication	2.65	uncommon	n07025141	-
 lied	noun	inert	communication	4.21	core	n07065660	-
 lifespan	noun	inert	time	3.37	common	n15165365	-
-lifetime	noun	inert	time	4.39	core	n15165365	-
 lightlessness	noun	inert	state	0.0	obscure	n14007292	-
 liken	verb	inert	cognition	2.57	uncommon	v00655291	-
 limerick	noun	inert	communication	3.07	common	n06392226	-
@@ -2921,7 +2810,6 @@ literalize	verb	inert	cognition	0.0	obscure	v00625484	-
 lithiasis	noun	inert	state	0.0	obscure	n14139396	-
 lithuresis	noun	inert	process	0.0	obscure	n13530153	-
 litotes	noun	inert	communication	1.23	rare	n07118958	-
-live	verb	inert	stative	5.54	core	v02655932	adjective:quality,adverb:manner
 loanblend	noun	inert	communication	0.0	obscure	n06304010	-
 loanword	noun	inert	communication	1.62	rare	n06304241	-
 loathe	verb	inert	emotion	3.11	common	v01778347	-
@@ -2934,7 +2822,6 @@ logbook	noun	inert	communication	2.5	uncommon	n06516040	-
 logginess	noun	inert	state	0.0	obscure	n14041903	-
 loginess	noun	inert	state	0.0	obscure	n14041903	-
 logion	noun	inert	communication	0.0	obscure	n06312292	-
-logo	noun	inert	communication	4.28	core	n07286789	-
 logogram	noun	inert	communication	1.15	rare	n06853940	-
 logograph	noun	inert	communication	0.0	obscure	n06853940	-
 logomachy	noun	inert	communication	0.0	obscure	n07156027	-
@@ -3006,7 +2893,6 @@ malocclusion	noun	inert	state	1.8	rare	n14084411	-
 malware	noun	inert	communication	3.49	common	n06600315	-
 mammon	noun	inert	state	2.3	uncommon	n14516218	-
 manana	noun	inert	time	2.05	uncommon	n15288736	-
-manga	noun	inert	communication	3.97	common	n06379605	-
 mania	noun	inert	motive	3.44	common	n09204454	-
 manifesto	noun	inert	communication	3.65	common	n06739973	-
 mantissa	noun	inert	communication	1.8	rare	n06825973	-
@@ -3077,7 +2963,6 @@ menorrhagia	noun	inert	process	1.42	rare	n13534743	-
 menses	noun	inert	process	2.19	uncommon	n13534950	-
 menstruation	noun	inert	process	2.9	uncommon	n13534950	-
 mensurate	verb	inert	cognition	0.0	obscure	v00648747	-
-mention	verb	inert	communication	4.73	core	v01026199	noun:communication
 meralgia	noun	inert	state	0.0	obscure	n14352299	-
 merchantability	noun	inert	state	1.85	rare	n14587746	-
 merestone	noun	inert	communication	0.0	obscure	n07274106	-
@@ -3086,7 +2971,6 @@ meronym	noun	inert	communication	0.0	obscure	n06304527	-
 meronymy	noun	inert	relation	0.0	obscure	n13830920	-
 mesalliance	noun	inert	state	0.0	obscure	n13989129	-
 mesasamkranti	noun	inert	time	0.0	obscure	n15246082	-
-message	noun	inert	communication	5.0	core	n06263820	verb:communication
 messaging	noun	inert	communication	3.8	common	n06291130	-
 messidor	noun	inert	time	0.0	obscure	n15202443	-
 metabolism	noun	inert	process	3.78	common	n13536083	-
@@ -3231,7 +3115,6 @@ morals	noun	inert	motive	3.65	common	n09206590	-
 moratorium	noun	inert	time	3.08	common	n15300452	-
 morceau	noun	inert	communication	1.39	rare	n06280327	-
 morn	noun	inert	time	3.05	common	n15190336	-
-morning	noun	inert	time	5.33	core	n15190336	-
 morphallaxis	noun	inert	process	0.0	obscure	n13538588	-
 morpheme	noun	inert	communication	2.28	uncommon	n06317223	-
 morphogenesis	noun	inert	process	2.23	uncommon	n13538756	-
@@ -3248,7 +3131,6 @@ motto	noun	inert	communication	3.72	common	n07166967	-
 moue	noun	inert	communication	1.03	rare	n06890792	-
 moulting	noun	inert	process	1.99	rare	n13538045	-
 mourn	verb	inert	emotion	3.43	common	v01801062	-
-movie	noun	inert	communication	5.16	core	n06626039	-
 mph	noun	inert	time	4.03	core	n15305564	-
 ms	noun	inert	communication	4.67	core	n06418622	-
 mst	noun	inert	time	2.77	uncommon	n15157360	-
@@ -3295,7 +3177,6 @@ myositis	noun	inert	state	1.92	rare	n14373697	-
 myotonia	noun	inert	state	1.43	rare	n14568955	-
 mysophobia	noun	inert	state	0.0	obscure	n14407253	-
 mystifier	noun	inert	communication	0.0	obscure	n06797496	-
-myth	noun	inert	communication	4.08	core	n06384303	-
 mythologisation	noun	inert	communication	0.0	obscure	n06782029	-
 mythologization	noun	inert	communication	0.0	obscure	n06782029	-
 myxedema	noun	inert	state	1.26	rare	n14144982	-
@@ -3361,7 +3242,6 @@ newssheet	noun	inert	communication	0.0	obscure	n06694721	-
 nickname	noun	inert	communication	3.91	common	n06349063	verb:communication
 nidation	noun	inert	process	0.0	obscure	n13517489	-
 niggle	verb	inert	emotion	2.04	uncommon	v01797944	-
-night	noun	inert	time	5.61	core	n15192074	-
 nightfall	noun	inert	time	3.11	common	n15194468	-
 nighttime	noun	inert	time	3.27	common	n15192074	-
 nihility	noun	inert	state	0.0	obscure	n14479148	-
@@ -3392,7 +3272,6 @@ nonintervention	noun	inert	communication	1.34	rare	n06674492	-
 nonoccurrence	noun	inert	state	0.0	obscure	n13984465	-
 nonplus	verb	inert	cognition	0.0	obscure	v00624056	-
 nonsensicality	noun	inert	communication	0.0	obscure	n06619692	-
-noon	noun	inert	time	4.11	core	n15190537	-
 noonday	noun	inert	time	2.15	uncommon	n15190537	-
 noontide	noun	inert	time	1.3	rare	n15190537	-
 normothermia	noun	inert	state	0.0	obscure	n14067854	-
@@ -3488,7 +3367,6 @@ ophthalmoplegia	noun	inert	state	1.28	rare	n14374624	-
 opine	verb	inert	communication	2.3	uncommon	v01029677	-
 opisthorchiasis	noun	inert	state	0.0	obscure	n14477777	-
 opisthotonos	noun	inert	state	0.0	obscure	n14384918	-
-opportunity	noun	inert	state	4.95	core	n14507501	-
 oppositeness	noun	inert	relation	0.0	obscure	n13876846	-
 opprobrium	noun	inert	state	2.11	uncommon	n14464964	-
 oppugn	verb	inert	communication	0.0	obscure	v00869073	-
@@ -3564,7 +3442,6 @@ overstay	verb	inert	stative	2.13	uncommon	v02643550	-
 overstress	verb	inert	communication	1.49	rare	v00842288	-
 overtop	verb	inert	stative	1.88	rare	v02701971	-
 overvalue	verb	inert	cognition	1.97	rare	v00697241	-
-overview	noun	inert	communication	4.11	core	n06480894	-
 overwinter	verb	inert	stative	1.99	rare	v02715447	-
 overwrite	verb	inert	communication	2.43	uncommon	v01001124	-
 ovulation	noun	inert	process	2.98	uncommon	n13551440	-
@@ -3664,7 +3541,6 @@ pasch	noun	inert	time	1.7	rare	n15216329	-
 pascha	noun	inert	time	1.85	rare	n15216329	-
 pasquinade	noun	inert	communication	0.0	obscure	n06793148	-
 passover	noun	inert	time	3.18	common	n15220763	-
-password	noun	inert	communication	4.06	core	n06686933	-
 pastorale	noun	inert	communication	1.65	rare	n07057570	-
 pathogenesis	noun	inert	process	2.81	uncommon	n13554552	-
 patois	noun	inert	communication	2.35	uncommon	n07171981	-
@@ -3700,7 +3576,6 @@ penumbra	noun	inert	state	2.25	uncommon	n14008704	-
 penury	noun	inert	state	2.09	uncommon	n14517300	-
 peptisation	noun	inert	process	0.0	obscure	n13555301	-
 peptization	noun	inert	process	0.0	obscure	n13555301	-
-percent	noun	inert	relation	5.04	core	n13839738	-
 perennate	verb	inert	stative	0.0	obscure	v02624957	-
 perennation	noun	inert	process	0.0	obscure	n13555811	-
 perestroika	noun	inert	communication	2.39	uncommon	n06671290	-
@@ -3709,7 +3584,6 @@ periarteritis	noun	inert	state	0.0	obscure	n14282264	-
 pericarditis	noun	inert	state	1.92	rare	n14363087	-
 perigon	noun	inert	shape	0.0	obscure	n13915367	-
 perilousness	noun	inert	state	0.0	obscure	n14565140	-
-period	noun	inert	time	5.21	core	n15137796	-
 periphery	noun	inert	shape	3.3	common	n13926582	-
 periphrasis	noun	inert	communication	1.17	rare	n07104571	-
 peristalsis	noun	inert	process	1.88	rare	n13555976	-
@@ -3736,7 +3610,6 @@ pesach	noun	inert	time	2.15	uncommon	n15220763	-
 pesah	noun	inert	time	0.0	obscure	n15220763	-
 pester	verb	inert	emotion	2.57	uncommon	v01807344	-
 petechia	noun	inert	state	1.18	rare	n14312695	-
-petition	noun	inert	communication	4.3	core	n06525357	verb:communication
 petrification	noun	inert	process	1.58	rare	n13556786	-
 pettifog	verb	inert	communication	1.04	rare	v00776101	-
 pettifoggery	noun	inert	communication	0.0	obscure	n07199395	-
@@ -3747,7 +3620,6 @@ phalangitis	noun	inert	state	0.0	obscure	n14376206	-
 phalguna	noun	inert	time	0.0	obscure	n15246270	-
 phaneromania	noun	inert	motive	0.0	obscure	n09205681	-
 phanerozoic	noun	inert	time	1.7	rare	n15149100	-
-phase	noun	inert	time	4.64	core	n15315573	verb:create
 phi	noun	inert	communication	3.55	common	n06849325	-
 philippic	noun	inert	communication	1.35	rare	n07248075	-
 philistinism	noun	inert	state	1.47	rare	n14062792	-
@@ -3772,7 +3644,6 @@ photolithography	noun	inert	communication	1.9	rare	n06692940	-
 photophobia	noun	inert	state	1.78	rare	n14407756	-
 photoretinitis	noun	inert	state	0.0	obscure	n14578651	-
 photosynthesis	noun	inert	process	3.03	common	n13558632	-
-phrase	noun	inert	communication	4.3	core	n06327041	verb:communication
 phraseology	noun	inert	communication	2.22	uncommon	n07095931	-
 phrenitis	noun	inert	state	0.0	obscure	n14365537	-
 phycomycosis	noun	inert	state	0.0	obscure	n14205814	-
@@ -3825,10 +3696,7 @@ pluviose	noun	inert	time	0.0	obscure	n15201677	-
 pneumonitis	noun	inert	state	1.89	rare	n14377400	-
 pneumothorax	noun	inert	state	2.37	uncommon	n14173018	-
 podalgia	noun	inert	state	0.0	obscure	n14353606	-
-podcast	verb	inert	communication	4.15	core	v00970994	-
-poem	noun	inert	communication	4.25	core	n06389065	-
 poesy	noun	inert	communication	1.66	rare	n07107220	-
-poetry	noun	inert	communication	4.4	core	n07107220	-
 poignance	noun	inert	state	1.08	rare	n14012928	-
 polarity	noun	inert	relation	3.06	common	n13878307	-
 polemicise	verb	inert	communication	0.0	obscure	v00776977	-
@@ -3883,10 +3751,8 @@ potence	noun	inert	state	1.2	rare	n14075210	-
 potentiation	noun	inert	process	2.03	uncommon	n13560625	-
 pother	noun	inert	state	1.2	rare	n14427176	verb:emotion
 potomania	noun	inert	motive	0.0	obscure	n09204890	-
-poverty	noun	inert	state	4.46	core	n14516729	-
 praenomen	noun	inert	communication	1.21	rare	n06348964	-
 prairial	noun	inert	time	1.1	rare	n15202291	-
-praise	verb	inert	communication	4.31	core	v00858506	noun:communication
 prate	noun	inert	communication	1.52	rare	n07151837	verb:communication
 prattle	verb	inert	communication	2.18	uncommon	v01038676	noun:communication
 preach	verb	inert	communication	3.69	common	v00829664	-
@@ -3905,7 +3771,6 @@ predicament	noun	inert	state	3.28	common	n14432050	-
 predicate	noun	inert	communication	2.85	uncommon	n06327806	verb:communication
 predication	noun	inert	communication	1.83	rare	n06745976	-
 predicator	noun	inert	communication	0.0	obscure	n06327369	-
-predict	verb	inert	communication	4.08	core	v00919743	-
 predispose	verb	inert	cognition	2.28	uncommon	v00682611	-
 preeminence	noun	inert	state	2.12	uncommon	n14458911	-
 preexist	verb	inert	stative	0.0	obscure	v02610107	-
@@ -3953,7 +3818,6 @@ prioritize	verb	inert	cognition	3.31	common	v00662052	-
 priscoan	noun	inert	time	0.0	obscure	n15154524	-
 prismatoid	noun	inert	shape	0.0	obscure	n13940907	-
 prismoid	noun	inert	shape	0.0	obscure	n13941128	-
-processing	noun	inert	process	4.46	core	n13562370	-
 proclaim	verb	inert	communication	3.27	common	v00980205	-
 procrastinate	verb	inert	stative	2.71	uncommon	v02648322	-
 proctalgia	noun	inert	state	0.0	obscure	n14353670	-
@@ -3999,8 +3863,6 @@ prophase	noun	inert	process	1.72	rare	n13563677	-
 prophesy	verb	inert	communication	2.66	uncommon	v00928673	-
 propitiate	verb	inert	communication	1.53	rare	v00767258	-
 proportionateness	noun	inert	relation	0.0	obscure	n13839491	-
-proposal	noun	inert	communication	4.47	core	n07176845	-
-propose	verb	inert	communication	3.99	common	v00876925	-
 proposition	noun	inert	communication	3.85	common	n06763518	verb:communication
 propound	verb	inert	communication	1.55	rare	v00877863	-
 prorate	verb	inert	cognition	1.57	rare	v00640993	-
@@ -4021,7 +3883,6 @@ prothalamion	noun	inert	communication	0.0	obscure	n07067404	-
 prothalamium	noun	inert	communication	0.0	obscure	n07067404	-
 protuberance	noun	inert	shape	1.9	rare	n13917127	-
 protuberate	verb	inert	stative	0.0	obscure	v02720606	-
-prove	verb	inert	stative	4.77	core	v02639962	-
 proverb	noun	inert	communication	3.14	common	n07168546	-
 proviso	noun	inert	communication	2.64	uncommon	n06768658	-
 pseudocyesis	noun	inert	state	0.0	obscure	n14069520	-
@@ -4083,7 +3944,6 @@ quatrain	noun	inert	communication	2.03	uncommon	n06396123	-
 quattrocento	noun	inert	time	1.69	rare	n15230676	-
 quellung	noun	inert	process	0.0	obscure	n13565740	-
 query	verb	inert	communication	3.64	common	v00786670	noun:communication
-question	noun	inert	communication	5.35	core	n07208256	verb:communication
 quetch	verb	inert	communication	0.0	obscure	v00909100	-
 quibble	noun	inert	communication	2.69	uncommon	n06774509	verb:communication
 quietus	noun	inert	state	1.94	rare	n13986101	-
@@ -4093,7 +3953,6 @@ quintupling	noun	inert	process	1.07	rare	n13566133	-
 quip	verb	inert	communication	2.67	uncommon	v00855640	noun:communication
 quiz	noun	inert	communication	3.82	common	n07213851	verb:communication
 quotation	noun	inert	communication	3.51	common	n06776392	-
-quote	verb	inert	communication	4.51	core	v01025268	noun:communication
 racecard	noun	inert	communication	1.2	rare	n06761555	-
 rachischisis	noun	inert	state	0.0	obscure	n14494808	-
 racon	noun	inert	communication	1.11	rare	n07278565	-
@@ -4120,7 +3979,6 @@ rapture	noun	inert	state	3.17	common	n14009857	-
 raptus	noun	inert	state	1.22	rare	n14105423	-
 rateability	noun	inert	state	0.0	obscure	n14554261	-
 ratification	noun	inert	communication	3.14	common	n07194603	-
-ratio	noun	inert	relation	4.37	core	n13841419	-
 ratiocinate	verb	inert	cognition	0.0	obscure	v00634927	-
 ratting	noun	inert	communication	2.29	uncommon	n07229654	-
 ravenousness	noun	inert	state	0.0	obscure	n14063553	-
@@ -4129,7 +3987,6 @@ razz	noun	inert	communication	2.14	uncommon	n07138578	verb:communication
 razzing	noun	inert	communication	1.48	rare	n07138578	-
 re	noun	inert	communication	5.23	core	n06881495	-
 reabsorption	noun	inert	process	2.02	uncommon	n13571707	-
-read	verb	inert	cognition	5.54	core	v00626756	noun:communication
 reaffirm	verb	inert	communication	2.83	uncommon	v01013950	-
 reaffirmation	noun	inert	communication	2.16	uncommon	n06745330	-
 realness	noun	inert	state	2.48	uncommon	n13978747	-
@@ -4145,12 +4002,10 @@ rebus	noun	inert	communication	2.53	uncommon	n06799343	-
 rebut	verb	inert	communication	2.6	uncommon	v00816512	-
 rebuttal	noun	inert	communication	3.1	common	n07215880	-
 recalculate	verb	inert	cognition	2.16	uncommon	v00641355	-
-recall	verb	inert	cognition	4.4	core	v00609334	noun:communication
 recant	verb	inert	communication	2.42	uncommon	v00800379	-
 recantation	noun	inert	communication	1.75	rare	n07220756	-
 recapitulation	noun	inert	process	2.22	uncommon	n13552855	-
 recasting	noun	inert	communication	2.37	uncommon	n06440815	-
-recipe	noun	inert	communication	4.23	core	n06801642	-
 reciprocality	noun	inert	relation	0.0	obscure	n13863412	-
 recital	noun	inert	communication	3.28	common	n07235433	-
 recitative	noun	inert	communication	2.19	uncommon	n07101538	-
@@ -4176,12 +4031,9 @@ redefinition	noun	inert	communication	2.39	uncommon	n06758323	-
 redeposition	noun	inert	process	0.0	obscure	n13568583	-
 redetermine	verb	inert	communication	0.0	obscure	v00921931	-
 redox	noun	inert	process	2.75	uncommon	n13552002	-
-reducing	noun	inert	process	4.36	core	n13568880	-
 reduplication	noun	inert	communication	2.02	uncommon	n07114264	-
 reevaluate	verb	inert	cognition	2.9	uncommon	v00684700	-
 reexamine	verb	inert	cognition	2.35	uncommon	v00697955	-
-refer	verb	inert	communication	4.45	core	v01026199	-
-reference	noun	inert	communication	4.74	core	n06778981	verb:create
 refilling	noun	inert	process	2.53	uncommon	n13569128	-
 refining	noun	inert	process	3.41	common	n13569308	-
 reflation	noun	inert	process	1.55	rare	n13569553	-
@@ -4203,10 +4055,8 @@ reintroduction	noun	inert	communication	2.71	uncommon	n07232333	-
 reiterate	verb	inert	communication	3.13	common	v00960366	-
 rejoice	verb	inert	emotion	3.46	common	v01817851	-
 rejoinder	noun	inert	communication	2.2	uncommon	n07214582	-
-relate	verb	inert	cognition	4.24	core	v00715072	-
 relatedness	noun	inert	relation	2.38	uncommon	n13817701	-
 relations	noun	inert	relation	4.67	core	n13802661	-
-relationship	noun	inert	relation	5.15	core	n13802931	-
 relativise	verb	inert	cognition	0.0	obscure	v00693600	-
 relativize	verb	inert	cognition	1.23	rare	v00693600	-
 relatum	noun	inert	communication	0.0	obscure	n06615719	-
@@ -4215,9 +4065,6 @@ relent	verb	inert	stative	2.52	uncommon	v02709149	-
 relevance	noun	inert	relation	3.75	common	n13816629	-
 relevancy	noun	inert	relation	2.72	uncommon	n13816629	-
 relive	verb	inert	cognition	3.24	common	v00598611	-
-rely	verb	inert	cognition	4.29	core	v00714537	-
-remember	verb	inert	cognition	5.38	core	v00609334	-
-remind	verb	inert	cognition	4.37	core	v00612092	-
 reminisce	verb	inert	cognition	2.84	uncommon	v00612609	-
 remonstrance	noun	inert	communication	1.81	rare	n07261402	-
 remonstrate	verb	inert	communication	1.81	rare	v00912508	-
@@ -4236,9 +4083,7 @@ rephrase	verb	inert	communication	2.83	uncommon	v00963768	-
 rephrasing	noun	inert	communication	1.91	rare	n06440815	-
 repine	verb	inert	communication	1.07	rare	v00912844	-
 replenishment	noun	inert	process	2.74	uncommon	n13569128	-
-reply	verb	inert	communication	4.5	core	v00817348	noun:communication
 reportage	noun	inert	communication	2.65	uncommon	n06696529	-
-reporting	noun	inert	communication	4.54	core	n06696529	-
 reprehend	verb	inert	communication	1.11	rare	v00827862	-
 reprehension	noun	inert	communication	0.0	obscure	n06724794	-
 reprimand	verb	inert	communication	2.9	uncommon	v00825330	noun:communication
@@ -4250,10 +4095,8 @@ reprove	verb	inert	communication	1.79	rare	v00825727	-
 repudiate	verb	inert	communication	2.45	uncommon	v00759589	-
 repugn	verb	inert	communication	0.0	obscure	v00871260	-
 repute	verb	inert	cognition	2.64	uncommon	v00691692	noun:state
-request	verb	inert	communication	4.76	core	v00754770	noun:communication
 requiem	noun	inert	communication	3.06	common	n07064659	-
 requiescat	noun	inert	communication	1.48	rare	n07205244	-
-require	verb	inert	stative	4.78	core	v02634015	-
 requisiteness	noun	inert	state	0.0	obscure	n14474370	-
 reread	verb	inert	cognition	3.0	common	v00627360	-
 reschedule	verb	inert	communication	2.92	uncommon	v00797137	-
@@ -4267,7 +4110,6 @@ residuum	noun	inert	relation	1.45	rare	n13833030	-
 resorption	noun	inert	process	2.19	uncommon	n13571707	-
 respects	noun	inert	communication	3.9	common	n06727491	-
 resplend	verb	inert	stative	0.0	obscure	v02739328	-
-respond	verb	inert	cognition	4.53	core	v00719282	-
 restate	verb	inert	communication	2.47	uncommon	v00960366	-
 restatement	noun	inert	communication	2.37	uncommon	n06781692	-
 resurge	verb	inert	stative	1.4	rare	v02630887	-
@@ -4286,7 +4128,6 @@ rewording	noun	inert	communication	1.81	rare	n06440815	-
 rewriting	noun	inert	communication	3.14	common	n06440462	-
 rhapsodise	verb	inert	communication	0.0	obscure	v00956169	-
 rhapsodize	verb	inert	communication	1.18	rare	v00956169	-
-rhetoric	noun	inert	communication	3.95	common	n07086738	-
 rhinitis	noun	inert	state	2.39	uncommon	n14378465	-
 rhinopathy	noun	inert	state	0.0	obscure	n14420294	-
 rhinophyma	noun	inert	state	0.0	obscure	n14420444	-
@@ -4322,7 +4163,6 @@ rondo	noun	inert	communication	3.03	common	n07057714	-
 rooting	noun	inert	process	3.55	common	n13573327	-
 roots	noun	inert	state	4.34	core	n14088894	-
 roseola	noun	inert	state	1.33	rare	n14345380	-
-roster	noun	inert	communication	4.09	core	n06506991	-
 rota	noun	inert	communication	2.7	uncommon	n06508853	-
 rotting	noun	inert	process	3.34	common	n13479192	-
 roughhouse	verb	inert	cognition	1.57	rare	v00605742	-
@@ -4376,7 +4216,6 @@ satirize	verb	inert	communication	2.08	uncommon	v00854367	-
 saturday	noun	inert	time	4.87	core	n15189617	-
 sawan	noun	inert	time	1.78	rare	n15245181	-
 say	verb	inert	communication	5.89	core	v01011267	noun:state
-saying	noun	inert	communication	5.37	core	n07166088	-
 sayonara	noun	inert	communication	2.37	uncommon	n06642117	-
 scabies	noun	inert	state	2.43	uncommon	n14203809	-
 scandalise	verb	inert	emotion	1.05	rare	v01814414	-
@@ -4427,7 +4266,6 @@ secernate	verb	inert	cognition	0.0	obscure	v00652006	-
 secondo	noun	inert	communication	1.9	rare	n07044888	-
 seedtime	noun	inert	time	1.05	rare	n15316652	-
 segno	noun	inert	communication	1.45	rare	n06882321	-
-semester	noun	inert	time	4.03	core	n15250593	-
 semibreve	noun	inert	communication	1.02	rare	n06883626	-
 semicircle	noun	inert	shape	2.27	uncommon	n13896890	-
 semicolon	noun	inert	communication	2.48	uncommon	n06857789	-
@@ -4490,8 +4328,6 @@ shmoose	verb	inert	communication	0.0	obscure	v01041034	-
 shmooze	noun	inert	communication	0.0	obscure	n07151177	verb:communication
 shoes	noun	inert	state	4.67	core	n13949819	-
 shortlist	noun	inert	communication	3.07	common	n06507616	verb:cognition
-shout	verb	inert	communication	4.06	core	v00914426	noun:communication
-shouting	noun	inert	communication	3.97	common	n07266447	-
 showdown	noun	inert	communication	3.49	common	n07195703	-
 showtime	noun	inert	time	3.39	common	n15290329	-
 shrive	verb	inert	communication	1.22	rare	v00905665	-
@@ -4514,7 +4350,6 @@ signification	noun	inert	communication	2.12	uncommon	n06613680	-
 signified	noun	inert	communication	2.8	uncommon	n06614825	-
 signifier	noun	inert	communication	2.28	uncommon	n06301417	-
 signify	verb	inert	communication	3.22	common	v00933814	-
-signing	noun	inert	communication	4.4	core	n06888747	-
 signpost	noun	inert	communication	2.46	uncommon	n06807231	verb:communication
 silents	noun	inert	communication	1.75	rare	n06630259	-
 silurian	noun	inert	time	2.7	uncommon	n15153152	-
@@ -4530,7 +4365,6 @@ sinuousness	noun	inert	shape	0.0	obscure	n13907864	-
 sinusitis	noun	inert	state	2.42	uncommon	n14378643	-
 siss	verb	inert	communication	1.72	rare	v01056058	-
 sitcom	noun	inert	communication	3.55	common	n07030847	-
-situation	noun	inert	state	5.09	core	n13950416	-
 sivan	noun	inert	time	2.52	uncommon	n15240985	-
 siwan	noun	inert	time	1.69	rare	n15240985	-
 sixties	noun	inert	time	3.36	common	n15175094	-
@@ -4561,7 +4395,6 @@ snowblindness	noun	inert	state	0.0	obscure	n14579382	-
 snugness	noun	inert	state	1.03	rare	n14469764	-
 soakage	noun	inert	process	0.0	obscure	n13578361	-
 sobriquet	noun	inert	communication	2.11	uncommon	n06349063	-
-software	noun	inert	communication	4.77	core	n06578068	-
 sogginess	noun	inert	state	1.04	rare	n14559933	-
 soh	noun	inert	communication	2.25	uncommon	n06881894	-
 solfa	noun	inert	communication	1.11	rare	n06880930	-
@@ -4573,10 +4406,7 @@ soliloquy	noun	inert	communication	2.45	uncommon	n07175403	-
 solmisation	noun	inert	communication	0.0	obscure	n06880725	-
 solstice	noun	inert	time	3.1	common	n15246614	-
 solvation	noun	inert	process	1.86	rare	n13579328	-
-solve	verb	inert	cognition	4.42	core	v00636568	-
 solvency	noun	inert	state	2.71	uncommon	n14501727	-
-somebody	noun	inert	Tops	4.8	core	n00007846	-
-someone	noun	inert	Tops	5.63	core	n00007846	-
 somnolence	noun	inert	state	1.83	rare	n14053917	-
 sonata	noun	inert	communication	3.13	common	n07057834	-
 sonatina	noun	inert	communication	1.59	rare	n07058426	-
@@ -4587,16 +4417,12 @@ soubriquet	noun	inert	communication	1.45	rare	n06349063	-
 sough	verb	inert	communication	1.59	rare	v01048687	-
 souring	noun	inert	process	2.16	uncommon	n13580612	-
 spallation	noun	inert	process	1.7	rare	n13580712	-
-spam	noun	inert	communication	4.05	core	n06291000	verb:communication
-speak	verb	inert	communication	5.03	core	v00944022	-
 spec	noun	inert	communication	3.59	common	n06737816	-
 speciation	noun	inert	process	2.63	uncommon	n13581282	-
 specify	verb	inert	communication	3.78	common	v01020937	-
 speculate	verb	inert	cognition	3.48	common	v00635105	-
-speech	noun	inert	communication	4.85	core	n07253354	-
 speechify	verb	inert	communication	0.0	obscure	v00992040	-
 speechmaking	noun	inert	communication	1.41	rare	n07256497	-
-spelling	noun	inert	communication	4.0	core	n06364852	-
 spelunk	verb	inert	cognition	0.0	obscure	v00651540	-
 spermatogenesis	noun	inert	process	2.06	uncommon	n13581532	-
 spheroid	noun	inert	shape	2.07	uncommon	n13921338	-
@@ -4637,10 +4463,8 @@ stagnation	noun	inert	state	3.19	common	n14036138	-
 stammer	verb	inert	communication	2.49	uncommon	v00983576	noun:state
 stanza	noun	inert	communication	3.01	common	n07066331	-
 stardom	noun	inert	state	3.09	common	n13971984	-
-statement	noun	inert	communication	4.97	core	n06735202	-
 stationariness	noun	inert	state	0.0	obscure	n14029975	-
 stationery	noun	inert	communication	3.29	common	n06269505	-
-status	noun	inert	state	4.87	core	n13968971	-
 steatocystoma	noun	inert	state	0.0	obscure	n14226245	-
 steatorrhea	noun	inert	state	1.15	rare	n14591537	-
 steerageway	noun	inert	time	0.0	obscure	n15309771	-
@@ -4660,13 +4484,11 @@ stoplight	noun	inert	communication	2.33	uncommon	n07280695	-
 storyline	noun	inert	communication	3.74	common	n06385268	-
 stovepiping	noun	inert	process	0.0	obscure	n13572320	-
 strabismus	noun	inert	state	2.11	uncommon	n14581007	-
-stress	noun	inert	communication	4.73	core	n07099567	verb:communication
 stricture	noun	inert	state	2.02	uncommon	n14130856	-
 stridor	noun	inert	state	1.53	rare	n14591775	-
 stripes	noun	inert	communication	3.76	common	n07284257	-
 strophe	noun	inert	communication	1.69	rare	n06398336	-
 studbook	noun	inert	communication	1.14	rare	n06519321	-
-studying	noun	inert	communication	4.42	core	n06610798	-
 stumper	noun	inert	communication	1.51	rare	n06798224	-
 stutter	verb	inert	communication	2.95	uncommon	v00983576	noun:state
 stye	noun	inert	state	1.84	rare	n14208701	-
@@ -4706,7 +4528,6 @@ sudation	noun	inert	process	0.0	obscure	n13556464	-
 sudoku	noun	inert	communication	2.64	uncommon	n06798869	-
 suffice	verb	inert	stative	3.46	common	v02675578	-
 suffusion	noun	inert	process	1.65	rare	n13556157	-
-suggest	verb	inert	communication	4.75	core	v00876925	-
 suggestibility	noun	inert	state	1.79	rare	n14558173	-
 sukkoth	noun	inert	time	0.0	obscure	n15186919	-
 summarisation	noun	inert	communication	0.0	obscure	n06479116	-
@@ -4723,7 +4544,6 @@ supertitle	noun	inert	communication	0.0	obscure	n06359181	-
 supertonic	noun	inert	communication	1.01	rare	n06870917	-
 suppertime	noun	inert	time	1.6	rare	n15191117	-
 supplicate	verb	inert	communication	1.65	rare	v00760672	-
-suppose	verb	inert	communication	4.56	core	v00919271	-
 suprainfection	noun	inert	state	0.0	obscure	n14208985	-
 supremacy	noun	inert	state	3.64	common	n14465996	-
 surmisal	noun	inert	communication	0.0	obscure	n06795537	-
@@ -4733,7 +4553,6 @@ surrebuttal	noun	inert	communication	0.0	obscure	n06575631	-
 surrebutter	noun	inert	communication	0.0	obscure	n06575631	-
 surrejoinder	noun	inert	communication	0.0	obscure	n06575792	-
 surtitle	noun	inert	communication	0.0	obscure	n06359181	-
-survive	verb	inert	stative	4.52	core	v02624202	-
 susceptibility	noun	inert	state	3.1	common	n14553663	-
 susceptibleness	noun	inert	state	0.0	obscure	n14553663	-
 suspiration	noun	inert	communication	0.0	obscure	n07144310	-
@@ -4741,7 +4560,6 @@ susurrate	verb	inert	communication	0.0	obscure	v01046249	-
 sutra	noun	inert	communication	2.91	uncommon	n06636504	-
 svoboda	noun	inert	state	2.42	uncommon	n14019696	-
 swastika	noun	inert	communication	2.97	uncommon	n06896775	-
-swear	verb	inert	communication	4.51	core	v00867051	-
 swearing	noun	inert	communication	3.53	common	n07139804	-
 swearword	noun	inert	communication	1.42	rare	n07139804	-
 sweating	noun	inert	process	3.66	common	n13556464	-
@@ -4799,10 +4617,8 @@ tabloid	noun	inert	communication	3.25	common	n06278644	-
 tachogram	noun	inert	communication	0.0	obscure	n07019013	-
 tachycardia	noun	inert	state	2.59	uncommon	n14386432	-
 tachygraphy	noun	inert	communication	0.0	obscure	n06361497	-
-tale	noun	inert	communication	4.29	core	n07235754	-
 talipes	noun	inert	state	1.01	rare	n14238066	-
 talkie	noun	inert	communication	2.82	uncommon	n06631329	-
-talking	noun	inert	communication	5.29	core	n07150442	-
 talks	noun	inert	communication	4.61	core	n07162900	-
 tammuz	noun	inert	time	1.69	rare	n15241182	-
 tamponade	noun	inert	state	1.96	rare	n14531970	-
@@ -4861,7 +4677,6 @@ tenet	noun	inert	communication	3.0	common	n06802899	-
 tenonitis	noun	inert	state	0.0	obscure	n14379983	-
 tenosynovitis	noun	inert	state	1.25	rare	n14380398	-
 tenseness	noun	inert	state	1.55	rare	n14567937	-
-tension	noun	inert	state	4.22	core	n14399593	-
 tensity	noun	inert	state	0.0	obscure	n14567937	-
 terahertz	noun	inert	time	2.2	uncommon	n15305326	-
 teratogenesis	noun	inert	process	0.0	obscure	n13587639	-
@@ -4869,13 +4684,11 @@ terce	noun	inert	time	1.23	rare	n15254671	-
 tercentenary	noun	inert	time	2.02	uncommon	n15276568	-
 tercentennial	noun	inert	time	0.0	obscure	n15276568	-
 tergiversate	verb	inert	communication	0.0	obscure	v00837185	-
-term	noun	inert	communication	5.23	core	n06314878	verb:communication
 terminology	noun	inert	communication	3.68	common	n06315049	-
 terrify	verb	inert	emotion	2.8	uncommon	v01784760	-
 terseness	noun	inert	communication	1.38	rare	n07102630	-
 tesseract	noun	inert	shape	2.38	uncommon	n13939960	-
 testify	verb	inert	communication	3.84	common	v01016830	-
-testimony	noun	inert	communication	4.17	core	n06747216	-
 tet	noun	inert	time	2.81	uncommon	n15208101	-
 tetanilla	noun	inert	state	0.0	obscure	n14333931	-
 tetany	noun	inert	state	1.43	rare	n14333931	-
@@ -4892,7 +4705,6 @@ thalweg	noun	inert	shape	1.21	rare	n13935701	-
 thammuz	noun	inert	time	0.0	obscure	n15241182	-
 thanatophobia	noun	inert	state	0.0	obscure	n14408007	-
 thanatopsis	noun	inert	communication	1.01	rare	n06421926	-
-thank	verb	inert	communication	5.48	core	v00893836	-
 thanksgiving	noun	inert	communication	4.04	core	n07204699	-
 theologise	verb	inert	communication	0.0	obscure	v01035990	-
 theologize	verb	inert	communication	0.0	obscure	v01035990	-
@@ -4903,14 +4715,11 @@ thermalgesia	noun	inert	state	0.0	obscure	n14356463	-
 thermidor	noun	inert	time	1.92	rare	n15202596	-
 thermocoagulation	noun	inert	process	0.0	obscure	n13588266	-
 thermogram	noun	inert	communication	1.39	rare	n07019134	-
-thesis	noun	inert	communication	4.05	core	n06768165	-
 theta	noun	inert	communication	3.16	common	n06847935	-
 think	verb	inert	cognition	6.08	core	v00691086	noun:knowledge
 thirties	noun	inert	time	3.24	common	n15173998	-
 thraldom	noun	inert	state	1.03	rare	n14020738	-
 thralldom	noun	inert	state	0.0	obscure	n14020738	-
-threat	noun	inert	state	4.6	core	n14566833	-
-threaten	verb	inert	stative	3.94	common	v02702962	-
 threnody	noun	inert	communication	1.55	rare	n07064659	-
 thriller	noun	inert	communication	3.91	common	n06382026	-
 throe	noun	inert	state	1.24	rare	n14348081	-
@@ -4935,7 +4744,6 @@ tiff	noun	inert	communication	3.03	common	n07199395	-
 tilde	noun	inert	communication	2.19	uncommon	n06836441	-
 timekeeping	noun	inert	time	2.33	uncommon	n15198759	-
 timelessness	noun	inert	state	2.15	uncommon	n13980191	-
-timeline	noun	inert	communication	4.15	core	n06516956	-
 timetable	noun	inert	communication	3.44	common	n06508490	-
 tinea	noun	inert	state	2.2	uncommon	n14148948	-
 tinnitus	noun	inert	state	2.83	uncommon	n14591940	-
@@ -4984,7 +4792,6 @@ translocation	noun	inert	process	2.72	uncommon	n13590867	-
 transpiration	noun	inert	process	2.12	uncommon	n13591108	-
 transsexualism	noun	inert	state	1.83	rare	n14595655	-
 trapezohedron	noun	inert	shape	1.13	rare	n13941750	-
-trauma	noun	inert	state	4.14	core	n14309164	-
 traumatophobia	noun	inert	state	0.0	obscure	n14409324	-
 travelog	noun	inert	communication	1.04	rare	n06627701	-
 travelogue	noun	inert	communication	2.46	uncommon	n06627701	-
@@ -5080,11 +4887,9 @@ undernourishment	noun	inert	state	1.55	rare	n14063972	-
 underrate	verb	inert	cognition	2.11	uncommon	v00673254	-
 underscore	verb	inert	communication	2.97	uncommon	v01016618	noun:communication
 undersign	verb	inert	communication	0.0	obscure	v00998964	-
-understand	verb	inert	cognition	5.37	core	v00590283	-
 understate	verb	inert	communication	2.3	uncommon	v00842804	-
 understatement	noun	inert	communication	3.36	common	n06771774	-
 underwrite	verb	inert	communication	2.55	uncommon	v00891261	-
-unemployment	noun	inert	state	4.22	core	n13991755	-
 unfolding	noun	inert	process	3.33	common	n13592420	-
 unhallow	verb	inert	communication	0.0	obscure	v00868726	-
 unhealthiness	noun	inert	state	1.48	rare	n14075528	-
@@ -5205,7 +5010,6 @@ virginity	noun	inert	state	3.48	common	n13991028	-
 virgule	noun	inert	communication	0.0	obscure	n06857953	-
 virilisation	noun	inert	process	0.0	obscure	n13532958	-
 virilization	noun	inert	process	1.39	rare	n13532958	-
-visa	noun	inert	communication	4.13	core	n06700628	verb:communication
 viscountcy	noun	inert	state	1.04	rare	n14456698	-
 vitalisation	noun	inert	state	0.0	obscure	n14073034	-
 vitalization	noun	inert	state	1.29	rare	n14073034	-
@@ -5233,13 +5037,10 @@ vulvitis	noun	inert	state	1.25	rare	n14382398	-
 vulvovaginitis	noun	inert	state	0.0	obscure	n14382478	-
 wafture	noun	inert	communication	0.0	obscure	n07288732	-
 waggishness	noun	inert	communication	0.0	obscure	n06794138	-
-wait	verb	inert	stative	5.35	core	v02644022	noun:act
 wanderlust	noun	inert	motive	2.65	uncommon	n09206037	-
-warn	verb	inert	communication	4.02	core	v00871877	-
 warranty	noun	inert	communication	3.73	common	n06698201	-
 wartime	noun	inert	time	3.59	common	n15318571	-
 washday	noun	inert	time	1.24	rare	n15247636	-
-wasting	noun	inert	state	4.11	core	n14571697	-
 watchword	noun	inert	communication	2.21	uncommon	n07167460	-
 waterlessness	noun	inert	state	0.0	obscure	n14560040	-
 waul	verb	inert	communication	1.21	rare	v01049135	-
@@ -5254,11 +5055,8 @@ weariness	noun	inert	state	2.63	uncommon	n14039832	-
 webpage	noun	inert	communication	3.36	common	n06370307	-
 wedlock	noun	inert	state	2.86	uncommon	n13987306	-
 wednesday	noun	inert	time	4.59	core	n15189280	-
-week	noun	inert	time	5.56	core	n15194920	-
 weekday	noun	inert	time	3.31	common	n15188204	-
-weekend	noun	inert	time	4.93	core	n15195551	verb:stative
 weeknight	noun	inert	time	2.62	uncommon	n15192722	-
-weigh	verb	inert	stative	3.99	common	v02710678	-
 wellbeing	noun	inert	state	3.52	common	n14470991	-
 wellerism	noun	inert	communication	0.0	obscure	n07120008	-
 wellness	noun	inert	state	3.57	common	n14471374	-
@@ -5313,11 +5111,9 @@ yack	noun	inert	communication	1.83	rare	n07151648	verb:communication
 yammer	verb	inert	communication	2.04	uncommon	v01049253	-
 yaup	verb	inert	communication	0.0	obscure	v01048804	-
 yawp	verb	inert	communication	1.57	rare	v01048352	-
-year	noun	inert	time	5.96	core	n15228587	-
 yearn	verb	inert	emotion	2.97	uncommon	v01832347	-
 years	noun	inert	time	5.96	core	n15178747	-
 yell	verb	inert	communication	3.85	common	v00915018	noun:communication
-yelling	noun	inert	communication	4.04	core	n07138260	-
 yes	noun	inert	communication	5.5	core	n07218560	-
 yesteryear	noun	inert	time	2.62	uncommon	n15145765	-
 yips	noun	inert	state	2.15	uncommon	n14399902	-

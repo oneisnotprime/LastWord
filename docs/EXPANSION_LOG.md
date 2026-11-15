@@ -123,3 +123,65 @@ into `tools/generated_words.txt`, letters in `tools/producers.txt`). Art is draw
   of racks that can spell a watched word is about 1% in rounds that are now half as long (4.5% before,
   inflated by the time-up rounds' big racks). Traps sprang once; fealty was sworn 2 to 3 times a
   tournament; no bot was captured (they rarely own a lockup and a capturing trap together).
+
+## Frequency batch 1: the most common words that had no data
+
+- The gap (`tools/freq_gap.py`: wordfreq's English ranking; a dictionary headword in lexicon.tsv or
+  inert.tsv with no data in demo.json; function words, names, proper nouns, words WordNet only
+  knows capitalized, crude words and `EXCLUDED` left out; plurals and degrees of a word with data
+  count as implemented). Before, by part of speech:
+
+  | wordfreq top | missing | nouns | verbs | adjectives | adverbs |
+  |---|---|---|---|---|---|
+  | 10,000 | 1,668 | 782 | 212 | 573 | 101 |
+  | 20,000 | 4,694 | 2,262 | 477 | 1,664 | 291 |
+  | 30,000 | 7,526 | 3,609 | 729 | 2,700 | 488 |
+
+  After this batch: top 10k 613 (282 n, 67 v, 234 adj, 30 adv), top 20k 3,639 (1,762, 332, 1,325,
+  220), top 30k 6,471 (3,109, 584, 2,361, 417).
+- Added 1,056 words, every missing word down to wordfreq rank about 7,800 (YEAR, NIGHT, BELIEVE,
+  REMEMBER, QUESTION, HEALTH... to EXPLICIT, CONTINENTAL): 498 nouns, 341 adjectives, 146 verbs, 71
+  adverbs; the dictionary is now 13,537 words. Twelve core words are hand-written in demo_words.txt
+  (YEAR, NIGHT, MORNING, ANIMAL, KNOWLEDGE, HEALTH, QUESTION, FREEDOM, BELIEVE, REMEMBER, LEARN,
+  UNDERSTAND); the rest went through chunk files and `generate_words.py merge`. New producers: hired
+  people pay N (DEVELOPER, CONTRACTOR, WORKFORCE...), FARMING lays a crop field, a MANUFACTURER makes
+  M, a WORKPLACE C.
+- How abstract words act, through shared systems only: time words set daylight (NIGHT, MORNING,
+  EVENING, AFTERNOON, NOON: map-wide, and day and night end each other) or stretch durations
+  (YEAR, WEEK, ERA, SEMESTER, as HOUR does); an act aimed at someone is an event (QUESTION confuses
+  and reads them, THREAT frightens, INFECTION sickens and spreads, POEM charms, LITIGATION and
+  SUBSCRIPTION put debt on them, BOMBING drops impacts, FLOODING lays water, OCCUPATION claims ground
+  and forbids gathering); states, feelings and ideas are fields (KNOWLEDGE, FREEDOM ends root, stun
+  and charm; STRESS, POVERTY, IGNORANCE, CULT charms enemies, TENSION sets everyone hostile, CLIMATE);
+  RELATIONSHIP, FRIENDSHIP, PROPOSAL, MERGER are pacts; verbs are cast on the speller (SURVIVE
+  cheats death once, DISAPPEAR, PREDICT, SHOUT deafens, ATTRACT pulls, ADOPT takes a creature);
+  adjectives are operations (OVERWHELMING doubles, MIGHTY, BRUTAL, EXPLOSIVE, MICRO, ABSENT phases out,
+  TRANSPARENT, UNLIMITED) and number words are counts (FORTY, FIFTEEN, ELEVEN); adverbs bend verbs
+  (REPEATEDLY duplicates, UTTERLY and DESPERATELY ×2 to ×2.5 with self-harm, SIMULTANEOUSLY, PRIVATELY).
+  Each lasting area has an ender: the polish2 test passes. No new word seals a fate (polish test:
+  ten at most).
+- Pitfalls for the next batch: a noun's archetype decides how it acts (`phrase.ts` `kindOf`). An
+  event aimed at someone in a non-event archetype (knowledge, attribute, document, place) is parsed
+  as an object or a field and its event properties do nothing; a field in a non-event archetype
+  uses `field_duration` (none lasts for ever), not `event_duration`. Abstract "documents" (SPEECH,
+  MYTH, SOFTWARE) belong in knowledge, or they become paper objects. `counters` is read backwards:
+  W ends L when W's counters name L.
+- Data audit (batch 3's CERBERUS and PTERODACTYL): objects and creatures whose aura or field
+  reached most of the 1 km map, now local: HELL (fear and fire field 500 m -> 120), FLOOD (500 ->
+  200), RAINFOREST (400 -> 160), CREATOR and GODDESS's healing fields (500 and 300 -> 60), CARILLON,
+  BELFRY, MINARET (400, 400, 300 -> 80), FLAGSHIP (400 -> 60), the map-wide fields of NEWSPAPER,
+  PUBLICATION, MAGAZINE, INTERNET, PUBLISHER, NEWSCASTER (40 to 80 m), LIFEGUARD and LIFESAVER's
+  healing by sight (200 -> 100 m). `freq1.test.ts` fails if any object or creature radiates fear,
+  healing or a field past 200 m (weather and sky words excepted).
+- Drawn: a WORDS shape for each of the 131 new concrete words without a generated image (people as
+  bipeds by what they do, crowds for INFANTRY and WORKFORCE, a ceiling, plug, gas cylinder, doll,
+  skirt, picture, radiator, grave, pipeline, cart, drain; landforms as signs), checked in the gallery.
+- Tournament (48 rooms, 8 mixed bots, 30 min cap, same seeds; main against this batch): mean round
+  10.6 -> 8.3 min; median first death 130 -> 131 s; rounds at the time cap 2 -> 1 (each time two bots
+  left riding vehicles with no foe in sight: TODO). Bots spelled new words 138 times (41 different;
+  CAB 59, MYTH 8, PAL 7, ALLY 7), from about 1.3% of racks.
+- Remaining: `tools/freq_todo.txt` (3,000 words, rank order) starts at CONSIST (rank 7,781), OVERHEAD,
+  PIERCE, PRONE, READILY, REFLECTING, REGIMENT, REUNION. Left out on purpose and not counted: names
+  WordNet also lists lower-case (`freq_gap.py` NAMES), inflections it misreads (NOT_WORDS: LIED,
+  SHOOK...), crude words added to tools/crude.txt (BULLSHIT, SHITTY...), and words about groups of
+  people or sexual violence added to `EXCLUDED` (WELSH, INDIGENOUS, LESBIAN, IMMIGRANT, SLAVERY...).
