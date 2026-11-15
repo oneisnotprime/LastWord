@@ -8777,7 +8777,7 @@ export class WorldRoom extends Room {
     else throw new Error(`A ghost cannot make things: ${word}`);
     g.next = this.elapsed + GHOST_GAP;
     this.sendTo(id, "spelled", `Ghost: ${done}`);
-    const mind = this.bots.get(id);
+    const mind = this.allBots.get(id); // a fallen bot's mind is kept there
     if (mind) this.botUsed(mind, "haunt");
     return done;
   }
@@ -8816,8 +8816,9 @@ export class WorldRoom extends Room {
     if (client) { client.view ??= new StateView(); client.view.add(w.player); client.send("letters", w.letters); client.send("revived", { by }); }
     this.tell(w);
     for (const c of this.clients) if (c.sessionId !== gid) c.send("notice", `${name} is back from the dead (${by})`);
-    const mind = this.bots.get(gid);
-    if (mind) { this.botUsed(mind, "revived"); mind.peaceUntil = this.elapsed + 10; }
+    // A bot back from the dead thinks again.
+    const mind = this.allBots.get(gid);
+    if (mind) { this.bots.set(gid, mind); this.botUsed(mind, "revived"); mind.peaceUntil = this.elapsed + 10; }
     this.refreshViews();
     return true;
   }
