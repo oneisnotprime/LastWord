@@ -1,4 +1,4 @@
-import { ACTION_LETTERS, becomes, cooks, GRAFT_CAPABILITIES, GROUNDED_FROM, isBoon, isGraft, isTrap, parsePhrase, placeRules, pluralize, producerOf, sails, STATUSES, TILE_METERS, TILE_TYPES, WORN_SLOTS, type Dictionary, type Letters, type Op, type Stats, type Status } from "@lastword/shared";
+import { ACTION_LETTERS, becomes, doorGuard, hatches, matured, opensDoors, resolveSpelled, cooks, GRAFT_CAPABILITIES, GROUNDED_FROM, isBoon, isGraft, isTrap, parsePhrase, placeRules, pluralize, producerOf, sails, STATUSES, TILE_METERS, TILE_TYPES, WORN_SLOTS, type Dictionary, type Letters, type Op, type Stats, type Status } from "@lastword/shared";
 
 /**
  * Server-side bot players: what a bot knows about words, and how hard it plays. The room
@@ -65,17 +65,20 @@ export type Use = "weapon" | "armor" | "mount" | "creature" | "producer" | "clai
  * faith to heal), `morale` (lifts its side's morale or courage; music when it is loud), `haste`
  * (time runs faster for it), `rewind` (`rewinds`), `gravity` (grounds flyers), `vessel` (sails),
  * `fishing` (a tool that fishes), `luck` (luck for itself), `borer` (a creature that eats things made
- * of what it `bores`: TERMITES on an enemy's wooden house; shared bug.ts).
+ * of what it `bores`: TERMITES on an enemy's wooden house; shared bug.ts), `siege` (against an enemy's
+ * walk-in building: a door counter carried or ridden, a weapon or engine whose `siege` multiplies its
+ * blows on buildings, or an event aimed at the building that breaks doors or batters it: a RAM, a
+ * TREBUCHET, a BREACH; shared interior.ts), `guard` (a door guard for its own building: a PORTCULLIS).
  */
 export type ThemeUse = "warm" | "disguise" | "graft" | "cure" | "hex" | "duel" | "gift" | "loan" | "bribe" | "trap" | "lie" | "jam"
-  | "shrine" | "miracle" | "morale" | "haste" | "rewind" | "gravity" | "vessel" | "fishing" | "luck" | "borer";
+  | "shrine" | "miracle" | "morale" | "haste" | "rewind" | "gravity" | "vessel" | "fishing" | "luck" | "borer" | "siege" | "guard";
 
 /** What the bot tournament lists as the themes' systems (`botUsed` names), in order. */
 export const THEME_SYSTEMS = [
   "warm", "disguise", "graft self", "graft creature", "cure", "calm", "avoid sick", "hex", "hex rage", "hex doom", "hex curse",
   "hex chaos", "hex expose", "hex debt", "hex stasis", "hex void", "hex sick", "morale", "music", "gift", "bribe", "loan", "trap", "lie", "jam",
   "shrine", "sacrifice", "miracle", "weather", "haste", "rewind", "gravity", "vessel", "sail", "fishing", "catch", "duel", "luck", "sell",
-  "hide", "shelter", "store", "raid", "break in", "borer",
+  "hide", "shelter", "store", "raid", "break in", "borer", "siege", "bolt door", "grow up",
 ] as const;
 
 export interface BotWord {
@@ -316,7 +319,9 @@ export function wordBook(dict: Dictionary) {
       // A ship cannot leave the water: no use to a bot on land.
       if (Math.max(s.num("speed_land"), s.num("speed_air")) > 0) add("mount", Math.max(s.num("speed_land"), s.num("speed_air")) / 2 + s.num("integrity") / 20 + dps(s) / 10);
     }
-    else if (becomes(s) === "creature") add("creature", (dps(s) + s.num("integrity") / 10) * p.count);
+    else if (becomes(s) === "creature") add("creature", Math.max(dps(s) + s.num("integrity") / 10, grownWorth(dict, word, s)) * p.count);
+    // A thing that hatches into a creature (an EGG, a COCOON: shared bug.ts) is worth part of what hatches.
+    else if (hatches(dict, s) && becomes(s) === "ground") add("creature", grownWorth(dict, word, s) * p.count);
     // A weapon thrown once (GRENADE) is worth little next to one that lasts.
     else if (slot === "held" && damage(s) > 0) add("weapon", dps(s) * (s.num("attack_range") > 6 ? 1.5 : 1) * (s.flag("single_use") ? 0.05 : 1), { slot });
     else if (slot !== "held" && slot !== "none" && s.num("armor") > 0) add("armor", s.num("armor") + s.num("integrity") / 20, { slot });
@@ -327,6 +332,18 @@ export function wordBook(dict: Dictionary) {
   for (const w of words) (byUse.get(w.use) ?? byUse.set(w.use, []).get(w.use)!).push(w);
   book = { words, byUse, counters };
   return book;
+}
+
+/**
+ * What a young thing is worth for what it grows into (shared bug.ts `matured`): the grown body's
+ * fighting worth, halved for the wait and the risk of losing it young. 0 if it never grows up.
+ */
+function grownWorth(dict: Dictionary, word: string, s: Stats): number {
+  const next = s.get("matures_into") ? matured(dict, { noun: word }, s) : null;
+  if (!next) return 0;
+  const g = resolveSpelled(dict, next);
+  if (!g.flag("alive") && !g.flag("sentient")) return 0;
+  return (dps(g) + g.num("integrity") / 10) * 0.5;
 }
 
 /**
@@ -361,6 +378,13 @@ function themeUses(word: string, archetype: string, ops: readonly Op[], p: Retur
       if (score > 0 && adjectiveEffect(ops) >= 0) add("graft", score, { aim: "walker" });
     }
     if (s.flag("alive") && s.tags("bores").length) add("borer", p.count * (1 + damage(s)), { eats: s.tags("bores").map((m) => m.toLowerCase()) });
+    // Against buildings: a door counter it carries or rides, or blows multiplied by `siege` (a RAM, a TREBUCHET, a SAPPER).
+    const carried = slot !== "none" || s.flag("mountable") || becomes(s) === "creature";
+    if (carried && !s.flag("single_use") || opensDoors(s)) {
+      const batter = s.num("siege") > 1 ? dps(s) * s.num("siege") * (s.num("attack_range") > 6 ? 1.5 : 1) : 0;
+      if (opensDoors(s) || batter > 0) add("siege", (opensDoors(s) ? 500 : 0) + batter, { aim: "self" });
+    }
+    if (doorGuard(s)) add("guard", s.num("integrity") / 100 + s.tags("counters").length, { aim: "self" });
     if (isTrap(s) && !s.flag("mountable")) add("trap", (damaging ? 2 : 0) + bad.length + s.num("stealth") / 5);
     if (s.flag("jams") && s.get("portable") === false) add("jam", 1);
     if (s.get("portable") === false && (s.num("faith_output") > 0 || s.num("sacrifice") > 0)) add("shrine", s.num("faith_output") + s.num("sacrifice"));
@@ -371,6 +395,10 @@ function themeUses(word: string, archetype: string, ops: readonly Op[], p: Retur
   // Statuses passed on a foe, at them or at their spot (FATE, CURSE, CHAOS, PROVOCATION, WANTED, DEBT, STASIS).
   if (bad.length && (atWalker || (atSpot && targets !== "owned" && targets !== "self")) && !s.num("stakes") && !s.flag("transfers_ownership") && !(s.num("pays") > 0)) {
     add("hex", bad.reduce((n, st) => n + (HEX_WEIGHT[st] ?? 1), 0), { statuses: bad, aim: atWalker ? "walker" : "spot", faith, reach: Math.max(1.5, s.num("placement_range") / TILE_METERS) });
+  }
+  // An event aimed at a building that breaks its door or batters it (BREACH, ESCALADE, UNDERMINING).
+  if (p.kind === "event" && placement === "target" && (opensDoors(s) || (s.num("siege") > 1 && damaging))) {
+    add("siege", (opensDoors(s) ? 800 : 0) + damage(s) * s.num("siege"), { aim: "spot", reach: Math.max(1.5, s.num("placement_range") / TILE_METERS) });
   }
   if (atWalker && s.num("stakes") > 0 && !s.num("race_to")) add("duel", s.num("stakes"), { aim: "walker", reach: Math.max(1.5, s.num("placement_range") / TILE_METERS) });
   if (atWalker && s.num("pays") > 0) {

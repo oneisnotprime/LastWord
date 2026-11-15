@@ -51,7 +51,9 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
     `terrain.worker.ts`; a terrain edit redraws only the chunks it touches.
   - `src/art/shapes.ts` what words look like: `WORDS` (a shape for one word) wins over
     `ARCHETYPES` (one per archetype) and `CLASSES`. Builders and units are in `build.ts`. Add a
-    word's own shape there; `gallery.html` shows every shape (`?phrases=huge wolf,red car`).
+    word's own shape there (expansion batch 2 added the `engine` builder: TREBUCHET, CATAPULT,
+    BALLISTA, siege tower, RAM, gun carriage; `dino`: theropod, raptor, sauropod, ceratops, stego,
+    ankylo, duckbill, sail, dome, ptero, plesio; `polearm`); `gallery.html` shows every shape (`?phrases=huge wolf,red car`).
   - `src/art/raster.ts` generated word images (`public/art/words/*.webp`, `manifest.json`, made
     by `tools/art`, `docs/ART_PIPELINE.md`): the manifest loads when the scene starts, an image
     when its word is first drawn; until then the drawn shape stands in. An image wins over

@@ -109,3 +109,16 @@ it("a COCOON on the ground hatches (it could never grow up before: it cannot mov
   a.send("spell", "mirror"); await wait();
   expect(mine(b.sessionId).some((w: any) => w.body.noun === "cockatrice")).toBe(false);
 });
+
+it("bots know the new words by their data: siege words, door guards, and young beasts worth what they grow into", async () => {
+  const { wordBook } = await import("./bots.js");
+  const { loadDictionary } = await import("./data.js");
+  const book = wordBook(loadDictionary());
+  const siege = (book.byUse.get("siege") ?? []).map((x) => x.word);
+  for (const w of ["ram", "petard", "trebuchet", "catapult", "breach", "sapper"]) expect(siege, w).toContain(w);
+  expect((book.byUse.get("guard") ?? [])[0]?.word).toBe("portcullis");
+  const creature = (w: string) => book.byUse.get("creature")!.find((x) => x.word === w)!.score;
+  expect(creature("dragonet")).toBeGreaterThan(1000); // half a DRAGON
+  expect(creature("hatchling")).toBeGreaterThan(creature("chick"));
+  expect(book.byUse.get("creature")!.some((x) => x.word === "cocoon")).toBe(true); // hatches into a creature
+});

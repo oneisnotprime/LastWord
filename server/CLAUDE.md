@@ -215,6 +215,17 @@ Node process that owns the game state. One room per map instance (from milestone
   into its `matures_into` once `Walker.born` is old enough (`age` moves `born`), and lets borers strike
   things of their `bores` materials near them (`strikeThing`, through armour). Bots: `borer` use
   (bots.ts), spelled beside an enemy's thing they eat. `loadtest/tournament.ts` takes WATCH=words.txt.
+- Expansion batch 2: `hangGuard` (in `placeInRoom`) hangs a door guard put down in or beside its
+  side's room on the door (`Indoors.guards`, `max` and `door` raised; `leaveRoom` takes it off;
+  `breakDoor` breaks the guards too); `doorBreaker` checks shared `opensPast` against the guards;
+  `breachDoors` (in `happen`) breaks enemy doors in an event's reach when it `counters` doors; `bugs`
+  hatches things that `matures_into` (ground and carried) and lets borers reach from a building's
+  wall. Bots: `siege` (bots.ts: door counters, `siege` weapons and engines, breaching events) on an
+  enemy's walk-in building in sight when not fighting a person, `guard` (a PORTCULLIS at home),
+  borers on enemy things in sight (then it goes for the thing), young beasts scored by what they grow
+  into (`grownWorth`), `raidHeadway` (gives up a door it cannot dent after RAID_PATIENCE s),
+  `BotMind.wants` (a borer or siege word it has a target for: `botWant` trades toward it first).
+  `loadtest/tournament.ts` with WATCH also prints how many racks could spell each watched word.
 - Themes batch 5: `rebuild` reads time and gravity (`Walker.time`, `gravity`, `range`), sailing
   (`Walker.sailing`: `walk` routes with SAIL_COST) and the void (`hampered.nulled`: no gear, mount
   or fields). `make` launches vessels (`launchSpot`: by the owner's port, else the nearest water);

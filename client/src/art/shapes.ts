@@ -7,7 +7,7 @@
  * and colour. See build.ts for the units and the builders.
  */
 import {
-  band, behind, biped, bird, boat, brickWall, bug, car, dot, dragon, E, eye, fish, flower, glue, house, icon, moved, P, part, plane, quad, R,
+  at, band, behind, biped, bird, boat, brickWall, bug, car, dino, dot, dragon, E, engine, eye, fish, flower, glue, house, icon, moved, P, part, plane, polearm, quad, R,
   rosette, sign, snake, sym, tank, train, tree, wheel, type Piece, type Pt, type Silhouette,
 } from "./build.js";
 
@@ -318,6 +318,53 @@ const spray = s([part(R(-6, -26, 6, 0), "body", 1), glue(R(-3, -31, 3, -26), "#3
 const swatter = s([part(band([[0, 2], [0, -24]], 1.6), "#8a8f96"), glue(R(-7, -38, 7, -24), "body", 1), ...[-34, -30, -26].map((y) => dot(band([[-6, y], [6, y]], 0.5), "deep"))], "#c9453f");
 const digger = biped({ hat: "helmet", colour: "#6b5a44", belt: "#3a3633" });
 
+
+// Theme 28 (siege and arms): engines, polearms, guns, armour, walls and the people who man them.
+const crossbow = s([part(band([[-14, -16], [14, -16]], 3, 2.4), "#8a6440"), glue(band(E(8, -16, 3, 11, 12, -Math.PI / 2, Math.PI / 2), 2, 2), "body"), dot(band([[8, -27], [-6, -16], [8, -5]], 0.5), "#fbf7ec"), glue(band([[-12, -14], [-12, -6]], 2), "#6b4a2e"), glue(P(14, -18, 19, -16, 14, -14), "#d8e0e4")], "#7d7f80");
+const longGun = (colour = "#8a6440", bell = false) => s([part(P(-24, -12, -8, -15, 26, -15, 26, -12.5, -4, -12.5, -8, -9, -24, -6), "body"), dot(R(-8, -15, 26, -13.5), "#5a5a62"), ...(bell ? [glue(P(24, -17, 30, -19, 30, -9, 24, -11), "#c9a24a")] : [glue(R(-2, -18, 1, -15), "#5a5a62")])], colour);
+const club = s([part(band([[0, 2], [2, -28]], 2.4, 5), "body", 1), dot(E(1, -22, 1.4, 2, 6), "dark"), dot(E(2, -12, 1.2, 1.6, 6), "dark")], "#8a6440");
+const staff = s([part(band([[0, 2], [0, -50]], 2.4), "body"), dot(R(-1.2, -30, 1.2, -26), "dark")], "#8a6440");
+const roundShield = s([part(E(0, -16, 13, 13, 18), "body", 1), dot(E(0, -16, 9.5, 9.5, 16), "light"), glue(E(0, -16, 3.6, 3.6, 10), "#c9a24a")], "#8a6440");
+const tallShield = s([part(P(-11, -44, 11, -44, 12, -4, 0, 0, -12, -4), "body", 1), dot(P(-8, -40, 8, -40, 9, -7, 0, -4, -9, -7), "light"), dot(R(-1.5, -40, 1.5, -6), "deep")], "#b5554a");
+const collar = s([part([...E(0, -10, 12, 7, 16, 0, Math.PI), ...E(0, -12, 7, 4, 12, Math.PI, 0).reverse()] as Pt[], "body", 1), ...[-6, 0, 6].map((x) => dot(E(x, -6, 1.2, 1.2, 6), "dark"))], "#b8c2c8");
+const plateArmour = (colour: string, mail = false) => s([...armor.pieces, ...(mail ? Array.from({ length: 12 }, (_, i) => dot(E(-7 + (i % 4) * 4.6, -30 + Math.floor(i / 4) * 7, 1.2, 1.2, 6), "dark")) : [])], colour);
+const merlons = (colour = "#bfb3a0", slit = false) => s([part(R(-30, -24, 30, 0)), ...[-30, -18, -6, 6, 18].map((x) => part(R(x, -32, x + 8, -24))), ...(slit ? [-14, 2, 16].map((x) => dot(R(x, -18, x + 2, -6), "#2e2a26")) : []), dot(band([[-30, -12], [30, -12]], 0.6), "dark")], colour);
+const machicolations = s([part(R(-30, -40, 30, -30)), ...[-30, -18, -6, 6, 18].map((x) => part(R(x, -46, x + 8, -40))), ...[-24, -12, 0, 12, 24].map((x) => glue(P(x - 4, -30, x + 4, -30, x + 2, -26, x - 2, -26), "dark")), part(R(-24, -26, 24, 0)), glue(P(-6, -26, 6, -26, 2, -14, -2, -14), "#d9573b")], "#bfb3a0");
+const portcullis = s([part(R(-18, -40, 18, -36), "#5a5a62"), ...[-15, -9, -3, 3, 9, 15].map((x) => part(P(x - 1.4, -36, x + 1.4, -36, x + 1.4, -2, x, 2, x - 1.4, -2), "body")), ...[-30, -20, -10].map((y) => glue(R(-17, y, 17, y + 2.2), "body"))], "#3d3d40");
+const drawbridge = s([part(P(-6, 0, -6, -40, 4, -40, 4, 0), "#8a6440"), glue(P(4, -2, 34, -10, 34, -6, 4, 2), "body", 0), ...[10, 18, 26].map((x) => dot(band([[x, -2 - (x - 4) / 4], [x, 2 - (x - 4) / 4]], 0.8), "dark")), dot(band([[2, -38], [32, -10]], 0.6), "#5a5a62")], "#a8703c");
+const petard = s([part(P(-8, 0, -10, -16, -6, -22, 6, -22, 10, -16, 8, 0), "body", 1), glue(R(-10, -4, 10, 0), "#8a6440"), dot(band([[0, -22], [3, -28], [7, -28]], 1), "#c9a77a"), glue(P(6, -32, 9, -28, 6, -26, 9, -25, 5, -24), "#f4c95d")], "#3d3d40");
+const soldierOf = (colour: string, held: "spear" | "staff" | "none" = "spear", hat: "helmet" | "cap" | "hood" | "none" = "helmet") => biped({ hat, held, colour, legs: "#4a4a52", belt: "#3d3a33" });
+
+// Theme 29 (mythic beasts and prehistoric giants).
+/** Wings put on a four-legged body, behind and in front, at the shoulders. */
+const winged = (base: Silhouette, x: number, y: number, k = 1, feather = true): Silhouette => ({
+  ...base, flies: true,
+  pieces: [behind(at(feather ? P(0, 0, -10, -22, -26, -26, -18, -14, -24, -8, -6, 2) : P(0, 0, -12, -20, -28, -20, -20, -12, -24, -4, -14, -6, -10, 2), x - 4, y, k), "dark", 1),
+    ...base.pieces, glue(at(feather ? P(0, 0, -6, -24, -22, -30, -16, -16, -22, -10, -4, 4) : P(0, 0, -8, -22, -26, -24, -18, -14, -22, -6, -12, -8, -8, 4), x, y, k), feather ? "light" : "deep", 1)],
+});
+const withBeak = (base: Silhouette, x: number, y: number): Silhouette => ({ ...base, pieces: [...base.pieces, glue(P(x, y - 2, x + 7, y + 1, x, y + 3), "#e7a43c")] });
+const withHorn = (base: Silhouette, x: number, y: number, ink = "#f4e9c8"): Silhouette => ({ ...base, pieces: [...base.pieces, glue(P(x - 1.5, y, x + 4, y - 11, x + 1.5, y), ink)] });
+const lionBody = (colour: string) => quad({ len: 44, h: 15, leg: 13, neck: 5, head: 7, snout: 4, ear: "round", tail: "tuft", mane: true, colour });
+const horseBody = (colour: string) => quad({ len: 44, h: 15, leg: 20, legW: 4, neck: 16, head: 6, snout: 9, snoutH: 5, ear: "point", tail: "bushy", colour });
+const deerBody = (colour: string) => quad({ len: 38, h: 12, leg: 18, neck: 12, head: 5.5, snout: 6, ear: "point", tail: "stub", horns: "antler", colour });
+const merfolk = (colour: string, skin = "#efcfae", tail = "#3f8a8a") => s([part(band([[-2, -16], [-10, -8], [-18, -6], [-26, -10]], 7, 2.4), tail, 1), glue(P(-26, -10, -34, -16, -32, -6, -34, 0), tail), ...moved(biped({ colour, skin, hat: "hair", hair: "#5a3a24" }), 0, -4, 0.75).pieces.filter((_, i) => i > 1)], colour, { living: true });
+const serpentFolk = (colour: string, skin: string) => s([...snake(colour).pieces, ...moved(biped({ colour, skin, hat: "hair", hair: "#2b2a28" }), 22, -8, 0.6).pieces.filter((_, i) => i > 1)], colour, { living: true });
+const many = (base: Silhouette, offsets: [number, number, number][]): Silhouette => ({ ...base, pieces: offsets.flatMap(([x, y, k]) => moved(base, x, y, k).pieces) });
+const sabre = s([...quad({ len: 44, h: 14, leg: 12, neck: 4, head: 7, snout: 4, ear: "round", tail: "stub", colour: "#c9955a", belly: "#f3e6c8" }).pieces, glue(band([[30, -28], [31, -20]], 1.6, 0.6), "#f6f0e2"), glue(band([[33, -28], [34, -21]], 1.6, 0.6), "#f6f0e2")], "#c9955a", { living: true });
+const bigSloth = quad({ len: 40, h: 22, leg: 12, legW: 7, neck: 4, head: 7, snout: 4, ear: "round", tail: "stub", low: true, colour: "#8a6a4a" });
+const domeBack = s([part([...E(0, -10, 20, 14, 18, Math.PI, Math.PI * 2), [20, -6], [-20, -6]] as Pt[], "body", 1), ...[-12, -4, 4, 12].flatMap((x) => [-16, -10].map((y) => dot(E(x, y, 2.4, 2, 8), "dark"))), part(E(22, -7, 4, 3.4, 10)), part(R(-12, -6, -6, 0)), part(R(8, -6, 14, 0)), glue(E(-22, -8, 4, 3.4, 8), "deep"), eye(23, -8, 1)], "#8a6a4a", { living: true });
+const woolly = (b: Silhouette, colour: string) => s([...b.pieces, ...Array.from({ length: 6 }, (_, i) => dot(E(-14 + i * 6, -22 + (i % 2) * 4, 3, 3, 8), "light"))], colour, { living: true });
+const elephantKin = (colour: string) => quad({ len: 56, h: 26, leg: 16, legW: 8, neck: 2, head: 11, snout: 0, ear: "flop", tail: "thin", trunk: true, tusk: true, colour });
+const smallHorse = (colour: string) => quad({ len: 26, h: 9, leg: 12, legW: 3, neck: 9, head: 4.5, snout: 5, snoutH: 3.5, ear: "point", tail: "thin", colour });
+const treeFolk = s([...tree({ h: 60, colour: "#5f8a4a" }).pieces, eye(-4, -22, 1.6), eye(4, -22, 1.6), dot(band([[-4, -16], [4, -16]], 0.8), "#3d2a1e"), glue(band([[-3, -28], [-14, -36], [-18, -32]], 2.4, 1.2), "#6b4a2e"), glue(band([[3, -28], [14, -34], [18, -30]], 2.4, 1.2), "#6b4a2e")], "#5f8a4a", { living: true });
+const spirit = (colour: string, hat: "none" | "horns" = "none") => biped({ ghost: true, hat, arms: "up", colour, skin: colour });
+/** Two more heads beside the one it has (CERBERUS, an ETTIN): one behind and up, one in front and down, each on its own neck. */
+const multiHead = (base: Silhouette, hx: number, hy: number, r: number): Silhouette => ({ ...base, pieces: [
+  behind(band([[hx - r * 2.4, hy + r * 1.6], [hx - r * 2.6, hy - r * 1.6]], r * 0.9), "dark"), behind(E(hx - r * 2.6, hy - r * 2, r, r * 0.9, 12), "dark"),
+  ...base.pieces, glue(E(hx + r * 0.6, hy + r * 2.2, r, r * 0.9, 12), "light"), eye(hx + r * 1, hy + r * 2, 1.1)] });
+const twoHeaded = (base: Silhouette): Silhouette => ({ ...base, pieces: [...base.pieces, part(E(-22, -6, 3.6, 3, 10)), eye(-23, -7, 0.9)] });
+const stinger = (base: Silhouette, x: number, y: number): Silhouette => ({ ...base, pieces: [...base.pieces, part(band([[x, y], [x - 8, y - 12], [x - 2, y - 22], [x + 6, y - 20]], 2.6, 1.4), "deep"), glue(P(x + 6, y - 22, x + 11, y - 19, x + 6, y - 17), "#3d2a1e")] });
+
 export const WORDS: Record<string, Silhouette> = {
   // Animals.
   wolf, dog, fox, cat, lion, tiger, bear, horse, cow, bull, pig, sheep, goat, deer, elephant, camel, rat, mouse: rat, rabbit, monkey, boar, donkey, ass: donkey, bat, whale,
@@ -503,6 +550,94 @@ export const WORDS: Record<string, Silhouette> = {
   certainty: rosette(icon.key(), "#3f6fa8"), fate: sign(icon.skull(), "#fbf6ea", "#2f2c33"), destiny: rosette(icon.star(), "#8a5a9a"), doom: sign(icon.skull(), "#fbf6ea", "#a8323a"),
   karma: rosette(icon.spiral(), "#5f8a4a"), providence: rosette(icon.sun(), "#e3b341"), coincidence: rosette(icon.chain(), "#8a5a9a"), paradox: rosette(icon.chain(), "#c9453f"),
   typo: sign(icon.scroll(), "#fbf6ea", "#c9453f"), mistake: sign(icon.scroll()), accident: sign(icon.bang()), dictionary: s(book.pieces, "#3f6fa8"), nonsense: rosette(icon.bubble(), "#e8892e"),
+  // Expansion batch 2: siege and arms; mythic beasts and prehistoric giants.
+  trebuchet: engine({ kind: "trebuchet" }), catapult: engine({ kind: "catapult" }), mangonel: engine({ kind: "catapult", colour: "#8a6440" }), onager: engine({ kind: "catapult", colour: "#9a7a50" }),
+  ballista: engine({ kind: "ballista" }), springald: engine({ kind: "ballista", colour: "#8a6440" }), helepolis: engine({ kind: "tower" }), ram: engine({ kind: "ram" }), culverin: engine({ kind: "gun" }),
+  arbalest: crossbow, arbalist: crossbow, crossbow, petard, portcullis, drawbridge, postern: door, sallyport: s(door.pieces, "#6b4a2e"),
+  halberd: polearm("axe"), glaive: polearm("blade"), guisarme: polearm("hook"), poleaxe: polearm("hammer", 44), poleax: polearm("hammer", 44), pikestaff: polearm("spike", 62), bardiche: polearm("axe", 46),
+  voulge: polearm("blade", 50), spontoon: polearm("spike", 48), billhook: s(knife.pieces, "#b8c2c8"), morningstar: polearm("ball", 30, "#7d7f80"), warhammer: polearm("hammer", 30, "#7d7f80"), mace: polearm("ball", 26, "#8e98a0"),
+  falchion: sword(26, 6), scimitar: sword(28, 5, "#e6eef2"), claymore: sword(40, 5), broadsword: sword(32, 6), greatsword: sword(44, 6.5), longsword: sword(36, 4.4), backsword: sword(30, 4.6), estoc: sword(38, 3),
+  misericorde: knife, poniard: knife, dirk: knife, kris: s(knife.pieces, "#c9a24a"), cudgel: club, bludgeon: s(club.pieces, "#6b4a2e"), quarterstaff: staff, assegai: spear, pilum: spear,
+  slingshot: s([part(band([[0, 2], [0, -14]], 2.4), "#8a6440"), part(band([[0, -14], [-6, -26]], 2.2), "#8a6440"), part(band([[0, -14], [6, -26]], 2.2), "#8a6440"), dot(band([[-6, -26], [0, -20], [6, -26]], 0.8), "#c9553f")]),
+  bola: s([...[[-8, -4], [8, -4], [0, -18]].map(([x, y]) => part(E(x!, y!, 4, 4, 10), "body"))], "#9a948a"), bolas: s([...[[-8, -4], [8, -4], [0, -18]].map(([x, y]) => part(E(x!, y!, 4, 4, 10), "body")), dot(band([[-8, -4], [0, -11], [8, -4]], 0.8), "#6b4a2e"), dot(band([[0, -11], [0, -18]], 0.8), "#6b4a2e")], "#9a948a"),
+  quarrel: s([part(band([[0, 2], [0, -26]], 1.4), "body"), glue(P(-2.5, -24, 0, -32, 2.5, -24), "#8e98a0"), glue(P(-2.5, 2, 0, -3, 2.5, 2), "#c9553f")], "#8a6440"),
+  arquebus: longGun(), harquebus: longGun(), hackbut: longGun("#7a5a3a"), hagbut: longGun("#7a5a3a"), matchlock: longGun("#6b4a2e"), musket: longGun(), blunderbuss: longGun("#8a6440", true),
+  carbine: s(rifle.pieces, "#5a5a62"), fusil: longGun("#9a7a50"), grapeshot: s([...[[-6, -3], [0, -3], [6, -3], [-3, -8], [3, -8], [0, -13]].map(([x, y]) => part(E(x!, y!, 3.2, 3.2, 10), "body"))], "#4a4a52"),
+  hauberk: plateArmour("#b8c2c8", true), habergeon: plateArmour("#c9d1d6", true), chainmail: plateArmour("#b8c2c8", true), cuirass: plateArmour("#d8e0e4"), brigandine: plateArmour("#a8323a"),
+  gambeson: plateArmour("#efe4cf"), lamellar: plateArmour("#8e98a0", true), caparison: plateArmour("#c9553f"), pauldron: s(armor.pieces, "#c9d1d6"),
+  greave: s(boot.pieces, "#b8c2c8"), sabaton: s(boot.pieces, "#c9d1d6"), vambrace: s(glove.pieces, "#b8c2c8"), rerebrace: s(glove.pieces, "#c9d1d6"), gorget: collar, aventail: collar, camail: collar,
+  armet: s(helmet.pieces, "#c9d1d6"), heaume: s(helmet.pieces, "#8e98a0"), sallet: s(helmet.pieces, "#d8e0e4"), basinet: s(helmet.pieces, "#b8c2c8"), morion: s(helmet.pieces, "#e6eef2"), chanfron: s(helmet.pieces, "#b8c2c8"),
+  buckler: roundShield, targe: s(roundShield.pieces, "#6b4a2e"), pavise: tallShield, escutcheon: s(shield.pieces, "#3f6fa8"),
+  mantlet: s([part(R(-16, -40, 16, -6), "body", 1), ...[-10, -3, 4, 11].map((x) => dot(band([[x, -38], [x, -8]], 0.8), "dark")), dot(R(-4, -30, 4, -27), "#2e2a26"), ...wheel(-10, -5, 5), ...wheel(10, -5, 5)], "#a8703c"),
+  surcoat: s(cloak.pieces, "#c9553f"), tabard: s(cloak.pieces, "#3f6fa8"),
+  machicolation: machicolations, crenellation: merlons(), crenelation: merlons(), merlon: merlons("#c9bca4"), embrasure: merlons("#bfb3a0", true), loophole: merlons("#b5a890", true), arrowslit: merlons("#c9bca4", true),
+  bailey: fort, outwork: s(wall.pieces, "#a8916a"), revetment: wall, ravelin: fort, glacis: s(wall.pieces, "#a8916a"), casemate: bunker, blockhouse: house({ roof: "flat", wall: "#a8703c", roofInk: "#6b4a2e", windows: 2 }),
+  bartizan: tower, escarp: wall, motte: sign(icon.mountain()),
+  crossbowman: soldierOf("#6b7a4a", "none"), arbalester: soldierOf("#5a6a4a", "none"), pikeman: soldierOf("#7a4a3a"), arquebusier: soldierOf("#4a5a7a", "staff", "cap"), castellan: s(king.pieces, "#5a4a8a"),
+  besieger: soldierOf("#7a5a3a", "none"), yeoman: soldierOf("#5f8a4a", "none", "cap"), horseman: knight, fusilier: soldierOf("#a83a3a", "staff", "cap"), skirmisher: soldierOf("#8a7a5a", "spear", "hood"),
+  condottiere: soldierOf("#3d3a40"), landsknecht: soldierOf("#c9553f", "none", "cap"), cavalier: s(knight.pieces, "#3f6fa8"),
+  armorer: smith, armourer: smith, bowyer: s(smith.pieces, "#5f8a4a"), fletcher: s(smith.pieces, "#8a6440"), swordsmith: s(smith.pieces, "#4a4a52"),
+  breach: sign(icon.bang(), "#fbf6ea", "#c9553f"), escalade: sign(icon.arrow("#8a6440")), countermine: sign(icon.hole()), undermining: sign(icon.hole()), sortie: rosette(icon.swords(), "#c9553f"), sally: rosette(icon.swords(), "#e8892e"),
+  circumvallation: rosette(icon.chain(), "#7d8a99"),
+  manticore: stinger(winged(lionBody("#c9553f"), 10, -30, 1, false), -22, -24), gryphon: winged(withBeak(lionBody("#d9a65a"), 32, -36), 8, -30), griffon: winged(withBeak(lionBody("#c9955a"), 32, -36), 8, -30),
+  griffin: winged(withBeak(lionBody("#d9a65a"), 32, -36), 8, -30), hippogriff: winged(withBeak(horseBody("#efe9dc"), 30, -48), 10, -36), pegasus: winged(horseBody("#f4f1ea"), 10, -36), alicorn: winged(withHorn(horseBody("#f4f1ea"), 30, -54), 10, -36),
+  unicorn: withHorn(horseBody("#f4f1ea"), 30, -54), kelpie: s(horseBody("#2f2c33").pieces, "#2f2c33", { living: true }), kelpy: s(horseBody("#2f3a44").pieces, "#2f3a44", { living: true }), pooka: s(smallHorse("#2b2a28").pieces, "#2b2a28", { living: true }),
+  qilin: withHorn(deerBody("#e3b341"), 26, -44, "#c9553f"), kirin: withHorn(deerBody("#e3b341"), 26, -44, "#c9553f"), peryton: winged(deerBody("#5f8a4a"), 6, -30),
+  cockatrice: winged(s([...chicken.pieces, part(band([[-12, -14], [-22, -10], [-28, -16], [-34, -12]], 3, 1), "#5f8a4a")], "#e3b341", { living: true }), 2, -18, 0.6, false),
+  amphisbaena: twoHeaded(snake("#5f8a4a")), cerberus: multiHead(quad({ len: 40, h: 13, leg: 13, neck: 6, head: 6.5, snout: 6, ear: "point", tail: "thin", colour: "#2f2c33" }), 26, -32, 5),
+  chupacabra: quad({ len: 30, h: 10, leg: 11, neck: 4, head: 5.5, snout: 5, ear: "point", tail: "thin", stripes: true, colour: "#7d8a8a" }),
+  kitsune: s([...fox.pieces, ...[-0.3, 0.2].map((d) => part(P(-13, -16, -26, -26 + d * 20, -34, -14 + d * 16, -28, -10, -14, -12), "body", 2))], "#e8892e", { living: true }),
+  smilodon: sabre, megatherium: bigSloth, megathere: bigSloth, mylodon: s(bigSloth.pieces, "#a8865a", { living: true }), glyptodont: domeBack,
+  aurochs: s(bull.pieces, "#2f2c33", { living: true }), megaloceros: quad({ len: 42, h: 14, leg: 20, neck: 12, head: 6, snout: 6, ear: "point", tail: "stub", horns: "antler", colour: "#8a5a3a" }),
+  elasmotherium: woolly(rhino, "#7a5a3a"), indricothere: quad({ len: 50, h: 18, leg: 28, legW: 6, neck: 18, head: 7, snout: 6, snoutH: 5, ear: "round", tail: "thin", colour: "#8e8b86" }),
+  uintathere: s(rhino.pieces, "#6b6560", { living: true }), dinocerate: s(rhino.pieces, "#7a7268", { living: true }), gomphothere: elephantKin("#8a8478"), mastodont: woolly(elephantKin("#7a5a3a"), "#7a5a3a"),
+  eohippus: smallHorse("#8a5a3a"), mesohippus: smallHorse("#9a6a4a"), protohippus: smallHorse("#a8786a"),
+  tyrannosaur: dino({ kind: "theropod", colour: "#5f7a3a" }), tyrannosaurus: dino({ kind: "theropod", colour: "#5f7a3a" }), allosaur: dino({ kind: "theropod", colour: "#8a6a4a" }), allosaurus: dino({ kind: "theropod", colour: "#8a6a4a" }),
+  carnosaur: dino({ kind: "theropod", colour: "#7a5a3a" }), megalosaur: dino({ kind: "theropod", colour: "#8a7a4a" }), megalosaurus: dino({ kind: "theropod", colour: "#8a7a4a" }), ceratosaur: dino({ kind: "theropod", colour: "#a8603a" }),
+  ceratosaurus: dino({ kind: "theropod", colour: "#a8603a" }), herrerasaurus: dino({ kind: "theropod", size: 0.7, colour: "#8a6a4a" }),
+  spinosaurus: dino({ kind: "sail", colour: "#a8603a" }), dimetrodon: dino({ kind: "sail", size: 0.6, colour: "#c9773a" }), pelycosaur: dino({ kind: "sail", size: 0.55, colour: "#c9773a" }),
+  velociraptor: dino({ kind: "raptor", size: 0.6, colour: "#8a6a4a" }), utahraptor: dino({ kind: "raptor", size: 0.85, colour: "#8a6a4a" }), deinonychus: dino({ kind: "raptor", size: 0.7, colour: "#6b5a44" }),
+  dromaeosaur: dino({ kind: "raptor", size: 0.6, colour: "#7a6a4a" }), maniraptor: dino({ kind: "raptor", size: 0.55, colour: "#6b6a4a" }), compsognathus: dino({ kind: "raptor", size: 0.35, colour: "#6f9a50" }),
+  eoraptor: dino({ kind: "raptor", size: 0.4, colour: "#8a6a4a" }), staurikosaurus: dino({ kind: "raptor", size: 0.45, colour: "#8a6a4a" }), oviraptorid: dino({ kind: "raptor", size: 0.5, colour: "#c9773a" }),
+  apatosaurus: dino({ kind: "sauropod", colour: "#7f9a5a" }), apatosaur: dino({ kind: "sauropod", colour: "#7f9a5a" }), brontosaur: dino({ kind: "sauropod", colour: "#8e8b86" }), brontosaurus: dino({ kind: "sauropod", colour: "#8e8b86" }),
+  diplodocus: dino({ kind: "sauropod", colour: "#9a9a7a" }), barosaurus: dino({ kind: "sauropod", colour: "#9a948a" }), seismosaur: dino({ kind: "sauropod", size: 1.2, colour: "#8a8478" }), titanosaur: dino({ kind: "sauropod", size: 1.3, colour: "#7d7f80" }),
+  argentinosaur: dino({ kind: "sauropod", size: 1.35, colour: "#8a7a6a" }), sauropod: dino({ kind: "sauropod", colour: "#8e8b86" }),
+  stegosaur: dino({ kind: "stego", colour: "#6f8a4a" }), stegosaurus: dino({ kind: "stego", colour: "#6f8a4a" }), ankylosaur: dino({ kind: "ankylo", colour: "#8a6a4a" }), ankylosaurus: dino({ kind: "ankylo", colour: "#8a6a4a" }),
+  triceratops: dino({ kind: "ceratops", colour: "#8a7a5a" }), styracosaurus: dino({ kind: "ceratops", colour: "#9a6a4a" }), ceratopsian: dino({ kind: "ceratops", colour: "#8a7a5a" }), protoceratops: dino({ kind: "ceratops", size: 0.6, colour: "#a8865a" }),
+  psittacosaurus: dino({ kind: "duckbill", size: 0.45, colour: "#6f9a50" }), pachycephalosaurus: dino({ kind: "dome", size: 0.7, colour: "#8a6a4a" }), hadrosaur: dino({ kind: "duckbill", colour: "#6f9a50" }),
+  hadrosaurus: dino({ kind: "duckbill", colour: "#6f9a50" }), corythosaurus: dino({ kind: "duckbill", colour: "#5f8a6a" }), edmontosaurus: dino({ kind: "duckbill", colour: "#7f9a5a" }), trachodon: dino({ kind: "duckbill", colour: "#6f8a5a" }),
+  anatotitan: dino({ kind: "duckbill", size: 1.1, colour: "#7f8a5a" }), iguanodon: dino({ kind: "duckbill", colour: "#6f8a4a" }),
+  pteranodon: dino({ kind: "ptero", colour: "#a8603a" }), pterodactyl: dino({ kind: "ptero", colour: "#8a6a4a" }), pterosaur: dino({ kind: "ptero", colour: "#8a6a4a" }),
+  plesiosaurus: dino({ kind: "plesio", colour: "#3f7a8a" }), plesiosaur: dino({ kind: "plesio", colour: "#3f7a8a" }), ichthyosaurus: fish({ len: 34, shark: true, colour: "#4d6b8a" }), ichthyosaur: fish({ len: 34, shark: true, colour: "#4d6b8a" }),
+  mosasaur: fish({ len: 44, shark: true, colour: "#3f6a6a" }), nothosaur: dino({ kind: "plesio", size: 0.6, colour: "#3f7a6a" }), megalodon: fish({ len: 48, shark: true, colour: "#6a7a86" }),
+  dicynodont: quad({ len: 30, h: 12, leg: 6, legW: 4, neck: 1, head: 6, snout: 3, ear: "none", tail: "stub", tusk: true, low: true, colour: "#8a6a4a" }), cynodont: rat, thecodont: lizard, archosaur: lizard, saurian: s(lizard.pieces, "#5f8a4a", { living: true }),
+  labyrinthodont: s(crocodile.pieces, "#7a6a4a", { living: true }), eurypterid: s(scorpion.pieces, "#8a6a4a", { living: true, speck: false }), belemnite: s(fish({ len: 20, colour: "#8a6a5a" }).pieces, "#8a6a5a", { living: true }),
+  crinoid: flower("#d98aa0", 10, 22), archaeornis: bird({ size: 0.8, beak: 3, flies: true, colour: "#6b5a44" }),
+  eaglet: bird({ size: 0.8, beak: 3, hooked: true, round: true, colour: "#a8865a", breast: "#e6d3a3" }), owlet: bird({ size: 0.8, beak: 2, hooked: true, round: true, tail: 1, colour: "#c9b99a", breast: "#efe4cf" }),
+  cygnet: bird({ size: 0.9, beak: 4, neck: 4, legs: 3, colour: "#9a9a9e" }), hatchling: s([...egg.pieces.map((p) => ({ ...p, pts: p.pts.filter(([, y]) => y > -8) })), ...moved(dino({ kind: "theropod", colour: "#6f9a50" }), 2, -4, 0.3).pieces], "#6f9a50", { living: true }),
+  dragonet: moved(dragon("#d9573b"), 0, 0, 0.45), firedrake: dragon("#e8892e"), wivern: dragon("#5f7a3a"), wyvern: dragon("#5f7a3a"),
+  wyrm: s(snake("#a8323a").pieces.map((p) => ({ ...p, pts: p.pts.map(([x, y]) => [x * 1.8, y * 1.8] as Pt) })), "#a8323a", { living: true }), lindworm: s(snake("#5f7a3a").pieces.map((p) => ({ ...p, pts: p.pts.map(([x, y]) => [x * 1.5, y * 1.5] as Pt) })), "#5f7a3a", { living: true }),
+  scylla: many(snake("#3f7a6a"), [[-6, -6, 0.9], [4, 0, 1], [-14, 2, 0.8]]), tarasque: s([...turtle.pieces.map((p) => ({ ...p, pts: p.pts.map(([x, y]) => [x * 2.2, y * 2.2] as Pt) })), ...[-16, -6, 4, 14].map((x) => glue(P(x - 3, -18, x, -28, x + 3, -18), "#efe6d0"))], "#5f7a3a", { living: true }),
+  bahamut: s(whale.pieces, "#3f6fa8", { living: true }), catoblepas: s(bull.pieces, "#6b6560", { living: true }), bunyip: s(seal.pieces, "#6b4a32", { living: true }), selkie: s(seal.pieces, "#8a8a92", { living: true }),
+  simurgh: bird({ size: 1.8, beak: 4, hooked: true, flies: true, tail: 12, crest: true, colour: "#3f8a8a", breast: "#e3b341" }), garuda: bird({ size: 1.8, beak: 4, hooked: true, flies: true, tail: 6, crest: true, colour: "#e8892e", breast: "#c9553f" }),
+  ziz: bird({ size: 2.2, beak: 5, hooked: true, flies: true, tail: 8, colour: "#6b4a2e", breast: "#c9a77a" }),
+  minotaur: biped({ h: 50, w: 12, hat: "horns", skin: "#7a4a2e", colour: "#5a3a2a", legs: "#3d2a1e", belt: "#c9a24a" }), gorgon: biped({ hat: "none", skin: "#9ab88a", colour: "#5f7a4a", beard: undefined, robe: true }),
+  lamia: serpentFolk("#5f8a4a", "#e9c9a8"), naga: serpentFolk("#3f7a5a", "#c9a07a"), merman: merfolk("#3f8a8a", "#d9b896"), nixie: merfolk("#5fa8b8", "#cfe3ea", "#5fa8b8"), undine: merfolk("#7fc4d8", "#cfe3ea", "#4d7b8c"),
+  naiad: merfolk("#5f8a6a", "#e9d8c8", "#4d8a7a"), nereid: merfolk("#3f8a9a", "#f3e6d8", "#3f6f8a"),
+  dryad: biped({ robe: true, hat: "hair", hair: "#5f8a4a", skin: "#c9b08a", colour: "#6f9a50" }), hamadryad: biped({ robe: true, hat: "hair", hair: "#4f7a4a", skin: "#a8906a", colour: "#5f7a3a" }), treant: treeFolk,
+  hobgoblin: biped({ h: 32, skin: "#7f9a5a", hat: "none", colour: "#6b4a32", legs: "#4a3a2a" }), bugbear: biped({ h: 48, w: 12, skin: "#8a6a4a", hat: "none", colour: "#6b4a32", legs: "body" }),
+  ogress: biped({ h: 56, w: 13, skin: "#8aa06a", hat: "bun", hair: "#3d2a1e", colour: "#6b5a44", robe: true }), giantess: biped({ h: 72, w: 13, hat: "bun", hair: "#8a6440", colour: "#a8603a", robe: true }),
+  ettin: s([...biped({ h: 64, w: 14, beard: "#5a3a24", colour: "#7a6a4a" }).pieces, part(E(-12, -50, 7, 7.5, 14), "#efcfae"), eye(-9, -51, 1.4), dot(P(-18, -50, -14, -58, -6, -57, -8, -52), "#5a3a24")], "#7a6a4a", { living: true }), kobold: biped({ h: 22, skin: "#c9553f", hat: "none", tail: true, colour: "#6b4a32" }),
+  redcap: biped({ h: 26, hat: "cap", skin: "#d9b896", colour: "#5a4a3a", beard: "#8e8580" }), boggart: biped({ h: 24, skin: "#8a7a5a", hat: "none", colour: "#5a4a3a" }), homunculus: biped({ h: 14, head: 7, hat: "none", skin: "#e9b8b0", colour: "#e9b8b0" }),
+  lycanthrope: biped({ h: 46, w: 11, skin: "#8a939e", hat: "horns", tail: true, colour: "#6a6e78", legs: "body" }), wolfman: biped({ h: 46, w: 11, skin: "#8a7a6a", hat: "horns", tail: true, colour: "#6b5a4a", legs: "body" }),
+  sasquatch: s(gorilla.pieces, "#6b4a32", { living: true }), bigfoot: s(gorilla.pieces, "#7a5a3a", { living: true }), yowie: s(gorilla.pieces, "#8a6a4a", { living: true }),
+  wendigo: biped({ h: 60, w: 8, skin: "#e9e6dc", hat: "horns", colour: "#d8d2c4", legs: "body", arms: "forward" }), rakshasa: biped({ h: 48, w: 11, skin: "#e08a3e", hat: "horns", colour: "#7a2a3a", robe: true }),
+  tengu: biped({ skin: "#c9453f", hat: "cap", wings: "feather", colour: "#4a4a52", held: "staff" }), silenus: biped({ robe: true, beard: "#e9e2d0", hair: "#e9e2d0", colour: "#8a5ac9" }),
+  lich: biped({ robe: true, hat: "crown", skin: "#e9e2d0", held: "staff", colour: "#4a2a5a" }), typhon: s(giant.pieces, "#a8323a", { living: true }),
+  jinn: spirit("#5fa8d8"), jinni: spirit("#5fa8d8"), djinni: spirit("#4d8ac9"), ifrit: spirit("#d9573b", "horns"), efreet: spirit("#c9453f", "horns"), dybbuk: spirit("#9a9aa0"), sylph: s(spirit("#e9eef0").pieces, "#e9eef0", { living: true, flies: true }),
+  charybdis: rosette(icon.spiral(), "#2f4a7a"), extinction: sign(icon.skull(), "#fbf6ea", "#c9553f"),
+  slayer: s(knight.pieces, "#7a2a2a"), dragonslayer: s(knight.pieces, "#a8323a"), paleontologist: s(digger.pieces, "#c9a77a"),
+  wolfsbane: flower("#8a5ac9", 5, 18), phylactery: s(ring.pieces, "#c9d1d6"), chick: bird({ size: 0.6, beak: 2, round: true, tail: 1, colour: "#f4d35e" }), termite: bug({ kind: "ant", colour: "#efe2c4" }),
   // Dictionary themes batch 6: bugs, grubs and swarms; stone and ore.
   maggot: bug({ kind: "worm", colour: "#f2ead8" }), larva: bug({ kind: "worm", colour: "#f2ead8" }), grub: bug({ kind: "worm", colour: "#efe2c4" }), pupa: s(cocoon.pieces, "#a8805a"), chrysalis: s(cocoon.pieces, "#6fae5a"),
   clegg: bug({ kind: "fly" }), cleg: bug({ kind: "fly" }), horsefly: bug({ kind: "fly" }), housefly: bug({ kind: "fly" }), blowfly: bug({ kind: "fly" }), greenbottle: bug({ kind: "fly" }),

@@ -188,6 +188,14 @@ server and the client import this, so anything here must give the same answer on
   - `bug.ts` (bugs, theme 26): `matured`/`matureSeconds` (`matures_into` after `growth_time` ×
     GROW_PACE: the server's `bugs` swaps the creature, count and master kept), `bores` (BORE_TILES,
     BORE_TIMES: a borer eats things of its `bores` materials, through armour), `bugText`.
+  - siege and arms (theme 28): `interior.ts` door guards (`doorGuard`: lockable, `blocks` land, not a
+    room, not carried: PORTCULLIS, DRAWBRIDGE, GATE; GUARD_SHARE of its integrity added to its owner's
+    door; `boltsAgainst`/`opensPast`: a guard bolts the door against what it counters unless the breaker
+    counters the guard), `guardText`, and a siege line on cards (`interiorText`). Engines are mountable
+    weapons with `siege` (combat.ts already multiplies blows on built things).
+  - mythic beasts and prehistoric giants (theme 29): bug.ts `hatches` (a thing that `matures_into` a
+    creature hatches where it lies or is carried: EGG, COCOON, PUPA); counters are `counters` read by
+    the server's `exterminate`.
   - stone and ore (theme 27): food.ts `heatNeeded` (a raw thing's `smelts_at`: ore smelts into its
     `cooks_into` metal only by that much heat); rocks, minerals and landforms are data on the
     material, terrain and trap systems.

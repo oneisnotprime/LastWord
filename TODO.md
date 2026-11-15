@@ -192,6 +192,13 @@ by how many words set them (minds and upkeep took `sentient`, `intelligence`, `f
           pollinators and sap-suckers; 179 words (docs/EXPANSION_LOG.md)
       27. [x] Stone and ore (expansion batch 1): ores smelted by heat (`smelts_at`), rocks and minerals as
           materials, radioactive ores, landforms that reshape the map; 245 words
+      28. [x] Medieval siege and arms (expansion batch 2): siege engines, door guards that hang on a
+          walk-in building's door (PORTCULLIS, DRAWBRIDGE), breaches, polearms, guns, armour; 128 words
+      29. [x] Mythic beasts and prehistoric giants (expansion batch 2): hatching, young beasts that grow
+          into dragons and dinosaurs, the old stories' counters; 152 words
+      - [ ] Bots spell siege words and borers only rarely (EXPANSION_LOG batch 2): few enemy walk-in or
+          wooden buildings in sight, long words with rare letters; a bot riding a JET with no air-capable
+          weapon on the other side can stall a round to time-up
 
 - [x] Before the next art pass: research external tools that make per-word art faster and
       cheaper than writing it with Claude (image generation pipelines, pixel/paper-style

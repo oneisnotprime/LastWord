@@ -392,6 +392,129 @@ export function dragon(colour = "#c4583c"): Silhouette {
 }
 
 // ---------------------------------------------------------------------------------------------
+// Prehistoric giants (theme 29): one body plan with parts swapped in.
+
+export interface Dino {
+  /** theropod: on two legs, big head; sauropod: long neck and tail on pillars; ceratops: frill and horns;
+   *  stego: plates; ankylo: low, armoured, clubbed tail; duckbill: crested, on two legs or four;
+   *  ptero: flying; plesio: swimming, long neck; sail: a fin along the back. */
+  kind?: "theropod" | "raptor" | "sauropod" | "ceratops" | "stego" | "ankylo" | "duckbill" | "ptero" | "plesio" | "sail" | "dome";
+  size?: number; colour?: string; belly?: string;
+}
+
+export function dino(o: Dino = {}): Silhouette {
+  const kind = o.kind ?? "theropod", k = o.size ?? 1, pieces: Piece[] = [];
+  const S = (pts: Pt[]) => at(pts, 0, 0, k);
+  const living = (flies = false): Silhouette => ({ pieces, colour: o.colour, living: true, flies });
+  if (kind === "ptero") {
+    pieces.push(behind(S(P(-2, -30, -22, -44, -34, -34, -14, -28)), "dark", 1));
+    pieces.push(part(S(E(0, -28, 9, 4, 12))), part(S(P(6, -31, 14, -36, 30, -33, 14, -30, 8, -27))), part(S(P(10, -35, 4, -44, 13, -36))));
+    pieces.push(glue(S(P(-2, -30, 18, -48, 32, -36, 8, -27)), "light", 1), eye(15 * k, -34 * k, 1.1 * k));
+    return living(true);
+  }
+  if (kind === "plesio") {
+    pieces.push(behind(S(P(-40, -1, -24, -5, -10, -2, 4, -6, 20, -2, 36, -5, 40, -1, 36, 0, -36, 0)), "#9cc6d2", 2));
+    pieces.push(part(S(E(-4, -7, 16, 6, 16))), part(S(band([[8, -10], [16, -22], [22, -34], [28, -38]], 4, 2.6))), part(S(E(30, -38, 4.5, 3, 10))));
+    pieces.push(part(S(band([[-18, -7], [-30, -5], [-36, -6]], 4, 1))), glue(S(P(-8, -4, -16, 2, -2, -2)), "dark"), glue(S(P(6, -4, 0, 2, 12, -2)), "dark"), eye(31 * k, -39 * k, 1 * k));
+    return living();
+  }
+  const quadruped = kind === "sauropod" || kind === "ceratops" || kind === "stego" || kind === "ankylo";
+  if (quadruped) {
+    const long = kind === "sauropod";
+    const L = long ? 46 : 40, top = kind === "ankylo" ? -22 : long ? -34 : -30, leg = kind === "ankylo" ? 8 : long ? 16 : 12;
+    for (const x of [L * 0.32 - 3, -L * 0.3 - 3]) pieces.push(behind(S(R(x - 3.5, -leg - 6, x + 3.5, 0)), "dark", 1));
+    if (kind === "stego") for (let i = 0; i < 6; i++) { const x = -18 + i * 7; pieces.push(behind(S(P(x - 4, top + 8, x, top - 6 - (i > 1 && i < 4 ? 4 : 0), x + 4, top + 8)), "#c9775a")); }
+    pieces.push(part(S(E(0, (top - leg) / 2 - 2, L / 2, (-top - leg) / 2 + 2, 20))));
+    if (long) pieces.push(part(S(band([[14, -26], [24, -42], [30, -58], [36, -62]], 7, 4))), part(S(E(38, -62, 5.5, 3.6, 10))), part(S(band([[-20, -24], [-36, -16], [-50, -8], [-60, -6]], 7, 1))), );
+    else pieces.push(part(S(band([[-18, top + 8], [-30, top + 14], [-40, top + 20]], 7, kind === "ankylo" ? 3 : 1))));
+    if (kind === "ankylo") pieces.push(glue(S(E(-42, top + 20, 5, 4, 10)), "deep"), ...[-12, -4, 4, 12].map((x) => dot(S(P(x - 3, top + 5, x, top + 1, x + 3, top + 5)), "light")));
+    if (kind === "stego") pieces.push(glue(S(band([[-40, top + 20], [-46, top + 14]], 1.4, 0.6)), "#efe6d0"), glue(S(band([[-40, top + 20], [-47, top + 21]], 1.4, 0.6)), "#efe6d0"));
+    if (!long) {
+      const hx = L / 2 + 4, hy = top + (kind === "ankylo" ? 10 : 8);
+      if (kind === "ceratops") pieces.push(behind(S(E(hx - 6, hy - 5, 8, 11, 14)), "deep", 1));
+      pieces.push(part(S(P(L / 2 - 6, top + 4, hx, hy - 5, hx + 9, hy + 1, hx + 6, hy + 5, L / 2 - 2, hy + 8))));
+      if (kind === "ceratops") pieces.push(glue(S(P(hx - 2, hy - 4, hx + 4, hy - 16, hx + 2, hy - 4)), "#efe6d0"), glue(S(P(hx + 6, hy - 1, hx + 13, hy - 7, hx + 8, hy + 1)), "#efe6d0"));
+      pieces.push(eye((hx + 1) * k, (hy - 1) * k, 1.1 * k));
+    } else pieces.push(eye(39 * k, -63 * k, 1 * k));
+    for (const x of [L * 0.32, -L * 0.3]) pieces.push(part(S(R(x - 3.5, -leg - 6, x + 3.5, 0))));
+    if (o.belly) pieces.push(dot(S(E(0, -leg - 2, L * 0.32, 3, 12)), o.belly));
+    return living();
+  }
+  // On two legs: theropods, raptors, duckbills, sail-backs, dome-heads.
+  const small = kind === "raptor";
+  pieces.push(behind(S(band([[-2, -22], [-4, -12], [-1, 0]], 5, 3)), "dark"));
+  if (kind === "sail") pieces.push(part(S([...E(-4, -34, 15, 16, 16, Math.PI, Math.PI * 2)] as Pt[]), "deep", 1), ...[-14, -8, -2, 4].map((x) => dot(S(band([[x, -36], [x, -46 + Math.abs(x + 4) * 0.5]], 0.6)), "dark")));
+  pieces.push(part(S(P(-6, -36, 8, -38, 14, -30, 10, -20, -4, -18, -14, -24))));
+  pieces.push(part(S(band([[-12, -26], [-26, -24], [-38, -20], [-50, -18]], 6, 1))));
+  const neck: Pt[] = small ? [[10, -34], [16, -42]] : [[10, -34], [14, -42]];
+  pieces.push(part(S(band(neck, 6, 5))));
+  const hx = 16, hy = small ? -44 : -46, head = kind === "duckbill" ? P(hx - 5, hy - 4, hx + 6, hy - 5, hx + 16, hy - 1, hx + 16, hy + 3, hx + 4, hy + 5, hx - 5, hy + 3)
+    : kind === "dome" ? P(hx - 6, hy - 3, hx - 2, hy - 9, hx + 6, hy - 8, hx + 10, hy - 2, hx + 12, hy + 3, hx - 4, hy + 4)
+    : P(hx - 6, hy - 4, hx + 8, hy - 6, hx + 20, hy - 2, hx + 20, hy + 3, hx + 10, hy + 7, hx - 4, hy + 5);
+  pieces.push(part(S(head), "body", 1));
+  if (kind === "duckbill") pieces.push(glue(S(band([[hx - 2, hy - 4], [hx - 8, hy - 14], [hx - 12, hy - 12]], 3, 1.4)), "#c9775a"));
+  if (kind === "theropod" || kind === "sail" || small) pieces.push(dot(S(band([[hx + 4, hy + 2.5], [hx + 19, hy + 1]], 0.7)), "#fbf7ec"));
+  pieces.push(part(S(band([[-2, -22], [2, -12], [0, 0]], 6, 3.4))), glue(S(R(-1, -2, 6, 0)), "deep"));
+  pieces.push(glue(S(band([[10, -26], [14, -24], [16, -26]], 1.8, 1)), "body"));
+  if (small) pieces.push(glue(S(P(4, -1, 9, -7, 7, 0)), "#efe6d0"), ...[-30, -36, -42].map((x) => dot(S(P(x, -22, x - 4, -27, x - 6, -21)), "deep")));
+  if (o.belly) pieces.push(dot(S(E(2, -24, 6, 4, 10)), o.belly));
+  pieces.push(eye((hx + 3) * k, (hy - 2) * k, 1.1 * k));
+  return living();
+}
+
+// ---------------------------------------------------------------------------------------------
+// Siege engines and polearms (theme 28): wooden frames on wheels.
+
+export function engine(o: { kind?: "trebuchet" | "catapult" | "ballista" | "tower" | "ram" | "gun"; colour?: string } = {}): Silhouette {
+  const kind = o.kind ?? "catapult", pieces: Piece[] = [], wood = "body", iron = "#5a5a62";
+  const wheels = (xs: number[], r = 5) => xs.flatMap((x) => wheel(x, -r, r));
+  if (kind === "trebuchet") {
+    pieces.push(part(R(-22, -8, 22, -4), wood), part(band([[-14, -6], [0, -52]], 3), wood), part(band([[14, -6], [0, -52]], 3), wood));
+    pieces.push(glue(band([[-26, -30], [30, -62]], 2.6, 1.6), "light"), glue(R(-32, -32, -20, -20), iron, 1), dot(band([[30, -62], [32, -44]], 0.6), "#6b4a2e"), glue(E(32, -42, 3, 2.4, 8), "#9a948a"));
+    pieces.push(glue(E(0, -50, 2.2, 2.2, 8), iron), ...wheels([-16, 16]));
+    return { pieces, colour: o.colour ?? "#a8703c" };
+  }
+  if (kind === "catapult") {
+    pieces.push(part(R(-20, -10, 20, -5), wood), part(P(-6, -10, -2, -24, 2, -24, 6, -10), wood));
+    pieces.push(glue(band([[-14, -12], [18, -36]], 2.6, 2), "light"), glue([...E(19, -38, 5, 3.4, 10, Math.PI, Math.PI * 2)] as Pt[], "deep"), glue(E(19, -41, 3, 3, 8), "#9a948a"));
+    pieces.push(glue(band([[-2, -24], [2, -26]], 3), iron), ...wheels([-13, 13]));
+    return { pieces, colour: o.colour ?? "#a8703c" };
+  }
+  if (kind === "ballista") {
+    pieces.push(part(P(-6, 0, -3, -18, 3, -18, 6, 0), wood), part(band([[-18, -22], [18, -26]], 4, 3), wood));
+    pieces.push(glue(band(E(10, -24, 4, 14, 12, -Math.PI / 2, Math.PI / 2), 2.4, 2.4), "light"), dot(band([[10, -38], [-14, -23], [10, -10]], 0.6), "#fbf7ec"));
+    pieces.push(glue(band([[-16, -24], [26, -25]], 1.4), "#8a6440"), glue(P(25, -28, 32, -25, 25, -22), "#d8e0e4"));
+    return { pieces, colour: o.colour ?? "#a8703c" };
+  }
+  if (kind === "tower") {
+    pieces.push(part(P(-14, -6, -11, -66, 11, -66, 14, -6), wood), ...[-54, -40, -26, -12].map((y) => dot(band([[-12, y], [12, y]], 1), "dark")));
+    pieces.push(dot(band([[-12, -60], [12, -14]], 0.8), "dark"), dot(band([[12, -60], [-12, -14]], 0.8), "dark"), glue(P(11, -66, 26, -58, 24, -54, 11, -60), "light"));
+    pieces.push(glue(P(-14, -70, -12, -66, 12, -66, 14, -70), "deep"), ...wheels([-9, 9], 5));
+    return { pieces, colour: o.colour ?? "#a8703c" };
+  }
+  if (kind === "ram") {
+    pieces.push(part(P(-22, -8, -16, -26, 16, -26, 22, -8), "deep"), dot(R(-16, -12, 16, -9), "dark"));
+    pieces.push(glue(band([[-26, -14], [30, -14]], 6), wood), glue(E(31, -14, 4, 4.4, 10), iron), ...wheels([-14, 14], 4.5));
+    return { pieces, colour: o.colour ?? "#a8703c" };
+  }
+  // A gun on a wheeled carriage (CULVERIN).
+  pieces.push(part(band([[-14, -12], [22, -20]], 9, 7), "body", 1), glue(E(-15, -12, 5, 5, 12), "body"), dot(E(23, -20, 2.6, 3, 8), "#2b2a28"), part(P(-12, -10, 6, -10, 8, -4, -14, -4), "#8a6440"), ...wheels([-6], 7));
+  return { pieces, colour: o.colour ?? "#c9a24a" };
+}
+
+/** A staff weapon with its head: an axe blade, a spike, a hook, a curved blade. */
+export function polearm(head: "axe" | "spike" | "hook" | "blade" | "ball" | "hammer" = "axe", len = 54, colour = "#d8e0e4"): Silhouette {
+  const top = -len, pieces: Piece[] = [part(band([[0, 2], [0, top + 6]], 2.4), "#8a6440")];
+  if (head === "axe") pieces.push(glue(P(1, top + 18, 12, top + 12, 14, top + 24, 12, top + 32, 1, top + 26), "body", 1), glue(P(-1, top + 22, -7, top + 19, -6, top + 25), "body"), glue(P(-2, top + 10, 0, top - 2, 2, top + 10), "body"));
+  if (head === "spike") pieces.push(glue(P(-3, top + 10, 0, top - 4, 3, top + 10, 0, top + 12), "body"), glue(R(-2.5, top + 10, 2.5, top + 13), "#6b4a2e"));
+  if (head === "hook") pieces.push(glue(P(-2, top + 10, 0, top - 2, 2, top + 10), "body"), glue(band([[1, top + 14], [9, top + 10], [10, top + 3], [6, top + 4]], 2.4, 1.2), "body"));
+  if (head === "blade") pieces.push(glue(P(-2, top + 14, 1, top + 14, 8, top + 2, 5, top - 6, -1, top + 2), "body", 1));
+  if (head === "ball") { pieces.splice(0, 1, part(band([[0, 2], [0, top + 12]], 2.6), "#8a6440")); pieces.push(glue(E(0, top + 8, 6, 6, 12), "body"), ...Array.from({ length: 8 }, (_, i) => { const a = (i / 8) * Math.PI * 2; return glue(P(Math.cos(a) * 5 - 1.2, top + 8 + Math.sin(a) * 5, Math.cos(a) * 9, top + 8 + Math.sin(a) * 9, Math.cos(a) * 5 + 1.2, top + 8 + Math.sin(a) * 5), "body"); })); }
+  if (head === "hammer") { pieces.splice(0, 1, part(band([[0, 2], [0, top + 12]], 2.6), "#8a6440")); pieces.push(glue(R(-4, top + 6, 8, top + 13), "body", 0), glue(P(-4, top + 7, -11, top + 9.5, -4, top + 12), "body")); }
+  return { pieces, colour };
+}
+
+// ---------------------------------------------------------------------------------------------
 // Plants
 
 export function tree(o: { kind?: "round" | "pine" | "palm" | "dead" | "bush" | "cactus"; h?: number; colour?: string } = {}): Silhouette {

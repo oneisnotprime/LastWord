@@ -31,6 +31,11 @@ const ttk = { person: [] as number[], creature: [] as number[] };
 const firstDeaths: number[] = [];
 const watched = new Set(process.env.WATCH ? readFileSync(process.env.WATCH, "utf8").split(/\s+/).filter(Boolean) : []);
 const spelledWatched = new Map<string, number>();
+let spelledAll = 0;
+// Letter availability: every 30 s each bot's rack is checked against every watched word (could it spell it now?).
+const affordable = new Map<string, number>();
+let racks = 0;
+const canSpell = (letters: Record<string, number>, word: string) => { const need: Record<string, number> = {}; for (const ch of word) need[ch] = (need[ch] ?? 0) + 1; return Object.entries(need).every(([ch, n]) => (letters[ch] ?? 0) >= n); };
 const killers = new Map<string, number>();
 
 for (let r = 0; r < rooms; r++) {
@@ -51,6 +56,7 @@ for (let r = 0; r < rooms; r++) {
     const spellWord = anyRoom.spellWord.bind(room);
     anyRoom.spellWord = (id: string, w: unknown, text: unknown) => {
       const out = spellWord(id, w, text);
+      spelledAll++;
       const noun = String(text).toLowerCase().trim().split(/\s+/).at(-1)!;
       for (const k of [noun, noun.replace(/s$/, ""), noun.replace(/es$/, "")]) if (watched.has(k)) { spelledWatched.set(k, (spelledWatched.get(k) ?? 0) + 1); break; }
       return out;
@@ -79,7 +85,18 @@ for (let r = 0; r < rooms; r++) {
     fightFrom.delete(id);
     return kill(id, killerId);
   };
-  while (room.state.phase !== "over" && seconds < cap * 60) { room.update(0.1); seconds += 0.1; }
+  let sampled = 0;
+  while (room.state.phase !== "over" && seconds < cap * 60) {
+    room.update(0.1); seconds += 0.1;
+    if (watched.size && seconds - sampled >= 30) {
+      sampled = seconds;
+      for (const [id, w] of anyRoom.walkers) {
+        if (!anyRoom.bots.has(id)) continue;
+        racks++;
+        for (const word of watched) if (canSpell(w.letters, word)) affordable.set(word, (affordable.get(word) ?? 0) + 1);
+      }
+    }
+  }
   const report = room.botReport();
   for (const b of report) {
     const m = used.get(b.difficulty) ?? used.set(b.difficulty, new Map()).get(b.difficulty)!;
@@ -117,6 +134,9 @@ const unused = themed.filter((k) => !(themedUsers.get(k) ?? 0));
 console.log(`Themes' systems used: ${themed.length - unused.length} of ${themed.length}${unused.length ? `; never: ${unused.join(", ")}` : ""}`);
 if (watched.size) {
   const n = [...spelledWatched.values()].reduce((a, b) => a + b, 0);
+  const any = [...affordable.values()].length;
+  console.log(`\nAll words spelled by bots: ${spelledAll}; racks sampled ${racks}; watched words some rack could spell: ${any} of ${watched.size}; mean share of racks that could spell one: ${racks ? (([...affordable.values()].reduce((a, b) => a + b, 0) / watched.size / racks) * 100).toFixed(1) : "-"}%`);
+  console.log(`Most affordable watched words (share of racks): ${[...affordable].sort((a, b) => b[1] - a[1]).slice(0, 15).map(([k, v]) => `${k} ${((v / racks) * 100).toFixed(0)}%`).join(", ")}`);
   console.log(`\nWatched words spelled: ${n} times, ${spelledWatched.size} different: ${[...spelledWatched].sort((a, b) => b[1] - a[1]).slice(0, 30).map(([k, v]) => `${k} ${v}`).join(", ")}`);
 }
 const total = [...sources.values()].reduce((n, v) => n + v, 0);
