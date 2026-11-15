@@ -10,7 +10,7 @@ Run on 2026-11-14. **Result:** 2,964 of 3,000 words have an image (2,795 from th
 keep a placard or rosette (1,537 adjectives, 791 events, 574 verbs, 405 auras, 251 knowledge,
 247 institutions, 215 adverbs, 116 weather and phenomena, 99 terrain places and depressions,
 63 afflictions, 61 measures, 3 spells) and 27 plurals use their singular's image.
-The images take **1.84 MB** in all (about 620 bytes each, lossless WebP), and each one loads
+The images take **1.66 MB** in all (about 560 bytes each, lossless WebP), and each one loads
 the first time its word is drawn.
 
 | | |
@@ -18,8 +18,8 @@ the first time its word is drawn.
 | Style LoRA | **kept**, scale 1.0: flatter colour, no paper grain, and clean white backgrounds where the prompt alone gave grey ones (bomb, shark, chef, crane); recognisability the same. [Comparison](art-pipeline/lora.jpg) |
 | Candidates | 12,820 (3,000 × 4, then 205 retries × 4) at 640², $0.0035 each |
 | Judged | 300 contact sheets of 10 words by five Claude sessions, 21 retry sheets by a sixth |
-| Cut-out | BiRefNet for the first 1,021 picks; the fal balance ran out there, so the other 1,943 use the local cut-out (`ART_CUT=local`), which matched BiRefNet on these plain backgrounds (`tools/art/picks.tsv` says which) |
-| fal cost | ≈ $48.5 (estimated from list prices: trainer $2.26, LoRA generation $45.0, validation $0.5, BiRefNet ≈ $1.0) |
+| Cut-out | BiRefNet for 2,942 picks. The fal balance ran out after the first 1,021; on 2026-11-15 the other 1,943 were cut again with BiRefNet, each compared with the local cut-out (`ART_CUT=local`) by alpha coverage and on contact sheets. BiRefNet won where white parts touch the white background (bottles, jars, foam, white clothes). 22 keep the local cut-out because BiRefNet punched holes where grey details sit on the grey background (coins, clear liquids, keys, lines on paper). `tools/art/picks.tsv` says which |
+| fal cost | ≈ $48.5 (estimated from list prices: trainer $2.26, LoRA generation $45.0, validation $0.5, BiRefNet ≈ $1.0), plus $0.79 for the BiRefNet redo of 1,943 cut-outs (read from the fal balance: about $0.0004 an image) |
 | Frame rate | headless Chromium, software GL, 12 generated words on screen: 3.9 fps before, 4.5 after (two runs each, noise ±0.4) |
 
 ![Sample of 100 accepted words, drawn in game style](art-pipeline/sample-100.jpg)
