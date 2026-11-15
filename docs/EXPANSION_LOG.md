@@ -173,7 +173,7 @@ into `tools/generated_words.txt`, letters in `tools/producers.txt`). Art is draw
   PUBLICATION, MAGAZINE, INTERNET, PUBLISHER, NEWSCASTER (40 to 80 m), LIFEGUARD and LIFESAVER's
   healing by sight (200 -> 100 m). `freq1.test.ts` fails if any object or creature radiates fear,
   healing or a field past 200 m (weather and sky words excepted).
-- Drawn: a WORDS shape for each of the 140 new concrete words without a generated image (people as
+- Drawn: a WORDS shape for each of the 131 new concrete words without a generated image (people as
   bipeds by what they do, crowds for INFANTRY and WORKFORCE, a ceiling, plug, gas cylinder, doll,
   skirt, picture, radiator, grave, pipeline, cart, drain; landforms as signs), checked in the gallery.
 - Tournament (48 rooms, 8 mixed bots, 30 min cap, same seeds; main against this batch): mean round
