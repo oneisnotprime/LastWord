@@ -257,3 +257,19 @@ server and the client import this, so anything here must give the same answer on
     `unheard` (`hampered.unheard`: no pings, no spell called out).
   - The data comes from `tools/meaning.py`: rules by WordNet sense and gloss give `inflict_*`,
     `restores_panels`, `immune_*`, `read_properties`, `hearing_range` and `decoys` across the dictionary.
+- Concept batch: combat. `affinity.ts` damage natures: `NATURE_MATRIX` (nature -> damage type ->
+  multiplier; a body with several takes the product), `affinity`, `damageShare` (res × make-up ×
+  natures), `affOf` (WEAK_FROM 1.25, RESIST_BELOW 0.75: a `Strike`'s `aff`), `weaknesses`,
+  `affinityText` (cards). `strike` multiplies each type by `affinity`; an attack absolute ignores
+  what a nature resists. `resolve` unions an adjective's `nature`; `applyMaterial` swaps material
+  natures (`MATERIAL_NATURES`). `scale.ts`: `size` (relative), `sizeOps` (reach ×k, sight ×√k,
+  stride ×k^0.3; `resolve` and `Unit` apply them), `carryScale` (`carryLimit` × size²), `statureOf`
+  (cube root of the word's mass over PERSON_KG, × size), `hitbox`, `doorProblem` (DOOR_STATURE),
+  `slipsUnder` (SLIP_STATURE), `rideProblem` (RIDE_SHARE), `carries` (CARRY_RATIO), `scaleText`.
+  `control.ts`: `wobbleDrift`, `mirrored`, `isReversed`, `leashed` (LEASH_TILES), `magnetPull`,
+  `isMetal`, `controlText`; statuses `drunk` (wobble), `reverse` (reversed), `hypnosis` (`steered`:
+  `hampered.steeredBy`), `leash` (`tethered`: `hampered.leashedTo`; `Affliction.at` when tied to a
+  spot). `idea.ts`: `luckyChance`/`luckyRoll` (luck and rerolls on any chance), `rerolled` (`Unit`
+  applies `rerolls` to accuracy, critical, evasion), `trapMissChance`, `gambleOdds`; `huntYield`
+  takes luck for its rare letter (RARE_HUNT). `curse` lowers luck, `bless` raises it, `shrink` sets
+  size ×0.25. `combat2.test.ts` prints the coverage audit.

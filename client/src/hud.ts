@@ -687,7 +687,11 @@ export class Hud {
         const s = d!.stores[k], net = Math.round((s.make - s.need) * 100) / 100;
         return s.make || s.need ? ` <small>${s.make ? `+${+s.make.toFixed(2)}` : ""}${s.need ? ` −${+s.need.toFixed(2)}` : ""}/min</small>${net < 0 && s.have < -net * 5 ? " <small>!</small>" : ""}` : "";
       };
+      // Luck and size in force (shared idea.ts, scale.ts): a hint that rolls lean your way, or against you.
+      const luck = d?.luck, sized = d?.size ?? 1;
       const chips = [
+        ...(luck && (luck.percent || luck.rerolls) ? [`<span class="chip luck${luck.percent < 0 ? " bad" : ""}" title="every roll: gathering, hits, criticals, dodging, rare drops, traps, gambles">♣ LUCK ${luck.percent >= 0 ? "+" : "−"}${Math.abs(luck.percent)}%${luck.rerolls ? ` · ${luck.rerolls} REROLL${luck.rerolls > 1 ? "S" : ""}` : ""}</span>`] : []),
+        ...(Math.abs(sized - 1) >= 0.05 ? [`<span class="chip size" title="reach, sight, stride, carrying, doors and rides follow your size">SIZE ×${+sized.toFixed(2)}</span>`] : []),
         ...(d?.statuses ?? []).map((s) => chip(s.status, s.left)),
         ...(d?.effects ?? []).map((e) => `<span class="chip effect item" data-inspect="${esc(e.word)}" data-effect="1" title="${esc(effectText(this.dict, e.word))}">${esc(e.word.toUpperCase())}${e.left > 0 ? `<small>${e.left}s</small>` : ""}</span>`),
         ...(["food", "fuel", "power", "faith"] as const).filter((k) => (d?.stores[k].have ?? 0) > 0 || (d?.stores[k].need ?? 0) > 0 || (d?.stores[k].make ?? 0) > 0).map((k) =>

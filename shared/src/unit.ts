@@ -6,7 +6,8 @@ import type { Op, Value } from "./types.js";
 import { inflicts } from "./status.js";
 import { graftCosts, handsOf, isGraft } from "./body.js";
 import { lend, lends } from "./wear.js";
-import { luckOps } from "./idea.js";
+import { luckOps, rerolled } from "./idea.js";
+import { carryScale, sizeOf, sizeOps } from "./scale.js";
 
 /**
  * A noun with the adjectives on it. `count` above 1 is many of it as one body (a swarm, a
@@ -46,7 +47,8 @@ export const IMPROVISED_DAMAGE = 2;
 
 /** The most a body can carry in its hands, in kg: its strength times CARRY_PER_STRENGTH. */
 export function carryLimit(body: Stats): number {
-  return Math.max(0, body.num("strength")) * CARRY_PER_STRENGTH;
+  // A giant's hands carry the square of its size more (shared scale.ts), a shrunk body's less.
+  return Math.max(0, body.num("strength")) * CARRY_PER_STRENGTH * carryScale(sizeOf(body));
 }
 
 /** True for something with no place to be worn, held or ridden: carried, it is an improvised weapon. */
@@ -151,12 +153,17 @@ export class Unit {
     }
 
     body.apply(graftCosts(body.num("mass"), grafted));
+    const sized = sizeOf(body);
     for (const effect of loadout.effects ?? []) {
       for (const [id, value] of Object.entries(effect.set ?? {})) body.set(id, value);
       body.apply(effect.ops ?? []);
     }
-    // Luck shifts every roll (shared idea.ts): aim, criticals and dodging.
+    // Grown or shrunk by what is in force on it (GROW, SHRINK, a potion): reach, sight and stride follow (shared scale.ts).
+    body.apply(sizeOps(sizeOf(body) / sized));
+    // Luck shifts every roll (shared idea.ts): aim, criticals and dodging; rerolls throw failures again.
     body.apply(luckOps(body.num("luck")));
+    const rerolls = body.num("rerolls");
+    if (rerolls > 0) for (const id of ["accuracy", "critical", "evasion"]) body.set(id, rerolled(body.num(id), rerolls));
     this.onFoot = armed(weapon, body);
     this.body = spawn(loadout.body.noun, body);
     // A rider's own adjectives carry over to what it rides: a FAST driver makes a fast tank.
@@ -217,6 +224,8 @@ function armed(weapon: Stats | null, body: Stats): Stats {
   }
   const swung = stats.num("attack_range") <= MELEE_RANGE;
   const factor = (1 + body.num("training") / 10) * (swung ? body.num("strength") / 5 : 1);
+  // A giant's arm swings a blade farther (shared scale.ts); claws and teeth already grew with the body.
+  if (swung && weapon && sizeOf(body) !== 1) stats.set("attack_range", stats.num("attack_range") * sizeOf(body));
   stats.apply(stats.entries().filter(([id]) => id.startsWith("dmg_")).map(([id]) => [id, "mul", factor]));
   return stats;
 }

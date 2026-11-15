@@ -17,7 +17,10 @@ there, which is countered by BIRD, FIRE or WINTER, each of which has its own sid
 | Growth and food | fertility, growth, food output, hunger | farm, locust, famine, fertile, wheat |
 | Life and disease | integrity, regeneration, contagion | plague, doctor, medicine, rot, zombie |
 | Light and sight | light level, visibility, stealth | sun, fog, night, torch, invisible, spy |
-| Force and damage | damage types, resistances, armor | sword, nuke, shield, bunker, sharp |
+| Force and damage | damage types, resistances, natures, armor | sword, nuke, shield, bunker, sharp, ghost, holy |
+| Fortune | luck, rerolls, gambles | clover, horseshoe, jinx, curse, dice, fate |
+| Scale | size, stature | gigantic, tiny, growth, shrink, mouse, titan |
+| Control | wobble, reversed controls, hypnosis, leash, magnetism | beer, reversal, hypnotize, lasso, magnet, sober, awaken, scissors |
 | Matter | mass, hardness, material, conductivity | iron, wooden, magnet, lightning, acid |
 | Movement | speed by medium, movement cost, blocking | jet, wall, swamp, bridge, fly |
 | Production | letter output, labour, upkeep, storage | forge, miner, tax, harvester, vault |
@@ -158,6 +161,35 @@ Playtests found power arriving in huge, invisible jumps and fights ending before
   harm in the last 8 s), a short grey beat, a kill feed of deaths near you or by people you see,
   and a round recap (winner, round length, who killed most). Screens close when you are hit.
 - A bot's opening peace covers its creatures: they only defend.
+
+## Concept batch: combat (natures, luck, scale, control)
+
+Four dimensions every word can touch, given by meaning across the dictionary by generator rules
+(`tools/derive.py`, run by `build_demo.py`: class, archetype, first material, a word's own
+properties, WordNet hypernyms and glosses; never a word's name; never over a value a word sets):
+
+- Damage natures (shared `affinity.ts`): every body has natures (beast, insect, plant, undead,
+  spirit, demon, holy, fae, fire, ice, water, stone, metal, wood, glass, cloth, paper, plastic,
+  bone, machine, flesh); `NATURE_MATRIX` says how much of each of the 24 damage types each takes.
+  What lands is raw × (1 − res) × make-up (material.ts) × natures. Things take the flammability,
+  conductivity, brittleness and melting point of their first material (a wooden FENCE burns, a
+  steel SWORD conducts). Hits that meet a weakness say "weak!", a resistance "resists"; cards list
+  both. An attack absolute ignores what a nature resists, not what it is weak to.
+- Luck (shared `idea.ts`): `luck` shifts every roll (gathering, hits, criticals, dodging, a hunt's
+  rare letter, a ruin's X, stepping over a hidden trap, gambles); `rerolls` throws a failure
+  again; `gamble` stakes letters, double or nothing, or between two people (DICE, FATE).
+- Scale (shared `scale.ts`): `size` against a word's own (anything scaling height, length or mass
+  scales it); reach, sight, stride and carrying follow; stature (size times the cube root of the
+  word's mass over a person's) sets the hitbox, the doors it fits through (none past ×2.2, under
+  any shut one at ×0.35) and what it rides (a mount no smaller than its rider; a creature three
+  times its master's stature carries them). The standee is drawn at its size.
+- Control (shared `control.ts`): `wobble` sways a walker, `reversed` mirrors where it means to go,
+  the `hypnosis` status hands its body to its caster, the `leash` status tethers it within four
+  tiles of its holder, a carried magnet pulls enemies' metal. The server applies all of it in
+  `walk`, `compel` and `tether` to people, creatures and bots alike; counters by meaning (SOBER,
+  COFFEE, AWAKEN, a cord-cutting blade carried).
+
+Fight pacing held: bot tournament median time to kill a person 5.5 s before and after.
 
 ## Buildings you walk into
 

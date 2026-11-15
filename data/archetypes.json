@@ -11,7 +11,7 @@
  {
   "class": "artifact",
   "archetype": "artifact",
-  "words": 1327,
+  "words": 1326,
   "groups": [
    "physical",
    "mobility",
@@ -906,7 +906,7 @@
  {
   "class": "modifier",
   "archetype": "quality",
-  "words": 12185,
+  "words": 12186,
   "groups": [
    "meta"
   ]

@@ -11,6 +11,7 @@ export const STATUSES = [
   "stun", "slow", "blind", "fear", "burn", "freeze", "poison", "bleed", "sleep", "charm", "silence", "root", "confuse", "shrink",
   "sick", "rage", "deaf", "debt", "curse", "bless", "expose", "haste", "stasis", "truce", "chaos", "void", "doom",
   "amnesia", "illiterate", "censor", "gag",
+  "drunk", "reverse", "hypnosis", "leash",
 ] as const;
 export type Status = (typeof STATUSES)[number];
 
@@ -69,6 +70,10 @@ export interface StatusRule {
   set?: Record<string, Value>;
   /** Nobody hears it: no pings, no quick messages, no spell called out (shared comms.ts). */
   unheard?: boolean;
+  /** Whoever put it on steers the body (shared control.ts: hypnosis). */
+  steered?: boolean;
+  /** Tethered to whoever put it on (shared control.ts: leash). */
+  tethered?: boolean;
 }
 
 /** Every kind of damage, for statuses that take them all away (void). */
@@ -92,7 +97,7 @@ export const STATUS_RULES: Record<Status, StatusRule> = {
   silence: { mute: true, unheard: true },
   root: { still: true },
   confuse: { random: true },
-  shrink: { ops: [["mass", "mul", 0.1], ["height", "mul", 0.25], ["length", "mul", 0.25], ["strength", "mul", 0.3], ["speed_land", "mul", 0.6]] },
+  shrink: { ops: [["mass", "mul", 0.1], ["height", "mul", 0.25], ["length", "mul", 0.25], ["strength", "mul", 0.3], ["speed_land", "mul", 0.6], ["size", "mul", 0.25]] },
   // Disease (shared disease.ts): it wastes the body and passes to whoever stands close.
   sick: { dot: { disease: 3 }, living: true, ops: [["strength", "mul", 0.7], ["speed_land", "mul", 0.8], ["labor", "mul", 0.5], ["morale", "add", -1]] },
   // Emotions (shared emotion.ts): blind fury, at whoever is nearest.
@@ -102,8 +107,8 @@ export const STATUS_RULES: Record<Status, StatusRule> = {
   // Money (shared money.ts): a letter every DEBT_SECONDS to the creditor.
   debt: { owes: true },
   // Religion (shared faith.ts): fortune in letters, and the heart for a fight.
-  curse: { earns: 0.5, ops: [["accuracy", "add", -0.15], ["morale", "add", -2], ["regeneration", "mul", 0]] },
-  bless: { earns: 1.5, boon: true, ops: [["regeneration", "add", 1], ["morale", "add", 2], ["courage", "add", 2]] },
+  curse: { earns: 0.5, ops: [["accuracy", "add", -0.15], ["morale", "add", -2], ["regeneration", "mul", 0], ["luck", "add", -4]] },
+  bless: { earns: 1.5, boon: true, ops: [["regeneration", "add", 1], ["morale", "add", 2], ["courage", "add", 2], ["luck", "add", 2]] },
   // Information (shared signal.ts): everyone knows where you are.
   expose: { exposed: true, ops: [["stealth", "mul", 0], ["disguise", "mul", 0]] },
   // Time (shared time.ts): twice the time, or none at all.
@@ -124,6 +129,11 @@ export const STATUS_RULES: Record<Status, StatusRule> = {
   illiterate: { ops: [["read_properties", "mul", 0.5]] },
   censor: {},
   gag: { unheard: true },
+  // Control (shared control.ts): who steers the body.
+  drunk: { living: true, ops: [["wobble", "add", 5], ["accuracy", "add", -0.15], ["courage", "add", 2]] },
+  reverse: { ops: [["reversed", "add", 1]] },
+  hypnosis: { steered: true, spares: true, living: true, resistedBy: "loyalty" },
+  leash: { tethered: true },
 };
 
 /**
@@ -141,6 +151,7 @@ export const STATUS_STRETCH: Record<Status, number> = {
   debt: 3, curse: 6, bless: 6, expose: 6,
   haste: 6, stasis: 2, truce: 1.5, chaos: 4, void: 4, doom: 1.2,
   amnesia: 6, illiterate: 6, censor: 6, gag: 5,
+  drunk: 8, reverse: 4, hypnosis: 2, leash: 3,
 };
 /** Seconds past which stretching bends toward a ceiling of about this much more. */
 export const STATUS_HORIZON = 120;
@@ -177,6 +188,8 @@ export interface Affliction {
   owing?: number;
   /** For chaos: the property changes drawn for it as it took hold (shared idea.ts `chaosOps`). */
   ops?: Op[];
+  /** For a leash put on by a thing or an area: the spot it is tied to (shared control.ts). */
+  at?: { x: number; y: number };
 }
 
 /** What someone's statuses do to the letters they earn: blessed half again, cursed half (shared faith.ts). */
@@ -296,6 +309,10 @@ export interface Hampered {
   nulled: boolean;
   /** Nobody hears its pings and spells (gag, silence: shared comms.ts). */
   unheard: boolean;
+  /** Who steers it (hypnosis), if anyone. */
+  steeredBy?: string;
+  /** Whom it is tethered to (leash), if anyone. */
+  leashedTo?: string;
 }
 
 export function hampered(list: readonly Affliction[]): Hampered {
@@ -315,6 +332,8 @@ export function hampered(list: readonly Affliction[]): Hampered {
     if (r.untouchable) h.untouchable = true;
     if (r.nulls) h.nulled = true;
     if (r.unheard) h.unheard = true;
+    if (r.steered) h.steeredBy = a.from;
+    if (r.tethered) h.leashedTo = a.from;
   }
   return h;
 }

@@ -84,6 +84,12 @@
   (`decoys`) send made-up calls and DANGER pings. No free text chat.
 - These properties come from meaning rules over the whole dictionary (`tools/meaning.py`: WordNet
   ancestors and glosses, a word's own shape decides how it applies); hand values always win.
+- Concept batch: combat (PLAN.md): damage natures with an explicit matrix (`affinity.ts`), luck
+  with rerolls and gambles, size and stature, and control (sway, reversed controls, hypnosis,
+  leashes, magnets) are shared systems given across the dictionary by `tools/derive.py`. People
+  are flesh: they have no weakness of their own; what they wear and carry does. GIANT, TITAN and
+  MOUSE stay creatures (big or small by their mass); GIGANTIC, COLOSSAL, TITANIC, MINIATURE and
+  GROWTH are the size words. BLACK CAT is two words: JINX, HEX, CURSE lower luck instead.
 
 ## Properties words use that the engine ignores
 
@@ -111,6 +117,18 @@ by how many words set them (minds and upkeep took `sentient`, `intelligence`, `f
   `tamable` 20, `growth_time` 20, `elevation` 20
 
 ## High priority
+
+- [x] Concept batch: combat. Damage types and resistances as an explicit matrix of natures
+      (shared `affinity.ts`; "weak!", "resists", "immune" on hits and cards), luck (rerolls, rare
+      drops, traps, gambles; HUD chip, "lucky step!", "crit!"), scale (`size`, stature: reach,
+      sight, stride, carrying, hitbox, doors, rides; standees resize) and control (`wobble`,
+      `reversed`, `hypnosis`, `leash`, magnets; badges, a sway, a tether line), assigned by meaning
+      by `tools/derive.py`. Coverage: natures on 5,984 nouns (every creature, person and plant),
+      268 luck words, 14 rerolls or gambles, 262 size words, 133 control words and 115 counters.
+- [ ] Concept batch follow-ups: bots choosing a weapon by their foe's weakness (now they only give
+      up a foe their blows pass through, `futile`); a gamble bots take when they have letters to
+      spare; letting a giant person carry its own small creatures (stature works both ways in the
+      rule, only the small riding the big is wired); more undead and spirit words (5 and 32).
 
 - [x] Letter economy part 2 (PLAN.md): producers need their conditions (shared `produce.ts`).
       Every `produce_*` value now comes from `tools/producers.txt` by the plan's table (A crops,

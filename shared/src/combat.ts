@@ -1,6 +1,7 @@
 import type { Rng } from "./rng.js";
 import type { Stats } from "./stats.js";
 import { susceptibility } from "./material.js";
+import { affinity, affOf, type Aff } from "./affinity.js";
 
 /** Something in the world that can hit or be hit. */
 export interface Entity {
@@ -94,11 +95,13 @@ export interface Strike {
   damage: number;
   /** Damage by type after resistances, before armor. */
   byType: Record<string, number>;
+  /** How the blow met its target's natures and resistances (shared affinity.ts): "weak", "resist", "immune" or "". */
+  aff?: Aff;
 }
 
 /**
- * One strike. Order: hit roll, per-type resistance and make-up (`susceptibility`), armor,
- * critical, shield, integrity.
+ * One strike. Order: hit roll, per-type resistance, make-up (`susceptibility`) and natures
+ * (shared affinity.ts), armor, critical, shield, integrity.
  *
  * Absolutes: an attack absolute (IRRESISTIBLE) ignores resistance, armor and INDESTRUCTIBLE,
  * except where the defender holds a narrower absolute on that damage type (FIREPROOF against
@@ -121,22 +124,27 @@ export function strike(attacker: Stats, defender: Entity, rng: Rng): Strike {
   const siege = fixed ? attacker.num("siege") : 1;
   const pierce = attacker.absolute("ignores_resistance");
   const byType: Record<string, number> = {};
-  let total = 0;
+  let total = 0, rawTotal = 0;
   for (const type of damageTypes(attacker)) {
     const raw = attacker.num(`dmg_${type}`) * siege;
     if (raw <= 0) continue;
     let resistance = Math.min(1, target.num(`res_${type}`));
     const wall = target.absolute(`res_${type}`);
     if (pierce && !(wall && wall.specificity > pierce.specificity)) resistance = Math.min(resistance, 0);
-    // What the target is made of: glass shatters under blows, paper burns, iron carries lightning.
-    const dealt = raw * (1 - resistance) * susceptibility(target, type);
+    // What the target is made of: glass shatters under blows, paper burns, iron carries lightning;
+    // and what kind of body it is: holy burns the undead, crush passes through a ghost.
+    // An attack absolute ignores what a nature resists (not what it is weak to), as it ignores res_*.
+    const kind = affinity(target, type), ignored = pierce && !(wall && wall.specificity > pierce.specificity);
+    const dealt = raw * (1 - resistance) * susceptibility(target, type) * (ignored ? Math.max(1, kind) : kind);
+    rawTotal += raw;
     if (dealt > 0) {
       byType[type] = dealt;
       total += dealt;
     }
   }
+  const aff = affOf(rawTotal, total);
   if (!pierce) {
-    if (target.flag("indestructible")) return { hit: true, critical: false, damage: 0, byType };
+    if (target.flag("indestructible")) return { hit: true, critical: false, damage: 0, byType, aff };
     total -= target.num("armor") * (1 - Math.min(1, attacker.num("armor_pierce")));
   }
   total = Math.max(0, total);
@@ -150,7 +158,7 @@ export function strike(attacker: Stats, defender: Entity, rng: Rng): Strike {
   const absorbed = Math.min(defender.shield, total);
   defender.shield -= absorbed;
   defender.integrity -= total - absorbed;
-  return { hit: true, critical, damage: total, byType };
+  return { hit: true, critical, damage: total, byType, aff };
 }
 
 /** Advances one entity's own clock: regeneration, shield recharge, decay. */

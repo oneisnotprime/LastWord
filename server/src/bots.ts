@@ -86,6 +86,7 @@ export const THEME_SYSTEMS = [
   "hide", "shelter", "store", "raid", "break in", "borer", "siege", "bolt door", "grow up",
   "trap sprung", "captured", "held", "breakout", "fealty", "tribute", "rebel", "antiair", "target", "target spelled",
   "restore", "ping help", "answer ping", "hex amnesia", "hex illiterate", "hex censor", "hex gag", "hex blind",
+  "hex hypnosis", "hex leash", "hex reverse", "hex drunk", "cure hypnosis", "cure leash", "cure reverse", "cure drunk", "futile",
 ] as const;
 
 export interface BotWord {
@@ -153,7 +154,7 @@ const dps = (s: Stats) => damage(s) * Math.max(0.1, s.num("attack_rate") || 1);
 const GOOD = /^(speed_land|speed_air|armor|accuracy|integrity|attack_rate|evasion|morale|courage|block|luck|critical|dmg_.*)$/;
 
 /** How much a bot wants each status on a foe: a sealed fate, stopped time and nothing at all most. */
-const HEX_WEIGHT: Partial<Record<Status, number>> = { doom: 5, stasis: 4, void: 4, chaos: 3, curse: 3, rage: 3, sick: 3, debt: 2, expose: 2, fear: 2, sleep: 2, root: 2, confuse: 2, silence: 2 };
+const HEX_WEIGHT: Partial<Record<Status, number>> = { doom: 5, stasis: 4, void: 4, chaos: 3, curse: 3, rage: 3, sick: 3, hypnosis: 3, debt: 2, expose: 2, fear: 2, sleep: 2, root: 2, confuse: 2, silence: 2, leash: 2, reverse: 2, drunk: 1 };
 
 /** Statuses a stats sheet passes on (`inflict_*`), boons and charm left out. */
 function harms(s: Stats): Status[] {

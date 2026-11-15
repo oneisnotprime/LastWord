@@ -205,6 +205,9 @@ export const BADGE: Record<string, { ink: string; paper: string; text: string }>
   confuse: { ink: "#fbf7ec", paper: "#8a5ac9", text: "? CONFUSE" }, shrink: { ink: "#4a3f33", paper: "#e9c9d4", text: "SHRINK" },
   fleeing: { ink: "#fbf7ec", paper: "#8a6a4a", text: "FLEEING" }, hungry: { ink: "#4a3f33", paper: "#e3c46a", text: "HUNGRY" },
   starving: { ink: "#fbf7ec", paper: "#a8703c", text: "STARVING" }, wild: { ink: "#fbf7ec", paper: "#5a6a4a", text: "WILD" },
+  // Control (shared control.ts): who steers the body.
+  drunk: { ink: "#4a3f33", paper: "#e8b04a", text: "∿ DRUNK" }, reverse: { ink: "#fbf7ec", paper: "#3d6a8a", text: "⇄ REVERSED" },
+  hypnosis: { ink: "#fbf7ec", paper: "#7a3f9a", text: "◎ HYPNOTIZED" }, leash: { ink: "#fbf7ec", paper: "#7a5a3a", text: "⊸ LEASHED" },
 };
 
 /** A little round-cornered paper badge for a status. */

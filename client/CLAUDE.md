@@ -187,3 +187,12 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
   (`#calls`, spells said aloud and pings), `Pings` (V opens `#pingbar`, 1-7 pings at the pointer,
   middle-click pings HERE; marks in `#pingmarks` for PING_MS). The preview names counter-words with
   insight 2+ (shared `countersShown`).
+- Concept batch: combat. `fx.number` tags a hit "crit!", "weak!", "resists" or "immune" (`Hit.aff`;
+  CSS `.num.weak`, `.resist`); `fx.luck` floats "lucky step!", "reroll!", "won!", "lost" (`luck`
+  message). The HUD card has a LUCK chip (percent, rerolls) and a SIZE chip from the loadout.
+  `main.ts` `sized` draws a standee at `Player.size` over its phrase's own size (0.2 to 3 on
+  screen; the old shrink ×0.55 is gone); a drunk standee sways and lurches (`View.wobble`); a
+  leashed one has a sagging rope to its holder (`Player.tether`, drawn with the tracers). Badges:
+  ∿ DRUNK, ⇄ REVERSED, ◎ HYPNOTIZED, ⊸ LEASHED. Cards list natures, weaknesses and resistances
+  (shared `affinityText`), size and control lines.
+

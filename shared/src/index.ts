@@ -55,3 +55,6 @@ export * from "./bug.js";
 export * from "./screen.js";
 export * from "./knowledge.js";
 export * from "./comms.js";
+export * from "./affinity.js";
+export * from "./scale.js";
+export * from "./control.js";

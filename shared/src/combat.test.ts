@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { duel, felt, landed, resolve, seeded, spawn, strike, tick, windupOf } from "./index.js";
+import { affinity, duel, felt, landed, resolve, seeded, spawn, strike, susceptibility, tick, windupOf, type Entity } from "./index.js";
 import { demo } from "./testdata.js";
 
 const dict = demo();
@@ -7,6 +7,8 @@ const dict = demo();
 const sure = () => 0;
 const never = () => 0.999;
 const make = (noun: string, adjectives: string[] = []) => spawn(noun, resolve(dict, noun, adjectives));
+/** What a body's make-up and natures do to a damage type, as an attack absolute meets them (no resistances). */
+const kind = (e: Entity, type: string) => susceptibility(e.stats, type) * Math.max(1, affinity(e.stats, type));
 
 describe("strike", () => {
   it("deals raw damage to an unprotected target", () => {
@@ -29,8 +31,8 @@ describe("strike", () => {
 
   it("lets a vulnerability raise damage", () => {
     const zombie = make("zombie");
-    // torch: 8 fire; zombie res_fire -0.5
-    expect(strike(resolve(dict, "torch"), zombie, () => 0.5).damage).toBeCloseTo(landed(12, zombie.stats.num("integrity")));
+    // torch: 8 fire; zombie res_fire -0.5, and undead take fire ×1.5 (shared affinity.ts)
+    expect(strike(resolve(dict, "torch"), zombie, () => 0.5).damage).toBeCloseTo(landed(18, zombie.stats.num("integrity")));
   });
 
   it("stops everything at an indestructible target", () => {
@@ -42,8 +44,11 @@ describe("strike", () => {
   it("lets an attack absolute beat a general defence absolute", () => {
     const wall = make("wall", ["indestructible"]);
     const hit = strike(resolve(dict, "cannon", ["irresistible"]), wall, () => 0.5);
-    expect(hit.damage).toBeCloseTo(landed(2000, 8000)); // 300 blast + 200 crush, times 4 for siege against a structure
-    expect(wall.integrity).toBeCloseTo(8000 - landed(2000, 8000));
+    // 300 blast + 200 crush, met by what stone is (brittle, crush ×1.25: shared material.ts, affinity.ts;
+    // an absolute ignores what it resists), times 4 for siege against a structure
+    const raw = 4 * (300 * kind(wall, "blast") + 200 * kind(wall, "crush"));
+    expect(hit.damage).toBeCloseTo(landed(raw, 8000));
+    expect(wall.integrity).toBeCloseTo(8000 - landed(raw, 8000));
   });
 
   it("lets a specific defence absolute beat a general attack absolute", () => {
@@ -51,7 +56,7 @@ describe("strike", () => {
     const hit = strike(resolve(dict, "torch", ["irresistible"]), wall, () => 0.5);
     expect(hit.damage).toBe(0);
     const blast = strike(resolve(dict, "cannon", ["irresistible"]), wall, () => 0.5);
-    expect(blast.damage).toBeCloseTo(landed(2000, wall.stats.num("integrity")));
+    expect(blast.damage).toBeCloseTo(landed(4 * (300 * kind(wall, "blast") + 200 * kind(wall, "crush")), wall.stats.num("integrity")));
   });
 
   it("never hits what cannot be targeted", () => {

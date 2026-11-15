@@ -59,6 +59,8 @@ export interface Handlers {
   got(what: Got): void;
   /** A gathering try found nothing: where, and the odds it had ("nothing · DESERT 12%"). */
   missed(what: { x: number; y: number; text: string }): void;
+  /** Luck showed (shared idea.ts): a lucky step over a trap, a reroll, a gamble won or lost. */
+  luck(what: { x: number; y: number; text: string; bad?: boolean }): void;
   /** Exploring widened your sight (no J: someone was there first). */
   sight(where: { x: number; y: number }): void;
   notice(text: string): void;
@@ -102,7 +104,7 @@ export interface Handlers {
 }
 
 /** One blow, as the server tells it (server `Hit`). */
-export interface Hit { by: string; on: string; amount: number; layer: string; kind: "hit" | "crit" | "miss" | "blocked" | "dodged"; ranged: boolean; x?: number; y?: number }
+export interface Hit { by: string; on: string; amount: number; layer: string; kind: "hit" | "crit" | "miss" | "blocked" | "dodged"; ranged: boolean; x?: number; y?: number; aff?: "weak" | "resist" | "immune" }
 /** A heavy blow winding up (server `Windup`). */
 export interface Windup { by: string; on: string; x: number; y: number; seconds: number }
 /** How you died (server `recap`): who and what struck last, the top sources of harm, how long it took, how many are left. */
@@ -136,6 +138,7 @@ export async function connect(on: Handlers): Promise<Connection> {
   room.onMessage("gathering", on.gathering);
   room.onMessage("got", on.got);
   room.onMessage("missed", on.missed);
+  room.onMessage("luck", on.luck);
   room.onMessage("sight", on.sight);
   room.onMessage("notice", on.notice);
   room.onMessage("dead", on.dead);

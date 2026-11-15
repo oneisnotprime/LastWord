@@ -2480,7 +2480,7 @@ medal: mass=0.1 integrity=40 material=gold equip_slot=neck value=200 morale+2 co
 
 # noun toy
 ball: mass=0.45 length=0.22 integrity=20 elasticity=10 shape=round material=rubber equip_slot=held hands_required=1 dmg_blunt=6 attack_rate=1 attack_range=30 knockback=2 inflict_stun=1 morale+1 color=white
-dice: mass=0.01 integrity=20 material=bone equip_slot=held hands_required=0 luck+2 plural_count=2 color=white
+dice: mass=0.01 integrity=20 material=bone equip_slot=held hands_required=0 luck+2 rerolls+1 gamble=6 plural_count=2 color=white
 
 # noun worker
 referee: mass=75 integrity=100 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=6 authority=6 peace=120 detect_stealth=6 counters=cheat,foul,brawl food_need=0.03
@@ -2557,7 +2557,7 @@ illusion: placement=target placement_range=150 field_radius=40 field_targets=ene
 certainty: placement=self field_radius=4 field_targets=self field_duration=2 accuracy+0.3 luck+2 immune_chaos=true counters=randomness,chance
 
 # noun event
-fate: placement=target placement_range=150 event_target=character inflict_doom=60 event_duration=1 counters=karma,providence,freedom,eternity,infinity,reprieve
+fate: placement=target placement_range=150 event_target=character inflict_doom=60 gamble=8 event_duration=1 counters=karma,providence,freedom,eternity,infinity,reprieve
 destiny: placement=self field_radius=4 field_targets=self field_duration=3 luck+4 immune_doom=true courage+3 effect_status=doom counters=fate,doom
 doom: placement=target placement_range=100 event_target=character inflict_doom=45 inflict_fear=10 event_duration=1 counters=karma,providence,destiny,hope,reprieve,infinity
 karma: placement=target placement_range=100 event_target=character reflect=0.5 effect_status=doom,bless inflict_curse=30 event_duration=1 counters=doom,fate,fraud,theft
@@ -2745,6 +2745,40 @@ solution: state=liquid mass=1 density=1050 wetness=6 corrosiveness=3 toxicity=2 
 
 # noun feeling
 fatigue: placement=target placement_range=40 field_radius=8 field_targets=living field_duration=3 inflict_slow=15 inflict_sleep=3 friendly_fire=true speed_land*0.6 labor*0.5 attack_rate*0.7 counters=coffee,rest,sleep,pacing
+
+# Concept batch: combat (TODO.md). Damage natures, luck, scale and control are given across the
+# dictionary by tools/derive.py; these are the core words of each, hand-written.
+
+# adjective quality
+colossal: mass*512 height*8 length*8 footprint*64 integrity*20 strength*5 dmg_blunt*5 dmg_crush*5 stealth+-6 food_need*40 fear_aura+4
+titanic: mass*1000 height*10 length*10 footprint*100 integrity*30 strength*6 dmg_blunt*6 dmg_crush*6 stealth+-8 food_need*60 fear_aura+5
+dizzy: wobble+5 accuracy+-0.2 agility+-2
+
+# adjective quality
+miniature: mass*0.001 height*0.1 length*0.1 footprint*0.01 integrity*0.15 strength*0.2 stealth+5 evasion+0.25 food_need*0.01
+
+# verb body
+awaken: duration=1 effect_status=hypnosis,sleep,charm,drunk,confuse morale+1
+hypnotize: effect_target=touched inflict_hypnosis=8 duration=1
+mesmerize: effect_target=touched inflict_hypnosis=6 inflict_slow=4 duration=1
+
+# noun act
+hypnotism: placement=target placement_range=60 event_target=character inflict_hypnosis=10 event_duration=1 counters=awakening
+
+# noun event
+reversal: placement=target placement_range=60 event_target=character inflict_reverse=15 luck+-2 event_duration=1
+shrinkage: placement=target placement_range=60 event_target=character inflict_shrink=12 event_duration=1
+
+# noun artifact
+marionette: mass=0.5 integrity=15 material=wood equip_slot=held hands_required=1 attack_range=10 attack_rate=0.5 inflict_hypnosis=6 inflict_leash=10 color=red
+halter: mass=1 integrity=40 material=leather equip_slot=held hands_required=1 attack_range=4 attack_rate=0.7 inflict_leash=12 counters=horse,pony,mule,donkey color=brown
+
+# noun weapon
+horseshoe: mass=0.4 integrity=150 hardness=8 material=iron speed_land*1.2 terrain_ignored=road,badlands value=10 charm+1 luck+3 plural_count=4 color=gray
+
+# noun attribute
+growth: placement=self field_radius=20 field_targets=owned field_duration=3 growth=2.5 mass*8 height*2 integrity*2.5 strength*1.5 growth_time*0.5 counters=blight,drought,stagnation,shrinkage
+sobriety: placement=self field_radius=4 field_targets=self field_duration=2 effect_status=drunk,confuse immune_drunk=true accuracy+0.1
 
 # Frequency batch 1 (tools/freq_gap.py): the most common words that had no data. The rest of
 # the batch, about a thousand words, is generated from these and the lines above. Time words set

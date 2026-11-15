@@ -3,7 +3,7 @@ import "@fontsource/kalam/700.css";
 import "@fontsource/fredoka/500.css";
 import "@fontsource/fredoka/600.css";
 import Phaser from "phaser";
-import { BIOMES, INTERIOR, DODGE_TILES, doorAt, TRADE_RANGE, aimOf, cardOf, GATHER_REASONS, missing, parsePhrase, readDescription, SITE_RADIUS, stampTerrain, Tile, tileAt, TILE_METERS, type Card, type Phrase, type WorldMap, generateMap } from "@lastword/shared";
+import { BIOMES, INTERIOR, DODGE_TILES, doorAt, TRADE_RANGE, aimOf, cardOf, GATHER_REASONS, missing, parsePhrase, readDescription, SITE_RADIUS, stampTerrain, Tile, tileAt, TILE_METERS, type Card, type Phrase, type WorldMap, generateMap, sizeOf } from "@lastword/shared";
 import { Effects } from "./fx.js";
 import { playAgain } from "./start.js";
 import { lookOf, type Look } from "./art/look.js";
@@ -82,6 +82,25 @@ interface View {
   flashUntil: number; shakeUntil: number; barUntil: number; crit: boolean;
   /** Until when it lunges toward `lungeTo` (an attack it made). */
   lungeUntil: number; lungeTo: { x: number; y: number } | null;
+  /** Drunk (shared control.ts): it sways as it stands and walks. */
+  wobble?: boolean;
+}
+
+/** A phrase's own size (shared scale.ts), so a server size that only repeats it (HUGE WOLF) is not drawn twice. */
+const phraseSizes = new Map<string, number>();
+function phraseSize(phrase: string): number {
+  let k = phraseSizes.get(phrase);
+  if (k === undefined) {
+    try { k = sizeOf(parsePhrase(dictionary, phrase).stats); } catch { k = 1; }
+    phraseSizes.set(phrase, k);
+  }
+  return k;
+}
+/** A look drawn at the size the server says (GROW, SHRINK, a potion), against what its phrase already shows; kept within 0.2 to 3 on screen. */
+function sized(look: Look, size: number | undefined, phrase: string): Look {
+  if (!size || Math.abs(size - 1) < 0.01 && phraseSize(phrase) === 1) return look;
+  const k = Math.min(3, Math.max(0.2, size / phraseSize(phrase)));
+  return Math.abs(k - 1) < 0.02 ? look : { ...look, scale: look.scale * k };
 }
 
 /** Why a letter came that ends a gathering action. */
@@ -259,6 +278,7 @@ class World extends Phaser.Scene {
         gathering: (seconds) => { this.gathering = { start: this.time.now, ms: seconds * 1000 }; },
         got: (g) => this.onGot(g),
         missed: (m) => { this.fx.fail(m.x, m.y - 1.2, m.text, true); this.gathering = null; },
+        luck: (m) => this.fx.luck(m.x, m.y - 1.6, m.text, !!m.bad),
         sight: (m) => this.fx.note(m.x, m.y - 1.2, "+sight"),
         hits: (list) => this.onHits(list),
         windups: (list) => this.onWindups(list),
@@ -611,7 +631,7 @@ class World extends Phaser.Scene {
       if (attacker && target) { attacker.lungeUntil = now + 220; attacker.lungeTo = { x: target.x, y: target.y }; }
       const at = this.net.state.players.get(h.on) ?? this.net.state.things.get(h.on) ?? (target ? { x: target.x / PX, y: target.y / PX } : null);
       this.hitCount++;
-      if (at) this.fx.number(at.x, at.y - 1.4, h.amount, h.kind, h.layer, h.on === mine);
+      if (at) this.fx.number(at.x, at.y - 1.4, h.amount, h.kind, h.layer, h.on === mine, h.aff);
       this.tracers.push({ from: h.by, to: h.on, ...(h.x !== undefined ? { fx: h.x, fy: h.y } : {}), until: now + (h.ranged ? 260 : 180), ranged: h.ranged, mine: h.on === mine || h.by === mine });
       if (h.on === mine && h.amount > 0 && h.kind !== "miss" && h.kind !== "dodged") this.hud.closeScreens(); // a fight is never hidden behind a screen
       if (h.on === mine && h.kind !== "miss" && h.kind !== "dodged") {
@@ -675,6 +695,17 @@ class World extends Phaser.Scene {
         t.lineStyle(2.4, 0xfbf6ea, 0.9 * k).beginPath().arc(to.x, to.y, 9, ang + Math.PI - 0.9, ang + Math.PI + 0.9).strokePath();
       }
     }
+    // Leashes (shared control.ts): a sagging rope from each leashed body to whoever holds it.
+    this.net.state.players.forEach((p: any, id: string) => {
+      if (!p.tether) return;
+      const a = this.views.get(id), b = this.views.get(p.tether);
+      if (!a || !b) return;
+      const ax = a.x, ay = a.y - a.top * 0.35, bx = b.x, by = b.y - b.top * 0.45;
+      const sag = Math.min(14, Math.hypot(bx - ax, by - ay) * 0.18), mx = (ax + bx) / 2, my = (ay + by) / 2 + sag;
+      const rope = new Phaser.Curves.QuadraticBezier(new Phaser.Math.Vector2(ax, ay), new Phaser.Math.Vector2(mx, my), new Phaser.Math.Vector2(bx, by));
+      t.lineStyle(3.2, 0x3a2a1a, 0.55); rope.draw(t, 16);
+      t.lineStyle(1.8, 0xc9a26a, 0.95); rope.draw(t, 16);
+    });
     // Heavy blows winding up: a red ring on the ground where each lands, closing as it comes, and a
     // "!" over whoever swings. Step out of the ring (shared DODGE_TILES) and it misses.
     this.windups = this.windups.filter((w) => w.until > time);
@@ -1085,11 +1116,12 @@ class World extends Phaser.Scene {
 
   /** Redraws a standee when what it is changes: its look, what it holds, its statuses. */
   private dress(v: View, look: Look, held: string | undefined, statuses: string[], ride?: string) {
-    const shrink = statuses.includes("shrink");
-    const key = `${look.noun}|${look.colour}|${look.scale}|${look.count}|${held ?? ""}|${ride ?? ""}|${statuses.includes("burn")}|${shrink}|${look.burning}|${look.frozen}|${look.invisible}|${rasterOf(look.noun) ? 1 : 0}|${ride && rasterOf(lookOf(dictionary, ride).noun) ? 1 : 0}`;
+    // Size (shrink, growth) comes from the server's `size` (shared scale.ts), already in `look.scale`.
+    v.wobble = statuses.includes("drunk");
+    const key = `${look.noun}|${look.colour}|${look.scale}|${look.count}|${held ?? ""}|${ride ?? ""}|${statuses.includes("burn")}|${look.burning}|${look.frozen}|${look.invisible}|${rasterOf(look.noun) ? 1 : 0}|${ride && rasterOf(lookOf(dictionary, ride).noun) ? 1 : 0}`;
     if (key !== v.drawn) {
       v.drawn = key;
-      const shown: Look = shrink ? { ...look, scale: look.scale * 0.55 } : look;
+      const shown: Look = look;
       const st = this.paint.standee(shown, held, ride);
       useStandee(v.body, st);
       v.top = st.top; v.half = st.half; v.flies = st.flies; v.living = st.living;
@@ -1145,7 +1177,10 @@ class World extends Phaser.Scene {
       if (Math.abs(dx) > 0.5) v.facing = dx > 0 ? 1 : -1;
     }
     v.body.setPosition(v.x + ox, v.y + bob + oy).setDepth(100 + v.y + (v.flies ? 40 : 0)).setFlipX(v.facing < 0);
-    v.body.setRotation(v.living ? Math.sin(t * 1.6 + v.phase) * 0.03 + (v.moving > 0 ? Math.sin(t * 12 + v.phase) * 0.05 : 0) : 0);
+    // A drunk sways wide and lurches (shared control.ts); anyone else only breathes and steps.
+    const sway = v.wobble ? Math.sin(t * 3.1 + v.phase) * 0.22 + Math.sin(t * 7.3) * 0.06 : 0;
+    if (v.wobble) v.body.x += Math.sin(t * 3.1 + v.phase) * 2.2;
+    v.body.setRotation((v.living ? Math.sin(t * 1.6 + v.phase) * 0.03 + (v.moving > 0 ? Math.sin(t * 12 + v.phase) * 0.05 : 0) : 0) + sway);
     v.flames.forEach((f, i) => {
       const [fx, fy] = v.spots[i]!;
       f.setPosition(v.x + fx * 0.5 * v.facing, v.y + bob + fy * 0.5).setDepth(v.body.depth + 0.5);
@@ -1338,7 +1373,7 @@ class World extends Phaser.Scene {
       const statuses: string[] = p.status ? p.status.split(" ").filter(Boolean) : [];
       if (creature) {
         // A roaming boss stands half again as tall, with a red tag saying what it drops.
-        const look = lookOf(dictionary, p.name, p.count);
+        const look = sized(lookOf(dictionary, p.name, p.count), p.size, p.name);
         this.dress(v, p.boss ? { ...look, scale: look.scale * 1.6 } : look, undefined, statuses);
         this.label(v, p.boss ? [`${counted(p.name, p.count)} · BOSS`, "slay it for Z Z Z"] : [f?.label ?? counted(p.name, p.count)],
           p.boss ? TAG_INK.person : p.owner === mine ? TAG_INK.mine : p.owner === "-" ? TAG_INK.wild : TAG_INK.theirs);
@@ -1347,7 +1382,7 @@ class World extends Phaser.Scene {
         const colour = id === mine ? "#3f6fa8" : PEOPLE[[...String(p.name)].reduce((n, c) => n + c.charCodeAt(0), 0) % PEOPLE.length]!;
         // Adjectives someone put on a person (WORST, HUGE) change their look like any other body's.
         const traits = String(p.traits ?? "");
-        const look = lookOf(dictionary, traits ? `${traits} human` : "human");
+        const look = sized(lookOf(dictionary, traits ? `${traits} human` : "human"), p.size, traits ? `${traits} human` : "human");
         this.dress(v, { ...look, colour: look.colour === lookOf(dictionary, "human").colour ? colour : look.colour }, this.slotOf(p.gear, "held"), statuses, this.slotOf(p.gear, "ride"));
         const name = traits ? `${String(p.name).toUpperCase()} · ${traits.toUpperCase()}` : String(p.name).toUpperCase();
         this.label(v, p.gear ? [name, `+ ${p.gear}`] : [name], id === mine ? TAG_INK.me : TAG_INK.person);

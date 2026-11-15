@@ -1,6 +1,7 @@
 import type { Dictionary } from "./dictionary.js";
 import type { Degree, Op, Value, WordDef } from "./types.js";
 import { applyMaterial, isMaterial, knownMaterial } from "./material.js";
+import { sizeOf, sizeOps } from "./scale.js";
 
 /** Properties that describe an adjective itself and are not copied onto its noun. */
 const META = new Set(["is_absolute", "absolute_side", "specificity"]);
@@ -131,6 +132,8 @@ export function resolve(
     if (made) applyMaterial(dict, stats, made);
     for (const [id, value] of Object.entries(adj.def.set)) {
       if (META.has(id) || (made && id === "material")) continue;
+      // An adjective's nature is added to the thing's own (a FIERY WOLF is a beast and fire; shared affinity.ts).
+      if (id === "nature" && Array.isArray(value)) { stats.set(id, [...new Set([...stats.tags("nature"), ...value])]); continue; }
       stats.set(id, value);
       if (absolute && (value === "ABS" || value === true)) {
         stats.absolutes.push({
@@ -144,6 +147,8 @@ export function resolve(
     // Absolutes do not grade: there is no "more invincible".
     stats.apply(adj.def.ops, absolute ? 1 : dict.degrees[adj.degree]);
   }
+  // Grown or shrunk by its adjectives (HUGE, TINY): reach, sight and stride follow (shared scale.ts).
+  stats.apply(sizeOps(sizeOf(stats)));
   return stats;
 }
 
