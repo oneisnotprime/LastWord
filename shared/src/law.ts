@@ -15,6 +15,11 @@ import type { Stats } from "./stats.js";
  *   (their creatures lose BREACH_LOYALTY), `morale` (theirs fall to nothing for a moment),
  *   `reputation` (markets ask them double for BREACH_MINUTES).
  * - Alliances must break: when everyone left alive is in one pact, it ends.
+ * - Fealty (theme 31): a pact word with `tax_rate` (FEALTY, HOMAGE, ALLEGIANCE, FEUDALISM) makes its
+ *   speller the liege: every other member pays the liege that share of every letter they earn,
+ *   anywhere (cities' S, land, producers), for as long as it lasts (`tribute`).
+ * - A word whose `counters` names a pact's word (BETRAYAL, TREACHERY, REBELLION, USURPATION) ends
+ *   the pact its speller is in, with no penalty (`endsPact`).
  */
 export const PACT_MINUTES = 10;
 export const BREACH_LETTERS = 6;
@@ -26,6 +31,8 @@ export interface PactSpec {
   size: number;
   minutes: number;
   penalty: string[];
+  /** Share of every letter the other members earn that goes to the speller, the liege (0: none). */
+  tribute: number;
 }
 
 /** The pact a word makes, or null if it binds nobody. */
@@ -33,8 +40,15 @@ export function pactOf(s: Stats): PactSpec | null {
   const n = Math.floor(s.num("binds"));
   if (!(n >= 2)) return null;
   const minutes = s.num("event_duration") > 0 ? s.num("event_duration") : PACT_MINUTES;
-  return { size: Number.isFinite(n) ? n : 1000, minutes, penalty: s.tags("bind_penalty") };
+  return { size: Number.isFinite(n) ? n : 1000, minutes, penalty: s.tags("bind_penalty"), tribute: Math.max(0, Math.min(1, s.num("tax_rate"))) };
 }
+
+/** Whether a word (by its `counters`) ends a pact made with `pactWord`, freeing its speller with no penalty. */
+export const endsPact = (counters: readonly string[], pactWord: string): boolean => counters.map((c) => c.toLowerCase()).includes(pactWord.toLowerCase());
+
+/** A pact's tribute in plain words. */
+export const tributeText = (spec: PactSpec): string =>
+  spec.tribute > 0 ? `; the others pay you ${Math.round(spec.tribute * 100)}% of every letter they earn` : "";
 
 /** What breaking a pact costs, in plain words. */
 export function breachText(penalty: readonly string[]): string {

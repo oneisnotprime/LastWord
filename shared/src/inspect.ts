@@ -38,7 +38,7 @@ import { isMaterial, materialText } from "./material.js";
 import { foodText } from "./food.js";
 import { bugText } from "./bug.js";
 import { jobText } from "./work.js";
-import { breachText, pactOf } from "./law.js";
+import { breachText, pactOf, tributeText } from "./law.js";
 
 /**
  * How a spelled object enters the world (the server's `make` follows this):
@@ -336,7 +336,7 @@ export function cardOf(dict: Dictionary, p: Phrase): Card {
     if (s.num("restores") > 0) card.does.push("repairs a thing");
     if (s.flag("frees_target")) card.does.push("frees everything around you from its owners");
     const pact = pactOf(s);
-    if (pact) card.does.push(`binds you and ${pact.size - 1} other${pact.size === 2 ? "" : "s"} you pick to one side for ${num(pact.minutes)} min; whoever breaks it pays ${breachText(pact.penalty)}`);
+    if (pact) card.does.push(`binds you and ${pact.size - 1} other${pact.size === 2 ? "" : "s"} you pick to one side for ${num(pact.minutes)} min; whoever breaks it pays ${breachText(pact.penalty)}${tributeText(pact)}`);
     if (s.flag("sets_hostile")) card.does.push("creatures in it attack everyone not on your side");
     card.does.push(...moneyText(s), ...signalText(s), ...faithText(s), ...batch5(s)); // themes 16, 18, 19, 21-25
     card.does.push(...placeLines(dict, p.noun, s));

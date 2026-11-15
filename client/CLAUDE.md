@@ -163,3 +163,7 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
   planks show and the standee (the roof) drops to ROOF_CUT alpha; a broken door hangs askew with
   splinters. The corner says "In HOUSE · hidden from outside". A click on an enemy's door attacks
   the building. Those indoors and what they put down never reach outsiders' views (server).
+- Expansion batch 3: `WORDS` has every new concrete word of traps and dungeons (`jaws`, `wire`, `mines`,
+  `trapdoor`, `cuffs`, `lockup` jails with barred windows, `earthwork`, `pipeMouth`, `mazeShape`, a
+  hooded `headsmanShape`, striped `convict`s) and of heraldry and courts (`banneret` banners with a
+  charge, `lord` nobles, sceptre, dais), and rosettes for the oaths, betrayals and breakouts.

@@ -1,10 +1,10 @@
 {
- "count": 424,
+ "count": 425,
  "groups": {
   "physical": 48,
   "mobility": 25,
   "offence": 70,
-  "defence": 69,
+  "defence": 70,
   "perception": 14,
   "life": 29,
   "economy": 58,
@@ -1616,9 +1616,16 @@
    "id": "trigger_radius",
    "group": "defence",
    "type": "num",
-   "desc": "a trap: lying on the ground it is hidden from enemies whose detect_stealth is below its stealth, and springs on the first enemy body that comes this close: its blow and statuses land, then it is spent (shared crime.ts)",
+   "desc": "a trap: lying on the ground it is hidden from enemies whose detect_stealth is below its stealth, and springs on the first enemy body that comes this close: its blow and statuses land; a single_use trap is then spent, any other re-arms after 20 s (shared crime.ts)",
    "unit": "m",
    "default": 0
+  },
+  {
+   "id": "captures",
+   "group": "defence",
+   "type": "bool",
+   "desc": "a trap that springs, or an event passed on a person, drops its victim into its owner's nearest walk-in lockup within 40 tiles, behind the door: the walls hold enemies until the door is broken (shared crime.ts, interior.ts)",
+   "default": false
   },
   {
    "id": "disguise",

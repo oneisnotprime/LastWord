@@ -734,7 +734,7 @@ conscription: placement=region event_radius=100 event_duration=3 summons=soldier
 crusade: placement=region event_radius=300 event_duration=10 sets_hostile=true dmg_holy+50 courage+4 produce_K*2 produce_Q*2 counters=heresy,secularism
 looting: placement=region event_radius=60 event_duration=3 produce_D*3 produce_X*2
 riot: placement=region event_radius=80 event_duration=3 sets_hostile=true law=trade aggression+5 morale+-1 produce_D*3 counters=curfew,lockdown,crackdown,patrol,birthday,occasion,occasions,concert,exhibition,entertainment,vacation,conference,initiation,retirement
-rebellion: placement=region event_radius=200 event_duration=5 sets_hostile=true authority+-5 obedience+-5 produce_V*3 counters=tax,tithe,toll,tariff,levy,customs,duty,tribute,curfew,lockdown,crackdown,monopoly,embargo
+rebellion: placement=region event_radius=200 event_duration=5 sets_hostile=true authority+-5 obedience+-5 produce_V*3 counters=fealty,homage,allegiance,suzerainty,feudalism,enfeoffment,villeinage,socage,corvee,tax,tithe,toll,tariff,levy,customs,duty,tribute,curfew,lockdown,crackdown,monopoly,embargo
 uprising: placement=region event_radius=150 event_duration=4 sets_hostile=true courage+4 produce_K*2 counters=siege,blockade,curfew,crackdown
 
 # noun conflict
@@ -1228,8 +1228,8 @@ ban: placement=region placement_range=100 field_radius=30 field_targets=enemies 
 prohibition: placement=map field_radius=ABS field_targets=enemies field_duration=3 law=trade trade_rate=3 produce_T*0
 penalty: placement=region field_radius=40 field_targets=enemies field_duration=8 law=attack fine=8
 sanction: placement=target placement_range=200 field_radius=20 field_targets=enemies field_duration=6 trade_rate=3 law=trade produce_T*0.5
-veto: placement=self field_radius=40 field_duration=1 counters=law,decree,edict,ordinance,regulation,statute,ban,prohibition,penalty,sanction,tax,toll,tariff,curfew,embargo,fiat,proclamation,referendum,enactment
-repeal: placement=self field_radius=80 field_duration=1 counters=law,decree,edict,ordinance,regulation,statute,ban,prohibition,penalty,tax,tithe,toll,tariff,levy,duty,customs,curfew,lockdown
+veto: placement=self field_radius=40 field_duration=1 counters=law,decree,ukase,interdict,edict,ordinance,regulation,statute,ban,prohibition,penalty,sanction,tax,toll,tariff,curfew,embargo,fiat,proclamation,referendum,enactment
+repeal: placement=self field_radius=80 field_duration=1 counters=law,decree,ukase,interdict,assize,edict,ordinance,regulation,statute,ban,prohibition,penalty,tax,tithe,toll,tariff,levy,duty,customs,curfew,lockdown
 democracy: placement=region field_radius=100 field_targets=owned field_duration=15 morale+3 loyalty+2 trade_rate=0.8 counters=tyranny,dictatorship
 tyranny: placement=region field_radius=100 field_targets=enemies field_duration=10 tax_rate=0.3 law=gather,trade fine=4 morale+-3 counters=democracy,constitution
 dictatorship: placement=region field_radius=120 field_targets=all field_duration=10 tax_rate=0.4 law=spell fine=6 authority+5 command_limit+20 morale+-2 counters=democracy,constitution,revolution
@@ -1400,7 +1400,7 @@ rake: mass=1.5 length=1.6 integrity=40 material=steel,wood equip_slot=held hands
 pitchfork: mass=2 length=1.8 integrity=50 sharpness=5 material=steel,wood equip_slot=held hands_required=2 dmg_pierce=30 attack_range=2 harvest_bonus=1.5 harvest_sources=field color=brown
 hook: mass=0.05 integrity=10 sharpness=7 material=steel equip_slot=held hands_required=1 dmg_pierce=6 inflict_bleed=2 harvest_bonus=2 harvest_sources=fishing color=silver
 trap: mass=5 integrity=200 sharpness=6 material=iron portable=false stealth=7 dmg_pierce=60 inflict_root=8 inflict_bleed=6 single_use=true harvest_bonus=2 harvest_sources=hunting color=gray
-snare: mass=0.3 integrity=10 material=fiber portable=false stealth=8 inflict_root=10 harvest_bonus=1.8 harvest_sources=hunting color=brown
+snare: mass=0.3 integrity=10 material=fiber portable=false stealth=8 trigger_radius=1 inflict_root=10 single_use=true harvest_bonus=1.8 harvest_sources=hunting color=brown
 lasso: mass=1 length=15 integrity=20 material=fiber equip_slot=held hands_required=1 attack_range=12 inflict_root=5 harvest_bonus=1.5 harvest_sources=hunting counters=horse,cow,bull,behemoth,unicorn color=brown attack_rate=0.5
 sieve: mass=0.5 integrity=15 material=steel,wire equip_slot=held hands_required=2 harvest_bonus=2 harvest_sources=river,dig color=silver
 tongs: mass=1 length=0.5 integrity=100 material=iron equip_slot=held hands_required=1 res_fire+0.3 craft_slots=1 color=black
@@ -2030,7 +2030,7 @@ steal: effect_target=touched transfers_ownership=true contest_with=stealth conte
 
 # verb perceive
 investigate: duration=120 detect_stealth+10 read_properties+6 tracking+5 sight_range*1.2 counters=hoax,lie,ruse,decoy
-disarm: placement=self field_radius=20 field_duration=1 effect_status=root counters=landmine,tripwire,pitfall,trap,snare,mousetrap,mine
+disarm: placement=self field_radius=20 field_duration=1 effect_status=root counters=landmine,tripwire,pitfall,trap,snare,mousetrap,mine,mantrap,minefield,barbwire,abatis,fetter,hobble,crusher,chute,caltrop,spike,noose,quicksand,jacks,rattrap
 
 # verb contact
 frame: effect_target=touched inflict_expose=60 inflict_debt=60 duration=1
@@ -2723,7 +2723,7 @@ bridle: mass=1 integrity=40 material=leather obedience+4 agility+2 equip_slot=mo
 rebirth: placement=self field_radius=4 field_targets=self field_duration=1 rewinds=30 restores=200 effect_status=burn,poison,bleed,curse,doom counters=death,mortality,doom,cataclysm
 
 # noun event
-revolution: placement=map field_radius=ABS field_targets=all field_duration=5 sets_hostile=true authority+-6 obedience+-4 morale+2 counters=monarchy,dictatorship,tyranny,regime,oligarchy,empire,kingdom,tax,curfew,law,decree,gentry,regency,caliphate,sultanate,emirate,khanate,duchy,principality,protectorate,realm,commonwealth
+revolution: placement=map field_radius=ABS field_targets=all field_duration=5 sets_hostile=true authority+-6 obedience+-4 morale+2 counters=ukase,interdict,assize,fealty,suzerainty,feudalism,villeinage,monarchy,dictatorship,tyranny,regime,oligarchy,empire,kingdom,tax,curfew,law,decree,gentry,regency,caliphate,sultanate,emirate,khanate,duchy,principality,protectorate,realm,commonwealth
 
 # noun attack
 invasion: placement=region placement_range=2000 event_target=region event_radius=500 event_duration=20 sets_hostile=true transfers_ownership=true contest_with=command_limit contested_by=security dmg_pierce=200 dmg_fire=150 attack_rate=0.3 morale+-3 fear_aura=6 counters=borough,canton,county,district,domain,enclave,fatherland,homeland,motherland,municipality,parish,precinct,province,shire,territory,township,ward,constituency,diocese,metropolis,frontier,area,center,middle,south,independence,nation,state

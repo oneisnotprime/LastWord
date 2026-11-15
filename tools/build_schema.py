@@ -139,7 +139,8 @@ regeneration|num|0|hp/s|integrity restored per second
 reflect|frac|0||fraction of damage sent back
 thorns|num|0|hp|damage dealt to melee attackers
 stealth|scale|0||how hard it is to see
-trigger_radius|num|0|m|a trap: lying on the ground it is hidden from enemies whose detect_stealth is below its stealth, and springs on the first enemy body that comes this close: its blow and statuses land, then it is spent (shared crime.ts)
+trigger_radius|num|0|m|a trap: lying on the ground it is hidden from enemies whose detect_stealth is below its stealth, and springs on the first enemy body that comes this close: its blow and statuses land; a single_use trap is then spent, any other re-arms after 20 s (shared crime.ts)
+captures|bool|false||a trap that springs, or an event passed on a person, drops its victim into its owner's nearest walk-in lockup within 40 tiles, behind the door: the walls hold enemies until the door is broken (shared crime.ts, interior.ts)
 disguise|scale|0||worn: passes its wearer off as one of another side: enemies' creatures, wild animals and bots leave them be until they strike; seen through by detect_stealth as high or a nose (smell_range) close by (shared wear.ts)
 camouflage|tags|||terrain types where stealth doubles
 cover|frac|0||damage reduction it gives things behind or inside it

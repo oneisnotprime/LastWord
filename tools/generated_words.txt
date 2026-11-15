@@ -9043,7 +9043,7 @@ anaconda: mass=150 length=7 integrity=300 alive=true aggression=5 diet=carnivore
 ankylosaurus: mass=6000 length=8 height=2 integrity=9000 alive=true aggression=4 diet=herbivore food_need=1.5 speed_land=3 armor=80 res_pierce=0.6 res_slash=0.6 dmg_blunt=500 knockback=10 attack_rate=0.3 age=70000000 habitat=jungle color=brown
 asp: mass=1 length=0.8 integrity=8 alive=true aggression=5 diet=carnivore food_need=0.001 speed_land=3 stealth=7 venomous=true dmg_pierce=6 dmg_poison=100 inflict_poison=30 attack_rate=1 camouflage=sand habitat=desert color=brown
 boa: mass=30 length=3 integrity=90 alive=true diet=carnivore food_need=0.005 speed_land=1.5 speed_water=1 climb=5 stealth=6 dmg_crush=30 inflict_root=6 attack_rate=0.5 camouflage=jungle,forest habitat=jungle,swamp temp_min=15 tamable=true
-brontosaurus: mass=17000 length=22 height=5 integrity=25000 alive=true diet=herbivore food_need=4 speed_land=4 dmg_crush=1500 attack_rate=0.2 attack_range=10 knockback=12 siege=4 loudness=8 fear_aura=4 sight_range=500 habitat=jungle,marsh,forest color=green
+brontosaurus: mass=17000 length=22 height=5 integrity=25000 alive=true diet=herbivore food_need=4 speed_land=4 dmg_crush=1500 attack_rate=0.2 attack_range=10 knockback=12 siege=4 loudness=8 fear_aura=4 sight_range=120 habitat=jungle,marsh,forest color=green
 caiman: mass=60 length=2.2 integrity=300 alive=true aggression=5 diet=carnivore food_need=0.02 speed_land=7 speed_water=8 stealth=7 armor=8 dmg_crush=60 dmg_pierce=50 attack_rate=0.6 camouflage=swamp,water placeable_on=water,land habitat=marsh,jungle color=black
 cayman: mass=60 length=2.2 integrity=300 alive=true aggression=5 diet=carnivore food_need=0.02 speed_land=7 speed_water=8 stealth=7 armor=8 dmg_crush=60 dmg_pierce=50 attack_rate=0.6 camouflage=swamp,water placeable_on=water,land habitat=marsh,jungle color=black
 constrictor: mass=40 length=4 integrity=100 alive=true aggression=4 diet=carnivore food_need=0.01 speed_land=2 speed_water=2 stealth=7 dmg_crush=80 inflict_root=10 attack_rate=0.5 habitat=jungle,marsh color=brown
@@ -9058,7 +9058,7 @@ leatherback: mass=600 length=2 integrity=700 alive=true diet=carnivore food_need
 loggerhead: mass=130 length=1 integrity=300 alive=true diet=carnivore food_need=0.01 speed_land=0.3 speed_water=5 dive_depth=200 range=10000 armor=25 res_slash=0.7 dmg_crush=60 attack_rate=0.4 placeable_on=water,deep_water habitat=shore color=brown
 mamba: mass=1.6 length=2.5 integrity=15 alive=true aggression=7 diet=carnivore food_need=0.002 speed_land=5 climb=6 venomous=true dmg_pierce=8 dmg_poison=250 inflict_poison=40 attack_rate=2 multi_target=3 fear_aura=5 habitat=savanna,jungle color=black
 plesiosaur: mass=2000 length=10 integrity=3500 alive=true aggression=7 diet=carnivore food_need=1.5 breathes=air speed_water=8 dive_depth=200 dmg_pierce=300 attack_rate=0.6 targets=water fear_aura=5 age=80000000 habitat=water,deep_water color=gray
-pterodactyl: mass=20 length=2 integrity=60 alive=true aggression=6 diet=carnivore food_need=0.02 speed_land=2 speed_air=25 flight_ceiling=1500 sight_range=2000 dmg_pierce=40 attack_rate=1 targets=land,air,water fear_aura=3 counters=fish habitat=shore,hills,volcanic color=brown
+pterodactyl: mass=20 length=2 integrity=60 alive=true aggression=6 diet=carnivore food_need=0.02 speed_land=2 speed_air=25 flight_ceiling=1500 sight_range=200 dmg_pierce=40 attack_rate=1 targets=land,air,water fear_aura=3 counters=fish habitat=shore,hills,volcanic color=brown
 pterosaur: mass=25 length=3 integrity=70 alive=true aggression=6 diet=carnivore food_need=0.02 speed_land=2 speed_air=25 flight_ceiling=1500 sight_range=2000 dmg_pierce=45 attack_rate=1 targets=land,air,water age=80000000 color=brown
 rattler: mass=2 length=1.4 integrity=12 alive=true aggression=5 diet=carnivore food_need=0.002 speed_land=3 stealth=6 venomous=true loudness=5 alarm=true dmg_pierce=8 dmg_poison=100 inflict_poison=30 inflict_fear=2 detect_life=10 habitat=desert,badlands color=brown
 reptile: mass=5 length=1 integrity=25 alive=true diet=carnivore food_need=0.002 speed_land=3 armor=4 res_cold=-0.5 temp_min=5 stealth=5 habitat=desert,jungle,marsh color=green
@@ -11393,7 +11393,7 @@ silenus: mass=90 integrity=200 alive=true sentient=true intelligence=8 loyalty=5
 sylph: mass=0.1 integrity=200 alive=true sentient=true intelligence=7 loyalty=4 hover=true speed_air=30 stealth=7 evasion=0.5 dmg_wind=60 attack_rate=1 attack_range=30 knockback=6 diet=none color=white
 minotaur: mass=600 height=2.5 integrity=5000 alive=true sentient=true intelligence=3 loyalty=1 aggression=10 courage=10 hands=true speed_land=12 strength=10 dmg_crush=350 dmg_pierce=250 attack_rate=0.7 knockback=10 immune_fear=true fear_aura=8 siege=3 diet=carnivore food_need=0.5 color=brown
 pegasus: mass=500 length=2.4 integrity=3000 alive=true sentient=true intelligence=6 loyalty=9 courage=9 diet=herbivore food_need=0.3 speed_land=20 speed_air=55 flight_ceiling=6000 mountable=true seats=1 equip_slot=mount tamable=true dmg_blunt=120 attack_rate=0.6 beauty=10 color=white
-cerberus: mass=900 length=3 integrity=18000 alive=true sentient=true intelligence=4 loyalty=7 aggression=10 speed_land=14 dmg_pierce=600 dmg_fire=300 attack_rate=1.5 multi_target=3 alarm=true sight_range=600 night_vision=true fear_aura=9 diet=carnivore food_need=1 color=black
+cerberus: mass=900 length=3 integrity=18000 alive=true sentient=true intelligence=4 loyalty=7 aggression=10 speed_land=14 dmg_pierce=600 dmg_fire=300 attack_rate=1.5 multi_target=3 alarm=true sight_range=100 night_vision=true fear_aura=9 diet=carnivore food_need=1 color=black
 gorgon: mass=80 integrity=3000 alive=true sentient=true intelligence=7 loyalty=2 aggression=8 hands=true venomous=true dmg_poison=200 attack_rate=0.8 attack_range=40 inflict_root=20 inflict_stun=8 fear_aura=9 res_holy=-0.3 counters=mirror color=green
 chupacabra: mass=40 length=1.2 integrity=400 alive=true intelligence=4 aggression=8 nocturnal=true stealth=8 speed_land=12 dmg_pierce=60 lifesteal=0.5 attack_rate=1.2 counters=goat,sheep,hen,chicken diet=carnivore food_need=0.02 habitat=desert,badlands color=gray
 wendigo: mass=200 height=3.5 integrity=5000 alive=true sentient=true intelligence=4 loyalty=1 aggression=10 nocturnal=true speed_land=14 dmg_slash=300 dmg_cold=200 attack_rate=0.9 inflict_freeze=4 lifesteal=0.3 res_cold=1 temp_min=-80 fear_aura=9 diet=carnivore food_need=3 habitat=tundra,taiga color=white
@@ -11528,3 +11528,202 @@ protohippus: mass=70 length=1.2 integrity=80 alive=true diet=herbivore food_need
 
 # noun killing
 extinction: placement=region event_radius=400 event_duration=1 counters=dinosaur,tyrannosaurus,tyrannosaur,triceratops,velociraptor,stegosaurus,stegosaur,brontosaurus,brontosaur,diplodocus,apatosaurus,apatosaur,ankylosaurus,ankylosaur,allosaurus,allosaur,iguanodon,pterodactyl,pterosaur,pteranodon,spinosaurus,mammoth,mastodon,mastodont,sabertooth,smilodon,dodo,moa,plesiosaur,plesiosaurus,ichthyosaur,ichthyosaurus,mosasaur,megalodon,titanosaur,sauropod,hadrosaur,hadrosaurus,deinonychus,utahraptor,dromaeosaur,dimetrodon,megatherium,megathere,glyptodont,aurochs,trilobite,hatchling,dragonet
+
+# Theme 30, traps and dungeons. Traps are crime.ts traps (trigger_radius): hidden from enemies
+# without the detect_stealth to see them; one with no single_use re-arms after REARM_SECONDS;
+# one that captures drops whoever it springs on into its owner's nearest walk-in lockup, where
+# the walls hold enemies until the door is broken (interior.ts holds). Events that capture do
+# the same to the person they are passed on.
+
+# noun tool
+mantrap: mass=12 integrity=300 hardness=8 sharpness=7 material=steel portable=false stealth=8 trigger_radius=1.5 dmg_pierce=90 inflict_bleed=6 inflict_root=30 captures=true color=gray
+flytrap: mass=0.2 integrity=8 material=paper portable=false stealth=3 trigger_radius=1 stickiness=9 inflict_root=6 counters=fly,housefly,blowfly,horsefly,gnat,midge,mosquito,bluebottle color=yellow
+rattrap: mass=0.5 integrity=20 material=wood,steel portable=false stealth=5 trigger_radius=1 dmg_crush=25 inflict_root=5 counters=rat,mouse,vole,rodent harvest_bonus=1.5 harvest_sources=hunting color=brown
+minefield: mass=200 integrity=400 material=steel portable=false stealth=8 trigger_radius=4 dmg_blast=500 dmg_pierce=150 attack_area=8 inflict_stun=3 friendly_fire=true loudness=10 color=green
+abatis: mass=3000 footprint=4 integrity=1500 material=wood flammability=7 portable=false stealth=2 trigger_radius=2 dmg_pierce=25 inflict_slow=25 inflict_bleed=4 cover=0.4 color=brown
+barbwire: mass=20 length=30 integrity=200 sharpness=7 material=steel portable=false stealth=3 trigger_radius=1.5 dmg_slash=25 inflict_bleed=6 inflict_slow=20 inflict_root=3 color=gray
+fetter: mass=2 integrity=250 hardness=8 material=iron portable=false stealth=6 trigger_radius=1 inflict_root=45 inflict_slow=90 locks=true single_use=true color=black
+hobble: mass=1 integrity=60 material=leather,iron portable=false stealth=6 trigger_radius=1 inflict_slow=120 inflict_root=8 single_use=true counters=horse,pony,mule,donkey color=brown
+crusher: mass=4000 integrity=3000 hardness=9 material=stone,iron portable=false stealth=7 trigger_radius=1.5 dmg_crush=600 attack_area=2 inflict_stun=2 siege=2 loudness=8 color=gray
+chute: mass=500 footprint=1 integrity=800 material=wood,stone portable=false stealth=9 trigger_radius=1.5 inflict_root=10 captures=true color=brown
+leash: mass=0.3 length=2 integrity=30 material=leather equip_slot=held hands_required=1 attack_range=3 inflict_root=4 counters=dog,hound,puppy color=brown
+lariat: mass=1 length=15 integrity=20 material=fiber equip_slot=held hands_required=1 attack_range=12 attack_rate=0.5 inflict_root=6 harvest_bonus=1.5 harvest_sources=hunting counters=horse,cow,bull,steer color=brown
+
+# noun weapon
+garrote: mass=0.1 length=0.6 integrity=30 material=steel,wood equip_slot=held hands_required=2 dmg_suffocation=90 attack_rate=0.5 attack_range=0.6 critical=0.4 stealth=7 inflict_silence=6 color=gray
+garrotte: mass=0.1 length=0.6 integrity=30 material=steel,wood equip_slot=held hands_required=2 dmg_suffocation=90 attack_rate=0.5 attack_range=0.6 critical=0.4 stealth=7 inflict_silence=6 color=gray
+scourge: mass=1 length=2 integrity=40 material=leather,iron equip_slot=held hands_required=1 dmg_slash=32 attack_rate=1.1 attack_range=2.5 inflict_bleed=4 inflict_fear=2 color=brown
+blowgun: mass=0.5 length=1.5 integrity=20 material=wood equip_slot=held hands_required=2 dmg_pierce=6 dmg_poison=30 inflict_poison=20 attack_rate=0.6 attack_range=25 stealth=7 targets=land,air ammo_per_hit=1 ammo_type=dart color=brown
+
+# noun device
+thumbscrew: mass=0.5 integrity=60 material=iron placement=target placement_range=4 event_target=character inflict_silence=60 letter_steal=6 contest_with=intimidation contested_by=courage event_duration=1 color=gray
+muzzle: mass=0.4 integrity=30 material=leather placement=target placement_range=4 event_target=character inflict_silence=90 event_duration=1 counters=bark,howl,roar color=brown
+blindfold: mass=0.05 integrity=5 material=cloth placement=target placement_range=4 event_target=character inflict_blind=60 event_duration=1 counters=stare,gaze color=black
+straitjacket: mass=3 integrity=80 material=canvas placement=target placement_range=4 event_target=character inflict_root=60 inflict_silence=40 event_duration=1 color=white
+gibbet: mass=800 footprint=1 height=4 integrity=900 material=wood portable=false fear_aura=6 authority=3 field_radius=50 field_targets=enemies morale+-3 courage+-2 law=theft fine=40 counters=outlaw,thief,highwayman,brigand color=brown
+
+# noun act
+interrogation: placement=target placement_range=8 event_target=character read_inventory=true letter_steal=4 inflict_expose=120 contest_with=intimidation contested_by=courage event_duration=1
+strappado: placement=target placement_range=4 event_target=character inflict_root=40 inflict_fear=30 contest_with=intimidation contested_by=courage event_duration=1
+flogging: placement=target placement_range=4 event_target=character inflict_bleed=10 inflict_fear=30 contest_with=authority contested_by=courage event_duration=1
+whipping: placement=target placement_range=4 event_target=character inflict_bleed=8 inflict_fear=20 contest_with=authority contested_by=courage event_duration=1
+branding: placement=target placement_range=4 event_target=character inflict_burn=3 inflict_expose=300 event_duration=1
+ducking: placement=target placement_range=4 event_target=character inflict_slow=40 inflict_silence=20 event_duration=1
+internment: placement=target placement_range=30 event_target=character inflict_root=60 captures=true contest_with=authority contested_by=courage event_duration=1 counters=liberation,jailbreak
+incarceration: placement=target placement_range=20 event_target=character inflict_root=90 inflict_silence=30 captures=true contest_with=authority contested_by=stealth event_duration=1 counters=jailbreak,breakout
+captivity: placement=target placement_range=20 event_target=character inflict_root=60 captures=true contest_with=authority contested_by=courage event_duration=1 counters=liberation,manumission
+remand: placement=target placement_range=20 event_target=character inflict_root=45 captures=true contest_with=authority contested_by=stealth event_duration=1 counters=bail,parole
+manumission: placement=target placement_range=30 event_target=character effect_status=root,charm,silence,debt restores=20 event_duration=1 counters=captivity,serfdom,villeinage,slavery
+liberation: placement=self event_radius=20 event_duration=1 effect_status=root,silence,stun field_targets=owned morale+3 counters=door,lockable,jail,prison,dungeon,internment,captivity,occupation,siege
+
+# noun escape
+jailbreak: placement=self event_radius=12 event_duration=1 effect_status=root,silence speed_land*2 counters=door,lockable,jail,prison,dungeon,gaol,lockup,incarceration
+breakout: placement=self event_radius=12 event_duration=1 effect_status=root,stun speed_land*2 counters=door,lockable,cell,brig,stockade,siege,blockade,encirclement
+
+# noun building
+panopticon: mass=8000000 footprint=20 height=15 integrity=120000 hardness=8 material=stone,iron portable=false enterable=true occupants=400 lockable=true security=9 cover=0.8 claim_radius=8 detect_stealth=9 sees_through=walls alarm=true blocks=land,projectiles needs_foundation=true color=gray
+chokey: mass=300000 footprint=4 height=4 integrity=16000 hardness=8 material=stone,iron portable=false enterable=true occupants=6 lockable=true security=6 claim_radius=3 blocks=land alarm=true color=gray
+choky: mass=300000 footprint=4 height=4 integrity=16000 hardness=8 material=stone,iron portable=false enterable=true occupants=6 lockable=true security=6 claim_radius=3 blocks=land alarm=true color=gray
+bullpen: mass=500000 footprint=6 height=4 integrity=20000 hardness=8 material=concrete,steel portable=false enterable=true occupants=30 lockable=true security=6 claim_radius=3 blocks=land color=gray
+hoosegow: mass=600000 footprint=5 height=4 integrity=22000 hardness=8 material=stone,iron portable=false enterable=true occupants=12 lockable=true security=7 claim_radius=3 blocks=land alarm=true color=brown
+pokey: mass=600000 footprint=5 height=4 integrity=22000 hardness=8 material=stone,iron portable=false enterable=true occupants=12 lockable=true security=7 claim_radius=3 blocks=land alarm=true color=gray
+slammer: mass=1000000 footprint=6 height=5 integrity=30000 hardness=8 material=concrete,steel portable=false enterable=true occupants=20 lockable=true security=8 claim_radius=4 blocks=land,projectiles alarm=true color=gray
+lazaretto: mass=1500000 footprint=8 height=6 integrity=30000 material=stone portable=false enterable=true occupants=40 lockable=true security=6 claim_radius=5 field_radius=20 field_targets=all law=contact counters=plague,pox,leprosy,pestilence,epidemic color=white
+reformatory: mass=2000000 footprint=10 height=6 integrity=40000 material=brick portable=false enterable=true occupants=80 lockable=true security=6 claim_radius=5 field_radius=15 field_targets=enemies obedience+3 loyalty+1 color=red
+borstal: mass=2000000 footprint=10 height=6 integrity=40000 material=brick portable=false enterable=true occupants=80 lockable=true security=6 claim_radius=5 field_radius=15 field_targets=enemies obedience+3 aggression+-2 color=red
+
+# noun fortification
+breastwork: mass=20000 footprint=4 height=1.5 integrity=5000 material=earth,wood portable=false cover=0.7 field_radius=8 field_targets=owned res_pierce+0.3 res_blast+0.2 blocks=projectiles color=brown
+foxhole: mass=0 footprint=1 depth=1.5 integrity=3000 portable=false enterable=true occupants=2 cover=0.9 res_blast=0.7 stealth=4 color=brown
+entrenchment: tile_type=pit radius=1 length=60 depth=2 cover=0.8 res_blast=0.6 res_pierce=0.4 movement_cost=2 portable=false placement=region
+intrenchment: tile_type=pit radius=1 length=60 depth=2 cover=0.8 res_blast=0.6 res_pierce=0.4 movement_cost=2 portable=false placement=region
+retrenchment: mass=30000 footprint=6 height=3 integrity=10000 material=earth,stone portable=false cover=0.7 field_radius=10 field_targets=owned res_pierce+0.3 armor+5 blocks=projectiles color=brown
+lunette: mass=40000 footprint=6 height=3 integrity=12000 material=earth,stone portable=false cover=0.75 claim_radius=5 field_radius=12 field_targets=owned res_pierce+0.35 blocks=projectiles color=brown
+fieldwork: mass=15000 footprint=5 height=1.5 integrity=4000 material=earth portable=false cover=0.6 field_radius=10 field_targets=owned res_pierce+0.25 res_blast+0.25 color=brown
+defilade: placement=self field_radius=15 field_targets=owned field_duration=3 cover=0.8 res_pierce+0.5 res_blast+0.3 stealth+2
+crenel: mass=2000 footprint=1 height=1 integrity=3000 hardness=8 material=stone portable=false cover=0.6 field_radius=6 field_targets=owned res_pierce+0.3 accuracy+0.1 color=gray
+
+# noun structure
+maze: mass=500000 footprint=16 integrity=30000 material=hedge,stone portable=false enterable=true tile_type=wall radius=5 movement_cost=4 stealth=7 inflict_confuse=20 blocks=sight color=green
+sewer: tile_type=road radius=0.5 length=80 speed_underground=2 stealth=6 odor=8 inflict_sick=2 portable=false placement=region color=brown
+culvert: tile_type=road radius=0.5 length=20 stealth=4 portable=false placement=region color=gray
+
+# noun material
+quicklime: state=solid mass=1 dmg_acid=60 dmg_fire=20 inflict_blind=10 inflict_burn=2 single_use=true placement=target placement_range=8 attack_area=3 color=white
+
+# noun person
+gaoler: mass=85 integrity=180 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=4 authority=3 alarm=true detect_stealth=5 inflict_root=12 dmg_blunt=25 attack_rate=1 security=8 counters=escapee,jailbreak,breakout,liberator food_need=0.03
+warder: mass=85 integrity=180 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=4 authority=3 alarm=true detect_stealth=5 inflict_root=12 dmg_blunt=25 attack_rate=1 security=8 counters=escapee,jailbreak,breakout food_need=0.03
+gatekeeper: mass=85 integrity=200 alive=true sentient=true intelligence=6 loyalty=8 hands=true speech=true speed_land=4 authority=3 alarm=true detect_stealth=7 dmg_pierce=35 attack_rate=1 attack_range=2.5 security=7 counters=thief,burglar,intruder,trespasser,liberator food_need=0.03
+doorkeeper: mass=80 integrity=170 alive=true sentient=true intelligence=5 loyalty=8 hands=true speech=true speed_land=4 alarm=true detect_stealth=6 dmg_blunt=25 attack_rate=1 security=6 counters=thief,burglar,intruder food_need=0.03 produce_N=0.3
+torturer: mass=90 integrity=180 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 strength=7 intimidation=8 fear_aura=5 dmg_pierce=30 inflict_fear=8 inflict_bleed=4 attack_rate=0.8 read_inventory=true food_need=0.04
+headsman: mass=100 integrity=220 alive=true sentient=true intelligence=4 loyalty=6 hands=true speech=true speed_land=4 strength=9 dmg_slash=160 attack_rate=0.2 attack_windup=1.5 critical=0.5 severs=1 fear_aura=6 intimidation=8 food_need=0.05
+liberator: mass=75 integrity=160 alive=true sentient=true intelligence=7 loyalty=8 courage=9 hands=true speech=true speed_land=6 charm=5 dmg_slash=35 attack_rate=1 counters=door,lockable,shackle,fetter,manacle,handcuff,chain food_need=0.03
+detainee: mass=70 integrity=90 alive=true sentient=true intelligence=5 loyalty=3 hands=true speech=true speed_land=3 morale=2 labor=2 food_need=0.02 produce_N=0.35
+internee: mass=70 integrity=90 alive=true sentient=true intelligence=5 loyalty=3 hands=true speech=true speed_land=3 morale=2 labor=2 food_need=0.02 produce_N=0.35
+lifer: mass=80 integrity=150 alive=true sentient=true intelligence=5 loyalty=2 courage=8 hands=true speech=true speed_land=4 strength=8 dmg_blunt=35 attack_rate=1 labor=3 food_need=0.03 produce_N=0.5
+escapee: mass=70 integrity=100 alive=true sentient=true intelligence=6 loyalty=2 hands=true speech=true speed_land=8 stealth=7 evasion=0.3 immune_root=true food_need=0.03
+
+# Theme 31, heraldry, courts and fealty. Oaths are pacts (law.ts binds); a pact word with
+# tax_rate is fealty: every other member pays its speller, the liege, that share of every letter
+# they earn while it lasts. A word whose counters name a pact's word ends that pact for its
+# speller with no penalty (BETRAYAL, REBELLION, TREACHERY). Challenges are sport.ts stakes.
+
+# noun possession
+fealty: binds=2 bind_penalty=letters,loyalty,reputation event_duration=12 tax_rate=0.3 placement_range=40
+homage: binds=2 bind_penalty=letters,reputation event_duration=10 tax_rate=0.25 placement_range=40
+allegiance: binds=3 bind_penalty=letters,loyalty,reputation event_duration=12 tax_rate=0.15 placement_range=60
+oath: binds=2 bind_penalty=letters,loyalty,morale,reputation event_duration=20 placement_range=40
+vow: binds=2 bind_penalty=letters,morale event_duration=15 placement_range=30
+suzerainty: binds=4 bind_penalty=letters,loyalty,reputation event_duration=12 tax_rate=0.2 placement_range=80
+feudalism: binds=6 bind_penalty=letters,loyalty,reputation event_duration=15 tax_rate=0.15 placement_range=100
+enfeoffment: binds=2 bind_penalty=letters,reputation event_duration=15 tax_rate=0.2 placement_range=40
+villeinage: binds=2 bind_penalty=letters,loyalty event_duration=12 tax_rate=0.4 placement_range=30
+socage: binds=2 bind_penalty=letters event_duration=10 tax_rate=0.15 placement_range=40
+corvee: binds=3 bind_penalty=letters,morale event_duration=8 tax_rate=0.35 placement_range=40
+betrothal: binds=2 bind_penalty=letters,morale,reputation event_duration=20 placement_range=30
+escheat: placement=target placement_range=30 field_radius=10 field_targets=enemies field_duration=5 tax_rate=0.6 counters=heir,primogeniture
+amercement: placement=target placement_range=30 event_target=character letter_steal=6 contest_with=authority contested_by=courage event_duration=1 counters=pardon,amnesty
+
+# noun crime
+betrayal: placement=target placement_range=40 event_target=character inflict_expose=90 inflict_fear=15 counters=fealty,homage,allegiance,oath,vow,treaty,alliance,pact,pledge,truce,suzerainty,feudalism,enfeoffment,villeinage,socage,corvee,betrothal,loyalty
+treachery: placement=target placement_range=40 event_target=character inflict_expose=60 inflict_curse=60 counters=fealty,homage,allegiance,oath,vow,treaty,alliance,pact,pledge,suzerainty,feudalism,loyalty
+perfidy: placement=target placement_range=40 event_target=character inflict_expose=60 inflict_confuse=20 counters=fealty,homage,allegiance,oath,vow,treaty,alliance,pact,pledge,betrothal
+disloyalty: placement=target placement_range=60 event_target=creature transfers_ownership=true contest_with=charm contested_by=loyalty counters=fealty,allegiance,oath,loyalty
+infidelity: placement=target placement_range=30 event_target=character inflict_expose=60 inflict_rage=10 counters=betrothal,vow,oath
+usurpation: placement=region event_radius=150 takes_city=true counters=fealty,homage,allegiance,suzerainty,enfeoffment,coronation,throne,crown,king,queen,regent authority+-4
+attainder: placement=target placement_range=60 event_target=character letter_steal=10 inflict_expose=180 inflict_curse=120 contest_with=authority contested_by=courage event_duration=1 counters=pardon,amnesty
+outlawry: placement=target placement_range=60 event_target=character inflict_expose=300 inflict_debt=60 contest_with=authority contested_by=courage event_duration=1 counters=pardon,amnesty,alibi
+proscription: placement=target placement_range=60 event_target=character inflict_expose=240 inflict_silence=30 contest_with=authority contested_by=courage event_duration=1 counters=pardon,amnesty
+
+# noun knowledge
+interdict: placement=region field_radius=100 field_targets=enemies field_duration=5 law=trade,spell fine=4
+ukase: placement=map field_radius=ABS field_targets=enemies field_duration=3 law=gather fine=2 authority+3
+assize: placement=region field_radius=60 field_targets=all field_duration=6 law=attack,theft fine=20 authority+2 counters=riot,anarchy,lynching
+heraldry: placement=self field_radius=60 field_targets=owned field_duration=6 morale+2 loyalty+3 courage+2 immune_charm=true counters=disguise,costume,mask,masquerade
+primogeniture: placement=self field_radius=4 field_targets=self field_duration=10 survives_death=true authority+2 counters=escheat
+
+# noun contest
+challenge: placement=target placement_range=40 event_target=character stakes=12 field_radius=12 field_duration=2 counters=foul,referee,forfeit
+melee: placement=region event_radius=24 event_duration=1 sets_hostile=true courage+3 aggression+3 counters=truce,peace,armistice
+
+# noun ceremony
+investiture: placement=target placement_range=20 event_target=character inflict_bless=180 effect_status=fear,curse,expose event_duration=1
+accolade: placement=target placement_range=20 event_target=character inflict_bless=120 inflict_haste=30 effect_status=fear event_duration=1
+knighthood: placement=self field_radius=20 field_targets=owned field_duration=3 summons=knight summon_count=4 summon_owned=true courage+3 loyalty+2
+
+# noun artifact
+blazon: mass=3 length=2 integrity=20 material=cloth portable=false claim_radius=6 field_radius=50 field_targets=owned morale+3 loyalty+3 detect_stealth+3 color=red
+pennon: mass=0.4 length=1.2 integrity=10 material=cloth equip_slot=held hands_required=1 field_radius=25 field_targets=owned morale+2 courage+2 speed_land+1 color=red
+oriflamme: mass=2 length=2.5 integrity=20 material=silk portable=false claim_radius=8 field_radius=60 field_targets=owned morale+5 courage+6 dmg_slash+10 dmg_pierce+10 immune_fear=true color=red
+tricolor: mass=1 length=1.5 integrity=10 material=cloth portable=false claim_radius=10 field_radius=40 field_targets=owned morale+3 loyalty+3 courage+2 color=blue
+tricolour: mass=1 length=1.5 integrity=10 material=cloth portable=false claim_radius=10 field_radius=40 field_targets=owned morale+3 loyalty+3 courage+2 color=blue
+saltire: mass=1 length=1.5 integrity=10 material=cloth portable=false claim_radius=8 field_radius=40 field_targets=owned morale+2 courage+3 res_slash+0.1 color=white
+chevron: mass=0.1 integrity=10 material=cloth equip_slot=back authority=2 command_limit=5 morale+1 color=yellow
+roundel: mass=0.5 integrity=15 material=wood,paint portable=false claim_radius=4 field_radius=30 field_targets=owned accuracy+0.1 morale+1 color=blue
+quartering: mass=2 integrity=20 material=cloth portable=false claim_radius=6 field_radius=40 field_targets=owned morale+2 loyalty+2 command_limit+8 color=red
+insignia: mass=0.1 integrity=20 material=brass equip_slot=neck authority=3 command_limit=10 reputation=2 disguise=2 color=gold
+scepter: mass=1.5 length=0.8 integrity=80 material=gold equip_slot=held hands_required=1 authority=7 command_limit=20 charm=3 dmg_blunt=20 attack_rate=0.8 value=4000 beauty=8 tax_rate=0.1 color=gold
+sceptre: mass=1.5 length=0.8 integrity=80 material=gold equip_slot=held hands_required=1 authority=7 command_limit=20 charm=3 dmg_blunt=20 attack_rate=0.8 value=4000 beauty=8 tax_rate=0.1 color=gold
+dais: mass=2000 footprint=2 height=0.6 integrity=2000 material=wood,stone portable=false claim_radius=6 authority=4 field_radius=20 field_targets=owned morale+2 loyalty+2 obedience+2 color=red
+
+# noun leader
+liege: mass=85 integrity=180 alive=true sentient=true intelligence=7 loyalty=7 hands=true speech=true speed_land=4 authority=8 command_limit=40 tax_rate=0.2 claim_radius=12 charm=3 recruit_rate=0.6 food_need=0.04
+thane: mass=85 integrity=200 alive=true sentient=true intelligence=6 loyalty=7 courage=8 hands=true speech=true speed_land=4 authority=5 command_limit=20 tax_rate=0.1 claim_radius=8 dmg_slash=45 attack_rate=1 food_need=0.04
+marquess: mass=80 integrity=150 alive=true sentient=true intelligence=7 hands=true speech=true speed_land=4 authority=6 command_limit=25 tax_rate=0.12 claim_radius=12 charm=4 food_need=0.04
+margrave: mass=85 integrity=180 alive=true sentient=true intelligence=7 hands=true speech=true speed_land=4 authority=6 command_limit=30 tax_rate=0.12 claim_radius=14 cover=0.2 detect_stealth=4 food_need=0.04
+seigneur: mass=80 integrity=150 alive=true sentient=true intelligence=7 hands=true speech=true speed_land=4 authority=6 command_limit=25 tax_rate=0.15 claim_radius=12 food_need=0.04
+baronet: mass=80 integrity=140 alive=true sentient=true intelligence=6 hands=true speech=true speed_land=4 authority=4 command_limit=15 tax_rate=0.08 claim_radius=6 food_need=0.04
+banneret: mass=95 integrity=400 alive=true sentient=true intelligence=6 loyalty=9 hands=true speech=true speed_land=4 armor=25 authority=5 command_limit=30 dmg_slash=55 attack_rate=1 field_radius=30 field_targets=owned morale+3 courage+3 food_need=0.04
+potentate: mass=90 integrity=200 alive=true sentient=true intelligence=7 hands=true speech=true speed_land=3 authority=10 command_limit=60 tax_rate=0.3 claim_radius=20 fear_aura=4 food_need=0.05
+landgrave: mass=85 integrity=160 alive=true sentient=true intelligence=7 hands=true speech=true speed_land=4 authority=6 command_limit=25 tax_rate=0.15 claim_radius=20 food_need=0.04
+palatine: mass=85 integrity=170 alive=true sentient=true intelligence=7 hands=true speech=true speed_land=4 authority=8 command_limit=35 tax_rate=0.15 claim_radius=15 law=theft food_need=0.04
+grandee: mass=85 integrity=150 alive=true sentient=true intelligence=7 hands=true speech=true speed_land=4 authority=6 command_limit=20 charm=5 value=3000 trade_bonus=0.15 food_need=0.04
+princeling: mass=65 integrity=110 alive=true sentient=true intelligence=6 hands=true speech=true speed_land=5 authority=4 command_limit=12 charm=4 claim_radius=6 food_need=0.03
+noblewoman: mass=60 integrity=100 alive=true sentient=true intelligence=7 hands=true speech=true speed_land=4 authority=5 command_limit=15 charm=6 beauty=7 trade_bonus=0.15 food_need=0.03
+
+# noun person
+liegeman: mass=80 integrity=200 alive=true sentient=true intelligence=5 loyalty=10 obedience=9 courage=8 hands=true speech=true speed_land=5 immune_charm=true dmg_slash=40 attack_rate=1 food_need=0.04 produce_N=0.3
+feudatory: mass=75 integrity=140 alive=true sentient=true intelligence=5 loyalty=9 obedience=8 hands=true speech=true speed_land=4 labor=3 claim_radius=4 food_need=0.03 produce_N=0.5
+villein: mass=65 integrity=80 alive=true sentient=true intelligence=4 loyalty=6 obedience=8 hands=true speech=true speed_land=4 labor=4 harvest_bonus=1.3 food_need=0.02 produce_N=0.6
+armiger: mass=80 integrity=250 alive=true sentient=true intelligence=6 loyalty=8 courage=8 hands=true speech=true speed_land=5 armor=15 block=0.3 dmg_slash=45 attack_rate=1 authority=2 food_need=0.04
+gallant: mass=75 integrity=180 alive=true sentient=true intelligence=6 loyalty=7 courage=9 hands=true speech=true speed_land=6 charm=6 agility=7 dmg_pierce=45 attack_rate=1.2 critical=0.2 food_need=0.03
+patrician: mass=75 integrity=110 alive=true sentient=true intelligence=7 hands=true speech=true speed_land=4 authority=4 charm=4 value=2000 trade_bonus=0.1 food_need=0.03
+regicide: mass=75 integrity=130 alive=true sentient=true intelligence=7 loyalty=1 courage=9 hands=true speech=true speed_land=6 stealth=7 dmg_pierce=70 critical=0.5 attack_rate=1 counters=king,queen,emperor,empress,regent,monarch,sovereign,czar,tsar,liege,potentate food_need=0.03
+perjurer: mass=70 integrity=90 alive=true sentient=true intelligence=7 loyalty=1 hands=true speech=true speed_land=5 disguise=5 decoys=2 counters=oath,vow,testimony food_need=0.03
+recreant: mass=70 integrity=100 alive=true sentient=true intelligence=5 loyalty=1 courage=1 hands=true speech=true speed_land=7 stealth=5 counters=oath,fealty,allegiance food_need=0.03
+apostate: mass=70 integrity=100 alive=true sentient=true intelligence=7 loyalty=2 hands=true speech=true speed_land=5 immune_curse=true immune_bless=true counters=oath,vow,faith,creed food_need=0.03
+mutineer: mass=80 integrity=140 alive=true sentient=true intelligence=5 loyalty=1 aggression=7 courage=8 hands=true speech=true speed_land=5 dmg_slash=40 attack_rate=1 counters=captain,admiral,commander,levy,conscription food_need=0.04
+insurgent: mass=75 integrity=130 alive=true sentient=true intelligence=6 loyalty=2 aggression=6 courage=8 hands=true speech=true speed_land=6 stealth=5 dmg_pierce=50 attack_rate=1 attack_range=30 targets=land,air counters=tax,tribute,levy,fealty,curfew food_need=0.04
+
+# adjective quality
+armorial: authority+2 loyalty+2 beauty+2 reputation+2
+heraldic: authority+2 loyalty+2 beauty+2 reputation+2
+courtly: charm+3 authority+1 beauty+2
+chivalrous: courage+3 loyalty+3 charm+2 immune_fear=true
+chivalric: courage+3 loyalty+3 charm+2
+disloyal: loyalty*0.1 obedience*0.5 reputation+-3
+rebellious: obedience*0 loyalty*0.3 aggression+3 courage+2
+
+# verb social
+usurp: duration=1 takes_city=true authority+3
