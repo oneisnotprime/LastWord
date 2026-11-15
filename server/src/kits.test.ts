@@ -10,6 +10,8 @@ afterAll(async () => { WorldRoom.kits = false; await colyseus.shutdown(); });
 afterEach(() => { WorldRoom.testSeed = null; });
 
 const wait = (ms = 150) => new Promise((r) => setTimeout(r, ms));
+/** Picks the same choice at each of the four steps: job, building, legendary, letters. */
+const pickAll = (c: any, index: number) => { for (let step = 0; step < 4; step++) c.send("kit", { step, index }); };
 const TYPES = ["letters", "notice", "loadout", "refused", "spelled", "got", "kits", "kit", "legend", "offers", "gathering", "gathered", "hits", "sensed", "described", "dead", "won", "roundover"];
 
 async function world(people = 1, options: object = {}) {
@@ -30,49 +32,69 @@ async function world(people = 1, options: object = {}) {
   return { room, r, clients, me, of };
 }
 
-it("a person joins to three different kits and cannot spell or walk until they pick", async () => {
+it("a person picks a job, a building, a legendary and letters in turn, and cannot spell, walk or be hurt until done", async () => {
   const { clients, me, of } = await world();
   const offer = of(0, "kits")[0];
-  expect(offer.cards).toHaveLength(3);
-  expect(new Set(offer.cards.map((c: any) => c.job.word)).size).toBe(3);
-  expect(new Set(offer.cards.map((c: any) => c.building.word)).size).toBe(3);
-  expect(new Set(offer.cards.map((c: any) => c.legend.word)).size).toBe(3);
+  expect(offer.step).toBe(0);
+  expect(offer.options).toHaveLength(3);
+  expect(new Set(offer.options.map((o: any) => o.word)).size).toBe(3);
   expect(offer.seconds).toBe(KIT_SECONDS);
-  for (const c of offer.cards) {
-    expect(c.letters).toHaveLength(STARTING_HAND);
-    expect(c.job.lines.length).toBeGreaterThan(0);
-    expect(c.legend.unlock).toMatch(/\w/);
-  }
+  for (const o of offer.options) expect(o.lines.length).toBeGreaterThan(0);
+  expect(me().hamper.untouchable).toBe(true);
   const at = { ...me().player };
   clients[0].send("move", { x: at.x + 5, y: at.y });
   clients[0].send("spell", "dog");
   await wait();
   expect(of(0, "refused").at(-1)).toMatch(/kit first/);
   expect(me().target).toBeNull();
+  // A pick for a step already past is ignored.
+  clients[0].send("kit", { step: 0, index: 2 }); clients[0].send("kit", { step: 0, index: 1 });
+  await wait();
+  const steps = of(0, "kits");
+  expect(steps.at(-1).step).toBe(1);
+  expect(steps.at(-1).chosen).toEqual([offer.options[2].word]);
+  clients[0].send("kit", { step: 1, index: 0 }); await wait();
+  const legends = of(0, "kits").at(-1);
+  expect(legends.step).toBe(2);
+  for (const o of legends.options) { expect(o.unlock).toMatch(/\w/); expect(o.counter).toMatch(/\w/); }
+  clients[0].send("kit", { step: 2, index: 0 }); await wait();
+  const hands = of(0, "kits").at(-1);
+  expect(hands.step).toBe(3);
+  for (const o of hands.options) expect(o.letters).toHaveLength(STARTING_HAND);
+  expect(me().hamper.untouchable).toBe(true);
+  clients[0].send("kit", { step: 3, index: 1 }); await wait();
+  expect(me().picking).toBeUndefined();
+  expect(me().hamper.untouchable).toBe(false);
+  expect(me().kit.job.word).toBe(offer.options[2].word);
 });
 
 it("picking a kit gives its job, hand and building, and seals its legendary", async () => {
   const { r, clients, me, of } = await world();
-  const card = of(0, "kits")[0].cards[1];
-  clients[0].send("kit", 1);
-  await wait();
+  const job = of(0, "kits")[0].options[1].word;
+  clients[0].send("kit", { step: 0, index: 1 }); await wait();
+  const building = of(0, "kits").at(-1).options[1].word;
+  clients[0].send("kit", { step: 1, index: 1 }); await wait();
+  const legend = of(0, "kits").at(-1).options[1].word;
+  clients[0].send("kit", { step: 2, index: 1 }); await wait();
+  const letters = of(0, "kits").at(-1).options[1].letters;
+  clients[0].send("kit", { step: 3, index: 1 }); await wait();
   const w = me();
   expect(w.picking).toBeUndefined();
-  expect(w.kit.job.word).toBe(card.job.word);
+  expect(w.kit.job.word).toBe(job);
   const hand = Object.entries(w.letters).flatMap(([ch, n]: [string, any]) => Array(n).fill(ch)).sort().join("");
-  expect(hand).toBe(card.letters);
+  expect(hand).toBe(letters);
   // The building stands at their spawn, theirs.
   const mine = [...r.state.things.values()].filter((t: any) => t.owner === clients[0].sessionId).map((t: any) => t.phrase);
-  expect(mine.join(" ").toLowerCase()).toContain(card.building.word);
+  expect(mine.join(" ").toLowerCase()).toContain(building);
   const kit = of(0, "kit").at(-1);
-  expect(kit.job).toBe(card.job.word);
-  expect(kit.legend.word).toBe(card.legend.word);
+  expect(kit.job).toBe(job);
+  expect(kit.legend.word).toBe(legend);
   expect(kit.legend.state).toBe("sealed");
 });
 
-it("nobody who leaves the kits alone is kept waiting: the best is picked when time runs out", async () => {
+it("nobody who leaves the kits alone is kept waiting: the best is picked at each step when time runs out", async () => {
   const { room, me } = await world();
-  for (let i = 0; i < KIT_SECONDS + 2; i++) room.update(1);
+  for (let i = 0; i < 4 * (KIT_SECONDS + 1) + 2; i++) room.update(1);
   await wait();
   expect(me().picking).toBeUndefined();
   expect(me().kit).toBeTruthy();
@@ -97,7 +119,7 @@ it("a job acts through shared systems: a scout sees further, a farmer forages be
 
 it("a legendary unseals when its condition is met, is announced to everyone, and is spelled free once", async () => {
   const { r, room, clients, me, of } = await world(2);
-  clients[0].send("kit", 0); clients[1].send("kit", 0); await wait();
+  pickAll(clients[0], 0); pickAll(clients[1], 0); await wait();
   const w = me();
   // Make the first kit's legendary one unsealed by paying its letters.
   const dragon = r.kitData.legendaries.find((l: any) => l.word === "phoenix") ?? r.kitData.legendaries.find((l: any) => l.unlock.kind === "letters");
@@ -122,7 +144,7 @@ it("a legendary unseals when its condition is met, is announced to everyone, and
 
 it("a legendary with a time condition unseals on the round clock", async () => {
   const { r, room, clients, me, of } = await world();
-  clients[0].send("kit", 0); await wait();
+  pickAll(clients[0], 0); await wait();
   const w = me();
   w.kit.legend = { word: "titan", unlock: { kind: "minutes", need: 1 }, counter: "chain" }; w.kit.state = "sealed";
   for (let i = 0; i < 62; i++) room.update(1);

@@ -90,10 +90,11 @@ export function jobLines(job: JobDef): KitLine[] {
       else if (KIND_TEXT[kind]) out.push({ icon: KIND_TEXT[kind]![0], text: `${KIND_TEXT[kind]![1]} ${pct((bonus - 1) * TOOL_POINTS)}` });
     }
   }
-  const yields = job.ops.filter(yieldOp).map(([id, op, n]) => `${id === "harvest_bonus" ? "all" : id.slice(8)} ${op === "mul" ? `×${fmt(n)}` : `+${fmt(n)}`}`);
-  if (yields.length) out.push({ icon: "🔤", text: yields.join(" · ") });
+  // A rate multiplier, said as one: "Y ×2 income" (whole numbers in the data, tools/build_kits.py).
+  const yields = job.ops.filter(yieldOp).map(([id, op, n]) => `${id === "harvest_bonus" ? "all letters" : id.slice(8)} ${op === "mul" ? `×${fmt(n)}` : `+${fmt(n)}`}`);
+  if (yields.length) out.push({ icon: "🔤", text: `${yields.join(" · ")} income` });
   const rate = Number(job.set.trade_rate ?? 1);
-  if (rate !== 1) out.push({ icon: "⚖", text: `markets ask ×${fmt(rate)}` });
+  if (rate !== 1) out.push({ icon: "⚖", text: `market prices ${pct(rate - 1)}` });
   if (Number(job.set.command_limit) > 0) out.push({ icon: "👥", text: `+${fmt(Number(job.set.command_limit))} creatures follow you` });
   if (Number(job.set.authority) > 0) out.push({ icon: "👑", text: `authority +${fmt(Number(job.set.authority))}` });
   if (Number(job.set.recruit_rate) > 0) out.push({ icon: "🙌", text: "draws wild creatures to you" });
@@ -183,6 +184,27 @@ function makesOf(dict: Dictionary): Map<string, string> {
   return makes;
 }
 
+/** A starting hand and the starter word it is dealt around. */
+export interface StarterHand { word: string; hand: Letters }
+
+/** The starter words a job's hand may be dealt around: those that make or are spelled with its letters, else all. */
+function handWords(dict: Dictionary, job: JobDef): { pool: string[]; lean: string[] } {
+  const words = starterWords(dict), makes = makesOf(dict);
+  const lean = [...job.letters.toLowerCase()].filter((ch) => /[a-z]/.test(ch) && !"jqxz".includes(ch));
+  const fits = words.filter((w) => lean.some((ch) => makes.get(w)?.includes(ch) || w.includes(ch)));
+  return { pool: fits.length ? fits : words, lean };
+}
+
+/** STARTING_HAND letters around `word`: half the rest from the job's letters, the rest by how common each letter is. */
+function handAround(word: string, lean: string[], rng: Rng): Letters {
+  const hand: Letters = {};
+  const add = (ch: string) => { hand[ch] = (hand[ch] ?? 0) + 1; };
+  for (const ch of word) add(ch);
+  const rest = STARTING_HAND - word.length, leaned = lean.length ? Math.ceil(rest / 2) : 0;
+  for (let i = 0; i < rest; i++) add(i < leaned ? lean[i % lean.length]! : HAND_FILL[Math.floor(rng() * HAND_FILL.length)]!);
+  return hand;
+}
+
 /**
  * A starting hand for a job: STARTING_HAND letters around a starter word (shared `starterWords`,
  * so the hand can always spell a producer), picked among those that make or are spelled with the
@@ -190,17 +212,16 @@ function makesOf(dict: Dictionary): Map<string, string> {
  * which only actions give) and the rest by how common each letter is.
  */
 export function kitHand(dict: Dictionary, job: JobDef, rng: Rng): Letters {
-  const words = starterWords(dict), makes = makesOf(dict);
-  const lean = [...job.letters.toLowerCase()].filter((ch) => /[a-z]/.test(ch) && !"jqxz".includes(ch));
-  const fits = words.filter((w) => lean.some((ch) => makes.get(w)?.includes(ch) || w.includes(ch)));
-  const pool = fits.length ? fits : words;
-  const word = pool[Math.floor(rng() * pool.length)] ?? "";
-  const hand: Letters = {};
-  const add = (ch: string) => { hand[ch] = (hand[ch] ?? 0) + 1; };
-  for (const ch of word) add(ch);
-  const rest = STARTING_HAND - word.length, leaned = lean.length ? Math.ceil(rest / 2) : 0;
-  for (let i = 0; i < rest; i++) add(i < leaned ? lean[i % lean.length]! : HAND_FILL[Math.floor(rng() * HAND_FILL.length)]!);
-  return hand;
+  const { pool, lean } = handWords(dict, job);
+  return handAround(pool[Math.floor(rng() * pool.length)] ?? "", lean, rng);
+}
+
+/** `n` starting hands for a job to choose from, each around a different starter word where there are enough. */
+export function kitHands(dict: Dictionary, job: JobDef, rng: Rng, n = KIT_CHOICES): StarterHand[] {
+  const { pool, lean } = handWords(dict, job);
+  const words = distinct(pool, n, rng);
+  while (words.length < n) words.push(pool[Math.floor(rng() * pool.length)] ?? "");
+  return words.map((word) => ({ word, hand: handAround(word, lean, rng) }));
 }
 
 /** `n` picks from a list, all different (fewer if the list is shorter). */
@@ -230,11 +251,71 @@ export function kitCard(data: KitData, dict: Dictionary, kit: Kit): KitCard {
   };
 }
 
+/** How a job rates: the most to it. */
+export function jobScore(job: JobDef | undefined): number {
+  return job ? Object.keys(job.set).length + job.ops.length : 0;
+}
+
+/** How a building rates: how many letters it makes. */
+export function buildingScore(dict: Dictionary, word: string): number {
+  return Object.keys(producerOf(parsePhrase(dict, word).stats).rates).length;
+}
+
+/** Unlock conditions met by playing as everyone does anyway. */
+const EASY_UNLOCK = new Set<UnlockKind>(["minutes", "letters", "producers", "hunts", "trades"]);
+
 /** How a bot rates a kit: a building that makes letters first, then the job with the most to it. */
 export function kitScore(data: KitData, dict: Dictionary, kit: Kit): number {
-  const job = data.jobs.find((j) => j.word === kit.job);
-  const makes = Object.keys(producerOf(parsePhrase(dict, kit.building).stats).rates).length;
-  return makes * 3 + (job ? Object.keys(job.set).length + job.ops.length : 0);
+  return buildingScore(dict, kit.building) * 3 + jobScore(data.jobs.find((j) => j.word === kit.job));
+}
+
+/**
+ * The pick in four steps (PLAN.md "Starting kits"): a job, a building, a legendary and the
+ * letters, three of each. The first three come from the kits dealt (`dealKits`); the letters
+ * are dealt for the job picked (`kitHands`).
+ */
+export const KIT_STEPS = ["job", "building", "legend", "letters"] as const;
+export type KitStep = (typeof KIT_STEPS)[number];
+
+/** One choice in a step: its word and lines; a legendary's unlock and counter; a hand's letters. */
+export interface KitOption { word: string; lines: KitLine[]; unlock?: string; counter?: string; letters?: string }
+
+/** A step's choices: jobs, buildings and legendaries from the kits dealt, or hands. */
+export function kitOptions(data: KitData, dict: Dictionary, step: number, kits: readonly Kit[], hands: readonly StarterHand[] = []): KitOption[] {
+  switch (KIT_STEPS[step]) {
+    case "job": return kits.map((k) => ({ word: k.job, lines: jobLines(data.jobs.find((j) => j.word === k.job)!) }));
+    case "building": return kits.map((k) => ({ word: k.building, lines: buildingLines(dict, k.building) }));
+    case "legend": return kits.map((k) => {
+      const l = data.legendaries.find((x) => x.word === k.legend)!;
+      return { word: k.legend, lines: legendLines(dict, k.legend), unlock: unlockText(l), counter: l.counter };
+    });
+    case "letters": return hands.map((h) => {
+      const makes = makesOf(dict).get(h.word) ?? "";
+      return {
+        word: h.word, letters: Object.entries(h.hand).flatMap(([ch, k]) => Array(k).fill(ch)).sort().join(""),
+        lines: [{ icon: "✍", text: `spells ${h.word.toUpperCase()}${makes ? `, which makes ${makes.toUpperCase().split("").join(" ")}` : ""}` }],
+      };
+    });
+    default: return [];
+  }
+}
+
+/** The choice taken for someone out of time: the job with most to it, the building making most letters, an easy legendary, the hand whose word makes most. */
+export function bestOption(data: KitData, dict: Dictionary, step: number, kits: readonly Kit[], hands: readonly StarterHand[] = []): number {
+  const score = (i: number): number => {
+    const k = kits[i];
+    switch (KIT_STEPS[step]) {
+      case "job": return jobScore(data.jobs.find((j) => j.word === k?.job));
+      case "building": return k ? buildingScore(dict, k.building) : 0;
+      case "legend": return EASY_UNLOCK.has(legendOf(data, k?.legend ?? "")?.unlock.kind as UnlockKind) ? 1 : 0;
+      case "letters": return (makesOf(dict).get(hands[i]?.word ?? "") ?? "").length;
+      default: return 0;
+    }
+  };
+  const n = KIT_STEPS[step] === "letters" ? hands.length : kits.length;
+  let best = 0;
+  for (let i = 1; i < n; i++) if (score(i) > score(best)) best = i;
+  return best;
 }
 
 /**

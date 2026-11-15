@@ -1,10 +1,29 @@
 import { describe, expect, it } from "vitest";
-import { knowsWord, RULE_TIPS, seeded, TIP_KINDS, tipText, tipWeight, wordIdeas, wordTip } from "./index.js";
+import { knowsWord, RULE_TIPS, seeded, spellableNow, spellGroup, TIP_KINDS, tipText, tipWeight, wordIdeas, wordTip } from "./index.js";
 import { demo } from "./testdata.js";
 
 const dict = demo();
 
+describe("words you can spell now, by group", () => {
+  it("sorts words by what spelling them makes", () => {
+    expect(spellGroup(dict, "sword")).toBe("weapons");
+    expect(spellGroup(dict, "wolf")).toBe("creatures");
+    expect(spellGroup(dict, "horse")).toBe("rides");
+    expect(spellGroup(dict, "fire")).toBe("events");
+    expect(spellGroup(dict, "mill")).toBe("buildings");
+    const g = spellableNow(dict, { d: 1, o: 1, g: 1 });
+    expect(g.creatures).toContain("dog");
+    expect(Object.values(g).flat().every((w) => /^[dog]+$/.test(w))).toBe(true);
+  });
+});
+
 describe("word tips", () => {
+  it("give each property a short plain meaning", () => {
+    const huge = wordTip(dict, "huge")!;
+    expect(huge.lines[0]).toMatchObject({ text: expect.stringMatching(/^integrity ×8/), why: expect.stringMatching(/damage it takes/) });
+    expect(wordTip(dict, "dog")!.lines.find((l) => l.text.startsWith("makes I"))!.why).toMatch(/letters/);
+  });
+
   it("say what a word does in plain numbers, with a counter-word when one exists", () => {
     const huge = wordTip(dict, "huge")!;
     expect(huge.kind).toBe("adjective");
