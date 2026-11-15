@@ -163,6 +163,11 @@
       #events .ev:nth-child(odd) { transform: rotate(-1deg); }
       #events .ev i { font-style: normal; display: inline-grid; place-items: center; width: 17px; height: 17px; border-radius: 50%; background: var(--c); color: #fff; font-size: 11px; }
       #events .ev small { font: 600 10px var(--round); color: var(--soft); margin-left: 2px; }
+      /* The storm wall's chip (shared round.ts): violet, red while you stand outside it. */
+      #events .ev.storm { --c: #7a55b8; background: #efe7fb; color: #3d2a63; font: 600 11px var(--round); cursor: default; }
+      #events .ev.storm.out { background: #f6d6d2; color: #6a1a14; animation: stormout 1s ease-in-out infinite; }
+      #events .ev.storm small { color: inherit; opacity: .8; }
+      @keyframes stormout { 50% { box-shadow: 0 0 0 3px rgba(201,69,63,.35); } }
       #eventcard { position: absolute; top: 44px; left: 50%; transform: translateX(-50%) rotate(-.5deg); display: none; width: 300px; padding: 8px 12px 9px;
         background: var(--paper); box-shadow: var(--shadow); border-radius: 3px; font: 500 12px/1.35 var(--round); pointer-events: auto; cursor: pointer; }
       #eventcard.show { display: block; }
@@ -255,6 +260,20 @@
       .tile.used small { color: #7a5a20; }
       .tile.short { background: #e88a80; color: #5a1a14; }
       .tile.short small { color: #7a2a24; }
+      /* Spelling rules (shared speech.ts): a banned letter greyed under a lock, a doubled one ringed, blanks as stars. */
+      .tile.banned { background: #c9c2b4; color: #8a8276; position: relative; }
+      .tile.banned .lock { position: absolute; right: -4px; top: -6px; width: 10px; height: 8px; background: #5a4a3a; border-radius: 2px; }
+      .tile.banned .lock::before { content: ""; position: absolute; left: 2px; top: -5px; width: 4px; height: 5px; border: 1.5px solid #5a4a3a; border-bottom: 0; border-radius: 4px 4px 0 0; }
+      .tile.doubled { box-shadow: inset 0 0 0 2px #e9b949; }
+      .tile.wild { background: #efe7fb; color: #7a55b8; font-size: 18px; }
+      .tile.wild.used { background: #b48cf0; color: #fff; }
+      #abc .banned { opacity: .35; text-decoration: line-through; }
+      #preview .cost { font: 500 11px var(--round); color: #6a5a30; }
+      #status .chip.follow { background: #e9eef6; color: #2f4a6e; }
+      #status .chip.follow.low { background: #f6d6d2; color: #6a1a14; }
+      #status .chip.life { background: #fbecc8; color: #6a4a10; }
+      #status .chip.rule { background: #efe7fb; color: #3d2a63; }
+      #status .out.ghost { color: #7a55b8; letter-spacing: .2em; }
       /* Effects over the game (fx.ts): letter popups, damage numbers, the red edge when you are hit. */
       #fx { position: fixed; inset: 0; pointer-events: none; z-index: 5; overflow: hidden; }
       #fx .pop { position: absolute; display: flex; flex-direction: column; align-items: center; transform: translate(-50%, -50%); will-change: transform; }

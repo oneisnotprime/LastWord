@@ -34,6 +34,8 @@ export interface Connection {
   /** Pick a starting kit by its index among those offered. */
   pickKit(step: number, index: number): void;
   act(type: "market" | "sell" | "hire" | "swap" | "transmute" | "offer" | "answer", payload: unknown): void;
+  /** Knocked out: watch a person still in the round, or null for your own ghost (shared death.ts). */
+  watch(id: string | null): void;
 }
 
 /** Letters gained and why ("forage", "hunted COW (+12 food)"), and where they came from. */
@@ -90,6 +92,12 @@ export interface Handlers {
   kit(state: KitState): void;
   /** A grand spelling somewhere on the map (a DRAGON, a METEOR): it makes an entrance. */
   entrance(e: Entrance): void;
+  /** Knocked out, you haunt the map as a ghost (shared death.ts): a word every `gap` seconds. */
+  ghost(info: { gap: number; sight: number }): void;
+  /** Someone in sight used an extra life (shared death.ts): where, and what gave it. */
+  reborn(e: { id: string; x: number; y: number; word: string; name: string }): void;
+  /** You are back from the dead. */
+  revived(info: { by: string }): void;
 }
 
 /** One blow, as the server tells it (server `Hit`). */
@@ -144,6 +152,9 @@ export async function connect(on: Handlers): Promise<Connection> {
   room.onMessage("kits", on.kits);
   room.onMessage("kit", on.kit);
   room.onMessage("entrance", on.entrance);
+  room.onMessage("ghost", on.ghost);
+  room.onMessage("reborn", on.reborn);
+  room.onMessage("revived", on.revived);
   room.onLeave(on.closed);
   room.onDrop(on.dropped);
   // Listening now: the server sends the kits to pick from (or your kit), here and after a reconnect.
@@ -170,6 +181,7 @@ export async function connect(on: Handlers): Promise<Connection> {
     pick: (what) => room.send("pick", what),
     act: (type, payload) => room.send(type, payload),
     pickKit: (step, index) => room.send("kit", { step, index }),
+    watch: (id) => room.send("watch", id ? { id } : null),
     leave: () => { room.onLeave.clear?.(); void room.leave(true); },
     describe: (text, target, gear) => room.send("describe", { text, target, ...(gear !== undefined ? { gear } : {}) }),
   };
