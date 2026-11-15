@@ -1,0 +1,196 @@
+# Generator rules (tools/rules.py; README "Generator rules"). Applied by build_demo.py after
+# demo_words.txt and generated_words.txt: every word whose meaning matches gains the properties,
+# unless it already sets them. Earlier rules win (a word keeps the first value it gets).
+#
+# Kinds decide whom a rule binds (server): an area (a field, an event with a radius, a thing that
+# radiates) binds whoever it reaches, its maker's side spared what hinders; an act passed on a
+# person binds them; a verb binds its speller; anything else owned binds its owner.
+
+# ---------------------------------------------------------------- 1. spelling rules
+
+# Silencing, censoring and forbidding, laid on others: their commonest letter is banned.
+rule ban: censorship and silencing over an area or on a person
+when role=noun class=event,aura,world_state,institution,affliction,knowledge under=censorship,suppression,prohibition,ban,restriction,silence,quiet,hush,taboo,oppression,repression,tyranny,secrecy,gag_law,interdiction,boycott,embargo,excommunication,anathema
+when role=noun class=event,aura,world_state,institution,affliction,knowledge word=censorship,silence,hush,prohibition,ban,banning,suppression,repression,oppression,tyranny,boycott,embargo,interdict,blackout,muteness,silencing,dictatorship,omerta,taboo,curfew,crackdown,lockdown,containment,filibuster,quarantine
+when role=verb is=effect_target:touched word=gag,silence,hush,muzzle,censor,mute,stifle,muffle,shush,suppress,quash,ban,forbid,prohibit,outlaw,bar,redact,bleep,smother,blacklist,deafen,quell,squelch,throttle
+not is=field_targets:owned|self|allies
+set ban_letters=top
+
+# Taxes and price rises on others' spelling.
+rule cost x2: inflation and ransom
+when word=inflation,hyperinflation,extortion,ransom,profiteering,gouging,stagflation,surcharge,usury
+set spell_cost=2
+rule cost x1.5: taxes, tolls and red tape over an area
+when role=noun class=event,aura,world_state,institution,knowledge under=tax,levy,duty,fee,toll,tariff,excise,tithe,customs,surcharge,bureaucracy,red_tape,formality,regulation,paperwork,price_increase,cost_of_living,austerity,overhead,penalty
+when role=noun class=event,aura,world_state,institution,knowledge word=tax,taxation,tithe,toll,tariff,levy,duty,customs,excise,bureaucracy,paperwork,regulation,protocol,formality,austerity,recession,depression,scarcity,shortage,dearth,famine,poverty,expense,overhead,premium,markup,tribute,ransom
+not is=field_targets:owned|self|allies
+set spell_cost=1.5
+rule cost x0.6: discounts, plenty and bargains for oneself
+when role=noun class=event,aura,world_state,institution,knowledge under=discount,bargain,rebate,subsidy,reduction,sale,concession,grant,bonus,windfall,bounty,abundance,plenty,surplus
+when word=discount,bargain,rebate,subsidy,sale,clearance,giveaway,freebie,coupon,voucher,deflation,plenty,abundance,surplus,glut,bounty,cornucopia,windfall,bonanza,jackpot,largesse,generosity,charity,scholarship
+not is=field_targets:enemies
+set spell_cost=0.6
+rule cost x0.75: mastery of language
+when role=noun under=literacy,fluency,eloquence,articulateness,vocabulary,grammar,erudition,linguistics,etymology,spelling,orthography,alphabet,lexicon,poetry,rhetoric,oratory
+when role=noun class=person under=scholar,linguist,lexicographer,grammarian,philologist,etymologist,teacher,professor,tutor,librarian,editor,proofreader,scholar
+not is=field_targets:enemies
+set spell_cost=0.75
+rule cost on the body: literate and articulate
+when role=adjective word=literate,fluent,eloquent,articulate,erudite,learned,lettered,wordy,verbose,bookish,scholarly,poetic,lyrical,literary,grammatical,silver-tongued,glib,witty,clever,brilliant,intelligent,wise,smart
+set spell_cost*0.8
+
+# A short tongue: the longest word they may spell.
+rule limit 4: stammering and halting speech near someone
+when role=noun class=event,aura,affliction,world_state under=stammer,stutter,hesitation,speech_disorder,hiccup,lisp,mumble,babble,gibberish,confusion,amnesia,forgetfulness,stupor,daze,dementia,delirium,muddle
+when role=noun class=event,aura,affliction,world_state word=hiccup,hiccups,stutter,stammer,hesitation,babble,gibberish,amnesia,forgetfulness,dementia,delirium,stupor,daze,muddle,confusion,brainfog,concussion,ignorance,illiteracy,idiocy,stupidity,dyslexia
+when role=verb is=effect_target:touched word=stun,daze,confuse,befuddle,bewilder,muddle,stupefy,dumbfound,hypnotize,mesmerize,silence,shush,interrupt,heckle
+not is=field_targets:owned|self|allies
+set word_limit=4
+rule limit 5: brevity, an abstract word laid round its speller on enemies
+when role=noun class=aura,knowledge,world_state,measure word=brevity,shortness,conciseness,terseness,curtness,succinctness,laconism,abbreviation,acronym,shorthand,summary,synopsis,haiku,epigram,aphorism,slogan,soundbite,headline,caption,telegram,tweet,abridgement,digest,precis,abstract,minimalism
+not is=field_targets:owned|self|allies
+set word_limit=5 placement=self field_radius=60 field_targets=enemies field_duration=1.5
+rule limit on the body: speechless and dull
+when role=adjective word=speechless,mute,dumb,inarticulate,tongue-tied,stammering,stuttering,halting,laconic,terse,curt,monosyllabic,illiterate,stupid,dull,dim,dense,slow,foolish,witless,brainless,confused,dazed,groggy,drunk,dizzy
+set word_limit+5
+
+# Blanks: wordsmiths and tricksters who stand for any letter.
+rule wild: wordsmiths, poets and tricksters at your side
+when role=noun class=person under=writer,poet,author,novelist,playwright,lyricist,journalist,linguist,lexicographer,scribe,translator,interpreter,jester,clown,comedian,trickster,joker,wit,humorist,bard,minstrel,troubadour,storyteller,rhymer,orator,speaker,calligrapher,copyist,stenographer,crossword_puzzler
+when word=joker,wildcard,blank,jester,harlequin,trickster,shapeshifter,chameleon,mimic,impersonator,doppelganger,polyglot,wordsmith,thesaurus,glossary,dictionary,lexicon,encyclopedia,almanac,alphabet,vocabulary,wordbook,crossword,anagram,scrabble,acrostic,palindrome,cipher,cryptogram,riddle,rebus,pun,wordplay,limerick,sonnet,verse,poem,poetry,ballad,ode,lyric,rhyme,metaphor,simile,improvisation,freestyle
+not is=field_targets:enemies
+set wild_letters=1
+rule wild on the body: inventive and versatile
+when role=adjective word=versatile,inventive,creative,imaginative,resourceful,improvised,adaptable,flexible,wild,poetic,lyrical,witty,ingenious,protean,mercurial
+set wild_letters+1
+
+# Letters that count double.
+rule double all: emphasis and repetition
+when word=emphasis,stress,accent,echo,repetition,reiteration,encore,reprise,refrain,chorus,redundancy,alliteration,rhyme,reverberation,resonance,duplication,duplicate,twin,twins,double,doubling,copy,photocopy,replica,clone,mirror,echoes,amplifier,amplification,megaphone,loudspeaker,bullhorn,exclamation,italics,boldface,underline,highlight,highlighter,capital,capitals,shout,shouting,yell,roar,proclamation,decree,declaration,manifesto
+when role=noun under=emphasis,repetition,echo,duplication,copy,reverberation,proclamation,declaration
+not is=field_targets:enemies
+set double_letters=all
+rule double vowels: song and chant
+when role=noun under=song,singing,chant,hymn,anthem,lullaby,carol,aria,serenade,yodel,vocal_music,choir,chorus
+not is=field_targets:enemies
+set double_letters=vowels
+
+# A letter off still reads.
+rule typos: slang, dialect and loose talk
+when role=noun under=dialect,slang,jargon,argot,vernacular,patois,pidgin,creole,colloquialism,pun,wordplay,malapropism,spoonerism,nonsense,gibberish,babble,leniency,tolerance,forgiveness,mercy,latitude,leeway,improvisation,shorthand,abbreviation
+when word=slang,dialect,jargon,argot,lingo,vernacular,patois,pidgin,creole,colloquialism,pun,malapropism,spoonerism,typo,autocorrect,spellcheck,leniency,tolerance,forgiveness,leeway,mercy,grace,improvisation,freestyle,rap,graffiti,texting,emoji,shorthand,nickname,alias
+not is=field_targets:enemies
+set misspell_ok=1
+rule typos on the body: careless and loose
+when role=adjective word=sloppy,careless,casual,informal,colloquial,slangy,lax,lenient,forgiving,tolerant,loose,relaxed,easygoing,fluent,improvised,freestyle
+set misspell_ok+1
+
+# Free speech: others' spelling rules do not bind.
+rule free speech: liberty, rights and the voice that carries
+when role=noun under=freedom,liberty,emancipation,liberation,independence,autonomy,sovereignty,democracy,suffrage,amendment,eloquence,oratory,rhetoric,protest,petition,manifesto,journalism
+when word=freedom,liberty,emancipation,liberation,independence,autonomy,amendment,democracy,suffrage,eloquence,oratory,rhetoric,protest,petition,manifesto,megaphone,loudspeaker,microphone,bullhorn,soapbox,pulpit,podium,rostrum,lectern,press,newspaper,broadcast,radio,microphone,voice,shout,anthem,uncensored,outspoken
+not is=field_targets:enemies
+set free_speech=true
+
+# ---------------------------------------------------------------- 2. command capacity
+
+rule command: leaders and officers lead followers
+when role=noun class=person under=leader,ruler,commander,officer,chief,general,captain,lieutenant,sergeant,corporal,marshal,admiral,colonel,major,commandant,warlord,chieftain,monarch,sovereign,noble,aristocrat,lord,master,boss,supervisor,foreman,shepherd,herder,drover,trainer,tamer,handler,conductor,coach,mentor,guru,prophet,messiah,pied_piper
+set command_limit=6
+rule command regalia: crowns, sceptres, banners, whistles and badges
+when role=noun class=artifact under=crown,coronet,diadem,tiara,scepter,sceptre,regalia,throne,flag,banner,pennant,ensign,insignia,badge,medal,epaulet,baton,whistle,bugle,trumpet,drum,gong,megaphone,bullhorn,leash,rein,bridle,harness,lasso,crook,mace,livery
+set command_limit=4
+rule command charisma: presence and renown, around their holder
+when role=noun class=aura,knowledge,institution,world_state under=charisma,leadership,magnetism,glamour,prestige,renown,fame,celebrity,reputation,dominance,dominion,sovereignty,supremacy,hegemony,majesty,royalty,nobility,obedience,loyalty,allegiance,fealty,devotion,fanaticism,cult,zeal
+when word=charisma,leadership,authority,command,presence,magnetism,glamour,prestige,renown,fame,celebrity,influence,dominance,majesty,discipline,obedience,loyalty,allegiance,fealty,devotion,zeal,cult,whistle,rally,muster,summon,command,lead,marshal,rally
+not is=field_targets:enemies
+set command_limit+5
+rule command on the body: commanding and charismatic
+when role=adjective word=charismatic,commanding,authoritative,inspiring,inspirational,magnetic,persuasive,regal,royal,majestic,imperial,kingly,queenly,lordly,noble,heroic,legendary,famous,renowned,celebrated,beloved,popular,dominant,masterful,bossy,charming,seductive,captivating,mesmerizing,hypnotic,messianic,venerable,revered,glorious
+set command_limit+4
+
+# Mutiny and desertion: followers whose loyalty has worn thin break away.
+rule mutiny joins: treason and defection turn followers to their speller
+when word=treason,defection,betrayal,disloyalty,sedition,subversion,treachery,perfidy,bribery,bribe,corruption,seduction,temptation,propaganda,brainwashing,indoctrination,conversion,charm,enchantment,persuasion,flattery,blandishment,poaching,headhunting,usurpation,coup
+when role=noun class=event,aura under=treason,defection,betrayal,disloyalty,sedition,subversion,treachery,bribery,seduction,propaganda,indoctrination,conversion,persuasion,flattery,usurpation,coup
+set mutiny=6 mutiny_joins=true
+rule mutiny: rebellion and desertion set followers loose
+when word=mutiny,desertion,rebellion,revolt,uprising,insurrection,insurgency,riot,anarchy,strike,walkout,abandonment,exodus,secession,schism,revolution,panic,rout,stampede,chaos,discord,dissent,disobedience,insubordination,famine,starvation,terror,horror,despair,hopelessness,demoralization,cowardice,fear,dread,emancipation,liberation,manumission,freedom
+when role=noun class=event,aura,world_state under=mutiny,desertion,rebellion,revolt,uprising,insurrection,riot,anarchy,strike,abandonment,secession,schism,revolution,panic,rout,discord,dissent,disobedience,insubordination
+when role=verb word=desert,abandon,mutiny,rebel,revolt,riot,defect,betray,abscond,flee,scatter,disband,dismiss,demobilize,liberate,emancipate,unleash,free,release,scare,terrify,panic,stampede,demoralize
+set mutiny=5
+
+# ---------------------------------------------------------------- 3. death and respawn
+
+rule lives: rebirth, resurrection and undying things
+when role=noun under=rebirth,resurrection,reincarnation,immortality,afterlife,revival,regeneration,phoenix,elixir,panacea,talisman,amulet,ankh,salvation,redemption,miracle,guardian_angel
+when word=phoenix,ankh,elixir,amulet,talisman,horseshoe,lifeline,salvation,redemption,miracle,providence,soul,spirit,reincarnation,rebirth,resurrection,revival,immortality,afterlife,heaven,paradise,valhalla,nirvana,eternity,lich,phylactery,horcrux,vampire,undead,zombie,mummy,skeleton,revenant,wraith,banshee,cat,hydra,starfish,lizard,salamander,axolotl,tardigrade,cockroach,survivor,survival,lifeboat,parachute,airbag,defibrillator,antidote,adrenaline,epinephrine,lifeguard,guardian,angel,saint,martyr,cheat,cheater,checkpoint,respawn,backup,continue,encore,sequel,heir,legacy,resilience,endurance,tenacity,perseverance,grit,toughness,stamina
+when role=verb word=survive,endure,persist,persevere,outlive,outlast,withstand,revive,resurrect,reincarnate,regenerate,rise,respawn,recover,resuscitate,reanimate,cheat,dodge,escape,evade
+when role=adjective word=undying,deathless,immortal,eternal,everlasting,unkillable,indestructible,resilient,tenacious,hardy,tough,durable,enduring,lucky,blessed,charmed,fortunate,miraculous,invincible,unbreakable,stubborn
+set prevents_death=1
+rule revives: healers and life-givers bring the fallen back
+when role=noun class=person under=medic,paramedic,doctor,physician,nurse,healer,cleric,priest,shaman,surgeon,herbalist,druid,saint,angel,necromancer,witch_doctor,medicine_man,first-aider,lifeguard,rescuer
+when word=medic,paramedic,doctor,nurse,healer,cleric,priest,priestess,shaman,surgeon,druid,saint,angel,necromancer,witchdoctor,lifeguard,rescuer,defibrillator,resurrection,revival,rebirth,reincarnation,resuscitation,resurrect,revive,resuscitate,reanimate,raise,necromancy,miracle,phoenix,elixir,panacea,ambulance,hospital,infirmary,clinic,sanatorium,medkit,bandage,stretcher
+set revives=0.5
+rule revives a little: words that restore someone
+when role=verb is=effect_target:touched has=restores
+when class=event is=event_target:character has=restores
+set revives=0.3
+rule last stand: heroes and the desperate fight on
+when role=noun class=person,creature under=martyr,hero,heroine,berserker,berserk,samurai,spartan,kamikaze,warrior,knight,paladin,champion,gladiator,viking,barbarian,legionnaire,legionary,ronin,crusader,templar,zealot,fanatic,juggernaut,titan,daredevil
+when role=noun class=aura,event,world_state,knowledge under=valor,courage,bravery,heroism,gallantry,defiance,desperation,sacrifice,martyrdom,adrenaline,rage,fury,wrath,frenzy,bloodlust,berserk,determination,resolve,tenacity,perseverance,grit,willpower,spite,vengeance,revenge,vendetta
+when word=martyr,martyrdom,valor,valour,bravery,heroism,gallantry,defiance,desperation,sacrifice,adrenaline,fury,frenzy,bloodlust,berserk,berserker,determination,resolve,tenacity,grit,willpower,spite,vengeance,revenge,vendetta,kamikaze,banzai,charge,stand,bastion,holdout,laststand,glory,honor,honour
+when role=adjective word=heroic,valiant,brave,courageous,defiant,indomitable,unyielding,unbowed,undaunted,relentless,desperate,dauntless,fearless,fierce,furious,berserk,frenzied,stubborn,tenacious,gritty,determined,resolute,bloodthirsty,suicidal,reckless,doomed,vengeful,spiteful,glorious,legendary
+set last_stand=10
+rule haunts by status: acts and fields that frighten, curse or bewilder
+when role=noun class=event,aura,affliction,world_state has=inflict_fear,inflict_curse,inflict_confuse,inflict_blind,inflict_sleep,inflict_doom
+when role=verb is=effect_target:touched has=inflict_fear,inflict_curse,inflict_confuse,inflict_blind,inflict_sleep,inflict_doom
+not has=destroys_target,summons,transfers_ownership,takes_city,binds,stakes,faith_cost
+set haunts=true
+rule haunts by meaning: hauntings, curses, chills and wails
+when role=noun class=event,aura,affliction,world_state,knowledge under=haunting,apparition,curse,hex,jinx,malediction,fright,fear,terror,horror,dread,nightmare,omen,portent,premonition,foreboding,chill,shiver,shudder,whisper,wail,moan,scream,shriek,howl,possession,spookiness,eeriness,gloom,darkness,shadow,despair,grief,sorrow,mourning,lament,dirge,requiem,elegy
+when word=haunt,haunting,boo,scare,spook,fright,wail,moan,howl,shriek,scream,whisper,curse,hex,jinx,chill,shiver,possess,possession,poltergeist,apparition,phantom,spectre,specter,wraith,banshee,nightmare,seance,omen,doom,gloom,dread,terror,horror,haunt,creep,lurk,stalk,glare,stare,frighten,terrify,startle,petrify,bewitch,enchant,mesmerize,hypnotize,befuddle,confuse,blind,silence,unnerve,rattle,taunt,mock,jeer,heckle,blight,wither,rot,decay,mourn,lament,grieve,vanish,flicker,shadow,darken,cloud,fog,mist
+not has=destroys_target,summons,transfers_ownership,takes_city,binds,stakes,faith_cost
+not class=artifact,creature,person,flora,material,consumable,bodypart,terrain
+set haunts=true
+rule raises zombies: the undead make more of themselves
+when word=zombie,ghoul,revenant,undead,wight,draugr,plague,pandemic,epidemic,infection,outbreak,contagion,virus,rabies,graveyard,cemetery,necropolis,voodoo,hoodoo,curse,bokor
+when role=noun class=creature under=zombie,ghoul,revenant
+set raises=zombie
+rule raises skeletons: necromancy
+when word=necromancer,necromancy,lich,deathknight,bonemaster,skeleton,catacomb,ossuary,crypt,tomb,mausoleum,sepulchre,sarcophagus,underworld,hades,hell,inferno,netherworld,reaper,banshee,warlock,sorcerer,witch,wizard,mummy,pharaoh,ankh
+set raises=skeleton
+rule raises vampires: the bite that turns
+when word=vampire,vampirism,dracula,nosferatu,vampire_bat,werewolf,lycanthropy,lycanthrope
+set raises=vampire
+rule entombs: tombs and graves hold the fallen's letters
+when role=noun class=artifact,terrain under=tomb,grave,burial_chamber,crypt,mausoleum,sarcophagus,coffin,casket,urn,ossuary,catacomb,sepulcher,pyramid,barrow,cairn,mound,vault,reliquary,shrine,memorial,monument,cenotaph,headstone,gravestone,tombstone,cemetery,graveyard,necropolis
+when word=tomb,grave,crypt,mausoleum,sarcophagus,coffin,casket,urn,ossuary,catacomb,sepulchre,pyramid,barrow,cairn,vault,reliquary,memorial,monument,cenotaph,headstone,gravestone,tombstone,cemetery,graveyard,necropolis,pharaoh
+set entombs=true
+rule denies revival: final deaths
+when word=reaper,death,executioner,headsman,annihilation,obliteration,oblivion,disintegration,erasure,extinction,execution,executing,decapitation,beheading,guillotine,mortality,finality,eradication,extermination,genocide,purge,banishment,exorcism,exorcist,smite,smiting,judgment,judgement,damnation,perdition,void,nothingness,nihility,entropy,incineration,cremation,vaporization,atomization,unmaking,deletion,erase,delete,obliterate,annihilate,disintegrate,eradicate,exterminate,execute,behead,decapitate,incinerate,cremate,vaporize,banish,exorcise,smite,damn,consign
+when role=noun class=event under=annihilation,obliteration,extinction,execution,eradication,extermination,destruction,disintegration,cremation,incineration
+when role=adjective word=final,fatal,lethal,deadly,mortal,terminal,ultimate,conclusive,irrevocable,irreversible,permanent,absolute,total,complete,utter,unholy,cursed,damned
+set denies_revival=true
+
+# ---------------------------------------------------------------- 4. the round
+
+rule storm sudden death: showdowns and the end of everything
+when word=showdown,endgame,deathmatch,finale,ultimatum,armageddon,ragnarok,eschaton,apocalypse,doomsday,judgement,judgment,reckoning,rapture,cataclysm,climax
+set sudden_death=true
+rule storm hurry big: ends of the world
+when word=apocalypse,doomsday,armageddon,ragnarok,cataclysm,catastrophe,eschaton,rapture,meltdown,collapse,extinction,end,ending,doom,oblivion,judgement,judgment,reckoning,annihilation,holocaust,firestorm,deluge,flood,plague,pandemic,blitz,invasion,onslaught,conquest
+set storm_shift=120
+rule storm hurry: deadlines, urgency and haste
+when word=deadline,countdown,urgency,emergency,crisis,hurry,rush,haste,acceleration,escalation,climax,culmination,showdown,clash,confrontation,battle,war,warfare,skirmish,charge,assault,offensive,blitzkrieg,stampede,frenzy,panic,alarm,siren,ultimatum,deadline,storm,tempest,hurricane,cyclone,typhoon,tornado,maelstrom,whirlwind
+when role=noun class=event,aura,world_state,measure under=urgency,emergency,crisis,haste,acceleration,escalation,climax,culmination,confrontation,battle,war,offensive,assault,deadline,countdown
+when role=verb word=hurry,rush,hasten,accelerate,quicken,expedite,escalate,provoke,incite,inflame,charge,attack,storm,stampede,race,sprint,dash
+set storm_shift=45
+rule storm hold long: overtime and extensions
+when word=overtime,extension,prolongation,postponement,adjournment,deferral,deferment,stay,reprieve,amnesty,armistice,stalemate,deadlock,impasse,stasis,eternity,infinity,forever,limbo,purgatory,hibernation,dormancy,sabbatical
+set storm_pause=120
+rule storm hold: truces, pauses and calm
+when word=truce,ceasefire,peace,peacetime,pacifism,respite,lull,intermission,recess,hiatus,timeout,pause,break,standstill,moratorium,sabbath,siesta,detente,halt,suspension,delay,cessation,calm,tranquility,tranquillity,serenity,stillness,quiet,rest,repose,relaxation,leisure,holiday,vacation,festival,fiesta,celebration,picnic,nap,sleep,slumber,dream,meditation,prayer,vigil,silence,neutrality,diplomacy,negotiation,mediation,reconciliation,treaty,accord,compromise,sanctuary,refuge,haven,shelter,asylum
+when role=noun class=event,aura,world_state,measure under=truce,ceasefire,peace,respite,lull,intermission,recess,hiatus,pause,break,standstill,moratorium,halt,suspension,delay,cessation,calm,rest,relaxation,leisure,holiday,vacation,negotiation,mediation,reconciliation,diplomacy,treaty
+when role=verb word=pause,halt,stop,delay,postpone,adjourn,suspend,stall,procrastinate,wait,linger,dawdle,loiter,rest,relax,nap,sleep,meditate,pray,negotiate,mediate,reconcile,pacify,appease,placate,calm,soothe
+set storm_pause=45

@@ -6,7 +6,8 @@ and generated_words.txt, written by generate_words.py and checked leniently (a b
 dropped, a word that cannot be placed is skipped, and both are counted). Hand-written words win.
 
 build_demo.py --overrides   add each word's role and archetype to overrides.tsv
-build_demo.py               validate against properties.json and lexicon.tsv, write demo.json
+build_demo.py [wordnet dir] validate against properties.json and lexicon.tsv, write demo.json;
+                            with the WordNet dict dir, generator rules (rules.txt) match by meaning
 """
 import os, re, sys, json
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -84,6 +85,24 @@ def producers(out, props, errors):
             needs = [n for ch in made for n in NEEDS.get(ch, [])]
             if needs:
                 out[w]["set"]["production_needs"] = list(dict.fromkeys(needs)) if "vowel" not in needs else needs
+
+def rule_token(t, props):
+    """A rules.txt token as (op, property, value), or why it is bad."""
+    m = re.fullmatch(r"(\w+)([=*+])(.+)", t)
+    if not m or m.group(1) not in props:
+        return f"bad token {t}"
+    pid, op, val = m.groups()
+    p = props[pid]
+    numeric = p["type"] in ("num", "scale", "frac")
+    if op != "=":
+        if not numeric: return f"{t}: {op} needs a numeric property"
+        return ("mul" if op == "*" else "add", pid, float(val))
+    if numeric: return ("set", pid, "ABS" if val == "ABS" else float(val))
+    if p["type"] == "bool": return ("set", pid, val == "true")
+    if p["type"] == "enum":
+        return ("set", pid, val) if val in p["values"] else f"{t}: not one of {p['values']}"
+    if p["type"] == "tags": return ("set", pid, val.split(","))
+    return ("set", pid, val)
 
 def main():
     entries = [e[:5] for e in entries_all()]
@@ -165,6 +184,17 @@ def main():
                     err(f"{t}: {val} is not a property"); continue
                 sets[pid] = val
         out[w] = {"role": role, "class": lex[w][1], "archetype": arch, "set": sets, "ops": ops}
+    # Generator rules (rules.txt): properties by meaning, for every word that matches.
+    wn_dir = next((a for a in sys.argv[1:] if not a.startswith("--")), None)
+    if wn_dir and not os.path.isdir(wn_dir):
+        sys.exit(f"{wn_dir}: not a WordNet dict dir")
+    if wn_dir:
+        import rules
+        full = {l.split("\t")[0]: l.rstrip("\n").split("\t")[1:] for l in list(open(os.path.join(D, "lexicon.tsv")))[1:]}
+        report = {}
+        counts = rules.apply(out, props, rules.Meaning(wn_dir, full), lambda t: rule_token(t, props), errors, report)
+        json.dump({"counts": counts, "words": {k: sorted(v) for k, v in report.items()}}, open(os.path.join(D, "rules.json"), "w"), indent=0)
+        print("rules:", ", ".join(f"{k} {n}" for k, n in counts.items()))
     producers(out, props, errors)
     if dropped or skipped:
         with open(os.path.join(HERE, "..", "data", "generated_problems.txt"), "w") as f:

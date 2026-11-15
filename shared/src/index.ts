@@ -52,3 +52,6 @@ export * from "./sea.js";
 export * from "./sport.js";
 export * from "./idea.js";
 export * from "./bug.js";
+export * from "./speech.js";
+export * from "./round.js";
+export * from "./death.js";

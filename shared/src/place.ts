@@ -3,6 +3,7 @@ import type { Stats } from "./stats.js";
 import type { Op, WordDef } from "./types.js";
 import { areaTime } from "./time.js";
 import { MARKET, marketRatio } from "./letters.js";
+import { speechOf, speechText, type SpeechRule } from "./speech.js";
 
 /**
  * What an area does to the letters earned and the acts done inside it (PLAN.md "Letter
@@ -33,6 +34,8 @@ export interface PlaceRules {
   fine: number;
   /** How fast time runs inside (shared time.ts `time_scale`): letters made, crops growing, ageing into Y. */
   time: number;
+  /** Spelling rules for whoever it reaches (shared speech.ts): banned letters, costs, word limits, blanks. */
+  speech?: SpeechRule;
 }
 
 /** Acts a `law` can forbid, and how each reads. */
@@ -74,8 +77,10 @@ export function placeRules(def: WordDef, s: Stats): PlaceRules | null {
     fine: Math.max(0, num("fine")),
     time: areaTime(s.num("time_scale"), def.ops),
   };
+  const speech = speechOf(s);
+  if (speech) rules.speech = speech;
   const changes = Object.keys(yields).length || rules.growth !== 1 || rules.deposits !== 1 || rules.tax > 0 ||
-    (rules.lode.length && rules.lodeShare > 0) || rules.tradeRate !== 1 || rules.law.length || rules.time !== 1;
+    (rules.lode.length && rules.lodeShare > 0) || rules.tradeRate !== 1 || rules.law.length || rules.time !== 1 || !!speech;
   return changes ? rules : null;
 }
 
@@ -146,5 +151,6 @@ export function rulesText(r: PlaceRules): string[] {
   }
   if (marketRatio(r.tradeRate) !== MARKET.ratio) { const n = marketRatio(r.tradeRate); out.push(`markets ask ${n} letter${n === 1 ? "" : "s"} for 1`); }
   for (const l of r.law) out.push(r.fine > 0 ? `${LAWS[l]!}, or a fine of ${fmt(r.fine)} letters to its maker` : LAWS[l]!);
+  out.push(...speechText(r.speech ?? null));
   return out;
 }

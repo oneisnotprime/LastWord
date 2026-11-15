@@ -1,3 +1,4 @@
+import { helpful, lastStandOf, livesOf, speechOf, stormBendOf } from "@lastword/shared";
 import { ACTION_LETTERS, becomes, cannotRide, pactOf, doorGuard, hatches, matured, opensDoors, resolveSpelled, cooks, GRAFT_CAPABILITIES, GROUNDED_FROM, isBoon, isGraft, isTrap, parsePhrase, placeRules, pluralize, producerOf, sails, STATUSES, TILE_METERS, TILE_TYPES, WORN_SLOTS, type Dictionary, type Letters, type Op, type Stats, type Status } from "@lastword/shared";
 
 /**
@@ -76,7 +77,8 @@ export type Use = "weapon" | "armor" | "mount" | "creature" | "producer" | "clai
  */
 export type ThemeUse = "warm" | "disguise" | "graft" | "cure" | "hex" | "duel" | "gift" | "loan" | "bribe" | "trap" | "lie" | "jam"
   | "shrine" | "miracle" | "morale" | "haste" | "rewind" | "gravity" | "vessel" | "fishing" | "luck" | "borer" | "siege" | "guard"
-  | "breakout" | "fealty" | "rebel" | "antiair";
+  | "breakout" | "fealty" | "rebel" | "antiair"
+  | "stormhold" | "stormhurry" | "life" | "stand" | "wordsmith" | "censor" | "mutiny";
 
 /** What the bot tournament lists as the themes' systems (`botUsed` names), in order. */
 export const THEME_SYSTEMS = [
@@ -85,6 +87,8 @@ export const THEME_SYSTEMS = [
   "shrine", "sacrifice", "miracle", "weather", "haste", "rewind", "gravity", "vessel", "sail", "fishing", "catch", "duel", "luck", "sell",
   "hide", "shelter", "store", "raid", "break in", "borer", "siege", "bolt door", "grow up",
   "trap sprung", "captured", "held", "breakout", "fealty", "tribute", "rebel", "antiair", "target", "target spelled",
+  // The round's systems (concept rules): the storm wall, spelling rules, command, death.
+  "storm", "storm hold", "storm hurry", "wordsmith", "censor", "mutiny", "life", "stand", "life used", "last stand", "raised", "haunt", "revive", "revived",
 ] as const;
 
 export interface BotWord {
@@ -135,7 +139,24 @@ export function held(letters: Letters): Uint8Array {
   return c;
 }
 
+/**
+ * Held letters as counts under the spelling rules binding a bot (shared speech.ts): banned letters
+ * count as none, a tax divides what it has. `limit` is the longest word it may spell (0: any).
+ */
+export function heldUnder(letters: Letters, rules: { banned: readonly string[]; cost: number; limit: number }): Uint8Array {
+  const c = held(letters);
+  for (const ch of rules.banned) c[ch.charCodeAt(0) - A] = 0;
+  if (rules.cost > 1) for (let i = 0; i < 26; i++) c[i] = Math.floor(c[i]! / rules.cost);
+  wordLimit = rules.limit;
+  return c;
+}
+
+/** The longest word the bot thinking now may spell (shared speech.ts `word_limit`), 0 for any: set by `heldUnder`. */
+let wordLimit = 0;
+export const currentWordLimit = (): number => wordLimit;
+
 export function affords(have: Uint8Array, w: BotWord): boolean {
+  if (wordLimit > 0 && w.word.length > wordLimit) return false;
   for (let i = 0; i < 26; i++) if (w.cost[i]! > have[i]!) return false;
   return true;
 }
@@ -401,6 +422,7 @@ function themeUses(word: string, archetype: string, ops: readonly Op[], p: Retur
     if (s.get("portable") === false && (s.num("faith_output") > 0 || s.num("sacrifice") > 0)) add("shrine", s.num("faith_output") + s.num("sacrifice"));
     if (s.flag("mountable") && sails(s)) add("vessel", s.num("speed_water") + s.num("integrity") / 1000);
     if (!s.flag("mountable") && String(s.get("harvest_sources")).split(",").includes("fishing") && slot === "held") add("fishing", s.num("harvest_bonus"));
+    conceptUses(p, s, placement, targets, false, false, false, add);
     return;
   }
   // Statuses passed on a foe, at them or at their spot (FATE, CURSE, CHAOS, PROVOCATION, WANTED, DEBT, STASIS).
@@ -435,6 +457,32 @@ function themeUses(word: string, archetype: string, ops: readonly Op[], p: Retur
   const pact = pactOf(s);
   if (pact && pact.tribute > 0) add("fealty", pact.tribute * 10 + pact.size, { aim: "walker", reach: Math.max(1.5, s.num("placement_range") / TILE_METERS) });
   if (atSpot && multiplied(ops, "gravity") >= GROUNDED_FROM) add("gravity", multiplied(ops, "gravity"), { aim: "spot", reach: Math.max(1.5, s.num("placement_range") / TILE_METERS) });
+  conceptUses(p, s, placement, targets, atWalker, atSpot, atSelf, add);
+}
+
+/**
+ * Uses of the round's systems (concept rules), read from shared properties: `stormhold` and
+ * `stormhurry` (the storm wall), `life` (extra lives for itself), `stand` (a last stand),
+ * `wordsmith` (a spelling rule that helps its speller: blanks, cheaper words, typos), `censor`
+ * (one that hinders: banned letters, taxes, word limits, at a foe), `mutiny` (followers of others).
+ */
+function conceptUses(p: ReturnType<typeof parsePhrase>, s: Stats, placement: string, targets: string, atWalker: boolean, atSpot: boolean, atSelf: boolean,
+  add: (use: Use, score: number, extra?: Partial<BotWord>) => void) {
+  const reach = Math.max(1.5, s.num("placement_range") / TILE_METERS);
+  const bend = stormBendOf(s);
+  if (bend && bend.pause > 0 && !bend.sudden && !(bend.shift > 0)) add("stormhold", bend.pause / p.letters.length, { aim: "self" });
+  if (bend && (bend.shift > 0 || bend.sudden)) add("stormhurry", (bend.sudden ? 300 : bend.shift) / p.letters.length, { aim: "self" });
+  const lives = livesOf(s);
+  if (lives > 0 && !atWalker && (p.kind !== "object" || becomes(s) === "worn" || String(s.get("equip_slot")) !== "none")) add("life", Math.min(5, lives) * 10 / p.letters.length, { aim: "self" });
+  if (lastStandOf(s) > 0 && (p.kind === "verb" || atSelf)) add("stand", lastStandOf(s) / p.letters.length, { aim: "self" });
+  const rule = speechOf(s);
+  if (rule && helpful(rule) && (p.kind === "object" || atSelf) && !(p.kind === "object" && s.num("field_radius") > 0 && targets === "enemies")) {
+    add("wordsmith", (rule.wild * 3 + (1 - Math.min(1, rule.cost)) * 5 + (rule.double ? 2 : 0) + rule.typos + (rule.free ? 1 : 0)) * 4 / p.letters.length, { aim: "self" });
+  }
+  if (rule && !helpful(rule) && (atWalker || atSpot || (p.kind !== "object" && placement !== "target" && targets !== "owned" && targets !== "self"))) {
+    add("censor", ((rule.ban ? 3 : 0) + Math.max(0, rule.cost - 1) * 4 + (rule.limit ? 8 / rule.limit : 0)) * 3 / p.letters.length, { aim: atWalker ? "walker" : atSpot ? "spot" : "self", reach });
+  }
+  if (s.num("mutiny") > 0) add("mutiny", s.num("mutiny") / p.letters.length, { aim: atSpot || atWalker ? "spot" : "self", reach });
 }
 
 /**

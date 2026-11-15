@@ -117,6 +117,11 @@ Word classes and what they usually set, by example below:
 - creatures: alive, diet, speeds, integrity, damage, senses; ridable ones mountable and seats
 - terrain: tile_type and radius; sky words placement=sky and their field
 - events: placement, event_target, contest_with and contested_by, damage, durations
+- the four round systems, when the word means them (tools/rules.txt gives the commonest meanings
+  these by rule; set them yourself for anything the rules miss): spelling rules (ban_letters,
+  spell_cost, word_limit, wild_letters, double_letters, misspell_ok, free_speech), command
+  (command_limit, mutiny, mutiny_joins), death (prevents_death, last_stand, revives, haunts, raises,
+  entombs, denies_revival) and the storm wall (storm_pause, storm_shift, sudden_death)
 - adjectives and adverbs: * and + operations
 - verbs: duration and * or + operations on the caster
 

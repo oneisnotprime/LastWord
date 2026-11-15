@@ -285,7 +285,10 @@ it("fights: armor breaks before the body, the dead are knocked out and the last 
   const recap = got.b.find(([t]) => t === "dead")![1] as any;
   expect(recap).toMatchObject({ killer: wa.player.name, what: "GUN" });
   expect(recap.top[0]).toMatchObject({ who: wa.player.name, what: "GUN", kind: "pierce" });
-  expect(wa.letters.z).toBe(3); // the dead player's letters go to the killer
+  // The dead player's letters: the commoner half to the killer, the rarer half into a GRAVE where they fell (shared death.ts).
+  expect(wa.letters.z).toBe(1);
+  const grave = [...(room as any).grounded.values()].find((g: any) => g.graveOf === b.sessionId);
+  expect(grave?.hoard).toBe("zz");
   expect(got.a.some(([t]) => t === "won")).toBe(true);
 });
 

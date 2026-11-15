@@ -1224,6 +1224,42 @@
    "core": false
   },
   {
+   "word": "priestess",
+   "set": {
+    "command_limit": 3,
+    "recruit_rate": 0.5
+   },
+   "ops": [
+    [
+     "integrity",
+     "mul",
+     1.15
+    ],
+    [
+     "res_poison",
+     "add",
+     0.3
+    ],
+    [
+     "produce_Y",
+     "mul",
+     2
+    ],
+    [
+     "armor",
+     "add",
+     6
+    ],
+    [
+     "res_unholy",
+     "add",
+     0.5
+    ]
+   ],
+   "letters": "yk",
+   "core": false
+  },
+  {
    "word": "pontiff",
    "set": {
     "command_limit": 8.0,
@@ -1294,6 +1330,37 @@
    "core": false
   },
   {
+   "word": "hero",
+   "set": {
+    "command_limit": 3,
+    "recruit_rate": 0.5
+   },
+   "ops": [
+    [
+     "speed_land",
+     "mul",
+     1.1
+    ],
+    [
+     "strength",
+     "add",
+     2
+    ],
+    [
+     "armor",
+     "add",
+     6
+    ],
+    [
+     "integrity",
+     "mul",
+     1.15
+    ]
+   ],
+   "letters": "k",
+   "core": false
+  },
+  {
    "word": "bishop",
    "set": {
     "command_limit": 4,
@@ -1322,6 +1389,103 @@
     ]
    ],
    "letters": "k",
+   "core": false
+  },
+  {
+   "word": "canon",
+   "set": {
+    "command_limit": 3,
+    "authority": 2
+   },
+   "ops": [
+    [
+     "produce_Y",
+     "mul",
+     2
+    ],
+    [
+     "armor",
+     "add",
+     6
+    ],
+    [
+     "integrity",
+     "mul",
+     1.15
+    ],
+    [
+     "res_unholy",
+     "add",
+     0.5
+    ]
+   ],
+   "letters": "syk",
+   "core": false
+  },
+  {
+   "word": "reverend",
+   "set": {
+    "command_limit": 3,
+    "recruit_rate": 0.5
+   },
+   "ops": [
+    [
+     "integrity",
+     "mul",
+     1.15
+    ],
+    [
+     "res_poison",
+     "add",
+     0.3
+    ],
+    [
+     "armor",
+     "add",
+     6
+    ],
+    [
+     "res_unholy",
+     "add",
+     0.5
+    ]
+   ],
+   "letters": "k",
+   "core": false
+  },
+  {
+   "word": "shaman",
+   "set": {
+    "command_limit": 3
+   },
+   "ops": [
+    [
+     "integrity",
+     "mul",
+     1.15
+    ],
+    [
+     "res_poison",
+     "add",
+     0.3
+    ],
+    [
+     "produce_Y",
+     "mul",
+     2
+    ],
+    [
+     "armor",
+     "add",
+     6
+    ],
+    [
+     "res_unholy",
+     "add",
+     0.5
+    ]
+   ],
+   "letters": "yk",
    "core": false
   },
   {
@@ -1357,41 +1521,6 @@
     ]
    ],
    "letters": "jdk",
-   "core": false
-  },
-  {
-   "word": "priestess",
-   "set": {
-    "recruit_rate": 0.5
-   },
-   "ops": [
-    [
-     "integrity",
-     "mul",
-     1.15
-    ],
-    [
-     "res_poison",
-     "add",
-     0.3
-    ],
-    [
-     "produce_Y",
-     "mul",
-     2
-    ],
-    [
-     "armor",
-     "add",
-     6
-    ],
-    [
-     "res_unholy",
-     "add",
-     0.5
-    ]
-   ],
-   "letters": "yk",
    "core": false
   },
   {
@@ -1524,9 +1653,9 @@
    "core": false
   },
   {
-   "word": "hero",
+   "word": "victor",
    "set": {
-    "recruit_rate": 0.5
+    "command_limit": 3
    },
    "ops": [
     [
@@ -1581,36 +1710,6 @@
     ]
    ],
    "letters": "sk",
-   "core": false
-  },
-  {
-   "word": "canon",
-   "set": {
-    "authority": 2
-   },
-   "ops": [
-    [
-     "produce_Y",
-     "mul",
-     2
-    ],
-    [
-     "armor",
-     "add",
-     6
-    ],
-    [
-     "integrity",
-     "mul",
-     1.15
-    ],
-    [
-     "res_unholy",
-     "add",
-     0.5
-    ]
-   ],
-   "letters": "syk",
    "core": false
   },
   {
@@ -1791,36 +1890,6 @@
    "core": false
   },
   {
-   "word": "reverend",
-   "set": {
-    "recruit_rate": 0.5
-   },
-   "ops": [
-    [
-     "integrity",
-     "mul",
-     1.15
-    ],
-    [
-     "res_poison",
-     "add",
-     0.3
-    ],
-    [
-     "armor",
-     "add",
-     6
-    ],
-    [
-     "res_unholy",
-     "add",
-     0.5
-    ]
-   ],
-   "letters": "k",
-   "core": false
-  },
-  {
    "word": "sniper",
    "set": {},
    "ops": [
@@ -1914,6 +1983,36 @@
      "integrity",
      "mul",
      1.15
+    ]
+   ],
+   "letters": "k",
+   "core": false
+  },
+  {
+   "word": "cleric",
+   "set": {
+    "command_limit": 3
+   },
+   "ops": [
+    [
+     "integrity",
+     "mul",
+     1.15
+    ],
+    [
+     "res_poison",
+     "add",
+     0.3
+    ],
+    [
+     "armor",
+     "add",
+     6
+    ],
+    [
+     "res_unholy",
+     "add",
+     0.5
     ]
    ],
    "letters": "k",
@@ -2046,39 +2145,6 @@
     ]
    ],
    "letters": "k",
-   "core": false
-  },
-  {
-   "word": "shaman",
-   "set": {},
-   "ops": [
-    [
-     "integrity",
-     "mul",
-     1.15
-    ],
-    [
-     "res_poison",
-     "add",
-     0.3
-    ],
-    [
-     "produce_Y",
-     "mul",
-     2
-    ],
-    [
-     "armor",
-     "add",
-     6
-    ],
-    [
-     "res_unholy",
-     "add",
-     0.5
-    ]
-   ],
-   "letters": "yk",
    "core": false
   },
   {
@@ -2544,55 +2610,6 @@
     ]
    ],
    "letters": "ctd",
-   "core": false
-  },
-  {
-   "word": "quarryman",
-   "set": {
-    "harvest_sources": [
-     "quarry"
-    ],
-    "harvest_bonus": 3.0
-   },
-   "ops": [
-    [
-     "strength",
-     "add",
-     2
-    ],
-    [
-     "armor",
-     "add",
-     6
-    ],
-    [
-     "integrity",
-     "mul",
-     1.15
-    ]
-   ],
-   "letters": "gk",
-   "core": false
-  },
-  {
-   "word": "director",
-   "set": {
-    "command_limit": 8.0,
-    "authority": 3
-   },
-   "ops": [
-    [
-     "produce_B",
-     "mul",
-     2
-    ],
-    [
-     "produce_Y",
-     "mul",
-     2
-    ]
-   ],
-   "letters": "sby",
    "core": false
   }
  ],

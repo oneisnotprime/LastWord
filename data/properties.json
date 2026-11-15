@@ -1,5 +1,5 @@
 {
- "count": 425,
+ "count": 443,
  "groups": {
   "physical": 48,
   "mobility": 25,
@@ -14,7 +14,8 @@
   "meta": 18,
   "field": 21,
   "event": 23,
-  "effect": 8
+  "effect": 8,
+  "rules": 18
  },
  "damage_types": [
   "blunt",
@@ -3371,6 +3372,137 @@
    "desc": "integrity restored",
    "unit": "hp",
    "default": 0
+  },
+  {
+   "id": "ban_letters",
+   "group": "rules",
+   "type": "text",
+   "desc": "letters whoever it binds cannot spell with: letters (e or qz), vowels, or top (each one's commonest held letter); a field, event or thing that radiates binds whoever its area reaches, an act passed on a person binds them, a verb its speller, a thing anyone owns its owner (shared speech.ts)",
+   "default": ""
+  },
+  {
+   "id": "spell_cost",
+   "group": "rules",
+   "type": "num",
+   "desc": "letters a spelling costs whoever it binds, times this: 1.5 adds half the word's length again in copies of its own letters, 0.5 makes the rarer half free (shared speech.ts)",
+   "unit": "x",
+   "default": 1
+  },
+  {
+   "id": "word_limit",
+   "group": "rules",
+   "type": "num",
+   "desc": "the longest word whoever it binds may spell (0: no limit) (shared speech.ts)",
+   "unit": "letters",
+   "default": 0
+  },
+  {
+   "id": "wild_letters",
+   "group": "rules",
+   "type": "num",
+   "desc": "blanks: letters a spelling by whoever it binds may use without holding them, any letter not banned (shared speech.ts)",
+   "default": 0
+  },
+  {
+   "id": "double_letters",
+   "group": "rules",
+   "type": "text",
+   "desc": "letters that count double for whoever it binds: each one held pays for two copies (letters, vowels, consonants or all) (shared speech.ts)",
+   "default": ""
+  },
+  {
+   "id": "misspell_ok",
+   "group": "rules",
+   "type": "num",
+   "desc": "whoever it binds may spell a word with a letter wrong, missing or extra and it reads as the real word, paid as typed (shared speech.ts)",
+   "default": 0
+  },
+  {
+   "id": "free_speech",
+   "group": "rules",
+   "type": "bool",
+   "desc": "spelling rules others lay do not bind whoever has it: banned letters, costs over 1 and word limits (shared speech.ts)",
+   "default": false
+  },
+  {
+   "id": "mutiny",
+   "group": "rules",
+   "type": "scale",
+   "desc": "followers of others it reaches whose loyalty, less what hunger and fear have cost, is below this break away: they run wild, or join its speller with mutiny_joins (shared mind.ts)",
+   "default": 0
+  },
+  {
+   "id": "mutiny_joins",
+   "group": "rules",
+   "type": "bool",
+   "desc": "followers a mutiny breaks away come over to its speller, within their command (shared mind.ts)",
+   "default": false
+  },
+  {
+   "id": "revives",
+   "group": "rules",
+   "type": "frac",
+   "desc": "brings a knocked-out person back from their ghost with this share of full health and what their grave still holds: a word spelled with the ghost clicked, or a follower or thing of their side beside the ghost, once a minute (shared death.ts)",
+   "default": 0
+  },
+  {
+   "id": "last_stand",
+   "group": "rules",
+   "type": "num",
+   "desc": "when its holder would die they fight on this many seconds, unable to fall and enraged, then fall (shared death.ts)",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "haunts",
+   "group": "rules",
+   "type": "bool",
+   "desc": "a ghost may spell it: the knocked out haunt the living with it, free of letters, one word every 12 s (shared death.ts)",
+   "default": false
+  },
+  {
+   "id": "raises",
+   "group": "rules",
+   "type": "text",
+   "desc": "the creature whatever its holder kills, or whatever dies in its area, rises as, under the killer's (or the area maker's) command (shared death.ts)",
+   "default": ""
+  },
+  {
+   "id": "entombs",
+   "group": "rules",
+   "type": "bool",
+   "desc": "a tomb: at its owner's death every letter they hold goes inside it, not to their killer, for whoever takes or breaks it, or back to them if they are revived (shared death.ts)",
+   "default": false
+  },
+  {
+   "id": "denies_revival",
+   "group": "rules",
+   "type": "bool",
+   "desc": "a death it deals cannot be cheated: no extra life, last stand or rising (shared death.ts)",
+   "default": false
+  },
+  {
+   "id": "storm_pause",
+   "group": "rules",
+   "type": "num",
+   "desc": "holds the storm wall where it is for this many seconds: the round runs that much longer and bosses wait too; a word that counters it ends the hold (shared round.ts)",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "storm_shift",
+   "group": "rules",
+   "type": "num",
+   "desc": "moves the storm wall's clock on this many seconds at once: it closes sooner and bosses come sooner (shared round.ts)",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "sudden_death",
+   "group": "rules",
+   "type": "bool",
+   "desc": "the storm wall jumps to its last circle at once (shared round.ts)",
+   "default": false
   }
  ]
 }
