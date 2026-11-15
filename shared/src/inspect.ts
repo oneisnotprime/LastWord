@@ -12,6 +12,9 @@ import { soundText } from "./sound.js";
 import { moneyText } from "./money.js";
 import { crimeText } from "./crime.js";
 import { signalText } from "./signal.js";
+import { screenText } from "./screen.js";
+import { knowledgeText } from "./knowledge.js";
+import { commsText } from "./comms.js";
 import { faithText } from "./faith.js";
 import { weatherText } from "./weather.js";
 import { timeText } from "./time.js";
@@ -19,6 +22,9 @@ import { spaceText } from "./space.js";
 import { seaText } from "./sea.js";
 import { sportText } from "./sport.js";
 import { ideaText } from "./idea.js";
+import { affinityText } from "./affinity.js";
+import { scaleText } from "./scale.js";
+import { controlText } from "./control.js";
 import type { Dictionary } from "./dictionary.js";
 import { GROW_PACE, needsText, producerOf, SEEDLING } from "./produce.js";
 import { parsePhrase, type Phrase } from "./phrase.js";
@@ -266,7 +272,7 @@ export function behaviours(s: Stats, count = 1, cls?: string): string[] {
   if (s.num("luminosity") > 0) out.push("gives off light");
   if (s.num("fear_aura") > 0) out.push(`frightens enemies (fear ${num(s.num("fear_aura"))})`);
   if (s.num("heals") > 0) out.push(`heals allies ${num(s.num("heals"))} a second`);
-  out.push(...interiorText(s, count), ...homeText(s), ...craftText(s), ...techText(s), ...herdText(s), ...bodyText(s), ...wearText(s), ...diseaseText(s), ...emotionText(s), ...soundText(s), ...moneyText(s), ...crimeText(s), ...signalText(s), ...faithText(s), ...weatherText(s), ...batch5(s));
+  out.push(...interiorText(s, count), ...homeText(s), ...craftText(s), ...techText(s), ...herdText(s), ...bodyText(s), ...wearText(s), ...diseaseText(s), ...emotionText(s), ...soundText(s), ...moneyText(s), ...crimeText(s), ...signalText(s), ...screenText(s), ...knowledgeText(s), ...commsText(s), ...faithText(s), ...weatherText(s), ...batch5(s));
   const need = needs(s, count), make = outputs(s, count);
   for (const k of SUPPLIES) {
     if (need[k] > 0) out.push(`draws ${num(need[k])} ${k} a minute${s.flag("alive") ? "" : ` (comes with ${STARTING_SUPPLY_MINUTES} min)`}`);
@@ -319,7 +325,7 @@ export function cardOf(dict: Dictionary, p: Phrase): Card {
     const e = p.effect ?? { set: {}, ops: [] };
     card.does.push(...e.ops.map(opText), ...Object.entries(e.set).map(([k, v]) => setText(k, v)).filter((x): x is string => !!x));
     if (s.tags("effect_status").length) card.does.push(`cures ${s.tags("effect_status").join(", ")}`);
-    card.does.push(...moneyText(s), ...signalText(s), ...faithText(s), ...batch5(s)); // themes 16, 18, 19, 21-25
+    card.does.push(...moneyText(s), ...signalText(s), ...screenText(s), ...knowledgeText(s), ...commsText(s), ...faithText(s), ...batch5(s)); // themes 16, 18, 19, 21-25
     card.does.push(aimed ?? "acts on you");
     return card;
   }
@@ -338,7 +344,7 @@ export function cardOf(dict: Dictionary, p: Phrase): Card {
     const pact = pactOf(s);
     if (pact) card.does.push(`binds you and ${pact.size - 1} other${pact.size === 2 ? "" : "s"} you pick to one side for ${num(pact.minutes)} min; whoever breaks it pays ${breachText(pact.penalty)}${tributeText(pact)}`);
     if (s.flag("sets_hostile")) card.does.push("creatures in it attack everyone not on your side");
-    card.does.push(...moneyText(s), ...signalText(s), ...faithText(s), ...batch5(s)); // themes 16, 18, 19, 21-25
+    card.does.push(...moneyText(s), ...signalText(s), ...screenText(s), ...knowledgeText(s), ...commsText(s), ...faithText(s), ...batch5(s)); // themes 16, 18, 19, 21-25
     card.does.push(...placeLines(dict, p.noun, s));
     for (const [id] of s.entries()) if (id.startsWith("inflict_") && s.num(id) > 0) card.does.push(`${plain(id)} ${num(statusSeconds(id.slice(8) as Status, s.num(id)))} s`);
     if (s.get("contest_with") && s.get("contested_by")) card.does.push(`your ${words(String(s.get("contest_with")))} against their ${words(String(s.get("contested_by")))}`);
@@ -380,7 +386,11 @@ export function cardOf(dict: Dictionary, p: Phrase): Card {
   const use = useText(dict, p.noun, p.adjectives);
   if (use) does.push(use);
   // Flavour (made of steel, loud) after what changes a fight, unless an adjective made it so.
-  card.does = [...(remade ? materialText(dict, s) : []), ...does.filter((d) => !trivia(d)), ...does.filter(trivia), ...(remade ? [] : materialText(dict, s))];
+  // Its natures, weaknesses and resistances (shared affinity.ts) right after what it does.
+  const natures = kind === "terrain" ? [] : affinityText(s);
+  // What its make-up does to blows is in its weaknesses now; the material line only says what it is made of.
+  const made = kind === "terrain" ? materialText(dict, s) : materialText(dict, s).filter((l) => /^made of /.test(l));
+  card.does = [...(remade ? made : []), ...does.filter((d) => !trivia(d)), ...natures, ...does.filter(trivia), ...(remade ? [] : made)];
   return card;
 }
 
@@ -574,7 +584,7 @@ export function effectText(dict: Dictionary, word: string): string {
 
 /** What themes 21 to 25 add to a card: time, space, sea, sports, abstract ideas. */
 function batch5(s: Stats): string[] {
-  return [...timeText(s), ...spaceText(s), ...seaText(s), ...sportText(s), ...ideaText(s)];
+  return [...timeText(s), ...spaceText(s), ...seaText(s), ...sportText(s), ...ideaText(s), ...scaleText(s), ...controlText(s)];
 }
 
 /** How grand a spelling is, for its entrance (`grand`): the most of its damage and a fifth of its integrity, times how many. */

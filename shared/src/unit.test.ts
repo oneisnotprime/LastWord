@@ -89,7 +89,8 @@ describe("riding", () => {
 
   it("lends the rider's adjectives to the vehicle on top of its own", () => {
     expect(tanker(["fast"]).movement.num("speed_land")).toBe(36);
-    expect(tanker(["fast"], ["big"]).movement.num("speed_land")).toBeCloseTo(36 * 0.9);
+    // BIG's own ×0.9, and its size's longer stride (shared scale.ts).
+    expect(tanker(["fast"], ["big"]).movement.num("speed_land")).toBeCloseTo(36 * 0.9 * resolve(dict, "tank", ["big"]).num("size") ** 0.3);
   });
 
   it("puts the rider on foot when the vehicle is destroyed", () => {
@@ -113,8 +114,9 @@ describe("nothing is indestructible by default", () => {
   it("a god ignores the physical but not the spiritual or magical", () => {
     expect(blow("gun", "god")).toBe(0);
     expect(blow("nuke", "god")).toBe(0);
-    expect(blow("wizard", "god")).toBeCloseTo(landed(300, resolve(dict, "god").num("integrity")));
-    expect(blow("angel", "god")).toBeCloseTo(landed(400, resolve(dict, "god").num("integrity")));
+    // A god is a spirit: magic finds it ×1.5 (shared affinity.ts).
+    expect(blow("wizard", "god")).toBeCloseTo(landed(450, resolve(dict, "god").num("integrity")));
+    expect(blow("angel", "god")).toBeCloseTo(landed(600, resolve(dict, "god").num("integrity")));
     expect(resolve(dict, "god").num("upkeep_food")).toBe(0);
   });
 

@@ -17,13 +17,19 @@ there, which is countered by BIRD, FIRE or WINTER, each of which has its own sid
 | Growth and food | fertility, growth, food output, hunger | farm, locust, famine, fertile, wheat |
 | Life and disease | integrity, regeneration, contagion | plague, doctor, medicine, rot, zombie |
 | Light and sight | light level, visibility, stealth | sun, fog, night, torch, invisible, spy |
-| Force and damage | damage types, resistances, armor | sword, nuke, shield, bunker, sharp |
+| Force and damage | damage types, resistances, natures, armor | sword, nuke, shield, bunker, sharp, ghost, holy |
+| Fortune | luck, rerolls, gambles | clover, horseshoe, jinx, curse, dice, fate |
+| Scale | size, stature | gigantic, tiny, growth, shrink, mouse, titan |
+| Control | wobble, reversed controls, hypnosis, leash, magnetism | beer, reversal, hypnotize, lasso, magnet, sober, awaken, scissors |
 | Matter | mass, hardness, material, conductivity | iron, wooden, magnet, lightning, acid |
 | Movement | speed by medium, movement cost, blocking | jet, wall, swamp, bridge, fly |
 | Production | letter output, labour, upkeep, storage | forge, miner, tax, harvester, vault |
 | Minds | loyalty, morale, fear, authority | king, love, fear, revolt, brave |
 | Ownership | owner, claims, security, agreements | theft, treaty, key, guard, heir |
 | Sky and time | daylight, weather, season, duration | sun, moon, storm, winter, hour |
+| Screen | panels greyed, blanked, scrambled or given back | blind, amnesia, illiteracy, censor, glasses, map |
+| Knowledge | insight (read_properties): counters, racks, what others can spell | book, library, spy, oracle, ignorance, cipher |
+| Communication | voice, hearing, pings, spells said aloud, lies | radio, telepathy, gag, silence, rumour, megaphone |
 
 Rules that follow:
 
@@ -156,6 +162,35 @@ Playtests found power arriving in huge, invisible jumps and fights ending before
   and a round recap (winner, round length, who killed most). Screens close when you are hit.
 - A bot's opening peace covers its creatures: they only defend.
 
+## Concept batch: combat (natures, luck, scale, control)
+
+Four dimensions every word can touch, given by meaning across the dictionary by generator rules
+(`tools/derive.py`, run by `build_demo.py`: class, archetype, first material, a word's own
+properties, WordNet hypernyms and glosses; never a word's name; never over a value a word sets):
+
+- Damage natures (shared `affinity.ts`): every body has natures (beast, insect, plant, undead,
+  spirit, demon, holy, fae, fire, ice, water, stone, metal, wood, glass, cloth, paper, plastic,
+  bone, machine, flesh); `NATURE_MATRIX` says how much of each of the 24 damage types each takes.
+  What lands is raw × (1 − res) × make-up (material.ts) × natures. Things take the flammability,
+  conductivity, brittleness and melting point of their first material (a wooden FENCE burns, a
+  steel SWORD conducts). Hits that meet a weakness say "weak!", a resistance "resists"; cards list
+  both. An attack absolute ignores what a nature resists, not what it is weak to.
+- Luck (shared `idea.ts`): `luck` shifts every roll (gathering, hits, criticals, dodging, a hunt's
+  rare letter, a ruin's X, stepping over a hidden trap, gambles); `rerolls` throws a failure
+  again; `gamble` stakes letters, double or nothing, or between two people (DICE, FATE).
+- Scale (shared `scale.ts`): `size` against a word's own (anything scaling height, length or mass
+  scales it); reach, sight, stride and carrying follow; stature (size times the cube root of the
+  word's mass over a person's) sets the hitbox, the doors it fits through (none past ×2.2, under
+  any shut one at ×0.35) and what it rides (a mount no smaller than its rider; a creature three
+  times its master's stature carries them). The standee is drawn at its size.
+- Control (shared `control.ts`): `wobble` sways a walker, `reversed` mirrors where it means to go,
+  the `hypnosis` status hands its body to its caster, the `leash` status tethers it within four
+  tiles of its holder, a carried magnet pulls enemies' metal. The server applies all of it in
+  `walk`, `compel` and `tether` to people, creatures and bots alike; counters by meaning (SOBER,
+  COFFEE, AWAKEN, a cord-cutting blade carried).
+
+Fight pacing held: bot tournament median time to kill a person 5.5 s before and after.
+
 ## Buildings you walk into
 
 Large buildings have rooms (shared `interior.ts`; rule and numbers in TODO.md "Decided"): a floor
@@ -170,6 +205,28 @@ inside or beside it the roof turns see-through over a planked floor.
 
 Each map can start with five random adjectives applied to the whole map (FROZEN, FERTILE,
 DARK and so on), so the strongest opening differs from round to round. Later priority.
+
+## Screen, knowledge and communication
+
+What a player sees of their own interface, knows of others and hears are shared quantities words
+touch, never private features (shared screen.ts, knowledge.ts, comms.ts):
+
+- Screen: statuses take panels away. BLIND greys the minimap with static and hides others' bars and
+  names; AMNESIA hides the spell preview, the best-words strip and the inventory; ILLITERATE scrambles
+  word cards, the rack, the trade screen and the chips; CENSOR blanks the chips and the feed; SLEEP
+  most of it; a jamming field puts static on the minimap and feed. Things carried or worn, fields and
+  verbs with `restores_panels` give panels back (GLASSES, a MAP, a BOOK, LITERACY, a DIARY, NEWS);
+  `immune_*` keeps the status off and `effect_status` ends it. The server sends the screen in the
+  loadout; the client draws it.
+- Knowledge: insight is `read_properties`. 2 shows the words that end a word on the preview, 5 the
+  letters and gear of people in sight (an intel panel), 8 what they can spell now. Creatures of yours
+  read for you (a SPY, an ORACLE). IGNORANCE and AMNESIA take it away, CIPHER hides you, lies falsify
+  what you read.
+- Communication: pings (HERE, DANGER, HELP, ATTACK, RUN, TRADE, TRUCE) and spells said aloud are
+  heard by your side anywhere and by others within earshot of your voice (louder with a MEGAPHONE,
+  farther with a RADIO or TELEPATHY's `hearing_range`); the deaf hear nothing, the gagged and
+  silenced say nothing; lies (`decoys`: RUMOUR, LIE, PROPAGANDA) send made-up calls and pings.
+- Words get these properties by meaning across the dictionary (`tools/meaning.py`), not one by one.
 
 ## Later
 

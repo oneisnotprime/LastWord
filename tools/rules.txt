@@ -46,7 +46,7 @@ set spell_cost*0.8
 rule limit 4: stammering and halting speech near someone
 when role=noun class=event,aura,affliction,world_state under=stammer,stutter,hesitation,speech_disorder,hiccup,lisp,mumble,babble,gibberish,confusion,amnesia,forgetfulness,stupor,daze,dementia,delirium,muddle
 when role=noun class=event,aura,affliction,world_state word=hiccup,hiccups,stutter,stammer,hesitation,babble,gibberish,amnesia,forgetfulness,dementia,delirium,stupor,daze,muddle,confusion,brainfog,concussion,ignorance,illiteracy,idiocy,stupidity,dyslexia
-when role=verb is=effect_target:touched word=stun,daze,confuse,befuddle,bewilder,muddle,stupefy,dumbfound,hypnotize,mesmerize,silence,shush,interrupt,heckle
+when role=verb is=effect_target:touched word=stun,daze,confuse,befuddle,bewilder,muddle,stupefy,dumbfound,silence,shush,interrupt,heckle
 not is=field_targets:owned|self|allies
 not class=aura,world_state,institution,knowledge,affliction,measure no=field_radius
 set word_limit=4

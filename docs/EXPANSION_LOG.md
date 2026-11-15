@@ -292,3 +292,62 @@ into `tools/generated_words.txt`, letters in `tools/producers.txt`). Art is draw
   13, FOE 12, AVAIL 7, MONO 6), 1.8% of 5,989 spellings, from about 0.9% of racks.
 - Remaining: `tools/freq_todo.txt` (3,000 words, rank order) starts at ENTHUSIAST (rank 15,809),
   EPILEPSY, ESTIMATION, EXCAVATION, EXTREMIST, FEEDER, FLATTERING, FORCIBLY.
+
+## Concept: screen, knowledge and communication
+
+- Not a word batch: three shared systems (shared `screen.ts`, `knowledge.ts`, `comms.ts`) and meaning
+  rules (`tools/meaning.py`) that give their properties across the whole dictionary by WordNet sense
+  and gloss, applied by how each word acts (weapon, event, field, carried thing, verb, adjective).
+- Screen: new statuses AMNESIA, ILLITERATE, CENSOR and GAG; BLIND, SLEEP, CONFUSE and CHAOS also take
+  panels. About 1,040 words touch the screen: 80 inflict amnesia (clubs, hammers, knockouts,
+  CONCUSSION), 105 blind, 412 confuse, 102 sleep, 25 censor (every jammer, REDACTION, CENSORSHIP), 6
+  illiterate (BABEL, JARGON, NONSENSE); 129 restore panels (GLASSES and goggles, MAP, CHART, COMPASS,
+  every book and reference work, schools, diaries and notebooks, news and broadcasting).
+- Knowledge: `read_properties`, which about 500 words already set and nothing read, is now insight:
+  790 words; 358 give 2 or more (counters), 156 give 5 or more (racks: spies, detectives, libraries,
+  scholars), 32 give 8 or more (what others can spell: ORACLE, SEER, PROPHET, ASTROLOGER, TRUTH).
+- Communication: pings and spells said aloud; about 1,560 words touch it, mostly through `loudness`
+  (1,240: a voice carries farther), `hearing_range` (97: RADIO, PHONE, TELEPATHY), lies' `decoys`
+  (165 now also send made-up calls and DANGER pings), and the deaf, silenced and gagged.
+- Pitfall: GAG and BLINDFOLD were artifacts (objects on the ground) though their data read as events;
+  GAG is now an act in demo_words.txt. Check `parsePhrase(...).kind` for any word meant to land on someone.
+## Concept batch: combat (damage natures, luck, scale, control)
+
+- Four dimensions as shared systems, given by meaning across the whole dictionary by generator
+  rules (`tools/derive.py`, run by `build_demo.py` after the hand-written and generated words are
+  read; class, archetype, first material, own properties, WordNet hypernyms and glosses; a rule never
+  overrides what a word sets). PLAN.md "Concept batch: combat" has the rules.
+- Damage natures (shared `affinity.ts`): 24 natures, an explicit matrix over the 24 damage types.
+  Natures on 5,984 nouns: every creature (992), person (1,403, flesh: no weakness of their own) and
+  plant (417), 89% of artifacts; by nature flesh 1,675, metal 825, stone 691, beast 586, wood 520,
+  plant 411, cloth 409, machine 207, plastic 180, insect 171, paper 148, reptile 100, glass 99, fire
+  64, fish 57, water 46, spirit 32, holy 28, fae 18, ice 16, demon 15, fungus 11, bone 7, undead 5.
+  Things now take their first material's flammability (1,292 words), conductivity (947),
+  brittleness (697) and melting point (1,306): a wooden FENCE burns, a steel SWORD conducts. 4,746
+  of 7,224 bodies have a weakness, resistance or immunity on their card. A HAMMER passes through a
+  GHOST ("immune"), a TORCH burns a ZOMBIE ×1.5 ("weak!"), a SWORD on a stone WALL "resists".
+- Luck (shared `idea.ts`): 268 words move luck (CLOVER, HORSESHOE, AMULET, TALISMAN, JUJU, LUCKY,
+  SERENDIPITY up; JINX, MISFORTUNE, DISASTER, CURSE's status down), 14 reroll or gamble (DICE
+  rerolls and gambles 6 letters, FATE throws 8 letters between two people, ROULETTE, CASINO,
+  LOTTERY, RAFFLE, SWEEPSTAKES). Luck reaches a hunt's rare letter, a ruin's X, gathering misses
+  (rerolled), hidden traps (the lucky step over) and gambles.
+- Scale (shared `scale.ts`): 262 words change size, from what they do to height, length or mass
+  (GIGANTIC ×3, COLOSSAL ×8, TITANIC ×10, HUGE ×4, GROWTH ×2 for your side, TINY and MINIATURE ×0.1,
+  SHRINK and SHRINKAGE ×0.25, potions and the geological ages alike). Stature: a GIANT (8 t) or a
+  GIGANTIC person cannot enter a house, a MOUSE or a SHRUNK person slips under an enemy's door, a
+  GIGANTIC rider cannot ride a HORSE, a SHRUNK one rides their own WOLF.
+- Control (shared `control.ts`): 133 words steer bodies (49 alcoholic drinks and DIZZY sway;
+  REVERSAL, IRONY, MIRAGE reverse controls; HYPNOTIZE, MESMERIZE, HYPNOTISM, ENCHANTMENT, DOMINATION,
+  MANIPULATION, POSSESSION, PUPPET hypnotize; LASSO, ROPE, CHAIN, HARPOON, OCTOPUS, VINE, KUDZU,
+  NOOSE, HALTER, MARIONETTE leash instead of rooting; MAGNET, LODESTONE, DYNAMO pull metal) and 115
+  end it (SOBER, COFFEE, TEA, SOBRIETY; AWAKEN, REVEILLE and whatever ends sleep or charm;
+  SCISSORS, SHEARS, HACKSAW, SEVER).
+- Judgement calls: GIANT, TITAN and MOUSE stay creatures (big or small by their own mass) rather
+  than becoming adjectives; frequency batch 3's GIGANTIC (×3) was kept over this batch's (×4).
+  MINIATURE became an adjective (it was a painting). REVERSAL now reverses controls instead of
+  swapping owners. BLACK CAT is two words; nothing was made of it. Holy damage still hurts the holy
+  (a god must fall to it, TODO.md "Decided").
+- Tournament (24 rooms, 8 mixed bots, 30 min cap, same seeds; main against this batch, both on the
+  frequency batch 2 dictionary): mean round 8.4 -> 8.5 min; median first death 158 -> 137 s; median
+  time to kill a person 5.5 -> 5.5 s (p25 1.3 -> 1.8, p75 13.7 -> 11.4, under 2 s 52 -> 43 of 168);
+  creatures 0.0 -> 1.9 s; no round at the cap either way.

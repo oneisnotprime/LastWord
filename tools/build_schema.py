@@ -14,7 +14,7 @@ OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data")
 DAMAGE = ("blunt slash pierce crush fire cold electric acid poison radiation blast sonic light dark "
           "water wind earth psychic holy unholy disease magic suffocation hunger").split()
 MEDIA = "land water air underground space".split()
-STATUS = "stun slow blind fear burn freeze poison bleed sleep charm silence root confuse shrink sick rage deaf debt curse bless expose haste stasis truce chaos void doom".split()
+STATUS = "stun slow blind fear burn freeze poison bleed sleep charm silence root confuse shrink sick rage deaf debt curse bless expose haste stasis truce chaos void doom amnesia illiterate censor gag drunk reverse hypnosis leash".split()
 
 # What the newer statuses do, for the generator's prompt (the rest explain themselves).
 STATUS_MEANS = {
@@ -27,6 +27,14 @@ STATUS_MEANS = {
     "chaos": " (chaos: a handful of their properties (speed, damage rate, armour, aim, strength, sight...) are each multiplied by a random 0.25 to 3 while it lasts: shared idea.ts)",
     "void": " (void: nothing they carry, wear, ride or stand in does anything, and their own damage, statuses and flight are nothing: shared idea.ts)",
     "doom": " (doom: a sealed fate: when it runs out the body takes three quarters of its full integrity as damage nothing resists, unless ended first (effect_status=doom): shared idea.ts)",
+    "amnesia": " (amnesia: forgets: the spell preview, the best-words strip, the inventory and the intel panel go blank, insight (read_properties) is nothing; MEMORY, a DIARY, a NOTEBOOK restore: shared screen.ts)",
+    "illiterate": " (illiterate: cannot read: word cards, the letter rack, the trade screen, the preview and the chips are scrambled letters; LITERACY, a DICTIONARY, a SCHOOL restore: shared screen.ts)",
+    "censor": " (censor: not told: the event chips and the feed of calls, pings and kills go black; NEWS, a NEWSPAPER, a RADIO restore: shared screen.ts)",
+    "gag": " (gag: says nothing: cannot ping, and its spelling is not called out to anyone, grand words included: shared comms.ts)",
+    "drunk": " (drunk: sways as it walks (wobble 5), aims worse; SOBER and AWAKEN-like cures end it: shared control.ts)",
+    "reverse": " (reverse: its controls are reversed: it walks the opposite way to where it means to go: shared control.ts)",
+    "hypnosis": " (hypnosis: whoever put it on them steers their body: it walks where they walk and strikes what they strike, never them; AWAKEN ends it: shared control.ts)",
+    "leash": " (leash: tethered to whoever put it on them: it cannot go farther than 4 tiles from them and is dragged along; a blade that cuts cords (SCISSORS) carried or used snaps it: shared control.ts)",
     "expose": " (expose: shown on every enemy's threat arrows wherever they are, no stealth or disguise; immune_expose also keeps letters from being read: shared signal.ts)",
 }
 
@@ -64,6 +72,8 @@ loudness|scale|0||noise it makes: from 3 up it gives away where its maker is on 
 odor|scale|0||smell it gives off; reveals position
 state|enum|solid|solid,liquid,gas,plasma,energy,none|state of matter
 material|tags|||what it is made of (wood, steel, flesh, stone ...)
+nature|tags|||what kind of body it is for damage (beast, insect, plant, undead, spirit, demon, holy, fire, ice, water, stone, metal, wood, glass, cloth, paper, plastic, machine, bone, flesh...): each nature takes some damage types more or less (the matrix in shared affinity.ts); adjectives add theirs; given by tools/derive.py from class, material and meaning
+size|num|1|x|its size against what the word is by itself: GIANT, GROWTH ×2 to ×4, TINY, SHRINK ×0.1 to ×0.4; scales its reach, sight, stride, carrying, hitbox, which doors it fits through and what it can ride (shared scale.ts)
 shape|enum|irregular|irregular,flat,round,long,hollow,pointed,sheet,pile|rough form
 color|text|||dominant color
 edible|bool|false||can be eaten
@@ -146,13 +156,16 @@ camouflage|tags|||terrain types where stealth doubles
 cover|frac|0||damage reduction it gives things behind or inside it
 untargetable|bool|false||cannot be chosen as a target
 anchored|bool|false||held fast: no pull, push, knockback or waves move or rock it, and its rider (shared space.ts, sea.ts)
+rerolls|num|0||a second chance: each point rolls a failed gathering, hit, dodge or critical roll again, and gives a gamble one more throw (shared idea.ts)
+wobble|scale|0||drunken sway: it veers side to side as it walks, wider the higher (shared control.ts)
+reversed|scale|0||above 0 its controls are reversed: it walks away from where it means to go (shared control.ts)
 luck|scale|0||shifts its holder's dice: each point adds 3% to gathering odds and to hitting, landing criticals and dodging; negative is misfortune (shared idea.ts)
 peace|num|0|s|carried or following: gives whoever takes it a truce for this many seconds, once (untouchable, cannot strike or spell); a word that ends truce (effect_status=truce) breaks it (shared sport.ts)
 indestructible|bool|false||defence absolute: integrity cannot reach 0
 """.strip().split("\n"))
 GROUPS["perception"] = """
 sight_range|num|10|m|how far it sees
-hearing_range|num|10|m|how far past earshot it hears noise (shared sound.ts)
+hearing_range|num|10|m|how far past earshot it hears noise, others' pings and spells said aloud (a RADIO 3000 hears the whole map: shared sound.ts, comms.ts)
 smell_range|num|0|m|how far it detects odor
 night_vision|bool|false||sees without light
 sees_through|tags|||things its sight ignores (walls, fog, water)
@@ -160,7 +173,7 @@ detect_stealth|scale|0||cancels this much stealth
 detect_underground|bool|false||sees burrowed and buried things
 detect_letters|num|0|m|range at which it shows letter sources
 detect_life|num|0|m|range at which it shows living things
-read_properties|scale|0||how much of another player's stats it reveals
+read_properties|scale|0||insight: 2 shows the words that end a word on the spell preview and cards, 5 the letters and gear of people in sight on the intel panel, 8 also what they can spell now; your creatures read in their sight; immune_expose hides, lies falsify (shared knowledge.ts)
 read_inventory|bool|false||an event passed on a person (SPY, AUDIT, ESPIONAGE): tells its speller every letter and thing they hold, unless immune_expose (shared signal.ts)
 map_reveal|num|0|tiles|radius of map uncovered around it; left on the ground, it watches that ground on its owner's minimap (shared tech.ts)
 tracking|scale|0||follows targets that left sight
@@ -314,13 +327,14 @@ contagion|frac|0||chance per minute it spreads to a neighbour; a word that infli
 sets_daylight|enum|none|none,day,night|forces day or night in its field
 sets_weather|text|||weather it starts in its field
 clears_weather|tags|||weather it ends in its field; a weather word with a tile_type lays it in patches over the land while it lasts (snow over grass and shallow water, floods beside water, drought dries shallow water to sand: shared weather.ts)
-decoys|num|0||false marks it puts on the threat arrows and minimaps of everyone its field reaches: that many made-up people closing in; seen through with detect_stealth 5 or more (shared signal.ts)
+decoys|num|0||false marks it puts on the threat arrows and minimaps of everyone its field reaches: that many made-up people closing in; seen through with detect_stealth 5 or more; those it fools also get made-up spell calls and DANGER pings, and read false racks (shared signal.ts, comms.ts, knowledge.ts)
 time_scale|num|1|x|how fast time runs for whoever it is on or its field reaches (field words: an operation, time_scale*0.5): movement, attacks and statuses wearing off; inside an area also letters made, crops growing and things ageing into Y run this many times as fast (shared time.ts)
 gravity|num|1|g|the pull of the ground on whoever it reaches (field words: an operation, gravity*0.2): under 1 they bound faster, shots fly farther and blows knock them back farther, under 0.3 they float over water and walls; over 1 they plod and shoot short, and from 3 nothing can fly (shared space.ts)
 pull|num|0|m/s|its field draws every body it reaches toward its centre this fast (negative pushes them out); anchored bodies stay put (shared space.ts)
 meteors|num|0|/min|its field drops this many impacts a minute near people inside it: each strikes with the word's own damage over its attack_area (a METEOR SHOWER, STARFALL) (shared space.ts)
 waves|num|0|m|rough water in its field: vessels afloat take damage by wave height against their length (a big ship rides it out) and sail slower; anchored ones are spared (shared sea.ts)
-jams|bool|false||its field blacks out the minimap and watching things (MAP, RADAR, CAMERA) of everyone it reaches (shared signal.ts)
+jams|bool|false||its field blacks out the minimap and watching things (MAP, RADAR, CAMERA) of everyone it reaches, and puts static on their feed of calls and pings (shared signal.ts, screen.ts)
+restores_panels|tags|||screen panels it gives back whatever greys them, carried, worn, as a field or a verb in force: minimap, bars (others' health and names), preview, best, inventory, trade, rack, chips, feed, cards, intel, or all (GLASSES minimap,bars; LITERACY cards,rack; MAP minimap: shared screen.ts)
 """
 GROUPS["event"] = """
 takes_city|bool|false||makes its speller the ruler of a city it reaches (conquest, coup, election)
@@ -356,6 +370,7 @@ effect_delta|num|0||amount added to that property
 effect_multiplier|num|1|x|multiplier applied to that property
 effect_status|tags|||status effects it applies or removes
 restores|num|0|hp|integrity restored
+gamble|num|0||spelled or used: stakes this many of its speller's letters on a throw (half, shifted by luck): won, they come back doubled; lost, they are gone; passed on a person, the loser pays the winner (shared idea.ts)
 """
 
 GROUPS["rules"] = """

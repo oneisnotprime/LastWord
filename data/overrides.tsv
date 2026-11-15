@@ -451,6 +451,7 @@ ammonia	noun	liquid
 ammonite	noun	natural_object
 ammonium	noun	material
 ammunition	noun	artifact
+amnesia	noun	knowledge
 amnesty	noun	possession
 amoeba	noun	creature
 amorous	adjective	quality
@@ -1000,6 +1001,7 @@ avoidance	noun	act
 await	verb	social
 awaited	adjective	quality
 awake	adjective	quality
+awaken	verb	body
 awakening	noun	act
 award	noun	artifact
 aware	adjective	quality
@@ -1024,6 +1026,7 @@ baa	noun	event
 baba	noun	food
 babble	noun	event
 babe	noun	person
+babel	noun	act
 baboon	noun	mammal
 baby	noun	person
 babysitter	noun	worker
@@ -2304,7 +2307,7 @@ cement	noun	material
 cemetery	noun	place
 cenotaph	noun	structure
 cenozoic	adjective	pertaining
-censor	noun	person
+censor	noun	worker
 censorship	noun	act
 census	noun	knowledge
 cent	noun	currency
@@ -2830,6 +2833,7 @@ colored	adjective	participle
 colorful	adjective	quality
 coloring	noun	food
 colors	noun	artifact
+colossal	adjective	quality
 colossus	noun	supernatural
 colour	noun	material
 coloured	adjective	quality
@@ -4291,6 +4295,7 @@ division	noun	group
 divorce	noun	act
 divorced	adjective	participle
 divot	noun	depression
+dizzy	adjective	quality
 djinn	noun	supernatural
 djinni	noun	supernatural
 dobsonfly	noun	insect
@@ -5689,6 +5694,7 @@ forged	adjective	quality
 forger	noun	criminal
 forgery	noun	crime
 forget	verb	perceive
+forgetfulness	noun	knowledge
 forgive	verb	social
 forgiveness	noun	feeling
 forgiving	adjective	quality
@@ -6488,6 +6494,7 @@ hallucination	noun	knowledge
 hallway	noun	structure
 halo	noun	artifact
 halt	noun	act
+halter	noun	artifact
 ham	noun	food
 hamadryad	noun	supernatural
 hamburger	noun	food
@@ -7030,6 +7037,8 @@ hygienist	noun	worker
 hymn	noun	knowledge
 hype	noun	feeling
 hypnotic	noun	medicine
+hypnotism	noun	act
+hypnotize	verb	body
 hypochondriac	noun	person
 hypocrisy	noun	event
 hypodermic	noun	device
@@ -7086,6 +7095,7 @@ illegal	adjective	quality
 illegally	adverb	manner
 illegitimate	adjective	quality
 illicit	adjective	quality
+illiteracy	noun	knowledge
 illness	noun	affliction
 illogical	adjective	quality
 illuminated	adjective	quality
@@ -8592,6 +8602,7 @@ marinade	noun	food
 marinate	verb	create
 marine	noun	fighter
 mariner	noun	worker
+marionette	noun	artifact
 mariposa	noun	flower
 marital	adjective	pertaining
 maritime	adjective	quality
@@ -8815,6 +8826,7 @@ merriment	noun	feeling
 merry	adjective	quality
 mesa	noun	elevation
 mesh	noun	fabric
+mesmerize	verb	body
 mesohippus	noun	mammal
 mesosphere	noun	phenomenon
 mesozoic	adjective	pertaining
@@ -8920,7 +8932,7 @@ mineral	noun	mineral
 mineralogist	noun	person
 mineshaft	noun	artifact
 mini	noun	clothing
-miniature	noun	artifact
+miniature	adjective	quality
 minimal	adjective	quality
 minimize	verb	transform
 minimum	adjective	quality
@@ -8999,6 +9011,7 @@ mixed	adjective	quality
 mixer	noun	machine
 mixing	noun	act
 mixture	noun	material
+mnemonic	noun	act
 moa	noun	bird
 moat	noun	structure
 mob	noun	group
@@ -11434,6 +11447,7 @@ recurring	adjective	quality
 recursion	noun	event
 recycling	noun	act
 red	adjective	quality
+redaction	noun	act
 redbug	noun	invertebrate
 redcap	noun	supernatural
 redeem	verb	social
@@ -12011,6 +12025,7 @@ rumble	noun	event
 rumbling	noun	event
 rumen	noun	bodypart
 rumor	noun	act
+rumour	noun	crime
 rump	noun	bodypart
 run	verb	movement
 runaway	adjective	quality
@@ -12707,6 +12722,7 @@ shrill	adjective	quality
 shrimp	noun	produce
 shrine	noun	building
 shrink	verb	transform
+shrinkage	noun	event
 shrub	noun	shrub
 shrubbery	noun	structure
 shrug	verb	body
@@ -13040,6 +13056,7 @@ soar	verb	movement
 sob	noun	event
 sobbing	noun	act
 sober	adjective	quality
+sobriety	noun	attribute
 socage	noun	possession
 soccer	noun	contest
 social	adjective	pertaining
@@ -14105,6 +14122,7 @@ telecommunication	noun	knowledge
 telegram	noun	act
 telegraph	noun	device
 telemetry	noun	device
+telepathy	noun	knowledge
 telephone	noun	device
 teleport	verb	movement
 telescope	noun	device

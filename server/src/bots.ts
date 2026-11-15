@@ -1,5 +1,5 @@
 import { helpful, lastStandOf, livesOf, speechOf, stormBendOf } from "@lastword/shared";
-import { ACTION_LETTERS, becomes, cannotRide, pactOf, doorGuard, hatches, matured, opensDoors, resolveSpelled, cooks, GRAFT_CAPABILITIES, GROUNDED_FROM, isBoon, isGraft, isTrap, parsePhrase, placeRules, pluralize, producerOf, sails, STATUSES, TILE_METERS, TILE_TYPES, WORN_SLOTS, type Dictionary, type Letters, type Op, type Stats, type Status } from "@lastword/shared";
+import { restoresOf, SCREEN_RULES, ACTION_LETTERS, becomes, cannotRide, pactOf, doorGuard, hatches, matured, opensDoors, resolveSpelled, cooks, GRAFT_CAPABILITIES, GROUNDED_FROM, isBoon, isGraft, isTrap, parsePhrase, placeRules, pluralize, producerOf, sails, STATUSES, TILE_METERS, TILE_TYPES, WORN_SLOTS, type Dictionary, type Letters, type Op, type Stats, type Status } from "@lastword/shared";
 
 /**
  * Server-side bot players: what a bot knows about words, and how hard it plays. The room
@@ -77,7 +77,7 @@ export type Use = "weapon" | "armor" | "mount" | "creature" | "producer" | "clai
  */
 export type ThemeUse = "warm" | "disguise" | "graft" | "cure" | "hex" | "duel" | "gift" | "loan" | "bribe" | "trap" | "lie" | "jam"
   | "shrine" | "miracle" | "morale" | "haste" | "rewind" | "gravity" | "vessel" | "fishing" | "luck" | "borer" | "siege" | "guard"
-  | "breakout" | "fealty" | "rebel" | "antiair"
+  | "breakout" | "fealty" | "rebel" | "antiair" | "restore"
   | "stormhold" | "stormhurry" | "life" | "stand" | "wordsmith" | "censor" | "mutiny";
 
 /** What the bot tournament lists as the themes' systems (`botUsed` names), in order. */
@@ -87,6 +87,8 @@ export const THEME_SYSTEMS = [
   "shrine", "sacrifice", "miracle", "weather", "haste", "rewind", "gravity", "vessel", "sail", "fishing", "catch", "duel", "luck", "sell",
   "hide", "shelter", "store", "raid", "break in", "borer", "siege", "bolt door", "grow up",
   "trap sprung", "captured", "held", "breakout", "fealty", "tribute", "rebel", "antiair", "target", "target spelled",
+  "restore", "ping help", "answer ping", "hex amnesia", "hex illiterate", "hex censor", "hex gag", "hex blind",
+  "hex hypnosis", "hex leash", "hex reverse", "hex drunk", "cure hypnosis", "cure leash", "cure reverse", "cure drunk", "futile",
   // The round's systems (concept rules): the storm wall, spelling rules, command, death.
   "storm", "storm hold", "storm hurry", "wordsmith", "censor", "mutiny", "life", "stand", "life used", "last stand", "raised", "haunt", "revive", "revived",
 ] as const;
@@ -173,7 +175,7 @@ const dps = (s: Stats) => damage(s) * Math.max(0.1, s.num("attack_rate") || 1);
 const GOOD = /^(speed_land|speed_air|armor|accuracy|integrity|attack_rate|evasion|morale|courage|block|luck|critical|dmg_.*)$/;
 
 /** How much a bot wants each status on a foe: a sealed fate, stopped time and nothing at all most. */
-const HEX_WEIGHT: Partial<Record<Status, number>> = { doom: 5, stasis: 4, void: 4, chaos: 3, curse: 3, rage: 3, sick: 3, debt: 2, expose: 2, fear: 2, sleep: 2, root: 2, confuse: 2, silence: 2 };
+const HEX_WEIGHT: Partial<Record<Status, number>> = { doom: 5, stasis: 4, void: 4, chaos: 3, curse: 3, rage: 3, sick: 3, hypnosis: 3, debt: 2, expose: 2, fear: 2, sleep: 2, root: 2, confuse: 2, silence: 2, leash: 2, reverse: 2, drunk: 1 };
 
 /** Statuses a stats sheet passes on (`inflict_*`), boons and charm left out. */
 function harms(s: Stats): Status[] {
@@ -392,6 +394,12 @@ function themeUses(word: string, archetype: string, ops: readonly Op[], p: Retur
   const ends = s.tags("effect_status").filter((st) => (STATUSES as readonly string[]).includes(st) && !isBoon(st as Status));
   if (ends.length && !bad.length && !damaging && (atSelf || (p.kind === "event" && s.get("event_target") === "character") || (p.kind === "object" && s.flag("edible")))) {
     add("cure", ends.length / p.letters.length, { statuses: ends, aim: atSelf || p.kind === "object" ? "self" : "walker", faith });
+  }
+  // Gives back panels a status greys (shared screen.ts): GLASSES when blind, a DIARY with amnesia, LITERACY when illiterate.
+  const back = restoresOf(s);
+  if (back.length && !bad.length && !damaging && (atSelf || p.kind === "object")) {
+    const fixes = (Object.keys(SCREEN_RULES) as Status[]).filter((st) => Object.keys(SCREEN_RULES[st]!).some((panel) => back.includes(panel as never)));
+    if (fixes.length) add("restore", back.length / p.letters.length, { statuses: fixes, aim: "self" });
   }
   if (p.kind === "object") {
     const slot = String(s.get("equip_slot"));

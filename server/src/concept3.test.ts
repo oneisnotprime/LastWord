@@ -40,6 +40,7 @@ it("a GAG passed on someone bans their commonest letter; a blank does not cover 
   wb.letters = { z: 9, o: 3, b: 1, d: 1, s: 1, w: 1, r: 1 };
   a.send("pick", { id: b.sessionId }); a.send("spell", "gag"); a.send("pick", null); await wait();
   expect(R.speechFor(b.sessionId, wb).banned).toEqual(["z"]);
+  wb.statuses = wb.statuses.filter((s: any) => s.status !== "silence"); R.statusChanged(wb); // its silence passes; the ban stays
   b.send("spell", "zoo"); await wait();
   expect(said(1, "refused").at(-1)).toMatch(/Z is banned \(GAG\)/);
   b.send("spell", "sword"); await wait(); // no E in it: fine

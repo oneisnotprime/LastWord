@@ -1,5 +1,5 @@
 import { priceOf, rulesLines, NO_RULES, type SpeechRules } from "@lastword/shared";
-import { bestWords, forageOdds, type BiomeInfo, selfRisk, effectText, heldText, spellableNow, SPELL_GROUPS, type SpellGroup, tipOfTheMoment, inspectText, LETTER_GUIDE, missing, parsePhrase, readTrade, standIn, standsFor, type Card, type Dictionary, type Letters, type LoadoutDetail, type Offer } from "@lastword/shared";
+import { countersShown, bestWords, forageOdds, type BiomeInfo, selfRisk, effectText, heldText, spellableNow, SPELL_GROUPS, type SpellGroup, tipOfTheMoment, inspectText, LETTER_GUIDE, missing, parsePhrase, readTrade, standIn, standsFor, type Card, type Dictionary, type Letters, type LoadoutDetail, type Offer } from "@lastword/shared";
 import { BADGE } from "./art/paper.js";
 import { ideasHtml, setTipsOn, tipRng, tipsOn } from "./tips.js";
 import { keyGlyph, only, pad, padGlyph } from "./pad.js";
@@ -503,7 +503,9 @@ export class Hud {
     const ghostly = this.ghostGap && !this.dict.word(stood ? stood.word : t.split(/\s+/).at(-1)!)?.set.haunts ? `<div class="warn">a ghost cannot spell this</div>` : "";
     el.innerHTML = `<div><b>${esc(c.title)}</b>${c.kind ? ` <span class="kind">${esc(c.kind)}</span>` : ""}</div>` + cost + ghostly +
       (stats.length ? `<div class="lead">${esc(stats.join(" · "))}</div>` : "") + (does.length ? `<div class="key">${esc(does.join(" · "))}</div>` : "") +
-      (risk ? `<div class="warn">⚠ ${esc(risk)}</div>` : "");
+      (risk ? `<div class="warn">⚠ ${esc(risk)}</div>` : "") +
+      // With insight (shared knowledge.ts) the preview names the words that end it.
+      (() => { const ends = countersShown(this.dict, (stood ? stood.word : t).split(/\s+/).pop() ?? t, this.detail?.insight ?? 0); return ends.length ? `<div class="ends">ended by ${esc(ends.join(" · ").toUpperCase())}</div>` : ""; })();
     el.className = "show";
   }
 
@@ -737,8 +739,12 @@ export class Hud {
         const s = d!.stores[k], net = Math.round((s.make - s.need) * 100) / 100;
         return s.make || s.need ? ` <small>${s.make ? `+${+s.make.toFixed(2)}` : ""}${s.need ? ` −${+s.need.toFixed(2)}` : ""}/min</small>${net < 0 && s.have < -net * 5 ? " <small>!</small>" : ""}` : "";
       };
+      // Luck and size in force (shared idea.ts, scale.ts): a hint that rolls lean your way, or against you.
+      const luck = d?.luck, sized = d?.size ?? 1;
       const chips = [
         followers, lives, stand, spelling,
+        ...(luck && (luck.percent || luck.rerolls) ? [`<span class="chip luck${luck.percent < 0 ? " bad" : ""}" title="every roll: gathering, hits, criticals, dodging, rare drops, traps, gambles">♣ LUCK ${luck.percent >= 0 ? "+" : "−"}${Math.abs(luck.percent)}%${luck.rerolls ? ` · ${luck.rerolls} REROLL${luck.rerolls > 1 ? "S" : ""}` : ""}</span>`] : []),
+        ...(Math.abs(sized - 1) >= 0.05 ? [`<span class="chip size" title="reach, sight, stride, carrying, doors and rides follow your size">SIZE ×${+sized.toFixed(2)}</span>`] : []),
         ...(d?.statuses ?? []).map((s) => chip(s.status, s.left)),
         ...(d?.effects ?? []).map((e) => `<span class="chip effect item" data-inspect="${esc(e.word)}" data-effect="1" title="${esc(effectText(this.dict, e.word))}">${esc(e.word.toUpperCase())}${e.left > 0 ? `<small>${e.left}s</small>` : ""}</span>`),
         ...(["food", "fuel", "power", "faith"] as const).filter((k) => (d?.stores[k].have ?? 0) > 0 || (d?.stores[k].need ?? 0) > 0 || (d?.stores[k].make ?? 0) > 0).map((k) =>
@@ -798,6 +804,11 @@ export class Hud {
   closeScreens() {
     if (this.open) this.show(null);
     this.closeInspect();
+  }
+
+  /** The sheet open now: the inventory, the trade screen, or none. */
+  get sheet(): "inventory" | "trade" | null {
+    return this.open;
   }
 
   /** True while a screen is open, so clicks on it do not walk the player. */

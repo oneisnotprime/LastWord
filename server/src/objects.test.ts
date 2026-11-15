@@ -1,6 +1,6 @@
 import { boot, type ColyseusTestServer } from "@colyseus/testing";
 import { afterAll, beforeAll, beforeEach, expect, it } from "vitest";
-import { nearestWalkable, parsePhrase, useObject } from "@lastword/shared";
+import { nearestWalkable, parsePhrase, readNoun, useObject } from "@lastword/shared";
 import appConfig from "./app.config.js";
 import { loadDictionary } from "./data.js";
 import { WorldRoom } from "./WorldRoom.js";
@@ -253,7 +253,8 @@ it("uses every usable word in the dictionary", async () => {
   console.log(`usable words: ${candidates.length}; used to effect: ${did.length}; not: ${not.length}\n  ${not.join("\n  ")}`);
   // Every word the data gives an effect (shared useObject) was used, wherever spelling put it,
   // unless spelling made it a creature that walks off on its own, or land (a WHEAT field).
-  const effective = candidates.filter((w) => useObject(dict, w) && !dict.word(w)!.set.tile_type &&
+  // (Spelled, a word that reads as another's plural, as SHEARS does SHEAR's, is that other word.)
+  const effective = candidates.filter((w) => useObject(dict, w) && !dict.word(w)!.set.tile_type && readNoun(dict, w)?.word === w &&
     !(parsePhrase(dict, w).stats.flag("alive") && Math.max(...["speed_land", "speed_air", "speed_water"].map((k) => parsePhrase(dict, w).stats.num(k))) > 0));
   for (const w of effective) expect(did.map((d) => d.split(" ")[0]), w).toContain(w);
 }, 240_000);

@@ -1,6 +1,7 @@
 import type { Threat } from "./threats.js";
 import { Client } from "@colyseus/sdk";
-import type { Letters, LoadoutDetail, Offer, Sensed } from "@lastword/shared";
+import type { Intel, Letters, LoadoutDetail, Offer, Ping, Sensed } from "@lastword/shared";
+import type { Pinged } from "./comms.js";
 import { chooseGame } from "./start.js";
 import type { KitOffer, KitState } from "./kits.js";
 
@@ -36,6 +37,8 @@ export interface Connection {
   act(type: "market" | "sell" | "hire" | "swap" | "transmute" | "offer" | "answer", payload: unknown): void;
   /** Knocked out: watch a person still in the round, or null for your own ghost (shared death.ts). */
   watch(id: string | null): void;
+  /** A ping (shared comms.ts) at a spot on the map, else where you stand. */
+  ping(kind: Ping, x?: number, y?: number): void;
 }
 
 /** Letters gained and why ("forage", "hunted COW (+12 food)"), and where they came from. */
@@ -58,6 +61,8 @@ export interface Handlers {
   got(what: Got): void;
   /** A gathering try found nothing: where, and the odds it had ("nothing · DESERT 12%"). */
   missed(what: { x: number; y: number; text: string }): void;
+  /** Luck showed (shared idea.ts): a lucky step over a trap, a reroll, a gamble won or lost. */
+  luck(what: { x: number; y: number; text: string; bad?: boolean }): void;
   /** Exploring widened your sight (no J: someone was there first). */
   sight(where: { x: number; y: number }): void;
   notice(text: string): void;
@@ -98,10 +103,16 @@ export interface Handlers {
   reborn(e: { id: string; x: number; y: number; word: string; name: string }): void;
   /** You are back from the dead. */
   revived(info: { by: string }): void;
+  /** People read through insight (shared knowledge.ts): racks, gear, what they can spell. */
+  intel(list: Intel[]): void;
+  /** A spelling said aloud in earshot (shared comms.ts), or a lie's made-up one. */
+  call(c: { name: string; word: string; x: number; y: number; ally: boolean }): void;
+  /** A ping heard (shared comms.ts). */
+  pinged(p: Pinged): void;
 }
 
 /** One blow, as the server tells it (server `Hit`). */
-export interface Hit { by: string; on: string; amount: number; layer: string; kind: "hit" | "crit" | "miss" | "blocked" | "dodged"; ranged: boolean; x?: number; y?: number }
+export interface Hit { by: string; on: string; amount: number; layer: string; kind: "hit" | "crit" | "miss" | "blocked" | "dodged"; ranged: boolean; x?: number; y?: number; aff?: "weak" | "resist" | "immune" }
 /** A heavy blow winding up (server `Windup`). */
 export interface Windup { by: string; on: string; x: number; y: number; seconds: number }
 /** How you died (server `recap`): who and what struck last, the top sources of harm, how long it took, how many are left. */
@@ -135,6 +146,7 @@ export async function connect(on: Handlers): Promise<Connection> {
   room.onMessage("gathering", on.gathering);
   room.onMessage("got", on.got);
   room.onMessage("missed", on.missed);
+  room.onMessage("luck", on.luck);
   room.onMessage("sight", on.sight);
   room.onMessage("notice", on.notice);
   room.onMessage("dead", on.dead);
@@ -155,6 +167,9 @@ export async function connect(on: Handlers): Promise<Connection> {
   room.onMessage("ghost", on.ghost);
   room.onMessage("reborn", on.reborn);
   room.onMessage("revived", on.revived);
+  room.onMessage("intel", on.intel);
+  room.onMessage("call", on.call);
+  room.onMessage("pinged", on.pinged);
   room.onLeave(on.closed);
   room.onDrop(on.dropped);
   // Listening now: the server sends the kits to pick from (or your kit), here and after a reconnect.
@@ -180,6 +195,7 @@ export async function connect(on: Handlers): Promise<Connection> {
     attack: (target) => room.send("attack", target),
     pick: (what) => room.send("pick", what),
     act: (type, payload) => room.send(type, payload),
+    ping: (kind, x, y) => room.send("ping", { kind, ...(x !== undefined && y !== undefined ? { x, y } : {}) }),
     pickKit: (step, index) => room.send("kit", { step, index }),
     watch: (id) => room.send("watch", id ? { id } : null),
     leave: () => { room.onLeave.clear?.(); void room.leave(true); },

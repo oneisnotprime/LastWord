@@ -6,8 +6,11 @@ and generated_words.txt, written by generate_words.py and checked leniently (a b
 dropped, a word that cannot be placed is skipped, and both are counted). Hand-written words win.
 
 build_demo.py --overrides   add each word's role and archetype to overrides.tsv
-build_demo.py [wordnet dir] validate against properties.json and lexicon.tsv, write demo.json;
-                            with the WordNet dict dir, generator rules (rules.txt) match by meaning
+build_demo.py [wordnet dir] validate against properties.json and lexicon.tsv, apply derive.py's
+                            generator rules, meaning.py's (screen, knowledge, communication) and
+                            rules.py's (rules.txt: spelling rules, command, death, the storm wall)
+                            (needs WordNet: the argument, WORDNET_DICT or
+                            ../node_modules/wordnet-db/dict), write demo.json
 """
 import os, re, sys, json
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -184,18 +187,28 @@ def main():
                     err(f"{t}: {val} is not a property"); continue
                 sets[pid] = val
         out[w] = {"role": role, "class": lex[w][1], "archetype": arch, "set": sets, "ops": ops}
-    # Generator rules (rules.txt): properties by meaning, for every word that matches.
-    wn_dir = next((a for a in sys.argv[1:] if not a.startswith("--")), None)
-    if wn_dir and not os.path.isdir(wn_dir):
-        sys.exit(f"{wn_dir}: not a WordNet dict dir")
-    if wn_dir:
-        import rules
-        full = {l.split("\t")[0]: l.rstrip("\n").split("\t")[1:] for l in list(open(os.path.join(D, "lexicon.tsv")))[1:]}
-        report = {}
-        counts = rules.apply(out, props, rules.Meaning(wn_dir, full), lambda t: rule_token(t, props), errors, report)
-        json.dump({"counts": counts, "words": {k: sorted(v) for k, v in report.items()}}, open(os.path.join(D, "rules.json"), "w"), indent=0)
-        print("rules:", ", ".join(f"{k} {n}" for k, n in counts.items()))
     producers(out, props, errors)
+    # Generator rules (derive.py): nature, size, luck and control by meaning, across the dictionary.
+    import derive
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    wn_dir = args[0] if args else os.environ.get("WORDNET_DICT", os.path.join(HERE, "..", "node_modules", "wordnet-db", "dict"))
+    if not os.path.exists(os.path.join(wn_dir, "data.noun")):
+        sys.exit(f"build_demo.py needs the WordNet dict dir (argument, WORDNET_DICT, or npm i wordnet-db): {wn_dir}")
+    hooked = derive.derive(out, wn_dir, audit="--audit" in sys.argv)
+    # Meaning rules (meaning.py): screen, knowledge and communication by what words mean.
+    import meaning
+    full = {l.split("\t")[0]: l.rstrip("\n").split("\t")[1:] for l in list(open(os.path.join(D, "lexicon.tsv")))[1:]}
+    told = meaning.apply(out, full, wn_dir)
+    print("meaning rules added:", {d: len(ws) for d, ws in sorted(told.items())}, "words in each dimension:", meaning.report(out))
+    # Generator rules (rules.txt, rules.py): spelling rules, command, death and the storm wall by meaning.
+    import rules
+    report = {}
+    counts = rules.apply(out, props, rules.Meaning(wn_dir, full), lambda t: rule_token(t, props), errors, report)
+    json.dump({"counts": counts, "words": {k: sorted(v) for k, v in report.items()}}, open(os.path.join(D, "rules.json"), "w"), indent=0)
+    print("round rules added:", sum(counts.values()))
+    for k in [k for v in out.values() for k in v["set"]] + [o[0] for v in out.values() for o in v["ops"]]:
+        if k not in props:
+            errors.append(f"derive.py: unknown property {k}")
     if dropped or skipped:
         with open(os.path.join(HERE, "..", "data", "generated_problems.txt"), "w") as f:
             f.write("# Words skipped and tokens dropped from generated_words.txt by build_demo.py\n")
