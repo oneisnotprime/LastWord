@@ -9,9 +9,15 @@ server and the client import this, so anything here must give the same answer on
 
 ## Map
 
-- `dictionary.ts` word and property lookup, including inflected forms (BIGGER -> big).
+- `dictionary.ts` word and property lookup, including inflected forms (BIGGER -> big); `crude`
+  (data/crude.json from tools/crude.txt): never a tip, a word of the moment, or a bot's word.
 - `stats.ts` `resolve(dict, noun, adjectives)` builds an object's properties; tracks absolutes.
-- `combat.ts` `strike`, `tick`, `duel`. The absolute rules are documented on `strike`.
+- `combat.ts` `strike`, `tick`, `duel`. The absolute rules are documented on `strike`. Blows and
+  bodies are felt (`felt`: in full to FELT_KNEE, the square root past it) and paced (`landed`,
+  FIGHT_PACE); `windupOf` says which blows wind up (HEAVY_SHARE, WINDUP_SECONDS, DODGE_TILES).
+- `hazard.ts` harm from the sky and areas: AREA_WARNING, cells (CELL_FROM, CELL_TILES,
+  CELL_WARNING, CELL_SCATTER, `cellGap`, `cellRadius`), shelter (`shelterShare`, ROOF_TILES), and
+  `selfRisk` (the spell preview's warning when a word's strikes can land on its speller).
 - `world.ts` map generation from a seed, tile costs, `stepToward` movement, `stampTerrain` for
   words that reshape the land. 1 tile = 4 m.
 - `phrase.ts` `parsePhrase` reads what a player typed (adjectives + noun, or adverb + verb);
@@ -99,8 +105,8 @@ server and the client import this, so anything here must give the same answer on
   over half the limit) if it weighs at most `carryLimit` (strength × 4 kg); `cannotCarry` says why not.
 - `kits.ts` starting kits: `dealKits` (three kits, all parts different), `kitHand` (eight letters
   around a starter word, leaning toward the job), `jobStats`/`jobBodyOps`/`jobRules` (a job as a
-  carried tool, body operations and place rules), `kitCard` lines, `unlockText`/`unlockNeed`/
-  `sealedLetters` (legendary conditions), `legendCost` (an unsealed legendary spells free), `kitScore`.
+  carried tool, body operations and place rules), `kitCard` lines, `kitScore`, the pick in three
+  steps (`KIT_STEPS` job, building, letters; `kitOptions`, `bestOption`, `kitHands`). No legendary.
 - Dictionary themes (TODO.md), each a shared system words use by their properties:
   - `material.ts` (materials): a material noun before a noun (GLASS SWORD) or an adjective whose
     `material` names one (WOODEN) remakes the thing out of it (`applyMaterial`, called by `resolve`):

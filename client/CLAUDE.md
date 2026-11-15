@@ -113,12 +113,17 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
   and received are cards at the right (`#offers`: Accept, Counter, Decline, Withdraw). Inputs on a
   screen count as typing (`Hud.typing`), so their letters are not commands.
 - A roaming boss (`Player.boss`) stands 1.6 times as tall with a red tag.
-- `src/kits.ts` starting kits: the pick in four steps, job, building, legendary, letters (`#kits`,
-  three choices each, keys 1-3 or a click, a countdown a step; `KitView.choosing` until your kit
-  arrives, and meanwhile toasts (`Hud.quiet`) and legend calls are dropped, not replayed),
-  your job and sealed legendary with progress on the HUD card (a click shows your card, with
-  Unseal when letters open it), and `#legendcall`, the one map-wide call (with a camera shake)
-  when a legendary unseals and is made at once ("UNLEASHED"), or unseals to spell later.
+- `src/kits.ts` starting kits: the pick in three steps, job, building, letters (`#kits`, three
+  choices each, keys 1-3 or a click, a countdown a step; `KitView.choosing` until your kit
+  arrives, and meanwhile toasts (`Hud.quiet`) are dropped, not replayed). No legendary.
+- Playtest batch C1: `src/recap.ts` (`RecapView`): the kill feed (`#killfeed`, from `killed`), the
+  death recap (`#recap`, from `dead`) and the round recap (from `roundover`; the HUD says "round
+  over", `Hud.ended`). `main.ts`: `onWindups` draws a red ring closing where a heavy blow lands and
+  a "!" over the striker (`windups`), the screen edge pulses (`fx.warn`, `body.incoming`);
+  `deathBeat` (a second of slow grey, camera drifting in); `Hud.closeScreens` on a blow or wind-up
+  on you. `zones.ts`: a zone with `warn` gets a red ring closing until it strikes, then a flash;
+  name tags stay with their zone (`ZONE_TAG_RISE`), never following you. The spell preview warns
+  when a word strikes its speller too (shared `selfRisk`).
 - `src/tips.ts` teaching tips (shared `tips.ts`): rotating word cards on the start screen (two
   columns: the word and kind, its properties with a short meaning each, `WordTip.lines`), one
   line (`#tip`) in the spell window while it is empty, and Word ideas with a reroll in the Esc

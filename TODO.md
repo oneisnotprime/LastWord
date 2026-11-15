@@ -47,8 +47,11 @@
   as many random letters (everyday frequency). Transmuting into Z needs alchemy: something of yours
   with `transmute_in` (ALCHEMIST, WIZARD) or a precious material carried; otherwise Z comes from
   bosses and the few words that make it.
-- An unsealed legendary is made at once for its holder, free, as if spelled, with one map-wide
-  call. If it cannot be made then (muted, a law against spelling) it stays open to spell free once.
+- Kits give no legendary: a kit is a job, a building and letters. Legendary words are ordinary
+  words spelled with their letters (playtest batch C1).
+- Fights are felt, paced and telegraphed (PLAN.md "Fights you can see"): compression of blows and
+  bodies in shared `strike`, wind-ups on heavy blows that can be stepped out of, sky and area harm
+  in marked local cells with shelter, death and round recaps, a kill feed.
 - Buildings with interiors (not built yet; a later batch): large buildings get a walk-in interior
   footprint on the map; entering hides you from outside sight; stored things sit inside, safe from
   theft; raiders must break the door first.
@@ -105,13 +108,12 @@ by how many words set them (minds and upkeep took `sentient`, `intelligence`, `f
       Producers make letters while they belong to you, carried too; the HUD lists your income
 - [x] Starting kits (PLAN.md "Starting kits", shared `kits.ts`, `data/kits.json`): pick one of
       three at round start: a job (100, worn as shared properties), a building at your spawn (100),
-      a sealed legendary (16, each with an unlock condition and a counter-word, unsealed with a
-      map-wide call and spelled free once) and eight letters leaning toward the job
+      and eight letters leaning toward the job (the sealed legendary was taken out in batch C1)
 - [ ] Starting kits: once the professions theme is merged, rebuild `data/kits.json` so the derived
       jobs come from its profession words; drop the 18 profession lines copied into
       `tools/demo_words.txt` if the theme's own are better; tune perks from playtests
 - [ ] Starting kits: EXCALIBUR (WordNet knows it only as a name, and a weapon has no counter-word
-      mechanic yet); legendaries bots aim at their counters; show other people's jobs
+      mechanic yet); show other people's jobs
 - [ ] Letter economy: tune rates from playtests (pacing table in the part 3 pull request)
 - [ ] Replace the live "xxx" shortcut (999 of every letter, `CHEAT` in `WorldRoom.ts`) with a
       real debug server (its own app or a password), then take the shortcut off the live game.
@@ -501,8 +503,7 @@ Full list with spelling costs: `data/watchlist.tsv` (269 words). Rulings needed:
       and answered, picking up and claiming, adjective phrases and plurals, adjectives on foes and
       their own gear, aimed fields and events, area words by their place rules (plenty, taxes,
       laws, war, refuges, weather), roads, taking cities, crop land, cooking, counter-words to
-      areas, weather and creatures, running when badly hurt; kits picked by difficulty, working
-      toward their legendary's unlock, spelling it, countering enemies' legendaries. `loadtest/tournament.ts` reports it
+      areas, weather and creatures, running when badly hurt; kits picked by difficulty. `loadtest/tournament.ts` reports it
 - [ ] Bots still to do: use terrain words on purpose, form pacts
 - [x] Bots use the themes' systems of batches 3 to 5 (polish batch 1, `botThemes`, `botCure`,
       `botBoat`, `SKILL.themes`/`cures`): dress for cold, disguises, grafts on themselves and their
