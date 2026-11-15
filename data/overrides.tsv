@@ -918,6 +918,7 @@ aviator	noun	worker
 avocado	noun	produce
 avoid	verb	movement
 awake	adjective	quality
+awaken	verb	body
 awakening	noun	act
 award	noun	artifact
 aware	adjective	quality
@@ -2644,6 +2645,7 @@ colored	adjective	participle
 colorful	adjective	quality
 coloring	noun	food
 colors	noun	artifact
+colossal	adjective	quality
 colossus	noun	supernatural
 colour	noun	material
 coloured	adjective	quality
@@ -3966,6 +3968,7 @@ division	noun	group
 divorce	noun	act
 divorced	adjective	participle
 divot	noun	depression
+dizzy	adjective	quality
 djinn	noun	supernatural
 djinni	noun	supernatural
 dobsonfly	noun	insect
@@ -5610,6 +5613,7 @@ giddy	adjective	quality
 gift	noun	exchange
 gifted	adjective	quality
 gig	noun	act
+gigantic	adjective	quality
 giggle	verb	body
 gilded	adjective	quality
 gilding	noun	material
@@ -6016,6 +6020,7 @@ hallucination	noun	knowledge
 hallway	noun	structure
 halo	noun	artifact
 halt	noun	act
+halter	noun	artifact
 ham	noun	food
 hamadryad	noun	supernatural
 hamburger	noun	food
@@ -6531,6 +6536,8 @@ hygienist	noun	worker
 hymn	noun	knowledge
 hype	noun	feeling
 hypnotic	noun	medicine
+hypnotism	noun	act
+hypnotize	verb	body
 hypochondriac	noun	person
 hypocrisy	noun	event
 hypodermic	noun	device
@@ -7998,6 +8005,7 @@ marinade	noun	food
 marinate	verb	create
 marine	noun	fighter
 mariner	noun	worker
+marionette	noun	artifact
 mariposa	noun	flower
 maritime	adjective	quality
 mark	verb	contact
@@ -8207,6 +8215,7 @@ merriment	noun	feeling
 merry	adjective	quality
 mesa	noun	elevation
 mesh	noun	fabric
+mesmerize	verb	body
 mesohippus	noun	mammal
 mesosphere	noun	phenomenon
 mesozoic	adjective	pertaining
@@ -8305,7 +8314,7 @@ mineral	noun	mineral
 mineralogist	noun	person
 mineshaft	noun	artifact
 mini	noun	clothing
-miniature	noun	artifact
+miniature	adjective	quality
 minimal	adjective	quality
 minimize	verb	transform
 minimum	adjective	quality
@@ -10960,6 +10969,7 @@ reverence	noun	feeling
 reverend	noun	worker
 reverent	adjective	quality
 reverie	noun	event
+reversal	noun	event
 reverse	verb	transform
 reversed	adjective	quality
 revert	verb	transform
@@ -11834,6 +11844,7 @@ shrill	adjective	quality
 shrimp	noun	produce
 shrine	noun	building
 shrink	verb	transform
+shrinkage	noun	event
 shrub	noun	shrub
 shrubbery	noun	structure
 shrug	verb	body
@@ -12141,6 +12152,7 @@ soapstone	noun	mineral
 soar	verb	movement
 sob	noun	event
 sober	adjective	quality
+sobriety	noun	attribute
 socage	noun	possession
 soccer	noun	contest
 social	adjective	pertaining
@@ -13371,6 +13383,7 @@ tire	noun	machine
 tired	adjective	quality
 tissue	noun	bodypart
 titan	noun	supernatural
+titanic	adjective	quality
 titanium	noun	metal
 titanosaur	noun	reptile
 tithe	noun	possession

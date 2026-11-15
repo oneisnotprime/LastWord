@@ -23,6 +23,38 @@ import type { Op } from "./types.js";
 /** Chance each point of luck adds to a roll. */
 export const LUCK_POINT = 0.03;
 
+/**
+ * The chance of a roll of base chance `p` for a body with `luck` and `rerolls`: luck shifts it by
+ * LUCK_POINT a point (0 to 1), and each reroll throws a failure again (concept batch: combat).
+ * Read by gathering, rare drops (a hunt's rare letter, a ruin's X, a chest's prize), traps and gambles.
+ */
+export function luckyChance(p: number, luck = 0, rerolls = 0): number {
+  const q = Math.min(1, Math.max(0, p + (Number.isFinite(luck) ? luck : Math.sign(luck)) * LUCK_POINT));
+  const r = Number.isFinite(rerolls) ? Math.max(0, Math.floor(rerolls)) : 10;
+  return 1 - (1 - q) ** (1 + r);
+}
+
+/** A roll of base chance `p` for a body with `luck` and `rerolls`: true on success. */
+export function luckyRoll(rng: Rng, p: number, luck = 0, rerolls = 0): boolean {
+  return rng() < luckyChance(p, luck, rerolls);
+}
+
+/** A trap passed over: the chance a lucky body steps over it untouched (twice its luck's points; never for the unlucky). */
+export function trapMissChance(luck: number, rerolls = 0): number {
+  return luck > 0 ? luckyChance(0, 2 * luck, rerolls) : 0;
+}
+
+/** Odds a gamble is won: an even throw, shifted by luck and thrown again for each reroll. */
+export function gambleOdds(luck: number, rerolls = 0): number {
+  return luckyChance(0.5, luck, rerolls);
+}
+
+/** Rerolls applied to a body's own chances to hit, land a critical and dodge (each failure thrown again). */
+export function rerolled(chance: number, rerolls: number): number {
+  if (!(rerolls > 0) || !Number.isFinite(chance) || chance >= 1 || chance <= 0) return chance;
+  return 1 - (1 - chance) ** (1 + Math.floor(rerolls));
+}
+
 /** What luck does to a body's rolls in combat: aim, criticals and dodging. */
 export function luckOps(luck: number): Op[] {
   if (!luck || !Number.isFinite(luck)) return [];
@@ -107,6 +139,8 @@ export function ideaText(s: Stats): string[] {
   const out: string[] = [];
   const luck = s.num("luck");
   if (luck && Number.isFinite(luck)) out.push(`luck ${luck > 0 ? "+" : "−"}${Math.round(Math.abs(luck) * LUCK_POINT * 100)}% on every roll`);
+  if (s.num("rerolls") > 0) out.push(`${Math.floor(s.num("rerolls"))} reroll${s.num("rerolls") >= 2 ? "s" : ""} of every failed roll`);
+  if (s.num("gamble") > 0) out.push(`gambles ${Math.round(s.num("gamble"))} letters: double or nothing`);
   if (s.num("inflict_chaos") > 0) out.push("chaos: random properties");
   if (s.num("inflict_void") > 0) out.push("void: everything carried and worn does nothing");
   if (s.num("inflict_doom") > 0) out.push(`doom: ${Math.round(DOOM_SHARE * 100)}% of full health when it runs out`);

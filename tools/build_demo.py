@@ -6,7 +6,9 @@ and generated_words.txt, written by generate_words.py and checked leniently (a b
 dropped, a word that cannot be placed is skipped, and both are counted). Hand-written words win.
 
 build_demo.py --overrides   add each word's role and archetype to overrides.tsv
-build_demo.py               validate against properties.json and lexicon.tsv, write demo.json
+build_demo.py [wordnet dir] validate against properties.json and lexicon.tsv, apply derive.py's
+                            generator rules (needs WordNet: the argument, WORDNET_DICT or
+                            ../node_modules/wordnet-db/dict), write demo.json
 """
 import os, re, sys, json
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -166,6 +168,16 @@ def main():
                 sets[pid] = val
         out[w] = {"role": role, "class": lex[w][1], "archetype": arch, "set": sets, "ops": ops}
     producers(out, props, errors)
+    # Generator rules (derive.py): nature, size, luck and control by meaning, across the dictionary.
+    import derive
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    wn_dir = args[0] if args else os.environ.get("WORDNET_DICT", os.path.join(HERE, "..", "node_modules", "wordnet-db", "dict"))
+    if not os.path.exists(os.path.join(wn_dir, "data.noun")):
+        sys.exit(f"build_demo.py needs the WordNet dict dir (argument, WORDNET_DICT, or npm i wordnet-db): {wn_dir}")
+    hooked = derive.derive(out, wn_dir, audit="--audit" in sys.argv)
+    for k in [k for v in out.values() for k in v["set"]] + [o[0] for v in out.values() for o in v["ops"]]:
+        if k not in props:
+            errors.append(f"derive.py: unknown property {k}")
     if dropped or skipped:
         with open(os.path.join(HERE, "..", "data", "generated_problems.txt"), "w") as f:
             f.write("# Words skipped and tokens dropped from generated_words.txt by build_demo.py\n")

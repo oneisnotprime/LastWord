@@ -1,10 +1,10 @@
 {
- "count": 425,
+ "count": 439,
  "groups": {
-  "physical": 48,
+  "physical": 50,
   "mobility": 25,
-  "offence": 70,
-  "defence": 70,
+  "offence": 74,
+  "defence": 77,
   "perception": 14,
   "life": 29,
   "economy": 58,
@@ -14,7 +14,7 @@
   "meta": 18,
   "field": 21,
   "event": 23,
-  "effect": 8
+  "effect": 9
  },
  "damage_types": [
   "blunt",
@@ -76,7 +76,11 @@
   "truce",
   "chaos",
   "void",
-  "doom"
+  "doom",
+  "drunk",
+  "reverse",
+  "hypnosis",
+  "leash"
  ],
  "properties": [
   {
@@ -321,6 +325,21 @@
    "type": "tags",
    "desc": "what it is made of (wood, steel, flesh, stone ...)",
    "default": []
+  },
+  {
+   "id": "nature",
+   "group": "physical",
+   "type": "tags",
+   "desc": "what kind of body it is for damage (beast, insect, plant, undead, spirit, demon, holy, fire, ice, water, stone, metal, wood, glass, cloth, paper, plastic, machine, bone, flesh...): each nature takes some damage types more or less (the matrix in shared affinity.ts); adjectives add theirs; given by tools/derive.py from class, material and meaning",
+   "default": []
+  },
+  {
+   "id": "size",
+   "group": "physical",
+   "type": "num",
+   "desc": "its size against what the word is by itself: GIANT, GROWTH \u00d72 to \u00d74, TINY, SHRINK \u00d70.1 to \u00d70.4; scales its reach, sight, stride, carrying, hitbox, which doors it fits through and what it can ride (shared scale.ts)",
+   "unit": "x",
+   "default": 1
   },
   {
    "id": "shape",
@@ -1046,6 +1065,38 @@
    "default": 0
   },
   {
+   "id": "inflict_drunk",
+   "group": "offence",
+   "type": "num",
+   "desc": "seconds of drunk applied on hit (drunk: sways as it walks (wobble 5), aims worse; SOBER and AWAKEN-like cures end it: shared control.ts)",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "inflict_reverse",
+   "group": "offence",
+   "type": "num",
+   "desc": "seconds of reverse applied on hit (reverse: its controls are reversed: it walks the opposite way to where it means to go: shared control.ts)",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "inflict_hypnosis",
+   "group": "offence",
+   "type": "num",
+   "desc": "seconds of hypnosis applied on hit (hypnosis: whoever put it on them steers their body: it walks where they walk and strikes what they strike, never them; AWAKEN ends it: shared control.ts)",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "inflict_leash",
+   "group": "offence",
+   "type": "num",
+   "desc": "seconds of leash applied on hit (leash: tethered to whoever put it on them: it cannot go farther than 4 tiles from them and is dragged along; a blade that cuts cords (SCISSORS) carried or used snaps it: shared control.ts)",
+   "unit": "s",
+   "default": 0
+  },
+  {
    "id": "attack_rate",
    "group": "offence",
    "type": "num",
@@ -1545,6 +1596,34 @@
    "default": false
   },
   {
+   "id": "immune_drunk",
+   "group": "defence",
+   "type": "bool",
+   "desc": "cannot be affected by drunk",
+   "default": false
+  },
+  {
+   "id": "immune_reverse",
+   "group": "defence",
+   "type": "bool",
+   "desc": "cannot be affected by reverse",
+   "default": false
+  },
+  {
+   "id": "immune_hypnosis",
+   "group": "defence",
+   "type": "bool",
+   "desc": "cannot be affected by hypnosis",
+   "default": false
+  },
+  {
+   "id": "immune_leash",
+   "group": "defence",
+   "type": "bool",
+   "desc": "cannot be affected by leash",
+   "default": false
+  },
+  {
    "id": "armor",
    "group": "defence",
    "type": "num",
@@ -1661,6 +1740,27 @@
    "type": "bool",
    "desc": "held fast: no pull, push, knockback or waves move or rock it, and its rider (shared space.ts, sea.ts)",
    "default": false
+  },
+  {
+   "id": "rerolls",
+   "group": "defence",
+   "type": "num",
+   "desc": "a second chance: each point rolls a failed gathering, hit, dodge or critical roll again, and gives a gamble one more throw (shared idea.ts)",
+   "default": 0
+  },
+  {
+   "id": "wobble",
+   "group": "defence",
+   "type": "scale",
+   "desc": "drunken sway: it veers side to side as it walks, wider the higher (shared control.ts)",
+   "default": 0
+  },
+  {
+   "id": "reversed",
+   "group": "defence",
+   "type": "scale",
+   "desc": "above 0 its controls are reversed: it walks away from where it means to go (shared control.ts)",
+   "default": 0
   },
   {
    "id": "luck",
@@ -3370,6 +3470,13 @@
    "type": "num",
    "desc": "integrity restored",
    "unit": "hp",
+   "default": 0
+  },
+  {
+   "id": "gamble",
+   "group": "effect",
+   "type": "num",
+   "desc": "spelled or used: stakes this many of its speller's letters on a throw (half, shifted by luck): won, they come back doubled; lost, they are gone; passed on a person, the loser pays the winner (shared idea.ts)",
    "default": 0
   }
  ]

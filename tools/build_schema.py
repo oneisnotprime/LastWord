@@ -14,7 +14,7 @@ OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data")
 DAMAGE = ("blunt slash pierce crush fire cold electric acid poison radiation blast sonic light dark "
           "water wind earth psychic holy unholy disease magic suffocation hunger").split()
 MEDIA = "land water air underground space".split()
-STATUS = "stun slow blind fear burn freeze poison bleed sleep charm silence root confuse shrink sick rage deaf debt curse bless expose haste stasis truce chaos void doom".split()
+STATUS = "stun slow blind fear burn freeze poison bleed sleep charm silence root confuse shrink sick rage deaf debt curse bless expose haste stasis truce chaos void doom drunk reverse hypnosis leash".split()
 
 # What the newer statuses do, for the generator's prompt (the rest explain themselves).
 STATUS_MEANS = {
@@ -27,6 +27,10 @@ STATUS_MEANS = {
     "chaos": " (chaos: a handful of their properties (speed, damage rate, armour, aim, strength, sight...) are each multiplied by a random 0.25 to 3 while it lasts: shared idea.ts)",
     "void": " (void: nothing they carry, wear, ride or stand in does anything, and their own damage, statuses and flight are nothing: shared idea.ts)",
     "doom": " (doom: a sealed fate: when it runs out the body takes three quarters of its full integrity as damage nothing resists, unless ended first (effect_status=doom): shared idea.ts)",
+    "drunk": " (drunk: sways as it walks (wobble 5), aims worse; SOBER and AWAKEN-like cures end it: shared control.ts)",
+    "reverse": " (reverse: its controls are reversed: it walks the opposite way to where it means to go: shared control.ts)",
+    "hypnosis": " (hypnosis: whoever put it on them steers their body: it walks where they walk and strikes what they strike, never them; AWAKEN ends it: shared control.ts)",
+    "leash": " (leash: tethered to whoever put it on them: it cannot go farther than 4 tiles from them and is dragged along; a blade that cuts cords (SCISSORS) carried or used snaps it: shared control.ts)",
     "expose": " (expose: shown on every enemy's threat arrows wherever they are, no stealth or disguise; immune_expose also keeps letters from being read: shared signal.ts)",
 }
 
@@ -64,6 +68,8 @@ loudness|scale|0||noise it makes: from 3 up it gives away where its maker is on 
 odor|scale|0||smell it gives off; reveals position
 state|enum|solid|solid,liquid,gas,plasma,energy,none|state of matter
 material|tags|||what it is made of (wood, steel, flesh, stone ...)
+nature|tags|||what kind of body it is for damage (beast, insect, plant, undead, spirit, demon, holy, fire, ice, water, stone, metal, wood, glass, cloth, paper, plastic, machine, bone, flesh...): each nature takes some damage types more or less (the matrix in shared affinity.ts); adjectives add theirs; given by tools/derive.py from class, material and meaning
+size|num|1|x|its size against what the word is by itself: GIANT, GROWTH ×2 to ×4, TINY, SHRINK ×0.1 to ×0.4; scales its reach, sight, stride, carrying, hitbox, which doors it fits through and what it can ride (shared scale.ts)
 shape|enum|irregular|irregular,flat,round,long,hollow,pointed,sheet,pile|rough form
 color|text|||dominant color
 edible|bool|false||can be eaten
@@ -146,6 +152,9 @@ camouflage|tags|||terrain types where stealth doubles
 cover|frac|0||damage reduction it gives things behind or inside it
 untargetable|bool|false||cannot be chosen as a target
 anchored|bool|false||held fast: no pull, push, knockback or waves move or rock it, and its rider (shared space.ts, sea.ts)
+rerolls|num|0||a second chance: each point rolls a failed gathering, hit, dodge or critical roll again, and gives a gamble one more throw (shared idea.ts)
+wobble|scale|0||drunken sway: it veers side to side as it walks, wider the higher (shared control.ts)
+reversed|scale|0||above 0 its controls are reversed: it walks away from where it means to go (shared control.ts)
 luck|scale|0||shifts its holder's dice: each point adds 3% to gathering odds and to hitting, landing criticals and dodging; negative is misfortune (shared idea.ts)
 peace|num|0|s|carried or following: gives whoever takes it a truce for this many seconds, once (untouchable, cannot strike or spell); a word that ends truce (effect_status=truce) breaks it (shared sport.ts)
 indestructible|bool|false||defence absolute: integrity cannot reach 0
@@ -356,6 +365,7 @@ effect_delta|num|0||amount added to that property
 effect_multiplier|num|1|x|multiplier applied to that property
 effect_status|tags|||status effects it applies or removes
 restores|num|0|hp|integrity restored
+gamble|num|0||spelled or used: stakes this many of its speller's letters on a throw (half, shifted by luck): won, they come back doubled; lost, they are gone; passed on a person, the loser pays the winner (shared idea.ts)
 """
 
 # Which property groups an archetype class normally fills in. Everything else stays at default.

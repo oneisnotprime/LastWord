@@ -36,6 +36,9 @@ const RAISED = ["beauty", "toxicity", "luminosity", "corrosiveness", "radioactiv
 /** What any body is made of when its data names no material: living flesh, or ordinary stuff. */
 const FLESH: Record<string, number> = { density: 1000, integrity: 100, hardness: 3, brittleness: 2, flammability: 1, conductivity: 3, value: 1, sharpness: 0 };
 
+/** Natures that come from what a thing is made of (shared affinity.ts): a material before a noun replaces these. */
+export const MATERIAL_NATURES: readonly string[] = ["stone", "metal", "wood", "glass", "cloth", "paper", "plastic", "bone", "ice", "flesh"];
+
 /** True for a word that names a material: a noun of the material class, or a fabric. */
 export function isMaterial(def: WordDef | undefined): boolean {
   return !!def && def.role === "noun" && (def.class === "material" || def.archetype === "fabric");
@@ -107,6 +110,10 @@ export function applyMaterial(dict: Dictionary, stats: Stats, word: string): voi
     else if ((id.startsWith("res_") || id.startsWith("inflict_")) && typeof v === "number" && v > stats.num(id)) stats.set(id, v);
     else if (id.startsWith("immune_") && v === true) stats.set(id, true);
   }
+  // What it is made of is what kind of body it is (shared affinity.ts): a GLASS SWORD is glass, not
+  // metal, and an IRON DOG is still a beast, now metal too.
+  const made = Array.isArray(own.nature) ? own.nature : [];
+  if (made.length) stats.set("nature", [...new Set([...made, ...stats.tags("nature").filter((n) => !MATERIAL_NATURES.includes(n))])]);
   stats.set("color", typeof own.color === "string" && own.color ? own.color : word.toLowerCase());
   stats.set("material", [word.toLowerCase()]);
 }

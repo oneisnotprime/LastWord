@@ -8,14 +8,14 @@
  "demo_candidates": 509,
  "inflections": 405,
  "lexicon_by_role": {
-  "noun": 36176,
-  "adjective": 16234,
+  "noun": 36175,
+  "adjective": 16235,
   "verb": 4036,
   "adverb": 3233
  },
  "lexicon_by_class": {
-  "modifier": 16236,
-  "artifact": 6878,
+  "modifier": 16237,
+  "artifact": 6877,
   "person": 5633,
   "event": 4825,
   "spell": 4046,
@@ -46,7 +46,7 @@
   "attribute": 3042,
   "knowledge": 1910,
   "material": 1589,
-  "artifact": 1327,
+  "artifact": 1326,
   "bodypart": 1222,
   "worker": 1036,
   "device": 998,

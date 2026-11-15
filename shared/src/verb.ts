@@ -97,6 +97,7 @@ export function useObject(dict: Dictionary, noun: string, adjectives: readonly s
   const ops = def.ops;
   const lasting = stats.num("duration") > 0 && (ops.length > 0 || Object.keys(set).length > 0);
   const poisonous = stats.flag("edible") && stats.num("toxicity") > 0; // eaten, it poisons (shared food.ts `toxin`)
-  if (!(stats.num("restores") > 0) && !stats.tags("effect_status").length && !lasting && !(stats.num("nutrition") > 0) && !poisonous) return null;
+  // A gamble (DICE) is used by throwing it (shared idea.ts).
+  if (!(stats.num("restores") > 0) && !stats.tags("effect_status").length && !lasting && !(stats.num("nutrition") > 0) && !poisonous && !(stats.num("gamble") > 0)) return null;
   return { stats, set, ops };
 }

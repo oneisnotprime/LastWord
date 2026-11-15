@@ -1,3 +1,4 @@
+import { luckyChance } from "./idea.js";
 import type { Dictionary } from "./dictionary.js";
 import type { Rng } from "./rng.js";
 import type { Stats } from "./stats.js";
@@ -184,9 +185,14 @@ const RAREST = "qjzxkvwfbyhgpmudclsrtnoiae";
  * Returns the letters, extra food (a multiplier) and the reasons, for the popup.
  */
 export interface HuntYield { letters: string; food: number; why: string[] }
+/** Chance a far-off animal yields a rare letter, before luck. */
+export const RARE_HUNT = 0.25;
+
 export function huntYield(
   noun: string, prey: Stats, weapon: { name: string; stats: Stats } | null,
   tools: readonly { name: string; stats: Stats }[], rng: Rng,
+  /** The hunter's luck and rerolls (shared idea.ts): the rare letter is a lucky drop. */
+  luck = 0, rerolls = 0,
 ): HuntYield {
   const name = noun.toLowerCase().replace(/[^a-z]/g, "") || "h";
   // Extra letters come from the name's everyday letters; the rare ones only from the lucky roll below.
@@ -205,7 +211,7 @@ export function huntYield(
     if (n > 0) { for (let i = 0; i < n; i++) letters += pick(); why.push(`${h.by.toUpperCase()} +${n}`); }
   }
   const habitat = prey.tags("habitat");
-  if (habitat.length && !habitat.some((h) => h === "meadow" || h === "forest") && rng() < 0.25) {
+  if (habitat.length && !habitat.some((h) => h === "meadow" || h === "forest") && rng() < luckyChance(RARE_HUNT, luck, rerolls)) {
     const rare = [...RAREST].find((ch) => name.includes(ch));
     if (rare) { letters += rare; why.push(`rare ${rare.toUpperCase()}`); }
   }
