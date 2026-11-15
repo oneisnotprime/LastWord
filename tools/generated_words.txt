@@ -568,6 +568,7 @@ covetous: loyalty+-3 letter_steal+1 aggression+1
 cranky: aggression+3 charm+-2 accuracy+-0.05
 crazy: aggression+5 obedience+-5 attack_rate*1.6 accuracy+-0.2 immune_fear=true immune_confuse=true inflict_confuse+3
 creative: craft_slots+2 build_speed*2 intelligence+2 beauty+3 grants_adjective_slots+1
+creepy: fear_aura+2 stealth+2
 crippled: speed_land*0.3 jump*0 agility+-3 evasion*0.3 strength+-1 carry_capacity*0.5
 crispy: brittleness+4 loudness+2 morale+1 nutrition*1.1
 critical: critical+0.5 dmg_pierce*1.5 dmg_slash*1.5 armor_pierce+0.3 read_properties+3
@@ -2133,6 +2134,7 @@ fostering: placement=target placement_range=20 event_target=creature loyalty+4 i
 fuck: placement=target placement_range=1 event_target=creature event_duration=1 reproduction+3 morale+4 loudness=6
 fumble: placement=target placement_range=40 event_target=character accuracy+-0.3 inflict_stun=1 luck+-3 event_duration=1 counters=grip,grace
 fumble: placement=target placement_range=40 event_target=character inflict_confuse=4 accuracy+-0.3 event_duration=1
+fumigation: placement=target placement_range=40 event_target=region event_radius=8 event_duration=0.5 dmg_poison=25 attack_rate=1 inflict_blind=3 friendly_fire=true counters=infestation,vermin,pest,termite,swarm,anthill,formicary
 gaffe: placement=target placement_range=40 event_target=character charm+-4 reputation+-3 inflict_confuse=2 event_duration=1 counters=tact,grace
 gambit: placement=self field_radius=4 field_targets=self field_duration=1 critical+0.5 armor+-10 evasion+-0.1
 gambling: placement=target placement_range=50 event_target=character stakes=20 field_radius=10 field_duration=1 luck+-1 counters=foul
@@ -2204,6 +2206,7 @@ mambo: field_radius=25 field_targets=all field_duration=2 loudness=7 morale+4 ag
 manufacturing: placement=target placement_range=20 event_target=structure event_duration=10 build_speed*3 craft_slots+3 produce_C*3 produce_M*2
 mapping: placement=region placement_range=500 event_target=region event_radius=300 event_duration=1 map_reveal=300 detect_letters=500
 mazurka: field_radius=25 field_targets=all field_duration=2 loudness=6 morale+3 speed_land*1.15 agility+2
+metamorphosis: placement=target placement_range=30 event_target=creature ages=60 inflict_confuse=2
 mining: placement=target placement_range=20 event_target=tile event_duration=10 harvest_bonus*3 produce_G*3 produce_X+0.05 speed_underground+0.3 dmg_earth=50
 minuet: placement=target placement_range=20 field_radius=10 field_targets=living field_duration=2 loudness=4 inflict_charm=3 aggression+-3 charm+2
 miscalculation: placement=target placement_range=80 event_target=character inflict_confuse=4 accuracy+-0.2 luck+-2 event_duration=1 counters=logic,arithmetic
@@ -2543,6 +2546,7 @@ cleanser: mass=0.4 state=liquid integrity=1 corrosiveness=2 res_disease+0.5 nega
 clover: mass=0.01 integrity=1 material=plant color=green luck+4 harvest_bonus*1.2 counters=jinx,misfortune,unlucky
 coaster: mass=0.02 integrity=3 material=cork equip_slot=held hands_required=1 dmg_slash=2 attack_range=10 plural_count=6 color=brown
 coating: mass=0.5 integrity=20 reflectivity=4 res_water+0.5 res_acid+0.3 res_fire+0.2
+cobble: mass=1 hardness=7 integrity=150 material=stone shape=round equip_slot=held hands_required=1 dmg_blunt=18 attack_range=15 inflict_stun=1 single_use=true color=gray
 colors: mass=1 length=1.5 integrity=10 material=silk claim_radius=8 field_radius=50 field_targets=owned morale+3 courage+3 recruit_rate=0.2 color=red
 colours: mass=1 length=1.5 integrity=10 material=silk claim_radius=8 field_radius=50 field_targets=owned morale+3 courage+3 recruit_rate=0.2 color=red
 confetti: mass=0.5 integrity=1 material=paper morale+3 charm+2 inflict_blind=1 color=pink plural_count=100
@@ -2552,6 +2556,9 @@ crucifix: mass=0.3 integrity=40 material=wood,silver equip_slot=neck res_unholy=
 decal: beauty+1 charm+1 faction=decal
 decor: mass=10 integrity=20 material=wood,cloth beauty=7 comfort=1.5 morale+1 color=beige
 decoration: mass=0.5 integrity=5 material=paper,glass beauty=7 comfort=1 morale+1 color=gold
+delf: tile_type=pit radius=2 depth=20 portable=false movement_cost=3
+diggings: tile_type=pit radius=2 depth=10 portable=false movement_cost=2 lode=g,u,x lode_share=0.2 lode_stock=8
+ditch: tile_type=pit radius=1 length=60 depth=2 cover=0.5 movement_cost=3 portable=false placement=region
 doormat: mass=3 integrity=20 material=coir comfort=0.5 alarm=true counters=mud,dirt color=brown
 drawing: mass=0.01 integrity=1 flammability=9 material=paper map_reveal=30 beauty=5 value=20 read_properties=1
 duvet: mass=2 integrity=10 material=down,cotton comfort=3 equip_slot=back res_cold=0.6 temp_min+-15 sleep_need*0.8 color=white
@@ -2563,7 +2570,9 @@ figurine: mass=0.3 integrity=5 brittleness=9 material=porcelain beauty=7 value=6
 firework: mass=0.5 integrity=3 material=paper,gunpowder single_use=true speed_air=60 dmg_fire=40 dmg_blast=40 dmg_light=60 inflict_blind=3 luminosity=10 loudness=10 morale+3 attack_range=50 attack_area=5 color=red
 flag: mass=1 length=1.5 integrity=10 material=cloth portable=false claim_radius=8 field_radius=40 field_targets=owned morale+3 courage+3 loyalty+2 sight_range+100 counters=surrender
 flooring: mass=200 footprint=4 integrity=400 material=wood portable=false tile_type=floor radius=2
+fosse: tile_type=water radius=1 length=80 depth=3 blocks=land portable=false placement=region
 frieze: mass=500 integrity=800 material=stone portable=false beauty=8 comfort=1 value=2000 color=white
+furrow: tile_type=tilled radius=1 length=40 portable=false placement=region
 gargoyle: mass=500 integrity=3000 hardness=8 material=stone portable=false fear_aura=3 alarm=true res_unholy+0.3 counters=demon,ghost,evil beauty=5 water_output=1 color=gray
 glaze: beauty+2 brittleness+1 res_water+0.3 reflectivity+2 value*1.3
 goalpost: mass=150 height=2.4 integrity=600 material=steel portable=false plural_count=2 field_radius=20 field_targets=owned accuracy+0.1 morale+1
@@ -2586,9 +2595,11 @@ mascot: placement=self field_radius=20 field_targets=owned field_duration=5 luck
 mat: mass=2 integrity=15 material=rubber comfort=0.5 slipperiness*0.3 res_blunt+0.1 color=gray
 memorial: mass=20000 integrity=8000 material=stone portable=false field_radius=40 field_targets=owned courage+3 morale+2 loyalty+2 beauty=5
 metronome: mass=0.5 integrity=15 material=wood,brass loudness=3 training+1 accuracy+0.05 inflict_sleep=1 color=brown
+mineshaft: tile_type=pit radius=1 depth=200 portable=false enterable=true occupants=10 cover=0.9 luminosity=0 placeable_on=hill,mountain
 mojo: mass=0.1 integrity=5 equip_slot=neck charm+3 morale+2 critical+0.1 harvest_bonus*1.3
 molding: mass=3 length=2 integrity=30 material=wood portable=false beauty=6 comfort=0.5 color=white
 mortar: mass=150 length=1.2 integrity=300 material=steel portable=false dmg_blast=200 attack_rate=0.2 attack_range=3000 attack_area=8 attack_windup=3 targets=land siege=3 loudness=9 ammo_per_hit=1 ammo_type=shell
+mothball: mass=0.01 integrity=2 toxicity=3 odor=8 field_radius=6 dmg_poison=1 attack_rate=0.5 res_disease+0.1 color=white
 moulding: mass=3 length=2 integrity=30 material=wood portable=false beauty=6 comfort=0.5 color=white
 object: mass=2 integrity=30 value=2 dmg_blunt=10 attack_range=10
 ornament: mass=0.2 integrity=4 brittleness=8 material=glass beauty=8 comfort=0.5 value=40 plural_count=4 color=red
@@ -2630,6 +2641,7 @@ toothpaste: mass=0.1 integrity=1 stickiness=3 odor=3 res_disease+0.2 charm+1 col
 totem: mass=400 length=6 integrity=600 material=wood portable=false claim_radius=6 field_radius=40 field_targets=owned morale+2 courage+2 beauty=7 color=red
 towel: mass=0.5 integrity=10 material=cotton equip_slot=held flammability=7 wetness*0 res_water+0.2 counters=wet color=white
 trampoline: mass=80 footprint=2 integrity=150 elasticity=10 material=steel,cloth portable=false field_radius=3 field_targets=all jump*4 evasion+0.1
+trench: tile_type=pit radius=1 length=60 depth=2 cover=0.8 res_blast=0.6 res_pierce=0.4 movement_cost=2 portable=false placement=region
 trump: mass=0.002 integrity=1 material=paper single_use=true counters=artifact,weapon,spell strips_adjectives=3 is_absolute=true absolute_side=attack specificity=4 critical=1
 warhead: mass=500 integrity=50 material=steel single_use=true dmg_blast=20000 dmg_fire=4000 attack_area=60 siege=6 friendly_fire=true loudness=10
 wick: mass=0.001 integrity=1 material=cotton flammability=9 burn_time=1800 luminosity=1 plural_count=6 color=white
@@ -3109,6 +3121,7 @@ nose: equip_slot=graft mass=0.05 integrity=10 smell_range+300 tracking+4 detect_
 nostril: equip_slot=graft mass=0.002 integrity=3 smell_range+150 tracking+2 res_suffocation+0.1 plural_count=2
 nucleus: equip_slot=graft mass=0 integrity=1 regeneration+1 res_radiation+0.2 intelligence+1
 organ: equip_slot=graft mass=1 integrity=30 regeneration+1 res_disease+0.2 integrity*1.1
+ovipositor: mass=0.1 integrity=20 equip_slot=graft dmg_pierce=20 inflict_sick=8 attack_rate=1 summons=larva summon_count=20 summon_owned=true
 oxytocin: mass=0 potency=5 charm+5 morale+3 loyalty+3 inflict_charm=15 aggression*0.5 duration=300
 palate: equip_slot=graft mass=0.05 integrity=20 smell_range+30 res_poison+0.2 speech=true
 pancreas: equip_slot=graft mass=0.1 integrity=10 food_need*0.8 res_hunger+0.3 regeneration+0.5
@@ -3859,22 +3872,34 @@ tourney: placement=self field_radius=50 field_targets=owned field_duration=4 tra
 
 # noun creature
 amoeba: mass=0.000000005 length=0.0005 integrity=1 alive=true diet=omnivore plural_count=10000 reproduction=200 stealth=9 speed_water=0.00001 dmg_disease=3 attack_rate=1 inflict_sick=25 contagion=0.3 habitat=water,swamp food_need=0
+antlion: mass=0.0002 length=0.015 integrity=1 alive=true food_need=0.00001 plural_count=10 aggression=8 diet=carnivore speed_underground=0.05 stealth=9 trigger_radius=1 dmg_pierce=6 inflict_root=6 attack_rate=1 matures_into=lacewing growth_time=6 counters=ant,emmet,pismire habitat=desert,shore color=brown
+armyworm: mass=0.002 length=0.03 integrity=1 alive=true food_need=0.00001 plural_count=1000 diet=herbivore speed_land=0.1 matures_into=noctuid growth_time=4 field_radius=12 produce_A*0.3 counters=corn,wheat,rice,grass habitat=meadow,forest color=green
 bacillus: mass=0.000000001 length=0.000005 integrity=1 alive=true plural_count=100000 reproduction=500 stealth=10 dmg_disease=2 attack_rate=1 inflict_sick=20 contagion=0.4 food_need=0 shape=long
 bacteria: mass=0.000000001 length=0.000002 integrity=1 alive=true diet=omnivore plural_count=1000000 reproduction=6 stealth=10 dmg_disease=2 attack_rate=1 inflict_sick=20 contagion=0.5 food_need=0
 bacterium: mass=0.000000001 length=0.000002 integrity=1 alive=true diet=omnivore reproduction=1000 stealth=10 dmg_disease=1 attack_rate=1 inflict_sick=15 contagion=0.4 food_need=0
 beast: mass=400 length=2.5 integrity=800 alive=true aggression=8 courage=8 diet=carnivore food_need=0.2 speed_land=14 dmg_slash=90 dmg_crush=60 attack_rate=1 fear_aura=6 night_vision=true loudness=7 habitat=forest,badlands
+bollworm: mass=0.002 length=0.03 integrity=1 alive=true food_need=0.00001 plural_count=40 diet=herbivore speed_land=0.1 matures_into=noctuid growth_time=4 counters=cotton,corn,tomato habitat=meadow,forest color=brown
+cabbageworm: mass=0.002 length=0.03 integrity=1 alive=true food_need=0.00001 plural_count=40 diet=herbivore speed_land=0.1 matures_into=comma growth_time=4 counters=cabbage,broccoli,kale habitat=meadow,forest color=green
+caddisworm: mass=0.0002 length=0.02 integrity=1 alive=true food_need=0.00001 plural_count=30 diet=omnivore speed_water=0.1 breathes=water armor=2 camouflage=water matures_into=dayfly growth_time=4 habitat=marsh color=brown
+cankerworm: mass=0.002 length=0.03 integrity=1 alive=true food_need=0.00001 plural_count=40 diet=herbivore speed_land=0.1 matures_into=geometrid growth_time=4 counters=elm,apple,oak habitat=meadow,forest color=green
+cercaria: mass=1e-06 length=0.0005 integrity=1 alive=true food_need=0.00001 plural_count=500 diet=carnivore speed_water=0.1 breathes=water stealth=10 dmg_disease=2 contagion=0.5 inflict_sick=6 attack_rate=0.5 matures_into=schistosome growth_time=3 habitat=marsh color=white
+cocoon: mass=0.002 length=0.04 integrity=1 alive=true food_need=0.00001 diet=none speed_land=0 armor=3 stealth=8 regeneration=1 res_cold=0.8 material=silk matures_into=tussah growth_time=6 value=5 habitat=forest,meadow color=white
 creature: mass=80 length=1.6 integrity=150 alive=true aggression=4 diet=omnivore food_need=0.05 speed_land=8 dmg_slash=25 dmg_pierce=20 attack_rate=1 night_vision=true fear_aura=2 habitat=forest,marsh color=gray
 critter: mass=0.5 length=0.25 integrity=4 alive=true diet=omnivore food_need=0.001 speed_land=4 stealth=6 evasion=0.3 letter_steal=1 reproduction=8 pack_size=3 habitat=forest,meadow,city color=brown
 cub: mass=8 length=0.6 integrity=30 alive=true sentient=true intelligence=3 loyalty=8 diet=carnivore food_need=0.008 speed_land=7 climb=4 dmg_slash=6 attack_rate=1 comfort=2 charm=8 trainable=9 tamable=true equip_slot=companion habitat=forest,savanna color=brown
+cutworm: mass=0.002 length=0.03 integrity=1 alive=true food_need=0.00001 plural_count=40 diet=herbivore speed_land=0.1 matures_into=noctuid growth_time=4 counters=cabbage,corn,tomato,seedling habitat=meadow,forest color=brown
 extraterrestrial: mass=40 integrity=150 alive=true sentient=true intelligence=10 hands=true speed_land=5 hover=true teleport_range=50 dmg_light=30 attack_rate=1 attack_range=40 inflict_confuse=3 breathes=none res_radiation=0.8 res_cold=0.6 detect_life=200 read_properties=3 aggression=4 gravity*0.5 color=green
 fledgling: mass=0.1 length=0.15 integrity=1 alive=true diet=omnivore food_need=0.001 speed_land=1 speed_air=3 flight_ceiling=5 courage=0 charm=5 tamable=true trainable=8 habitat=forest,meadow color=brown
 grub: mass=0.003 length=0.03 integrity=1 alive=true diet=herbivore food_need=0.0001 speed_underground=0.01 pack_size=20 counters=grass,lawn,garden habitat=meadow,forest color=white
 hatchling: mass=0.05 length=0.1 integrity=1 alive=true diet=omnivore food_need=0.0005 speed_land=1 courage=0 charm=6 comfort=1 tamable=true trainable=8 color=green
 herbivore: mass=300 length=2.2 integrity=300 alive=true diet=herbivore food_need=0.12 speed_land=14 dmg_blunt=30 attack_rate=0.5 pack_size=6 reproduction=0.5 habitat=meadow,savanna color=brown
+inchworm: mass=0.002 length=0.03 integrity=1 alive=true food_need=0.00001 plural_count=40 diet=herbivore speed_land=0.1 matures_into=geometrid growth_time=4 camouflage=forest habitat=meadow,forest color=green
 larva: mass=0.001 length=0.02 integrity=1 alive=true diet=herbivore food_need=0.0001 speed_land=0.05 growth_time=5 reproduction=0 pack_size=30 habitat=marsh,forest,meadow color=white
 listeria: mass=0.000000001 length=0.000002 integrity=1 alive=true plural_count=100000 reproduction=500 stealth=10 dmg_disease=3 attack_rate=1 inflict_sick=30 inflict_confuse=4 contagion=0.2 food_need=0 temp_min=-5 toxicity+4 counters=cheese,milk
+looper: mass=0.002 length=0.03 integrity=1 alive=true food_need=0.00001 plural_count=40 diet=herbivore speed_land=0.1 matures_into=noctuid growth_time=4 camouflage=forest counters=cabbage habitat=meadow,forest color=green
 maggot: mass=0.0001 length=0.01 integrity=1 alive=true diet=scavenger food_need=0.00005 speed_land=0.01 pack_size=200 res_disease=1 reclaim_rate=0.1 reclaim_range=5 regeneration+0.5 counters=rotten,meat,carcass odor=3 habitat=marsh,city color=white
 martian: mass=50 integrity=150 alive=true sentient=true intelligence=8 hands=true speed_land=5 dmg_light=40 attack_rate=1 attack_range=60 res_cold=0.8 temp_min=-100 breathes=none aggression=7 pack_size=3 gravity*0.4 color=red
+mealworm: mass=0.0001 length=0.02 integrity=1 alive=true food_need=0.00001 plural_count=50 diet=scavenger speed_land=0.1 matures_into=blackbeetle growth_time=5 edible=true nutrition=1 counters=flour,grain,bread habitat=city,meadow color=yellow
 microbe: mass=0.000000001 length=0.000002 integrity=1 alive=true diet=omnivore plural_count=100000 reproduction=600 stealth=10 dmg_disease=1 attack_rate=1 inflict_sick=12 contagion=0.4 food_need=0
 mouse: mass=0.02 length=0.08 integrity=3 alive=true diet=omnivore speed_land=3 climb=6 stealth=7 pack_size=10 reproduction=4 dmg_disease=1 attack_rate=1 inflict_sick=8 contagion=0.3 food_need=0.001 letter_steal=1 habitat=meadow,field,forest color=gray counters=cheese,grain
 mutant: mass=100 length=1.8 integrity=400 alive=true sentient=true intelligence=4 aggression=7 diet=omnivore food_need=0.08 speed_land=7 regeneration=2 radioactivity=3 res_radiation=0.9 res_poison=0.5 dmg_slash=50 dmg_radiation=20 attack_rate=1 fear_aura=4 habitat=volcanic,badlands color=green
@@ -3894,7 +3919,9 @@ scavenger: mass=8 length=0.9 integrity=25 alive=true diet=scavenger food_need=0.
 staph: mass=0.000000001 length=0.000001 integrity=1 alive=true plural_count=100000 reproduction=600 stealth=10 dmg_disease=3 attack_rate=1 inflict_sick=25 contagion=0.5 food_need=0 regeneration*0.5
 strep: mass=0.000000001 length=0.000001 integrity=1 alive=true plural_count=100000 reproduction=600 stealth=10 dmg_disease=2 attack_rate=1 inflict_sick=20 inflict_silence=6 contagion=0.6 food_need=0
 varmint: mass=2 length=0.4 integrity=8 alive=true aggression=3 diet=scavenger food_need=0.002 speed_land=6 stealth=6 letter_steal=2 reproduction=10 pack_size=3 counters=garden,chicken,hen habitat=meadow,city,forest color=brown
+webworm: mass=0.002 length=0.03 integrity=1 alive=true food_need=0.00001 plural_count=40 diet=herbivore speed_land=0.1 matures_into=geometrid growth_time=4 inflict_root=2 counters=elm,maple,mulberry habitat=meadow,forest color=white
 whelp: mass=3 length=0.35 integrity=12 alive=true sentient=true intelligence=3 loyalty=9 aggression=2 diet=carnivore food_need=0.004 speed_land=7 comfort=2 charm=4 dmg_pierce=3 trainable=9 tamable=true equip_slot=companion color=gray
+wireworm: mass=0.0001 length=0.02 integrity=1 alive=true food_need=0.00001 plural_count=50 diet=herbivore speed_underground=0.01 matures_into=elater growth_time=6 stealth=8 counters=potato,carrot,wheat habitat=meadow color=orange
 
 # noun crime
 abduction: placement=target placement_range=10 event_target=creature transfers_ownership=true contest_with=strength contested_by=strength inflict_fear=12 inflict_silence=10 event_duration=1 counters=rescue,police
@@ -4061,14 +4088,31 @@ yen: plural_count=100 mass=0.001 integrity=20 material=aluminum equip_slot=held 
 yuan: plural_count=10 mass=0.001 integrity=1 material=paper flammability=9 equip_slot=held hands_required=0 value=1.5 trade_bonus=0.02 color=red
 
 # noun depression
+arroyo: tile_type=sand radius=2 length=300 movement_cost=1.5 portable=false placement=region
 bottom: tile_type=pit radius=3 depth=100 blocks=land movement_cost=10 portable=false inflict_root=20 dmg_blunt=150 stealth=3 produce_U=0.5 luminosity=0
 burrow: tile_type=pit radius=1 depth=3 enterable=true occupants=6 cover=0.9 stealth=8 res_blast=0.6 portable=false claim_radius=1 field_radius=5 field_targets=owned reproduction*2 placeable_on=land,field,meadow,forest
+cirque: tile_type=snow radius=4 depth=100 portable=false temperature_delta=-8
+corrie: tile_type=snow radius=4 depth=100 portable=false temperature_delta=-8
 crack: tile_type=pit radius=1 length=30 depth=8 blocks=land movement_cost=5 portable=false stealth=3 inflict_root=5 dmg_blunt=30 siege=2
+cwm: tile_type=snow radius=4 depth=100 portable=false temperature_delta=-8
 depression: tile_type=pit radius=6 depth=40 blocks=land movement_cost=4 portable=false stealth=3 cover=0.4 moisture=3
+divot: tile_type=pit radius=0.5 depth=0.2 movement_cost=1.5 portable=false
 fault: tile_type=pit radius=2 length=5000 depth=60 blocks=land portable=false placement=region dmg_earth=800 dmg_crush=300 attack_rate=0.01 attack_area=200 friendly_fire=true siege=6 targets=land,underground
 gap: tile_type=pit radius=1 depth=8 blocks=land movement_cost=6 portable=false dmg_blunt=30 inflict_root=5
+gorge: tile_type=pit radius=2 length=400 depth=150 blocks=land portable=false placement=region
+gulch: tile_type=pit radius=1 length=200 depth=40 blocks=land portable=false placement=region
+gully: tile_type=pit radius=1 length=150 depth=20 movement_cost=4 portable=false placement=region
 hole: tile_type=pit radius=1 depth=5 blocks=land movement_cost=6 portable=false inflict_root=6 dmg_blunt=25 stealth=2 storage_objects=500
+landfill: tile_type=field radius=3 portable=false odor=8 dmg_disease=1 contagion=0.1 produce_U=0.5
+nullah: tile_type=sand radius=2 length=300 movement_cost=1.5 portable=false placement=region
+pothole: tile_type=pit radius=1 depth=2 movement_cost=3 portable=false inflict_slow=3
+quicksand: mass=1000 portable=false trigger_radius=1.5 stealth=8 camouflage=desert,sand,shore inflict_root=25 dmg_suffocation=60 attack_rate=0.5 stickiness=10 color=yellow
+ravine: tile_type=pit radius=2 length=300 depth=80 blocks=land portable=false placement=region
+sandpit: tile_type=sand radius=2 depth=3 portable=false movement_cost=2
+sinkhole: placement=target placement_range=60 event_target=tile event_radius=2 event_duration=0 tile_type=pit radius=2 dmg_crush=300 dmg_earth=200 inflict_root=6 inflict_stun=2 attack_windup=2 friendly_fire=true
+trough: tile_type=pit radius=2 length=200 depth=30 movement_cost=4 portable=false placement=region
 valley: placement=region tile_type=field radius=15 depth=200 fertility=8 moisture=5 cover=0.3 stealth=2 portable=false food_output=5 produce_A=1
+wadi: tile_type=sand radius=2 length=300 movement_cost=1.5 portable=false placement=region moisture=3
 warren: tile_type=pit radius=3 depth=3 portable=false enterable=true occupants=30 stealth=7 cover=0.7 movement_cost=3 speed_underground+1 produce_U=0.5 produce_R=0.3 reproduction=10
 
 # noun destruction
@@ -4155,6 +4199,7 @@ defibrillator: mass=3 integrity=20 material=plastic,copper equip_slot=held hands
 dehumidifier: mass=15 integrity=40 material=steel,plastic upkeep_power=3 field_radius=8 field_targets=all wetness+-3 decay_rate*0.5 temp_max+3 counters=mist,fog,dew,mold
 desktop: mass=10 integrity=30 material=plastic,steel portable=false upkeep_power=0.4 intelligence+3 read_properties=6 detect_letters=700 storage_letters=400 color=black
 detector: mass=1 integrity=15 material=plastic equip_slot=held hands_required=1 detect_letters=200 detect_underground=true detect_stealth=3 alarm=true upkeep_power=0.05 color=gray
+detonator: mass=1 integrity=20 equip_slot=held hands_required=1 single_use=true dmg_blast=800 attack_range=60 attack_area=5 attack_windup=1 siege=5 friendly_fire=true loudness=9
 device: mass=1 integrity=30 material=steel,plastic equip_slot=held upkeep_power=0.05 craft_slots=1 detect_letters=100 produce_C=0.2
 devices: mass=3 integrity=30 material=steel,plastic upkeep_power=0.15 craft_slots=2 detect_letters=150 plural_count=5 produce_C=0.4
 dial: mass=0.1 integrity=10 material=plastic hearing_range+500 accuracy+0.05 color=black
@@ -4311,6 +4356,7 @@ sconce: mass=2 integrity=60 material=brass portable=false luminosity=5 burn_time
 scope: mass=0.6 length=0.3 integrity=20 material=glass,steel equip_slot=held sight_range+800 accuracy+0.2 critical+0.15 attack_range*1.5
 searchlight: mass=200 integrity=150 material=steel,glass portable=false luminosity=10 sight_range=2000 detect_stealth=6 sees_through=night,fog inflict_blind=4 map_reveal=120 upkeep_power=5 color=white
 seatbelt: mass=0.5 integrity=40 material=nylon,steel equip_slot=body res_blunt=0.4 res_crush=0.3 immune_stun=true knockback*0 prevents_death=1 speed_land*0.8
+seismograph: mass=20 integrity=40 portable=false detect_life=80 detect_underground=true map_reveal=60 upkeep_power=0.05
 selector: mass=0.2 integrity=10 material=plastic portable=false conductivity=6 read_properties=2 color=black
 semaphore: mass=3 integrity=20 material=wood,cloth command_limit+8 obedience+2 luminosity=1 sight_range+100
 sender: mass=30 integrity=60 material=steel portable=false hearing_range=6000 command_limit+15 upkeep_power=1 color=gray
@@ -4645,10 +4691,34 @@ trice: placement=self field_radius=2 field_targets=self field_duration=1 inflict
 yesterday: placement=self field_radius=4 field_targets=self field_duration=1 rewinds=15 effect_status=poison,bleed,burn letter_refund=0.3 counters=tomorrow
 
 # noun elevation
+alp: tile_type=mountain radius=5 elevation=3000 blocks=land,sight movement_cost=6 portable=false temperature_delta=-15 produce_G=0.6
+anthill: mass=200 footprint=1 integrity=80 material=earth portable=false summons=emmet summon_count=500 summon_owned=true placement=target placement_range=20 trigger_radius=2 dmg_acid=2 inflict_slow=3 attack_rate=1 fertility=4 color=brown
 ben: tile_type=mountain radius=6 elevation=1100 mass=500000000000 integrity=3000000 armor=1500 hardness=8 blocks=land,sight,projectiles movement_cost=5 portable=false produce_G=0.8 temperature_delta=-7 sight_range+3000
+berm: tile_type=hill radius=1 length=60 elevation=3 cover=0.6 res_blast=0.5 movement_cost=2 portable=false placement=region
+butte: tile_type=mountain radius=2 elevation=200 blocks=land,sight movement_cost=6 portable=false sight_range+500 attack_range+20 produce_G=0.3
 cant: tile_type=hill radius=2 elevation=6 portable=false movement_cost=1.6 slipperiness=3 sight_range+60 attack_range+5
+cay: tile_type=sand radius=3 portable=false placeable_on=water,deep_water
+dune: tile_type=sand radius=3 elevation=30 movement_cost=2 portable=false camouflage=desert stealth=3
+esker: tile_type=hill radius=1 length=300 elevation=30 movement_cost=1.5 portable=false placement=region
+foothill: tile_type=hill radius=3 elevation=150 movement_cost=2 portable=false sight_range+200 produce_G=0.2
+formicary: mass=200 footprint=1 integrity=80 material=earth portable=false summons=emmet summon_count=500 summon_owned=true placement=target placement_range=20 dmg_acid=2 inflict_slow=3 attack_rate=1 fertility=4 color=brown
+highland: tile_type=hill radius=6 elevation=800 movement_cost=2 portable=false sight_range+300 temperature_delta=-6
+hillock: tile_type=hill radius=1 elevation=15 movement_cost=1.5 portable=false sight_range+150 attack_range+10
+hummock: tile_type=hill radius=1 elevation=5 movement_cost=1.5 portable=false
+knoll: tile_type=hill radius=1 elevation=20 movement_cost=1.5 portable=false sight_range+200 attack_range+10
+kopje: tile_type=hill radius=2 elevation=50 movement_cost=2 portable=false cover=0.5 sight_range+300
+koppie: tile_type=hill radius=2 elevation=50 movement_cost=2 portable=false cover=0.5 sight_range+300
+ledge: tile_type=wall radius=1 length=40 elevation=10 integrity=400000 armor=1000 hardness=8 blocks=land movement_cost=10 portable=false cover=0.5
+mesa: tile_type=mountain radius=4 elevation=300 blocks=land,sight movement_cost=6 portable=false sight_range+600 attack_range+30 produce_G=0.5
+molehill: tile_type=hill radius=0.5 elevation=0.2 movement_cost=1.2 portable=false fertility=4
 mount: tile_type=mountain radius=6 elevation=1500 mass=500000000000 integrity=3000000 armor=1500 hardness=8 blocks=land,sight,projectiles movement_cost=5 portable=false produce_G=0.8 temperature_delta=-8 sight_range+4000
 peak: tile_type=mountain radius=3 elevation=4000 integrity=3000000 armor=1500 hardness=8 blocks=land,sight movement_cost=8 portable=false temperature_delta=-25 sight_range+8000 attack_range+50 map_reveal=80
+plateau: tile_type=hill radius=6 elevation=500 movement_cost=1.5 portable=false sight_range+400 temperature_delta=-5
+ridge: tile_type=hill radius=1 length=400 elevation=100 blocks=sight movement_cost=2 portable=false placement=region sight_range+300
+sandbank: tile_type=sand radius=2 length=200 portable=false placement=region placeable_on=water,deep_water
+sandbar: tile_type=sand radius=2 length=200 portable=false placement=region placeable_on=water,deep_water
+tableland: tile_type=hill radius=6 elevation=500 movement_cost=1.5 portable=false sight_range+400 temperature_delta=-5
+upland: tile_type=hill radius=6 elevation=500 movement_cost=2 portable=false sight_range+300
 
 # noun escape
 departure: placement=self teleport_range=800 speed_land*2 evasion+0.4 untargetable=true duration=5 effect_status=root,stun
@@ -4852,6 +4922,7 @@ ping: placement=target event_target=tile event_duration=1 placement_range=500 ev
 planetoid: placement=target placement_range=500 event_radius=40 event_duration=6 dmg_blast=8000 dmg_fire=2000 friendly_fire=true siege=6 inflict_stun=4 luminosity=10 tile_type=pit radius=6 lode=z,q,x lode_share=0.7 lode_stock=10 counters=dome,deflector
 plea: placement=target placement_range=30 event_target=character event_duration=2 inflict_charm=15 aggression+-5 counters=wrath,rage
 plop: placement=target event_target=tile event_duration=1 placement_range=30 event_radius=3 loudness=3 wetness+2
+pollination: placement=self field_radius=40 field_duration=4 growth=2 produce_A*2 produce_P*2 counters=blight,drought
 popping: placement=target event_target=tile event_duration=1 placement_range=40 event_radius=8 loudness=7 dmg_sonic=8 inflict_confuse=2 inflict_fear=1
 portent: placement=target placement_range=120 event_target=character inflict_doom=45 inflict_fear=4 event_duration=1 counters=providence,karma,hope
 predestination: placement=self field_radius=1 field_targets=self field_duration=20 faith_cost=20 evasion+0.2 accuracy+0.2 immune_confuse=true immune_charm=true
@@ -4985,9 +5056,11 @@ zip: placement=target placement_range=30 event_target=character inflict_void=10 
 acquisition: placement=target placement_range=60 event_target=structure transfers_ownership=true pays=12 contest_with=pays contested_by=security
 advertising: placement=region placement_range=200 field_radius=80 field_targets=all field_duration=5 charm+3 recruit_rate+0.5 trade_rate=0.9 produce_T*1.3 loudness=5
 ante: placement=target placement_range=40 event_target=character stakes=3 field_radius=10 field_duration=1 luck+1 counters=foul,referee
+apiculture: placement=self field_radius=30 field_duration=4 summons=honeybee summon_count=200 summon_owned=true produce_P*1.5 growth=1.5
 auction: placement=target placement_range=50 event_target=object transfers_ownership=true contest_with=value contested_by=security trade_bonus+0.5 produce_T=5 loudness=6 event_duration=2
 banking: storage_letters=500 security+4 trade_bonus+0.1 produce_T=2 produce_B=0.5
 barter: placement=self field_radius=20 field_targets=all field_duration=5 trade_rate=0.6 law=theft counters=embargo,inflation
+beekeeping: placement=self field_radius=30 field_duration=4 summons=honeybee summon_count=200 summon_owned=true produce_P*1.5 growth=1.5
 bet: placement=self field_radius=4 field_targets=self field_duration=1 lode=z,q,x,j lode_share=0.5 lode_stock=2 morale+1
 bingo: placement=self field_radius=4 field_targets=self field_duration=1 luck+4 lode=b,i,n,g,o lode_share=0.3 lode_stock=5 morale+1
 bubble: placement=map field_radius=ABS field_targets=all field_duration=3 trade_rate=1.6 produce_T*2.5 morale+2 counters=crash,recession
@@ -5019,6 +5092,7 @@ price: placement=self field_radius=20 field_targets=all field_duration=5 trade_r
 printing: placement=self field_radius=4 field_targets=self field_duration=2 duplicates=2
 publishing: placement=map field_radius=ABS field_targets=all field_duration=3 detect_life+300 morale+1 inflict_expose+30 counters=censorship
 purchase: placement=target placement_range=30 event_target=object transfers_ownership=true pays=6 contest_with=pays contested_by=loyalty
+quarrying: duration=30 harvest_bonus+2 strength+1
 raffle: placement=self field_radius=4 field_targets=self field_duration=1 luck+4 lode=k,v,w,y lode_share=0.3 lode_stock=2
 retail: placement=self field_radius=25 field_targets=all field_duration=8 trade_rate=0.9 produce_T*1.4
 sale: placement=target placement_range=20 event_target=object transfers_ownership=true trade_bonus+0.4 value*0.5 produce_S=2 produce_T=1
@@ -5921,6 +5995,7 @@ turret: mass=50000 footprint=1 height=8 integrity=15000 hardness=8 material=ston
 watchtower: mass=300000 footprint=1 height=20 integrity=20000 material=stone,wood portable=false enterable=true occupants=4 cover=0.7 claim_radius=3 sight_range=2000 map_reveal=60 alarm=true detect_stealth=5 attack_range+20 counters=ambush,spy,stealth,infiltration color=gray
 
 # noun fuel
+anthracite: mass=1.5 density=1500 hardness=3 flammability=6 burn_time=7200 temperature=1300 fuel_output=4 integrity=40 value=3 color=black
 biomass: mass=0.5 density=500 hardness=0 flammability=6 integrity=5 value=0.2 color=green fuel_output=0.8 fertility=3
 charcoal: mass=1 integrity=3 material=carbon flammability=7 burn_time=3600 temperature=20 fuel_output=2 craft_slots=1 crafts=document color=black
 coke: mass=0.5 density=500 hardness=3 brittleness=5 flammability=6 burn_time=7200 integrity=20 value=1 color=gray temperature+200 fuel_output=2
@@ -5928,6 +6003,7 @@ fuel: mass=0.8 state=liquid density=800 flammability=9 burn_time=600 fuel_output
 gasoline: mass=0.74 state=liquid density=740 hardness=0 flammability=10 toxicity=4 odor=7 integrity=1 value=4 color=yellow dmg_fire=150 dmg_blast=100 inflict_burn=6 fuel_output=3
 kerosene: mass=0.8 state=liquid density=800 hardness=0 flammability=9 burn_time=3600 toxicity=3 odor=7 integrity=1 value=3 color=white dmg_fire=100 luminosity=2 fuel_output=2
 lighter: mass=0.05 integrity=10 material=plastic equip_slot=held hands_required=1 temperature=1000 dmg_fire=10 inflict_burn=3 luminosity=3 attack_range=0.3 counters=tinder,fuse
+lignite: mass=1.3 density=1300 hardness=2 flammability=7 burn_time=2400 temperature=900 fuel_output=2 odor=4 integrity=25 value=1 color=brown
 methanol: mass=0.79 state=liquid density=792 hardness=0 flammability=9 toxicity=8 integrity=1 value=2 color=white dmg_fire=60 inflict_blind=20 dmg_poison=60 stealth=3
 napalm: mass=0.9 state=liquid density=900 hardness=0 flammability=10 stickiness=9 burn_time=600 temperature=1000 integrity=1 value=20 color=orange dmg_fire=400 inflict_burn=20 lingering=10 attack_area=10 fear_aura=6
 petrol: mass=0.74 state=liquid density=740 hardness=0 flammability=10 toxicity=4 odor=7 integrity=1 value=4 color=yellow dmg_fire=150 dmg_blast=100 inflict_burn=6 fuel_output=3
@@ -6012,11 +6088,17 @@ xenon: mass=0.0059 state=gas density=5.9 hardness=0 flammability=0 integrity=1 v
 
 # noun gem
 amber: mass=1.08 density=1080 hardness=2 brittleness=6 melting_point=250 flammability=6 transparency=0.6 conductivity=0 integrity=40 value=1500 beauty=9 color=orange res_electric=0.6 decay_rate*0 luminosity=1
+aquamarine: mass=3.5 density=3500 hardness=8 brittleness=4 flammability=0 integrity=250 value=8000 beauty=9 color=blue transparency=0.5 res_water=0.4
+cabochon: mass=3.5 density=3500 hardness=7 brittleness=4 flammability=0 integrity=250 value=3000 beauty=9 color=red transparency=0.5
+carbonado: mass=3.5 density=3500 hardness=10 brittleness=4 flammability=0 integrity=250 value=15000 beauty=9 color=black transparency=0.5 sharpness=9
+chrysoprase: mass=3.5 density=3500 hardness=7 brittleness=4 flammability=0 integrity=250 value=1500 beauty=9 color=green transparency=0.5
 coral: mass=2.6 density=2600 hardness=4 brittleness=7 flammability=0 integrity=60 value=600 beauty=8 color=pink sharpness=5 inflict_bleed=4 res_water=0.6
 gem: mass=3.5 density=3500 hardness=8 brittleness=5 flammability=0 transparency=0.6 integrity=200 value=20000 beauty=10 color=blue luminosity=1 charm=2
 gemstone: mass=3.5 density=3500 hardness=8 brittleness=5 flammability=0 transparency=0.6 integrity=200 value=20000 beauty=10 color=red luminosity=1
 jasper: mass=2.6 density=2600 hardness=7 brittleness=4 flammability=0 integrity=180 value=200 beauty=8 color=red res_earth=0.3
+lazuli: mass=3.5 density=3500 hardness=5 brittleness=4 flammability=0 integrity=250 value=3000 beauty=9 color=blue transparency=0.5 faith_output=0.05
 moonstone: mass=2.6 density=2600 hardness=6 brittleness=5 flammability=0 transparency=0.5 reflectivity=6 integrity=120 value=2500 beauty=9 color=white luminosity=3 night_vision=true res_dark=0.3
+morganite: mass=3.5 density=3500 hardness=8 brittleness=4 flammability=0 integrity=250 value=5000 beauty=9 color=pink transparency=0.5 charm=2
 peridot: mass=3.3 density=3300 hardness=7 brittleness=6 flammability=0 transparency=0.7 integrity=150 value=2000 beauty=9 color=green luminosity=1 res_dark=0.3
 
 # noun group
@@ -6224,32 +6306,127 @@ wort: mass=0.05 height=0.6 integrity=1 alive=true diet=photosynthesis growth_tim
 yarrow: mass=0.02 height=0.6 integrity=1 alive=true diet=photosynthesis growth_time=2 edible=true restores=30 effect_status=bleed regeneration+2 duration=120 single_use=true spread_rate=0.2 plural_count=10 color=white
 
 # noun insect
+adelgid: mass=2e-06 length=0.003 integrity=1 alive=true food_need=0.00001 plural_count=500 diet=herbivore speed_land=0.01 reproduction=200 growth*0.7 produce_A*0.7 field_radius=6 counters=pine,fir,hemlock,spruce habitat=meadow,forest color=white
+alderfly: mass=2e-05 length=0.01 integrity=1 alive=true food_need=0.00001 plural_count=200 speed_air=2 diet=carnivore breathes=both habitat=marsh,meadow,city color=brown
+andrena: mass=0.0002 length=0.02 integrity=1 alive=true food_need=0.00001 plural_count=100 diet=herbivore speed_air=4 dmg_poison=2 attack_rate=1 fertility+2 field_radius=10 produce_A*1.3 produce_P*1.3 habitat=meadow,forest color=brown
+anglewing: mass=0.0005 length=0.05 integrity=1 alive=true food_need=0.00001 plural_count=12 diet=herbivore speed_air=5 beauty=7 camouflage=forest habitat=meadow,forest,jungle color=orange
+anopheline: mass=2e-05 length=0.01 integrity=1 alive=true food_need=0.00001 plural_count=200 aggression=7 speed_air=2 dmg_disease=3 contagion=0.6 inflict_sick=14 attack_rate=1 habitat=marsh,meadow,city color=brown
 aphid: mass=0.000001 length=0.002 integrity=1 alive=true diet=herbivore speed_land=0.01 pack_size=1000 reproduction=200 growth*0.7 counters=rose,garden,wheat habitat=meadow,forest color=green
+backswimmer: mass=1e-05 length=0.005 integrity=1 alive=true food_need=0.00001 plural_count=100 aggression=5 diet=carnivore speed_water=1 breathes=both dmg_pierce=2 inflict_poison=3 attack_rate=1 habitat=marsh color=brown
 bedbug: mass=0.000005 length=0.005 integrity=1 alive=true aggression=5 speed_land=0.01 stealth=9 nocturnal=true pack_size=200 reproduction=40 dmg_pierce=1 lifesteal=1 attack_rate=1 counters=bed,mattress habitat=city color=red
+blackbeetle: mass=0.0005 length=0.02 integrity=1 alive=true food_need=0.00001 plural_count=30 diet=scavenger speed_land=1.2 nocturnal=true res_radiation=0.8 reproduction=40 counters=bread,flour habitat=forest,meadow,desert color=black
+blackfly: mass=2e-05 length=0.01 integrity=1 alive=true food_need=0.00001 plural_count=200 aggression=8 speed_air=3 dmg_pierce=1 inflict_bleed=3 attack_rate=1 morale+-1 habitat=marsh,meadow,city color=black
+blowfly: mass=2e-05 length=0.01 integrity=1 alive=true food_need=0.00001 plural_count=200 aggression=4 diet=scavenger speed_air=5 dmg_disease=2 contagion=0.4 inflict_sick=6 attack_rate=0.5 reproduction=80 counters=meat,carcass,steak habitat=marsh,meadow,city color=blue
+booklouse: mass=0.0002 length=0.02 integrity=1 alive=true food_need=0.00001 plural_count=100 diet=scavenger speed_land=0.01 stealth=9 reproduction=60 bores=paper,parchment counters=book,paper,map habitat=meadow,forest color=white
+botfly: mass=2e-05 length=0.01 integrity=1 alive=true food_need=0.00001 plural_count=200 aggression=6 diet=carnivore speed_air=5 dmg_pierce=2 dmg_disease=3 inflict_sick=10 contagion=0.2 attack_rate=0.3 counters=cattle,horse,deer habitat=marsh,meadow,city color=brown
+bristletail: mass=0.0002 length=0.02 integrity=1 alive=true food_need=0.00001 plural_count=100 diet=scavenger speed_land=0.4 nocturnal=true stealth=8 counters=paper,book habitat=meadow,forest color=gray
+browntail: mass=0.0005 length=0.05 integrity=1 alive=true food_need=0.00001 plural_count=12 diet=herbivore speed_air=3 dmg_poison=1 inflict_poison=3 counters=oak,apple habitat=meadow,forest,jungle color=white
 bug: mass=0.0005 length=0.01 integrity=1 alive=true diet=herbivore food_need=0.00002 speed_land=0.2 speed_air=2 stealth=6 pack_size=50 reproduction=50 counters=garden,crop habitat=meadow,forest,city color=black
 bumblebee: mass=0.0003 length=0.02 integrity=1 alive=true diet=herbivore speed_air=5 res_cold=0.5 dmg_poison=4 inflict_slow=2 attack_rate=1 pack_size=50 fertility+3 food_output=0.005 loudness=3 habitat=meadow,tundra color=yellow
+calosoma: mass=0.0005 length=0.02 integrity=1 alive=true food_need=0.00001 plural_count=30 aggression=6 diet=carnivore speed_land=1.5 armor=2 dmg_slash=1 attack_rate=1 counters=caterpillar,cutworm,armyworm,inchworm habitat=forest,meadow,desert color=green
+capsid: mass=2e-06 length=0.003 integrity=1 alive=true food_need=0.00001 plural_count=500 diet=herbivore speed_land=0.01 reproduction=200 growth*0.7 produce_A*0.7 field_radius=6 counters=apple,potato,cotton habitat=meadow,forest color=green
+cecropia: mass=0.0005 length=0.05 integrity=1 alive=true food_need=0.00001 plural_count=12 diet=herbivore speed_air=4 nocturnal=true beauty=9 charm=2 value=20 habitat=meadow,forest,jungle color=red
+chalcid: mass=0.0002 length=0.02 integrity=1 alive=true food_need=0.00001 plural_count=100 diet=carnivore speed_air=1 stealth=9 counters=caterpillar,cutworm,armyworm,bollworm,whitefly habitat=meadow,forest color=black
+chigger: mass=1e-05 length=0.005 integrity=1 alive=true food_need=0.00001 plural_count=100 aggression=5 speed_land=0.01 dmg_pierce=1 inflict_slow=3 attack_rate=1 morale+-1 habitat=meadow,marsh color=red
+chigoe: mass=1e-05 length=0.005 integrity=1 alive=true food_need=0.00001 plural_count=100 aggression=5 speed_land=0.5 jump=1 dmg_pierce=1 dmg_disease=2 inflict_sick=5 attack_rate=1 habitat=jungle,shore color=brown
+chinch: mass=2e-06 length=0.003 integrity=1 alive=true food_need=0.00001 plural_count=500 diet=herbivore speed_land=0.01 reproduction=200 growth*0.7 produce_A*0.7 field_radius=6 counters=wheat,corn,grass habitat=meadow,forest color=black
 chrysalis: mass=0.001 length=0.03 integrity=3 alive=true diet=none speed_land=0 stealth=8 camouflage=forest growth_time=10 armor=2 regeneration=1 habitat=meadow,forest,jungle color=green
 cicada: mass=0.002 length=0.04 integrity=1 alive=true diet=herbivore speed_air=3 loudness=10 speed_underground=0.001 pack_size=500 habitat=forest,meadow color=green
+cicala: mass=0.0002 length=0.02 integrity=1 alive=true food_need=0.00001 plural_count=100 diet=herbivore speed_air=3 loudness=10 inflict_deaf=2 field_radius=10 pack_size=500 habitat=meadow,forest color=green
+cleg: mass=2e-05 length=0.01 integrity=1 alive=true food_need=0.00001 plural_count=200 aggression=7 diet=carnivore speed_air=6 dmg_pierce=3 inflict_bleed=4 attack_rate=1 pack_size=20 lifesteal=0.5 habitat=marsh,meadow,city color=gray
+clegg: mass=2e-05 length=0.01 integrity=1 alive=true food_need=0.00001 plural_count=200 aggression=7 diet=carnivore speed_air=6 dmg_pierce=3 inflict_bleed=4 attack_rate=1 pack_size=20 lifesteal=0.5 habitat=marsh,meadow,city color=gray
+cockchafer: mass=0.0005 length=0.02 integrity=1 alive=true food_need=0.00001 plural_count=30 diet=herbivore speed_air=3 armor=2 loudness=3 reproduction=20 counters=oak,grass,wheat habitat=forest,meadow,desert color=brown
+comma: mass=0.0005 length=0.05 integrity=1 alive=true food_need=0.00001 plural_count=12 diet=herbivore speed_air=4 beauty=8 charm=2 camouflage=forest habitat=meadow,forest,jungle color=orange
+conenose: mass=1e-05 length=0.005 integrity=1 alive=true food_need=0.00001 plural_count=100 aggression=6 diet=carnivore speed_land=0.5 nocturnal=true stealth=8 dmg_disease=3 contagion=0.4 inflict_sick=12 lifesteal=1 attack_rate=0.3 habitat=jungle,city color=brown
+cootie: mass=1e-05 length=0.005 integrity=1 alive=true food_need=0.00001 plural_count=100 aggression=4 speed_land=0.01 stealth=9 reproduction=50 dmg_disease=1 contagion=0.3 charm+-2 attack_rate=1 habitat=city color=white
 cricket: mass=0.0008 length=0.025 integrity=1 alive=true diet=omnivore speed_land=0.5 jump=1 nocturnal=true loudness=6 pack_size=20 reproduction=20 morale+1 counters=cloth habitat=meadow,city color=brown
+crotonbug: mass=1e-05 length=0.005 integrity=1 alive=true food_need=0.00001 plural_count=100 diet=scavenger speed_land=1.5 res_radiation=0.8 nocturnal=true reproduction=40 counters=bread,flour habitat=city color=brown
+damselfly: mass=0.0002 length=0.02 integrity=1 alive=true food_need=0.00001 plural_count=100 diet=carnivore speed_air=8 agility=9 beauty=8 counters=mosquito,gnat,midge habitat=meadow,forest color=blue
+dayfly: mass=2e-05 length=0.01 integrity=1 alive=true food_need=0.00001 plural_count=200 speed_air=1 lifespan=1440 reproduction=200 habitat=marsh,meadow,city color=yellow
+deathwatch: mass=0.0005 length=0.02 integrity=1 alive=true food_need=0.00001 plural_count=30 diet=herbivore speed_land=0.05 bores=wood loudness=2 dmg_slash=1 attack_rate=1 fear_aura=1 stealth=8 habitat=forest,meadow,desert color=brown
+dipteran: mass=0.0002 length=0.02 integrity=1 alive=true food_need=0.00001 plural_count=100 diet=scavenger speed_air=4 dmg_disease=1 contagion=0.2 habitat=meadow,forest color=black
+dipteron: mass=0.0002 length=0.02 integrity=1 alive=true food_need=0.00001 plural_count=100 diet=scavenger speed_air=4 dmg_disease=1 contagion=0.2 habitat=meadow,forest color=black
+dobsonfly: mass=2e-05 length=0.01 integrity=1 alive=true food_need=0.00001 plural_count=200 aggression=4 diet=carnivore speed_air=3 dmg_pierce=6 attack_rate=0.5 fear_aura=2 habitat=marsh,meadow,city color=brown
+dorbeetle: mass=0.0005 length=0.02 integrity=1 alive=true food_need=0.00001 plural_count=30 diet=scavenger speed_land=0.3 speed_air=2 armor=2 fertility+2 reclaim_rate=0.1 reclaim_range=6 habitat=forest,meadow,desert color=black
+drosophila: mass=2e-05 length=0.01 integrity=1 alive=true food_need=0.00001 plural_count=200 speed_air=1 reproduction=300 lifespan=60 counters=banana,fruit,wine habitat=marsh,meadow,city color=orange
 earwig: mass=0.00005 length=0.015 integrity=1 alive=true diet=omnivore speed_land=0.1 nocturnal=true stealth=7 dmg_pierce=1 counters=garden habitat=meadow,forest,city color=brown
+eggar: mass=0.0005 length=0.05 integrity=1 alive=true food_need=0.00001 plural_count=12 diet=herbivore speed_air=3 nocturnal=true bores=wool,fur,cloth habitat=meadow,forest,jungle color=brown
+egger: mass=0.0005 length=0.05 integrity=1 alive=true food_need=0.00001 plural_count=12 diet=herbivore speed_air=3 nocturnal=true bores=wool,fur,cloth habitat=meadow,forest,jungle color=brown
+elater: mass=0.0005 length=0.02 integrity=1 alive=true food_need=0.00001 plural_count=30 diet=herbivore speed_land=0.3 jump=0.3 armor=2 loudness=2 habitat=forest,meadow,desert color=brown
+emmet: mass=0.0002 length=0.02 integrity=1 alive=true food_need=0.00001 plural_count=100 diet=omnivore speed_land=0.05 dmg_acid=1 attack_rate=1 labor=0.001 reproduction=100 carry_capacity=0.0002 habitat=meadow,forest color=red
+figeater: mass=0.0005 length=0.02 integrity=1 alive=true food_need=0.00001 plural_count=30 diet=herbivore speed_air=3 armor=2 counters=fig,peach,grape habitat=forest,meadow,desert color=green
+firebrat: mass=0.0005 length=0.02 integrity=1 alive=true food_need=0.00001 plural_count=30 diet=scavenger speed_land=0.5 nocturnal=true res_fire=0.9 temp_max=60 stealth=8 counters=paper,book,flour habitat=forest,meadow,desert color=gray
+froghopper: mass=2e-06 length=0.003 integrity=1 alive=true food_need=0.00001 plural_count=500 diet=herbivore speed_land=0.01 reproduction=200 growth*0.7 produce_A*0.7 field_radius=6 jump=1 counters=grass,strawberry habitat=meadow,forest color=brown
 gadfly: mass=0.0002 length=0.02 integrity=1 alive=true aggression=8 speed_air=10 dmg_pierce=2 inflict_confuse=3 attack_rate=1 morale+-1 counters=horse,cow,cattle habitat=meadow,marsh color=gray
+gallfly: mass=2e-05 length=0.01 integrity=1 alive=true food_need=0.00001 plural_count=200 speed_air=2 reproduction=40 counters=oak,rose habitat=marsh,meadow,city color=black
+geometrid: mass=0.0005 length=0.05 integrity=1 alive=true food_need=0.00001 plural_count=12 diet=herbivore speed_air=3 nocturnal=true camouflage=forest habitat=meadow,forest,jungle color=green
+glossina: mass=2e-05 length=0.01 integrity=1 alive=true food_need=0.00001 plural_count=200 aggression=7 speed_air=6 dmg_disease=4 inflict_sleep=8 contagion=0.4 attack_rate=0.5 habitat=marsh,meadow,city color=brown
+glowworm: mass=0.0002 length=0.02 integrity=1 alive=true food_need=0.00001 plural_count=50 diet=carnivore speed_land=0.05 luminosity=2 nocturnal=true beauty=9 charm=2 camouflage=forest habitat=forest,marsh color=yellow
 gnat: mass=0.0000005 length=0.002 integrity=1 alive=true aggression=4 speed_air=1 plural_count=1000 pack_size=500 dmg_disease=1 attack_rate=1 accuracy+-0.05 habitat=marsh,meadow color=black
+goldeneye: mass=0.0002 length=0.02 integrity=1 alive=true food_need=0.00001 plural_count=100 diet=carnivore speed_air=2 beauty=6 counters=aphid,greenfly habitat=meadow,forest color=green
 grasshopper: mass=0.002 length=0.05 integrity=1 alive=true diet=herbivore food_need=0.0001 speed_land=1 jump=1 speed_air=3 pack_size=50 habitat=meadow,field,savanna color=green produce_A*0.8
+greenbottle: mass=2e-05 length=0.01 integrity=1 alive=true food_need=0.00001 plural_count=200 aggression=4 diet=scavenger speed_air=5 dmg_disease=2 contagion=0.4 inflict_sick=6 attack_rate=0.5 reproduction=80 counters=meat,carcass habitat=marsh,meadow,city color=green
+greenfly: mass=2e-05 length=0.01 integrity=1 alive=true food_need=0.00001 plural_count=200 speed_air=1 reproduction=200 growth*0.7 counters=rose,bean,wheat habitat=marsh,meadow,city color=green
+hairstreak: mass=0.0005 length=0.05 integrity=1 alive=true food_need=0.00001 plural_count=12 diet=herbivore speed_air=5 beauty=8 charm=2 habitat=meadow,forest,jungle color=blue
+hawkmoth: mass=0.0005 length=0.05 integrity=1 alive=true food_need=0.00001 plural_count=12 diet=herbivore speed_air=12 nocturnal=true agility=8 beauty=6 fertility+1 habitat=meadow,forest,jungle color=brown
 honeybee: mass=0.0001 length=0.015 integrity=1 alive=true diet=herbivore speed_air=7 dmg_poison=3 inflict_slow=2 attack_rate=1 single_use=true pack_size=300 food_output=0.015 fertility+3 tamable=true habitat=meadow,forest color=yellow
+horsefly: mass=2e-05 length=0.01 integrity=1 alive=true food_need=0.00001 plural_count=200 aggression=8 diet=carnivore speed_air=7 dmg_pierce=4 inflict_bleed=5 attack_rate=1 pack_size=20 lifesteal=0.5 counters=horse,pony,mule habitat=marsh,meadow,city color=gray
+housefly: mass=2e-05 length=0.01 integrity=1 alive=true food_need=0.00001 plural_count=200 aggression=3 diet=scavenger speed_air=4 dmg_disease=1 contagion=0.3 inflict_sick=4 attack_rate=0.5 reproduction=60 counters=meat,bread,cake habitat=marsh,meadow,city color=black
+humblebee: mass=0.0002 length=0.02 integrity=1 alive=true food_need=0.00001 plural_count=100 diet=herbivore speed_air=5 res_cold=0.5 dmg_poison=4 inflict_slow=2 attack_rate=1 fertility+3 loudness=3 field_radius=10 produce_A*1.4 produce_P*1.4 habitat=meadow,forest color=yellow
 insect: mass=0.001 length=0.02 integrity=1 alive=true diet=herbivore food_need=0.00003 speed_land=0.3 speed_air=3 pack_size=40 reproduction=40 habitat=meadow,forest,jungle color=black
+katydid: mass=0.0002 length=0.02 integrity=1 alive=true food_need=0.00001 plural_count=100 diet=herbivore speed_land=0.5 jump=1 speed_air=2 camouflage=forest loudness=6 nocturnal=true pack_size=20 habitat=meadow,forest color=green
+lacewing: mass=0.0001 length=0.02 integrity=1 alive=true food_need=0.00001 plural_count=20 diet=carnivore speed_air=2 beauty=6 nocturnal=true counters=aphid,greenfly,whitefly,mealybug habitat=meadow,forest color=green
+ladybeetle: mass=0.0005 length=0.02 integrity=1 alive=true food_need=0.00001 plural_count=30 diet=carnivore speed_air=1 beauty=7 charm=2 toxicity=2 luck=1 counters=aphid,greenfly,mealybug habitat=forest,meadow,desert color=red
 ladybird: mass=0.00002 length=0.008 integrity=1 alive=true diet=carnivore speed_air=1 beauty=7 charm=2 pack_size=30 toxicity=2 fertility+1 counters=aphid habitat=meadow,forest color=red
 ladybug: mass=0.00002 length=0.008 integrity=1 alive=true diet=carnivore speed_air=1 beauty=7 charm=2 pack_size=30 toxicity=2 fertility+1 counters=aphid habitat=meadow,forest color=red
+leafhopper: mass=2e-06 length=0.003 integrity=1 alive=true food_need=0.00001 plural_count=500 diet=herbivore speed_land=0.01 reproduction=200 growth*0.7 produce_A*0.7 field_radius=6 jump=0.5 counters=grape,rice,potato dmg_disease=1 contagion=0.2 habitat=meadow,forest color=green
+lepidopteran: mass=0.0005 length=0.05 integrity=1 alive=true food_need=0.00001 plural_count=12 diet=herbivore speed_air=4 beauty=8 habitat=meadow,forest,jungle color=orange
+lepidopteron: mass=0.0005 length=0.05 integrity=1 alive=true food_need=0.00001 plural_count=12 diet=herbivore speed_air=4 beauty=8 habitat=meadow,forest,jungle color=orange
+longicorn: mass=0.0005 length=0.02 integrity=1 alive=true food_need=0.00001 plural_count=30 diet=herbivore speed_land=0.2 speed_air=2 bores=wood dmg_slash=2 attack_rate=1 armor=2 habitat=forest,meadow,desert color=black
 louse: mass=0.0000005 length=0.002 integrity=1 alive=true speed_land=0.01 stealth=9 pack_size=200 reproduction=50 dmg_disease=1 attack_rate=1 contagion=0.3 charm+-2 habitat=city color=white
+mantid: mass=0.0002 length=0.02 integrity=1 alive=true food_need=0.00001 plural_count=100 aggression=7 diet=carnivore speed_land=0.2 stealth=9 camouflage=forest,meadow,jungle dmg_slash=1 critical=0.5 attack_rate=3 counters=fly,mosquito,moth,grasshopper,housefly habitat=meadow,forest color=green
 mantis: mass=0.004 length=0.08 integrity=1 alive=true aggression=7 diet=carnivore speed_land=0.2 stealth=9 camouflage=forest,meadow,jungle dmg_slash=1 critical=0.5 attack_rate=3 counters=fly,mosquito,moth,grasshopper habitat=meadow,jungle color=green
 mayfly: mass=0.00005 length=0.015 integrity=1 alive=true diet=none speed_air=1 lifespan=1440 pack_size=2000 reproduction=200 habitat=marsh color=yellow
+mealybug: mass=2e-06 length=0.003 integrity=1 alive=true food_need=0.00001 plural_count=500 diet=herbivore speed_land=0.01 reproduction=200 growth*0.7 produce_A*0.7 field_radius=6 counters=grape,orange,cactus habitat=meadow,forest color=white
+medfly: mass=2e-05 length=0.01 integrity=1 alive=true food_need=0.00001 plural_count=200 speed_air=2 reproduction=120 counters=orange,peach,apple,fig habitat=marsh,meadow,city color=yellow
 midge: mass=0.0000005 length=0.002 integrity=1 alive=true aggression=6 speed_air=1 plural_count=1000 pack_size=1000 dmg_pierce=1 attack_rate=1 morale+-1 habitat=marsh,taiga,tundra color=black
 mite: mass=0.0000001 length=0.0005 integrity=1 alive=true speed_land=0.01 stealth=10 pack_size=1000 reproduction=100 dmg_disease=1 contagion=0.2 counters=bee,honeybee habitat=forest,meadow,city color=red
+noctuid: mass=0.0005 length=0.05 integrity=1 alive=true food_need=0.00001 plural_count=12 diet=herbivore speed_air=4 nocturnal=true stealth=6 habitat=meadow,forest,jungle color=brown
+phasmid: mass=0.0002 length=0.02 integrity=1 alive=true food_need=0.00001 plural_count=100 diet=herbivore speed_land=0.05 stealth=10 camouflage=forest,jungle disguise=8 habitat=meadow,forest color=brown
+pismire: mass=0.0002 length=0.02 integrity=1 alive=true food_need=0.00001 plural_count=100 diet=omnivore speed_land=0.05 dmg_acid=1 attack_rate=1 labor=0.001 reproduction=100 carry_capacity=0.0002 habitat=meadow,forest color=black
+planthopper: mass=2e-06 length=0.003 integrity=1 alive=true food_need=0.00001 plural_count=500 diet=herbivore speed_land=0.01 reproduction=200 growth*0.7 produce_A*0.7 field_radius=6 jump=0.5 counters=rice,sugarcane,corn habitat=meadow,forest color=brown
 pollinator: mass=0.0002 length=0.015 integrity=1 alive=true diet=herbivore speed_air=5 pack_size=100 fertility+4 growth*1.3 habitat=meadow,jungle color=yellow
+psylla: mass=2e-06 length=0.003 integrity=1 alive=true food_need=0.00001 plural_count=500 diet=herbivore speed_land=0.01 reproduction=200 growth*0.7 produce_A*0.7 field_radius=6 counters=pear,apple habitat=meadow,forest color=green
+psyllid: mass=2e-06 length=0.003 integrity=1 alive=true food_need=0.00001 plural_count=500 diet=herbivore speed_land=0.01 reproduction=200 growth*0.7 produce_A*0.7 field_radius=6 counters=pear,potato,tomato habitat=meadow,forest color=green
+punkie: mass=2e-05 length=0.01 integrity=1 alive=true food_need=0.00001 plural_count=200 aggression=7 speed_air=1 dmg_pierce=1 attack_rate=1 morale+-1 habitat=marsh,meadow,city color=gray
+punky: mass=2e-05 length=0.01 integrity=1 alive=true food_need=0.00001 plural_count=200 aggression=7 speed_air=1 dmg_pierce=1 attack_rate=1 morale+-1 habitat=marsh,meadow,city color=gray
 pupa: mass=0.001 length=0.02 integrity=2 alive=true diet=none speed_land=0 stealth=7 growth_time=10 armor=1 habitat=meadow,forest color=brown
+sandfly: mass=2e-05 length=0.01 integrity=1 alive=true food_need=0.00001 plural_count=200 aggression=7 speed_air=2 dmg_disease=2 contagion=0.5 inflict_sick=10 attack_rate=1 camouflage=sand habitat=marsh,meadow,city color=brown
+sawfly: mass=2e-05 length=0.01 integrity=1 alive=true food_need=0.00001 plural_count=200 speed_air=3 reproduction=40 counters=pine,rose,willow habitat=marsh,meadow,city color=yellow
 scarab: mass=0.002 length=0.03 integrity=3 alive=true diet=scavenger speed_land=0.2 speed_air=3 armor=4 res_slash=0.6 reclaim_rate=0.1 reclaim_range=10 fertility+2 value=50 habitat=desert,savanna color=blue
+scarabaeus: mass=0.0005 length=0.02 integrity=1 alive=true food_need=0.00001 plural_count=30 diet=scavenger speed_land=0.2 speed_air=3 armor=4 res_slash=0.6 value=50 faith_output=0.02 fertility+2 habitat=forest,meadow,desert color=blue
+sciara: mass=2e-05 length=0.01 integrity=1 alive=true food_need=0.00001 plural_count=200 speed_air=1 reproduction=100 counters=mushroom,seedling habitat=marsh,meadow,city color=black
+shadfly: mass=2e-05 length=0.01 integrity=1 alive=true food_need=0.00001 plural_count=200 speed_air=1 lifespan=1440 reproduction=200 habitat=marsh,meadow,city color=yellow
 silverfish: mass=0.00001 length=0.012 integrity=1 alive=true diet=scavenger speed_land=0.3 nocturnal=true stealth=8 evasion=0.5 pack_size=50 counters=book,paper,map,scroll habitat=city color=silver
+silverspot: mass=0.0005 length=0.05 integrity=1 alive=true food_need=0.00001 plural_count=12 diet=herbivore speed_air=5 beauty=8 charm=2 luck=1 habitat=meadow,forest,jungle color=orange
+snakefly: mass=2e-05 length=0.01 integrity=1 alive=true food_need=0.00001 plural_count=200 diet=carnivore speed_air=3 dmg_pierce=1 counters=aphid,greenfly,whitefly habitat=marsh,meadow,city color=black
+spittlebug: mass=2e-06 length=0.003 integrity=1 alive=true food_need=0.00001 plural_count=500 diet=herbivore speed_land=0.01 reproduction=200 growth*0.7 produce_A*0.7 field_radius=6 jump=0.7 stealth=8 counters=grass,olive,grape habitat=meadow,forest color=white
+springtail: mass=0.0002 length=0.02 integrity=1 alive=true food_need=0.00001 plural_count=100 diet=scavenger speed_land=0.05 jump=0.1 res_cold=0.9 temp_min=-30 reproduction=200 fertility+1 habitat=meadow,forest color=white
+stonefly: mass=2e-05 length=0.01 integrity=1 alive=true food_need=0.00001 plural_count=200 speed_air=2 breathes=both lifespan=60 habitat=marsh,meadow,city color=brown
+thrip: mass=2e-06 length=0.003 integrity=1 alive=true food_need=0.00001 plural_count=500 diet=herbivore speed_land=0.01 reproduction=200 growth*0.7 produce_A*0.7 field_radius=6 counters=onion,rose habitat=meadow,forest color=black
+thrips: mass=2e-06 length=0.003 integrity=1 alive=true food_need=0.00001 plural_count=500 diet=herbivore speed_land=0.01 reproduction=200 growth*0.7 produce_A*0.7 field_radius=6 counters=onion,rose,cotton habitat=meadow,forest color=black
+tortrix: mass=0.0005 length=0.05 integrity=1 alive=true food_need=0.00001 plural_count=12 diet=herbivore speed_air=2 nocturnal=true counters=apple,oak,plum habitat=meadow,forest,jungle color=green
+treehopper: mass=2e-06 length=0.003 integrity=1 alive=true food_need=0.00001 plural_count=500 diet=herbivore speed_land=0.01 reproduction=200 growth*0.7 produce_A*0.7 field_radius=6 jump=0.5 camouflage=forest counters=oak,locust habitat=meadow,forest color=green
 tsetse: mass=0.00003 length=0.012 integrity=1 alive=true aggression=6 speed_air=6 pack_size=50 dmg_disease=10 inflict_sleep=60 attack_rate=1 contagion=0.2 habitat=savanna,jungle color=brown
+tumblebug: mass=0.0005 length=0.02 integrity=1 alive=true food_need=0.00001 plural_count=30 diet=scavenger speed_land=0.3 armor=2 fertility+2 reclaim_rate=0.1 reclaim_range=6 strength=6 habitat=forest,meadow,desert color=black
+tussah: mass=0.0005 length=0.05 integrity=1 alive=true food_need=0.00001 plural_count=12 diet=herbivore speed_air=3 value=10 tamable=true habitat=meadow,forest,jungle color=brown
+tussore: mass=0.0005 length=0.05 integrity=1 alive=true food_need=0.00001 plural_count=12 diet=herbivore speed_air=3 value=10 tamable=true habitat=meadow,forest,jungle color=brown
+tzetze: mass=2e-05 length=0.01 integrity=1 alive=true food_need=0.00001 plural_count=200 aggression=7 speed_air=6 dmg_disease=4 inflict_sleep=8 contagion=0.4 attack_rate=0.5 habitat=marsh,meadow,city color=brown
+underwing: mass=0.0005 length=0.05 integrity=1 alive=true food_need=0.00001 plural_count=12 diet=herbivore speed_air=4 nocturnal=true camouflage=forest beauty=7 inflict_fear=2 habitat=meadow,forest,jungle color=gray
+vedalia: mass=0.0005 length=0.02 integrity=1 alive=true food_need=0.00001 plural_count=30 diet=carnivore speed_air=1 counters=mealybug,scale,whitefly habitat=forest,meadow,desert color=red
+walkingstick: mass=0.0002 length=0.02 integrity=1 alive=true food_need=0.00001 plural_count=100 diet=herbivore speed_land=0.05 stealth=10 camouflage=forest,jungle disguise=8 habitat=meadow,forest color=brown
 weevil: mass=0.00001 length=0.005 integrity=1 alive=true diet=herbivore speed_land=0.01 stealth=8 pack_size=500 reproduction=40 armor=1 counters=wheat,grain,corn,flour habitat=meadow,city color=brown
+whitefly: mass=2e-05 length=0.01 integrity=1 alive=true food_need=0.00001 plural_count=200 speed_air=1 reproduction=150 growth*0.8 counters=tomato,cabbage,cotton habitat=marsh,meadow,city color=white
 
 # noun instrument
 bassoon: mass=3.5 length=1.3 integrity=35 material=wood equip_slot=held hands_required=2 loudness=6 inflict_sleep=2 field_radius=30 field_targets=enemies speed_land*0.9 aggression+-2 value=3000
@@ -6305,30 +6482,77 @@ zither: mass=3 length=0.6 integrity=20 material=wood,steel equip_slot=held hands
 
 # noun invertebrate
 abalone: mass=0.5 length=0.2 integrity=20 alive=true diet=herbivore speed_water=0.01 armor=12 stickiness=9 beauty=8 value=100 breathes=water placeable_on=water habitat=shore color=blue
+acarus: mass=0.002 length=0.05 integrity=1 alive=true food_need=0.00001 plural_count=20 speed_land=0.01 stealth=10 reproduction=100 dmg_disease=1 contagion=0.2 habitat=forest,meadow,jungle color=red
+amphipod: mass=0.002 length=0.05 integrity=1 alive=true food_need=0.00001 plural_count=20 diet=scavenger speed_water=0.2 breathes=water reclaim_rate=0.05 reclaim_range=4 habitat=shore color=pink
 anemone: mass=0.5 length=0.1 integrity=6 alive=true diet=carnivore speed_water=0 venomous=true thorns=4 dmg_poison=8 inflict_stun=1 beauty=8 breathes=water placeable_on=water habitat=shore color=pink
+angleworm: mass=0.003 length=0.1 integrity=1 alive=true food_need=0.00001 plural_count=40 diet=herbivore regeneration=0.5 speed_underground=0.05 fertility+3 growth*1.2 habitat=meadow,forest color=pink
+annelid: mass=0.003 length=0.1 integrity=1 alive=true food_need=0.00001 plural_count=40 diet=herbivore regeneration=0.5 speed_underground=0.05 fertility+2 habitat=meadow,marsh color=pink
+arachnid: mass=0.002 length=0.05 integrity=1 alive=true food_need=0.00001 plural_count=20 aggression=5 diet=carnivore speed_land=0.5 venomous=true dmg_poison=10 inflict_poison=10 inflict_root=4 attack_rate=0.5 fear_aura=2 habitat=forest,meadow,jungle color=black
+arrowworm: mass=0.003 length=0.1 integrity=1 alive=true food_need=0.00001 plural_count=40 diet=carnivore regeneration=0.5 aggression=6 speed_water=1 breathes=water stealth=9 dmg_pierce=2 attack_rate=1 habitat=shore color=white
 barnacle: mass=0.01 length=0.03 integrity=8 alive=true diet=herbivore armor=6 stickiness=10 pack_size=100 breathes=water placeable_on=water speed_water*0.8 counters=ship,boat habitat=shore color=white
+bloodsucker: mass=1e-05 length=0.005 integrity=1 alive=true food_need=0.00001 plural_count=100 aggression=6 diet=carnivore speed_water=1 lifesteal=1 dmg_pierce=2 inflict_bleed=5 attack_rate=1 habitat=marsh color=black
+bloodworm: mass=0.003 length=0.1 integrity=1 alive=true food_need=0.00001 plural_count=40 diet=herbivore regeneration=0.5 speed_water=0.1 breathes=water dmg_poison=2 inflict_poison=4 attack_rate=0.5 habitat=marsh,shore color=red
 centipede: mass=0.01 length=0.15 integrity=2 alive=true aggression=5 diet=carnivore speed_land=0.5 nocturnal=true stealth=6 venomous=true dmg_pierce=2 dmg_poison=15 inflict_poison=8 attack_rate=1.5 fear_aura=2 habitat=jungle,forest,desert color=red
+cestode: mass=1e-05 length=0.005 integrity=1 alive=true food_need=0.00001 plural_count=50 diet=carnivore speed_land=0.01 stealth=10 dmg_hunger=3 lifesteal=1 attack_rate=0.2 habitat=marsh,jungle,meadow color=white
 clam: mass=0.2 length=0.1 integrity=15 alive=true diet=herbivore speed_water=0 speed_underground=0.01 armor=10 res_slash=0.7 breathes=water placeable_on=water pack_size=20 reproduction=5 habitat=shore color=white
 cockle: mass=0.03 length=0.05 integrity=8 alive=true diet=herbivore speed_underground=0.01 armor=6 breathes=water placeable_on=water pack_size=40 habitat=shore color=white
 conch: mass=2 length=0.3 integrity=40 alive=true diet=herbivore speed_land=0.01 armor=15 res_slash=0.7 loudness=8 beauty=7 breathes=water placeable_on=water habitat=shore color=pink
+copepod: mass=0.002 length=0.05 integrity=1 alive=true food_need=0.00001 plural_count=20 diet=omnivore speed_water=0.1 breathes=water food_output=0.001 habitat=shore,marsh color=white
 crawfish: mass=0.05 length=0.12 integrity=4 alive=true diet=scavenger speed_land=0.3 speed_water=1 armor=3 dmg_crush=3 attack_rate=1 placeable_on=water,land pack_size=30 reproduction=8 habitat=marsh color=red
 cuttlefish: mass=4 length=0.5 integrity=10 alive=true sentient=true intelligence=8 diet=carnivore food_need=0.002 speed_water=5 stealth=10 camouflage=water,sand,swamp inflict_blind=5 inflict_confuse=3 attack_rate=1 breathes=water placeable_on=water habitat=shore color=brown
+daphnia: mass=0.002 length=0.05 integrity=1 alive=true food_need=0.00001 plural_count=20 diet=herbivore speed_water=0.1 breathes=water food_output=0.001 reproduction=200 habitat=marsh color=red
 earthworm: mass=0.004 length=0.15 integrity=1 alive=true diet=herbivore speed_underground=0.05 fertility+3 growth*1.2 reproduction=6 pack_size=40 regeneration=0.5 habitat=meadow,forest color=pink
+echinococcus: mass=1e-05 length=0.005 integrity=1 alive=true food_need=0.00001 plural_count=50 diet=carnivore speed_land=0.01 stealth=10 dmg_disease=5 inflict_sick=20 contagion=0.2 attack_rate=0.2 habitat=marsh,jungle,meadow color=white
+eelworm: mass=1e-05 length=0.005 integrity=1 alive=true food_need=0.00001 plural_count=50 diet=carnivore speed_land=0.01 stealth=10 counters=potato,beet,oat,clover habitat=marsh,jungle,meadow color=white
+fishworm: mass=0.003 length=0.1 integrity=1 alive=true food_need=0.00001 plural_count=40 diet=herbivore regeneration=0.5 speed_underground=0.05 fertility+3 growth*1.2 habitat=meadow,forest color=pink
+harvestman: mass=0.002 length=0.05 integrity=1 alive=true food_need=0.00001 plural_count=20 diet=omnivore speed_land=1 stealth=6 odor=4 fear_aura=1 habitat=forest,meadow,jungle color=brown
+helminth: mass=1e-05 length=0.005 integrity=1 alive=true food_need=0.00001 plural_count=50 diet=carnivore speed_land=0.01 stealth=10 dmg_hunger=2 lifesteal=1 contagion=0.2 attack_rate=0.3 habitat=marsh,jungle,meadow color=white
 hookworm: mass=0.00001 length=0.01 integrity=1 alive=true diet=carnivore stealth=10 dmg_disease=4 dmg_hunger=2 lifesteal=1 attack_rate=0.2 contagion=0.2 habitat=jungle,marsh color=white
+isopod: mass=0.002 length=0.05 integrity=1 alive=true food_need=0.00001 plural_count=20 diet=scavenger speed_land=0.1 speed_water=0.1 breathes=both armor=3 res_blunt=0.5 habitat=forest,meadow,jungle color=gray
 krill: mass=0.002 length=0.05 integrity=1 alive=true diet=herbivore speed_water=0.3 luminosity=1 breathes=water placeable_on=water,deep_water pack_size=10000 reproduction=50 food_output=0.1 habitat=shore,tundra color=pink
 limpet: mass=0.02 length=0.05 integrity=15 alive=true diet=herbivore speed_land=0.001 armor=10 stickiness=10 immune_root=true breathes=both placeable_on=water,land habitat=shore color=gray
+lobworm: mass=0.003 length=0.1 integrity=1 alive=true food_need=0.00001 plural_count=40 diet=herbivore regeneration=0.5 speed_underground=0.05 fertility+2 edible=true nutrition=1 habitat=shore color=red
+lugworm: mass=0.003 length=0.1 integrity=1 alive=true food_need=0.00001 plural_count=40 diet=herbivore regeneration=0.5 speed_underground=0.05 fertility+2 edible=true nutrition=1 habitat=shore color=red
+millepede: mass=0.002 length=0.05 integrity=1 alive=true food_need=0.00001 plural_count=20 diet=scavenger speed_land=0.1 armor=3 toxicity=4 dmg_poison=2 inflict_poison=4 attack_rate=0.5 fertility+1 res_slash=0.5 habitat=forest,meadow,jungle color=brown
+milliped: mass=0.002 length=0.05 integrity=1 alive=true food_need=0.00001 plural_count=20 diet=scavenger speed_land=0.1 armor=3 toxicity=4 dmg_poison=2 inflict_poison=4 attack_rate=0.5 fertility+1 res_slash=0.5 habitat=forest,meadow,jungle color=brown
+millipede: mass=0.002 length=0.05 integrity=1 alive=true food_need=0.00001 plural_count=20 diet=scavenger speed_land=0.1 armor=3 toxicity=4 dmg_poison=2 inflict_poison=4 attack_rate=0.5 fertility+1 res_slash=0.5 habitat=forest,meadow,jungle color=brown
 mollusc: mass=0.2 length=0.1 integrity=10 alive=true diet=herbivore speed_land=0.01 speed_water=0.01 armor=8 res_slash=0.6 breathes=water placeable_on=water,land reproduction=5 habitat=shore,marsh color=gray
 mollusk: mass=0.2 length=0.1 integrity=10 alive=true diet=herbivore speed_land=0.01 speed_water=0.01 armor=8 res_slash=0.6 breathes=water placeable_on=water,land reproduction=5 habitat=shore,marsh color=gray
 mussel: mass=0.05 length=0.07 integrity=10 alive=true diet=herbivore armor=8 res_slash=0.6 stickiness=6 breathes=water placeable_on=water pack_size=40 reproduction=6 edible=true nutrition=0.5 raw=true shelf_life=60 habitat=shore color=black
+myriapod: mass=0.002 length=0.05 integrity=1 alive=true food_need=0.00001 plural_count=20 diet=carnivore speed_land=0.5 armor=2 dmg_pierce=2 dmg_poison=6 inflict_poison=4 attack_rate=1 habitat=forest,meadow,jungle color=brown
 nautilus: mass=1.5 length=0.25 integrity=25 alive=true diet=carnivore speed_water=1 dive_depth=700 buoyancy=5 armor=10 beauty=9 breathes=water placeable_on=deep_water habitat=shore color=white
+nematode: mass=1e-05 length=0.005 integrity=1 alive=true food_need=0.00001 plural_count=50 diet=carnivore speed_land=0.01 stealth=10 dmg_disease=2 dmg_hunger=1 lifesteal=0.5 contagion=0.2 attack_rate=0.3 counters=potato,tomato,soybean habitat=marsh,jungle,meadow color=white
 nightcrawler: mass=0.008 length=0.25 integrity=1 alive=true diet=herbivore speed_underground=0.05 nocturnal=true fertility+3 reproduction=5 pack_size=30 harvest_bonus=1.5 harvest_sources=fishing habitat=meadow,forest color=pink
+nightwalker: mass=0.003 length=0.1 integrity=1 alive=true food_need=0.00001 plural_count=40 diet=herbivore regeneration=0.5 speed_underground=0.05 nocturnal=true fertility+3 growth*1.2 habitat=meadow,forest color=pink
+oligochaete: mass=0.003 length=0.1 integrity=1 alive=true food_need=0.00001 plural_count=40 diet=herbivore regeneration=0.5 speed_underground=0.05 fertility+2 habitat=meadow,marsh color=pink
+ostracod: mass=0.002 length=0.05 integrity=1 alive=true food_need=0.00001 plural_count=20 diet=omnivore speed_water=0.1 breathes=water luminosity=1 habitat=shore,marsh color=white
 oyster: mass=0.1 length=0.1 integrity=15 alive=true diet=herbivore speed_water=0 armor=10 res_slash=0.7 breathes=water placeable_on=water pack_size=20 value=20 reproduction=5 habitat=shore color=gray
+pinworm: mass=1e-05 length=0.005 integrity=1 alive=true food_need=0.00001 plural_count=50 diet=carnivore speed_land=0.01 stealth=10 dmg_hunger=1 contagion=0.5 morale+-1 attack_rate=0.3 habitat=marsh,jungle,meadow color=white
+planaria: mass=1e-05 length=0.005 integrity=1 alive=true food_need=0.00001 plural_count=50 diet=carnivore speed_land=0.01 speed_water=0.1 breathes=water regeneration=5 counters=sever,amputate habitat=marsh,jungle,meadow color=brown
+planarian: mass=1e-05 length=0.005 integrity=1 alive=true food_need=0.00001 plural_count=50 diet=carnivore speed_land=0.01 speed_water=0.1 breathes=water regeneration=5 counters=sever,amputate habitat=marsh,jungle,meadow color=brown
+polychaete: mass=0.003 length=0.1 integrity=1 alive=true food_need=0.00001 plural_count=40 diet=herbivore regeneration=0.5 speed_water=0.2 breathes=water dmg_pierce=2 attack_rate=0.5 habitat=shore color=red
+polychete: mass=0.003 length=0.1 integrity=1 alive=true food_need=0.00001 plural_count=40 diet=herbivore regeneration=0.5 speed_water=0.2 breathes=water dmg_pierce=2 attack_rate=0.5 habitat=shore color=red
 prawn: mass=0.03 length=0.15 integrity=2 alive=true diet=scavenger speed_water=1 breathes=water placeable_on=water pack_size=40 reproduction=10 habitat=shore color=pink
+pseudoscorpion: mass=0.002 length=0.05 integrity=1 alive=true food_need=0.00001 plural_count=20 aggression=5 diet=carnivore speed_land=0.2 stealth=9 dmg_pierce=1 dmg_poison=3 inflict_poison=3 attack_rate=1 counters=booklouse,mite,louse habitat=forest,meadow,jungle color=brown
+redbug: mass=1e-05 length=0.005 integrity=1 alive=true food_need=0.00001 plural_count=100 aggression=5 speed_land=0.01 dmg_pierce=1 inflict_slow=3 attack_rate=1 morale+-1 habitat=meadow,marsh color=red
+roundworm: mass=1e-05 length=0.005 integrity=1 alive=true food_need=0.00001 plural_count=50 diet=carnivore speed_land=0.01 stealth=10 dmg_disease=2 dmg_hunger=2 lifesteal=1 contagion=0.2 inflict_sick=8 attack_rate=0.3 habitat=marsh,jungle,meadow color=white
+sandhopper: mass=0.002 length=0.05 integrity=1 alive=true food_need=0.00001 plural_count=20 diet=scavenger speed_land=0.5 jump=0.5 reclaim_rate=0.05 reclaim_range=4 habitat=shore color=gray
+schistosome: mass=1e-05 length=0.005 integrity=1 alive=true food_need=0.00001 plural_count=50 diet=carnivore speed_land=0.01 stealth=10 speed_water=0.1 breathes=water dmg_disease=4 inflict_sick=15 contagion=0.4 attack_rate=0.3 habitat=marsh,jungle,meadow color=white
 shellfish: mass=0.3 length=0.15 integrity=10 alive=true diet=scavenger armor=8 res_slash=0.6 breathes=water placeable_on=water pack_size=12 reproduction=4 edible=true nutrition=2 raw=true shelf_life=60 habitat=shore color=pink
+shipworm: mass=0.003 length=0.1 integrity=1 alive=true food_need=0.00001 plural_count=40 diet=herbivore regeneration=0.5 speed_water=0.05 breathes=water bores=wood dmg_slash=2 attack_rate=1 stealth=9 habitat=shore color=white
+slater: mass=0.002 length=0.05 integrity=1 alive=true food_need=0.00001 plural_count=20 diet=scavenger speed_land=0.1 armor=3 res_blunt=0.5 reclaim_rate=0.05 reclaim_range=4 fertility+1 habitat=forest,meadow,jungle color=gray
 starfish: mass=0.3 length=0.3 integrity=10 alive=true diet=carnivore food_need=0.0005 speed_water=0.01 regeneration=1 breathes=water placeable_on=water counters=oyster,clam,mussel habitat=shore color=orange
 tapeworm: mass=0.05 length=5 integrity=2 alive=true diet=carnivore speed_land=0 stealth=10 lifesteal=1 dmg_hunger=3 attack_rate=0.2 food_need+0.01 contagion=0.1 color=white
+tardigrade: mass=1e-05 length=0.005 integrity=40 alive=true food_need=0.00001 plural_count=50 diet=carnivore speed_land=0.01 speed_water=0.01 breathes=both res_cold=1 res_fire=0.9 res_radiation=1 res_suffocation=1 immune_stasis=true temp_min=-270 temp_max=150 habitat=marsh,jungle,meadow color=pink
+teredo: mass=0.003 length=0.1 integrity=1 alive=true food_need=0.00001 plural_count=40 diet=herbivore regeneration=0.5 speed_water=0.05 breathes=water bores=wood dmg_slash=2 attack_rate=1 stealth=9 habitat=shore color=white
+threadworm: mass=1e-05 length=0.005 integrity=1 alive=true food_need=0.00001 plural_count=50 diet=carnivore speed_land=0.01 stealth=10 dmg_hunger=1 lifesteal=0.5 contagion=0.3 attack_rate=0.3 habitat=marsh,jungle,meadow color=white
 tick: mass=0.00001 length=0.004 integrity=1 alive=true aggression=6 diet=carnivore speed_land=0.01 stealth=9 lifesteal=1 dmg_pierce=1 dmg_disease=8 contagion=0.2 attack_rate=0.2 pack_size=20 habitat=forest,meadow,taiga color=brown
+trematode: mass=1e-05 length=0.005 integrity=1 alive=true food_need=0.00001 plural_count=50 diet=carnivore speed_land=0.01 stealth=10 dmg_disease=3 lifesteal=1 contagion=0.2 attack_rate=0.3 habitat=marsh,jungle,meadow color=white
+trichina: mass=1e-05 length=0.005 integrity=1 alive=true food_need=0.00001 plural_count=50 diet=carnivore speed_land=0.01 stealth=10 dmg_disease=4 inflict_sick=12 contagion=0.3 attack_rate=0.2 counters=pork,ham,bacon habitat=marsh,jungle,meadow color=white
 trilobite: mass=0.05 length=0.1 integrity=6 alive=true diet=scavenger speed_water=0.2 armor=5 breathes=water placeable_on=water value=100 habitat=shore color=gray
+vinegarroon: mass=0.002 length=0.05 integrity=1 alive=true food_need=0.00001 plural_count=20 aggression=5 diet=carnivore speed_land=0.5 dmg_acid=6 inflict_blind=4 attack_rate=0.5 odor=6 fear_aura=2 habitat=desert color=black
+woodlouse: mass=0.002 length=0.05 integrity=1 alive=true food_need=0.00001 plural_count=20 diet=scavenger speed_land=0.1 armor=3 res_blunt=0.5 reclaim_rate=0.05 reclaim_range=4 fertility+1 habitat=forest,meadow,jungle color=gray
+woodworm: mass=0.003 length=0.1 integrity=1 alive=true food_need=0.00001 plural_count=40 diet=herbivore regeneration=0.5 speed_land=0.01 bores=wood dmg_slash=1 attack_rate=1 stealth=9 matures_into=deathwatch growth_time=8 habitat=forest,city color=white
 
 # noun killing
 death: placement=target placement_range=30 event_target=creature destroys_target=true dmg_dark=5000 fear_aura=8 contest_with=dmg_unholy contested_by=prevents_death counters=life
@@ -6352,6 +6576,7 @@ archaeology: detect_underground=true detect_letters=40 lode=Y lode_share=0.15 re
 architecture: build_speed*2 grants_adjective_slots=1 grants_slots_to=building integrity*1.2
 arrangement: binds=2 bind_penalty=reputation trade_bonus=0.1 command_limit+5
 arts: beauty+3 charm+3 craft_slots+1 morale+1 produce_A*1.5 produce_R*1.5
+assay: placement=target placement_range=30 event_target=object read_properties=10 detect_letters=30
 assessment: read_properties=7 read_inventory=true
 assumption: placement=target placement_range=100 field_radius=20 field_targets=enemies field_duration=2 decoys=1 accuracy+-0.1
 assurance: placement=self field_radius=30 field_targets=owned field_duration=3 morale+3 courage+3 counters=worry,fear,doubt
@@ -6621,21 +6846,33 @@ zodiac: placement=self field_radius=6 field_targets=self field_duration=5 luck+3
 
 # noun landform
 abyss: tile_type=pit radius=6 depth=1000 field_radius=30 field_targets=all pull=3 fear_aura=4 temperature_delta=-10 luminosity=0
+aquifer: tile_type=water radius=2 portable=false moisture=10 water_output=5 produce_O=0.6
+arete: tile_type=mountain radius=1 length=300 elevation=500 blocks=land,sight movement_cost=6 portable=false placement=region
 berg: mass=1000000000 footprint=30 height=60 integrity=200000 material=ice temperature=-10 buoyancy=9 dmg_crush=5000 temperature_delta=-5 tile_type=snow radius=6 placeable_on=deep_water,water
+caldera: tile_type=lava radius=4 temperature=1100 dmg_fire=150 attack_rate=0.5 luminosity=6 blocks=land friendly_fire=true portable=false lode=x,z,f lode_share=0.3 lode_stock=6
 coast: tile_type=sand radius=6 movement_cost=1.2 portable=false placeable_on=land,water moisture=5 produce_O=1 produce_C=0.5 temperature_delta=-3 sight_range+200
 copse: tile_type=forest radius=2 movement_cost=1.5 blocks=sight cover=0.4 stealth=3 flammability=6 portable=false
+crag: tile_type=wall radius=1 length=60 elevation=40 integrity=800000 armor=1200 hardness=8 blocks=land movement_cost=10 portable=false cover=0.6
 crater: tile_type=pit radius=5 depth=30 elevation=0 movement_cost=2 lode=x,z,q lode_share=0.3 lode_stock=5 placeable_on=land,sand,desert,ash
+diapir: tile_type=hill radius=3 elevation=100 movement_cost=2 portable=false produce_G=0.3
+escarpment: tile_type=wall radius=1 length=300 elevation=100 integrity=2000000 armor=1500 hardness=8 blocks=land movement_cost=10 portable=false placement=region
 field: tile_type=field radius=6 fertility=7 produce_A=1 food_output=2 movement_cost=1 portable=false
+geyser: placement=target placement_range=50 event_target=tile event_radius=2 event_duration=1 dmg_water=80 dmg_fire=60 knockback=10 inflict_stun=2 attack_rate=0.2 temperature=95 tile_type=water radius=1 friendly_fire=true luminosity=2
 glacier: mass=1e12 footprint=40 height=100 integrity=10000000 material=ice temperature=-10 tile_type=snow slipperiness=8 movement_cost=4 field_radius=200 field_targets=all temperature_delta=-15 water_output=20 dmg_cold=2 counters=heatwave,summer,thaw,fire
 ground: tile_type=field radius=4 portable=false fertility=4 movement_cost=1 cover+0.1 produce_G=0.3 produce_E=0.2
 grove: tile_type=forest radius=4 movement_cost=1.5 blocks=sight cover=0.4 stealth=3 flammability=6 portable=false fertility=5 beauty=6 morale+1
+hogback: tile_type=mountain radius=1 length=300 elevation=150 blocks=land,sight movement_cost=6 portable=false placement=region
 iceberg: mass=1e9 footprint=20 height=60 integrity=1000000 material=ice temperature=-10 buoyancy=9 placeable_on=water,deep_water blocks=true dmg_crush=1000 knockback+10 field_radius=60 field_targets=all temperature_delta=-10 counters=ship,boat,heatwave,thaw
 isthmus: mass=0 portable=false tile_type=field radius=2 elevation=2 placeable_on=water,deep_water blocks=water
 jungle: tile_type=forest radius=20 movement_cost=4 blocks=sight cover=0.6 stealth=6 moisture=8 fertility=9 temperature_delta=8 dmg_disease=1 portable=false spread_rate=0.05 sight_range*0.3
 land: tile_type=field radius=10 elevation=5 placeable_on=water,deep_water,land fertility=4 claim_radius=10 portable=false produce_L=0.5
 lawn: tile_type=field radius=5 beauty=5 fertility=3 morale+1 movement_cost=1 portable=false
+maar: tile_type=water radius=3 depth=50 portable=false moisture=9 produce_O=0.4
 maria: tile_type=floor radius=50 material=basalt color=gray placement=region movement_cost=1 temperature_delta=-30 portable=false
+massif: tile_type=mountain radius=7 elevation=2500 blocks=land,sight,projectiles movement_cost=6 portable=false produce_G=1 temperature_delta=-12
 meadow: tile_type=field radius=10 fertility=6 beauty=7 movement_cost=1 morale+1 food_output=1 portable=false flammability=6 spread_rate=0.02
+monocline: tile_type=hill radius=4 elevation=100 movement_cost=2 portable=false
+outpouring: placement=target placement_range=40 event_target=tile event_radius=3 event_duration=1 tile_type=lava radius=2 dmg_fire=200 attack_rate=0.5 friendly_fire=true luminosity=6
 paddy: tile_type=swamp radius=4 depth=0.2 moisture=9 fertility=8 food_output=4 placeable_on=land,field,swamp movement_cost=3 portable=false production_needs=tilled,water
 park: tile_type=field radius=8 portable=false fertility=6 beauty=7 morale+2 regeneration+0.5 produce_P=1 produce_K=0.2 spread_rate=0.01
 parts: radius=10 claim_radius=10 portable=false map_reveal=10 produce_P=0.3 produce_S=0.3
@@ -6643,12 +6880,17 @@ pasture: tile_type=field radius=8 fertility=6 food_output=3 portable=false flamm
 permafrost: tile_type=tundra radius=50 temperature=-10 hardness=6 fertility=-5 decay_rate=0 field_radius=50 field_targets=all temperature_delta=-8 growth=0.2 speed_underground*0.2
 plain: tile_type=field radius=30 movement_cost=0.8 fertility=5 portable=false sight_range+200 produce_A=1
 prairie: tile_type=field radius=40 fertility=7 movement_cost=1 visibility=1.5 flammability=8 spread_rate=0.05 portable=false food_output=2
+precipice: tile_type=wall radius=1 length=150 elevation=150 integrity=2000000 armor=1500 hardness=8 blocks=land movement_cost=10 portable=false knockback+10
 rainforest: tile_type=forest radius=40 movement_cost=5 blocks=sight cover=0.7 stealth=7 moisture=10 fertility=10 temperature_delta=10 sets_weather=rain field_radius=400 portable=false sight_range*0.3 flammability=2
 region: mass=0 portable=false placement=region radius=15 claim_radius=10 map_reveal=15
+ridgeline: tile_type=hill radius=1 length=400 elevation=100 blocks=sight movement_cost=2 portable=false placement=region sight_range+300
 savanna: tile_type=field radius=40 fertility=4 flammability=9 temperature_delta=8 visibility=1.5 movement_cost=1 portable=false
+scarp: tile_type=wall radius=1 length=200 elevation=60 integrity=1500000 armor=1500 hardness=8 blocks=land movement_cost=10 portable=false placement=region
+scree: tile_type=hill radius=3 movement_cost=4 portable=false inflict_slow=4 slipperiness=6 dmg_blunt=10 attack_rate=0.3
 shore: tile_type=sand radius=4 movement_cost=1.2 portable=false placeable_on=land,water produce_O=0.4 moisture=3
 snowdrift: tile_type=snow radius=6 height=2 temperature=-5 movement_cost=5 cover=0.5 blocks=true field_radius=6 field_targets=all inflict_slow=2 speed_land*0.4
 snowfield: tile_type=snow radius=40 temperature=-5 movement_cost=2 field_radius=40 field_targets=all temperature_delta=-10 reflectivity=9 sight_range*1.2 stealth+-2
+talus: tile_type=hill radius=3 movement_cost=4 portable=false inflict_slow=4 slipperiness=6 dmg_blunt=10 attack_rate=0.3
 thicket: tile_type=forest radius=3 movement_cost=4 blocks=sight,land cover=0.6 stealth=6 thorns=5 flammability=7 portable=false
 undergrowth: tile_type=forest radius=4 movement_cost=2.5 stealth=6 camouflage=forest cover=0.2 flammability=8 spread_rate=0.1 portable=false
 woodland: tile_type=forest radius=15 movement_cost=2 blocks=sight cover=0.4 stealth=3 flammability=6 fertility=6 portable=false spread_rate=0.01
@@ -7054,6 +7296,7 @@ balm: mass=0.05 state=liquid density=900 odor=3 single_use=true restores=30 effe
 balsa: mass=0.15 density=150 hardness=1 brittleness=5 flammability=8 buoyancy=10 integrity=10 value=5 color=white
 beaver: mass=1 density=1000 hardness=1 flammability=4 buoyancy=5 integrity=40 value=200 color=brown res_cold=0.7 res_water=0.8
 beech: mass=0.72 density=720 hardness=5 brittleness=2 flammability=7 burn_time=3600 integrity=100 value=5 color=brown
+beeswax: mass=1 density=960 hardness=1 brittleness=2 melting_point=64 flammability=7 burn_time=600 res_water=0.8 integrity=15 value=4 color=yellow
 bitumen: state=liquid mass=1.05 density=1050 hardness=0 stickiness=9 flammability=7 melting_point=90 integrity=20 value=1 color=black inflict_slow=5 res_water=0.9 tile_type=road radius=1
 blackwood: mass=1.2 density=1200 hardness=8 brittleness=3 flammability=4 integrity=170 value=150 beauty=8 color=black
 board: mass=5 length=2 integrity=40 hardness=3 material=wood flammability=7 buoyancy=5 shape=flat cover=0.2 fuel_output=0.3 plural_count=6
@@ -7078,6 +7321,7 @@ cement: mass=1.5 density=1500 hardness=7 brittleness=4 flammability=0 integrity=
 ceramic: mass=2.4 density=2400 hardness=7 brittleness=8 flammability=0 conductivity=0 melting_point=1800 integrity=150 value=10 beauty=6 color=white res_fire=0.9 res_electric=0.9 res_acid=0.7
 char: mass=0.3 density=300 hardness=1 brittleness=8 flammability=8 integrity=3 value=0.2 color=black fuel_output=0.5 stealth=1
 cherry: mass=0.58 density=580 hardness=4 flammability=6 integrity=85 value=15 beauty=8 color=red
+chert: mass=2.65 density=2650 hardness=7 brittleness=8 flammability=0 integrity=120 value=1 color=gray sharpness=8
 chestnut: mass=0.56 density=560 hardness=4 flammability=6 integrity=90 value=6 color=brown res_water=0.7 decay_rate*0.5
 chinchilla: mass=1 density=1000 hardness=0 flammability=5 integrity=20 value=3000 beauty=9 color=gray res_cold=0.8
 chitin: mass=1.4 density=1400 hardness=5 brittleness=3 flammability=3 integrity=180 value=2 color=brown res_slash=0.3 res_pierce=0.2
@@ -7131,6 +7375,7 @@ firewood: mass=0.6 density=600 hardness=3 brittleness=3 flammability=9 burn_time
 fleece: mass=0.3 density=300 hardness=0 flammability=4 integrity=25 value=10 color=white res_cold=0.7 temp_min+-20 elasticity=4
 fluff: mass=0.02 density=20 hardness=0 elasticity=7 flammability=9 buoyancy=6 integrity=1 value=0 color=white res_blunt=0.3
 fluoride: mass=3.2 density=3180 hardness=4 brittleness=6 flammability=0 toxicity=3 integrity=30 value=2 color=white res_acid=0.5
+flypaper: mass=0.05 integrity=2 material=paper portable=false stickiness=10 trigger_radius=2 inflict_root=12 stealth=3 dmg_poison=2 single_use=true color=yellow
 foam: mass=0.05 density=50 hardness=0 elasticity=9 buoyancy=9 flammability=6 integrity=8 value=0.5 color=white res_blunt=0.6 res_fire=0.2 knockback*0.2
 foil: mass=2.7 density=2700 hardness=1 conductivity=9 flammability=0 reflectivity=9 integrity=3 value=1 color=silver res_light=0.6 res_psychic=0.3
 frost: mass=0.1 density=100 hardness=1 brittleness=8 temperature=-10 melting_point=0 flammability=0 integrity=2 value=0 color=white dmg_cold=30 inflict_freeze=3 inflict_slow=3 slipperiness=6
@@ -7163,6 +7408,7 @@ hydroxide: mass=2.1 density=2130 hardness=1 corrosiveness=9 toxicity=6 integrity
 icicle: mass=0.5 length=0.4 sharpness=8 brittleness=9 hardness=2 material=ice temperature=-10 melting_point=0 dmg_pierce=25 dmg_cold=10 single_use=true color=white
 incense: mass=0.5 density=500 hardness=1 flammability=8 burn_time=1800 odor=8 integrity=2 value=50 color=brown luminosity=1 morale+2 res_unholy=0.3 dmg_holy=10
 indigo: mass=1.2 density=1200 hardness=0 integrity=2 value=30 beauty=7 color=blue stealth+2 camouflage=water
+insecticide: mass=1 toxicity=6 single_use=true field_radius=30 dmg_poison=20 attack_rate=0.5 counters=swarm,infestation,vermin,pest,locust,termite,hive,anthill,formicary,armyworm,pollination
 insulation: mass=0.05 density=40 hardness=0 elasticity=5 conductivity=0 flammability=1 integrity=10 value=1 color=pink res_cold=0.8 res_fire=0.5 res_electric=0.9 res_sonic=0.6 loudness+-3
 iodine: state=liquid mass=0.05 density=4900 color=brown toxicity=3 single_use=true effect_status=sick restores=15 res_disease+0.4 res_radiation+0.5 counters=germ,goiter
 ironwood: mass=1.1 density=1100 hardness=8 brittleness=2 flammability=3 burn_time=7200 integrity=250 value=30 color=brown res_slash=0.3
@@ -7174,6 +7420,7 @@ kraft: mass=0.8 density=800 hardness=2 flammability=8 integrity=12 value=0.3 col
 lac: mass=1.1 density=1100 hardness=3 flammability=6 melting_point=80 reflectivity=5 integrity=20 value=10 color=red res_water=0.6
 lacquer: mass=1.2 density=1200 hardness=4 flammability=7 reflectivity=7 integrity=20 value=15 beauty=8 color=red res_water=0.8 res_acid=0.3
 lactose: mass=1.5 density=1525 hardness=1 integrity=2 value=1 color=white edible=true nutrition=3
+larvicide: mass=1 toxicity=4 single_use=true field_radius=20 dmg_poison=40 attack_rate=0.5 placement=target placement_range=30 counters=infestation,pest,metamorphosis
 latex: mass=0.95 density=950 hardness=1 elasticity=10 conductivity=0 flammability=4 integrity=30 value=4 color=white res_electric=0.8 res_disease=0.7 knockback=3
 latex: mass=1 state=liquid elasticity=9 stickiness=6 conductivity=0 res_electric+0.6 color=white
 leather: mass=1 density=860 hardness=4 integrity=60 elasticity=4 flammability=3 res_slash=0.2 material=leather value=10
@@ -7448,63 +7695,221 @@ zinc: mass=7.1 density=7140 hardness=3 brittleness=4 melting_point=420 conductiv
 zirconium: mass=6.5 density=6520 hardness=6 melting_point=1855 conductivity=2 flammability=1 integrity=280 value=30 color=silver res_acid=0.8 res_radiation=0.3
 
 # noun mineral
+aa: mass=2.4 density=2400 hardness=6 brittleness=6 flammability=0 integrity=200 value=1 color=black sharpness=6 res_fire=0.8 dmg_slash=4
+actinolite: mass=3.1 density=3100 hardness=5 brittleness=4 flammability=0 integrity=80 value=4 color=green res_fire=0.9 immune_burn=true toxicity=4
 agate: mass=2.6 density=2600 hardness=7 brittleness=4 flammability=0 transparency=0.3 integrity=180 value=100 beauty=8 color=orange
 alabaster: mass=2.3 density=2300 hardness=2 brittleness=6 flammability=0 transparency=0.3 integrity=60 value=50 beauty=8 color=white luminosity=1
+albite: mass=2.62 density=2620 hardness=6 brittleness=5 flammability=0 integrity=150 value=2 color=white
+alexandrite: mass=3.5 density=3500 hardness=8 brittleness=4 flammability=0 integrity=250 value=20000 beauty=9 color=green transparency=0.5 disguise=3
+almandine: mass=3.5 density=3500 hardness=7 brittleness=4 flammability=0 integrity=250 value=1200 beauty=9 color=red transparency=0.5
+alumina: mass=3.95 density=3950 hardness=9 brittleness=4 flammability=0 integrity=400 value=5 color=white res_fire=0.8 sharpness=4
 amethyst: mass=2.65 density=2650 hardness=7 brittleness=5 flammability=0 transparency=0.7 integrity=150 value=1500 beauty=9 color=purple res_psychic=0.4 res_poison=0.3 dmg_magic=15
+amphibole: mass=3.1 density=3100 hardness=6 brittleness=5 flammability=0 integrity=170 value=2 color=black
+amphibolite: mass=3 density=3000 hardness=6 brittleness=3 flammability=0 integrity=380 value=2 color=black
+andesite: mass=2.6 density=2600 hardness=6 brittleness=4 flammability=0 integrity=330 value=1 color=gray res_fire=0.4
+anorthite: mass=2.73 density=2730 hardness=6 brittleness=5 flammability=0 integrity=160 value=2 color=white
+apatite: mass=3.2 density=3200 hardness=5 brittleness=6 flammability=0 integrity=80 value=15 color=green fertility=5
+aragonite: mass=2.93 density=2930 hardness=4 brittleness=6 flammability=0 integrity=90 value=5 color=white
+argillite: mass=2.6 density=2600 hardness=4 brittleness=5 flammability=0 integrity=200 value=2 color=red
+arsenopyrite: mass=6.1 density=6100 hardness=5 brittleness=5 flammability=0 integrity=150 value=5 color=silver raw=true cooks_into=iron smelts_at=1200 toxicity=7 inflict_poison=8
 asbestos: mass=2.5 density=2500 hardness=4 brittleness=3 flammability=0 conductivity=0 integrity=80 value=1 color=white res_fire=0.95 immune_burn=true toxicity=6 dmg_disease=20
+augite: mass=3.4 density=3400 hardness=6 brittleness=5 flammability=0 integrity=190 value=2 color=black
+aventurine: mass=3.5 density=3500 hardness=7 brittleness=4 flammability=0 integrity=250 value=600 beauty=9 color=green transparency=0.5 luck=2
+azurite: mass=3.5 density=3500 hardness=4 brittleness=4 flammability=0 integrity=250 value=400 beauty=9 color=blue transparency=0.5 raw=true cooks_into=copper smelts_at=1000
+balas: mass=3.5 density=3500 hardness=8 brittleness=4 flammability=0 integrity=250 value=6000 beauty=9 color=red transparency=0.5
+barite: mass=4.48 density=4480 hardness=3 brittleness=6 flammability=0 integrity=80 value=3 color=white res_radiation=0.7
+barytes: mass=4.48 density=4480 hardness=3 brittleness=6 flammability=0 integrity=80 value=3 color=white res_radiation=0.7
 basalt: mass=3 density=3000 hardness=7 brittleness=3 flammability=0 integrity=450 value=2 color=black res_fire=0.8 melting_point=1200
+batholith: tile_type=mountain radius=8 elevation=1500 blocks=land,sight movement_cost=6 portable=false produce_G=1.2 lode=g,u,x lode_share=0.3
 bauxite: mass=2.5 density=2500 hardness=2 brittleness=5 flammability=0 integrity=60 value=1 color=red
 beryl: mass=2.76 density=2760 hardness=8 brittleness=5 flammability=0 transparency=0.6 integrity=200 value=2000 beauty=8 color=green
+biotite: mass=3 density=3000 hardness=2 brittleness=3 flammability=0 integrity=40 value=3 color=black res_electric=0.9 res_fire=0.6 shape=sheet
+blende: mass=4.05 density=4050 hardness=5 brittleness=5 flammability=0 integrity=150 value=5 color=brown raw=true cooks_into=zinc smelts_at=900
 bloodstone: mass=2.6 density=2610 hardness=7 brittleness=4 flammability=0 integrity=150 value=200 beauty=7 color=green inflict_bleed=6 regeneration+1 lifesteal=0.1
+bluestone: mass=2.7 density=2700 hardness=6 brittleness=3 flammability=0 integrity=320 value=3 color=blue
+borax: mass=1.73 density=1730 hardness=2 brittleness=6 flammability=0 integrity=20 value=3 color=white res_fire=0.6 effect_status=poison counters=mold,mildew,fungus
+bornite: mass=5.1 density=5100 hardness=5 brittleness=5 flammability=0 integrity=150 value=5 color=purple raw=true cooks_into=copper smelts_at=1000 beauty=6
+breccia: mass=2.6 density=2600 hardness=6 brittleness=5 flammability=0 integrity=260 value=3 color=red
 brick: mass=2.5 density=1900 hardness=6 brittleness=4 integrity=200 melting_point=1500 material=clay res_fire=0.8 plural_count=500 build_speed=1.5 value=1
 brimstone: mass=2 density=2070 hardness=2 brittleness=7 melting_point=115 flammability=9 toxicity=4 odor=9 integrity=10 value=1 color=yellow dmg_fire=60 dmg_unholy=30 inflict_burn=5
+brownstone: mass=2.4 density=2400 hardness=5 brittleness=4 flammability=0 integrity=260 value=3 color=brown
+cairngorm: mass=3.5 density=3500 hardness=7 brittleness=4 flammability=0 integrity=250 value=1000 beauty=9 color=brown transparency=0.5
+calamine: mass=4.4 density=4400 hardness=5 brittleness=5 flammability=0 integrity=150 value=5 color=white raw=true cooks_into=zinc smelts_at=900 restores=5
+calcite: mass=2.71 density=2710 hardness=3 brittleness=6 flammability=0 integrity=80 value=5 color=white transparency=0.8 decoys=1
+carbuncle: mass=3.5 density=3500 hardness=8 brittleness=4 flammability=0 integrity=250 value=6000 beauty=9 color=red transparency=0.5 luminosity=2
+carnallite: mass=1.6 density=1600 hardness=2 brittleness=7 flammability=0 integrity=10 value=3 color=pink fertility=4 res_water=0
+carnelian: mass=3.5 density=3500 hardness=7 brittleness=4 flammability=0 integrity=250 value=800 beauty=9 color=orange transparency=0.5 courage+1
+carnotite: mass=4.7 density=4700 hardness=5 brittleness=5 flammability=0 integrity=150 value=5 color=yellow raw=true cooks_into=uranium smelts_at=1300 radioactivity=5 field_radius=10 field_targets=all dmg_radiation=8 attack_rate=0.3 inflict_sick=6 friendly_fire=true
+cassiterite: mass=6.9 density=6900 hardness=5 brittleness=5 flammability=0 integrity=150 value=5 color=brown raw=true cooks_into=tin smelts_at=700
+celestite: mass=3.95 density=3950 hardness=3 brittleness=7 flammability=0 integrity=60 value=20 color=blue beauty=8 luminosity=1
+cerussite: mass=6.5 density=6500 hardness=5 brittleness=5 flammability=0 integrity=150 value=5 color=white raw=true cooks_into=lead smelts_at=700 toxicity=4
+chalcedony: mass=3.5 density=3500 hardness=7 brittleness=4 flammability=0 integrity=250 value=500 beauty=9 color=blue transparency=0.5
+chalcocite: mass=5.6 density=5600 hardness=5 brittleness=5 flammability=0 integrity=150 value=5 color=black raw=true cooks_into=copper smelts_at=1000
+chalcopyrite: mass=4.2 density=4200 hardness=5 brittleness=5 flammability=0 integrity=150 value=5 color=gold raw=true cooks_into=copper smelts_at=1000 beauty=5
 chalk: mass=2.5 density=2500 hardness=1 brittleness=8 flammability=0 integrity=10 value=0.5 color=white inflict_blind=1
+chlorite: mass=2.8 density=2800 hardness=2 brittleness=4 flammability=0 integrity=50 value=2 color=green slipperiness=4
+chromite: mass=4.6 density=4600 hardness=5 brittleness=5 flammability=0 integrity=150 value=5 color=black raw=true cooks_into=chromium smelts_at=1400
+chrysoberyl: mass=3.5 density=3500 hardness=8 brittleness=4 flammability=0 integrity=250 value=6000 beauty=9 color=yellow transparency=0.5
+chrysolite: mass=3.5 density=3500 hardness=7 brittleness=4 flammability=0 integrity=250 value=2000 beauty=9 color=green transparency=0.5
+chrysotile: mass=2.55 density=2550 hardness=3 brittleness=3 flammability=0 integrity=60 value=4 color=green res_fire=0.95 immune_burn=true toxicity=4 contagion=0 inflict_sick=6
 cinnabar: mass=8 density=8100 hardness=2 brittleness=5 toxicity=7 integrity=40 value=60 color=red melting_point=580 dmg_poison=20 flammability=0
 citrine: mass=2.65 density=2650 hardness=7 brittleness=5 flammability=0 transparency=0.8 integrity=150 value=500 beauty=8 color=yellow luminosity=1 morale+1
+claystone: mass=2.2 density=2200 hardness=3 brittleness=6 flammability=0 integrity=120 value=1 color=brown
+coltan: mass=6 density=6000 hardness=6 brittleness=4 flammability=0 integrity=200 value=80 color=black conductivity=6
+columbite: mass=5.3 density=5300 hardness=5 brittleness=5 flammability=0 integrity=150 value=5 color=black raw=true cooks_into=tungsten smelts_at=1400
 conglomerate: mass=2.6 density=2600 hardness=6 brittleness=3 flammability=0 integrity=260 value=1 color=brown
+cordierite: mass=2.6 density=2600 hardness=7 brittleness=5 flammability=0 integrity=160 value=30 color=blue res_fire=0.7
+cornelian: mass=3.5 density=3500 hardness=7 brittleness=4 flammability=0 integrity=250 value=800 beauty=9 color=orange transparency=0.5 courage+1
+corundum: mass=4 density=4000 hardness=9 brittleness=3 flammability=0 integrity=450 value=40 color=gray sharpness=7
+cristobalite: mass=2.3 density=2300 hardness=6 brittleness=7 flammability=0 integrity=90 value=5 color=white toxicity=4
+cryolite: mass=2.95 density=2950 hardness=3 brittleness=6 flammability=0 integrity=50 value=10 color=white transparency=0.7
 crystal: mass=0.5 density=2650 hardness=7 brittleness=6 transparency=0.9 reflectivity=8 luminosity=2 res_magic=0.3 read_properties=3 value=200 beauty=8 integrity=150
+dacite: mass=2.55 density=2550 hardness=6 brittleness=4 flammability=0 integrity=300 value=1 color=gray res_fire=0.4
+diorite: mass=2.85 density=2850 hardness=7 brittleness=3 flammability=0 integrity=420 value=3 color=gray
+dolomite: mass=2.85 density=2850 hardness=4 brittleness=4 flammability=0 integrity=250 value=2 color=white
 emery: mass=4 density=4000 hardness=9 brittleness=3 flammability=0 integrity=300 value=3 color=black sharpness=6 armor_pierce=0.2
+feldspar: mass=2.56 density=2560 hardness=6 brittleness=5 flammability=0 integrity=160 value=2 color=pink
+fieldstone: mass=2.6 density=2600 hardness=6 brittleness=3 flammability=0 integrity=300 value=1 color=gray
+fluor: mass=3.18 density=3180 hardness=4 brittleness=7 flammability=0 integrity=70 value=20 color=purple luminosity=3 beauty=8
+fluorapatite: mass=3.2 density=3200 hardness=5 brittleness=6 flammability=0 integrity=80 value=10 color=green fertility=5
+fluorite: mass=3.18 density=3180 hardness=4 brittleness=7 flammability=0 integrity=70 value=20 color=purple luminosity=3 beauty=8 transparency=0.6
+fluorspar: mass=3.18 density=3180 hardness=4 brittleness=7 flammability=0 integrity=70 value=20 color=purple luminosity=3 beauty=8
+gabbro: mass=2.95 density=2950 hardness=7 brittleness=3 flammability=0 integrity=450 value=3 color=black
 galena: mass=7.6 density=7600 hardness=3 brittleness=7 flammability=0 toxicity=5 reflectivity=6 integrity=60 value=3 color=silver res_radiation=0.5
 garnet: mass=3.9 density=3900 hardness=7 brittleness=4 flammability=0 transparency=0.6 integrity=200 value=1000 beauty=8 color=red sharpness=5 inflict_bleed=3
+gesso: mass=1.5 density=1500 hardness=1 brittleness=7 flammability=0 integrity=30 value=2 color=white beauty=3
+gibbsite: mass=2.4 density=2400 hardness=5 brittleness=5 flammability=0 integrity=150 value=5 color=white raw=true cooks_into=aluminium smelts_at=1000
+girasol: mass=3.5 density=3500 hardness=6 brittleness=4 flammability=0 integrity=250 value=4000 beauty=9 color=white transparency=0.5 luminosity=1
+glauconite: mass=2.7 density=2700 hardness=2 brittleness=5 flammability=0 integrity=60 value=2 color=green fertility=5
+gneiss: mass=2.75 density=2750 hardness=7 brittleness=3 flammability=0 integrity=400 value=2 color=gray
+goethite: mass=4.3 density=4300 hardness=5 brittleness=5 flammability=0 integrity=150 value=5 color=brown raw=true cooks_into=iron smelts_at=1200
+goldstone: mass=2.6 density=2600 hardness=5 brittleness=6 flammability=0 integrity=60 value=15 color=bronze beauty=7 luminosity=1
 gravel: mass=1.7 density=1700 hardness=6 brittleness=2 flammability=0 integrity=200 value=0.5 color=gray movement_cost*1.2 loudness=3 dmg_blunt=10
+greensand: mass=1.6 density=1600 hardness=2 brittleness=6 flammability=0 integrity=60 value=1 color=green fertility=6 shape=pile
+greisen: mass=2.65 density=2650 hardness=6 brittleness=4 flammability=0 integrity=280 value=4 color=gray
 grit: mass=1.6 density=1600 hardness=7 brittleness=2 flammability=0 integrity=40 value=0.2 color=gray dmg_slash=8 slipperiness=-4 courage+2
+gritstone: mass=2.5 density=2500 hardness=6 brittleness=4 flammability=0 integrity=280 value=1 color=brown slipperiness=0
 gypsum: mass=2.3 density=2310 hardness=2 brittleness=6 flammability=0 integrity=40 value=1 color=white res_fire=0.6
+haematite: mass=5.26 density=5260 hardness=5 brittleness=5 flammability=0 integrity=150 value=5 color=red raw=true cooks_into=iron smelts_at=1200 magnetism=2
+halite: mass=2.16 density=2160 hardness=2 brittleness=7 flammability=0 integrity=10 value=2 color=white edible=true nutrition=0 shelf_life=0 counters=slug,snail,ice,frost
+heliotrope: mass=3.5 density=3500 hardness=7 brittleness=4 flammability=0 integrity=250 value=800 beauty=9 color=green transparency=0.5 heals=1
 hematite: mass=5.3 density=5260 hardness=6 brittleness=5 flammability=0 magnetism=2 integrity=200 value=5 color=red reflectivity=6 inflict_bleed=3
+holystone: mass=2.2 density=2200 hardness=5 brittleness=4 flammability=0 integrity=150 value=1 color=white faith_output=0.02
+hornblende: mass=3.2 density=3200 hardness=6 brittleness=5 flammability=0 integrity=180 value=2 color=black
+hornfels: mass=2.8 density=2800 hardness=8 brittleness=3 flammability=0 integrity=460 value=2 color=black
+ilmenite: mass=4.7 density=4700 hardness=5 brittleness=5 flammability=0 integrity=150 value=5 color=black raw=true cooks_into=titanium smelts_at=1400 magnetism=2
+isinglass: mass=2.8 density=2800 hardness=2 brittleness=3 flammability=0 integrity=30 value=5 color=silver transparency=0.9 res_fire=0.6 shape=sheet
+jacinth: mass=3.5 density=3500 hardness=7 brittleness=4 flammability=0 integrity=250 value=2500 beauty=9 color=orange transparency=0.5
+jadeite: mass=3.5 density=3500 hardness=7 brittleness=4 flammability=0 integrity=250 value=10000 beauty=9 color=green transparency=0.5 luck=1
+kaolinite: mass=2.6 density=2600 hardness=2 brittleness=5 flammability=0 integrity=30 value=2 color=white raw=true cooks_into=porcelain
+kimberlite: mass=3 density=3000 hardness=6 brittleness=4 flammability=0 integrity=320 value=50 color=green lode=x,z lode_share=0.2 lode_stock=4
+kunzite: mass=3.5 density=3500 hardness=7 brittleness=4 flammability=0 integrity=250 value=3000 beauty=9 color=pink transparency=0.5 charm=2
+kyanite: mass=3.6 density=3600 hardness=6 brittleness=6 flammability=0 integrity=150 value=30 color=blue res_fire=0.8 melting_point=1800
+lepidolite: mass=2.84 density=2840 hardness=3 brittleness=3 flammability=0 integrity=50 value=15 color=purple res_electric=0.8 beauty=6 shape=sheet
 limestone: mass=2.6 density=2600 hardness=3 brittleness=4 flammability=0 integrity=220 value=2 color=white res_acid=-0.5
+limonite: mass=3.8 density=3800 hardness=5 brittleness=5 flammability=0 integrity=150 value=5 color=brown raw=true cooks_into=iron smelts_at=1200
 lodestone: mass=5 integrity=100 hardness=6 material=stone magnetism=6 letter_steal=1 attack_range=5 equip_slot=held hands_required=0 anchored=true counters=iron,steel,compass color=black
+magnesia: mass=3.58 density=3580 hardness=5 brittleness=6 flammability=0 integrity=80 value=3 color=white res_fire=0.9 restores=5
+magnesite: mass=3 density=3000 hardness=4 brittleness=5 flammability=0 integrity=100 value=3 color=white res_fire=0.8
 magnetite: mass=5.2 density=5170 hardness=6 brittleness=4 flammability=0 conductivity=4 magnetism=9 integrity=220 value=5 color=black counters=compass
 malachite: mass=4 density=4000 hardness=4 brittleness=5 flammability=0 toxicity=2 integrity=90 value=300 beauty=9 color=green
+meerschaum: mass=2 density=2000 hardness=2 brittleness=5 flammability=0 integrity=40 value=30 color=white buoyancy=7 beauty=6
 mica: mass=2.8 density=2830 hardness=2 brittleness=4 flammability=0 conductivity=0 transparency=0.5 reflectivity=7 integrity=20 value=10 color=silver res_electric=0.8 res_fire=0.6
 mineral: mass=2.7 density=2700 hardness=5 brittleness=5 flammability=0 integrity=150 value=5 color=gray
+molybdenite: mass=4.7 density=4700 hardness=1 brittleness=3 flammability=0 integrity=40 value=20 color=silver slipperiness=8
+monazite: mass=5.1 density=5100 hardness=5 brittleness=5 flammability=0 integrity=120 value=60 color=brown radioactivity=4 field_radius=8 field_targets=all dmg_radiation=6 attack_rate=0.3 inflict_sick=4 friendly_fire=true
+muscovite: mass=2.82 density=2820 hardness=2 brittleness=3 flammability=0 integrity=40 value=5 color=silver transparency=0.6 res_electric=0.9 res_fire=0.6 shape=sheet
+nepheline: mass=2.6 density=2600 hardness=6 brittleness=5 flammability=0 integrity=140 value=2 color=gray
+nephrite: mass=3.5 density=3500 hardness=6 brittleness=4 flammability=0 integrity=250 value=3000 beauty=9 color=green transparency=0.5 luck=1
+ochre: mass=2.5 density=2500 hardness=2 brittleness=6 flammability=0 integrity=20 value=2 color=yellow camouflage=desert,badlands shape=pile
+olivine: mass=3.3 density=3300 hardness=6 brittleness=5 flammability=0 integrity=180 value=20 color=green beauty=6
 onyx: mass=2.65 density=2650 hardness=7 brittleness=4 flammability=0 integrity=180 value=300 beauty=8 color=black reflectivity=5 res_dark=0.3 stealth=1
 opal: mass=2.1 density=2090 hardness=6 brittleness=8 flammability=0 transparency=0.4 reflectivity=7 integrity=40 value=8000 beauty=10 color=white luminosity=2 dmg_magic=20 inflict_confuse=2
 ore: mass=4 density=4000 hardness=6 brittleness=4 flammability=0 conductivity=4 magnetism=3 integrity=250 value=3 color=brown production_needs=extract
+orpiment: mass=3.49 density=3490 hardness=2 brittleness=5 flammability=0 integrity=30 value=12 color=yellow toxicity=9 dmg_poison=20 inflict_poison=15
+orthoclase: mass=2.56 density=2560 hardness=6 brittleness=5 flammability=0 integrity=160 value=3 color=pink
+pahoehoe: mass=2.6 density=2600 hardness=6 brittleness=4 flammability=0 integrity=250 value=1 color=black res_fire=0.8 slipperiness=2
+pegmatite: mass=2.7 density=2700 hardness=7 brittleness=4 flammability=0 integrity=350 value=10 color=pink lode=x,g lode_share=0.1
+peridotite: mass=3.3 density=3300 hardness=7 brittleness=3 flammability=0 integrity=450 value=3 color=green
+phlogopite: mass=2.8 density=2800 hardness=2 brittleness=3 flammability=0 integrity=40 value=3 color=brown res_electric=0.9 res_fire=0.6 shape=sheet
+pitchblende: mass=9 density=9000 hardness=5 brittleness=5 flammability=0 integrity=150 value=5 color=black raw=true cooks_into=uranium smelts_at=1300 radioactivity=7 field_radius=12 field_targets=all dmg_radiation=12 attack_rate=0.3 inflict_sick=8 friendly_fire=true
+plagioclase: mass=2.65 density=2650 hardness=6 brittleness=5 flammability=0 integrity=160 value=2 color=white
+pluton: tile_type=mountain radius=6 elevation=1000 blocks=land,sight movement_cost=6 portable=false produce_G=1 lode=g,u lode_share=0.3
+porphyry: mass=2.7 density=2700 hardness=7 brittleness=3 flammability=0 integrity=380 value=30 color=purple beauty=7
 pumice: mass=0.6 density=600 hardness=6 brittleness=7 flammability=0 buoyancy=7 integrity=40 value=1 color=gray res_fire=0.8 dmg_slash=5
 pyrite: mass=5 density=5010 hardness=6 brittleness=6 flammability=1 reflectivity=7 integrity=120 value=1 beauty=6 color=gold charm=2 inflict_burn=2
+pyrope: mass=3.5 density=3500 hardness=7 brittleness=4 flammability=0 integrity=250 value=1500 beauty=9 color=red transparency=0.5
+pyrophyllite: mass=2.8 density=2800 hardness=1 brittleness=5 flammability=0 integrity=30 value=3 color=white slipperiness=6
+pyroxene: mass=3.3 density=3300 hardness=6 brittleness=5 flammability=0 integrity=180 value=2 color=green
+pyrrhotite: mass=4.6 density=4600 hardness=4 brittleness=5 flammability=0 integrity=100 value=4 color=bronze magnetism=6 counters=compass
 quartz: mass=2.65 density=2650 hardness=7 brittleness=6 sharpness=6 flammability=0 conductivity=1 transparency=0.8 integrity=150 value=50 beauty=7 color=white dmg_electric=20 luminosity=1
+quartzite: mass=2.65 density=2650 hardness=7 brittleness=3 flammability=0 integrity=420 value=3 color=white
+raddle: mass=2.5 density=2500 hardness=2 brittleness=6 flammability=0 integrity=20 value=2 color=red camouflage=badlands shape=pile
+realgar: mass=3.56 density=3560 hardness=2 brittleness=6 flammability=0 integrity=30 value=10 color=red toxicity=9 dmg_poison=20 inflict_poison=15
+rhinestone: mass=2.5 density=2500 hardness=5 brittleness=8 flammability=0 integrity=20 value=1 color=white beauty=7 disguise=2
+rhodochrosite: mass=3.5 density=3500 hardness=4 brittleness=4 flammability=0 integrity=250 value=600 beauty=9 color=pink transparency=0.5 charm=2
+rhodonite: mass=3.5 density=3500 hardness=6 brittleness=4 flammability=0 integrity=250 value=400 beauty=9 color=pink transparency=0.5 heals=1
+rhyolite: mass=2.5 density=2500 hardness=6 brittleness=5 flammability=0 integrity=280 value=2 color=pink res_fire=0.4
+ruddle: mass=2.5 density=2500 hardness=2 brittleness=6 flammability=0 integrity=20 value=2 color=red camouflage=badlands shape=pile
+rutile: mass=4.2 density=4200 hardness=5 brittleness=5 flammability=0 integrity=150 value=5 color=red raw=true cooks_into=titanium smelts_at=1400
 salt: mass=2.2 density=2200 hardness=2 shape=pile edible=true nutrition=0 decay_rate*0 temperature_delta=0 counters=ice,snow,slug,frost freezing_point=-21 value=3 color=white
 saltpeter: mass=2.1 density=2110 hardness=2 brittleness=6 flammability=6 integrity=10 value=5 color=white dmg_blast=60 dmg_fire=40 fertility=4 shelf_life*0
 sandstone: mass=2.3 density=2300 hardness=5 brittleness=4 flammability=0 integrity=200 value=2 color=orange res_fire=0.4
+sard: mass=3.5 density=3500 hardness=7 brittleness=4 flammability=0 integrity=250 value=700 beauty=9 color=red transparency=0.5
+sardonyx: mass=3.5 density=3500 hardness=7 brittleness=4 flammability=0 integrity=250 value=900 beauty=9 color=red transparency=0.5 courage+1
+scheelite: mass=6.1 density=6100 hardness=5 brittleness=5 flammability=0 integrity=150 value=5 color=white raw=true cooks_into=tungsten smelts_at=1400 luminosity=2
+schist: mass=2.7 density=2700 hardness=5 brittleness=6 flammability=0 integrity=200 value=1 color=gray sharpness=4
+sepiolite: mass=2 density=2000 hardness=2 brittleness=5 flammability=0 integrity=40 value=10 color=white buoyancy=7
 shale: mass=2.4 density=2400 hardness=3 brittleness=7 flammability=2 integrity=60 value=1 color=gray fuel_output=0.2
+siderite: mass=3.9 density=3900 hardness=5 brittleness=5 flammability=0 integrity=150 value=5 color=brown raw=true cooks_into=iron smelts_at=1200
 sienna: mass=2.5 density=2500 hardness=2 brittleness=5 flammability=0 integrity=20 value=3 color=brown camouflage=sand
 silica: mass=2.65 density=2650 hardness=7 brittleness=7 flammability=0 conductivity=0 transparency=0.4 integrity=60 value=1 color=white res_fire=0.7 dmg_disease=5
+siltstone: mass=2.4 density=2400 hardness=4 brittleness=5 flammability=0 integrity=180 value=1 color=brown
 soapstone: mass=2.75 density=2750 hardness=1 brittleness=3 flammability=0 slipperiness=4 integrity=90 value=10 color=gray res_fire=0.8 res_acid=0.6 temperature=40
+sodalite: mass=3.5 density=3500 hardness=6 brittleness=4 flammability=0 integrity=250 value=400 beauty=9 color=blue transparency=0.5
 spar: mass=2.6 density=2600 hardness=6 brittleness=6 flammability=0 transparency=0.5 reflectivity=6 integrity=90 value=10 color=white
+sphalerite: mass=4.05 density=4050 hardness=5 brittleness=5 flammability=0 integrity=150 value=5 color=brown raw=true cooks_into=zinc smelts_at=900
+spinel: mass=3.5 density=3500 hardness=8 brittleness=4 flammability=0 integrity=250 value=7000 beauty=9 color=red transparency=0.5
+spodumene: mass=3.15 density=3150 hardness=7 brittleness=5 flammability=0 integrity=160 value=25 color=pink conductivity=6
 steatite: mass=2.75 density=2750 hardness=1 brittleness=3 flammability=0 slipperiness=4 integrity=90 value=10 color=green res_fire=0.8 res_acid=0.6
+stibnite: mass=4.6 density=4600 hardness=5 brittleness=5 flammability=0 integrity=150 value=5 color=silver raw=true cooks_into=antimony smelts_at=700 toxicity=5
+sunstone: mass=3.5 density=3500 hardness=6 brittleness=4 flammability=0 integrity=250 value=2000 beauty=9 color=orange transparency=0.5 luminosity=3 dmg_light=10 res_dark=0.3
+taconite: mass=3.5 density=3500 hardness=5 brittleness=5 flammability=0 integrity=150 value=5 color=gray raw=true cooks_into=iron smelts_at=1200 magnetism=3
+talc: mass=2.75 density=2750 hardness=1 brittleness=4 flammability=0 integrity=20 value=2 color=white slipperiness=9 shape=pile res_water=0.5
+talcum: mass=2.75 density=2750 hardness=1 brittleness=4 flammability=0 integrity=20 value=2 color=white slipperiness=9 shape=pile res_water=0.5
+tantalite: mass=7.9 density=7900 hardness=5 brittleness=5 flammability=0 integrity=150 value=5 color=black raw=true cooks_into=tungsten smelts_at=1400
 topaz: mass=3.5 density=3550 hardness=8 brittleness=6 flammability=0 transparency=0.8 integrity=220 value=3000 beauty=9 color=yellow luminosity=1
 tourmaline: mass=3.1 density=3100 hardness=7 brittleness=5 flammability=0 conductivity=4 transparency=0.6 integrity=180 value=2000 beauty=9 color=pink dmg_electric=25
+tremolite: mass=3 density=3000 hardness=5 brittleness=4 flammability=0 integrity=80 value=4 color=white res_fire=0.9 immune_burn=true toxicity=4
 tripoli: mass=1.9 density=1900 hardness=4 brittleness=7 flammability=0 integrity=20 value=1 color=white reflectivity=4
+tufa: mass=1.9 density=1900 hardness=3 brittleness=5 flammability=0 integrity=120 value=1 color=white buoyancy=3
 tuff: mass=1.4 density=1400 hardness=3 brittleness=5 flammability=0 integrity=120 value=1 color=gray buoyancy=2
 turquoise: mass=2.7 density=2700 hardness=6 brittleness=4 flammability=0 integrity=120 value=1500 beauty=9 color=blue res_magic=0.2 charm=2
+umber: mass=2.5 density=2500 hardness=2 brittleness=6 flammability=0 integrity=20 value=2 color=brown camouflage=forest,badlands shape=pile
+uraninite: mass=9 density=9000 hardness=5 brittleness=5 flammability=0 integrity=150 value=5 color=black raw=true cooks_into=uranium smelts_at=1300 radioactivity=7 field_radius=12 field_targets=all dmg_radiation=12 attack_rate=0.3 inflict_sick=8 friendly_fire=true
+vermiculite: mass=0.9 density=900 hardness=1 brittleness=5 flammability=0 integrity=20 value=2 color=gold res_fire=0.8 res_cold=0.5 buoyancy=6
+vesuvian: mass=3.4 density=3400 hardness=6 brittleness=5 flammability=0 integrity=160 value=30 color=green res_fire=0.6
+wolframite: mass=7.3 density=7300 hardness=5 brittleness=5 flammability=0 integrity=150 value=5 color=black raw=true cooks_into=tungsten smelts_at=1400
+wollastonite: mass=2.9 density=2900 hardness=5 brittleness=5 flammability=0 integrity=120 value=3 color=white res_fire=0.7
+wurtzite: mass=4.1 density=4100 hardness=5 brittleness=5 flammability=0 integrity=150 value=5 color=brown raw=true cooks_into=zinc smelts_at=900
+xenotime: mass=4.8 density=4800 hardness=5 brittleness=5 flammability=0 integrity=120 value=60 color=brown radioactivity=4 field_radius=8 field_targets=all dmg_radiation=6 attack_rate=0.3 inflict_sick=4 friendly_fire=true
+zeolite: mass=2.2 density=2200 hardness=4 brittleness=6 flammability=0 integrity=60 value=5 color=white res_poison=0.5 res_disease=0.3
 zircon: mass=4.7 density=4700 hardness=7 brittleness=7 flammability=0 transparency=0.8 reflectivity=9 integrity=150 value=1000 beauty=9 color=blue radioactivity=1
 
 # noun natural_object
 ammonite: mass=2 integrity=150 hardness=7 material=stone shape=round age=20000000 value=200 beauty=6 color=brown
+cavern: tile_type=pit radius=3 depth=60 enterable=true occupants=60 cover=0.9 stealth=6 portable=false luminosity=0 res_blast=0.7 placeable_on=hill,mountain
+cinder: mass=0.9 density=900 hardness=3 brittleness=7 flammability=0 integrity=40 value=0 color=black temperature=300 res_fire=0.9 buoyancy=6
+crust: integrity=200 hardness=6 material=stone armor+20 res_earth+0.3 res_fire+0.2
 existence: field_radius=0 field_targets=self prevents_death=1 lifespan*2 regeneration+1 survives_death=true
 finding: mass=0.5 integrity=30 value=2000 storage_letters=60 produce_X=0.1 produce_Z=0.05 detect_letters=200 beauty=5
 fossil: mass=5 integrity=200 hardness=7 material=stone age=6000000 value=150 color=gray
+geode: mass=3 hardness=7 brittleness=7 integrity=60 material=quartz shape=round value=300 beauty=8 lode=x,z,q lode_share=0.5 lode_stock=3 color=purple
 nest: mass=0.5 integrity=5 material=wood,fiber flammability=8 portable=false occupants=4 comfort=1 storage_letters=15 field_radius=3 field_targets=owned reproduction*3 regeneration+1 color=brown
 remains: mass=40 integrity=10 material=bone,flesh odor=6 decay_rate=0.5 dmg_disease=3 fear_aura=2 letter_refund=0.5 reclaim_rate=0.3 reclaim_range=3
+sediment: tile_type=swamp radius=3 moisture=6 fertility=7 movement_cost=2 portable=false growth=1.5
+stalactite: placement=target placement_range=30 event_target=tile event_radius=1 event_duration=0 dmg_pierce=400 attack_area=1 attack_windup=2 inflict_bleed=6 friendly_fire=true
+stalagmite: mass=300 length=2 integrity=600 material=stone hardness=7 portable=false thorns=40 blocks=land cover=0.4 color=gray
 universe: placement=map field_radius=ABS field_targets=all mass=1e53 integrity=ABS persistence=0 map_reveal=ABS detect_letters=ABS luminosity=2 growth=2 produce_Z=1 produce_X=1
 
 # noun person
@@ -7523,6 +7928,7 @@ analyst: mass=70 integrity=80 alive=true sentient=true intelligence=9 loyalty=6 
 anarchist: mass=70 integrity=110 alive=true sentient=true hands=true speech=true intelligence=6 loyalty=3 obedience=0 speed_land=6 dmg_blast=60 attack_rate=0.3 attack_area=5 immune_charm=true counters=law,tax,curfew,decree food_need=0.03
 announcer: mass=72 integrity=85 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 loudness=8 field_radius=80 field_targets=owned morale+2 command_limit+5 food_need=0.03
 antagonist: mass=75 integrity=150 alive=true sentient=true intelligence=7 aggression=8 hands=true speech=true speed_land=5 intimidation=4 fear_aura=3 dmg_slash=25 attack_rate=1 food_need=0.03 sets_hostile=true
+apiarist: mass=75 integrity=90 alive=true sentient=true intelligence=6 hands=true speech=true speed_land=4 labor=1 res_poison=0.8 charm=3 food_need=0.03
 appointee: mass=75 integrity=85 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 authority=2 food_need=0.03
 appraiser: mass=70 integrity=80 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 read_properties=7 trade_bonus=0.2 detect_stealth=4 food_need=0.03 counters=forgery,counterfeit
 archaeologist: mass=75 integrity=100 alive=true sentient=true hands=true speech=true speed_land=4 intelligence=8 detect_underground=true detect_letters=30 harvest_bonus=1.5 lode=Y lode_share=0.2 food_need=0.03
@@ -7533,6 +7939,7 @@ arrival: mass=70 integrity=100 alive=true sentient=true intelligence=5 hands=tru
 ascetic: mass=50 integrity=90 alive=true sentient=true intelligence=8 loyalty=10 courage=9 hands=true speech=true speed_land=4 res_hunger=0.8 res_cold=0.4 immune_charm=true immune_sleep=true faith_output=1.5 food_need=0.005
 assailant: mass=80 integrity=120 alive=true sentient=true intelligence=5 aggression=8 hands=true speech=true speed_land=7 stealth=5 dmg_slash=35 attack_rate=1.2 inflict_fear=4 food_need=0.04
 assassin: mass=70 integrity=110 alive=true sentient=true intelligence=8 loyalty=4 hands=true speech=true speed_land=7 stealth=8 disguise=5 dmg_pierce=120 dmg_poison=40 critical=0.5 attack_rate=1 armor_pierce=0.5 food_need=0.03 training=8
+assayer: mass=75 integrity=90 alive=true sentient=true intelligence=8 hands=true speech=true speed_land=4 read_properties=8 trade_bonus=0.2 transmute_in=1 food_need=0.03
 assessor: mass=75 integrity=90 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=4 read_inventory=true read_properties=4 tax_rate=0.05 field_radius=10 food_need=0.03
 asshole: mass=80 integrity=100 alive=true sentient=true intelligence=3 loyalty=1 aggression=5 hands=true speech=true speed_land=5 reputation=-5 intimidation=3 loudness=6 morale+-2
 associate: mass=75 integrity=90 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=5 labor=2 trade_bonus=0.1 food_need=0.03 produce_A=0.3
@@ -7559,6 +7966,7 @@ billionaire: mass=80 integrity=90 alive=true sentient=true intelligence=8 loyalt
 biped: mass=75 integrity=100 alive=true speed_land=6 hands=true climb=2 jump=1 food_need=0.03 diet=omnivore
 bobby: mass=80 integrity=180 alive=true sentient=true intelligence=6 loyalty=8 courage=7 hands=true speech=true speed_land=6 authority=3 detect_stealth=5 alarm=true dmg_blunt=25 attack_rate=1 inflict_root=4 counters=thief,pickpocket,hooligan food_need=0.04
 bodyguard: mass=95 integrity=300 alive=true sentient=true hands=true speech=true intelligence=5 loyalty=9 courage=9 speed_land=5 armor=15 block=0.5 dmg_pierce=40 attack_rate=1 attack_range=30 cover=0.5 food_need=0.04
+bookworm: mass=70 integrity=80 alive=true sentient=true intelligence=9 hands=true speech=true speed_land=3 training+1 read_properties=5 food_need=0.03
 boy: mass=40 height=1.4 integrity=60 alive=true sentient=true intelligence=5 hands=true speech=true diet=omnivore food_need=0.03 speed_land=6 agility=6 climb=4 stealth=2 labor=0.5 trainable=8 produce_N=0.2
 boyfriend: mass=78 integrity=110 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=5 charm=5 morale+3 courage+2 strength=6 equip_slot=companion food_need=0.03 produce_N=0.3
 breadwinner: mass=80 integrity=110 alive=true sentient=true intelligence=6 loyalty=8 hands=true speech=true speed_land=5 labor=3 strength=6 field_radius=10 field_targets=owned morale+1 food_need=0.04
@@ -7652,9 +8060,11 @@ elder: mass=60 integrity=70 alive=true sentient=true hands=true speech=true spee
 emissary: mass=75 integrity=90 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=5 charm=7 field_radius=10 field_targets=all aggression+-2 food_need=0.03
 enchanter: mass=70 integrity=100 alive=true sentient=true intelligence=9 loyalty=5 hands=true speech=true speed_land=4 inflict_charm=10 attack_rate=0.4 attack_range=20 charm=7 res_magic=0.4 food_need=0.03
 enforcer: mass=100 integrity=250 alive=true sentient=true hands=true speech=true intelligence=4 loyalty=7 aggression=6 strength=8 speed_land=5 dmg_blunt=50 attack_rate=1 intimidation=7 letter_steal=4 food_need=0.04
+entomologist: mass=75 integrity=90 alive=true sentient=true intelligence=8 hands=true speech=true speed_land=4 detect_life=60 read_properties=6 tamable=true charm=3 food_need=0.03
 envoy: mass=75 integrity=90 alive=true sentient=true intelligence=8 loyalty=7 hands=true speech=true speed_land=5 charm=7 trade_bonus=0.1 field_radius=10 field_targets=all aggression+-2 food_need=0.03
 executioner: mass=100 integrity=220 alive=true sentient=true intelligence=4 loyalty=6 hands=true speech=true speed_land=4 strength=9 dmg_slash=150 attack_rate=0.2 critical=0.5 fear_aura=6 intimidation=8 food_need=0.05
 expert: mass=75 integrity=100 alive=true sentient=true intelligence=9 hands=true speech=true speed_land=5 training=8 craft_slots=1 read_properties=5 critical+0.15 accuracy+0.05 food_need=0.03
+exterminator: mass=85 integrity=110 alive=true sentient=true intelligence=5 hands=true speech=true speed_land=4 labor=1 field_radius=12 field_targets=enemies dmg_poison=10 attack_rate=0.5 res_poison=0.8 counters=termite,infestation,vermin,pest,cockroach,anthill food_need=0.04
 faker: mass=70 integrity=75 alive=true sentient=true intelligence=6 loyalty=2 hands=true speech=true speed_land=5 disguise=5 decoys=2 field_radius=30 field_targets=enemies food_need=0.03
 father: mass=85 height=1.8 integrity=120 alive=true sentient=true intelligence=7 loyalty=9 courage=8 diet=omnivore food_need=0.03 speed_land=5 hands=true speech=true labor=1.5 authority=3 command_limit=5 strength=7 produce_N=0.3
 favourite: mass=70 integrity=110 alive=true sentient=true intelligence=7 hands=true speech=true speed_land=6 charm=6 critical=0.2 morale+2 loyalty=7 food_need=0.03
@@ -7765,6 +8175,7 @@ member: mass=75 height=1.75 integrity=100 alive=true sentient=true intelligence=
 mezzo: mass=70 integrity=80 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=4 loudness=8 charm=6 inflict_charm=3 field_radius=30 field_targets=all morale+3 food_need=0.03
 millionaire: mass=80 integrity=90 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=4 storage_letters=2000 trade_bonus=0.3 charm=5 authority=3 food_need=0.03
 mimic: mass=70 integrity=80 alive=true sentient=true intelligence=7 hands=true speech=true speed_land=6 copies=true disguise=7 food_need=0.03
+mineralogist: mass=75 integrity=90 alive=true sentient=true intelligence=9 hands=true speech=true speed_land=4 detect_letters=40 detect_underground=true read_properties=6 transmute_in=1 food_need=0.03
 miser: mass=60 integrity=80 alive=true sentient=true intelligence=7 loyalty=7 hands=true speech=true speed_land=3 storage_letters=800 security=8 charm=-3 trade_bonus=0.3 morale=4 food_need=0.01 counters=charity,donation
 mom: mass=65 height=1.65 integrity=110 alive=true sentient=true intelligence=7 loyalty=10 courage=9 hands=true speech=true diet=omnivore food_need=0.03 speed_land=5 heals=5 morale+3 labor=2 food_output=1 produce_N=0.3 equip_slot=companion
 moneylender: mass=75 integrity=90 alive=true sentient=true intelligence=8 loyalty=4 hands=true speech=true speed_land=4 storage_letters=600 security=5 authority=3 inflict_debt=90 attack_rate=0.2 food_need=0.03
@@ -7884,6 +8295,7 @@ sorcerer: mass=75 integrity=120 alive=true sentient=true intelligence=9 loyalty=
 southpaw: mass=80 integrity=150 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=6 strength=7 training=4 dmg_blunt=28 attack_rate=1.3 critical=0.15 evasion=0.1 food_need=0.04
 spectator: mass=75 integrity=80 alive=true sentient=true intelligence=5 loyalty=5 hands=true speech=true speed_land=4 sight_range=40 loudness=3 food_need=0.03
 speculator: mass=75 integrity=85 alive=true sentient=true intelligence=8 loyalty=3 hands=true speech=true speed_land=5 trade_bonus=0.3 field_radius=4 field_targets=self produce_T*2 critical=0.2 food_need=0.03
+spelunker: mass=70 integrity=100 alive=true sentient=true intelligence=6 hands=true speech=true speed_land=4 climb=8 night_vision=true speed_underground=0.2 terrain_ignored=pit,hill food_need=0.03
 spendthrift: mass=75 integrity=85 alive=true sentient=true intelligence=4 loyalty=3 hands=true speech=true speed_land=5 charm=5 trade_bonus=-0.2 morale=8 food_need=0.04
 spokesman: mass=75 integrity=85 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=4 charm=6 loudness=6 field_radius=60 field_targets=owned morale+2 reputation=2 counters=rumor,gossip,slander food_need=0.03
 spokesperson: mass=72 integrity=85 alive=true sentient=true intelligence=7 loyalty=8 hands=true speech=true speed_land=4 charm=6 loudness=6 field_radius=60 field_targets=owned morale+2 reputation=2 counters=rumor,gossip,slander food_need=0.03
@@ -8113,6 +8525,7 @@ site: placement=target placement_range=100 claim_radius=5 build_speed=2 needs_fo
 south: placement=region field_radius=2000 temperature_delta=10 growth=1.3 field_duration=20 portable=false
 square: tile_type=floor radius=4 movement_cost=0.8 recruit_rate=1 trade_bonus=0.15 portable=false charm=3 produce_S=0.3
 state: placement=region field_radius=250 field_targets=owned field_duration=15 claim_radius=40 authority+3 command_limit+20 tax_rate=0.15 law=theft fine=5
+stratum: tile_type=hill radius=3 elevation=20 movement_cost=1.5 portable=false produce_G=0.3
 sultanate: claim_radius=40 placement=region field_radius=150 field_targets=owned field_duration=15 authority+5 command_limit+20 tax_rate=0.2
 territory: claim_radius=25 placement=region field_radius=100 field_targets=owned field_duration=15 security+1 morale+1
 town: placement=region footprint=100 height=15 integrity=500000 material=brick,wood portable=false enterable=true occupants=5000 claim_radius=40 trade_bonus=0.15 produce_T=2 produce_N=2 labor=50 tile_type=road radius=10
@@ -8662,6 +9075,10 @@ velociraptor: mass=15 length=2 integrity=60 alive=true sentient=true intelligenc
 saving: placement=target placement_range=300 event_target=creature moves_target=300 restores=100 effect_status=root,stun,bleed prevents_death=1
 
 # noun rock
+bedrock: mass=100000 integrity=500000 armor=1500 hardness=9 material=stone portable=false anchored=true res_earth=1 res_blast=0.8 color=gray
+boulder: mass=2000 length=1.5 density=2600 hardness=7 brittleness=3 integrity=3000 material=stone shape=round portable=false dmg_crush=600 knockback=8 attack_range=30 attack_area=2 attack_windup=2 placement=target placement_range=40 single_use=true color=gray
+outcrop: tile_type=hill radius=2 elevation=40 hardness=7 portable=false blocks=sight movement_cost=3 cover=0.5 produce_G=0.4
+pebble: mass=0.05 plural_count=12 hardness=7 integrity=20 material=stone shape=round equip_slot=held hands_required=0 dmg_blunt=6 attack_range=25 single_use=true color=gray
 rock: mass=50 density=2600 length=0.4 hardness=7 brittleness=3 integrity=400 material=stone dmg_blunt=40 attack_range=20 inflict_stun=1 shape=round value=0 produce_R=0.2
 
 # noun route
@@ -8850,6 +9267,7 @@ headstone: mass=250 footprint=1 height=1 integrity=3000 hardness=7 material=ston
 hearth: mass=4000 footprint=1 integrity=2000 material=stone portable=false temperature=500 luminosity=5 regeneration+1 morale+2 res_cold+0.3 upkeep_fuel=0.05 color=orange
 hedgerow: mass=2000 height=2.5 length=40 integrity=1500 alive=true diet=photosynthesis growth_time=20 portable=false blocks=land,sight cover=0.6 stealth=4 thorns=4 flammability=5 claim_radius=3 color=green
 henhouse: mass=800 footprint=1 height=2 integrity=200 material=wood,wire portable=false enterable=true occupants=15 claim_radius=1 food_output=0.6 summons=hen summon_count=4 summon_owned=true flammability=7 odor=3 counters=fox,weasel color=brown
+honeycomb: mass=1 integrity=10 material=beeswax edible=true nutrition=6 restores=20 effect_status=poison shelf_life=0 value=8 color=yellow
 hothouse: mass=20000 footprint=5 height=4 integrity=1500 brittleness=8 material=glass,steel portable=false enterable=true claim_radius=3 temperature=34 moisture=4 field_radius=24 field_targets=objects growth=3 fertility=5 transparency=0.9 color=green
 hutch: mass=30 footprint=1 height=1 integrity=60 material=wood,wire portable=false enterable=true occupants=4 claim_radius=1 comfort=1 security=2 reproduction*2 flammability=7 color=brown
 icehouse: mass=50000 footprint=2 depth=3 integrity=5000 material=stone,sawdust portable=false enterable=true storage_objects=20000 temperature=-2 food_output=2 claim_radius=1 field_radius=4 field_targets=objects decay_rate*0.1 counters=rot,heatwave color=white
@@ -8949,6 +9367,7 @@ veranda: mass=4000 footprint=3 height=3 integrity=600 material=wood portable=fal
 verandah: mass=4000 footprint=3 height=3 integrity=600 material=wood portable=false comfort=3 cover=0.3 claim_radius=1 sight_range=150 field_radius=6 field_targets=owned temperature_delta=-3 regeneration+0.5 color=white
 vestibule: mass=20000 footprint=2 height=3 integrity=4000 material=stone portable=false enterable=true occupants=6 comfort=2 security=2
 vestry: mass=10000 footprint=1 height=4 integrity=2000 material=stone portable=false enterable=true occupants=4 lockable=true security=4 claim_radius=1 storage_letters=60 storage_objects=500 res_unholy+0.3 color=gray
+vivarium: mass=50 footprint=1 integrity=60 material=glass portable=false lockable=true security=3 comfort=2 storage_objects=6 temperature=28
 washroom: mass=4000 footprint=1 height=2.5 integrity=600 material=tile,porcelain portable=false enterable=true occupants=2 water_output=6 claim_radius=1 effect_status=poison,burn comfort=2 counters=filth color=white
 weir: mass=500000 footprint=6 height=2 integrity=30000 material=stone,wood portable=false placeable_on=water depth=2 blocks=water power_output=50 food_output=3 moisture=3 counters=flood color=gray
 wharf: mass=800000 footprint=15 height=2 integrity=40000 material=wood,stone portable=false placeable_on=water,sand,land tile_type=floor radius=2 claim_radius=5 storage_objects=400000 trade_bonus=0.15 odor=4 color=brown
@@ -9051,6 +9470,7 @@ file: mass=0.3 length=0.3 integrity=120 hardness=9 material=steel equip_slot=hel
 findings: mass=4 integrity=60 material=steel craft_slots=2 build_speed=2 container_slots=6
 fishnet: mass=3 integrity=20 material=fiber equip_slot=held attack_range=6 inflict_root=6 targets=land,water harvest_bonus=3 harvest_sources=fishing
 flail: mass=2 length=1.4 integrity=60 material=wood,leather equip_slot=held hands_required=2 dmg_blunt=30 attack_area=1 attack_rate=1 harvest_bonus=2 harvest_sources=field color=brown
+flyswatter: mass=0.1 length=0.5 integrity=10 material=plastic equip_slot=held hands_required=1 dmg_blunt=6 attack_rate=3 attack_area=0.5 multi_target=30 color=red
 frypan: mass=1.8 length=0.45 integrity=180 hardness=7 material=iron equip_slot=held hands_required=1 dmg_blunt=30 inflict_stun=1.5 attack_rate=1 knockback=1 loudness=6 crafts=food craft_slots=1 color=black
 funnel: mass=0.3 length=0.2 integrity=20 material=steel equip_slot=held hands_required=1 water_output=1 color=silver
 gaff: mass=1.5 length=1.5 integrity=60 sharpness=7 material=steel,wood equip_slot=held hands_required=2 dmg_pierce=25 attack_range=1.5 moves_target=2 harvest_bonus=2 harvest_sources=fishing color=gray
@@ -9134,6 +9554,7 @@ streamer: mass=0.05 integrity=1 material=paper plural_count=10 morale+1 beauty=5
 stylus: mass=0.02 length=0.12 integrity=20 sharpness=6 material=steel equip_slot=held hands_required=1 dmg_pierce=4 craft_slots=1 crafts=document,clay color=silver
 surfboard: mass=6 length=2.2 integrity=40 material=fiberglass buoyancy=8 equip_slot=held hands_required=2 speed_water*2.5 agility+3 waves*0.5 color=blue
 swab: mass=0.002 integrity=1 material=cotton single_use=true restores=15 effect_status=poison res_disease+0.2 plural_count=10 color=white
+swatter: mass=0.1 length=0.5 integrity=10 material=plastic equip_slot=held hands_required=1 dmg_blunt=6 attack_rate=3 attack_area=0.5 multi_target=30 color=red
 sweeper: mass=8 length=1.2 integrity=40 material=plastic,bristle dmg_blunt=5 counters=dust,ash,litter,glass harvest_bonus=1.5 harvest_sources=forage color=gray
 tablespoon: mass=0.05 length=0.2 integrity=20 material=steel equip_slot=held hands_required=1 dmg_blunt=3 plural_count=4 color=silver
 tackle: mass=5 integrity=30 material=fiber,steel equip_slot=held hands_required=2 harvest_bonus=2.5 harvest_sources=fishing color=green
@@ -9444,6 +9865,7 @@ easel: mass=4 height=1.7 integrity=30 material=wood portable=false craft_slots=1
 epee: mass=0.77 length=1.1 integrity=60 sharpness=4 material=steel equip_slot=held hands_required=1 dmg_pierce=25 attack_rate=1.6 attack_range=1.3 accuracy=0.95 agility+1
 fishhook: mass=0.005 integrity=8 sharpness=8 material=steel dmg_pierce=4 inflict_bleed=2 harvest_bonus=2 harvest_sources=fishing plural_count=10 color=silver
 fork: mass=0.04 length=0.2 integrity=20 sharpness=5 material=steel equip_slot=held hands_required=1 dmg_pierce=5 plural_count=6 comfort=0.5 color=silver
+gelignite: mass=0.3 length=0.2 integrity=5 equip_slot=held hands_required=1 single_use=true dmg_blast=3500 attack_range=20 attack_area=8 attack_windup=4 siege=8 friendly_fire=true loudness=10 res_water=1
 gimlet: mass=0.1 length=0.15 integrity=50 sharpness=7 hardness=8 material=steel,wood equip_slot=held hands_required=1 dmg_pierce=10 build_speed=1.2 color=brown
 handsaw: mass=0.8 length=0.6 integrity=60 sharpness=7 material=steel,wood equip_slot=held hands_required=1 dmg_slash=20 inflict_bleed=3 build_speed=1.4 harvest_bonus=1.8 harvest_sources=tree craft_slots=1 crafts=furniture,wood color=silver
 hardware: mass=30000 length=8 integrity=8000 hardness=8 material=steel portable=false dmg_blast=900 dmg_pierce=300 attack_rate=0.2 attack_range=3000 attack_area=8 siege=3 loudness=9 targets=land,air armor=80
@@ -9902,6 +10324,7 @@ pianist: mass=65 integrity=80 alive=true sentient=true intelligence=7 loyalty=6 
 pilot: mass=75 integrity=100 alive=true sentient=true intelligence=8 hands=true speech=true speed_land=5 speed_air*1.3 agility+3 flight_ceiling*1.3 accuracy+0.1 equip_slot=companion food_need=0.03
 pioneer: mass=80 integrity=140 alive=true sentient=true intelligence=7 loyalty=7 hands=true speech=true speed_land=6 labor=2 build_speed=1.5 sight_range=300 map_reveal=30 claim_radius=3 terrain_ignored=forest,swamp food_need=0.04
 piper: mass=70 integrity=100 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=5 loudness=10 inflict_charm=4 field_radius=60 field_targets=living courage+4 morale+2 recruit_rate=0.5 food_need=0.03 counters=rat,mouse
+pitman: mass=80 integrity=120 alive=true sentient=true intelligence=5 hands=true speech=true speed_land=4 speed_underground=0.1 labor=3 harvest_bonus=2 harvest_sources=mine,quarry food_need=0.04 night_vision=true
 planter: mass=75 integrity=110 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 labor=2 harvest_bonus=1.5 harvest_sources=field,orchard fertility=2 food_need=0.04
 plasterer: mass=80 integrity=110 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 labor=2 build_speed=1.7 food_need=0.04
 playwright: mass=65 integrity=80 alive=true sentient=true intelligence=9 loyalty=6 hands=true speech=true speed_land=4 charm=6 field_radius=10 field_targets=owned morale+2 courage+1 food_need=0.03
@@ -10104,6 +10527,7 @@ nod: duration=30 charm+2 obedience+2 loyalty+1 trade_bonus+0.05
 overdose: effect_target=touched dmg_poison=80 inflict_poison=30 inflict_sleep=20 inflict_confuse=10 duration=1
 pant: duration=30 regeneration+1 temperature+-3 loudness+2
 persist: effect_target=self immune_slow=true immune_stun=true morale+2 regeneration+2 duration=30
+pupate: duration=10 armor+20 regeneration+5 speed_land*0.1 stealth+3
 purify: effect_target=touched effect_status=sick,poison,confuse restores=40 toxicity*0 res_unholy+0.3 counters=poison,toxin,venom,miasma,contamination
 quiver: duration=5 accuracy+-0.2 courage+-2 evasion+0.1
 recover: duration=30 restores=300 effect_status=stun,bleed,poison,fear regeneration+5

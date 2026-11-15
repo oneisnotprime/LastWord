@@ -51,3 +51,4 @@ export * from "./space.js";
 export * from "./sea.js";
 export * from "./sport.js";
 export * from "./idea.js";
+export * from "./bug.js";

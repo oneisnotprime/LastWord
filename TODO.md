@@ -188,6 +188,10 @@ by how many words set them (minds and upkeep took `sentient`, `intelligence`, `f
       24. [x] Sports and games: duels, races, wagers; low-risk challenges with stakes
       25. [x] Abstract ideas: truth, chaos, luck, fate, nothing; meta words that bend rules (batch 5:
           about 1,500 words; README "Dictionary themes"). All 25 done
+      26. [x] Bugs, grubs and swarms (expansion batch 1): growing up (`matures_into`), borers (`bores`),
+          pollinators and sap-suckers; 179 words (docs/EXPANSION_LOG.md)
+      27. [x] Stone and ore (expansion batch 1): ores smelted by heat (`smelts_at`), rocks and minerals as
+          materials, radioactive ores, landforms that reshape the map; 245 words
 
 - [x] Before the next art pass: research external tools that make per-word art faster and
       cheaper than writing it with Claude (image generation pipelines, pixel/paper-style

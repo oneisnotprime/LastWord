@@ -301,6 +301,23 @@ export const FALLBACK: Silhouette = box;
 // Words with a shape of their own, ahead of their archetype. Start with the commonest creature
 // and object words; every word added here is one fewer that looks like its archetype.
 
+
+// Theme 26 and 27 (bugs; stone and ore): lumps, crystals and bug works. Body ink takes the word's own colour.
+const rocky = s([part(P(-14, 0, -13, -6, -10, -12, -3, -16, 4, -15, 9, -11, 13, -6, 15, 0)), dot(P(-10, -12, -3, -16, -1, -10, -8, -8), "light"), dot(P(4, -15, 9, -11, 13, -6, 6, -7), "dark"), dot(band([[-4, -5], [2, -9]], 0.7), "dark")]);
+const oreLump = s([part(P(-14, 0, -12, -9, -6, -15, 2, -17, 9, -13, 14, -6, 12, 0)), dot(P(-6, -15, 2, -17, 0, -11, -5, -10), "light"), dot(P(9, -13, 14, -6, 7, -6), "dark"), ...[[-8, -6, 0.4], [1, -10, -0.5], [6, -4, 0.8], [-2, -3, -0.2]].map(([x, y, a]) => dot(P(x!, y! - 2, x! + 2.4 * Math.cos(a!), y! + 0.4, x!, y! + 2, x! - 2.4 * Math.cos(a!), y! - 0.4), "#d8dde0"))]);
+const gemCut = s([part(P(-11, -12, -6, -18, 6, -18, 11, -12, 0, 0), "body"), dot(P(-6, -18, -3, -12, 3, -12, 6, -18), "light"), dot(P(-11, -12, -3, -12, 0, 0), "dark"), dot(P(-2, -16, 0, -17, 1, -14), "#fbf7ec")]);
+const cluster = s([part(P(-12, 0, -13, -10, -9, -18, -6, -8, -3, -24, 1, -12, 5, -20, 8, -8, 12, -13, 13, 0), "body", 0), dot(P(-3, -24, -1, -4, 1, -12), "light"), dot(P(5, -20, 4, -4, 8, -8), "dark"), dot(P(-9, -18, -8, -3, -6, -8), "light")]);
+const sheet = s([0, 1, 2, 3].map((i) => part(P(-12 + i, -3 - i * 3.5, 11 + i, -4 - i * 3.5, 13 + i, -1 - i * 3.5, -10 + i, 0 - i * 3.5), i % 2 ? "light" : "body", 0)));
+const pebbles = s([[-8, -3, 4], [0, -4, 5], [7, -3, 3.5], [-3, -8, 3.2]].map(([x, y, r]) => part(E(x!, y!, r!, r! * 0.75, 10), "body")), "#a8a296");
+const geodeShape = s([part(E(0, -11, 12, 11, 18), "#8a7a6a"), dot(E(1, -11, 8, 7.5, 14), "body"), ...[[-3, -14], [3, -9], [4, -15], [-2, -8]].map(([x, y]) => dot(P(x!, y! + 2, x! + 1.5, y! - 2.5, x! + 3, y! + 2), "light"))], "#9a6ac0");
+const stalagmiteShape = s([part(P(-10, 0, -5, -14, -2, -36, 1, -14, 4, -22, 7, -8, 10, 0), "body", 1), dot(band([[-3, -6], [-2, -30]], 0.8), "light")], "#b8ab98");
+const cocoon = s([part(E(0, -12, 6.5, 11, 16), "body", 1), ...[-18, -14, -10, -6].map((y) => dot(band([[-6, y], [6, y - 2]], 0.6), "dark")), glue(band([[0, -23], [0, -30]], 0.8), "#c9b99a")], "#f2ead8");
+const mound = s([part(P(-18, 0, -12, -8, -5, -16, 0, -18, 6, -15, 13, -7, 18, 0), "body", 2), dot(E(0, -16, 2, 1.4, 8), "#2b2a28"), ...[[-8, -5], [7, -6], [-2, -9]].map(([x, y]) => dot(E(x!, y!, 1, 0.7, 6), "#2b2a28"))], "#a87c50");
+const comb = s([part(P(-14, -2, -14, -16, -7, -20, 7, -20, 14, -16, 14, -2), "body", 1), ...[[-7, -14], [0, -14], [7, -14], [-3.5, -8], [3.5, -8]].map(([x, y]) => dot(E(x!, y!, 3, 2.6, 6), "deep"))], "#e9b949");
+const spray = s([part(R(-6, -26, 6, 0), "body", 1), glue(R(-3, -31, 3, -26), "#3a3633"), glue(R(3, -31, 8, -29), "#3a3633"), dot(R(-6, -20, 6, -10), "#fbf6ea"), dot(P(-3, -17, 0, -13, 3, -17), "#5f8a4a")], "#c9453f");
+const swatter = s([part(band([[0, 2], [0, -24]], 1.6), "#8a8f96"), glue(R(-7, -38, 7, -24), "body", 1), ...[-34, -30, -26].map((y) => dot(band([[-6, y], [6, y]], 0.5), "deep"))], "#c9453f");
+const digger = biped({ hat: "helmet", colour: "#6b5a44", belt: "#3a3633" });
+
 export const WORDS: Record<string, Silhouette> = {
   // Animals.
   wolf, dog, fox, cat, lion, tiger, bear, horse, cow, bull, pig, sheep, goat, deer, elephant, camel, rat, mouse: rat, rabbit, monkey, boar, donkey, ass: donkey, bat, whale,
@@ -486,6 +503,66 @@ export const WORDS: Record<string, Silhouette> = {
   certainty: rosette(icon.key(), "#3f6fa8"), fate: sign(icon.skull(), "#fbf6ea", "#2f2c33"), destiny: rosette(icon.star(), "#8a5a9a"), doom: sign(icon.skull(), "#fbf6ea", "#a8323a"),
   karma: rosette(icon.spiral(), "#5f8a4a"), providence: rosette(icon.sun(), "#e3b341"), coincidence: rosette(icon.chain(), "#8a5a9a"), paradox: rosette(icon.chain(), "#c9453f"),
   typo: sign(icon.scroll(), "#fbf6ea", "#c9453f"), mistake: sign(icon.scroll()), accident: sign(icon.bang()), dictionary: s(book.pieces, "#3f6fa8"), nonsense: rosette(icon.bubble(), "#e8892e"),
+  // Dictionary themes batch 6: bugs, grubs and swarms; stone and ore.
+  maggot: bug({ kind: "worm", colour: "#f2ead8" }), larva: bug({ kind: "worm", colour: "#f2ead8" }), grub: bug({ kind: "worm", colour: "#efe2c4" }), pupa: s(cocoon.pieces, "#a8805a"), chrysalis: s(cocoon.pieces, "#6fae5a"),
+  clegg: bug({ kind: "fly" }), cleg: bug({ kind: "fly" }), horsefly: bug({ kind: "fly" }), housefly: bug({ kind: "fly" }), blowfly: bug({ kind: "fly" }), greenbottle: bug({ kind: "fly" }),
+  botfly: bug({ kind: "fly" }), sandfly: bug({ kind: "fly" }), blackfly: bug({ kind: "fly" }), whitefly: bug({ kind: "fly" }), greenfly: bug({ kind: "fly" }), medfly: bug({ kind: "fly" }),
+  drosophila: bug({ kind: "fly" }), gallfly: bug({ kind: "fly" }), sawfly: bug({ kind: "fly" }), stonefly: bug({ kind: "fly" }), alderfly: bug({ kind: "fly" }), dobsonfly: bug({ kind: "fly" }),
+  snakefly: bug({ kind: "fly" }), shadfly: bug({ kind: "fly" }), dayfly: bug({ kind: "fly" }), sciara: bug({ kind: "fly" }), glossina: bug({ kind: "fly" }), tzetze: bug({ kind: "fly" }),
+  punky: bug({ kind: "fly" }), punkie: bug({ kind: "fly" }), anopheline: bug({ kind: "fly" }), dipteran: bug({ kind: "fly" }), dipteron: bug({ kind: "fly" }), damselfly: bug({ kind: "fly" }),
+  chalcid: bug({ kind: "fly" }), lacewing: bug({ kind: "fly" }), goldeneye: bug({ kind: "fly" }), comma: bug({ kind: "moth" }), underwing: bug({ kind: "moth" }), hawkmoth: bug({ kind: "moth" }),
+  eggar: bug({ kind: "moth" }), egger: bug({ kind: "moth" }), cecropia: bug({ kind: "moth" }), hairstreak: bug({ kind: "moth" }), silverspot: bug({ kind: "moth" }), anglewing: bug({ kind: "moth" }),
+  tortrix: bug({ kind: "moth" }), noctuid: bug({ kind: "moth" }), geometrid: bug({ kind: "moth" }), browntail: bug({ kind: "moth" }), lepidopteran: bug({ kind: "moth" }), lepidopteron: bug({ kind: "moth" }),
+  tussah: bug({ kind: "moth" }), tussore: bug({ kind: "moth" }), cockchafer: bug({ kind: "beetle" }), deathwatch: bug({ kind: "beetle" }), longicorn: bug({ kind: "beetle" }), ladybeetle: bug({ kind: "beetle" }),
+  blackbeetle: bug({ kind: "beetle" }), dorbeetle: bug({ kind: "beetle" }), tumblebug: bug({ kind: "beetle" }), scarabaeus: bug({ kind: "beetle" }), calosoma: bug({ kind: "beetle" }), elater: bug({ kind: "beetle" }),
+  figeater: bug({ kind: "beetle" }), vedalia: bug({ kind: "beetle" }), capsid: bug({ kind: "beetle" }), chinch: bug({ kind: "beetle" }), mealybug: bug({ kind: "beetle" }), psyllid: bug({ kind: "beetle" }),
+  psylla: bug({ kind: "beetle" }), thrips: bug({ kind: "beetle" }), thrip: bug({ kind: "beetle" }), adelgid: bug({ kind: "beetle" }), conenose: bug({ kind: "beetle" }), redbug: bug({ kind: "beetle" }),
+  chigger: bug({ kind: "beetle" }), chigoe: bug({ kind: "beetle" }), cootie: bug({ kind: "beetle" }), crotonbug: bug({ kind: "beetle" }), woodlouse: bug({ kind: "beetle" }), slater: bug({ kind: "beetle" }),
+  isopod: bug({ kind: "beetle" }), leafhopper: bug({ kind: "cricket" }), planthopper: bug({ kind: "cricket" }), froghopper: bug({ kind: "cricket" }), spittlebug: bug({ kind: "cricket" }), treehopper: bug({ kind: "cricket" }),
+  backswimmer: bug({ kind: "cricket" }), katydid: bug({ kind: "cricket" }), cicala: bug({ kind: "cricket" }), springtail: bug({ kind: "cricket" }), bristletail: bug({ kind: "cricket" }), firebrat: bug({ kind: "cricket" }),
+  booklouse: bug({ kind: "cricket" }), amphipod: bug({ kind: "cricket" }), sandhopper: bug({ kind: "cricket" }), copepod: bug({ kind: "cricket" }), daphnia: bug({ kind: "cricket" }), ostracod: bug({ kind: "cricket" }),
+  cutworm: bug({ kind: "worm" }), armyworm: bug({ kind: "worm" }), bollworm: bug({ kind: "worm" }), webworm: bug({ kind: "worm" }), cankerworm: bug({ kind: "worm" }), cabbageworm: bug({ kind: "worm" }),
+  inchworm: bug({ kind: "worm" }), looper: bug({ kind: "worm" }), mealworm: bug({ kind: "worm" }), wireworm: bug({ kind: "worm" }), caddisworm: bug({ kind: "worm" }), nematode: bug({ kind: "worm" }),
+  roundworm: bug({ kind: "worm" }), threadworm: bug({ kind: "worm" }), pinworm: bug({ kind: "worm" }), eelworm: bug({ kind: "worm" }), helminth: bug({ kind: "worm" }), trematode: bug({ kind: "worm" }),
+  schistosome: bug({ kind: "worm" }), cestode: bug({ kind: "worm" }), echinococcus: bug({ kind: "worm" }), trichina: bug({ kind: "worm" }), planarian: bug({ kind: "worm" }), planaria: bug({ kind: "worm" }),
+  tardigrade: bug({ kind: "worm" }), lugworm: bug({ kind: "worm" }), lobworm: bug({ kind: "worm" }), angleworm: bug({ kind: "worm" }), fishworm: bug({ kind: "worm" }), nightwalker: bug({ kind: "worm" }),
+  bloodworm: bug({ kind: "worm" }), polychaete: bug({ kind: "worm" }), polychete: bug({ kind: "worm" }), annelid: bug({ kind: "worm" }), oligochaete: bug({ kind: "worm" }), arrowworm: bug({ kind: "worm" }),
+  woodworm: bug({ kind: "worm" }), shipworm: bug({ kind: "worm" }), teredo: bug({ kind: "worm" }), glowworm: bug({ kind: "worm" }), cercaria: bug({ kind: "worm" }), bloodsucker: bug({ kind: "worm" }),
+  mantid: bug({ kind: "mantis" }), phasmid: bug({ kind: "mantis" }), walkingstick: bug({ kind: "mantis" }), millipede: bug({ kind: "centipede" }), millepede: bug({ kind: "centipede" }), milliped: bug({ kind: "centipede" }),
+  myriapod: bug({ kind: "centipede" }), pseudoscorpion: bug({ kind: "spider" }), harvestman: bug({ kind: "spider" }), vinegarroon: bug({ kind: "spider" }), arachnid: bug({ kind: "spider" }), acarus: bug({ kind: "spider" }),
+  antlion: bug({ kind: "spider" }), andrena: bug({ kind: "bee" }), humblebee: bug({ kind: "bee" }), pismire: bug({ kind: "ant" }), emmet: bug({ kind: "ant" }), cocoon: cocoon,
+  anthill: mound, formicary: mound, honeycomb: comb, beeswax: s(ingot.pieces, "#e9c46a"), insecticide: spray, larvicide: spray,
+  mothball: s(ball.pieces, "#f4f1ea"), flypaper: s(letter.pieces, "#f4d35e"), swatter: swatter, flyswatter: swatter, entomologist: s(human.pieces, "#6f8a5a"), exterminator: s(human.pieces, "#c9a24a"),
+  apiarist: s(human.pieces, "#f4e9c8"), bookworm: s(human.pieces, "#8a5a9a"), vivarium: s(box.pieces, "#bfe0e6"), ovipositor: s(knife.pieces, "#6b4a2e"), anthracite: s(pile.pieces, "#2f2c33"), lignite: s(pile.pieces, "#5a4632"),
+  aquamarine: gemCut, lazuli: gemCut, morganite: gemCut, chrysoprase: gemCut, cabochon: gemCut, carbonado: gemCut,
+  chert: rocky, dolomite: rocky, brownstone: rocky, bluestone: rocky, quartzite: rocky, porphyry: cluster,
+  gneiss: rocky, schist: rocky, andesite: rocky, siltstone: rocky, rhyolite: rocky, breccia: rocky,
+  tufa: rocky, fieldstone: rocky, diorite: rocky, gabbro: rocky, dacite: rocky, peridotite: rocky,
+  pegmatite: rocky, amphibolite: rocky, argillite: rocky, claystone: rocky, gritstone: rocky, greisen: rocky,
+  hornfels: rocky, kimberlite: rocky, greensand: s(pile.pieces), glauconite: rocky, holystone: rocky, aa: rocky,
+  pahoehoe: rocky, gesso: rocky, calcite: cluster, aragonite: rocky, feldspar: rocky, orthoclase: rocky,
+  plagioclase: rocky, albite: rocky, anorthite: rocky, nepheline: rocky, muscovite: sheet, biotite: sheet,
+  phlogopite: sheet, lepidolite: sheet, isinglass: sheet, olivine: cluster, pyroxene: rocky, augite: rocky,
+  amphibole: rocky, hornblende: rocky, kyanite: rocky, cordierite: rocky, wollastonite: rocky, vesuvian: rocky,
+  zeolite: rocky, apatite: rocky, fluorapatite: rocky, chlorite: rocky, cristobalite: rocky, celestite: cluster,
+  barite: rocky, barytes: rocky, fluorite: cluster, fluor: cluster, fluorspar: cluster, corundum: rocky,
+  spodumene: rocky, magnesite: rocky, pyrrhotite: rocky, pyrophyllite: rocky, talc: s(pile.pieces), talcum: s(pile.pieces),
+  sepiolite: rocky, meerschaum: cluster, kaolinite: oreLump, halite: rocky, carnallite: rocky, cryolite: cluster,
+  borax: rocky, alumina: rocky, magnesia: rocky, vermiculite: rocky, chrysotile: rocky, tremolite: rocky,
+  actinolite: rocky, realgar: rocky, orpiment: rocky, ochre: s(pile.pieces), umber: s(pile.pieces), ruddle: s(pile.pieces),
+  raddle: s(pile.pieces), goldstone: cluster, rhinestone: cluster, monazite: rocky, xenotime: rocky, coltan: rocky,
+  molybdenite: rocky, carbuncle: gemCut, carnelian: gemCut, cornelian: gemCut, chalcedony: gemCut, sunstone: gemCut,
+  alexandrite: gemCut, sard: gemCut, sardonyx: gemCut, aventurine: gemCut, chrysoberyl: gemCut, chrysolite: gemCut,
+  pyrope: gemCut, almandine: gemCut, jacinth: gemCut, kunzite: gemCut, girasol: gemCut, heliotrope: gemCut,
+  jadeite: gemCut, nephrite: gemCut, cairngorm: gemCut, balas: gemCut, spinel: gemCut, rhodonite: gemCut,
+  rhodochrosite: gemCut, sodalite: gemCut, azurite: oreLump, haematite: oreLump, siderite: oreLump, limonite: oreLump,
+  goethite: oreLump, taconite: oreLump, chalcopyrite: oreLump, bornite: oreLump, chalcocite: oreLump, cerussite: oreLump,
+  cassiterite: oreLump, sphalerite: oreLump, blende: oreLump, calamine: oreLump, wurtzite: oreLump, ilmenite: oreLump,
+  rutile: oreLump, chromite: oreLump, wolframite: oreLump, scheelite: oreLump, stibnite: oreLump, gibbsite: oreLump,
+  arsenopyrite: oreLump, tantalite: oreLump, columbite: oreLump, pitchblende: oreLump, uraninite: oreLump, carnotite: oreLump,
+  batholith: rocky, pluton: rocky, boulder: s(rock.pieces.map((p) => ({ ...p, pts: p.pts.map(([x, y]) => [x * 2.2, y * 2.2] as Pt) }))), pebble: pebbles, outcrop: rocky, bedrock: s(brickWall(64, 2, "#7d7f80").pieces),
+  cobble: s(rock.pieces.map((p) => ({ ...p, pts: p.pts.map(([x, y]) => [x * 0.6, y * 0.6] as Pt) }))), geode: geodeShape, stalagmite: stalagmiteShape, quicksand: s(puddle.pieces, "#d9c08a", { flat: true }), pitman: digger, mineralogist: wizard,
+  assayer: s(human.pieces, "#8a6440"), spelunker: s(digger.pieces, "#c9773a"), gelignite: s([part(R(-4, -22, 4, 0), "body", 1), dot(R(-4, -16, 4, -12), "#f4f1ea"), glue(band([[0, -22], [3, -28], [6, -28]], 0.9), "#c9a77a"), glue(P(5, -32, 8, -28, 5, -26, 8, -25, 4, -24), "#f4c95d")], "#c9453f"), detonator: s(box.pieces, "#c9453f"), seismograph: s(machine.pieces, "#7d8a99"), crust: rocky, cinder: s(pile.pieces, "#3a3633"),
   // Stuff.
   stone: rock, rock, crystal, diamond: s(crystal.pieces, "#cfeaf2"), iron: s(ingot.pieces, "#7d7f80"), steel: s(ingot.pieces, "#b8c2c8"), copper: s(ingot.pieces, "#c9773a"),
   water: puddle, oil: s(puddle.pieces, "#2f2c33"), lava: s(puddle.pieces, "#e0663a"), blood: s(puddle.pieces, "#a8323a"), wood: s([...[[-8, -4], [8, -4], [0, -12]].map(([x, y]) => part(E(x!, y!, 10, 4.5, 12), "body")), ...[[-16, -4], [0, -4], [-8, -12]].map(([x, y]) => dot(E(x! - 1, y!, 3, 3.6, 8), "#e6c89a"))], "#8a6440"),

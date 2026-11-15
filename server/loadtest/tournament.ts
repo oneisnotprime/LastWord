@@ -6,11 +6,13 @@
  *
  * "mixed" gives each room's bots easy, normal and hard in turn. Rooms play one after another in
  * this process (the room steps by hand, ten ticks to a second, as fast as it can).
+ * WATCH=words.txt (one word a line) also counts how often bots spelled those words.
  */
 import { boot } from "@colyseus/testing";
 import appConfig from "../src/app.config.js";
 import { sourceOf, THEME_SYSTEMS, type Difficulty } from "../src/bots.js";
 import { WorldRoom } from "../src/WorldRoom.js";
+import { readFileSync } from "node:fs";
 
 const [rooms = 4, bots = 8] = process.argv.slice(2, 4).map(Number);
 const mode = (process.argv[4] ?? "mixed") as Difficulty | "mixed";
@@ -27,6 +29,8 @@ const themedUsers = new Map<string, number>();
 const ENGAGE_GAP = 10;
 const ttk = { person: [] as number[], creature: [] as number[] };
 const firstDeaths: number[] = [];
+const watched = new Set(process.env.WATCH ? readFileSync(process.env.WATCH, "utf8").split(/\s+/).filter(Boolean) : []);
+const spelledWatched = new Map<string, number>();
 const killers = new Map<string, number>();
 
 for (let r = 0; r < rooms; r++) {
@@ -43,6 +47,15 @@ for (let r = 0; r < rooms; r++) {
   const anyRoom = room as any;
   const blow = anyRoom.blow.bind(room), kill = anyRoom.kill.bind(room);
   let firstDeath = NaN;
+  if (watched.size) {
+    const spellWord = anyRoom.spellWord.bind(room);
+    anyRoom.spellWord = (id: string, w: unknown, text: unknown) => {
+      const out = spellWord(id, w, text);
+      const noun = String(text).toLowerCase().trim().split(/\s+/).at(-1)!;
+      for (const k of [noun, noun.replace(/s$/, ""), noun.replace(/es$/, "")]) if (watched.has(k)) { spelledWatched.set(k, (spelledWatched.get(k) ?? 0) + 1); break; }
+      return out;
+    };
+  }
   anyRoom.blow = (by: string, on: string, r: { hit: boolean; damage: number }, ...rest: unknown[]) => {
     if (r.hit && r.damage > 0 && anyRoom.walkers.has(on)) {
       const f = fightFrom.get(on);
@@ -102,6 +115,10 @@ for (const k of themed) {
 }
 const unused = themed.filter((k) => !(themedUsers.get(k) ?? 0));
 console.log(`Themes' systems used: ${themed.length - unused.length} of ${themed.length}${unused.length ? `; never: ${unused.join(", ")}` : ""}`);
+if (watched.size) {
+  const n = [...spelledWatched.values()].reduce((a, b) => a + b, 0);
+  console.log(`\nWatched words spelled: ${n} times, ${spelledWatched.size} different: ${[...spelledWatched].sort((a, b) => b[1] - a[1]).slice(0, 30).map(([k, v]) => `${k} ${v}`).join(", ")}`);
+}
 const total = [...sources.values()].reduce((n, v) => n + v, 0);
 console.log(`\nLetter sources (${total} letters):`);
 for (const [k, n] of [...sources].sort((a, b) => b[1] - a[1])) console.log(`${k.padEnd(12)}${String(n).padStart(7)}  ${((n / total) * 100).toFixed(1)}%`);

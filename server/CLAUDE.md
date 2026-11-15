@@ -210,6 +210,11 @@ Node process that owns the game state. One room per map instance (from milestone
   minimap dots), `jams` (`jammed`: `sensed` is blacked out) and `weather` (a sky field's tile);
   `sendThreats` shows the exposed to every enemy within EXPOSED_TILES; `weatherPatches` (in
   `beat`) lays weather tiles near people through `reshapeOnly` (`Edit.only`).
+- Expansion batch 1: `kitchen` weighs each heat source's temperature against a raw thing's
+  shared `heatNeeded` (ore smelts by a FORGE, not a CAMPFIRE); `bugs` (once a second) grows a creature
+  into its `matures_into` once `Walker.born` is old enough (`age` moves `born`), and lets borers strike
+  things of their `bores` materials near them (`strikeThing`, through armour). Bots: `borer` use
+  (bots.ts), spelled beside an enemy's thing they eat. `loadtest/tournament.ts` takes WATCH=words.txt.
 - Themes batch 5: `rebuild` reads time and gravity (`Walker.time`, `gravity`, `range`), sailing
   (`Walker.sailing`: `walk` routes with SAIL_COST) and the void (`hampered.nulled`: no gear, mount
   or fields). `make` launches vessels (`launchSpot`: by the owner's port, else the nearest water);

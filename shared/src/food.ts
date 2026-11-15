@@ -30,6 +30,12 @@ export const cookable = (s: Stats): boolean => s.flag("raw");
 /** True for something hot enough to cook with. */
 export const cooks = (s: Stats): boolean => s.num("temperature") >= COOK_HEAT;
 
+/**
+ * Heat a raw thing needs to change: COOK_HEAT, or its `smelts_at` if higher (theme 27, stone and
+ * ore: MALACHITE smelts into COPPER by a FORGE or a FURNACE, never by a CAMPFIRE).
+ */
+export const heatNeeded = (s: Stats): number => Math.max(COOK_HEAT, s.num("smelts_at"));
+
 /** True once a thing made `minutes` ago has gone off. */
 export function spoils(s: Stats, minutes: number): boolean {
   const life = s.num("shelf_life");
@@ -73,7 +79,7 @@ export function foodText(dict: Dictionary, s: Stats): string[] {
   const out: string[] = [];
   if (cookable(s)) {
     const into = String(s.get("cooks_into") || "");
-    out.push(`raw: near heat (${COOK_HEAT}°C, ${COOK_RANGE} tiles) it ${into && dict.word(into) ? `becomes ${into.toUpperCase()}` : "cooks"} in ${COOK_SECONDS} s`);
+    out.push(`raw: near heat (${heatNeeded(s)}°C, ${COOK_RANGE} tiles) it ${into && dict.word(into) ? `becomes ${into.toUpperCase()}` : "cooks"} in ${COOK_SECONDS} s`);
   }
   if (cooks(s)) out.push(`hot enough to cook raw food within ${COOK_RANGE} tiles`);
   const life = s.num("shelf_life");

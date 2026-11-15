@@ -681,7 +681,7 @@ gazelle: mass=25 length=1.2 integrity=60 alive=true diet=herbivore food_need=0.0
 
 # noun insect
 locust: mass=0.002 length=0.05 integrity=1 alive=true diet=herbivore food_need=0.0001 speed_land=1 speed_air=5 plural_count=500 field_radius=20 growth=0 produce_A*0 produce_P*0
-termite: mass=0.001 length=0.01 integrity=1 alive=true diet=herbivore food_need=0.0001 speed_land=0.5 plural_count=1000 dmg_slash=1 attack_rate=1 siege=5 aggression=5
+termite: mass=0.001 length=0.01 integrity=1 alive=true diet=herbivore food_need=0.0001 speed_land=0.5 plural_count=1000 dmg_slash=1 attack_rate=1 siege=5 aggression=5 bores=wood
 
 # noun supernatural
 apparition: mass=0 integrity=80 alive=false sentient=true speed_land=3 speed_air=3 phase=true hover=true stealth=6 res_blunt=1 res_slash=1 res_pierce=1 res_holy=-1 fear_aura=5 dmg_psychic=15 attack_rate=0.5 aggression=6 on_owner_death=vanish
@@ -1540,17 +1540,17 @@ dinosaur: mass=8000 length=12 integrity=8000 alive=true aggression=8 diet=carniv
 
 # noun amphibian
 newt: mass=0.01 length=0.12 integrity=1 alive=true diet=carnivore food_need=0.0002 speed_land=1 speed_water=2 toxicity=3 regeneration=1 placeable_on=water,land habitat=marsh,forest color=orange
-tadpole: mass=0.002 length=0.03 integrity=1 alive=true diet=herbivore speed_water=1 breathes=water placeable_on=water reproduction=10 habitat=marsh color=black
+tadpole: mass=0.002 length=0.03 integrity=1 alive=true diet=herbivore speed_water=1 breathes=water placeable_on=water reproduction=10 habitat=marsh color=black matures_into=frog growth_time=4
 
 # noun insect
 butterfly: mass=0.0005 length=0.08 integrity=1 alive=true diet=herbivore speed_air=5 beauty=10 charm=3 fertility+1 pack_size=12 habitat=meadow,jungle color=orange
-moth: mass=0.0005 length=0.05 integrity=1 alive=true diet=herbivore speed_air=4 nocturnal=true pack_size=20 counters=wool,silk,cloth,fur habitat=forest,meadow color=gray
+moth: mass=0.0005 length=0.05 integrity=1 alive=true diet=herbivore speed_air=4 nocturnal=true pack_size=20 counters=wool,silk,cloth,fur habitat=forest,meadow color=gray bores=wool,silk,cloth,fur,fabric
 beetle: mass=0.005 length=0.03 integrity=2 alive=true diet=herbivore speed_land=1 armor=3 res_slash=0.6 pack_size=30 counters=log,wood,tree habitat=forest,desert color=black
 wasp: mass=0.0002 length=0.02 integrity=1 alive=true aggression=8 diet=carnivore speed_air=8 dmg_poison=6 inflict_poison=4 attack_rate=2 pack_size=100 fear_aura=2 habitat=meadow,forest color=yellow
 hornet: mass=0.0005 length=0.04 integrity=1 alive=true aggression=9 diet=carnivore speed_air=10 dmg_poison=12 inflict_poison=6 attack_rate=2 pack_size=80 fear_aura=3 counters=bee habitat=forest,jungle color=orange
 firefly: mass=0.0002 length=0.02 integrity=1 alive=true diet=herbivore speed_air=3 luminosity=1 nocturnal=true beauty=9 pack_size=50 habitat=marsh,meadow,forest color=yellow
 dragonfly: mass=0.001 length=0.08 integrity=1 alive=true diet=carnivore speed_air=15 agility=10 counters=mosquito,fly,gnat habitat=marsh color=blue
-caterpillar: mass=0.002 length=0.04 integrity=1 alive=true diet=herbivore food_need=0.0002 speed_land=0.1 reproduction=0 pack_size=20 counters=cabbage,lettuce,leaf habitat=meadow,forest color=green
+caterpillar: mass=0.002 length=0.04 integrity=1 alive=true diet=herbivore food_need=0.0002 speed_land=0.1 pack_size=20 counters=cabbage,lettuce,leaf habitat=meadow,forest color=green matures_into=butterfly growth_time=3
 silkworm: mass=0.002 length=0.05 integrity=1 alive=true diet=herbivore speed_land=0.1 value=5 reproduction=4 tamable=true color=white
 
 # noun invertebrate
@@ -2636,6 +2636,40 @@ word: placement=self field_radius=4 field_targets=self field_duration=2 stands_f
 
 # noun document
 letter: mass=0.01 integrity=1 flammability=9 material=paper placement=target placement_range=1000 event_target=character event_duration=1 inflict_charm=10 loyalty+2 morale+1 stands_for=6 color=white
+
+# Theme 26, bugs, grubs and swarms (shared bug.ts). Young things grow up: a creature with
+# `matures_into` becomes that creature once it is `growth_time` × 0.1 minutes old, the count and
+# its master kept, so thirty MAGGOTS are thirty BLOWFLIES half a minute later (CENTURY or
+# METAMORPHOSIS grows it up at once; killing it young, cold and INSECTICIDE are the counters).
+# Borers eat things made of what they `bores` (TERMITE and WOODWORM wood, MOTH cloth, SHIPWORM
+# wooden hulls) at four times their bite, through armour; a STONE HOUSE or IRON SHIP is safe.
+# Pollinators raise crop and flora yields in their field. Counters: INSECTICIDE, PESTICIDE,
+# FUMIGATION, LARVICIDE, an EXTERMINATOR, birds and mantises, fire, stone.
+
+# noun creature
+larva: mass=0.001 length=0.02 integrity=1 alive=true diet=herbivore food_need=0.0001 speed_land=0.05 reproduction=0 pack_size=30 habitat=marsh,forest,meadow color=white matures_into=beetle growth_time=5
+maggot: mass=0.0001 length=0.01 integrity=1 alive=true diet=scavenger food_need=0.00005 speed_land=0.01 pack_size=200 res_disease=1 reclaim_rate=0.1 reclaim_range=5 regeneration+0.5 counters=rotten,meat,carcass odor=3 habitat=marsh,city color=white matures_into=blowfly growth_time=3
+grub: mass=0.003 length=0.03 integrity=1 alive=true diet=herbivore food_need=0.0001 speed_underground=0.01 pack_size=20 counters=grass,lawn,garden habitat=meadow,forest color=white matures_into=cockchafer growth_time=5
+
+# noun insect
+pupa: mass=0.001 length=0.02 integrity=2 alive=true diet=none speed_land=0 stealth=7 armor=1 habitat=meadow,forest color=brown matures_into=moth growth_time=3
+chrysalis: mass=0.001 length=0.03 integrity=3 alive=true diet=none speed_land=0 stealth=8 camouflage=forest armor=2 regeneration=1 habitat=meadow,forest,jungle color=green matures_into=butterfly growth_time=3
+
+# Theme 27, stone and ore (shared food.ts `heatNeeded`, material.ts). Ores are raw: by heat of
+# their `smelts_at` or more (a FORGE 1200 C, a FURNACE 1400, a SMELTER 1500; never a CAMPFIRE)
+# they become their metal, which an ANVIL then works (IRON SWORD, COPPER HELMET). Rocks and
+# minerals are materials (GRANITE GOLEM, TALC floors, MICA shields lightning); radioactive ones
+# sicken everyone near, holder too (LEAD and BARITE resist); landforms reshape the map where they
+# are spelled (GORGE, MESA, SCREE, SANDBAR across water); SINKHOLE and GEYSER strike a spot.
+
+# noun mineral
+ore: mass=4 density=4000 hardness=6 brittleness=4 flammability=0 conductivity=4 magnetism=3 integrity=250 value=3 color=brown production_needs=extract raw=true cooks_into=iron smelts_at=1200
+hematite: mass=5.3 density=5260 hardness=6 brittleness=5 flammability=0 magnetism=2 integrity=200 value=5 color=red reflectivity=6 inflict_bleed=3 raw=true cooks_into=iron smelts_at=1200
+magnetite: mass=5.2 density=5170 hardness=6 brittleness=4 flammability=0 conductivity=4 magnetism=9 integrity=220 value=5 color=black counters=compass raw=true cooks_into=iron smelts_at=1200
+malachite: mass=4 density=4000 hardness=4 brittleness=5 flammability=0 toxicity=2 integrity=90 value=300 beauty=9 color=green raw=true cooks_into=copper smelts_at=1000
+galena: mass=7.6 density=7600 hardness=3 brittleness=7 flammability=0 toxicity=5 reflectivity=6 integrity=60 value=3 color=silver res_radiation=0.5 raw=true cooks_into=lead smelts_at=700
+cinnabar: mass=8 density=8100 hardness=2 brittleness=5 toxicity=7 integrity=40 value=60 color=red melting_point=580 dmg_poison=20 flammability=0 raw=true cooks_into=mercury smelts_at=700
+bauxite: mass=2.5 density=2500 hardness=2 brittleness=5 flammability=0 integrity=60 value=1 color=red raw=true cooks_into=aluminium smelts_at=1000
 
 # Ways out (polish batch 2): every lasting area has a word that ends it (`counters`). These
 # generated words are copied here, unchanged but for the areas they end; the rest of the new

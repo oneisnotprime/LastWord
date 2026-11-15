@@ -185,6 +185,13 @@ server and the client import this, so anything here must give the same answer on
     `chaos` status's random ops, on `Affliction.ops`), the `void` status (`nulls`: `hampered.nulled`),
     the `doom` status (`fated`, `doomDamage`), `typoOf` (`misspells`), `spellchecked` (`spellchecks`),
     `standsFor`/`standIn` (`stands_for`: a stand-in pays for another word), `ideaText`.
+  - `bug.ts` (bugs, theme 26): `matured`/`matureSeconds` (`matures_into` after `growth_time` ×
+    GROW_PACE: the server's `bugs` swaps the creature, count and master kept), `bores` (BORE_TILES,
+    BORE_TIMES: a borer eats things of its `bores` materials, through armour), `bugText`.
+  - stone and ore (theme 27): food.ts `heatNeeded` (a raw thing's `smelts_at`: ore smelts into its
+    `cooks_into` metal only by that much heat); rocks, minerals and landforms are data on the
+    material, terrain and trap systems.
+- `combat.ts` `shown`: damage, HP and integrity as cards and tips show them (felt).
 - `letters.ts` `salePrice`: what a market pays for a thing sold, by its `value` (SALE_MAX).
 - `tips.ts` teaching tips: `wordTip` (one line of what a word does in numbers, plus its shortest
   counter-word), `wordIdeas` (one word per `TIP_KINDS` kind, weighted by `tipWeight` toward words

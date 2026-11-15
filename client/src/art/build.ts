@@ -288,9 +288,61 @@ export function fish(o: { len?: number; shark?: boolean; colour?: string } = {})
 }
 
 /** A beetle-like thing seen from the side: ant, bee, cricket, spider. */
-export function bug(o: { kind?: "ant" | "bee" | "cricket" | "spider"; colour?: string } = {}): Silhouette {
+export function bug(o: { kind?: "ant" | "bee" | "cricket" | "spider" | "fly" | "moth" | "beetle" | "mantis" | "worm" | "centipede"; colour?: string; wing?: string } = {}): Silhouette {
   const kind = o.kind ?? "ant";
   const pieces: Piece[] = [];
+  const living = (ps: Piece[], c = o.colour): Silhouette => ({ pieces: ps, colour: c, living: true, speck: true });
+  if (kind === "worm") {
+    // A segmented crawler, low to the ground, head up: worms, grubs, caterpillars.
+    const line: Pt[] = Array.from({ length: 9 }, (_, i) => [-14 + i * 3.4, -3 - Math.sin(i * 0.8) * 1.6] as Pt);
+    line.push([16, -7]);
+    pieces.push(part(band(line, 4.5, 5.5), "body", 1), part(E(17, -8, 3.6, 3.4, 10)));
+    for (let i = 0; i < 6; i++) pieces.push(dot(band([[-11 + i * 4.4, -6.5], [-11 + i * 4.4, -0.5]], 0.7), "deep"));
+    pieces.push(eye(18.5, -9, 0.8));
+    return living(pieces);
+  }
+  if (kind === "centipede") {
+    // Many legs under a long low body.
+    for (let i = 0; i < 9; i++) pieces.push(behind(band([[-16 + i * 4, -3], [-17 + i * 4, 0]], 1, 0.7), "deep"));
+    pieces.push(part(band(Array.from({ length: 10 }, (_, i) => [-17 + i * 4, -3.5 - Math.sin(i * 0.9) * 0.8] as Pt), 3.4, 3.8), "body", 1));
+    pieces.push(part(E(22, -4.5, 3, 2.6, 10)), dot(band([[23, -6], [27, -11]], 0.6), "deep"), dot(band([[22, -6.5], [24, -12]], 0.6), "deep"));
+    pieces.push(eye(23.5, -5, 0.7));
+    return living(pieces);
+  }
+  if (kind === "moth") {
+    // Big flat wings held up: butterflies and moths.
+    const w = o.wing ?? "light";
+    pieces.push(behind(P(0, -10, -12, -30, -17, -20, -10, -11), "dark", 1));
+    pieces.push(part(E(0, -9, 7, 2.2, 10)), part(E(7, -10, 2.2, 2.2, 8)));
+    pieces.push(glue(P(-1, -10, 6, -30, 14, -26, 10, -16, 4, -10), w, 1), glue(P(-1, -9, 4, -4, -2, -1, -6, -6), w, 1));
+    pieces.push(dot(E(8, -24, 2, 2, 8), "deep"), dot(band([[8, -12], [12, -18]], 0.6), "deep"));
+    for (const x of [-3, 0, 3]) pieces.push(behind(band([[x, -7], [x + 1, 0]], 0.8, 0.6), "deep"));
+    return living(pieces);
+  }
+  if (kind === "fly") {
+    // A round body with clear wings up: flies, gnats, midges.
+    for (const x of [-2, 1, 4]) pieces.push(behind(band([[x, -5], [x + (x - 1), 0]], 0.9, 0.6), "deep"));
+    pieces.push(part(E(-4, -7, 5.5, 3.6, 12)), part(E(3, -7.5, 3, 3, 10)), part(E(7, -8, 2.8, 3, 10)));
+    pieces.push(glue(P(-1, -10, -9, -20, -14, -16, -6, -9), "#eef6f8", 1), glue(P(1, -10, -3, -21, -7, -20, -2, -10), "#dfeef2", 1));
+    pieces.push(dot(E(8, -8.5, 1.6, 2, 8), "#a8323a"));
+    return living(pieces);
+  }
+  if (kind === "beetle") {
+    // A domed shell with a line down it: beetles, chafers, scarabs.
+    for (const x of [-6, -1, 4]) pieces.push(behind(band([[x, -4], [x + (x + 1) * 0.4, 0]], 1.2, 0.8), "deep"));
+    pieces.push(part([...E(-1, -4, 10, 9, 16, Math.PI, Math.PI * 2), [9, -3], [-11, -3]] as Pt[], "body", 1));
+    pieces.push(part(E(10, -5, 3, 2.6, 10)), dot(band([[-1, -12.5], [-1, -3.5]], 0.7), "deep"), dot(E(-5, -9, 2.6, 1.6, 8), "light"));
+    pieces.push(dot(band([[12, -6], [15, -10]], 0.6), "deep"), eye(11, -6, 0.7));
+    return living(pieces);
+  }
+  if (kind === "mantis") {
+    // Upright, forelegs raised: mantises, stick insects.
+    pieces.push(behind(band([[-10, -6], [-14, 0]], 1, 0.7), "deep"), behind(band([[-4, -6], [-6, 0]], 1, 0.7), "deep"), behind(band([[0, -7], [3, 0]], 1, 0.7), "deep"));
+    pieces.push(part(band([[-18, -6], [-6, -6], [2, -10], [6, -20]], 2.6, 1.8), "body", 1), part(E(7, -22, 2.8, 2.4, 10)));
+    pieces.push(part(band([[5, -17], [11, -14], [10, -20]], 1.4, 1), "body"), dot(band([[8, -24], [13, -29]], 0.5), "deep"));
+    pieces.push(eye(8, -22.5, 0.8));
+    return living(pieces);
+  }
   const legs = (xs: number[], y: number, spread: number) => xs.forEach((x, i) => pieces.push(behind(band([[x, y], [x + (i - 1) * spread, y + 3], [x + (i - 1) * spread * 1.5, 0]], 1.1, 0.8), "deep")));
   if (kind === "spider") {
     for (let i = 0; i < 4; i++) for (const s of [1, -1]) pieces.push(behind(band([[0, -7], [s * (5 + i * 2), -12 + i], [s * (9 + i * 3), 0]], 1.2, 0.8), "deep"));
