@@ -60,7 +60,9 @@ server and the client import this, so anything here must give the same answer on
   at a typical spot: 15% on snow to 70% in jungle) and the letters it finds, written as whole
   percents (`pool`, 100 letters, E first at 30 to 40%, then letters fitting the ground; PLAN.md
   "Letter economy"). Hostile ground (desert, badlands, tundra, snow, ash) finds less often but
-  has J, K, V, Y, X; Z only on ash (1%); never Q. `forageOdds` gives the HUD's shares. `toolHelp`: things whose `harvest_sources`
+  has J, K, V, Y, X; Z only on ash (1%); never Q. `INTERIOR` is the biome inside any building's
+  room (`biomeAt(..., indoors)`; `Deposits.gather` takes `indoors`: only foraging, household letters,
+  45%). `forageOdds` gives the HUD's shares. `toolHelp`: things whose `harvest_sources`
   name a kind of gathering add 10 points a point of `harvest_bonus` (SHOVEL dig, NET fish, BASKET
   forage); `roll`/`rollText` ("JUNGLE 35% · +10% SHOVEL"); `wildlife` (creatures by `habitat`,
   the big and fierce rarer); `huntYield` (H, the animal's first letter, more for big bodies,

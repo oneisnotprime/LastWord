@@ -62,9 +62,16 @@ export const BIOMES: Partial<Record<Tile, BiomeInfo>> = {
   [Tile.Field]: B("tilled land", "meadow", 0.6, pool({ e: 35, a: 30, p: 10, l: 10, i: 8, n: 7 }), 0.2),
 };
 
-/** The biome of a point on the map, or undefined where nobody can stand. */
-export function biomeAt(map: WorldMap, x: number, y: number): BiomeInfo | undefined {
-  return BIOMES[tileAt(map, x, y)];
+/**
+ * Inside any walk-in building's room (shared interior.ts), whatever ground it stands on: what a
+ * house holds. Furniture's B, crafting's C, machines' M, the Y of old things kept, hired hands' N,
+ * and T from what changed hands. Safe, and picked over: a little under the open meadow's odds.
+ */
+export const INTERIOR: BiomeInfo = B("indoors", "interior", 0.45, pool({ e: 32, b: 16, c: 14, y: 12, m: 10, n: 8, t: 8 }), 0.02);
+
+/** The biome of a point on the map, or undefined where nobody can stand; INTERIOR for someone inside a room. */
+export function biomeAt(map: WorldMap, x: number, y: number, indoors = false): BiomeInfo | undefined {
+  return indoors ? INTERIOR : BIOMES[tileAt(map, x, y)];
 }
 
 /** Success chances of gathering that is not foraging (fishing, digging, caves), before tools. */

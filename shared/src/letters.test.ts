@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   ACTION_LETTERS, addLetters, CHEST_CHANCE, RUIN_X_CHANCE, toolHelp, Deposits, DEPOSITS, depositsAt, destroyLetters, generateMap, killLetters, mainland, MAP_SOURCES,
-  LETTER_GUIDE, makesLetter, parsePhrase, PATCH_TILES, PENDING_SOURCES, placeSources, production, readTrade, regionOf, resolve, seeded, SPAWN_APART, spawnPoint, Tile, tileAt, tradeProblem, walkable, marketRatio, rackSwap, exploredSight,
+  INTERIOR, LETTER_GUIDE, makesLetter, parsePhrase, PATCH_TILES, PENDING_SOURCES, placeSources, production, readTrade, regionOf, resolve, seeded, SPAWN_APART, spawnPoint, Tile, tileAt, tradeProblem, walkable, marketRatio, rackSwap, exploredSight,
 } from "./index.js";
 import { demo } from "./testdata.js";
 
@@ -39,6 +39,20 @@ describe("deposits", () => {
     expect(d.available(grass.x, grass.y, 1)).toEqual({});
     expect(d.gather(grass.x, grass.y, DEPOSITS.forage.regen + 1, rng).letter).toBe("e");
     expect(d.gather(grass.x + PATCH_TILES, grass.y, 1, rng).letter).toBe("e");
+  });
+
+  it("inside a room only foraging, from the room's own pool, even beside water", () => {
+    const d = new Deposits(map), rng = seeded(5);
+    const shore = find(near(Tile.Water));
+    const sure = () => [{ by: "test", chance: 1 }];
+    const got: string[] = [];
+    for (let i = 0; i < DEPOSITS.forage.stock; i++) {
+      const g = d.gather(shore.x, shore.y, 0, rng, 1, sure, true);
+      expect("roll" in g && g.roll?.place).toBe("indoors");
+      got.push(g.letter);
+    }
+    for (const ch of got) expect(INTERIOR.finds).toContain(ch);
+    expect(d.gather(shore.x, shore.y, 0, rng, 1, sure, true).letter).toBe(""); // the patch's forage is spent; no fishing indoors
   });
 
   it("caves are scarce: a patch's U runs out long before its E", () => {

@@ -148,7 +148,8 @@ Node process that owns the game state. One room per map instance (from milestone
 - Hunting: a killed living, non-sentient body adds shared `carcassFood` to the killer's food;
   a wild kill pays shared `huntYield` (H, its first letter, bonuses) with the reasons as `detail`.
 - Gathering rolls (shared `biome.ts`): a forage find is drawn from the biome's pool (E about a
-  third, the rest letters fitting the ground, rare J K V X on hostile ground); a miss sends `missed` { x, y, text } ("nothing · DESERT
+  third, the rest letters fitting the ground, rare J K V X on hostile ground; inside a room,
+  `w.inside`, the shared INTERIOR pool and nothing else); a miss sends `missed` { x, y, text } ("nothing · DESERT
   12%"); a find's `got` carries `detail` (the odds and the tools that helped, `helpOf`).
 - J: the first person into each 64-tile region (`discovered`), once a map. Every region a person
   enters (`explore`, their own `explored`, scouts' included) widens their sight in `rebuild`

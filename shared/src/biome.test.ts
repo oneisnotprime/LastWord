@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { BIOMES, forageOdds, generateMap, pool, huntYield, pickWild, resolve, roll, rollText, seeded, Tile, toolHelp, wildlife, WALK_COST } from "./index.js";
+import { biomeAt, BIOMES, forageOdds, generateMap, INTERIOR, pool, huntYield, pickWild, resolve, roll, rollText, seeded, Tile, toolHelp, wildlife, WALK_COST } from "./index.js";
 import { demo } from "./testdata.js";
 
 const dict = demo();
@@ -42,6 +42,21 @@ describe("biomes", () => {
     expect(share(Tile.Sand, "o")).toBeGreaterThan(20);
     expect(share(Tile.Taiga, "w")).toBeGreaterThan(10);
     expect(() => pool({ e: 50, a: 40 })).toThrow(/90/);
+  });
+
+  it("inside any room is its own biome, whatever the ground: household letters, no rare ones, a little under open ground's odds", () => {
+    const map = generateMap(7);
+    const at = { x: map.size / 2 + 0.5, y: map.size / 2 + 0.5 };
+    expect(biomeAt(map, at.x, at.y, true)).toBe(INTERIOR);
+    expect(biomeAt(map, at.x, at.y)).toBe(BIOMES[map.tiles[Math.floor(at.y) * map.size + Math.floor(at.x)] as Tile]);
+    const odds = forageOdds(INTERIOR);
+    expect(INTERIOR.finds.length).toBe(100);
+    expect(odds[0]).toEqual({ letter: "e", pct: 32 });
+    expect(odds.map((o) => o.letter).join("")).toBe("ebcymnt");
+    expect(INTERIOR.finds).not.toMatch(/[jkqvxz]/);
+    expect(INTERIOR.forage).toBeGreaterThan(BIOMES[Tile.Snow]!.forage);
+    expect(INTERIOR.forage).toBeLessThan(BIOMES[Tile.Grass]!.forage);
+    for (const b of Object.values(BIOMES)) expect(b!.finds, b!.name).not.toBe(INTERIOR.finds);
   });
 
   it("rare letters only on hostile ground, which finds less often; Z only on ash, and never Q", () => {

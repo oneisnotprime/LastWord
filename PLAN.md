@@ -79,7 +79,9 @@ and T. Hostile ground (desert, badlands, tundra, snow, volcanic ash) finds somet
 (15 to 30%, against about 60% on common ground) but can turn up rare letters: J, K, V, Y and X,
 6 to 24% of finds, the most on snow. Their own sources stay the main ones (a forage find there is
 one try in several). Z comes from forage only on ash, 1% of finds; Q never comes from foraging.
-The pools are `BIOMES` in shared/src/biome.ts.
+Inside any walk-in building's room is its own biome, whatever ground it stands on: only foraging,
+45% of the time, from household letters (E, then B, C, Y, M, N, T). The pools are `BIOMES` and
+`INTERIOR` in shared/src/biome.ts.
 
 Sources deplete over a round, so the map slowly starves and the last sources become
 flashpoints. That is how a round converges without caps.
