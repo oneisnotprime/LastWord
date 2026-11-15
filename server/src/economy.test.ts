@@ -48,6 +48,21 @@ it("people start with eight letters, far apart, and no free SWORD", async () => 
   void room;
 });
 
+it("no bot spells in its first five seconds, so every starting hand is whole however slowly a client joins", async () => {
+  // The room's clock runs in real time while a client connects. A bot used to be able to spell its
+  // starter word within a second of the start (one seed did at 0.68 s), so on a loaded machine the
+  // hand check above saw 5 letters instead of 8.
+  WorldRoom.testSeed = 77;
+  const room = (await colyseus.createRoom("world", { bots: 7 })) as unknown as WorldRoom;
+  const minds = [...((room as any).bots as Map<string, any>).values()];
+  expect(minds).toHaveLength(7);
+  for (const m of minds) expect(m.nextSpell - (room as any).elapsed).toBeGreaterThanOrEqual(4.5);
+  const walkers = (room as any).walkers as Map<string, any>;
+  for (let i = 0; i < 45; i++) room.update(0.1); // four and a half seconds of play
+  for (const m of minds) expect(m.spelled).toBe(0); // gathering may add letters; nothing has been spent
+  for (const w of walkers.values()) if (w.master === null) expect(total(w.letters)).toBeGreaterThanOrEqual(STARTING_HAND);
+});
+
 it("digging beside a chest gives X until it is gone; the temple gives Q", async () => {
   const { room, a, me, fixtures, inbox } = await setup();
   const [cid, chest] = fixtures("chest")[0]!;

@@ -168,6 +168,11 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
   `trapdoor`, `cuffs`, `lockup` jails with barred windows, `earthwork`, `pipeMouth`, `mazeShape`, a
   hooded `headsmanShape`, striped `convict`s) and of heraldry and courts (`banneret` banners with a
   charge, `lord` nobles, sceptre, dais), and rosettes for the oaths, betrayals and breakouts.
+- Frequency batch 5: `WORDS` has every new concrete word without a generated image (people with `job`,
+  `lord` and `soldierOf`, a towering GOLIATH, a pale WIGHT, a winged CUPID, a mounted EQUESTRIAN; new
+  shapes for a bayonet, a tripod, a helix, a floppy disk, a moustache, an orb, a leaf blower, a grating,
+  a coulter, a splinter, a hamper, an oculus, a pulpit, a castor, an embroidery hoop and a pencil
+  (EYELINER); landforms as signs; quantities left to their archetype).
 - Frequency batch 4: `WORDS` has every new concrete word (people with `job`, a crowd for FODDER, and
   new shapes for a zeppelin, a chariot, a revolver, a rocket launcher, a wavy kris (CREASE), a prism, a
   windshield, a mudguard (FENDER), a hinge, an electrode, a lattice, a pedestal, a piling, a strip

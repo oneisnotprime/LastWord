@@ -12,6 +12,7 @@ abattoir	noun	building
 abbess	noun	leader
 abbey	noun	building
 abbot	noun	leader
+abbreviated	adjective	quality
 abbreviation	noun	knowledge
 abdicate	verb	social
 abdication	noun	act
@@ -30,6 +31,8 @@ abode	noun	place
 abolish	verb	social
 abolition	noun	act
 abomination	noun	feeling
+abort	noun	act
+abound	verb	create
 above	adjective	quality
 abrasion	noun	phenomenon
 abrasive	noun	material
@@ -38,6 +41,7 @@ abrupt	adjective	quality
 abruptly	adverb	manner
 absence	noun	act
 absent	adjective	quality
+absentee	noun	person
 absinthe	noun	shrub
 absolute	adjective	absolute
 absolutely	adverb	manner
@@ -45,6 +49,7 @@ absorb	verb	contact
 absorbed	adjective	quality
 absorbing	adjective	quality
 absorption	noun	attribute
+abstinence	noun	attribute
 abstract	adjective	quality
 abstraction	noun	knowledge
 absurd	adjective	quality
@@ -58,6 +63,7 @@ abyss	noun	landform
 acacia	noun	tree
 academia	noun	group
 academic	adjective	pertaining
+academically	adverb	manner
 academy	noun	building
 acarus	noun	invertebrate
 accelerate	verb	transform
@@ -81,6 +87,7 @@ accidentally	adverb	manner
 acclaim	verb	social
 accolade	noun	ceremony
 accommodate	verb	social
+accommodating	adjective	quality
 accommodation	noun	building
 accompanied	adjective	participle
 accompaniment	noun	event
@@ -102,6 +109,7 @@ accountant	noun	worker
 accounting	noun	knowledge
 accreditation	noun	act
 accredited	adjective	quality
+accrued	adjective	quality
 accumulate	verb	transfer
 accumulated	adjective	quality
 accumulation	noun	group
@@ -118,11 +126,13 @@ ace	noun	toy
 acetaminophen	noun	medicine
 acetate	noun	material
 ache	verb	body
+achievable	adjective	quality
 achieve	verb	social
 achievement	noun	act
 aching	adjective	quality
 acid	noun	liquid
 acidic	adjective	quality
+acidity	noun	attribute
 acknowledge	verb	social
 acknowledged	adjective	participle
 acknowledgement	noun	knowledge
@@ -147,11 +157,13 @@ acropolis	noun	building
 across	adverb	manner
 acrylic	noun	material
 act	noun	act
+actin	noun	material
 acting	adjective	participle
 actinolite	noun	mineral
 action	noun	conflict
 activate	verb	create
 activated	adjective	participle
+activating	noun	act
 activation	noun	act
 active	adjective	quality
 actively	adverb	manner
@@ -190,6 +202,7 @@ adequate	adjective	quality
 adequately	adverb	manner
 adhere	verb	transform
 adherence	noun	attribute
+adhesion	noun	attribute
 adhesive	noun	material
 adjacent	adjective	quality
 adjective	adjective	pertaining
@@ -211,15 +224,18 @@ admiralty	noun	group
 admiration	noun	feeling
 admire	verb	perceive
 admired	adjective	quality
+admirer	noun	person
 admission	noun	document
 admit	verb	social
 admittedly	adverb	manner
+ado	noun	act
 adobe	noun	material
 adolescence	noun	duration
 adolescent	noun	person
 adopt	verb	transfer
 adopted	adjective	participle
 adoption	noun	act
+adoptive	adjective	quality
 adorable	adjective	quality
 adoration	noun	feeling
 adore	verb	social
@@ -239,9 +255,11 @@ advantage	noun	attribute
 advantageous	adjective	quality
 advent	noun	season
 adventure	noun	event
+adventurer	noun	person
 adventurous	adjective	quality
 adversary	noun	fighter
 adverse	adjective	quality
+adversely	adverb	manner
 adversity	noun	event
 advert	verb	perceive
 advertise	verb	social
@@ -250,6 +268,7 @@ advertisement	noun	knowledge
 advertiser	noun	person
 advertising	noun	exchange
 advice	noun	act
+advisable	adjective	quality
 advise	verb	social
 advised	adjective	participle
 adviser	noun	person
@@ -260,8 +279,12 @@ advocate	noun	person
 adze	noun	weapon
 aeon	noun	duration
 aerial	noun	device
+aerobic	adjective	quality
+aerodynamic	adjective	pertaining
+aeroplane	noun	vehicle_air
 aerospace	noun	attribute
 aesthetic	adjective	pertaining
+aesthetically	adverb	manner
 afar	adverb	manner
 affair	noun	feeling
 affairs	noun	knowledge
@@ -276,6 +299,8 @@ affiliate	noun	person
 affiliated	adjective	quality
 affiliation	noun	act
 affinity	noun	phenomenon
+affirm	verb	social
+affirmation	noun	act
 affirmative	adjective	quality
 afflicted	adjective	quality
 affliction	noun	affliction
@@ -308,6 +333,7 @@ agent	noun	worker
 aggravated	adjective	quality
 aggravation	noun	feeling
 aggregate	noun	artifact
+aggregation	noun	group
 aggression	noun	feeling
 aggressive	adjective	quality
 aggressively	adverb	manner
@@ -322,7 +348,9 @@ agnostic	noun	person
 ago	adverb	manner
 agony	noun	feeling
 agora	noun	building
+agrarian	adjective	quality
 agree	verb	social
+agreeable	adjective	quality
 agreed	adjective	quality
 agreement	noun	group
 agricultural	adjective	pertaining
@@ -330,6 +358,7 @@ agriculture	noun	knowledge
 aground	adjective	quality
 ague	noun	affliction
 ahead	adverb	manner
+ahem	noun	knowledge
 aid	noun	medicine
 aide	noun	worker
 aided	adjective	quality
@@ -351,6 +380,8 @@ airplane	noun	vehicle_air
 airport	noun	building
 airspace	noun	place
 airstream	noun	weather
+airway	noun	route
+airy	adjective	quality
 aisle	noun	route
 akin	adjective	quality
 alabaster	noun	mineral
@@ -363,6 +394,7 @@ albatross	noun	bird
 albite	noun	mineral
 album	noun	document
 alchemist	noun	worker
+alchemy	noun	knowledge
 alcohol	noun	drink
 alcoholic	noun	person
 alcoholism	noun	event
@@ -377,6 +409,7 @@ alexandrite	noun	mineral
 alfalfa	noun	herb
 algae	noun	plant
 algebra	noun	knowledge
+algebraic	adjective	pertaining
 algorithm	noun	knowledge
 alias	adverb	manner
 alibi	noun	act
@@ -394,6 +427,7 @@ alkali	noun	material
 alkaline	adjective	quality
 all	noun	quantity
 allegation	noun	knowledge
+allege	verb	social
 alleged	adjective	quality
 allegedly	adverb	manner
 allegiance	noun	possession
@@ -415,6 +449,7 @@ allotted	adjective	quality
 allow	verb	social
 allowance	noun	possession
 alloy	noun	metal
+allure	noun	attribute
 ally	noun	group
 almanac	noun	document
 almandine	noun	mineral
@@ -440,6 +475,7 @@ alteration	noun	event
 altered	adjective	participle
 altering	noun	act
 alternate	adjective	quality
+alternately	adverb	manner
 alternating	adjective	quality
 alternative	noun	knowledge
 alternatively	adverb	manner
@@ -455,6 +491,7 @@ aluminum	noun	metal
 always	adverb	manner
 amaranth	noun	produce
 amateur	noun	person
+amaze	verb	social
 amazed	adjective	quality
 amazement	noun	feeling
 amazing	adjective	quality
@@ -501,6 +538,7 @@ amphitheater	noun	building
 amphitheatre	noun	building
 ample	adjective	quality
 amplifier	noun	device
+amplify	verb	transform
 amplitude	noun	phenomenon
 amputate	verb	contact
 amputation	noun	medicine
@@ -529,6 +567,7 @@ analyzed	adjective	quality
 anarchic	adjective	quality
 anarchist	noun	person
 anarchy	noun	phenomenon
+anatomical	adjective	pertaining
 anatomy	noun	knowledge
 anatotitan	noun	reptile
 ancestor	noun	supernatural
@@ -543,6 +582,8 @@ andiron	noun	device
 andrena	noun	insect
 android	noun	machine
 andromeda	noun	celestial
+anecdotal	adjective	pertaining
+anecdote	noun	knowledge
 anemometer	noun	device
 anemone	noun	invertebrate
 anesthesia	noun	medicine
@@ -557,6 +598,7 @@ anger	noun	feeling
 angered	adjective	quality
 angina	noun	affliction
 angle	noun	attribute
+angled	adjective	quality
 angler	noun	worker
 anglewing	noun	insect
 angleworm	noun	invertebrate
@@ -566,7 +608,9 @@ angry	adjective	quality
 angst	noun	feeling
 anguish	noun	feeling
 angular	adjective	pertaining
+ani	noun	bird
 animal	noun	creature
+animate	adjective	quality
 animated	adjective	participle
 animation	noun	attribute
 anime	noun	material
@@ -598,6 +642,7 @@ annually	adverb	manner
 annuity	noun	possession
 annul	verb	transform
 annulment	noun	event
+annum	noun	duration
 anoint	verb	social
 anomaly	noun	attribute
 anon	adverb	manner
@@ -625,6 +670,7 @@ anthill	noun	elevation
 anthology	noun	knowledge
 anthracite	noun	fuel
 anthrax	noun	affliction
+anthropologist	noun	person
 anthropology	noun	knowledge
 anti	adjective	quality
 antibacterial	noun	medicine
@@ -635,6 +681,7 @@ anticipated	adjective	participle
 anticipation	noun	feeling
 antidepressant	noun	medicine
 antidote	noun	medicine
+antigen	noun	medicine
 antimatter	noun	material
 antimony	noun	metal
 antioxidant	noun	material
@@ -670,6 +717,7 @@ aphid	noun	insect
 apiarist	noun	person
 apiary	noun	building
 apiculture	noun	exchange
+apiece	adverb	manner
 apocalypse	noun	disaster
 apocalyptic	adjective	quality
 apologise	verb	social
@@ -691,6 +739,7 @@ appealing	adjective	participle
 appear	verb	perceive
 appearance	noun	attribute
 appearing	noun	act
+appease	verb	social
 appellate	adjective	pertaining
 appendage	noun	bodypart
 appendix	noun	bodypart
@@ -715,6 +764,7 @@ appraiser	noun	person
 appreciate	verb	social
 appreciated	adjective	participle
 appreciation	noun	attribute
+appreciative	adjective	quality
 apprehended	adjective	quality
 apprehension	noun	feeling
 apprentice	noun	person
@@ -734,6 +784,7 @@ approximation	noun	knowledge
 apricot	noun	produce
 apron	noun	clothing
 apt	adjective	quality
+aptitude	noun	knowledge
 aqua	adjective	quality
 aqualung	noun	tool
 aquamarine	noun	gem
@@ -741,6 +792,7 @@ aquanaut	noun	worker
 aquarium	noun	building
 aquatic	adjective	quality
 aquatics	noun	act
+aqueous	adjective	pertaining
 aquifer	noun	landform
 arachnid	noun	invertebrate
 aragonite	noun	mineral
@@ -748,6 +800,7 @@ arbalest	noun	weapon
 arbalester	noun	person
 arbalist	noun	weapon
 arbiter	noun	worker
+arbitrarily	adverb	manner
 arbitrary	adjective	quality
 arbitration	noun	act
 arbitrator	noun	worker
@@ -766,6 +819,7 @@ archangel	noun	supernatural
 archbishop	noun	leader
 archdeacon	noun	leader
 archduke	noun	person
+arched	adjective	pertaining
 archer	noun	fighter
 archery	noun	act
 archipelago	noun	landform
@@ -778,6 +832,7 @@ archivist	noun	worker
 archosaur	noun	reptile
 arctic	adjective	quality
 ardent	adjective	quality
+arduous	adjective	quality
 area	noun	place
 arena	noun	building
 arete	noun	landform
@@ -793,6 +848,7 @@ arid	adjective	quality
 arise	verb	body
 aristocracy	noun	group
 aristocrat	noun	person
+aristocratic	adjective	quality
 arithmetic	noun	knowledge
 ark	noun	vehicle_water
 arm	noun	bodypart
@@ -802,6 +858,7 @@ armchair	noun	furniture
 armed	adjective	participle
 armet	noun	protection
 armiger	noun	person
+arming	noun	act
 armistice	noun	feeling
 armless	adjective	quality
 armoire	noun	furniture
@@ -817,6 +874,7 @@ armpit	noun	bodypart
 arms	noun	weapon
 army	noun	group
 armyworm	noun	creature
+aroma	noun	attribute
 aromatherapy	noun	medicine
 aromatic	adjective	pertaining
 around	adverb	manner
@@ -847,6 +905,7 @@ arson	noun	crime
 arsonist	noun	criminal
 art	noun	artifact
 artemisia	noun	shrub
+arterial	adjective	pertaining
 artery	noun	bodypart
 arthritis	noun	affliction
 artichoke	noun	produce
@@ -908,6 +967,7 @@ assert	verb	social
 asserted	adjective	quality
 asserting	adjective	quality
 assertion	noun	knowledge
+assertive	adjective	quality
 assess	verb	perceive
 assessment	noun	knowledge
 assessor	noun	person
@@ -918,6 +978,7 @@ assign	verb	social
 assigned	adjective	quality
 assigning	noun	act
 assignment	noun	document
+assimilation	noun	act
 assist	verb	social
 assistance	noun	attribute
 assistant	noun	worker
@@ -926,6 +987,7 @@ assize	noun	knowledge
 associate	noun	person
 association	noun	group
 assorted	adjective	quality
+assortment	noun	group
 assume	verb	social
 assumed	adjective	quality
 assuming	adjective	quality
@@ -954,6 +1016,7 @@ astronomy	noun	knowledge
 astrophysicist	noun	worker
 astrophysics	noun	knowledge
 asylum	noun	building
+asymmetric	adjective	quality
 asymmetrical	adjective	quality
 asymmetry	noun	attribute
 atelier	noun	building
@@ -972,6 +1035,7 @@ atomic	adjective	quality
 atone	verb	social
 atop	adverb	manner
 atrium	noun	structure
+atrocious	adjective	quality
 atrophy	noun	event
 atropine	noun	poison
 attach	verb	contact
@@ -984,6 +1048,7 @@ attacking	adjective	participle
 attain	verb	social
 attainder	noun	crime
 attained	adjective	quality
+attainment	noun	knowledge
 attempt	noun	attack
 attempted	adjective	quality
 attend	verb	social
@@ -993,6 +1058,8 @@ attended	adjective	quality
 attending	noun	act
 attention	noun	feeling
 attentive	adjective	quality
+attest	verb	social
+attested	adjective	quality
 attic	noun	structure
 attire	noun	clothing
 attitude	noun	feeling
@@ -1000,13 +1067,16 @@ attorney	noun	worker
 attract	verb	social
 attraction	noun	phenomenon
 attractive	adjective	quality
+attractiveness	noun	attribute
 attributable	adjective	quality
 attribute	noun	knowledge
 attribution	noun	act
+attrition	noun	act
 aubergine	noun	produce
 auburn	adjective	quality
 auction	noun	exchange
 auctioneer	noun	worker
+audacity	noun	attribute
 audible	adjective	quality
 audience	noun	group
 audio	noun	device
@@ -1014,14 +1084,17 @@ audit	noun	event
 audition	noun	knowledge
 auditor	noun	person
 auditorium	noun	building
+auditory	adjective	pertaining
 auger	noun	tool
 augite	noun	mineral
+augment	verb	transform
 augmented	adjective	quality
 augury	noun	phenomenon
 august	adjective	quality
 auk	noun	bird
 aunt	noun	person
 auntie	noun	person
+aunty	noun	person
 aura	noun	attribute
 aurochs	noun	mammal
 aurora	noun	phenomenon
@@ -1041,7 +1114,9 @@ authority	noun	attribute
 authorization	noun	document
 authorize	verb	social
 authorized	adjective	participle
+authorship	noun	act
 auto	noun	vehicle_land
+autobiographical	adjective	pertaining
 autobiography	noun	knowledge
 autocracy	noun	group
 autocrat	noun	leader
@@ -1067,12 +1142,15 @@ avalanche	noun	event
 avarice	noun	attribute
 avaricious	adjective	quality
 avatar	noun	supernatural
+avenge	verb	combat
 avenger	noun	person
 aventail	noun	protection
 aventurine	noun	mineral
 avenue	noun	route
 average	adjective	quality
 aversion	noun	feeling
+avert	verb	social
+avian	adjective	pertaining
 aviary	noun	structure
 aviation	noun	group
 aviator	noun	worker
@@ -1098,9 +1176,11 @@ awful	adjective	quality
 awfully	adverb	manner
 awhile	adverb	manner
 awkward	adjective	quality
+awkwardly	adverb	manner
 awl	noun	weapon
 awning	noun	structure
 axe	noun	weapon
+axial	adjective	pertaining
 axis	noun	knowledge
 axle	noun	machine
 axolotl	noun	amphibian
@@ -1116,8 +1196,10 @@ babel	noun	act
 baboon	noun	mammal
 baby	noun	person
 babysitter	noun	worker
+babysitting	noun	act
 baccarat	noun	act
 bachelor	noun	person
+bachelorette	noun	person
 bacillus	noun	creature
 back	noun	bodypart
 backbone	noun	bodypart
@@ -1128,7 +1210,10 @@ backgammon	noun	act
 background	noun	attribute
 backing	noun	fortification
 backlash	noun	event
+backlog	noun	act
 backpack	noun	container
+backseat	noun	furniture
+backside	noun	attribute
 backstage	noun	artifact
 backswimmer	noun	insect
 backsword	noun	weapon
@@ -1202,7 +1287,9 @@ bandana	noun	clothing
 bandicoot	noun	mammal
 bandit	noun	criminal
 bandleader	noun	person
+bandwagon	noun	knowledge
 bandwidth	noun	quantity
+bane	noun	act
 bang	noun	event
 banger	noun	food
 banging	noun	event
@@ -1233,7 +1320,9 @@ baptistery	noun	structure
 bar	noun	weapon
 barb	noun	weapon
 barbarian	noun	fighter
+barbaric	adjective	quality
 barbecue	noun	food
+barbed	adjective	quality
 barbell	noun	tool
 barbeque	noun	food
 barber	noun	worker
@@ -1312,6 +1401,7 @@ bastion	noun	fortification
 bat	noun	mammal
 batch	noun	food
 bath	noun	container
+bathe	verb	body
 bathhouse	noun	building
 bathing	noun	act
 batholith	noun	mineral
@@ -1333,6 +1423,8 @@ battlement	noun	fortification
 battleship	noun	vehicle_water
 bauxite	noun	mineral
 bay	noun	water
+bayonet	noun	weapon
+bayou	noun	water
 bazaar	noun	artifact
 beach	noun	landform
 beachcomber	noun	worker
@@ -1407,6 +1499,7 @@ behavioral	adjective	pertaining
 behaviour	noun	attribute
 behavioural	adjective	pertaining
 behead	verb	contact
+beheaded	adjective	quality
 behemoth	noun	supernatural
 behind	adverb	manner
 behold	verb	perceive
@@ -1465,6 +1558,7 @@ beryllium	noun	metal
 besides	adverb	manner
 besieged	adjective	quality
 besieger	noun	person
+bespoke	adjective	quality
 best	adjective	quality
 bestial	adjective	quality
 bestseller	noun	document
@@ -1495,6 +1589,7 @@ bicycling	noun	act
 bid	verb	transfer
 bidder	noun	person
 bidding	noun	act
+biennial	noun	plant
 big	adjective	quality
 bigfoot	noun	supernatural
 bigger	adjective	quality
@@ -1524,23 +1619,27 @@ binding	noun	act
 binge	noun	act
 bingo	noun	exchange
 binoculars	noun	device
+biochemical	adjective	pertaining
 biochemistry	noun	knowledge
 biodiversity	noun	attribute
 biographical	adjective	pertaining
 biography	noun	act
 biological	adjective	pertaining
+biologically	adverb	manner
 biologist	noun	worker
 biology	noun	knowledge
 biomass	noun	fuel
 biomedical	adjective	pertaining
 biopsy	noun	act
 biosphere	noun	structure
+biotech	noun	knowledge
 biotechnology	noun	knowledge
 biotite	noun	mineral
 bipartisan	adjective	quality
 biped	noun	person
 birch	noun	tree
 bird	noun	bird
+birdie	noun	bird
 birth	noun	event
 birthday	noun	ceremony
 birthplace	noun	attribute
@@ -1560,6 +1659,7 @@ bitterness	noun	feeling
 bitters	noun	drink
 bittersweet	noun	plant
 bitumen	noun	material
+biz	noun	possession
 bizarre	adjective	quality
 black	adjective	quality
 blackbeetle	noun	insect
@@ -1591,6 +1691,7 @@ blaster	noun	weapon
 blasting	adjective	quality
 blastoff	noun	act
 blatant	adjective	quality
+blatantly	adverb	manner
 blaze	noun	event
 blazer	noun	clothing
 blazing	adjective	quality
@@ -1616,6 +1717,7 @@ blighted	adjective	participle
 blind	adjective	quality
 blinded	adjective	quality
 blindfold	noun	device
+blinding	adjective	quality
 blindly	adverb	manner
 blindness	noun	event
 bling	noun	adornment
@@ -1660,11 +1762,13 @@ blossom	noun	flower
 blot	noun	event
 blouse	noun	clothing
 blow	verb	weather
+blower	noun	machine
 blowfish	noun	fish
 blowfly	noun	insect
 blowgun	noun	weapon
 blowing	noun	act
 blown	adjective	participle
+blowout	noun	act
 blowpipe	noun	weapon
 blowtorch	noun	weapon
 bludgeon	noun	weapon
@@ -1674,6 +1778,7 @@ blueberry	noun	produce
 bluebird	noun	bird
 bluefin	noun	fish
 bluegill	noun	fish
+bluegrass	noun	herb
 blueprint	noun	knowledge
 bluestone	noun	mineral
 bluff	noun	act
@@ -1682,6 +1787,7 @@ blunderbuss	noun	weapon
 blunt	adjective	quality
 blur	noun	knowledge
 blurred	adjective	quality
+blurry	adjective	quality
 blush	verb	body
 bluster	noun	weather
 blustery	adjective	quality
@@ -1712,6 +1818,7 @@ bodied	adjective	quality
 bodily	adjective	pertaining
 bodkin	noun	weapon
 body	noun	bodypart
+bodybuilding	noun	act
 bodyguard	noun	fighter
 bog	noun	depression
 bogeyman	noun	supernatural
@@ -1740,6 +1847,7 @@ bombardment	noun	attack
 bomber	noun	vehicle_air
 bombing	noun	act
 bombproof	adjective	absolute
+bombshell	noun	act
 bonanza	noun	phenomenon
 bond	noun	group
 bonding	noun	knowledge
@@ -1778,6 +1886,7 @@ boon	noun	phenomenon
 boost	verb	movement
 booster	noun	machine
 boot	noun	clothing
+booted	adjective	quality
 booth	noun	building
 bootleg	noun	drink
 booty	noun	attribute
@@ -1785,6 +1894,7 @@ booze	noun	drink
 bop	verb	movement
 borax	noun	mineral
 border	noun	building
+bordered	adjective	quality
 borderline	noun	attribute
 bore	verb	combat
 bored	adjective	quality
@@ -1795,6 +1905,7 @@ bornite	noun	mineral
 boron	noun	material
 borough	noun	place
 borrow	verb	transfer
+borrower	noun	person
 borrowing	noun	exchange
 borstal	noun	building
 boss	noun	leader
@@ -1804,6 +1915,7 @@ botanical	noun	medicine
 botanist	noun	worker
 botany	noun	knowledge
 botch	noun	act
+botched	adjective	quality
 botfly	noun	insect
 bother	verb	social
 bothered	adjective	participle
@@ -1819,6 +1931,7 @@ boulevard	noun	route
 bounce	verb	body
 bouncer	noun	fighter
 bouncing	noun	event
+bouncy	adjective	quality
 bound	adjective	participle
 boundary	noun	place
 bounded	adjective	quality
@@ -1862,11 +1975,14 @@ braid	verb	create
 braided	adjective	participle
 brain	noun	bodypart
 brainstem	noun	bodypart
+brainwashed	adjective	quality
 braise	verb	create
 brake	noun	machine
 bramble	noun	plant
 bran	noun	material
 branch	noun	weapon
+branched	adjective	quality
+branching	noun	act
 brand	noun	weapon
 branded	adjective	quality
 branding	noun	act
@@ -1874,6 +1990,7 @@ brandy	noun	drink
 brass	noun	metal
 brat	noun	person
 brave	adjective	quality
+bravely	adverb	manner
 bravery	noun	feeling
 bravo	noun	criminal
 brawl	noun	act
@@ -1888,6 +2005,7 @@ bread	noun	food
 breadth	noun	knowledge
 breadwinner	noun	person
 break	verb	contact
+breakaway	noun	escape
 breakdown	noun	affliction
 breaker	noun	device
 breakers	noun	weather
@@ -1901,7 +2019,9 @@ breast	noun	bodypart
 breastwork	noun	fortification
 breath	noun	gas
 breathe	verb	body
+breathed	adjective	quality
 breathing	noun	act
+breathless	adjective	quality
 breathtaking	adjective	quality
 breccia	noun	mineral
 breeches	noun	clothing
@@ -1936,6 +2056,7 @@ brigadier	noun	leader
 brigand	noun	criminal
 brigandine	noun	protection
 bright	adjective	quality
+brighten	verb	transform
 brightly	adverb	manner
 brightness	noun	attribute
 brilliance	noun	attribute
@@ -1993,6 +2114,7 @@ browser	noun	person
 browsing	noun	act
 bruin	noun	mammal
 bruise	verb	contact
+bruising	adjective	quality
 brunch	noun	food
 brunette	noun	person
 brush	noun	tool
@@ -2005,6 +2127,7 @@ brute	noun	person
 brutish	adjective	quality
 bryony	noun	plant
 bubble	noun	exchange
+bubbling	adjective	quality
 bubbly	noun	drink
 bubonic	adjective	pertaining
 buccaneer	noun	criminal
@@ -2018,7 +2141,9 @@ buckwheat	noun	produce
 bud	noun	plant
 budding	adjective	quality
 buddy	noun	person
+budge	verb	movement
 budget	noun	document
+budgetary	adjective	pertaining
 budgie	noun	bird
 buff	noun	person
 buffalo	noun	mammal
@@ -2034,6 +2159,7 @@ building	noun	building
 buildup	noun	act
 built	adjective	participle
 bulb	noun	light
+bulge	verb	transform
 bulk	noun	attribute
 bulky	adjective	quality
 bull	noun	mammal
@@ -2045,6 +2171,7 @@ bulletproof	adjective	absolute
 bullfighting	noun	act
 bullfrog	noun	amphibian
 bullion	noun	currency
+bullish	adjective	quality
 bullock	noun	mammal
 bullpen	noun	building
 bully	noun	person
@@ -2053,8 +2180,10 @@ bulwark	noun	fortification
 bum	noun	person
 bumblebee	noun	insect
 bumboat	noun	vehicle_water
+bummer	noun	act
 bump	noun	event
 bumper	noun	machine
+bumpy	adjective	quality
 bun	noun	food
 bunch	noun	group
 bundle	noun	group
@@ -2112,6 +2241,7 @@ bust	noun	event
 busted	adjective	quality
 buster	noun	person
 bustle	noun	clothing
+bustling	adjective	quality
 busy	adjective	quality
 butane	noun	gas
 butcher	noun	worker
@@ -2131,6 +2261,7 @@ buttress	noun	structure
 buy	verb	transfer
 buyer	noun	person
 buying	noun	exchange
+buyout	noun	act
 buzz	noun	event
 buzzard	noun	bird
 buzzer	noun	device
@@ -2138,6 +2269,7 @@ buzzing	adjective	quality
 bygone	adjective	quality
 bypass	noun	route
 byre	noun	structure
+byte	noun	quantity
 cab	noun	vehicle_land
 cabana	noun	building
 cabaret	noun	building
@@ -2184,7 +2316,9 @@ caldera	noun	landform
 calendar	noun	device
 calf	noun	mammal
 caliber	noun	attribute
+calibrated	adjective	participle
 calibration	noun	repair
+calibre	noun	attribute
 caliper	noun	weapon
 caliphate	noun	place
 calla	noun	flower
@@ -2216,6 +2350,7 @@ camp	noun	place
 campaign	noun	event
 campaigning	noun	act
 campanile	noun	structure
+camper	noun	person
 campfire	noun	structure
 camping	noun	act
 campion	noun	flower
@@ -2286,6 +2421,7 @@ capsize	verb	movement
 capsule	noun	medicine
 captain	noun	leader
 caption	verb	transfer
+captivating	adjective	quality
 captive	noun	person
 captivity	noun	act
 capture	verb	transfer
@@ -2294,6 +2430,7 @@ capybara	noun	mammal
 car	noun	vehicle_land
 caramel	noun	food
 carapace	noun	bodypart
+carat	noun	quantity
 caravan	noun	group
 caraway	noun	herb
 carbide	noun	material
@@ -2305,6 +2442,7 @@ carbonate	noun	material
 carboniferous	adjective	pertaining
 carbuncle	noun	mineral
 carburetor	noun	device
+carcass	noun	food
 carcinoma	noun	affliction
 card	noun	toy
 cardamom	noun	herb
@@ -2317,6 +2455,7 @@ cardiovascular	adjective	pertaining
 cards	noun	toy
 care	noun	repair
 career	noun	act
+carefree	adjective	quality
 careful	adjective	quality
 carefully	adverb	manner
 caregiver	noun	worker
@@ -2324,6 +2463,7 @@ careless	adjective	quality
 caretaker	noun	worker
 cargo	noun	possession
 caribou	noun	mammal
+caricature	verb	create
 carillon	noun	instrument
 caring	noun	feeling
 carjacking	noun	crime
@@ -2347,10 +2487,12 @@ carrier	noun	vehicle_water
 carrot	noun	produce
 carry	verb	contact
 cart	noun	artifact
+carte	noun	knowledge
 cartel	noun	group
 carter	noun	worker
 cartilage	noun	bodypart
 cartographer	noun	worker
+carton	noun	container
 cartoon	verb	create
 cartridge	noun	device
 cartwright	noun	worker
@@ -2379,6 +2521,7 @@ castaway	noun	criminal
 castellan	noun	person
 casting	noun	act
 castle	noun	building
+castor	noun	container
 casual	adjective	quality
 casually	adverb	manner
 casualty	noun	person
@@ -2388,6 +2531,7 @@ catacomb	noun	structure
 catalog	noun	document
 catalogue	noun	document
 catalyst	noun	material
+catalytic	adjective	pertaining
 catamaran	noun	vehicle_water
 catapult	noun	weapon
 cataract	noun	affliction
@@ -2406,6 +2550,7 @@ catering	noun	act
 caterpillar	noun	insect
 catfish	noun	fish
 cathedral	noun	building
+catheter	noun	medicine
 catnap	noun	act
 catnip	noun	herb
 catoblepas	noun	supernatural
@@ -2425,6 +2570,7 @@ cavalier	noun	person
 cavalry	noun	group
 cavalryman	noun	fighter
 cave	noun	depression
+caveat	noun	knowledge
 caveman	noun	person
 cavern	noun	natural_object
 caviar	noun	food
@@ -2481,6 +2627,7 @@ centric	adjective	quality
 centrifugal	adjective	pertaining
 centrifuge	noun	machine
 centripetal	adjective	pertaining
+centrist	noun	person
 centurion	noun	leader
 century	noun	event
 ceramic	noun	material
@@ -2494,6 +2641,7 @@ cerebellum	noun	bodypart
 cerebral	adjective	quality
 ceremonial	adjective	quality
 ceremony	noun	ceremony
+cert	noun	attribute
 certain	adjective	quality
 certainly	adverb	manner
 certainty	noun	knowledge
@@ -2504,6 +2652,7 @@ certify	verb	social
 certitude	noun	attribute
 cerussite	noun	mineral
 cesium	noun	metal
+cessation	noun	act
 cesspool	noun	container
 cestode	noun	invertebrate
 cetacean	noun	mammal
@@ -2516,6 +2665,7 @@ chainmail	noun	protection
 chainsaw	noun	machine
 chair	noun	furniture
 chairman	noun	leader
+chairperson	noun	leader
 chaise	noun	furniture
 chalcedony	noun	mineral
 chalcid	noun	insect
@@ -2625,6 +2775,7 @@ cheesy	adjective	quality
 cheetah	noun	mammal
 chef	noun	worker
 chemical	noun	liquid
+chemically	adverb	manner
 chemise	noun	clothing
 chemist	noun	worker
 chemistry	noun	knowledge
@@ -2680,6 +2831,7 @@ chinook	noun	weather
 chip	noun	device
 chipmunk	noun	mammal
 chipotle	noun	produce
+chipping	noun	attack
 chips	noun	produce
 chiropractor	noun	worker
 chirp	verb	contact
@@ -2711,6 +2863,7 @@ chopped	adjective	quality
 chopper	noun	weapon
 choral	adjective	pertaining
 chord	noun	knowledge
+chore	noun	act
 choreographer	noun	worker
 choreography	noun	act
 chorizo	noun	food
@@ -2756,6 +2909,7 @@ cilantro	noun	herb
 cinder	noun	natural_object
 cinema	noun	building
 cinematic	adjective	pertaining
+cinematography	noun	knowledge
 cinnabar	noun	mineral
 cinnamon	noun	plant
 cipher	noun	knowledge
@@ -2767,11 +2921,14 @@ circular	adjective	quality
 circulate	verb	movement
 circulating	adjective	quality
 circulation	noun	phenomenon
+circumference	noun	attribute
 circumnavigate	verb	movement
 circumnavigation	noun	travel
 circumstance	noun	knowledge
 circumstances	noun	possession
+circumstantial	adjective	quality
 circumvallation	noun	act
+circumvent	verb	movement
 circus	noun	ceremony
 cirque	noun	depression
 cirrhosis	noun	affliction
@@ -2796,6 +2953,7 @@ civilized	adjective	quality
 clack	noun	event
 clad	adjective	quality
 claim	noun	possession
+claimant	noun	person
 clairvoyant	noun	person
 clam	noun	invertebrate
 clamor	noun	event
@@ -2808,6 +2966,7 @@ clap	noun	event
 clapping	noun	knowledge
 clarification	noun	act
 clarify	verb	transform
+clarifying	adjective	quality
 clarinet	noun	instrument
 clarion	noun	instrument
 clarity	noun	attribute
@@ -2834,6 +2993,7 @@ clean	adjective	quality
 cleaner	noun	artifact
 cleaners	noun	building
 cleaning	noun	act
+cleanliness	noun	attribute
 cleanse	verb	body
 cleanser	noun	artifact
 cleansing	noun	act
@@ -2859,15 +3019,20 @@ cleric	noun	worker
 clerical	adjective	pertaining
 clerk	noun	worker
 clever	adjective	quality
+cleverly	adverb	manner
+cliche	noun	knowledge
 click	noun	event
 client	noun	person
+clientele	noun	group
 cliff	noun	elevation
 climate	noun	attribute
+climatic	adjective	pertaining
 climax	noun	act
 climb	verb	movement
 climber	noun	plant
 climbing	noun	act
 clinch	noun	escape
+clinched	adjective	quality
 cling	verb	contact
 clinic	noun	building
 clinical	adjective	pertaining
@@ -2878,12 +3043,15 @@ clip	noun	weapon
 clipped	adjective	quality
 clipper	noun	vehicle_water
 clipping	noun	act
+clique	noun	group
 cloak	noun	clothing
 clock	noun	device
+clockwise	adjective	quality
 clockwork	noun	device
 clog	noun	clothing
 clogged	adjective	quality
 clone	noun	person
+cloning	noun	act
 close	adjective	quality
 closed	adjective	quality
 closely	adverb	manner
@@ -2895,6 +3063,7 @@ closure	noun	knowledge
 clot	noun	bodypart
 cloth	noun	fabric
 clothe	verb	body
+clothed	adjective	quality
 clothes	noun	clothing
 clothespin	noun	weapon
 clothing	noun	clothing
@@ -2902,6 +3071,7 @@ cloud	noun	weather
 cloudburst	noun	weather
 cloudless	adjective	quality
 cloudy	adjective	quality
+clout	noun	attribute
 clove	noun	plant
 clover	noun	artifact
 clown	noun	person
@@ -2955,9 +3125,11 @@ cod	noun	fish
 code	noun	knowledge
 coded	adjective	quality
 codeine	noun	medicine
+codex	noun	document
 coding	noun	act
 coefficient	noun	quantity
 coelacanth	noun	fish
+coercion	noun	act
 coffee	noun	drink
 coffeehouse	noun	building
 coffer	noun	container
@@ -2998,6 +3170,7 @@ collation	noun	food
 colleague	noun	person
 collect	verb	transfer
 collected	adjective	participle
+collectible	noun	artifact
 collecting	noun	act
 collection	noun	group
 collective	adjective	quality
@@ -3058,6 +3231,7 @@ comfortably	adverb	manner
 comforting	adjective	quality
 comfy	adjective	quality
 comic	adjective	quality
+comical	adjective	quality
 coming	adjective	quality
 comma	noun	insect
 command	noun	knowledge
@@ -3068,9 +3242,12 @@ commanding	adjective	quality
 commandment	noun	knowledge
 commando	noun	fighter
 commemorate	verb	social
+commemorating	adjective	pertaining
 commemoration	noun	ceremony
+commemorative	noun	artifact
 commence	verb	transform
 commencement	noun	ceremony
+commend	verb	social
 comment	noun	act
 commentary	noun	knowledge
 commentator	noun	person
@@ -3110,6 +3287,7 @@ commuter	noun	vehicle_land
 commuting	noun	travel
 compact	noun	group
 companion	noun	person
+companionship	noun	attribute
 company	noun	group
 comparable	adjective	quality
 comparative	adjective	pertaining
@@ -3130,6 +3308,7 @@ compensated	adjective	quality
 compensation	noun	possession
 compete	verb	social
 competence	noun	attribute
+competency	noun	attribute
 competent	adjective	quality
 competition	noun	contest
 competitive	adjective	quality
@@ -3140,6 +3319,7 @@ compile	verb	transfer
 compiler	noun	person
 compiling	noun	act
 complacency	noun	feeling
+complacent	adjective	quality
 complain	verb	social
 complaining	adjective	participle
 complaint	noun	conflict
@@ -3155,6 +3335,7 @@ complexion	noun	attribute
 complexity	noun	attribute
 compliance	noun	group
 compliant	adjective	quality
+complicate	verb	transform
 complicated	adjective	quality
 complication	noun	event
 compliment	noun	act
@@ -3194,7 +3375,9 @@ con	noun	crime
 conceal	verb	transform
 concealed	adjective	quality
 concede	verb	social
+conceding	noun	act
 conceit	noun	feeling
+conceivable	adjective	quality
 conceive	verb	create
 concentrate	noun	material
 concentrated	adjective	participle
@@ -3205,6 +3388,8 @@ conceptual	adjective	quality
 concern	noun	feeling
 concerned	adjective	quality
 concert	noun	event
+concerted	adjective	quality
+concerto	noun	knowledge
 concession	noun	document
 conch	noun	invertebrate
 concierge	noun	worker
@@ -3217,7 +3402,9 @@ conclusive	adjective	quality
 concoction	noun	food
 concord	verb	create
 concrete	noun	material
+concur	verb	social
 concurrent	adjective	quality
+concurrently	adverb	manner
 concussion	noun	event
 condemn	verb	social
 condemnation	noun	act
@@ -3233,10 +3420,13 @@ conditioning	noun	knowledge
 conditions	noun	weather
 condo	noun	building
 condominium	noun	building
+condone	verb	social
 condor	noun	bird
 condottiere	noun	person
+conducive	adjective	quality
 conduct	verb	social
 conducting	noun	act
+conductivity	noun	phenomenon
 conductor	noun	worker
 conduit	noun	structure
 cone	noun	artifact
@@ -3246,6 +3436,7 @@ confectionery	noun	building
 confederacy	noun	group
 confederate	noun	criminal
 confederation	noun	group
+confer	verb	transfer
 conference	noun	group
 confess	verb	social
 confession	noun	event
@@ -3258,6 +3449,7 @@ confidential	adjective	quality
 confidentiality	noun	knowledge
 confidently	adverb	manner
 configuration	noun	knowledge
+configured	adjective	quality
 confined	adjective	quality
 confinement	noun	event
 confirm	verb	transform
@@ -3269,6 +3461,7 @@ confiscation	noun	event
 conflict	noun	conflict
 conflicting	adjective	quality
 conform	verb	transform
+conformity	noun	attribute
 confront	verb	combat
 confrontation	noun	conflict
 confuse	verb	social
@@ -3278,6 +3471,7 @@ confusion	noun	knowledge
 conga	noun	act
 congenital	adjective	quality
 conger	noun	fish
+congested	adjective	quality
 congestion	noun	phenomenon
 conglomerate	noun	mineral
 congratulate	verb	social
@@ -3298,14 +3492,17 @@ connector	noun	artifact
 connotation	noun	knowledge
 conquer	verb	social
 conquering	noun	conflict
+conqueror	noun	fighter
 conquest	noun	act
 conscience	noun	attribute
+conscientious	adjective	quality
 conscious	adjective	quality
 consciously	adverb	manner
 consciousness	noun	knowledge
 conscript	noun	fighter
 conscription	noun	act
 consecrate	verb	social
+consecrated	adjective	quality
 consecration	noun	ceremony
 consecutive	adjective	quality
 consensus	noun	knowledge
@@ -3317,6 +3514,7 @@ conservatism	noun	knowledge
 conservative	adjective	quality
 conservatory	noun	structure
 conserve	noun	food
+conserved	adjective	quality
 consider	verb	perceive
 considerable	adjective	quality
 considerably	adverb	manner
@@ -3333,6 +3531,7 @@ consolidate	verb	transform
 consolidated	adjective	quality
 consolidation	noun	event
 consonant	adjective	quality
+consort	noun	person
 consortium	noun	group
 conspicuous	adjective	quality
 conspiracy	noun	act
@@ -3379,6 +3578,7 @@ contaminate	verb	body
 contaminated	adjective	quality
 contamination	noun	material
 contemplate	verb	perceive
+contemplation	noun	knowledge
 contemporary	adjective	quality
 contempt	noun	feeling
 contend	verb	social
@@ -3391,6 +3591,8 @@ contest	noun	contest
 contestant	noun	person
 contested	adjective	participle
 context	noun	knowledge
+contextual	adjective	pertaining
+contiguous	adjective	quality
 continent	noun	landform
 continental	adjective	quality
 contingency	noun	event
@@ -3427,6 +3629,7 @@ contributing	adjective	participle
 contribution	noun	possession
 contributor	noun	person
 contrition	noun	feeling
+contrived	adjective	quality
 control	noun	attribute
 controlled	adjective	quality
 controller	noun	device
@@ -3435,12 +3638,14 @@ controversial	adjective	quality
 controversy	noun	conflict
 convalesce	verb	body
 convalescent	noun	person
+convection	noun	phenomenon
 convenience	noun	attribute
 convenient	adjective	quality
 conveniently	adverb	manner
 convent	noun	building
 convention	noun	group
 conventional	adjective	quality
+converge	verb	movement
 convergence	noun	event
 conversation	noun	act
 converse	adjective	quality
@@ -3449,7 +3654,9 @@ conversion	noun	event
 convert	verb	social
 converter	noun	machine
 convertible	noun	vehicle_land
+convex	adjective	quality
 convey	verb	transfer
+conveying	noun	exchange
 conveyor	noun	machine
 convict	noun	person
 conviction	noun	event
@@ -3495,11 +3702,13 @@ copse	noun	landform
 copy	noun	artifact
 copying	noun	act
 copyright	noun	possession
+copyrighted	adjective	quality
 copywriter	noun	worker
 coral	noun	gem
 cord	noun	weapon
 cordial	noun	drink
 cordierite	noun	mineral
+cordon	noun	group
 cords	noun	clothing
 corduroy	noun	fabric
 core	noun	device
@@ -3515,9 +3724,12 @@ cornea	noun	bodypart
 cornelian	noun	mineral
 corner	noun	place
 cornerback	noun	fighter
+cornered	adjective	quality
 cornerstone	noun	knowledge
 cornet	noun	instrument
 cornucopia	noun	attribute
+corny	adjective	quality
+corolla	noun	flower
 corona	noun	phenomenon
 coronary	adjective	pertaining
 coronation	noun	act
@@ -3538,6 +3750,7 @@ correctional	adjective	quality
 corrective	noun	medicine
 correctly	adverb	manner
 correctness	noun	attribute
+correlate	noun	knowledge
 correlated	adjective	quality
 correlation	noun	knowledge
 correspond	verb	social
@@ -3548,6 +3761,7 @@ corridor	noun	structure
 corrie	noun	depression
 corrosion	noun	knowledge
 corrosive	noun	material
+corrugated	adjective	quality
 corrupt	adjective	quality
 corrupted	adjective	quality
 corruption	noun	act
@@ -3583,8 +3797,10 @@ couch	noun	furniture
 cougar	noun	mammal
 cough	verb	body
 coughing	noun	knowledge
+coulter	noun	tool
 council	noun	group
 councillor	noun	person
+councilman	noun	leader
 counsel	noun	person
 counseling	noun	act
 counselling	noun	act
@@ -3593,6 +3809,7 @@ counselor	noun	person
 count	noun	leader
 countdown	noun	event
 counter	noun	furniture
+counteract	verb	social
 counterfeit	noun	crime
 counterfeiter	noun	criminal
 countermine	noun	act
@@ -3617,11 +3834,13 @@ courageous	adjective	quality
 courier	noun	worker
 course	noun	place
 court	noun	building
+courteous	adjective	quality
 courtesy	noun	act
 courthouse	noun	building
 courtier	noun	person
 courtly	adjective	quality
 courtroom	noun	building
+courtship	noun	act
 courtyard	noun	place
 couscous	noun	food
 cousin	noun	person
@@ -3662,7 +3881,9 @@ crackling	noun	material
 cradle	noun	furniture
 craft	noun	vehicle_air
 craftsman	noun	worker
+crafty	adjective	quality
 crag	noun	landform
+cram	verb	contact
 cramp	noun	affliction
 cramped	adjective	quality
 cranberry	noun	produce
@@ -3679,6 +3900,7 @@ crate	noun	container
 crater	noun	landform
 cravat	noun	clothing
 crave	verb	body
+craven	noun	person
 craving	noun	feeling
 craw	noun	bodypart
 crawfish	noun	invertebrate
@@ -3687,6 +3909,7 @@ crawling	noun	act
 crayfish	noun	food
 crayon	noun	tool
 craze	noun	feeling
+crazed	adjective	quality
 crazy	adjective	quality
 creak	verb	perceive
 creaking	noun	event
@@ -3748,6 +3971,7 @@ criterion	noun	knowledge
 critic	noun	worker
 critical	adjective	quality
 critically	adverb	manner
+criticise	verb	social
 criticism	noun	act
 criticize	verb	social
 critique	noun	knowledge
@@ -3774,8 +3998,10 @@ crossbowman	noun	person
 crossed	adjective	quality
 crossing	noun	travel
 crossover	noun	person
+crossword	noun	knowledge
 croton	noun	shrub
 crotonbug	noun	insect
+crouch	verb	movement
 croup	noun	affliction
 croupier	noun	worker
 crow	noun	bird
@@ -3818,6 +4044,7 @@ cubicle	noun	building
 cuckoo	noun	bird
 cucumber	noun	produce
 cuddle	verb	contact
+cuddly	adjective	quality
 cudgel	noun	weapon
 cue	noun	knowledge
 cuff	noun	clothing
@@ -3840,6 +4067,7 @@ culture	noun	group
 cultured	adjective	quality
 culverin	noun	weapon
 culvert	noun	structure
+cumbersome	adjective	quality
 cumin	noun	herb
 cummerbund	noun	clothing
 cumulative	adjective	quality
@@ -3849,6 +4077,7 @@ cup	noun	container
 cupbearer	noun	worker
 cupboard	noun	furniture
 cupcake	noun	food
+cupid	noun	supernatural
 cupola	noun	structure
 cuppa	noun	drink
 cur	noun	mammal
@@ -3859,8 +4088,10 @@ curd	noun	food
 cure	noun	medicine
 cured	adjective	quality
 curfew	noun	phenomenon
+curing	noun	repair
 curiosity	noun	knowledge
 curious	adjective	quality
+curiously	adverb	manner
 curl	verb	transform
 curled	adjective	quality
 curlew	noun	bird
@@ -3874,9 +4105,12 @@ curry	noun	food
 curse	noun	event
 cursed	adjective	quality
 cursive	adjective	quality
+curt	adjective	quality
 curtain	noun	furniture
+curvature	noun	attribute
 curve	noun	act
 curved	adjective	quality
+curvy	adjective	quality
 cushion	noun	device
 custard	noun	food
 custodian	noun	worker
@@ -3885,11 +4119,13 @@ custom	noun	knowledge
 customary	adjective	quality
 customer	noun	person
 customhouse	noun	structure
+customize	verb	create
 customs	noun	possession
 cut	verb	contact
 cute	adjective	quality
 cutlass	noun	tool
 cutlery	noun	tool
+cutoff	noun	act
 cutout	noun	device
 cutpurse	noun	criminal
 cutter	noun	tool
@@ -3902,6 +4138,8 @@ cyanide	noun	material
 cybercrime	noun	crime
 cyborg	noun	machine
 cycle	noun	vehicle_land
+cyclic	adjective	pertaining
+cyclical	adjective	quality
 cycling	noun	act
 cyclist	noun	worker
 cyclone	noun	weather
@@ -3933,6 +4171,7 @@ dairy	noun	structure
 dairyman	noun	worker
 dais	noun	artifact
 daisy	noun	flower
+dal	noun	food
 dale	noun	landform
 dalmatian	noun	mammal
 dam	noun	structure
@@ -3943,6 +4182,7 @@ damaging	adjective	quality
 dame	noun	person
 damn	adjective	quality
 damned	adjective	quality
+damning	adjective	quality
 damp	adjective	quality
 dampen	verb	transform
 damselfly	noun	insect
@@ -3951,11 +4191,13 @@ dancer	noun	worker
 dancing	noun	act
 dandelion	noun	herb
 dandruff	noun	affliction
+dandy	noun	person
 danger	noun	feeling
 dangerous	adjective	quality
 dangerously	adverb	manner
 dangling	noun	act
 danish	noun	food
+dank	adjective	quality
 daphne	noun	shrub
 daphnia	noun	invertebrate
 dapper	adjective	quality
@@ -3973,6 +4215,7 @@ darts	noun	act
 dash	verb	movement
 dashboard	noun	device
 dashed	adjective	quality
+dashing	adjective	quality
 data	noun	knowledge
 database	noun	knowledge
 date	noun	ceremony
@@ -4013,8 +4256,10 @@ death	noun	killing
 deathbed	noun	furniture
 deathless	adjective	quality
 deathwatch	noun	insect
+deb	noun	person
 debacle	noun	event
 debate	noun	act
+debilitating	adjective	quality
 debit	noun	act
 debris	noun	material
 debt	noun	act
@@ -4047,6 +4292,7 @@ decidedly	adverb	manner
 deciding	noun	act
 deciduous	adjective	quality
 decimal	noun	quantity
+decipher	verb	perceive
 decision	noun	knowledge
 decisive	adjective	quality
 deck	noun	structure
@@ -4058,6 +4304,7 @@ declared	adjective	participle
 decline	verb	transform
 deco	noun	knowledge
 decode	verb	perceive
+decomposition	noun	act
 decor	noun	artifact
 decorate	verb	create
 decorated	adjective	participle
@@ -4079,6 +4326,8 @@ deduction	noun	possession
 deed	noun	possession
 deem	verb	social
 deep	adjective	quality
+deepen	verb	transform
+deepening	adjective	quality
 deeply	adverb	manner
 deer	noun	mammal
 defamation	noun	act
@@ -4096,9 +4345,11 @@ defending	adjective	participle
 defense	noun	fortification
 defensive	adjective	quality
 defensively	adverb	manner
+defer	verb	transform
 deferment	noun	act
 deferral	noun	act
 defiance	noun	attribute
+defiant	adjective	quality
 defibrillator	noun	device
 deficiency	noun	attribute
 deficient	adjective	quality
@@ -4112,16 +4363,24 @@ definitely	adverb	manner
 definition	noun	attribute
 definitive	adjective	quality
 deflation	noun	event
+deflect	verb	combat
+deflection	noun	protection
 deflector	noun	machine
 defoliant	noun	poison
+deforestation	noun	act
+deformation	noun	act
+deformed	adjective	quality
 defraud	verb	transfer
+defunct	adjective	quality
 defy	verb	social
 degenerate	verb	body
 degradation	noun	act
+degrade	verb	transform
 degraded	adjective	quality
 degrading	adjective	quality
 degree	noun	attribute
 dehumidifier	noun	device
+dehydrated	adjective	quality
 dehydration	noun	event
 deinonychus	noun	reptile
 deity	noun	supernatural
@@ -4130,6 +4389,7 @@ delayed	adjective	quality
 delegate	noun	person
 delegation	noun	group
 delete	verb	contact
+deletion	noun	act
 delf	noun	artifact
 deli	noun	building
 deliberate	adjective	quality
@@ -4149,8 +4409,10 @@ delusion	noun	event
 delusional	adjective	quality
 delusive	adjective	quality
 deluxe	adjective	quality
+delve	verb	movement
 demand	noun	knowledge
 demanding	adjective	participle
+demeanor	noun	attribute
 dementia	noun	act
 demigod	noun	supernatural
 demise	verb	transfer
@@ -4159,6 +4421,7 @@ democracy	noun	act
 democrat	noun	person
 democratic	adjective	quality
 demographic	noun	knowledge
+demolish	verb	create
 demolished	adjective	quality
 demolition	noun	event
 demon	noun	supernatural
@@ -4173,6 +4436,7 @@ denial	noun	feeling
 denim	noun	fabric
 denomination	noun	currency
 denote	verb	perceive
+denounce	verb	social
 dense	adjective	quality
 densely	adverb	manner
 density	noun	attribute
@@ -4185,8 +4449,10 @@ deny	verb	social
 depart	verb	movement
 departed	noun	person
 department	noun	group
+departmental	adjective	pertaining
 departure	noun	escape
 depend	verb	perceive
+dependable	adjective	quality
 dependence	noun	attribute
 dependency	noun	place
 dependent	adjective	quality
@@ -4195,6 +4461,8 @@ depicted	adjective	quality
 depicting	noun	knowledge
 depiction	noun	knowledge
 depleted	adjective	quality
+depletion	noun	act
+deplorable	adjective	quality
 deploy	verb	combat
 deployment	noun	act
 deport	verb	social
@@ -4208,12 +4476,14 @@ depressed	adjective	quality
 depressing	adjective	quality
 depression	noun	depression
 deprivation	noun	attribute
+deprive	verb	transfer
 deprived	adjective	quality
 depth	noun	attribute
 deputy	noun	person
 derange	verb	transform
 deranged	adjective	participle
 derby	noun	clothing
+deregulation	noun	act
 derision	noun	act
 derivative	noun	knowledge
 derive	verb	transfer
@@ -4221,6 +4491,7 @@ derived	adjective	quality
 dermatitis	noun	affliction
 dermatologist	noun	worker
 dermis	noun	bodypart
+derogatory	adjective	quality
 derrick	noun	building
 descend	verb	movement
 descendant	noun	person
@@ -4249,6 +4520,7 @@ desire	noun	feeling
 desired	adjective	participle
 desk	noun	furniture
 desktop	noun	device
+desolate	adjective	quality
 desolation	noun	feeling
 despair	noun	feeling
 desperate	adjective	quality
@@ -4256,6 +4528,7 @@ desperately	adverb	manner
 desperation	noun	attribute
 despicable	adjective	quality
 despise	verb	social
+despised	adjective	quality
 despite	noun	feeling
 despondent	adjective	quality
 despot	noun	leader
@@ -4274,6 +4547,7 @@ detachment	noun	feeling
 detail	noun	knowledge
 detailed	adjective	participle
 detailing	noun	knowledge
+detain	verb	social
 detainee	noun	person
 detect	verb	perceive
 detected	adjective	participle
@@ -4284,6 +4558,7 @@ detector	noun	device
 detention	noun	event
 deter	verb	social
 detergent	noun	material
+deteriorate	verb	transform
 deterioration	noun	event
 determination	noun	attribute
 determine	verb	social
@@ -4292,8 +4567,10 @@ determining	adjective	participle
 deterrence	noun	act
 deterrent	noun	knowledge
 detonator	noun	device
+detour	noun	route
 detox	noun	building
 detoxification	noun	act
+detriment	noun	act
 detrimental	adjective	quality
 devastating	adjective	quality
 devastation	noun	feeling
@@ -4314,6 +4591,7 @@ devolution	noun	act
 devote	verb	transfer
 devoted	adjective	quality
 devotion	noun	feeling
+devotional	noun	ceremony
 devour	verb	consume
 devout	adjective	quality
 dew	noun	weather
@@ -4364,6 +4642,7 @@ differentiation	noun	knowledge
 differently	adverb	manner
 difficult	adjective	quality
 difficulty	noun	attribute
+diffuse	adjective	quality
 diffusion	noun	event
 dig	verb	movement
 digest	verb	consume
@@ -4375,12 +4654,15 @@ diggings	noun	artifact
 digit	noun	quantity
 digital	adjective	quality
 digitally	adverb	manner
+dignified	adjective	quality
 dignity	noun	feeling
 dike	noun	structure
 dilatory	adjective	quality
 dilemma	noun	event
 diligence	noun	attribute
+diligent	adjective	quality
 dill	noun	herb
+dilute	verb	transform
 diluted	adjective	quality
 dim	adjective	quality
 dime	noun	currency
@@ -4431,6 +4713,7 @@ dirk	noun	weapon
 dirt	noun	material
 dirty	adjective	quality
 disable	verb	transform
+disabling	adjective	quality
 disadvantage	noun	attribute
 disadvantaged	adjective	quality
 disaffection	noun	feeling
@@ -4445,6 +4728,7 @@ disappointing	adjective	participle
 disappointment	noun	feeling
 disapproval	noun	feeling
 disarm	verb	perceive
+disarmament	noun	act
 disarrange	verb	transform
 disarray	noun	knowledge
 disaster	noun	disaster
@@ -4454,6 +4738,7 @@ disbursement	noun	possession
 disc	noun	document
 discard	noun	natural_object
 discarded	adjective	quality
+discern	verb	perceive
 discharge	noun	act
 discharged	adjective	quality
 disciple	noun	worker
@@ -4476,16 +4761,20 @@ discount	noun	exchange
 discourage	verb	social
 discouraged	adjective	quality
 discouragement	noun	feeling
+discouraging	adjective	quality
 discourse	noun	knowledge
 discover	verb	perceive
 discovered	adjective	quality
 discovery	noun	knowledge
 discredit	noun	act
+discredited	adjective	quality
 discreet	adjective	quality
 discrepancy	noun	event
 discrete	adjective	quality
 discretion	noun	knowledge
+discretionary	adjective	quality
 discriminate	verb	social
+discriminating	adjective	quality
 discrimination	noun	knowledge
 discriminatory	adjective	quality
 discus	noun	contest
@@ -4495,6 +4784,7 @@ disdain	noun	feeling
 disease	noun	affliction
 diseased	adjective	quality
 disgrace	verb	social
+disgraced	adjective	quality
 disgraceful	adjective	quality
 disguise	noun	attribute
 disguised	adjective	quality
@@ -4504,7 +4794,9 @@ disgusting	adjective	quality
 dish	noun	food
 dishonest	adjective	quality
 dishonestly	adverb	manner
+dishonesty	noun	attribute
 dishwasher	noun	machine
+disillusioned	adjective	quality
 disinfect	verb	body
 disinfectant	noun	material
 disinfection	noun	act
@@ -4513,22 +4805,29 @@ dislike	noun	feeling
 disliked	adjective	quality
 disloyal	adjective	quality
 disloyalty	noun	crime
+dismal	adjective	quality
+dismantle	verb	create
 dismantled	adjective	quality
+dismantling	noun	destruction
 dismay	noun	feeling
 dismember	verb	contact
 dismiss	verb	social
 dismissal	noun	act
 dismissed	adjective	participle
+disobedience	noun	attribute
 disorder	verb	transform
 disorderly	adjective	quality
 disorganize	verb	transform
+disparate	adjective	quality
 disparity	noun	attribute
 dispatch	noun	attribute
 dispatcher	noun	worker
 dispensary	noun	building
 dispenser	noun	container
+dispersal	noun	act
 disperse	verb	contact
 dispersed	adjective	quality
+dispersion	noun	act
 displacement	noun	event
 display	noun	device
 displeasure	noun	feeling
@@ -4552,15 +4851,19 @@ disrupt	verb	transform
 disrupted	adjective	quality
 disruption	noun	event
 disruptive	adjective	quality
+diss	verb	social
 dissatisfaction	noun	feeling
 dissatisfied	adjective	quality
+dissemination	noun	attribute
 dissent	noun	act
+dissenting	adjective	quality
 dissertation	noun	knowledge
 dissolution	noun	act
 dissolve	verb	transform
 dissolved	adjective	quality
 dissonance	noun	knowledge
 distaff	noun	weapon
+distal	adjective	quality
 distance	noun	attribute
 distant	adjective	quality
 distaste	noun	feeling
@@ -4581,6 +4884,7 @@ distraction	noun	knowledge
 distraught	adjective	quality
 distress	noun	feeling
 distressed	adjective	quality
+distressing	adjective	quality
 distribute	verb	transfer
 distributed	adjective	quality
 distribution	noun	knowledge
@@ -4597,9 +4901,12 @@ diva	noun	person
 divan	noun	furniture
 dive	verb	movement
 diver	noun	worker
+divergence	noun	act
 divergent	adjective	quality
 diverse	adjective	quality
+diversification	noun	act
 diversified	adjective	quality
+diversify	verb	transform
 diversion	noun	attack
 diversity	noun	attribute
 divert	verb	movement
@@ -4612,6 +4919,7 @@ divine	adjective	quality
 diving	noun	act
 divinity	noun	supernatural
 division	noun	group
+divisional	adjective	pertaining
 divisive	adjective	quality
 divorce	noun	act
 divorced	adjective	participle
@@ -4640,6 +4948,7 @@ documentation	noun	act
 documented	adjective	participle
 doddering	adjective	quality
 dodge	verb	body
+dodger	noun	criminal
 dodging	noun	act
 dodgy	adjective	quality
 dodo	noun	bird
@@ -4664,6 +4973,8 @@ dolphin	noun	mammal
 domain	noun	place
 dome	noun	structure
 domestic	adjective	quality
+domestically	adverb	manner
+domesticated	adjective	quality
 domicile	noun	place
 dominance	noun	attribute
 dominant	adjective	quality
@@ -4716,6 +5027,7 @@ doubleheader	noun	contest
 doubles	noun	act
 doubling	noun	act
 doubloon	noun	currency
+doubly	adverb	manner
 doubt	noun	feeling
 doubtful	adjective	quality
 doubting	adjective	quality
@@ -4727,6 +5039,7 @@ dovecote	noun	structure
 down	adverb	manner
 downdraft	noun	weather
 downfall	noun	event
+downgrade	noun	act
 downhill	noun	landform
 download	verb	transfer
 downpour	noun	weather
@@ -4734,9 +5047,11 @@ downright	adjective	quality
 downside	noun	knowledge
 downstairs	adjective	quality
 downstream	adjective	quality
+downtime	noun	duration
 downtown	noun	place
 downturn	noun	exchange
 downward	adjective	quality
+downwards	adverb	manner
 dowry	noun	possession
 doze	noun	act
 dozen	noun	quantity
@@ -4762,6 +5077,7 @@ drama	noun	event
 dramatic	adjective	quality
 dramatically	adverb	manner
 drape	noun	furniture
+draped	adjective	quality
 draper	noun	worker
 drapery	noun	furniture
 drastic	adjective	quality
@@ -4770,6 +5086,7 @@ draught	noun	food
 draughts	noun	act
 draughtsman	noun	worker
 draw	verb	combat
+drawback	noun	act
 drawbridge	noun	structure
 drawer	noun	container
 drawing	noun	artifact
@@ -4780,8 +5097,10 @@ dreadful	adjective	quality
 dreadnought	noun	vehicle_water
 dream	noun	knowledge
 dreamed	adjective	quality
+dreamer	noun	person
 dreaming	noun	act
 dreamlike	adjective	quality
+dreamy	adjective	quality
 dredge	noun	machine
 drench	verb	weather
 drenched	adjective	quality
@@ -4802,6 +5121,7 @@ drilled	adjective	quality
 drilling	noun	act
 drink	noun	drink
 drinkable	noun	drink
+drinker	noun	person
 drinking	noun	act
 drip	verb	movement
 dripping	noun	event
@@ -4824,6 +5144,7 @@ drought	noun	weather
 drove	noun	group
 drown	verb	combat
 drug	noun	medicine
+drugged	adjective	quality
 drugstore	noun	building
 drum	noun	instrument
 drummer	noun	worker
@@ -4874,6 +5195,7 @@ duo	noun	group
 dupe	noun	person
 duplex	noun	building
 duplicate	noun	artifact
+duplication	noun	act
 duplicity	noun	act
 durability	noun	attribute
 durable	adjective	quality
@@ -4903,6 +5225,7 @@ dysentery	noun	affliction
 dysfunction	noun	event
 dysfunctional	adjective	quality
 dysphoria	noun	feeling
+dystopian	adjective	pertaining
 eager	adjective	quality
 eagerly	adverb	manner
 eagerness	noun	feeling
@@ -4931,12 +5254,15 @@ earthquake	noun	disaster
 earthworm	noun	invertebrate
 earwig	noun	insect
 ease	verb	movement
+eased	adjective	quality
 easel	noun	weapon
 easement	noun	place
 easily	adverb	manner
+easing	noun	act
 east	noun	place
 easterly	noun	weather
 eastern	adjective	quality
+eastward	adjective	quality
 easy	adjective	quality
 eat	verb	consume
 eater	noun	person
@@ -4970,6 +5296,7 @@ eddy	noun	event
 edelweiss	noun	flower
 edge	noun	attribute
 edged	adjective	quality
+edging	noun	structure
 edgy	adjective	quality
 edible	noun	food
 edict	noun	knowledge
@@ -5001,6 +5328,8 @@ efficiency	noun	attribute
 efficient	adjective	quality
 efficiently	adverb	manner
 effort	noun	attribute
+effortless	adjective	quality
+effortlessly	adverb	manner
 efreet	noun	supernatural
 egg	noun	food
 eggar	noun	insect
@@ -5020,6 +5349,7 @@ eject	verb	movement
 ejection	noun	act
 ejector	noun	device
 elaborate	adjective	quality
+elaborated	adjective	quality
 elan	noun	feeling
 eland	noun	mammal
 elapse	verb	body
@@ -5074,8 +5404,10 @@ elimination	noun	act
 elite	noun	group
 elixir	noun	liquid
 elk	noun	mammal
+elliptical	adjective	quality
 elm	noun	material
 elongated	adjective	quality
+eloquent	adjective	quality
 elsewhere	adverb	manner
 elusive	adjective	quality
 email	noun	act
@@ -5097,22 +5429,30 @@ embezzler	noun	criminal
 emblem	noun	artifact
 embodied	adjective	quality
 embodiment	noun	supernatural
+embody	verb	transform
 embrace	noun	act
 embracing	noun	act
 embrasure	noun	fortification
 embroider	verb	create
+embroidery	noun	adornment
 embryo	noun	plant
+embryonic	adjective	quality
 emerald	noun	gem
 emerge	verb	transform
 emergence	noun	event
 emergency	noun	event
+emergent	adjective	quality
 emerging	adjective	participle
+emeritus	noun	person
 emery	noun	mineral
+emigration	noun	travel
+eminence	noun	attribute
 eminent	adjective	quality
 emir	noun	leader
 emirate	noun	place
 emissary	noun	person
 emission	noun	material
+emit	verb	body
 emmet	noun	insect
 emotion	noun	feeling
 emotional	adjective	quality
@@ -5120,6 +5460,7 @@ emotionally	adverb	manner
 empathy	noun	feeling
 emperor	noun	leader
 emphasis	noun	attribute
+emphasised	adjective	quality
 emphasize	verb	social
 emphasized	adjective	quality
 emphasizing	noun	act
@@ -5136,6 +5477,7 @@ empower	verb	social
 empowered	adjective	quality
 empowerment	noun	act
 empress	noun	leader
+emptiness	noun	attribute
 empty	adjective	quality
 emu	noun	bird
 emulate	verb	combat
@@ -5148,12 +5490,14 @@ enamel	noun	material
 encampment	noun	place
 enchanted	adjective	quality
 enchanter	noun	person
+enchanting	adjective	quality
 enchantment	noun	feeling
 encirclement	noun	conflict
 enclave	noun	place
 enclosed	adjective	quality
 enclosure	noun	structure
 encoding	noun	act
+encompass	verb	transform
 encompassing	adjective	quality
 encore	noun	act
 encounter	noun	event
@@ -5166,11 +5510,13 @@ encryption	noun	knowledge
 encyclopaedia	noun	document
 encyclopedia	noun	document
 end	noun	destruction
+endanger	verb	combat
 endangered	adjective	quality
 endeavor	noun	act
 endeavour	noun	act
 ended	adjective	quality
 endemic	noun	affliction
+endgame	noun	event
 ending	noun	act
 endless	adjective	quality
 endlessly	adverb	manner
@@ -5211,7 +5557,10 @@ enigmatic	adjective	quality
 enjoy	verb	consume
 enjoyable	adjective	quality
 enjoyment	noun	feeling
+enlarge	verb	transform
 enlarged	adjective	quality
+enlargement	noun	act
+enlighten	verb	social
 enlightened	adjective	quality
 enlightenment	noun	feeling
 enlist	verb	combat
@@ -5231,6 +5580,7 @@ ensign	noun	artifact
 ensnare	verb	combat
 ensuing	adjective	quality
 ensure	verb	social
+entail	verb	transfer
 entangle	verb	transform
 entangled	adjective	participle
 entanglement	noun	event
@@ -5245,6 +5595,8 @@ entertainment	noun	act
 enthusiasm	noun	feeling
 enthusiast	noun	person
 enthusiastic	adjective	quality
+enthusiastically	adverb	manner
+entice	verb	social
 entire	adjective	quality
 entirely	adverb	manner
 entirety	noun	attribute
@@ -5252,6 +5604,7 @@ entitled	adjective	quality
 entitlement	noun	attribute
 entity	noun	group
 entomologist	noun	person
+entourage	noun	group
 entrails	noun	bodypart
 entrance	noun	structure
 entrap	verb	combat
@@ -5267,6 +5620,7 @@ envious	adjective	quality
 environment	noun	place
 environmental	adjective	pertaining
 environmentally	adverb	manner
+envision	verb	perceive
 envisioned	adjective	quality
 envoy	noun	person
 envy	noun	feeling
@@ -5293,8 +5647,11 @@ equalize	verb	combat
 equalizer	noun	device
 equally	adverb	manner
 equanimity	noun	feeling
+equate	verb	transform
 equation	noun	act
 equator	noun	season
+equatorial	adjective	quality
+equestrian	noun	fighter
 equilibrium	noun	attribute
 equine	noun	mammal
 equinox	noun	phenomenon
@@ -5303,6 +5660,7 @@ equipment	noun	possession
 equipped	adjective	quality
 equitable	adjective	quality
 equity	noun	possession
+equivalence	noun	attribute
 equivalent	noun	knowledge
 era	noun	duration
 eradicate	verb	transform
@@ -5350,9 +5708,11 @@ established	adjective	quality
 establishment	noun	group
 estate	noun	possession
 esteem	noun	feeling
+esteemed	adjective	quality
 estimate	noun	document
 estimation	noun	knowledge
 estoc	noun	weapon
+estranged	adjective	quality
 estrangement	noun	feeling
 estuary	noun	water
 eta	noun	knowledge
@@ -5364,6 +5724,7 @@ eternity	noun	duration
 ethanol	noun	liquid
 ether	noun	material
 ethereal	adjective	quality
+ethernet	noun	device
 ethic	noun	knowledge
 ethical	adjective	pertaining
 ethnic	adjective	quality
@@ -5404,12 +5765,14 @@ evidenced	adjective	quality
 evident	adjective	quality
 evidently	adverb	manner
 evil	adjective	quality
+evoke	verb	create
 evolution	noun	act
 evolutionary	adjective	pertaining
 evolve	verb	transform
 ewe	noun	mammal
 exact	adjective	quality
 exactly	adverb	manner
+exaggerate	verb	social
 exaggerated	adjective	quality
 exaggeration	noun	act
 exaltation	noun	feeling
@@ -5452,6 +5815,7 @@ exclusive	adjective	quality
 exclusively	adverb	manner
 excursion	noun	travel
 excuse	noun	act
+excused	adjective	quality
 execute	verb	social
 executed	adjective	participle
 executing	noun	act
@@ -5489,6 +5853,7 @@ exosphere	noun	phenomenon
 exotic	adjective	quality
 expand	verb	transform
 expanded	adjective	quality
+expanse	noun	attribute
 expansion	noun	act
 expansive	adjective	quality
 expect	verb	perceive
@@ -5524,6 +5889,7 @@ exploit	verb	consume
 exploitation	noun	act
 exploited	adjective	quality
 exploration	noun	act
+exploratory	adjective	quality
 explore	verb	perceive
 explorer	noun	worker
 explosion	noun	event
@@ -5546,6 +5912,7 @@ expressly	adverb	manner
 expulsion	noun	act
 expunge	verb	transform
 exquisite	adjective	quality
+extant	adjective	quality
 extend	verb	transform
 extended	adjective	quality
 extension	noun	act
@@ -5559,11 +5926,13 @@ external	adjective	quality
 externally	adverb	manner
 extinct	adjective	participle
 extinction	noun	killing
+extinguished	adjective	quality
 extort	verb	transfer
 extortion	noun	crime
 extra	adjective	quality
 extract	noun	material
 extraction	noun	act
+extradition	noun	act
 extraordinarily	adverb	manner
 extraordinary	adjective	quality
 extraterrestrial	noun	creature
@@ -5579,10 +5948,14 @@ eyed	adjective	participle
 eyelash	noun	bodypart
 eyeless	adjective	quality
 eyelid	noun	bodypart
+eyeliner	noun	adornment
 eyepatch	noun	tool
 eyes	noun	bodypart
+eyeshadow	noun	adornment
+eyesight	noun	knowledge
 eyewitness	noun	person
 fab	adjective	quality
+fable	noun	knowledge
 fabric	noun	fabric
 fabricated	adjective	quality
 fabrication	noun	crime
@@ -5590,6 +5963,7 @@ fabulous	adjective	quality
 facade	noun	act
 face	noun	bodypart
 faced	adjective	quality
+facet	noun	knowledge
 facial	adjective	pertaining
 facilitate	verb	social
 facility	noun	building
@@ -5600,6 +5974,7 @@ factor	noun	quantity
 factory	noun	machine
 factual	adjective	quality
 faculty	noun	group
+fad	noun	knowledge
 fade	verb	transform
 faded	adjective	quality
 fading	noun	event
@@ -5612,8 +5987,10 @@ fair	adjective	quality
 fairly	adverb	manner
 fairness	noun	act
 fairy	noun	supernatural
+fairytale	noun	knowledge
 faith	noun	feeling
 faithful	adjective	quality
+faithfully	adverb	manner
 faithless	adjective	quality
 fake	adjective	quality
 faker	noun	person
@@ -5622,6 +5999,7 @@ falchion	noun	weapon
 falcon	noun	bird
 falconer	noun	worker
 fall	noun	season
+fallacy	noun	act
 fallen	adjective	quality
 falling	adjective	quality
 fallout	noun	material
@@ -5632,6 +6010,7 @@ falsely	adverb	manner
 falsify	verb	transform
 fame	noun	attribute
 famed	adjective	quality
+familial	adjective	pertaining
 familiar	adjective	quality
 familiarity	noun	knowledge
 family	noun	group
@@ -5640,9 +6019,11 @@ famished	adjective	quality
 famous	adjective	quality
 famously	adverb	manner
 fan	noun	machine
+fanatic	noun	fighter
 fanciful	adjective	quality
 fancy	adjective	quality
 fandom	noun	group
+fanfare	noun	knowledge
 fang	noun	bodypart
 fanged	adjective	pertaining
 fantastic	adjective	quality
@@ -5684,6 +6065,7 @@ fated	adjective	quality
 fateful	adjective	quality
 father	noun	person
 fatherland	noun	place
+fathom	verb	perceive
 fatigue	noun	feeling
 fatigues	noun	clothing
 fatty	noun	person
@@ -5695,6 +6077,7 @@ fauna	noun	group
 faux	adjective	quality
 favor	noun	attribute
 favorable	adjective	quality
+favorably	adverb	manner
 favored	adjective	quality
 favorite	adjective	quality
 favour	noun	feeling
@@ -5751,6 +6134,7 @@ femur	noun	bodypart
 fence	noun	structure
 fencer	noun	person
 fencing	noun	act
+fend	verb	combat
 fender	noun	protection
 fennel	noun	herb
 feral	adjective	quality
@@ -5784,6 +6168,7 @@ feverish	adjective	quality
 fewer	adjective	quality
 fez	noun	clothing
 fiance	noun	person
+fiancee	noun	person
 fiasco	noun	event
 fiat	noun	knowledge
 fiber	noun	material
@@ -5857,12 +6242,14 @@ financially	adverb	manner
 financier	noun	worker
 financing	noun	act
 finch	noun	bird
+finder	noun	person
 finding	noun	natural_object
 findings	noun	tool
 fine	noun	possession
 finely	adverb	manner
 finer	adjective	quality
 finery	noun	clothing
+finesse	noun	attribute
 finger	noun	bodypart
 fingerling	noun	fish
 fingernail	noun	bodypart
@@ -5870,6 +6257,7 @@ fingerprint	noun	document
 fingertip	noun	bodypart
 finish	verb	transform
 finished	adjective	participle
+finisher	noun	fighter
 finishing	noun	material
 finite	adjective	quality
 fir	noun	material
@@ -5887,6 +6275,7 @@ firefly	noun	insect
 firehouse	noun	building
 fireman	noun	worker
 fireplace	noun	structure
+firepower	noun	attribute
 fireproof	adjective	absolute
 firestorm	noun	weather
 firewall	noun	device
@@ -5896,6 +6285,8 @@ firing	noun	attack
 firm	adjective	quality
 firmament	noun	celestial
 firmly	adverb	manner
+firmware	noun	knowledge
+firsthand	adjective	quality
 firstly	adverb	manner
 fiscal	adjective	pertaining
 fish	noun	fish
@@ -5908,6 +6299,7 @@ fishmonger	noun	worker
 fishnet	noun	tool
 fishtail	verb	movement
 fishworm	noun	invertebrate
+fishy	adjective	pertaining
 fist	noun	bodypart
 fit	verb	transform
 fitness	noun	attribute
@@ -5916,6 +6308,7 @@ fitting	adjective	quality
 five	noun	quantity
 fiver	noun	currency
 fix	verb	transform
+fixation	noun	act
 fixed	adjective	quality
 fixing	noun	act
 fixture	noun	artifact
@@ -5926,10 +6319,12 @@ flag	noun	artifact
 flagship	noun	vehicle_water
 flail	noun	tool
 flair	noun	knowledge
+flake	noun	phenomenon
 flame	verb	weather
 flamenco	noun	act
 flaming	adjective	quality
 flamingo	noun	bird
+flammable	adjective	quality
 flank	noun	group
 flanker	noun	person
 flannel	noun	fabric
@@ -5953,6 +6348,7 @@ flawed	adjective	quality
 flawless	adjective	quality
 flaxen	adjective	quality
 flea	noun	insect
+fledged	adjective	quality
 fledgling	noun	creature
 flee	verb	movement
 fleece	noun	material
@@ -5986,10 +6382,12 @@ floodlight	noun	device
 floor	noun	structure
 flooring	noun	artifact
 flop	noun	person
+floppy	noun	device
 flora	noun	phenomenon
 floral	adjective	quality
 florin	noun	currency
 florist	noun	worker
+floss	noun	material
 flotilla	noun	group
 flotsam	noun	disaster
 flounder	noun	fish
@@ -6020,6 +6418,7 @@ fluorite	noun	mineral
 fluorspar	noun	mineral
 flurry	noun	weather
 flush	adjective	quality
+flushed	adjective	quality
 flute	noun	instrument
 flutter	verb	movement
 flux	noun	event
@@ -6061,6 +6460,7 @@ following	adjective	quality
 folly	noun	event
 fond	adjective	quality
 fondant	noun	food
+fondly	adverb	manner
 fondness	noun	feeling
 fondue	noun	food
 font	noun	container
@@ -6088,6 +6488,8 @@ forbidden	adjective	quality
 forbidding	adjective	quality
 force	noun	attribute
 forced	adjective	participle
+forceful	adjective	quality
+forcefully	adverb	manner
 forcibly	adverb	manner
 ford	noun	water
 fore	noun	artifact
@@ -6100,6 +6502,7 @@ foreclosure	noun	act
 forefinger	noun	bodypart
 forefront	noun	attribute
 foregone	adjective	absolute
+foreground	noun	knowledge
 forehead	noun	bodypart
 foreign	adjective	quality
 forelimb	noun	bodypart
@@ -6108,6 +6511,7 @@ foremast	noun	device
 foremost	adjective	quality
 forensic	adjective	quality
 foresail	noun	device
+foresee	verb	perceive
 foreseeable	adjective	quality
 foresight	noun	attribute
 forest	noun	landform
@@ -6133,9 +6537,11 @@ forlorn	adjective	quality
 form	noun	document
 formal	adjective	quality
 formaldehyde	noun	gas
+formality	noun	ceremony
 formally	adverb	manner
 format	noun	document
 formation	noun	group
+formative	adjective	quality
 formatting	noun	knowledge
 formed	adjective	quality
 former	adjective	quality
@@ -6143,6 +6549,7 @@ formerly	adverb	manner
 formicary	noun	elevation
 formidable	adjective	quality
 formula	noun	knowledge
+formulate	verb	create
 formulated	adjective	quality
 formulation	noun	material
 fort	noun	fortification
@@ -6152,6 +6559,7 @@ forthcoming	adjective	quality
 forthwith	adverb	manner
 fortification	noun	fortification
 fortified	adjective	quality
+fortitude	noun	attribute
 fortnight	noun	duration
 fortress	noun	structure
 fortuitous	adjective	quality
@@ -6161,6 +6569,7 @@ fortune	noun	currency
 forty	adjective	quality
 forum	noun	group
 forward	adverb	manner
+forwarding	noun	exchange
 forwards	adverb	manner
 fosse	noun	artifact
 fossil	noun	natural_object
@@ -6185,6 +6594,7 @@ fraction	noun	attribute
 fracture	noun	affliction
 fragile	adjective	quality
 fragment	noun	natural_object
+fragmentation	noun	destruction
 fragmented	adjective	quality
 fragrance	noun	knowledge
 fragrant	adjective	quality
@@ -6199,9 +6609,12 @@ frank	noun	food
 frankfurter	noun	food
 frankly	adverb	manner
 frantic	adjective	quality
+frantically	adverb	manner
+frat	noun	group
 fraternity	noun	group
 fraud	noun	crime
 fraudulent	adjective	quality
+fray	noun	act
 freak	noun	event
 freaky	adjective	quality
 freckle	noun	bodypart
@@ -6246,6 +6659,7 @@ frightening	adjective	quality
 frigid	adjective	quality
 frill	noun	bodypart
 fringe	noun	attribute
+frivolous	adjective	quality
 frock	noun	clothing
 frog	noun	reptile
 froghopper	noun	insect
@@ -6264,6 +6678,7 @@ fructose	noun	material
 frugal	adjective	quality
 fruit	noun	produce
 fruitful	adjective	quality
+fruition	noun	attribute
 fruity	adjective	quality
 frumpy	adjective	quality
 frustrated	adjective	quality
@@ -6280,6 +6695,7 @@ fucking	adverb	manner
 fudge	noun	food
 fuel	noun	fuel
 fueled	adjective	quality
+fueling	noun	act
 fugitive	noun	person
 fulcrum	noun	machine
 fulfil	verb	create
@@ -6299,6 +6715,7 @@ fun	noun	feeling
 function	noun	knowledge
 functional	adjective	quality
 functionality	noun	attribute
+functionally	adverb	manner
 functionary	noun	person
 functioning	adjective	participle
 fund	noun	currency
@@ -6317,7 +6734,9 @@ funnel	noun	tool
 funny	adjective	quality
 fur	noun	material
 furious	adjective	quality
+furiously	adverb	manner
 furnace	noun	structure
+furnish	verb	transfer
 furnished	adjective	quality
 furniture	noun	furniture
 furrier	noun	worker
@@ -6325,6 +6744,7 @@ furrow	noun	artifact
 furry	adjective	quality
 further	adverb	manner
 furthermore	adverb	manner
+furthest	adjective	quality
 furtive	adjective	quality
 fury	noun	feeling
 fuse	noun	device
@@ -6341,6 +6761,7 @@ futuristic	adjective	pertaining
 fuzzy	adjective	quality
 gabardine	noun	fabric
 gabbro	noun	mineral
+gabby	adjective	quality
 gadfly	noun	insect
 gadget	noun	device
 gadgetry	noun	device
@@ -6388,6 +6809,7 @@ gantry	noun	structure
 gaol	noun	building
 gaoler	noun	person
 gap	noun	depression
+gaping	adjective	quality
 garage	noun	building
 garb	noun	clothing
 garbage	noun	material
@@ -6415,6 +6837,7 @@ gash	noun	affliction
 gasoline	noun	fuel
 gasp	noun	act
 gastric	adjective	pertaining
+gastrointestinal	adjective	pertaining
 gate	noun	structure
 gatehouse	noun	fortification
 gatekeeper	noun	person
@@ -6453,10 +6876,12 @@ gender	noun	attribute
 gene	noun	bodypart
 genealogy	noun	knowledge
 general	noun	leader
+generalization	noun	knowledge
 generalized	adjective	quality
 generally	adverb	manner
 generate	verb	create
 generation	noun	group
+generational	adjective	pertaining
 generator	noun	artifact
 generic	noun	drink
 generosity	noun	attribute
@@ -6471,6 +6896,7 @@ genie	noun	supernatural
 genius	noun	person
 genome	noun	knowledge
 genre	noun	knowledge
+gent	noun	person
 gentle	adjective	quality
 gentleman	noun	person
 gently	adverb	manner
@@ -6489,6 +6915,8 @@ geology	noun	knowledge
 geometric	adjective	quality
 geometrid	noun	insect
 geometry	noun	knowledge
+geopolitical	adjective	pertaining
+geothermal	adjective	pertaining
 geranium	noun	herb
 gerbil	noun	mammal
 germ	noun	affliction
@@ -6503,6 +6931,7 @@ getup	noun	clothing
 geyser	noun	landform
 ghee	noun	food
 ghost	noun	supernatural
+ghostly	adjective	quality
 ghoul	noun	supernatural
 giant	noun	supernatural
 giantess	noun	supernatural
@@ -6520,6 +6949,7 @@ gilding	noun	material
 gill	noun	bodypart
 gilt	noun	material
 gimlet	noun	weapon
+gimmick	noun	artifact
 gin	noun	drink
 ginger	noun	herb
 gingerbread	noun	food
@@ -6534,6 +6964,7 @@ giro	noun	document
 gist	noun	knowledge
 git	noun	person
 giveaway	noun	possession
+giver	noun	person
 giving	noun	possession
 gizmo	noun	device
 gizzard	noun	bodypart
@@ -6566,9 +6997,11 @@ gleam	noun	attribute
 glee	noun	feeling
 glen	noun	depression
 glide	verb	movement
+gliding	noun	travel
 glimpse	noun	knowledge
 glitch	noun	event
 glitter	noun	material
+glittering	adjective	quality
 gloat	noun	feeling
 gloating	noun	feeling
 global	adjective	quality
@@ -6578,6 +7011,7 @@ globe	noun	device
 glockenspiel	noun	instrument
 gloom	noun	feeling
 gloomy	adjective	quality
+glorified	adjective	quality
 glorify	verb	social
 glorious	adjective	quality
 glory	noun	attribute
@@ -6634,6 +7068,8 @@ goldstone	noun	mineral
 golem	noun	supernatural
 golf	noun	contest
 golfer	noun	worker
+golfing	noun	contest
+goliath	noun	fighter
 gomphothere	noun	mammal
 gondola	noun	vehicle_water
 gong	noun	instrument
@@ -6677,10 +7113,12 @@ gown	noun	clothing
 grab	verb	contact
 grace	noun	attribute
 graceful	adjective	quality
+gracefully	adverb	manner
 gracious	adjective	quality
 grad	noun	quantity
 grade	noun	attribute
 graded	adjective	quality
+grader	noun	person
 gradient	noun	attribute
 grading	noun	act
 gradual	adjective	quality
@@ -6702,6 +7140,7 @@ granary	noun	artifact
 grand	adjective	quality
 granddaughter	noun	person
 grandee	noun	leader
+grandeur	noun	attribute
 grandfather	noun	person
 grandma	noun	person
 grandmaster	noun	fighter
@@ -6725,6 +7164,7 @@ graphite	noun	material
 grapple	noun	tool
 grappling	noun	act
 grasp	verb	contact
+grasping	noun	knowledge
 grass	noun	plant
 grasshopper	noun	insect
 grassroots	adjective	quality
@@ -6733,6 +7173,7 @@ grate	verb	create
 grateful	adjective	quality
 grater	noun	tool
 gratification	noun	feeling
+grating	noun	structure
 gratitude	noun	feeling
 gratuity	noun	possession
 grave	noun	structure
@@ -6786,17 +7227,20 @@ grief	noun	feeling
 grievance	noun	feeling
 grieve	verb	social
 grieving	adjective	quality
+grievous	adjective	quality
 griffin	noun	supernatural
 griffon	noun	supernatural
 grifter	noun	criminal
 grill	noun	device
 grilled	adjective	quality
+grilling	noun	act
 grim	adjective	quality
 grin	verb	body
 grind	verb	transform
 grinder	noun	tool
 grinding	noun	act
 grindstone	noun	artifact
+grinning	noun	act
 grip	verb	contact
 gripping	adjective	quality
 grist	noun	food
@@ -6810,10 +7254,12 @@ grocer	noun	worker
 grocery	noun	building
 grog	noun	drink
 groom	noun	person
+groomed	adjective	quality
 grooming	noun	act
 groove	noun	knowledge
 gross	adjective	quality
 grossly	adverb	manner
+grotesque	adjective	quality
 grouchy	adjective	quality
 ground	noun	landform
 groundbreaking	noun	ceremony
@@ -6821,6 +7267,7 @@ groundhog	noun	mammal
 grounding	noun	affliction
 grounds	noun	place
 groundskeeper	noun	worker
+groundwork	noun	knowledge
 group	noun	group
 grouped	adjective	quality
 grouper	noun	fish
@@ -6835,6 +7282,7 @@ grown	adjective	quality
 growth	noun	attribute
 grub	noun	creature
 grudge	noun	feeling
+gruesome	adjective	quality
 grumble	noun	event
 grumbling	noun	event
 grumpy	adjective	quality
@@ -6848,6 +7296,7 @@ guardhouse	noun	fortification
 guardian	noun	worker
 guardsman	noun	fighter
 guava	noun	produce
+gubernatorial	adjective	pertaining
 guerrilla	noun	fighter
 guess	noun	knowledge
 guessing	noun	act
@@ -6886,6 +7335,7 @@ gunfight	noun	act
 gunfire	noun	act
 gunman	noun	criminal
 gunner	noun	fighter
+gunpoint	noun	act
 gunpowder	noun	artifact
 gunshot	noun	act
 gunslinger	noun	criminal
@@ -6915,10 +7365,12 @@ habergeon	noun	protection
 habit	noun	clothing
 habitat	noun	place
 habitation	noun	place
+habitual	adjective	quality
 hacienda	noun	building
 hack	verb	transform
 hackbut	noun	weapon
 hacker	noun	criminal
+hackney	noun	vehicle_land
 hacksaw	noun	tool
 haddock	noun	fish
 hadrosaur	noun	reptile
@@ -6968,7 +7420,9 @@ hamburger	noun	food
 hamlet	noun	group
 hammer	noun	tool
 hammered	adjective	participle
+hammering	noun	attack
 hammock	noun	furniture
+hamper	noun	container
 hamster	noun	mammal
 hamstring	noun	bodypart
 hand	noun	bodypart
@@ -7013,6 +7467,7 @@ happenstance	noun	event
 happily	adverb	manner
 happiness	noun	feeling
 happy	adjective	quality
+harass	verb	combat
 harassed	adjective	quality
 harassment	noun	feeling
 harbor	noun	building
@@ -7024,6 +7479,7 @@ hardcover	noun	document
 harden	verb	transform
 hardened	adjective	quality
 hardly	adverb	manner
+hardness	noun	attribute
 hardship	noun	attribute
 hardware	noun	weapon
 hardwood	noun	material
@@ -7049,6 +7505,7 @@ harrier	noun	bird
 harrow	noun	machine
 harry	verb	combat
 harsh	adjective	quality
+harshly	adverb	manner
 hart	noun	mammal
 harvest	noun	act
 harvester	noun	tool
@@ -7063,11 +7520,13 @@ hastily	adverb	manner
 hasty	adjective	quality
 hat	noun	clothing
 hatch	verb	body
+hatched	adjective	quality
 hatchet	noun	tool
 hatchling	noun	creature
 hate	noun	feeling
 hated	adjective	participle
 hateful	adjective	quality
+hater	noun	person
 hatred	noun	feeling
 hatter	noun	worker
 hauberk	noun	protection
@@ -7081,6 +7540,7 @@ havoc	noun	phenomenon
 haw	noun	shrub
 hawk	noun	bird
 hawker	noun	worker
+hawking	noun	exchange
 hawkmoth	noun	insect
 hawser	noun	device
 hawthorn	noun	shrub
@@ -7091,6 +7551,7 @@ hazardous	adjective	quality
 haze	noun	phenomenon
 hazel	noun	material
 hazelnut	noun	produce
+hazy	adjective	quality
 head	noun	bodypart
 headache	noun	feeling
 headband	noun	clothing
@@ -7133,6 +7594,7 @@ heartbreaking	adjective	quality
 heartbroken	adjective	quality
 heartfelt	adjective	quality
 hearth	noun	structure
+heartland	noun	place
 heartless	adjective	quality
 hearts	noun	bodypart
 heartstrings	noun	feeling
@@ -7164,6 +7626,7 @@ heel	noun	bodypart
 hefty	adjective	quality
 heifer	noun	mammal
 height	noun	attribute
+heinous	adjective	quality
 heir	noun	worker
 heiress	noun	person
 heirloom	noun	possession
@@ -7174,6 +7637,7 @@ helicopter	noun	vehicle_air
 heliocentric	adjective	pertaining
 heliotrope	noun	mineral
 helium	noun	gas
+helix	noun	structure
 hell	noun	place
 hellish	adjective	quality
 helm	noun	device
@@ -7222,6 +7686,7 @@ hero	noun	leader
 heroic	adjective	quality
 heroin	noun	medicine
 heroine	noun	person
+heroism	noun	attribute
 heron	noun	bird
 herpes	noun	affliction
 herrerasaurus	noun	reptile
@@ -7245,6 +7710,7 @@ hideous	adjective	quality
 hideout	noun	place
 hiding	noun	act
 hie	verb	movement
+hierarchical	adjective	quality
 hierarchy	noun	group
 high	adjective	quality
 highboy	noun	furniture
@@ -7270,6 +7736,7 @@ hilarity	noun	feeling
 hill	noun	elevation
 hillock	noun	elevation
 hillside	noun	elevation
+hilly	adjective	quality
 hind	noun	mammal
 hinder	verb	social
 hindsight	noun	attribute
@@ -7296,6 +7763,7 @@ historically	adverb	manner
 history	noun	knowledge
 hit	verb	contact
 hitch	noun	act
+hitherto	adverb	manner
 hitman	noun	criminal
 hitter	noun	fighter
 hitting	noun	attack
@@ -7340,6 +7808,7 @@ homeland	noun	place
 homeless	noun	person
 homemade	adjective	quality
 homeopathy	noun	medicine
+homeowner	noun	person
 homepage	noun	knowledge
 homer	noun	act
 homesick	adjective	quality
@@ -7349,6 +7818,7 @@ hometown	noun	place
 homework	noun	document
 homicide	noun	killing
 homing	noun	device
+homogeneous	adjective	quality
 homunculus	noun	supernatural
 hone	verb	transform
 honest	adjective	quality
@@ -7375,9 +7845,11 @@ hoofed	adjective	quality
 hook	noun	tool
 hooked	adjective	quality
 hooking	noun	act
+hookup	noun	device
 hookworm	noun	invertebrate
 hooligan	noun	person
 hoop	noun	artifact
+hooray	noun	knowledge
 hoosegow	noun	building
 hooved	adjective	quality
 hoover	verb	contact
@@ -7386,9 +7858,11 @@ hope	noun	feeling
 hopeful	adjective	quality
 hopefully	adverb	manner
 hopeless	adjective	quality
+hopelessly	adverb	manner
 hopelessness	noun	feeling
 hopper	noun	container
 hopscotch	noun	act
+horde	noun	group
 horizon	noun	phenomenon
 horizontal	adjective	quality
 horizontally	adverb	manner
@@ -7404,6 +7878,7 @@ horoscope	noun	document
 horrendous	adjective	quality
 horrible	adjective	quality
 horribly	adverb	manner
+horrid	adjective	quality
 horrific	adjective	quality
 horrified	adjective	quality
 horrifying	adjective	quality
@@ -7416,6 +7891,8 @@ horsepower	noun	quantity
 horseradish	noun	produce
 horseshoe	noun	weapon
 horseshoes	noun	act
+horticultural	adjective	pertaining
+horticulture	noun	knowledge
 hose	noun	tool
 hosiery	noun	clothing
 hospice	noun	building
@@ -7432,6 +7909,7 @@ hot	adjective	quality
 hotel	noun	building
 hothouse	noun	structure
 hotness	noun	attribute
+hotspot	noun	place
 hound	noun	mammal
 hour	noun	duration
 hourglass	noun	device
@@ -7441,6 +7919,7 @@ houseboat	noun	vehicle_water
 housefly	noun	insect
 household	noun	group
 housekeeper	noun	worker
+housekeeping	noun	repair
 housemaid	noun	worker
 housewife	noun	worker
 housing	noun	building
@@ -7449,6 +7928,7 @@ hover	verb	movement
 hovercraft	noun	vehicle_land
 howl	verb	contact
 howler	noun	mammal
+howling	adjective	quality
 hub	noun	group
 hubbub	noun	event
 hubby	noun	person
@@ -7471,6 +7951,8 @@ humanoid	noun	machine
 humans	noun	mammal
 humble	adjective	quality
 humblebee	noun	insect
+humbled	adjective	quality
+humbly	adverb	manner
 humbug	noun	act
 humerus	noun	bodypart
 humid	adjective	quality
@@ -7528,6 +8010,8 @@ hydra	noun	supernatural
 hydrangea	noun	shrub
 hydrant	noun	device
 hydrate	noun	material
+hydrated	adjective	quality
+hydration	noun	act
 hydraulic	adjective	quality
 hydrocarbon	noun	material
 hydrofoil	noun	vehicle_water
@@ -7538,7 +8022,9 @@ hygiene	noun	knowledge
 hygienist	noun	worker
 hymn	noun	knowledge
 hype	noun	feeling
+hyperbolic	adjective	quality
 hypertension	noun	event
+hypnosis	noun	act
 hypnotic	noun	medicine
 hypnotism	noun	act
 hypnotize	verb	body
@@ -7568,6 +8054,7 @@ iconic	adjective	quality
 icy	adjective	quality
 idea	noun	knowledge
 ideal	adjective	quality
+idealistic	adjective	pertaining
 ideally	adverb	manner
 identical	adjective	quality
 identifiable	adjective	quality
@@ -7589,6 +8076,7 @@ iffy	adjective	quality
 ifrit	noun	supernatural
 igloo	noun	structure
 ignite	verb	weather
+ignited	adjective	quality
 ignition	noun	device
 ignorance	noun	knowledge
 ignorant	adjective	quality
@@ -7608,6 +8096,7 @@ illness	noun	affliction
 illogical	adjective	quality
 illuminate	verb	transform
 illuminated	adjective	quality
+illuminating	adjective	quality
 illumination	noun	light
 illusion	noun	knowledge
 illusionist	noun	worker
@@ -7620,6 +8109,7 @@ illustrious	adjective	quality
 ilmenite	noun	mineral
 image	noun	knowledge
 imagery	noun	knowledge
+imaginable	adjective	quality
 imaginary	adjective	quality
 imagination	noun	knowledge
 imaginative	adjective	quality
@@ -7656,14 +8146,19 @@ impartial	adjective	quality
 impatience	noun	feeling
 impatient	adjective	quality
 impeachment	noun	document
+impeccable	adjective	quality
+impedance	noun	phenomenon
+impede	verb	social
 impending	adjective	quality
 imperative	adjective	quality
 imperfect	adjective	quality
 imperial	adjective	quality
 imperialism	noun	knowledge
+imperialist	noun	leader
 impersonate	verb	transform
 impersonation	noun	act
 impersonator	noun	person
+impetus	noun	phenomenon
 implant	noun	device
 implanted	adjective	quality
 implement	noun	tool
@@ -7672,6 +8167,7 @@ implemented	adjective	participle
 implicated	adjective	quality
 implication	noun	knowledge
 implicit	adjective	quality
+implicitly	adverb	manner
 implosion	noun	phenomenon
 imply	verb	social
 import	noun	artifact
@@ -7683,11 +8179,13 @@ importing	noun	exchange
 impose	verb	social
 imposed	adjective	participle
 imposing	adjective	quality
+imposition	noun	act
 impossibility	noun	event
 impossible	adjective	absolute
 imposter	noun	person
 impostor	noun	person
 impoverished	adjective	quality
+impractical	adjective	quality
 impress	noun	act
 impressed	adjective	quality
 impression	noun	feeling
@@ -7708,6 +8206,8 @@ improving	adjective	quality
 improvise	verb	create
 improvised	adjective	participle
 impulse	noun	feeling
+impulsive	adjective	quality
+impunity	noun	attribute
 impure	adjective	quality
 inability	noun	act
 inaccessible	adjective	quality
@@ -7723,6 +8223,7 @@ inaugural	noun	ceremony
 inauguration	noun	act
 inauspicious	adjective	quality
 inboard	adjective	quality
+inbound	adjective	quality
 incandescent	adjective	quality
 incapable	adjective	quality
 incarceration	noun	act
@@ -7738,9 +8239,11 @@ incident	noun	event
 incidental	adjective	quality
 incidentally	adverb	manner
 incinerator	noun	building
+incision	noun	attack
 incitement	noun	act
 inclement	adjective	quality
 inclination	noun	knowledge
+incline	noun	elevation
 inclined	adjective	quality
 include	verb	social
 included	adjective	participle
@@ -7752,6 +8255,7 @@ incompatible	adjective	quality
 incompetence	noun	attribute
 incompetent	noun	person
 incomplete	adjective	quality
+incomprehensible	adjective	quality
 incongruity	noun	attribute
 inconsistency	noun	attribute
 inconsistent	adjective	quality
@@ -7782,6 +8286,7 @@ independent	adjective	quality
 independently	adverb	manner
 indestructible	adjective	absolute
 index	noun	document
+indexing	noun	knowledge
 indicate	verb	transfer
 indication	noun	knowledge
 indicative	adjective	pertaining
@@ -7795,7 +8300,9 @@ indigo	noun	material
 indirect	adjective	quality
 indirectly	adverb	manner
 indispensable	adjective	quality
+indistinguishable	adjective	quality
 individual	noun	person
+individuality	noun	attribute
 individually	adverb	manner
 indoor	adjective	quality
 indoors	adverb	manner
@@ -7833,6 +8340,8 @@ infect	verb	body
 infected	adjective	quality
 infection	noun	act
 infectious	adjective	quality
+infer	verb	perceive
+inference	noun	knowledge
 inferior	adjective	quality
 infernal	adjective	quality
 inferno	noun	attribute
@@ -7840,13 +8349,16 @@ infestation	noun	phenomenon
 infidelity	noun	crime
 infielder	noun	person
 infiltrate	verb	movement
+infiltration	noun	attack
 infiltrator	noun	person
 infinite	adjective	absolute
 infinitely	adverb	manner
 infinity	noun	quantity
 infirmary	noun	building
+inflamed	adjective	quality
 inflammation	noun	affliction
 inflammatory	adjective	quality
+inflatable	adjective	quality
 inflated	adjective	quality
 inflation	noun	event
 inflict	verb	combat
@@ -7859,6 +8371,7 @@ inform	verb	social
 informal	adjective	quality
 informant	noun	worker
 information	noun	knowledge
+informational	adjective	pertaining
 informative	adjective	quality
 informed	adjective	participle
 informer	noun	person
@@ -7869,10 +8382,12 @@ infrastructure	noun	structure
 infringement	noun	crime
 infusion	noun	drink
 ingenious	adjective	quality
+ingenuity	noun	knowledge
 ingot	noun	currency
 ingredient	noun	food
 inhabit	verb	movement
 inhabited	adjective	quality
+inhale	verb	consume
 inhaler	noun	container
 inherent	adjective	quality
 inherently	adverb	manner
@@ -7882,6 +8397,8 @@ inherited	adjective	quality
 inhibit	verb	transform
 inhibition	noun	attribute
 inhibitor	noun	material
+inhuman	adjective	quality
+inhumane	adjective	quality
 initial	adjective	quality
 initially	adverb	manner
 initiate	verb	create
@@ -7891,6 +8408,7 @@ inject	verb	body
 injection	noun	medicine
 injector	noun	device
 injunction	noun	knowledge
+injure	verb	combat
 injured	adjective	participle
 injury	noun	affliction
 injustice	noun	attribute
@@ -7914,7 +8432,9 @@ innovation	noun	knowledge
 innovative	adjective	quality
 inoculate	verb	body
 inoculation	noun	medicine
+inorganic	adjective	quality
 input	noun	knowledge
+inquest	noun	act
 inquire	verb	perceive
 inquiring	adjective	quality
 inquiry	noun	act
@@ -7934,6 +8454,7 @@ insertion	noun	act
 inshore	adjective	quality
 inside	noun	place
 insider	noun	leader
+insidious	adjective	quality
 insight	noun	attribute
 insightful	adjective	quality
 insignia	noun	artifact
@@ -7941,6 +8462,7 @@ insignificant	adjective	quality
 insist	verb	social
 insistence	noun	act
 insisting	verb	social
+insolvency	noun	act
 insolvent	adjective	quality
 insomnia	noun	event
 inspect	verb	perceive
@@ -7958,8 +8480,10 @@ installing	noun	act
 installment	noun	possession
 instance	noun	act
 instant	noun	duration
+instantaneous	adjective	quality
 instantly	adverb	manner
 instinct	noun	knowledge
+instinctively	adverb	manner
 institute	noun	building
 institution	noun	building
 institutional	adjective	pertaining
@@ -7986,6 +8510,7 @@ insurgent	noun	person
 insurrection	noun	act
 intact	adjective	quality
 intake	noun	artifact
+intangible	noun	attribute
 integer	noun	quantity
 integral	adjective	quality
 integrate	verb	transform
@@ -8003,6 +8528,7 @@ intended	adjective	quality
 intense	adjective	quality
 intensely	adverb	manner
 intensified	adjective	quality
+intensify	verb	transform
 intensity	noun	attribute
 intensive	adjective	quality
 intent	noun	feeling
@@ -8017,7 +8543,10 @@ intercept	verb	perceive
 interception	noun	act
 intercession	noun	event
 interchange	noun	artifact
+interchangeable	adjective	quality
 intercom	noun	device
+interconnected	adjective	quality
+intercontinental	adjective	quality
 interdict	noun	knowledge
 interdisciplinary	adjective	pertaining
 interest	noun	feeling
@@ -8032,6 +8561,7 @@ intergalactic	adjective	pertaining
 interim	adjective	quality
 interior	noun	place
 interlude	noun	duration
+intermediary	noun	person
 intermediate	adjective	quality
 interminable	adjective	quality
 intermission	noun	duration
@@ -8048,6 +8578,7 @@ internment	noun	act
 internship	noun	act
 interpersonal	adjective	quality
 interplanetary	adjective	pertaining
+interplay	noun	act
 interpolation	noun	knowledge
 interpret	verb	create
 interpretation	noun	knowledge
@@ -8058,6 +8589,7 @@ interrogation	noun	act
 interrupt	verb	transform
 interrupted	adjective	quality
 interruption	noun	act
+intersect	verb	movement
 intersection	noun	route
 interstate	noun	place
 interstellar	adjective	pertaining
@@ -8071,11 +8603,14 @@ intestinal	adjective	pertaining
 intestine	noun	bodypart
 intimacy	noun	feeling
 intimate	adjective	quality
+intimately	adverb	manner
 intimidate	verb	social
 intimidated	adjective	quality
 intimidating	adjective	quality
 intimidation	noun	feeling
+intolerable	adjective	quality
 intolerance	noun	feeling
+intolerant	adjective	quality
 intonation	noun	act
 intoxicated	adjective	quality
 intoxication	noun	feeling
@@ -8104,6 +8639,7 @@ invasion	noun	attack
 invasive	adjective	quality
 invent	verb	create
 invention	noun	knowledge
+inventive	adjective	quality
 inventor	noun	worker
 inventory	noun	artifact
 inverse	adjective	quality
@@ -8123,6 +8659,7 @@ investor	noun	worker
 invincible	adjective	absolute
 invisible	adjective	absolute
 invitation	noun	act
+invitational	adjective	pertaining
 invite	verb	social
 inviting	adjective	quality
 invocation	noun	event
@@ -8135,6 +8672,7 @@ involvement	noun	feeling
 inward	adjective	quality
 iodine	noun	material
 ion	noun	group
+ionic	adjective	pertaining
 ionized	adjective	quality
 ionosphere	noun	phenomenon
 irate	adjective	quality
@@ -8158,6 +8696,7 @@ irresistible	adjective	absolute
 irrespective	adverb	manner
 irresponsible	adjective	quality
 irreverent	adjective	quality
+irreversible	adjective	quality
 irrigation	noun	act
 irritability	noun	feeling
 irritable	adjective	quality
@@ -8171,6 +8710,7 @@ isle	noun	landform
 islet	noun	water
 isolate	verb	transform
 isolated	adjective	quality
+isolating	adjective	quality
 isolation	noun	feeling
 isopod	noun	invertebrate
 isotope	noun	material
@@ -8184,6 +8724,7 @@ itching	noun	event
 itchy	adjective	quality
 item	noun	artifact
 iteration	noun	act
+itinerary	noun	knowledge
 ivory	noun	material
 ivy	noun	plant
 jab	noun	attack
@@ -8238,6 +8779,7 @@ jelly	noun	food
 jellyfish	noun	invertebrate
 jeopardy	noun	knowledge
 jerk	verb	body
+jerking	noun	act
 jerky	noun	food
 jersey	noun	clothing
 jest	noun	act
@@ -8264,6 +8806,7 @@ jitter	noun	event
 jiujitsu	noun	act
 jive	verb	create
 job	noun	possession
+jobless	adjective	quality
 jock	noun	person
 jockey	noun	worker
 jodhpur	noun	clothing
@@ -8278,6 +8821,7 @@ jointly	adverb	manner
 joke	noun	act
 joker	noun	toy
 joking	adjective	quality
+jokingly	adverb	manner
 jolly	adjective	quality
 journal	noun	document
 journalism	noun	act
@@ -8298,12 +8842,14 @@ judge	noun	worker
 judgement	noun	event
 judging	noun	act
 judgment	noun	event
+judgmental	adjective	quality
 judicial	adjective	quality
 judiciary	noun	act
 judo	noun	act
 jug	noun	container
 juggernaut	noun	supernatural
 juggler	noun	worker
+juggling	noun	act
 jugular	noun	bodypart
 juice	noun	drink
 juicer	noun	tool
@@ -8325,9 +8871,11 @@ junk	noun	material
 junta	noun	group
 jurassic	adjective	pertaining
 jurisdiction	noun	knowledge
+jurisprudence	noun	knowledge
 juror	noun	person
 jury	noun	group
 justice	noun	worker
+justifiable	adjective	quality
 justification	noun	knowledge
 justified	adjective	participle
 justify	verb	transform
@@ -8362,6 +8910,7 @@ kennel	noun	building
 keno	noun	exchange
 kepi	noun	clothing
 kerchief	noun	clothing
+kern	noun	artifact
 kernel	noun	plant
 kerosene	noun	fuel
 kestrel	noun	bird
@@ -8394,16 +8943,20 @@ kill	verb	contact
 killer	noun	criminal
 killing	noun	killing
 kiln	noun	structure
+kilometer	noun	quantity
+kilometre	noun	quantity
 kilt	noun	clothing
 kimberlite	noun	mineral
 kimono	noun	clothing
 kin	noun	person
+kinase	noun	material
 kind	adjective	quality
 kinda	adverb	manner
 kindergarten	noun	structure
 kindle	verb	weather
 kindly	adjective	quality
 kindness	noun	act
+kindred	adjective	quality
 kinetic	adjective	pertaining
 king	noun	leader
 kingdom	noun	place
@@ -8423,6 +8976,7 @@ kitten	noun	mammal
 kitty	noun	group
 kiwi	noun	produce
 klondike	noun	exchange
+knack	noun	knowledge
 knave	noun	person
 knead	verb	create
 knee	noun	bodypart
@@ -8491,6 +9045,7 @@ lacking	adjective	quality
 lacquer	noun	material
 lacrosse	noun	act
 lactose	noun	material
+lacy	adjective	quality
 lad	noun	person
 ladder	noun	tool
 laden	adjective	quality
@@ -8501,14 +9056,18 @@ ladybird	noun	insect
 ladybug	noun	insect
 lag	noun	act
 lager	noun	drink
+lagging	noun	material
 lagoon	noun	water
 laid	adjective	participle
 lair	noun	place
+laird	noun	leader
 lake	noun	water
+lakh	noun	quantity
 lam	noun	escape
 lamb	noun	mammal
 lame	adjective	quality
 lamellar	noun	protection
+lament	verb	social
 lamia	noun	supernatural
 lamp	noun	device
 lamprey	noun	fish
@@ -8526,6 +9085,7 @@ landlord	noun	person
 landmark	noun	place
 landmine	noun	tool
 landscape	noun	place
+landscaping	noun	repair
 landsknecht	noun	person
 landslide	noun	event
 lane	noun	route
@@ -8573,6 +9133,7 @@ latter	adjective	quality
 lattice	noun	structure
 laudanum	noun	medicine
 laugh	verb	body
+laughable	adjective	quality
 laughing	adjective	quality
 laughter	noun	act
 launch	verb	movement
@@ -8582,6 +9143,7 @@ launchpad	noun	structure
 launder	verb	transfer
 laundering	noun	act
 laundry	noun	building
+laureate	noun	person
 laurel	noun	tree
 lava	noun	material
 lavatory	noun	structure
@@ -8605,9 +9167,11 @@ laying	noun	group
 layout	noun	knowledge
 lazaretto	noun	building
 lazily	adverb	manner
+laziness	noun	act
 lazuli	noun	gem
 lazy	adjective	quality
 lea	noun	place
+leach	verb	transform
 lead	noun	metal
 leaden	adjective	quality
 leader	noun	leader
@@ -8621,11 +9185,13 @@ leaflet	noun	document
 leafy	adjective	quality
 league	noun	group
 leak	verb	social
+leakage	noun	event
 leaker	noun	person
 lean	verb	body
 leaning	adjective	quality
 leap	noun	act
 leapfrog	noun	act
+leaping	noun	travel
 learn	verb	perceive
 learned	adjective	quality
 learner	noun	person
@@ -8642,6 +9208,7 @@ leaving	noun	act
 lectern	noun	furniture
 lecture	noun	act
 lecturer	noun	worker
+lecturing	noun	knowledge
 ledge	noun	elevation
 ledger	noun	document
 lee	noun	place
@@ -8649,11 +9216,13 @@ leech	noun	invertebrate
 leek	noun	produce
 leftover	adjective	quality
 leftovers	noun	food
+lefty	noun	person
 leg	noun	bodypart
 legacy	noun	possession
 legal	adjective	quality
 legality	noun	attribute
 legalization	noun	act
+legalize	verb	social
 legally	adverb	manner
 legate	noun	person
 legend	noun	knowledge
@@ -8701,12 +9270,15 @@ letdown	noun	feeling
 lethal	adjective	absolute
 lethargy	noun	attribute
 letter	noun	document
+lettering	noun	knowledge
+letterman	noun	fighter
 letters	noun	knowledge
 letting	noun	possession
 lettuce	noun	produce
 leukaemia	noun	affliction
 leukemia	noun	affliction
 level	noun	attribute
+leveling	noun	destruction
 lever	noun	machine
 leverage	noun	phenomenon
 leviathan	noun	supernatural
@@ -8738,6 +9310,7 @@ licensed	adjective	quality
 lich	noun	supernatural
 lichen	noun	plant
 lick	verb	contact
+licked	adjective	quality
 licking	noun	event
 licorice	noun	herb
 lid	noun	bodypart
@@ -8751,6 +9324,8 @@ lieutenant	noun	leader
 life	noun	attribute
 lifeboat	noun	vehicle_water
 lifeguard	noun	worker
+lifeless	adjective	quality
+lifeline	noun	rescue
 lifelong	adjective	quality
 lifer	noun	person
 lifesaver	noun	worker
@@ -8765,6 +9340,7 @@ ligament	noun	bodypart
 liger	noun	mammal
 light	adjective	quality
 lightbulb	noun	device
+lighted	adjective	quality
 lighten	verb	contact
 lighter	noun	fuel
 lighterman	noun	worker
@@ -8794,6 +9370,7 @@ limit	noun	attribute
 limitation	noun	knowledge
 limited	adjective	quality
 limiting	adjective	participle
+limitless	adjective	quality
 limo	noun	vehicle_land
 limonite	noun	mineral
 limousine	noun	vehicle_land
@@ -8847,6 +9424,7 @@ literacy	noun	knowledge
 literal	adjective	quality
 literally	adverb	manner
 literary	adjective	pertaining
+literate	noun	person
 literature	noun	knowledge
 lithium	noun	metal
 litigation	noun	act
@@ -8880,6 +9458,7 @@ lobster	noun	invertebrate
 lobworm	noun	invertebrate
 local	adjective	quality
 locality	noun	attribute
+localization	noun	knowledge
 localized	adjective	quality
 locally	adverb	manner
 locate	verb	perceive
@@ -8897,6 +9476,7 @@ lockkeeper	noun	worker
 locksmith	noun	worker
 lockup	noun	building
 locomotive	noun	vehicle_land
+locus	noun	place
 locust	noun	insect
 lode	noun	phenomenon
 lodestone	noun	mineral
@@ -8912,6 +9492,7 @@ logging	noun	act
 logic	noun	knowledge
 logical	adjective	quality
 logically	adverb	manner
+logistical	adjective	pertaining
 logo	noun	knowledge
 loin	noun	food
 lollipop	noun	food
@@ -8928,8 +9509,10 @@ longevity	noun	attribute
 longhorn	noun	mammal
 longicorn	noun	insect
 longing	noun	feeling
+longitude	noun	knowledge
 longitudinal	adjective	pertaining
 longshoreman	noun	worker
+longstanding	adjective	quality
 longsword	noun	weapon
 longtime	adjective	quality
 loo	noun	structure
@@ -8944,6 +9527,7 @@ loose	adjective	quality
 loosely	adverb	manner
 loosen	verb	transform
 loot	noun	attribute
+looted	adjective	quality
 looter	noun	criminal
 looting	noun	act
 lord	noun	leader
@@ -8966,6 +9550,7 @@ loudspeaker	noun	device
 lounge	noun	building
 louse	noun	insect
 lousy	adjective	quality
+lovable	adjective	quality
 love	noun	feeling
 loved	adjective	participle
 lovely	adjective	quality
@@ -8979,6 +9564,7 @@ lowercase	adjective	quality
 lowered	adjective	quality
 lowering	noun	act
 lowest	adjective	quality
+lowly	adjective	quality
 loyal	adjective	quality
 loyalist	noun	person
 loyalty	noun	attribute
@@ -9048,6 +9634,7 @@ machicolation	noun	fortification
 machine	noun	machine
 machinery	noun	machine
 machinist	noun	worker
+macho	noun	person
 macintosh	noun	fabric
 mack	noun	clothing
 mackerel	noun	fish
@@ -9061,6 +9648,7 @@ madame	noun	person
 madden	verb	social
 madder	noun	plant
 madhouse	noun	building
+madly	adverb	manner
 madness	noun	feeling
 madras	noun	fabric
 madrigal	verb	create
@@ -9138,6 +9726,7 @@ mallard	noun	bird
 mallet	noun	tool
 mallow	noun	shrub
 malnutrition	noun	affliction
+malpractice	noun	crime
 malt	noun	food
 malware	noun	knowledge
 mama	noun	person
@@ -9145,6 +9734,7 @@ mamba	noun	reptile
 mambo	noun	act
 mamma	noun	person
 mammal	noun	mammal
+mammalian	noun	mammal
 mammoth	noun	mammal
 man	noun	person
 manacle	noun	tool
@@ -9173,6 +9763,7 @@ mangonel	noun	weapon
 mangrove	noun	tree
 mangy	adjective	quality
 manhattan	noun	drink
+manhood	noun	attribute
 mania	noun	feeling
 manic	adjective	quality
 manicurist	noun	worker
@@ -9183,6 +9774,7 @@ manifold	noun	structure
 manila	noun	material
 manipulate	verb	social
 manipulation	noun	act
+manipulative	adjective	quality
 maniraptor	noun	reptile
 mankind	noun	group
 manly	adjective	quality
@@ -9233,6 +9825,7 @@ margarita	noun	drink
 marge	noun	food
 margin	noun	attribute
 marginal	adjective	quality
+marginally	adverb	manner
 margrave	noun	leader
 marguerite	noun	flower
 maria	noun	landform
@@ -9331,6 +9924,7 @@ maternal	adjective	quality
 maternity	noun	attribute
 math	noun	knowledge
 mathematical	adjective	pertaining
+mathematically	adverb	manner
 mathematician	noun	worker
 mathematics	noun	knowledge
 mating	noun	act
@@ -9360,6 +9954,7 @@ mayhem	noun	crime
 mayo	noun	food
 mayonnaise	noun	food
 mayor	noun	leader
+mayoral	adjective	pertaining
 maze	noun	structure
 mazurka	noun	act
 mead	noun	drink
@@ -9396,6 +9991,7 @@ medallion	noun	adornment
 medallist	noun	person
 meddling	noun	act
 medfly	noun	insect
+medial	adjective	quality
 median	adjective	quality
 mediated	adjective	quality
 mediation	noun	act
@@ -9410,8 +10006,10 @@ medicine	noun	medicine
 medico	noun	worker
 medieval	adjective	pertaining
 mediocre	adjective	quality
+meditate	verb	perceive
 meditation	noun	ceremony
 medium	noun	worker
+medley	noun	knowledge
 medusa	noun	supernatural
 meek	adjective	quality
 meerkat	noun	mammal
@@ -9450,9 +10048,11 @@ memorabilia	noun	artifact
 memorable	adjective	quality
 memorandum	noun	knowledge
 memorial	noun	artifact
+memorize	verb	perceive
 memory	noun	knowledge
 men	noun	group
 menace	verb	social
+menacing	adjective	quality
 mend	verb	create
 menhir	noun	structure
 meningitis	noun	affliction
@@ -9464,9 +10064,12 @@ mention	verb	social
 mentor	noun	person
 menu	noun	document
 meow	noun	event
+mercantile	adjective	pertaining
 mercenary	noun	fighter
 merchandise	noun	artifact
+merchandising	noun	exchange
 merchant	noun	worker
+merciful	adjective	quality
 mercury	noun	metal
 mercy	noun	feeling
 mere	adjective	quality
@@ -9505,6 +10108,7 @@ metal	noun	metal
 metallic	adjective	quality
 metamorphosis	noun	act
 metaphor	noun	knowledge
+metaphysical	adjective	pertaining
 meteor	noun	disaster
 meteoric	adjective	pertaining
 meteorite	noun	disaster
@@ -9519,6 +10123,7 @@ methanol	noun	fuel
 method	noun	knowledge
 methodology	noun	knowledge
 methyl	noun	material
+meticulous	adjective	quality
 metre	noun	knowledge
 metric	noun	quantity
 metro	noun	artifact
@@ -9533,10 +10138,12 @@ mica	noun	mineral
 micro	adjective	quality
 microbe	noun	creature
 microbial	adjective	pertaining
+microbiology	noun	knowledge
 microchip	noun	device
 microphone	noun	device
 microscope	noun	device
 microscopic	adjective	pertaining
+microscopy	noun	knowledge
 microwave	noun	device
 mid	adjective	quality
 midday	noun	duration
@@ -9554,6 +10161,7 @@ mighty	adjective	quality
 migraine	noun	event
 migrate	verb	movement
 migration	noun	phenomenon
+migratory	adjective	quality
 mike	noun	device
 mild	adjective	quality
 mildew	noun	fungus
@@ -9595,6 +10203,7 @@ minded	adjective	quality
 minder	noun	worker
 mindful	adjective	quality
 mindfulness	noun	attribute
+mindless	adjective	quality
 mindset	noun	knowledge
 mine	noun	structure
 mined	adjective	quality
@@ -9603,9 +10212,12 @@ miner	noun	worker
 mineral	noun	mineral
 mineralogist	noun	person
 mineshaft	noun	artifact
+mingle	verb	social
 mini	noun	clothing
 miniature	adjective	quality
 minimal	adjective	quality
+minimalist	noun	person
+minimise	verb	transform
 minimize	verb	transform
 minimum	adjective	quality
 mining	noun	act
@@ -9628,6 +10240,7 @@ minuscule	adjective	quality
 minute	noun	duration
 miracle	noun	event
 miraculous	adjective	quality
+miraculously	adverb	manner
 mirage	noun	phenomenon
 mirror	noun	device
 mirrored	adjective	quality
@@ -9638,11 +10251,13 @@ miscalculation	noun	act
 miscellaneous	adjective	quality
 mischief	noun	attribute
 mischievous	adjective	quality
+misconception	noun	act
 misconduct	noun	crime
 miscount	noun	act
 misdemeanor	noun	crime
 miser	noun	person
 miserable	adjective	quality
+miserably	adverb	manner
 misericorde	noun	weapon
 miserly	adjective	quality
 misery	noun	feeling
@@ -9665,6 +10280,7 @@ missing	adjective	participle
 mission	noun	group
 missionary	noun	worker
 misstep	noun	act
+missy	noun	person
 mist	noun	phenomenon
 mistake	noun	event
 mistaken	adjective	quality
@@ -9674,6 +10290,7 @@ mistral	noun	weather
 mistress	noun	person
 mistrust	noun	affliction
 misty	adjective	quality
+misunderstand	verb	perceive
 misunderstanding	noun	knowledge
 misunderstood	adjective	quality
 misuse	noun	act
@@ -9697,6 +10314,7 @@ mob	noun	group
 mobile	adjective	quality
 mobility	noun	attribute
 mobilization	noun	act
+mobilize	verb	transform
 mobster	noun	criminal
 moccasin	noun	clothing
 mocha	noun	material
@@ -9717,9 +10335,11 @@ moderation	noun	attribute
 moderator	noun	material
 modern	adjective	quality
 modernism	noun	knowledge
+modernist	noun	person
 modernity	noun	attribute
 modernization	noun	act
 modest	adjective	quality
+modesty	noun	attribute
 modification	noun	act
 modified	adjective	participle
 modify	verb	transform
@@ -9733,6 +10353,7 @@ moist	adjective	quality
 moisten	verb	transform
 moisture	noun	phenomenon
 mojo	noun	artifact
+mol	noun	quantity
 molar	noun	bodypart
 molasses	noun	food
 mold	noun	fungus
@@ -9775,6 +10396,8 @@ monkfish	noun	fish
 mono	noun	affliction
 monocle	noun	clothing
 monocline	noun	landform
+monograph	noun	document
+monologue	noun	knowledge
 monopoly	noun	possession
 monotheism	noun	knowledge
 monoxide	noun	material
@@ -9800,12 +10423,14 @@ moonwalk	verb	movement
 moor	verb	movement
 mooring	noun	structure
 moose	noun	mammal
+moot	noun	contest
 mop	noun	tool
 moral	adjective	quality
 morale	noun	feeling
 morality	noun	attribute
 morally	adverb	manner
 moray	noun	fish
+morbid	adjective	quality
 morel	noun	fungus
 moreover	adverb	manner
 morganite	noun	gem
@@ -9816,6 +10441,7 @@ morningstar	noun	weapon
 morocco	noun	material
 morose	adjective	quality
 morphine	noun	medicine
+morphological	adjective	pertaining
 morphology	noun	knowledge
 morrow	noun	duration
 mortal	adjective	quality
@@ -9873,9 +10499,11 @@ mouse	noun	creature
 mouser	noun	mammal
 mousetrap	noun	tool
 mousse	noun	food
+moustache	noun	adornment
 mouth	noun	bodypart
 mouthpiece	noun	person
 mouthwash	noun	medicine
+movable	noun	possession
 move	verb	movement
 moved	adjective	participle
 movement	noun	act
@@ -9909,6 +10537,9 @@ multimedia	noun	knowledge
 multinational	adjective	quality
 multiple	adjective	quality
 multiplex	noun	building
+multiplication	noun	act
+multiplied	adjective	quality
+multiplier	noun	quantity
 multiply	verb	transform
 multitude	noun	quantity
 mum	noun	person
@@ -9955,6 +10586,8 @@ mutate	verb	transform
 mutation	noun	person
 mute	verb	social
 muted	adjective	quality
+mutilated	adjective	quality
+mutilation	noun	attack
 mutineer	noun	person
 mutiny	noun	conflict
 mutt	noun	mammal
@@ -9971,6 +10604,7 @@ myriapod	noun	invertebrate
 myrrh	noun	plant
 myrtle	noun	shrub
 mysterious	adjective	quality
+mysteriously	adverb	manner
 mystery	noun	knowledge
 mystic	noun	worker
 mystical	adjective	quality
@@ -9985,12 +10619,14 @@ nada	noun	event
 nadir	noun	phenomenon
 nag	noun	mammal
 naga	noun	supernatural
+nagging	adjective	quality
 naiad	noun	supernatural
 nail	noun	weapon
 naive	adjective	quality
 naked	adjective	quality
 naloxone	noun	medicine
 name	noun	attribute
+nameless	adjective	quality
 namely	adverb	manner
 naming	noun	act
 nan	noun	person
@@ -10010,6 +10646,7 @@ narrator	noun	person
 narrow	adjective	quality
 narrowboat	noun	vehicle_water
 narrowed	adjective	quality
+narrowing	noun	attribute
 narrowly	adverb	manner
 narwhal	noun	mammal
 nasal	adjective	pertaining
@@ -10024,6 +10661,7 @@ nationwide	adjective	quality
 native	noun	person
 nativity	noun	event
 natural	adjective	quality
+naturalist	noun	person
 naturally	adverb	manner
 nature	noun	attribute
 naught	noun	event
@@ -10072,6 +10710,7 @@ negligee	noun	clothing
 negligence	noun	attribute
 negligent	adjective	quality
 negligible	adjective	quality
+negotiable	adjective	quality
 negotiate	verb	social
 negotiation	noun	act
 negotiator	noun	person
@@ -10094,6 +10733,7 @@ nerd	noun	person
 nereid	noun	supernatural
 nerve	noun	bodypart
 nervous	adjective	quality
+nervously	adverb	manner
 nervousness	noun	feeling
 ness	noun	landform
 nest	noun	natural_object
@@ -10106,6 +10746,7 @@ network	noun	group
 neural	adjective	pertaining
 neurological	adjective	pertaining
 neurologist	noun	worker
+neurology	noun	knowledge
 neuron	noun	bodypart
 neuroscience	noun	knowledge
 neurosurgeon	noun	worker
@@ -10114,6 +10755,7 @@ neutrality	noun	knowledge
 neutron	noun	natural_object
 nevertheless	adverb	manner
 new	adjective	quality
+newbie	noun	person
 newborn	adjective	quality
 newcomer	noun	person
 newly	adverb	manner
@@ -10137,6 +10779,8 @@ nickel	noun	currency
 nickname	noun	act
 nicotine	noun	poison
 niece	noun	person
+nifty	adjective	quality
+nigh	adjective	quality
 night	noun	phenomenon
 nightcap	noun	drink
 nightclub	noun	building
@@ -10146,10 +10790,12 @@ nighthawk	noun	bird
 nightie	noun	clothing
 nightingale	noun	bird
 nightjar	noun	bird
+nightlife	noun	event
 nightly	adjective	quality
 nightmare	noun	attribute
 nightshade	noun	plant
 nightstick	noun	weapon
+nighttime	noun	season
 nightwalker	noun	invertebrate
 nihilism	noun	knowledge
 nil	noun	event
@@ -10177,6 +10823,7 @@ nobody	noun	person
 noctuid	noun	insect
 nocturnal	adjective	quality
 nod	verb	body
+nodding	adjective	quality
 node	noun	bodypart
 nodule	noun	bodypart
 noggin	noun	bodypart
@@ -10184,6 +10831,7 @@ noise	noun	event
 noisily	adverb	manner
 noisy	adjective	quality
 nomad	noun	person
+nomenclature	noun	knowledge
 nominal	adjective	pertaining
 nominate	verb	social
 nominated	adjective	participle
@@ -10193,6 +10841,8 @@ non	adverb	manner
 none	adjective	quality
 nonetheless	adverb	manner
 nonexistent	adjective	quality
+nonfiction	noun	document
+nonlinear	adjective	quality
 nonprofit	noun	group
 nonsense	noun	document
 nonsensical	adjective	quality
@@ -10205,10 +10855,12 @@ norm	noun	knowledge
 normal	adjective	quality
 normally	adverb	manner
 north	noun	place
+northbound	adjective	quality
 northeast	noun	event
 northeastern	adjective	quality
 northerly	adjective	pertaining
 northern	adjective	quality
+northward	adjective	quality
 northwest	noun	event
 northwestern	adjective	quality
 nose	noun	bodypart
@@ -10234,6 +10886,7 @@ noticed	adjective	quality
 notification	noun	act
 notify	verb	social
 notion	noun	knowledge
+notoriety	noun	attribute
 notorious	adjective	quality
 notoriously	adverb	manner
 notwithstanding	adverb	manner
@@ -10252,6 +10905,7 @@ nowhere	adverb	manner
 nozzle	noun	device
 nuclear	adjective	quality
 nucleus	noun	bodypart
+nudge	noun	act
 nudity	noun	attribute
 nugget	noun	natural_object
 nuisance	noun	knowledge
@@ -10262,6 +10916,7 @@ nullification	noun	event
 nullify	verb	transform
 nullity	noun	event
 numb	adjective	quality
+numbering	noun	knowledge
 numbers	noun	act
 numbness	noun	feeling
 numerical	adjective	quality
@@ -10283,6 +10938,7 @@ nutritionist	noun	worker
 nutritious	adjective	quality
 nuts	adjective	quality
 nutshell	noun	produce
+nutty	adjective	quality
 nylon	noun	material
 nylons	noun	clothing
 nymph	noun	supernatural
@@ -10296,6 +10952,7 @@ oat	noun	produce
 oath	noun	possession
 oatmeal	noun	food
 obedience	noun	attribute
+obedient	adjective	quality
 obelisk	noun	structure
 obese	adjective	quality
 obesity	noun	attribute
@@ -10304,10 +10961,12 @@ obituary	noun	document
 object	noun	artifact
 objection	noun	act
 objective	noun	knowledge
+objectively	adverb	manner
 obligated	adjective	quality
 obligation	noun	act
 obligatory	adjective	quality
 obliged	adjective	quality
+oblique	adjective	quality
 obliterate	verb	transform
 obliteration	noun	event
 oblivion	noun	event
@@ -10354,6 +11013,7 @@ ocelot	noun	mammal
 ochre	noun	mineral
 octane	noun	material
 octopus	noun	invertebrate
+oculus	noun	structure
 odd	adjective	quality
 oddity	noun	event
 oddly	adjective	quality
@@ -10375,10 +11035,12 @@ office	noun	building
 officer	noun	worker
 official	noun	worker
 officially	adverb	manner
+officiating	noun	ceremony
 offset	verb	create
 offshore	adjective	quality
 offside	noun	act
 offspring	noun	person
+oft	adverb	manner
 often	adverb	manner
 ogre	noun	supernatural
 ogress	noun	supernatural
@@ -10404,6 +11066,7 @@ omelette	noun	food
 omen	noun	event
 ominous	adjective	quality
 omission	noun	act
+omnibus	noun	vehicle_land
 omnipotent	adjective	quality
 omniscient	adjective	quality
 omnivore	noun	creature
@@ -10466,17 +11129,21 @@ option	noun	document
 optional	adjective	quality
 optometrist	noun	worker
 opulent	adjective	quality
+opus	noun	knowledge
 oracle	noun	worker
 oral	adjective	pertaining
 orange	noun	produce
 orangery	noun	structure
 orangutan	noun	mammal
+orb	noun	artifact
 orbit	noun	phenomenon
 orbital	adjective	pertaining
 orbiter	noun	vehicle_air
 orca	noun	mammal
 orchard	noun	structure
 orchestra	noun	group
+orchestral	adjective	pertaining
+orchestrated	adjective	pertaining
 orchestration	noun	act
 orchid	noun	flower
 ordain	verb	social
@@ -10487,6 +11154,7 @@ ordered	adjective	quality
 ordering	noun	group
 orderly	noun	worker
 ordinance	noun	knowledge
+ordinarily	adverb	manner
 ordinary	adjective	quality
 ordination	noun	ceremony
 ordnance	noun	weapon
@@ -10496,6 +11164,7 @@ oreo	noun	food
 organ	noun	bodypart
 organic	adjective	quality
 organisation	noun	group
+organisational	adjective	pertaining
 organise	verb	transform
 organised	adjective	participle
 organism	noun	creature
@@ -10520,13 +11189,16 @@ oriole	noun	bird
 ornament	noun	artifact
 ornamental	noun	plant
 ornamentation	noun	artifact
+ornate	adjective	quality
 orphan	noun	person
 orphanage	noun	building
+orphaned	adjective	quality
 orpiment	noun	mineral
 orrery	noun	device
 orthoclase	noun	mineral
 orthodontist	noun	worker
 orthodox	adjective	pertaining
+orthodoxy	noun	attribute
 oryx	noun	mammal
 oscillator	noun	device
 osmium	noun	metal
@@ -10540,11 +11212,15 @@ otter	noun	mammal
 ottoman	noun	furniture
 oubliette	noun	building
 ounce	noun	quantity
+outage	noun	act
+outback	noun	place
 outbid	verb	social
 outboard	noun	device
 outbreak	noun	affliction
+outburst	noun	event
 outcome	noun	event
 outcrop	noun	rock
+outcry	noun	act
 outdated	adjective	quality
 outdoor	adjective	quality
 outer	adjective	quality
@@ -10555,6 +11231,7 @@ outgoing	adjective	quality
 outhouse	noun	building
 outing	noun	travel
 outlaw	noun	criminal
+outlawed	adjective	quality
 outlawry	noun	crime
 outlet	noun	device
 outline	noun	knowledge
@@ -10578,6 +11255,7 @@ outsider	noun	person
 outspoken	adjective	quality
 outstanding	adjective	quality
 outward	adjective	quality
+outweigh	verb	combat
 outwork	noun	fortification
 oval	adjective	quality
 ovation	noun	knowledge
@@ -10593,12 +11271,15 @@ overdraft	noun	possession
 overdrive	noun	machine
 overdue	adjective	quality
 overflow	noun	event
+overflowing	adjective	quality
 overgrown	adjective	quality
 overhaul	noun	repair
 overhead	adjective	quality
 overhear	verb	perceive
+overland	adjective	quality
 overlap	noun	knowledge
 overlapping	noun	artifact
+overlay	noun	protection
 overload	noun	event
 overlook	verb	perceive
 overlooked	adjective	quality
@@ -10619,10 +11300,13 @@ overt	adjective	quality
 overtake	verb	combat
 overthrow	noun	act
 overtime	noun	duration
+overtly	adverb	manner
 overture	noun	event
+overturn	noun	act
 overturned	adjective	quality
 overview	noun	knowledge
 overweight	adjective	quality
+overwhelm	verb	combat
 overwhelming	adjective	participle
 overwhelmingly	adverb	manner
 ovipositor	noun	bodypart
@@ -10661,6 +11345,7 @@ packing	noun	material
 pact	noun	possession
 pad	noun	material
 padded	adjective	quality
+padding	noun	protection
 paddle	noun	weapon
 paddler	noun	worker
 paddlewheel	noun	device
@@ -10681,6 +11366,7 @@ pain	noun	feeling
 painful	adjective	quality
 painfully	adverb	manner
 painkiller	noun	medicine
+painless	adjective	quality
 paint	noun	liquid
 paintball	noun	toy
 paintbrush	noun	tool
@@ -10710,6 +11396,7 @@ palm	noun	tree
 palmetto	noun	tree
 palmyra	noun	tree
 palomino	noun	mammal
+palpable	adjective	quality
 palsy	noun	affliction
 pamphlet	noun	document
 pan	noun	tool
@@ -10728,6 +11415,7 @@ panicked	adjective	quality
 panicky	adjective	quality
 panopticon	noun	building
 panorama	noun	knowledge
+panoramic	adjective	quality
 pansy	noun	herb
 pant	verb	body
 pantheon	noun	building
@@ -10766,6 +11454,7 @@ paralysis	noun	event
 paralyzed	adjective	quality
 paramedic	noun	worker
 parameter	noun	knowledge
+paramilitary	noun	group
 paramount	adjective	quality
 paranoia	noun	act
 paranoid	adjective	quality
@@ -10773,6 +11462,7 @@ paranormal	adjective	quality
 parapet	noun	fortification
 parasailing	noun	act
 parasite	noun	creature
+parasitic	adjective	pertaining
 parasol	noun	clothing
 paratrooper	noun	fighter
 parcel	noun	document
@@ -10802,6 +11492,7 @@ parsley	noun	herb
 parsnip	noun	produce
 parson	noun	leader
 parsonage	noun	building
+partake	verb	consume
 parted	adjective	quality
 partial	adjective	quality
 partially	adverb	manner
@@ -10825,6 +11516,7 @@ pass	verb	movement
 passage	noun	structure
 passageway	noun	structure
 passenger	noun	person
+passer	noun	person
 passing	noun	killing
 passion	noun	feeling
 passionate	adjective	quality
@@ -10843,12 +11535,15 @@ pasture	noun	landform
 pasty	noun	food
 pat	verb	social
 patch	verb	create
+patched	adjective	quality
 patchouli	noun	shrub
 patchwork	noun	artifact
 pate	noun	food
 patella	noun	bodypart
 patent	noun	document
 patented	adjective	quality
+paternal	adjective	pertaining
+paternity	noun	act
 path	noun	route
 pathetic	adjective	quality
 pathfinder	noun	worker
@@ -10875,10 +11570,12 @@ patronage	noun	group
 patsy	noun	person
 patter	noun	event
 pattern	noun	artifact
+patterned	adjective	quality
 patty	noun	food
 pauldron	noun	protection
 pauper	noun	person
 pause	noun	duration
+pave	verb	create
 paved	adjective	quality
 pavement	noun	artifact
 pavilion	noun	structure
@@ -10905,6 +11602,7 @@ peace	noun	feeling
 peaceful	adjective	quality
 peacefully	adverb	manner
 peacekeeper	noun	fighter
+peacekeeping	noun	act
 peach	noun	produce
 peacock	noun	bird
 peak	noun	elevation
@@ -10934,6 +11632,7 @@ peek	noun	act
 peel	noun	food
 peeled	adjective	quality
 peeler	noun	weapon
+peeling	noun	phenomenon
 peep	noun	event
 peer	verb	perceive
 peeve	noun	feeling
@@ -11022,12 +11721,15 @@ permafrost	noun	landform
 permanence	noun	attribute
 permanent	adjective	quality
 permanently	adverb	manner
+permissible	adjective	quality
 permission	noun	act
 permit	noun	document
 peroxide	noun	material
 perpendicular	adjective	quality
 perpetrator	noun	person
 perpetual	adjective	quality
+perpetually	adverb	manner
+perpetuate	verb	transform
 perpetuity	noun	duration
 perplex	verb	perceive
 perplexing	adjective	quality
@@ -11042,6 +11744,7 @@ persistent	adjective	quality
 person	noun	person
 persona	noun	knowledge
 personal	adjective	quality
+personalised	adjective	quality
 personality	noun	attribute
 personalized	adjective	quality
 personally	adverb	manner
@@ -11054,6 +11757,7 @@ persuasive	adjective	quality
 pertinent	adjective	quality
 pertussis	noun	affliction
 pervasive	adjective	quality
+perverse	adjective	quality
 peryton	noun	supernatural
 peso	noun	currency
 pessimism	noun	feeling
@@ -11094,8 +11798,10 @@ pheasant	noun	bird
 phenomenal	adjective	pertaining
 phenomenon	noun	phenomenon
 phi	noun	knowledge
+philanthropic	adjective	quality
 philanthropist	noun	person
 philanthropy	noun	act
+philharmonic	adjective	pertaining
 philosopher	noun	worker
 philosophical	adjective	pertaining
 philosophy	noun	knowledge
@@ -11129,10 +11835,12 @@ physiotherapy	noun	medicine
 physique	noun	bodypart
 pianist	noun	worker
 piano	noun	instrument
+piazza	noun	place
 pic	noun	artifact
 piccolo	noun	instrument
 pick	noun	tool
 pickaxe	noun	weapon
+picket	noun	worker
 picking	noun	act
 pickle	noun	food
 pickled	adjective	participle
@@ -11222,8 +11930,10 @@ pitchfork	noun	tool
 pitching	noun	act
 pitfall	noun	tool
 pith	noun	material
+pitiful	adjective	quality
 pitman	noun	worker
 pittance	noun	possession
+pitted	adjective	quality
 pituitary	noun	bodypart
 pity	noun	feeling
 pivot	noun	person
@@ -11270,12 +11980,14 @@ plaque	noun	bodypart
 plasma	noun	bodypart
 plasmodium	noun	creature
 plaster	noun	material
+plastered	adjective	quality
 plasterer	noun	worker
 plastic	noun	material
 plate	noun	protection
 plateau	noun	elevation
 platform	noun	structure
 platinum	noun	metal
+platonic	adjective	pertaining
 platoon	noun	group
 platter	noun	tool
 platypus	noun	mammal
@@ -11290,6 +12002,7 @@ player	noun	person
 playful	adjective	quality
 playfulness	noun	feeling
 playground	noun	building
+playhouse	noun	building
 playing	noun	act
 playlist	noun	knowledge
 playmaker	noun	person
@@ -11313,6 +12026,7 @@ plentiful	adjective	quality
 plenty	noun	attribute
 plesiosaur	noun	reptile
 plesiosaurus	noun	reptile
+plethora	noun	attribute
 pliers	noun	tool
 plight	noun	event
 plinth	noun	structure
@@ -11325,6 +12039,7 @@ plover	noun	bird
 plow	noun	tool
 ploy	noun	act
 pluck	verb	contact
+plucked	adjective	quality
 plug	noun	device
 plugged	adjective	quality
 plum	noun	produce
@@ -11345,6 +12060,7 @@ plush	noun	fabric
 plutocrat	noun	person
 pluton	noun	mineral
 plutonium	noun	metal
+ply	noun	material
 plywood	noun	material
 pneumatic	adjective	quality
 pneumonia	noun	affliction
@@ -11361,6 +12077,7 @@ poet	noun	worker
 poetic	adjective	pertaining
 poetry	noun	knowledge
 poi	noun	food
+poignant	adjective	quality
 pointed	adjective	quality
 pointer	noun	device
 pointless	adjective	quality
@@ -11374,6 +12091,7 @@ pokey	noun	building
 poking	noun	attack
 pol	noun	leader
 polar	adjective	quality
+polarization	noun	phenomenon
 pole	noun	tool
 poleax	noun	weapon
 poleaxe	noun	weapon
@@ -11386,14 +12104,17 @@ policy	noun	knowledge
 polio	noun	affliction
 polish	verb	transform
 polished	adjective	quality
+polishing	noun	repair
 polite	adjective	quality
 politely	adverb	manner
 political	adjective	quality
 politically	adverb	manner
 politician	noun	person
+politico	noun	leader
 politics	noun	knowledge
 polka	noun	act
 poll	noun	knowledge
+pollard	noun	tree
 pollen	noun	phenomenon
 pollinate	verb	create
 pollination	noun	event
@@ -11409,6 +12130,7 @@ polyester	noun	material
 polyethylene	noun	material
 polymer	noun	material
 polystyrene	noun	material
+polytechnic	noun	building
 pomegranate	noun	produce
 poncho	noun	clothing
 pond	noun	water
@@ -11437,6 +12159,7 @@ popsicle	noun	food
 populace	noun	group
 popular	adjective	quality
 popularity	noun	attribute
+popularly	adverb	manner
 populated	adjective	quality
 population	noun	group
 populist	noun	leader
@@ -11479,6 +12202,7 @@ posse	noun	group
 possess	verb	social
 possessed	adjective	quality
 possession	noun	act
+possessive	adjective	pertaining
 possibility	noun	attribute
 possible	adjective	quality
 possibly	adverb	manner
@@ -11491,6 +12215,7 @@ posted	adjective	participle
 poster	noun	document
 posterior	adjective	quality
 postern	noun	structure
+postgraduate	noun	person
 posting	noun	act
 postman	noun	worker
 postpone	verb	social
@@ -11501,6 +12226,7 @@ pot	noun	container
 potable	noun	drink
 potassium	noun	metal
 potato	noun	produce
+potency	noun	attribute
 potent	adjective	quality
 potentate	noun	leader
 potential	adjective	quality
@@ -11568,19 +12294,24 @@ predecessor	noun	person
 predestination	noun	event
 predestined	adjective	quality
 predetermined	adjective	quality
+predicament	noun	act
 predict	verb	perceive
 predictability	noun	attribute
 predictable	adjective	quality
 prediction	noun	knowledge
 predictive	adjective	quality
+predominant	adjective	quality
 predominantly	adverb	manner
 preface	noun	knowledge
 prefect	noun	person
+prefecture	noun	place
 prefer	verb	social
 preferable	adjective	quality
 preferably	adverb	manner
 preference	noun	knowledge
+preferential	adjective	quality
 preferred	adjective	quality
+prefix	verb	create
 pregnant	adjective	quality
 prehistoric	adjective	quality
 prejudice	noun	knowledge
@@ -11596,6 +12327,7 @@ premiership	noun	act
 premise	noun	knowledge
 premium	adjective	quality
 premonition	noun	feeling
+preoccupied	adjective	quality
 prep	noun	act
 prepaid	adjective	quality
 preparation	noun	medicine
@@ -11604,6 +12336,7 @@ prepare	verb	transform
 prepared	adjective	quality
 preparedness	noun	attribute
 preposterous	adjective	quality
+prerequisite	noun	knowledge
 presbytery	noun	building
 preschool	noun	group
 prescribe	verb	social
@@ -11633,11 +12366,13 @@ prestige	noun	attribute
 prestigious	adjective	quality
 presumably	adverb	manner
 presume	verb	social
+presumption	noun	knowledge
 pretend	verb	transform
 pretended	adjective	quality
 pretender	noun	person
 pretending	noun	act
 pretense	noun	act
+pretentious	adjective	quality
 pretext	noun	act
 pretty	adjective	quality
 pretzel	noun	food
@@ -11646,6 +12381,7 @@ prevailing	adjective	quality
 prevalence	noun	attribute
 prevalent	adjective	quality
 prevent	verb	social
+preventable	adjective	quality
 prevention	noun	act
 preventive	noun	medicine
 preview	verb	perceive
@@ -11666,6 +12402,7 @@ primarily	adverb	manner
 primary	adjective	quality
 primate	noun	mammal
 prime	adjective	quality
+primed	adjective	quality
 primer	noun	document
 primeval	adjective	quality
 primitive	adjective	quality
@@ -11695,6 +12432,7 @@ privacy	noun	feeling
 private	noun	fighter
 privateer	noun	criminal
 privately	adverb	manner
+privatization	noun	act
 privilege	noun	possession
 privileged	adjective	quality
 privy	noun	building
@@ -11707,6 +12445,7 @@ probably	adverb	manner
 probate	noun	document
 probation	noun	event
 probe	verb	contact
+probing	adjective	quality
 probiotic	noun	creature
 problem	noun	affliction
 problematic	adjective	quality
@@ -11720,11 +12459,15 @@ processed	adjective	participle
 processing	noun	knowledge
 procession	noun	event
 processor	noun	device
+proclaim	verb	social
 proclaimed	adjective	quality
 proclamation	noun	knowledge
 procrastination	noun	attribute
+proctor	noun	leader
+procure	verb	transfer
 procurement	noun	act
 prod	noun	device
+prodigy	noun	person
 produce	noun	produce
 producer	noun	worker
 product	noun	possession
@@ -11769,9 +12512,11 @@ projector	noun	device
 proletariat	noun	group
 proliferation	noun	event
 prolific	adjective	quality
+prologue	noun	knowledge
 prolong	verb	transform
 prolonged	adjective	quality
 prom	noun	ceremony
+promenade	noun	ceremony
 prominence	noun	attribute
 prominent	adjective	quality
 prominently	adverb	manner
@@ -11787,6 +12532,7 @@ prompting	noun	knowledge
 promptly	adverb	manner
 prone	adjective	quality
 pronghorn	noun	mammal
+pronoun	noun	knowledge
 pronounce	verb	social
 pronounced	adjective	quality
 pronunciation	noun	knowledge
@@ -11795,14 +12541,17 @@ prop	noun	structure
 propaganda	noun	act
 propagation	noun	phenomenon
 propane	noun	gas
+propel	verb	contact
 propellant	noun	material
 propeller	noun	device
+propensity	noun	feeling
 proper	adjective	quality
 properly	adverb	manner
 property	noun	possession
 prophecy	noun	event
 prophet	noun	worker
 prophetic	adjective	quality
+proponent	noun	person
 proportion	noun	attribute
 proportional	adjective	quality
 proposal	noun	act
@@ -11826,6 +12575,7 @@ prosperity	noun	attribute
 prosperous	adjective	quality
 prostate	noun	bodypart
 prosthesis	noun	device
+prosthetic	adjective	pertaining
 protagonist	noun	person
 protect	verb	combat
 protected	adjective	participle
@@ -11836,17 +12586,20 @@ protector	noun	person
 protectorate	noun	place
 protein	noun	food
 protest	noun	event
+proto	adjective	quality
 protoceratops	noun	reptile
 protocol	noun	knowledge
 protohippus	noun	mammal
 proton	noun	natural_object
 prototype	noun	machine
+protracted	adjective	quality
 protractor	noun	weapon
 proud	adjective	quality
 proudly	adverb	manner
 prove	verb	social
 proved	adjective	quality
 proven	adjective	quality
+provenance	noun	knowledge
 provide	verb	transfer
 providence	noun	event
 providential	adjective	quality
@@ -11861,9 +12614,11 @@ provocative	adjective	quality
 provoke	verb	create
 provoked	adjective	quality
 provoking	adjective	quality
+provost	noun	leader
 prow	noun	device
 prowess	noun	knowledge
 prowl	verb	movement
+proximal	adjective	quality
 proximity	noun	attribute
 proxy	noun	person
 prudent	adjective	quality
@@ -11900,6 +12655,7 @@ public	adjective	quality
 publican	noun	worker
 publication	noun	document
 publicity	noun	knowledge
+publicized	adjective	quality
 publicly	adverb	manner
 publish	verb	social
 published	adjective	participle
@@ -11913,12 +12669,14 @@ puffball	noun	fungus
 puffer	noun	fish
 puffin	noun	bird
 pug	noun	mammal
+puke	noun	attack
 pull	verb	contact
 pulley	noun	device
 pulling	noun	act
 pullover	noun	clothing
 pulmonary	adjective	pertaining
 pulp	noun	material
+pulpit	noun	structure
 pulsar	noun	phenomenon
 pulse	noun	phenomenon
 puma	noun	mammal
@@ -11932,6 +12690,7 @@ punctual	adjective	quality
 punctuality	noun	attribute
 punctually	adverb	manner
 punctuation	noun	event
+puncture	noun	attack
 punish	verb	social
 punishable	adjective	quality
 punished	adjective	participle
@@ -11980,9 +12739,11 @@ pushing	noun	attack
 pushpin	noun	weapon
 pussy	noun	mammal
 put	verb	contact
+putt	noun	attack
 putting	noun	act
 putty	noun	material
 puzzle	noun	event
+puzzled	adjective	quality
 puzzling	adjective	quality
 pylon	noun	structure
 pyramid	noun	building
@@ -11997,10 +12758,13 @@ qilin	noun	supernatural
 quack	noun	person
 quad	noun	vehicle_land
 quadrangle	noun	place
+quadrant	noun	place
 quadriceps	noun	bodypart
 quadruped	noun	person
+quadruple	noun	quantity
 quaff	verb	consume
 quail	noun	bird
+quaint	adjective	quality
 quake	noun	event
 qualification	noun	attribute
 qualified	adjective	quality
@@ -12010,6 +12774,7 @@ qualifying	noun	act
 qualitative	adjective	quality
 quality	noun	attribute
 quandary	noun	event
+quantify	verb	perceive
 quantitative	adjective	quality
 quantity	noun	attribute
 quantum	noun	knowledge
@@ -12084,6 +12849,7 @@ rack	noun	furniture
 racket	noun	event
 racketeer	noun	person
 racketeering	noun	crime
+racking	adjective	quality
 racquet	noun	tool
 racquetball	noun	toy
 rad	noun	quantity
@@ -12100,6 +12866,7 @@ radically	adverb	manner
 radio	noun	device
 radioactive	adjective	quality
 radiologist	noun	worker
+radiology	noun	knowledge
 radiotherapy	noun	medicine
 radish	noun	produce
 radium	noun	metal
@@ -12113,6 +12880,7 @@ ragged	adjective	quality
 raging	adjective	quality
 raid	noun	attack
 raider	noun	criminal
+raiding	adjective	quality
 rail	noun	structure
 railing	noun	structure
 railroad	noun	route
@@ -12134,7 +12902,9 @@ raising	noun	event
 rake	noun	tool
 rakshasa	noun	supernatural
 rally	noun	ceremony
+rallying	noun	act
 ram	noun	weapon
+rambling	adjective	quality
 ramp	noun	device
 rampage	noun	act
 rampant	adjective	quality
@@ -12162,7 +12932,9 @@ rapidity	noun	attribute
 rapidly	adverb	manner
 rapier	noun	weapon
 rapper	noun	worker
+rapport	noun	act
 raptor	noun	bird
+rapture	noun	act
 rare	adjective	quality
 rarefied	adjective	quality
 rarely	adverb	manner
@@ -12186,10 +12958,12 @@ rationale	noun	knowledge
 rationing	noun	act
 rattan	noun	tree
 rattle	noun	instrument
+rattled	adjective	quality
 rattler	noun	reptile
 rattlesnake	noun	reptile
 rattling	noun	event
 rattrap	noun	tool
+ravaged	adjective	quality
 rave	noun	act
 ravel	noun	event
 ravelin	noun	fortification
@@ -12207,6 +12981,7 @@ reach	verb	movement
 reaching	noun	act
 react	verb	social
 reaction	noun	phenomenon
+reactionary	noun	person
 reactive	adjective	quality
 reactor	noun	machine
 read	verb	perceive
@@ -12222,6 +12997,7 @@ realisation	noun	knowledge
 realise	verb	transfer
 realised	adjective	participle
 realism	noun	attribute
+realist	noun	person
 realistic	adjective	quality
 realistically	adverb	manner
 reality	noun	knowledge
@@ -12238,6 +13014,7 @@ reasonable	adjective	quality
 reasonably	adverb	manner
 reasoned	adjective	quality
 reasoning	noun	knowledge
+reassurance	noun	act
 reassure	verb	social
 reassuring	adjective	quality
 rebate	noun	possession
@@ -12252,6 +13029,7 @@ rebuild	verb	create
 rebuilding	noun	repair
 recall	verb	perceive
 recap	noun	knowledge
+recapture	noun	act
 receipt	noun	act
 receive	verb	transfer
 received	adjective	participle
@@ -12269,7 +13047,10 @@ recessive	adjective	pertaining
 recharge	verb	contact
 recipe	noun	document
 recipient	noun	person
+reciprocal	adjective	quality
+recital	noun	knowledge
 recitation	noun	act
+recite	verb	social
 reckless	adjective	quality
 reckon	verb	perceive
 reckoning	noun	knowledge
@@ -12283,18 +13064,23 @@ recognizable	adjective	quality
 recognize	verb	perceive
 recognized	adjective	participle
 recoil	noun	event
+recollection	noun	knowledge
 recommend	verb	social
 recommendation	noun	act
 recompense	noun	possession
 reconcile	verb	transform
+reconciled	adjective	quality
 reconciliation	noun	act
 reconnaissance	noun	knowledge
 reconsider	verb	social
+reconstruct	verb	create
+reconstructed	adjective	quality
 reconstruction	noun	act
 record	noun	device
 recorded	adjective	quality
 recorder	noun	device
 recording	noun	device
+recount	noun	act
 recourse	noun	attribute
 recover	verb	body
 recovered	adjective	participle
@@ -12305,12 +13091,16 @@ recreate	verb	body
 recreation	noun	act
 recreational	adjective	pertaining
 recruit	noun	fighter
+recruiter	noun	person
 recruitment	noun	act
+rectangle	noun	structure
 rectangular	adjective	quality
 rectifier	noun	device
+rectify	verb	transform
 rector	noun	worker
 rectory	noun	building
 recurrence	noun	act
+recurrent	adjective	quality
 recurring	adjective	quality
 recursion	noun	event
 recycle	verb	movement
@@ -12326,8 +13116,12 @@ redeemer	noun	supernatural
 redemption	noun	rescue
 redesign	verb	create
 redevelopment	noun	repair
+redhead	noun	person
+redirect	verb	movement
+redistribution	noun	act
 redo	verb	transform
 redoubt	noun	fortification
+redress	noun	possession
 reduce	verb	transform
 reduced	adjective	quality
 reducing	noun	group
@@ -12348,7 +13142,10 @@ reference	noun	document
 referenced	adjective	quality
 referendum	noun	event
 referral	noun	person
+refill	noun	medicine
+refine	verb	transform
 refined	adjective	quality
+refinement	noun	repair
 refinery	noun	building
 refining	noun	event
 reflect	verb	combat
@@ -12366,8 +13163,10 @@ reformatory	noun	building
 reformed	adjective	quality
 refrain	verb	consume
 refresh	verb	transform
+refreshed	adjective	quality
 refreshing	adjective	quality
 refreshment	noun	food
+refrigeration	noun	act
 refrigerator	noun	furniture
 refuge	noun	place
 refugee	noun	person
@@ -12427,6 +13226,7 @@ rejected	adjective	quality
 rejection	noun	act
 rejoice	verb	social
 rejoicing	noun	feeling
+rejoin	verb	social
 rejuvenate	verb	transform
 rejuvenation	noun	event
 rekindle	verb	weather
@@ -12434,6 +13234,7 @@ relapse	noun	event
 relate	verb	perceive
 related	adjective	participle
 relation	noun	person
+relational	adjective	quality
 relationship	noun	act
 relative	adjective	quality
 relatively	adverb	manner
@@ -12447,6 +13248,7 @@ release	noun	artifact
 releasing	adjective	participle
 relegation	noun	act
 relentless	adjective	quality
+relentlessly	adverb	manner
 relevance	noun	attribute
 relevant	adjective	quality
 reliability	noun	attribute
@@ -12460,7 +13262,10 @@ relieve	verb	body
 relieved	adjective	participle
 religion	noun	knowledge
 religious	adjective	quality
+religiously	adverb	manner
 relish	noun	food
+relive	verb	perceive
+reload	verb	contact
 relocate	verb	transform
 relocated	adjective	quality
 relocation	noun	act
@@ -12468,6 +13273,7 @@ reluctance	noun	feeling
 reluctant	adjective	quality
 reluctantly	adverb	manner
 rely	verb	body
+rem	noun	quantity
 remain	verb	transform
 remainder	noun	duration
 remaining	adjective	quality
@@ -12500,6 +13306,7 @@ removed	adjective	quality
 remover	noun	material
 remuneration	noun	possession
 renal	adjective	pertaining
+rename	verb	social
 render	verb	transform
 rendering	noun	knowledge
 rendezvous	noun	attribute
@@ -12509,6 +13316,8 @@ renew	verb	transform
 renewable	adjective	quality
 renewal	noun	act
 renewed	adjective	participle
+renewing	adjective	quality
+renounce	verb	social
 renovation	noun	repair
 renowned	adjective	quality
 rent	noun	possession
@@ -12528,6 +13337,7 @@ repeat	verb	create
 repeated	adjective	quality
 repeatedly	adverb	manner
 repeating	noun	act
+repel	verb	contact
 repellent	noun	material
 repent	verb	social
 repentance	noun	feeling
@@ -12554,6 +13364,7 @@ represent	verb	social
 representation	noun	knowledge
 representative	noun	leader
 represented	adjective	participle
+repressed	adjective	quality
 repression	noun	act
 reprieve	noun	act
 reprint	verb	create
@@ -12564,6 +13375,7 @@ reptile	noun	reptile
 republic	noun	group
 republican	noun	person
 repulsion	noun	phenomenon
+repulsive	adjective	quality
 reputable	adjective	quality
 reputation	noun	knowledge
 request	verb	social
@@ -12571,8 +13383,10 @@ requested	adjective	quality
 require	verb	social
 required	adjective	participle
 requirement	noun	knowledge
+requisite	noun	artifact
 rerebrace	noun	protection
 rerun	verb	create
+resale	noun	exchange
 rescue	noun	act
 rescued	adjective	participle
 research	noun	knowledge
@@ -12613,6 +13427,7 @@ resolved	adjective	participle
 resolving	noun	knowledge
 resonance	noun	phenomenon
 resonant	adjective	quality
+resonate	verb	perceive
 resort	noun	building
 resound	verb	perceive
 resource	noun	possession
@@ -12630,6 +13445,7 @@ respond	verb	social
 response	noun	phenomenon
 responsibility	noun	attribute
 responsible	adjective	quality
+responsibly	adverb	manner
 responsive	adjective	pertaining
 rest	verb	body
 restart	verb	transform
@@ -12640,6 +13456,7 @@ restless	adjective	quality
 restoration	noun	act
 restorative	noun	medicine
 restore	verb	transform
+restrain	verb	contact
 restrained	adjective	quality
 restraint	noun	attribute
 restrict	verb	transform
@@ -12653,11 +13470,13 @@ resume	verb	transform
 resurgence	noun	event
 resurrect	verb	social
 resurrection	noun	event
+ret	verb	transform
 retail	noun	exchange
 retailer	noun	worker
 retain	verb	social
 retained	adjective	participle
 retainer	noun	possession
+retake	noun	act
 retaliation	noun	act
 retention	noun	knowledge
 rethink	noun	knowledge
@@ -12682,8 +13501,10 @@ return	verb	movement
 returning	adjective	quality
 reunion	noun	group
 reunite	verb	social
+reusable	adjective	quality
 reuse	verb	consume
 rev	verb	transform
+revamp	verb	transform
 reveal	verb	perceive
 revealing	adjective	quality
 reveille	noun	act
@@ -12709,11 +13530,13 @@ review	noun	knowledge
 reviewer	noun	person
 revise	verb	social
 revised	adjective	participle
+revising	noun	repair
 revision	noun	act
 revisit	verb	movement
 revival	noun	act
 revive	verb	transform
 revived	adjective	quality
+reviving	adjective	quality
 revoke	verb	transform
 revolt	noun	act
 revolution	noun	event
@@ -12748,6 +13571,8 @@ ribbon	noun	artifact
 rice	noun	food
 rich	adjective	quality
 riches	noun	currency
+richly	adverb	manner
+richness	noun	attribute
 ricin	noun	poison
 rick	noun	material
 rickets	noun	affliction
@@ -12755,6 +13580,7 @@ rickey	noun	drink
 ricotta	noun	food
 rid	verb	transfer
 riddle	noun	device
+riddled	adjective	quality
 ride	verb	movement
 rider	noun	person
 ridge	noun	elevation
@@ -12763,6 +13589,7 @@ ridicule	noun	act
 ridiculous	adjective	quality
 ridiculously	adverb	manner
 riding	noun	travel
+rife	adjective	quality
 riff	verb	perceive
 rifle	noun	weapon
 rifleman	noun	fighter
@@ -12773,6 +13600,7 @@ rigging	noun	device
 righteous	adjective	quality
 righteousness	noun	attribute
 rightful	adjective	quality
+rightfully	adverb	manner
 rightly	adverb	manner
 rigid	adjective	quality
 rigorous	adjective	quality
@@ -12786,6 +13614,7 @@ rings	noun	tool
 rink	noun	building
 rinse	noun	material
 riot	noun	act
+rioting	noun	conflict
 rip	verb	contact
 ripe	adjective	quality
 ripen	verb	transform
@@ -12856,6 +13685,7 @@ romantic	noun	person
 romper	noun	clothing
 roof	noun	structure
 roofer	noun	worker
+roofing	noun	material
 rooftop	noun	attribute
 rook	noun	bird
 rookie	noun	person
@@ -12876,11 +13706,13 @@ rosemary	noun	herb
 rosette	noun	adornment
 rosewood	noun	material
 roster	noun	knowledge
+rosy	adjective	quality
 rot	verb	body
 rotary	noun	artifact
 rotate	verb	movement
 rotated	adjective	quality
 rotation	noun	group
+rotational	adjective	pertaining
 rotor	noun	device
 rotten	adjective	participle
 rotting	noun	event
@@ -12926,6 +13758,7 @@ rucksack	noun	container
 rudder	noun	device
 ruddle	noun	mineral
 rude	adjective	quality
+rudimentary	adjective	quality
 rue	noun	herb
 ruff	noun	bodypart
 ruffle	noun	adornment
@@ -12949,6 +13782,8 @@ rumour	noun	crime
 rump	noun	bodypart
 run	verb	movement
 runaway	adjective	quality
+rundown	noun	knowledge
+rung	noun	structure
 runner	noun	worker
 running	noun	act
 runoff	noun	event
@@ -13003,6 +13838,7 @@ safeguard	noun	act
 safely	adverb	manner
 safety	noun	place
 saffron	noun	flower
+sag	verb	movement
 saga	noun	knowledge
 sage	noun	herb
 sagebrush	noun	shrub
@@ -13100,6 +13936,7 @@ sash	noun	adornment
 sashimi	noun	food
 sasquatch	noun	supernatural
 sassafras	noun	tree
+sassy	adjective	quality
 satanic	adjective	quality
 satchel	noun	container
 satellite	noun	device
@@ -13131,6 +13968,7 @@ savanna	noun	landform
 savannah	noun	place
 save	verb	social
 saved	adjective	quality
+saver	noun	person
 saving	noun	rescue
 savings	noun	currency
 savior	noun	supernatural
@@ -13163,6 +14001,7 @@ scammer	noun	person
 scamper	verb	movement
 scan	noun	device
 scandal	noun	act
+scandalous	adjective	quality
 scanner	noun	device
 scanning	noun	act
 scapegoat	noun	person
@@ -13178,6 +14017,7 @@ scared	adjective	quality
 scarf	noun	clothing
 scarlet	noun	attribute
 scarp	noun	landform
+scarred	adjective	quality
 scary	adjective	quality
 scat	noun	act
 scatter	verb	movement
@@ -13205,7 +14045,9 @@ schnauzer	noun	mammal
 scholar	noun	worker
 scholarly	adjective	quality
 scholarship	noun	possession
+scholastic	noun	person
 school	noun	building
+schoolboy	noun	person
 schoolhouse	noun	building
 schooling	noun	knowledge
 schoolmaster	noun	worker
@@ -13259,6 +14101,7 @@ screeching	noun	event
 screen	noun	protection
 screening	noun	fabric
 screenplay	noun	knowledge
+screenwriter	noun	person
 screw	noun	tool
 screwdriver	noun	tool
 scribe	noun	worker
@@ -13273,6 +14116,7 @@ scrooge	noun	person
 scrub	verb	contact
 scrubber	noun	tool
 scrubs	noun	clothing
+scrum	noun	contest
 scrutiny	noun	act
 scuba	noun	tool
 scuffle	noun	act
@@ -13322,6 +14166,7 @@ seasick	adjective	quality
 seaside	noun	water
 season	noun	season
 seasonal	adjective	quality
+seasonally	adverb	manner
 seasoned	adjective	participle
 seasoning	noun	food
 seat	noun	furniture
@@ -13339,6 +14184,7 @@ seaworthy	adjective	quality
 sec	noun	duration
 secateurs	noun	weapon
 secession	noun	event
+secluded	adjective	quality
 seclusion	noun	feeling
 secondary	adjective	quality
 secondly	adverb	manner
@@ -13346,6 +14192,7 @@ secrecy	noun	attribute
 secret	noun	knowledge
 secretariat	noun	group
 secretary	noun	person
+secretive	adjective	quality
 secretly	adverb	manner
 section	noun	route
 sectional	noun	furniture
@@ -13353,6 +14200,7 @@ sector	noun	group
 secular	noun	person
 secularism	noun	knowledge
 secure	verb	transfer
+securely	adverb	manner
 security	noun	protection
 sedan	noun	vehicle_land
 sedation	noun	affliction
@@ -13376,6 +14224,7 @@ seemingly	adverb	manner
 seer	noun	worker
 seethe	verb	body
 segment	noun	artifact
+segmentation	noun	act
 seigneur	noun	leader
 seine	noun	tool
 seismic	adjective	quality
@@ -13394,6 +14243,7 @@ selector	noun	device
 selenium	noun	material
 self	noun	attribute
 selfish	adjective	quality
+selfishness	noun	attribute
 selfless	adjective	quality
 selkie	noun	supernatural
 sell	verb	transfer
@@ -13449,6 +14299,7 @@ separately	adverb	manner
 separation	noun	act
 sepiolite	noun	mineral
 sept	noun	group
+septic	adjective	quality
 septum	noun	bodypart
 sepulchre	noun	structure
 sequel	noun	event
@@ -13470,6 +14321,7 @@ serious	adjective	quality
 seriously	adverb	manner
 seriousness	noun	feeling
 sermon	noun	knowledge
+serotonin	noun	medicine
 serpent	noun	reptile
 serrated	adjective	quality
 serum	noun	bodypart
@@ -13502,6 +14354,7 @@ seventh	adjective	quality
 seventy	adjective	quality
 sever	verb	contact
 several	adjective	quality
+severance	noun	act
 severe	adjective	quality
 severed	adjective	quality
 severely	adverb	manner
@@ -13522,14 +14375,17 @@ shack	noun	structure
 shackle	noun	tool
 shad	noun	food
 shade	noun	attribute
+shaded	adjective	quality
 shadfly	noun	insect
 shading	noun	attribute
 shadow	noun	phenomenon
+shadowy	adjective	quality
 shady	adjective	quality
 shaft	noun	weapon
 shaggy	adjective	quality
 shake	verb	contact
 shaken	adjective	quality
+shaker	noun	leader
 shaking	noun	act
 shako	noun	clothing
 shaky	adjective	quality
@@ -13540,6 +14396,7 @@ sham	noun	act
 shaman	noun	worker
 shambles	noun	event
 shame	noun	feeling
+shamed	adjective	quality
 shameful	adjective	quality
 shameless	adjective	quality
 shampoo	noun	artifact
@@ -13560,6 +14417,7 @@ sharpener	noun	tool
 sharpie	noun	weapon
 sharply	adverb	manner
 sharpshooter	noun	fighter
+shatter	verb	transform
 shattered	adjective	quality
 shattering	noun	destruction
 shave	verb	body
@@ -13583,6 +14441,7 @@ shelf	noun	furniture
 shell	noun	bodypart
 shellac	noun	material
 shellfish	noun	invertebrate
+shelling	noun	attack
 shelter	noun	structure
 sheltered	adjective	quality
 shepherd	noun	worker
@@ -13591,6 +14450,8 @@ sheriff	noun	worker
 sherlock	noun	person
 sherry	noun	drink
 shield	noun	protection
+shielded	adjective	quality
+shielding	noun	protection
 shift	noun	event
 shifter	noun	machine
 shifting	adjective	participle
@@ -13681,13 +14542,16 @@ shrine	noun	building
 shrink	verb	transform
 shrinkage	noun	event
 shrinking	noun	event
+shroud	noun	clothing
 shrub	noun	shrub
 shrubbery	noun	structure
 shrug	verb	body
 shudder	verb	body
 shuffle	verb	transform
+shun	verb	social
 shut	adjective	quality
 shutdown	noun	act
+shutout	noun	act
 shutter	noun	device
 shutting	noun	act
 shuttle	noun	weapon
@@ -13703,6 +14567,7 @@ sickness	noun	affliction
 side	noun	place
 sideboard	noun	furniture
 sidecar	noun	drink
+sidekick	noun	person
 sideline	noun	attribute
 siderite	noun	mineral
 sidewalk	noun	route
@@ -13720,6 +14585,7 @@ sighted	adjective	quality
 sighting	noun	act
 sigma	noun	knowledge
 sign	verb	social
+signage	noun	structure
 signal	verb	contact
 signaling	noun	knowledge
 signature	noun	document
@@ -13729,6 +14595,7 @@ signet	noun	weapon
 significance	noun	attribute
 significant	adjective	quality
 significantly	adverb	manner
+signify	verb	social
 signing	noun	act
 silence	noun	phenomenon
 silenced	adjective	quality
@@ -13787,6 +14654,7 @@ singing	noun	act
 single	adjective	quality
 singles	noun	contest
 singlet	noun	clothing
+singleton	noun	quantity
 singular	adjective	quality
 singularity	noun	phenomenon
 sinister	adjective	quality
@@ -13807,6 +14675,7 @@ sit	verb	body
 sitar	noun	instrument
 sitcom	noun	knowledge
 site	noun	place
+sitter	noun	person
 sitting	adjective	participle
 situated	adjective	participle
 situation	noun	attribute
@@ -13818,7 +14687,9 @@ sixth	adjective	quality
 sixty	adjective	quality
 sizable	adjective	quality
 size	noun	attribute
+sizeable	adjective	quality
 sized	adjective	quality
+sizing	noun	material
 sizzle	noun	event
 sizzling	adjective	participle
 skate	noun	clothing
@@ -13832,14 +14703,18 @@ skeleton	noun	tool
 skeptical	adjective	quality
 skepticism	noun	affliction
 sketch	verb	create
+sketchy	adjective	quality
+skewed	adjective	quality
 skewer	noun	weapon
 ski	noun	clothing
+skid	noun	artifact
 skier	noun	worker
 skiff	noun	vehicle_water
 skiing	noun	act
 skill	noun	attribute
 skilled	adjective	quality
 skillet	noun	tool
+skim	verb	movement
 skimming	noun	crime
 skin	noun	bodypart
 skincare	noun	act
@@ -13852,6 +14727,7 @@ skipper	noun	worker
 skirmish	noun	act
 skirmisher	noun	person
 skirt	noun	artifact
+skit	noun	knowledge
 skittish	adjective	quality
 skittle	noun	toy
 skittles	noun	act
@@ -13876,9 +14752,11 @@ slam	verb	contact
 slammer	noun	building
 slander	noun	act
 slang	noun	knowledge
+slant	noun	knowledge
 slap	verb	contact
 slapstick	noun	device
 slash	verb	contact
+slashed	adjective	quality
 slasher	noun	criminal
 slate	noun	artifact
 slater	noun	invertebrate
@@ -13887,6 +14765,7 @@ slaughterhouse	noun	building
 slaw	noun	food
 slay	verb	combat
 slayer	noun	person
+slaying	noun	killing
 sled	noun	vehicle_land
 sledding	noun	act
 sledge	noun	tool
@@ -13895,6 +14774,7 @@ sleek	adjective	quality
 sleep	verb	body
 sleeper	noun	person
 sleeping	adjective	participle
+sleepless	adjective	quality
 sleepy	adjective	quality
 sleet	noun	weather
 sleeve	noun	clothing
@@ -13907,6 +14787,7 @@ sliced	adjective	quality
 slick	noun	attribute
 slicker	noun	clothing
 slide	verb	movement
+slider	noun	person
 sliding	adjective	quality
 slight	adjective	quality
 slightly	adverb	manner
@@ -13940,7 +14821,10 @@ slugger	noun	fighter
 sluggish	adjective	quality
 sluggishly	adverb	manner
 sluggishness	noun	attribute
+slum	noun	place
+slumber	verb	body
 slump	noun	exchange
+slur	noun	act
 slurry	noun	material
 slush	noun	material
 sly	adjective	quality
@@ -13979,6 +14863,7 @@ smoothly	adverb	manner
 smother	verb	contact
 smug	adjective	quality
 smuggle	verb	transfer
+smuggled	adjective	quality
 smuggler	noun	criminal
 smuggling	noun	crime
 snack	noun	food
@@ -14011,6 +14896,7 @@ snoop	verb	perceive
 snooping	noun	act
 snooze	noun	act
 snore	noun	event
+snoring	noun	act
 snorkel	noun	tool
 snorkeling	noun	act
 snot	noun	bodypart
@@ -14018,6 +14904,7 @@ snout	noun	bodypart
 snow	noun	weather
 snowball	noun	toy
 snowbank	noun	structure
+snowboarding	noun	travel
 snowdrift	noun	landform
 snowfall	noun	weather
 snowfield	noun	landform
@@ -14029,6 +14916,7 @@ snowshoe	noun	clothing
 snowstorm	noun	weather
 snowy	adjective	quality
 snub	noun	act
+snuff	noun	material
 snug	noun	structure
 soak	verb	contact
 soaked	adjective	quality
@@ -14046,10 +14934,12 @@ soccer	noun	contest
 social	adjective	pertaining
 socialism	noun	exchange
 socialist	noun	person
+socialize	verb	social
 socially	adverb	manner
 societal	adjective	pertaining
 society	noun	group
 socioeconomic	adjective	pertaining
+sociological	adjective	pertaining
 sociology	noun	knowledge
 sock	noun	clothing
 socket	noun	bodypart
@@ -14063,6 +14953,7 @@ sofa	noun	furniture
 soft	adjective	quality
 softball	noun	toy
 soften	verb	perceive
+softened	adjective	quality
 softly	adverb	manner
 software	noun	knowledge
 soggy	adjective	quality
@@ -14080,6 +14971,7 @@ solicitation	noun	act
 solicitor	noun	person
 solid	adjective	quality
 solidarity	noun	attribute
+solidly	adverb	manner
 solitaire	noun	adornment
 solitary	adjective	quality
 solitude	noun	attribute
@@ -14091,6 +14983,7 @@ solve	verb	transfer
 solved	adjective	participle
 solvent	noun	material
 solving	noun	act
+soma	noun	drink
 sombrero	noun	clothing
 somebody	noun	person
 someday	adverb	manner
@@ -14119,14 +15012,17 @@ soothsayer	noun	person
 sooty	adjective	quality
 sop	noun	food
 sophisticated	adjective	quality
+sophistication	noun	knowledge
 sophomore	noun	person
 soprano	noun	worker
 sorbet	noun	food
 sorcerer	noun	person
 sorcery	noun	knowledge
 sore	adjective	quality
+sorely	adverb	manner
 soreness	noun	feeling
 sorghum	noun	produce
+sorority	noun	group
 sorrel	noun	herb
 sorrow	noun	feeling
 sorry	adjective	quality
@@ -14143,6 +15039,7 @@ soup	noun	food
 sour	adjective	quality
 source	noun	water
 south	noun	place
+southbound	adjective	quality
 southeast	noun	event
 southeastern	adjective	quality
 southerly	noun	weather
@@ -14199,6 +15096,7 @@ special	adjective	quality
 specialised	adjective	quality
 specialist	noun	worker
 specialization	noun	act
+specialize	verb	transform
 specialized	adjective	participle
 specially	adverb	manner
 specialty	noun	attribute
@@ -14206,6 +15104,7 @@ species	noun	group
 specific	adjective	quality
 specifically	adverb	manner
 specification	noun	document
+specificity	noun	attribute
 specified	adjective	participle
 specify	verb	social
 specimen	noun	knowledge
@@ -14226,11 +15125,13 @@ speculative	adjective	quality
 speculator	noun	person
 speculum	noun	device
 speech	noun	knowledge
+speechless	adjective	quality
 speed	noun	attribute
 speedboat	noun	vehicle_water
 speedily	adverb	manner
 speeding	noun	act
 speedometer	noun	device
+speedway	noun	route
 speedy	adjective	quality
 spell	verb	create
 spelling	noun	knowledge
@@ -14249,6 +15150,7 @@ spicy	adjective	quality
 spider	noun	invertebrate
 spiegel	noun	metal
 spike	noun	tool
+spiked	adjective	quality
 spill	noun	liquid
 spin	verb	movement
 spinach	noun	produce
@@ -14283,6 +15185,7 @@ splatter	noun	event
 spleen	noun	bodypart
 splendid	adjective	quality
 splint	noun	device
+splinter	noun	natural_object
 split	verb	transform
 splitting	adjective	quality
 splurge	verb	social
@@ -14290,6 +15193,7 @@ spodumene	noun	mineral
 spoil	verb	social
 spoiled	adjective	quality
 spoiler	noun	leader
+spoiling	noun	act
 spoke	noun	tool
 spoken	adjective	quality
 spokesman	noun	person
@@ -14320,6 +15224,7 @@ spotter	noun	worker
 spotting	noun	act
 spouse	noun	person
 sprain	verb	body
+sprawling	adjective	quality
 spray	noun	material
 spraying	noun	attack
 spread	verb	transform
@@ -14359,6 +15264,7 @@ squally	adjective	quality
 squander	verb	social
 square	noun	place
 squared	adjective	quality
+squarely	adverb	manner
 squash	noun	produce
 squat	adjective	quality
 squawk	noun	event
@@ -14369,6 +15275,7 @@ squeezing	noun	attack
 squid	noun	invertebrate
 squire	noun	fighter
 squirrel	noun	mammal
+squirt	noun	person
 squish	noun	event
 stab	noun	weapon
 stabbing	adjective	quality
@@ -14390,10 +15297,14 @@ staged	adjective	quality
 staggering	adjective	quality
 staging	noun	artifact
 stagnant	adjective	quality
+stagnation	noun	act
 stain	verb	transform
 stained	adjective	quality
+staining	noun	act
 stainless	noun	metal
+stair	noun	structure
 staircase	noun	route
+stairway	noun	route
 stake	noun	weapon
 stakeout	noun	knowledge
 stakes	noun	exchange
@@ -14402,9 +15313,11 @@ stalagmite	noun	natural_object
 stale	adjective	quality
 stalemate	noun	act
 stalk	noun	material
+stalked	adjective	quality
 stalker	noun	criminal
 stalking	noun	act
 stall	noun	structure
+stalling	noun	act
 stallion	noun	mammal
 stamina	noun	attribute
 stammer	noun	act
@@ -14422,7 +15335,9 @@ staph	noun	creature
 staple	noun	artifact
 stapler	noun	weapon
 star	noun	celestial
+starboard	noun	attribute
 starch	noun	material
+stardust	noun	attribute
 stare	verb	perceive
 starfish	noun	invertebrate
 stargaze	verb	perceive
@@ -14470,10 +15385,12 @@ stature	noun	attribute
 status	noun	attribute
 statute	noun	knowledge
 statutory	adjective	pertaining
+staunch	adjective	quality
 staurikosaurus	noun	reptile
 stay	verb	body
 stays	noun	clothing
 staysail	noun	device
+stead	noun	act
 steadily	adverb	manner
 steady	adjective	quality
 steak	noun	food
@@ -14503,13 +15420,17 @@ stegosaurus	noun	reptile
 stein	noun	container
 stellar	adjective	pertaining
 stem	noun	plant
+stemmed	adjective	quality
 stencil	noun	weapon
 stenographer	noun	worker
 step	noun	quantity
+stepfather	noun	person
 stepladder	noun	furniture
+stepmother	noun	person
 steps	noun	structure
 stereo	noun	device
 stereotype	noun	act
+stereotypical	adjective	quality
 sterile	adjective	quality
 sterilize	verb	body
 sterling	noun	currency
@@ -14521,12 +15442,14 @@ stevedore	noun	worker
 stevia	noun	herb
 stew	noun	food
 steward	noun	worker
+stewardship	noun	possession
 stibnite	noun	mineral
 stick	noun	weapon
 sticker	noun	artifact
 sticking	adjective	participle
 sticky	adjective	quality
 stiff	adjective	quality
+stiffness	noun	attribute
 stigma	noun	attribute
 stiletto	noun	clothing
 stillness	noun	attribute
@@ -14570,11 +15493,13 @@ stone	noun	mineral
 stonecutter	noun	worker
 stoned	adjective	quality
 stonefly	noun	insect
+stoner	noun	fighter
 stoneware	noun	container
 stony	adjective	quality
 stooge	noun	person
 stool	noun	furniture
 stop	verb	movement
+stoppage	noun	act
 stopped	adjective	quality
 stopping	adjective	participle
 stops	noun	contest
@@ -14593,10 +15518,12 @@ storyteller	noun	person
 stout	adjective	quality
 stove	noun	device
 straight	adjective	quality
+straighten	verb	movement
 straightforward	adjective	quality
 strain	noun	phenomenon
 strained	adjective	quality
 strainer	noun	weapon
+straining	noun	act
 strait	noun	water
 straitjacket	noun	device
 strand	noun	landform
@@ -14605,11 +15532,13 @@ strange	adjective	quality
 strangely	adverb	manner
 stranger	noun	person
 strangle	verb	combat
+strangled	adjective	quality
 strangler	noun	plant
 strap	noun	tool
 strappado	noun	act
 strategic	adjective	pertaining
 strategically	adverb	manner
+strategist	noun	leader
 strategy	noun	knowledge
 stratosphere	noun	season
 stratum	noun	place
@@ -14621,6 +15550,8 @@ streak	noun	act
 stream	noun	water
 streamer	noun	tool
 streaming	adjective	participle
+streamline	verb	create
+streamlined	adjective	quality
 street	noun	route
 strength	noun	attribute
 strengthen	verb	transform
@@ -14662,18 +15593,21 @@ strongly	adverb	manner
 strontium	noun	metal
 struck	adjective	quality
 structural	adjective	pertaining
+structurally	adverb	manner
 structure	noun	building
 structured	adjective	quality
 struggle	noun	conflict
 struggling	adjective	quality
 strum	noun	event
 strung	adjective	participle
+strut	noun	structure
 strychnine	noun	poison
 stubble	noun	bodypart
 stubborn	adjective	quality
 stucco	noun	material
 stuck	adjective	quality
 stud	noun	adornment
+studded	adjective	quality
 student	noun	person
 studied	adjective	quality
 studio	noun	building
@@ -14685,6 +15619,7 @@ stuffing	noun	food
 stumble	verb	movement
 stump	noun	plant
 stun	verb	transform
+stung	adjective	quality
 stunned	adjective	quality
 stunning	adjective	quality
 stunt	noun	act
@@ -14714,6 +15649,7 @@ submariner	noun	worker
 submerged	adjective	quality
 submersible	noun	vehicle_water
 submission	noun	act
+submissive	adjective	quality
 submit	verb	social
 subordinate	noun	worker
 subpoena	noun	document
@@ -14721,6 +15657,7 @@ subscribe	verb	social
 subscribed	adjective	quality
 subscriber	noun	person
 subscription	noun	act
+subsection	noun	knowledge
 subsequent	adjective	quality
 subsequently	adverb	manner
 subset	noun	quantity
@@ -14743,6 +15680,7 @@ subtle	adjective	quality
 subtly	adverb	manner
 suburb	noun	place
 suburban	adjective	pertaining
+subversive	noun	criminal
 subway	noun	artifact
 succeed	verb	social
 succeeding	adjective	quality
@@ -14772,8 +15710,10 @@ sugar	noun	food
 sugarcane	noun	produce
 suggest	verb	social
 suggestion	noun	knowledge
+suggestive	adjective	quality
 suicidal	adjective	quality
 suit	noun	clothing
+suitability	noun	attribute
 suitable	adjective	quality
 suitcase	noun	container
 suite	noun	building
@@ -14789,6 +15729,7 @@ sultanate	noun	place
 sultry	adjective	quality
 sum	noun	currency
 sumac	noun	plant
+summarize	verb	perceive
 summary	adjective	quality
 summer	noun	season
 summertime	noun	season
@@ -14839,6 +15780,7 @@ supermarket	noun	building
 supermodel	noun	worker
 supernatural	adjective	quality
 supernova	noun	celestial
+superpower	noun	group
 supersonic	adjective	quality
 superstar	noun	person
 superstition	noun	knowledge
@@ -14885,6 +15827,7 @@ surgery	noun	knowledge
 surgical	adjective	pertaining
 surname	noun	knowledge
 surpass	verb	combat
+surpassing	adjective	quality
 surplice	noun	clothing
 surplus	noun	attribute
 surprise	noun	attack
@@ -14924,6 +15867,8 @@ sustenance	noun	food
 suture	noun	bodypart
 suzerainty	noun	possession
 swab	noun	tool
+swag	noun	possession
+swagger	noun	attribute
 swallow	noun	bird
 swamp	noun	landform
 swan	noun	bird
@@ -14969,6 +15914,7 @@ swine	noun	mammal
 swing	verb	combat
 swinging	noun	act
 swipe	noun	act
+swirl	verb	movement
 swish	noun	event
 switch	noun	device
 switchboard	noun	device
@@ -14989,6 +15935,7 @@ sylph	noun	supernatural
 symbol	noun	knowledge
 symbolic	adjective	pertaining
 symbolism	noun	knowledge
+symmetric	adjective	quality
 symmetrical	adjective	quality
 symmetry	noun	attribute
 sympathetic	adjective	pertaining
@@ -14999,8 +15946,10 @@ symptom	noun	act
 synagogue	noun	building
 synapse	noun	bodypart
 sync	verb	transform
+synchronized	adjective	quality
 syndicate	noun	group
 syndrome	noun	affliction
+synergy	noun	phenomenon
 synonymous	adjective	quality
 synopsis	noun	knowledge
 syntax	noun	knowledge
@@ -15023,10 +15972,12 @@ tablecloth	noun	artifact
 tableland	noun	elevation
 tablespoon	noun	tool
 tablet	noun	artifact
+tabloid	noun	document
 taboo	adjective	quality
 tabor	noun	instrument
 tack	noun	weapon
 tackle	noun	tool
+tacky	adjective	quality
 taco	noun	food
 taconite	noun	mineral
 tactic	noun	knowledge
@@ -15051,6 +16002,8 @@ takedown	noun	event
 takeoff	noun	travel
 takeout	noun	food
 takeover	noun	act
+taker	noun	person
+takin	noun	mammal
 taking	noun	act
 talc	noun	mineral
 talcum	noun	mineral
@@ -15072,9 +16025,11 @@ tame	adjective	quality
 tamer	noun	worker
 tammy	noun	fabric
 tamper	noun	tool
+tampering	noun	crime
 tan	noun	attribute
 tandem	noun	attribute
 tang	noun	attribute
+tangent	noun	knowledge
 tangerine	noun	produce
 tangible	adjective	quality
 tangle	verb	transform
@@ -15093,8 +16048,10 @@ tape	noun	tool
 taped	adjective	quality
 tapeline	noun	weapon
 taper	noun	light
+tapered	adjective	quality
 tapestry	noun	artifact
 tapeworm	noun	invertebrate
+taping	noun	document
 tapioca	noun	food
 tapir	noun	mammal
 tapped	adjective	quality
@@ -15171,6 +16128,7 @@ technician	noun	worker
 technique	noun	knowledge
 techno	noun	knowledge
 technological	adjective	pertaining
+technologically	adverb	manner
 technology	noun	knowledge
 teddy	noun	toy
 tedious	adjective	quality
@@ -15199,6 +16157,7 @@ telly	noun	device
 temp	noun	worker
 temper	verb	transform
 temperament	noun	feeling
+temperance	noun	attribute
 temperate	adjective	quality
 temperature	noun	attribute
 tempered	adjective	participle
@@ -15209,6 +16168,7 @@ tempo	noun	attribute
 temporal	adjective	pertaining
 temporarily	adverb	manner
 temporary	adjective	quality
+tempt	verb	social
 temptation	noun	feeling
 tempting	adjective	quality
 ten	adjective	quality
@@ -15216,6 +16176,7 @@ tenant	noun	person
 tend	verb	social
 tendency	noun	knowledge
 tender	adjective	quality
+tenderness	noun	attribute
 tending	noun	act
 tendon	noun	bodypart
 tenement	noun	building
@@ -15240,7 +16201,9 @@ terminal	noun	building
 terminate	verb	transform
 terminated	adjective	quality
 termination	noun	act
+terminator	noun	worker
 terminology	noun	knowledge
+terminus	noun	place
 termite	noun	insect
 terms	noun	possession
 tern	noun	bird
@@ -15265,6 +16228,7 @@ tesla	noun	quantity
 test	noun	contest
 testament	noun	artifact
 tested	adjective	quality
+tester	noun	person
 testify	verb	social
 testimonial	adjective	pertaining
 testimony	noun	act
@@ -15278,6 +16242,7 @@ textbook	noun	document
 textile	noun	fabric
 textual	adjective	pertaining
 texture	noun	attribute
+textured	adjective	quality
 thane	noun	leader
 thank	verb	social
 thankful	adjective	quality
@@ -15298,6 +16263,7 @@ theology	noun	knowledge
 theorem	noun	knowledge
 theoretical	adjective	pertaining
 theoretically	adverb	manner
+theorist	noun	person
 theory	noun	knowledge
 therapeutic	adjective	quality
 therapist	noun	worker
@@ -15313,6 +16279,7 @@ thermos	noun	container
 thermostat	noun	device
 thesaurus	noun	document
 thesis	noun	document
+theta	noun	knowledge
 thick	adjective	quality
 thicket	noun	landform
 thickness	noun	attribute
@@ -15323,6 +16290,7 @@ thimble	noun	weapon
 thin	adjective	quality
 thinker	noun	person
 thinking	noun	knowledge
+thinly	adverb	manner
 thinner	noun	material
 thirst	noun	attribute
 thirsty	adjective	quality
@@ -15341,8 +16309,10 @@ thoroughly	adverb	manner
 thought	noun	knowledge
 thoughtful	adjective	quality
 thousand	noun	quantity
+thrash	verb	combat
 thread	noun	tool
 threadbare	adjective	quality
+threaded	adjective	pertaining
 threads	noun	clothing
 threadworm	noun	invertebrate
 threat	noun	conflict
@@ -15369,13 +16339,16 @@ throne	noun	furniture
 throttle	noun	device
 through	adverb	manner
 throughout	adverb	manner
+throughput	noun	attribute
 throw	verb	contact
+throwback	noun	act
 thrown	adjective	quality
 thrust	verb	movement
 thruster	noun	machine
 thud	noun	event
 thug	noun	criminal
 thumb	noun	bodypart
+thumbnail	noun	bodypart
 thumbscrew	noun	device
 thumbtack	noun	weapon
 thump	noun	event
@@ -15387,6 +16360,7 @@ thunderclap	noun	event
 thunderous	adjective	quality
 thunderstorm	noun	weather
 thunk	noun	event
+thwarted	adjective	quality
 thyme	noun	herb
 thymus	noun	bodypart
 thyroid	noun	bodypart
@@ -15448,6 +16422,7 @@ tinkle	noun	event
 tinny	adjective	pertaining
 tinsel	noun	artifact
 tinsmith	noun	worker
+tint	noun	attribute
 tiny	adjective	quality
 tip	noun	exchange
 tipped	adjective	quality
@@ -15465,6 +16440,7 @@ titled	adjective	participle
 toad	noun	reptile
 toadstool	noun	fungus
 toast	verb	create
+toasted	adjective	quality
 toaster	noun	machine
 tobacco	noun	artifact
 toboggan	noun	vehicle_land
@@ -15504,6 +16480,7 @@ tongs	noun	tool
 tongue	noun	bodypart
 tonic	noun	drink
 tonight	adverb	manner
+tonne	noun	quantity
 tons	noun	quantity
 tonsil	noun	bodypart
 tool	noun	tool
@@ -15518,6 +16495,8 @@ top	noun	toy
 topaz	noun	mineral
 topic	noun	knowledge
 topical	adjective	quality
+topography	noun	attribute
+topology	noun	knowledge
 topped	adjective	quality
 topping	noun	food
 topsail	noun	device
@@ -15525,6 +16504,7 @@ toque	noun	clothing
 tor	noun	rock
 torch	noun	tool
 torment	noun	feeling
+tormented	adjective	quality
 torn	adjective	participle
 tornado	noun	weather
 torpedo	noun	weapon
@@ -15541,9 +16521,12 @@ tortrix	noun	insect
 torture	noun	feeling
 tortured	adjective	quality
 torturer	noun	person
+torturing	noun	attack
 toss	noun	event
+tot	noun	drink
 total	adjective	quality
 totaled	adjective	quality
+totalitarian	noun	leader
 totality	noun	attribute
 totally	adverb	manner
 tote	noun	container
@@ -15563,10 +16546,12 @@ tourmaline	noun	mineral
 tournament	noun	contest
 tourney	noun	contest
 tourniquet	noun	device
+tout	noun	person
 tow	noun	act
 towboat	noun	vehicle_water
 towel	noun	artifact
 tower	noun	structure
+towering	adjective	quality
 town	noun	place
 township	noun	place
 toxic	adjective	quality
@@ -15575,6 +16560,7 @@ toxicology	noun	knowledge
 toxin	noun	poison
 toy	noun	toy
 trace	noun	group
+tracer	noun	worker
 trachea	noun	bodypart
 trachodon	noun	reptile
 tracing	noun	artifact
@@ -15596,6 +16582,7 @@ traditionally	adverb	manner
 traffic	noun	group
 tragedy	noun	event
 tragic	adjective	quality
+tragically	adverb	manner
 trail	noun	route
 trailer	noun	vehicle_land
 trailing	noun	act
@@ -15616,6 +16603,8 @@ tranquil	adjective	quality
 tranquility	noun	feeling
 tranquillity	noun	feeling
 transaction	noun	exchange
+transatlantic	adjective	pertaining
+transcribed	adjective	quality
 transcript	noun	document
 transcription	noun	device
 transducer	noun	device
@@ -15633,19 +16622,23 @@ transitional	adjective	pertaining
 translate	verb	transform
 translation	noun	travel
 translator	noun	person
+translucent	adjective	quality
 transmission	noun	machine
 transmit	verb	transfer
 transmitted	adjective	quality
 transmitter	noun	device
 transmitting	noun	act
+transnational	adjective	quality
 transoceanic	adjective	quality
 transparency	noun	phenomenon
 transparent	adjective	quality
 transplant	verb	create
+transplantation	noun	repair
 transponder	noun	device
 transport	noun	vehicle_land
 transportation	noun	vehicle_land
 transporter	noun	machine
+transverse	adjective	quality
 trap	noun	tool
 trapped	adjective	participle
 trapper	noun	worker
@@ -15689,6 +16682,7 @@ trek	noun	act
 trellis	noun	structure
 trematode	noun	invertebrate
 tremble	verb	body
+trembling	adjective	quality
 tremendous	adjective	quality
 tremendously	adverb	manner
 tremolite	noun	mineral
@@ -15700,6 +16694,7 @@ trendy	adjective	quality
 trepidation	noun	feeling
 trespass	noun	crime
 trey	noun	quantity
+triad	noun	quantity
 trial	noun	event
 triangle	noun	instrument
 triangular	adjective	quality
@@ -15707,6 +16702,7 @@ triassic	adjective	pertaining
 tribe	noun	group
 tribunal	noun	event
 tribune	noun	person
+tributary	noun	water
 tribute	noun	possession
 trice	noun	duration
 triceps	noun	bodypart
@@ -15714,6 +16710,7 @@ triceratops	noun	reptile
 trichina	noun	invertebrate
 trick	noun	act
 trickery	noun	act
+trickle	noun	event
 trickster	noun	person
 tricky	adjective	quality
 tricolor	noun	artifact
@@ -15738,6 +16735,7 @@ trio	noun	group
 trip	noun	travel
 tripe	noun	food
 triple	adjective	quality
+tripod	noun	device
 tripoli	noun	mineral
 tripping	adjective	quality
 tripwire	noun	tool
@@ -15769,6 +16767,7 @@ troubled	adjective	quality
 troublesome	adjective	quality
 troubling	adjective	quality
 trough	noun	depression
+troupe	noun	group
 trouser	noun	clothing
 trousers	noun	clothing
 trout	noun	fish
@@ -15794,6 +16793,7 @@ trusting	adjective	quality
 trustworthy	adjective	quality
 truth	noun	knowledge
 truthful	adjective	quality
+truthfully	adverb	manner
 trying	adjective	quality
 tsar	noun	leader
 tsetse	noun	insect
@@ -15804,6 +16804,7 @@ tube	noun	container
 tuber	noun	plant
 tuberculosis	noun	affliction
 tubing	noun	structure
+tubular	adjective	quality
 tuck	verb	contact
 tucked	adjective	quality
 tufa	noun	mineral
@@ -15871,6 +16872,7 @@ tuxedo	noun	clothing
 tv	noun	device
 twain	noun	quantity
 twang	noun	event
+tweak	noun	act
 tweed	noun	fabric
 tweet	noun	event
 tweeter	noun	device
@@ -15925,6 +16927,7 @@ ulna	noun	bodypart
 ulster	noun	clothing
 ultimate	adjective	quality
 ultimately	adverb	manner
+ultimatum	noun	act
 ultra	adjective	quality
 ultrasonic	adjective	pertaining
 ultrasound	noun	device
@@ -15941,6 +16944,7 @@ unanimous	adjective	quality
 unanimously	adverb	manner
 unanswered	adjective	quality
 unarmed	adjective	quality
+unattended	adjective	quality
 unattractive	adjective	quality
 unauthorized	adjective	quality
 unavailable	adjective	quality
@@ -15953,23 +16957,32 @@ unbeaten	adjective	quality
 unbelievable	adjective	quality
 unbelievably	adverb	manner
 unbiased	adjective	quality
+unbroken	adjective	quality
 uncanny	adjective	quality
 uncertain	adjective	quality
 uncertainty	noun	attribute
 unchanged	adjective	quality
 unchanging	adjective	quality
+uncharted	adjective	quality
+unchecked	adjective	quality
 uncle	noun	person
 unclear	adjective	quality
 uncomfortable	adjective	quality
 uncommon	adjective	quality
 unconditional	adjective	quality
+unconditionally	adverb	manner
 unconscious	adjective	quality
 unconstitutional	adjective	quality
+uncontrollable	adjective	quality
+uncontrolled	adjective	quality
 unconventional	adjective	quality
 uncover	verb	contact
 uncovered	adjective	quality
+uncut	adjective	quality
+undecided	adjective	quality
 undefeated	adjective	quality
 undeniable	adjective	quality
+undeniably	adverb	manner
 underage	adjective	quality
 undercover	adjective	quality
 underdog	noun	person
@@ -15984,8 +16997,10 @@ undermining	noun	act
 underneath	adverb	manner
 underpants	noun	clothing
 undersea	adjective	quality
+underside	noun	attribute
 understand	verb	perceive
 understandable	adjective	quality
+understandably	adverb	manner
 understanding	noun	knowledge
 understatement	noun	knowledge
 understood	adjective	participle
@@ -16003,6 +17018,7 @@ undesirable	adjective	quality
 undies	noun	clothing
 undine	noun	supernatural
 undisclosed	adjective	quality
+undisputed	adjective	quality
 undo	verb	contact
 undock	verb	movement
 undone	adjective	quality
@@ -16014,6 +17030,7 @@ unearthly	adjective	quality
 unease	noun	feeling
 uneasiness	noun	feeling
 uneasy	adjective	quality
+uneducated	adjective	quality
 unemployed	adjective	quality
 unemployment	noun	event
 unending	adjective	quality
@@ -16026,13 +17043,16 @@ unexplained	adjective	quality
 unfair	adjective	quality
 unfairly	adverb	manner
 unfamiliar	adjective	quality
+unfavorable	adjective	quality
 unfinished	adjective	quality
 unfit	adjective	quality
 unfold	verb	transform
 unfolding	noun	event
+unforeseen	adjective	quality
 unforgettable	adjective	quality
 unfortunate	adjective	quality
 unfortunately	adverb	manner
+unfounded	adjective	quality
 ungodly	adjective	quality
 ungrateful	adjective	quality
 unhappiness	noun	feeling
@@ -16045,11 +17065,22 @@ unidentified	adjective	quality
 unification	noun	event
 unified	adjective	quality
 uniform	noun	clothing
+uniformed	adjective	quality
+uniformly	adverb	manner
+unifying	adjective	quality
 unilateral	adjective	quality
+unimaginable	adjective	quality
+unimportant	adjective	quality
+uninsured	adjective	quality
+unintended	adjective	quality
+unintentionally	adverb	manner
+uninterrupted	adjective	quality
 union	noun	group
 unionist	noun	worker
 unique	adjective	quality
 uniquely	adverb	manner
+uniqueness	noun	attribute
+unison	noun	attribute
 unit	noun	group
 unite	verb	social
 united	adjective	quality
@@ -16066,9 +17097,14 @@ unleash	verb	contact
 unlike	adjective	quality
 unlikely	adjective	quality
 unlimited	adjective	quality
+unload	verb	transfer
+unloaded	adjective	quality
+unloading	noun	exchange
 unlock	verb	contact
 unlocked	adjective	quality
 unlucky	adjective	quality
+unmanned	adjective	quality
+unmarked	adjective	quality
 unmarried	adjective	quality
 unmask	verb	contact
 unnamed	adjective	quality
@@ -16077,33 +17113,51 @@ unnecessarily	adverb	manner
 unnecessary	adjective	quality
 unnoticed	adjective	quality
 unofficial	adjective	quality
+unorthodox	adjective	quality
 unpaid	adjective	quality
+unparalleled	adjective	quality
 unpleasant	adjective	quality
 unpleasantness	noun	feeling
 unpopular	adjective	quality
 unprecedented	adjective	quality
 unpredictable	adjective	quality
+unprepared	adjective	quality
+unprofessional	adjective	quality
 unprofitable	adjective	quality
 unprotected	adjective	quality
 unpublished	adjective	quality
+unqualified	adjective	quality
+unquestionably	adverb	manner
 unravel	verb	transform
 unreal	adjective	quality
 unrealistic	adjective	quality
 unreasonable	adjective	quality
 unrelated	adjective	quality
+unreleased	adjective	quality
 unreliable	adjective	quality
 unresolved	adjective	quality
 unrest	noun	feeling
+unrestricted	adjective	quality
 unripe	adjective	quality
 unruly	adjective	quality
 unsafe	adjective	quality
 unseaworthy	adjective	quality
+unsecured	adjective	quality
 unseen	adjective	quality
+unsettled	adjective	quality
+unsigned	adjective	quality
+unsolicited	adjective	quality
+unsolved	adjective	quality
 unspecified	adjective	quality
+unspoken	adjective	quality
 unstable	adjective	quality
 unstoppable	adjective	absolute
 unsuccessful	adjective	quality
+unsuccessfully	adverb	manner
+unsuitable	adjective	quality
 unsure	adjective	quality
+unthinkable	adjective	quality
+untitled	adjective	quality
 untold	adjective	quality
 untouched	adjective	quality
 untreated	adjective	quality
@@ -16111,10 +17165,13 @@ untrue	adjective	quality
 unused	adjective	quality
 unusual	adjective	quality
 unusually	adverb	manner
+unveil	verb	perceive
 unveiled	adjective	quality
+unveiling	noun	ceremony
 unwanted	adjective	quality
 unwilling	adjective	quality
 unwillingness	noun	feeling
+unworthy	adjective	quality
 upbeat	adjective	quality
 upbringing	noun	attribute
 upcoming	adjective	quality
@@ -16126,7 +17183,9 @@ upgrade	verb	combat
 upheaval	noun	event
 uphill	noun	elevation
 uphold	verb	social
+upkeep	noun	repair
 upland	noun	elevation
+uplift	noun	event
 uplifting	noun	event
 upload	verb	create
 upper	adjective	quality
@@ -16142,6 +17201,7 @@ upside	noun	attribute
 upstairs	adjective	quality
 upstate	adverb	manner
 upstream	adjective	quality
+uptake	noun	act
 uptown	noun	place
 upturn	noun	exchange
 upward	adverb	manner
@@ -16174,13 +17234,16 @@ usurper	noun	person
 usury	noun	act
 utahraptor	noun	reptile
 utensil	noun	tool
+utilised	adjective	quality
 utility	noun	structure
 utilization	noun	act
 utilize	verb	consume
 utilized	adjective	quality
 utmost	adjective	quality
 utopia	noun	place
+utopian	adjective	pertaining
 utter	adjective	quality
+uttered	adjective	quality
 utterly	adverb	manner
 vacancy	noun	act
 vacant	adjective	quality
@@ -16227,7 +17290,9 @@ vanguard	noun	group
 vanilla	noun	flower
 vanish	verb	movement
 vanished	adjective	quality
+vanishing	noun	act
 vanity	noun	feeling
+vantage	noun	place
 vapor	noun	material
 vaporous	adjective	quality
 vapour	noun	material
@@ -16239,6 +17304,7 @@ variation	noun	group
 varied	adjective	quality
 variety	noun	quantity
 various	adjective	quality
+variously	adverb	manner
 varmint	noun	creature
 varnished	adjective	participle
 varsity	noun	group
@@ -16260,8 +17326,10 @@ vegetable	noun	produce
 vegetarian	noun	person
 vegetation	noun	plant
 veggie	noun	produce
+vehemently	adverb	manner
 vehicle	noun	vehicle_land
 veil	noun	clothing
+veiled	adjective	quality
 vein	noun	bodypart
 vellum	noun	material
 velociraptor	noun	reptile
@@ -16270,6 +17338,7 @@ velodrome	noun	building
 velvet	noun	fabric
 velvety	adjective	quality
 vend	verb	transfer
+vendetta	noun	conflict
 vending	noun	exchange
 vendor	noun	worker
 veneer	noun	material
@@ -16304,15 +17373,19 @@ verity	noun	knowledge
 vermiculite	noun	mineral
 vermin	noun	phenomenon
 vermouth	noun	drink
+vernacular	adjective	quality
 vernal	adjective	quality
 veronica	noun	flower
 versatile	adjective	quality
 versatility	noun	knowledge
 verse	noun	knowledge
+versed	adjective	quality
 version	noun	knowledge
 vertebra	noun	bodypart
+vertex	noun	knowledge
 vertical	adjective	quality
 vertically	adverb	manner
+vertigo	noun	act
 vessel	noun	vehicle_water
 vest	noun	clothing
 vested	adjective	quality
@@ -16354,6 +17427,7 @@ viewers	noun	group
 viewing	noun	act
 viewpoint	noun	knowledge
 vigil	noun	ceremony
+vigilance	noun	knowledge
 vigilant	adjective	quality
 vigilante	noun	fighter
 vigorous	adjective	quality
@@ -16399,6 +17473,7 @@ virus	noun	affliction
 visa	noun	document
 visage	noun	bodypart
 viscera	noun	bodypart
+visceral	adjective	pertaining
 viscount	noun	leader
 vise	noun	tool
 visibility	noun	attribute
@@ -16414,6 +17489,7 @@ visor	noun	clothing
 vista	noun	knowledge
 visual	adjective	pertaining
 visualization	noun	knowledge
+visualize	verb	create
 visually	adverb	manner
 vital	adjective	quality
 vitality	noun	attribute
@@ -16423,17 +17499,20 @@ vitreous	adjective	pertaining
 viva	noun	contest
 vivarium	noun	structure
 vivid	adjective	quality
+vividly	adverb	manner
 vizier	noun	leader
 vocabulary	noun	knowledge
 vocal	adjective	pertaining
 vocalist	noun	worker
 vocalize	verb	social
+vocation	noun	possession
 vocational	adjective	pertaining
 vodka	noun	drink
 vogue	noun	knowledge
 voice	noun	attribute
 voiced	adjective	quality
 voicemail	noun	knowledge
+voicing	noun	act
 void	noun	quality
 volatile	noun	material
 volatility	noun	attribute
@@ -16459,6 +17538,7 @@ voucher	noun	person
 voulge	noun	weapon
 vow	noun	possession
 vowel	noun	knowledge
+vox	noun	knowledge
 voyage	noun	travel
 voyager	noun	worker
 vroom	noun	event
@@ -16487,6 +17567,7 @@ wait	verb	social
 waiter	noun	worker
 waiting	noun	act
 waitress	noun	worker
+waive	verb	social
 waiver	noun	act
 wake	verb	body
 waking	noun	act
@@ -16494,6 +17575,7 @@ walk	verb	movement
 walker	noun	person
 walking	adjective	participle
 walkingstick	noun	insect
+walkway	noun	route
 wall	noun	structure
 wallaby	noun	mammal
 wallet	noun	container
@@ -16508,6 +17590,7 @@ wan	adjective	quality
 wand	noun	tool
 wander	verb	movement
 wandering	adjective	quality
+wannabe	noun	person
 wanted	noun	event
 wanting	adjective	quality
 war	noun	conflict
@@ -16526,6 +17609,7 @@ warlord	noun	leader
 warm	adjective	quality
 warmed	adjective	quality
 warming	adjective	quality
+warmly	adverb	manner
 warmth	noun	attribute
 warn	verb	social
 warning	noun	act
@@ -16550,6 +17634,8 @@ washroom	noun	structure
 wasp	noun	insect
 waste	noun	material
 wasted	adjective	participle
+wasteful	adjective	quality
+wasteland	noun	place
 wastewater	noun	material
 wasting	noun	act
 watch	noun	device
@@ -16574,12 +17660,15 @@ watermelon	noun	produce
 waterproof	adjective	quality
 waters	noun	water
 watershed	noun	place
+waterway	noun	water
+watery	adjective	quality
 watt	noun	quantity
 wattle	noun	bodypart
 wave	noun	weather
 wavelength	noun	attribute
 wavering	noun	event
 waving	noun	act
+wavy	adjective	quality
 wax	noun	material
 waxen	adjective	pertaining
 waxy	adjective	pertaining
@@ -16587,6 +17676,7 @@ weak	adjective	quality
 weaken	verb	transform
 weakened	adjective	quality
 weakening	noun	event
+weakly	adjective	quality
 weakness	noun	act
 wealth	noun	possession
 wealthy	adjective	quality
@@ -16598,6 +17688,7 @@ wearing	adjective	participle
 weary	adjective	quality
 weasel	noun	mammal
 weather	noun	weather
+weathered	adjective	quality
 weatherman	noun	worker
 weathervane	noun	device
 weave	verb	create
@@ -16665,11 +17756,13 @@ wheelchair	noun	furniture
 wheeled	adjective	quality
 wheeler	noun	worker
 wheelhouse	noun	structure
+wheeling	noun	travel
 whelp	noun	creature
 whereabouts	noun	act
 wherever	adverb	manner
 whetstone	noun	weapon
 whey	noun	material
+whiff	noun	phenomenon
 whim	noun	feeling
 whimsy	noun	attribute
 whine	noun	event
@@ -16692,6 +17785,7 @@ whispering	noun	event
 whist	noun	act
 whistle	verb	perceive
 whistleblower	noun	person
+whistler	noun	person
 whistling	noun	event
 white	adjective	quality
 whitefish	noun	food
@@ -16702,25 +17796,33 @@ whiting	noun	food
 whittle	verb	transform
 whiz	noun	person
 whole	noun	quantity
+wholeheartedly	adverb	manner
 wholesale	noun	exchange
 wholesome	adjective	quality
 wholly	adverb	manner
+whoop	noun	knowledge
 whoosh	noun	event
 whopper	noun	act
+whopping	adjective	quality
 wick	noun	artifact
 wicked	adjective	quality
 wicker	noun	material
 wicket	noun	artifact
 wide	adjective	quality
 widely	adverb	manner
+widen	verb	transform
 widening	noun	route
 widespread	adjective	quality
 widget	noun	device
 widow	noun	person
+widowed	adjective	quality
 width	noun	attribute
+wield	verb	combat
 wiener	noun	food
 wife	noun	person
 wig	noun	clothing
+wiggle	verb	movement
+wight	noun	supernatural
 wigwam	noun	building
 wild	adjective	quality
 wildebeest	noun	mammal
@@ -16795,6 +17897,7 @@ withdrawn	adjective	quality
 wither	verb	transform
 withered	adjective	participle
 withers	noun	bodypart
+withhold	verb	transfer
 withholding	noun	possession
 within	adverb	manner
 withstand	verb	combat
@@ -16834,6 +17937,7 @@ woodpecker	noun	bird
 woodruff	noun	herb
 woods	noun	landform
 woodwind	noun	instrument
+woodwork	noun	structure
 woodworm	noun	invertebrate
 woody	adjective	quality
 wool	noun	fabric
@@ -16847,6 +17951,7 @@ work	noun	knowledge
 workbench	noun	furniture
 workbook	noun	document
 worker	noun	worker
+workflow	noun	act
 workforce	noun	group
 workhorse	noun	mammal
 workhouse	noun	building
@@ -16870,7 +17975,9 @@ worried	adjective	quality
 worry	noun	feeling
 worrying	noun	act
 worse	adjective	quality
+worsening	noun	act
 worship	noun	ceremony
+worshipped	adjective	quality
 worshipper	noun	person
 worst	adjective	quality
 wort	noun	herb
@@ -16880,11 +17987,13 @@ worthwhile	adjective	quality
 worthy	adjective	quality
 wound	noun	affliction
 wounded	adjective	participle
+wounding	noun	attack
 woven	adjective	participle
 wraith	noun	supernatural
 wrangler	noun	worker
 wrap	noun	clothing
 wrapped	adjective	participle
+wrapper	noun	clothing
 wrapping	noun	artifact
 wrath	noun	feeling
 wrathful	adjective	quality
@@ -16943,6 +18052,7 @@ yelled	adjective	quality
 yelling	noun	act
 yellow	adjective	quality
 yellowfin	noun	fish
+yellowish	adjective	quality
 yelp	noun	event
 yen	noun	currency
 yeoman	noun	person
@@ -16955,11 +18065,13 @@ yin	noun	attribute
 yip	noun	event
 yoga	noun	knowledge
 yoghurt	noun	food
+yogi	noun	person
 yogurt	noun	food
 yoke	noun	weapon
 yolk	noun	food
 young	adjective	quality
 younger	adjective	quality
+youngster	noun	person
 youth	noun	person
 youthful	adjective	quality
 yowie	noun	supernatural
@@ -16971,6 +18083,7 @@ zeal	noun	feeling
 zealot	noun	person
 zealous	adjective	quality
 zebra	noun	mammal
+zee	noun	knowledge
 zenith	noun	phenomenon
 zeolite	noun	mineral
 zephyr	noun	weather
@@ -16995,5 +18108,6 @@ zone	noun	place
 zoning	noun	act
 zoo	noun	structure
 zoologist	noun	worker
+zoology	noun	knowledge
 zoom	noun	event
 zucchini	noun	produce

@@ -60,6 +60,10 @@ psychotic psychopath bigotry childbirth handicapped adultery amir bey raja bourg
 heterosexual multicultural segregated interracial masculinity racially unborn welch estrogen incest
 inquisition obi blooded homophobia colonialism miscarriage synod colleen depressive priesthood
 sclerosis boomer shiva
+dialysis junkie sectarian supremacist contraception consensual patriarchal psychosis pueblo madman
+maniac narcissistic seduction apostolic circumcision loco tic tramp fibrosis bigot infertility anemia
+autoimmune euthanasia anorexia fundamentalist inpatient martyrdom menopause prenatal antisemitism
+cancerous quaker abuser chastity het
 """.split())
 
 
