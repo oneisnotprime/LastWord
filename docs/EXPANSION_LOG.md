@@ -185,3 +185,45 @@ into `tools/generated_words.txt`, letters in `tools/producers.txt`). Art is draw
   WordNet also lists lower-case (`freq_gap.py` NAMES), inflections it misreads (NOT_WORDS: LIED,
   SHOOK...), crude words added to tools/crude.txt (BULLSHIT, SHITTY...), and words about groups of
   people or sexual violence added to `EXCLUDED` (WELSH, INDIGENOUS, LESBIAN, IMMIGRANT, SLAVERY...).
+
+## Frequency batch 2: the next thousand most common words
+
+- Added 1,149 words, every missing word from wordfreq rank 7,781 to 11,916 (CONSIST, OVERHEAD,
+  PIERCE, PRONE, READILY... to MATERNITY, MISCONDUCT): 523 nouns, 440 adjectives, 120 verbs, 66
+  adverbs; the dictionary is now 14,686 words. Twelve core words are hand-written in demo_words.txt
+  (AIRPLANE, BOMBER, PICKUP, SHOTGUN, REGIMENT, PIERCE, EXPLODE, DAYTIME, HARMLESS, AIRBORNE,
+  PROSPERITY, REDEMPTION); the rest went through chunk files and `generate_words.py merge`. New
+  producers: hired hands pay N (RESEARCHER, SUPPLIER, APPRENTICE, a TEMP while his lifespan lasts),
+  a RIG and an AUTOMATION make M, an APPARATUS and SEWING are stations (C), SEATING is furniture
+  (B), a RESERVOIR and a BROOK give O, VEGETATION P.
+- Gap after this batch (`tools/freq_gap.py`): top 10k 0 (was 613), top 20k 2,439 (1,188 n, 211 v,
+  886 adj, 154 adv; was 3,639), top 30k 5,270 (2,534, 463, 1,922, 351; was 6,471).
+- Left out on purpose and not counted: names WordNet also lists lower-case (JENNY, MOLLY, DONNA,
+  TUCKER, MAXWELL, SURREY's neighbours SILVA and DELL...: `freq_gap.py` NAMES), inflections and
+  foreign words it misreads (DUG, TORE, PARA, MIL, DAS, SOL, COMP: NOT_WORDS), crude words added to
+  tools/crude.txt (CUNT, FUCKER, RETARDED, XXX, and the anatomy VAGINA, SPERM), and words about
+  groups of people, sexuality, religion's offices or atrocities added to `EXCLUDED` (HOLOCAUST,
+  GHETTO, NEGRO, ORIENTAL, ABORIGINAL, MIGRANT, NATIONALITY, ETHNICITY, HOMOSEXUAL, BISEXUAL, QUEER,
+  PROSTITUTION, PROTESTANT, CALIF, FASCIST, MORON).
+- Notable effects, all through shared systems: military units muster where they land (REGIMENT 12
+  soldiers, BRIGADE 24, BATTALION 30, LEGION 40, CAVALRY and SQUADRON cavalrymen, MILITIA rebels,
+  CLERGY three priests, MANKIND and TURNOUT a wild crowd); BOOKING captures its victim into your
+  lockup; REJECTION severs every graft; REDEMPTION ends doom, curses and debt; REPLAY rewinds 20 s of
+  harm; VARIANT brings chaos; COMPRESSION shrinks; BANNING forbids spelling in an area, PROM and
+  NEUTRALITY forbid fighting, EXCLUSION trade and spelling for enemies; TAKEOVER takes a city;
+  EXPLOITATION strips the ground for a burst of G and U; DRAINAGE ends floods and swamps; HEMISPHERE
+  brings night for a minute and a half and DAYTIME day for four (night and day words end each
+  other); METAPHOR, ANALOGY and VERB are stand-ins (any 7- or 5-letter word, any movement verb);
+  ATLAS is a minimap; PROTAGONIST cheats death once; TODDLER grows into a BOY. Counter-words by
+  meaning: HARMLESS and UNARMED take a weapon's teeth, PARKED and IMPRISONED stop a ride or a
+  creature, SUNK a boat, UNLOCKED a lock, STRIPPED armour, DISCHARGED anything electric, FINITE an
+  indestructible thing, UNCHANGED resists chaos and shrinking, SANE confusion; AIRBORNE makes
+  anything fly, AUTONOMOUS and CHARTERED drive themselves, BARRED locks a door, INSURED refunds
+  letters when it breaks. Fields are short (at most 10 minutes in one place, 1.5 minutes map-wide)
+  or follow their speller, so no new lasting area lacks an ender; no word seals a fate; no object
+  radiates past 200 m.
+- Drawn: a WORDS shape for each of the 164 new concrete words (people as bipeds by what they do, a
+  ghostly DEPARTED, a green HULK, crowds for OFFSPRING and CLONE; new shapes for a sphere, a traffic
+  cone, a saddle, a coil, a drawer, a sculpture, an oil rig, a robot arm, a shotgun, a quad bike,
+  carriages, a stage flat, a sticker, a pixel, a runway, a pentagon; landforms as signs), checked in
+  the gallery with headless Playwright.

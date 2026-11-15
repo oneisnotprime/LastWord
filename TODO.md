@@ -268,8 +268,8 @@ lexicon so every related word is captured.
 ## Data
 
 - [ ] Frequency batches: `tools/freq_todo.txt` lists the next most common words with no data
-      (`tools/freq_gap.py`); batch 1 covered wordfreq ranks to about 7,800. Next: CONSIST,
-      OVERHEAD, PIERCE, PRONE, READILY...
+      (`tools/freq_gap.py`); batch 1 covered wordfreq ranks to about 7,800, batch 2 to about 11,900.
+      Next: NEEDLESS, NERD, NOVELTY, OPTIMIZATION, PINT...
 - [ ] Bots riding a vehicle with no foe in sight can wander out a round (2 time-ups in 48 rooms on
       main, 1 after frequency batch 1): the endgame hunt does not reach a rider who never meets
       anyone
