@@ -31,7 +31,7 @@ def R(pattern):
     return re.compile(pattern, re.I)
 
 # Glosses that undo what restorers and knowledge give: ERASE is not a memory, nor CENSOR news.
-UNDOING = re.compile(r"\b(eras\w*|effac\w*|forget\w*|delet\w*|obliterat\w*|censor\w*|block\w* out)\b", re.I)
+UNDOING = re.compile(r"\b(eras\w*|effac\w*|forget\w*|delet\w*|obliterat\w*|censor\w*|block\w* out|suspension of|remove from memory)\b", re.I)
 
 def _unused(pattern):
     return re.compile(pattern, re.I)
@@ -63,7 +63,7 @@ RULES = [
          gloss=R(r"\b(remember\w*|reminder\w*|recall\w*|recollect\w*|diar(y|ies)|journal|notebook|souvenir\w*|keepsake\w*|mnemonic\w*|memento\w*|memoir\w*|memory|memories)\b")),
     dict(dim="screen", kind="restore", what="news", under=["news.n.1", "broadcasting.n.1", "journalism.n.1", "newspaper.n.1", "magazine.n.1"],
          gloss=R(r"\b(news\w*|journalis\w*|the press|bulletin\w*|headline\w*|gazette|broadcast(s|ing|er)?|televis\w*|town crier)\b")),
-    dict(dim="screen", kind="restore", what="speech", gloss=R(r"\b(freedom of speech|free speech|outcry|speak(s|ing)? out|right to speak)\b")),
+    dict(dim="screen", kind="restore", what="speech", under=["megaphone.n.1", "loudspeaker.n.1", "microphone.n.1"], gloss=R(r"\b(freedom of speech|free speech|outcry|speak(s|ing)? out|right to speak)\b")),
     # Knowledge: insight (read_properties).
     dict(dim="knowledge", kind="know", level=3, under=["publication.n.1", "book.n.1", "book.n.2", "document.n.1", "reference_book.n.1"],
          gloss=R(r"\b(knowledge|learn(ed|ing)?|wisdom|insight\w*|scholar\w*|erudit\w*|lore|research\w*)\b"), only=("carried", "being", "field", "verb")),
@@ -227,7 +227,7 @@ def apply(out, lex, wn_dir):
                 hit = bool(rule["gloss"].search(s.gloss.split(";")[0]))
             if not hit and rule.get("has") is not None:
                 hit = rule["has"](v)
-            if hit and s is not None and UNDOING.search(s.gloss.split(";")[0]) and rule["kind"] in ("restore", "know"):
+            if hit and rule["kind"] in ("restore", "know") and (UNDOING.search(w) or (s is not None and UNDOING.search(s.gloss.split(";")[0]))):
                 hit = False
             if hit and act(rule, v):
                 hooked.setdefault(rule["dim"], set()).add(w)

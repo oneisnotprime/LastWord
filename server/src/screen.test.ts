@@ -89,7 +89,9 @@ it("knowledge: insight shows counters (BOOK), racks of people in sight (SPY's fi
   expect(intel[0].letters).toBe("DORSW");
   expect(intel[0].words).toContain("SWORD");
   // B under a CIPHER is off A's intel.
-  b.send("spell", "cipher"); await wait(); second(2); await wait();
+  wb.letters = all(); b.send("spell", "cipher"); await wait(); second(2);
+  for (let i = 0; i < 20 && said("a", "intel").at(-1)?.length; i++) await wait(100);
+  expect(wb.unit.body.stats.flag("immune_expose")).toBe(true);
   expect(said("a", "intel").at(-1)).toEqual([]);
   // Insight goes with amnesia.
   (room as any).hurtWith(wa, [["amnesia", 10]], b.sessionId, b.sessionId, false); room.rebuild(wa);
