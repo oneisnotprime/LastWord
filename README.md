@@ -141,6 +141,17 @@ system in `shared/`. The core words of each are hand-written in `tools/demo_word
 | Heraldry, courts and fealty (31) | `law.ts` (`tribute`, `endsPact`), `sport.ts`, `place.ts` | Oaths are pacts: OATH, VOW, BETROTHAL bind two for a long time with heavy penalties; FEALTY, HOMAGE, ALLEGIANCE, SUZERAINTY, FEUDALISM, VILLEINAGE, CORVEE make the speller liege: the other members pay a share (15% to 40%) of every letter they earn, a city's S included, while it lasts. Courts: ATTAINDER, OUTLAWRY, PROSCRIPTION, AMERCEMENT on a person, INTERDICT, UKASE, ASSIZE over an area; CHALLENGE is a duel with stakes; KNIGHTHOOD musters four knights; USURP and USURPATION take the city; banners (BLAZON, ORIFLAMME, TRICOLOR, SALTIRE) rally their side; nobles take their levy | BETRAYAL, TREACHERY, PERFIDY, REBELLION, REVOLUTION, USURPATION end the pact their speller is in with no penalty; attacking a member breaks it and pays its penalty; PARDON and AMNESTY against court sentences |
 | Stone and ore (27) | `food.ts` `heatNeeded`, `material.ts`, `world.ts` | Ores are raw and smelt into their metal by heat of their `smelts_at` or more (HEMATITE and TACONITE to IRON at a FORGE's 1200 C, MALACHITE to COPPER, CASSITERITE to TIN, PITCHBLENDE to URANIUM; never by a CAMPFIRE), and an ANVIL works the metal. Rocks and minerals are materials (TALC SWORD, MUSCOVITE SHIELD against lightning, CHRYSOTILE fireproof but sickening); gems are precious; radioactive ores sicken everyone near, holder too. Landforms reshape the map where they are spelled: GORGE and RAVINE cut, MESA and MASSIF raise, SCREE slows, SANDBAR crosses water, CALDERA lays lava; SINKHOLE, GEYSER and STALACTITE strike a spot; QUICKSAND is a hidden trap; MINESHAFT, DIGGINGS and BATHOLITH pay G | LEAD and BARITE against radiation, DETECTIVE-style sight against QUICKSAND, flying and terrain-ignoring bodies, the counters of each terrain (bridges, ladders) |
 
+## Meaning rules
+
+`tools/meaning.py` (run by `build_demo.py`, which now takes the WordNet dict dir) gives the screen,
+knowledge and communication properties to every word whose meaning calls for them: rules pick words by
+the WordNet ancestors of the sense the lexicon chose and by that sense's gloss, and what a rule adds
+depends on how the word acts (a weapon, creature, event or field inflicts AMNESIA, ILLITERATE,
+CENSOR, GAG or BLIND; something carried, a field or a verb `restores_panels` and is immune; things,
+people, fields and verbs get insight, `read_properties`; telecoms and telepathy `hearing_range`; lies
+`decoys`). A rule never overwrites a value the word already has. The build prints how many words
+each dimension holds; `MEANING_DEBUG=1` lists every word a rule touched.
+
 ## Generating more words
 
 `tools/generate_words.py` gives property values to more of the lexicon with Claude, through the

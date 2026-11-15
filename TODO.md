@@ -74,6 +74,16 @@
 - Nobody strikes past their sight: a weapon's reach is cut to its wielder's sight (TELESCOPE,
   RADAR and night change it). Threats coming from beyond sight are shown at the screen's edge.
 - A click on something nobody owns claims it (walk there, take); Shift-click attacks it.
+- The screen is a shared quantity (PLAN.md "Screen, knowledge and communication"): statuses grey,
+  blank or scramble panels (blind, amnesia, illiterate, censor, sleep, confuse, chaos, a jam), and
+  `restores_panels`, immunities and cures give them back. The server sends it; the client draws it.
+- Knowledge is insight (`read_properties`): counter-words at 2, others' racks at 5, what they can
+  spell at 8; your creatures read for you; CIPHER hides, lies falsify.
+- Communication: pings and spells said aloud, heard by your side anywhere and others in earshot of
+  your voice (loudness, `hearing_range`); deaf hear nothing; gag and silence say nothing; lies
+  (`decoys`) send made-up calls and DANGER pings. No free text chat.
+- These properties come from meaning rules over the whole dictionary (`tools/meaning.py`: WordNet
+  ancestors and glosses, a word's own shape decides how it applies); hand values always win.
 
 ## Properties words use that the engine ignores
 

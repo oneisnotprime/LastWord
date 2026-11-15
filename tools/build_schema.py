@@ -14,7 +14,7 @@ OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data")
 DAMAGE = ("blunt slash pierce crush fire cold electric acid poison radiation blast sonic light dark "
           "water wind earth psychic holy unholy disease magic suffocation hunger").split()
 MEDIA = "land water air underground space".split()
-STATUS = "stun slow blind fear burn freeze poison bleed sleep charm silence root confuse shrink sick rage deaf debt curse bless expose haste stasis truce chaos void doom".split()
+STATUS = "stun slow blind fear burn freeze poison bleed sleep charm silence root confuse shrink sick rage deaf debt curse bless expose haste stasis truce chaos void doom amnesia illiterate censor gag".split()
 
 # What the newer statuses do, for the generator's prompt (the rest explain themselves).
 STATUS_MEANS = {
@@ -27,6 +27,10 @@ STATUS_MEANS = {
     "chaos": " (chaos: a handful of their properties (speed, damage rate, armour, aim, strength, sight...) are each multiplied by a random 0.25 to 3 while it lasts: shared idea.ts)",
     "void": " (void: nothing they carry, wear, ride or stand in does anything, and their own damage, statuses and flight are nothing: shared idea.ts)",
     "doom": " (doom: a sealed fate: when it runs out the body takes three quarters of its full integrity as damage nothing resists, unless ended first (effect_status=doom): shared idea.ts)",
+    "amnesia": " (amnesia: forgets: the spell preview, the best-words strip, the inventory and the intel panel go blank, insight (read_properties) is nothing; MEMORY, a DIARY, a NOTEBOOK restore: shared screen.ts)",
+    "illiterate": " (illiterate: cannot read: word cards, the letter rack, the trade screen, the preview and the chips are scrambled letters; LITERACY, a DICTIONARY, a SCHOOL restore: shared screen.ts)",
+    "censor": " (censor: not told: the event chips and the feed of calls, pings and kills go black; NEWS, a NEWSPAPER, a RADIO restore: shared screen.ts)",
+    "gag": " (gag: says nothing: cannot ping, and its spelling is not called out to anyone, grand words included: shared comms.ts)",
     "expose": " (expose: shown on every enemy's threat arrows wherever they are, no stealth or disguise; immune_expose also keeps letters from being read: shared signal.ts)",
 }
 
@@ -152,7 +156,7 @@ indestructible|bool|false||defence absolute: integrity cannot reach 0
 """.strip().split("\n"))
 GROUPS["perception"] = """
 sight_range|num|10|m|how far it sees
-hearing_range|num|10|m|how far past earshot it hears noise (shared sound.ts)
+hearing_range|num|10|m|how far past earshot it hears noise, others' pings and spells said aloud (a RADIO 3000 hears the whole map: shared sound.ts, comms.ts)
 smell_range|num|0|m|how far it detects odor
 night_vision|bool|false||sees without light
 sees_through|tags|||things its sight ignores (walls, fog, water)
@@ -160,7 +164,7 @@ detect_stealth|scale|0||cancels this much stealth
 detect_underground|bool|false||sees burrowed and buried things
 detect_letters|num|0|m|range at which it shows letter sources
 detect_life|num|0|m|range at which it shows living things
-read_properties|scale|0||how much of another player's stats it reveals
+read_properties|scale|0||insight: 2 shows the words that end a word on the spell preview and cards, 5 the letters and gear of people in sight on the intel panel, 8 also what they can spell now; your creatures read in their sight; immune_expose hides, lies falsify (shared knowledge.ts)
 read_inventory|bool|false||an event passed on a person (SPY, AUDIT, ESPIONAGE): tells its speller every letter and thing they hold, unless immune_expose (shared signal.ts)
 map_reveal|num|0|tiles|radius of map uncovered around it; left on the ground, it watches that ground on its owner's minimap (shared tech.ts)
 tracking|scale|0||follows targets that left sight
@@ -314,13 +318,14 @@ contagion|frac|0||chance per minute it spreads to a neighbour; a word that infli
 sets_daylight|enum|none|none,day,night|forces day or night in its field
 sets_weather|text|||weather it starts in its field
 clears_weather|tags|||weather it ends in its field; a weather word with a tile_type lays it in patches over the land while it lasts (snow over grass and shallow water, floods beside water, drought dries shallow water to sand: shared weather.ts)
-decoys|num|0||false marks it puts on the threat arrows and minimaps of everyone its field reaches: that many made-up people closing in; seen through with detect_stealth 5 or more (shared signal.ts)
+decoys|num|0||false marks it puts on the threat arrows and minimaps of everyone its field reaches: that many made-up people closing in; seen through with detect_stealth 5 or more; those it fools also get made-up spell calls and DANGER pings, and read false racks (shared signal.ts, comms.ts, knowledge.ts)
 time_scale|num|1|x|how fast time runs for whoever it is on or its field reaches (field words: an operation, time_scale*0.5): movement, attacks and statuses wearing off; inside an area also letters made, crops growing and things ageing into Y run this many times as fast (shared time.ts)
 gravity|num|1|g|the pull of the ground on whoever it reaches (field words: an operation, gravity*0.2): under 1 they bound faster, shots fly farther and blows knock them back farther, under 0.3 they float over water and walls; over 1 they plod and shoot short, and from 3 nothing can fly (shared space.ts)
 pull|num|0|m/s|its field draws every body it reaches toward its centre this fast (negative pushes them out); anchored bodies stay put (shared space.ts)
 meteors|num|0|/min|its field drops this many impacts a minute near people inside it: each strikes with the word's own damage over its attack_area (a METEOR SHOWER, STARFALL) (shared space.ts)
 waves|num|0|m|rough water in its field: vessels afloat take damage by wave height against their length (a big ship rides it out) and sail slower; anchored ones are spared (shared sea.ts)
-jams|bool|false||its field blacks out the minimap and watching things (MAP, RADAR, CAMERA) of everyone it reaches (shared signal.ts)
+jams|bool|false||its field blacks out the minimap and watching things (MAP, RADAR, CAMERA) of everyone it reaches, and puts static on their feed of calls and pings (shared signal.ts, screen.ts)
+restores_panels|tags|||screen panels it gives back whatever greys them, carried, worn, as a field or a verb in force: minimap, bars (others' health and names), preview, best, inventory, trade, rack, chips, feed, cards, intel, or all (GLASSES minimap,bars; LITERACY cards,rack; MAP minimap: shared screen.ts)
 """
 GROUPS["event"] = """
 takes_city|bool|false||makes its speller the ruler of a city it reaches (conquest, coup, election)

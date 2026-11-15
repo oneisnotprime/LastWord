@@ -8936,7 +8936,7 @@ cenotaph	noun	artifact	structure	2.61	uncommon	n02996649	-
 cenozoic	adjective	modifier	pertaining	2.43	uncommon	a02698070	noun:time
 cense	verb	spell	perceive	1.36	rare	v02131151	-
 censer	noun	artifact	container	2.03	uncommon	n02996823	-
-censor	noun	person	person	3.36	common	n09923389	verb:social
+censor	noun	person	worker	3.36	common	n09923092	verb:social
 censored	adjective	modifier	quality	3.38	common	a00319840	-
 censorial	adjective	modifier	pertaining	1.27	rare	a02698315	-
 censoring	noun	event	act	2.97	uncommon	n00822744	-
@@ -21630,7 +21630,7 @@ gaff	noun	artifact	tool	2.68	uncommon	n03415057	-
 gaffe	noun	event	act	2.66	uncommon	n00077016	-
 gaffer	noun	person	person	2.57	uncommon	n10396589	-
 gaffsail	noun	artifact	fabric	0.0	obscure	n03415333	-
-gag	noun	artifact	device	3.63	common	n03415650	verb:perceive
+gag	noun	event	act	3.63	common	n06790941	verb:perceive
 gaga	adjective	modifier	quality	3.59	common	a01649738	-
 gage	noun	artifact	medicine	3.22	common	n03997192	verb:combat
 gaggle	noun	institution	group	2.71	uncommon	n08008558	verb:communication
@@ -44959,6 +44959,7 @@ rummer	noun	artifact	container	1.2	rare	n04126454	-
 rummy	noun	person	person	2.37	uncommon	n10057110	adjective:quality
 rumor	noun	event	act	3.73	common	n07238110	verb:communication
 rumormonger	noun	person	person	0.0	obscure	n10158867	-
+rumour	noun	event	crime	3.38	common	n07238110	verb:communication
 rumourmonger	noun	person	person	0.0	obscure	n10158867	-
 rump	noun	bodypart	bodypart	3.05	common	n02466242	-
 rumple	verb	spell	contact	2.24	uncommon	v01390147	-
@@ -52178,6 +52179,7 @@ teleost	noun	creature	fish	1.71	rare	n02530794	-
 teleostan	noun	creature	fish	0.0	obscure	n02530794	-
 telepathic	adjective	modifier	quality	2.78	uncommon	a02116606	-
 telepathist	noun	person	person	0.0	obscure	n10717375	-
+telepathy	noun	knowledge	knowledge	2.88	uncommon	n07270666	-
 telephone	noun	artifact	device	4.41	core	n04408223	verb:communication
 telephoner	noun	person	person	0.0	obscure	n09907469	-
 telephonic	adjective	modifier	pertaining	2.2	uncommon	a03135102	-

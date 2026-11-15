@@ -5,7 +5,7 @@
  * around anything of yours on the ground that watches (a CAMERA, a TOWER: shared `eyeOf`), with
  * whoever is in it.
  */
-import { combineSenses, Tile, tileAt, type LoadoutDetail, type Sensed, type WorldMap } from "@lastword/shared";
+import { type Blot, combineSenses, Tile, tileAt, type LoadoutDetail, type Sensed, type WorldMap } from "@lastword/shared";
 
 const COLOURS: Record<Tile, [number, number, number]> = {
   [Tile.DeepWater]: [61, 103, 120], [Tile.Water]: [109, 158, 170], [Tile.Sand]: [230, 211, 163], [Tile.Grass]: [163, 184, 111],
@@ -26,6 +26,8 @@ export class Minimap {
   private eyes: NonNullable<LoadoutDetail["eyes"]> = [];
   private drawnAt = 0;
   private land: { key: string; img: HTMLCanvasElement } | null = null;
+  /** The screen's blot on the minimap (shared screen.ts): static when blind or jammed, hidden asleep. */
+  blot: Blot | undefined;
 
   constructor(private readonly canvas: HTMLCanvasElement, private readonly dpr: number) {
     this.ctx = canvas.getContext("2d")!;
@@ -82,11 +84,11 @@ export class Minimap {
     }
     const c = this.ctx, k = px / side;
     c.imageSmoothingEnabled = false;
-    if (this.sensed.jammed) {
-      // Jammed (shared signal.ts): static, nothing else.
+    if (this.sensed.jammed || this.blot) {
+      // Jammed (shared signal.ts) or blind (screen.ts): static, nothing else.
       c.fillStyle = "#3a3632"; c.fillRect(0, 0, px, px);
       for (let i = 0; i < 400; i++) { c.fillStyle = (i * 7919 + Math.floor(now / 120)) % 3 ? "#5a544c" : "#8a8278"; c.fillRect(((i * 1597 + now) % px), ((i * 2711) % px), 2 * this.dpr, 2 * this.dpr); }
-      c.fillStyle = "#fbf6ea"; c.font = `${12 * this.dpr}px sans-serif`; c.textAlign = "center"; c.fillText("JAMMED", px / 2, px / 2);
+      c.fillStyle = "#fbf6ea"; c.font = `${12 * this.dpr}px sans-serif`; c.textAlign = "center"; c.fillText(this.sensed.jammed ? "JAMMED" : (this.canvas.dataset.by || "NO SIGNAL"), px / 2, px / 2);
       return;
     }
     c.drawImage(this.land.img, 0, 0, px, px);

@@ -1,3 +1,5 @@
+import type { Screen } from "./screen.js";
+
 /** What a player is told about their own character; sent only to them. */
 export interface LoadoutDetail {
   health: { now: number; max: number };
@@ -55,6 +57,10 @@ export interface LoadoutDetail {
   market?: { ratio: number; stock: number; refuses: string; closed: string; hire: number; citizens: number; ruler: string; swapped: boolean; sells?: { index: number; phrase: string; price: number }[] };
   /** Common letters a transmutation into Z takes for you now; absent without alchemy (`transmute_in`, a precious material). */
   transmute?: number;
+  /** What is greyed, blanked or scrambled on your screen and what your things give back (shared screen.ts). */
+  screen?: Screen;
+  /** Your insight (shared knowledge.ts): 2 shows counter-words, 5 others' racks, 8 what they can spell. */
+  insight?: number;
 }
 
 /** An offer between two players, as each of them is told it (`offers`). */

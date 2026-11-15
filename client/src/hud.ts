@@ -1,4 +1,4 @@
-import { bestWords, forageOdds, type BiomeInfo, selfRisk, effectText, heldText, spellableNow, SPELL_GROUPS, type SpellGroup, tipOfTheMoment, inspectText, LETTER_GUIDE, missing, parsePhrase, readTrade, standIn, standsFor, type Card, type Dictionary, type Letters, type LoadoutDetail, type Offer } from "@lastword/shared";
+import { countersShown, bestWords, forageOdds, type BiomeInfo, selfRisk, effectText, heldText, spellableNow, SPELL_GROUPS, type SpellGroup, tipOfTheMoment, inspectText, LETTER_GUIDE, missing, parsePhrase, readTrade, standIn, standsFor, type Card, type Dictionary, type Letters, type LoadoutDetail, type Offer } from "@lastword/shared";
 import { BADGE } from "./art/paper.js";
 import { ideasHtml, setTipsOn, tipRng, tipsOn } from "./tips.js";
 import { keyGlyph, only, pad, padGlyph } from "./pad.js";
@@ -461,7 +461,9 @@ export class Hud {
     try { risk = selfRisk(parsePhrase(this.dict, stood ? stood.word : t)); } catch { /* not a phrase */ }
     el.innerHTML = `<div><b>${esc(c.title)}</b>${c.kind ? ` <span class="kind">${esc(c.kind)}</span>` : ""}</div>` +
       (stats.length ? `<div class="lead">${esc(stats.join(" · "))}</div>` : "") + (does.length ? `<div class="key">${esc(does.join(" · "))}</div>` : "") +
-      (risk ? `<div class="warn">⚠ ${esc(risk)}</div>` : "");
+      (risk ? `<div class="warn">⚠ ${esc(risk)}</div>` : "") +
+      // With insight (shared knowledge.ts) the preview names the words that end it.
+      (() => { const ends = countersShown(this.dict, (stood ? stood.word : t).split(/\s+/).pop() ?? t, this.detail?.insight ?? 0); return ends.length ? `<div class="ends">ended by ${esc(ends.join(" · ").toUpperCase())}</div>` : ""; })();
     el.className = "show";
   }
 
@@ -745,6 +747,11 @@ export class Hud {
   closeScreens() {
     if (this.open) this.show(null);
     this.closeInspect();
+  }
+
+  /** The sheet open now: the inventory, the trade screen, or none. */
+  get sheet(): "inventory" | "trade" | null {
+    return this.open;
   }
 
   /** True while a screen is open, so clicks on it do not walk the player. */

@@ -312,3 +312,13 @@ Node process that owns the game state. One room per map instance (from milestone
   has stopped dead (out of fuel or power) or made no headway for 30 s toward where it is going gets off
   and goes on foot (`BotMind.ride`, used "dismount"): two bots sat in dead machines far apart were the
   rounds that ran to the time cap.
+- Screen, knowledge and communication (shared screen.ts, knowledge.ts, comms.ts; `screen.test.ts`):
+  the loadout carries `screen` (`screenFor`: statuses, `restoredFor` from gear, buffs, fields and senses,
+  `jammed`) and `insight`; `screens` (in `beat`) re-tells a changed screen, sends `intel` (`intelFor`:
+  readers are you and your creatures with insight 5+, within their sight or READ_TILES; oracle words
+  at most one rack a beat, kept ORACLE_SECONDS) and lies' made-up `call` and DANGER `pinged`
+  (`lieBeats`). `ping` { kind, x?, y? } goes through `pingFrom` to `listeners` (shared `hears`) as
+  `pinged`; `entrance` calls a non-grand spelling out to listeners as `call` (`callOut`); the
+  `unheard` (gag, silence) send neither. Bots: `restore` use (bots.ts: words that give back the panels
+  a status greys, tried by `botCure` when no cure fits), HELP pings when attacked in a pact, and they
+  walk to an ally's HELP or ATTACK ping (`BotMind.help`); hexes include the new statuses.

@@ -9,7 +9,7 @@
   "letter": "I",
   "class": "vowel",
   "source": "livestock and pets",
-  "lexicon_share": 0.0881
+  "lexicon_share": 0.088
  },
  {
   "letter": "A",
@@ -105,7 +105,7 @@
   "letter": "B",
   "class": "made",
   "source": "base furniture",
-  "lexicon_share": 0.0204
+  "lexicon_share": 0.0203
  },
  {
   "letter": "F",

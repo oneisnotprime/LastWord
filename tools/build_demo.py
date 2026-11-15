@@ -6,7 +6,8 @@ and generated_words.txt, written by generate_words.py and checked leniently (a b
 dropped, a word that cannot be placed is skipped, and both are counted). Hand-written words win.
 
 build_demo.py --overrides   add each word's role and archetype to overrides.tsv
-build_demo.py               validate against properties.json and lexicon.tsv, write demo.json
+build_demo.py <wordnet dir> validate against properties.json and lexicon.tsv, apply the meaning
+                            rules (meaning.py: screen, knowledge, communication), write demo.json
 """
 import os, re, sys, json
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -165,6 +166,19 @@ def main():
                     err(f"{t}: {val} is not a property"); continue
                 sets[pid] = val
         out[w] = {"role": role, "class": lex[w][1], "archetype": arch, "set": sets, "ops": ops}
+    # Meaning rules (meaning.py): screen, knowledge and communication properties by what words mean.
+    wn_dir = next((a for a in sys.argv[1:] if not a.startswith("--")), None)
+    if not wn_dir:
+        errors.append("build_demo.py needs the WordNet dict dir for the meaning rules (build_all.sh passes it)")
+    else:
+        import meaning
+        full = {l.split("\t")[0]: l.rstrip("\n").split("\t")[1:] for l in list(open(os.path.join(D, "lexicon.tsv")))[1:]}
+        hooked = meaning.apply(out, full, wn_dir)
+        for k, v in out.items():
+            for pid in v["set"]:
+                if pid not in props:
+                    errors.append(f"meaning rule set unknown property {pid} on {k}")
+        print("meaning rules added:", {d: len(ws) for d, ws in sorted(hooked.items())}, "words in each dimension:", meaning.report(out))
     producers(out, props, errors)
     if dropped or skipped:
         with open(os.path.join(HERE, "..", "data", "generated_problems.txt"), "w") as f:
