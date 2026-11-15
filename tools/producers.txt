@@ -1225,3 +1225,27 @@ administrator: produce_N=0.3
 farming: produce_A=1.2 tile_type=tilled radius=4
 manufacturer: produce_M=1.2
 workplace: produce_C=0.6 production_needs=labor
+
+# Frequency batch 2: hired hands, apprentices and suppliers pay N (a TEMP only until his lifespan
+# runs out); a RIG and an AUTOMATION are machines (M); an APPARATUS and SEWING are stations (C);
+# SEATING is furniture (B); a RESERVOIR and a BROOK give water (O); VEGETATION is planted flora (P).
+researcher: produce_N=0.3
+coordinator: produce_N=0.3
+subsidiary: produce_N=0.3
+supplier: produce_N=0.35
+apprentice: produce_N=0.3
+temp: produce_N=0.5
+freelance: produce_N=0.35
+auxiliary: produce_N=0.3
+contributor: produce_N=0.3
+distributor: produce_N=0.3
+wheeler: produce_N=0.3
+ranger: produce_N=0.25
+rig: produce_M=1 production_needs=extract
+automation: produce_M=1
+apparatus: produce_C=0.5 production_needs=labor
+sewing: produce_C=0.4
+seating: produce_B=0.5 production_needs=claim
+reservoir: produce_O=1 production_needs=extract
+brook: produce_O=0.5 production_needs=extract
+vegetation: produce_P=0.6

@@ -8,7 +8,7 @@ any	absolute and scaling modifiers	3	7.8	2.6	-	adjective:quality
 total	absolute and scaling modifiers	5	7.8	1.6	-	adjective:quality
 more	absolute and scaling modifiers	4	7.8	1.9	-	adjective:quality
 epic	absolute and scaling modifiers	4	8.3	2.1	-	adjective:quality
-most	absolute and scaling modifiers	4	8.6	2.1	-	adjective:quality
+most	absolute and scaling modifiers	4	8.5	2.1	-	adjective:quality
 pure	absolute and scaling modifiers	4	9.1	2.3	-	adjective:quality
 ultra	absolute and scaling modifiers	5	9.2	1.8	-	adjective:quality
 dual	absolute and scaling modifiers	4	9.4	2.4	-	adjective:quality
@@ -17,14 +17,14 @@ eternal	absolute and scaling modifiers	7	9.8	1.4	-	adjective:absolute
 great	absolute and scaling modifiers	5	10.0	2.0	-	adjective:quality
 triple	absolute and scaling modifiers	6	10.8	1.8	-	adjective:quality
 super	absolute and scaling modifiers	5	10.9	2.2	-	adjective:quality
+big	absolute and scaling modifiers	3	11.1	3.7	-	adjective:quality
 prime	absolute and scaling modifiers	5	11.1	2.2	-	adjective:quality
-big	absolute and scaling modifiers	3	11.2	3.7	-	adjective:quality
 many	absolute and scaling modifiers	4	11.4	2.9	-	adjective:quality
 atomic	absolute and scaling modifiers	6	11.7	1.9	-	adjective:quality
 free	absolute and scaling modifiers	4	11.8	3.0	-	adjective:quality
 lethal	absolute and scaling modifiers	6	11.9	2.0	-	adjective:absolute
 safe	absolute and scaling modifiers	4	12.3	3.1	-	adjective:quality
-trillion	absolute and scaling modifiers	8	12.4	1.6	-	noun:quantity
+trillion	absolute and scaling modifiers	8	12.3	1.5	-	adjective:quality
 nuclear	absolute and scaling modifiers	7	12.6	1.8	-	adjective:quality
 holy	absolute and scaling modifiers	4	12.7	3.2	-	adjective:quality
 huge	absolute and scaling modifiers	4	12.9	3.2	-	adjective:quality
@@ -34,7 +34,7 @@ immune	absolute and scaling modifiers	6	14.1	2.4	-	adjective:quality
 fatal	absolute and scaling modifiers	5	14.2	2.8	-	adjective:quality
 billion	absolute and scaling modifiers	7	14.6	2.1	-	adjective:quality
 vast	absolute and scaling modifiers	4	15.1	3.8	V	adjective:quality
-ultimate	absolute and scaling modifiers	8	15.2	1.9	-	adjective:quality
+ultimate	absolute and scaling modifiers	8	15.1	1.9	-	adjective:quality
 supreme	absolute and scaling modifiers	7	15.5	2.2	-	adjective:quality
 deadly	absolute and scaling modifiers	6	15.7	2.6	-	adjective:quality
 myriad	absolute and scaling modifiers	6	16.0	2.7	-	adjective:quality
@@ -48,7 +48,7 @@ divine	absolute and scaling modifiers	6	18.8	3.1	V	adjective:quality
 every	absolute and scaling modifiers	5	18.9	3.8	V	adjective:quality
 omnipotent	absolute and scaling modifiers	10	18.9	1.9	-	adjective:quality
 perfect	absolute and scaling modifiers	7	19.4	2.8	-	adjective:quality
-mighty	absolute and scaling modifiers	6	20.4	3.4	-	adjective:quality
+mighty	absolute and scaling modifiers	6	20.3	3.4	-	adjective:quality
 almighty	absolute and scaling modifiers	8	23.5	2.9	-	adjective:quality
 invisible	absolute and scaling modifiers	9	25.6	2.8	V	adjective:absolute
 invincible	absolute and scaling modifiers	10	27.8	2.8	V	adjective:absolute
@@ -70,8 +70,8 @@ legion	beings and forces	6	11.8	2.0	-	noun:group
 horde	beings and forces	5	11.8	2.4	-	noun:group
 deity	beings and forces	5	12.0	2.4	-	noun:supernatural
 tyrant	beings and forces	6	12.4	2.1	-	noun:leader
-golem	beings and forces	5	12.7	2.5	-	noun:supernatural
-fleet	beings and forces	5	13.7	2.7	-	noun:group
+golem	beings and forces	5	12.6	2.5	-	noun:supernatural
+fleet	beings and forces	5	13.6	2.7	-	noun:group
 dragon	beings and forces	6	13.8	2.3	-	noun:supernatural
 ghost	beings and forces	5	13.8	2.8	-	noun:supernatural
 emperor	beings and forces	7	13.9	2.0	-	noun:leader
@@ -126,7 +126,7 @@ scribe	letter and word meta	6	13.2	2.2	-	noun:worker
 consonant	letter and word meta	9	14.8	1.6	-	adjective:quality
 ink	letter and word meta	3	15.4	5.1	K	noun:liquid
 library	letter and word meta	7	17.7	2.5	-	noun:building
-verb	letter and word meta	4	18.3	4.6	V	noun:inert
+verb	letter and word meta	4	18.3	4.6	V	noun:knowledge
 glyph	letter and word meta	5	19.3	3.9	-	noun:artifact
 alphabet	letter and word meta	8	20.3	2.5	-	noun:knowledge
 word	letter and word meta	4	20.6	5.2	W	noun:knowledge
@@ -141,7 +141,7 @@ sand	map-scale terrain and states	4	7.9	2.0	-	noun:mineral
 moon	map-scale terrain and states	4	8.4	2.1	-	noun:celestial
 earth	map-scale terrain and states	5	9.8	2.0	-	noun:celestial
 space	map-scale terrain and states	5	10.0	2.0	-	noun:phenomenon
-planet	map-scale terrain and states	6	10.9	1.8	-	noun:celestial
+planet	map-scale terrain and states	6	10.8	1.8	-	noun:celestial
 cosmos	map-scale terrain and states	6	12.7	2.1	-	noun:natural_object
 night	map-scale terrain and states	5	13.3	2.7	-	noun:phenomenon
 fog	map-scale terrain and states	3	14.4	4.8	-	noun:weather
@@ -154,21 +154,21 @@ galaxy	map-scale terrain and states	6	45.9	7.6	X	noun:celestial
 sea	mass destruction	3	4.0	1.3	-	noun:water
 rot	mass destruction	3	4.7	1.6	-	verb:body
 star	mass destruction	4	6.1	1.5	-	noun:celestial
-sun	mass destruction	3	6.3	2.1	-	noun:celestial
+sun	mass destruction	3	6.2	2.1	-	noun:celestial
 tide	mass destruction	4	7.1	1.8	-	noun:event
 sarin	mass destruction	5	7.3	1.5	-	noun:gas
-mine	mass destruction	4	7.5	1.9	-	noun:structure
+mine	mass destruction	4	7.4	1.9	-	noun:structure
 ocean	mass destruction	5	7.8	1.6	-	noun:water
 atom	mass destruction	4	8.1	2.0	-	noun:material
 hell	mass destruction	4	9.0	2.2	-	noun:place
 doom	mass destruction	4	10.1	2.5	-	noun:event
 storm	mass destruction	5	10.1	2.0	-	noun:weather
 comet	mass destruction	5	10.2	2.0	-	noun:phenomenon
-meteor	mass destruction	6	10.4	1.7	-	noun:disaster
+meteor	mass destruction	6	10.3	1.7	-	noun:disaster
 death	mass destruction	5	11.5	2.3	-	noun:killing
 tornado	mass destruction	7	12.4	1.8	-	noun:weather
 asteroid	mass destruction	8	13.2	1.6	-	noun:disaster
-napalm	mass destruction	6	13.3	2.2	-	noun:fuel
+napalm	mass destruction	6	13.2	2.2	-	noun:fuel
 tsunami	mass destruction	7	14.0	2.0	-	noun:disaster
 magma	mass destruction	5	14.5	2.9	-	noun:mineral
 deluge	mass destruction	6	14.7	2.4	-	noun:weather
@@ -210,7 +210,7 @@ curse	rules, fate and information	5	9.6	1.9	-	noun:event
 oracle	rules, fate and information	6	9.6	1.6	-	noun:worker
 spy	rules, fate and information	3	10.3	3.4	-	noun:worker
 fate	rules, fate and information	4	12.1	3.0	-	noun:event
-miracle	rules, fate and information	7	13.0	1.9	-	noun:event
+miracle	rules, fate and information	7	12.9	1.8	-	noun:event
 magic	rules, fate and information	5	13.2	2.6	-	noun:knowledge
 charm	rules, fate and information	5	13.3	2.7	-	noun:attribute
 veto	rules, fate and information	4	14.6	3.6	V	noun:act

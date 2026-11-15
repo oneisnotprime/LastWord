@@ -31,10 +31,12 @@ mr mrs ms dr st co inc ltd re la ii iii iv vi vii viii ix xi xii etc thou thee t
 """.split())
 # Names WordNet also lists lower-case (GOOGLE as a verb, JOSH as to tease): counted as names.
 NAMES = set("""google josh franklin wright turner ken benjamin costa murphy brad warner harper
-shanghai superman troy chad randy gilbert ana easter thanksgiving""".split())
+shanghai superman troy chad randy gilbert ana easter thanksgiving
+beth burke donna ira rand tucker chapman timothy somerset jenny molly benedict brent monte
+clarence maxwell lambert silva dell congo beck""".split())
 # Headwords whose common use is an inflection or an abbreviation WordNet reads as something else
 # (LIED as a German song, SHOOK as a sheaf, MPH, GEN, CHI): left out of the gap.
-NOT_WORDS = set("lied shook tops mph neo gen sen chi col sang wont".split())
+NOT_WORDS = set("lied shook tops mph neo gen sen chi col sang wont dug comp para mil das sol tore".split())
 
 
 

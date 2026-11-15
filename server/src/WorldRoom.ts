@@ -488,6 +488,8 @@ interface BotMind {
   /** Where it stood at its last thought, and how many thoughts it has not moved while walking. */
   at: Point;
   stuck: number;
+  /** Late in a round, riding: where its ride last made headway, and when (a dead machine is left behind). */
+  ride?: Point & { at: number };
   /** For tests and metrics: gathers started and words spelled. */
   gathered: number;
   spelled: number;
@@ -1954,6 +1956,19 @@ export class WorldRoom extends Room {
     if (canSpell() && (w.hungry || w.stores.food < 0.5)) { const ate = this.botEat(id, w, mind, have); if (ate) spelled(ate); }
     const peaceful = this.elapsed < mind.peaceUntil;
     const endgame = this.state.alive <= 2 || this.elapsed > BOT_HUNT_AFTER * 1.25;
+    // Late in a round, a ride that has stopped dead (a CAB or a JET out of fuel or power: speed nothing)
+    // or makes no headway for half a minute toward where it is going: the bot gets off and goes on foot,
+    // rather than sitting in a dead machine far from the last foe until the time cap.
+    if (w.unit.riding && !w.sailing && (endgame || this.elapsed > BOT_HUNT_AFTER) && w.hamper.moves) {
+      const r = mind.ride;
+      if (!r || Math.hypot(w.player.x - r.x, w.player.y - r.y) > 2) mind.ride = { x: w.player.x, y: w.player.y, at: this.elapsed };
+      const foe = w.foe ? this.walkers.get(w.foe) : undefined;
+      const going = !!w.target || (!!foe && Math.hypot(foe.player.x - w.player.x, foe.player.y - w.player.y) > 4);
+      if (w.speed < 0.05 || (going && this.elapsed - mind.ride!.at > 30)) {
+        try { this.dismountWalker(id, w); this.botUsed(mind, "dismount"); w.route = []; w.routeTo = null; } catch { /* cannot get off here */ }
+        mind.ride = undefined;
+      }
+    } else mind.ride = undefined;
 
     // Who is about: people (and their creatures) who attack it, people to hunt down, wild game.
     type Seen = { id: string; d: number; hp: number; person: boolean };

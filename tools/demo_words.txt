@@ -2785,3 +2785,43 @@ learn: duration=120 trainable+4 training+2 intelligence+2
 
 # verb perceive
 understand: duration=60 intelligence+4 read_properties+5 immune_confuse=true
+
+# Frequency batch 2 (tools/freq_todo.txt from CONSIST): the next thousand or so most common words
+# that had no data. Core words of each kind below; the rest are generated from these and the lines above.
+# A daytime word sets day for the whole map (night words end it); regiments muster soldiers where they land.
+
+# noun vehicle_air
+airplane: mass=40000 length=35 integrity=2500 material=aluminum speed_air=230 flight_ceiling=11000 self_propelled=true mountable=true seats=150 carry_capacity=20000 requires_runway=true upkeep_fuel=2 range=5000 loudness=9 color=white
+
+# noun weapon
+shotgun: mass=3.5 length=1.1 integrity=60 material=steel,wood equip_slot=held hands_required=2 dmg_pierce=180 attack_rate=0.5 attack_range=25 attack_area=2 multi_target=3 knockback=3 accuracy=0.9 loudness=10 ammo_per_hit=1 ammo_type=shell color=gray
+
+# noun vehicle_air
+bomber: mass=30000 length=20 integrity=2500 material=aluminum speed_air=150 flight_ceiling=10000 self_propelled=true mountable=true seats=4 requires_runway=true dmg_blast=900 dmg_fire=200 attack_area=10 attack_rate=0.2 attack_range=15 siege=4 targets=land,water upkeep_fuel=2 loudness=10 color=gray
+
+# noun group
+regiment: placement=region placement_range=80 field_radius=20 field_targets=owned field_duration=4 summons=soldier summon_count=12 summon_owned=true courage+2 morale+2 loudness=6
+
+# verb combat
+pierce: duration=10 armor_pierce+0.6 dmg_pierce+60 inflict_bleed+6 accuracy+0.1
+
+# verb transform
+explode: duration=1 dmg_blast+600 dmg_fire+200 attack_area+6 knockback+8 self_damage+0.5
+
+# noun phenomenon
+daytime: placement=map field_radius=ABS field_duration=4 sets_daylight=day
+
+# adjective quality
+harmless: dmg_blunt*0.1 dmg_slash*0.1 dmg_pierce*0.1 dmg_fire*0.1 dmg_blast*0.1 aggression*0 charm+3
+
+# adjective quality
+airborne: speed_air+20 flight_ceiling+300 hover=true
+
+# noun vehicle_land
+pickup: mass=2000 length=5 integrity=700 material=steel speed_land=38 self_propelled=true mountable=true seats=3 carry_capacity=1000 tow_capacity=3000 upkeep_fuel=0.2 loudness=5 color=red
+
+# noun attribute
+prosperity: placement=region placement_range=80 field_radius=30 field_targets=all field_duration=5 harvest_bonus*1.5 trade_rate=0.75 growth=1.5 morale+2 counters=poverty,famine,recession
+
+# noun rescue
+redemption: placement=target placement_range=40 event_target=character event_duration=1 effect_status=curse,doom,debt inflict_bless=60 restores=200

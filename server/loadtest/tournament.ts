@@ -6,6 +6,7 @@
  *
  * "mixed" gives each room's bots easy, normal and hard in turn. Rooms play one after another in
  * this process (the room steps by hand, ten ticks to a second, as fast as it can).
+ * SEED_BASE=n starts the rooms' seeds elsewhere (default 1000), for a second set of maps.
  * WATCH=words.txt (one word a line) also counts how often bots spelled those words.
  */
 import { ColyseusTestServer } from "@colyseus/testing";
@@ -47,7 +48,7 @@ const gathered = new Map<string, number>();
 let spellWords: string[] | null = null;
 
 for (let r = 0; r < rooms; r++) {
-  WorldRoom.testSeed = 1000 + r * 7919;
+  WorldRoom.testSeed = Number(process.env.SEED_BASE ?? 1000) + r * 7919;
   const first = mode === "mixed" ? "easy" : mode;
   const room = (await server.createRoom("world", { bots: mode === "mixed" ? 0 : bots, difficulty: first })) as unknown as WorldRoom;
   if (mode === "mixed") for (let i = 0; i < bots; i++) room.addBots(1, (["easy", "normal", "hard"] as const)[i % 3]!);

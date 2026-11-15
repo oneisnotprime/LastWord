@@ -308,3 +308,7 @@ Node process that owns the game state. One room per map instance (from milestone
   TARGET_SECONDS; `botWant` trades and offers toward it and `botTrade` keeps its letters; spelled
   first once affordable), and the endgame (`endgame`: with two left or after 25 min every bot fights
   whoever it finds and goes after the nearest). `loadtest/tournament.ts` prints who was left at time-up.
+- Frequency batch 2: late in a round (after BOT_HUNT_AFTER, or the endgame) a riding bot whose ride
+  has stopped dead (out of fuel or power) or made no headway for 30 s toward where it is going gets off
+  and goes on foot (`BotMind.ride`, used "dismount"): two bots sat in dead machines far apart were the
+  rounds that ran to the time cap.

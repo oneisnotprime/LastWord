@@ -216,6 +216,8 @@ server and the client import this, so anything here must give the same answer on
   feeling or attribute word with a `field_radius` is a field; a physical class (artifact, person...)
   is an object whose field radiates from it. No object or creature radiates fear, healing or a field
   past 200 m (the map is about 1 km across).
+- Frequency batch 2 (`freq2.test.ts`): data only, the same rules. Units (REGIMENT, LEGION) are fields
+  that `summons` soldiers; counter adjectives act by meaning (HARMLESS, UNARMED, PARKED, SUNK).
 - `combat.ts` `shown`: damage, HP and integrity as cards and tips show them (felt).
 - `letters.ts` `salePrice`: what a market pays for a thing sold, by its `value` (SALE_MAX).
 - `tips.ts` teaching tips: `wordTip` (one line of what a word does in numbers, plus its shortest
