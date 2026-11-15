@@ -106,6 +106,17 @@ export function rollText(r: Pick<Roll, "base" | "place" | "help">): string {
   return [`${r.place.toUpperCase()} ${Math.round(r.base * 100)}%`, ...r.help.map((h) => `+${Math.round(h.chance * 100)}% ${h.by.toUpperCase()}`)].join(" · ");
 }
 
+/**
+ * What foraging here tends to give, for the HUD: each letter's share of finds, commonest first,
+ * as whole percents ("E 57 · P 29 · N 14").
+ */
+export function forageOdds(b: BiomeInfo): { letter: string; pct: number }[] {
+  const n = new Map<string, number>();
+  for (const c of b.finds) n.set(c, (n.get(c) ?? 0) + 1);
+  return [...n].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .map(([letter, k]) => ({ letter, pct: Math.round((k / b.finds.length) * 100) }));
+}
+
 /** A letter drawn from a biome's finds. */
 export function forageLetter(b: BiomeInfo, rng: Rng): string {
   return b.finds[Math.floor(rng() * b.finds.length)] ?? "e";

@@ -3,7 +3,7 @@ import "@fontsource/kalam/700.css";
 import "@fontsource/fredoka/500.css";
 import "@fontsource/fredoka/600.css";
 import Phaser from "phaser";
-import { DODGE_TILES, doorAt, TRADE_RANGE, aimOf, cardOf, GATHER_REASONS, missing, parsePhrase, readDescription, SITE_RADIUS, stampTerrain, Tile, tileAt, TILE_METERS, type Card, type Phrase, type WorldMap, generateMap } from "@lastword/shared";
+import { BIOMES, DODGE_TILES, doorAt, TRADE_RANGE, aimOf, cardOf, GATHER_REASONS, missing, parsePhrase, readDescription, SITE_RADIUS, stampTerrain, Tile, tileAt, TILE_METERS, type Card, type Phrase, type WorldMap, generateMap } from "@lastword/shared";
 import { Effects } from "./fx.js";
 import { playAgain } from "./start.js";
 import { lookOf, type Look } from "./art/look.js";
@@ -1402,7 +1402,7 @@ class World extends Phaser.Scene {
     });
     // Indoors (shared interior.ts): say where, and that outsiders cannot see you.
     if (this.indoors) this.hud.corner(`In ${this.indoors}`, Math.floor(me.x), Math.floor(me.y), state.wind ?? 0, "hidden from outside");
-    else this.hud.corner(Tile[tileAt(this.map, me.x, me.y)] ?? "", Math.floor(me.x), Math.floor(me.y), state.wind ?? 0, city);
+    else this.hud.corner(Tile[tileAt(this.map, me.x, me.y)] ?? "", Math.floor(me.x), Math.floor(me.y), state.wind ?? 0, city, BIOMES[tileAt(this.map, me.x, me.y)]);
     this.hud.where(
       `${Tile[tileAt(this.map, me.x, me.y)]} · ${Math.round(me.x * TILE_METERS)}, ${Math.round(me.y * TILE_METERS)} m · ` +
       `${others} other${others === 1 ? "" : "s"} in sight${state.daylight === "night" ? " · night" : ""}${state.weather ? ` · ${state.weather}` : ""}`,

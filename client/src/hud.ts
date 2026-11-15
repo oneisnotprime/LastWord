@@ -1,4 +1,4 @@
-import { bestWords, selfRisk, effectText, heldText, spellableNow, SPELL_GROUPS, type SpellGroup, tipOfTheMoment, inspectText, LETTER_GUIDE, missing, parsePhrase, readTrade, standIn, standsFor, type Card, type Dictionary, type Letters, type LoadoutDetail, type Offer } from "@lastword/shared";
+import { bestWords, forageOdds, type BiomeInfo, selfRisk, effectText, heldText, spellableNow, SPELL_GROUPS, type SpellGroup, tipOfTheMoment, inspectText, LETTER_GUIDE, missing, parsePhrase, readTrade, standIn, standsFor, type Card, type Dictionary, type Letters, type LoadoutDetail, type Offer } from "@lastword/shared";
 import { BADGE } from "./art/paper.js";
 import { ideasHtml, setTipsOn, tipRng, tipsOn } from "./tips.js";
 import { keyGlyph, only, pad, padGlyph } from "./pad.js";
@@ -566,8 +566,10 @@ export class Hud {
   }
 
   /** Bottom-left: the ground under you and your tile. */
-  corner(ground: string, x: number, y: number, wind = 0, city = "") {
-    const html = `<b>${esc(ground === "Field" ? "Tilled land" : ground.replace(/([a-z])([A-Z])/g, "$1 $2"))}</b>${city ? `<span>${esc(city)}</span>` : ""}<span>tile ${x}, ${y} · wind ${wind}%</span>`;
+  corner(ground: string, x: number, y: number, wind = 0, city = "", biome?: BiomeInfo) {
+    // What foraging here gives: chance, then each letter's share ("forage 60% · E 57 P 29 N 14").
+    const odds = biome && biome.finds ? `<span class="odds">forage ${Math.round(biome.forage * 100)}% · ${forageOdds(biome).map((o) => `${o.letter.toUpperCase()} ${o.pct}`).join(" ")}</span>` : "";
+    const html = `<b>${esc(ground === "Field" ? "Tilled land" : ground.replace(/([a-z])([A-Z])/g, "$1 $2"))}</b>${city ? `<span>${esc(city)}</span>` : ""}${odds}<span>tile ${x}, ${y} · wind ${wind}%</span>`;
     const el = $("corner");
     if (el.innerHTML !== html) el.innerHTML = html;
   }
