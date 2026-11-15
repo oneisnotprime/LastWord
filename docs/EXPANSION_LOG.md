@@ -293,6 +293,76 @@ into `tools/generated_words.txt`, letters in `tools/producers.txt`). Art is draw
 - Remaining: `tools/freq_todo.txt` (3,000 words, rank order) starts at ENTHUSIAST (rank 15,809),
   EPILEPSY, ESTIMATION, EXCAVATION, EXTREMIST, FEEDER, FLATTERING, FORCIBLY.
 
+## Frequency batch 4: the next eleven hundred most common words
+
+- Added 1,188 words, every missing word from wordfreq rank 15,809 to 20,087 (ENTHUSIAST, ESTIMATION,
+  EXCAVATION, FEEDER, FLATTERING... to DECIMAL, DEFENSIVELY): 557 nouns, 450 adjectives, 98 verbs, 83
+  adverbs; the dictionary is now 16,987 words. Twelve core words are hand-written in demo_words.txt
+  (ZEPPELIN, CHARIOT, REVOLVER, LAUNCHER, ROACH, WILDFIRE, BONFIRE, CARNAGE, NEMESIS, MONSTROUS,
+  APOCALYPTIC, UNLEASH); the rest went through chunk files and `generate_words.py merge`. The todo list
+  was rebuilt first: the concept batches had already given DIZZY, RUMOUR, COLOSSAL, AWAKEN and AMNESIA
+  data. New producers: hired hands pay N (PROPRIETOR, SUBORDINATE, TRAINEE, CAMERAMAN, BREEDER,
+  EXPORTER, UNIONIST), a CONVERTER and a BINDER make M, MAIZE is a crop (A).
+- Gap after this batch (`tools/freq_gap.py`): top 10k 0, top 20k 0 (was 1,262: 623 n, 98 v, 460 adj,
+  81 adv), top 30k 2,802 (1,332 n, 251 v, 1,025 adj, 194 adv; was 4,092). `--todo` now reads the top
+  40k, so the list holds 3,000 words though fewer than that are left in the top 30k.
+- Left out on purpose and not counted: names WordNet also lists lower-case (BARTLETT, HOBBIT,
+  LANGLEY, PHOEBE, DIXIE, RUTHERFORD, MEDINA, NAPA, KELVIN, SIEMENS...: `freq_gap.py` NAMES), Roman
+  numerals and misread forms (XIII, XIV, XVI, LIV, CPS, ELVES, CONN, MIDI, RETREATED: NOT_WORDS), crude
+  and sexual words added to tools/crude.txt (MASTURBATION, OBSCENE, NIPPLE, the genital and pelvic
+  anatomy, BLOWJOB, THREESOME, PERVERT, PEDOPHILE, SHITE and four slurs), and words about groups of
+  people, sexuality, illness, religion's offices or atrocities added to `EXCLUDED` (DIASPORA,
+  UNDOCUMENTED, MULTICULTURAL, INTERRACIAL, RACIALLY, SEGREGATED, BOURGEOIS, BOOMER, COLLEEN, WELCH,
+  HETEROSEXUAL, HOMOPHOBIA, MASCULINITY, ADULTERY, INCEST, CHILDBIRTH, UNBORN, MISCARRIAGE, EPILEPSY,
+  AUTISTIC, DIABETIC, SCLEROSIS, LUNATIC, PSYCHOTIC, PSYCHOPATH, DEPRESSIVE, HANDICAPPED, PAPAL,
+  EPISCOPAL, SYNOD, PRIESTHOOD, SHIVA, OBI, AMIR, BEY, RAJA, INQUISITION, COLONIALISM, BIGOTRY,
+  EXTREMIST, EXTREMISM). Political and religious ideas kept, acting only through ordinary systems and
+  aimed at no group: CONSERVATISM (a field that fines spelling, stretches durations and ends
+  REVOLUTION and REFORM), IMPERIALISM (claims and taxes ground), POPULIST (a leader whose mutinies
+  join him), UNIONIST, BIPARTISAN (a pact), COLONIZATION (settlers and a claim), HOLINESS, DIVINITY,
+  HALLELUJAH, OCCULT, SINNER and REPENT.
+- Notable effects, all through shared systems: WILDFIRE burns and spreads over a 25 m region and ends
+  forests and meadows; CARNAGE cuts down everyone in a 12 m circle (400 slash, 300 blunt, bleeding);
+  BLOODSHED raises the slain as ghosts; MANPOWER musters 8 workers, COHORT 6 soldiers, OVERRUN 10 and
+  takes the city, CIVILISATION 6 peasants under a law; ANNEXATION, ACCESSION and CONQUERING take a city;
+  OVERFLOW floods, SATURATION drenches a region and puts out fire, OXIDATION rusts steel and iron,
+  SHATTERING breaks glass and ice, WRECKING levels a building; GLITCH misspells a thing, SUBSTITUTION and
+  LIEU swap owners, REPLICATION copies, RETRIEVAL hauls a thing 150 m to you; NEMESIS is a hunting
+  spirit, DIVINITY a healing god, INCARNATION and SURROGATE cheat death once; KICKOFF moves the storm on
+  30 s, OUTSET, TIMETABLE and MIDTERM hold it; VOWEL gives a blank and doubles vowels, ACRONYM and
+  SYLLABLE are stand-ins; MAVERICK has free speech. Adjectives by meaning: MONSTROUS (size ×3, mass ×8),
+  JUMBO, OVERSIZED, MOUNTAINOUS; MICROSCOPIC (size ×0.05) slips out of reach; PARALYZED and TOTALED stop
+  a body or a ride; ARMOURED, FORTIFIED, FLAMING; APOCALYPTIC doubles fire and blast; UNPROTECTED strips
+  armour, cover and shields; VACCINATED and SANITARY end sickness. Adverbs bend verbs from MILDLY (×0.6) to
+  EXPONENTIALLY (×2.5 and a copy) and FATALLY (no revival). Counter-words, checked for direction:
+  LEGALIZATION ends a BAN and PROHIBITION, FREEING a PRISON, CAGE or SHACKLE, PAX a WAR or FEUD,
+  ANTITRUST a MONOPOLY, CORRECTNESS a TYPO, CONFIDENTIALITY a LEAK, INTERCEPTION a MISSILE or ROCKET,
+  OVERRIDE a ROBOT or DRONE, MODERATOR a MELTDOWN, SWAT a FLY or WASP. Areas laid at a place last at
+  most five minutes (pacts up to eight), the map-wide GLOBALIZATION 1.5, and MIDDAY's and MERIDIAN's day is
+  ended by any night word, so no new lasting area lacks an ender; no word seals a fate; no object
+  radiates past 200 m.
+- The build's meaning rules gave the new words their dimensions with no hand work: natures (139
+  words: people flesh, machines metal, a ZEPPELIN aluminium), their materials' melting points, burning,
+  conducting and shattering (47 things), size from meaning (17: ELONGATED ×2, FLATTENED ×0.1), last stands (GRITTY,
+  GUERRILLA, DAREDEVIL, FRENZY...), haunting acts for ghosts (21), screen, knowledge and comms
+  (JAMMING censors, KAPPA, TAU and ETA restore panels). Two the rules got wrong were set by hand:
+  HIPPIE and HIPSTER do not fight on (`last_stand=0`).
+- Pitfalls (shared CLAUDE.md): acts aimed at someone written in an affliction, knowledge, feeling or
+  possession archetype (MIGRAINE, PERSUASION, PARANOIA, APPROPRIATION) and self fields written as places
+  with no tile (SOLITUDE, AFTERLIFE, BEDSIDE) parsed as lone objects; they are now `act`/`event` and
+  `attribute`. An object with `haunts` (OBITUARY) fails the ghosts test: only acts on others may haunt.
+- Drawn: a WORDS shape for each of the 180 new concrete words without a generated image (people as
+  bipeds by what they do, a crowd for FODDER; new shapes for a zeppelin, a chariot, a revolver, a rocket
+  launcher, a wavy kris, a prism, a windshield, a mudguard, a hinge, an electrode, a lattice, a
+  pedestal, a piling, a strip light, a wristband and a particle; landforms as signs), checked in the
+  gallery with headless Playwright (the chariot's rider and the horseback saddle were redrawn).
+- Tournament (48 rooms, 8 mixed bots, 30 min cap, same seeds; main's dictionary against this
+  batch's): mean round 8.5 -> 8.7 min (longest 11.4 -> 13.1); median first death 128 -> 142 s; median
+  time to kill a person 7.6 -> 6.2 s; rounds at the time cap 0 -> 0. Bots spelled new words 83 times
+  (23 different; ODE 18, POL 12, ARIA 11, DUN 8), 2.0% of 4,216 spellings.
+- Remaining: `tools/freq_todo.txt` (3,000 words, rank order) starts at DEFUNCT (rank 20,088),
+  DEGRADE, DIFFUSE, DIGNIFIED, DISOBEDIENCE, DREAMER, ESTEEMED, ETHERNET.
+
 ## Concept: screen, knowledge and communication
 
 - Not a word batch: three shared systems (shared `screen.ts`, `knowledge.ts`, `comms.ts`) and meaning

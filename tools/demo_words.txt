@@ -2935,3 +2935,39 @@ rumour: placement=target placement_range=300 field_radius=60 field_targets=enemi
 secrecy: placement=self field_radius=30 field_targets=owned field_duration=5 immune_expose=true stealth+2 counters=espionage,disclosure,leak
 # noun worker
 censor: mass=75 integrity=100 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 authority=4 silences=15 field_radius=40 field_targets=enemies inflict_censor=6 counters=poet,critic,columnist,rumor food_need=0.03
+
+# Frequency batch 4 (tools/freq_todo.txt from ENTHUSIAST): the next eleven hundred or so most common
+# words that had no data. Core words of each kind below; the rest are generated from these and the lines above.
+# A wildfire spreads across a region; carnage cuts down everyone in a circle; a nemesis hunts its quarry.
+
+# noun vehicle_air
+zeppelin: mass=200000 length=240 integrity=3000 material=aluminum,canvas self_propelled=true speed_air=35 hover=true flight_ceiling=2000 seats=50 mountable=true requires_pilot=true diet=fuel upkeep_fuel=4 flammability=8 carry_capacity=15000 sight_range=300 map_reveal=200 loudness=5 color=silver
+
+# noun vehicle_land
+chariot: mass=300 length=3 integrity=300 material=wood,bronze self_propelled=true mountable=true seats=2 speed_land=14 upkeep_food=0.1 dmg_slash=80 dmg_crush=60 attack_rate=1 knockback=6 agility=4 loudness=6 color=gold
+
+# noun weapon
+revolver: mass=1.1 length=0.3 integrity=60 material=steel equip_slot=held hands_required=1 dmg_pierce=75 attack_rate=0.7 attack_range=40 accuracy=0.7 ammo_per_hit=1 critical=0.15 loudness=9 color=gray
+launcher: mass=15 length=1.2 integrity=120 material=steel equip_slot=held hands_required=2 dmg_blast=320 attack_area=4 attack_range=200 attack_rate=0.2 ammo_per_hit=1 targets=land,air siege=3 loudness=10 friendly_fire=true color=green
+
+# noun insect
+roach: mass=0.003 length=0.04 integrity=3 alive=true diet=scavenger food_need=0.0001 speed_land=1.5 plural_count=100 pack_size=20 res_radiation=0.9 stealth=6 odor=4 inflict_sick=3 habitat=urban,forest nature=insect color=brown
+
+# noun disaster
+wildfire: placement=target placement_range=100 event_target=tile event_radius=25 event_duration=4 dmg_fire=300 inflict_burn=20 spread_rate=6 temperature=900 luminosity=8 friendly_fire=true counters=forest,woodland,grassland,meadow
+
+# noun event
+bonfire: placement=target placement_range=30 event_target=tile event_radius=4 event_duration=4 dmg_fire=60 inflict_burn=6 luminosity=9 temperature=700 light_delta=4 morale+3 loudness=4
+
+# noun killing
+carnage: placement=target placement_range=60 event_target=tile event_radius=12 event_duration=1 dmg_slash=400 dmg_blunt=300 inflict_bleed=20 inflict_fear=15 multi_target=8 friendly_fire=true
+
+# noun supernatural
+nemesis: mass=70 integrity=600 alive=true sentient=true intelligence=9 hands=true speech=true speed_land=7 speed_air=12 dmg_slash=120 attack_rate=1.2 tracking=10 detect_stealth=9 critical=0.25 aggression=9 courage=10 immune_fear=true nature=spirit food_need=0
+
+# adjective quality
+monstrous: size*3 mass*8 integrity*4 dmg_crush*3 fear_aura+6 beauty+-5 speed_land*0.9 stealth+-8
+apocalyptic: dmg_fire*2 dmg_blast*2 fear_aura+7 attack_area*2 inflict_fear+8 friendly_fire=true
+
+# verb contact
+unleash: duration=20 attack_rate*1.6 aggression+6 obedience*0.3 dmg_blunt*1.4 effect_status=leash,root

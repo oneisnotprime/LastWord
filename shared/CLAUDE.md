@@ -221,6 +221,10 @@ server and the client import this, so anything here must give the same answer on
 - Frequency batch 3 (`freq3.test.ts`): data only, the same rules. Terrain-class words with a
   `field_radius` and no `tile_type` are objects (`kindOf`), so self fields such as ROOFTOP and
   SKYLINE are attributes; `summons` acts only on areas (fields and events), not on objects or verbs.
+- Frequency batch 4 (`freq4.test.ts`): data only, the same rules. An act aimed at someone must have
+  an event archetype even when its meaning is an affliction, an idea or a holding (MIGRAINE, PERSUASION,
+  APPROPRIATION are `act`/`event`), and a place that lays no tile but radiates is an attribute
+  (SOLITUDE, AFTERLIFE, BEDSIDE), else either is parsed as a lone object.
 - `combat.ts` `shown`: damage, HP and integrity as cards and tips show them (felt).
 - `letters.ts` `salePrice`: what a market pays for a thing sold, by its `value` (SALE_MAX).
 - `tips.ts` teaching tips: `wordTip` (one line of what a word does in numbers, plus its shortest
