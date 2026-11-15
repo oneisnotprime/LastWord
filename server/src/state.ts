@@ -23,6 +23,10 @@ export const Player = schema(
     traits: t.string(),
     /** A roaming boss: slay it for Z. */
     boss: t.boolean(),
+    /** Size against its word (shared scale.ts): the standee is drawn this much bigger. 0 is read as 1. */
+    size: t.float32(),
+    /** Whom it is leashed to (shared control.ts): a tether line is drawn to them. "" when none. */
+    tether: t.string(),
   },
   "Player",
 );

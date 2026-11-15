@@ -26,6 +26,10 @@ export interface LoadoutDetail {
   statuses: { status: string; left: number }[];
   /** Morale, 0 to 10 and beyond: shaken below 3, fleeing at 0. */
   morale: number;
+  /** Luck as the percent it shifts every roll, and rerolls of a failed roll (shared idea.ts); 0 and 0 when none. */
+  luck?: { percent: number; rerolls: number };
+  /** Size against your body's own (shared scale.ts), 1 when unchanged. */
+  size?: number;
   /** Food, fuel and power in store, and what everything you own draws (need) and supplies (makes) a minute. */
   stores: Record<"food" | "fuel" | "power" | "faith", { have: number; need: number; make: number }>;
   /** Things of yours that went short at the last count, by name: hungry creatures, stalled machines. */

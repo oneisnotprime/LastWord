@@ -272,6 +272,16 @@
       #fx .num.layer, #fx .num.blocked { color: #e8e4dc; -webkit-text-stroke-color: #5a5a62; font-size: 14px; }
       #fx .num.miss { color: #fbf7ec; -webkit-text-stroke-color: #8a7a60; font-size: 13px; font-style: italic; }
       #fx .num.dodged { color: #fff3c4; -webkit-text-stroke-color: #2f5a8e; font-size: 15px; font-style: italic; }
+      #fx .num .aff { display: block; font-size: 11px; letter-spacing: 0.04em; text-align: center; margin-top: 1px; -webkit-text-stroke-width: 2.5px; }
+      #fx .num.weak .aff { color: #ffe27a; -webkit-text-stroke-color: #8a2a0a; font-size: 13px; }
+      #fx .num.resist .aff, #fx .num.immune .aff { color: #dfe8f0; -webkit-text-stroke-color: #3d4a5a; }
+      #fx .num.weak { font-size: 21px; }
+      #fx .num.resist, #fx .num.immune { opacity: 0.85; }
+      #fx .note.luck { color: #f6ffe0; -webkit-text-stroke: 3px #2f6a2a; paint-order: stroke fill; font: 700 15px/1 var(--round); }
+      #fx .note.luck.bad { -webkit-text-stroke-color: #6a2a2a; color: #ffe4e0; }
+      #status .chip.luck { background: #d8efc4; color: #24561f; }
+      #status .chip.luck.bad { background: #f2cdc6; color: #7a2420; }
+      #status .chip.size { background: #e6dcf2; color: #4a3a6a; }
       /* A heavy blow coming for you: the screen's edge pulses red. Knocked out: a beat of slow grey. */
       body.incoming::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 4; animation: incoming .45s infinite alternate;
         background: radial-gradient(ellipse at center, transparent 58%, rgba(201, 40, 30, .45) 100%); }

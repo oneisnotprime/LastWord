@@ -52,3 +52,6 @@ export * from "./sea.js";
 export * from "./sport.js";
 export * from "./idea.js";
 export * from "./bug.js";
+export * from "./affinity.js";
+export * from "./scale.js";
+export * from "./control.js";

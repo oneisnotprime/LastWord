@@ -19,6 +19,9 @@ import { spaceText } from "./space.js";
 import { seaText } from "./sea.js";
 import { sportText } from "./sport.js";
 import { ideaText } from "./idea.js";
+import { affinityText } from "./affinity.js";
+import { scaleText } from "./scale.js";
+import { controlText } from "./control.js";
 import type { Dictionary } from "./dictionary.js";
 import { GROW_PACE, needsText, producerOf, SEEDLING } from "./produce.js";
 import { parsePhrase, type Phrase } from "./phrase.js";
@@ -380,7 +383,11 @@ export function cardOf(dict: Dictionary, p: Phrase): Card {
   const use = useText(dict, p.noun, p.adjectives);
   if (use) does.push(use);
   // Flavour (made of steel, loud) after what changes a fight, unless an adjective made it so.
-  card.does = [...(remade ? materialText(dict, s) : []), ...does.filter((d) => !trivia(d)), ...does.filter(trivia), ...(remade ? [] : materialText(dict, s))];
+  // Its natures, weaknesses and resistances (shared affinity.ts) right after what it does.
+  const natures = kind === "terrain" ? [] : affinityText(s);
+  // What its make-up does to blows is in its weaknesses now; the material line only says what it is made of.
+  const made = kind === "terrain" ? materialText(dict, s) : materialText(dict, s).filter((l) => /^made of /.test(l));
+  card.does = [...(remade ? made : []), ...does.filter((d) => !trivia(d)), ...natures, ...does.filter(trivia), ...(remade ? [] : made)];
   return card;
 }
 
@@ -574,7 +581,7 @@ export function effectText(dict: Dictionary, word: string): string {
 
 /** What themes 21 to 25 add to a card: time, space, sea, sports, abstract ideas. */
 function batch5(s: Stats): string[] {
-  return [...timeText(s), ...spaceText(s), ...seaText(s), ...sportText(s), ...ideaText(s)];
+  return [...timeText(s), ...spaceText(s), ...seaText(s), ...sportText(s), ...ideaText(s), ...scaleText(s), ...controlText(s)];
 }
 
 /** How grand a spelling is, for its entrance (`grand`): the most of its damage and a fifth of its integrity, times how many. */
