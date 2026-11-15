@@ -64,6 +64,11 @@ dialysis junkie sectarian supremacist contraception consensual patriarchal psych
 maniac narcissistic seduction apostolic circumcision loco tic tramp fibrosis bigot infertility anemia
 autoimmune euthanasia anorexia fundamentalist inpatient martyrdom menopause prenatal antisemitism
 cancerous quaker abuser chastity het
+midwestern femininity harem patriarchy ethnically schizophrenic institutionalized neonatal pasha untouchable
+multiculturalism crucifixion heathen sheik bonkers phobia hospitalization derelict creole cystic mahatma lynching
+xenophobia xenophobic yakuza albino bigoted cannibal cannibalism prejudiced polygamy amour deviate deviant neurotic
+sociopath unhinged incurable aneurysm lesion ulcer dyslexia rheumatoid blackwater degenerative servitude hobo bohemia
+curate congregational archdiocese swami hajj joss gentile gangsta atrocity contraceptive consenting placenta
 """.split())
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """The frequency gap: the most common English words that are not playable yet.
 
-    python tools/freq_gap.py                 counts for the top 10k, 20k and 30k, by part of speech
+    python tools/freq_gap.py                 counts for the top 10k, 20k, 30k and 40k, by part of speech
     python tools/freq_gap.py --todo 3000     also write tools/freq_todo.txt, the next missing words
     (WordNet from node_modules/wordnet-db/dict, or the directory in $WORDNET_DICT)
 
@@ -39,10 +39,11 @@ kylie dickens waterloo ling marcel skinner thatcher mercer cummings coco
 bartlett hobbit langley mei pascal cutler phoebe dixie rutherford bourne mina ridley gemma lulu
 siemens medina napa cassie kelvin muller
 liza granger heller fitch marseille ritz rudd fuji gage kali laguna levant salah britt cicero firth
-fabian tod hogg lev dak""".split())
+fabian tod hogg lev dak
+saratoga dobson louvre bennet argus merle flinders""".split())
 # Headwords whose common use is an inflection or an abbreviation WordNet reads as something else
 # (LIED as a German song, SHOOK as a sheaf, MPH, GEN, CHI): left out of the gap.
-NOT_WORDS = set("lied shook tops mph neo gen sen chi col sang wont dug comp para mil das sol tore var divers meg ala wen ain rbi rpm xiii xiv xvi liv cps elves conn midi retreated nee som otc ccc masse pct".split())
+NOT_WORDS = set("lied shook tops mph neo gen sen chi col sang wont dug comp para mil das sol tore var divers meg ala wen ain rbi rpm xiii xiv xvi liv cps elves conn midi retreated nee som otc ccc masse pct khz".split())
 
 
 
@@ -101,10 +102,10 @@ def gap(top=30000):
 
 
 def main():
-    # The todo list may run past the top 30k once the gap there is shorter than it.
-    missing = gap(40000 if "--todo" in sys.argv else 30000)
+    # The todo list may run past the top 40k once the gap there is shorter than it.
+    missing = gap(50000 if "--todo" in sys.argv else 40000)
     print("missing headwords among wordfreq's top N, by part of speech")
-    for n in (10000, 20000, 30000):
+    for n in (10000, 20000, 30000, 40000):
         c = collections.Counter(r[2] for r in missing if r[0] <= n)
         print(f"  top {n // 1000}k: {sum(c.values()):5d}  " + "  ".join(f"{k} {c.get(k, 0)}" for k in ROLES))
     if "--todo" in sys.argv:

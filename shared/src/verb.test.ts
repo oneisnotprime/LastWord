@@ -54,7 +54,9 @@ describe("adverbs", () => {
       }
       new Unit(dict, { body: { noun: "human" }, effects: [castVerb(dict, v)] });
     }
-  });
+    // Every pair: about a million casts with frequency batch 6 (1,484 verbs, 700 adverbs), near 3 s alone
+    // and past the 5 s default when the suite runs files in parallel on a loaded machine.
+  }, 30000);
 });
 
 describe("using objects", () => {

@@ -60,7 +60,7 @@ describe("word tips", () => {
       if (miss <= 3) near++;
     }
     expect(near / all).toBeGreaterThan(0.6);
-  });
+  }, 30000); // the first call sorts the whole dictionary into tip pools
 });
 
 describe("rule tips", () => {

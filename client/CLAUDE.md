@@ -180,6 +180,10 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
   shapes for a bayonet, a tripod, a helix, a floppy disk, a moustache, an orb, a leaf blower, a grating,
   a coulter, a splinter, a hamper, an oculus, a pulpit, a castor, an embroidery hoop and a pencil
   (EYELINER); landforms as signs; quantities left to their archetype).
+- Frequency batch 6: `WORDS` has every new concrete word without a generated image (people with `job`,
+  `lord` and `soldierOf`, wizards for WIZ and CASTER, a big-headed TOON, a demon-red FIEND; new shapes for
+  a boomerang, a glider, a scarecrow, a blob, a jukebox (NICKELODEON), a pallet and a cork (STOPPER); a
+  STREETCAR is a tram with a trolley pole; landforms as signs).
 - Frequency batch 4: `WORDS` has every new concrete word (people with `job`, a crowd for FODDER, and
   new shapes for a zeppelin, a chariot, a revolver, a rocket launcher, a wavy kris (CREASE), a prism, a
   windshield, a mudguard (FENDER), a hinge, an electrode, a lattice, a pedestal, a piling, a strip

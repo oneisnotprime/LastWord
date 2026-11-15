@@ -15,7 +15,7 @@
   "letter": "A",
   "class": "vowel",
   "source": "crop fields on tilled land",
-  "lexicon_share": 0.0846
+  "lexicon_share": 0.0845
  },
  {
   "letter": "R",
@@ -39,7 +39,7 @@
   "letter": "O",
   "class": "vowel",
   "source": "water: wells, lakes, fishing",
-  "lexicon_share": 0.0692
+  "lexicon_share": 0.0693
  },
  {
   "letter": "S",

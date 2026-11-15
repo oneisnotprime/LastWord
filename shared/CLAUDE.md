@@ -228,6 +228,10 @@ server and the client import this, so anything here must give the same answer on
 - Frequency batch 5 (`freq5.test.ts`): data only, the same rules. A self field written with an operation
   on `field_radius` and no `field_radius` of its own is an object (EXPANSE); a word with `binds` 2 or
   more that is not physical is a pact (event), whatever its archetype (SORORITY, CLIQUE).
+- Frequency batch 6 (`freq6.test.ts`): data only, the same rules. Sky words set daylight for at most a
+  minute and a half (NIGHTFALL, DAYBREAK, MORN, MIDSUMMER, SOLSTICE) and weather laid on a region counts as
+  map-wide for `lasting` (SMOG lasts 1.5 minutes); an inert word (only in data/inert.tsv) is fine in a chunk
+  file though check.py says "not in lexicon": the overrides pass adds it.
 - `combat.ts` `shown`: damage, HP and integrity as cards and tips show them (felt).
 - `letters.ts` `salePrice`: what a market pays for a thing sold, by its `value` (SALE_MAX).
 - `tips.ts` teaching tips: `wordTip` (one line of what a word does in numbers, plus its shortest

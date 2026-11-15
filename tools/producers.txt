@@ -1284,3 +1284,18 @@ councilman: produce_N=0.35
 blower: produce_M=0.3
 polytechnic: produce_C=0.6 production_needs=labor
 bluegrass: produce_P=0.4
+
+# Frequency batch 6: hired hands pay N (a PRENTICE, a SPOKESWOMAN, a LOBBYIST, an IMPORTER, a
+# CARTOONIST, a PUBLICIST, a GROWER, a FITTER); an ALLOTMENT is a crop field (A); a CATCHMENT holds
+# water (O); a FURNISHING is furniture (B).
+prentice: produce_N=0.25
+spokeswoman: produce_N=0.3
+lobbyist: produce_N=0.3
+importer: produce_N=0.3
+cartoonist: produce_N=0.3
+publicist: produce_N=0.3
+grower: produce_N=0.3
+fitter: produce_N=0.3
+allotment: produce_A=0.6 tile_type=tilled radius=3
+catchment: produce_O=0.5 production_needs=extract
+furnishing: produce_B=0.3
