@@ -312,3 +312,19 @@ Node process that owns the game state. One room per map instance (from milestone
   has stopped dead (out of fuel or power) or made no headway for 30 s toward where it is going gets off
   and goes on foot (`BotMind.ride`, used "dismount"): two bots sat in dead machines far apart were the
   rounds that ran to the time cap.
+- Concept batch: combat. `blow` sends a hit's `aff` ("weak", "resist", "immune": shared affinity.ts).
+  `rebuild` sets `Walker.size`/`stature` (`Player.size` for the standee) and `magnets`. Reach adds
+  the foe's `hitbox`; `bar` keeps a body over DOOR_STATURE out of every room and lets one under
+  SLIP_STATURE under any shut door; `equip` checks `rideProblem` and lets a creature that `carries`
+  its master be ridden (`takeNear`). Luck: gathering rerolls a miss, a ruin's X and a hunt's rare
+  letter use `luckyChance`, `springTraps` lets the lucky step over (`luckyPast`), `settleGamble`
+  throws a `gamble` (house or person) once a spelling is paid, and `use` throws DICE; `luck` messages
+  { x, y, text, bad? } go to the client. Control: `walk` mirrors a reversed walker's new target once
+  (`mirroredFor`) and sways a wobbling one; `compel` lets a hypnotist steer (target and foe);
+  `tether` (after walking) drags the leashed back to LEASH_TILES and lets carried magnets pull;
+  a cord-cutting thing carried (`effect_status` leash) snaps a leash; `affect` ending drunk or
+  reverse drops the buffs that cause them; `showStatus` adds drunk and reverse from properties and
+  sets `Player.tether`. Bots: hexes and cures include the four control statuses; a bot whose blows
+  land "immune" FUTILE_BLOWS times leaves that foe for FUTILE_SECONDS (`BotMind.futile`).
+  `combat2.test.ts` has a scenario per dimension.
+
