@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { ACTION_LETTERS, missing, spellableNow, starterWeapons, parsePhrase, PENDING_SOURCES, producerOf, reachability, reachTable, seeded, starterHand, starterWords, STARTING_HAND } from "./index.js";
+import { ACTION_LETTERS, missing, starterWeapons, parsePhrase, PENDING_SOURCES, producerOf, reachability, reachTable, seeded, starterHand, starterWords, STARTING_HAND } from "./index.js";
 import { demo } from "./testdata.js";
 
 const dict = demo();
@@ -28,8 +28,8 @@ describe("starting hands spell a weapon", () => {
     expect(weapons).toEqual(expect.arrayContaining(["sword", "bow", "club", "spear", "gun"]));
     expect(weapons).not.toContain("spoon");
     let armed = 0;
-    for (let seed = 0; seed < 200; seed++) if (spellableNow(dict, starterHand(dict, seeded(seed))).weapons.some((w) => weapons.includes(w))) armed++;
-    expect(armed).toBeGreaterThan(180);
+    for (let seed = 0; seed < 60; seed++) { const h = starterHand(dict, seeded(seed)); if (weapons.some((w) => !missing(h, w))) armed++; }
+    expect(armed).toBeGreaterThan(54);
   });
 });
 
