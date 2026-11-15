@@ -34,7 +34,7 @@ LORA = os.environ.get('ART_LORA', 'https://v3b.fal.media/files/b/0ab27d53/eQwXLy
 LORA = '' if LORA == 'none' else LORA
 LORA_SCALE = float(os.environ.get('ART_LORA_SCALE', 1))
 TRIGGER = 'lwpaper '
-PRICE = {MODEL: 0.005, LORA_MODEL: 0.0085}      # $ per megapixel (fal list price, Nov 2026)
+PRICE = {MODEL: 0.005, LORA_MODEL: 0.0085}      # $ per megapixel, at least 1 MP an image (fal, Nov 2026)
 BIREFNET = 'fal-ai/birefnet/v2'
 BIREFNET_PRICE = 0.001                          # upper estimate per image (billed per compute second)
 TEMPLATE = ('Simple flat paper cut-out token of {subject}. Side view, one chunky readable silhouette made of a handful '
@@ -112,7 +112,7 @@ def cmd_generate(only=None, rnd='1', budget=70.0):
     seeds = SEEDS if rnd == '1' else RETRY_SEEDS
     jobs = [(r['word'], rnd, r['prompt'], s) for r in rows for s in seeds
             if not os.path.exists(os.path.join(WORK, 'raw', r['word'], f'{s}.png'))]
-    unit = PRICE[LORA_MODEL if LORA else MODEL] * SIZE * SIZE / 1e6
+    unit = PRICE[LORA_MODEL if LORA else MODEL] * max(1.0, SIZE * SIZE / 1e6)   # fal bills at least 1 MP an image
     if fal.spent() + len(jobs) * unit > budget: sys.exit(f'would exceed budget: {fal.spent():.2f} + {len(jobs)} x {unit:.4f}')
     print(len(jobs), 'images at', unit, flush=True)
     done = logged = 0

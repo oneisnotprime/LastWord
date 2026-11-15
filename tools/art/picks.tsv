@@ -11,42 +11,42 @@ support	1	22	birefnet
 head	1	22	birefnet	
 line	1	11	birefnet	
 shit	1	22	birefnet	
-general	1	22	birefnet	
+general	3	11	birefnet	person redo: signature prop and headgear
 face	1	44	birefnet	
 president	1	22	birefnet	
 video	1	11	birefnet	
 hand	1	22	birefnet	
 body	1	11	birefnet	
 food	1	22	birefnet	bread not plate
-guy	1	22	birefnet	
+guy	3	22	birefnet	person redo: signature prop and headgear
 matter	1	22	birefnet	
 air	1	33	birefnet	
-friend	1	33	birefnet	
+friend	3	33	birefnet	person redo: signature prop and headgear
 series	1	33	birefnet	
 report	1	22	birefnet	
 check	1	22	birefnet	cheque shape vague
 form	1	22	birefnet	
 heart	1	22	birefnet	
-major	1	22	birefnet	
+major	3	22	birefnet	person redo: signature prop and headgear
 art	1	22	birefnet	
 works	1	22	birefnet	
 list	1	22	birefnet	
 son	1	22	birefnet	
-father	1	22	birefnet	
+father	3	22	birefnet	person redo: signature prop and headgear
 board	1	22	birefnet	
 field	1	11	birefnet	
-mother	1	44	birefnet	
-wife	1	22	birefnet	
+mother	3	11	birefnet	person redo: signature prop and headgear
+wife	3	22	birefnet	person redo: signature prop and headgear
 land	1	33	birefnet	reads as globe
 shot	1	33	birefnet	
 record	1	22	birefnet	
 film	1	22	birefnet	
 lead	1	22	birefnet	
 security	1	44	birefnet	
-player	1	22	birefnet	
-private	1	22	birefnet	
+player	3	22	birefnet	person redo: signature prop and headgear
+private	3	22	birefnet	person redo: signature prop and headgear
 star	1	22	birefnet	
-member	1	33	birefnet	
+member	3	22	birefnet	person redo: signature prop and headgear
 hands	1	22	birefnet	
 park	1	33	birefnet	ground strip but subject is a patch
 press	1	11	birefnet	
@@ -54,64 +54,64 @@ bill	1	22	birefnet
 director	1	22	birefnet	
 ground	1	11	birefnet	
 source	1	33	birefnet	
-official	1	33	birefnet	
+official	3	11	birefnet	person redo: signature prop and headgear
 production	1	22	birefnet	
 round	1	11	birefnet	
 stuff	1	22	birefnet	
 felt	1	22	birefnet	plain grey squares, vague
 match	1	11	birefnet	
 picture	1	22	birefnet	
-mom	1	33	birefnet	
+mom	3	11	birefnet	person redo: signature prop and headgear
 page	1	22	birefnet	
 brother	1	22	birefnet	
 character	1	33	birefnet	
 chief	1	33	birefnet	
 china	1	33	birefnet	
-lord	1	33	birefnet	
+lord	3	22	birefnet	person redo: signature prop and headgear
 release	1	22	birefnet	
 website	1	33	birefnet	
 hair	1	44	birefnet	reads as head of hair
 daughter	1	22	birefnet	
-figure	1	22	birefnet	
+figure	3	22	birefnet	person redo: signature prop and headgear
 paper	1	11	birefnet	
 parts	1	11	birefnet	
 earth	1	22	birefnet	
 internet	1	22	birefnet	
 sea	1	22	birefnet	
 sir	1	22	birefnet	
-minister	1	22	birefnet	
+minister	3	11	birefnet	person redo: signature prop and headgear
 piece	1	33	birefnet	
-officer	1	22	birefnet	
+officer	3	22	birefnet	person redo: signature prop and headgear
 river	1	33	birefnet	
 album	1	22	birefnet	
 eye	1	33	birefnet	
-student	1	33	birefnet	
+student	3	11	birefnet	person redo: signature prop and headgear
 track	1	33	birefnet	
 weight	1	11	birefnet	may read as bag
 addition	1	33	birefnet	
 gas	1	22	birefnet	
 island	1	33	birefnet	
 text	1	22	birefnet	
-female	1	22	birefnet	
+female	3	11	birefnet	person redo: signature prop and headgear
 husband	1	22	birefnet	
 ice	1	11	birefnet	
-individual	1	11	birefnet	
+individual	3	22	birefnet	person redo: signature prop and headgear
 region	1	33	birefnet	
 section	1	22	birefnet	
-kid	1	33	birefnet	
+kid	3	11	birefnet	person redo: signature prop and headgear
 link	1	44	birefnet	
-justice	1	44	birefnet	
-manager	1	33	birefnet	
+justice	3	22	birefnet	person redo: signature prop and headgear
+manager	3	33	birefnet	person redo: signature prop and headgear
 photo	1	11	birefnet	
 sun	1	22	birefnet	
-subject	1	33	birefnet	
+subject	3	11	birefnet	person redo: signature prop and headgear
 author	1	11	birefnet	
-dad	1	22	birefnet	
-lady	1	22	birefnet	
+dad	3	11	birefnet	person redo: signature prop and headgear
+lady	3	22	birefnet	person redo: signature prop and headgear
 leader	1	22	birefnet	
 material	1	22	birefnet	
-nobody	1	22	birefnet	
-secretary	1	44	birefnet	
+nobody	3	11	birefnet	person redo: signature prop and headgear
+secretary	3	22	birefnet	person redo: signature prop and headgear
 sister	1	33	birefnet	
 annual	1	11	birefnet	
 brain	1	11	birefnet	
@@ -119,14 +119,14 @@ contract	1	33	birefnet
 opening	1	44	birefnet	
 approach	1	22	birefnet	
 defense	1	33	birefnet	
-master	1	22	birefnet	
+master	3	33	birefnet	person redo: signature prop and headgear
 trump	1	22	birefnet	
 beach	1	11	birefnet	shell odd blue
 fan	1	22	birefnet	
-senior	1	22	birefnet	
+senior	3	22	birefnet	person redo: signature prop and headgear
 skin	-	-	-	REJECTED: unclear blobs read as faces / drew a head profile, not a patch of skin
 drink	1	11	birefnet	
-professor	1	33	birefnet	
+professor	3	22	birefnet	person redo: signature prop and headgear
 japan	1	44	birefnet	
 plant	1	22	birefnet	
 award	1	22	birefnet	
@@ -149,10 +149,10 @@ solution	1	11	birefnet
 structure	1	11	birefnet	
 brand	1	22	birefnet	
 cent	1	22	birefnet	
-count	1	33	birefnet	
+count	3	11	birefnet	person redo: signature prop and headgear
 lake	1	22	birefnet	
 mouth	1	11	birefnet	
-owner	1	44	birefnet	
+owner	3	22	birefnet	person redo: signature prop and headgear
 score	1	11	birefnet	
 tom	1	33	birefnet	
 arms	1	22	birefnet	
@@ -162,14 +162,14 @@ hill	1	22	birefnet
 jack	1	44	birefnet	
 metal	1	33	birefnet	
 profile	1	33	birefnet	
-agent	1	44	birefnet	
+agent	3	22	birefnet	person redo: signature prop and headgear
 dude	1	33	birefnet	
 foundation	1	11	birefnet	
 supply	1	22	birefnet	
 waste	1	22	birefnet	
-adult	1	22	birefnet	
+adult	3	22	birefnet	person redo: signature prop and headgear
 artist	1	44	birefnet	
-chairman	1	44	birefnet	
+chairman	3	11	birefnet	person redo: signature prop and headgear
 edition	1	11	birefnet	
 institute	1	33	birefnet	
 mike	1	11	birefnet	
@@ -188,11 +188,11 @@ copy	1	44	birefnet
 garden	1	22	birefnet	
 housing	1	22	birefnet	plain brick block, vague
 journal	1	33	birefnet	
-patient	1	22	birefnet	
+patient	3	22	birefnet	person redo: signature prop and headgear
 setting	1	22	birefnet	
 bitch	1	22	birefnet	
 connection	1	22	birefnet	no plugs
-fellow	1	33	birefnet	
+fellow	3	22	birefnet	person redo: signature prop and headgear
 stick	1	22	birefnet	
 vehicle	1	33	birefnet	
 aid	1	33	birefnet	
@@ -201,7 +201,7 @@ file	1	11	birefnet	could read as marker
 frank	1	33	birefnet	
 guide	1	44	birefnet	
 treat	1	22	birefnet	
-youth	1	33	birefnet	
+youth	3	22	birefnet	person redo: signature prop and headgear
 magazine	1	44	birefnet	
 web	1	33	birefnet	
 wine	1	44	birefnet	
@@ -213,7 +213,7 @@ medicine	1	33	birefnet
 mountain	1	22	birefnet	
 steps	1	22	birefnet	
 tea	1	11	birefnet	
-assistant	1	33	birefnet	
+assistant	3	22	birefnet	person redo: signature prop and headgear
 classic	1	22	birefnet	
 fuel	1	22	birefnet	
 sky	1	33	birefnet	
@@ -229,10 +229,10 @@ moon	1	33	birefnet
 ocean	1	11	birefnet	
 republican	1	33	birefnet	
 suit	1	22	birefnet	
-attorney	1	33	birefnet	
+attorney	3	11	birefnet	person redo: signature prop and headgear
 ben	1	22	birefnet	
 native	1	22	birefnet	
-tech	1	33	birefnet	
+tech	3	33	birefnet	person redo: signature prop and headgear
 user	1	22	birefnet	
 writer	1	22	birefnet	
 girlfriend	1	22	birefnet	
@@ -247,7 +247,7 @@ feed	1	22	birefnet
 platform	1	33	birefnet	
 pool	1	22	birefnet	
 route	1	22	birefnet	
-candidate	1	33	birefnet	
+candidate	3	22	birefnet	person redo: signature prop and headgear
 jersey	1	33	birefnet	
 leg	1	44	birefnet	reads as foot
 liberal	1	22	birefnet	
@@ -270,24 +270,24 @@ novel	1	22	birefnet
 shirt	1	33	birefnet	
 cream	1	11	birefnet	
 editor	1	22	birefnet	
-mayor	1	44	birefnet	
+mayor	3	11	birefnet	person redo: signature prop and headgear
 serving	1	11	birefnet	
 stream	1	33	birefnet	
 alcohol	1	44	birefnet	
 breakfast	1	33	birefnet	
-chosen	1	33	birefnet	
+chosen	3	22	birefnet	person redo: signature prop and headgear
 customer	1	11	birefnet	
 cutting	1	22	birefnet	
-medium	1	22	birefnet	
+medium	3	22	birefnet	person redo: signature prop and headgear
 papers	1	33	birefnet	
 spoke	1	22	birefnet	whole wheel not one spoke
 ticket	1	33	birefnet	
-don	1	44	birefnet	
+don	3	22	birefnet	person redo: signature prop and headgear
 facility	1	22	birefnet	
 painting	1	22	birefnet	
 salt	1	44	birefnet	
 switch	1	33	birefnet	
-boyfriend	1	11	birefnet	
+boyfriend	3	22	birefnet	person redo: signature prop and headgear
 prize	1	22	birefnet	
 register	1	33	birefnet	
 resolution	1	22	birefnet	
@@ -296,7 +296,7 @@ branch	1	33	birefnet
 brazil	1	22	birefnet	
 drawing	1	11	birefnet	pencil only, no paper
 guest	1	33	birefnet	
-senator	1	44	birefnet	
+senator	3	33	birefnet	person redo: signature prop and headgear
 teeth	1	33	birefnet	single tooth
 chemical	1	11	birefnet	
 favourite	1	22	birefnet	
@@ -305,22 +305,22 @@ item	1	44	birefnet
 lane	1	22	birefnet	vague shape
 mess	1	22	birefnet	
 parent	1	22	birefnet	
-representative	1	11	birefnet	
+representative	3	11	birefnet	person redo: signature prop and headgear
 storage	1	33	birefnet	
 transportation	1	11	birefnet	
 button	1	22	birefnet	
 consumer	1	33	birefnet	
 counter	1	33	birefnet	
 creation	2	88	birefnet	
-expert	1	33	birefnet	
+expert	3	22	birefnet	person redo: signature prop and headgear
 object	1	22	birefnet	
 pattern	1	44	birefnet	
 premier	1	11	birefnet	
 tool	1	11	birefnet	
-victim	1	22	birefnet	pale, low contrast
+victim	3	22	birefnet	person redo: signature prop and headgear
 amazon	1	33	birefnet	
 carbon	1	44	birefnet	
-deputy	1	11	birefnet	
+deputy	3	22	birefnet	person redo: signature prop and headgear
 factory	1	33	birefnet	
 legislation	1	22	birefnet	
 mate	1	22	birefnet	
@@ -338,25 +338,25 @@ protein	1	44	birefnet
 breath	1	22	birefnet	
 license	1	44	birefnet	
 paint	1	11	birefnet	
-pilot	1	33	birefnet	
-principal	1	22	birefnet	
-singer	1	11	birefnet	
+pilot	3	22	birefnet	person redo: signature prop and headgear
+principal	3	33	birefnet	person redo: signature prop and headgear
+singer	3	11	birefnet	person redo: signature prop and headgear
 theatre	1	22	birefnet	
 therapy	1	33	birefnet	
-witness	1	22	birefnet	
+witness	3	11	birefnet	person redo: signature prop and headgear
 defence	1	44	birefnet	not round
 nose	1	33	birefnet	
 plastic	1	11	birefnet	
 recording	1	33	birefnet	
 semi	1	33	birefnet	
-suspect	1	22	birefnet	
+suspect	3	22	birefnet	person redo: signature prop and headgear
 tie	1	22	birefnet	
 document	1	11	birefnet	
-employee	1	11	birefnet	
-engineer	1	33	birefnet	
+employee	3	22	birefnet	person redo: signature prop and headgear
+engineer	3	22	birefnet	person redo: signature prop and headgear
 facing	1	33	birefnet	
 ford	1	33	birefnet	
-graduate	1	33	birefnet	
+graduate	3	11	birefnet	person redo: signature prop and headgear
 miller	1	33	birefnet	
 shoulder	2	66	birefnet	weak: vague arm blob
 wheel	1	22	birefnet	
@@ -385,17 +385,17 @@ tears	1	11	birefnet
 accused	1	33	birefnet	
 bedroom	1	22	birefnet	
 colors	1	44	birefnet	
-founder	1	22	birefnet	
+founder	3	22	birefnet	person redo: signature prop and headgear
 gear	1	11	birefnet	
 hip	-	-	-	REJECTED: pale pink blobs, unreadable / reads as a dog bone, not a pelvis
 infrastructure	1	33	birefnet	
 package	1	33	birefnet	
 railway	1	33	birefnet	
-server	1	33	birefnet	
+server	3	22	birefnet	person redo: signature prop and headgear
 acid	1	22	birefnet	
 actress	1	22	birefnet	
 covering	1	22	birefnet	
-duke	1	33	birefnet	
+duke	3	22	birefnet	person redo: signature prop and headgear
 flash	2	88	birefnet	reads as plain light bulb
 mac	1	22	birefnet	
 publication	1	33	birefnet	
@@ -407,7 +407,7 @@ arrival	1	11	birefnet
 bath	1	11	birefnet	
 concrete	1	22	birefnet	
 jimmy	2	66	birefnet	
-lieutenant	1	33	birefnet	
+lieutenant	3	22	birefnet	person redo: signature prop and headgear
 mini	1	33	birefnet	
 muscle	1	44	birefnet	
 producer	1	33	birefnet	
@@ -418,7 +418,7 @@ tag	1	33	birefnet	obscure shape
 tape	1	22	birefnet	
 thread	1	22	birefnet	
 avenue	1	22	birefnet	
-commissioner	1	33	birefnet	
+commissioner	3	22	birefnet	person redo: signature prop and headgear
 ear	1	22	birefnet	
 gym	1	11	birefnet	
 label	1	22	birefnet	
@@ -436,19 +436,19 @@ stomach	1	11	birefnet
 trash	2	55	birefnet	
 walker	1	22	birefnet	
 bureau	1	22	birefnet	
-cousin	1	22	birefnet	
+cousin	3	11	birefnet	person redo: signature prop and headgear
 deck	1	44	birefnet	
 dust	1	33	birefnet	
 institution	1	22	birefnet	
 memorial	1	44	birefnet	
-mum	1	33	birefnet	
+mum	3	22	birefnet	person redo: signature prop and headgear
 rail	1	22	birefnet	
 remote	1	44	birefnet	
 root	1	11	birefnet	
-buddy	1	22	birefnet	
+buddy	3	33	birefnet	person redo: signature prop and headgear
 butter	1	22	birefnet	
 crap	1	22	birefnet	
-dean	1	33	birefnet	
+dean	3	22	birefnet	person redo: signature prop and headgear
 desert	1	44	birefnet	
 hop	1	11	birefnet	
 landing	-	-	-	REJECTED: abstract slabs, no jetty / reads as a table, no water or pier sense
@@ -457,21 +457,21 @@ pot	1	44	birefnet
 sake	1	33	birefnet	
 sheet	1	22	birefnet	reads as paper
 string	1	22	birefnet	
-associate	1	22	birefnet	
+associate	3	11	birefnet	person redo: signature prop and headgear
 citizen	1	11	birefnet	
 entrance	1	33	birefnet	
-idiot	1	22	birefnet	
+idiot	3	22	birefnet	person redo: signature prop and headgear
 liquid	1	22	birefnet	
 makeup	1	22	birefnet	
 shell	1	44	birefnet	whole turtle
 berlin	1	11	birefnet	
 findings	2	55	birefnet	
-journalist	1	22	birefnet	
+journalist	3	22	birefnet	person redo: signature prop and headgear
 oxford	1	11	birefnet	
 passenger	1	44	birefnet	
 pen	1	44	birefnet	
 pope	1	33	birefnet	
-resident	1	33	birefnet	
+resident	3	33	birefnet	person redo: signature prop and headgear
 anna	1	22	birefnet	
 creek	1	11	birefnet	
 currency	1	33	birefnet	
@@ -481,26 +481,26 @@ log	1	44	birefnet
 resort	1	22	birefnet	palm trees only, no hotel
 seed	1	44	birefnet	no sprout, looks like avocado
 tongue	1	44	birefnet	
-daddy	1	44	birefnet	
-doc	1	33	birefnet	
+daddy	3	11	birefnet	person redo: signature prop and headgear
+doc	3	22	birefnet	person redo: signature prop and headgear
 gene	1	22	birefnet	
 headquarters	1	33	birefnet	
 jean	1	22	birefnet	
 juice	1	22	birefnet	
 strip	2	55	birefnet	
 tube	1	11	birefnet	
-ambassador	1	33	birefnet	
+ambassador	3	22	birefnet	person redo: signature prop and headgear
 breast	1	33	birefnet	
 cant	1	22	birefnet	
 carter	1	22	birefnet	
 cotton	-	-	-	REJECTED: vague white sheets / reads as toilet roll on holder
 leather	1	22	birefnet	
-rep	1	33	birefnet	
-reporter	1	44	birefnet	
-terrorist	1	22	birefnet	
+rep	3	22	birefnet	person redo: signature prop and headgear
+reporter	3	22	birefnet	person redo: signature prop and headgear
+terrorist	3	22	birefnet	person redo: signature prop and headgear
 theater	1	11	birefnet	
 virgin	1	22	birefnet	
-asshole	1	44	birefnet	
+asshole	3	11	birefnet	person redo: signature prop and headgear
 glasses	1	11	birefnet	
 maria	1	33	birefnet	
 reader	1	22	birefnet	
@@ -538,12 +538,12 @@ craft	1	11	birefnet
 finishing	1	33	birefnet	no brush
 graham	1	33	birefnet	
 hardware	1	33	birefnet	
-intellectual	1	44	birefnet	
+intellectual	3	11	birefnet	person redo: signature prop and headgear
 sauce	1	44	birefnet	
 stem	1	11	birefnet	
 throat	1	22	birefnet	
 candy	1	22	birefnet	
-celebrity	1	44	birefnet	
+celebrity	3	22	birefnet	person redo: signature prop and headgear
 certificate	1	44	birefnet	
 clay	1	22	birefnet	
 estimate	1	33	birefnet	vague
@@ -559,11 +559,11 @@ globe	1	22	birefnet
 gulf	1	33	birefnet	
 photographer	1	11	birefnet	
 pin	1	22	birefnet	
-specialist	1	22	birefnet	
+specialist	3	22	birefnet	person redo: signature prop and headgear
 stocks	2	55	birefnet	weak: plank with holes, may not read as stocks
-stranger	1	22	birefnet	
+stranger	3	22	birefnet	person redo: signature prop and headgear
 tap	1	22	birefnet	
-volunteer	1	11	birefnet	
+volunteer	3	22	birefnet	person redo: signature prop and headgear
 mechanism	1	11	birefnet	
 opera	1	22	birefnet	
 passage	1	22	birefnet	
@@ -573,9 +573,9 @@ anime	1	11	birefnet
 clip	2	55	birefnet	
 cooper	1	22	birefnet	
 guardian	1	33	birefnet	
-homeless	1	22	birefnet	
+homeless	3	11	birefnet	person redo: signature prop and headgear
 instrument	1	22	birefnet	
-lover	1	33	birefnet	
+lover	3	11	birefnet	person redo: signature prop and headgear
 menu	2	55	birefnet	generic red booklet
 scope	1	33	birefnet	
 segment	1	22	birefnet	
@@ -583,8 +583,8 @@ spectrum	1	22	birefnet
 stays	2	66	birefnet	
 brick	1	22	birefnet	
 emperor	1	33	birefnet	
-inspector	1	44	birefnet	
-khan	1	33	birefnet	
+inspector	3	11	birefnet	person redo: signature prop and headgear
+khan	3	22	birefnet	person redo: signature prop and headgear
 oxygen	1	44	birefnet	
 pipe	1	33	birefnet	
 powder	1	33	birefnet	
@@ -594,10 +594,10 @@ trigger	1	11	birefnet	whole gun
 bullet	1	44	birefnet	
 democrat	1	11	birefnet	
 dirt	1	11	birefnet	
-grandfather	1	22	birefnet	
+grandfather	3	11	birefnet	person redo: signature prop and headgear
 habit	1	22	birefnet	
 mama	1	22	birefnet	
-marshall	1	33	birefnet	
+marshall	3	22	birefnet	person redo: signature prop and headgear
 pussy	1	22	birefnet	
 shoe	1	11	birefnet	
 terry	1	33	birefnet	
@@ -612,13 +612,13 @@ pole	1	44	birefnet
 rubber	1	33	birefnet	
 substance	1	11	birefnet	
 amateur	1	11	birefnet	
-batman	1	22	birefnet	
+batman	3	22	birefnet	person redo: signature prop and headgear
 bearing	1	33	birefnet	
 beats	1	22	birefnet	
-bobby	1	11	birefnet	
+bobby	3	22	birefnet	person redo: signature prop and headgear
 canal	1	33	birefnet	
 charlotte	1	11	birefnet	
-employer	1	11	birefnet	
+employer	3	11	birefnet	person redo: signature prop and headgear
 fluid	1	33	birefnet	
 leaf	1	22	birefnet	
 outfit	1	44	birefnet	
@@ -633,9 +633,9 @@ dish	1	33	birefnet
 nail	1	22	birefnet	
 phoenix	1	22	birefnet	
 poet	1	22	birefnet	
-scientist	1	44	birefnet	
+scientist	3	22	birefnet	person redo: signature prop and headgear
 stole	2	66	local	
-veteran	1	44	birefnet	
+veteran	3	22	birefnet	person redo: signature prop and headgear
 bronze	1	11	birefnet	
 bug	1	22	birefnet	
 dose	1	11	birefnet	
@@ -645,14 +645,14 @@ implement	1	11	birefnet	spade not hoe
 laser	1	44	birefnet	
 marijuana	1	11	birefnet	
 opponent	1	22	birefnet	
-prisoner	1	33	birefnet	
-punk	1	33	birefnet	
+prisoner	3	22	birefnet	person redo: signature prop and headgear
+punk	3	22	birefnet	person redo: signature prop and headgear
 radar	1	22	birefnet	
 villa	1	22	birefnet	
 wrap	2	55	birefnet	
 bacteria	2	77	birefnet	
 corn	1	11	birefnet	
-dealer	1	11	birefnet	
+dealer	3	22	birefnet	person redo: signature prop and headgear
 filling	1	11	birefnet	tub reads weakly
 nerve	-	-	-	REJECTED: looks like a sun / reads as virus, no long axon tendrils
 pie	1	11	birefnet	
@@ -664,7 +664,7 @@ assignment	1	22	birefnet
 carpet	1	22	birefnet	
 cherry	1	44	birefnet	
 cole	1	11	birefnet	
-earl	1	44	birefnet	
+earl	3	11	birefnet	person redo: signature prop and headgear
 garbage	1	22	birefnet	
 grain	1	33	birefnet	
 grid	1	33	birefnet	
@@ -684,10 +684,10 @@ dressing	1	22	birefnet
 jam	1	22	birefnet	
 lens	1	22	birefnet	
 ash	1	11	birefnet	reads as grey rocks
-counsel	1	22	birefnet	
+counsel	3	22	birefnet	person redo: signature prop and headgear
 creature	1	22	birefnet	
 manhattan	1	33	birefnet	
-politician	1	33	birefnet	
+politician	3	22	birefnet	person redo: signature prop and headgear
 spirits	1	11	birefnet	
 bacon	1	22	birefnet	
 cattle	1	33	birefnet	
@@ -704,7 +704,7 @@ stake	1	22	birefnet
 tackle	1	11	birefnet	
 beam	1	11	birefnet	lamp and beam weak
 dining	1	44	birefnet	
-grandmother	1	22	birefnet	
+grandmother	3	22	birefnet	person redo: signature prop and headgear
 missile	1	11	birefnet	
 organ	1	22	birefnet	
 pearl	1	11	birefnet	
@@ -713,7 +713,7 @@ rod	1	44	birefnet
 tattoo	1	33	birefnet	
 zoo	1	44	birefnet	
 arrow	2	77	birefnet	
-chancellor	1	22	birefnet	
+chancellor	3	11	birefnet	person redo: signature prop and headgear
 closet	1	22	birefnet	
 combine	1	33	birefnet	
 controller	1	22	birefnet	
@@ -722,7 +722,7 @@ embassy	1	22	birefnet
 haven	1	22	birefnet	
 lip	1	22	birefnet	
 mud	1	33	birefnet	
-publisher	1	22	birefnet	
+publisher	3	22	birefnet	person redo: signature prop and headgear
 rookie	1	33	birefnet	
 sandwich	1	33	birefnet	
 ski	1	44	birefnet	
@@ -731,14 +731,14 @@ valve	1	44	birefnet
 ham	2	66	birefnet	
 jewelry	1	22	birefnet	
 jungle	1	33	birefnet	
-prof	1	33	birefnet	
+prof	3	11	birefnet	person redo: signature prop and headgear
 provisions	1	33	birefnet	
 defender	1	22	birefnet	
 generic	1	11	birefnet	
 keyboard	1	44	birefnet	
 potato	1	44	birefnet	
 potter	1	22	birefnet	
-sergeant	1	22	birefnet	
+sergeant	3	11	birefnet	person redo: signature prop and headgear
 silk	-	-	-	REJECTED: reads as paper sheets / reads as a sheet of paper
 stamp	1	22	birefnet	
 voter	1	33	birefnet	
@@ -761,11 +761,11 @@ lighter	1	44	birefnet
 meter	1	11	birefnet	weak, plain box
 olive	1	22	birefnet	plain yellow cube
 receiver	1	22	birefnet	
-servant	1	44	birefnet	
+servant	3	33	birefnet	person redo: signature prop and headgear
 skull	1	22	birefnet	
 statue	1	22	birefnet	
 vacuum	1	11	birefnet	
-architect	1	11	birefnet	
+architect	3	22	birefnet	person redo: signature prop and headgear
 basin	1	44	birefnet	
 bud	1	44	birefnet	
 butler	1	11	birefnet	
@@ -775,10 +775,10 @@ console	1	33	birefnet
 fabric	-	-	-	REJECTED: reads as paper sheets / reads as paper towel roll
 fairy	1	44	birefnet	
 lodge	1	33	birefnet	
-pastor	1	33	birefnet	
+pastor	3	22	birefnet	person redo: signature prop and headgear
 poison	1	33	birefnet	
 rebel	1	22	birefnet	
-trainer	1	33	birefnet	
+trainer	3	11	birefnet	person redo: signature prop and headgear
 basket	1	44	birefnet	
 beard	1	22	birefnet	
 blanket	1	11	birefnet	
@@ -840,8 +840,8 @@ ferry	1	44	birefnet
 fisher	1	33	birefnet	
 gauge	1	11	birefnet	
 gut	1	22	birefnet	
-instructor	1	44	birefnet	
-liar	1	22	birefnet	
+instructor	3	22	birefnet	person redo: signature prop and headgear
+liar	3	11	birefnet	person redo: signature prop and headgear
 machinery	1	22	birefnet	
 mercury	1	22	birefnet	
 platinum	1	11	birefnet	
@@ -854,17 +854,17 @@ goddess	1	44	birefnet
 liquor	1	11	birefnet	
 loser	1	11	birefnet	
 pad	1	44	birefnet	
-seller	1	11	birefnet	
+seller	3	11	birefnet	person redo: signature prop and headgear
 thumb	1	11	birefnet	
 timber	1	11	birefnet	
 vitamin	1	22	birefnet	
-voluntary	1	33	birefnet	
+voluntary	3	33	birefnet	person redo: signature prop and headgear
 wheat	1	22	birefnet	
 wrist	1	44	birefnet	
 banana	1	22	birefnet	
 capitol	1	22	birefnet	
 chin	1	44	birefnet	whole head profile
-clerk	1	33	birefnet	
+clerk	3	11	birefnet	person redo: signature prop and headgear
 flour	1	22	birefnet	
 geneva	1	44	birefnet	
 java	1	33	birefnet	
@@ -877,12 +877,12 @@ vaccine	1	11	birefnet
 vinyl	1	22	birefnet	
 asylum	1	11	birefnet	
 dancer	1	11	birefnet	
-entrepreneur	1	11	birefnet	
+entrepreneur	3	22	birefnet	person redo: signature prop and headgear
 fossil	1	22	birefnet	
 injection	1	33	birefnet	
 spark	1	22	birefnet	
 straw	1	33	birefnet	
-successor	1	22	birefnet	
+successor	3	22	birefnet	person redo: signature prop and headgear
 archive	1	33	birefnet	
 bean	1	22	birefnet	
 bicycle	1	33	birefnet	
@@ -893,7 +893,7 @@ jaw	2	77	birefnet	very pale on white
 lawn	1	22	birefnet	
 needle	1	44	birefnet	
 pond	1	33	birefnet	
-porter	1	33	birefnet	
+porter	3	11	birefnet	person redo: signature prop and headgear
 prey	1	11	birefnet	
 refugee	1	44	birefnet	
 ruby	1	22	birefnet	
@@ -904,26 +904,26 @@ certification	1	22	birefnet
 licence	1	11	birefnet	blank card, weak
 mandate	1	44	birefnet	
 steak	1	22	birefnet	
-therapist	1	22	birefnet	
+therapist	3	22	birefnet	person redo: signature prop and headgear
 canvas	1	22	birefnet	
 cheek	1	22	birefnet	
-comedian	1	44	birefnet	
+comedian	3	22	birefnet	person redo: signature prop and headgear
 cooler	1	44	birefnet	
 curry	1	22	birefnet	
 drake	1	22	birefnet	
-investor	1	44	birefnet	
+investor	3	11	birefnet	person redo: signature prop and headgear
 marble	1	22	birefnet	
-nominee	1	33	birefnet	
+nominee	3	22	birefnet	person redo: signature prop and headgear
 pillow	1	22	birefnet	
-rapper	1	33	birefnet	
-scholar	1	22	birefnet	
+rapper	3	22	birefnet	person redo: signature prop and headgear
+scholar	3	22	birefnet	person redo: signature prop and headgear
 spa	2	88	birefnet	
 spike	2	55	birefnet	
 tab	1	22	birefnet	
 underwear	1	11	birefnet	
 waist	1	22	birefnet	
 brake	1	22	birefnet	
-critic	1	11	birefnet	
+critic	3	22	birefnet	person redo: signature prop and headgear
 depot	2	66	birefnet	
 eats	1	11	birefnet	
 elevator	1	33	birefnet	
@@ -933,16 +933,16 @@ messenger	1	44	birefnet
 pencil	1	33	birefnet	
 plasma	1	22	birefnet	
 quarterback	1	33	birefnet	
-ref	1	22	birefnet	
-sovereign	1	22	birefnet	
-supervisor	1	22	birefnet	
+ref	3	22	birefnet	person redo: signature prop and headgear
+sovereign	3	22	birefnet	person redo: signature prop and headgear
+supervisor	3	11	birefnet	person redo: signature prop and headgear
 automobile	1	33	birefnet	
 cement	1	22	birefnet	
 cox	1	22	birefnet	
 grove	1	33	birefnet	
 gum	1	22	birefnet	
 lance	1	11	birefnet	
-prosecutor	1	33	birefnet	
+prosecutor	3	11	birefnet	person redo: signature prop and headgear
 spice	1	22	birefnet	
 towel	2	55	birefnet	pale
 vegetable	1	44	birefnet	
@@ -959,10 +959,10 @@ sanctuary	1	33	birefnet
 sleeve	2	77	birefnet	
 spine	2	88	birefnet	
 steering	1	22	birefnet	
-treasurer	1	11	birefnet	
+treasurer	3	11	birefnet	person redo: signature prop and headgear
 triangle	1	22	birefnet	
 debris	1	33	birefnet	
-donor	1	22	birefnet	
+donor	3	22	birefnet	person redo: signature prop and headgear
 garlic	1	22	birefnet	
 indicator	1	22	birefnet	
 lounge	1	11	birefnet	
@@ -990,7 +990,7 @@ chrome	1	33	birefnet
 cleaner	1	11	birefnet	
 griffin	1	44	birefnet	
 historian	1	44	birefnet	
-hostage	1	11	birefnet	
+hostage	3	11	birefnet	person redo: signature prop and headgear
 monument	1	22	birefnet	
 particle	1	11	birefnet	
 peanut	1	44	birefnet	
@@ -1002,18 +1002,18 @@ shuttle	1	33	birefnet	weak, reads as boat
 snack	1	44	birefnet	
 spotlight	1	22	birefnet	
 striker	1	33	birefnet	
-vet	1	33	birefnet	
-broker	1	33	birefnet	
+vet	3	22	birefnet	person redo: signature prop and headgear
+broker	3	22	birefnet	person redo: signature prop and headgear
 cocktail	1	22	birefnet	
 fist	1	22	birefnet	
-heir	1	22	birefnet	
-landlord	1	22	birefnet	
+heir	3	22	birefnet	person redo: signature prop and headgear
+landlord	3	11	birefnet	person redo: signature prop and headgear
 mosque	1	33	birefnet	
 moss	1	33	birefnet	
 nursery	1	22	birefnet	
 onion	1	22	birefnet	
 recruit	1	22	birefnet	
-rogue	1	11	birefnet	
+rogue	3	11	birefnet	person redo: signature prop and headgear
 tomb	1	11	birefnet	reads as gravestone
 abbey	1	33	birefnet	
 baron	1	22	birefnet	
@@ -1032,13 +1032,13 @@ terrace	1	33	birefnet
 villain	1	33	birefnet	
 billboard	1	44	birefnet	
 bully	1	22	birefnet	
-economist	1	33	birefnet	
+economist	3	22	birefnet	person redo: signature prop and headgear
 forehead	1	22	birefnet	whole face
 gem	1	44	birefnet	
 heather	1	22	birefnet	
 marker	2	55	birefnet	
 marsh	1	11	birefnet	
-marshal	1	22	birefnet	
+marshal	3	22	birefnet	person redo: signature prop and headgear
 ninja	1	33	birefnet	
 pharmacy	1	11	birefnet	
 processor	1	22	birefnet	
@@ -1046,12 +1046,12 @@ rubbish	1	44	birefnet
 salon	2	55	birefnet	reads as bank/museum
 sodium	1	11	birefnet	
 swallow	1	44	birefnet	
-congressman	1	33	birefnet	
+congressman	3	11	birefnet	person redo: signature prop and headgear
 coral	1	22	birefnet	
-correspondent	1	22	birefnet	
+correspondent	3	22	birefnet	person redo: signature prop and headgear
 coupon	1	33	birefnet	
 curtain	1	22	birefnet	
-dentist	1	11	birefnet	
+dentist	3	33	birefnet	person redo: signature prop and headgear
 dough	1	22	birefnet	
 envelope	1	33	birefnet	
 granite	1	22	birefnet	
@@ -1062,13 +1062,13 @@ maid	1	11	birefnet
 maple	1	11	birefnet	leaf not tree
 operative	1	22	birefnet	
 relay	2	55	birefnet	
-taxpayer	1	33	birefnet	
+taxpayer	3	33	birefnet	person redo: signature prop and headgear
 wheelchair	1	11	birefnet	
 atm	1	44	birefnet	
 bark	2	55	birefnet	
 bra	1	22	birefnet	
 composer	1	11	birefnet	
-cowboy	1	22	birefnet	
+cowboy	3	22	birefnet	person redo: signature prop and headgear
 gasoline	1	22	birefnet	
 ivory	1	22	birefnet	
 kirk	1	11	birefnet	
@@ -1087,15 +1087,15 @@ heel	2	55	birefnet
 mat	1	33	birefnet	
 spill	1	33	birefnet	
 swamp	1	22	birefnet	
-teammate	1	33	birefnet	
+teammate	3	11	birefnet	person redo: signature prop and headgear
 vanilla	1	11	birefnet	no pods, generic flower
 violet	1	44	birefnet	
 afghan	1	11	birefnet	no crochet texture
 dessert	1	33	birefnet	
-investigator	1	22	birefnet	
+investigator	3	33	birefnet	person redo: signature prop and headgear
 ivy	1	33	birefnet	
 livestock	1	33	birefnet	
-missionary	1	33	birefnet	
+missionary	3	22	birefnet	person redo: signature prop and headgear
 pumpkin	1	33	birefnet	
 ramp	1	33	birefnet	
 reef	1	11	birefnet	
@@ -1105,19 +1105,19 @@ archbishop	1	22	birefnet
 calcium	1	22	birefnet	
 decoration	1	44	birefnet	
 dye	1	22	birefnet	
-guru	1	11	birefnet	
+guru	3	22	birefnet	person redo: signature prop and headgear
 hormone	1	11	birefnet	
 lace	1	44	birefnet	
 marketplace	1	44	birefnet	
 membrane	1	11	birefnet	weak, plain pink sheet
-murderer	1	33	birefnet	
+murderer	3	22	birefnet	person redo: signature prop and headgear
 nickel	1	22	birefnet	plain grey circle, weak coin
 remedy	1	33	birefnet	
 slate	1	44	birefnet	
 token	1	11	birefnet	
 yacht	1	44	birefnet	
 archer	1	11	birefnet	
-barber	1	22	birefnet	
+barber	3	22	birefnet	person redo: signature prop and headgear
 competitor	1	22	birefnet	only bib without numbers
 cuisine	1	22	birefnet	
 dioxide	1	22	birefnet	
@@ -1127,11 +1127,11 @@ insulin	1	11	birefnet
 lid	1	33	birefnet	whole face, not just eyelid
 manor	1	33	birefnet	
 mic	1	22	birefnet	
-narrator	1	11	birefnet	
-partisan	1	22	birefnet	
+narrator	3	22	birefnet	person redo: signature prop and headgear
+partisan	3	22	birefnet	person redo: signature prop and headgear
 ribbon	1	33	birefnet	
 coffin	1	44	birefnet	
-conductor	1	33	birefnet	
+conductor	3	22	birefnet	person redo: signature prop and headgear
 font	1	22	birefnet	
 glue	1	44	birefnet	
 luggage	1	11	birefnet	
@@ -1140,16 +1140,16 @@ morocco	-	-	-	REJECTED: drew dogs and blobs / shapeless red blob, not a hide
 peel	1	22	birefnet	
 picnic	1	33	birefnet	
 psychic	1	22	birefnet	
-psychologist	1	11	birefnet	
+psychologist	3	22	birefnet	person redo: signature prop and headgear
 puppet	1	44	birefnet	
 sausage	1	33	birefnet	
 skeleton	1	44	birefnet	
 tick	1	22	birefnet	
-capitalist	1	22	birefnet	
-constable	1	22	birefnet	
+capitalist	3	22	birefnet	person redo: signature prop and headgear
+constable	3	22	birefnet	person redo: signature prop and headgear
 goalkeeper	1	11	birefnet	
 kindergarten	1	33	birefnet	
-mechanic	1	33	birefnet	
+mechanic	3	11	birefnet	person redo: signature prop and headgear
 pitcher	1	22	birefnet	
 playground	1	22	birefnet	
 receptor	2	77	birefnet	reads as generic pink ball
@@ -1164,13 +1164,13 @@ buffer	1	22	birefnet
 daisy	1	33	birefnet	
 disco	1	33	birefnet	mirror ball only, no building
 foam	1	11	birefnet	
-invalid	1	33	birefnet	
+invalid	3	11	birefnet	person redo: signature prop and headgear
 jade	1	33	birefnet	
 participant	1	11	birefnet	
 phantom	1	22	birefnet	
 stab	1	44	birefnet	
 supermarket	1	33	birefnet	weak shape
-tenant	1	22	birefnet	
+tenant	3	22	birefnet	person redo: signature prop and headgear
 tractor	1	33	birefnet	
 turnover	1	44	birefnet	
 whiskey	1	44	birefnet	
@@ -1191,7 +1191,7 @@ textbook	1	22	birefnet
 vein	2	66	birefnet	could read as tree branch
 velvet	1	22	birefnet	
 accountant	1	22	birefnet	
-billionaire	1	33	birefnet	
+billionaire	3	22	birefnet	person redo: signature prop and headgear
 bypass	1	33	birefnet	
 cane	1	11	birefnet	
 cedar	1	11	birefnet	
@@ -1240,7 +1240,7 @@ jewellery	1	33	birefnet	necklace with gem
 joker	1	22	birefnet	jester card readable
 notebook	1	22	birefnet	open laptop
 palette	1	44	birefnet	classic palette shape
-reverend	1	11	birefnet	no white collar visible
+reverend	3	22	birefnet	person redo: signature prop and headgear
 rust	1	11	birefnet	corroded lump
 serum	1	44	birefnet	dropper vial
 skate	1	22	birefnet	clear ice skate
@@ -1252,8 +1252,8 @@ arcade	1	22	birefnet	arched colonnade
 chili	1	33	birefnet	bowl of chili
 covenant	1	11	birefnet	scroll with seal
 hose	1	33	birefnet	coiled hose with nozzle
-millionaire	1	22	birefnet	top hat and money bag
-patron	1	22	birefnet	purse barely readable
+millionaire	3	33	birefnet	person redo: signature prop and headgear
+patron	3	22	birefnet	person redo: signature prop and headgear
 popcorn	1	22	birefnet	striped tub
 proxy	1	22	birefnet	cloaked figure with mask
 sniper	1	22	birefnet	scoped rifle
@@ -1269,10 +1269,10 @@ grease	1	22	birefnet	tin of yellow grease
 hallway	1	11	birefnet	reads as door only
 jeep	1	33	birefnet	military jeep
 knot	2	77	birefnet	crossed ropes more than a knot
-lecturer	1	22	birefnet	pointer clear
+lecturer	3	11	birefnet	person redo: signature prop and headgear
 mayo	1	22	birefnet	jar of white cream
 petrol	1	33	birefnet	jerrycan
-philosopher	1	44	birefnet	toga and scroll
+philosopher	3	33	birefnet	person redo: signature prop and headgear
 plantation	1	22	birefnet	crop rows with farmhouse
 razor	2	88	birefnet	
 rug	1	22	birefnet	patterned rug
@@ -1283,7 +1283,7 @@ boiler	1	22	birefnet	gauge and pipes
 coating	1	33	birefnet	paint can with drip
 cork	1	11	birefnet	stopper shape
 detector	2	66	birefnet	
-magistrate	1	44	birefnet	robe and gavel
+magistrate	3	22	birefnet	person redo: signature prop and headgear
 mug	1	33	birefnet	clear mug
 pod	1	33	birefnet	open pod with peas
 predator	1	33	birefnet	prowling tiger
@@ -1293,13 +1293,13 @@ tract	1	22	birefnet	plot with fence
 bikini	1	22	birefnet	clear
 bracelet	1	22	birefnet	chain links
 capsule	1	22	birefnet	two-tone capsule
-captive	1	22	birefnet	shackled wrists
+captive	3	22	birefnet	person redo: signature prop and headgear
 cinnamon	1	33	birefnet	tied sticks
 confederate	1	22	birefnet	hooded figure with lantern
 contamination	1	11	birefnet	leaking barrel
 crisp	1	11	birefnet	weak, reads as pasta
 cutter	1	44	birefnet	box cutter
-delegate	1	11	birefnet	suit with briefcase
+delegate	3	22	birefnet	person redo: signature prop and headgear
 emission	1	33	birefnet	smoke cloud
 fin	1	44	birefnet	fin shape; abstract
 grape	1	22	birefnet	bunch of grapes
@@ -1312,24 +1312,24 @@ offender	1	11	birefnet	striped prisoner, ball and chain
 oracle	1	22	birefnet	crystal ball
 pottery	1	22	birefnet	workshop with kiln
 prairie	1	22	birefnet	grass tuft with flowers
-psychiatrist	1	33	birefnet	white coat clipboard
+psychiatrist	3	22	birefnet	person redo: signature prop and headgear
 quartz	1	11	birefnet	crystal cluster
-songwriter	1	33	birefnet	guitar
-technician	1	33	birefnet	overalls and wrench
+songwriter	3	22	birefnet	person redo: signature prop and headgear
+technician	3	22	birefnet	person redo: signature prop and headgear
 yuan	1	33	birefnet	banknote
-aide	1	22	birefnet	folder
+aide	3	22	birefnet	person redo: signature prop and headgear
 avatar	1	33	birefnet	four arms
 beverage	1	33	birefnet	drink with straw and lemon
 bumper	1	22	birefnet	reads as car front, not bumper
 chalk	1	22	birefnet	chalk stick
 coaster	1	33	birefnet	could read as cookie
-councillor	1	33	birefnet	gold chain
-diplomat	1	33	birefnet	briefcase
+councillor	3	33	birefnet	person redo: signature prop and headgear
+diplomat	3	11	birefnet	person redo: signature prop and headgear
 fallout	1	33	birefnet	ash pile with glow
 footballer	1	11	birefnet	striped kit, ball
 lipstick	1	44	birefnet	single tube
 mart	1	22	birefnet	shop with awning
-monarch	1	44	birefnet	crown, sceptre
+monarch	3	11	birefnet	person redo: signature prop and headgear
 mustard	1	22	birefnet	squeeze bottle
 plaque	1	22	birefnet	artery with blob; abstract
 rabbi	1	33	birefnet	hat, book
@@ -1341,7 +1341,7 @@ solicitor	1	22	birefnet	briefcase and papers
 taco	1	11	birefnet	clear taco
 tinder	1	11	birefnet	twig pile
 titan	1	33	birefnet	giant with boulder
-traitor	1	33	birefnet	hidden dagger
+traitor	3	22	birefnet	person redo: signature prop and headgear
 wallpaper	1	22	birefnet	roll of wallpaper
 willow	1	11	birefnet	weeping willow
 ale	1	22	birefnet	pint with foam
@@ -1358,7 +1358,7 @@ staple	-	-	-	REJECTED: drawn as plain block / ramp/wedge shapes, no U staple
 sushi	1	44	birefnet	nigiri with nori
 tails	1	33	birefnet	tailcoat with tails
 bakery	1	11	birefnet	brick building with chimney
-believer	1	22	birefnet	praying hands
+believer	3	11	birefnet	person redo: signature prop and headgear
 caffeine	1	11	birefnet	powder jar; generic
 coward	1	22	birefnet	hiding behind shield
 fibre	1	33	birefnet	strands; weak
@@ -1366,21 +1366,21 @@ garrison	1	22	birefnet	fort with gate and tower
 hacker	1	33	birefnet	laptop
 harness	-	-	-	REJECTED: reads as horse / drew a whole horse, extra creature
 insulation	1	11	birefnet	pink roll; toilet-roll-like
-intern	1	22	birefnet	coffee cup and badge
+intern	3	11	birefnet	person redo: signature prop and headgear
 mole	1	22	birefnet	mole with pink paws
 molecule	1	22	local	ball and stick
 parcel	1	33	birefnet	string-tied parcel
 partition	1	44	birefnet	folding screen
 savior	1	22	birefnet	halo, outstretched arms
 toby	1	33	birefnet	mug with tricorn hat
-translator	1	11	birefnet	two books barely
+translator	3	22	birefnet	person redo: signature prop and headgear
 tutor	1	22	birefnet	book and pencil
 yeast	1	22	birefnet	pale block
 assassin	1	22	birefnet	dagger
 brewery	1	22	birefnet	vats and chimney
 bulb	1	22	birefnet	glowing bulb
 cardboard	2	55	birefnet	
-dictator	1	22	birefnet	uniform with medals
+dictator	3	22	birefnet	person redo: signature prop and headgear
 dime	1	33	birefnet	small coin
 freezer	1	22	birefnet	chest freezer; plain box
 oxide	1	22	birefnet	red powder lump
@@ -1393,7 +1393,7 @@ basil	1	22	birefnet	basil sprig
 blackberry	1	33	birefnet	berry with leaves
 booze	1	44	birefnet	whisky bottle
 cellphone	1	22	birefnet	smartphone
-corporal	1	22	birefnet	rifle; stripes not visible
+corporal	3	22	birefnet	person redo: signature prop and headgear
 crest	1	22	birefnet	rooster rather than comb alone
 decor	1	22	birefnet	armchair and plant
 elf	1	22	birefnet	pointed ears and bow
@@ -1401,7 +1401,7 @@ graffiti	1	22	birefnet	spray can with rainbow
 helm	1	33	birefnet	ship's wheel
 monastery	1	22	birefnet	bell tower
 nightclub	1	44	birefnet	neon entrance
-samurai	1	22	birefnet	katana
+samurai	3	22	birefnet	person redo: signature prop and headgear
 seafood	1	22	birefnet	shrimp crab mussels
 spaghetti	1	22	birefnet	weak, reads as omelette
 stein	1	33	birefnet	lidded stein
@@ -1421,9 +1421,9 @@ neon	1	22	birefnet	red tube; glow weak
 nun	1	33	birefnet	habit and rosary
 polymer	1	33	birefnet	white pellet pile
 pup	1	11	birefnet	puppy
-salesman	1	22	birefnet	sample case
-spokesperson	1	22	birefnet	microphone
-sultan	1	33	birefnet	turban and sceptre
+salesman	3	11	birefnet	person redo: signature prop and headgear
+spokesperson	3	22	birefnet	person redo: signature prop and headgear
+sultan	3	22	birefnet	person redo: signature prop and headgear
 vinegar	1	11	birefnet	brown bottle
 accessory	1	33	birefnet	belt with buckle
 broadcaster	1	44	birefnet	blue suit with mic
@@ -1439,16 +1439,16 @@ hash	1	33	birefnet	bowl of hash
 hogan	1	22	birefnet	earth lodge
 laurel	1	22	birefnet	tree
 podium	1	44	birefnet	speaker podium
-practitioner	1	33	birefnet	white coat stethoscope
+practitioner	3	22	birefnet	person redo: signature prop and headgear
 puck	1	22	birefnet	hockey puck
 rum	1	44	birefnet	dark rum bottle
 scorer	1	44	birefnet	raising ball
-shareholder	1	33	birefnet	holding certificate
+shareholder	3	33	birefnet	person redo: signature prop and headgear
 soy	1	33	birefnet	open pod with beans
 squash	1	44	birefnet	butternut
 tar	1	22	birefnet	bucket of tar
 turbine	1	11	birefnet	wind turbine
-warden	1	22	birefnet	ring of keys
+warden	3	22	birefnet	person redo: signature prop and headgear
 whisky	1	22	birefnet	brown bottle
 yogurt	1	44	birefnet	cup with spoon
 barbecue	1	22	birefnet	meat skewer
@@ -1464,7 +1464,7 @@ mascot	1	22	birefnet	plush bear
 ottoman	1	22	birefnet	round footstool
 paddy	1	22	birefnet	flooded plot with shoots
 paperback	1	44	birefnet	book
-peasant	1	33	birefnet	tunic and pitchfork
+peasant	3	22	birefnet	person redo: signature prop and headgear
 pointer	1	22	birefnet	laser beam
 regulator	1	11	birefnet	valve; no gauge
 tally	2	77	birefnet	
@@ -1476,7 +1476,7 @@ crank	1	11	birefnet	crank handle
 enclosure	1	22	birefnet	fence pen; no mesh
 jasmine	1	11	birefnet	white flower sprig
 linen	2	88	birefnet	weak: reads as paper sheets
-lookout	1	33	birefnet	sailor with spyglass
+lookout	3	22	birefnet	person redo: signature prop and headgear
 mosquito	1	44	birefnet	long legs and proboscis
 motel	1	33	birefnet	row of doors
 novelist	1	11	birefnet	quill pen
@@ -1486,29 +1486,29 @@ resin	1	22	birefnet	golden lump
 simulator	-	-	-	REJECTED: drawn as airplane / white blob on legs, reads as bug or sheep
 sock	1	22	birefnet	striped sock
 storey	1	44	birefnet	floor section with windows
-tailor	1	22	birefnet	tape measure and scissors
+tailor	3	22	birefnet	person redo: signature prop and headgear
 waiter	1	44	birefnet	vest and tray
 adapter	1	33	birefnet	plug adapter
-attendant	1	44	birefnet	towel over arm
+attendant	3	33	birefnet	person redo: signature prop and headgear
 bourbon	1	33	birefnet	amber bottle
 breaker	2	88	birefnet	
 cockpit	1	44	birefnet	seat with canopy
 colon	1	22	birefnet	large intestine
-consul	1	33	birefnet	passport
+consul	3	22	birefnet	person redo: signature prop and headgear
 contender	1	22	birefnet	championship belt
 emerald	1	44	birefnet	faceted emerald
 mare	1	33	birefnet	brown horse
 meadow	1	33	birefnet	meadow patch with flowers
-mystic	1	11	birefnet	glowing crystal
+mystic	3	22	birefnet	person redo: signature prop and headgear
 quarry	2	66	birefnet	reads as bowl/arena
 sap	1	22	birefnet	yellow drop
-sheikh	1	33	birefnet	white robes, beads
+sheikh	3	33	birefnet	person redo: signature prop and headgear
 strait	1	22	birefnet	channel between shores
 weaver	1	33	birefnet	shuttle unclear
 yarn	1	22	birefnet	ball of yarn
 attacker	1	22	birefnet	raised axe
 banquet	1	11	birefnet	table with roast and goblets
-chamberlain	1	22	birefnet	ring of keys
+chamberlain	3	22	birefnet	person redo: signature prop and headgear
 coloring	1	11	birefnet	small red bottle
 cortex	1	33	birefnet	brain
 dynamite	1	22	birefnet	stick with fuse
@@ -1516,7 +1516,7 @@ garment	1	11	birefnet	dress on hanger
 impeachment	1	33	birefnet	document with stamp
 inventor	1	22	birefnet	goggles and gadget
 jasper	1	22	birefnet	red stone
-librarian	1	22	birefnet	glasses and books
+librarian	3	11	birefnet	person redo: signature prop and headgear
 lumber	1	33	birefnet	plank stack
 muse	1	22	birefnet	lyre
 nanny	1	33	birefnet	pushing pram
@@ -1530,14 +1530,14 @@ announcer	1	22	birefnet	herald trumpet
 baba	1	22	birefnet	weak, generic cake
 charcoal	1	22	birefnet	black lumps
 citrus	1	33	birefnet	three fruits
-columnist	1	22	birefnet	newspaper; pen faint
+columnist	3	22	birefnet	person redo: signature prop and headgear
 courtroom	1	22	birefnet	judge's bench
 cushion	1	44	birefnet	square cushion
 cyclist	1	33	birefnet	helmet, bike
 dorm	1	22	birefnet	brick block
 duct	2	55	birefnet	
 emblem	2	55	birefnet	
-foreman	1	22	birefnet	hard hat, clipboard
+foreman	3	22	birefnet	person redo: signature prop and headgear
 glacier	1	33	birefnet	blue-white ice block
 kernel	1	22	birefnet	corn kernel
 mustang	1	22	birefnet	rearing horse
@@ -1557,7 +1557,7 @@ concession	1	11	birefnet	contract with ribbon
 crescent	1	33	birefnet	crescent moon
 hog	1	33	birefnet	pink hog
 jockey	1	11	birefnet	silks and crop
-mummy	1	22	birefnet	bandaged mummy
+mummy	3	11	birefnet	person redo: signature prop and headgear
 orchard	1	33	birefnet	trees with fence
 riches	1	22	birefnet	chest of gold coins
 rosemary	1	33	birefnet	sprig
@@ -1590,23 +1590,23 @@ thinner	2	77	birefnet
 topping	1	33	birefnet	whipped cream with cherry
 vapor	2	88	birefnet	
 veronica	1	22	birefnet	flower spike; weak
-waitress	1	33	birefnet	coffee pot
+waitress	3	22	birefnet	person redo: signature prop and headgear
 walnut	1	22	birefnet	wood plank
 bowel	1	22	birefnet	coiled intestine
 brow	1	11	birefnet	eyebrow over eye
 cabbage	1	33	birefnet	cabbage
 convertible	1	33	birefnet	top-down car
 crater	1	11	birefnet	round crater
-curator	1	33	birefnet	magnifying glass
+curator	3	22	birefnet	person redo: signature prop and headgear
 educator	1	33	birefnet	pointer and book
 finch	1	33	birefnet	yellow finch
-gangster	1	22	birefnet	pinstripe, fedora, gun
+gangster	3	22	birefnet	person redo: signature prop and headgear
 heater	1	11	birefnet	radiator
 kite	1	44	birefnet	kite with tail
 lighthouse	1	44	birefnet	striped lighthouse
 mash	1	33	birefnet	bucket of mash
 messiah	1	22	birefnet	halo, raised hands
-plaintiff	1	33	birefnet	holding document; faint
+plaintiff	3	22	birefnet	person redo: signature prop and headgear
 plum	1	22	birefnet	plum with leaf
 rag	1	44	birefnet	tattered cloth; weak
 sedan	1	33	birefnet	four-door car
@@ -1618,7 +1618,7 @@ vibes	1	44	birefnet	vibraphone
 algae	1	11	birefnet	green clump; reads as bush
 asbestos	1	22	local	jar of fibre; weak
 boutique	1	22	birefnet	shop with awning
-brewer	1	22	birefnet	apron, tankard
+brewer	3	22	birefnet	person redo: signature prop and headgear
 buffet	1	22	birefnet	table with trays
 catcher	1	22	birefnet	mask and mitt
 dryer	1	22	birefnet	tumble dryer
@@ -1626,14 +1626,14 @@ fireplace	1	22	birefnet	fireplace with fire
 fugitive	1	11	birefnet	running with bundle
 hazel	1	44	birefnet	forked rod; fork-like
 headset	1	33	birefnet	headset with mic
-inmate	1	11	birefnet	orange jumpsuit, cup
-interpreter	1	33	birefnet	headset and notepad
+inmate	3	11	birefnet	person redo: signature prop and headgear
+interpreter	3	11	birefnet	person redo: signature prop and headgear
 methane	1	22	birefnet	flask; gas weak
 oyster	1	44	birefnet	oyster with pearl
 pea	1	33	birefnet	pod with peas
 sawyer	1	22	birefnet	two-handled saw
 seminary	1	11	birefnet	building with spire
-skipper	1	33	birefnet	ship's wheel
+skipper	3	22	birefnet	person redo: signature prop and headgear
 transcription	1	44	local	clipboard
 unicorn	1	44	birefnet	unicorn
 vat	1	22	birefnet	steel vat
@@ -1647,10 +1647,10 @@ booklet	2	66	birefnet
 countess	1	33	birefnet	gown, tiara, fan
 fungus	1	22	birefnet	mushroom cluster
 lingerie	1	22	birefnet	nightgown on hanger
-magician	1	33	birefnet	top hat and wand
+magician	3	22	birefnet	person redo: signature prop and headgear
 marrow	1	33	birefnet	bone showing marrow
 pastry	1	22	birefnet	croissant
-pawn	1	22	birefnet	spear
+pawn	3	33	birefnet	person redo: signature prop and headgear
 plaster	1	33	birefnet	bag of powder
 residue	-	-	-	REJECTED: grey paper squares, no dish / grey smear in dish unreadable
 salsa	1	33	birefnet	bowl of salsa
@@ -1685,10 +1685,10 @@ loft	1	22	birefnet	barn with hay door
 outlaw	1	22	birefnet	bandana and revolver
 parasite	2	77	birefnet	
 perennial	1	22	birefnet	potted plant
-spectator	1	22	birefnet	cap and binoculars
+spectator	3	11	birefnet	person redo: signature prop and headgear
 tyre	1	22	birefnet	car tyre
 ultrasound	1	33	birefnet	screen and cart
-usher	1	11	birefnet	torch
+usher	3	44	birefnet	person redo: signature prop and headgear
 bartender	1	22	birefnet	vest and shaker
 birch	1	11	birefnet	white trunk
 broccoli	1	33	birefnet	broccoli
@@ -1724,7 +1724,7 @@ icing	1	22	birefnet	piping bag
 ledger	1	22	birefnet	leather book with clasp
 loaf	1	22	birefnet	reads as slice not loaf
 magnesium	1	22	birefnet	ingot
-mimic	1	11	birefnet	white face, stripes
+mimic	3	11	birefnet	person redo: signature prop and headgear
 musk	1	33	birefnet	small perfume bottle
 paddle	1	22	birefnet	paddle oar
 peg	2	55	birefnet	
@@ -1739,10 +1739,10 @@ bowler	1	33	birefnet	bowler hat
 cameo	1	33	birefnet	cameo brooch
 caramel	1	11	birefnet	pile of candies
 chromosome	1	22	birefnet	X-shaped
-contestant	1	33	birefnet	sash and trophy
+contestant	3	33	birefnet	person redo: signature prop and headgear
 convent	1	44	birefnet	bell tower with cross
 diner	1	33	birefnet	chrome diner
-envoy	1	22	birefnet	sealed scroll
+envoy	3	22	birefnet	person redo: signature prop and headgear
 fir	1	33	birefnet	plank stack
 goalie	1	22	birefnet	gloves and ball
 gravy	2	66	birefnet	
@@ -1760,7 +1760,7 @@ stew	1	44	birefnet	beef stew
 tequila	1	44	birefnet	golden bottle
 thorn	1	22	birefnet	thorny stem
 thug	1	44	birefnet	crowbar
-alto	1	33	birefnet	robe and book
+alto	3	22	birefnet	person redo: signature prop and headgear
 aperture	1	22	birefnet	camera lens
 char	1	22	birefnet	charred wood pile
 coupling	1	11	birefnet	reads as crane hook
@@ -1782,7 +1782,7 @@ ethanol	1	11	local	flask; faint
 flashlight	1	44	birefnet	torch with beam
 garland	1	33	birefnet	flower garland
 grail	1	22	birefnet	golden chalice
-illustrator	1	22	birefnet	brush and sketchbook
+illustrator	3	11	birefnet	person redo: signature prop and headgear
 ketchup	1	11	birefnet	ketchup bottle
 martyr	1	33	birefnet	palm branch
 opium	1	11	birefnet	poppy pod with crown
@@ -1791,7 +1791,7 @@ privy	1	44	birefnet	wooden outhouse
 serpent	1	44	birefnet	coiled snake
 sesame	1	22	birefnet	seed pile
 stalk	2	55	birefnet	
-statesman	1	22	birefnet	suit and scroll
+statesman	3	22	birefnet	person redo: signature prop and headgear
 swine	1	33	birefnet	pink pig
 tram	1	33	birefnet	red tram
 amplifier	1	22	birefnet	guitar amp
@@ -1801,25 +1801,25 @@ biscuit	1	22	birefnet	round biscuit
 caretaker	1	44	birefnet	overalls and broom
 clamp	1	44	birefnet	
 cracker	1	22	birefnet	
-empress	1	22	birefnet	
+empress	3	22	birefnet	person redo: signature prop and headgear
 finalist	1	44	birefnet	
 gadget	1	33	birefnet	reads a bit like a drill
 hamburger	1	44	birefnet	
 inlet	1	22	birefnet	
 lotion	1	33	birefnet	
-marquis	1	22	birefnet	
+marquis	3	22	birefnet	person redo: signature prop and headgear
 mould	1	22	birefnet	
 pinnacle	1	44	birefnet	
 racer	1	33	birefnet	
-regent	1	22	birefnet	
+regent	3	44	birefnet	person redo: signature prop and headgear
 stalker	1	11	birefnet	
-steward	1	22	birefnet	
+steward	3	11	birefnet	person redo: signature prop and headgear
 stump	1	44	birefnet	
 synagogue	1	11	birefnet	
 bead	1	44	birefnet	string barely visible
 berth	2	66	birefnet	
 cafeteria	1	33	birefnet	
-godfather	1	11	birefnet	
+godfather	3	22	birefnet	person redo: signature prop and headgear
 lemonade	1	22	birefnet	
 orderly	1	44	birefnet	
 patio	1	44	birefnet	
@@ -1835,14 +1835,14 @@ tanker	1	22	birefnet
 torpedo	1	33	birefnet	
 trolley	1	22	birefnet	
 yearbook	1	33	birefnet	
-abbot	1	22	birefnet	
+abbot	3	22	birefnet	person redo: signature prop and headgear
 aspen	1	22	birefnet	
 bearer	1	22	birefnet	
 blender	1	22	birefnet	
-chaplain	1	22	birefnet	
+chaplain	3	11	birefnet	person redo: signature prop and headgear
 chlorine	1	11	birefnet	
 chow	1	33	birefnet	
-coroner	1	33	birefnet	
+coroner	3	22	birefnet	person redo: signature prop and headgear
 grit	1	33	birefnet	
 hostel	1	22	birefnet	
 lagoon	1	44	birefnet	
@@ -1872,10 +1872,10 @@ noodle	1	33	birefnet
 nylon	1	11	birefnet	
 paving	1	22	birefnet	
 phosphate	1	22	birefnet	
-physicist	1	22	birefnet	
+physicist	3	11	birefnet	person redo: signature prop and headgear
 rigging	1	44	birefnet	
 rotor	2	66	birefnet	extra hub blob
-trooper	1	22	birefnet	
+trooper	3	33	birefnet	person redo: signature prop and headgear
 turret	1	33	birefnet	
 bouquet	1	22	birefnet	
 boxers	1	22	birefnet	
@@ -1889,7 +1889,7 @@ filth	1	22	birefnet	no flies
 foliage	1	11	birefnet	
 genie	2	66	birefnet	lamp and smoke, no genie figure
 goo	2	88	birefnet	
-helper	1	33	birefnet	
+helper	3	22	birefnet	person redo: signature prop and headgear
 hoop	1	33	birefnet	
 hurdle	1	33	birefnet	
 kicker	1	33	birefnet	
@@ -1900,7 +1900,7 @@ pew	1	11	birefnet
 projector	1	33	birefnet	
 qualifier	1	33	birefnet	
 rink	1	44	birefnet	plain oval, others are skates
-sentinel	1	22	birefnet	
+sentinel	3	11	birefnet	person redo: signature prop and headgear
 torso	1	44	birefnet	reads as whole figure
 abyss	1	33	birefnet	
 batsman	1	33	birefnet	
@@ -1918,13 +1918,13 @@ silicone	1	22	birefnet
 stylist	1	11	birefnet	
 tenor	1	44	birefnet	
 thrift	1	11	birefnet	
-vocalist	1	33	birefnet	
+vocalist	3	11	birefnet	person redo: signature prop and headgear
 broth	1	11	birefnet	
 checkpoint	1	22	birefnet	barrier only, no booth
 chloride	1	22	birefnet	
 conditioner	1	22	birefnet	
 conglomerate	1	33	birefnet	
-deacon	1	33	birefnet	
+deacon	3	11	birefnet	person redo: signature prop and headgear
 espresso	1	44	birefnet	
 hospice	1	22	birefnet	
 kremlin	1	11	birefnet	
@@ -1944,12 +1944,12 @@ affidavit	1	11	birefnet
 baroness	1	22	birefnet	
 biomass	1	22	birefnet	
 blouse	1	11	birefnet	
-bodyguard	1	33	birefnet	
+bodyguard	3	22	birefnet	person redo: signature prop and headgear
 bulldog	1	33	birefnet	
-cleric	1	22	birefnet	
+cleric	3	33	birefnet	person redo: signature prop and headgear
 compressor	1	33	birefnet	
 cougar	1	11	birefnet	
-disciple	1	22	birefnet	
+disciple	3	11	birefnet	person redo: signature prop and headgear
 fife	1	22	birefnet	
 gland	-	-	-	REJECTED: pink blobs, unreadable / reads as a pink leaf
 kale	2	66	birefnet	
@@ -1964,11 +1964,11 @@ toothbrush	2	77	birefnet
 workings	1	22	birefnet	
 adhesive	1	22	birefnet	
 bandit	1	11	birefnet	
-barrister	1	22	birefnet	
+barrister	3	22	birefnet	person redo: signature prop and headgear
 bazaar	1	22	birefnet	
 brochure	1	11	birefnet	
 cobalt	1	11	birefnet	
-collier	1	33	birefnet	
+collier	3	22	birefnet	person redo: signature prop and headgear
 commodore	1	33	birefnet	
 compiler	1	22	birefnet	
 conserve	1	22	birefnet	
@@ -1987,7 +1987,7 @@ tack	1	22	birefnet	looks like a nail
 tart	1	44	birefnet	
 toothpaste	1	22	birefnet	
 transformer	1	33	birefnet	
-vicar	1	22	birefnet	
+vicar	3	11	birefnet	person redo: signature prop and headgear
 ammonia	1	22	birefnet	very pale
 anarchist	1	44	birefnet	
 apron	1	22	birefnet	
@@ -2007,7 +2007,7 @@ spinner	1	22	birefnet
 steamer	1	33	birefnet	
 sunflower	1	22	birefnet	
 surveyor	1	22	birefnet	
-tyrant	1	22	birefnet	
+tyrant	3	11	birefnet	person redo: signature prop and headgear
 wastewater	1	33	birefnet	
 wreath	1	33	birefnet	
 appliance	1	22	local	
@@ -2023,7 +2023,7 @@ enamel	1	11	birefnet
 goggles	1	44	birefnet	
 golfer	1	33	birefnet	
 graphite	1	44	birefnet	
-hostess	1	44	birefnet	
+hostess	3	22	birefnet	person redo: signature prop and headgear
 iceberg	1	33	birefnet	
 muffin	1	22	birefnet	
 palate	2	77	birefnet	lips/mouth rather than palate
@@ -2049,9 +2049,9 @@ ligament	2	66	birefnet
 loom	1	22	birefnet	
 myrtle	1	11	birefnet	
 parlor	1	22	birefnet	
-pharmacist	1	33	birefnet	
+pharmacist	3	11	birefnet	person redo: signature prop and headgear
 radiator	1	33	birefnet	
-rector	1	11	birefnet	
+rector	3	11	birefnet	person redo: signature prop and headgear
 rocker	1	33	birefnet	
 sculptor	1	11	birefnet	
 sling	1	11	birefnet	
@@ -2095,12 +2095,12 @@ celery	1	22	birefnet
 grinder	1	44	birefnet	
 gunman	1	22	birefnet	
 hardcover	1	22	birefnet	
-healer	1	22	birefnet	
-jock	1	33	birefnet	
+healer	3	22	birefnet	person redo: signature prop and headgear
+jock	3	22	birefnet	person redo: signature prop and headgear
 melon	1	11	birefnet	
 mojo	1	22	birefnet	
 ornament	1	22	birefnet	
-outpatient	1	33	birefnet	
+outpatient	3	11	birefnet	person redo: signature prop and headgear
 pamphlet	1	11	birefnet	
 perpetrator	1	22	birefnet	
 quid	1	22	birefnet	
@@ -2112,7 +2112,7 @@ bastion	1	44	birefnet
 bolster	1	33	birefnet	
 briefs	1	22	birefnet	
 chopper	1	22	birefnet	
-commando	1	33	birefnet	
+commando	3	22	birefnet	person redo: signature prop and headgear
 donut	1	11	birefnet	
 goblin	1	11	birefnet	
 gunner	1	22	birefnet	
@@ -2124,7 +2124,7 @@ luncheon	1	33	birefnet	no soup or salad
 mailbox	1	22	birefnet	
 mammal	1	22	birefnet	
 paisley	1	22	birefnet	
-patriarch	1	33	birefnet	
+patriarch	3	22	birefnet	person redo: signature prop and headgear
 penthouse	1	33	birefnet	reads as a plain tower
 raider	1	22	birefnet	
 roc	1	22	birefnet	
@@ -2137,7 +2137,7 @@ ballpark	1	22	birefnet
 beak	1	44	birefnet	
 blueberry	1	33	birefnet	
 bran	1	22	birefnet	
-brigadier	1	33	birefnet	
+brigadier	3	22	birefnet	person redo: signature prop and headgear
 chateau	1	22	birefnet	
 conservatory	1	44	birefnet	
 emery	1	22	birefnet	
@@ -2212,12 +2212,12 @@ snag	1	44	birefnet
 tote	1	11	birefnet	
 trident	1	44	birefnet	
 artisan	1	44	birefnet	
-blacksmith	1	33	birefnet	
+blacksmith	3	22	birefnet	person redo: signature prop and headgear
 burrito	1	11	birefnet	
 cartilage	2	66	birefnet	
 casket	1	22	birefnet	reads as a chest
 daphne	1	33	birefnet	
-electrician	1	33	birefnet	
+electrician	3	22	birefnet	person redo: signature prop and headgear
 estuary	2	55	birefnet	map patch, scene-like
 gunpowder	1	22	birefnet	
 kosher	1	11	birefnet	
@@ -2230,7 +2230,7 @@ potty	2	55	birefnet	reads as toilet
 projectile	2	77	birefnet	
 puddle	-	-	-	REJECTED: reads as flame or blob / reads as cloud or splash
 railing	1	11	birefnet	
-receptionist	1	44	birefnet	
+receptionist	3	22	birefnet	person redo: signature prop and headgear
 starship	2	77	birefnet	
 typewriter	1	44	local	
 veggie	1	22	birefnet	
@@ -2264,14 +2264,14 @@ teal	1	33	birefnet
 tweed	1	22	birefnet	no tweed texture
 bittersweet	1	11	birefnet	
 cabaret	1	33	birefnet	
-commandant	1	22	birefnet	
+commandant	3	22	birefnet	person redo: signature prop and headgear
 cyanide	1	11	birefnet	
 firewall	1	22	birefnet	
 hanger	1	33	birefnet	
 hem	2	77	birefnet	weak
-hitman	1	33	birefnet	
+hitman	3	44	birefnet	person redo: signature prop and headgear
 kayak	1	33	birefnet	
-mathematician	1	11	birefnet	compass not clear
+mathematician	3	11	birefnet	person redo: signature prop and headgear
 mayonnaise	1	11	birefnet	
 netting	2	88	birefnet	
 nozzle	2	55	birefnet	
@@ -2282,7 +2282,7 @@ terrier	1	44	birefnet
 thistle	1	33	birefnet	
 urn	1	11	birefnet	trophy-like
 arsenic	1	22	birefnet	
-cheater	1	33	birefnet	
+cheater	3	22	birefnet	person redo: signature prop and headgear
 domino	1	33	birefnet	
 dung	1	22	birefnet	
 hawthorn	1	33	birefnet	
@@ -2291,8 +2291,8 @@ intestine	1	22	birefnet
 pantry	1	22	birefnet	
 parchment	1	22	birefnet	
 pollock	1	22	birefnet	whole fish, not a fillet
-renegade	1	22	birefnet	
-ripper	1	22	birefnet	
+renegade	3	22	birefnet	person redo: signature prop and headgear
+ripper	3	11	birefnet	person redo: signature prop and headgear
 sash	1	11	birefnet	
 sled	1	44	birefnet	
 sludge	1	22	birefnet	
@@ -2305,7 +2305,7 @@ carbonate	1	22	birefnet
 cheesecake	1	44	birefnet	
 clam	2	88	birefnet	
 colouring	1	22	birefnet	
-craftsman	1	22	birefnet	
+craftsman	3	22	birefnet	person redo: signature prop and headgear
 cyborg	1	22	birefnet	
 distillery	1	33	birefnet	
 fishery	1	44	birefnet	
@@ -2313,10 +2313,10 @@ fullback	1	44	birefnet
 galley	1	22	birefnet	no oars visible
 knuckle	1	11	birefnet	reads as a hand
 lineman	1	11	birefnet	
-medalist	2	77	birefnet	
+medalist	3	22	birefnet	person redo: signature prop and headgear
 methyl	1	22	local	very pale
 pantheon	1	44	birefnet	
-payer	1	33	birefnet	
+payer	3	22	birefnet	person redo: signature prop and headgear
 prospectus	1	11	birefnet	
 puma	1	44	birefnet	
 redwood	1	11	birefnet	
@@ -2325,7 +2325,7 @@ seaweed	1	11	birefnet
 serge	1	22	birefnet	
 shaman	2	66	birefnet	
 thermometer	1	22	birefnet	
-babysitter	1	33	birefnet	
+babysitter	3	22	birefnet	person redo: signature prop and headgear
 bile	1	11	local	
 bling	1	11	birefnet	
 brownie	1	33	birefnet	
@@ -2334,10 +2334,10 @@ carousel	1	22	birefnet
 cartwright	1	22	birefnet	
 compost	1	11	birefnet	
 cot	1	22	birefnet	
-crusader	1	33	birefnet	
-geologist	1	33	birefnet	
+crusader	3	11	birefnet	person redo: signature prop and headgear
+geologist	3	11	birefnet	person redo: signature prop and headgear
 goldsmith	1	22	birefnet	
-hermit	1	33	birefnet	
+hermit	3	11	birefnet	person redo: signature prop and headgear
 lorry	1	22	birefnet	
 magnolia	1	33	birefnet	
 mover	1	22	birefnet	
@@ -2357,13 +2357,13 @@ cauliflower	1	11	birefnet
 chainsaw	1	33	birefnet	
 clockwork	1	44	birefnet	
 detergent	1	33	birefnet	
-fireman	1	33	birefnet	
+fireman	3	11	birefnet	person redo: signature prop and headgear
 flask	1	22	birefnet	
 fluff	1	11	birefnet	
 gearbox	-	-	-	REJECTED: gray blob, unreadable / grey disc, unrecognisable
 gnome	1	44	birefnet	no beard
 janitor	1	22	birefnet	
-legislator	1	11	birefnet	
+legislator	3	22	birefnet	person redo: signature prop and headgear
 limousine	1	22	birefnet	
 linden	1	22	birefnet	
 lymph	1	44	birefnet	
@@ -2399,7 +2399,7 @@ sprite	1	22	birefnet
 sulfate	1	11	birefnet	
 sweatshirt	1	22	birefnet	
 transporter	2	66	birefnet	
-veterinarian	1	22	birefnet	
+veterinarian	3	22	birefnet	person redo: signature prop and headgear
 watchdog	1	22	birefnet	
 andromeda	1	33	birefnet	
 bagel	1	22	birefnet	
@@ -2421,13 +2421,13 @@ sulphur	1	22	birefnet
 tulip	1	22	birefnet	
 turnpike	1	33	birefnet	
 undertaker	1	33	birefnet	
-whistleblower	1	33	birefnet	
-beggar	1	22	birefnet	
+whistleblower	3	11	birefnet	person redo: signature prop and headgear
+beggar	3	22	birefnet	person redo: signature prop and headgear
 canteen	1	33	birefnet	
 capacitor	1	11	birefnet	
 carbohydrate	1	22	birefnet	
-chauffeur	1	33	birefnet	
-clergyman	1	33	birefnet	
+chauffeur	3	22	birefnet	person redo: signature prop and headgear
+clergyman	3	11	birefnet	person redo: signature prop and headgear
 climber	1	22	birefnet	
 coliseum	1	22	birefnet	
 cranberry	1	22	birefnet	
@@ -2439,7 +2439,7 @@ felon	1	33	birefnet
 garnet	1	22	birefnet	
 grapefruit	1	11	birefnet	
 greyhound	1	22	birefnet	
-hairdresser	1	11	birefnet	
+hairdresser	3	22	birefnet	person redo: signature prop and headgear
 lei	1	22	birefnet	
 palladium	1	22	birefnet	
 pathogen	1	22	birefnet	
@@ -2448,16 +2448,16 @@ seine	1	22	birefnet
 selector	2	77	birefnet	
 shawl	1	22	birefnet	
 shilling	1	11	local	
-valet	1	44	birefnet	
+valet	3	22	birefnet	person redo: signature prop and headgear
 wiener	2	88	birefnet	
-alderman	1	22	birefnet	
+alderman	3	11	birefnet	person redo: signature prop and headgear
 autopilot	1	44	birefnet	
 ballast	1	33	birefnet	
 blackjack	1	33	birefnet	reads as paddle
 bloodstream	1	22	birefnet	abstract
 camo	1	22	birefnet	
 cockroach	1	22	birefnet	
-collaborator	1	22	birefnet	
+collaborator	3	22	birefnet	person redo: signature prop and headgear
 dynamo	1	22	birefnet	
 elixir	1	22	birefnet	
 firewood	1	22	birefnet	
@@ -2471,7 +2471,7 @@ probate	1	33	birefnet
 rosary	1	22	birefnet	
 sheath	1	11	birefnet	
 snowman	1	22	birefnet	
-sportsman	1	33	birefnet	
+sportsman	3	22	birefnet	person redo: signature prop and headgear
 thong	1	33	birefnet	
 tsar	1	11	birefnet	
 tycoon	1	22	birefnet	
@@ -2496,19 +2496,19 @@ marshmallow	1	33	birefnet
 mucus	1	44	birefnet	
 mulberry	1	11	birefnet	
 newsroom	1	22	birefnet	
-pathologist	1	22	birefnet	
+pathologist	3	11	birefnet	person redo: signature prop and headgear
 pixie	1	22	birefnet	
 raptor	1	22	birefnet	
 ratchet	1	22	birefnet	plain wrench
 sax	1	33	birefnet	
 saxophone	1	22	birefnet	
-settler	1	11	birefnet	
+settler	3	22	birefnet	person redo: signature prop and headgear
 shellfish	1	22	birefnet	
 shortening	1	11	birefnet	
 sickle	2	77	birefnet	little curve, knife-like
 tablespoon	1	22	birefnet	
 tombstone	1	11	birefnet	
-cantor	1	22	birefnet	
+cantor	3	22	birefnet	person redo: signature prop and headgear
 chime	1	33	birefnet	
 chromium	1	22	birefnet	
 cuckoo	1	11	birefnet	
@@ -2516,7 +2516,7 @@ gauntlet	1	33	birefnet
 grouse	1	44	birefnet	
 lark	1	22	birefnet	
 mohawk	1	44	birefnet	
-ombudsman	1	44	birefnet	
+ombudsman	3	22	birefnet	person redo: signature prop and headgear
 pancreas	2	55	birefnet	reads as meat
 primate	1	44	birefnet	
 showroom	1	44	birefnet	others are flat sign cards
@@ -2525,10 +2525,10 @@ spleen	1	22	birefnet	could read as liver
 trampoline	1	33	birefnet	
 chipotle	1	22	birefnet	
 choreographer	1	22	birefnet	
-concierge	1	22	birefnet	
+concierge	3	22	birefnet	person redo: signature prop and headgear
 duplex	1	22	birefnet	
 hypnotic	1	22	birefnet	
-juror	1	44	birefnet	
+juror	3	22	birefnet	person redo: signature prop and headgear
 lactose	1	22	birefnet	
 lube	1	22	birefnet	
 macon	1	11	birefnet	
@@ -2538,15 +2538,15 @@ screwdriver	1	22	birefnet
 transfusion	1	22	birefnet	
 veneer	1	33	birefnet	
 wafer	1	11	birefnet	
-archaeologist	1	22	birefnet	
+archaeologist	3	11	birefnet	person redo: signature prop and headgear
 atrium	1	22	birefnet	
-bouncer	1	33	birefnet	
+bouncer	3	22	birefnet	person redo: signature prop and headgear
 cashmere	1	22	birefnet	
 cheeseburger	1	44	birefnet	
 clarinet	1	11	birefnet	
 custodian	1	33	birefnet	
 cyst	-	-	-	REJECTED: reads as onion or pouch / plain yellow circle
-delinquent	1	44	birefnet	
+delinquent	3	22	birefnet	person redo: signature prop and headgear
 dormitory	1	22	birefnet	
 feline	1	22	birefnet	
 forage	1	44	birefnet	unclear as hay
@@ -2557,17 +2557,17 @@ hoist	1	11	birefnet
 lasagna	1	44	birefnet	
 leaflet	2	77	birefnet	
 moat	1	11	birefnet	
-mouthpiece	1	22	birefnet	
+mouthpiece	3	22	birefnet	person redo: signature prop and headgear
 muck	1	22	birefnet	
-patsy	1	22	birefnet	
-philanthropist	1	33	birefnet	
+patsy	3	33	birefnet	person redo: signature prop and headgear
+philanthropist	3	33	birefnet	person redo: signature prop and headgear
 pinto	1	44	birefnet	
 seawater	1	11	birefnet	
 stockpile	1	33	birefnet	
 tungsten	1	22	birefnet	
 bethel	1	33	local	
 bookshop	1	11	birefnet	
-caregiver	1	11	birefnet	
+caregiver	3	11	birefnet	person redo: signature prop and headgear
 chesterfield	1	22	birefnet	
 corrosive	1	22	birefnet	
 cyclops	1	33	birefnet	
@@ -2586,7 +2586,7 @@ manganese	1	22	birefnet
 mantis	1	11	birefnet	
 notary	1	22	birefnet	
 paddock	1	22	birefnet	
-padre	1	11	birefnet	
+padre	3	11	birefnet	person redo: signature prop and headgear
 polyester	2	55	birefnet	
 porridge	1	33	birefnet	
 pug	1	11	birefnet	
@@ -2633,8 +2633,8 @@ scaffolding	2	77	birefnet
 snitch	1	33	birefnet	
 snug	1	11	birefnet	reads as market stall
 spindle	1	33	birefnet	
-staffer	1	11	birefnet	
-supermodel	1	44	birefnet	
+staffer	3	22	birefnet	person redo: signature prop and headgear
+supermodel	3	11	birefnet	person redo: signature prop and headgear
 sweats	1	22	birefnet	
 thermostat	2	77	birefnet	
 touchscreen	1	44	birefnet	
@@ -2646,11 +2646,11 @@ assailant	1	11	birefnet
 avenger	1	22	birefnet	
 barricade	1	44	birefnet	
 beater	-	-	-	REJECTED: drew vegetable peelers / drew balloons, not a whisk
-benefactor	1	33	birefnet	
+benefactor	3	22	birefnet	person redo: signature prop and headgear
 briefcase	1	22	birefnet	
 diaphragm	1	44	birefnet	
 dispensary	2	66	birefnet	
-executioner	1	22	birefnet	
+executioner	3	22	birefnet	person redo: signature prop and headgear
 filament	1	33	birefnet	
 foyer	2	88	birefnet	
 gilt	1	11	birefnet	
@@ -2658,7 +2658,7 @@ leviathan	1	33	birefnet
 motley	1	22	birefnet	
 peppermint	1	44	birefnet	
 plough	2	55	birefnet	
-prefect	1	33	birefnet	
+prefect	3	22	birefnet	person redo: signature prop and headgear
 salmonella	1	11	birefnet	
 savoy	1	11	birefnet	
 soybean	1	11	birefnet	
@@ -2668,36 +2668,36 @@ yoke	2	77	birefnet
 acorn	1	33	birefnet	
 basilica	1	33	local	
 blaster	1	22	birefnet	
-cornerback	1	22	birefnet	
+cornerback	3	22	birefnet	person redo: signature prop and headgear
 debtor	1	11	birefnet	
-dispatcher	1	33	birefnet	
+dispatcher	3	22	birefnet	person redo: signature prop and headgear
 draught	1	22	birefnet	
 earring	1	11	birefnet	
 gallows	1	22	birefnet	grim
 harrow	1	33	birefnet	unclear at small size
 mackerel	1	22	birefnet	
 marge	1	22	birefnet	
-medallist	1	33	birefnet	
+medallist	3	11	birefnet	person redo: signature prop and headgear
 mite	1	11	birefnet	
 morgue	1	33	birefnet	generic office block
 mulligan	1	33	birefnet	
 octane	1	22	birefnet	
 pry	-	-	-	REJECTED: plain black bars, not a crowbar / reads as wrench, no crowbar claw
 radiotherapy	1	44	birefnet	
-scribe	1	33	birefnet	
-sentry	1	33	birefnet	
-sexton	1	22	birefnet	
+scribe	3	11	birefnet	person redo: signature prop and headgear
+sentry	3	22	birefnet	person redo: signature prop and headgear
+sexton	3	11	birefnet	person redo: signature prop and headgear
 silverware	1	22	birefnet	
 slipper	2	77	birefnet	reads as slide sandal
 snout	1	44	birefnet	whole pig rather than snout
 specter	1	22	birefnet	
-storyteller	1	33	birefnet	
+storyteller	3	11	birefnet	person redo: signature prop and headgear
 tundra	1	44	birefnet	
 tunic	1	22	birefnet	
 veal	1	44	birefnet	
-viceroy	1	33	birefnet	
+viceroy	3	33	birefnet	person redo: signature prop and headgear
 whiting	1	33	birefnet	
-alchemist	1	22	birefnet	
+alchemist	3	22	birefnet	person redo: signature prop and headgear
 bootleg	1	44	birefnet	
 brine	1	22	birefnet	
 casserole	1	22	birefnet	
@@ -2713,20 +2713,20 @@ faucet	1	11	birefnet
 gymnast	1	22	birefnet	
 hairline	1	33	birefnet	
 handset	1	22	birefnet	
-heiress	1	22	birefnet	
+heiress	3	22	birefnet	person redo: signature prop and headgear
 holster	2	88	birefnet	weak
 keg	1	33	birefnet	
 lancet	1	22	birefnet	
 lawmaker	1	44	birefnet	
 lifeguard	1	33	birefnet	
-mogul	1	33	birefnet	
+mogul	3	22	birefnet	person redo: signature prop and headgear
 nomad	2	66	birefnet	
 pathfinder	1	44	birefnet	
 pediatrician	1	11	birefnet	
 ponytail	1	22	birefnet	
 poplar	1	22	birefnet	
 rascal	1	11	birefnet	
-roper	1	22	birefnet	
+roper	3	22	birefnet	person redo: signature prop and headgear
 sacking	1	22	birefnet	reads as paper bag
 seatbelt	1	22	birefnet	
 shank	1	33	birefnet	
@@ -2747,12 +2747,12 @@ cleanser	1	11	birefnet
 clipper	1	33	birefnet	
 colossus	1	33	birefnet	
 corral	1	22	birefnet	
-dermatologist	1	22	birefnet	
+dermatologist	3	22	birefnet	person redo: signature prop and headgear
 diode	1	33	birefnet	
 fedora	1	22	birefnet	
 hoof	2	66	birefnet	
 impala	1	11	birefnet	
-mime	1	22	birefnet	
+mime	3	11	birefnet	person redo: signature prop and headgear
 minivan	1	44	birefnet	
 nave	1	33	birefnet	
 nib	1	22	birefnet	
@@ -2794,7 +2794,7 @@ dredge	1	33	birefnet
 drool	1	11	birefnet	
 escrow	1	33	birefnet	
 fiberglass	2	55	birefnet	vague pink roll
-friar	1	22	birefnet	
+friar	3	22	birefnet	person redo: signature prop and headgear
 garnish	1	33	birefnet	
 gnu	1	33	birefnet	
 goody	1	33	birefnet	
@@ -2807,11 +2807,11 @@ mortuary	1	11	birefnet
 neurologist	1	22	birefnet	
 nutmeg	1	44	birefnet	
 petal	1	33	birefnet	whole flower not one petal
-quartermaster	1	11	birefnet	
+quartermaster	3	22	birefnet	person redo: signature prop and headgear
 rupee	1	11	local	plain coin
 saltwater	1	11	birefnet	
 seaboard	1	11	birefnet	
-shortstop	1	22	birefnet	
+shortstop	3	11	birefnet	person redo: signature prop and headgear
 snipe	1	33	birefnet	
 streamer	1	11	birefnet	
 tarmac	1	22	birefnet	
@@ -2835,13 +2835,13 @@ hydrocarbon	1	44	birefnet
 kebab	1	22	birefnet	
 locator	1	33	birefnet	weak, gray box
 loyalist	1	33	birefnet	
-mariner	1	22	birefnet	
+mariner	3	11	birefnet	person redo: signature prop and headgear
 milkshake	1	11	birefnet	
 nourishment	1	22	birefnet	
 paintball	2	55	birefnet	
 piccolo	1	33	birefnet	
 priory	1	11	birefnet	
-rancher	1	22	birefnet	
+rancher	3	22	birefnet	person redo: signature prop and headgear
 scaffold	1	22	birefnet	
 scavenger	1	22	birefnet	
 schooner	1	44	birefnet	
@@ -2869,7 +2869,7 @@ kerosene	2	55	birefnet
 mince	1	11	birefnet	
 moray	1	22	birefnet	
 nacho	1	22	birefnet	
-nobleman	1	22	birefnet	
+nobleman	3	22	birefnet	person redo: signature prop and headgear
 overlord	1	22	birefnet	
 poodle	1	33	birefnet	
 pus	2	55	birefnet	
@@ -2896,13 +2896,13 @@ distillation	1	11	birefnet
 eggplant	1	22	birefnet	
 eucalyptus	1	22	birefnet	
 eyelid	1	44	birefnet	
-financier	1	22	birefnet	
-florist	1	44	birefnet	
+financier	3	22	birefnet	person redo: signature prop and headgear
+florist	3	11	birefnet	person redo: signature prop and headgear
 garb	1	22	birefnet	
-grocer	1	22	birefnet	
+grocer	3	22	birefnet	person redo: signature prop and headgear
 marlin	1	33	birefnet	
 mutton	2	66	birefnet	
-outfielder	1	44	birefnet	
+outfielder	3	22	birefnet	person redo: signature prop and headgear
 pepperoni	1	44	birefnet	
 raisin	1	22	birefnet	
 redeemer	1	22	birefnet	
@@ -2910,19 +2910,19 @@ resistor	1	33	birefnet
 rhea	1	44	birefnet	
 roux	2	88	birefnet	
 saucepan	1	22	birefnet	
-seer	1	22	birefnet	
+seer	3	33	birefnet	person redo: signature prop and headgear
 sneaker	1	22	birefnet	
 solitaire	1	22	birefnet	
 spiegel	1	22	birefnet	
 swimwear	1	33	birefnet	
 ukulele	1	22	birefnet	
-ump	1	33	birefnet	
-watchman	1	22	birefnet	
+ump	3	11	birefnet	person redo: signature prop and headgear
+watchman	3	22	birefnet	person redo: signature prop and headgear
 yeti	1	22	birefnet	
 yoghurt	1	22	birefnet	
 armpit	2	66	birefnet	
 bagging	1	11	birefnet	reads as paper bag
-bailiff	1	11	birefnet	
+bailiff	3	22	birefnet	person redo: signature prop and headgear
 blister	-	-	-	REJECTED: plain pink blobs / drew a head profile, not a blister
 bower	1	22	birefnet	
 buoy	1	44	birefnet	
@@ -2935,7 +2935,7 @@ fowl	1	22	birefnet
 gelatin	2	66	birefnet	
 halfback	1	33	birefnet	
 headband	1	22	birefnet	
-heretic	1	22	birefnet	
+heretic	3	22	birefnet	person redo: signature prop and headgear
 hummus	1	22	birefnet	
 kingpin	1	33	birefnet	
 kiosk	1	22	birefnet	
@@ -2948,7 +2948,7 @@ racecourse	1	11	birefnet	weak shape
 rainwater	1	33	birefnet	
 reflector	-	-	-	REJECTED: plain white discs / reads as red ball/gem
 sieve	1	33	birefnet	
-soloist	1	11	birefnet	
+soloist	3	11	birefnet	person redo: signature prop and headgear
 sphinx	2	77	birefnet	
 spore	2	66	birefnet	
 starfish	1	22	birefnet	
@@ -2957,17 +2957,17 @@ telemetry	1	22	birefnet	reads as satellite dish
 vane	1	11	birefnet	
 wicker	1	11	birefnet	
 amulet	1	11	birefnet	
-aristocrat	1	22	birefnet	
+aristocrat	3	11	birefnet	person redo: signature prop and headgear
 barbershop	1	22	birefnet	
 beanie	1	33	birefnet	
 bronco	1	22	birefnet	not bucking
 cask	1	22	birefnet	
 clog	1	22	birefnet	
 duvet	2	55	birefnet	
-enforcer	1	22	birefnet	
+enforcer	3	22	birefnet	person redo: signature prop and headgear
 fryer	2	55	birefnet	
 hippocampus	1	11	birefnet	
-informer	1	22	birefnet	
+informer	3	22	birefnet	person redo: signature prop and headgear
 juggernaut	1	22	birefnet	
 larva	1	22	birefnet	
 lint	1	44	birefnet	plain gray blob
@@ -2990,12 +2990,12 @@ sustenance	1	22	birefnet	bread only, no soup
 swivel	2	77	birefnet	
 toolbox	1	33	birefnet	
 tuff	1	33	birefnet	
-warlock	1	33	birefnet	
+warlock	3	22	birefnet	person redo: signature prop and headgear
 ade	1	33	birefnet	
 apricot	1	22	birefnet	
-arbiter	1	22	birefnet	
-arbitrator	1	33	birefnet	
+arbiter	3	22	birefnet	person redo: signature prop and headgear
+arbitrator	3	22	birefnet	person redo: signature prop and headgear
 archangel	1	44	birefnet	
-baritone	1	33	birefnet	
+baritone	3	22	birefnet	person redo: signature prop and headgear
 bustle	2	77	birefnet	
 carbide	1	33	birefnet	
