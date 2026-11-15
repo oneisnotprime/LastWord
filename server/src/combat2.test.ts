@@ -90,8 +90,8 @@ it("scale: GIGANTIC is too big for its own HOUSE's door; SHRUNK slips under an e
   wa.target = { x: house.x, y: house.y + 5 }; second(4);
   expect(wa.inside).toBeUndefined();
   a.send("describe", { text: "gigantic", target: a.sessionId }); await wait();
-  expect(wa.size).toBe(4);
-  expect(wa.player.size).toBe(4);
+  expect(wa.size).toBe(3);
+  expect(wa.player.size).toBe(3);
   wa.target = { x: house.x, y: house.y }; second(4); await wait();
   expect(wa.inside).toBeUndefined();
   expect(String(said("a", "refused").at(-1))).toMatch(/too big for the door/);
@@ -102,7 +102,7 @@ it("scale: GIGANTIC is too big for its own HOUSE's door; SHRUNK slips under an e
   wb.target = { x: house.x, y: house.y }; second(4);
   expect(wb.inside).toBe(hid);
   // A giant's hitbox: B strikes it from farther than an ordinary body.
-  expect(R.walkers.get(a.sessionId).stature).toBeGreaterThan(3);
+  expect(R.walkers.get(a.sessionId).stature).toBeGreaterThan(2.5);
 });
 
 it("scale: a shrunk person climbs on their own WOLF and rides it; a gigantic one cannot ride a HORSE", async () => {

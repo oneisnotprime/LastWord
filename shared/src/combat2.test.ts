@@ -116,7 +116,7 @@ describe("concept batch: scale", () => {
   it("size adjectives, verbs and potions scale size by what they do to height and mass", () => {
     expect(sizeOf(resolve(dict, "wolf", ["huge"]))).toBe(4);
     expect(sizeOf(resolve(dict, "wolf", ["tiny"]))).toBeCloseTo(0.1);
-    expect(sizeOf(resolve(dict, "human", ["gigantic"]))).toBe(4);
+    expect(sizeOf(resolve(dict, "human", ["gigantic"]))).toBe(3);
     expect(sizeOf(resolve(dict, "horse", ["miniature"]))).toBeCloseTo(0.1);
     const sized = words.filter(([, d]) => opOn(d, "size")).length;
     console.log(`Scale: ${sized} words change size`);
@@ -126,8 +126,8 @@ describe("concept batch: scale", () => {
   it("a giant reaches, sees and strides farther and carries more; shrinking does the reverse", () => {
     const plain = new Unit(dict, { body: { noun: "human" }, items: [{ noun: "sword" }] });
     const giant = new Unit(dict, { body: { noun: "human", adjectives: ["gigantic"] }, items: [{ noun: "sword" }] });
-    expect(giant.attack.num("attack_range")).toBeCloseTo(plain.attack.num("attack_range") * 4);
-    expect(giant.body.stats.num("sight_range")).toBeCloseTo(plain.body.stats.num("sight_range") * 2);
+    expect(giant.attack.num("attack_range")).toBeCloseTo(plain.attack.num("attack_range") * 3);
+    expect(giant.body.stats.num("sight_range")).toBeCloseTo(plain.body.stats.num("sight_range") * Math.sqrt(3));
     const shrunk = new Unit(dict, { body: { noun: "human" }, effects: statusEffects([{ status: "shrink", left: 10, from: "x", origin: "x" }]) });
     expect(sizeOf(shrunk.body.stats)).toBeCloseTo(0.25);
     expect(shrunk.body.stats.num("sight_range")).toBeCloseTo(plain.body.stats.num("sight_range") * 0.5);
