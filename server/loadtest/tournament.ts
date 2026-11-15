@@ -57,7 +57,7 @@ for (let r = 0; r < rooms; r++) {
       const t = f ? seconds - f.from : 0;
       (w.master === null ? ttk.person : ttk.creature).push(t);
       if (w.master === null && Number.isNaN(firstDeath)) {
-        firstDeath = seconds; firstDeaths.push(seconds);
+        firstDeath = Math.round(seconds); firstDeaths.push(seconds);
         const r = anyRoom.recap(w, killerId);
         console.log(`  first death ${(seconds / 60).toFixed(2)} min: ${w.player.name} by ${r.killer || "the wild"}'s ${r.what}`);
       }
