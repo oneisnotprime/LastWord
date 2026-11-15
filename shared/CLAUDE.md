@@ -243,6 +243,20 @@ server and the client import this, so anything here must give the same answer on
   tiles; door DOOR_SHARE 0.1 of integrity), `doorAt` (south wall), `within`, `opensDoors` (`counters`
   door, lockable or gate: KEY, THIEF, RAM), `seesThroughWalls` (RADAR), DOOR_MEND, DOOR_QUIET,
   BESIDE_TILES, `interiorText` (on `cardOf` through `behaviours`).
+- Screen, knowledge and communication (concept batch: the HUD as a shared quantity; `screen.test.ts`):
+  - `screen.ts` `PANELS` (minimap, bars, preview, best, inventory, trade, rack, chips, feed, cards,
+    intel), `SCREEN_RULES` (what each status hides, greys or scrambles: blind, sleep, confuse, chaos and
+    the new `amnesia`, `illiterate`, `censor`), `JAMMED_SCREEN`, `screenOf` (statuses, restored panels,
+    a jam; the worst blot wins), `restoresOf` (`restores_panels` tags, "all"), `screenLine`/`screenText`.
+  - `knowledge.ts` insight (`insightOf`: the most `read_properties` of a body and its carried things),
+    `KNOWS` (2 counters on the preview, 5 racks of people in sight, 8 what they can spell), READ_TILES,
+    `countersShown`, `readPerson` (an `Intel` line; lies give `falseRack`), `rackText`, `knowledgeText`.
+  - `comms.ts` `PINGS`/`PING_TEXT`, VOICE, PING_GAP, `voiceOf` (loudness carries), `hears` (your side
+    anywhere, others in `earshot` with their `hearing_range`, the deaf never), `grandWords`, `fakeCall`
+    (a lie's made-up call, DECOY_CALL_SECONDS), `commsText`. status.ts: `gag` and `silence` are
+    `unheard` (`hampered.unheard`: no pings, no spell called out).
+  - The data comes from `tools/meaning.py`: rules by WordNet sense and gloss give `inflict_*`,
+    `restores_panels`, `immune_*`, `read_properties`, `hearing_range` and `decoys` across the dictionary.
 - Concept batch: combat. `affinity.ts` damage natures: `NATURE_MATRIX` (nature -> damage type ->
   multiplier; a body with several takes the product), `affinity`, `damageShare` (res × make-up ×
   natures), `affOf` (WEAK_FROM 1.25, RESIST_BELOW 0.75: a `Strike`'s `aff`), `weaknesses`,

@@ -451,6 +451,7 @@ ammonia	noun	liquid
 ammonite	noun	natural_object
 ammonium	noun	material
 ammunition	noun	artifact
+amnesia	noun	knowledge
 amnesty	noun	possession
 amoeba	noun	creature
 amorous	adjective	quality
@@ -1025,6 +1026,7 @@ baa	noun	event
 baba	noun	food
 babble	noun	event
 babe	noun	person
+babel	noun	act
 baboon	noun	mammal
 baby	noun	person
 babysitter	noun	worker
@@ -2305,7 +2307,7 @@ cement	noun	material
 cemetery	noun	place
 cenotaph	noun	structure
 cenozoic	adjective	pertaining
-censor	noun	person
+censor	noun	worker
 censorship	noun	act
 census	noun	knowledge
 cent	noun	currency
@@ -5690,6 +5692,7 @@ forged	adjective	quality
 forger	noun	criminal
 forgery	noun	crime
 forget	verb	perceive
+forgetfulness	noun	knowledge
 forgive	verb	social
 forgiveness	noun	feeling
 forgiving	adjective	quality
@@ -5903,7 +5906,7 @@ gadget	noun	device
 gadgetry	noun	device
 gaff	noun	tool
 gaffe	noun	act
-gag	noun	device
+gag	noun	act
 gaga	adjective	quality
 gaggle	noun	group
 gaiety	noun	feeling
@@ -7090,6 +7093,7 @@ illegal	adjective	quality
 illegally	adverb	manner
 illegitimate	adjective	quality
 illicit	adjective	quality
+illiteracy	noun	knowledge
 illness	noun	affliction
 illogical	adjective	quality
 illuminated	adjective	quality
@@ -9005,6 +9009,7 @@ mixed	adjective	quality
 mixer	noun	machine
 mixing	noun	act
 mixture	noun	material
+mnemonic	noun	act
 moa	noun	bird
 moat	noun	structure
 mob	noun	group
@@ -11440,6 +11445,7 @@ recurring	adjective	quality
 recursion	noun	event
 recycling	noun	act
 red	adjective	quality
+redaction	noun	act
 redbug	noun	invertebrate
 redcap	noun	supernatural
 redeem	verb	social
@@ -12017,6 +12023,7 @@ rumble	noun	event
 rumbling	noun	event
 rumen	noun	bodypart
 rumor	noun	act
+rumour	noun	crime
 rump	noun	bodypart
 run	verb	movement
 runaway	adjective	quality
@@ -14111,6 +14118,7 @@ telecommunication	noun	knowledge
 telegram	noun	act
 telegraph	noun	device
 telemetry	noun	device
+telepathy	noun	knowledge
 telephone	noun	device
 teleport	verb	movement
 telescope	noun	device

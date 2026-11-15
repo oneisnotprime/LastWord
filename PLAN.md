@@ -27,6 +27,9 @@ there, which is countered by BIRD, FIRE or WINTER, each of which has its own sid
 | Minds | loyalty, morale, fear, authority | king, love, fear, revolt, brave |
 | Ownership | owner, claims, security, agreements | theft, treaty, key, guard, heir |
 | Sky and time | daylight, weather, season, duration | sun, moon, storm, winter, hour |
+| Screen | panels greyed, blanked, scrambled or given back | blind, amnesia, illiteracy, censor, glasses, map |
+| Knowledge | insight (read_properties): counters, racks, what others can spell | book, library, spy, oracle, ignorance, cipher |
+| Communication | voice, hearing, pings, spells said aloud, lies | radio, telepathy, gag, silence, rumour, megaphone |
 
 Rules that follow:
 
@@ -202,6 +205,28 @@ inside or beside it the roof turns see-through over a planked floor.
 
 Each map can start with five random adjectives applied to the whole map (FROZEN, FERTILE,
 DARK and so on), so the strongest opening differs from round to round. Later priority.
+
+## Screen, knowledge and communication
+
+What a player sees of their own interface, knows of others and hears are shared quantities words
+touch, never private features (shared screen.ts, knowledge.ts, comms.ts):
+
+- Screen: statuses take panels away. BLIND greys the minimap with static and hides others' bars and
+  names; AMNESIA hides the spell preview, the best-words strip and the inventory; ILLITERATE scrambles
+  word cards, the rack, the trade screen and the chips; CENSOR blanks the chips and the feed; SLEEP
+  most of it; a jamming field puts static on the minimap and feed. Things carried or worn, fields and
+  verbs with `restores_panels` give panels back (GLASSES, a MAP, a BOOK, LITERACY, a DIARY, NEWS);
+  `immune_*` keeps the status off and `effect_status` ends it. The server sends the screen in the
+  loadout; the client draws it.
+- Knowledge: insight is `read_properties`. 2 shows the words that end a word on the preview, 5 the
+  letters and gear of people in sight (an intel panel), 8 what they can spell now. Creatures of yours
+  read for you (a SPY, an ORACLE). IGNORANCE and AMNESIA take it away, CIPHER hides you, lies falsify
+  what you read.
+- Communication: pings (HERE, DANGER, HELP, ATTACK, RUN, TRADE, TRUCE) and spells said aloud are
+  heard by your side anywhere and by others within earshot of your voice (louder with a MEGAPHONE,
+  farther with a RADIO or TELEPATHY's `hearing_range`); the deaf hear nothing, the gagged and
+  silenced say nothing; lies (`decoys`: RUMOUR, LIE, PROPAGANDA) send made-up calls and pings.
+- Words get these properties by meaning across the dictionary (`tools/meaning.py`), not one by one.
 
 ## Later
 

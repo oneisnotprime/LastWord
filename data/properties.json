@@ -1,10 +1,10 @@
 {
- "count": 439,
+ "count": 448,
  "groups": {
   "physical": 50,
   "mobility": 25,
-  "offence": 74,
-  "defence": 77,
+  "offence": 78,
+  "defence": 81,
   "perception": 14,
   "life": 29,
   "economy": 58,
@@ -12,7 +12,7 @@
   "social": 13,
   "slots": 9,
   "meta": 18,
-  "field": 21,
+  "field": 22,
   "event": 23,
   "effect": 9
  },
@@ -77,6 +77,10 @@
   "chaos",
   "void",
   "doom",
+  "amnesia",
+  "illiterate",
+  "censor",
+  "gag",
   "drunk",
   "reverse",
   "hypnosis",
@@ -1065,6 +1069,38 @@
    "default": 0
   },
   {
+   "id": "inflict_amnesia",
+   "group": "offence",
+   "type": "num",
+   "desc": "seconds of amnesia applied on hit (amnesia: forgets: the spell preview, the best-words strip, the inventory and the intel panel go blank, insight (read_properties) is nothing; MEMORY, a DIARY, a NOTEBOOK restore: shared screen.ts)",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "inflict_illiterate",
+   "group": "offence",
+   "type": "num",
+   "desc": "seconds of illiterate applied on hit (illiterate: cannot read: word cards, the letter rack, the trade screen, the preview and the chips are scrambled letters; LITERACY, a DICTIONARY, a SCHOOL restore: shared screen.ts)",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "inflict_censor",
+   "group": "offence",
+   "type": "num",
+   "desc": "seconds of censor applied on hit (censor: not told: the event chips and the feed of calls, pings and kills go black; NEWS, a NEWSPAPER, a RADIO restore: shared screen.ts)",
+   "unit": "s",
+   "default": 0
+  },
+  {
+   "id": "inflict_gag",
+   "group": "offence",
+   "type": "num",
+   "desc": "seconds of gag applied on hit (gag: says nothing: cannot ping, and its spelling is not called out to anyone, grand words included: shared comms.ts)",
+   "unit": "s",
+   "default": 0
+  },
+  {
    "id": "inflict_drunk",
    "group": "offence",
    "type": "num",
@@ -1596,6 +1632,34 @@
    "default": false
   },
   {
+   "id": "immune_amnesia",
+   "group": "defence",
+   "type": "bool",
+   "desc": "cannot be affected by amnesia",
+   "default": false
+  },
+  {
+   "id": "immune_illiterate",
+   "group": "defence",
+   "type": "bool",
+   "desc": "cannot be affected by illiterate",
+   "default": false
+  },
+  {
+   "id": "immune_censor",
+   "group": "defence",
+   "type": "bool",
+   "desc": "cannot be affected by censor",
+   "default": false
+  },
+  {
+   "id": "immune_gag",
+   "group": "defence",
+   "type": "bool",
+   "desc": "cannot be affected by gag",
+   "default": false
+  },
+  {
    "id": "immune_drunk",
    "group": "defence",
    "type": "bool",
@@ -1796,7 +1860,7 @@
    "id": "hearing_range",
    "group": "perception",
    "type": "num",
-   "desc": "how far past earshot it hears noise (shared sound.ts)",
+   "desc": "how far past earshot it hears noise, others' pings and spells said aloud (a RADIO 3000 hears the whole map: shared sound.ts, comms.ts)",
    "unit": "m",
    "default": 10
   },
@@ -1856,7 +1920,7 @@
    "id": "read_properties",
    "group": "perception",
    "type": "scale",
-   "desc": "how much of another player's stats it reveals",
+   "desc": "insight: 2 shows the words that end a word on the spell preview and cards, 5 the letters and gear of people in sight on the intel panel, 8 also what they can spell now; your creatures read in their sight; immune_expose hides, lies falsify (shared knowledge.ts)",
    "default": 0
   },
   {
@@ -3176,7 +3240,7 @@
    "id": "decoys",
    "group": "field",
    "type": "num",
-   "desc": "false marks it puts on the threat arrows and minimaps of everyone its field reaches: that many made-up people closing in; seen through with detect_stealth 5 or more (shared signal.ts)",
+   "desc": "false marks it puts on the threat arrows and minimaps of everyone its field reaches: that many made-up people closing in; seen through with detect_stealth 5 or more; those it fools also get made-up spell calls and DANGER pings, and read false racks (shared signal.ts, comms.ts, knowledge.ts)",
    "default": 0
   },
   {
@@ -3223,8 +3287,15 @@
    "id": "jams",
    "group": "field",
    "type": "bool",
-   "desc": "its field blacks out the minimap and watching things (MAP, RADAR, CAMERA) of everyone it reaches (shared signal.ts)",
+   "desc": "its field blacks out the minimap and watching things (MAP, RADAR, CAMERA) of everyone it reaches, and puts static on their feed of calls and pings (shared signal.ts, screen.ts)",
    "default": false
+  },
+  {
+   "id": "restores_panels",
+   "group": "field",
+   "type": "tags",
+   "desc": "screen panels it gives back whatever greys them, carried, worn, as a field or a verb in force: minimap, bars (others' health and names), preview, best, inventory, trade, rack, chips, feed, cards, intel, or all (GLASSES minimap,bars; LITERACY cards,rack; MAP minimap: shared screen.ts)",
+   "default": []
   },
   {
    "id": "takes_city",

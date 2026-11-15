@@ -180,6 +180,13 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
   staff), crowds for INFANTRY and WORKFORCE, and new things (`ceilingShape`, `plugShape`,
   `cylinderShape`, `dollShape`, `skirtShape`, `picture` for PIC and ARTWORK, `radiator` for HEATING,
   `grave` for CEMETERY, `pipelineShape`, a cart, a drain); landforms are signs.
+- Screen, knowledge and communication: `src/comms.ts` `ScreenView` puts the loadout's `screen` on the
+  page as `data-blot` (hide: striped cover with the cause, static: grey noise, scramble: letters
+  reshuffled every 180 ms; `garble`), the minimap draws static (`Minimap.blot`), and `main.ts` hides
+  others' bars and name tags under `bars`. `drawIntel` (`#intel`, from `intel`), `callLine`/`feedLine`
+  (`#calls`, spells said aloud and pings), `Pings` (V opens `#pingbar`, 1-7 pings at the pointer,
+  middle-click pings HERE; marks in `#pingmarks` for PING_MS). The preview names counter-words with
+  insight 2+ (shared `countersShown`).
 - Concept batch: combat. `fx.number` tags a hit "crit!", "weak!", "resists" or "immune" (`Hit.aff`;
   CSS `.num.weak`, `.resist`); `fx.luck` floats "lucky step!", "reroll!", "won!", "lost" (`luck`
   message). The HUD card has a LUCK chip (percent, rerolls) and a SIZE chip from the loadout.

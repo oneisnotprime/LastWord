@@ -93,7 +93,7 @@ describe("inflicting statuses", () => {
 describe("what each status does", () => {
   const free = hampered([]);
   it("leaves the unafflicted free", () => {
-    expect(free).toEqual({ moves: true, acts: true, spells: true, random: false, tempo: 1, flees: [], spares: [], berserk: false, deaf: false, time: 1, untouchable: false, nulled: false });
+    expect(free).toEqual({ moves: true, acts: true, spells: true, random: false, tempo: 1, flees: [], spares: [], berserk: false, deaf: false, time: 1, untouchable: false, nulled: false, unheard: false });
   });
 
   it("stun: cannot move, strike or spell", () => {

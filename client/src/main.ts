@@ -23,6 +23,7 @@ import { Painter, PX, useMade, useStandee, ZOOM } from "./paint.js";
 import { Sky } from "./sky.js";
 import { Zones } from "./zones.js";
 import { RoomView } from "./rooms.js";
+import { callLine, drawIntel, Pings, ScreenView } from "./comms.js";
 
 /** The fog canvas's size, and the radius of its clear middle, in canvas pixels. */
 const FOG_SIZE = 512, FOG_CLEAR = 100;
@@ -161,6 +162,13 @@ class World extends Phaser.Scene {
   private windups: { by: string; on: string; x: number; y: number; from: number; until: number; mine: boolean }[] = [];
   /** Kill feed, death recap and the end-of-round recap. */
   private recapView = new RecapView();
+  /** The screen as the server says it stands (shared screen.ts), and pings (comms.ts). */
+  private screenView = Object.assign(new ScreenView(), { sheet: () => this.hud.sheet });
+  private screenAt = 0;
+  private readonly pings = new Pings((kind) => {
+    const p = this.input.activePointer, at = this.cameras.main.getWorldPoint(p.x, p.y);
+    this.net?.ping(kind, at.x / PX, at.y / PX);
+  });
   private tracerGfx!: Phaser.GameObjects.Graphics;
   /** Who struck you lately, and until when they are marked as targeting you. */
   private threats = new Map<string, number>();
@@ -236,7 +244,9 @@ class World extends Phaser.Scene {
     window.addEventListener("keydown", (e) => {
       if (e.repeat || this.hud.typing || !this.net || this.over) return;
       const key = e.key.toLowerCase();
-      if (key === "g") this.net.gather();
+      if (this.pings.key(key)) return;
+      if (key === "v") this.pings.toggle();
+      else if (key === "g") this.net.gather();
       else if (key === "e") this.net.take();
       else if (key === "r") this.net.dismount();
       else if (key === "q") this.net.drop();
@@ -278,6 +288,9 @@ class World extends Phaser.Scene {
         kits: (offer) => this.kits.offer(offer),
         kit: (state) => this.kits.set(state),
         entrance: (e) => this.entrance(e),
+        intel: (list) => drawIntel(list),
+        call: (c) => callLine(c),
+        pinged: (p) => this.pings.heard(p, String(this.net.state.players.get(this.net.sessionId)?.name ?? "")),
         dropped: () => this.hud.toast("Connection lost: reconnecting…", "bad"),
         reconnected: () => this.hud.toast("Reconnected", "good"),
         notice: (text) => { const t = terse("notice", text); if (t) this.hud.toast(t, "good"); },
@@ -303,6 +316,7 @@ class World extends Phaser.Scene {
         },
         loadout: (detail) => {
           this.hud.setLoadout(detail); this.minimap.senses(detail);
+          this.screenView.set(detail.screen); this.minimap.blot = this.screenView.blot("minimap");
           if (detail.sight > 0) this.sightTiles = detail.sight / TILE_METERS;
         },
         described: (e) => this.burst(e),
@@ -340,6 +354,8 @@ class World extends Phaser.Scene {
       if (this.over || this.hud.screen) return;
       const at = this.cameras.main.getWorldPoint(p.x, p.y);
       const x = at.x / PX, y = at.y / PX;
+      // Middle-click: a HERE ping on that spot (shared comms.ts).
+      if (p.middleButtonDown()) return this.net.ping("here", x, y);
       if (this.aiming) {
         if (p.rightButtonDown()) return this.endAim(true);
         const target = this.hitAt(x, y, this.aimHow !== "anywhere"); // yourself too: adjectives, a graft
@@ -1379,9 +1395,11 @@ class World extends Phaser.Scene {
       if (Math.abs(dx) > 0.15) v.facing = dx > 0 ? 1 : -1;
       v.moving = Math.hypot(dx, dy) > 0.3 ? 0.3 : Math.max(0, v.moving - delta / 1000);
       v.x += dx * k; v.y += dy * k;
-      this.place(v, id, time, p.hp, id === mine || (p.hp < 100 && v.barUntil > time));
+      // Blind (shared screen.ts `bars`): nobody else's bar or name, only your own.
+      const blind = id !== mine && this.screenView.blot("bars") === "hide";
+      this.place(v, id, time, p.hp, !blind && (id === mine || (p.hp < 100 && v.barUntil > time)));
       // In a pile of one kind, only the first carries the tag ("WOLF ×5") and the badges.
-      const shown = !f?.hidden;
+      const shown = !f?.hidden && !blind;
       v.tag.setVisible(shown);
       for (const b of v.badges) b.setVisible(shown);
       if (id === mine || (id === this.watching && !state.players.get(mine))) this.cameras.main.centerOn(v.x, v.y);
@@ -1391,6 +1409,11 @@ class World extends Phaser.Scene {
     this.indoors = indoors;
     this.unstackTags();
     this.overlays(time, delta);
+    if (time - this.screenAt > 250) { this.screenAt = time; this.screenView.apply(); }
+    this.pings.frame((x, y) => {
+      const cam = this.cameras.main;
+      return { x: ((x * PX - cam.worldView.x) * cam.zoom) / DPR, y: ((y * PX - cam.worldView.y) * cam.zoom) / DPR };
+    });
 
     // Light at night: fires, burning and glowing things, and a lantern for you.
     const lights: { x: number; y: number; r: number; warm: boolean }[] = [];

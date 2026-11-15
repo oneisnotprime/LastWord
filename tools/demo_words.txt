@@ -2899,3 +2899,26 @@ summon: duration=30 recruit_rate+8 command_limit+10 obedience+5 loudness+6 charm
 
 # verb combat
 withstand: duration=20 armor+30 res_blunt+0.4 res_slash+0.4 res_pierce+0.4 knockback*0 immune_stun=true speed_land*0.6
+
+# Screen, knowledge and communication (concept): the core words of shared screen.ts, knowledge.ts
+# and comms.ts. The rest of the dictionary gets these properties by meaning (tools/meaning.py).
+# noun knowledge
+amnesia: placement=target placement_range=150 field_radius=30 field_targets=enemies field_duration=2 inflict_amnesia=8 read_properties+-6 counters=memory,remembrance,reminder,mnemonic
+forgetfulness: placement=target placement_range=100 field_radius=20 field_targets=enemies field_duration=1.5 inflict_amnesia=5 counters=memory,reminder,mnemonic
+illiteracy: placement=target placement_range=150 field_radius=40 field_targets=enemies field_duration=2 inflict_illiterate=8 read_properties+-3 counters=literacy,education,alphabet,dictionary
+ignorance: placement=target placement_range=60 field_radius=15 field_targets=enemies field_duration=2 intelligence+-4 read_properties+-4 detect_stealth+-4 inflict_amnesia=4 counters=knowledge,education,school,teacher
+literacy: placement=self field_radius=20 field_targets=owned field_duration=6 intelligence+2 read_properties+3 training+1 restores_panels=cards,rack,trade,preview immune_illiterate=true effect_status=illiterate counters=illiteracy,babel
+telepathy: placement=self field_radius=10 field_targets=self field_duration=3 hearing_range+5000 read_properties+6 counters=static,jammer,silence
+# noun event
+concussion: placement=target placement_range=10 event_target=character dmg_blunt=30 inflict_stun=1 inflict_amnesia=6 event_duration=1 counters=helmet
+# noun act
+redaction: placement=target placement_range=150 event_target=character inflict_censor=10 event_duration=1 counters=news,disclosure,leak
+babel: placement=target placement_range=200 event_target=region event_radius=60 inflict_illiterate=8 inflict_confuse=2 event_duration=1 counters=literacy,translation
+gag: placement=target placement_range=8 event_target=character inflict_gag=8 inflict_silence=4 event_duration=1 counters=scream,shout,alarm,outcry
+mnemonic: placement=target placement_range=10 event_target=character effect_status=amnesia,illiterate event_duration=1
+# noun crime
+rumour: placement=target placement_range=300 field_radius=60 field_targets=enemies field_duration=3 decoys=3 inflict_confuse=3 counters=truth
+# noun attribute
+secrecy: placement=self field_radius=30 field_targets=owned field_duration=5 immune_expose=true stealth+2 counters=espionage,disclosure,leak
+# noun worker
+censor: mass=75 integrity=100 alive=true sentient=true intelligence=8 loyalty=6 hands=true speech=true speed_land=4 authority=4 silences=15 field_radius=40 field_targets=enemies inflict_censor=6 counters=poet,critic,columnist,rumor food_need=0.03

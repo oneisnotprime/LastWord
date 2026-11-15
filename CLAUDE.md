@@ -30,7 +30,8 @@ inventory screens (M0 to M5). Not deployed yet.
 - Rebuild data: `tools/build_all.sh <wordnet dict dir>` (needs `npm i wordnet-db`,
   `pip install wordfreq`). It fails if a demo word uses an unknown property or wrong type.
   `tools/derive.py` (run by `build_demo.py`) gives properties across the dictionary by meaning
-  (natures, size, luck, control); to give a concept to many words, add a rule there.
+  (natures, size, luck, control), and `tools/meaning.py` does the same for the screen, knowledge
+  and communication; to give a concept to many words, add a rule there.
 - Do not name features after spelling bees. Names come from words, letters and combat.
 - No private mechanics: a word acts only through the shared systems in `PLAN.md`.
 - Aim for spectacle: when a word could have a modest effect or a dramatic one, choose dramatic.

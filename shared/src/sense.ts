@@ -25,7 +25,7 @@ const READINGS = new Set(["map_reveal", "detect_letters", "detect_life"]);
 /** Properties that make a thing do something even if it also shows things: it lights, feeds, poisons, burns. */
 const ACTIVE = new Set(["luminosity", "edible", "nutrition", "radioactivity", "toxicity", "corrosiveness", "temperature", "potency", "decay_rate"]);
 /** Readings that show more but change nothing (sight itself does: it widens what you are sent). */
-const QUIET = new Set(["read_properties", "read_inventory", "detect_stealth", "detect_underground", "tracking", "alarm", "hearing_range", "smell_range"]);
+const QUIET = new Set(["restores_panels", "read_properties", "read_inventory", "detect_stealth", "detect_underground", "tracking", "alarm", "hearing_range", "smell_range"]);
 /** Where and how it is carried: no effect of its own. */
 const CARRIED = new Set(["equip_slot", "hands_required", "portable", "placement", "placement_range"]);
 

@@ -10,6 +10,7 @@ export const UNHEARD: readonly string[] = ["charm", "sleep"];
 export const STATUSES = [
   "stun", "slow", "blind", "fear", "burn", "freeze", "poison", "bleed", "sleep", "charm", "silence", "root", "confuse", "shrink",
   "sick", "rage", "deaf", "debt", "curse", "bless", "expose", "haste", "stasis", "truce", "chaos", "void", "doom",
+  "amnesia", "illiterate", "censor", "gag",
   "drunk", "reverse", "hypnosis", "leash",
 ] as const;
 export type Status = (typeof STATUSES)[number];
@@ -67,6 +68,8 @@ export interface StatusRule {
   fated?: boolean;
   /** What it sets on the body while it lasts (stasis and truce: untargetable). */
   set?: Record<string, Value>;
+  /** Nobody hears it: no pings, no quick messages, no spell called out (shared comms.ts). */
+  unheard?: boolean;
   /** Whoever put it on steers the body (shared control.ts: hypnosis). */
   steered?: boolean;
   /** Tethered to whoever put it on (shared control.ts: leash). */
@@ -91,7 +94,7 @@ export const STATUS_RULES: Record<Status, StatusRule> = {
   bleed: { dot: { slash: 6 }, living: true },
   sleep: { still: true, helpless: true, breaksOnHit: true, living: true, ops: [["sight_range", "mul", 0]] },
   charm: { spares: true, living: true, resistedBy: "loyalty" },
-  silence: { mute: true },
+  silence: { mute: true, unheard: true },
   root: { still: true },
   confuse: { random: true },
   shrink: { ops: [["mass", "mul", 0.1], ["height", "mul", 0.25], ["length", "mul", 0.25], ["strength", "mul", 0.3], ["speed_land", "mul", 0.6], ["size", "mul", 0.25]] },
@@ -120,6 +123,12 @@ export const STATUS_RULES: Record<Status, StatusRule> = {
     ops: [...DAMAGE_TYPES.map((d): Op => [`dmg_${d}`, "mul", 0]), ["speed_air", "mul", 0], ["armor", "mul", 0], ["regeneration", "mul", 0], ["luck", "mul", 0]],
   },
   doom: { fated: true, ops: [["morale", "add", -2]] },
+  // The screen (shared screen.ts `SCREEN_RULES` says which panels each greys, blanks or scrambles):
+  // forgetting what you know, words you cannot read, news you are not told; and a gag (comms.ts).
+  amnesia: { ops: [["read_properties", "mul", 0]] },
+  illiterate: { ops: [["read_properties", "mul", 0.5]] },
+  censor: {},
+  gag: { unheard: true },
   // Control (shared control.ts): who steers the body.
   drunk: { living: true, ops: [["wobble", "add", 5], ["accuracy", "add", -0.15], ["courage", "add", 2]] },
   reverse: { ops: [["reversed", "add", 1]] },
@@ -141,6 +150,7 @@ export const STATUS_STRETCH: Record<Status, number> = {
   sick: 6, rage: 6, deaf: 8,
   debt: 3, curse: 6, bless: 6, expose: 6,
   haste: 6, stasis: 2, truce: 1.5, chaos: 4, void: 4, doom: 1.2,
+  amnesia: 6, illiterate: 6, censor: 6, gag: 5,
   drunk: 8, reverse: 4, hypnosis: 2, leash: 3,
 };
 /** Seconds past which stretching bends toward a ceiling of about this much more. */
@@ -297,6 +307,8 @@ export interface Hampered {
   untouchable: boolean;
   /** Its gear, mount and the fields it stands in do nothing (void). */
   nulled: boolean;
+  /** Nobody hears its pings and spells (gag, silence: shared comms.ts). */
+  unheard: boolean;
   /** Who steers it (hypnosis), if anyone. */
   steeredBy?: string;
   /** Whom it is tethered to (leash), if anyone. */
@@ -304,7 +316,7 @@ export interface Hampered {
 }
 
 export function hampered(list: readonly Affliction[]): Hampered {
-  const h: Hampered = { moves: true, acts: true, spells: true, random: false, tempo: 1, flees: [], spares: [], berserk: false, deaf: false, time: 1, untouchable: false, nulled: false };
+  const h: Hampered = { moves: true, acts: true, spells: true, random: false, tempo: 1, flees: [], spares: [], berserk: false, deaf: false, time: 1, untouchable: false, nulled: false, unheard: false };
   for (const a of list) {
     const r = STATUS_RULES[a.status];
     if (r.still) h.moves = false;
@@ -319,6 +331,7 @@ export function hampered(list: readonly Affliction[]): Hampered {
     if (r.time !== undefined) h.time *= r.time;
     if (r.untouchable) h.untouchable = true;
     if (r.nulls) h.nulled = true;
+    if (r.unheard) h.unheard = true;
     if (r.steered) h.steeredBy = a.from;
     if (r.tethered) h.leashedTo = a.from;
   }

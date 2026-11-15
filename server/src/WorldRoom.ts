@@ -12,6 +12,7 @@ import {
   type Affliction, type Candidate, type Dictionary, type Stores, type Supply, type Entity, type Hampered, type Status, type Stats, type Letters, type LoadoutDetail, type Op, type Phrase, type Point, type Spelled, type Value, type WordDef, type WorldMap,
 } from "@lastword/shared";
 import { grand, grandeur } from "@lastword/shared";
+import { READ_TILES, DECOY_CALL_SECONDS, fakeCall, grandWords, hears, INTEL_MAX, insightOf, isPing, KNOWS, PING_GAP, readPerson, restoresOf, screenOf, voiceOf, SCREEN_RULES, type Intel, type Panel, type Ping, type Screen } from "@lastword/shared";
 import {
   LAWS, takeLetters, pactOf, breachText, BREACH_LETTERS, BREACH_LOYALTY, BREACH_MINUTES, cooked, rotted, cooks, cookable, spoils, toxin, heatNeeded, matured, matureSeconds, bores, BORE_TILES, BORE_TIMES,
   COOK_RANGE, COOK_SECONDS, alchemyRatio, jobsOf, haggled, builtBy, WORK_RANGE, SCOUT_RANGE, grow, SEEDLING, type PactSpec,
@@ -183,6 +184,9 @@ interface Radiating { holder: string; keys: string[] }
 /** How a status reads in "you cannot spell while you are ...". */
 const STATE_WORDS: Partial<Record<Status, string>> = { stun: "stunned", freeze: "frozen", sleep: "asleep", silence: "silenced", stasis: "out of time (stasis)", truce: "under a truce" };
 
+/** Seconds an oracle's reading of someone's rack is kept before it is read again (shared knowledge.ts). */
+const ORACLE_SECONDS = 5;
+
 /** Tiles a frightened walker runs ahead of itself each tick. */
 const FLEE_TILES = 6;
 /** Cell width, in tiles, of the grid `beat` buckets walkers into to find enemies near each. */
@@ -345,6 +349,10 @@ interface Walker {
   shown: string;
   /** For a person: words that became part of their screen (shared `senseOf`): a MAP's minimap. */
   senses?: Sense[];
+  /** For a person: the screen (shared screen.ts) and intel last sent, as JSON, and when they last pinged. */
+  screenSent?: string;
+  intelSent?: string;
+  pingedAt?: number;
   /** At home: its side's comfort inside their claimed ground (shared `homeComfort`), as an effect, or null away. */
   home?: Effect | null;
   /** For a person: things of theirs on the ground that watch (shared `eyeOf`), shown on their minimap. */
@@ -488,6 +496,9 @@ const thingKey = (x: number, y: number) => Math.floor(x / THING_CELL) * 4096 + M
 /** What a bot remembers between thoughts. */
 interface BotMind {
   difficulty: Difficulty;
+  /** An ally's HELP ping it heard (shared comms.ts): where, and until when it answers; when it last asked for help itself. */
+  help?: { x: number; y: number; until: number; from: string };
+  askedAt?: number;
   /** Foes its blows cannot hurt (shared affinity.ts: a GHOST to a club), by id: until when it leaves them be, and blows in a row that were nothing. */
   futile?: Map<string, number>;
   immune?: { on: string; n: number };
@@ -944,6 +955,8 @@ export class WorldRoom extends Room {
       else if (walker?.kit) this.sendKit(client.sessionId, walker);
     },
     /** Spend letters to make an object where the player stands. */
+    /** A ping (shared comms.ts): { kind, x?, y? }, heard by your side and whoever is in earshot. */
+    ping: (client: Client, what: unknown) => this.attempt(client, (id, w) => this.ping(id, w, what)),
     spell: (client: Client, text: unknown) => {
       const walker = this.walkers.get(client.sessionId);
       if (!walker) return;
@@ -1200,7 +1213,9 @@ export class WorldRoom extends Room {
    * camera and shows it full size for a moment). An event lands where it was aimed.
    */
   private entrance(walker: Walker, phrase: Phrase, word: string) {
-    if (!grand(phrase)) return;
+    // Spelling is said aloud (shared comms.ts): heard in earshot; a grand word goes map-wide; the gagged say nothing.
+    if (walker.hamper.unheard) return;
+    if (!grand(phrase)) return this.callOut(walker, word);
     const picked = walker.picked ? this.walkers.get(walker.picked)?.player ?? this.state.things.get(walker.picked) : undefined;
     const at = phrase.kind === "object" ? walker.player : walker.aim ?? picked ?? walker.player;
     const message = { name: walker.player.name, word, kind: phrase.kind, x: at.x, y: at.y, grandeur: Math.round(grandeur(phrase)) };
@@ -1327,6 +1342,9 @@ export class WorldRoom extends Room {
     // Bots fill their places at once; each one takes a seat, so humans still fit the room.
     const { bots, difficulty } = botSettings(options, this.maxClients - 1);
     this.addBots(bots, difficulty);
+    // An oracle's reading and a lie's made-up call read the whole dictionary the first time (shared
+    // knowledge.ts, comms.ts): done once a process, while people pick their kits, not mid-fight.
+    if (WorldRoom.kits) setTimeout(() => { grandWords(this.dict); readPerson(this.dict, KNOWS.oracle, { id: "", name: "", letters: Object.fromEntries([..."abcdefghijklmnopqrstuvwxyz"].map((c) => [c, 9])), gear: [] }, null); }, 1500).unref?.();
   }
 
   /**
@@ -1830,7 +1848,10 @@ export class WorldRoom extends Room {
       income: this.income.get(walker.id)?.letters ?? [],
       market: this.marketInfo(walker.id, walker),
       transmute: this.transmuteRatio(walker.id, walker),
+      screen: this.screenFor(walker.id, walker),
+      insight: this.insight(walker),
     };
+    walker.screenSent = JSON.stringify(detail.screen);
     client.send("loadout", detail);
   }
 
@@ -2064,6 +2085,16 @@ export class WorldRoom extends Room {
 
     // A sickness, a rage, a sealed fate, a curse on it, or the cold: a word that ends it comes first.
     if (canSpell()) { const cured = this.botCure(id, w, mind, have); if (cured) spelled(cured); }
+    // Communication (shared comms.ts): under attack with allies about it pings HELP; an ally's HELP it heard, it answers.
+    if (attackers.length && this.elapsed - (mind.askedAt ?? -Infinity) > 20 && this.pactOf(id)) {
+      mind.askedAt = this.elapsed;
+      if (this.pingFrom(id, w, "help", w.player)) this.botUsed(mind, "ping help");
+    }
+    if (!attackers.length && !w.foe && mind.help && this.elapsed < mind.help.until && w.hamper.moves) {
+      const h = mind.help;
+      if (Math.hypot(h.x - w.player.x, h.y - w.player.y) > 3) { w.target = nearestWalkable(this.map, { x: h.x, y: h.y }); return; }
+      mind.help = undefined;
+    }
     // Out on a boat (`botBoat`): it sails a while, then comes back to shore.
     if (mind.boat && !attackers.length && this.botBoat(id, w, mind)) return;
 
@@ -2550,12 +2581,17 @@ export class WorldRoom extends Room {
     }
     if (!w.statuses.length) return null;
     // The worst first: a sealed fate, then whatever hampers it most.
-    const order: Status[] = ["doom", "void", "stasis", "hypnosis", "sick", "rage", "fear", "chaos", "curse", "leash", "debt", "expose", "poison", "burn", "bleed", "reverse", "confuse", "drunk", "slow", "root", "blind", "silence"];
+    const order: Status[] = ["doom", "void", "stasis", "hypnosis", "sick", "rage", "fear", "chaos", "curse", "leash", "debt", "expose", "poison", "burn", "bleed", "reverse", "confuse", "drunk", "slow", "root", "blind", "silence", "amnesia", "illiterate", "censor", "gag"];
     const ails = w.statuses.map((a) => a.status).filter((st) => !isBoon(st) && order.includes(st) && (!easy || st === "sick" || st === "poison"))
       .sort((a, b) => order.indexOf(a) - order.indexOf(b));
     for (const st of ails) {
       const x = chooseWord(book.byUse.get("cure"), have, mind.difficulty, this.rng, (x) => !mind.tried.has(x.word) && x.statuses!.includes(st) && (x.faith ?? 0) <= w.stores.faith);
-      if (!x || !this.botCast(id, w, mind, x, id)) continue;
+      if (!x || !this.botCast(id, w, mind, x, id)) {
+        // Nothing ends it: something that gives back the panels it greys (shared screen.ts), GLASSES for the blind.
+        const back = SCREEN_RULES[st] ? chooseWord(book.byUse.get("restore"), have, mind.difficulty, this.rng, (y) => !mind.tried.has(y.word) && y.statuses!.includes(st)) : null;
+        if (back && this.botCast(id, w, mind, back, id)) { this.botUsed(mind, "restore"); return "restore"; }
+        continue;
+      }
       const calm = st === "rage" || st === "fear";
       if (!calm) this.botUsed(mind, `cure ${st}`);
       return calm ? "calm" : "cure";
@@ -3960,6 +3996,7 @@ export class WorldRoom extends Room {
       }
     }
     for (const [id, w] of this.walkers) if (w.senses?.length || w.eyes?.length) this.sendSensed(id, w);
+    this.screens();
     this.nearGrid = null; // walkers move between beats
     // Offers lapse, or fall through when either side is gone or walks off.
     for (const o of [...this.offers.values()]) {
@@ -8025,6 +8062,161 @@ export class WorldRoom extends Room {
   }
 
   /** True if a trap is hidden from a viewer: not theirs, and its stealth beats their eyes (shared crime.ts). */
+  // Screen, knowledge and communication (shared screen.ts, knowledge.ts, comms.ts).
+
+  /** Panels a word in force gives back (`restores_panels`), by its noun or verb. */
+  private wordRestores(word: string): Panel[] {
+    const noun = word.trim().split(/\s+/).pop() ?? word;
+    let known = this.restoresMemo.get(noun);
+    if (!known) {
+      try { known = restoresOf(parsePhrase(this.dict, noun).stats); } catch { known = []; }
+      this.restoresMemo.set(noun, known);
+    }
+    return known;
+  }
+  private readonly restoresMemo = new Map<string, Panel[]>();
+
+  /** Panels a person's things carried and worn, fields, verbs in force and senses give back (shared `restoresOf`). */
+  private restoredFor(w: Walker): Panel[] {
+    const out = new Set<Panel>();
+    const nulled = w.hamper.nulled;
+    if (!nulled) for (const g of w.gear) for (const p of restoresOf(this.statsOf(g))) out.add(p);
+    for (const e of [...w.buffs, ...(nulled ? [] : w.fields ?? [])]) for (const p of this.wordRestores(e.word)) out.add(p);
+    for (const s of w.senses ?? []) for (const p of this.wordRestores(s.word)) out.add(p);
+    return [...out];
+  }
+
+  /** A person's screen (shared `screenOf`): what their statuses grey, what their things give back, and a jam. */
+  private screenFor(id: string, w: Walker): Screen {
+    return screenOf(w.statuses, this.restoredFor(w), this.jammed(id, w));
+  }
+
+  /** A walker's insight (shared `insightOf`): its body's `read_properties` and its carried things'; nothing with amnesia. */
+  private insight(w: Walker): number {
+    if (w.statuses.some((a) => SCREEN_RULES[a.status]?.intel === "hide")) return 0;
+    return insightOf(w.unit.body.stats, w.hamper.nulled ? [] : w.gear.map((g) => this.statsOf(g)));
+  }
+
+  /** Oracle readings by rack, kept a while (shared `bestWords` reads the whole dictionary). */
+  private readonly oracleMemo = new Map<string, { rack: string; at: number; words: string[] }>();
+  /** Oracle readings left this beat. */
+  private oracleBudget = 0;
+
+  /**
+   * What a person reads of others (shared knowledge.ts): with insight `KNOWS.racks` or more, theirs
+   * or a creature's of theirs, the racks and gear of people in that reader's sight, nearest first;
+   * with `KNOWS.oracle`, what each could spell. `immune_expose` hides; lies falsify.
+   */
+  private intelFor(id: string, w: Walker): Intel[] {
+    const readers: { level: number; at: Point; sight: number }[] = [];
+    const own = this.insight(w);
+    if (own >= KNOWS.racks) readers.push({ level: own, at: w.player, sight: Math.max(w.sight, READ_TILES) });
+    for (const c of this.walkers.values()) {
+      if (c.master !== id) continue;
+      const lv = this.insight(c);
+      if (lv >= KNOWS.racks) readers.push({ level: lv, at: c.player, sight: Math.max(c.sight, READ_TILES) });
+    }
+    if (!readers.length) return [];
+    const fooled = this.decoysFor(id, w).length > 0;
+    const found: { t: Walker; tid: string; level: number; d: number }[] = [];
+    for (const tid of this.people) {
+      if (tid === id) continue;
+      const t = this.walkers.get(tid)!;
+      if (t.unit.body.stats.flag("immune_expose") || this.walkerHidden(id, w, t)) continue;
+      let level = 0;
+      for (const r of readers) if (Math.hypot(t.player.x - r.at.x, t.player.y - r.at.y) <= r.sight) level = Math.max(level, r.level);
+      if (level) found.push({ t, tid, level, d: Math.hypot(t.player.x - w.player.x, t.player.y - w.player.y) });
+    }
+    found.sort((a, b) => a.d - b.d);
+    return found.slice(0, INTEL_MAX).map(({ t, tid, level }) => {
+      const key = fooled ? `${id}:${tid}:${Math.floor(this.elapsed / 30)}` : null;
+      const who = { id: tid, name: t.player.name, letters: t.letters, gear: t.gear.map((g) => g.phrase) };
+      const read = readPerson(this.dict, Math.min(level, KNOWS.oracle - 1), who, key)!;
+      if (level < KNOWS.oracle) return read;
+      // What they could spell (shared `bestWords` reads the whole dictionary): worked out at most one
+      // rack a beat and kept ORACLE_SECONDS, so a tick stays short.
+      const memo = `${key ?? ""}|${tid}`, rack = JSON.stringify(t.letters), had = this.oracleMemo.get(memo);
+      if (had && (had.rack === rack || this.elapsed - had.at < ORACLE_SECONDS || this.oracleBudget <= 0)) return { ...read, words: had.words };
+      if (this.oracleBudget <= 0) return read;
+      this.oracleBudget--;
+      const words = readPerson(this.dict, level, who, key)!.words ?? [];
+      if (this.oracleMemo.size > 200) this.oracleMemo.clear();
+      this.oracleMemo.set(memo, { rack, at: this.elapsed, words });
+      return { ...read, words };
+    });
+  }
+
+  /** Once a second: each person's screen and intel, sent on change, and the lies' made-up calls and pings. */
+  private screens() {
+    this.oracleBudget = 1;
+    for (const c of this.clients) {
+      const w = this.walkers.get(c.sessionId);
+      if (!w || w.master !== null) continue;
+      if (JSON.stringify(this.screenFor(c.sessionId, w)) !== w.screenSent) this.tell(w);
+      const intel = this.intelFor(c.sessionId, w), key = JSON.stringify(intel);
+      if (key !== (w.intelSent ?? "[]")) { w.intelSent = key; c.send("intel", intel); }
+    }
+    // Lies (shared comms.ts): each field with decoys sends those it fools a made-up call and a DANGER ping.
+    const beat = Math.floor(this.elapsed / DECOY_CALL_SECONDS);
+    for (const [key, a] of this.areas) {
+      if (!a.decoys || this.lieBeats.get(key) === beat) continue;
+      this.lieBeats.set(key, beat);
+      for (const c of this.clients) {
+        const w = this.walkers.get(c.sessionId);
+        if (!w || w.master !== null || w.hamper.deaf || !this.reaches(a, c.sessionId, w) || !this.decoysFor(c.sessionId, w).length) continue;
+        const names = this.people.filter((pid) => pid !== c.sessionId).map((pid) => this.walkers.get(pid)!.player.name);
+        const fake = fakeCall(this.dict, `${key}:${c.sessionId}`, names, this.elapsed);
+        const near = this.decoysFor(c.sessionId, w)[0]!;
+        c.send("call", { name: fake.name, word: fake.word.toUpperCase(), x: near.x, y: near.y, ally: false });
+        c.send("pinged", { name: fake.name, kind: "danger", x: near.x, y: near.y, ally: false });
+      }
+    }
+    for (const k of this.lieBeats.keys()) if (!this.areas.has(k)) this.lieBeats.delete(k);
+  }
+  private readonly lieBeats = new Map<string, number>();
+
+  /** Who hears a speaker (shared `hears`): people and bots of their side anywhere, others in earshot, never the deaf. */
+  private listeners(id: string, w: Walker): { lid: string; l: Walker; ally: boolean }[] {
+    const voice = voiceOf(w.unit.body.stats), mine = this.side(id, w), out: { lid: string; l: Walker; ally: boolean }[] = [];
+    for (const lid of this.people) {
+      const l = this.walkers.get(lid)!;
+      const ally = lid === id || this.side(lid, l) === mine;
+      const d = Math.hypot(l.player.x - w.player.x, l.player.y - w.player.y);
+      if (hears({ deaf: l.hamper.deaf, hearing: l.unit.body.stats.num("hearing_range") }, voice, d, ally)) out.push({ lid, l, ally });
+    }
+    return out;
+  }
+
+  /** A spelling said aloud (shared comms.ts): everyone who hears the speller is sent `call`. */
+  private callOut(walker: Walker, word: string) {
+    for (const { lid, ally } of this.listeners(walker.id, walker)) {
+      if (lid !== walker.id) this.sendTo(lid, "call", { name: walker.player.name, word, x: Math.round(walker.player.x), y: Math.round(walker.player.y), ally });
+    }
+  }
+
+  /** A ping from a person or bot (shared comms.ts): sent as `pinged` to all who hear it; bots of its side answer HELP. Returns whether it went out. */
+  private pingFrom(id: string, w: Walker, kind: Ping, at: Point): boolean {
+    if (w.hamper.unheard || this.elapsed - (w.pingedAt ?? -Infinity) < PING_GAP) return false;
+    w.pingedAt = this.elapsed;
+    const x = Math.round(Math.max(0, Math.min(this.map.size - 1, at.x)) * 10) / 10, y = Math.round(Math.max(0, Math.min(this.map.size - 1, at.y)) * 10) / 10;
+    for (const { lid, ally } of this.listeners(id, w)) {
+      this.sendTo(lid, "pinged", { name: w.player.name, kind, x, y, ally });
+      const mind = this.bots.get(lid);
+      if (mind && ally && lid !== id && (kind === "help" || kind === "attack")) { mind.help = { x, y, until: this.elapsed + 30, from: id }; this.botUsed(mind, "answer ping"); }
+    }
+    return true;
+  }
+
+  /** The `ping` message: { kind, x?, y? } (a point on the map, else where you stand). Throws why not. */
+  private ping(id: string, w: Walker, what: unknown): string {
+    const m = (what ?? {}) as { kind?: unknown; x?: unknown; y?: unknown };
+    if (!isPing(m.kind)) throw new Error("Ping what?");
+    if (w.hamper.unheard) throw new Error(`You are ${w.statuses.some((a) => a.status === "gag") ? "gagged" : "silenced"}: nobody hears you`);
+    const at = typeof m.x === "number" && typeof m.y === "number" && Number.isFinite(m.x) && Number.isFinite(m.y) ? { x: m.x, y: m.y } : w.player;
+    if (!this.pingFrom(id, w, m.kind, at)) throw new Error("One ping at a time");
+    return "";
+  }
+
   private trapHidden(id: string, t: Thing, viewer: Walker): boolean {
     if (!this.traps.has(id) || t.owner === viewer.id || this.sprung.has(id)) return false;
     const owner = this.walkers.get(t.owner);

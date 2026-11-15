@@ -293,6 +293,24 @@ into `tools/generated_words.txt`, letters in `tools/producers.txt`). Art is draw
 - Remaining: `tools/freq_todo.txt` (3,000 words, rank order) starts at ENTHUSIAST (rank 15,809),
   EPILEPSY, ESTIMATION, EXCAVATION, EXTREMIST, FEEDER, FLATTERING, FORCIBLY.
 
+## Concept: screen, knowledge and communication
+
+- Not a word batch: three shared systems (shared `screen.ts`, `knowledge.ts`, `comms.ts`) and meaning
+  rules (`tools/meaning.py`) that give their properties across the whole dictionary by WordNet sense
+  and gloss, applied by how each word acts (weapon, event, field, carried thing, verb, adjective).
+- Screen: new statuses AMNESIA, ILLITERATE, CENSOR and GAG; BLIND, SLEEP, CONFUSE and CHAOS also take
+  panels. About 1,040 words touch the screen: 80 inflict amnesia (clubs, hammers, knockouts,
+  CONCUSSION), 105 blind, 412 confuse, 102 sleep, 25 censor (every jammer, REDACTION, CENSORSHIP), 6
+  illiterate (BABEL, JARGON, NONSENSE); 129 restore panels (GLASSES and goggles, MAP, CHART, COMPASS,
+  every book and reference work, schools, diaries and notebooks, news and broadcasting).
+- Knowledge: `read_properties`, which about 500 words already set and nothing read, is now insight:
+  790 words; 358 give 2 or more (counters), 156 give 5 or more (racks: spies, detectives, libraries,
+  scholars), 32 give 8 or more (what others can spell: ORACLE, SEER, PROPHET, ASTROLOGER, TRUTH).
+- Communication: pings and spells said aloud; about 1,560 words touch it, mostly through `loudness`
+  (1,240: a voice carries farther), `hearing_range` (97: RADIO, PHONE, TELEPATHY), lies' `decoys`
+  (165 now also send made-up calls and DANGER pings), and the deaf, silenced and gagged.
+- Pitfall: GAG and BLINDFOLD were artifacts (objects on the ground) though their data read as events;
+  GAG is now an act in demo_words.txt. Check `parsePhrase(...).kind` for any word meant to land on someone.
 ## Concept batch: combat (damage natures, luck, scale, control)
 
 - Four dimensions as shared systems, given by meaning across the whole dictionary by generator

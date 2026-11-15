@@ -1,6 +1,7 @@
 import type { Threat } from "./threats.js";
 import { Client } from "@colyseus/sdk";
-import type { Letters, LoadoutDetail, Offer, Sensed } from "@lastword/shared";
+import type { Intel, Letters, LoadoutDetail, Offer, Ping, Sensed } from "@lastword/shared";
+import type { Pinged } from "./comms.js";
 import { chooseGame } from "./start.js";
 import type { KitOffer, KitState } from "./kits.js";
 
@@ -34,6 +35,8 @@ export interface Connection {
   /** Pick a starting kit by its index among those offered. */
   pickKit(step: number, index: number): void;
   act(type: "market" | "sell" | "hire" | "swap" | "transmute" | "offer" | "answer", payload: unknown): void;
+  /** A ping (shared comms.ts) at a spot on the map, else where you stand. */
+  ping(kind: Ping, x?: number, y?: number): void;
 }
 
 /** Letters gained and why ("forage", "hunted COW (+12 food)"), and where they came from. */
@@ -92,6 +95,12 @@ export interface Handlers {
   kit(state: KitState): void;
   /** A grand spelling somewhere on the map (a DRAGON, a METEOR): it makes an entrance. */
   entrance(e: Entrance): void;
+  /** People read through insight (shared knowledge.ts): racks, gear, what they can spell. */
+  intel(list: Intel[]): void;
+  /** A spelling said aloud in earshot (shared comms.ts), or a lie's made-up one. */
+  call(c: { name: string; word: string; x: number; y: number; ally: boolean }): void;
+  /** A ping heard (shared comms.ts). */
+  pinged(p: Pinged): void;
 }
 
 /** One blow, as the server tells it (server `Hit`). */
@@ -147,6 +156,9 @@ export async function connect(on: Handlers): Promise<Connection> {
   room.onMessage("kits", on.kits);
   room.onMessage("kit", on.kit);
   room.onMessage("entrance", on.entrance);
+  room.onMessage("intel", on.intel);
+  room.onMessage("call", on.call);
+  room.onMessage("pinged", on.pinged);
   room.onLeave(on.closed);
   room.onDrop(on.dropped);
   // Listening now: the server sends the kits to pick from (or your kit), here and after a reconnect.
@@ -172,6 +184,7 @@ export async function connect(on: Handlers): Promise<Connection> {
     attack: (target) => room.send("attack", target),
     pick: (what) => room.send("pick", what),
     act: (type, payload) => room.send(type, payload),
+    ping: (kind, x, y) => room.send("ping", { kind, ...(x !== undefined && y !== undefined ? { x, y } : {}) }),
     pickKit: (step, index) => room.send("kit", { step, index }),
     leave: () => { room.onLeave.clear?.(); void room.leave(true); },
     describe: (text, target, gear) => room.send("describe", { text, target, ...(gear !== undefined ? { gear } : {}) }),
