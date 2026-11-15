@@ -19,8 +19,11 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
 - `src/hud.ts` the HTML overlay: the top-left HUD card (health, armour and ride bars, hands,
   wears, rides, creatures, status chips, stores; players alive and round time), letter tiles at
   the bottom middle, the spell window (Enter opens it; while open every key goes to it, Enter
-  casts, Esc cancels), the aiming banner, toasts, and the inventory (I) and loadout (L) screens,
-  drawn from the server's private `loadout` message. Location and weather are on the loadout screen.
+  casts, Esc cancels), the aiming banner, toasts, and the inventory screen (I or L: letters, gear,
+  creatures, your numbers), drawn from the server's private `loadout` message. Location is on it.
+- The spell window lists the words you can spell now (shared `spellableNow`) as tabs by group
+  (weapons, gear, rides, creatures, buildings, other, verbs, events, areas, sky); a tab opens its
+  words, a click puts one in the box.
 - Adjectives spelled alone (`readDescription`) and events that need a target (shared `aimOf`) put
   `main.ts` into aiming: a click on a thing, creature, person or yourself sends `describe`, or
   `pick` + `spell` + `pick(null)` for an event; Esc or right-click cancels.
@@ -67,29 +70,32 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
   - Screens register a `Scope` (`pad.add`, lowest rank wins): D-pad or left stick move a focus
     ring (`.padfocus`) over buttons, items and inputs, A clicks, B sends Esc. Hud's scopes: the
     letter picker (`#picker` in the spell window: A add, B delete, X clear, RB space, Y cast),
-    the field picker for an offer's letters (`#fieldpick`), the inventory, loadout and trade
+    the field picker for an offer's letters (`#fieldpick`), the inventory and trade
     screens (focus on an item opens its card, `focusDetails`), and the offer cards (D-pad left).
     `pad.ts` adds the Esc menu, the start screen and any `[data-pad-scope]` element.
   - With no screen open, `World.padFrame` has the frame: left stick walks (`pad.walk`), the
     right stick moves a cursor that snaps to targets, RT attacks, LT inspects (LB/RB cycle), and
     aiming takes LB/RB, A, B. Other buttons press the keys they stand for (`pad.key`).
   - Browser checks stub `navigator.getGamepads` with a mutable pad object.
-- `src/fx.ts` HTML effects: letter popups from `got` (a big tile with its reason tag that flies to
-  the letter bar, which bounces), damage numbers from `hits`, the red screen edge when you are hit,
-  the red note when gathering finds nothing, and `note` ("+sight" from the `sight` message). In `main.ts`: `onHits` (flash, shake, lunge,
+- `src/fx.ts` HTML effects: letter popups from `got` (a big tile with its reason tag; then each
+  letter flies down to its own tile one after another, and only the tiles just added bounce and
+  light up, briefly), damage numbers from `hits`, the red screen edge when you are hit,
+  the red note when gathering finds nothing, and `note` ("+sight", from `sight`). In `main.ts`: `onHits` (flash, shake, lunge,
   tracer, health bar for a few seconds, a mark over whoever hit you), `overlays` (the camera zoomed
   so the screen holds your sight, fog past it, the gathering ring, `promptAt` hints over the
   letters: G: dig, E: claim).
 - The spell window shows a compact preview (`#preview`: what it makes, two or three key effects)
   and the alphabet guide (shared `LETTER_GUIDE`), lighting letters you hold.
-- Every item in the HUD, loadout and inventory shows what it does (shared `heldText`; effects in
+- Every item in the HUD and the inventory shows what it does (shared `heldText`; effects in
   force `effectText`) and a click opens its card (`Hud.inspectWord`).
 - `src/threats.ts` arrows at the screen's edge for `threats` off screen (✈ air, ⚔ ground, distance);
   aircraft in view get a shadow and speed streaks (`airborne`).
 - Areas' name tags say owner and kind and sit on the edge nearest you; a click on a tag, or a
   right-click inside an area, opens its card (`Zones.tagAt`, `Events.show`).
 - A click on something nobody owns (a RUIN) walks there and claims it (`claiming`, `take` { id });
-  Shift-click attacks it. A gathering miss shows small (`missed`), a find's popup its `detail`.
+  Shift-click attacks it. A click anywhere on a person's or creature's standee (`onStandee`, its
+  drawn bounds) locks on: red corner brackets, and the server chases and strikes until it dies, you
+  walk or click elsewhere, or Esc (`unlock`). A gathering miss shows small (`missed`), a find's popup its `detail`.
 - Knocked out, the HUD card has Start new round: `playAgain` (start.ts) reloads into a fresh room
   with the same choice, past the start screen. A room lost for good (server restart) does the same.
 - Themes batch 1 art: `ARCHETYPES` has `herb` and `gem`; `WORDS` has the common professions (chef,
@@ -99,7 +105,7 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
   tools, machines and animals of batch 2, drawn with the existing builders (house, quad, bird,
   fish, bug, snake).
 - The top-left HUD lists letters coming in a minute by letter and what makes them (loadout
-  `income`), and food, fuel and power in and out; the loadout screen's Producing lines say why a
+  `income`), and food, fuel and power in and out; the inventory screen's Producing lines say why a
   producer is idle. The corner shows the wind and the city you stand in (ruler, citizens).
 - The trade screen (T, `Hud.trade`): the market you stand at (pick the tiles you pay, `Hud.pay`,
   and the letter you get; the rack swap, once per market), hiring, transmuting into Z (only with
@@ -107,11 +113,14 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
   and received are cards at the right (`#offers`: Accept, Counter, Decline, Withdraw). Inputs on a
   screen count as typing (`Hud.typing`), so their letters are not commands.
 - A roaming boss (`Player.boss`) stands 1.6 times as tall with a red tag.
-- `src/kits.ts` starting kits: the pick of three (`#kits`, keys 1-3 or a click, with a countdown),
+- `src/kits.ts` starting kits: the pick in four steps, job, building, legendary, letters (`#kits`,
+  three choices each, keys 1-3 or a click, a countdown a step; `KitView.choosing` until your kit
+  arrives, and meanwhile toasts (`Hud.quiet`) and legend calls are dropped, not replayed),
   your job and sealed legendary with progress on the HUD card (a click shows your card, with
   Unseal when letters open it), and `#legendcall`, the one map-wide call (with a camera shake)
   when a legendary unseals and is made at once ("UNLEASHED"), or unseals to spell later.
-- `src/tips.ts` teaching tips (shared `tips.ts`): rotating word cards on the start screen, one
+- `src/tips.ts` teaching tips (shared `tips.ts`): rotating word cards on the start screen (two
+  columns: the word and kind, its properties with a short meaning each, `WordTip.lines`), one
   line (`#tip`) in the spell window while it is empty, and Word ideas with a reroll in the Esc
   menu, where Show tips turns them off (`lastword.tips` in localStorage).
 - Themes batch 3: a body part is aimed like an event ("someone"; you can click yourself); threat

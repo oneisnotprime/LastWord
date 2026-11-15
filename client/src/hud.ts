@@ -1,4 +1,4 @@
-import { effectText, heldText, tipOfTheMoment, inspectText, LETTER_GUIDE, missing, parsePhrase, readTrade, standIn, standsFor, type Card, type Dictionary, type Letters, type LoadoutDetail, type Offer } from "@lastword/shared";
+import { effectText, heldText, spellableNow, SPELL_GROUPS, type SpellGroup, tipOfTheMoment, inspectText, LETTER_GUIDE, missing, parsePhrase, readTrade, standIn, standsFor, type Card, type Dictionary, type Letters, type LoadoutDetail, type Offer } from "@lastword/shared";
 import { BADGE } from "./art/paper.js";
 import { ideasHtml, setTipsOn, tipRng, tipsOn } from "./tips.js";
 import { keyGlyph, only, pad, padGlyph } from "./pad.js";
@@ -81,7 +81,11 @@ export class Hud {
   private detail: LoadoutDetail | null = null;
   /** Your starting kit's lines for the HUD card (set by `KitView`). */
   kitHtml = "";
-  private open: "inventory" | "loadout" | "trade" | null = null;
+  /** The screen open: the inventory (I or L: letters, gear, creatures, you) or trade (T). */
+  private open: "inventory" | "trade" | null = null;
+  /** The spell window's open group of words you can spell now, or null (all closed). */
+  private group: SpellGroup | null = null;
+  private spellable: { key: string; groups: Record<SpellGroup, string[]> } | null = null;
   /** Sends a trading action to the server (set by the scene). */
   act: (type: "market" | "sell" | "hire" | "swap" | "transmute" | "offer" | "answer", payload: unknown) => void = () => {};
   /** People near enough to trade with (set by the scene). */
@@ -142,9 +146,8 @@ export class Hud {
     window.addEventListener("keydown", (e) => {
       if (this.typing || e.repeat) return;
       const key = e.key.toLowerCase();
-      if (key === "i") this.show(this.open === "inventory" ? null : "inventory");
+      if (key === "i" || key === "l") this.show(this.open === "inventory" ? null : "inventory");
       else if (key === "t") this.show(this.open === "trade" ? null : "trade");
-      else if (key === "l") this.show(this.open === "loadout" ? null : "loadout");
       else if (key === "escape") {
         // Esc closes what is open first (a screen, the menu, an aim, an inspect card), else opens the menu.
         if (this.open) this.show(null);
@@ -204,6 +207,11 @@ export class Hud {
     // A click outside the card keeps the window open and the cursor in it.
     this.win.addEventListener("mousedown", (e) => { if (e.target !== this.input) { e.preventDefault(); this.input.focus(); } });
     this.input.addEventListener("blur", () => { if (this.typing) setTimeout(() => this.typing && this.input.focus(), 0); });
+    $("canspell").addEventListener("click", (e) => {
+      const el = (e.target as HTMLElement).closest<HTMLElement>("button");
+      if (el?.dataset.group) { this.group = this.group === el.dataset.group ? null : el.dataset.group as SpellGroup; this.drawSpellable(); }
+      else if (el?.dataset.word) { this.input.value = el.dataset.word; this.typed(); }
+    });
     $("picker").addEventListener("click", (e) => {
       const tile = (e.target as HTMLElement).closest<HTMLElement>("[data-pick]");
       if (tile) this.pick(tile.dataset.pick!);
@@ -580,7 +588,7 @@ export class Hud {
   where(text: string) {
     if (text === this.place) return;
     this.place = text;
-    if (this.open === "loadout") this.drawPanel();
+    if (this.open === "inventory") this.drawPanel();
   }
 
   /** The top-left HUD, redrawn only when what it shows changes. */
@@ -787,7 +795,7 @@ export class Hud {
     return parts.join("");
   }
 
-  private show(which: "inventory" | "loadout" | "trade" | null) {
+  private show(which: "inventory" | "trade" | null) {
     this.open = which;
     this.onOffers = false;
     if (!which) this.closeField();
@@ -800,7 +808,7 @@ export class Hud {
     // Keep what is being typed into an offer while the screen redraws.
     const give = document.getElementById("offer-give") as HTMLInputElement | null, get = document.getElementById("offer-get") as HTMLInputElement | null;
     const kept = [give?.value ?? "", get?.value ?? ""], focus = document.activeElement?.id;
-    $("panel").innerHTML = this.open === "inventory" ? this.inventory() : this.open === "trade" ? this.trade() : this.loadout();
+    $("panel").innerHTML = this.open === "inventory" ? this.inventory() : this.trade();
     if (this.open === "trade") {
       const g = document.getElementById("offer-give") as HTMLInputElement | null, w = document.getElementById("offer-get") as HTMLInputElement | null;
       if (g) g.value = kept[0]!; if (w) w.value = kept[1]!;
@@ -808,61 +816,49 @@ export class Hud {
     }
   }
 
-  /** Words the player holds the letters for right now, shortest first. */
-  private affordable(): { word: string; role: string }[] {
-    const out: { word: string; role: string }[] = [];
-    for (const [word, def] of this.dict.words) {
-      if ((def.role === "noun" || def.role === "verb") && !missing(this.held, word)) out.push({ word, role: def.role });
-    }
-    return out.sort((a, b) => a.word.length - b.word.length || a.word.localeCompare(b.word));
+  /**
+   * The words you hold the letters for now (shared `spellableNow`), under the spell window: a
+   * tab per group with its count, and the open group's words (a click puts one in the box).
+   */
+  private drawSpellable() {
+    const el = $("canspell");
+    if (!this.typing) { el.innerHTML = ""; return; }
+    const key = Object.entries(this.held).filter(([, n]) => n > 0).sort().map(([c, n]) => `${c}${n}`).join("");
+    if (this.spellable?.key !== key) this.spellable = { key, groups: spellableNow(this.dict, this.held) };
+    const g = this.spellable.groups;
+    const tabs = SPELL_GROUPS.filter((k) => g[k].length).map((k) =>
+      `<button data-group="${k}" class="${k === this.group ? "on" : ""}">${GROUP_NAME[k]} <small>${g[k].length}</small></button>`).join("");
+    const open = this.group && g[this.group].length ? g[this.group] : [];
+    el.innerHTML = tabs ? `<div class="tabs"><span>Can spell now</span>${tabs}</div>${open.length ? `<div class="words">${open.slice(0, 80).map((w) => `<button data-word="${w}">${w}</button>`).join("")}${open.length > 80 ? `<small>+${open.length - 80}</small>` : ""}</div>` : ""}` : "";
   }
 
+  /** The inventory (I or L): letters held, what you wear, hold and ride, what is in reach, your creatures, and you. */
   private inventory(): string {
     const letters = Object.entries(this.held).filter(([, n]) => n > 0).sort();
     const total = letters.reduce((n, [, c]) => n + c, 0);
     const d = this.detail;
-    const words = this.affordable();
-    const list = (role: string) =>
-      words.filter((w) => w.role === role).slice(0, 80).map((w) => `<button data-word="${w.word}">${w.word}</button>`).join("") ||
-      `<span class="hint">Nothing yet</span>`;
-    return `
-      <h2>INVENTORY</h2><div class="hint">${keyGlyph("I")} or ${keyGlyph("Esc")} to close · ${only("click", padGlyph("a"))} a word to open it in the spell window · ${keyGlyph("U")} uses the last thing you can eat, drink or take</div>
-      <h3>Letters held (${total})</h3>
-      <div class="bag">${letters.map(([ch, n]) => `<div class="tile">${ch.toUpperCase()}<small>${n}</small></div>`).join("") || `<span class="hint">None</span>`}</div>
-      <div class="cols">
-        <div><h3>Carrying (${d?.gear.length ?? 0})</h3>${d?.gear.map((g) => `<div class="row">${itemHtml(this.dict, g.phrase)}<span class="slot">${g.slot}</span>${useButton(g)}</div>`).join("") || `<div class="row"><span class="empty">Nothing</span></div>`}
-          <h3>Within reach (${d?.nearby.length ?? 0})</h3>${nearby(d)}</div>
-        <div><h3>Creatures (${d?.creatures.length ?? 0}${d ? ` of ${d.command.limit}` : ""})</h3>${d?.creatures.map((c) => `<div class="row"><span class="what">${c.name}</span>${mood(c)}<div class="meter"><i style="width:${c.health}%"></i></div></div>`).join("") || `<div class="row"><span class="empty">None</span></div>`}</div>
-      </div>
-      <h3>Things you can spell now (${words.filter((w) => w.role === "noun").length})</h3><div class="words">${list("noun")}</div>
-      <h3>Verbs you can cast now (${words.filter((w) => w.role === "verb").length})</h3><div class="words">${list("verb")}</div>`;
-  }
-
-  private loadout(): string {
-    const d = this.detail;
-    if (!d) return `<h2>LOADOUT</h2><div class="hint">Waiting for the server…</div>`;
+    const bag = `<h3>Letters held (${total})</h3><div class="bag">${letters.map(([ch, n]) => `<div class="tile">${ch.toUpperCase()}<small>${n}</small></div>`).join("") || `<span class="hint">None</span>`}</div>`;
+    const head = `<h2>INVENTORY</h2><div class="hint">${keyGlyph("I")} or ${keyGlyph("Esc")} to close · damage lands on what you ride, then armor, then you${this.aiming ? ` · click "${esc(this.aiming.toUpperCase())} here" to put it on your own gear` : ""}</div>`;
+    if (!d) return `${head}${bag}<div class="hint">Waiting for the server…</div>`;
     const slots = ["head", "face", "neck", "body", "back", "hands", "feet", "finger", "held", "graft", "ride"];
-    const rows = slots.flatMap((slot) => {
-      const items = d.gear.filter((g) => g.slot === slot);
-      if (!items.length) return [`<div class="row"><span class="slot">${slot}</span><span class="empty">empty</span></div>`];
-      return items.map((g) => `<div class="row"><span class="slot">${slot}</span>${itemHtml(this.dict, g.phrase)}${
-        g.max ? `<div class="meter" title="${g.integrity} of ${g.max}"><i style="width:${(100 * (g.integrity ?? 0)) / g.max}%"></i></div>` : ""
-      }${this.aiming ? `<button class="aim" data-aim-gear="${g.index}">${esc(this.aiming.toUpperCase())} here</button>` : ""}${useButton(g)}<button data-drop="${g.index}">Drop</button></div>`);
-    });
+    const rows = slots.flatMap((slot) => d.gear.filter((g) => g.slot === slot).map((g) => `<div class="row"><span class="slot">${slot}</span>${itemHtml(this.dict, g.phrase)}${
+      g.max ? `<div class="meter" title="${g.integrity} of ${g.max}"><i style="width:${(100 * (g.integrity ?? 0)) / g.max}%"></i></div>` : ""
+    }${this.aiming ? `<button class="aim" data-aim-gear="${g.index}">${esc(this.aiming.toUpperCase())} here</button>` : ""}${useButton(g)}<button data-drop="${g.index}">Drop</button></div>`));
+    const empty = slots.filter((slot) => !d.gear.some((g) => g.slot === slot));
     const damage = Object.entries(d.attack.damage).map(([type, n]) => `${n} ${type}`).join(", ") || "none";
     const stat = (name: string, value: string) => `<div class="stat"><span>${name}</span><b>${value}</b></div>`;
-    return `
-      <h2>LOADOUT</h2><div class="hint">${keyGlyph("L")} or ${keyGlyph("Esc")} to close · damage lands on what you ride, then armor and shield, then you${this.aiming ? ` · click "${esc(this.aiming.toUpperCase())} here" to put it on your own gear` : ""}</div>
+    return `${head}${bag}
       <div class="cols">
-        <div><h3>Worn, held and ridden</h3>${rows.join("")}
-          <h3>Within reach</h3>${nearby(d)}</div>
+        <div><h3>Worn, held and ridden</h3>${rows.join("") || `<div class="row"><span class="empty">Nothing</span></div>`}
+          ${empty.length ? `<div class="hint">empty: ${empty.join(", ")}</div>` : ""}
+          <h3>Within reach</h3>${nearby(d)}
+          <h3>Creatures (${d.creatures.length} of ${d.command.limit})</h3>${d.creatures.map((c) => `<div class="row"><span class="what">${c.name}</span>${mood(c)}<div class="meter"><i style="width:${c.health}%"></i></div></div>`).join("") || `<div class="row"><span class="empty">None</span></div>`}</div>
         <div><h3>You</h3>
           ${this.place ? stat("Where", esc(this.place)) : ""}
           ${stat("Health", `${d.health.now} of ${d.health.max}`)}
           ${stat("Speed", `${d.speed} m/s${d.flying ? " (flying)" : ""}`)}
           ${stat("Sight", `${d.sight} m`)}
           ${stat("Morale", `${d.morale}${d.morale <= 0 ? " (fleeing)" : d.morale < 3 ? " (shaken: aim halved)" : ""}`)}
-          ${stat("Command", `${d.command.have} of ${d.command.limit} creatures`)}
           <h3>Stores</h3>
           ${stat("Food", store(d.stores.food))}
           ${stat("Fuel", store(d.stores.fuel))}
@@ -905,7 +901,11 @@ export class Hud {
     el.className = "show";
   }
 
+  /** True while toasts are dropped (the kit pick is up; set by the scene). */
+  quiet: () => boolean = () => false;
+
   toast(text: string, kind: "good" | "bad") {
+    if (this.quiet()) return;
     const el = $("toast");
     el.textContent = text;
     el.className = `show ${kind}`;
@@ -936,6 +936,7 @@ export class Hud {
     }
     $("letters").replaceChildren(...tiles);
     this.drawPicker();
+    this.drawSpellable();
     // The alphabet guide lights the letters you hold.
     for (const el of $("abc").children) el.classList.toggle("have", (this.held[(el as HTMLElement).dataset.letter!] ?? 0) > 0);
   }
@@ -954,10 +955,15 @@ const PAD_MAP: [string, string][] = [
   ["Get off", padGlyph("b")],
   ["Drop", padGlyph("lb")],
   ["Use", padGlyph("rb")],
-  ["Screens", `${padGlyph("up")} loadout · ${padGlyph("down")} inventory · ${padGlyph("right")} trade · ${padGlyph("left")} offers · ${padGlyph("back")} your kit (else inventory)`],
+  ["Screens", `${padGlyph("up")}${padGlyph("down")} inventory · ${padGlyph("right")} trade · ${padGlyph("left")} offers · ${padGlyph("back")} your kit (else inventory)`],
   ["On a screen", `D-pad or left stick to move · ${padGlyph("a")} choose · ${padGlyph("b")} back · an item shows its card`],
   ["Menu", padGlyph("start")],
 ];
+
+/** The spell window's groups of words you can spell now, as headed. */
+const GROUP_NAME: Record<SpellGroup, string> = {
+  weapons: "Weapons", gear: "Gear", rides: "Rides", creatures: "Creatures", buildings: "Buildings", other: "Other", verbs: "Verbs", events: "Events", areas: "Areas", sky: "Sky",
+};
 
 /** A letter held more often than this shows as one tile with a count. */
 const COPIES_SHOWN = 4;

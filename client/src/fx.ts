@@ -12,6 +12,9 @@ export type ToScreen = (x: number, y: number) => { x: number; y: number };
 const MAX_NUMBERS = 40;
 /** Most letter popups waiting their turn; past that, they are merged into the last. */
 const MAX_QUEUE = 8;
+/** Most letters of one popup that fly down one by one, and the milliseconds between them. */
+const MAX_CASCADE = 16;
+const CASCADE_GAP = 110;
 
 interface Floating { el: HTMLElement; x: number; y: number; born: number; life: number; rise: number }
 
@@ -73,29 +76,57 @@ export class Effects {
     ], { duration: 520, easing: "cubic-bezier(.2,1.4,.4,1)", fill: "forwards" });
     big.animate([{ transform: "rotate(-30deg)" }, { transform: "rotate(8deg)", offset: 0.6 }, { transform: "rotate(-3deg)" }], { duration: 520, fill: "forwards" });
     window.setTimeout(() => {
-      const ch = g.letters[0]!;
-      const target = document.querySelector<HTMLElement>(`#letters .tile[data-letter="${ch}"]`) ?? document.getElementById("letters");
-      const r = target?.getBoundingClientRect();
-      const to = r && r.width ? { x: r.left + r.width / 2, y: r.top + r.height / 2 } : { x: innerWidth / 2, y: innerHeight - 40 };
-      const box = big.getBoundingClientRect();
-      const dx = to.x - (box.left + box.width / 2), dy = to.y - (box.top + box.height / 2);
       why.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 200, fill: "forwards" });
       el.querySelector<HTMLElement>(".detail")?.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 200, fill: "forwards" });
-      big.animate([{ transform: "rotate(-3deg)" }, { transform: "rotate(357deg)" }], { duration: 560, fill: "forwards" });
-      el.animate([
-        { transform: "translate(-50%, -140%) scale(1)" },
-        { transform: `translate(calc(-50% + ${dx * 0.5}px), calc(-140% + ${dy * 0.5 - 60}px)) scale(0.8)`, offset: 0.5 },
-        { transform: `translate(calc(-50% + ${dx}px), calc(-140% + ${dy}px)) scale(0.45)` },
-      ], { duration: 560, easing: "cubic-bezier(.5,0,.6,1)", fill: "forwards" }).onfinish = () => {
-        el.remove();
-        this.sparkle(to.x, to.y, 8, ["#e9b949", "#fff3c4"]);
-        for (const t of document.querySelectorAll<HTMLElement>(`#letters .tile[data-letter="${ch}"]`)) {
+      const box = big.getBoundingClientRect();
+      big.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 120, fill: "forwards" });
+      window.setTimeout(() => el.remove(), 400);
+      this.cascade(g.letters, { x: box.left + box.width / 2, y: box.top + box.height / 2 });
+    }, 1300);
+  }
+
+  /**
+   * Each new letter flies down to its own tile in the letter bar, one after another; only the
+   * tile it lands on bounces and lights up, briefly. The k-th new copy of a letter goes to the
+   * k-th tile of it from the end (copies are added at the end), or to its one counted tile.
+   */
+  private cascade(letters: string, from: { x: number; y: number }) {
+    const list = [...letters.toLowerCase()].slice(0, MAX_CASCADE);
+    const seen: Record<string, number> = {};
+    list.forEach((ch, i) => {
+      const k = (seen[ch] = (seen[ch] ?? -1) + 1);
+      const fly = document.createElement("div");
+      fly.className = "fly";
+      fly.textContent = ch.toUpperCase();
+      fly.style.left = `${from.x}px`;
+      fly.style.top = `${from.y}px`;
+      fly.style.opacity = "0";
+      this.layer.append(fly);
+      window.setTimeout(() => {
+        const tiles = [...document.querySelectorAll<HTMLElement>(`#letters .tile[data-letter="${ch}"]`)];
+        const target = tiles[Math.max(0, tiles.length - 1 - k)] ?? document.getElementById("letters");
+        const r = target?.getBoundingClientRect();
+        const to = r && r.width ? { x: r.left + r.width / 2, y: r.top + r.height / 2 } : { x: innerWidth / 2, y: innerHeight - 40 };
+        const dx = to.x - from.x, dy = to.y - from.y, spread = (i - (list.length - 1) / 2) * 26;
+        fly.style.opacity = "1";
+        fly.animate([
+          { transform: "translate(-50%, -50%) scale(1.4) rotate(-10deg)" },
+          { transform: `translate(calc(-50% + ${dx * 0.35 + spread}px), calc(-50% + ${dy * 0.35 - 50}px)) scale(1.1) rotate(180deg)`, offset: 0.45 },
+          { transform: `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) scale(0.8) rotate(360deg)` },
+        ], { duration: 620, easing: "cubic-bezier(.5,0,.6,1)", fill: "forwards" }).onfinish = () => {
+          fly.remove();
+          this.sparkle(to.x, to.y, 6, ["#e9b949", "#fff3c4"]);
+          // Look the tile up again: the bar may have been redrawn while this one flew.
+          const now = [...document.querySelectorAll<HTMLElement>(`#letters .tile[data-letter="${ch}"]`)];
+          const t = now[Math.max(0, now.length - 1 - k)];
+          if (!t) return;
           t.classList.remove("landed");
           void t.offsetWidth;
           t.classList.add("landed");
-        }
-      };
-    }, 1300);
+          t.addEventListener("animationend", () => t.classList.remove("landed"), { once: true });
+        };
+      }, i * CASCADE_GAP);
+    });
   }
 
   /** Paper confetti bursting from a screen point. */

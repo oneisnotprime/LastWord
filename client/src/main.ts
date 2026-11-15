@@ -172,7 +172,9 @@ class World extends Phaser.Scene {
       this.net.describe(this.aiming, this.net.sessionId, index);
       this.endAim();
     }, () => { this.net?.leave(); playAgain(); });
-    this.kits = new KitView((i) => this.net?.pickKit(i), () => this.net?.unseal(), () => { this.hud.kitHtml = this.kits.hudHtml(); this.hud.redraw(); });
+    this.kits = new KitView((step, i) => this.net?.pickKit(step, i), () => this.net?.unseal(), () => { this.hud.kitHtml = this.kits.hudHtml(); this.hud.redraw(); });
+    // While you pick your kit, toasts are dropped, not kept for later.
+    this.hud.quiet = () => this.kits.choosing;
     // Trading: what the trade screen and offer cards send, and the people near enough to trade with.
     this.hud.act = (type, payload) => this.net?.act(type, payload);
     this.hud.people = () => {
@@ -226,6 +228,7 @@ class World extends Phaser.Scene {
         kits: (offer) => this.kits.offer(offer),
         kit: (state) => this.kits.set(state),
         legend: (call) => {
+          if (this.kits.choosing) return; // no calls over the pick; a stale one is not replayed after
           this.kits.announce(call, call.name === this.net?.state.players.get(this.net.sessionId)?.name);
           this.cameras.main.shake(call.spelled ? 700 : 450, call.spelled ? 0.012 : 0.006);
         },
@@ -313,8 +316,13 @@ class World extends Phaser.Scene {
         if (!thing.owner && !thing.fixture?.match(/market|temple|chest/) && !(p.event as MouseEvent).shiftKey) { claim = id; hit = null; }
         else { hit = id; claim = null; }
       });
+      // A person or creature is hit anywhere on its standee (its drawn bounds), not only at its feet;
+      // of several, the one drawn in front.
+      let front = -Infinity;
       this.net.state.players.forEach((other: any, id: string) => {
-        if (id !== mine && other.owner !== mine && Math.hypot(other.x - x, other.y - y) < 0.8) { hit = id; claim = null; }
+        if (id === mine || other.owner === mine) return;
+        const depth = this.onStandee(id, at.x, at.y) ?? (Math.hypot(other.x - x, other.y - y) < 0.8 ? -1e6 : null);
+        if (depth !== null && depth > front) { front = depth; hit = id; claim = null; }
       });
       if (claim) {
         const t = this.net.state.things.get(claim);
@@ -333,6 +341,7 @@ class World extends Phaser.Scene {
     window.addEventListener("keydown", (e) => {
       if (e.key !== "Escape" || this.hud.typing) return;
       if (this.aiming) this.endAim(true);
+      else if (this.foe) this.unlock();
       else this.hud.closeInspect();
     });
     window.addEventListener("mousemove", (e) => { if (this.aiming) this.hud.pointer(e.clientX, e.clientY); });
@@ -347,12 +356,31 @@ class World extends Phaser.Scene {
   private hitAt(x: number, y: number, self = false): string | null {
     let hit: string | null = null, best = Infinity;
     this.net.state.things.forEach((t: any, id: string) => { const d = Math.hypot(t.x - x, t.y - y); if (d < 0.7 && d < best) { hit = id; best = d; } });
+    let front = -Infinity;
     this.net.state.players.forEach((o: any, id: string) => {
       if (id === this.net.sessionId && !self) return;
+      // Anywhere on the standee counts, the one drawn in front first; else near the feet.
+      const depth = this.onStandee(id, x * PX, y * PX);
+      if (depth !== null) { if (depth > front) { front = depth; hit = id; best = -1; } return; }
       const d = Math.hypot(o.x - x, o.y - y - 0.3); // a standee stands up from its feet
-      if (d < 0.9 && d < best) { hit = id; best = d; }
+      if (front === -Infinity && d < 0.9 && d < best) { hit = id; best = d; }
     });
     return hit;
+  }
+
+  /** The depth of a view's standee if a world point (pixels) is on its drawn bounds, else null. */
+  private onStandee(id: string, wx: number, wy: number): number | null {
+    const v = this.views.get(id);
+    if (!v || !v.body.visible) return null;
+    const b = v.body.getBounds();
+    return b.contains(wx, wy) ? v.body.depth : null;
+  }
+
+  /** Stops attacking what was locked on: Esc, a move, or it is gone. */
+  private unlock() {
+    if (!this.foe) return;
+    this.foe = null;
+    this.net?.attack(null);
   }
 
   /** Waits for a click on what these adjectives describe. Nothing is spent until the server agrees. */
@@ -548,6 +576,22 @@ class World extends Phaser.Scene {
       t.fillStyle(0xd9573b, 0.95).fillTriangle(v.x - 5, y - 6, v.x + 5, y - 6, v.x, y + 2);
       t.lineStyle(1.5, 0xd9573b, 0.5 + Math.sin(time / 90) * 0.3).strokeCircle(v.x, v.y - v.top * 0.25, Math.max(10, v.half + 6));
     }
+    // Locked on (a click on a foe): red corner brackets around it until it dies or you break off.
+    if (this.foe) {
+      const v = this.views.get(this.foe);
+      if (!v || (!this.net.state.players.has(this.foe) && !this.net.state.things.has(this.foe))) this.foe = null;
+      else {
+        const b = v.body.getBounds(), pad2 = 3 + Math.sin(time / 140) * 1.5, L = 7;
+        const x0 = b.left - pad2, x1 = b.right + pad2, y0 = b.top - pad2, y1 = b.bottom + pad2;
+        t.lineStyle(3.5, 0xfbf6ea, 0.85);
+        for (const pass of [0, 1]) {
+          if (pass) t.lineStyle(2, 0xd9573b, 1);
+          for (const [cx, cy, sx, sy] of [[x0, y0, 1, 1], [x1, y0, -1, 1], [x0, y1, 1, -1], [x1, y1, -1, -1]] as const) {
+            t.beginPath().moveTo(cx + sx * L, cy).lineTo(cx, cy).lineTo(cx, cy + sy * L).strokePath();
+          }
+        }
+      }
+    }
     // The controller's cursor: a ring with a cross, gold on a target.
     const rg = this.reticle.clear();
     if (pad.mode === "pad" && this.cursor && me) {
@@ -603,7 +647,7 @@ class World extends Phaser.Scene {
       else if (t.fixture === "market") offer(d, "T", "trade at the MARKET");
       else if (!t.owner && d <= 2) {
         const set = dictionary.word(lookOf(dictionary, t.phrase).noun)?.set;
-        if (set && !set.tile_type) offer(d, "E", set.portable === false ? `claim ${name}: it becomes yours` : `pick up ${name}`);
+        if (set && !set.tile_type) offer(d, "E", set.portable === false ? `claim ${name}` : `pick up ${name}`);
       }
     });
     const b = best as { key: string; text: string } | null;
@@ -1133,6 +1177,7 @@ class World extends Phaser.Scene {
     if (!dx && !dy && !typing && (pad.walk.x || pad.walk.y)) { const m = Math.hypot(pad.walk.x, pad.walk.y); dx = pad.walk.x / m; dy = pad.walk.y / m; }
     if (dx || dy) {
       if (time - this.lastSteer > 100) { this.net.move(me.x + dx * 3, me.y + dy * 3); this.lastSteer = time; }
+      this.foe = null; // walking away breaks off the attack (the server's move does the same)
       this.gathering = null;
       this.steering = true;
     } else if (this.steering) {

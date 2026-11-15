@@ -1,7 +1,11 @@
-import type { KitCard, KitLine } from "@lastword/shared";
+import type { KitCard, KitLine, KitOption } from "@lastword/shared";
 
-/** The kits offered at the start of a round, as the server sends them. */
-export interface KitOffer { cards: KitCard[]; seconds: number }
+/** One step of the pick at the start of a round, as the server sends it: its three choices, the time left, what was chosen before. */
+export interface KitOffer { step: number; options: KitOption[]; seconds: number; chosen: string[] }
+
+/** The four steps of the pick (shared KIT_STEPS), as headed on screen. */
+const STEPS = ["Job", "Building", "Legendary", "Letters"];
+const STEP_CLASS = ["job", "building", "legend", "hand"];
 /** Your kit as it stands: job, building, and the legendary with its progress. */
 export interface KitState {
   job: string;
@@ -28,6 +32,15 @@ function cardHtml(c: KitCard, index: number | null, state = "sealed"): string {
     `<section class="hand"><h4>Letters</h4>${tiles(c.letters)}</section></div>`;
 }
 
+/** One choice in a step of the pick, on a sheet of paper. */
+function optionHtml(step: number, o: KitOption, index: number): string {
+  const body = step === 2
+    ? `<b>${esc(o.word.toUpperCase())}</b><div class="unlock">🔒 ${esc(o.unlock ?? "")}</div><ul>${lines(o.lines)}</ul><div class="counter">countered by ${esc((o.counter ?? "").toUpperCase())}</div>`
+    : step === 3 ? `${tiles(o.letters ?? "")}<ul>${lines(o.lines)}</ul>`
+    : `<b>${esc(o.word.toUpperCase())}</b><ul>${lines(o.lines)}</ul>`;
+  return `<div class="kitcard" data-pick="${index}"><div class="key">${index + 1}</div><section class="${STEP_CLASS[step]}">${body}</section></div>`;
+}
+
 /**
  * Starting kits on screen (PLAN.md "Starting kits"): the pick of three when a round starts (keys
  * 1 to 3 or a click; the server picks for you when time runs out), your job and sealed legendary
@@ -39,9 +52,12 @@ export class KitView {
   private timer = 0;
   private callTimer = 0;
   private picking = false;
+  private step = 0;
+  /** From the first step until your kit arrives (`picking` is off only while a choice is on its way). */
+  private inPick = false;
   private kit: KitState | null = null;
 
-  constructor(private readonly onPick: (index: number) => void, private readonly onUnseal: () => void, private readonly onChange: () => void) {
+  constructor(private readonly onPick: (step: number, index: number) => void, private readonly onUnseal: () => void, private readonly onChange: () => void) {
     this.root = document.createElement("div");
     this.root.id = "kits";
     this.call = document.createElement("div");
@@ -52,7 +68,7 @@ export class KitView {
       const pick = t.closest<HTMLElement>("[data-pick]");
       if (pick && this.picking) return this.pick(Number(pick.dataset.pick));
       if (t.closest("button.unseal")) return this.onUnseal();
-      if (!this.picking && (t.closest("button.close") || t === this.root)) this.hide();
+      if (!this.inPick && (t.closest("button.close") || t === this.root)) this.hide();
     });
     document.addEventListener("click", (e) => {
       if ((e.target as HTMLElement).closest("[data-kit]")) this.showMine();
@@ -62,22 +78,25 @@ export class KitView {
       if (!this.root.classList.contains("show")) return;
       e.stopImmediatePropagation();
       if (this.picking && /^[1-3]$/.test(e.key)) this.pick(Number(e.key) - 1);
-      else if (!this.picking && (e.key === "Escape" || e.key === "Enter")) this.hide();
+      else if (!this.inPick && (e.key === "Escape" || e.key === "Enter")) this.hide();
     }, true);
   }
 
   /** True while the pick of kits is on screen. */
   get open(): boolean { return this.root.classList.contains("show"); }
 
-  /** The kits to pick from, with the time left. */
+  /** True until your kit is picked: from joining through the last step (announcements wait). */
+  get choosing(): boolean { return this.inPick; }
+
+  /** A step of the pick: its three choices, the steps so far, and the time left. */
   offer(o: KitOffer) {
     this.picking = true;
+    this.inPick = true;
+    this.step = o.step;
     let left = o.seconds;
-    const draw = () => {
-      this.root.innerHTML = `<div class="sheet"><h2>Choose your kit</h2><div class="hint">A job, a building where you stand, a sealed legendary word and eight letters. ` +
-        `<b class="left">${left}s</b></div><div class="cards">${o.cards.map((c, i) => cardHtml(c, i)).join("")}</div></div>`;
-    };
-    draw();
+    const crumbs = STEPS.map((name, i) => `<span class="${i === o.step ? "now" : i < o.step ? "done" : ""}">${i + 1} ${name}${o.chosen[i] ? ` <b>${esc(o.chosen[i]!.toUpperCase())}</b>` : ""}</span>`).join("");
+    this.root.innerHTML = `<div class="sheet"><h2>Choose your kit <b class="left">${left}s</b></h2><div class="steps">${crumbs}</div>` +
+      `<div class="cards">${o.options.map((c, i) => optionHtml(o.step, c, i)).join("")}</div></div>`;
     this.root.className = "show";
     clearInterval(this.timer);
     this.timer = window.setInterval(() => {
@@ -88,16 +107,17 @@ export class KitView {
     }, 1000);
   }
 
+  /** A choice made: sent, and the sheet waits for the next step (or your kit) from the server. */
   private pick(index: number) {
     if (!this.picking) return;
     this.picking = false;
     clearInterval(this.timer);
-    this.onPick(index);
-    this.hide();
+    this.root.querySelector(`[data-pick="${index}"]`)?.classList.add("picked");
+    this.onPick(this.step, index);
   }
 
   private hide() {
-    if (this.picking) return;
+    if (this.inPick) return;
     this.root.className = "";
   }
 
@@ -105,7 +125,7 @@ export class KitView {
   set(k: KitState) {
     const was = this.kit?.legend.state;
     this.kit = k;
-    if (this.picking) { this.picking = false; clearInterval(this.timer); this.root.className = ""; }
+    if (this.inPick) { this.picking = this.inPick = false; clearInterval(this.timer); this.root.className = ""; }
     // Unsealed and made at once: the map-wide call says it, so your card closes.
     if (was === "sealed" && k.legend.state === "used") this.hide();
     else if (was === "sealed" && k.legend.state === "open") this.showMine();
@@ -129,7 +149,7 @@ export class KitView {
   /** Your own kit card, with Unseal when its letters are what open it and you hold them. */
   showMine() {
     const k = this.kit;
-    if (!k || this.picking) return;
+    if (!k || this.inPick) return;
     const l = k.legend;
     const can = l.state === "sealed" && l.kind === "letters" && l.have >= l.need;
     const status = l.state === "open" ? "Unsealed: spell it once, free" : l.state === "used" ? "Unleashed" : `${l.have} / ${l.need}`;

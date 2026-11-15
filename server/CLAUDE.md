@@ -37,8 +37,12 @@ Node process that owns the game state. One room per map instance (from milestone
   closes after `ROUND_END_SECONDS` (15; tests use 1). Clients reload into a new room.
 - For local testing only: `LETTERS=9` gives every player nine of each letter, `CROWD=1` spawns
   everyone in one city, `SEED_THINGS=5000` scatters that many objects at start.
-- Starting kits: `onJoin` deals kits (`kits` message; the client sends `ready` once listening and
-  gets them again); `kit` picks, else the best (`bestKit`) after KIT_SECONDS; bots pick at once.
+- Starting kits: `onJoin` deals kits; a person picks in four steps (shared KIT_STEPS: job, building,
+  legendary, letters; `kits` { step, options, seconds, chosen } per step, `kit` { step, index },
+  `pickStep`; the client sends `ready` once listening and gets the step again), the best
+  (`bestStep`, shared `bestOption`) after KIT_SECONDS a step, untouchable meanwhile
+  (`hamper.untouchable` while `picking`); hands are dealt for the job picked (shared `kitHands`).
+  Bots take a whole kit at once (`botKit`).
   `chooseKit` sets `Walker.kit`: the job's effect in `rebuild`, its stats in `helpOf`, hunting
   tools and `sources`, its rules in `rulesAt`; the hand; the building through `make`. Legendary
   progress is counted in `beat` (`legendProgress`, `deeds`); `unlockLegend` unseals it and makes it

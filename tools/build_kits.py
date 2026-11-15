@@ -9,6 +9,7 @@
   act on a shared system (letters, claims, fields, light, healing, supplies), most common first.
 - Legendaries: kits.txt, checked: in the dictionary, a known unlock condition, and a counter word
   whose `counters` names it.
+Letter rate multipliers (produce_<L>*x) are whole numbers: a card says "Y x2 income", never x1.5.
 Fails if there are fewer than JOBS jobs or BUILDINGS buildings.
 """
 import json, os, re, sys
@@ -44,6 +45,8 @@ def tokens(toks, props, where, errors):
         else:
             if p["type"] not in ("num", "scale", "frac"):
                 errors.append(f"{where}: {t}: needs a numeric property"); continue
+            if op == "*" and pid.startswith("produce_") and float(val) != int(float(val)):
+                errors.append(f"{where}: {t}: a letter rate multiplier is a whole number (x2, x3)"); continue
             ops.append([pid, "mul" if op == "*" else "add", float(val)])
     return own, ops, letters
 
@@ -60,12 +63,12 @@ def derive(word, v):
         letters += "".join(SOURCE_LETTERS.get(x, "") for x in sources)
     made = [k[-1] for k in s if k.startswith("produce_") and num(k) > 0 and k[-1] not in "NY"]
     for ch in made:
-        ops.append([f"produce_{ch}", "mul", 1.25]); letters += ch.lower()
+        ops.append([f"produce_{ch}", "mul", 2]); letters += ch.lower()
     if num("craft_slots") > 0 and "C" not in made:
-        ops.append(["produce_C", "mul", 1.25]); letters += "c"
+        ops.append(["produce_C", "mul", 2]); letters += "c"
     if num("trade_bonus") > 0:
         own["trade_rate"] = round(max(0.6, 1 - num("trade_bonus")), 2)
-        ops.append(["produce_T", "mul", 1.5]); letters += "t"
+        ops.append(["produce_T", "mul", 2]); letters += "t"
     if num("command_limit") > 0:
         own["command_limit"] = min(8.0, max(2.0, round(num("command_limit") / 2)))
     if num("authority") >= 5:
@@ -84,9 +87,9 @@ def derive(word, v):
     if num("stealth") > 0:
         ops.append(["stealth", "add", min(4.0, num("stealth"))]); letters += "d"
     if num("build_speed") > 1:
-        ops.append(["produce_B", "mul", 1.25]); letters += "b"
+        ops.append(["produce_B", "mul", 2]); letters += "b"
     if num("intelligence") >= 8:
-        ops.append(["produce_Y", "mul", 1.5]); letters += "y"
+        ops.append(["produce_Y", "mul", 2]); letters += "y"
     if num("detect_stealth") >= 3:
         ops.append(["sight_range", "mul", 1.15])
     damage = sum(num(k) for k in s if k.startswith("dmg_"))
@@ -97,7 +100,7 @@ def derive(word, v):
             ops.append([k, "add", round(min(0.5, num(k)), 2)])
     if not own and not ops:
         if arch == "worker" and num("labor") > 0:
-            ops.append(["produce_N", "mul", 1.3]); letters += "n"
+            ops.append(["produce_N", "mul", 2]); letters += "n"
         elif arch == "leader":
             own["command_limit"] = 4.0; letters += "s"
         elif arch == "criminal":
