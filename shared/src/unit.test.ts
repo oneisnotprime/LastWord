@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { cannotCarry, carryLimit, resolve, spawn, strike, strikeUnit, Unit } from "./index.js";
+import { cannotCarry, carryLimit, landed, resolve, spawn, strike, strikeUnit, Unit } from "./index.js";
 import { demo } from "./testdata.js";
 
 const dict = demo();
@@ -65,6 +65,8 @@ describe("where damage lands", () => {
     while (target.outer.name === "armor") strikeUnit(gunner, target, hit);
     expect(target.body.integrity).toBe(100);
     expect(strikeUnit(gunner, target, hit).on).toBe("human");
+    expect(target.body.integrity).toBeLessThan(100);
+    while (!target.dead) strikeUnit(gunner, target, hit);
     expect(target.dead).toBe(true);
   });
 
@@ -105,19 +107,19 @@ describe("nothing is indestructible by default", () => {
 
   it("a gun cannot hurt a mountain but dynamite can", () => {
     expect(blow("gun", "mountain")).toBe(0);
-    expect(blow("dynamite", "mountain")).toBe(2500 * 6 - 2000);
+    expect(blow("dynamite", "mountain")).toBeCloseTo(landed(2500 * 6 - 2000, resolve(dict, "mountain").num("integrity")));
   });
 
   it("a god ignores the physical but not the spiritual or magical", () => {
     expect(blow("gun", "god")).toBe(0);
     expect(blow("nuke", "god")).toBe(0);
-    expect(blow("wizard", "god")).toBe(300);
-    expect(blow("angel", "god")).toBe(400);
+    expect(blow("wizard", "god")).toBeCloseTo(landed(300, resolve(dict, "god").num("integrity")));
+    expect(blow("angel", "god")).toBeCloseTo(landed(400, resolve(dict, "god").num("integrity")));
     expect(resolve(dict, "god").num("upkeep_food")).toBe(0);
   });
 
   it("siege weapons do not multiply against the living or the portable", () => {
-    expect(blow("dynamite", "cow")).toBe(2500);
+    expect(blow("dynamite", "cow")).toBeCloseTo(landed(2500, resolve(dict, "cow").num("integrity")));
   });
 });
 

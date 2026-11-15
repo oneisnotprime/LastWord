@@ -1,4 +1,4 @@
-import { bestWords, effectText, heldText, spellableNow, SPELL_GROUPS, type SpellGroup, tipOfTheMoment, inspectText, LETTER_GUIDE, missing, parsePhrase, readTrade, standIn, standsFor, type Card, type Dictionary, type Letters, type LoadoutDetail, type Offer } from "@lastword/shared";
+import { bestWords, selfRisk, effectText, heldText, spellableNow, SPELL_GROUPS, type SpellGroup, tipOfTheMoment, inspectText, LETTER_GUIDE, missing, parsePhrase, readTrade, standIn, standsFor, type Card, type Dictionary, type Letters, type LoadoutDetail, type Offer } from "@lastword/shared";
 import { BADGE } from "./art/paper.js";
 import { ideasHtml, setTipsOn, tipRng, tipsOn } from "./tips.js";
 import { keyGlyph, only, pad, padGlyph } from "./pad.js";
@@ -82,8 +82,6 @@ export class Hud {
   private readonly win = $("spellwin");
   private toastTimer = 0;
   private detail: LoadoutDetail | null = null;
-  /** Your starting kit's lines for the HUD card (set by `KitView`). */
-  kitHtml = "";
   /** The screen open: the inventory (I or L: letters, gear, creatures, you) or trade (T). */
   private open: "inventory" | "trade" | null = null;
   /** The spell window's open group of words you can spell now, or null (all closed). */
@@ -458,8 +456,12 @@ export class Hud {
     // a creature's HP, a ride's speed, an event's radius and how long it lasts), then what it does.
     const stats = c.stats.filter((t) => !/^mass /.test(t)).slice(0, 4);
     const does = c.does.filter((d) => !/^lies where|^held in|^worn: /.test(d)).slice(0, stats.length ? 2 : 3);
+    // Its strikes can land on you too (a STORM, a QUAKE around you): said before you spell it (shared `selfRisk`).
+    let risk: string | null = null;
+    try { risk = selfRisk(parsePhrase(this.dict, stood ? stood.word : t)); } catch { /* not a phrase */ }
     el.innerHTML = `<div><b>${esc(c.title)}</b>${c.kind ? ` <span class="kind">${esc(c.kind)}</span>` : ""}</div>` +
-      (stats.length ? `<div class="lead">${esc(stats.join(" · "))}</div>` : "") + (does.length ? `<div class="key">${esc(does.join(" · "))}</div>` : "");
+      (stats.length ? `<div class="lead">${esc(stats.join(" · "))}</div>` : "") + (does.length ? `<div class="key">${esc(does.join(" · "))}</div>` : "") +
+      (risk ? `<div class="warn">⚠ ${esc(risk)}</div>` : "");
     el.className = "show";
   }
 
@@ -643,7 +645,7 @@ export class Hud {
   private drawHud() {
     const f = this.frame, d = this.detail;
     if (!f) return;
-    const parts = [`<div class="top"><span class="me">${esc(f.name.toUpperCase())}</span><span class="round"><b>${f.alive}</b> alive · <b>${clock(f.clock)}</b></span></div>`];
+    const parts = [`<div class="top"><span class="me">${esc(f.name.toUpperCase())}</span><span class="round">${this.ended ? "round over" : `<b>${f.alive}</b> alive`} · <b>${clock(f.clock)}</b></span></div>`];
     if (this.out !== null) {
       // Knocked out: no bars, no gear; just that, and whom the camera follows.
       parts.push(`<div class="out">KNOCKED OUT</div>${this.out ? `<div class="watch">watching ${esc(this.out.toUpperCase())}</div>` : ""}` +
@@ -689,7 +691,6 @@ export class Hud {
         // Eight hungry wolves are one chip: WOLF IS HUNGRY (NO FOOD) ×8.
         ...[...countEach(d?.short ?? [])].map(([t, n]) => chip("hungry").replace("HUNGRY", esc(t.toUpperCase()) + (n > 1 ? ` ×${n}` : ""))),
       ];
-      if (this.kitHtml) parts.push(this.kitHtml);
       if (chips.length) parts.push(`<div class="chips">${chips.join("")}</div>`);
     }
     const html = parts.join("");
@@ -733,6 +734,15 @@ export class Hud {
     this.drawPanel();
     this.drawHud();
     this.drawBest();
+  }
+
+  /** The round is over: the HUD says so instead of counting who is alive (the recap names the winner). */
+  ended = false;
+
+  /** Closes any screen (inventory, trade) and the inspect card: a fight is never hidden behind one. */
+  closeScreens() {
+    if (this.open) this.show(null);
+    this.closeInspect();
   }
 
   /** True while a screen is open, so clicks on it do not walk the player. */

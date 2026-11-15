@@ -8,3 +8,4 @@ python build_schema.py > /dev/null
 python build_demo.py
 python build_watchlist.py > /dev/null
 python build_kits.py
+python build_crude.py

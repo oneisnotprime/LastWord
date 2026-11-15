@@ -2,7 +2,7 @@ import type { Threat } from "./threats.js";
 import { Client } from "@colyseus/sdk";
 import type { Letters, LoadoutDetail, Offer, Sensed } from "@lastword/shared";
 import { chooseGame } from "./start.js";
-import type { KitOffer, KitState, LegendCall } from "./kits.js";
+import type { KitOffer, KitState } from "./kits.js";
 
 export interface Connection {
   sessionId: string;
@@ -33,8 +33,6 @@ export interface Connection {
   /** Trading and the like: "market" { give, get }, "sell" { index, get }, "hire" {}, "swap" {}, "transmute" { give }, "offer" { to, give, get }, "answer" { id, accept }. */
   /** Pick a starting kit by its index among those offered. */
   pickKit(step: number, index: number): void;
-  /** Pay a sealed legendary's letters to unseal it. */
-  unseal(): void;
   act(type: "market" | "sell" | "hire" | "swap" | "transmute" | "offer" | "answer", payload: unknown): void;
 }
 
@@ -61,10 +59,15 @@ export interface Handlers {
   /** Exploring widened your sight (no J: someone was there first). */
   sight(where: { x: number; y: number }): void;
   notice(text: string): void;
-  dead(killer: string): void;
+  /** Knocked out: who killed you, with what, and the biggest sources of harm in the last seconds. */
+  dead(recap: Recap): void;
   loadout(detail: LoadoutDetail): void;
   won(text: string): void;
-  roundover(info: { winner: string; seconds: number }): void;
+  roundover(info: RoundRecap): void;
+  /** A person died near you, or by someone you can see: the kill feed. */
+  killed(line: { killer: string; what: string; victim: string }): void;
+  /** Heavy blows shown coming (wind-ups), where they will land. */
+  windups(list: Windup[]): void;
   /** Adjectives were put on something in sight: show what changed. */
   described(effect: Described): void;
   /** Knocked out: whom the camera follows now (your killer, then theirs). */
@@ -85,14 +88,18 @@ export interface Handlers {
   /** Starting kits to pick from, and your kit as it stands. */
   kits(offer: KitOffer): void;
   kit(state: KitState): void;
-  /** A legendary unsealed or spelled somewhere on the map. */
-  legend(call: LegendCall): void;
   /** A grand spelling somewhere on the map (a DRAGON, a METEOR): it makes an entrance. */
   entrance(e: Entrance): void;
 }
 
 /** One blow, as the server tells it (server `Hit`). */
-export interface Hit { by: string; on: string; amount: number; layer: string; kind: "hit" | "crit" | "miss" | "blocked"; ranged: boolean; x?: number; y?: number }
+export interface Hit { by: string; on: string; amount: number; layer: string; kind: "hit" | "crit" | "miss" | "blocked" | "dodged"; ranged: boolean; x?: number; y?: number }
+/** A heavy blow winding up (server `Windup`). */
+export interface Windup { by: string; on: string; x: number; y: number; seconds: number }
+/** How you died (server `recap`): who and what struck last, the top sources of harm, how long it took, how many are left. */
+export interface Recap { killer: string; what: string; top: { who: string; what: string; kind: string; amount: number }[]; seconds: number; alive: number }
+/** The end of a round: the winner, seconds until the next, the round's length and who killed most. */
+export interface RoundRecap { winner: string; seconds: number; clock?: number; kills?: { name: string; kills: number }[]; people?: number }
 
 /**
  * Where the game server is: VITE_SERVER if set at build time; otherwise port 2567 on this host
@@ -126,6 +133,8 @@ export async function connect(on: Handlers): Promise<Connection> {
   room.onMessage("loadout", on.loadout);
   room.onMessage("won", on.won);
   room.onMessage("roundover", on.roundover);
+  room.onMessage("killed", on.killed);
+  room.onMessage("windups", on.windups);
   room.onMessage("described", on.described);
   room.onMessage("watching", on.watching);
   room.onMessage("sensed", on.sensed);
@@ -134,7 +143,6 @@ export async function connect(on: Handlers): Promise<Connection> {
   room.onMessage("threats", on.threats);
   room.onMessage("kits", on.kits);
   room.onMessage("kit", on.kit);
-  room.onMessage("legend", on.legend);
   room.onMessage("entrance", on.entrance);
   room.onLeave(on.closed);
   room.onDrop(on.dropped);
@@ -162,7 +170,6 @@ export async function connect(on: Handlers): Promise<Connection> {
     pick: (what) => room.send("pick", what),
     act: (type, payload) => room.send(type, payload),
     pickKit: (step, index) => room.send("kit", { step, index }),
-    unseal: () => room.send("unseal"),
     leave: () => { room.onLeave.clear?.(); void room.leave(true); },
     describe: (text, target, gear) => room.send("describe", { text, target, ...(gear !== undefined ? { gear } : {}) }),
   };

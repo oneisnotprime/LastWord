@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  landed,
   afflict, cure, effectSeconds, statusSeconds, STATUS_STRETCH, hampered, inflicts, resolve, spawn, statusDamage, statusEffects, STATUSES, strike, tickStatuses, Unit, wake,
   type Affliction, type Status,
 } from "./index.js";
@@ -128,7 +129,7 @@ describe("what each status does", () => {
       expect(hurt.from).toBe("attacker");
       const victim = spawn("human", human());
       strike(hurt.attack, victim, () => 0.99); // cannot miss
-      expect(victim.integrity).toBe(100 - amount);
+      expect(victim.integrity).toBeCloseTo(100 - landed(amount, 100));
     }
     expect(statusDamage(dict, given("stun"))).toBeNull();
   });
@@ -138,7 +139,7 @@ describe("what each status does", () => {
     armored.set("armor", 50);
     const e = spawn("human", armored);
     strike(statusDamage(dict, given("poison"))!.attack, e, () => 0.5);
-    expect(e.integrity).toBe(95);
+    expect(e.integrity).toBeCloseTo(100 - landed(5, 100));
     const proof = human();
     proof.set("res_poison", 1);
     const p = spawn("human", proof);
@@ -152,7 +153,7 @@ describe("what each status does", () => {
     const club = resolve(dict, "human");
     club.set("dmg_blunt", 10);
     strike(club, u.body, () => 0.5);
-    expect(u.body.integrity).toBe(80);
+    expect(u.body.integrity).toBeCloseTo(100 - landed(20, 100));
   });
 
   it("sleep: helpless until a blow lands", () => {

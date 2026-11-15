@@ -91,7 +91,14 @@ it("space: GRAVITY grounds B's wings; LEVITATION floats A; a SINGULARITY pulls B
   expect(Math.hypot(wb.player.x - mid.x, wb.player.y - mid.y)).toBeLessThan(before - 1);
   const hits = (room as any).hits.length;
   const hp = wb.hp;
-  a.send("pick", { x: wb.player.x, y: wb.player.y }); a.send("spell", "bombardment"); a.send("pick", null); await wait(); second(5);
+  a.send("pick", { x: wb.player.x, y: wb.player.y }); a.send("spell", "bombardment"); a.send("pick", null); await wait();
+  // Each impact is shown where it will fall first (shared hazard.ts): B, standing in one, is struck when it lands.
+  const R = room as any;
+  let cell: any;
+  for (let i = 0; i < 300 && !cell; i++) { room.update(0.1); cell = [...R.areas.values()].find((z: any) => z.cell && z.word === "bombardment" && z.armed > R.elapsed); }
+  expect(cell).toBeTruthy();
+  // (The singularity still pulls B about: B is held in the cell until it lands.)
+  for (let i = 0; i < 40; i++) { wb.player.x = cell.x; wb.player.y = cell.y; wb.target = null; room.update(0.1); }
   expect(wb.hp).toBeLessThan(hp);
   void hits;
 });

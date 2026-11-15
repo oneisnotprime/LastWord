@@ -168,15 +168,25 @@ export class Effects {
    * A damage number over a world point: bigger and gold for a critical blow, grey when armour or a
    * vehicle took it (named), "miss" for a miss.
    */
-  number(x: number, y: number, amount: number, kind: "hit" | "crit" | "miss" | "blocked", layer: string, mine: boolean) {
+  number(x: number, y: number, amount: number, kind: "hit" | "crit" | "miss" | "blocked" | "dodged", layer: string, mine: boolean) {
     if (this.numbers.length >= MAX_NUMBERS) this.numbers.shift()!.el.remove();
     const el = document.createElement("div");
     el.className = `num ${kind}${layer ? " layer" : ""}${mine ? " me" : ""}`;
-    el.textContent = kind === "miss" ? "miss" : kind === "blocked" ? `0${layer ? ` ${layer.toUpperCase()}` : ""}` : `${kind === "crit" ? "!" : ""}-${amount}${layer ? ` ${layer.toUpperCase()}` : ""}`;
+    el.textContent = kind === "miss" ? "miss" : kind === "dodged" ? "dodged" : kind === "blocked" ? `0${layer ? ` ${layer.toUpperCase()}` : ""}` : `${kind === "crit" ? "!" : ""}-${amount}${layer ? ` ${layer.toUpperCase()}` : ""}`;
     el.style.setProperty("--jx", `${(Math.random() - 0.5) * 24}px`);
     this.layer.append(el);
     this.numbers.push({ el, x, y, born: performance.now(), life: kind === "crit" ? 1300 : 950, rise: kind === "crit" ? 46 : 32 });
   }
+
+  /** A heavy blow is coming for you: the screen's edge pulses red until it lands (`seconds`). */
+  warn(seconds: number) {
+    document.body.classList.remove("incoming");
+    void document.body.offsetWidth;
+    document.body.classList.add("incoming");
+    window.clearTimeout(this.warnTimer);
+    this.warnTimer = window.setTimeout(() => document.body.classList.remove("incoming"), seconds * 1000);
+  }
+  private warnTimer = 0;
 
   /** You were hit: the screen's edge flushes red, brightest on the side the blow came from. */
   hurt(angle: number | null, heavy: boolean) {

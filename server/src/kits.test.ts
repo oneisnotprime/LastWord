@@ -1,6 +1,6 @@
 import { boot, type ColyseusTestServer } from "@colyseus/testing";
 import { afterAll, afterEach, beforeAll, expect, it } from "vitest";
-import { dealKits, KIT_SECONDS, STARTING_HAND, sealedLetters } from "@lastword/shared";
+import { dealKits, KIT_SECONDS, STARTING_HAND } from "@lastword/shared";
 import appConfig from "./app.config.js";
 import { WorldRoom } from "./WorldRoom.js";
 
@@ -10,9 +10,9 @@ afterAll(async () => { WorldRoom.kits = false; await colyseus.shutdown(); });
 afterEach(() => { WorldRoom.testSeed = null; });
 
 const wait = (ms = 150) => new Promise((r) => setTimeout(r, ms));
-/** Picks the same choice at each of the four steps: job, building, legendary, letters. */
-const pickAll = (c: any, index: number) => { for (let step = 0; step < 4; step++) c.send("kit", { step, index }); };
-const TYPES = ["letters", "notice", "loadout", "refused", "spelled", "got", "kits", "kit", "legend", "offers", "gathering", "gathered", "hits", "sensed", "described", "dead", "won", "roundover"];
+/** Picks the same choice at each of the three steps: job, building, letters. */
+const pickAll = (c: any, index: number) => { for (let step = 0; step < 3; step++) c.send("kit", { step, index }); };
+const TYPES = ["letters", "notice", "loadout", "refused", "spelled", "got", "kits", "kit", "offers", "gathering", "gathered", "hits", "sensed", "described", "dead", "won", "roundover"];
 
 async function world(people = 1, options: object = {}) {
   WorldRoom.testSeed = 91;
@@ -32,7 +32,7 @@ async function world(people = 1, options: object = {}) {
   return { room, r, clients, me, of };
 }
 
-it("a person picks a job, a building, a legendary and letters in turn, and cannot spell, walk or be hurt until done", async () => {
+it("a person picks a job, a building and letters in turn, and cannot spell, walk or be hurt until done", async () => {
   const { clients, me, of } = await world();
   const offer = of(0, "kits")[0];
   expect(offer.step).toBe(0);
@@ -54,30 +54,24 @@ it("a person picks a job, a building, a legendary and letters in turn, and canno
   expect(steps.at(-1).step).toBe(1);
   expect(steps.at(-1).chosen).toEqual([offer.options[2].word]);
   clients[0].send("kit", { step: 1, index: 0 }); await wait();
-  const legends = of(0, "kits").at(-1);
-  expect(legends.step).toBe(2);
-  for (const o of legends.options) { expect(o.unlock).toMatch(/\w/); expect(o.counter).toMatch(/\w/); }
-  clients[0].send("kit", { step: 2, index: 0 }); await wait();
   const hands = of(0, "kits").at(-1);
-  expect(hands.step).toBe(3);
+  expect(hands.step).toBe(2); // no legendary step: legendaries are ordinary words
   for (const o of hands.options) expect(o.letters).toHaveLength(STARTING_HAND);
   expect(me().hamper.untouchable).toBe(true);
-  clients[0].send("kit", { step: 3, index: 1 }); await wait();
+  clients[0].send("kit", { step: 2, index: 1 }); await wait();
   expect(me().picking).toBeUndefined();
   expect(me().hamper.untouchable).toBe(false);
   expect(me().kit.job.word).toBe(offer.options[2].word);
 });
 
-it("picking a kit gives its job, hand and building, and seals its legendary", async () => {
+it("picking a kit gives its job, hand and building", async () => {
   const { r, clients, me, of } = await world();
   const job = of(0, "kits")[0].options[1].word;
   clients[0].send("kit", { step: 0, index: 1 }); await wait();
   const building = of(0, "kits").at(-1).options[1].word;
   clients[0].send("kit", { step: 1, index: 1 }); await wait();
-  const legend = of(0, "kits").at(-1).options[1].word;
-  clients[0].send("kit", { step: 2, index: 1 }); await wait();
   const letters = of(0, "kits").at(-1).options[1].letters;
-  clients[0].send("kit", { step: 3, index: 1 }); await wait();
+  clients[0].send("kit", { step: 2, index: 1 }); await wait();
   const w = me();
   expect(w.picking).toBeUndefined();
   expect(w.kit.job.word).toBe(job);
@@ -88,13 +82,13 @@ it("picking a kit gives its job, hand and building, and seals its legendary", as
   expect(mine.join(" ").toLowerCase()).toContain(building);
   const kit = of(0, "kit").at(-1);
   expect(kit.job).toBe(job);
-  expect(kit.legend.word).toBe(legend);
-  expect(kit.legend.state).toBe("sealed");
+  expect(kit.building).toBe(building);
+  expect(kit.legend).toBeUndefined();
 });
 
 it("nobody who leaves the kits alone is kept waiting: the best is picked at each step when time runs out", async () => {
   const { room, me } = await world();
-  for (let i = 0; i < 4 * (KIT_SECONDS + 1) + 2; i++) room.update(1);
+  for (let i = 0; i < 3 * (KIT_SECONDS + 1) + 2; i++) room.update(1);
   await wait();
   expect(me().picking).toBeUndefined();
   expect(me().kit).toBeTruthy();
@@ -105,7 +99,7 @@ it("a job acts through shared systems: a scout sees further, a farmer forages be
   const id = clients[0].sessionId, w = me();
   const wear = (job: string) => {
     w.kit = undefined;
-    w.picking = { kits: [{ job, building: "well", legend: "titan", hand: { d: 1, o: 1, g: 1, e: 5 } }], until: Infinity };
+    w.picking = { kits: [{ job, building: "well", hand: { d: 1, o: 1, g: 1, e: 5 } }], until: Infinity };
     r.chooseKit(id, w, 0);
   };
   wear("scout");
@@ -117,64 +111,6 @@ it("a job acts through shared systems: a scout sees further, a farmer forages be
   expect(r.rulesAt(w.player, id, w).rules.some((x: any) => x.tradeRate === 0.75)).toBe(true);
 });
 
-it("a legendary unseals when its condition is met and is made at once, free, with one call to everyone", async () => {
-  const { r, room, clients, me, of } = await world(2);
-  pickAll(clients[0], 0); pickAll(clients[1], 0); await wait();
-  const w = me();
-  // Make the first kit's legendary one unsealed by paying its letters.
-  const dragon = r.kitData.legendaries.find((l: any) => l.word === "phoenix") ?? r.kitData.legendaries.find((l: any) => l.unlock.kind === "letters");
-  w.kit.legend = dragon; w.kit.state = "sealed"; w.kit.shown = "";
-  const pay = sealedLetters(dragon.word);
-  for (const ch of pay) w.letters[ch] = (w.letters[ch] ?? 0) + 1;
-  room.update(1.1); await wait();
-  expect(of(0, "kit").at(-1).legend.have).toBe(pay.length);
-  const calls = of(1, "legend").length;
-  clients[0].send("unseal"); await wait();
-  // Made there and then, as if spelled: no letters of its own, and no spelling it again.
-  expect(w.kit.state).toBe("used");
-  expect(of(0, "spelled").at(-1)).toMatch(new RegExp(dragon.word.toUpperCase()));
-  expect([...r.walkers.values()].some((c: any) => c.master === clients[0].sessionId && c.body.noun === dragon.word)).toBe(true);
-  // One call, not two.
-  expect(of(1, "legend").slice(calls)).toHaveLength(1);
-  expect(of(1, "legend").at(-1)).toMatchObject({ word: dragon.word, spelled: true, how: `paid ${pay.toUpperCase()}` });
-  for (const ch of dragon.word) w.letters[ch] = 0;
-  clients[0].send("spell", dragon.word); await wait();
-  expect(of(0, "refused").at(-1)).toMatch(/You need/);
-  expect(of(1, "legend").slice(calls)).toHaveLength(1);
-});
-
-it("a legendary that cannot be made when it unseals stays open, spelled free once, with no second call", async () => {
-  const { r, room, clients, me, of } = await world(2);
-  pickAll(clients[0], 0); pickAll(clients[1], 0); await wait();
-  const w = me();
-  w.kit.legend = { word: "titan", unlock: { kind: "minutes", need: 1 }, counter: "chain" }; w.kit.state = "sealed";
-  w.hamper = { ...w.hamper, spells: false, muteBy: "silence" }; // muted as it unseals
-  for (let i = 0; i < 62; i++) room.update(1);
-  await wait();
-  expect(w.kit.state).toBe("open");
-  const calls = of(1, "legend").length;
-  expect(of(1, "legend").at(-1)).toMatchObject({ word: "titan", spelled: false });
-  room.rebuild(w);
-  w.hamper = { ...w.hamper, spells: true };
-  for (const ch of "titan") w.letters[ch] = 0;
-  clients[0].send("spell", "titan"); await wait();
-  expect(w.kit.state).toBe("used");
-  expect(of(1, "legend")).toHaveLength(calls);
-  void r;
-});
-
-it("a legendary with a time condition unseals on the round clock and walks at once", async () => {
-  const { r, room, clients, me, of } = await world();
-  pickAll(clients[0], 0); await wait();
-  const w = me();
-  w.kit.legend = { word: "titan", unlock: { kind: "minutes", need: 1 }, counter: "chain" }; w.kit.state = "sealed";
-  for (let i = 0; i < 62; i++) room.update(1);
-  await wait();
-  expect(w.kit.state).toBe("used");
-  expect(of(0, "legend").at(-1)).toMatchObject({ word: "titan", spelled: true });
-  void r;
-});
-
 it("bots pick their kits at once", async () => {
   const { r } = await world(1, { bots: 3 });
   const bots = [...r.walkers.entries()].filter(([id]: [string, any]) => id.startsWith("bot"));
@@ -182,32 +118,12 @@ it("bots pick their kits at once", async () => {
   for (const [, b] of bots) { expect(b.kit).toBeTruthy(); expect(b.picking).toBeUndefined(); }
 });
 
-it("bots pick kits by difficulty, unseal and spell their legendary, and counter an enemy's", async () => {
-  const { room, r } = await world(0, { bots: 2, difficulty: "hard" });
+it("bots pick kits by difficulty", async () => {
+  const { r } = await world(0, { bots: 2, difficulty: "hard" });
   const ids = [...r.bots.keys()] as string[];
-  const [a, b] = ids.map((id) => r.walkers.get(id));
-  for (const w of [a, b]) expect(w.kit).toBeTruthy();
-  // Hard bots take the best of three (shared kitScore, a legendary they unseal by playing counting more).
+  for (const w of ids.map((id) => r.walkers.get(id))) expect(w.kit).toBeTruthy();
+  // Hard bots take the best of three (shared kitScore).
   const kits = dealKits(r.kitData, r.dict, () => 0.3);
   const best = r.botKit(kits, "hard");
   for (let i = 0; i < 3; i++) expect(r.botKit(kits, "hard")).toBe(best);
-  // A's legendary open: it spells it at once.
-  a.kit.state = "open";
-  r.bots.get(ids[0]).nextSpell = 0;
-  r.bots.get(ids[0]).peaceUntil = 0;
-  r.thinkBot(ids[0], a, r.bots.get(ids[0]));
-  expect(r.bots.get(ids[0]).used.legendary, JSON.stringify(r.bots.get(ids[0]).used)).toBe(1);
-  expect(a.kit.state).toBe("used");
-  // B, beside A's legendary with the letters of its counter-word, spells the counter.
-  const legend = a.kit.legend;
-  const creature = [...r.walkers.values()].find((c: any) => c.master === ids[0] && c.body.noun === legend.word);
-  const area = [...r.areas.values()].find((z: any) => z.word === legend.word);
-  expect(creature || area).toBeTruthy();
-  const at = creature ? creature.player : area;
-  b.player.x = at.x + 2; b.player.y = at.y;
-  b.letters = Object.fromEntries([...legend.counter].map((ch: string) => [ch, 3]));
-  const mind = r.bots.get(ids[1]);
-  Object.assign(mind, { nextSpell: 0, peaceUntil: 1e9 });
-  expect(r.botCounter(ids[1], b, mind, (await import("./bots.js")).held(b.letters), [])).toBe("counter");
-  void room;
 });

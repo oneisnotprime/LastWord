@@ -37,18 +37,15 @@ Node process that owns the game state. One room per map instance (from milestone
   closes after `ROUND_END_SECONDS` (15; tests use 1). Clients reload into a new room.
 - For local testing only: `LETTERS=9` gives every player nine of each letter, `CROWD=1` spawns
   everyone in one city, `SEED_THINGS=5000` scatters that many objects at start.
-- Starting kits: `onJoin` deals kits; a person picks in four steps (shared KIT_STEPS: job, building,
-  legendary, letters; `kits` { step, options, seconds, chosen } per step, `kit` { step, index },
+- Starting kits: `onJoin` deals kits; a person picks in three steps (shared KIT_STEPS: job, building,
+  letters; `kits` { step, options, seconds, chosen } per step, `kit` { step, index },
   `pickStep`; the client sends `ready` once listening and gets the step again), the best
   (`bestStep`, shared `bestOption`) after KIT_SECONDS a step, untouchable meanwhile
   (`hamper.untouchable` while `picking`); hands are dealt for the job picked (shared `kitHands`).
   Bots take a whole kit at once (`botKit`).
   `chooseKit` sets `Walker.kit`: the job's effect in `rebuild`, its stats in `helpOf`, hunting
-  tools and `sources`, its rules in `rulesAt`; the hand; the building through `make`. Legendary
-  progress is counted in `beat` (`legendProgress`, `deeds`); `unlockLegend` unseals it and makes it
-  at once through `spellWord` (letters waived once; an aimed one at the holder's foe), with one
-  `legend` call to everyone (`spelled` true if made, else it stays open to spell free once, with
-  no second call). `unseal` pays the "letters" condition. Bots go through the same path.
+  tools and `sources`, its rules in `rulesAt`; the hand; the building through `make`; `sendKit` tells
+  them `kit` { job, building, card }. No legendary comes with a kit (batch C1).
   Room tests run with kits off (`WorldRoom.kits`, off under Vitest) unless they turn them on.
 - `loadtest/bots.ts` modes: `wander`, `crowd`, `play` (gathers, spells and fights).
 - Only the room's first client's options are read (`onCreate`: `bots`, `difficulty`, `mode`);
@@ -82,9 +79,7 @@ Node process that owns the game state. One room per map instance (from milestone
   phrases and plurals), `botSystems` (adjectives on foes and own gear, area words, roads, cities,
   crop land, cooking, `botOffer`), `botTrade` (market, hiring, selling,
   a rack swap when it wants nothing and half its rack is one letter), `botAnswer`. `SKILL` scales each
-  by difficulty. Kits: `botKit` picks one by difficulty, `botQuest` steers normal and hard bots toward
-  their legendary's unlock (producers, land, hunts, trades, regions, a city, a boss, kills, letters),
-  `botLegend` spells it once unsealed, and `botCounter` aims counter-words at enemies' legendaries. `mind.used` counts what each used; `botReport` and `onAward` feed
+  by difficulty. Kits: `botKit` picks one by difficulty. `mind.used` counts what each used; `botReport` and `onAward` feed
   `loadtest/tournament.ts` (`npx tsx loadtest/tournament.ts 4 8 mixed 60`: rounds of bots, the
   systems they used, letter sources by `sourceOf`, round lengths).
 - Objects are made by `make`: up to `SEPARATE_UP_TO` (12) creatures or things each, more as one
@@ -253,3 +248,21 @@ Node process that owns the game state. One room per map instance (from milestone
   maker's side too with `friendly_fire`. A grand spelling (shared `grand`) sends `entrance`
   { name, word, kind, x, y, grandeur } to everyone (`entrance`). `loadtest/tournament.ts` prints
   first deaths; `PORT=` runs it beside another.
+- Playtest batch C1 (PLAN.md "Fights you can see"): combat goes through shared `strike`, felt and
+  paced (`landed`). `Walker.windup`: a heavy blow (shared `windupOf`) holds still, is sent as
+  `windups` [{ by, on, x, y, seconds }] with the hits (`flushHits`), and misses (`Hit.kind`
+  "dodged") whoever moved DODGE_TILES; `botDodge` steps bots out of rings and marked areas by
+  `SKILL.dodges`. Areas: `addArea` arms a striking area after AREA_WARNING (`Area.armed`, `Zone.warn`
+  seconds); `burn` strikes nothing before; one wider than CELL_FROM strikes through `dropCells`
+  (per person, `cellGap`) and `cellAt` (an `Area` with `cell`, striking once when armed; meteors
+  use it too); `shelterOf` (roof: an `enterable` thing within ROOF_TILES; else the side's claim
+  shelter) scales area blows. Aimed areas (`placement` target) never have `friendlyFire`.
+  Deaths: `blow` notes `Walker.harm` (`harmed`, `culprit`: "BOT1", "COLOSSUS"; damage over time
+  too) and `kill` sends `dead` with `recap` { killer, what, top, seconds, alive } and the kill feed
+  (`feed`: `killed` { killer, what, victim } to whoever was in it, saw either, or was within
+  FEED_TILES). `roundover` adds { clock, kills (`tally`), people }. `atPeace`: a bot in its opening
+  peace and its creatures only defend (`think`, `temper`). `recruit` never draws in a wild animal
+  its recruiter's side is fighting. `rebuild` drops gear that no longer fits (`shedGear`) instead of
+  throwing; `rebuild(w, true)` throws (equipping, describing). Bots skip crude words (`wordBook`).
+  `loadtest/tournament.ts` also prints time to kill (first blow of a fight to the death), the first
+  death of each round and what killed people (the recap).

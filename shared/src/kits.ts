@@ -2,7 +2,7 @@ import type { Dictionary } from "./dictionary.js";
 import { STARTING_HAND, starterWords, weaponLetters } from "./economy.js";
 import { HAND_FILL, MARKET, marketRatio } from "./letters.js";
 import { HARVEST_SOURCES, TOOL_POINTS } from "./biome.js";
-import { eventCard, keyStats, opText } from "./inspect.js";
+import { opText } from "./inspect.js";
 import { parsePhrase, type Letters } from "./phrase.js";
 import { placeRules, rulesText, type PlaceRules } from "./place.js";
 import { needsText, producerOf } from "./produce.js";
@@ -15,8 +15,9 @@ import { TILE_METERS } from "./world.js";
 
 /**
  * Starting kits (PLAN.md "Starting kits"): at the start of a round each person picks one of three
- * kits. A kit is a job, a building placed at their spawn, a sealed legendary word and a starting
- * hand. The tables come from `data/kits.json` (tools/build_kits.py).
+ * kits. A kit is a job, a building placed at their spawn and a starting hand; no power words come
+ * free with it (legendary words are ordinary words, spelled with letters like any other). The
+ * tables come from `data/kits.json` (tools/build_kits.py).
  *
  * A job is worn like an invisible tool for the whole round, so it acts only through shared
  * properties: its own `set` is read as any carried tool's (`harvest_sources` and `harvest_bonus`
@@ -26,10 +27,7 @@ import { TILE_METERS } from "./world.js";
  * `placeRules`): every L they earn, and every market price they pay.
  */
 export interface JobDef { word: string; set: Record<string, Value>; ops: Op[]; letters: string; core?: boolean }
-export type UnlockKind = "minutes" | "letters" | "land" | "boss" | "producers" | "regions" | "hunts" | "trades" | "city" | "kills";
-export interface Unlock { kind: UnlockKind; need?: number }
-export interface LegendDef { word: string; unlock: Unlock; counter: string }
-export interface KitData { jobs: JobDef[]; buildings: string[]; legendaries: LegendDef[] }
+export interface KitData { jobs: JobDef[]; buildings: string[] }
 
 /** Kits offered to each person. */
 export const KIT_CHOICES = 3;
@@ -37,7 +35,7 @@ export const KIT_CHOICES = 3;
 export const KIT_SECONDS = 20;
 
 /** One kit: what it gives, by name, and the starting hand. */
-export interface Kit { job: string; building: string; legend: string; hand: Letters }
+export interface Kit { job: string; building: string; hand: Letters }
 
 /** A line on a kit card: an icon and a few words. */
 export interface KitLine { icon: string; text: string }
@@ -45,7 +43,6 @@ export interface KitLine { icon: string; text: string }
 export interface KitCard {
   job: { word: string; lines: KitLine[] };
   building: { word: string; lines: KitLine[] };
-  legend: { word: string; unlock: string; counter: string; lines: KitLine[] };
   letters: string;
 }
 
@@ -140,41 +137,6 @@ export function buildingLines(dict: Dictionary, word: string): KitLine[] {
   return out;
 }
 
-/** The letters a legendary is unsealed with, under the "letters" condition: every other one of its letters. */
-export function sealedLetters(word: string): string {
-  return [...word].filter((_, i) => i % 2 === 1).join("");
-}
-
-/** A legendary's unlock condition in a few words. */
-export function unlockText(l: LegendDef): string {
-  const n = l.unlock.need ?? 0;
-  switch (l.unlock.kind) {
-    case "minutes": return `after ${n} min`;
-    case "letters": return `pay ${sealedLetters(l.word).toUpperCase().split("").join(" ")} (half its letters)`;
-    case "land": return `hold ${n} tiles of land`;
-    case "boss": return "slay a roaming boss";
-    case "producers": return `own ${n} things that make letters`;
-    case "regions": return `explore ${n} regions`;
-    case "hunts": return `hunt ${n} wild animals`;
-    case "trades": return `make ${n} trades`;
-    case "city": return "rule a city";
-    case "kills": return `kill ${n} ${n === 1 ? "person" : "people"}`;
-  }
-}
-
-/** How far toward unlocking: what counts, and what is needed. "letters" needs every sealed letter held. */
-export function unlockNeed(l: LegendDef): number {
-  return l.unlock.kind === "letters" ? sealedLetters(l.word).length : l.unlock.kind === "boss" || l.unlock.kind === "city" ? 1 : l.unlock.need ?? 1;
-}
-
-/** A legendary's card lines: its key numbers. */
-export function legendLines(dict: Dictionary, word: string): KitLine[] {
-  const p = parsePhrase(dict, word);
-  // An event or field says what it does; a creature or thing, its key numbers.
-  if (p.kind !== "object") return eventCard(dict, word).lines.slice(0, 3).map((text) => ({ icon: "🌋", text }));
-  return keyStats(p.stats).slice(0, 3).map((text) => ({ icon: "⚔", text }));
-}
-
 let starterMakes: { dict: Dictionary; makes: Map<string, string> } | null = null;
 /** Each starter word's letters made, once per dictionary. */
 function makesOf(dict: Dictionary): Map<string, string> {
@@ -237,22 +199,18 @@ function distinct<T>(list: readonly T[], n: number, rng: Rng): T[] {
   return out;
 }
 
-/** Deals KIT_CHOICES kits: different jobs, different buildings and different legendaries. */
+/** Deals KIT_CHOICES kits: different jobs and different buildings. */
 export function dealKits(data: KitData, dict: Dictionary, rng: Rng, n = KIT_CHOICES): Kit[] {
-  const jobs = distinct(data.jobs, n, rng), buildings = distinct(data.buildings, n, rng), legends = distinct(data.legendaries, n, rng);
-  return jobs.map((job, i) => ({
-    job: job.word, building: buildings[i % buildings.length]!, legend: legends[i % legends.length]!.word, hand: kitHand(dict, job, rng),
-  }));
+  const jobs = distinct(data.jobs, n, rng), buildings = distinct(data.buildings, n, rng);
+  return jobs.map((job, i) => ({ job: job.word, building: buildings[i % buildings.length]!, hand: kitHand(dict, job, rng) }));
 }
 
 /** The card for a kit. */
 export function kitCard(data: KitData, dict: Dictionary, kit: Kit): KitCard {
   const job = data.jobs.find((j) => j.word === kit.job)!;
-  const legend = data.legendaries.find((l) => l.word === kit.legend)!;
   return {
     job: { word: kit.job, lines: jobLines(job) },
     building: { word: kit.building, lines: buildingLines(dict, kit.building) },
-    legend: { word: kit.legend, unlock: unlockText(legend), counter: legend.counter, lines: legendLines(dict, kit.legend) },
     letters: Object.entries(kit.hand).flatMap(([ch, k]) => Array(k).fill(ch)).sort().join(""),
   };
 }
@@ -267,34 +225,27 @@ export function buildingScore(dict: Dictionary, word: string): number {
   return Object.keys(producerOf(parsePhrase(dict, word).stats).rates).length;
 }
 
-/** Unlock conditions met by playing as everyone does anyway. */
-const EASY_UNLOCK = new Set<UnlockKind>(["minutes", "letters", "producers", "hunts", "trades"]);
-
 /** How a bot rates a kit: a building that makes letters first, then the job with the most to it. */
 export function kitScore(data: KitData, dict: Dictionary, kit: Kit): number {
   return buildingScore(dict, kit.building) * 3 + jobScore(data.jobs.find((j) => j.word === kit.job));
 }
 
 /**
- * The pick in four steps (PLAN.md "Starting kits"): a job, a building, a legendary and the
- * letters, three of each. The first three come from the kits dealt (`dealKits`); the letters
- * are dealt for the job picked (`kitHands`).
+ * The pick in three steps (PLAN.md "Starting kits"): a job, a building and the letters, three of
+ * each. The first two come from the kits dealt (`dealKits`); the letters are dealt for the job
+ * picked (`kitHands`). No legendary comes with a kit: those are ordinary words.
  */
-export const KIT_STEPS = ["job", "building", "legend", "letters"] as const;
+export const KIT_STEPS = ["job", "building", "letters"] as const;
 export type KitStep = (typeof KIT_STEPS)[number];
 
-/** One choice in a step: its word and lines; a legendary's unlock and counter; a hand's letters. */
-export interface KitOption { word: string; lines: KitLine[]; unlock?: string; counter?: string; letters?: string }
+/** One choice in a step: its word and lines; a hand's letters. */
+export interface KitOption { word: string; lines: KitLine[]; letters?: string }
 
-/** A step's choices: jobs, buildings and legendaries from the kits dealt, or hands. */
+/** A step's choices: jobs and buildings from the kits dealt, or hands. */
 export function kitOptions(data: KitData, dict: Dictionary, step: number, kits: readonly Kit[], hands: readonly StarterHand[] = []): KitOption[] {
   switch (KIT_STEPS[step]) {
     case "job": return kits.map((k) => ({ word: k.job, lines: jobLines(data.jobs.find((j) => j.word === k.job)!) }));
     case "building": return kits.map((k) => ({ word: k.building, lines: buildingLines(dict, k.building) }));
-    case "legend": return kits.map((k) => {
-      const l = data.legendaries.find((x) => x.word === k.legend)!;
-      return { word: k.legend, lines: legendLines(dict, k.legend), unlock: unlockText(l), counter: l.counter };
-    });
     case "letters": return hands.map((h) => {
       const makes = makesOf(dict).get(h.word) ?? "";
       return {
@@ -306,14 +257,13 @@ export function kitOptions(data: KitData, dict: Dictionary, step: number, kits: 
   }
 }
 
-/** The choice taken for someone out of time: the job with most to it, the building making most letters, an easy legendary, the hand whose word makes most. */
+/** The choice taken for someone out of time: the job with most to it, the building making most letters, the hand whose word makes most. */
 export function bestOption(data: KitData, dict: Dictionary, step: number, kits: readonly Kit[], hands: readonly StarterHand[] = []): number {
   const score = (i: number): number => {
     const k = kits[i];
     switch (KIT_STEPS[step]) {
       case "job": return jobScore(data.jobs.find((j) => j.word === k?.job));
       case "building": return k ? buildingScore(dict, k.building) : 0;
-      case "legend": return EASY_UNLOCK.has(legendOf(data, k?.legend ?? "")?.unlock.kind as UnlockKind) ? 1 : 0;
       case "letters": return (makesOf(dict).get(hands[i]?.word ?? "") ?? "").length;
       default: return 0;
     }
@@ -324,18 +274,5 @@ export function bestOption(data: KitData, dict: Dictionary, step: number, kits: 
   return best;
 }
 
-/**
- * What spelling costs with an unsealed legendary in it: the phrase's letters less the
- * legendary's own (adjectives and a plural S still cost). Returns null if the noun is not it.
- */
-export function legendCost(letters: string, noun: string, legend: string): string | null {
-  if (noun !== legend) return null;
-  let left = letters;
-  for (const ch of legend) left = left.replace(ch, "");
-  return left;
-}
-
 /** A job by its word. */
 export const jobOf = (data: KitData, word: string): JobDef | undefined => data.jobs.find((j) => j.word === word);
-/** A legendary by its word. */
-export const legendOf = (data: KitData, word: string): LegendDef | undefined => data.legendaries.find((l) => l.word === word);

@@ -26,6 +26,57 @@ export function spawn(name: string, stats: Stats): Entity {
 
 export const destroyed = (e: Entity): boolean => e.integrity <= 0;
 
+/**
+ * How blows and bodies are felt: in full up to FELT_KNEE (about a person's scale), and by the
+ * square root of how far past it they go. A COLOSSUS's 7,000 crush is felt as 837, not 7,000; a
+ * BEHEMOTH's 250,000 integrity as 5,000. The order stays (bigger still wins), but a fight is no
+ * longer a lookup across five orders of magnitude.
+ */
+export const FELT_KNEE = 100;
+/** Share of a blow's felt size that lands: what sets how long fights last (5 to 15 s between people). */
+export const FIGHT_PACE = 0.5;
+
+/** A blow's or a body's felt size (see FELT_KNEE). */
+export function felt(x: number): number {
+  return x > FELT_KNEE && x !== Infinity ? FELT_KNEE * Math.sqrt(x / FELT_KNEE) : x;
+}
+
+/**
+ * What a blow of `damage` (after resistances and armour) takes off a body whose full integrity is
+ * `max`: its felt size times FIGHT_PACE, in the body's own units (a body felt smaller than it is
+ * loses as much more). Hits to destroy it go as felt(max) / felt(damage), not max / damage.
+ */
+export function landed(damage: number, max: number): number {
+  if (!(damage > 0)) return 0;
+  if (damage === Infinity) return Infinity;
+  const scale = max > FELT_KNEE && max !== Infinity ? max / felt(max) : 1;
+  return FIGHT_PACE * felt(damage) * scale;
+}
+
+/** A blow that would take at least this share of its target's full integrity is telegraphed. */
+export const HEAVY_SHARE = 0.25;
+/** Seconds a heavy blow winds up before it lands (plus the weapon's own `attack_windup`). */
+export const WINDUP_SECONDS = 1.2;
+/** A target that has moved this many tiles from where it stood when a heavy blow began is missed. */
+export const DODGE_TILES = 1.2;
+
+/**
+ * Seconds a blow from `attack` on `target` winds up before it lands, or 0 for an ordinary blow:
+ * a heavy one (its likely damage at least HEAVY_SHARE of the target's full integrity, before
+ * resistances) or a weapon with its own `attack_windup` is shown coming, and can be stepped out of.
+ */
+export function windupOf(attack: Stats, target: Entity): number {
+  const own = attack.num("attack_windup");
+  if (attack.flag("single_use")) return 0; // a bomb's windup is its fuse (`tick`)
+  let raw = 0;
+  for (const type of damageTypes(attack)) raw += Math.max(0, attack.num(`dmg_${type}`));
+  if (raw === Infinity) return WINDUP_SECONDS + (own > 0 && own !== Infinity ? own : 0);
+  raw = Math.max(0, raw - target.stats.num("armor"));
+  const max = target.stats.num("integrity");
+  const heavy = max !== Infinity && landed(raw, max) >= HEAVY_SHARE * max;
+  return heavy || own > 0 ? WINDUP_SECONDS + (own > 0 && own !== Infinity ? own : 0) : 0;
+}
+
 function damageTypes(stats: Stats): string[] {
   return stats.entries().map(([id]) => id).filter((id) => id.startsWith("dmg_")).map((id) => id.slice(4));
 }
@@ -86,6 +137,8 @@ export function strike(attacker: Stats, defender: Entity, rng: Rng): Strike {
   const chance = attacker.num("critical");
   const critical = total > 0 && (chance === Infinity || rng() < chance);
   if (critical) total *= 2;
+  // Felt, not raw (FELT_KNEE): what lands grows as the square root of the blow past a person's scale.
+  total = landed(total, target.num("integrity"));
 
   const absorbed = Math.min(defender.shield, total);
   defender.shield -= absorbed;

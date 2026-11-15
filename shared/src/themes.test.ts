@@ -55,7 +55,7 @@ describe("materials (theme 11)", () => {
     const hit = (target: string, adjectives: string[]) => {
       const e = spawn(target, make(target, adjectives));
       e.integrity = 1e9;
-      return strike(hammer, e, () => 0).damage;
+      return strike(hammer, e, () => 0).damage / e.stats.num("integrity"); // the share of it a blow takes
     };
     expect(hit("wall", ["glass"])).toBeGreaterThan(hit("wall", []) * 2);
     expect(susceptibility(make("castle", ["ice"]), "fire")).toBeGreaterThan(2); // melts

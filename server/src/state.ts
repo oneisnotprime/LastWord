@@ -55,6 +55,8 @@ export const Zone = schema({
   until: t.uint32(),
   /** Name of whoever made it ("" for the map's own). */
   by: t.string(),
+  /** Seconds from when it appeared until it strikes: it is shown first (shared hazard.ts); 0 once it has, or for an area that never warns. */
+  warn: t.float32(),
 }, "Zone");
 export type Zone = SchemaType<typeof Zone>;
 

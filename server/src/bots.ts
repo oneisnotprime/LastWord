@@ -29,17 +29,18 @@ export function botSettings(options: unknown, capacity: number, env = process.en
  * on what it spells (GLASS SWORD) and plurals (WOLVES), aims fields and adjectives at its foes,
  * counters words used against it, and how hurt it must be to run (0: never).
  */
-export interface Skill { systems: number; phrases: number; aims: boolean; counters: number; flee: number; offers: number; themes: number; cures: number }
+export interface Skill { systems: number; phrases: number; aims: boolean; counters: number; flee: number; offers: number; themes: number; cures: number; dodges: number }
 /**
  * `themes`: the chance a bot considers the dictionary themes' systems at a thought (`botThemes`:
  * dress, disguise, grafts, traps, lies, jamming, faith, music, money, time, gravity, boats, duels,
  * luck, statuses on its foes); `cures`: the chance it ends a status on itself that a word it can
  * afford ends (sickness, rage, fear, doom, curses, debts...). Easy bots only treat sickness and cold.
+ * `dodges`: the chance it steps out of a strike shown coming (a heavy blow's ring, a STORM's cell).
  */
 export const SKILL: Readonly<Record<Difficulty, Skill>> = {
-  easy: { systems: 0.25, phrases: 0, aims: false, counters: 0, flee: 0, offers: 0, themes: 0.15, cures: 0.3 },
-  normal: { systems: 0.6, phrases: 0.5, aims: true, counters: 0.6, flee: 0.25, offers: 0.3, themes: 0.5, cures: 0.7 },
-  hard: { systems: 1, phrases: 1, aims: true, counters: 1, flee: 0.35, offers: 0.6, themes: 0.9, cures: 1 },
+  easy: { systems: 0.25, phrases: 0, aims: false, counters: 0, flee: 0, offers: 0, themes: 0.15, cures: 0.3, dodges: 0.35 },
+  normal: { systems: 0.6, phrases: 0.5, aims: true, counters: 0.6, flee: 0.25, offers: 0.3, themes: 0.5, cures: 0.7, dodges: 0.65 },
+  hard: { systems: 1, phrases: 1, aims: true, counters: 1, flee: 0.35, offers: 0.6, themes: 0.9, cures: 1, dodges: 0.9 },
 };
 
 /**
@@ -209,6 +210,7 @@ export function wordBook(dict: Dictionary) {
   const words: BotWord[] = [];
   const counters = new Map<string, BotWord[]>();
   for (const [word, def] of dict.words) {
+    if (dict.crude(word)) continue; // never spelled by a bot (tools/crude.txt)
     if (def.role === "adjective") {
       // Adjectives: put on your own things or body (buff), or on a foe (debuff), or spelled before a noun.
       const e = adjectiveEffect(def.ops);

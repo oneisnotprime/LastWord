@@ -271,6 +271,30 @@
       #fx .num.crit { font-size: 27px; color: #ffd84a; -webkit-text-stroke: 4px #8a3a0a; }
       #fx .num.layer, #fx .num.blocked { color: #e8e4dc; -webkit-text-stroke-color: #5a5a62; font-size: 14px; }
       #fx .num.miss { color: #fbf7ec; -webkit-text-stroke-color: #8a7a60; font-size: 13px; font-style: italic; }
+      #fx .num.dodged { color: #fff3c4; -webkit-text-stroke-color: #2f5a8e; font-size: 15px; font-style: italic; }
+      /* A heavy blow coming for you: the screen's edge pulses red. Knocked out: a beat of slow grey. */
+      body.incoming::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 4; animation: incoming .45s infinite alternate;
+        background: radial-gradient(ellipse at center, transparent 58%, rgba(201, 40, 30, .45) 100%); }
+      @keyframes incoming { from { opacity: .35; } to { opacity: 1; } }
+      body.deathbeat canvas { filter: grayscale(.85) brightness(.8); transition: filter 1s; }
+      /* Kill feed (recap.ts): a few terse lines at the top right. */
+      #killfeed { position: fixed; top: 10px; right: 12px; z-index: 5; display: flex; flex-direction: column; align-items: flex-end; gap: 3px; pointer-events: none; }
+      #killfeed div { padding: 2px 9px; background: rgba(40, 30, 22, .72); color: #fbf6ea; border-radius: 3px; font: 600 12px var(--round); transition: opacity .6s; }
+      #killfeed div.mine { background: rgba(160, 40, 30, .85); }
+      #killfeed div.gone { opacity: 0; }
+      #killfeed i { font-style: normal; color: #f2a39b; margin: 0 2px; }
+      /* Death recap and end-of-round recap (recap.ts). */
+      #recap { position: fixed; left: 50%; top: 26%; transform: translate(-50%, -50%) rotate(-.6deg); z-index: 6; display: none; min-width: 300px; max-width: 92vw; padding: 12px 20px 10px;
+        background: var(--paper); color: var(--ink); border-radius: 4px; box-shadow: 0 0 0 4px var(--red), 0 3px 0 4px #8a2a2a, 0 18px 40px rgba(20, 14, 8, .5); pointer-events: none; text-align: center; }
+      #recap.show { display: block; animation: recapin .5s; } #recap.dim { opacity: .55; }
+      #recap.round { box-shadow: 0 0 0 4px var(--gold), 0 3px 0 4px #8a6a1a, 0 18px 40px rgba(20, 14, 8, .5); }
+      #recap h3 { margin: 0 0 6px; font: 700 24px/1.15 var(--hand); letter-spacing: 1px; }
+      #recap ul { list-style: none; margin: 0 auto 6px; padding: 0; max-width: 320px; }
+      #recap li { display: flex; justify-content: space-between; gap: 14px; font: 500 13px var(--round); border-bottom: 1px dashed var(--line); padding: 2px 0; }
+      #recap li b { color: var(--red); }
+      #recap small { color: var(--soft); font: 500 12px var(--round); }
+      @keyframes recapin { from { opacity: 0; transform: translate(-50%, -50%) scale(.8) rotate(-3deg); } to { opacity: 1; } }
+      #preview .warn { color: var(--red); font-weight: 700; }
       #fx .fail { position: absolute; white-space: nowrap; padding: 3px 10px 4px; font: 700 16px var(--hand); color: var(--red); background: var(--paper); border-radius: 2px;
         box-shadow: var(--shadow); }
       #fx .fail.small { font: 600 12px var(--round); padding: 2px 8px 3px; opacity: .92; }
@@ -317,7 +341,7 @@
       #status button.again { pointer-events: auto; display: block; width: 100%; margin-top: 8px; font: 700 15px var(--hand); letter-spacing: 1px; color: #4a3510; background: var(--gold);
         border: 0; border-radius: 3px; padding: 5px 8px; cursor: pointer; box-shadow: 0 2px 0 #b8902a, 0 4px 8px rgba(40, 28, 16, .3); }
       #status button.again:hover { transform: translateY(-1px) rotate(-1deg); }
-      /* Starting kits (kits.ts): the pick of three, your kit on the HUD, the map-wide call when a legendary unseals. */
+      /* Starting kits (kits.ts): the pick of three. */
       #kits { position: fixed; inset: 0; z-index: 6; display: none; pointer-events: auto; background: rgba(28, 22, 16, .55); font: 500 13px/1.35 var(--round); color: var(--ink); }
       #kits.show { display: flex; align-items: center; justify-content: center; }
       #kits .sheet { width: min(1060px, 96vw); max-height: 94vh; overflow: auto; padding: 16px 22px 20px; background: var(--card); border-radius: 4px; transform: rotate(-.4deg);
@@ -346,34 +370,13 @@
       #kits section:last-child { border-bottom: 0; }
       #kits h4 { margin: 0; font: 600 10px var(--round); color: var(--soft); text-transform: uppercase; letter-spacing: 1.5px; }
       #kits section > b { display: block; font: 700 22px/1.1 var(--hand); letter-spacing: 1px; }
-      #kits .job > b { color: var(--blue); } #kits .building > b { color: #8a5a1a; } #kits .legend > b { color: #7a2a8a; }
+      #kits .job > b { color: var(--blue); } #kits .building > b { color: #8a5a1a; }
       #kits ul { list-style: none; margin: 3px 0 0; padding: 0; }
       #kits li { display: flex; gap: 6px; font-size: 12px; line-height: 1.45; }
       #kits li i { font-style: normal; width: 18px; text-align: center; flex: none; }
-      #kits .seal { padding: 1px 5px; border-radius: 2px; background: #3f2f4a; color: #f3e6ff; letter-spacing: 1px; margin-left: 4px; }
-      #kits .unlock { margin: 3px 0; padding: 3px 7px; background: #efe0f3; border-radius: 2px; font: 600 12px var(--round); color: #5a2a6a; transform: rotate(-.6deg); }
-      #kits .counter { margin-top: 3px; font-size: 11px; color: var(--soft); }
       #kits .buttons { display: flex; justify-content: center; gap: 10px; margin-top: 14px; }
       #kits button { font: 700 15px var(--hand); color: var(--ink); background: var(--paper); border: 0; border-radius: 3px; padding: 5px 14px; cursor: pointer; box-shadow: 0 1px 0 #cfc3a6, 0 3px 6px rgba(40, 28, 16, .3); }
-      #kits button.unseal { background: #b07ac9; color: #fff; }
       #kits button:hover { transform: translateY(-1px) rotate(-1deg); background: var(--gold); }
-      #status .kitrow { pointer-events: auto; cursor: pointer; margin-top: 6px; padding-top: 5px; border-top: 1px dashed var(--line); display: grid; grid-template-columns: 62px 1fr; gap: 1px 6px; align-items: center; }
-      #status .kitrow > span { font: 600 10px var(--round); color: var(--soft); text-transform: uppercase; letter-spacing: 1px; }
-      #status .kitrow > b { font: 700 14px/18px var(--hand); text-transform: uppercase; }
-      #status .kitrow > b.legend { color: #7a2a8a; } #status .kitrow > b.legend.open { color: #c0392b; animation: legendglow 1s infinite alternate; }
-      #status .kitrow > small { grid-column: 2; font: 500 10.5px var(--round); color: var(--soft); }
-      #status .kitrow > .track, #status .kitrow > em { grid-column: 2; }
-      #status .kitrow .track i { background-color: #b07ac9; }
-      #status .kitrow em.open { font: 700 12px var(--round); font-style: normal; color: #c0392b; }
-      @keyframes legendglow { from { text-shadow: 0 0 0 rgba(233, 185, 73, 0); } to { text-shadow: 0 0 8px rgba(233, 185, 73, 1); } }
-      #legendcall { position: fixed; z-index: 7; left: 50%; top: 22%; transform: translate(-50%, -50%) scale(.6); opacity: 0; pointer-events: none; text-align: center;
-        padding: 18px 46px 16px; background: #2e2238; color: #fbeaff; border-radius: 4px; box-shadow: 0 0 0 5px var(--gold), 0 4px 0 5px #8a6a1a, 0 0 80px 20px rgba(233, 185, 73, .55); }
-      #legendcall.show { animation: legendcall 6.5s forwards; }
-      #legendcall small { display: block; font: 600 12px var(--round); letter-spacing: 3px; text-transform: uppercase; color: var(--gold); }
-      #legendcall b { display: block; font: 700 40px/1.15 var(--hand); letter-spacing: 3px; }
-      #legendcall span { display: block; font: 500 13px var(--round); color: #d9c6e6; }
-      @keyframes legendcall { 0% { opacity: 0; transform: translate(-50%, -50%) scale(.6) rotate(-4deg); } 8% { opacity: 1; transform: translate(-50%, -50%) scale(1.08) rotate(1deg); }
-        14% { transform: translate(-50%, -50%) scale(1) rotate(-1deg); } 85% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(-1deg); } 100% { opacity: 0; transform: translate(-50%, -60%) scale(.95) rotate(-1deg); } }
       /* Controller: the letter picker in the spell window (the tiles you hold) and for an offer's letters. */
       #picker, #pickhint { display: none; }
       body.pad #picker { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin: 12px auto 4px; max-width: 470px; }

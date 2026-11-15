@@ -157,7 +157,7 @@ export function wordTip(dict: Dictionary, word: string): WordTip | null {
   // "all inside: speed ×0.5" reads in two columns as "speed ×0.5" / "on everyone in its area".
   const lines = parts.map((text, i) => text.startsWith("all inside: ")
     ? { text: text.slice(12), why: "on everyone in its area" } : { text, why: meaning(dict, text, ids[i]) });
-  const counter = countersOf(dict, word).find((w) => w !== word && dict.word(w)?.role === "noun");
+  const counter = countersOf(dict, word).find((w) => w !== word && dict.word(w)?.role === "noun" && !dict.crude(w));
   return { word, kind, does: parts.join(", "), lines, ...(counter ? { counter } : {}) };
 }
 
@@ -168,7 +168,7 @@ function poolOf(dict: Dictionary): Map<TipKind, string[]> {
   if (pool) return pool;
   pool = new Map(TIP_KINDS.map((k) => [k, []]));
   for (const word of dict.words.keys()) {
-    if (!/^[a-z]+$/.test(word) || word.length > 9) continue;
+    if (!/^[a-z]+$/.test(word) || word.length > 9 || dict.crude(word)) continue;
     const kind = tipKind(dict, word);
     if (kind) pool.get(kind)!.push(word);
   }
@@ -302,7 +302,7 @@ const groupsKnown = new WeakMap<Dictionary, Map<string, SpellGroup | null>>();
 export function spellableNow(dict: Dictionary, held: Letters): Record<SpellGroup, string[]> {
   const out = Object.fromEntries(SPELL_GROUPS.map((g) => [g, [] as string[]])) as Record<SpellGroup, string[]>;
   const words: string[] = [];
-  for (const [word, def] of dict.words) if ((def.role === "noun" || def.role === "verb") && /^[a-z]+$/.test(word) && !missing(held, word)) words.push(word);
+  for (const [word, def] of dict.words) if ((def.role === "noun" || def.role === "verb") && /^[a-z]+$/.test(word) && !dict.crude(word) && !missing(held, word)) words.push(word);
   words.sort((a, b) => a.length - b.length || a.localeCompare(b));
   let known = groupsKnown.get(dict);
   if (!known) groupsKnown.set(dict, (known = new Map()));

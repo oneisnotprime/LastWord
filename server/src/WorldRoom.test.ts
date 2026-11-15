@@ -1,6 +1,6 @@
 import { boot, type ColyseusTestServer } from "@colyseus/testing";
 import { afterAll, beforeAll, beforeEach, expect, it } from "vitest";
-import { generateMap, Tile, tileAt, walkable } from "@lastword/shared";
+import { generateMap, landed, Tile, tileAt, walkable } from "@lastword/shared";
 import appConfig from "./app.config.js";
 import { WorldRoom } from "./WorldRoom.js";
 
@@ -281,7 +281,10 @@ it("fights: armor breaks before the body, the dead are knocked out and the last 
   expect(walkers.has(b.sessionId)).toBe(false);
   expect(room.state.players.has(b.sessionId)).toBe(false);
   expect(got.b.some(([t, m]) => t === "notice" && m === "Your ARMOR was destroyed")).toBe(true);
-  expect(got.b.find(([t]) => t === "dead")![1]).toBe(wa.player.name);
+  // The death recap: who did it, with what, and the top sources of harm.
+  const recap = got.b.find(([t]) => t === "dead")![1] as any;
+  expect(recap).toMatchObject({ killer: wa.player.name, what: "GUN" });
+  expect(recap.top[0]).toMatchObject({ who: wa.player.name, what: "GUN", kind: "pierce" });
   expect(wa.letters.z).toBe(3); // the dead player's letters go to the killer
   expect(got.a.some(([t]) => t === "won")).toBe(true);
 });
@@ -327,7 +330,7 @@ it("lays terrain, pushes players out of it, and lets things on the ground be des
   wa.player.x = wb.player.x; wa.player.y = wb.player.y; // there is no path-finding around the pond yet
   a.send("attack", chair);
   await wait();
-  for (let i = 0; i < 300 && room.state.things.has(chair); i++) room.update(0.1);
+  for (let i = 0; i < 1200 && room.state.things.has(chair); i++) room.update(0.1);
   await wait();
   expect(room.state.things.has(chair)).toBe(false);
   expect(wa.letters).toEqual({ d: 1, v: 1 });
@@ -585,7 +588,8 @@ it("ends the round when one person is left: locks, tells everyone, then closes",
   await new Promise((r) => setTimeout(r, 200));
   expect(room.state.phase).toBe("over");
   expect(room.state.winner).toBe(wa.player.name);
-  expect(over).toEqual([{ winner: wa.player.name, seconds: 1 }, { winner: wa.player.name, seconds: 1 }]);
+  expect(over).toHaveLength(2);
+  for (const o of over) expect(o).toMatchObject({ winner: wa.player.name, seconds: 1, people: 2, kills: [{ name: wa.player.name, kills: 1 }] }); // a short recap
   expect((room as any).locked).toBe(true);
   await new Promise((r) => setTimeout(r, 1500));
   expect(room.clients.length).toBe(0);
@@ -652,7 +656,7 @@ it("events act through their properties: murder, raid, repair, rescue, trade, re
   await select(b.sessionId);
   const hp = wb.hp;
   a.send("spell", "ambush"); await wait();
-  expect(wb.hp).toBe(hp - 10); // bare hands: 5 blunt, doubled
+  expect(wb.hp).toBeCloseTo(hp - landed(10, 100)); // bare hands: 5 blunt, doubled, felt (shared combat.ts `landed`)
   expect(wb.player.status).toBe("stun"); // and B is stunned for five seconds: no spelling meanwhile
   b.send("spell", "chair"); await wait();
   expect(said("b")).toBe("You cannot spell while you are stunned");

@@ -11,6 +11,7 @@ export const demo = () =>
     words: read("demo.json"),
     inflections: read("demo_inflections.json"),
     degrees: read("operators.json").degrees,
+    crude: read("crude.json"),
   });
 export const rawProperties = () => read("properties.json");
 /** The starting-kit tables (data/kits.json), for tests only. */
