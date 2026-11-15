@@ -1186,3 +1186,29 @@ fountain: produce_O=0.5 production_needs=extract
 kennel: produce_I=0.3 production_needs=labor
 golem: produce_N=1
 genie: produce_N=1
+
+# Theme 26, bugs: keepers and silk moths kept.
+apiarist: produce_N=0.35
+exterminator: produce_N=0.3
+tussah: produce_I=0.2
+tussore: produce_I=0.2
+
+# Theme 27, stone and ore: workings, raised rock and hidden water all run down as they are worked.
+mineshaft: produce_G=1.2 production_needs=extract
+diggings: produce_G=0.8 production_needs=extract
+delf: produce_G=1 production_needs=extract
+outcrop: produce_G=0.4 production_needs=extract
+stratum: produce_G=0.3 production_needs=extract
+mesa: produce_G=0.5 production_needs=extract
+butte: produce_G=0.3 production_needs=extract
+batholith: produce_G=1.2 production_needs=extract
+pluton: produce_G=1 production_needs=extract
+massif: produce_G=1 production_needs=extract
+alp: produce_G=0.6 production_needs=extract
+foothill: produce_G=0.2 production_needs=extract
+diapir: produce_G=0.3 production_needs=extract
+cavern: produce_U=1 production_needs=extract
+landfill: produce_U=0.5 production_needs=extract
+aquifer: produce_O=0.8 production_needs=extract
+maar: produce_O=0.4 production_needs=extract
+pitman: produce_N=0.4

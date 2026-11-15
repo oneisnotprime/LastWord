@@ -82,6 +82,8 @@ const CLAIM_THEIRS: ZoneStyle = { colour: "#e08a7a", ink: "#8a2a2a", decor: "wor
 
 /** Tiles above a zone's middle its name tag sits (less for a small zone: its top edge). */
 const ZONE_TAG_RISE = 2.5;
+/** World pixels below a claim's middle that its tag hangs at least: under its building's name tag. */
+const CLAIM_TAG_DROP = 30;
 
 /** A zone's tag: "Your MARKET · +25% defense", "Enemy HOME · …", "Unclaimed RUIN · …", "FIRE · by BOT2". */
 export function zoneTitle(zone: { word: string; owner?: string; shelter?: number; by?: string }, mine: string): string {
@@ -168,9 +170,11 @@ export class Zones {
       // The tissue's radius is 124 units, 62 world pixels, at its base scale.
       const s = (z.disc.getData("s") as number) * (z.r / 62);
       z.disc.setPosition(z.x, z.y).setScale(s * (1 + Math.sin(t * 1.3) * 0.01), s * 0.9 * (1 + Math.cos(t * 1.1) * 0.01));
-      // The tag stays with the zone, a little above its middle (over a claim's building), never
-      // following you about: standing inside a big one, the event chips say where you are.
-      z.tag.setPosition(z.x, z.y - Math.min(z.r * 0.9, ZONE_TAG_RISE * PX) - 8);
+      // The tag stays with the zone, never following you about: standing inside a big one, the
+      // event chips say where you are. A claim's tag hangs at the south rim of its ground, clear
+      // of its building's health bar and name; other zones' tags sit a little above the middle.
+      if (z.info.shelter > 0) z.tag.setPosition(z.x, z.y + Math.max(CLAIM_TAG_DROP, z.r * 0.85));
+      else z.tag.setPosition(z.x, z.y - Math.min(z.r * 0.9, ZONE_TAG_RISE * PX) - 8);
       if (z.warning) {
         // Coming: a red ring with an inner ring closing on it; landed: a bright flash fading out.
         const w = z.warning, g = w.ring.clear(), k = (time - w.from) / Math.max(1, w.until - w.from);

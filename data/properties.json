@@ -1,7 +1,7 @@
 {
- "count": 421,
+ "count": 424,
  "groups": {
-  "physical": 45,
+  "physical": 48,
   "mobility": 25,
   "offence": 70,
   "defence": 69,
@@ -389,6 +389,28 @@
    "type": "text",
    "desc": "the noun heat turns it into (dough into bread); without one it becomes cooked",
    "default": ""
+  },
+  {
+   "id": "smelts_at",
+   "group": "physical",
+   "type": "num",
+   "desc": "a raw thing that needs this much heat to change, not just 150 C: ore smelts by a FORGE or FURNACE, not a CAMPFIRE (shared food.ts heatNeeded)",
+   "unit": "C",
+   "default": 0
+  },
+  {
+   "id": "matures_into",
+   "group": "physical",
+   "type": "text",
+   "desc": "the creature it grows into once it is growth_time \u00d7 0.1 minutes old, count and master kept: a LARVA into a BEETLE (shared bug.ts)",
+   "default": ""
+  },
+  {
+   "id": "bores",
+   "group": "physical",
+   "type": "tags",
+   "desc": "materials it eats into: things made of them within 3 tiles take four times its bite, through armour; wild ones eat anything, owned ones only other sides' things (shared bug.ts)",
+   "default": []
   },
   {
    "id": "shelf_life",

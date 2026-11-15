@@ -135,6 +135,10 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
   `only` (weather patches change only some tiles); faith is a fourth store on the HUD and the
   loadout; `WORDS` has the core money, crime, information, religion and weather words, drawn
   with the existing builders (rosette and sign icons for acts and events).
+- Expansion batch 1: build.ts `bug` has fly, moth, beetle, mantis, worm and centipede kinds;
+  shapes.ts has lumps for stone and ore (rocky, oreLump, gemCut, cluster, sheet, pebbles, geode) and
+  bug works; every new bug, mineral and object has a `WORDS` entry. zones.ts hangs a claim's tag at
+  the south rim of its ground (CLAIM_TAG_DROP), clear of its building's health bar.
 - Themes batch 5: `WORDS` has the core time, space, sea, sports and abstract words (rosettes and
   signs for acts and events, boats for vessels, bridges for docks, existing builders elsewhere).
 - Fun batch C2: `#best` beside the letter tiles: the 3-5 best words the rack spells now (shared

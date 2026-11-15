@@ -13,7 +13,7 @@ import {
 } from "@lastword/shared";
 import { grand, grandeur } from "@lastword/shared";
 import {
-  LAWS, takeLetters, pactOf, breachText, BREACH_LETTERS, BREACH_LOYALTY, BREACH_MINUTES, cooked, rotted, cooks, cookable, spoils, toxin,
+  LAWS, takeLetters, pactOf, breachText, BREACH_LETTERS, BREACH_LOYALTY, BREACH_MINUTES, cooked, rotted, cooks, cookable, spoils, toxin, heatNeeded, matured, matureSeconds, bores, BORE_TILES, BORE_TIMES,
   COOK_RANGE, COOK_SECONDS, alchemyRatio, jobsOf, haggled, builtBy, WORK_RANGE, SCOUT_RANGE, grow, SEEDLING, type PactSpec,
   comfortOf, homeComfort, storageOf, keepSafe, exposed, hoards, eyeOf, automates, breedRate, HERD_RANGE, craftPlan, craftsOf, CRAFT_RANGE, CRAFTED,
   isGraft, severing, airAt, exposure, disguised, UNMASKED_SECONDS, WARM_FROM, WARM_RANGE, catchChance, recovered, CONTACT_TILES, SICK_CONTAGION, IMMUNE_SECONDS,
@@ -248,6 +248,8 @@ const COUNTER_TILES = 12;
 interface Walker {
   /** Session id for a person, creature id for a creature. */
   id: string;
+  /** Room time it came into the world, for growing up (shared bug.ts); ageing words move it. */
+  born?: number;
   /** For a person: the way they last walked, which a ROAD they spell runs. */
   facing?: Point;
   /** For a citizen: the city (index into the map's cities) it lives in. */
@@ -1780,6 +1782,7 @@ export class WorldRoom extends Room {
       ...freshMind(resolveSpelled(this.dict, gear.spelled).num("morale"), false),
     };
     if (hp !== undefined) { walker.hp = hp; walker.unit.body.integrity = hp; }
+    walker.born = this.elapsed;
     this.walkers.set(id, walker);
     this.rebuild(walker);
     if (hp !== undefined) walker.player.hp = Math.min(100, Math.ceil((hp / walker.unit.body.stats.num("integrity")) * 100));
@@ -2505,6 +2508,19 @@ export class WorldRoom extends Room {
         }
         return null;
       },
+      // Borers on an enemy's thing made of what they eat, standing beside it (shared bug.ts): TERMITES on a wooden house.
+      () => {
+        if (easy || peaceful) return null;
+        for (const [tid, g] of this.grounded) {
+          const t = this.state.things.get(tid);
+          if (!t || g.terrain || !t.owner || t.owner === id || dist(t) > BORE_TILES - 0.5) continue;
+          const made = this.statsOf(g).tags("material").map((m) => m.toLowerCase());
+          const done = cast("borer", choose("borer", (x) => !!x.eats?.some((m) => made[0] === m)));
+          if (done) this.botUsed(mind, "borer");
+          return done;
+        }
+        return null;
+      },
       // A trap or two at home once others are about (hidden from enemies who cannot see it).
       () => atHome && !peaceful && (mind.traps ?? 0) < (hard ? 2 : 1) ? (() => { const d = cast("trap", choose("trap")); if (d) mind.traps = (mind.traps ?? 0) + 1; return d; })() : null,
       // Lies and jamming against people near: made-up threats, blacked-out minimaps and cameras.
@@ -3042,16 +3058,21 @@ export class WorldRoom extends Room {
    * cook after COOK_SECONDS; things past their `shelf_life` rot.
    */
   private kitchen(seconds: number) {
-    const heat: Point[] = [];
-    for (const [tid, g] of this.grounded) { const t = this.state.things.get(tid); if (t && !g.terrain && cooks(this.statsOf(g))) heat.push(t); }
-    const hot = new Set<string>();
-    for (const [wid, w] of this.walkers) if (cooks(w.unit.body.stats) || w.gear.some((g) => cooks(this.statsOf(g)))) { heat.push(w.player); hot.add(wid); }
-    for (const a of this.areas.values()) if (Number(this.dict.base(a.word, "temperature")) >= 150) heat.push(a);
-    const warm = (p: Point) => heat.some((h) => Math.hypot(h.x - p.x, h.y - p.y) <= COOK_RANGE + ((h as { radius?: number }).radius ?? 0));
+    // Each source of heat with how hot it is: ore needs a FORGE's heat, not a CAMPFIRE's (shared `heatNeeded`).
+    const heat: [Point, number][] = [];
+    const temp = (s: Stats) => s.num("temperature");
+    for (const [tid, g] of this.grounded) { const t = this.state.things.get(tid); const st = !g.terrain ? this.statsOf(g) : null; if (t && st && cooks(st)) heat.push([t, temp(st)]); }
+    const hot = new Map<string, number>();
+    for (const [wid, w] of this.walkers) {
+      const t = Math.max(cooks(w.unit.body.stats) ? temp(w.unit.body.stats) : 0, ...w.gear.map((g) => { const st = this.statsOf(g); return cooks(st) ? temp(st) : 0; }));
+      if (t > 0) { heat.push([w.player, t]); hot.set(wid, t); }
+    }
+    for (const a of this.areas.values()) { const t = Number(this.dict.base(a.word, "temperature")); if (t >= 150) heat.push([a, t]); }
+    const warm = (p: Point, need: number) => heat.some(([h, t]) => t >= need && Math.hypot(h.x - p.x, h.y - p.y) <= COOK_RANGE + ((h as { radius?: number }).radius ?? 0));
     const tend = (g: Gear, at: Point, carrier?: string): boolean => {
       const stats = this.statsOf(g);
       let next: Spelled | null = null;
-      if (cookable(stats) && ((carrier && hot.has(carrier)) || warm(at))) {
+      if (cookable(stats) && ((carrier && (hot.get(carrier) ?? 0) >= heatNeeded(stats)) || warm(at, heatNeeded(stats)))) {
         g.heat = (g.heat ?? 0) + seconds;
         if (g.heat >= COOK_SECONDS) next = cooked(this.dict, g.spelled, stats);
       } else if (spoils(stats, (this.elapsed - (g.born ?? this.elapsed)) / 60)) next = rotted(this.dict, g.spelled);
@@ -3080,6 +3101,50 @@ export class WorldRoom extends Room {
       for (const g of w.gear) if (tend(g, w.player, wid)) { this.carried.delete(g); changed = true; }
       if (changed) { this.rebuild(w); this.tell(w); }
     }
+  }
+
+  /**
+   * Bugs, grubs and swarms (shared bug.ts), once a second: a creature old enough grows into its
+   * `matures_into` (count, master and the share of health it had kept); a borer eats into things
+   * made of what it `bores` near it (wild ones anything, owned ones only other sides').
+   */
+  private bugs() {
+    let changed = false;
+    for (const [id, w] of [...this.walkers]) {
+      if (w.master === null) continue;
+      const stats = w.unit.body.stats;
+      const into = stats.get("matures_into");
+      if (into) {
+        const born = w.born ?? this.elapsed;
+        const next = this.elapsed - born >= matureSeconds(stats) ? matured(this.dict, w.body, stats) : null;
+        if (next) {
+          const share = Math.max(0.05, w.hp / Math.max(1, stats.num("integrity")));
+          const { x, y, count } = w.player, master = w.master, was = w.player.name.toUpperCase();
+          this.removeWalker(id);
+          const g: Gear = { spelled: next, phrase: [...(next.adjectives ?? []), next.noun].join(" "), vehicle: false, integrity: null };
+          const nid = this.addCreature(g, master, x, y, count);
+          const nw = this.walkers.get(nid)!;
+          nw.hp = Math.max(1, nw.unit.body.stats.num("integrity") * share); nw.unit.body.integrity = nw.hp;
+          if (master !== "-") { this.sendTo(master, "notice", `${was} grew into ${g.phrase.toUpperCase()}`); this.command(master); }
+          changed = true;
+          continue;
+        }
+      }
+      if (!stats.get("bores") || w.hp <= 0) continue;
+      const bite = w.unit.attack.clone();
+      const ops: Op[] = [["armor_pierce", "add", 1]];
+      for (const [k] of bite.entries()) if (k.startsWith("dmg_")) ops.push([k, "mul", BORE_TIMES]);
+      bite.apply(ops);
+      for (const [tid, g] of [...this.grounded]) {
+        const t = this.state.things.get(tid);
+        if (!t || g.terrain || g.fixture === "ruin" || (w.master !== "-" && t.owner === w.master)) continue;
+        if (Math.hypot(t.x - w.player.x, t.y - w.player.y) > BORE_TILES + 0.5) continue;
+        if (!bores(this.dict, stats, this.statsOf(g))) continue;
+        this.strikeThing(id, bite, tid, t, false, "");
+        break;
+      }
+    }
+    if (changed) this.refreshViews();
   }
 
   /** Puts a creature under someone else, or nobody ("-": wild). What it radiates changes side with it. */
@@ -3540,6 +3605,7 @@ export class WorldRoom extends Room {
       if (past.length > REWIND_WINDOW) past.shift();
     }
     this.kitchen(since);
+    this.bugs();
     if (this.rooms.size) this.mendDoors(since);
     this.state.alive = this.people.length;
     this.state.clock = Math.floor(this.elapsed);
@@ -5720,6 +5786,7 @@ export class WorldRoom extends Room {
     if (!w) return null;
     const p = this.producers.get(target);
     if (p) p.born = agedBorn(p.born, this.elapsed, minutes);
+    if (w.born !== undefined) w.born = agedBorn(w.born, this.elapsed, minutes);
     for (const g of w.gear) shift(g, g);
     return w.player.name.toUpperCase();
   }

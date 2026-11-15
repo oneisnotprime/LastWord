@@ -72,6 +72,9 @@ potency|scale|0||strength of its drug, medicine or alcohol effect
 decay_rate|num|0|hp/min|integrity lost per minute on its own
 raw|bool|false||heat changes it: near something at 150 C or hotter it cooks (shared food.ts)
 cooks_into|text|||the noun heat turns it into (dough into bread); without one it becomes cooked
+smelts_at|num|0|C|a raw thing that needs this much heat to change, not just 150 C: ore smelts by a FORGE or FURNACE, not a CAMPFIRE (shared food.ts heatNeeded)
+matures_into|text|||the creature it grows into once it is growth_time × 0.1 minutes old, count and master kept: a LARVA into a BEETLE (shared bug.ts)
+bores|tags|||materials it eats into: things made of them within 3 tiles take four times its bite, through armour; wild ones eat anything, owned ones only other sides' things (shared bug.ts)
 shelf_life|num|0|min|minutes after it is made that it rots (0 keeps for ever)
 age|num|0|min|time since it was spelled
 beauty|scale|3||attracts and pleases; raises NPC attitude

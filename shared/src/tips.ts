@@ -1,3 +1,4 @@
+import { shown } from "./combat.js";
 import type { Dictionary } from "./dictionary.js";
 import { becomes, countersOf, eventCard, heldText, keyStats, objectKind, opText, cardOf } from "./inspect.js";
 import { missing, parsePhrase, readNoun, type Letters, type Phrase } from "./phrase.js";
@@ -356,12 +357,12 @@ function meritOf(dict: Dictionary, word: string): Merit | null {
     switch (group) {
       case "weapons": {
         const per = s.flag("single_use") ? hit / 4 : hit * Math.max(0.2, s.num("attack_rate") || 1);
-        power = 1 + log(per); why = `${short(hit)} dmg`; break;
+        power = 1 + log(per); why = `${short(shown(hit))} dmg`; break;
       }
-      case "creatures": power = 1 + (log(hp) + log(hit)) / 2; why = `${short(hp)} HP`; break;
+      case "creatures": power = 1 + (log(hp) + log(hit)) / 2; why = `${short(shown(hp))} HP`; break;
       case "rides": power = 1 + log(speed) + log(hp) / 3; why = `${short(speed)} m/s`; break;
       case "gear": power = 0.5 + log(s.num("armor")) + log(hp) / 4; why = s.num("armor") > 0 ? `armor ${short(s.num("armor"))}` : "gear"; break;
-      case "events": power = 1 + log(hit) / 1.2 + (inflictsAny(s) ? 0.5 : 0); why = hit ? `${short(hit)} dmg` : "event"; break;
+      case "events": power = 1 + log(hit) / 1.2 + (inflictsAny(s) ? 0.5 : 0); why = hit ? `${short(shown(hit))} dmg` : "event"; break;
       case "areas": case "sky": power = 1.2; why = group === "sky" ? "sky" : "area"; break;
       case "verbs": power = 0.8 + (heals ? 0.8 : 0); why = heals ? "heals" : "verb"; break;
       default: power = 0.5 + log(hp) / 4; why = group === "buildings" ? "building" : "thing";

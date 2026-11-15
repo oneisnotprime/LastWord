@@ -64,17 +64,18 @@ export type Use = "weapon" | "armor" | "mount" | "creature" | "producer" | "clai
  * `lie` (`decoys`), `jam` (`jams`), `shrine` (gathers faith or takes sacrifices), `miracle` (spends
  * faith to heal), `morale` (lifts its side's morale or courage; music when it is loud), `haste`
  * (time runs faster for it), `rewind` (`rewinds`), `gravity` (grounds flyers), `vessel` (sails),
- * `fishing` (a tool that fishes), `luck` (luck for itself).
+ * `fishing` (a tool that fishes), `luck` (luck for itself), `borer` (a creature that eats things made
+ * of what it `bores`: TERMITES on an enemy's wooden house; shared bug.ts).
  */
 export type ThemeUse = "warm" | "disguise" | "graft" | "cure" | "hex" | "duel" | "gift" | "loan" | "bribe" | "trap" | "lie" | "jam"
-  | "shrine" | "miracle" | "morale" | "haste" | "rewind" | "gravity" | "vessel" | "fishing" | "luck";
+  | "shrine" | "miracle" | "morale" | "haste" | "rewind" | "gravity" | "vessel" | "fishing" | "luck" | "borer";
 
 /** What the bot tournament lists as the themes' systems (`botUsed` names), in order. */
 export const THEME_SYSTEMS = [
   "warm", "disguise", "graft self", "graft creature", "cure", "calm", "avoid sick", "hex", "hex rage", "hex doom", "hex curse",
   "hex chaos", "hex expose", "hex debt", "hex stasis", "hex void", "hex sick", "morale", "music", "gift", "bribe", "loan", "trap", "lie", "jam",
   "shrine", "sacrifice", "miracle", "weather", "haste", "rewind", "gravity", "vessel", "sail", "fishing", "catch", "duel", "luck", "sell",
-  "hide", "shelter", "store", "raid", "break in",
+  "hide", "shelter", "store", "raid", "break in", "borer",
 ] as const;
 
 export interface BotWord {
@@ -106,6 +107,8 @@ export interface BotWord {
   loud?: boolean;
   /** An adjective, put on its speller's own body (`describe`). */
   adjective?: boolean;
+  /** For borers: the materials it eats into (shared bug.ts `bores`). */
+  eats?: string[];
 }
 
 const A = "a".charCodeAt(0);
@@ -357,6 +360,7 @@ function themeUses(word: string, archetype: string, ops: readonly Op[], p: Retur
       const score = Math.max(0, adjectiveEffect(ops)) + can + dmg / 20;
       if (score > 0 && adjectiveEffect(ops) >= 0) add("graft", score, { aim: "walker" });
     }
+    if (s.flag("alive") && s.tags("bores").length) add("borer", p.count * (1 + damage(s)), { eats: s.tags("bores").map((m) => m.toLowerCase()) });
     if (isTrap(s) && !s.flag("mountable")) add("trap", (damaging ? 2 : 0) + bad.length + s.num("stealth") / 5);
     if (s.flag("jams") && s.get("portable") === false) add("jam", 1);
     if (s.get("portable") === false && (s.num("faith_output") > 0 || s.num("sacrifice") > 0)) add("shrine", s.num("faith_output") + s.num("sacrifice"));

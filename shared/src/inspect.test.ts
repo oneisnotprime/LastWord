@@ -40,7 +40,7 @@ describe("cards", () => {
     const c = card("wolf");
     expect(c.title).toBe("WOLF");
     expect(c.kind).toContain("creature");
-    expect(c.stats[0]).toMatch(/^HP 140/); // a living body's integrity is its HP, first
+    expect(c.stats[0]).toMatch(/^HP 118/); // a living body's integrity is its HP, first, shown felt (140 raw)
     expect(c.stats.some((s) => s.startsWith("damage"))).toBe(true);
     expect(c.does).toContain("walks with you and defends you");
     expect(c.letters).toBe("wolf");
@@ -79,7 +79,7 @@ describe("cards lead with what matters", () => {
     expect(leadStats(resolve(dict, "troll"))[0]).toMatch(/^HP/);
   });
   it("an event or an area leads with damage, radius and how long it lasts", () => {
-    expect(card("meteor").stats).toEqual(expect.arrayContaining([expect.stringMatching(/^damage 2,000/), "radius 20 m", "lasts 6 min"]));
+    expect(card("meteor").stats).toEqual(expect.arrayContaining([expect.stringMatching(/^damage 447/), "radius 20 m", "lasts 6 min"]));
     expect(card("haste").stats).toEqual(["radius 30 m", "lasts 2 min"]);
   });
   it("only a made thing a person can lift is offered as a club: not an ARMY, not a 100 kg BOMB", () => {

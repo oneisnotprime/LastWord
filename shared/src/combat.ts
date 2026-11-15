@@ -42,6 +42,13 @@ export function felt(x: number): number {
 }
 
 /**
+ * A number of damage, HP or integrity as cards and tips show it: its felt size, so a NUKE's
+ * 7,500,000 reads 27k against a DRAGON's 2.4k HP, the ratio blows really land in (FIGHT_PACE
+ * scales every blow alike). Under FELT_KNEE it is the number itself.
+ */
+export const shown = (x: number): number => felt(Math.max(0, x));
+
+/**
  * What a blow of `damage` (after resistances and armour) takes off a body whose full integrity is
  * `max`: its felt size times FIGHT_PACE, in the body's own units (a body felt smaller than it is
  * loses as much more). Hits to destroy it go as felt(max) / felt(damage), not max / damage.

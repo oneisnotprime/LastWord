@@ -1,3 +1,4 @@
+import { shown } from "./combat.js";
 import { homeText } from "./home.js";
 import { interiorText } from "./interior.js";
 import { craftText } from "./craft.js";
@@ -35,6 +36,7 @@ import { toolHelp } from "./biome.js";
 import { TILE_TYPES } from "./world.js";
 import { isMaterial, materialText } from "./material.js";
 import { foodText } from "./food.js";
+import { bugText } from "./bug.js";
 import { jobText } from "./work.js";
 import { breachText, pactOf } from "./law.js";
 
@@ -131,7 +133,9 @@ function damage(s: Stats): string | null {
   for (const [id] of s.entries()) if (id.startsWith("dmg_")) { const n = s.num(id); if (n > 0) parts.push([id.slice(4), n]); }
   if (!parts.length) return null;
   parts.sort((a, b) => b[1] - a[1]);
-  const total = parts.reduce((t, [, n]) => t + n, 0);
+  // Shown felt (shared combat.ts `shown`): a NUKE's millions read as the blow that lands.
+  const raw = parts.reduce((t, [, n]) => t + n, 0), total = shown(raw), k = raw > 0 && Number.isFinite(raw) ? total / raw : 1;
+  for (const p of parts) p[1] = Number.isFinite(p[1]) ? p[1] * k : p[1];
   return parts.length === 1 ? `damage ${num(total)} ${parts[0]![0]}` : `damage ${num(total)} (${parts.map(([t, n]) => `${num(n)} ${t}`).join(", ")})`;
 }
 
@@ -142,7 +146,7 @@ interface StatLine { id: string; text: string }
 function statLines(s: Stats): StatLine[] {
   const out: StatLine[] = [];
   const add = (id: string, unit = "", name = plain(id)) => {
-    const n = s.num(id);
+    const n = id === "integrity" ? shown(s.num(id)) : s.num(id);
     if (n > 0) out.push({ id, text: `${name} ${num(n)}${unit && Number.isFinite(n) ? ` ${unit}` : ""}` });
   };
   // A living body has HP; a thing has integrity (the same property, said as players say it).
@@ -372,7 +376,7 @@ export function cardOf(dict: Dictionary, p: Phrase): Card {
   card.stats = kind === "terrain" ? [] : leadStats(s, kind);
   // What heat, time or a new material do to it come first: they are why it was spelled so.
   const remade = p.adjectives.some((a) => isMaterial(dict.lookup(a)?.def) || dict.lookup(a)?.def.set.material !== undefined);
-  const does = [...foodText(dict, s), ...behaviours(s, p.count, dict.word(p.noun)?.class)];
+  const does = [...foodText(dict, s), ...bugText(dict, s), ...behaviours(s, p.count, dict.word(p.noun)?.class)];
   const use = useText(dict, p.noun, p.adjectives);
   if (use) does.push(use);
   // Flavour (made of steel, loud) after what changes a fight, unless an adjective made it so.
