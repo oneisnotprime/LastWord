@@ -181,6 +181,25 @@
       #banner { position: absolute; top: 38%; left: 50%; transform: translate(-50%, -50%) rotate(-1deg); padding: 22px 34px; border-radius: 3px;
         background: var(--paper); box-shadow: 0 3px 0 #cfc3a6, 0 14px 30px rgba(40, 28, 16, .45); font: 700 26px/1.35 var(--hand); text-align: center; display: none; white-space: pre-line; }
       #banner.show { display: block; }
+      /* One sheet at a time: a screen hides the HUD card and chips it repeats; the round's end or your death hides the calls. */
+      body.onscreen #status, body.onscreen #events, body.onscreen #eventcard, body.onscreen #threats, body.onscreen #best { visibility: hidden; }
+      body.bannered #legendcall, body.bannered #bigcast, body.bannered #best, body.spelling #legendcall, body.spelling #bigcast, body.onscreen #legendcall, body.onscreen #bigcast { visibility: hidden; }
+      /* The best words the rack spells now, beside the tiles: a click puts one in the spell window. */
+      #best { display: flex; gap: 6px; pointer-events: auto; }
+      #best:empty { display: none; }
+      #best button { display: flex; flex-direction: column; align-items: center; padding: 3px 9px 4px; border: 0; border-radius: 3px; cursor: pointer;
+        background: var(--paper); box-shadow: 0 2px 0 #cfc3a6, 0 4px 10px rgba(40, 28, 16, .25); color: var(--ink); }
+      #best button:nth-child(odd) { transform: rotate(-1.5deg); } #best button:nth-child(even) { transform: rotate(1deg); }
+      #best button:hover { background: var(--gold); }
+      #best b { font: 700 15px/1.1 var(--hand); letter-spacing: 1px; }
+      #best small { font: 600 9.5px/1.1 var(--round); color: #8a5a1a; letter-spacing: .3px; }
+      /* A grand spelling's map-wide call (a DRAGON, a METEOR), like a legend's but its own. */
+      #bigcast { position: fixed; z-index: 7; left: 50%; top: 16%; transform: translate(-50%, -50%) scale(.6); opacity: 0; pointer-events: none; text-align: center;
+        padding: 10px 34px 10px; background: #3a2416; color: #fff3dc; border-radius: 4px; box-shadow: 0 0 0 4px #d9573b, 0 3px 0 4px #7a2a1a, 0 0 60px 14px rgba(217, 87, 59, .45); }
+      #bigcast.show { animation: legendcall 4.2s forwards; }
+      #bigcast small { display: block; font: 600 11px var(--round); letter-spacing: 3px; text-transform: uppercase; color: #f0b28a; }
+      #bigcast b { display: block; font: 700 32px/1.15 var(--hand); letter-spacing: 3px; }
+      #preview .lead { font: 600 12.5px var(--round); color: var(--ink); }
       #panel { position: absolute; inset: 78px 0 0 0; margin: 0 auto; width: min(880px, 94vw); height: fit-content; max-height: calc(100vh - 250px);
         overflow: auto; pointer-events: auto; background: var(--card); border-radius: 4px; padding: 18px 24px 20px; display: none;
         box-shadow: 0 0 0 6px var(--paper), 0 3px 0 6px #cfc3a6, 0 18px 40px rgba(30, 20, 10, .5);
@@ -386,11 +405,13 @@
       <div id="eventcard"></div>
       <div id="aim"></div>
       <div id="banner"></div>
+      <div id="bigcast"></div>
       <div id="panel"></div>
       <div id="corner"></div>
       <div id="bottom">
         <div id="toast"></div>
         <div id="prompt"></div>
+        <div id="best"></div>
         <div id="letters"></div>
       </div>
     </div>

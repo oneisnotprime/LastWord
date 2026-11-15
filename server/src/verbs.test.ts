@@ -42,11 +42,11 @@ it("QUICKLY RUN lasts less long than RUN and is faster while it lasts", async ()
   a.send("spell", "run"); await wait();
   expect(said.at(-1)).toBe("RUN for 200 seconds");
   const run = wa.speed;
-  expect(run).toBe(10);
+  expect(run).toBe(16); // 5 m/s × 2, on foot × FOOT_PACE (1.6)
   a.send("spell", "quickly run"); await wait();
   expect(said.at(-1)).toBe("QUICKLY RUN for 150 seconds");
   expect(wa.buffs.map((b: any) => b.word)).toEqual(["quickly run"]); // it replaces the plain RUN
-  expect(wa.speed).toBeCloseTo(5 * 2 ** 1.5);
+  expect(wa.speed).toBeCloseTo(5 * 1.6 * 2 ** 1.5);
   expect(wa.speed).toBeGreaterThan(run);
   expect(wa.player.gear).toBe("QUICKLY RUN");
   const letters = wa.letters.q;

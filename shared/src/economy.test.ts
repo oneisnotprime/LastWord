@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { ACTION_LETTERS, missing, parsePhrase, PENDING_SOURCES, producerOf, reachability, reachTable, seeded, starterHand, starterWords, STARTING_HAND } from "./index.js";
+import { ACTION_LETTERS, missing, starterWeapons, parsePhrase, PENDING_SOURCES, producerOf, reachability, reachTable, seeded, starterHand, starterWords, STARTING_HAND } from "./index.js";
 import { demo } from "./testdata.js";
 
 const dict = demo();
@@ -19,6 +19,17 @@ describe("starting hand", () => {
       const makes = producerOf(parsePhrase(dict, spellable[0]!).stats).rates;
       expect(Object.keys(makes).some((ch) => !ACTION_LETTERS.includes(ch))).toBe(true);
     }
+  });
+});
+
+describe("starting hands spell a weapon", () => {
+  it("most hands can also spell a weapon of 20 damage or more (a first fight is not fists against a WOLF)", () => {
+    const weapons = starterWeapons(dict);
+    expect(weapons).toEqual(expect.arrayContaining(["sword", "bow", "club", "spear", "gun"]));
+    expect(weapons).not.toContain("spoon");
+    let armed = 0;
+    for (let seed = 0; seed < 60; seed++) { const h = starterHand(dict, seeded(seed)); if (weapons.some((w) => !missing(h, w))) armed++; }
+    expect(armed).toBeGreaterThan(54);
   });
 });
 

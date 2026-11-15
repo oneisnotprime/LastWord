@@ -56,8 +56,8 @@ server and the client import this, so anything here must give the same answer on
 - `unit.ts` a character with its gear: damage layers, held weapon scaled by strength and
   training, riding. `strikeUnit` hits the outermost layer.
 - `biome.ts` biomes (`BIOMES`, one per walkable `Tile`; `generateMap` lays large regions from
-  ranked temperature and moisture): each has a name, a `habitat` tag, a forage chance (12-35%:
-  most tries find nothing) and the letters it finds. `toolHelp`: things whose `harvest_sources`
+  ranked temperature and moisture): each has a name, a `habitat` tag, a forage chance (about 60%
+  at a typical spot: 15% on snow to 70% in jungle) and the letters it finds. `toolHelp`: things whose `harvest_sources`
   name a kind of gathering add 10 points a point of `harvest_bonus` (SHOVEL dig, NET fish, BASKET
   forage); `roll`/`rollText` ("JUNGLE 35% · +10% SHOVEL"); `wildlife` (creatures by `habitat`,
   the big and fierce rarer); `huntYield` (H, the animal's first letter, more for big bodies,
@@ -190,3 +190,14 @@ server and the client import this, so anything here must give the same answer on
   counter-word), `wordIdeas` (one word per `TIP_KINDS` kind, weighted by `tipWeight` toward words
   the held letters nearly spell), `RULE_TIPS` (short "did you know" lines, test-checked against the
   data), `tipOfTheMoment` (either, for the idle spell window).
+- Fun batch C2: `inspect.ts` `objectKind` (weapon, gear, ride, creature, building, terrain, item;
+  tips.ts `spellGroup` uses it) and `leadStats` (a card's numbers in the order its kind cares
+  about: a weapon's damage and reach, a creature's HP, a ride's speed; `integrity` reads "HP" on
+  the living); `cardOf` puts `trivia` (made of, loud) after what changes a fight, and fields and sky
+  words get radius and minutes as stats. `behaviours` offers swinging a ground thing only if its
+  class is a made or natural object a person (strength 5) can lift ("too heavy to carry" else) and
+  says when a `single_use` explosive goes off. `grandeur`/`grand` (GRAND_FROM): whether a spelling
+  makes an entrance. tips.ts `bestWords`: the few best words a rack spells now for a `Situation`
+  (power for its kind plus what the speller lacks; two a group; the last place for the biggest).
+  economy.ts `starterWeapons`/`weaponLetters`: starting hands (`starterHand`, kits' `kitHand`) add a
+  weapon's letters where they fit.

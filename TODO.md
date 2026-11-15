@@ -35,8 +35,11 @@
 - Every word feeds the same shared systems (PLAN.md); no private mechanics per word.
 - The game lives in its own repository.
 - Maps have biomes (jungle, desert, tundra, savanna, badlands, volcanic ash, meadow, taiga,
-  marsh, shore) in large regions; each forages its own letters, and most forage tries find
-  nothing (12 to 35%, more with tools whose `harvest_sources` fit). Wild animals suit their biome.
+  marsh, shore) in large regions; each forages its own letters, and a forage try at a typical
+  spot finds something about 60% of the time (15% on snow to 70% in jungle, more with tools whose
+  `harvest_sources` fit). Wild animals suit their biome.
+- People (and their creatures) walk at 1.6 times their body's speed; wild animals tire after
+  4 s of running, so prey can be caught on foot. Most starting hands also spell a weapon.
 - A hunt pays H and the animal's first letter (FOX: H F), plus bonuses from the body and the tools.
 - J comes once per 64-tile region, to whoever is first there; X from eight chests (dug at 35% a
   try: one X and three everyday letters, in one popup) and one ruin in four.
@@ -251,6 +254,11 @@ lexicon so every related word is captured.
       TEMPLE 2, SHRINE 3); derived jobs dermatologist, oncologist, quarterback and near-duplicates
       skipped for 16 hand-tuned trades (chef, tailor, potter, weaver, brewer, butcher, innkeeper,
       healer, monk, archer, mercenary, gardener, beekeeper, trapper, navigator, banker)
+
+- [ ] Dictionary senses the playtest tripped on (fun batch C2; not fixed): PIKE is the fish
+      (the weapon was meant); HIKE is missing; GIANT is only the creature, so GIANT WOLF reads as
+      "giant is not an adjective" (the adjective sense is wanted too); ARMY is an institution that lies on the ground
+      as a hundred 1 kg things with integrity 10 (it should be soldiers that follow you)
 
 - [x] Word lists by role, class and archetype (59,232 with a role, 5,385 inert)
 - [x] Property schema (349 properties, 14 groups)

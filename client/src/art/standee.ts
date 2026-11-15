@@ -57,8 +57,11 @@ export interface StandeeOptions {
   k: number;
   /** A silhouette held in the hand, drawn small. */
   held?: { sil: Silhouette; colour: string };
-  /** What a person rides: drawn under them, the person standing on top. */
-  ride?: { sil: Silhouette; colour: string };
+  /**
+   * What a person rides: drawn under them at its own full size (a HUGE DRAGON as big as it is
+   * standing alone, its generated image if loaded), the person standing on its back.
+   */
+  ride?: { sil: Silhouette; colour: string; scale?: number; raster?: Raster };
   /** The word's generated image, drawn in place of the silhouette (which still gives its size and kind). */
   raster?: Raster;
 }
@@ -80,7 +83,8 @@ function rasterFlames(r: Raster, w: number, h: number, s: number, lift: number):
 export function renderStandee(look: Look, opt: StandeeOptions): Standee {
   const sil = look.shape, s = look.scale, k = opt.k;
   const flies = !!sil.flies, living = !!sil.living;
-  const rb = opt.ride ? bounds(opt.ride.sil, 0.9) : null;
+  const ride = opt.ride, rideS = ride?.scale ?? 0.9, rideR = ride?.raster ? rasterSize(ride.raster, ride.sil) : null;
+  const rb = ride ? (rideR ? { x0: (-rideR.w / 2) * rideS, x1: (rideR.w / 2) * rideS, y0: -rideR.h * rideS, y1: 0 } : bounds(ride.sil, rideS)) : null;
   const lift = (flies ? 22 * Math.max(1, s * 0.8) : 0) + (rb ? -rb.y0 * 0.55 : 0);
   const rast = opt.raster, rs = rast ? rasterSize(rast, sil) : null;
   const b0 = rs ? { x0: (-rs.w / 2) * s, x1: (rs.w / 2) * s, y0: -rs.h * s, y1: 0 } : bounds(sil, s);
@@ -151,7 +155,11 @@ export function renderStandee(look: Look, opt: StandeeOptions): Standee {
       if (living) stand(ctx, c.x, c.y, Math.min(20, halfW * 0.6 + 3));
       body(c, 2.5);
     }
-    if (opt.ride) drawSilhouette(ctx, opt.ride.sil, { x: 0, y: 0, s: 0.9, flip: false }, inks(opt.ride.colour), { depth: 3 });
+    if (ride) {
+      const at: Placed = { x: 0, y: 0, s: rideS, flip: false };
+      if (ride.raster && rideR) drawRaster(ctx, ride.raster.img, rideR.w, rideR.h, at, { depth: 3 });
+      else drawSilhouette(ctx, ride.sil, at, inks(ride.colour), { depth: 3 });
+    }
     const main: Placed = { x: 0, y: -lift - (living ? 1.5 : 0), s, flip: false };
     body(main, sil.flat ? 1.5 : 2.5 + s * 1.5, ghost);
     if (opt.held && sil.hand && !rast) {

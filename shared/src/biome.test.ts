@@ -6,15 +6,16 @@ const dict = demo();
 const thing = (word: string) => ({ name: word, stats: resolve(dict, word) });
 
 describe("biomes", () => {
-  it("every walkable kind of ground has a biome, and foraging fails most of the time", () => {
+  it("every walkable kind of ground has a biome, and foraging finds something more often than not on common ground", () => {
     for (const t of Object.keys(WALK_COST).map(Number) as Tile[]) {
       if (WALK_COST[t] !== Infinity) expect(BIOMES[t], Tile[t]).toBeDefined();
     }
     for (const b of Object.values(BIOMES)) {
-      expect(b!.forage).toBeLessThanOrEqual(0.35);
+      expect(b!.forage).toBeLessThanOrEqual(0.7);
       expect(b!.finds).toMatch(/^[a-z]+$/);
     }
     expect(BIOMES[Tile.Desert]!.forage).toBeLessThan(BIOMES[Tile.Jungle]!.forage);
+    for (const t of [Tile.Grass, Tile.Meadow, Tile.Forest, Tile.Jungle]) expect(BIOMES[t]!.forage).toBeGreaterThanOrEqual(0.6);
     expect(new Set(BIOMES[Tile.Jungle]!.finds).size).toBeGreaterThan(new Set(BIOMES[Tile.Desert]!.finds).size);
   });
 

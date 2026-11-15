@@ -11,6 +11,7 @@ import {
   STATUS_RULES, windupOf, DODGE_TILES, AREA_WARNING, CELL_FROM, CELL_WARNING, CELL_SCATTER, ROOF_TILES, cellGap, cellRadius, shelterShare,
   type Affliction, type Candidate, type Dictionary, type Stores, type Supply, type Entity, type Hampered, type Status, type Stats, type Letters, type LoadoutDetail, type Op, type Phrase, type Point, type Spelled, type Value, type WordDef, type WorldMap,
 } from "@lastword/shared";
+import { grand, grandeur } from "@lastword/shared";
 import {
   LAWS, takeLetters, pactOf, breachText, BREACH_LETTERS, BREACH_LOYALTY, BREACH_MINUTES, cooked, rotted, cooks, cookable, spoils, toxin,
   COOK_RANGE, COOK_SECONDS, alchemyRatio, jobsOf, haggled, builtBy, WORK_RANGE, SCOUT_RANGE, grow, SEEDLING, type PactSpec,
@@ -217,6 +218,12 @@ const NIGHT_SIGHT = 0.5;
 const TAKE_RANGE = 2;
 /** A wandering wild creature's pace, as a fraction of its speed. */
 const AMBLE_PACE = 0.4;
+/** Seconds a wild creature can run flat out before it tires, and the share of its speed it keeps then. */
+const WIND_SECONDS = 4, TIRED_PACE = 0.3;
+/** How much faster than its `speed_land` a person or their creature walks (riding goes at the mount's speed; the wild at their own). */
+const FOOT_PACE = 1.6;
+/** Seconds a set explosive with no `attack_windup` of its own waits before it goes off. */
+const FUSE_SECONDS = 3;
 /** Reach, in tiles, past which a blow is shown as a shot rather than a swing. */
 const RANGED_TILES = 2.5;
 /** Most blows one client is told about in a tick. */
@@ -307,6 +314,8 @@ interface Walker {
   intelligence: number;
   /** Broken (morale 0) or, for a cunning creature, badly hurt: it runs from `fleeFrom` and does not strike. */
   fleeing: boolean;
+  /** A wild creature's seconds of running lately (chasing or fleeing): past WIND_SECONDS it tires. */
+  winded?: number;
   fleeFrom: string | null;
   /** For a creature: the last order (its master's target) it was given, and whether it is ignoring it. */
   order: string | null;
@@ -593,6 +602,8 @@ export class WorldRoom extends Room {
   private waterers = new Map<string, number>();
   /** Traps on the ground (shared crime.ts), by thing id: tiles at which each springs. */
   private traps = new Map<string, number>();
+  /** Explosives lying on the ground (`single_use` with damage, not a trap) and when each goes off. */
+  private fuses = new Map<string, number>();
   /** Altars on the ground (shared faith.ts `sacrifice`), by thing id: their multiplier. */
   private altars = new Map<string, number>();
   /** Seconds toward the next round of weather patches (shared weather.ts). */
@@ -690,21 +701,20 @@ export class WorldRoom extends Room {
     /** Stand still and gather a letter from the ground. */
     gather: (client: Client) => {
       const walker = this.walkers.get(client.sessionId);
-      if (!walker || walker.gathering > 0 || walker.picking) return;
-      // Nothing to find here: say so at once rather than after the wait.
-      const problem = this.deposits.problem(walker.player.x, walker.player.y, this.elapsed);
-      if (problem) return void client.send("refused", problem);
-      walker.target = null;
-      walker.route = [];
-      walker.gathering = GATHER_SECONDS;
-      client.send("gathering", GATHER_SECONDS);
+      if (walker) this.startGather(client, walker);
     },
-    /** Pick up the nearest thing of your own, or nobody's, from the ground; or the one named ({ id }: a click to claim it). */
+    /**
+     * Pick up the nearest thing of your own, or nobody's, from the ground; or the one named ({ id }:
+     * a click to claim it). With nothing to pick up, E at a chest or the temple digs or prays there (G).
+     */
     take: (client: Client, message?: unknown) => {
       const walker = this.walkers.get(client.sessionId);
       if (!walker) return;
       const named = message && typeof message === "object" && typeof (message as { id?: unknown }).id === "string" ? (message as { id: string }).id : null;
-      try { this.takeNear(client.sessionId, walker, named); } catch (e) { client.send("refused", (e as Error).message); }
+      try { this.takeNear(client.sessionId, walker, named); } catch (e) {
+        if (!named && this.deposits.siteAt(walker.player.x, walker.player.y, this.elapsed)) return this.startGather(client, walker);
+        client.send("refused", (e as Error).message);
+      }
     },
     /**
      * Get off what you ride. It stays yours: a machine (a CAR, a TRAIN) stays on the ground where
@@ -901,6 +911,18 @@ export class WorldRoom extends Room {
     return `Off ${ride!.phrase.toUpperCase()} (E: back on)`;
   }
 
+  /** G: starts a gathering try where the walker stands, or says at once why nothing is to be found. */
+  private startGather(client: Client, walker: Walker) {
+    if (walker.gathering > 0 || walker.picking) return;
+    // Nothing to find here: say so at once rather than after the wait.
+    const problem = this.deposits.problem(walker.player.x, walker.player.y, this.elapsed);
+    if (problem) return void client.send("refused", problem);
+    walker.target = null;
+    walker.route = [];
+    walker.gathering = GATHER_SECONDS;
+    client.send("gathering", GATHER_SECONDS);
+  }
+
   takeNear(id: string, walker: Walker, named: string | null): string {
     let best: string | null = null, bestDistance = Infinity;
     this.state.things.forEach((t, tid) => {
@@ -1074,6 +1096,7 @@ export class WorldRoom extends Room {
       this.sendTo(id, "letters", walker.letters);
       if (stood) done = `${stood.stand.toUpperCase()} stands for ${stood.word.toUpperCase()}: ${done}`;
       this.sendTo(id, "spelled", done);
+      this.entrance(walker, phrase, spelledAs);
       return done;
     }
     if (phrase.count < 1) throw new Error(`${spelledAs} is none at all`);
@@ -1091,7 +1114,21 @@ export class WorldRoom extends Room {
     this.sendTo(id, "spelled", said);
     this.tell(walker); // what is now in reach to use
     this.refreshViews();
+    this.entrance(walker, phrase, spelledAs);
     return said;
+  }
+
+  /**
+   * A grand spelling (shared `grand`: a DRAGON, a GIANT, a METEOR) makes an entrance: everyone on
+   * the map is sent `entrance` (who, what, where; the client calls it out and, in sight, shakes the
+   * camera and shows it full size for a moment). An event lands where it was aimed.
+   */
+  private entrance(walker: Walker, phrase: Phrase, word: string) {
+    if (!grand(phrase)) return;
+    const picked = walker.picked ? this.walkers.get(walker.picked)?.player ?? this.state.things.get(walker.picked) : undefined;
+    const at = phrase.kind === "object" ? walker.player : walker.aim ?? picked ?? walker.player;
+    const message = { name: walker.player.name, word, kind: phrase.kind, x: at.x, y: at.y, grandeur: Math.round(grandeur(phrase)) };
+    for (const c of this.clients) c.send("entrance", message);
   }
 
   /**
@@ -1618,7 +1655,10 @@ export class WorldRoom extends Room {
     // A vessel (shared sea.ts) sails over water only.
     walker.sailing = !!unit.riding && sails(unit.riding.stats);
     walker.flying = air > 0 || (!walker.sailing && floats(g));
-    walker.speed = (walker.sailing ? unit.riding!.stats.num("speed_water") : Math.max(unit.movement.num("speed_land") * gravitySpeed(g), air)) * walker.time;
+    // People and their creatures walking (not riding or flying) go at FOOT_PACE times the body's
+    // speed; the wild keep their own pace, so a hunter on foot gains on its prey.
+    const foot = unit.riding || walker.flying || walker.master === "-" ? 1 : FOOT_PACE;
+    walker.speed = (walker.sailing ? unit.riding!.stats.num("speed_water") : Math.max(unit.movement.num("speed_land") * gravitySpeed(g) * foot, air)) * walker.time;
     // A ridden machine out of fuel or power goes nowhere (and comes down) until it is fed again.
     if (unit.riding && walker.gear.find((g) => g.vehicle)?.stalled) { walker.flying = false; walker.speed = 0; }
     const dark = this.state.daylight === "night" && !unit.body.stats.flag("night_vision");
@@ -3378,6 +3418,7 @@ export class WorldRoom extends Room {
 
   /** A wild creature: an aggressive one goes for whoever it sees (shared `chooseTarget`); the rest wander. */
   private roam(id: string, w: Walker) {
+    if (!w.target && !w.foe && !w.fleeing && w.winded) w.winded = Math.max(0, w.winded - 1); // a second's rest standing
     if (w.fleeing) return;
     if (aggressive(w.unit.body.stats)) {
       // Prey it can get at: not what it gave up on, and nothing in the air unless it flies too.
@@ -3573,7 +3614,12 @@ export class WorldRoom extends Room {
     // speed a grazing PIG, as fast as a person, could never be caught.
     // Rough water (shared sea.ts) slows a vessel for a moment after the waves last rocked it.
     const rough = w.sailing && w.waved !== undefined && this.elapsed - w.waved.at < 1.5 ? waveSlow(w.waved.height) : 1;
-    const speed = (w.master === "-" && !w.foe && !w.fleeing && !w.hamper.flees.length ? w.speed * AMBLE_PACE : w.speed) * rough;
+    // A wild creature runs only in bursts: after WIND_SECONDS of chasing or fleeing it tires to
+    // TIRED_PACE until it has walked as long again, so a hunter on foot catches a DEER in the end.
+    const running = w.master === "-" && (!!w.foe || w.fleeing || w.hamper.flees.length > 0);
+    if (w.master === "-") w.winded = Math.max(0, Math.min(WIND_SECONDS * 2, (w.winded ?? 0) + (running ? seconds : -seconds))); // standing, in `roam`
+    const pace = w.master !== "-" ? 1 : !running ? AMBLE_PACE : (w.winded ?? 0) > WIND_SECONDS ? TIRED_PACE : 1;
+    const speed = w.speed * pace * rough;
     if (w.flying) {
       if (stepToward(this.map, w.player, target, speed, seconds, true)) w.target = null;
       return;
@@ -5173,6 +5219,40 @@ export class WorldRoom extends Room {
   }
 
   /**
+   * Explosives on the ground whose time has come go off: every walker on the ground and every
+   * thing within their `attack_area` (at least a tile) takes the blast, the maker's side too if
+   * it has `friendly_fire` (a BOMB does); then it is gone.
+   */
+  private blowFuses() {
+    for (const [tid, at] of [...this.fuses]) {
+      const t = this.state.things.get(tid), g = this.grounded.get(tid);
+      if (!t || !g) { this.fuses.delete(tid); continue; }
+      if (this.elapsed < at) continue;
+      this.fuses.delete(tid);
+      const stats = this.statsOf(g), attack = stats.clone();
+      attack.set("accuracy", "ABS");
+      const area = Math.max(1, stats.num("attack_area") / TILE_METERS), owner = t.owner, x = t.x, y = t.y;
+      const maker = this.walkers.get(owner), mine = maker ? this.side(owner, maker) : owner, all = stats.flag("friendly_fire");
+      this.removeThing(tid);
+      for (const [wid, w] of [...this.walkers]) {
+        if (w.flying || w.hamper.untouchable || Math.hypot(w.player.x - x, w.player.y - y) > area) continue;
+        if (!all && this.side(wid, w) === mine) continue;
+        const outer = w.unit.outer, r = strike(attack, outer, this.rng);
+        this.blow(owner || tid, wid, r, outer === w.unit.body ? "" : outer.name, false);
+        this.settle(wid, w);
+        if (w.unit.dead) { this.kill(wid, owner); continue; }
+        const given = inflicts(stats);
+        if (given.length) this.hurtWith(w, given, owner, tid, true);
+      }
+      for (const [oid, o] of [...this.state.things]) {
+        if (o.fixture && o.fixture !== "ruin") continue; // markets, the temple and buried chests stand
+        if (this.grounded.has(oid) && Math.hypot(o.x - x, o.y - y) <= area) this.strikeThing(owner || tid, attack, oid, o);
+      }
+      this.refreshViews();
+    }
+  }
+
+  /**
    * Weather on the ground (shared weather.ts), every PATCH_SECONDS: the weather in force, and sky
    * words' fields, with a tile_type lay it in PATCHES patches near random people.
    */
@@ -6661,6 +6741,8 @@ export class WorldRoom extends Room {
       const water = wateringReach(stats.num("water_output"));
       if (water > 0) this.waterers.set(id, water);
       if (isTrap(stats)) this.traps.set(id, springReach(stats));
+      // A BOMB set down goes off once, after its windup (FUSE_SECONDS if it names none).
+      else if (stats.flag("single_use") && hasDamage(stats) && owner) this.fuses.set(id, this.elapsed + (stats.num("attack_windup") || FUSE_SECONDS));
       if (stats.num("sacrifice") > 0) this.altars.set(id, stats.num("sacrifice"));
       // A port (shared sea.ts `docks`) is a market for anyone at it.
       if (stats.flag("docks") && owner) this.markets.set(id, { stock: MARKET.stock, at: this.elapsed });
@@ -6712,6 +6794,7 @@ export class WorldRoom extends Room {
     for (const [key, a] of [...this.areas]) this.burn(key, a, seconds);
     // Traps spring five times a second (shared crime.ts).
     if (this.traps.size && this.tickCount % 2 === 0) this.springTraps();
+    if (this.fuses.size) this.blowFuses();
     // Once a second (or for however long a tick ran): morale, command, upkeep and the wild.
     if (this.elapsed - this.lastBeat >= 1) {
       const since = this.elapsed - this.lastBeat;

@@ -16,10 +16,10 @@ const [rooms = 4, bots = 8] = process.argv.slice(2, 4).map(Number);
 const mode = (process.argv[4] ?? "mixed") as Difficulty | "mixed";
 const cap = Number(process.argv[5] ?? 60);
 
-const server = await boot(appConfig);
+const server = await boot(appConfig, Number(process.env.PORT ?? 2568)); // PORT=2600 runs beside another tournament
 const used = new Map<Difficulty, Map<string, number>>();
 const sources = new Map<string, number>();
-const rounds: { minutes: number; winner: string; difficulty: string }[] = [];
+const rounds: { minutes: number; winner: string; difficulty: string; firstDeath: number }[] = [];
 const wins = new Map<string, number>();
 const themedUsers = new Map<string, number>();
 // Time to kill: from the first blow of the fight that ended in a death (a gap of ENGAGE_GAP seconds
@@ -42,7 +42,7 @@ for (let r = 0; r < rooms; r++) {
   const fightFrom = new Map<string, { from: number; last: number }>();
   const anyRoom = room as any;
   const blow = anyRoom.blow.bind(room), kill = anyRoom.kill.bind(room);
-  let firstDeath = 0;
+  let firstDeath = NaN;
   anyRoom.blow = (by: string, on: string, r: { hit: boolean; damage: number }, ...rest: unknown[]) => {
     if (r.hit && r.damage > 0 && anyRoom.walkers.has(on)) {
       const f = fightFrom.get(on);
@@ -56,7 +56,7 @@ for (let r = 0; r < rooms; r++) {
       const f = fightFrom.get(id);
       const t = f ? seconds - f.from : 0;
       (w.master === null ? ttk.person : ttk.creature).push(t);
-      if (w.master === null && !firstDeath) {
+      if (w.master === null && Number.isNaN(firstDeath)) {
         firstDeath = seconds; firstDeaths.push(seconds);
         const r = anyRoom.recap(w, killerId);
         console.log(`  first death ${(seconds / 60).toFixed(2)} min: ${w.player.name} by ${r.killer || "the wild"}'s ${r.what}`);
@@ -75,14 +75,16 @@ for (let r = 0; r < rooms; r++) {
   const winner = room.state.winner || "(none)";
   const level = report.find((b) => b.id === winner)?.difficulty ?? "-";
   wins.set(level, (wins.get(level) ?? 0) + 1);
-  rounds.push({ minutes: +(seconds / 60).toFixed(1), winner, difficulty: level });
-  console.log(`room ${r + 1}: ${winner} (${level}) won after ${(seconds / 60).toFixed(1)} min${room.state.phase === "over" ? "" : " (time up)"}`);
+  rounds.push({ minutes: +(seconds / 60).toFixed(1), winner, difficulty: level, firstDeath });
+  console.log(`room ${r + 1}: ${winner} (${level}) won after ${(seconds / 60).toFixed(1)} min${room.state.phase === "over" ? "" : " (time up)"}; first death ${firstDeath} s`);
   room.onAward = undefined;
   await room.disconnect().catch(() => {});
 }
 WorldRoom.testSeed = null;
 
 console.log(`\nRounds: ${rounds.length}; minutes ${rounds.map((r) => r.minutes).join(", ")}; mean ${(rounds.reduce((n, r) => n + r.minutes, 0) / rounds.length).toFixed(1)}`);
+const deaths = rounds.map((r) => r.firstDeath).filter((n) => !Number.isNaN(n)).sort((a, b) => a - b);
+console.log(`First death (s): ${deaths.join(", ")}; median ${deaths[Math.floor(deaths.length / 2)] ?? "-"}`);
 console.log(`Wins by difficulty: ${[...wins].map(([k, n]) => `${k} ${n}`).join(", ")}`);
 const pct = (a: number[], q: number) => { const b = [...a].sort((x, y) => x - y); return b.length ? b[Math.min(b.length - 1, Math.floor(q * b.length))]!.toFixed(1) : "-"; };
 for (const [k, a] of Object.entries(ttk)) console.log(`Time to kill (${k}s, ${a.length}): median ${pct(a, 0.5)} s, p25 ${pct(a, 0.25)}, p75 ${pct(a, 0.75)}, under 2 s ${a.filter((t) => t < 2).length}`);

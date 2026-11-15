@@ -239,6 +239,15 @@ Node process that owns the game state. One room per map instance (from milestone
   remounting a mount beside you. `fixtures` indexes the map's fixtures for `nearFixture`;
   `claimGround` remembers a claim's road tiles; `within` is the cheap distance test. Every room
   test file sets `testSeed`: no test depends on a random map or random rolls.
+- Fun batch C2: people and their creatures walk at FOOT_PACE (1.6) times `speed_land` when not
+  riding or flying (`rebuild`); a wild creature running (chasing or fleeing) tires past
+  WIND_SECONDS to TIRED_PACE (`Walker.winded`, in `walk`; rest in `roam`). `take` (E) with nothing
+  to pick up at a chest or the temple starts gathering (`startGather`, the G handler). A
+  `single_use` thing with damage set on the ground (a BOMB) is a fuse (`fuses`, `blowFuses`): after
+  its `attack_windup` (FUSE_SECONDS) it hits every walker and thing within `attack_area`, the
+  maker's side too with `friendly_fire`. A grand spelling (shared `grand`) sends `entrance`
+  { name, word, kind, x, y, grandeur } to everyone (`entrance`). `loadtest/tournament.ts` prints
+  first deaths; `PORT=` runs it beside another.
 - Playtest batch C1 (PLAN.md "Fights you can see"): combat goes through shared `strike`, felt and
   paced (`landed`). `Walker.windup`: a heavy blow (shared `windupOf`) holds still, is sent as
   `windups` [{ by, on, x, y, seconds }] with the hits (`flushHits`), and misses (`Hit.kind`
