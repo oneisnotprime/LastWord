@@ -32,7 +32,7 @@ export interface Connection {
   leave(): void;
   /** Trading and the like: "market" { give, get }, "sell" { index, get }, "hire" {}, "transmute" { give }, "offer" { to, give, get }, "answer" { id, accept }. */
   /** Pick a starting kit by its index among those offered. */
-  pickKit(index: number): void;
+  pickKit(step: number, index: number): void;
   act(type: "market" | "sell" | "hire" | "transmute" | "offer" | "answer", payload: unknown): void;
 }
 
@@ -147,7 +147,7 @@ export async function connect(on: Handlers): Promise<Connection> {
     attack: (target) => room.send("attack", target),
     pick: (what) => room.send("pick", what),
     act: (type, payload) => room.send(type, payload),
-    pickKit: (index) => room.send("kit", index),
+    pickKit: (step, index) => room.send("kit", { step, index }),
     leave: () => { room.onLeave.clear?.(); void room.leave(true); },
     describe: (text, target, gear) => room.send("describe", { text, target, ...(gear !== undefined ? { gear } : {}) }),
   };

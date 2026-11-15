@@ -68,6 +68,8 @@ interface ZoneView {
   word: string; style: ZoneStyle; x: number; y: number; r: number; laidFor: number;
   /** What its card says: who made it, until when, and for claimed ground whose it is and how much it shelters. */
   info: { by: string; until: number; owner: string; shelter: number; mine: boolean };
+  /** The text on the tag now. */
+  title?: string;
   /** Claimed ground (HOME, CASTLE): a fence of stakes around its edge, redrawn as it changes size. */
   fence?: Phaser.GameObjects.Graphics; fencedFor?: number;
 }
@@ -78,6 +80,14 @@ const CLAIM_THEIRS: ZoneStyle = { colour: "#e08a7a", ink: "#8a2a2a", decor: "wor
 
 /** Tiles above a zone's middle its name tag sits (less for a small zone: its top edge). */
 const ZONE_TAG_RISE = 2.5;
+
+/** A zone's tag: "Your MARKET · +25% defense", "Enemy HOME · …", "Unclaimed RUIN · …", "FIRE · by BOT2". */
+export function zoneTitle(zone: { word: string; owner?: string; shelter?: number; by?: string }, mine: string): string {
+  const word = zone.word.toUpperCase();
+  if (!(Number(zone.shelter) > 0)) return `${word}${zone.by ? ` · by ${String(zone.by).toUpperCase()}` : ""}`;
+  const whose = !zone.owner ? "Unclaimed" : zone.owner === mine ? "Your" : "Enemy";
+  return `${whose} ${word} · +${zone.shelter}% defense`;
+}
 
 export class Zones {
   private views = new Map<string, ZoneView>();
@@ -138,16 +148,14 @@ export class Zones {
         useMade(disc, this.paint.tissue(seed % 7), this.k);
         disc.setData("s", disc.scaleX);
         const tag = this.scene.add.image(0, 0, "__WHITE").setDepth(10000);
-        // Owner and kind on the tag: "BOT3's HOME · claimed ground", "FIRE · by BOT2".
-        const owner = zone.owner === mine ? "YOUR" : `${(nameOf(zone.owner) || zone.by || "SOMEONE").toUpperCase()}'S`;
-        const title = claim ? `${owner} ${zone.word.toUpperCase()} · claimed −${zone.shelter}%`
-          : `${zone.word.toUpperCase()}${zone.by ? ` · by ${String(zone.by).toUpperCase()}` : ""}`;
-        useMade(tag, this.paint.tag([title], style.ink, 13), this.k);
         z = { disc, tag, decor: [], word: zone.word, style, x: 0, y: 0, r: 0, laidFor: 0,
           info: { by: String(zone.by ?? ""), until: Number(zone.until ?? 0), owner: String(zone.owner ?? ""), shelter: Number(zone.shelter ?? 0), mine: zone.owner === mine } };
         if (claim) { z.fence = this.scene.add.graphics().setDepth(51).setScale(1, 0.9); disc.setAlpha(0.2); }
         this.views.set(id, z);
       }
+      // The tag follows a change of owner (a claimed RUIN, a swap).
+      const title = zoneTitle(zone, mine);
+      if (z.title !== title) { z.title = title; z.info.owner = String(zone.owner ?? ""); z.info.mine = zone.owner === mine; useMade(z.tag, this.paint.tag([title], z.style.ink, 13), this.k); }
       z.x = zone.x * PX; z.y = zone.y * PX; z.r = zone.radius * PX;
       if (z.fence) {
         // Stakes and a dashed rope around claimed ground, instead of cut-outs inside it.
@@ -212,8 +220,8 @@ export class Zones {
     const hits = [...this.views.values()].filter((z) => inside ? Math.hypot(x - z.x, (y - z.y) / 0.9) <= z.r : z.tag.getBounds().contains(x, y));
     for (const z of hits.sort((a, b) => a.r - b.r)) {
       const extra = z.info.shelter > 0 ? [
-        `claimed ground: ${z.info.mine ? "yours" : "someone else's"}`,
-        `${z.info.mine ? "your" : "their"} things inside take ${z.info.shelter}% less damage and are harder to steal`,
+        z.info.mine ? "your ground" : z.info.owner ? `enemy ground${z.info.by ? `: ${z.info.by}` : ""}` : "unclaimed ground",
+        `+${z.info.shelter}% defense: ${z.info.mine ? "your" : "their"} things inside take ${z.info.shelter}% less damage and are harder to steal`,
         z.info.mine ? "you are sheltered inside" : "their side is sheltered inside",
       ] : [];
       return { word: z.word, until: z.info.until, by: z.info.by, kind: "zone", extra };

@@ -22,16 +22,21 @@ export interface WordTip {
   does: string;
   /** The shortest word that ends or beats it, if one exists. */
   counter?: string;
+  /** The same as `does`, a property each, with a short plain explanation (the start screen's two columns). */
+  lines: TipLine[];
 }
 
+/** One property of a word idea and what it means: "integrity ×3" / "damage it takes before it is destroyed". */
+export interface TipLine { text: string; why: string }
+
 /** Short labels for the kinds, shown in brackets after the word. */
-const LABEL: Record<TipKind, string> = {
+export const TIP_LABEL: Record<TipKind, string> = {
   adjective: "adj", creature: "creature", event: "event", terrain: "terrain", producer: "producer", weapon: "weapon", sky: "sky", verb: "verb",
 };
 
 /** A word tip in one line. */
 export function tipText(t: WordTip): string {
-  return `${t.word.toUpperCase()} (${LABEL[t.kind]}): ${t.does}${t.counter ? ` · countered by ${t.counter.toUpperCase()}` : ""}`;
+  return `${t.word.toUpperCase()} (${TIP_LABEL[t.kind]}): ${t.does}${t.counter ? ` · countered by ${t.counter.toUpperCase()}` : ""}`;
 }
 
 /** Properties worth reading first in a change list, by prefix; anything else comes after. */
@@ -54,12 +59,30 @@ function setLine(id: string, v: Value): string | null {
   return null;
 }
 
-/** The changes an adjective, verb or adverb makes, most telling first. */
-function changes(ops: readonly Op[], set: Record<string, Value>, limit = 3): string[] {
+/** The changes an adjective, verb or adverb makes, most telling first, with the property each changes. */
+function changes(ops: readonly Op[], set: Record<string, Value>, limit = 3): { text: string; id: string }[] {
   const shown = ops.filter(([id]) => !DULL.test(id)).sort((a, b) => rank(a[0]) - rank(b[0]));
-  const out = shown.map(change);
-  for (const [id, v] of Object.entries(set)) { const t = setLine(id, v); if (t) out.push(t); }
+  const out = shown.map((o) => ({ text: change(o), id: o[0] }));
+  for (const [id, v] of Object.entries(set)) { const t = setLine(id, v); if (t) out.push({ text: t, id }); }
   return out.slice(0, limit);
+}
+
+/** Plain meanings of the lines a word idea shows that are not one property. */
+const MEANS: [RegExp, string][] = [
+  [/^makes [A-Z]/, "letters it earns you a minute"],
+  [/^needs /, "else it makes nothing"],
+  [/^follows you/, "a creature on your side"],
+  [/^damage/, "dealt with each strike"],
+  [/^flies/, "goes over water and walls"],
+  [/^turns land/, "reshapes the ground"],
+  [/^cures/, "ends those statuses"],
+];
+
+/** What a line means in a few words: the property's own description up to its first clause, or a line from MEANS. */
+function meaning(dict: Dictionary, text: string, id?: string): string {
+  const own = id && /^produce_[A-Z]$/.test(id) ? null : id ? dict.properties.get(id)?.desc : undefined;
+  const why = own ? own.split(/[;:(]/)[0]!.trim() : MEANS.find(([re]) => re.test(text))?.[1] ?? "";
+  return why.length > 48 ? `${why.slice(0, 46).replace(/\s+\S*$/, "")}…` : why;
 }
 
 /** What kind of word a phrase is, for the ideas; null for words that teach little (adverbs, things that do nothing). */
@@ -90,15 +113,19 @@ export function wordTip(dict: Dictionary, word: string): WordTip | null {
   const kind = tipKind(dict, word, p);
   if (!kind) return null;
   let parts: string[] = [];
+  let ids: (string | undefined)[] = [];
   const rates = (count = 1) => {
     const spec = producerOf(p!.stats, count), r = Object.entries(spec.rates);
     return r.length ? [`makes ${r.map(([ch, n]) => `${ch.toUpperCase()} +${+n.toPrecision(2)}/min`).join(", ")}`] : [];
   };
   switch (kind) {
     case "adjective":
-    case "verb":
-      parts = changes(def.ops, def.set);
+    case "verb": {
+      const c = changes(def.ops, def.set);
+      parts = c.map((x) => x.text);
+      ids = c.map((x) => x.id);
       break;
+    }
     case "creature": {
       const s = p!.stats;
       parts = [...keyStats(s).filter((k) => k.startsWith("damage")).slice(0, 1), ...(s.num("speed_air") > 0 ? ["flies"] : []), ...rates()];
@@ -127,8 +154,11 @@ export function wordTip(dict: Dictionary, word: string): WordTip | null {
   }
   parts = parts.filter(Boolean);
   if (!parts.length) return null;
+  // "all inside: speed ×0.5" reads in two columns as "speed ×0.5" / "on everyone in its area".
+  const lines = parts.map((text, i) => text.startsWith("all inside: ")
+    ? { text: text.slice(12), why: "on everyone in its area" } : { text, why: meaning(dict, text, ids[i]) });
   const counter = countersOf(dict, word).find((w) => w !== word && dict.word(w)?.role === "noun" && !dict.crude(w));
-  return { word, kind, does: parts.join(", "), ...(counter ? { counter } : {}) };
+  return { word, kind, does: parts.join(", "), lines, ...(counter ? { counter } : {}) };
 }
 
 /** Every word worth a tip, by kind; worked out once per dictionary. */
@@ -243,3 +273,45 @@ export function tipOfTheMoment(dict: Dictionary, held: Letters, rng: Rng): strin
 
 /** Whether a rule tip's word is one the dictionary knows (as itself, an inflection or a plural). */
 export const knowsWord = (dict: Dictionary, word: string): boolean => !!(dict.lookup(word) ?? readNoun(dict, word));
+
+/** The groups of the spell window's "you can spell now" list, in order. */
+export const SPELL_GROUPS = ["weapons", "gear", "rides", "creatures", "buildings", "other", "verbs", "events", "areas", "sky"] as const;
+export type SpellGroup = (typeof SPELL_GROUPS)[number];
+
+/**
+ * Which group a word falls in, from what spelling it makes (shared `parsePhrase`, `becomes`):
+ * verbs, events, areas (fields) and sky words by their kind; objects as weapons (held, dealing damage), other
+ * gear (worn or held), rides (mountable), creatures, buildings (fixed on the ground) or other.
+ */
+export function spellGroup(dict: Dictionary, word: string): SpellGroup | null {
+  let p: Phrase;
+  try { p = parsePhrase(dict, word); } catch { return null; }
+  if (p.kind === "verb") return "verbs";
+  if (p.kind === "event") return "events";
+  if (p.kind === "field") return "areas";
+  if (p.kind === "sky") return "sky";
+  const s = p.stats, to = becomes(s);
+  if (to === "creature") return "creatures";
+  if (s.flag("mountable")) return "rides";
+  if (to === "worn") return s.get("equip_slot") === "held" && keyStats(s).some((k) => k.startsWith("damage")) ? "weapons" : "gear";
+  if (to === "ground" && s.get("portable") === false) return "buildings";
+  return "other";
+}
+
+const groupsKnown = new WeakMap<Dictionary, Map<string, SpellGroup | null>>();
+
+/** Words whose letters `held` covers right now, shortest first, by group. */
+export function spellableNow(dict: Dictionary, held: Letters): Record<SpellGroup, string[]> {
+  const out = Object.fromEntries(SPELL_GROUPS.map((g) => [g, [] as string[]])) as Record<SpellGroup, string[]>;
+  const words: string[] = [];
+  for (const [word, def] of dict.words) if ((def.role === "noun" || def.role === "verb") && /^[a-z]+$/.test(word) && !missing(held, word)) words.push(word);
+  words.sort((a, b) => a.length - b.length || a.localeCompare(b));
+  let known = groupsKnown.get(dict);
+  if (!known) groupsKnown.set(dict, (known = new Map()));
+  for (const w of words) {
+    if (!known.has(w)) known.set(w, spellGroup(dict, w));
+    const g = known.get(w);
+    if (g) out[g].push(w);
+  }
+  return out;
+}

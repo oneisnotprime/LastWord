@@ -122,15 +122,25 @@
       #menu .cols { display: grid; grid-template-columns: 1fr 270px; gap: 18px; }
       #ideas .head { display: flex; justify-content: space-between; align-items: center; font: 600 10.5px var(--round); text-transform: uppercase; letter-spacing: 1px; color: var(--soft); }
       #ideas .head button { margin: 0; padding: 1px 8px; font-size: 11px; text-transform: none; letter-spacing: 0; }
-      #ideas .idea { padding: 4px 8px 5px; margin: 4px 0; background: var(--card); border-radius: 3px; box-shadow: inset 0 1px 2px rgba(60, 40, 20, .15); font: 500 11.5px/1.35 var(--round); }
-      #ideas .idea > b { font: 700 14px var(--hand); letter-spacing: 1px; }
+      #ideas .idea { display: grid; grid-template-columns: 34% 1fr; gap: 8px; padding: 4px 8px 5px; margin: 4px 0; background: var(--card); border-radius: 3px; box-shadow: inset 0 1px 2px rgba(60, 40, 20, .15); font: 500 11.5px/1.3 var(--round); }
+      #ideas .idea .w > b { display: block; font: 700 14px/1.2 var(--hand); letter-spacing: 1px; }
       #ideas .idea .k { font: 600 9.5px var(--round); text-transform: uppercase; letter-spacing: 1px; color: var(--soft); }
-      #ideas .idea .d { color: #8a5a1a; }
+      #ideas .idea .p { list-style: none; margin: 0; padding: 0; } #ideas .idea .p li { margin: 1px 0; }
+      #ideas .idea .d { color: #8a5a1a; font-weight: 600; } #ideas .idea .p small { display: block; color: var(--soft); font-size: 10px; line-height: 1.2; }
       #ideas .idea .c { color: var(--soft); font-size: 10.5px; } #ideas .idea .c b { color: var(--red); }
+      #ideas .ideahead { display: grid; grid-template-columns: 34% 1fr; gap: 8px; padding: 0 8px; font: 600 9.5px var(--round); text-transform: uppercase; letter-spacing: 1.5px; color: var(--soft); }
       #ideas .opt { display: flex; gap: 6px; align-items: center; margin-top: 8px; font: 500 11.5px var(--round); color: var(--soft); cursor: pointer; }
       /* The spell window's tip while nothing is typed: one line, a word idea or a rule. */
       #tip { display: none; margin-top: 8px; font: 500 11.5px var(--round); color: #8a5a1a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
       #tip.show { display: block; }
+      #canspell { margin-top: 8px; text-align: left; }
+      #canspell .tabs { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
+      #canspell .tabs > span { font: 600 10px var(--round); text-transform: uppercase; letter-spacing: 1px; color: var(--soft); margin-right: 4px; }
+      #canspell button { font: 600 11.5px var(--round); color: var(--ink); background: var(--card); border: 0; border-radius: 3px; padding: 2px 7px; cursor: pointer; box-shadow: 0 1px 0 #cfc3a6; }
+      #canspell button small { color: var(--soft); font-size: 10px; }
+      #canspell button.on, #canspell button:hover { background: var(--gold); }
+      #canspell .words { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 6px; max-height: 120px; overflow-y: auto; }
+      #canspell .words button { font: 700 12.5px var(--hand); letter-spacing: .5px; background: #fbf6ea; }
       #tip::before { content: "tip · "; color: var(--soft); }
       /* A letter you do not hold: the spell window flashes red and shakes. */
       #spellwin .card.reject { animation: reject .38s; background: #f6c9c2; box-shadow: 0 0 0 5px var(--red), 0 3px 0 5px #8a2a2a, 0 22px 50px rgba(20, 14, 8, .6); }
@@ -232,6 +242,8 @@
       #fx .pop .big { min-width: 58px; height: 74px; padding: 0 8px; box-sizing: border-box; display: flex; align-items: center; justify-content: center;
         font: 700 46px/1 var(--round); color: #4a3510; background: var(--gold); border-radius: 5px;
         box-shadow: 0 0 0 4px #fffdf6, 0 4px 0 4px #b8902a, 0 14px 24px rgba(40, 28, 16, .55); }
+      #fx .fly { position: absolute; width: 34px; height: 40px; display: flex; align-items: center; justify-content: center; transform: translate(-50%, -50%); will-change: transform;
+        font: 700 24px/1 var(--round); color: #4a3510; background: var(--gold); border-radius: 4px; box-shadow: 0 0 0 3px #fffdf6, 0 3px 0 3px #b8902a, 0 8px 14px rgba(40, 28, 16, .45); }
       #fx .pop .why { margin-top: 12px; padding: 3px 12px 4px; white-space: nowrap; font: 700 17px var(--hand); letter-spacing: 1px; color: #4a3f33; background: var(--paper);
         border-radius: 2px; box-shadow: var(--shadow); transform: rotate(-2deg); }
       #fx .spark { position: absolute; width: 9px; height: 6px; border-radius: 1px; box-shadow: 0 1px 1px rgba(0, 0, 0, .25); }
@@ -292,6 +304,14 @@
       #kits h2 { margin: 0; font: 700 30px var(--hand); letter-spacing: 2px; text-align: center; }
       #kits .hint { text-align: center; color: var(--soft); margin-bottom: 12px; }
       #kits .hint .left { color: var(--red); font: 700 16px var(--hand); margin-left: 6px; }
+      #kits h2 .left { color: var(--red); font: 700 18px var(--hand); margin-left: 8px; letter-spacing: 0; }
+      #kits .steps { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px 16px; margin: 4px 0 14px; font: 600 12px var(--round); color: var(--soft); }
+      #kits .steps span { padding: 2px 8px; border-radius: 2px; }
+      #kits .steps .now { background: var(--gold); color: #4a3510; }
+      #kits .steps .done b { color: var(--ink); }
+      #kits .kitcard.picked { box-shadow: 0 0 0 4px var(--gold), 0 3px 0 4px #b8903a; }
+      #kits .hand .tiles { margin: 4px 0 6px; }
+      #kits .kitcard .hand .tiles { gap: 4px; flex-wrap: wrap; } #kits .kitcard[data-pick] .hand .tiles i { width: 26px; height: 30px; font-size: 18px; line-height: 30px; }
       #kits .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
       #kits .kitcard { position: relative; padding: 12px 14px 12px; background: var(--paper); border-radius: 3px; box-shadow: 0 2px 0 #cfc3a6, 0 8px 18px rgba(40, 28, 16, .35); }
       #kits .kitcard[data-pick] { cursor: pointer; transition: transform .15s, box-shadow .15s; }
@@ -355,6 +375,7 @@
       <div id="pickhint"></div>
       <div id="tip"></div>
       <div id="abc"></div>
+      <div id="canspell"></div>
     </div></div>
     <div id="menu"><div class="card">
       <h2>MENU</h2>
@@ -371,8 +392,7 @@
         <dt>Get off</dt><dd><kbd>R</kbd></dd>
         <dt>Drop</dt><dd><kbd>Q</kbd></dd>
         <dt>Use</dt><dd><kbd>U</kbd></dd>
-        <dt>Inventory</dt><dd><kbd>I</kbd></dd>
-        <dt>Loadout</dt><dd><kbd>L</kbd></dd>
+        <dt>Inventory</dt><dd><kbd>I</kbd> or <kbd>L</kbd></dd>
       </dl>
       <dl class="padonly" id="padmap"></dl></div>
       <div id="ideas">

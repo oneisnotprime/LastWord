@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { demo, kitData } from "./testdata.js";
 import {
-  buildingLines, dealKits, jobBodyOps, jobLines, jobRules, jobStats, kitCard, kitHand,
+  bestOption, buildingLines, dealKits, kitHands, kitOptions, KIT_STEPS, jobBodyOps, jobLines, jobRules, jobStats, kitCard, kitHand,
   type KitData,
 } from "./kits.js";
 import { starterWords, STARTING_HAND } from "./economy.js";
@@ -14,7 +14,32 @@ import { toolHelp } from "./biome.js";
 const dict = demo();
 const data = kitData() as KitData;
 
+describe("the pick in three steps", () => {
+  it("offers three jobs, buildings, then three hands for the job picked; a best choice for each", () => {
+    const kits = dealKits(data, dict, seeded(4));
+    expect(KIT_STEPS).toEqual(["job", "building", "letters"]);
+    expect(kitOptions(data, dict, 0, kits).map((o) => o.word)).toEqual(kits.map((k) => k.job));
+    expect(kitOptions(data, dict, 1, kits).map((o) => o.word)).toEqual(kits.map((k) => k.building));
+    const job = data.jobs.find((j) => j.word === kits[0]!.job)!;
+    const hands = kitHands(dict, job, seeded(5));
+    expect(hands).toHaveLength(3);
+    expect(new Set(hands.map((h) => h.word)).size).toBe(3);
+    for (const o of kitOptions(data, dict, 2, kits, hands)) { expect(o.letters).toHaveLength(STARTING_HAND); expect(o.lines[0]!.text).toMatch(/^spells /); }
+    for (let step = 0; step < 3; step++) expect(bestOption(data, dict, step, kits, hands)).toBeLessThan(3);
+  });
+});
+
 describe("kit tables (data/kits.json)", () => {
+  it("letter rate multipliers are whole numbers, shown as an income multiplier", () => {
+    for (const j of data.jobs) {
+      for (const [id, op, n] of j.ops) if (/^produce_/.test(id) && op === "mul") expect(Number.isInteger(n), `${j.word} ${id} ${n}`).toBe(true);
+      for (const l of jobLines(j)) expect(l.text, j.word).not.toMatch(/×\d+\.\d/);
+    }
+    const scholar = data.jobs.find((j) => j.word === "scholar")!;
+    expect(jobLines(scholar).map((l) => l.text)).toContain("Y ×2 · J ×2 income");
+    expect(jobLines(data.jobs.find((j) => j.word === "merchant")!).map((l) => l.text)).toContain("market prices −25%");
+  });
+
   it("has 100 jobs and 100 buildings, all different", () => {
     expect(data.jobs).toHaveLength(100);
     expect(new Set(data.jobs.map((j) => j.word)).size).toBe(100);
