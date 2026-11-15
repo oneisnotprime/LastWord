@@ -69,6 +69,13 @@ it("trades at a market for a letter it lacks, hires a hand, and makes and answer
   expect(want).toBeTruthy();
   expect(R.botTrade(a!.id, a!.w, a!.mind, held(a!.w.letters))).toBe("trade");
   expect(a!.w.letters[want.letter]).toBeGreaterThan(0);
+  // A rack it can do nothing with (all J): the market's swap, once.
+  a!.w.letters = { j: 8 };
+  expect(R.botTrade(a!.id, a!.w, a!.mind, held(a!.w.letters))).toBe("swap");
+  expect(Object.values(a!.w.letters as Record<string, number>).reduce((n, v) => n + v, 0)).toBe(8);
+  expect(a!.w.letters.j ?? 0).toBe(0);
+  a!.w.letters = { j: 8 };
+  expect(R.botTrade(a!.id, a!.w, a!.mind, held(a!.w.letters))).not.toBe("swap");
   // An offer to the bot beside it: two spare letters for the one it lacks; the other bot accepts.
   const now = R.botWant(a!.mind, held({ ...letters(weapon.word.slice(1)) }));
   const spare = [..."qjxzvkwyfbhmpgucdlnrstoiae"].find((ch) => !now.word.word.includes(ch) && ch !== now.letter)!;

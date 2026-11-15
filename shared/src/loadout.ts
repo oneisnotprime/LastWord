@@ -48,11 +48,12 @@ export interface LoadoutDetail {
   /**
    * The market you stand at, for the market panel: letters it asks for one (`ratio`), trades it
    * has in hand, letters it never sells, why it is closed ("" if open), what hiring a worker costs
-   * in letters, citizens left to hire, and who rules its city ("" for nobody).
+   * in letters, citizens left to hire, who rules its city ("" for nobody), and whether you have
+   * used its one rack swap. `sells`: what you carry the market would buy, by gear index, and the
+   * letters it pays (shared `salePrice`).
    */
-  /** `sells`: what you carry the market would buy, by gear index, and the letters it pays (shared `salePrice`). */
-  market?: { ratio: number; stock: number; refuses: string; closed: string; hire: number; citizens: number; ruler: string; sells?: { index: number; phrase: string; price: number }[] };
-  /** Common letters a transmutation into Z takes for you now. */
+  market?: { ratio: number; stock: number; refuses: string; closed: string; hire: number; citizens: number; ruler: string; swapped: boolean; sells?: { index: number; phrase: string; price: number }[] };
+  /** Common letters a transmutation into Z takes for you now; absent without alchemy (`transmute_in`, a precious material). */
   transmute?: number;
 }
 

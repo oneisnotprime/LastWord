@@ -449,7 +449,7 @@ export function heldText(dict: Dictionary, phrase: string): string {
   if (s.flag("mountable") && Math.max(s.num("speed_land"), s.num("speed_air"), s.num("speed_water")) > 0) {
     out.push(`ride at ${num(Math.max(s.num("speed_land"), s.num("speed_air"), s.num("speed_water")))} m/s`);
   }
-  const KINDS: [string, string][] = [["forage", "foraging"], ["fish", "fishing"], ["dig", "digging"], ["cache", "caches"], ["hunt", "hunting"]];
+  const KINDS: [string, string][] = [["forage", "foraging"], ["fish", "fishing"], ["dig", "digging"], ["chest", "chests"], ["hunt", "hunting"]];
   for (const [kind, name] of KINDS) {
     const h = toolHelp(kind, [{ name: p.noun, stats: s }]);
     if (h.length) out.push(kind === "hunt" ? `more letters ${name}` : `+${Math.round(h[0]!.chance * 100)}% ${name}`);

@@ -4,6 +4,9 @@ import type { Letters } from "./phrase.js";
 import { Tile, tileAt, walkable, type Point, type WorldMap } from "./world.js";
 import { BIOMES, forageLetter, GATHER_CHANCE, roll, type Help, type Roll } from "./biome.js";
 
+/** Letters to fill a hand with after its starter word (and a market's rack swap), by how often words use them (no J, Q, X or Z). */
+export const HAND_FILL = "eeeeeeeeeeeiiiiiiiiaaaaaaaarrrrrrrnnnnnnnttttttoooooosssssslllllccccuuuudddpppmmmhhggyybbffwwkv";
+
 /** Seconds one gathering action takes. */
 export const GATHER_SECONDS = 2;
 /** How close, in tiles, two players must be to hand letters over. */
@@ -23,7 +26,7 @@ export const ACTION_SOURCES: Readonly<Record<string, string>> = {
   d: "destroying objects and structures, ruins included",
   k: "killing people and the people who follow them",
   j: "being first into a region nobody has explored",
-  x: "digging up buried caches, sometimes breaking ruins",
+  x: "digging up buried chests, sometimes breaking ruins",
   q: "the map's one temple",
   t: "trading at a city market",
 };
@@ -39,7 +42,7 @@ export const DEED_SOURCES: Readonly<Record<string, string>> = {
   v: "beating another player's things and creatures",
 };
 
-/** Common letters a transmutation takes for one Z, unless something you own (`transmute_in`, a LAB) does it for fewer. */
+/** Base of the alchemy ratio a precious material carried cuts (shared `alchemyRatio`); without alchemy (`transmute_in`, a material) there is no transmuting. */
 export const TRANSMUTE_RATIO = 10;
 
 /** One kind of ground deposit: the letter, how many a patch holds, and seconds to grow one back (0: never). */
@@ -84,7 +87,7 @@ export function depositsAt(map: WorldMap, x: number, y: number): Deposit[] {
   return out;
 }
 
-/** A place on the map that gives one letter to whoever gathers beside it: a cache (X) or the temple (Q). */
+/** A place on the map that gives one letter to whoever gathers beside it: a chest (X) or the temple (Q). */
 export interface Site {
   id: string;
   x: number;
@@ -92,7 +95,7 @@ export interface Site {
   letter: string;
   stock: number;
   max: number;
-  /** Seconds to grow one back; 0 for never (a cache, once dug out, is gone). */
+  /** Seconds to grow one back; 0 for never (a chest, once dug out, is gone). */
   regen: number;
   /** Tiles from it a gatherer may stand. */
   radius: number;
@@ -106,10 +109,10 @@ export interface Site {
  */
 export type Gathered = { letter: string; from: string; emptied?: string; roll?: Roll } | { letter: ""; why: string; roll?: Roll };
 
-/** A cache's X does not come at every dig: this chance, before a SHOVEL helps. */
-export const CACHE_CHANCE = 0.35;
+/** A chest's X does not come at every dig: this chance, before a SHOVEL helps. */
+export const CHEST_CHANCE = 0.35;
 
-/** What helps a person gather each kind ("forage", "fish", "dig", "cave", "cache"): their tools. */
+/** What helps a person gather each kind ("forage", "fish", "dig", "cave", "chest"): their tools. */
 export type GatherHelp = (kind: string) => Help[];
 
 /**
@@ -214,7 +217,7 @@ export class Deposits {
   gather(x: number, y: number, now: number, rng: Rng, growth = 1, help: GatherHelp = () => []): Gathered {
     const site = this.siteAt(x, y, now);
     if (site) {
-      const r = site.letter === "x" ? roll(CACHE_CHANCE, "cache", help("cache"), rng) : undefined;
+      const r = site.letter === "x" ? roll(CHEST_CHANCE, "chest", help("chest"), rng) : undefined;
       if (r && !r.ok) return { letter: "", why: "nothing", roll: r };
       site.stock -= 1;
       const gone = site.regen === 0 && site.stock < 1;
@@ -247,19 +250,31 @@ export class Deposits {
 export const REGION_TILES = 64;
 export const regionOf = (x: number, y: number): number => Math.floor(y / REGION_TILES) * 4096 + Math.floor(x / REGION_TILES);
 
+/**
+ * Exploring widens a person's sight: they start seeing SIGHT_EXPLORE.start of their body's sight,
+ * and each region they enter after the first adds SIGHT_EXPLORE.per, up to SIGHT_EXPLORE.max
+ * (eight regions, half of a 256-tile map).
+ */
+export const SIGHT_EXPLORE = { start: 0.7, per: 0.05, max: 1.1 };
+
+/** What a person's sight is multiplied by after exploring `regions` regions (their first included). */
+export function exploredSight(regions: number): number {
+  return Math.min(SIGHT_EXPLORE.max, SIGHT_EXPLORE.start + SIGHT_EXPLORE.per * Math.max(0, regions - 1));
+}
+
 /** How many of each source a map gets, besides a market in every city. */
-export const MAP_SOURCES = { caches: 8, ruins: 10, animals: 40 };
-/** X a buried cache holds; it never refills. */
-export const CACHE_X = 1;
-/** Letters a cache's last dig turns up besides its X: the prize for finding it. */
-export const CACHE_PRIZE = 3;
-/** What a cache's prize is drawn from: everyday letters, so the prize is always useful. */
+export const MAP_SOURCES = { chests: 8, ruins: 10, animals: 40 };
+/** X a buried chest holds; it never refills. */
+export const CHEST_X = 1;
+/** Letters a chest's last dig turns up besides its X: the prize for finding it. */
+export const CHEST_PRIZE = 3;
+/** What a chest's prize is drawn from: everyday letters, so the prize is always useful. */
 const PRIZE_LETTERS = "eeeaaaiioonnrrsstthldcmpbgwy";
 
-/** The prize at the bottom of a cache: CACHE_PRIZE everyday letters. */
-export function cachePrize(rng: Rng): string {
+/** The prize at the bottom of a chest: CHEST_PRIZE everyday letters. */
+export function chestPrize(rng: Rng): string {
   let out = "";
-  for (let i = 0; i < CACHE_PRIZE; i++) out += PRIZE_LETTERS[Math.floor(rng() * PRIZE_LETTERS.length)];
+  for (let i = 0; i < CHEST_PRIZE; i++) out += PRIZE_LETTERS[Math.floor(rng() * PRIZE_LETTERS.length)];
   return out;
 }
 /** X a ruin gives when it is broken, besides the D for breaking it, one time in RUIN_X_CHANCE. */
@@ -269,7 +284,7 @@ export const RUIN_X_CHANCE = 0.25;
 export const RUIN_INTEGRITY = 250;
 /** The temple's Q: how many it holds and seconds to grow one back. */
 export const TEMPLE_Q = { stock: 2, regen: 120 };
-/** Tiles from a cache or the temple a gatherer may stand. */
+/** Tiles from a chest or the temple a gatherer may stand. */
 export const SITE_RADIUS = 2.5;
 
 /** Wild creatures put on a map for hunting, and how often each is chosen. All are peaceable. */
@@ -283,13 +298,24 @@ export function pickAnimal(rng: Rng): string {
 }
 
 /**
- * Markets: neutral NPC traders, one in every city. Give MARKET_RATIO letters for one of your
- * choice (not the rare ones), and every trade also pays one T. A market has a few trades in
- * hand and takes on more slowly.
+ * Markets: neutral NPC traders, one in every city. Give any MARKET.ratio letters you choose for
+ * one of your choice (not the rare ones), and every trade also pays one T. A market has a few
+ * trades in hand and takes on more slowly. Each market also swaps a person's whole rack once
+ * (`rackSwap`).
  */
-export const MARKET = { ratio: 3, range: 4, stock: 8, regen: 20, refuses: "jqxz" };
+export const MARKET = { ratio: 4, range: 4, stock: 8, regen: 20, refuses: "jqxz" };
 
-/** Letters a market asks for one where its place's rules (shared `tradeRateOf`) scale the price: never under 1. */
+/**
+ * A market's rack swap: as many letters as were held, drawn like a starting hand's fill
+ * (everyday English letter frequency, never J, Q, X or Z). Once per market per person.
+ */
+export function rackSwap(count: number, rng: Rng): string {
+  let out = "";
+  for (let i = 0; i < count; i++) out += HAND_FILL[Math.floor(rng() * HAND_FILL.length)];
+  return out;
+}
+
+/** Letters a market asks for one where its place's rules (shared `tradeRateOf`) scale the price: whole letters, rounded, never under 1. */
 export function marketRatio(rate: number): number {
   return Math.max(1, Math.round(MARKET.ratio * (Number.isFinite(rate) ? rate : 1)));
 }
@@ -310,7 +336,7 @@ export function salePrice(value: number, count: number, ratio: number): number {
   return Math.min(SALE_MAX, Math.floor((Math.log10(worth) * MARKET.ratio) / Math.max(1, ratio)));
 }
 
-/** Reads "trade eee for o": what is given and what is wanted. Null if the text is not a trade. */
+/** Reads "trade eeee for o": what is given and what is wanted. Null if the text is not a trade. */
 export function readTrade(text: string): { give: string; get: string } | null {
   const m = /^\s*trade\s+([a-z]+)\s+for\s+([a-z]+)\s*$/i.exec(text);
   return m ? { give: m[1]!.toLowerCase(), get: m[2]!.toLowerCase() } : null;
@@ -356,12 +382,12 @@ export function mainland(map: WorldMap): Uint8Array {
   return out;
 }
 
-/** Where a map's sources go: a market per city, the temple, caches, ruins and wild animals. */
-export interface SourcePlaces { markets: Point[]; temple: Point; caches: Point[]; ruins: Point[]; animals: Point[] }
+/** Where a map's sources go: a market per city, the temple, chests, ruins and wild animals. */
+export interface SourcePlaces { markets: Point[]; temple: Point; chests: Point[]; ruins: Point[]; animals: Point[] }
 
 /**
  * Places the map's sources from a seeded generator, on the mainland only, out of cities:
- * caches and ruins at least 10 tiles from each other and from any city; the temple near the
+ * chests and ruins at least 10 tiles from each other and from any city; the temple near the
  * middle of the map, where everyone must go for it.
  */
 export function placeSources(map: WorldMap, rng: Rng, land = mainland(map)): SourcePlaces {
@@ -393,11 +419,11 @@ export function placeSources(map: WorldMap, rng: Rng, land = mainland(map)): Sou
     temple = spot((p) => Math.hypot(p.x - n / 2, p.y - n / 2) <= r + 4 && awayFromCities(p, 8));
   }
   temple ??= spot(() => true) ?? { x: n / 2, y: n / 2 };
-  const caches = spread(MAP_SOURCES.caches, [temple]);
-  const ruins = spread(MAP_SOURCES.ruins, [temple, ...caches]);
+  const chests = spread(MAP_SOURCES.chests, [temple]);
+  const ruins = spread(MAP_SOURCES.ruins, [temple, ...chests]);
   const animals: Point[] = [];
   for (let i = 0; i < MAP_SOURCES.animals; i++) { const p = spot((q) => awayFromCities(q, 3)); if (p) animals.push(p); }
-  return { markets, temple, caches, ruins, animals };
+  return { markets, temple, chests, ruins, animals };
 }
 
 /**
@@ -480,7 +506,7 @@ export const LETTER_GUIDE: Readonly<Record<string, LetterHow>> = {
   u: { how: "caves by mountains (G)", words: ["mushroom"] },
   v: { how: "beat others' things" },
   w: { how: "mills, with the wind", words: ["mill", "windmill"] },
-  x: { how: "caches (G), some ruins" },
+  x: { how: "chests (G), some ruins" },
   y: { how: "age: things kept", words: ["clock", "oak"] },
-  z: { how: "bosses, transmute 10" },
+  z: { how: "bosses; alchemy" },
 };

@@ -125,8 +125,8 @@ it("INFLATION doubles every market's price; a BARGAIN makes it one for one", asy
   const { room, a, wa, last, c } = await setup();
   wa.player.x = c.x + 0.5; wa.player.y = c.y + 0.5;
   a.send("spell", "inflation"); await wait();
-  a.send("spell", "trade eee for o"); await wait();
-  expect(last("a", "refused")).toBe("The market takes 6 letters for each one: 6 for O");
+  a.send("spell", "trade eeee for o"); await wait();
+  expect(last("a", "refused")).toBe("The market takes 8 letters for each one: 8 for O");
   a.send("spell", "deflation"); await wait(); // ends the inflation: two for one
   a.send("spell", "bargain"); await wait();
   a.send("spell", "trade e for o"); await wait();

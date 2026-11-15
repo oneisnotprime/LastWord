@@ -30,12 +30,12 @@ export interface Connection {
   pick(what: { id: string } | { x: number; y: number } | null): void;
   /** Leaves the room for good (a new round elsewhere). */
   leave(): void;
-  /** Trading and the like: "market" { give, get }, "sell" { index, get }, "hire" {}, "transmute" { give }, "offer" { to, give, get }, "answer" { id, accept }. */
+  /** Trading and the like: "market" { give, get }, "sell" { index, get }, "hire" {}, "swap" {}, "transmute" { give }, "offer" { to, give, get }, "answer" { id, accept }. */
   /** Pick a starting kit by its index among those offered. */
   pickKit(step: number, index: number): void;
   /** Pay a sealed legendary's letters to unseal it. */
   unseal(): void;
-  act(type: "market" | "sell" | "hire" | "transmute" | "offer" | "answer", payload: unknown): void;
+  act(type: "market" | "sell" | "hire" | "swap" | "transmute" | "offer" | "answer", payload: unknown): void;
 }
 
 /** Letters gained and why ("forage", "hunted COW (+12 food)"), and where they came from. */
@@ -55,6 +55,8 @@ export interface Handlers {
   got(what: Got): void;
   /** A gathering try found nothing: where, and the odds it had ("nothing · DESERT 12%"). */
   missed(what: { x: number; y: number; text: string }): void;
+  /** Exploring widened your sight (no J: someone was there first). */
+  sight(where: { x: number; y: number }): void;
   notice(text: string): void;
   dead(killer: string): void;
   loadout(detail: LoadoutDetail): void;
@@ -113,6 +115,7 @@ export async function connect(on: Handlers): Promise<Connection> {
   room.onMessage("gathering", on.gathering);
   room.onMessage("got", on.got);
   room.onMessage("missed", on.missed);
+  room.onMessage("sight", on.sight);
   room.onMessage("notice", on.notice);
   room.onMessage("dead", on.dead);
   room.onMessage("loadout", on.loadout);

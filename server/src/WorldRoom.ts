@@ -4,7 +4,7 @@ import {
   producerOf, outputOf, ageRate, SOIL, landHeld, roadRun, readOffer, readTransmute, transmuteProblem, bossWords, taper, stampTiles, TRANSMUTE_RATIO,
   LAND_RATE, ROAD_RATE, ROAD_HALF, CLAIMED_ROAD, CITIZEN_S, CITIZENS, CITIZEN_LEAVE, CITIZEN_RETURN, HIRE_PRICE, HIRED, TRADE_RANGE, OFFER_SECONDS, PAIR_COOLDOWN, BOSS_TIMES, BOSS_Z, BOSS_HOARD,
   type ClaimDisc, discTiles, windAt, moistureAt, waterNear, wateringReach, wetWeather, producingLine, Soil, LABOUR_RANGE, CYCLE_SECONDS, PEACE_RADIUS, PEACE_SECONDS, VOWELS, type ProducerSpec, type Conditions,
-  addLetters, afflict, placeRules, harvest, growthOf, tradeRateOf, marketRatio, type PlaceRules, aggressive, clearLine, courageOf, pluralize, auras, authorityOf, chooseTarget, commandLimit, draw, groundFood, hasAny, ignoresOrder, moraleAim, moraleGoal, needs, nextMorale, noStores, outputs, recruitRate, rerouteSeconds, startingSupply, becomes, retreats, routed, supply, theftResistance, HUNGER_LOYALTY, NORMAL, STARTING_STORES, STARVING, SUPPLIES, bodyFlags, cure, useObject, findPath, hampered, inflicts, statusDamage, statusEffects, tickStatuses, wake, GATHER_SECONDS, GATHER_REASONS, cachePrize, carcassFood, Deposits, destroyLetters, killLetters, mainland, MARKET, pickAnimal, placeSources, readTrade, regionOf, RUIN_INTEGRITY, CACHE_X, SITE_RADIUS, spawnPoint, starterHand, TEMPLE_Q, tradeProblem, generateMap, GIVE_RANGE, missing, parsePhrase, applyAdjectives, cannotCarry, improvisable, readDescription, production, resolveSpelled, SEPARATE_UP_TO, nearestWalkable, openGround, randomWalkable, resolve, Tile, tileAt, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit, cannotRide, claimOf, senseOf, combineSenses, type Sense, type Sensed,
+  addLetters, afflict, placeRules, harvest, growthOf, tradeRateOf, marketRatio, type PlaceRules, aggressive, clearLine, courageOf, pluralize, auras, authorityOf, chooseTarget, commandLimit, draw, groundFood, hasAny, ignoresOrder, moraleAim, moraleGoal, needs, nextMorale, noStores, outputs, recruitRate, rerouteSeconds, startingSupply, becomes, retreats, routed, supply, theftResistance, HUNGER_LOYALTY, NORMAL, STARTING_STORES, STARVING, SUPPLIES, bodyFlags, cure, useObject, findPath, hampered, inflicts, statusDamage, statusEffects, tickStatuses, wake, GATHER_SECONDS, GATHER_REASONS, chestPrize, rackSwap, exploredSight, carcassFood, Deposits, destroyLetters, killLetters, mainland, MARKET, pickAnimal, placeSources, readTrade, regionOf, RUIN_INTEGRITY, CHEST_X, SITE_RADIUS, spawnPoint, starterHand, TEMPLE_Q, tradeProblem, generateMap, GIVE_RANGE, missing, parsePhrase, applyAdjectives, cannotCarry, improvisable, readDescription, production, resolveSpelled, SEPARATE_UP_TO, nearestWalkable, openGround, randomWalkable, resolve, Tile, tileAt, seeded, spawn, spend, stampTerrain, stepToward, strike, strikeUnit, TILE_METERS, TILE_TYPES, Unit, cannotRide, claimOf, senseOf, combineSenses, type Sense, type Sensed,
   dealKits, legendOf, kitOptions, bestOption, kitHands, KIT_STEPS, jobBodyOps, jobRules, jobStats, kitCard, kitScore, legendCost, sealedLetters, unlockNeed, unlockText, makesLetters, KIT_SECONDS,
   type JobDef, type Kit, type StarterHand, type KitCard, type KitData, type LegendDef,
   effectSeconds, biomeAt, huntYield, pickWild, rollText, toolHelp, wildlife, RUIN_X_CHANCE, type Help,
@@ -45,7 +45,7 @@ interface Gear {
   /** Part of the land (a lake, a mountain, a market, the temple): cannot be picked up or attacked. */
   terrain?: boolean;
   /** One of the map's own letter sources, placed when the round starts. */
-  fixture?: "market" | "temple" | "cache" | "ruin";
+  fixture?: "market" | "temple" | "chest" | "ruin";
   /** A machine whose fuel, power or food ran short at the last count: it makes nothing and cannot strike. */
   stalled?: boolean;
   /** A living thing (a ridden DRAGON, a HORSE) that went hungry at the last count. */
@@ -361,7 +361,8 @@ interface Walker {
 /**
  * A person's starting kit: their job (worn like an invisible tool: its own stats help gathering,
  * hunting and command, its body operations change them, its rules go wherever they go) and their
- * sealed legendary word, which unlocks once (`state` open) and is then spelled free once (used).
+ * sealed legendary word, which unlocks once and is made at once, free, as if spelled (used); if it
+ * cannot be made there and then it stays open, spelled free once later.
  */
 interface PersonKit {
   job: JobDef;
@@ -522,7 +523,7 @@ export class WorldRoom extends Room {
   private discovered = new Set<number>();
   /** Wild creatures by habitat (shared `wildlife`), worked out once a room. */
   private wild = new Map<string, [string, number][]>();
-  /** For tests of other systems: rooms created while this is set get no markets, temple, caches, ruins, animals or exploring. */
+  /** For tests of other systems: rooms created while this is set get no markets, temple, chests, ruins, animals or exploring. */
   static testBare = false;
   /** Starting kits: each person picks one of three as they join. Off in room tests unless a test turns it on. */
   static kits = !process.env.VITEST;
@@ -585,19 +586,19 @@ export class WorldRoom extends Room {
   private altars = new Map<string, number>();
   /** Seconds toward the next round of weather patches (shared weather.ts). */
   private patchClock = 0;
-  /** What gathering finds where, and how much is left (shared `Deposits`); caches and the temple are its sites. */
+  /** What gathering finds where, and how much is left (shared `Deposits`); chests and the temple are its sites. */
   deposits!: Deposits;
   /** The tiles everyone can reach each other on, for placing people and sources. */
   private land!: Uint8Array;
   /** Each market's trades in hand and when that was last counted. */
-  private markets = new Map<string, { stock: number; at: number }>();
+  private markets = new Map<string, { stock: number; at: number; swapped?: Set<string> }>();
   /** Challenges on (shared sport.ts): a duel's ring or a race's flag, by the key of the area that shows it. */
   private challenges = new Map<string, Challenge>();
   /** The fish a catch can be (shared sea.ts `fishTable`), worked out once. */
   private fishes: [string, number][] | null = null;
   /** What each thing on the ground is, so it can be picked up again. */
   private grounded = new Map<string, Gear>();
-  /** The map's fixtures among `grounded` (markets, the temple, caches, ruins), for `nearFixture`. */
+  /** The map's fixtures among `grounded` (markets, the temple, chests, ruins), for `nearFixture`. */
   private fixtures = new Map<string, Gear>();
   /** The legendaries' words (`botCounter` looks for enemies' near a bot), read once. */
   private legendWords: Set<string> | null = null;
@@ -813,6 +814,8 @@ export class WorldRoom extends Room {
       const pay = (what as { pay?: unknown } | null)?.pay;
       return this.hire(id, w, typeof pay === "string" && /^[a-z]{1,40}$/.test(pay) ? pay : undefined);
     }),
+    /** Swap your whole rack at the market you stand at, once per market. */
+    swap: (client: Client) => this.attempt(client, (id, w) => this.swapRack(id, w)),
     /** Transmute common letters into a Z: { give }. */
     transmute: (client: Client, what: unknown) => this.attempt(client, (id, w) => {
       const give = (what as { give?: unknown } | null)?.give;
@@ -1018,6 +1021,7 @@ export class WorldRoom extends Room {
       if (!to) throw new Error(`${offered.to} is not here`);
       return this.offer(id, walker, to[0], offered.give, offered.get);
     }
+    if (/^\s*swap\s*$/i.test(text)) return this.swapRack(id, walker);
     const alchemy = readTransmute(text);
     if (alchemy) return this.transmute(id, walker, alchemy);
     const hiring = /^\s*hire(?:\s+([a-z]+))?\s*$/i.exec(text);
@@ -1207,7 +1211,7 @@ export class WorldRoom extends Room {
 
   /**
    * The map's own letter sources (shared `placeSources`): a market in every city (T, and letters
-   * at MARKET.ratio to one), the temple (Q), buried caches (X), broken ruins (D and X) and wild
+   * at MARKET.ratio to one), the temple (Q), buried chests (X), broken ruins (D and X) and wild
    * animals to hunt (H). Ground deposits (E, O, G, U) are counted by `deposits`.
    */
   private placeSources() {
@@ -1224,9 +1228,9 @@ export class WorldRoom extends Room {
     for (const p of places.markets) this.markets.set(fixture("market", "market", p), { stock: MARKET.stock, at: 0 });
     const temple = fixture("temple", "temple", places.temple);
     this.deposits.addSite({ id: temple, x: places.temple.x, y: places.temple.y, letter: "q", stock: TEMPLE_Q.stock, regen: TEMPLE_Q.regen, radius: SITE_RADIUS + 1 });
-    for (const p of places.caches) {
-      const id = fixture("chest", "cache", p);
-      this.deposits.addSite({ id, x: p.x, y: p.y, letter: "x", stock: CACHE_X, regen: 0, radius: SITE_RADIUS });
+    for (const p of places.chests) {
+      const id = fixture("chest", "chest", p);
+      this.deposits.addSite({ id, x: p.x, y: p.y, letter: "x", stock: CHEST_X, regen: 0, radius: SITE_RADIUS });
     }
     for (const p of places.ruins) {
       const id = fixture("ruin", "ruin", p, RUIN_INTEGRITY);
@@ -1494,23 +1498,39 @@ export class WorldRoom extends Room {
     return `${k.legend.word.toUpperCase()} unsealed`;
   }
 
-  /** A legendary unseals: its holder may spell it once, free, and the whole map hears of it. */
+  /** Notes a region a person has now explored; true if that widened their sight (shared `exploredSight`). */
+  private explore(w: Walker, region: number): boolean {
+    const before = exploredSight(w.explored!.size);
+    w.explored!.add(region);
+    if (exploredSight(w.explored!.size) <= before) return false;
+    this.rebuild(w);
+    return true;
+  }
+
+  /**
+   * A legendary unseals and is made at once for its holder, free, through `spellWord` (the same as
+   * spelling it; an aimed one goes at their foe), with one call to the whole map. If it cannot be
+   * made now (a law against spelling, muted, nothing to aim at) it stays open to spell free once.
+   */
   private unlockLegend(id: string, w: Walker, how: string) {
     const k = w.kit!;
     k.state = "open";
     k.have = unlockNeed(k.legend);
-    const message = { name: w.player.name, word: k.legend.word, how, x: w.player.x, y: w.player.y, counter: k.legend.counter, spelled: false };
+    const foe = w.foe ? this.walkers.get(w.foe) : undefined;
+    const picked = w.picked, aim = w.aim;
+    w.picked = w.foe;
+    if (foe) w.aim = { x: foe.player.x, y: foe.player.y };
+    try { this.spellWord(id, w, k.legend.word); } catch { /* left open: spelled free later */ } finally { w.picked = picked; w.aim = aim; }
+    const made = (k.state as PersonKit["state"]) === "used";
+    const message = { name: w.player.name, word: k.legend.word, how, x: w.player.x, y: w.player.y, counter: k.legend.counter, spelled: made };
     for (const c of this.clients) c.send("legend", message);
-    this.sendTo(id, "notice", `${k.legend.word.toUpperCase()} is unsealed: spell it once, free`);
+    if (!made) this.sendTo(id, "notice", `${k.legend.word.toUpperCase()}: spell it once, free`);
     this.sendKit(id, w);
   }
 
-  /** An unsealed legendary has been spelled: used up, and everyone is told. */
+  /** An unsealed legendary has been spelled: used up. The map was told when it unsealed (`unlockLegend`): no second call. */
   private legendSpelled(id: string, w: Walker) {
-    const k = w.kit!;
-    k.state = "used";
-    const message = { name: w.player.name, word: k.legend.word, how: "spelled", x: w.player.x, y: w.player.y, counter: k.legend.counter, spelled: true };
-    for (const c of this.clients) c.send("legend", message);
+    w.kit!.state = "used";
     this.sendKit(id, w);
   }
 
@@ -1673,7 +1693,9 @@ export class WorldRoom extends Room {
     // A ridden machine out of fuel or power goes nowhere (and comes down) until it is fed again.
     if (unit.riding && walker.gear.find((g) => g.vehicle)?.stalled) { walker.flying = false; walker.speed = 0; }
     const dark = this.state.daylight === "night" && !unit.body.stats.flag("night_vision");
-    walker.sight = (unit.body.stats.num("sight_range") * (dark ? NIGHT_SIGHT : 1)) / TILE_METERS;
+    // Exploring widens a person's sight (shared `exploredSight`); creatures see what their body sees.
+    const explored = walker.explored ? exploredSight(walker.explored.size) : 1;
+    walker.sight = (unit.body.stats.num("sight_range") * explored * (dark ? NIGHT_SIGHT : 1)) / TILE_METERS;
     walker.player.gear = [...walker.gear.map((g) => g.phrase), ...walker.buffs.map((b) => b.word.toUpperCase())].join(", ");
     if (!walker.flying && !walker.sailing) {
       const ground = openGround(this.map, walker.player); // coming down over water puts you ashore, with room to walk
@@ -1882,7 +1904,7 @@ export class WorldRoom extends Room {
    * One bot's thought. It eats if hungry (cooking raw food first when it can) and always defends
    * itself; badly hurt (normal and hard) it runs, spelling a refuge or a cure on the way. For its
    * first minute or so (`peaceUntil`) it only builds: gathers, hunts wild animals, breaks or claims
-   * ruins, digs caches and trades at markets. After that it also goes for a person in sight, or
+   * ruins, digs chests and trades at markets. After that it also goes for a person in sight, or
    * within twice its sight (easy bots only when armed and close). It spells at most one word every
    * 5 to 10 seconds: a counter to what is used against it, else the most useful word (`botWord`,
    * spelled as a phrase or plural by `phraseFor`), else one of the other systems (`botSystems`:
@@ -2045,10 +2067,10 @@ export class WorldRoom extends Room {
       }
       if (near && best > w.sight) { w.target = nearestWalkable(this.map, { x: near.player.x, y: near.player.y }); return; }
     }
-    // A cache in sight is worth the walk; otherwise gather here while there is something to find.
-    const cache = this.nearFixture(w, "cache", w.sight);
-    if (cache) {
-      const t = this.state.things.get(cache)!;
+    // A chest in sight is worth the walk; otherwise gather here while there is something to find.
+    const chest = this.nearFixture(w, "chest", w.sight);
+    if (chest) {
+      const t = this.state.things.get(chest)!;
       if (Math.hypot(t.x - w.player.x, t.y - w.player.y) > SITE_RADIUS - 0.5) { w.target = { x: t.x, y: t.y }; return; }
     }
     const here = this.deposits.available(w.player.x, w.player.y, this.elapsed);
@@ -2602,9 +2624,9 @@ export class WorldRoom extends Room {
   }
 
   /**
-   * At a market, a bot hires a hand when it has producers to work, else trades its commonest
-   * letters, at the market's price, for the one letter it lacks for a word it wants. Returns
-   * "hire" or "trade" if it did either.
+   * At a market, a bot hires a hand when it has producers to work, sells a valuable, swaps a
+   * lopsided rack (once per market), else trades its commonest letters, at the market's price,
+   * for the one letter it lacks for a word it wants. Returns what it did.
    */
   private botTrade(id: string, w: Walker, mind: BotMind, have: Uint8Array): string | null {
     if (!this.nearFixture(w, "market", MARKET.range)) return null;
@@ -2631,7 +2653,13 @@ export class WorldRoom extends Room {
       const scarce = [..."abcdefghijklmnopqrstuvwxyz"].filter((ch) => !MARKET.refuses.includes(ch) && ch !== spare[0]).sort((a, b) => (w.letters[a] ?? 0) - (w.letters[b] ?? 0))[0];
       if (scarce) want = { word: { word: "", use: "producer", score: 0, cost: new Uint8Array(26), slot: "", reach: 0 }, letter: scarce };
     }
-    if (!want || MARKET.refuses.includes(want.letter) || want.letter === spare[0]) return null;
+    if (!want || MARKET.refuses.includes(want.letter) || want.letter === spare[0]) {
+      // Nothing to buy, a lopsided rack (half of it one letter), and this market's swap unused: swap the lot.
+      if (!info.swapped && total >= 6 && spare[1] * 2 >= total && mind.difficulty !== "easy") {
+        try { this.swapRack(id, w); return "swap"; } catch { /* not here */ }
+      }
+      return null;
+    }
     try { this.spellWord(id, w, `trade ${spare[0].repeat(info.ratio)} for ${want.letter}`); return "trade"; } catch { return null; }
   }
 
@@ -5615,7 +5643,7 @@ export class WorldRoom extends Room {
         // A roaming boss drops Z and its hoard of everyday letters (PLAN.md: Z from roaming bosses).
         spoils += this.earn(payId, "z".repeat(BOSS_Z), at, `slew ${name}`);
         this.deed(killer, "bosses");
-        this.award(payId, killer, cachePrize(this.rng) + cachePrize(this.rng), `${name}'s hoard`, at);
+        this.award(payId, killer, chestPrize(this.rng) + chestPrize(this.rng), `${name}'s hoard`, at);
         for (const c of this.clients) c.send("notice", `${killer.player.name} slew the ${name}: ${"Z".repeat(BOSS_Z)}`);
       }
       if (kind === "wild") kc?.send("letters", killer.letters);
@@ -5898,7 +5926,7 @@ export class WorldRoom extends Room {
     if (!mid) return undefined;
     const t = this.state.things.get(mid)!, m = this.markets.get(mid)!;
     const stock = Math.min(MARKET.stock, m.stock + (this.elapsed - m.at) / MARKET.regen);
-    const ratio = marketRatio(tradeRateOf(this.rulesAt(t, id, w).rules));
+    const ratio = this.marketPrice(id, w, t);
     const city = this.cityAt(t);
     // What it would buy of what you carry, for its worth (shared `salePrice`): not what you ride.
     const sells: { index: number; phrase: string; price: number }[] = [];
@@ -5910,35 +5938,69 @@ export class WorldRoom extends Room {
     return {
       ratio, stock: Math.floor(stock), refuses: MARKET.refuses, closed: this.lawAgainst("trade", id, w, t) ?? "",
       hire: ratio * HIRE_PRICE, citizens: city >= 0 ? this.citizensOf(city).length : 0,
-      ruler: city >= 0 ? this.state.cities[city]?.ruler ?? "" : "",
+      ruler: city >= 0 ? this.state.cities[city]?.ruler ?? "" : "", swapped: !!m.swapped?.has(id),
       ...(sells.length ? { sells } : {}),
     };
   }
 
-  /** Common letters a transmutation takes for one Z: TRANSMUTE_RATIO, or the `transmute_in` of the best thing you own (a LAB). */
-  private transmuteRatio(id: string, w: Walker): number {
-    return this.alchemy(id, w).ratio;
+  /**
+   * Letters a market asks of someone for one: its place's `trade_rate` on MARKET.ratio, haggled by
+   * a trader of theirs (`priceFor`), in whole letters, rounded, never under 1.
+   */
+  private marketPrice(id: string, w: Walker, market: Point): number {
+    return Math.max(1, Math.round(this.priceFor(id, w, marketRatio(tradeRateOf(this.rulesAt(market, id, w).rules)))));
+  }
+
+  /** Common letters a transmutation takes for one Z, or undefined without alchemy (`alchemy`). */
+  private transmuteRatio(id: string, w: Walker): number | undefined {
+    return this.alchemy(id, w)?.ratio;
   }
 
   /**
-   * The best transmuting ratio someone has: their things' `transmute_in`, or a precious material
-   * they carry (shared `alchemyRatio`), which the transmutation then uses up (`gear`).
+   * Alchemy: the best transmuting ratio someone has, from the `transmute_in` of what they own (on
+   * them, on the ground, their creatures: an ALCHEMIST, a WIZARD), or a precious material they carry
+   * (shared `alchemyRatio`, from TRANSMUTE_RATIO), which the transmutation then uses up (`gear`).
+   * Null with neither: Z otherwise comes from bosses and what makes it.
    */
-  private alchemy(id: string, w: Walker): { ratio: number; gear?: Gear } {
-    let best = TRANSMUTE_RATIO, used: Gear | undefined;
-    const ratios: number[] = [...w.gear.map((g) => this.statsOf(g).num("transmute_in"))];
+  private alchemy(id: string, w: Walker): { ratio: number; gear?: Gear } | null {
+    let best = Infinity, used: Gear | undefined;
+    const ratios: number[] = [...w.gear.map((g) => this.statsOf(g).num("transmute_in")), w.unit.body.stats.num("transmute_in")];
     for (const [tid, g] of this.grounded) if (this.state.things.get(tid)?.owner === id) ratios.push(this.statsOf(g).num("transmute_in"));
+    for (const c of this.walkers.values()) if (c.master === id) ratios.push(c.unit.body.stats.num("transmute_in"));
     for (const r of ratios) if (r > 0 && r < best) best = r;
     for (const g of w.gear) {
       const r = alchemyRatio(this.dict, this.statsOf(g), TRANSMUTE_RATIO, g.spelled.noun);
       if (r !== null && r < best) { best = r; used = g; }
     }
-    return { ratio: Math.max(2, Math.round(best)), gear: used };
+    return Number.isFinite(best) ? { ratio: Math.max(2, Math.round(best)), gear: used } : null;
   }
 
-  /** Transmutes common letters into one Z (PLAN.md: Z from transmuting commons at a steep ratio). */
+  /**
+   * A market's rack swap: every letter you hold goes, and as many come back drawn like a starting
+   * hand (shared `rackSwap`). Once per market per person; no T, and it takes none of its stock.
+   */
+  private swapRack(id: string, w: Walker): string {
+    const mid = this.marketNear(w);
+    if (!mid) throw new Error("Swap at a MARKET: there is one in the middle of every city");
+    const closed = this.lawAgainst("trade", id, w, this.state.things.get(mid)!);
+    if (closed) throw new Error(`${closed}: this market is closed`);
+    const m = this.markets.get(mid)!;
+    if (m.swapped?.has(id)) throw new Error("This market swaps a rack once");
+    const count = Object.values(w.letters).reduce((n, v) => n + Math.max(0, v), 0);
+    if (!count) throw new Error("No letters to swap");
+    (m.swapped ??= new Set()).add(id);
+    for (const ch of Object.keys(w.letters)) w.letters[ch] = 0;
+    this.award(id, w, rackSwap(count, this.rng), "swap", this.state.things.get(mid)!);
+    this.sendTo(id, "letters", w.letters);
+    this.tell(w);
+    return `Swapped ${count} letters`;
+  }
+
+  /** Transmutes common letters into one Z by alchemy (PLAN.md: Z from bosses, or alchemy). */
   private transmute(id: string, w: Walker, give: string): string {
-    const { ratio, gear } = this.alchemy(id, w);
+    const alchemy = this.alchemy(id, w);
+    if (!alchemy) throw new Error("Transmuting needs alchemy: something of yours that transmutes, or a precious material carried");
+    const { ratio, gear } = alchemy;
     const problem = transmuteProblem(give, ratio);
     if (problem) throw new Error(problem);
     const lacking = missing(w.letters, give);
@@ -6126,7 +6188,7 @@ export class WorldRoom extends Room {
     const market = this.state.things.get(best)!;
     const closed = this.lawAgainst("trade", id, walker, market);
     if (closed) throw new Error(`${closed}: this market is closed`);
-    const problem = tradeProblem(give, get, this.priceFor(id, walker, marketRatio(tradeRateOf(this.rulesAt(market, id, walker).rules))));
+    const problem = tradeProblem(give, get, this.marketPrice(id, walker, market));
     if (problem) throw new Error(problem);
     const m = this.markets.get(best)!;
     m.stock = Math.min(MARKET.stock, m.stock + (this.elapsed - m.at) / MARKET.regen);
@@ -6711,15 +6773,15 @@ export class WorldRoom extends Room {
       if (got.letter) {
         const from = "from" in got ? got.from : "", site = this.state.things.get(from);
         const why = lode && from === lode.word ? lode.word.toUpperCase()
-          : site ? (got.letter === "q" ? "temple" : "cache") : GATHER_REASONS[from as keyof typeof GATHER_REASONS] ?? "gathered";
-        const kept = this.earn(id, got.letter, site ?? w.player, why, w.unit.body.stats.num("harvest_bonus"), got.roll ? rollText(got.roll) : undefined);
+          : site ? (got.letter === "q" ? "temple" : "chest") : GATHER_REASONS[from as keyof typeof GATHER_REASONS] ?? "gathered";
+        // The bottom of a chest: a prize of everyday letters besides its X, all in one `got`.
+        const emptied = "emptied" in got && got.emptied ? got.emptied : "";
+        const kept = this.earn(id, got.letter + (emptied ? chestPrize(this.rng) : ""), site ?? w.player, why, w.unit.body.stats.num("harvest_bonus"), got.roll ? rollText(got.roll) : undefined);
         changed.add(id);
         if (kept) client?.send("gathered", kept);
         else client?.send("refused", `Nothing grows here: ${place.areas.find((a) => harvest(got.letter, [a.rules!], () => 0.999) === "")?.word.toUpperCase() ?? "the weather"} took it`);
-        if ("emptied" in got && got.emptied) {
-          // The bottom of a cache: a prize of everyday letters besides its X.
-          this.award(id, w, cachePrize(this.rng), "cache prize", site ?? w.player);
-          this.removeThing(got.emptied);
+        if (emptied) {
+          this.removeThing(emptied);
           this.refreshViews();
         }
       } else if (got.roll) {
@@ -6736,10 +6798,10 @@ export class WorldRoom extends Room {
       if (!m?.explored || !jobsOf(w.unit.body.stats).includes("scout")) continue;
       const region = regionOf(w.player.x, w.player.y);
       if (m.explored.has(region)) continue;
-      m.explored.add(region);
-      if (this.discovered.has(region)) continue;
+      const wider = this.explore(m, region);
+      if (this.discovered.has(region)) { if (wider) this.sendTo(w.master!, "sight", { x: w.player.x, y: w.player.y }); continue; }
       this.discovered.add(region);
-      const j = this.earn(w.master!, "j", w.player, `${w.player.name.toUpperCase()} scouted new ground`, 1, "first here");
+      const j = this.earn(w.master!, "j", w.player, `${w.player.name.toUpperCase()} scouted new ground`, 1, wider ? "first here · +sight" : "first here");
       changed.add(w.master!);
       if (j) this.sendTo(w.master!, "gathered", j);
     }
@@ -6747,10 +6809,10 @@ export class WorldRoom extends Room {
       if (!w.explored) continue;
       const region = regionOf(w.player.x, w.player.y);
       if (w.explored.has(region)) continue;
-      w.explored.add(region);
-      if (this.discovered.has(region)) continue;
+      const wider = this.explore(w, region);
+      if (this.discovered.has(region)) { if (wider) this.sendTo(id, "sight", { x: w.player.x, y: w.player.y }); continue; }
       this.discovered.add(region);
-      const j = this.earn(id, "j", w.player, "new ground", 1, "first here");
+      const j = this.earn(id, "j", w.player, "new ground", 1, wider ? "first here · +sight" : "first here");
       changed.add(id);
       if (j) this.sendTo(id, "gathered", j);
     }

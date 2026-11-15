@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
-  ACTION_LETTERS, addLetters, CACHE_CHANCE, RUIN_X_CHANCE, toolHelp, Deposits, DEPOSITS, depositsAt, destroyLetters, generateMap, killLetters, mainland, MAP_SOURCES,
-  LETTER_GUIDE, makesLetter, parsePhrase, PATCH_TILES, PENDING_SOURCES, placeSources, production, readTrade, regionOf, resolve, seeded, SPAWN_APART, spawnPoint, Tile, tileAt, tradeProblem, walkable,
+  ACTION_LETTERS, addLetters, CHEST_CHANCE, RUIN_X_CHANCE, toolHelp, Deposits, DEPOSITS, depositsAt, destroyLetters, generateMap, killLetters, mainland, MAP_SOURCES,
+  LETTER_GUIDE, makesLetter, parsePhrase, PATCH_TILES, PENDING_SOURCES, placeSources, production, readTrade, regionOf, resolve, seeded, SPAWN_APART, spawnPoint, Tile, tileAt, tradeProblem, walkable, marketRatio, rackSwap, exploredSight,
 } from "./index.js";
 import { demo } from "./testdata.js";
 
@@ -51,16 +51,16 @@ describe("deposits", () => {
     expect(seen.g).toBeGreaterThanOrEqual(DEPOSITS.dig.stock); // hills foraging finds G too
   });
 
-  it("a cache gives its X to whoever digs beside it, often only at the third or fourth dig, and is then gone; the temple grows Q back", () => {
+  it("a chest gives its X to whoever digs beside it, often only at the third or fourth dig, and is then gone; the temple grows Q back", () => {
     const d = new Deposits(map), rng = () => 0;
     const at = find((x, y) => tileAt(map, x, y) === Tile.Grass);
     d.addSite({ id: "t1", x: at.x, y: at.y, letter: "x", stock: 2, regen: 0, radius: 2 });
     expect(d.available(at.x + 1, at.y, 0).x).toBe(2);
-    expect(d.gather(at.x + 1, at.y, 0, () => 0.99)).toMatchObject({ letter: "", why: "nothing", roll: { chance: CACHE_CHANCE, place: "cache" } });
+    expect(d.gather(at.x + 1, at.y, 0, () => 0.99)).toMatchObject({ letter: "", why: "nothing", roll: { chance: CHEST_CHANCE, place: "chest" } });
     expect(d.gather(at.x + 1, at.y, 0, rng)).toMatchObject({ letter: "x", from: "t1" });
-    // A SHOVEL (harvest_bonus 2 for dig and cache) adds ten points.
+    // A SHOVEL (harvest_bonus 2 for dig and chest) adds ten points.
     const shovel = (kind: string) => toolHelp(kind, [{ name: "shovel", stats: resolve(demo(), "shovel") }]);
-    expect(d.gather(at.x, at.y, 0, rng, 1, shovel)).toMatchObject({ letter: "x", from: "t1", emptied: "t1", roll: { chance: CACHE_CHANCE + 0.1 } });
+    expect(d.gather(at.x, at.y, 0, rng, 1, shovel)).toMatchObject({ letter: "x", from: "t1", emptied: "t1", roll: { chance: CHEST_CHANCE + 0.1 } });
     expect(d.gather(at.x, at.y, 0, rng).letter).toBe("e"); // only the ground is left
     d.addSite({ id: "q", x: at.x, y: at.y, letter: "q", stock: 1, regen: 100, radius: 2 }, 0);
     expect(d.gather(at.x, at.y, 0, rng).letter).toBe("q");
@@ -72,12 +72,12 @@ describe("deposits", () => {
 describe("the map's sources", () => {
   const land = mainland(map);
   const places = placeSources(map, seeded(4), land);
-  it("a market in every city, one temple, caches, ruins and animals on the mainland", () => {
+  it("a market in every city, one temple, chests, ruins and animals on the mainland", () => {
     expect(places.markets).toHaveLength(map.cities.length);
-    expect(places.caches).toHaveLength(MAP_SOURCES.caches);
+    expect(places.chests).toHaveLength(MAP_SOURCES.chests);
     expect(places.ruins).toHaveLength(MAP_SOURCES.ruins);
     expect(places.animals.length).toBeGreaterThan(MAP_SOURCES.animals * 0.8);
-    for (const p of [places.temple, ...places.caches, ...places.ruins, ...places.animals]) {
+    for (const p of [places.temple, ...places.chests, ...places.ruins, ...places.animals]) {
       expect(land[Math.floor(p.y) * map.size + Math.floor(p.x)]).toBe(1);
       expect(tileAt(map, p.x, p.y)).not.toBe(Tile.City);
     }
@@ -112,13 +112,32 @@ describe("deeds", () => {
 });
 
 describe("markets", () => {
-  it("reads a trade and holds it to three for one, never the rare letters", () => {
-    expect(readTrade("trade eee for o")).toEqual({ give: "eee", get: "o" });
-    expect(readTrade("TRADE eeeggg for SA")).toEqual({ give: "eeeggg", get: "sa" });
+  it("reads a trade and holds it to any four for one, never the rare letters", () => {
+    expect(readTrade("trade eeee for o")).toEqual({ give: "eeee", get: "o" });
+    expect(readTrade("TRADE eeeggggk for SA")).toEqual({ give: "eeeggggk", get: "sa" });
     expect(readTrade("trade")).toBeNull();
-    expect(tradeProblem("eee", "o")).toBeNull();
-    expect(tradeProblem("ee", "o")).toMatch(/3 letters for each/);
-    expect(tradeProblem("eee", "q")).toMatch(/No market sells Q/);
+    expect(tradeProblem("eeee", "o")).toBeNull();
+    expect(tradeProblem("zqxj", "o")).toBeNull();
+    expect(tradeProblem("eee", "o")).toMatch(/4 letters for each/);
+    expect(tradeProblem("eeee", "q")).toMatch(/No market sells Q/);
+  });
+  it("prices stay whole letters under place rules: a merchant's ×0.75 asks 3, INFLATION 8", () => {
+    expect(marketRatio(0.75)).toBe(3);
+    expect(marketRatio(2)).toBe(8);
+    expect(marketRatio(0.1)).toBe(1);
+  });
+  it("a rack swap gives as many letters as were held, at everyday frequency, never J Q X Z", () => {
+    const out = rackSwap(400, seeded(5));
+    expect(out).toHaveLength(400);
+    expect(out).not.toMatch(/[jqxz]/);
+    expect(out.split("e").length - 1).toBeGreaterThan(out.split("k").length - 1);
+    expect(rackSwap(0, seeded(5))).toBe("");
+  });
+  it("exploring widens sight from 0.7 to 1.1 over eight regions", () => {
+    expect(exploredSight(1)).toBeCloseTo(0.7);
+    expect(exploredSight(5)).toBeCloseTo(0.9);
+    expect(exploredSight(9)).toBeCloseTo(1.1);
+    expect(exploredSight(16)).toBeCloseTo(1.1);
   });
 });
 

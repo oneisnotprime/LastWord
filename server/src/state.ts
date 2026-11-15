@@ -39,7 +39,7 @@ export const Thing = schema(
     hp: t.uint8(),
     /** How many it is: a stack of a hundred arrows is one thing with count 100. */
     count: t.float64(),
-    /** One of the map's own letter sources ("market", "temple", "cache", "ruin"), else "". */
+    /** One of the map's own letter sources ("market", "temple", "chest", "ruin"), else "". */
     fixture: t.string(),
   },
   "Thing",

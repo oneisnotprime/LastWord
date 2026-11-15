@@ -225,7 +225,7 @@ export const RULE_TIPS: readonly RuleTip[] = [
   { text: "Spell an adjective alone (HUGE), then click a thing, a creature or yourself.", words: ["huge"], properties: ["adjective_slots"] },
   { text: "BIGGER and BIGGEST are BIG, only stronger.", words: ["bigger", "biggest", "big"], properties: [] },
   { text: "A HEDGE or FARM claims ground: your things there are sheltered.", words: ["hedge", "farm"], properties: ["claim_radius"] },
-  { text: "At a city MARKET: Enter, trade eee for o. Each trade pays a T.", words: ["market"], properties: ["trade_rate"] },
+  { text: "A city MARKET trades any four letters for one, and swaps your rack once.", words: ["market"], properties: ["trade_rate"] },
   { text: "G gathers: E almost anywhere, O by water, G in hills, U by a MOUNTAIN.", words: ["mountain"], properties: [] },
   { text: "A HOE tills land; crops on tilled land make A.", words: ["hoe"], properties: ["tile_type", "produce_A"] },
   { text: "A MILL makes W only while the wind blows.", words: ["mill"], properties: ["produce_W", "production_needs"] },

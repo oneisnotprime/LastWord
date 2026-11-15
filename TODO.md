@@ -38,8 +38,20 @@
   marsh, shore) in large regions; each forages its own letters, and most forage tries find
   nothing (12 to 35%, more with tools whose `harvest_sources` fit). Wild animals suit their biome.
 - A hunt pays H and the animal's first letter (FOX: H F), plus bonuses from the body and the tools.
-- J comes once per 64-tile region, to whoever is first there; X from eight one-X caches (dug at
-  35% a try) and one ruin in four.
+- J comes once per 64-tile region, to whoever is first there; X from eight chests (dug at 35% a
+  try: one X and three everyday letters, in one popup) and one ruin in four.
+- Exploring widens sight: you start at 70% of your body's sight, and each region you enter adds
+  5%, up to 110% (eight regions). The camera zoom follows sight.
+- Markets take any four letters you choose for one of your choice (not J, Q, X or Z), plus a T;
+  place rules and haggling scale that in whole letters. Each market swaps your whole rack once for
+  as many random letters (everyday frequency). Transmuting into Z needs alchemy: something of yours
+  with `transmute_in` (ALCHEMIST, WIZARD) or a precious material carried; otherwise Z comes from
+  bosses and the few words that make it.
+- An unsealed legendary is made at once for its holder, free, as if spelled, with one map-wide
+  call. If it cannot be made then (muted, a law against spelling) it stays open to spell free once.
+- Buildings with interiors (not built yet; a later batch): large buildings get a walk-in interior
+  footprint on the map; entering hides you from outside sight; stored things sit inside, safe from
+  theft; raiders must break the door first.
 - Statuses and temporary effects last several times their word's seconds (`statusSeconds`,
   `effectSeconds`): stuns about three times, most twenty, damage over time twice.
 - Nobody strikes past their sight: a weapon's reach is cut to its wielder's sight (TELESCOPE,
