@@ -196,6 +196,8 @@ interface Radiating { holder: string; keys: string[] }
 /** How a status reads in "you cannot spell while you are ...". */
 const STATE_WORDS: Partial<Record<Status, string>> = { stun: "stunned", freeze: "frozen", sleep: "asleep", silence: "silenced", stasis: "out of time (stasis)", truce: "under a truce" };
 
+/** What a ghost's words never carry (shared death.ts: ghosts haunt, they never kill). */
+const GHOST_HARMLESS = ["inflict_poison", "inflict_burn", "inflict_bleed", "inflict_doom", "inflict_sick", "inflict_freeze", "contagion", "meteors", "destroys_target"];
 /** Tiles a mutiny reaches round where it lands when its word gives no radius (shared mind.ts `mutiny`). */
 const MUTINY_TILES = 20;
 /** Seconds an oracle's reading of someone's rack is kept before it is read again (shared knowledge.ts). */
@@ -8428,6 +8430,8 @@ export class WorldRoom extends Room {
   private startStorm() {
     if (this.bare || !WorldRoom.storms) return;
     this.storm = stormPlan(this.map.size, this.rng, (x, y) => walkableAt(this.map, x, y));
+    // For local testing only: STORM_CLOCK=200 starts the storm clock 200 s in.
+    this.stormClock = Number(process.env.STORM_CLOCK) || 0;
     this.stormBeat(0);
   }
 
@@ -8465,7 +8469,7 @@ export class WorldRoom extends Room {
       if (outsideBy(st, w.player.x, w.player.y) <= 0) continue;
       const harm = stormDamage(st, w.unit.body.stats.num("integrity")) * since;
       w.unit.body.integrity -= harm;
-      (w.harm ??= []).push({ who: "STORM", what: "the storm wall", kind: "storm", amount: harm, t: this.elapsed });
+      (w.harm ??= []).push({ who: "STORM", what: "wall", kind: "storm", amount: harm, t: this.elapsed });
       this.settle(id, w);
       if (w.unit.dead) this.kill(id, "");
     }
@@ -8749,7 +8753,8 @@ export class WorldRoom extends Room {
     if (this.elapsed < g.next) throw new Error(`Your ghost gathers itself: ${Math.ceil(g.next - this.elapsed)} s`);
     const phrase = parsePhrase(this.dict, text.trim().split(/\s+/).at(-1)!);
     if (!phrase.stats.flag("haunts")) throw new Error(`A ghost cannot spell ${phrase.noun.toUpperCase()}: only haunting words`);
-    for (const [k, v] of phrase.stats.entries()) if (k.startsWith("dmg_") && typeof v === "number" && v > 0) phrase.stats.set(k, 0);
+    // Ghosts haunt; they never kill: no damage, and no harm that wears a body down (poison, burns, a sealed fate).
+    for (const [k, v] of phrase.stats.entries()) if ((k.startsWith("dmg_") || GHOST_HARMLESS.includes(k)) && typeof v === "number" && v > 0) phrase.stats.set(k, 0);
     const w = g.proxy, word = phrase.noun.toUpperCase();
     let done: string;
     if (phrase.kind === "verb" && phrase.stats.get("effect_target") !== "touched") {
@@ -8760,6 +8765,7 @@ export class WorldRoom extends Room {
       const near = (o: Walker) => Math.hypot(o.player.x - w.player.x, o.player.y - w.player.y);
       const victim = picked && near(picked) <= 4 ? picked : [...this.walkers.values()].filter((o) => !o.hamper.untouchable && near(o) <= 4).sort((a, b) => near(a) - near(b))[0];
       if (!victim) throw new Error(`Nobody near to ${word}: drift up to someone`);
+      for (let i = given.length - 1; i >= 0; i--) if (GHOST_HARMLESS.includes(`inflict_${given[i]![0]}`)) given.splice(i, 1);
       if (!given.length) given.push(["fear", 4]);
       this.hurtWith(victim, given, id, id, false);
       done = `${word} on ${victim.player.name}: ${given.map(([st]) => st).join(", ")}`;
@@ -8986,7 +8992,7 @@ export class WorldRoom extends Room {
     if (!st) return false;
     const outNow = outsideBy(st, w.player.x, w.player.y);
     const outNext = outsideBy({ x: st.nextX, y: st.nextY, r: st.nextR }, w.player.x, w.player.y);
-    const soon = st.shrinking || st.stage > 0 || st.left < 45;
+    const soon = st.shrinking || st.stage > 0 || st.left < 60;
     if (!(outNow > -1 || (soon && outNext > -1))) return false;
     const foe = w.foe ? this.walkers.get(w.foe) : undefined;
     const close = !!foe && Math.hypot(foe.player.x - w.player.x, foe.player.y - w.player.y) <= 6;

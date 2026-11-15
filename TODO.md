@@ -91,6 +91,14 @@
   MOUSE stay creatures (big or small by their mass); GIGANTIC, COLOSSAL, TITANIC, MINIATURE and
   GROWTH are the size words. BLACK CAT is two words: JINX, HEX, CURSE lower luck instead.
 
+- The round's systems (PLAN.md): spelling rules, command and loyalty, death and ghosts, and the
+  storm wall are shared systems given across the dictionary by `tools/rules.txt` (rules.py).
+  Hindering spelling rules sit only on areas, acts on a person and touched verbs: a thing you own
+  only ever helps you. Ghosts never count as alive, never kill (no damage or wearing harm in their
+  words) and cannot make things. A fallen person's killer takes the commoner half of their letters;
+  the rarer half stays in a GRAVE where they fell. `prevents_death` is now enforced (it was data
+  only); FEATHER stays a feather (a lucky or undying word on it makes it a life).
+
 ## Properties words use that the engine ignores
 
 Properties set by at least 20 words in `data/demo.json` that nothing in `shared/src` or
@@ -117,6 +125,15 @@ by how many words set them (minds and upkeep took `sentient`, `intelligence`, `f
   `tamable` 20, `growth_time` 20, `elevation` 20
 
 ## High priority
+
+- [x] Concept batch: the round's systems. Spelling rules (shared speech.ts: banned letters, costs,
+      word limits, blanks, doubled letters, typos, free speech; 366 words), command (mutiny and
+      desertion, fear wears loyalty; 680 words), death (extra lives, last stands, graves and tombs,
+      rising dead, revival, ghosts that haunt; 846 words) and the storm wall (shared round.ts;
+      191 words bend it), by `tools/rules.txt`.
+- [ ] Round systems follow-ups: bots revive pact allies' ghosts on purpose (only by chance now);
+      a ghost's words could target its killer's things too; tune STORM_STAGES against human play
+      (bots end most rounds in 7 to 9 minutes); a per-person ban word chosen by the speller.
 
 - [x] Concept batch: combat. Damage types and resistances as an explicit matrix of natures
       (shared `affinity.ts`; "weak!", "resists", "immune" on hits and cards), luck (rerolls, rare

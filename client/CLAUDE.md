@@ -180,6 +180,15 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
   staff), crowds for INFANTRY and WORKFORCE, and new things (`ceilingShape`, `plugShape`,
   `cylinderShape`, `dollShape`, `skirtShape`, `picture` for PIC and ARTWORK, `radiator` for HEATING,
   `grave` for CEMETERY, `pipelineShape`, a cart, a drain); landforms are signs.
+- Concept batch (the round's systems): `src/storm.ts` (`StormView`: the storm wall on the map, the
+  outside tinted violet, the next circle dashed; `stormChip` for the chip at the head of
+  `#events`, red with a direction and distance when you stand outside); the minimap shows the
+  circles, and without a sense the whole map in fog with them. Ghosts (`ghost` message): drawn pale,
+  the HUD says GHOST, the spell window lists haunting words (free), Tab watches the living
+  (`watch`). `reborn` draws a gold ring. Spelling rules from the loadout: a banned letter's tile
+  greyed with a lock (and struck in the alphabet guide), doubled letters ringed, blanks as star
+  tiles; the preview says what a spelling pays (tax, free letters, blanks) or why not; HUD chips
+  FOLLOWERS n/m · LOYALTY, lives, last stand, and the rules on you.
 - Screen, knowledge and communication: `src/comms.ts` `ScreenView` puts the loadout's `screen` on the
   page as `data-blot` (hide: striped cover with the cause, static: grey noise, scramble: letters
   reshuffled every 180 ms; `garble`), the minimap draws static (`Minimap.blot`), and `main.ts` hides

@@ -19,17 +19,17 @@ import type { Stats } from "./stats.js";
 export interface StormStage { wait: number; shrink: number; radius: number; dps: number }
 
 /**
- * The schedule, tuned for rounds of 8 to 12 minutes with eight people: calm for the first two
- * and a half minutes, then five closings, the last to nothing at 10 minutes of storm clock.
+ * The schedule, tuned for rounds of 8 to 12 minutes with eight people: calm for the first three
+ * minutes, then five closings, the last to nothing at 12 minutes of storm clock.
  * `dps` is the share of full health a second the wall takes from whoever is outside it while
  * that stage stands (or closes toward its circle).
  */
 export const STORM_STAGES: readonly StormStage[] = [
-  { wait: 150, shrink: 75, radius: 0.62, dps: 0.01 },
-  { wait: 60, shrink: 60, radius: 0.38, dps: 0.02 },
-  { wait: 50, shrink: 50, radius: 0.2, dps: 0.04 },
-  { wait: 40, shrink: 45, radius: 0.08, dps: 0.07 },
-  { wait: 30, shrink: 40, radius: 0, dps: 0.12 },
+  { wait: 180, shrink: 90, radius: 0.65, dps: 0.008 },
+  { wait: 75, shrink: 70, radius: 0.42, dps: 0.015 },
+  { wait: 60, shrink: 60, radius: 0.24, dps: 0.03 },
+  { wait: 50, shrink: 50, radius: 0.1, dps: 0.06 },
+  { wait: 40, shrink: 45, radius: 0, dps: 0.12 },
 ];
 
 /** Storm-clock seconds until the wall has closed to nothing. */

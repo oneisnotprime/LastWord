@@ -312,6 +312,26 @@ Node process that owns the game state. One room per map instance (from milestone
   has stopped dead (out of fuel or power) or made no headway for 30 s toward where it is going gets off
   and goes on foot (`BotMind.ride`, used "dismount"): two bots sat in dead machines far apart were the
   rounds that ran to the time cap.
+- Concept batch (the round's systems; `concept3.test.ts`): spelling rules (`speechFor`: owned
+  things, `Walker.speech` put on them by acts on a person, touched verbs and self verbs, areas'
+  `PlaceRules.speech` with the maker's side spared what hinders; `bindSpeech` fixes "top" to the
+  letter held most when it lands; `spellWord` and `describeWord` pay shared `priceOf`, read typos
+  with `readMisspelt`; the loadout carries `spelling`). Command: `mutiny` (any word with one, at
+  spell time), fear wears loyalty in `deathBeat` (FEAR_LOYALTY), loadout `command.loyalty`
+  (`loyaltyOf`). Death: `kill` first tries `cheatDeath` (`useLife`: granted `Walker.lives`, then
+  gear, things, the spelled body `ownBody`; then a last stand, `Walker.standing`), honours
+  `denies_revival` (`kill(id, killer, final)`), `bury` (a GRAVE with the rarer half, or the dead's
+  `entombs` tomb), `rise` (`raises`), then `makeGhost`: ghosts (`ghosts`, `Ghost.proxy` a walker
+  not in `walkers`, `Player.ghost`) drift (`driftGhosts`), spell only `haunts` words with no harm
+  (`haunt`, GHOST_HARMLESS), are seen by all (`refreshViews` through `bodyOf`), and `watch` lets
+  them follow the living. `revive` (a `revives` word with the ghost picked, or `deathBeat`: a
+  reviver of their side, a former follower or a thing they own beside the ghost). `conceptSpell`
+  adds the storm, a mutiny, lives and last stands to any spelling. The storm wall: `startStorm`
+  (off under Vitest: `WorldRoom.storms`), `stormBeat` (clock, holds, state `storm*`, harm outside,
+  the round's weather), `bendStorm`; bosses go by `roundClock`. Bots: `heldUnder` (bans, tax and
+  word limit shape what they afford), `botStorm` (heads into the next circle, holds the wall when
+  far out), concept tries in `botThemes` (life, stand, wordsmith, censor, mutiny, storm hurry),
+  `ghostBots`. For local testing only: `STORM_CLOCK=200`.
 - Screen, knowledge and communication (shared screen.ts, knowledge.ts, comms.ts; `screen.test.ts`):
   the loadout carries `screen` (`screenFor`: statuses, `restoredFor` from gear, buffs, fields and senses,
   `jammed`) and `insight`; `screens` (in `beat`) re-tells a changed screen, sends `intel` (`intelFor`:

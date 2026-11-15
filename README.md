@@ -164,6 +164,23 @@ meanings), and cures (`effect_status` drunk, hypnosis, leash). A rule never over
 word sets. `build_demo.py` needs WordNet for it (its argument, `WORDNET_DICT`, or
 `node_modules/wordnet-db/dict`). The matrix the natures feed is in shared `affinity.ts`.
 
+## Round rules (tools/rules.txt)
+
+The round's systems (concept batch: spelling rules, command, death, the storm wall) are given by
+meaning through `tools/rules.txt`, a plain list of rules that `tools/rules.py` applies after
+derive.py and meaning.py. Each rule has `when` lines (alternatives; every condition on a line must
+hold: `word=`, `name=`, `under=` WordNet ancestors' lemmas, `gloss=`, `role=`, `class=`, `arch=`,
+`has=`, `no=`, `tag=`, `is=`), `not` lines, and `set` tokens in the demo_words.txt format. A word
+keeps a value it sets itself; earlier rules win. The build writes `data/rules.json` (each rule's
+count and words; not read by the game). Coverage after this batch: spelling rules 366 words
+(`ban_letters` 32, `spell_cost` 127, `word_limit` 28, `wild_letters` 75, `double_letters` 56,
+`misspell_ok` 34, `free_speech` 40), command 680 (`command_limit` 620, `mutiny` 60), death 846
+(`prevents_death` 126, `last_stand` 107, `revives` 107, `haunts` 427, `raises` 34, `entombs` 42,
+`denies_revival` 56), the storm wall 191 (`storm_pause` 105, `storm_shift` 86, `sudden_death` 9).
+A word's kind decides whom a rule binds: an area binds whoever it reaches (its maker's side
+spared what hinders), an act passed on a person binds them, a verb its speller, a thing its owner;
+so hindering rules go only on areas, person acts and touched verbs, never on a thing you own.
+
 ## Generating more words
 
 `tools/generate_words.py` gives property values to more of the lexicon with Claude, through the

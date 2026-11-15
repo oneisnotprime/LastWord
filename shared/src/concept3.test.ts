@@ -143,13 +143,13 @@ describe("death and respawn (death.ts)", () => {
 });
 
 describe("the round: the storm wall (round.ts)", () => {
-  it("each circle lies inside the one before, and the wall closes to nothing in ten minutes", () => {
+  it("each circle lies inside the one before, and the wall closes to nothing in twelve minutes", () => {
     const plan = stormPlan(256, seeded(7));
     for (let i = 1; i < plan.circles.length; i++) {
       const a = plan.circles[i - 1]!, b = plan.circles[i]!;
       expect(Math.hypot(a.x - b.x, a.y - b.y) + b.r).toBeLessThanOrEqual(a.r + 1e-6);
     }
-    expect(STORM_END).toBe(600);
+    expect(STORM_END).toBe(720);
     expect(stormAt(plan, 0)).toMatchObject({ stage: 0, shrinking: false, dps: 0 });
     expect(stormAt(plan, STORM_STAGES[0]!.wait + 10)).toMatchObject({ stage: 1, shrinking: true });
     expect(stormAt(plan, STORM_END + 5)).toMatchObject({ closed: true, r: 0 });

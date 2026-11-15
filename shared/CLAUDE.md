@@ -243,6 +243,23 @@ server and the client import this, so anything here must give the same answer on
   tiles; door DOOR_SHARE 0.1 of integrity), `doorAt` (south wall), `within`, `opensDoors` (`counters`
   door, lockable or gate: KEY, THIEF, RAM), `seesThroughWalls` (RADAR), DOOR_MEND, DOOR_QUIET,
   BESIDE_TILES, `interiorText` (on `cardOf` through `behaviours`).
+- Concept batch: the round's systems, given by meaning (`tools/rules.txt`), `concept3.test.ts`:
+  - `speech.ts` spelling rules: `speechOf` reads `ban_letters` (letters, vowels, `top`: the
+    commonest held), `spell_cost`, `word_limit`, `wild_letters` (blanks), `double_letters`,
+    `misspell_ok`, `free_speech`; `combineSpeech` (others' hindering rules do not bind free speech;
+    `banBy`/`limitBy` name the culprits), `priceOf` (what a spelling pays: banned, too long, tax
+    copies, free rarest letters, blanks, doubled letters), `readMisspelt` (a letter off reads as the
+    real word), `helpful`, `speechText`/`rulesLines`. `place.ts` `PlaceRules.speech` carries an
+    area's rule.
+  - `round.ts` the storm wall: STORM_STAGES (calm 3 min, five closings, nothing at STORM_END 720 s
+    of storm clock), `stormPlan` (nested circles, seeded), `stormAt`, `outsideBy`, `stormDamage`
+    (share of full health a second), `stormBendOf` (`storm_pause`, `storm_shift`, `sudden_death`),
+    `bentClock`, SUDDEN_DEATH_AT, STORM_WEATHER_STAGE. territory.ts BOSS_TIMES are storm-clock seconds.
+  - `death.ts`: `livesOf` (`prevents_death`, ABS undying), `lastStandOf`, `raisesOf`, `revivesOf`,
+    `graveSplit` (the rarer GRAVE_SHARE to the grave), GHOST_GAP/SPEED/SIGHT, REVIVE_TILES and
+    REVIVE_COOLDOWN, REBORN_SHARE/SECONDS, `deathText`.
+  - `mind.ts` FEAR_LOYALTY (loyalty lost a minute afraid), `loyaltyLeft`, `mutinies` (`mutiny`),
+    `commandText`.
 - Screen, knowledge and communication (concept batch: the HUD as a shared quantity; `screen.test.ts`):
   - `screen.ts` `PANELS` (minimap, bars, preview, best, inventory, trade, rack, chips, feed, cards,
     intel), `SCREEN_RULES` (what each status hides, greys or scrambles: blind, sleep, confuse, chaos and

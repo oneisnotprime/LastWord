@@ -32,6 +32,8 @@ inventory screens (M0 to M5). Not deployed yet.
   `tools/derive.py` (run by `build_demo.py`) gives properties across the dictionary by meaning
   (natures, size, luck, control), and `tools/meaning.py` does the same for the screen, knowledge
   and communication; to give a concept to many words, add a rule there.
+  `tools/rules.txt` (read by `tools/rules.py`, also run by `build_demo.py`) does it for the round's
+  systems: spelling rules, command, death and respawn, and the storm wall.
 - Do not name features after spelling bees. Names come from words, letters and combat.
 - No private mechanics: a word acts only through the shared systems in `PLAN.md`.
 - Aim for spectacle: when a word could have a modest effect or a dramatic one, choose dramatic.

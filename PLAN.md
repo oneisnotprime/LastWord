@@ -228,6 +228,39 @@ touch, never private features (shared screen.ts, knowledge.ts, comms.ts):
   silenced say nothing; lies (`decoys`: RUMOUR, LIE, PROPAGANDA) send made-up calls and pings.
 - Words get these properties by meaning across the dictionary (`tools/meaning.py`), not one by one.
 
+## The round's systems (spelling rules, command, death, the storm wall)
+
+Four more shared quantities words touch, given across the dictionary by `tools/rules.txt`:
+
+- Spelling rules (shared speech.ts): language is the battlefield. A banned letter (CENSORSHIP over
+  an area, a GAG on a person: their commonest letter), a cost multiplier (TAX ×1.5, INFLATION ×2;
+  BARGAIN, LITERACY cheaper: the rarest letters free), a word limit (STUTTER 4, BREVITY 5 round
+  its speller), blanks (a POET or JOKER of yours: a blank in every word), letters that count double
+  (EMPHASIS, ECHO; songs double vowels), typos that still read (SLANG, DIALECT). An area binds
+  whoever it reaches (its maker's side spared what hinders), an act on a person binds them, a verb
+  its speller, a thing its owner. Counters: FREEDOM, LIBERTY, a MEGAPHONE (`free_speech`), the
+  `counters` that end the area or binding, and words that avoid the banned letter. The spell
+  window greys a banned letter under a lock, shows blanks as star tiles and what a word pays.
+- Command (shared mind.ts): `command_limit` (crowns, sceptres, banners, whistles, leaders,
+  CHARISMA), loyalty worn down by hunger and fear until followers desert; MUTINY, DESERTION
+  (`mutiny`) set loose followers whose loyalty is thin, TREASON and BRIBERY (`mutiny_joins`) turn
+  them to the speller. The HUD shows FOLLOWERS n/m · LOYALTY.
+- Death (shared death.ts): extra lives (`prevents_death`: PHOENIX, SURVIVE, RESURRECTION, a
+  LUCKY sword), a last stand (`last_stand`: MARTYR, VALOR), the dead rising (`raises`: ZOMBIE,
+  NECROMANCER), graves with the rarer half of the fallen's letters (`entombs`: their TOMB takes
+  all), deaths that cannot be cheated (`denies_revival`: REAPER, EXECUTION). The knocked out haunt
+  as ghosts until the round ends: never alive, untouchable, they drift through everything and
+  spell `haunts` words (BOO, SCARE, CURSE, GAG: 427 of them) free every 12 s, without harm; or
+  watch the living. A `revives` word with the ghost clicked (REVIVAL, RESURRECT), or a former
+  follower or thing of theirs beside it (a MEDIC, their HOSPITAL), brings them back with what their
+  grave holds. Last alive wins; ghosts never count.
+- The round (shared round.ts): a storm wall closes over the map: calm for three minutes, then five
+  closings to nothing at twelve minutes of storm clock, harming whoever is outside more each
+  stage; the late circles bring a THUNDERSTORM. Words bend its clock (`storm_pause`: TRUCE,
+  ARMISTICE, OVERTIME; `storm_shift`: DOOMSDAY, APOCALYPSE, a DEADLINE; `sudden_death`: a
+  SHOWDOWN); bosses rise on the storm clock. The map and minimap show the wall and the next circle,
+  with a chip timing it. Bots head inside and use every system through the same code.
+
 ## Later
 
 - Map size scales with the number of players.

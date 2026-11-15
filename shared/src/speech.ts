@@ -41,6 +41,9 @@ export interface SpeechRules {
   free: boolean;
   /** The words binding them, for the spell window ("CENSORSHIP bans E"). */
   by: string[];
+  /** The words that ban letters and that limit words, for the reasons a spelling is refused. */
+  banBy?: string[];
+  limitBy?: string[];
 }
 
 export const SPEECH_PROPS = ["ban_letters", "spell_cost", "word_limit", "wild_letters", "double_letters", "misspell_ok", "free_speech"] as const;
@@ -125,9 +128,9 @@ export function combineSpeech(parts: readonly { word: string; rule: SpeechRule; 
   for (const { word, rule, mine } of parts) {
     const binds = mine || !free;
     let used = false;
-    if (rule.ban && binds) { for (const c of lettersOf(rule.ban, held)) banned.add(c); used = true; }
+    if (rule.ban && binds) { for (const c of lettersOf(rule.ban, held)) banned.add(c); used = true; (out.banBy ??= []).push(word.toUpperCase()); }
     if (rule.cost !== 1 && (rule.cost < 1 || binds)) { out.cost *= rule.cost; used = true; }
-    if (rule.limit > 0 && binds) { out.limit = out.limit ? Math.min(out.limit, rule.limit) : rule.limit; used = true; }
+    if (rule.limit > 0 && binds) { out.limit = out.limit ? Math.min(out.limit, rule.limit) : rule.limit; used = true; (out.limitBy ??= []).push(word.toUpperCase()); }
     if (rule.wild > 0) { out.wild += rule.wild; used = true; }
     if (rule.double) { for (const c of lettersOf(rule.double, held)) doubled.add(c); used = true; }
     if (rule.typos > 0) { out.typos = Math.max(out.typos, rule.typos); used = true; }
@@ -156,12 +159,14 @@ export function priceOf(letters: string, words: readonly string[], rules: Speech
   const out: Price = { pay: "", wild: 0, extra: "", free: "", missing: "", problem: null };
   const hit = [...new Set([...letters].filter((c) => rules.banned.includes(c)))];
   if (hit.length) {
-    out.problem = `${hit.join(" ").toUpperCase()} ${hit.length === 1 ? "is" : "are"} banned${rules.by.length ? ` (${rules.by.join(", ")})` : ""}`;
+    const by = rules.banBy ?? rules.by;
+    out.problem = `${hit.join(" ").toUpperCase()} ${hit.length === 1 ? "is" : "are"} banned${by.length ? ` (${by.join(", ")})` : ""}`;
     return out;
   }
   const long = words.find((w) => rules.limit > 0 && w.replace(/[^a-z]/g, "").length > rules.limit);
   if (long) {
-    out.problem = `${long.toUpperCase()} is too long: ${rules.limit} letters at most${rules.by.length ? ` (${rules.by.join(", ")})` : ""}`;
+    const by = rules.limitBy ?? rules.by;
+    out.problem = `${long.toUpperCase()} is too long: ${rules.limit} letters at most${by.length ? ` (${by.join(", ")})` : ""}`;
     return out;
   }
   let need = [...letters];
