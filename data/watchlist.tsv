@@ -24,7 +24,7 @@ atomic	absolute and scaling modifiers	6	11.7	1.9	-	adjective:quality
 free	absolute and scaling modifiers	4	11.8	3.0	-	adjective:quality
 lethal	absolute and scaling modifiers	6	11.9	2.0	-	adjective:absolute
 safe	absolute and scaling modifiers	4	12.3	3.1	-	adjective:quality
-trillion	absolute and scaling modifiers	8	12.4	1.6	-	adjective:quality
+trillion	absolute and scaling modifiers	8	12.3	1.5	-	adjective:quality
 nuclear	absolute and scaling modifiers	7	12.6	1.8	-	adjective:quality
 holy	absolute and scaling modifiers	4	12.7	3.2	-	adjective:quality
 huge	absolute and scaling modifiers	4	12.9	3.2	-	adjective:quality
@@ -138,7 +138,7 @@ lexicon	letter and word meta	7	41.6	5.9	X	noun:knowledge
 ice	map-scale terrain and states	3	4.6	1.5	-	noun:mineral
 pit	map-scale terrain and states	3	6.4	2.1	-	noun:depression
 sand	map-scale terrain and states	4	7.9	2.0	-	noun:mineral
-moon	map-scale terrain and states	4	8.4	2.1	-	noun:celestial
+moon	map-scale terrain and states	4	8.3	2.1	-	noun:celestial
 earth	map-scale terrain and states	5	9.8	2.0	-	noun:celestial
 space	map-scale terrain and states	5	10.0	2.0	-	noun:phenomenon
 planet	map-scale terrain and states	6	10.8	1.8	-	noun:celestial
@@ -253,7 +253,7 @@ axe	verbs that end things	3	34.3	11.4	X	noun:weapon
 zap	verbs that end things	3	35.2	11.7	Z	noun:event
 freeze	verbs that end things	6	43.0	7.2	Z	verb:weather
 cure	verbs that escape or multiply	4	7.9	2.0	-	noun:medicine
-clone	verbs that escape or multiply	5	8.4	1.7	-	noun:person
+clone	verbs that escape or multiply	5	8.3	1.7	-	noun:person
 heal	verbs that escape or multiply	4	8.5	2.1	-	verb:body
 hide	verbs that escape or multiply	4	9.9	2.5	-	verb:body
 breed	verbs that escape or multiply	5	12.2	2.4	-	verb:body

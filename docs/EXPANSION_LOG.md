@@ -442,6 +442,87 @@ into `tools/generated_words.txt`, letters in `tools/producers.txt`). Art is draw
 - Remaining: `tools/freq_todo.txt` (3,000 words, rank order) starts at LINKAGE (rank 24,224), LOUVRE,
   LOVINGLY, MASONIC, NEWFOUND, NOSED, OBSERVATIONAL, PARLOUR.
 
+## Frequency batch 6: the next eleven hundred most common words
+
+- Added 1,107 words, every missing word from wordfreq rank 24,224 to 28,594 (LINKAGE, LOVINGLY, MASONIC,
+  NEWFOUND, NOSED... to INANIMATE, INEXPLICABLY): 500 nouns, 423 adjectives, 93 verbs, 91 adverbs; the
+  dictionary is now 19,208 words. Twelve core words are hand-written in demo_words.txt (GLIDER, STREETCAR,
+  BOOMERANG, SHIV, SCARECROW, CROSSFIRE, DETONATION, MANHUNT, NIGHTFALL, SUPERHUMAN, MERCILESS,
+  EXTINGUISH); the rest went through chunk files and `generate_words.py merge`. New producers: hired
+  hands pay N (PRENTICE, SPOKESWOMAN, LOBBYIST, IMPORTER, CARTOONIST, PUBLICIST, GROWER, FITTER), an
+  ALLOTMENT is a crop field (A), a CATCHMENT holds water (O), a FURNISHING is furniture (B).
+- Gap after this batch (`tools/freq_gap.py`, which now also prints the top 40k): top 10k 0, top 20k 0,
+  top 30k 402 (187 n, 37 v, 151 adj, 27 adv; was 1,602), top 40k 2,967 (1,476 n, 244 v, 1,054 adj, 193
+  adv; was 4,167). Fewer than 3,000 are left in the top 40k, so `--todo` now reads the top 50k.
+- Left out on purpose and not counted: names WordNet also lists lower-case (SARATOGA, DOBSON, LOUVRE,
+  BENNET, ARGUS, MERLE, FLINDERS: `freq_gap.py` NAMES), an abbreviation the lexicon does not hold (KHZ:
+  NOT_WORDS), crude and sexual words and slurs added to tools/crude.txt (REDNECK, COON, the genital and
+  pelvic anatomy, VIBRATOR, PEDOPHILIA, HICKEY, BUSTY, BOSOM, FECAL, DIARRHOEA, EROTICA, FOREPLAY, PETTING,
+  SPANK, SHAG, BITCHY, BOLLOCKS, FINGERING, GROPING), and words about groups of people, sexuality, illness,
+  religion's offices or atrocities added to `EXCLUDED` (MIDWESTERN, CREOLE, GENTILE, ETHNICALLY, YAKUZA,
+  GANGSTA, HOBO, DERELICT, UNTOUCHABLE, ALBINO, MULTICULTURALISM, XENOPHOBIA, XENOPHOBIC, BIGOTED,
+  PREJUDICED, FEMININITY, PATRIARCHY, HAREM, POLYGAMY, AMOUR, CONTRACEPTIVE, CONSENTING, PLACENTA,
+  NEONATAL, DEVIANT, DEVIATE, SCHIZOPHRENIC, NEUROTIC, SOCIOPATH, UNHINGED, BONKERS, PHOBIA,
+  INSTITUTIONALIZED, HOSPITALIZATION, INCURABLE, ANEURYSM, LESION, ULCER, CYSTIC, DYSLEXIA, RHEUMATOID,
+  BLACKWATER, DEGENERATIVE, PASHA, SHEIK, MAHATMA, SWAMI, CURATE, ARCHDIOCESE, CONGREGATIONAL, HEATHEN,
+  BOHEMIA, HAJJ, JOSS, SERVITUDE, LYNCHING, CRUCIFIXION, CANNIBAL, CANNIBALISM, ATROCITY). Political and
+  religious ideas kept, acting only through ordinary systems: ANARCHISM (a field that strips authority
+  and command and breeds mutiny), POPULISM (mutinies that join its speller), SEPARATIST and DISSIDENT
+  (mutiny that joins them), HEGEMONY (claims, taxes, command), NATIONALISTIC, FEDERALIST, EGALITARIAN,
+  PACIFIST (whoever takes him gets a truce), PIETY, SANCTITY, LITURGICAL, ATONEMENT.
+- Notable effects, all through shared systems: DETONATION levels a 12 m circle (500 blast, 200 fire, a
+  20 m knockback); CROSSFIRE rains 12 volleys over a region from 150 m off; FISSION is a 15 m nuclear blast
+  that sickens and blinds; FLAK shreds a region of sky and ends AIRLINER, GLIDER, ZEPPELIN, HELICOPTER and
+  DRONE; MANHUNT hunts one person for four minutes, exposed, with four of its speller's bloodhounds, and
+  captures them; FORAY raids a region and steals letters; ROUT breaks a region's morale; CREMATION burns a
+  person past revival; DISINTEGRATION is a 300-magic ray; HUMANKIND musters 10 people, CADRE 4 soldiers,
+  SUBGROUP 3, MINION comes three at a time; URBANIZATION paves a 10 m circle and ends forests and meadows,
+  RECLAMATION turns wasteland, desert and swamp to fertile field, EVAPORATION dries water to sand;
+  MORATORIUM holds the storm 40 s, SOLSTICE 20 s; NIGHTFALL brings night for a minute and a half and
+  DAYBREAK ends it; YAWN puts everyone near to sleep; APPREHEND arrests and SUBDUE captures; DISSECTION
+  severs a graft; PRIVATISATION, TENANCY and GENTRIFICATION take a building against its security; the
+  AEGIS is 40 armour, a 200 shield and fearlessness; a TOON shrugs off blunt and crushing blows; the BLOB
+  is an acid slime. Adjectives by meaning: SUPERHUMAN (strength +6, integrity ×3, carry ×4), INNUMERABLE
+  (count ×6), GALORE (×4), TEENY (size ×0.15), SENTIENT makes a thing alive and walking, VEHICULAR makes
+  it ridable, NOMADIC makes a house portable, INANIMATE stills a creature, EVAPORATED turns a thing to gas
+  that walks through walls, SUBTERRANEAN burrows, IMPENETRABLE, UNBREAKABLE, MERCILESS (×1.6 and no
+  revival), BLINDFOLDED, INCAPACITATED. Adverbs bend verbs from MINIMALLY (×0.5) to SUPREMELY (×1.8),
+  SPECTACULARLY (×1.8, louder and wider), THRICE (×1.5 and two copies) and TERMINALLY (no revival).
+  Counter-words, checked for direction: EXTINGUISH ends fire, flame, wildfire and torches; FLAK aircraft;
+  DAYBREAK night; MEDIATE an ALTERCATION, TIFF, BICKERING or STANDOFF; DISPEL fog, mirage and curses;
+  REFUTE lies and propaganda; ROUSE sleep; DERAIL trains and streetcars; MOW grass and hay; REQUIEM
+  ghosts; REMEDIATION pollution and SMOG; STERILIZATION and ANTIMICROBIAL germs and plague; SCARECROW crows
+  and their kin. Areas laid at a place last at most five minutes, map-wide and sky words at most a minute
+  and a half (SMOG, a region's fog, counts as map-wide), so no new lasting area lacks an ender; no word
+  seals a fate; no object radiates past 200 m.
+- The build's meaning rules gave the new words their dimensions: natures (150 words), their materials'
+  melting points (36), burning (37), conducting (26) and shattering (20), size from meaning (13), haunting
+  acts for ghosts (37: DURESS, SHOCKER, WAILING, CROSSFIRE...), last stands (RESOLUTE, CHIVALRY, MAINSTAY),
+  deaths absorbed (TENACITY, TENACIOUS, UNBREAKABLE), revivals (DELIVERANCE, ACUPUNCTURE, REINSTATE),
+  spelling rules (FLUENCY, BRAILLE cheaper; EXCLAMATION and AMPLIFICATION double letters; SCRABBLE a blank;
+  RANTING free speech), storm holds (BREATHER, MEDIATE, POISE) and a storm push (INCITE), amnesia from
+  blunt blows (BRUNT, FASTBALL, BOOMERANG). Ones the rules got wrong were set by hand: an INCENDIARY bomb
+  commands no one (`command_limit=0`), a VIDEOTAPE is no magnet (`magnetism=0`), WIZ, REFORMER and
+  DIAGNOSING do not fight on (`last_stand=0`), CUDDLING, SNUGGLE and STROKING are not haunting acts,
+  SPOKESWOMAN and BIOGRAPHER give no blank, CONDENSATION no amnesia, ELITIST, EGALITARIAN and UTILITARIAN
+  read no racks, and a TOON is fae.
+- Drawn: a WORDS shape for each of the 186 new concrete words without a generated image (people as bipeds
+  by what they do, wizards for WIZ and CASTER, a big-headed TOON, a demon-red FIEND; new shapes for a
+  boomerang, a glider, a scarecrow, a blob, a jukebox for NICKELODEON, a pallet and a cork for STOPPER;
+  landforms as signs), checked in the gallery with headless Playwright (STREETCAR, STUB and IRONING were
+  redrawn: they read as a steam train, a speck and a robe).
+- Slow tests: two shared tests that walk the whole dictionary passed the 5 s default when the suite
+  ran in parallel (every verb with every adverb, about a million casts; and the tip ideas). The tip
+  weight now counts missing letters without building a string (tips.ts `shortfall`, half the time),
+  and both tests get the explicit 30 s timeout the other whole-dictionary tests already had.
+- Tournament (48 rooms, 8 mixed bots, 30 min cap, same seeds; main's dictionary against this batch's):
+  mean round 8.7 -> 8.6 min (longest 11.7 -> 14.4); median first death 123 -> 132 s; median time to kill
+  a person 5.4 -> 4.4 s; rounds at the time cap 0 -> 0. Bots spelled new words 95 times (30 different; HAP
+  13, JIG 11, SHAY 9, EBB 7, HOY 7), 2.3% of 4,121 spellings; 825 of the new words were within some
+  rack's reach.
+- Remaining: `tools/freq_todo.txt` (3,000 words, rank order) starts at INFIELD (rank 28,595), INFLATE,
+  INNOVATOR, IRREPLACEABLE, KILOGRAM, LANDLINE, LINGO.
+
 ## Concept: screen, knowledge and communication
 
 - Not a word batch: three shared systems (shared `screen.ts`, `knowledge.ts`, `comms.ts`) and meaning

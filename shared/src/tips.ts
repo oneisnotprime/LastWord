@@ -184,8 +184,20 @@ function poolOf(dict: Dictionary): Map<TipKind, string[]> {
 export function tipWeight(held: Letters, word: string): number {
   const short = word.length <= 5 ? 1.5 : word.length <= 7 ? 1 : 0.4;
   if (!Object.values(held).some((n) => n > 0)) return short;
-  const m = missing(held, word).length;
+  const m = shortfall(held, word);
   return short * (m === 0 ? 4 : m <= 3 ? 4 - m * 0.6 : 0.15 / m);
+}
+
+/** How many letters `held` lacks for `word` (the length of `missing`, counted without building it: tips weigh every word in a pool). */
+function shortfall(held: Letters, word: string): number {
+  let lack = 0;
+  for (let i = 0; i < word.length; i++) {
+    const ch = word[i]!;
+    let need = 0;
+    for (let j = 0; j <= i; j++) if (word[j] === ch) need++;
+    if (need > (held[ch] ?? 0)) lack++;
+  }
+  return lack;
 }
 
 /** Picks one entry by weight. */

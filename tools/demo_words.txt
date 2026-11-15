@@ -3009,3 +3009,37 @@ blinding: inflict_blind+12 luminosity+7 dmg_light*1.6 sight_range*0.5
 
 # verb transform
 shatter: duration=10 effect_target=touched dmg_blunt+400 dmg_sonic+200 brittleness+10 integrity*0.1 multi_target+3 counters=glass,mirror,window,crystal,ice,shield,armor
+
+# Frequency batch 6 (tools/freq_todo.txt from LINKAGE): the next eleven hundred or so most common
+# words that had no data. Core words of each kind below; the rest are generated from these and the lines above.
+# Detonation levels a wide circle; crossfire rains bullets on a region; a manhunt hunts one person with hounds.
+
+# noun vehicle_air
+glider: mass=300 length=8 integrity=300 material=aluminum,canvas speed_air=25 flight_ceiling=1500 seats=1 mountable=true requires_pilot=true stealth=8 loudness=0 color=white
+
+# noun vehicle_land
+streetcar: mass=15000 length=14 integrity=2500 material=steel self_propelled=true requires_road=true speed_land=15 seats=50 mountable=true diet=power upkeep_power=3 cover=0.5 dmg_crush=350 knockback=14 carry_capacity=6000 loudness=7 color=red
+
+# noun weapon
+boomerang: mass=0.4 length=0.6 integrity=60 material=wood equip_slot=held hands_required=1 dmg_blunt=40 attack_rate=1 attack_range=40 multi_target=2 critical=0.15 inflict_stun=3 color=tan
+shiv: mass=0.15 length=0.15 integrity=30 material=steel equip_slot=held hands_required=1 dmg_pierce=60 sharpness=8 attack_rate=1.8 critical=0.3 inflict_bleed=8 stealth=8 color=gray
+
+# noun artifact
+scarecrow: mass=8 height=1.8 integrity=60 material=straw,wood portable=true fear_aura=4 inflict_fear=6 decoys=1 flammability=9 counters=crow,raven,rook,sparrow,pigeon,magpie,starling,jackdaw,daw color=tan
+
+# noun attack
+crossfire: placement=target placement_range=150 event_target=region event_radius=12 event_duration=1 meteors=12 dmg_pierce=300 multi_target=8 inflict_fear=10 loudness=10 friendly_fire=true
+detonation: placement=target placement_range=100 event_target=tile event_radius=12 event_duration=1 dmg_blast=500 dmg_fire=200 knockback=20 siege=4 inflict_deaf=10 inflict_stun=6 loudness=10 friendly_fire=true
+
+# noun act
+manhunt: placement=target placement_range=200 event_target=character event_duration=4 tracking=10 inflict_expose=20 summons=bloodhound summon_count=4 summon_owned=true captures=true
+
+# noun season
+nightfall: placement=map sets_daylight=night field_duration=1.5 luminosity=1 stealth+4 sight_range*0.6 inflict_fear=3 counters=day,morning,noon,daytime,midday,dawn,sunrise,daybreak,morn
+
+# adjective quality
+superhuman: strength+6 speed_land*1.6 integrity*3 jump*3 carry_capacity*4 courage+5 knockback+8 immune_fear=true
+merciless: dmg_slash*1.6 dmg_blunt*1.6 dmg_pierce*1.6 critical+0.25 denies_revival=true inflict_fear+8 aggression+6 charm+-6
+
+# verb transform
+extinguish: duration=10 effect_target=touched effect_status=burn dmg_water+150 dmg_cold+80 temperature+-60 counters=fire,flame,blaze,wildfire,bonfire,campfire,inferno,torch,candle

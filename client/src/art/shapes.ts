@@ -542,6 +542,20 @@ const pencilShape = (colour = "#2b2a28") => s([part(turn(R(-2, -30, 2, -4), 0.35
 const hoopShape = s([part(band(E(0, -16, 14, 14, 20), 2.4), "#a8703c", 1), dot(E(0, -16, 12, 12, 18), "#f4f1ea"), ...[0, 1, 2, 3, 4].map((i) => dot(E(Math.cos((i / 5) * Math.PI * 2) * 4, -16 + Math.sin((i / 5) * Math.PI * 2) * 4, 2.6, 2.6, 8), "#d4476a")), dot(E(0, -16, 1.8, 1.8, 8), "#e3b341"), dot(band([[-3, -8], [-6, -4]], 0.8), "#5f8a4a")], "#a8703c");
 const castorShape = s([part(P(-6, 0, -7, -16, -4, -22, 4, -22, 7, -16, 6, 0), "body", 1), glue(E(0, -24, 4.5, 3, 10), "#cfd6da"), ...[-2, 0, 2].map((x) => dot(E(x, -24.5, 0.6, 0.6, 6), "#2b2a28"))], "#e9eef0");
 
+// Frequency batch 6: the next eleven hundred most common words. People are bipeds by what they
+// do; new things: a boomerang, a glider, a scarecrow, a blob, a jukebox for NICKELODEON, a pallet
+// and a cork for STOPPER.
+const boomerangShape = s([part(band([[-15, -8], [-2, -20], [15, -10]], 3.2, 2.4), "body", 1), dot(band([[-12, -9], [-2, -18], [12, -11]], 0.8), "light")], "#c9a06a");
+const gliderShape = s([part(band([[-24, -22], [18, -22]], 2.6, 1.6), "body", 1), glue(P(-32, -24, 30, -26, 30, -24, -30, -22), "light", 1), glue(P(-20, -23, -26, -33, -22, -33, -16, -23), "body"), dot(E(12, -23, 2.6, 1.6, 8), "#7fb4d8")], "#f4f1ea", { flies: true });
+const scarecrowShape = s([part(band([[0, 2], [0, -44]], 1.6), "#8a6440"), part(band([[-17, -30], [17, -30]], 1.4), "#8a6440"), part(P(-8, -33, 8, -33, 10, -14, -10, -14), "body", 1),
+  dot(band([[-8, -30], [-16, -29]], 2.2), "body"), dot(band([[8, -30], [16, -29]], 2.2), "body"), ...[-1, 1].map((d) => dot(P(d * 16, -31, d * 20, -33, d * 19, -28, d * 20, -26, d * 16, -28), "#e3b341")),
+  part(E(0, -38, 5, 5, 12), "#e6c89a", 1), dot(E(-2, -39, 0.8, 0.8, 6), "#2b2a28"), dot(E(2, -39, 0.8, 0.8, 6), "#2b2a28"), glue(P(-10, -41, 10, -41, 4, -44, 4, -49, -4, -49, -4, -44), "#a8703c"),
+  dot(P(-4, -14, -2, -9, 0, -14, 2, -9, 4, -14), "#e3b341")], "#5f7a9a");
+const blobShape = s([part(P(-17, 0, -18, -8, -11, -18, 0, -22, 11, -18, 18, -8, 17, 0), "body", 2), dot(E(-8, -16, 3.4, 2, 8), "light"), ...[-5, 5].flatMap((x) => [dot(E(x, -11, 2.6, 2.6, 8), "#fbf7ec"), dot(E(x, -11, 1.1, 1.1, 6), "#2b2a28")])], "#7fae5a", { living: true });
+const jukeboxShape = s([part(P(-12, 0, -12, -22, -8, -31, 8, -31, 12, -22, 12, 0), "body", 1), dot(E(0, -23, 7, 5, 14, Math.PI, Math.PI * 2), "#f4d35e"), dot(R(-8, -18, 8, -8), "#2b2a28"), ...[-5, 0, 5].map((x) => dot(R(x - 1.5, -16, x + 1.5, -10), "#e9a8b8")), dot(R(-9, -5, 9, -3), "#c9a24a")], "#a8323a");
+const palletShape = s([...[-8, -3].map((y) => part(R(-20, y - 2, 20, y), "body", 1)), ...[-17, 0, 17].map((x) => part(R(x - 3, -6, x + 3, 0), "body")), dot(band([[-18, -9], [18, -9]], 0.4), "dark")], "#c9a06a", { flat: true });
+const corkShape = s([part(P(-5, 0, 5, 0, 6.5, -13, -6.5, -13), "body", 1), dot(E(0, -13, 6.5, 1.8, 10), "light"), ...[[-2, -5], [2, -8], [-1, -10], [3, -3]].map(([x, y]) => dot(E(x!, y!, 0.7, 0.7, 6), "dark"))], "#c9a06a");
+
 export const WORDS: Record<string, Silhouette> = {
   // Animals.
   wolf, dog, fox, cat, lion, tiger, bear, horse, cow, bull, pig, sheep, goat, deer, elephant, camel, rat, mouse: rat, rabbit, monkey, boar, donkey, ass: donkey, bat, whale,
@@ -1009,6 +1023,53 @@ export const WORDS: Record<string, Silhouette> = {
   incline: sign(icon.mountain(), "#fbf6ea", "#a8916a"), vantage: sign(icon.eye()), heartland: s(grass.pieces, "#a8b45a"), slum: house({ w: 30, h: 18, roof: "flat", windows: 1, wall: "#a8a094" }),
   outback: sign(icon.sun(), "#fbf6ea", "#d9a05a"), wasteland: sign(icon.skull(), "#fbf6ea", "#8a7a60"), piazza: sign(icon.house(), "#fbf6ea", "#d9c6a0"),
   waterway: s(puddle.pieces, "#5f8ac9"), tributary: s(puddle.pieces, "#7fb4d8"), bayou: s(puddle.pieces, "#4a6a3a"),
+  // Frequency batch 6.
+  grandchild: biped({ h: 28, colour: "#e3b341", legs: "#5f8ac9", hat: "hair" }), wiz: biped({ hat: "wizard", robe: true, colour: "#5a3a8a", arms: "up" }), caster: biped({ hat: "wizard", robe: true, colour: "#3f6fa8", arms: "forward" }),
+  spokeswoman: job("#c9553f", "bun", { arms: "forward" }), separatist: job("#5a2a2a", "hood", { arms: "up" }), predictor: job("#5f3a8a", "hood", { robe: true, arms: "forward" }),
+  landowner: job("#5f6a3a", "tophat", { belt: "#8a6440" }), reformer: job("#3f6fa8", "hair", { arms: "up", belt: "#f4f1ea" }), occupant: job("#8e8b80", "hair", { legs: "#5a5a62" }),
+  protester: job("#c9553f", "cap", { held: "staff", arms: "up" }), dissident: job("#3a3633", "hood", { arms: "up", cloak: "#5a2a2a" }), dork: job("#9aa3a8", "hair", { legs: "#5a7a8a", arms: "forward" }),
+  lobbyist: job("#2f2c33", "hair", { belt: "#c9a24a", arms: "forward" }), reliever: job("#5fb3c9", "cap", { arms: "forward" }), schoolgirl: biped({ h: 30, colour: "#3f6fa8", hat: "bun", hair: "#5a3a24", robe: true }),
+  biographer: job("#5a4a3a", "hair", { arms: "forward", belt: "#e9e2d0" }), complainant: job("#8a6a5a", "hair", { arms: "up" }), dada: job("#5a6a7a", "hair", { beard: "#5a3a24" }),
+  dropout: biped({ h: 36, colour: "#7a7a6a", legs: "#3f4a5a", hat: "cap" }), importer: job("#3f6fa8", "hair", { belt: "#a8703c" }), lass: biped({ colour: "#7fae5a", hat: "bun", hair: "#c9773a", robe: true }),
+  respondent: job("#7a8a9a", "hair"), outcast: job("#6b6a66", "hood", { legs: "#5a4636" }), wearer: job("#c9773a", "hair", { cloak: "#5f7a4a" }), cartoonist: job("#e3b341", "hair", { arms: "forward", belt: "#d4476a" }),
+  comptroller: job("#3a3633", "hair", { belt: "#c9a24a" }), elitist: job("#2f2c33", "tophat", { cloak: "#5a3a6a" }), fink: job("#5a5a62", "hood", { arms: "forward" }),
+  humanist: job("#5a4a6a", "hair", { robe: true, beard: "#8e8b80" }), motorist: job("#3a3633", "cap", { arms: "forward", legs: "#3f4a5a" }), pacifist: biped({ colour: "#e9e2d0", hat: "hair", hair: "#8a6440", robe: true, arms: "up" }),
+  publicist: job("#d4476a", "hair", { arms: "up" }), egalitarian: job("#7a8a6a", "hair", { arms: "forward" }), foodie: job("#c9773a", "bun", { belt: "#f4f1ea" }), hotspur: job("#c9553f", "hair", { cloak: "#a8323a", held: "spear" }),
+  islander: job("#5fb3c9", "none", { legs: "#e3b341" }), mainstay: job("#5a6a4a", "hair", { belt: "#8a6440" }), namesake: job("#8a8a9a", "hair", { legs: "#8a8a9a" }), pundit: job("#3a3633", "hair", { arms: "up", belt: "#c9553f" }),
+  ringer: job("#8a6440", "cap", { arms: "up" }), decadent: job("#8a3a6a", "tophat", { cloak: "#e3b341" }), federalist: job("#3f4a6a", "tophat", { belt: "#e9e2d0" }), fixer: job("#4a4a52", "cap", { arms: "forward", belt: "#e3b341" }),
+  fiduciary: job("#2f4a3a", "hair", { belt: "#c9a24a" }), sociologist: job("#6a5a4a", "hair", { arms: "forward" }), stringer: job("#3f8a5a", "cap", { legs: "#e9e2d0" }), utilitarian: job("#8e8b80", "hair", { belt: "#5a5a62" }),
+  scion: lord("#3f6fa8", "hair", "#c9a24a"), wag: job("#e3b341", "cap", { arms: "up" }), watcher: job("#4a5a4a", "hood", { arms: "forward" }), widower: job("#2b2a28", "hair", { beard: "#8e8b80" }),
+  bystander: job("#9aa3a8", "hair", { legs: "#7a7a6a" }), dieter: job("#7fae5a", "hair", { legs: "#e9e2d0" }), optimist: job("#f4d35e", "hair", { arms: "up" }), licensee: job("#5a7a6a", "hair", { belt: "#e9e2d0" }),
+  expat: job("#e9d070", "cap", { legs: "#c9a06a" }), chaser: job("#c9553f", "cap", { arms: "forward", legs: "#3f4a5a" }), middleweight: biped({ w: 11, colour: "#c9553f", legs: "#3a3633", hat: "none", arms: "up" }),
+  postmaster: job("#3f4a7a", "cap", { belt: "#c9a24a" }), organiser: job("#3f8a8a", "hair", { arms: "up" }), prentice: job("#a8805a", "cap", { h: 36 }), adjutant: soldierOf("#5f6a4a", "none", "cap"),
+  esquire: job("#8e98a0", "helmet", { held: "spear", h: 36 }), lister: job("#5a5a62", "hair", { arms: "forward" }), bridesmaid: biped({ colour: "#e9a8b8", hat: "bun", hair: "#c9773a", robe: true }),
+  checker: job("#3f6fa8", "cap", { arms: "forward" }), minion: biped({ h: 26, colour: "#e3b341", legs: "#3f6fa8", hat: "none" }), grower: job("#6f9a50", "cap", { legs: "#8a6a4a" }), fitter: job("#7a6a5a", "hair", { arms: "forward", belt: "#c9a24a" }),
+  mannequin: biped({ colour: "#e9e2d0", skin: "#e9e2d0", legs: "#e9e2d0", hat: "none" }), toon: biped({ h: 30, head: 9, colour: "#d4476a", legs: "#2b2a28", skin: "#f4f1ea", hat: "none", arms: "up" }),
+  fiend: s(demon.pieces, "#7a2a2a", { living: true }), blob: blobShape, scarecrow: scarecrowShape,
+  wildcat: quad({ len: 26, h: 10, leg: 9, neck: 4, head: 5, snout: 2, ear: "point", tail: "thin", stripes: true, colour: "#9a7a5a" }), coney: s(rabbit.pieces, "#a8805a", { living: true }),
+  daw: bird({ size: 0.8, colour: "#3a3a40", breast: "#8e98a0" }), brill: fish({ colour: "#a89a7a", len: 24 }), plankton: particle("#7fc4a8"), nit: bug({ kind: "beetle", colour: "#d9c6a0" }),
+  tung: tree({ kind: "round", colour: "#6f9a50" }), flamboyant: tree({ kind: "round", colour: "#d9473a" }), pia: s(grass.pieces, "#5f8a4a"), hepatic: bump("#4f7a4a"),
+  airliner: plane({ kind: "jet", colour: "#f4f1ea" }), glider: gliderShape, streetcar: s([...car({ cab: "bus", len: 54, h: 20, wheels: 3, windows: 6, colour: "#c9323a" }).pieces, glue(band([[-4, -37], [6, -46], [14, -46]], 0.8), "#2b2a28"), glue(R(-8, -38, 8, -36), "#4a4a52")], "#c9323a"), shay: carriageShape("#3a3633"), stroller: s(cartShape.pieces, "#3f6fa8"), hoy: boat({ kind: "boat", colour: "#8a6440" }),
+  boomerang: boomerangShape, shiv: s(knife.pieces, "#9aa3a8"), stave: s(staff.pieces, "#a8703c"), pellet: s(ammoShape.pieces, "#5a5a62"), canister: s(cylinderShape.pieces, "#5f6a4a"), incendiary: s(bomb.pieces, "#d9573b"),
+  aegis: s(shield.pieces, "#c9a24a"), plating: s(armor.pieces, "#8e98a0"), brim: s(hat.pieces, "#6b4a2e"), topper: s(hat.pieces, "#2b2a28"), ironing: s([...[0, 1, 2].map((i) => part(R(-12 + i, -4 - i * 5, 12 - i, -i * 5), i % 2 ? "#f4f1ea" : "body", 1))], "#9cb4d8", { flat: true }), clasp: s(ring.pieces, "#c9d1d6"),
+  perm: bump("#c9773a"), monogram: s(stickerShape.pieces, "#3f6fa8"), bod: bump("#efcfae"), fuzz: bump("#d9c6a0"), lat: bump("#e0a890"), tum: bump("#efcfae"), whitehead: bump("#f4f1ea"),
+  plat: map, shortlist: s(letter.pieces, "#f4f1ea"), novella: s(book.pieces, "#8a5ac9"), compendium: s(book.pieces, "#6b3a1e"), discography: s(book.pieces, "#2b2a28"), chit: s(letter.pieces, "#e9d070"),
+  preventative: s(bottle.pieces, "#f4f1ea"), inhalation: s(cylinderShape.pieces, "#5fb3c9"), downer: s(potion.pieces, "#5f6a8a"), cortisol: s(potion.pieces, "#e3b341"), antimicrobial: s(bottle.pieces, "#7fae5a"),
+  ester: s(bottle.pieces, "#e9d070"), flax: s(grass.pieces, "#c9b45a"), ligand: s(crystal.pieces, "#9cc6d2"), varnish: s(bottle.pieces, "#a8703c"), anil: s(potion.pieces, "#3f4a9a"), byproduct: s(pile.pieces, "#8e8b80"),
+  secretion: s(puddle.pieces, "#c9d47a"), aerosol: s(cylinderShape.pieces, "#c9553f"),
+  etching: picture("#c9773a", "#8a6440"), fresco: picture("#d98a5a", "#e9e2d0"), deodorant: s(cylinderShape.pieces, "#9cc6d2"), identifier: s(card.pieces, "#5fb3c9"), snippet: s(scroll.pieces, "#f4f1ea"),
+  tarot: s(card.pieces, "#8a5ac9"), pallet: palletShape, spout: s(pipelineShape.pieces, "#c9773a"), bookmark: s(sheet.pieces, "#c9553f"), pane: s(sheet.pieces, "#cfeaf2"), stopper: corkShape,
+  connective: s(plugShape.pieces, "#c9773a"), analyzer: scanShape, sampler: s(scanShape.pieces, "#5f8a4a"), cursor: sign(icon.arrow(), "#fbf6ea", "#3f6fa8"), cathode: s(electrodeShape.pieces, "#5a5a62"),
+  videotape: s(floppyShape.pieces, "#2b2a28"), cog: cogShape(), lashing: s(rope.pieces, "#a8805a"), incubator: s(box.pieces, "#e9eef0"), nickelodeon: jukeboxShape,
+  trove: s(chest.pieces, "#c9a24a"), crock: vaseShape("#a8703c"), tabletop: s(table.pieces, "#a8703c"), furnishing: s(chair.pieces, "#8a5a3a"),
+  bracing: s(frameShape.pieces, "#8e98a0"), stoop: s(stairsShape.pieces, "#bfb3a0"), grille: s(gratingShape.pieces, "#3a3a40"), fuselage: plane({ kind: "jet", colour: "#b8c2c8" }),
+  gable: house({ roof: "gable", w: 30, h: 20, windows: 1, wall: "#c9a06a" }), polygon: pentagonShape, tailgate: slabShape("#5a5a62"), catchment: dam,
+  parlour: house({ w: 36, h: 24, roof: "gable", windows: 2, wall: "#d98a8a", chimney: true }), expressway: road, causeway: s(bridge.pieces, "#9a948a"), backdoor: s(door.pieces, "#6b4a2e"),
+  hunk: s(rock.pieces, "#8e8b80"), jag: s(rocky.pieces, "#7d7f80"), stub: s([part(P(-9, 0, -7, -12, -3, -14, 0, -11, 4, -15, 7, -12, 9, 0), "body", 1), dot(E(0, -13, 6, 1.6, 10), "#e6c89a"), dot(band([[-3, -13.5], [3, -12.5]], 0.5), "#c9a06a")], "#8a6440"), cusp: toothShape, quark: particle("#d4476a"),
+  wetland: s(puddle.pieces, "#5a7a4a"), lakeside: sign(icon.wave(), "#fbf6ea", "#7fb4d8"), confluence: s(puddle.pieces, "#5f8ac9"), slough: s(puddle.pieces, "#5a6a3a"),
+  piedmont: sign(icon.mountain(), "#fbf6ea", "#9ab46a"), champaign: s(grass.pieces, "#b4c46a"), landfall: sign(icon.island()), hilltop: sign(icon.mountain(), "#fbf6ea", "#7fae5a"), yawning: sign(icon.hole()),
+  allotment: s(grass.pieces, "#7a9a3a"), campground: s(tent.pieces, "#5f8a4a"), campsite: tent, grassland: s(grass.pieces, "#b4b45a"), hangout: sign(icon.people()), outfield: s(grass.pieces, "#6fae5a"),
+  parkland: tree({ kind: "round", colour: "#6faa5a" }),
   // Frequency batch 4.
   enthusiast: job("#e3b341", "cap", { arms: "up", belt: "#c9553f" }), sleeper: job("#9cb4d8", "none", { robe: true, legs: "#9cb4d8" }), brat: biped({ h: 28, colour: "#d4476a", legs: "#3f4a5a", hat: "hair", arms: "up" }),
   entertainer: job("#8a5ac9", "tophat", { arms: "up", cloak: "#e3b341" }), wally: job("#c9a24a", "cap", { arms: "up", legs: "#7a5a3a" }), subordinate: job("#7a8a9a", "hair", { arms: "forward" }),
