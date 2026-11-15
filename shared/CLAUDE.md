@@ -225,6 +225,9 @@ server and the client import this, so anything here must give the same answer on
   an event archetype even when its meaning is an affliction, an idea or a holding (MIGRAINE, PERSUASION,
   APPROPRIATION are `act`/`event`), and a place that lays no tile but radiates is an attribute
   (SOLITUDE, AFTERLIFE, BEDSIDE), else either is parsed as a lone object.
+- Frequency batch 5 (`freq5.test.ts`): data only, the same rules. A self field written with an operation
+  on `field_radius` and no `field_radius` of its own is an object (EXPANSE); a word with `binds` 2 or
+  more that is not physical is a pact (event), whatever its archetype (SORORITY, CLIQUE).
 - `combat.ts` `shown`: damage, HP and integrity as cards and tips show them (felt).
 - `letters.ts` `salePrice`: what a market pays for a thing sold, by its `value` (SALE_MAX).
 - `tips.ts` teaching tips: `wordTip` (one line of what a word does in numbers, plus its shortest

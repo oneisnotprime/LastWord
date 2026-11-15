@@ -1270,3 +1270,17 @@ unionist: produce_N=0.3
 converter: produce_M=0.5
 binder: produce_M=0.3
 maize: produce_A=0.5 tile_type=tilled radius=1
+
+# Frequency batch 5: hired hands pay N (a RECRUITER, a HOMEOWNER, a TESTER, an INTERMEDIARY, a
+# SCREENWRITER, a THEORIST, a COUNCILMAN); a BLOWER is a machine (M); a POLYTECHNIC is a station (C);
+# BLUEGRASS is planted flora (P).
+recruiter: produce_N=0.3
+homeowner: produce_N=0.3
+tester: produce_N=0.3
+intermediary: produce_N=0.3
+screenwriter: produce_N=0.3
+theorist: produce_N=0.3
+councilman: produce_N=0.35
+blower: produce_M=0.3
+polytechnic: produce_C=0.6 production_needs=labor
+bluegrass: produce_P=0.4

@@ -2971,3 +2971,41 @@ apocalyptic: dmg_fire*2 dmg_blast*2 fear_aura+7 attack_area*2 inflict_fear+8 fri
 
 # verb contact
 unleash: duration=20 attack_rate*1.6 aggression+6 obedience*0.3 dmg_blunt*1.4 effect_status=leash,root
+
+# Frequency batch 5 (tools/freq_todo.txt from DEFUNCT): the next eleven hundred or so most common
+# words that had no data. Core words of each kind below; the rest are generated from these and the lines above.
+# Shelling rains shells on a wide region; a horde pours barbarians over the land; a vendetta hunts one foe.
+
+# noun vehicle_air
+aeroplane: mass=5000 length=12 integrity=900 material=aluminum,canvas self_propelled=true speed_air=110 flight_ceiling=4000 seats=4 mountable=true requires_runway=true requires_pilot=true diet=fuel upkeep_fuel=1 dmg_pierce=60 attack_rate=2 attack_range=60 targets=land,air loudness=8 color=red
+
+# noun vehicle_land
+omnibus: mass=8000 length=10 integrity=2000 material=steel self_propelled=true requires_road=true speed_land=18 seats=40 mountable=true diet=fuel upkeep_fuel=2 cover=0.5 dmg_crush=300 knockback=12 carry_capacity=4000 loudness=7 color=red
+
+# noun weapon
+bayonet: mass=0.4 length=0.4 integrity=80 material=steel equip_slot=held hands_required=1 dmg_pierce=70 dmg_slash=30 sharpness=8 attack_rate=1.2 inflict_bleed=8 critical=0.15 color=gray
+
+# noun fighter
+goliath: mass=300 height=3 integrity=700 alive=true sentient=true intelligence=5 hands=true speech=true speed_land=4 strength=10 courage=9 aggression=7 dmg_blunt=180 dmg_crush=120 attack_rate=0.7 attack_range=3 knockback=15 siege=2 armor=20 intimidation=9 fear_aura=4 food_need=0.08
+
+# noun supernatural
+wight: mass=60 integrity=350 alive=true sentient=true intelligence=6 hands=true speed_land=5 dmg_cold=80 dmg_unholy=60 attack_rate=1 inflict_freeze=8 inflict_fear=10 fear_aura=6 night_vision=true nocturnal=true res_cold=0.9 immune_fear=true immune_poison=true nature=undead food_need=0
+
+# noun group
+horde: placement=region placement_range=80 field_radius=15 field_targets=owned field_duration=4 summons=barbarian summon_count=16 summon_owned=true aggression+6 inflict_fear=10 loudness=9
+
+# noun attack
+shelling: placement=region placement_range=300 event_radius=20 event_duration=1 meteors=14 dmg_blast=350 siege=4 inflict_deaf=8 inflict_fear=12 loudness=10 friendly_fire=true counters=bunker,trench,fortification,rampart
+
+# noun act
+deforestation: placement=target placement_range=80 event_target=tile event_radius=15 event_duration=1 tile_type=field radius=10 dmg_slash=300 fertility=-3 loudness=8 counters=forest,woodland,grove,jungle,rainforest,greenwood
+
+# noun conflict
+vendetta: placement=target placement_range=100 event_target=character event_duration=5 sets_hostile=true inflict_rage=20 tracking=10 dmg_slash=150 critical=0.3 inflict_curse=10 counters=peace,truce,pax
+
+# adjective quality
+towering: size*4 height*4 mass*6 integrity*3 intimidation+5 sight_range*1.6 attack_range*1.5 stealth+-8
+blinding: inflict_blind+12 luminosity+7 dmg_light*1.6 sight_range*0.5
+
+# verb transform
+shatter: duration=10 effect_target=touched dmg_blunt+400 dmg_sonic+200 brittleness+10 integrity*0.1 multi_target+3 counters=glass,mirror,window,crystal,ice,shield,armor

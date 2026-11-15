@@ -2148,6 +2148,32 @@
    "core": false
   },
   {
+   "word": "conqueror",
+   "set": {
+    "command_limit": 6,
+    "authority": 3
+   },
+   "ops": [
+    [
+     "strength",
+     "add",
+     2
+    ],
+    [
+     "armor",
+     "add",
+     6
+    ],
+    [
+     "integrity",
+     "mul",
+     1.15
+    ]
+   ],
+   "letters": "sk",
+   "core": false
+  },
+  {
    "word": "warlord",
    "set": {
     "command_limit": 8.0,
@@ -2580,36 +2606,6 @@
     ]
    ],
    "letters": "ek",
-   "core": false
-  },
-  {
-   "word": "counterfeiter",
-   "set": {
-    "trade_rate": 0.7
-   },
-   "ops": [
-    [
-     "produce_C",
-     "mul",
-     2
-    ],
-    [
-     "produce_T",
-     "mul",
-     2
-    ],
-    [
-     "stealth",
-     "add",
-     4.0
-    ],
-    [
-     "produce_Y",
-     "mul",
-     2
-    ]
-   ],
-   "letters": "ctd",
    "core": false
   }
  ],

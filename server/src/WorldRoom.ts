@@ -621,7 +621,7 @@ const AIR_MEMORY = 60;
 
 /** Seconds a bot keeps the peace at the start: between these two. */
 const BOT_PEACE: [number, number] = [60, 90];
-/** Seconds between a bot's spellings: between these two. */
+/** Seconds between a bot's spellings, and before its first (so every hand starts whole): between these two. */
 const BOT_SPELL_GAP: [number, number] = [5, 10];
 
 /** Every live room in this process, for metrics. */
@@ -1530,7 +1530,7 @@ export class WorldRoom extends Room {
       if (this.kitsOn) { this.offerKits(id, bot, false); this.chooseKit(id, bot, this.botKit(bot.picking!.kits, difficulty)); }
       this.bots.set(id, {
         difficulty, phase: this.botCount, stay: 3 + Math.floor(this.rng() * 6), tried: new Set(), gathered: 0, spelled: 0, at: { x: 0, y: 0 }, stuck: 0,
-        peaceUntil: this.elapsed + BOT_PEACE[0] + this.rng() * (BOT_PEACE[1] - BOT_PEACE[0]), nextSpell: this.elapsed + this.rng() * BOT_SPELL_GAP[1], producers: 0,
+        peaceUntil: this.elapsed + BOT_PEACE[0] + this.rng() * (BOT_PEACE[1] - BOT_PEACE[0]), nextSpell: this.elapsed + BOT_SPELL_GAP[0] + this.rng() * (BOT_SPELL_GAP[1] - BOT_SPELL_GAP[0]), producers: 0,
         used: {}, roads: 0, offeredAt: -Infinity,
       });
     }

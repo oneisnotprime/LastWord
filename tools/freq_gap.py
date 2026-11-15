@@ -37,10 +37,12 @@ clarence maxwell lambert silva dell congo beck
 leone kat malik benny weber dexter amelia erica milo booker bolivia burgess bach chevy jonah
 kylie dickens waterloo ling marcel skinner thatcher mercer cummings coco
 bartlett hobbit langley mei pascal cutler phoebe dixie rutherford bourne mina ridley gemma lulu
-siemens medina napa cassie kelvin muller""".split())
+siemens medina napa cassie kelvin muller
+liza granger heller fitch marseille ritz rudd fuji gage kali laguna levant salah britt cicero firth
+fabian tod hogg lev dak""".split())
 # Headwords whose common use is an inflection or an abbreviation WordNet reads as something else
 # (LIED as a German song, SHOOK as a sheaf, MPH, GEN, CHI): left out of the gap.
-NOT_WORDS = set("lied shook tops mph neo gen sen chi col sang wont dug comp para mil das sol tore var divers meg ala wen ain rbi rpm xiii xiv xvi liv cps elves conn midi retreated".split())
+NOT_WORDS = set("lied shook tops mph neo gen sen chi col sang wont dug comp para mil das sol tore var divers meg ala wen ain rbi rpm xiii xiv xvi liv cps elves conn midi retreated nee som otc ccc masse pct".split())
 
 
 

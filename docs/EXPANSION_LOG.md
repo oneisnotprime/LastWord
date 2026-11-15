@@ -363,6 +363,85 @@ into `tools/generated_words.txt`, letters in `tools/producers.txt`). Art is draw
 - Remaining: `tools/freq_todo.txt` (3,000 words, rank order) starts at DEFUNCT (rank 20,088),
   DEGRADE, DIFFUSE, DIGNIFIED, DISOBEDIENCE, DREAMER, ESTEEMED, ETHERNET.
 
+## Frequency batch 5: the next eleven hundred most common words
+
+- Added 1,114 words, every missing word from wordfreq rank 20,088 to 24,223 (DEFUNCT, DEGRADE,
+  DIFFUSE, DIGNIFIED, DISOBEDIENCE... to JUSTIFIABLE, LECTURING): 500 nouns, 416 adjectives, 123 verbs,
+  75 adverbs; the dictionary is now 18,101 words. Twelve core words are hand-written in demo_words.txt
+  (AEROPLANE, OMNIBUS, BAYONET, GOLIATH, WIGHT, HORDE, SHELLING, DEFORESTATION, VENDETTA, TOWERING,
+  BLINDING, SHATTER); the rest went through chunk files and `generate_words.py merge`. New producers:
+  hired hands pay N (RECRUITER, HOMEOWNER, TESTER, INTERMEDIARY, SCREENWRITER, THEORIST, COUNCILMAN), a
+  leaf BLOWER makes M, a POLYTECHNIC is a station (C), BLUEGRASS is planted flora (P).
+- Gap after this batch (`tools/freq_gap.py`): top 10k 0, top 20k 0, top 30k 1,602 (765 n, 126 v, 592
+  adj, 119 adv; was 2,802), top 40k 4,167 (2,054 n, 333 v, 1,495 adj, 285 adv; was 5,367).
+- Left out on purpose and not counted: names WordNet also lists lower-case (LIZA, GRANGER, HELLER,
+  FITCH, MARSEILLE, RITZ, RUDD, FUJI, GAGE, KALI, LAGUNA, LEVANT, SALAH, BRITT, CICERO, FIRTH, FABIAN,
+  TOD, HOGG, LEV, DAK: `freq_gap.py` NAMES), foreign words and abbreviations (NEE, SOM, OTC, CCC, MASSE,
+  PCT: NOT_WORDS), crude and sexual words and slurs added to tools/crude.txt (SPANKING, ORGY, PEEING,
+  FECES, TURD, BONER, KINK, LEWD, PERVERTED, PORNOGRAPHIC, MASTURBATE, SADISTIC, INDECENT, the groin
+  anatomy, MIDGET, CRIPPLE, SISSY, POM, DICKHEAD), and words about groups of people, sexuality, illness,
+  religion's offices or atrocities added to `EXCLUDED` (SECTARIAN, SUPREMACIST, FUNDAMENTALIST, QUAKER,
+  APOSTOLIC, CIRCUMCISION, MARTYRDOM, ANTISEMITISM, BIGOT, PUEBLO, PATRIARCHAL, CONTRACEPTION, CONSENSUAL,
+  SEDUCTION, CHASTITY, HET, PRENATAL, MENOPAUSE, INFERTILITY, PSYCHOSIS, MADMAN, MANIAC, LOCO,
+  NARCISSISTIC, TIC, ANOREXIA, ANEMIA, AUTOIMMUNE, CANCEROUS, FIBROSIS, DIALYSIS, INPATIENT, JUNKIE,
+  TRAMP, ABUSER, EUTHANASIA). Political and religious ideas kept, acting only through ordinary systems:
+  TOTALITARIAN (a leader whose field censors and bans trade and spelling), IMPERIALIST (claims, taxes,
+  takes a city), REACTIONARY (rewinds, ends REFORM and REVOLUTION), CENTRIST (a peacemaker), SUBVERSIVE
+  (mutiny that joins him), DEREGULATION (ends bans and embargoes), ORTHODOXY, CONSECRATED, DEVOTIONAL,
+  WORSHIPPED, YOGI.
+- Notable effects, all through shared systems: SHELLING rains 14 shells over a 20 m region from 300 m off
+  and ends bunkers and trenches; HORDE pours 16 of its speller's barbarians over the land, PARAMILITARY 8
+  rebels, CORDON 6 guards who root and close trade, ENTOURAGE 4 bodyguards, TROUPE 4 jesters, PEACEKEEPING
+  4 soldiers under a law against fighting that ends wars and riots; DEFORESTATION fells a 15 m circle to
+  bare field and ends forests and jungles; VENDETTA hunts one foe for five minutes; FRAGMENTATION,
+  BOMBSHELL, OUTBURST, HAMMERING and MUTILATION (severs two grafts) are blows; LEVELING and DISMANTLING
+  raze a building; GOLIATH is a three-metre warrior with a 15 m knockback, WIGHT an undead that freezes,
+  CUPID a flying archer whose arrows charm; EXTRADITION hauls someone 150 m and captures them; COERCION
+  and HYPNOSIS take control, GUNPOINT roots and robs, INSOLVENCY puts 20 debt on a rival, ULTIMATUM
+  stakes five letters; NIGHTTIME brings night for a minute and a half and day ends it; ENDGAME brings
+  sudden death and moves the storm on 30 s for a minute; DISARMAMENT negates blades, guns and blasts and
+  ends weapons; CIRCUMVENT walks through walls and fences. Adjectives by meaning: TOWERING (size ×4, mass
+  ×6), WHOPPING, SIZEABLE; BLINDING, IGNITED, CONSECRATED (holy ×1.6, ends demons and zombies), LIFELESS
+  and DEFUNCT stop a body or a machine, INFLATABLE floats, BEHEADED raises a zombie, INTERCONTINENTAL
+  carries ten times as far, LIMITLESS stores five times as much. Adverbs bend verbs from MISERABLY (×0.6)
+  to DOUBLY (×2 and a copy), PERPETUALLY (five times as long) and MIRACULOUSLY (×1.8 and a life).
+  Counter-words, checked for direction: PEACEKEEPING ends RIOTING, RECONCILED a VENDETTA and a FEUD,
+  DEREGULATION and LEGALIZE a BAN, PUNCTURE and BLOWOUT a tyre or a balloon, SHATTER glass, ice and
+  shields, TERMINATOR pests. Areas laid at a place last at most five minutes, the map-wide NIGHTTIME and
+  ENDGAME 1.5 and 1, so no new lasting area lacks an ender; no word seals a fate; no object radiates past
+  200 m.
+- The build's meaning rules gave the new words their dimensions: natures (146 words), their materials'
+  melting points (31), burning (25), conducting (20) and shattering (13), size from meaning (19), haunting acts for
+  ghosts (33: COERCION, HYPNOSIS, BANE, TORTURING...), last stands (DEFIANT, AUDACITY, IMPERIALIST),
+  spelling rules (EASING, RICHNESS cheaper; CHORE, FORMALITY dearer; DUPLICATION doubles letters),
+  storm holds (CESSATION, MEDITATE, SLUMBER) and sudden death (ULTIMATUM, RAPTURE). Four the rules got
+  wrong were set by hand: ADMIRER and FAD do not fight on (`last_stand=0`), a FLOPPY disk and a TAPING
+  are not magnets (`magnetism=0`).
+- Pitfalls (shared CLAUDE.md): a self field written with an operation on `field_radius` and no
+  `field_radius` of its own parses as an object (EXPANSE, caught and fixed); a word with `binds` 2 or more
+  that is not physical is a pact (SORORITY, CLIQUE), whatever its archetype. A 60 kg CARCASS was the
+  first raw food bots chose and too heavy to carry, which broke the bots' cooking test: it is now 15 kg.
+- Drawn: a WORDS shape for each of the 173 new concrete words without a generated image (people as
+  bipeds by what they do, a three-metre GOLIATH, a pale WIGHT, a winged CUPID, a mounted EQUESTRIAN; new
+  shapes for a bayonet, a tripod, a helix, a floppy disk, a moustache, an orb, a leaf blower, a grating,
+  a coulter, a splinter, a hamper, an oculus, a pulpit, a castor, an embroidery hoop and a pencil for
+  EYELINER; landforms as signs; quantities keep their archetype's look), checked in the gallery with
+  headless Playwright (EMBROIDERY and EYELINER were redrawn: they read as a cloak and a torch).
+- Flaky test (batch 4 saw server `economy.test.ts` "people start with eight letters" fail once with 5):
+  a room's clock runs in real time while a test client connects, and a bot's first spelling was due at
+  `elapsed + rng × 10 s`, as early as 0.68 s on that test's seed. On a loaded machine the connect took
+  longer than that, the bot spelled its three-letter starter word, and the check saw 5 letters. Now a
+  bot's first spelling waits a whole spell gap like every later one (5 to 10 s,
+  `BOT_SPELL_GAP`), and a new test checks every bot's first spelling is at least that far off and that
+  none has spelled after four and a half seconds of ticks (it fails on the old code).
+- Tournament (48 rooms, 8 mixed bots, 30 min cap, same seeds, this branch's bots; main's dictionary
+  against this batch's): mean round 8.7 -> 8.7 min (longest 12.4 -> 11.7); median first death 106 ->
+  123 s; median time to kill a person 5.7 -> 5.4 s; rounds at the time cap 0 -> 0. Bots spelled new
+  words 71 times (23 different; ANI 18, DEB 12, YOGI 5, CERT 4), 1.8% of 4,051 spellings; 954 of the
+  new words were within some rack's reach.
+- Remaining: `tools/freq_todo.txt` (3,000 words, rank order) starts at LINKAGE (rank 24,224), LOUVRE,
+  LOVINGLY, MASONIC, NEWFOUND, NOSED, OBSERVATIONAL, PARLOUR.
+
 ## Concept: screen, knowledge and communication
 
 - Not a word batch: three shared systems (shared `screen.ts`, `knowledge.ts`, `comms.ts`) and meaning

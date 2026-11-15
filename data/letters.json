@@ -45,13 +45,13 @@
   "letter": "S",
   "class": "core",
   "source": "per NPC citizen in controlled cities",
-  "lexicon_share": 0.0628
+  "lexicon_share": 0.0627
  },
  {
   "letter": "L",
   "class": "core",
   "source": "per tile of land held",
-  "lexicon_share": 0.0595
+  "lexicon_share": 0.0594
  },
  {
   "letter": "C",
@@ -93,7 +93,7 @@
   "letter": "G",
   "class": "made",
   "source": "quarries and digging",
-  "lexicon_share": 0.0238
+  "lexicon_share": 0.0239
  },
  {
   "letter": "Y",

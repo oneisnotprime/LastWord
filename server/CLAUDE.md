@@ -69,7 +69,7 @@ Node process that owns the game state. One room per map instance (from milestone
   market per person (`markets` remembers `swapped`). Kills and destroyed things pay through `payee` (a creature's
   master). `WorldRoom.testBare` gives tests of other systems a map without any of this.
 - People start far apart (`spawnSpot`). Bots keep the peace for 60 to 90 s (`peaceUntil`), spell
-  at most once every 5 to 10 s (`nextSpell`), build producers first, hunt, break ruins, dig caches,
+  at most once every 5 to 10 s (`nextSpell`; the first no sooner than 5 s in, so hands start whole), build producers first, hunt, break ruins, dig caches,
   trade at markets, explore, and only go for people within twice their sight.
 - Bots play every system through the same code as people, choosing by word data only (`bots.ts`
   `wordBook` sorts words by use from shared rules: `buff`/`debuff` adjectives, `aimed` fields,
