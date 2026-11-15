@@ -15,6 +15,9 @@ import type { Spelled } from "./unit.js";
  *   cloth) eats into things made of them within BORE_TILES of it, on its own, at BORE_TIMES its
  *   bite and through their armour: wild ones anything, owned ones only other sides' things. A
  *   thing of another material (a STONE HOUSE, an IRON SHIP) is safe from it.
+ * - Hatching (theme 29): a thing lying on the ground or carried that `matures_into` a creature (an
+ *   EGG, a COCOON, a PUPA, a dragon's CLUTCH) hatches into it the same way, as a creature of the
+ *   thing's owner: the count kept. Breaking or eating it first is the counter.
  */
 
 /** Tiles from a borer that it eats into a thing (a building's middle: a HOUSE is two tiles across). */
@@ -42,6 +45,12 @@ export function matured(dict: Dictionary, s: Spelled, stats: Stats): Spelled | n
   return { noun: into, ...(adjectives.length ? { adjectives } : {}), ...(s.count ? { count: s.count } : {}) };
 }
 
+/** Whether a thing (not a creature) hatches: it `matures_into` a noun the dictionary has. */
+export function hatches(dict: Dictionary, s: Stats): boolean {
+  const into = String(s.get("matures_into") || "").toLowerCase();
+  return !!into && dict.word(into)?.role === "noun";
+}
+
 /** True if a borer eats into a thing: the thing's material (its first known one) is among the borer's `bores`. */
 export function bores(dict: Dictionary, borer: Stats, thing: Stats): boolean {
   const eats = borer.get("bores");
@@ -57,7 +66,7 @@ export function bores(dict: Dictionary, borer: Stats, thing: Stats): boolean {
 export function bugText(dict: Dictionary, s: Stats): string[] {
   const out: string[] = [];
   const into = String(s.get("matures_into") || "");
-  if (into && dict.word(into)) out.push(`grows into ${into.toUpperCase()} in ${Math.round(matureSeconds(s))} s`);
+  if (into && dict.word(into)) out.push(`${s.flag("alive") && Math.max(s.num("speed_land"), s.num("speed_air"), s.num("speed_water")) > 0 ? "grows" : "hatches"} into ${into.toUpperCase()} in ${Math.round(matureSeconds(s))} s`);
   const eats = s.get("bores");
   const list = Array.isArray(eats) ? eats : typeof eats === "string" && eats ? [eats] : [];
   if (list.length) out.push(`bores into ${list.join(", ")}: eats things made of it within ${BORE_TILES} tiles, through armour`);

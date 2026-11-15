@@ -70,6 +70,7 @@ it("a BOMB set down goes off after its windup and hits everyone near, its maker 
   expect(r.fuses.size).toBe(1);
   ticks(room, 30);
   expect(r.fuses.size).toBe(1); // not yet: a 5 s windup
+  ox.player.x = w.player.x + 1.5; ox.player.y = w.player.y; ox.target = null; // back beside the bomb, wherever it wandered
   ticks(room, 25);
   expect(r.fuses.size).toBe(0);
   expect([...room.state.things.values()].some((t: any) => t.phrase === "bomb")).toBe(false);

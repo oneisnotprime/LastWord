@@ -1911,7 +1911,6 @@ expound	verb	inert	communication	2.49	uncommon	v00957633	-
 expounding	noun	inert	communication	2.16	uncommon	n06755121	-
 express	verb	inert	communication	4.68	core	v00945869	noun:vehicle_land,adjective:quality,adverb:manner
 extenuate	verb	inert	communication	1.24	rare	v00907990	-
-extinction	noun	inert	state	3.76	common	n14035644	-
 extol	verb	inert	communication	2.3	uncommon	v00862284	-
 extolment	noun	inert	communication	0.0	obscure	n06705943	-
 extrados	noun	inert	shape	0.0	obscure	n13891684	-
@@ -3784,7 +3783,6 @@ phrase	noun	inert	communication	4.3	core	n06327041	verb:communication
 phraseology	noun	inert	communication	2.22	uncommon	n07095931	-
 phrenitis	noun	inert	state	0.0	obscure	n14365537	-
 phycomycosis	noun	inert	state	0.0	obscure	n14205814	-
-phylactery	noun	inert	communication	1.34	rare	n06869239	-
 phylogenesis	noun	inert	process	0.0	obscure	n13498226	-
 phylogeny	noun	inert	process	2.5	uncommon	n13498226	-
 pianism	noun	inert	communication	1.33	rare	n06906104	-

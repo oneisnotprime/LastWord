@@ -1409,7 +1409,6 @@ bibos	noun	proper	animal	0.0	obscure	n02412348	-
 bida	noun	proper	location	1.97	rare	n09009632	-
 bidens	noun	proper	plant	2.22	uncommon	n11960356	-
 bierce	noun	proper	person	2.22	uncommon	n10870735	-
-bigfoot	noun	proper	person	3.16	common	n09510515	-
 bignonia	noun	proper	plant	0.0	obscure	n12834630	-
 bignoniaceae	noun	proper	plant	0.0	obscure	n12834153	-
 bihar	noun	proper	location	3.28	common	n08925053	-
@@ -2239,7 +2238,6 @@ ceratopteris	noun	proper	plant	0.0	obscure	n13192547	-
 ceratostomataceae	noun	proper	plant	0.0	obscure	n12985332	-
 ceratostomella	noun	proper	plant	0.0	obscure	n12985510	-
 ceratotherium	noun	proper	animal	0.0	obscure	n02395362	-
-cerberus	noun	proper	person	2.77	uncommon	n09516335	-
 cercidiphyllaceae	noun	proper	plant	0.0	obscure	n11722897	-
 cercidiphyllum	noun	proper	plant	0.0	obscure	n11723035	-
 cercidium	noun	proper	plant	0.0	obscure	n12514204	-
@@ -2346,7 +2344,6 @@ charophyceae	noun	proper	animal	0.0	obscure	n01414726	-
 charronia	noun	proper	animal	0.0	obscure	n02453623	-
 chartism	noun	proper	cognition	1.6	rare	n05965154	-
 chartres	noun	proper	location	2.54	uncommon	n08955289	-
-charybdis	noun	proper	event	2.04	uncommon	n07447936	-
 chasid	noun	proper	person	0.0	obscure	n10181288	-
 chasidim	noun	proper	group	1.05	rare	n08111832	-
 chasidism	noun	proper	cognition	0.0	obscure	n06244411	-
@@ -4209,7 +4206,6 @@ flaviviridae	noun	proper	animal	0.0	obscure	n01335294	-
 flaxedil	noun	proper	substance	0.0	obscure	n14883773	-
 fleming	noun	proper	person	3.56	common	n10992977	-
 fletc	noun	proper	group	1.43	rare	n08154010	-
-fletcher	noun	proper	person	3.8	common	n10993156	-
 flexeril	noun	proper	artifact	1.18	rare	n03160000	-
 flindersia	noun	proper	plant	0.0	obscure	n12719043	-
 flnc	noun	proper	group	1.07	rare	n08052758	-
@@ -4453,7 +4449,6 @@ garonne	noun	proper	object	2.05	uncommon	n09310030	-
 garrick	noun	proper	person	2.86	uncommon	n11011411	-
 garrulinae	noun	proper	animal	0.0	obscure	n01582509	-
 garrulus	noun	proper	animal	0.0	obscure	n01582866	-
-garuda	noun	proper	person	2.53	uncommon	n09549241	-
 gary	noun	proper	location	4.39	core	n09107986	-
 gascogne	noun	proper	location	1.33	rare	n08962165	-
 gascony	noun	proper	location	2.01	uncommon	n08962165	-
@@ -4720,7 +4715,6 @@ gorbachev	noun	proper	person	3.08	common	n11027746	-
 gordimer	noun	proper	person	1.85	rare	n11027989	-
 gordius	noun	proper	person	1.19	rare	n11028169	-
 gorgas	noun	proper	person	1.8	rare	n11028458	-
-gorgon	noun	proper	person	2.62	uncommon	n09518234	-
 gorgonacea	noun	proper	animal	0.0	obscure	n01918651	-
 gorgoniacea	noun	proper	animal	0.0	obscure	n01918651	-
 gorgonocephalus	noun	proper	animal	0.0	obscure	n02321450	-
@@ -7397,7 +7391,6 @@ megapodiidae	noun	proper	animal	0.0	obscure	n01803400	-
 megapodius	noun	proper	animal	0.0	obscure	n01803604	-
 megaptera	noun	proper	animal	1.11	rare	n02068252	-
 megatheriidae	noun	proper	animal	0.0	obscure	n02460987	-
-megatherium	noun	proper	animal	1.38	rare	n02461306	-
 meir	noun	proper	person	2.71	uncommon	n11191288	-
 meissner	noun	proper	person	2.28	uncommon	n11191503	-
 meitner	noun	proper	person	1.73	rare	n11191604	-
@@ -7635,7 +7628,6 @@ minnesotan	noun	proper	person	1.92	rare	n09763123	-
 minnewit	noun	proper	person	0.0	obscure	n11201428	-
 minocin	noun	proper	artifact	1.13	rare	n03776599	-
 minos	noun	proper	person	2.39	uncommon	n09587809	-
-minotaur	noun	proper	person	2.76	uncommon	n09522187	-
 minsk	noun	proper	location	3.11	common	n09033888	-
 minuartia	noun	proper	plant	0.0	obscure	n11832827	-
 minuit	noun	proper	person	1.82	rare	n11201428	-
@@ -8024,7 +8016,6 @@ naemorhedus	noun	proper	animal	0.0	obscure	n02421294	-
 nafcil	noun	proper	artifact	0.0	obscure	n03810033	-
 nafta	noun	proper	act	3.14	common	n01094693	-
 nafud	noun	proper	location	0.0	obscure	n09194273	-
-naga	noun	proper	communication	2.97	uncommon	n06946206	-
 nagano	noun	proper	location	2.6	uncommon	n08943359	-
 nagari	noun	proper	communication	1.53	rare	n06364189	-
 nagasaki	noun	proper	location	2.98	uncommon	n08945730	-
@@ -8177,7 +8168,6 @@ nephropsidae	noun	proper	animal	0.0	obscure	n01986599	-
 nephthys	noun	proper	person	1.65	rare	n09535827	-
 nepidae	noun	proper	animal	0.0	obscure	n02244945	-
 neptune	noun	proper	person	3.36	common	n09592459	-
-nereid	noun	proper	person	1.44	rare	n09573714	-
 nereus	noun	proper	person	1.84	rare	n09590689	-
 nergal	noun	proper	person	1.84	rare	n09543358	-
 neritidae	noun	proper	animal	0.0	obscure	n01948759	-
@@ -8973,7 +8963,6 @@ pediocactus	noun	proper	plant	0.0	obscure	n11871217	-
 pedioecetes	noun	proper	animal	0.0	obscure	n01800693	-
 pedionomus	noun	proper	animal	0.0	obscure	n02023104	-
 pedipalpi	noun	proper	animal	0.0	obscure	n01773887	-
-pegasus	noun	proper	person	3.15	common	n09523757	-
 pehlevi	noun	proper	communication	0.0	obscure	n06987506	-
 pei	noun	proper	person	3.0	common	n11248143	-
 peiping	noun	proper	location	1.38	rare	n08742559	-
@@ -10443,7 +10432,6 @@ sars	noun	proper	state	2.99	uncommon	n14203428	-
 sartre	noun	proper	person	2.79	uncommon	n11302276	-
 sas	noun	proper	group	3.47	common	n08362958	-
 saskatchewan	noun	proper	location	3.45	common	n08848767	-
-sasquatch	noun	proper	person	2.68	uncommon	n09510515	-
 sassenach	noun	proper	person	1.59	rare	n10571821	-
 satan	noun	proper	person	3.93	common	n09566482	-
 satanism	noun	proper	cognition	2.55	uncommon	n05988462	-
@@ -10623,7 +10611,6 @@ scutigera	noun	proper	animal	0.0	obscure	n01788173	-
 scutigerella	noun	proper	animal	0.0	obscure	n01786212	-
 scutigeridae	noun	proper	animal	0.0	obscure	n01788033	-
 scyliorhinidae	noun	proper	animal	0.0	obscure	n01490875	-
-scylla	noun	proper	person	2.45	uncommon	n09514635	-
 scyphozoa	noun	proper	animal	1.11	rare	n01913170	-
 scythia	noun	proper	location	1.94	rare	n09200544	-
 sd	noun	proper	location	3.89	common	n09161650	-
@@ -12072,7 +12059,6 @@ typha	noun	proper	plant	1.62	rare	n12175976	-
 typhaceae	noun	proper	plant	0.0	obscure	n12175776	-
 typhlopidae	noun	proper	animal	0.0	obscure	n01742924	-
 typhoeus	noun	proper	person	0.0	obscure	n09525832	-
-typhon	noun	proper	person	2.14	uncommon	n09526038	-
 tyr	noun	proper	person	2.63	uncommon	n09606898	-
 tyranni	noun	proper	animal	0.0	obscure	n01549301	-
 tyrannidae	noun	proper	animal	0.0	obscure	n01550100	-

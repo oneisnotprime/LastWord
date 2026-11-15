@@ -11211,3 +11211,320 @@ radiate: duration=30 temperature+200 luminosity+5 dmg_fire+20 dmg_radiation+10 t
 reignite: duration=20 temperature+500 dmg_fire+40 inflict_burn+3 luminosity+4 spread_rate+0.5 morale+2
 rekindle: duration=30 temperature+300 dmg_fire+25 inflict_burn+2 luminosity+3 morale+3 regeneration+2
 shine: duration=60 luminosity+7 light_delta+3 stealth+-3 dmg_light+15 inflict_blind+1 morale+2 counters=fog,darkness,night
+
+# Theme 28, medieval siege and arms. Engines are ridden and batter buildings from afar (siege);
+# guards hang on doors (interior.ts doorGuard); breaches break doors where they land.
+
+# noun weapon
+mangonel: mass=2500 length=6 integrity=1500 hardness=6 material=wood flammability=6 speed_land=2 mountable=true seats=3 dmg_crush=400 dmg_blunt=100 attack_rate=0.12 attack_range=500 attack_area=3 attack_windup=3 accuracy=0.5 siege=8 targets=land loudness=6 color=brown
+onager: mass=2000 length=5 integrity=1300 hardness=6 material=wood flammability=6 speed_land=2 mountable=true seats=2 dmg_crush=380 attack_rate=0.14 attack_range=450 attack_area=3 attack_windup=3 accuracy=0.5 siege=8 targets=land knockback=6 loudness=6 color=brown
+arbalest: mass=6 length=1 integrity=80 material=wood,steel equip_slot=held hands_required=2 dmg_pierce=110 attack_rate=0.25 attack_range=120 accuracy=0.95 armor_pierce=0.6 targets=land,air ammo_per_hit=1 ammo_type=bolt counters=griffin,gryphon,hippogriff color=brown
+arbalist: mass=6 length=1 integrity=80 material=wood,steel equip_slot=held hands_required=2 dmg_pierce=110 attack_rate=0.25 attack_range=120 accuracy=0.95 armor_pierce=0.6 targets=land,air ammo_per_hit=1 ammo_type=bolt color=brown
+springald: mass=500 length=3 integrity=700 material=wood,iron flammability=5 speed_land=3 mountable=true seats=2 dmg_pierce=420 attack_rate=0.3 attack_range=700 accuracy=0.8 armor_pierce=0.5 siege=3 targets=land,air counters=wyvern,harpy color=brown
+culverin: mass=1800 length=4 integrity=900 hardness=8 material=bronze speed_land=2 mountable=true seats=3 dmg_blast=500 dmg_crush=250 attack_rate=0.1 attack_range=1500 attack_area=3 attack_windup=3 accuracy=0.6 siege=6 loudness=10 color=yellow
+helepolis: mass=60000 length=10 height=40 integrity=9000 hardness=6 material=wood,iron flammability=6 speed_land=1 mountable=true seats=20 cover=0.9 armor=60 res_pierce=0.8 dmg_pierce=120 attack_rate=0.5 attack_range=200 targets=land,air terrain_ignored=wall siege=3 counters=door,gate,lockable,wall color=brown
+halberd: mass=3.2 length=2.2 integrity=120 hardness=7 sharpness=8 material=steel,wood equip_slot=held hands_required=2 dmg_slash=60 dmg_pierce=45 attack_rate=0.8 attack_range=3 knockback=3 counters=cavalry,cavalryman,horseman color=silver
+glaive: mass=2.8 length=2.1 integrity=100 hardness=7 sharpness=8 material=steel,wood equip_slot=held hands_required=2 dmg_slash=70 attack_rate=0.8 attack_range=3 attack_area=1.5 color=silver
+guisarme: mass=3 length=2.2 integrity=100 hardness=7 sharpness=7 material=steel,wood equip_slot=held hands_required=2 dmg_slash=45 dmg_pierce=35 attack_rate=0.8 attack_range=3 counters=horseman,cavalryman,knight color=silver
+poleaxe: mass=3 length=1.8 integrity=130 hardness=8 sharpness=7 material=steel,wood equip_slot=held hands_required=2 dmg_slash=55 dmg_pierce=40 dmg_crush=30 attack_rate=0.7 attack_range=2.5 armor_pierce=0.5 counters=knight color=silver
+poleax: mass=3 length=1.8 integrity=130 hardness=8 sharpness=7 material=steel,wood equip_slot=held hands_required=2 dmg_slash=55 dmg_pierce=40 dmg_crush=30 attack_rate=0.7 attack_range=2.5 armor_pierce=0.5 color=silver
+pikestaff: mass=4 length=5 integrity=90 sharpness=7 material=wood,steel equip_slot=held hands_required=2 dmg_pierce=55 attack_rate=0.7 attack_range=5 knockback=2 counters=cavalry,cavalryman color=brown
+billhook: mass=1.2 length=0.6 integrity=60 sharpness=7 material=steel,wood equip_slot=held hands_required=1 dmg_slash=30 attack_rate=1.2 harvest_bonus=2 harvest_sources=forage,plant color=silver
+bardiche: mass=3 length=1.7 integrity=110 hardness=7 sharpness=8 material=steel,wood equip_slot=held hands_required=2 dmg_slash=80 attack_rate=0.6 attack_range=2.5 color=silver
+voulge: mass=3 length=2 integrity=100 hardness=7 sharpness=7 material=steel,wood equip_slot=held hands_required=2 dmg_slash=65 attack_rate=0.7 attack_range=2.8 color=silver
+spontoon: mass=2.2 length=2 integrity=80 sharpness=7 material=steel,wood equip_slot=held hands_required=2 dmg_pierce=50 attack_rate=0.9 attack_range=2.8 color=silver
+falchion: mass=1.4 length=0.9 integrity=90 hardness=7 sharpness=8 material=steel equip_slot=held hands_required=1 dmg_slash=50 attack_rate=1.1 attack_range=1.2 color=silver
+scimitar: mass=1.2 length=0.9 integrity=90 sharpness=9 material=steel equip_slot=held hands_required=1 dmg_slash=48 attack_rate=1.3 attack_range=1.2 critical=0.15 color=silver
+claymore: mass=2.5 length=1.4 integrity=130 hardness=7 sharpness=8 material=steel equip_slot=held hands_required=2 dmg_slash=85 attack_rate=0.7 attack_range=1.8 attack_area=1.2 intimidation=3 color=silver
+broadsword: mass=1.8 length=1.1 integrity=110 hardness=7 sharpness=7 material=steel equip_slot=held hands_required=1 dmg_slash=55 attack_rate=1 attack_range=1.4 color=silver
+greatsword: mass=3 length=1.6 integrity=150 hardness=7 sharpness=8 material=steel equip_slot=held hands_required=2 dmg_slash=95 attack_rate=0.6 attack_range=2 attack_area=1.5 attack_windup=1 intimidation=4 color=silver
+longsword: mass=1.6 length=1.2 integrity=110 hardness=7 sharpness=8 material=steel equip_slot=held hands_required=2 dmg_slash=62 dmg_pierce=20 attack_rate=1 attack_range=1.6 color=silver
+backsword: mass=1.4 length=1 integrity=90 hardness=7 sharpness=7 material=steel equip_slot=held hands_required=1 dmg_slash=46 attack_rate=1.1 attack_range=1.3 color=silver
+estoc: mass=1.5 length=1.3 integrity=100 hardness=8 sharpness=9 material=steel equip_slot=held hands_required=2 dmg_pierce=60 attack_rate=1 attack_range=1.7 armor_pierce=0.8 counters=knight color=silver
+misericorde: mass=0.3 length=0.35 integrity=40 sharpness=9 material=steel equip_slot=held hands_required=1 dmg_pierce=40 attack_rate=1.8 attack_range=0.8 armor_pierce=0.9 critical=0.35 color=silver
+poniard: mass=0.3 length=0.35 integrity=40 sharpness=9 material=steel equip_slot=held hands_required=1 dmg_pierce=32 attack_rate=1.8 attack_range=0.8 critical=0.3 stealth=4 armor_pierce=0.4 color=silver
+dirk: mass=0.4 length=0.4 integrity=45 sharpness=8 material=steel equip_slot=held hands_required=1 dmg_pierce=30 dmg_slash=12 attack_rate=1.7 attack_range=0.8 critical=0.25 stealth=4 color=silver
+kris: mass=0.4 length=0.4 integrity=45 sharpness=9 material=steel equip_slot=held hands_required=1 dmg_pierce=28 dmg_slash=14 inflict_bleed=4 attack_rate=1.7 attack_range=0.8 critical=0.25 color=silver
+morningstar: mass=2.5 length=0.9 integrity=120 hardness=8 material=iron,wood equip_slot=held hands_required=1 dmg_blunt=55 dmg_pierce=20 attack_rate=0.9 attack_range=1.2 armor_pierce=0.3 inflict_stun=1 color=gray
+warhammer: mass=2.5 length=0.9 integrity=140 hardness=8 material=steel,wood equip_slot=held hands_required=1 dmg_blunt=50 dmg_crush=30 attack_rate=0.9 attack_range=1.2 armor_pierce=0.7 siege=2 color=gray
+mace: mass=2 length=0.8 integrity=120 hardness=8 material=iron equip_slot=held hands_required=1 dmg_blunt=52 attack_rate=1 attack_range=1.1 armor_pierce=0.4 inflict_stun=1 color=gray
+cudgel: mass=1.5 length=0.8 integrity=50 material=wood equip_slot=held hands_required=1 dmg_blunt=28 attack_rate=1.1 inflict_stun=1 color=brown
+bludgeon: mass=2 length=0.8 integrity=60 material=wood,iron equip_slot=held hands_required=1 dmg_blunt=34 attack_rate=1 inflict_stun=1 color=brown
+quarterstaff: mass=1.8 length=2 integrity=60 material=wood equip_slot=held hands_required=2 dmg_blunt=26 attack_rate=1.4 attack_range=2 block=0.3 color=brown
+assegai: mass=1.2 length=1.8 integrity=40 sharpness=8 material=wood,iron equip_slot=held hands_required=1 dmg_pierce=45 attack_rate=0.9 attack_range=25 targets=land color=brown
+pilum: mass=2 length=2 integrity=30 sharpness=8 material=wood,iron equip_slot=held hands_required=1 dmg_pierce=60 attack_rate=0.5 attack_range=25 armor_pierce=0.5 single_use=true plural_count=6 color=brown
+slingshot: mass=0.2 length=0.2 integrity=10 material=wood,rubber equip_slot=held hands_required=2 dmg_blunt=8 attack_rate=1 attack_range=30 targets=land,air harvest_bonus=1 harvest_sources=hunting color=brown
+bolas: mass=1 length=1 integrity=20 material=leather,stone equip_slot=held hands_required=1 dmg_blunt=10 attack_rate=0.5 attack_range=20 inflict_root=6 single_use=true plural_count=3 color=brown
+quarrel: mass=0.05 length=0.35 integrity=4 sharpness=8 material=wood,iron single_use=true plural_count=20 dmg_pierce=15 armor_pierce=0.4 color=brown
+arquebus: mass=5 length=1.2 integrity=70 material=iron,wood equip_slot=held hands_required=2 dmg_pierce=140 attack_rate=0.12 attack_range=90 attack_windup=1 accuracy=0.6 armor_pierce=0.7 loudness=10 ammo_per_hit=1 ammo_type=shot counters=knight color=brown
+harquebus: mass=5 length=1.2 integrity=70 material=iron,wood equip_slot=held hands_required=2 dmg_pierce=140 attack_rate=0.12 attack_range=90 attack_windup=1 accuracy=0.6 armor_pierce=0.7 loudness=10 ammo_per_hit=1 ammo_type=shot color=brown
+hackbut: mass=5 length=1.2 integrity=70 material=iron,wood equip_slot=held hands_required=2 dmg_pierce=130 attack_rate=0.12 attack_range=80 attack_windup=1 accuracy=0.55 armor_pierce=0.7 loudness=10 color=brown
+hagbut: mass=5 length=1.2 integrity=70 material=iron,wood equip_slot=held hands_required=2 dmg_pierce=130 attack_rate=0.12 attack_range=80 attack_windup=1 accuracy=0.55 armor_pierce=0.7 loudness=10 color=brown
+matchlock: mass=5 length=1.3 integrity=70 material=iron,wood equip_slot=held hands_required=2 dmg_pierce=150 attack_rate=0.1 attack_range=100 attack_windup=1.5 accuracy=0.6 armor_pierce=0.7 loudness=10 ammo_per_hit=1 ammo_type=shot color=brown
+musket: mass=5 length=1.5 integrity=80 material=iron,wood equip_slot=held hands_required=2 dmg_pierce=160 attack_rate=0.12 attack_range=120 attack_windup=1 accuracy=0.65 armor_pierce=0.7 loudness=10 ammo_per_hit=1 ammo_type=shot counters=knight color=brown
+blunderbuss: mass=4 length=0.9 integrity=60 material=brass,wood equip_slot=held hands_required=2 dmg_pierce=180 attack_rate=0.15 attack_range=12 attack_area=3 multi_target=4 loudness=10 color=yellow
+carbine: mass=3 length=0.9 integrity=70 material=steel,wood equip_slot=held hands_required=2 dmg_pierce=90 attack_rate=0.4 attack_range=150 accuracy=0.8 loudness=9 color=gray
+fusil: mass=4 length=1.4 integrity=70 material=iron,wood equip_slot=held hands_required=2 dmg_pierce=120 attack_rate=0.2 attack_range=110 accuracy=0.7 loudness=10 color=brown
+pistol: mass=1 length=0.3 integrity=50 material=steel equip_slot=held hands_required=1 dmg_pierce=60 attack_rate=0.8 attack_range=50 accuracy=0.75 loudness=9 color=gray
+grapeshot: mass=8 integrity=10 material=iron single_use=true placement=target placement_range=60 dmg_pierce=200 attack_area=4 multi_target=8 siege=1 loudness=10 color=gray
+
+# noun protection
+hauberk: mass=12 integrity=320 hardness=7 material=steel equip_slot=body armor=22 res_slash=0.7 res_pierce=0.3 res_blunt=0.1 loudness=2 color=silver
+habergeon: mass=8 integrity=240 hardness=7 material=steel equip_slot=body armor=16 res_slash=0.6 res_pierce=0.25 loudness=2 color=silver
+chainmail: mass=11 integrity=300 hardness=7 material=steel equip_slot=body armor=20 res_slash=0.7 res_pierce=0.3 loudness=2 conductivity=8 color=silver
+cuirass: mass=10 integrity=360 hardness=8 material=steel equip_slot=body armor=26 res_slash=0.6 res_pierce=0.5 res_blunt=0.2 reflectivity=6 loudness=3 color=silver
+brigandine: mass=9 integrity=300 hardness=7 material=steel,leather equip_slot=body armor=22 res_slash=0.6 res_pierce=0.45 res_blunt=0.2 loudness=1 color=red
+gambeson: mass=4 integrity=160 material=cloth equip_slot=body armor=8 res_blunt=0.5 res_slash=0.3 res_cold=0.4 temp_min+-10 flammability=6 color=white
+lamellar: mass=10 integrity=280 hardness=7 material=steel,leather equip_slot=body armor=20 res_slash=0.6 res_pierce=0.35 loudness=2 color=gray
+greave: mass=1.5 integrity=100 hardness=8 material=steel equip_slot=feet armor=6 res_slash=0.3 res_blunt=0.2 color=silver
+sabaton: mass=1.5 integrity=100 hardness=8 material=steel equip_slot=feet armor=6 res_slash=0.3 loudness=2 color=silver
+vambrace: mass=1 integrity=80 hardness=8 material=steel equip_slot=hands armor=5 res_slash=0.3 block=0.1 color=silver
+rerebrace: mass=1 integrity=80 hardness=8 material=steel equip_slot=hands armor=4 res_slash=0.3 color=silver
+pauldron: mass=2 integrity=120 hardness=8 material=steel equip_slot=back armor=8 res_slash=0.3 res_blunt=0.2 color=silver
+gorget: mass=1 integrity=90 hardness=8 material=steel equip_slot=neck armor=6 res_slash=0.4 res_pierce=0.3 color=silver
+aventail: mass=1.5 integrity=80 hardness=7 material=steel equip_slot=neck armor=5 res_slash=0.5 color=silver
+camail: mass=1.5 integrity=80 hardness=7 material=steel equip_slot=neck armor=5 res_slash=0.5 color=silver
+armet: mass=3 integrity=180 hardness=8 material=steel equip_slot=head armor=10 res_blunt=0.4 immune_stun=true sight_range*0.8 color=silver
+heaume: mass=4 integrity=200 hardness=8 material=steel equip_slot=head armor=12 res_blunt=0.4 res_pierce=0.3 immune_stun=true sight_range*0.6 color=silver
+sallet: mass=2 integrity=150 hardness=8 material=steel equip_slot=head armor=9 res_blunt=0.3 immune_stun=true color=silver
+basinet: mass=2 integrity=150 hardness=8 material=steel equip_slot=head armor=9 res_blunt=0.3 immune_stun=true color=silver
+morion: mass=1.5 integrity=130 hardness=8 material=steel equip_slot=head armor=7 res_blunt=0.3 res_slash=0.3 color=silver
+buckler: mass=1.5 length=0.35 integrity=140 hardness=7 material=steel equip_slot=held hands_required=1 block=0.4 armor=6 res_slash=0.3 color=silver
+pavise: mass=9 length=1.4 integrity=500 hardness=6 material=wood,leather equip_slot=held hands_required=1 block=0.7 armor=16 res_pierce=0.8 cover=0.7 speed_land*0.8 color=red
+targe: mass=4 length=0.6 integrity=220 material=wood,leather equip_slot=held hands_required=1 block=0.5 armor=8 res_pierce=0.4 color=brown
+escutcheon: mass=5 length=0.9 integrity=260 material=wood,steel equip_slot=held hands_required=1 block=0.55 armor=10 res_pierce=0.4 courage+1 color=blue
+mantlet: mass=40 length=2 integrity=700 material=wood flammability=6 equip_slot=held hands_required=2 block=0.8 armor=25 res_pierce=0.9 res_blunt=0.3 cover=0.9 speed_land*0.6 color=brown
+chanfron: mass=3 integrity=150 hardness=8 material=steel equip_slot=head armor=10 res_slash=0.4 res_pierce=0.3 color=silver
+caparison: mass=8 integrity=120 material=cloth,steel equip_slot=body armor=8 res_slash=0.3 beauty=6 color=red
+surcoat: mass=1 integrity=20 material=cloth equip_slot=back disguise=3 courage+1 color=red
+tabard: mass=1 integrity=20 material=cloth equip_slot=back disguise=4 color=blue
+
+# noun fortification
+machicolation: mass=20000 footprint=1 height=3 integrity=8000 hardness=8 material=stone portable=false cover=0.5 field_radius=12 field_targets=enemies dmg_fire=45 inflict_burn=3 attack_rate=0.5 color=gray
+crenellation: mass=40000 footprint=2 height=2 integrity=15000 hardness=8 material=stone portable=false cover=0.85 field_radius=12 field_targets=owned res_pierce+0.4 res_blast+0.2 blocks=projectiles color=gray
+crenelation: mass=40000 footprint=2 height=2 integrity=15000 hardness=8 material=stone portable=false cover=0.85 field_radius=12 field_targets=owned res_pierce+0.4 res_blast+0.2 blocks=projectiles color=gray
+merlon: mass=20000 footprint=1 height=2 integrity=10000 hardness=8 material=stone portable=false cover=0.8 field_radius=8 field_targets=owned res_pierce+0.3 blocks=projectiles color=gray
+embrasure: mass=10000 footprint=1 height=2 integrity=8000 hardness=8 material=stone portable=false cover=0.7 field_radius=10 field_targets=owned accuracy+0.15 res_pierce+0.2 color=gray
+loophole: mass=8000 footprint=1 height=2 integrity=7000 hardness=8 material=stone portable=false cover=0.75 field_radius=10 field_targets=owned accuracy+0.1 res_pierce+0.3 stealth+2 color=gray
+arrowslit: mass=8000 footprint=1 height=2 integrity=7000 hardness=8 material=stone portable=false cover=0.75 field_radius=10 field_targets=owned accuracy+0.1 res_pierce+0.3 color=gray
+bailey: mass=2000000 footprint=20 height=6 integrity=60000 hardness=7 material=stone,wood portable=false enterable=true occupants=80 lockable=true security=6 cover=0.7 claim_radius=12 blocks=land,projectiles storage_letters=200 color=gray
+outwork: mass=500000 footprint=8 height=4 integrity=30000 hardness=6 material=earth,stone portable=false cover=0.8 claim_radius=8 blocks=land,projectiles res_blast=0.6 color=brown
+revetment: mass=300000 footprint=6 height=4 integrity=40000 hardness=7 material=stone portable=false cover=0.6 res_blast=0.8 blocks=projectiles claim_radius=4 color=gray
+ravelin: mass=1500000 footprint=12 height=6 integrity=80000 hardness=7 material=stone,earth portable=false cover=0.85 claim_radius=10 blocks=land,projectiles res_blast=0.7 sight_range=400 color=gray
+glacis: mass=2000000 footprint=20 height=3 integrity=90000 material=earth portable=false cover=0.3 movement_cost=3 res_blast=0.8 claim_radius=10 counters=helepolis,ram color=brown
+casemate: mass=800000 footprint=4 height=4 integrity=70000 hardness=8 material=stone portable=false enterable=true occupants=10 lockable=true cover=0.95 res_blast=0.8 dmg_blast=200 attack_rate=0.1 attack_range=800 siege=3 color=gray
+blockhouse: mass=300000 footprint=4 height=5 integrity=20000 hardness=6 material=wood,stone portable=false enterable=true occupants=12 lockable=true security=5 cover=0.85 claim_radius=5 flammability=4 color=brown
+bartizan: mass=30000 footprint=1 height=8 integrity=12000 hardness=8 material=stone portable=false cover=0.8 sight_range=500 map_reveal=15 dmg_pierce=30 attack_rate=1 attack_range=60 alarm=true color=gray
+escarp: tile_type=wall radius=1 length=60 elevation=8 integrity=100000 hardness=8 material=stone portable=false blocks=land cover=0.6 color=gray
+
+# noun structure
+postern: mass=1500 footprint=1 height=3 integrity=2000 material=oak,iron portable=false lockable=true security=6 blocks=land stealth=4 counters=key,thief color=brown
+motte: tile_type=hill radius=3 elevation=8 portable=false cover=0.6 claim_radius=6 color=green
+sallyport: mass=1500 footprint=1 height=3 integrity=2500 material=oak,iron portable=false lockable=true security=5 blocks=land counters=key color=brown
+
+# noun person
+crossbowman: mass=80 integrity=150 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=5 training=6 dmg_pierce=70 attack_rate=0.4 attack_range=80 accuracy=0.9 armor_pierce=0.5 targets=land,air food_need=0.04 counters=griffin
+arbalester: mass=80 integrity=150 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=5 training=6 dmg_pierce=100 attack_rate=0.3 attack_range=110 accuracy=0.9 armor_pierce=0.6 targets=land,air food_need=0.04
+pikeman: mass=85 integrity=190 alive=true sentient=true intelligence=5 loyalty=8 hands=true speech=true speed_land=5 training=6 dmg_pierce=55 attack_rate=0.7 attack_range=5 armor=10 counters=cavalry,cavalryman,horseman,lancer food_need=0.05
+arquebusier: mass=80 integrity=170 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=5 training=6 dmg_pierce=120 attack_rate=0.12 attack_range=90 accuracy=0.6 armor_pierce=0.7 loudness=10 food_need=0.05 counters=knight
+castellan: mass=85 integrity=260 alive=true sentient=true intelligence=7 loyalty=9 courage=8 hands=true speech=true speed_land=4 authority=6 command_limit=6 armor=15 dmg_slash=50 attack_rate=0.9 food_need=0.04 field_radius=16 field_targets=owned morale+2 res_pierce+0.1
+besieger: mass=85 integrity=220 alive=true sentient=true intelligence=5 loyalty=6 hands=true speech=true speed_land=4 dmg_crush=60 attack_rate=0.5 siege=8 armor=8 food_need=0.05 counters=door,gate
+yeoman: mass=75 integrity=150 alive=true sentient=true intelligence=6 loyalty=8 hands=true speech=true speed_land=6 dmg_pierce=40 attack_rate=0.6 attack_range=150 targets=land,air labor=1 food_need=0.04
+horseman: mass=600 integrity=500 alive=true sentient=true intelligence=5 loyalty=7 hands=true speech=true speed_land=18 dmg_slash=50 dmg_pierce=40 attack_rate=0.7 attack_range=3 knockback=3 food_need=0.2
+fusilier: mass=80 integrity=170 alive=true sentient=true intelligence=6 loyalty=7 hands=true speech=true speed_land=5 training=6 dmg_pierce=100 attack_rate=0.2 attack_range=110 loudness=9 food_need=0.05
+skirmisher: mass=70 integrity=120 alive=true sentient=true intelligence=6 loyalty=6 hands=true speech=true speed_land=8 stealth=5 evasion=0.3 dmg_pierce=30 attack_rate=0.9 attack_range=40 food_need=0.04
+condottiere: mass=85 integrity=260 alive=true sentient=true intelligence=7 loyalty=2 hands=true speech=true speed_land=5 armor=18 dmg_slash=70 attack_rate=0.9 training=7 food_need=0.05
+landsknecht: mass=90 integrity=240 alive=true sentient=true intelligence=5 loyalty=4 hands=true speech=true speed_land=5 dmg_slash=85 attack_rate=0.6 attack_area=1.5 training=6 intimidation=4 food_need=0.05
+cavalier: mass=600 integrity=520 alive=true sentient=true intelligence=6 loyalty=8 courage=9 hands=true speech=true speed_land=18 armor=20 dmg_slash=60 attack_rate=0.8 attack_range=2 food_need=0.2 charm=3
+
+# noun worker
+armorer: mass=85 integrity=140 alive=true sentient=true intelligence=6 hands=true speech=true labor=3 craft_slots=1 crafts=protection,metal food_need=0.04
+armourer: mass=85 integrity=140 alive=true sentient=true intelligence=6 hands=true speech=true labor=3 craft_slots=1 crafts=protection,metal food_need=0.04
+bowyer: mass=70 integrity=110 alive=true sentient=true intelligence=6 hands=true speech=true labor=2 craft_slots=1 crafts=weapon,wood food_need=0.03
+fletcher: mass=70 integrity=110 alive=true sentient=true intelligence=6 hands=true speech=true labor=2 craft_slots=1 crafts=weapon,wood food_need=0.03
+swordsmith: mass=90 integrity=150 alive=true sentient=true intelligence=6 hands=true speech=true labor=3 craft_slots=1 crafts=weapon,metal res_fire=0.3 food_need=0.04
+
+# noun act
+escalade: placement=target placement_range=40 event_target=structure event_radius=4 event_duration=1 counters=door,gate,lockable,wall,postern,sallyport
+countermine: placement=target placement_range=40 event_target=structure event_radius=12 event_duration=1 dmg_blast=300 siege=4 counters=sapper,miner,besieger,undermining
+undermining: placement=target placement_range=20 event_target=structure event_radius=5 event_duration=1 dmg_earth=500 siege=10 counters=door,gate,wall,lockable
+sortie: placement=self event_radius=30 event_duration=1 field_targets=allies inflict_haste=3 strength+2 courage+3 counters=siege,blockade,investment
+sally: placement=self event_radius=40 event_duration=1 field_targets=allies inflict_haste=4 morale+3 courage+3 counters=siege,blockade
+circumvallation: placement=target placement_range=200 event_target=structure event_radius=40 event_duration=8 field_targets=enemies law=trade,gather food_output*0 morale+-2 counters=sortie,sally
+
+# Theme 29, mythic beasts and prehistoric giants. Young ones grow up (bug.ts matures_into);
+# counters are the old stories' (WEASEL and MIRROR against gaze beasts, SLAYER against dragons,
+# WOLFSBANE against werewolves, METEOR and EXTINCTION against dinosaurs, cold against reptiles).
+
+# noun supernatural
+manticore: mass=400 length=4 integrity=6000 alive=true sentient=true intelligence=5 loyalty=2 aggression=9 diet=carnivore food_need=1 speed_land=14 dmg_slash=300 dmg_poison=250 attack_rate=0.8 attack_range=30 multi_target=3 targets=land,air inflict_poison=8 venomous=true armor=30 fear_aura=8 habitat=desert,savanna color=red
+cockatrice: mass=20 length=1.5 integrity=900 alive=true aggression=8 diet=carnivore food_need=0.05 speed_land=8 speed_air=6 dmg_poison=120 attack_rate=0.8 attack_range=12 inflict_root=12 inflict_stun=4 venomous=true res_poison=1 immune_poison=true fear_aura=6 habitat=desert,badlands color=yellow
+gryphon: mass=500 length=4 integrity=25000 alive=true sentient=true intelligence=7 loyalty=8 aggression=5 diet=carnivore food_need=1 speed_land=14 speed_air=50 flight_ceiling=5000 mountable=true seats=2 dmg_slash=900 dmg_pierce=400 attack_rate=1 attack_range=4 targets=land,air armor=40 courage=10 fear_aura=5 habitat=mountain color=yellow
+griffon: mass=500 length=4 integrity=25000 alive=true sentient=true intelligence=7 loyalty=8 aggression=5 diet=carnivore food_need=1 speed_land=14 speed_air=50 flight_ceiling=5000 mountable=true seats=2 dmg_slash=900 dmg_pierce=400 attack_rate=1 attack_range=4 targets=land,air armor=40 courage=10 fear_aura=5 habitat=mountain color=yellow
+hippogriff: mass=400 length=3 integrity=4000 alive=true sentient=true intelligence=5 loyalty=7 courage=8 diet=carnivore food_need=0.6 speed_land=16 speed_air=40 flight_ceiling=3000 mountable=true seats=1 equip_slot=mount tamable=true dmg_slash=250 dmg_pierce=150 attack_rate=1 targets=land,air habitat=mountain,meadow color=white
+amphisbaena: mass=30 length=3 integrity=1200 alive=true aggression=7 diet=carnivore food_need=0.05 speed_land=8 dmg_poison=150 dmg_pierce=60 attack_rate=1.6 multi_target=2 inflict_poison=10 venomous=true res_cold=0.8 immune_freeze=true habitat=desert color=green
+kelpie: mass=500 length=2.4 integrity=2500 alive=true sentient=true intelligence=6 loyalty=1 aggression=7 diet=carnivore food_need=0.3 speed_land=18 speed_water=20 mountable=true seats=1 charm=8 inflict_charm=6 dmg_water=200 dmg_crush=150 attack_rate=0.6 breathes=both habitat=marsh,shore color=black
+kelpy: mass=500 length=2.4 integrity=2500 alive=true sentient=true intelligence=6 loyalty=1 aggression=7 diet=carnivore food_need=0.3 speed_land=18 speed_water=20 mountable=true seats=1 charm=8 inflict_charm=6 dmg_water=200 dmg_crush=150 attack_rate=0.6 breathes=both habitat=marsh,shore color=black
+dryad: mass=60 integrity=900 alive=true sentient=true intelligence=7 loyalty=5 speed_land=4 stealth=8 camouflage=forest charm=8 inflict_charm=8 inflict_root=8 attack_rate=0.5 attack_range=20 regeneration=20 res_fire=-0.5 field_radius=20 field_targets=all growth*2 beauty=9 diet=photosynthesis habitat=forest color=green
+hamadryad: mass=60 integrity=1400 alive=true sentient=true intelligence=7 loyalty=8 speed_land=1 stealth=9 camouflage=forest inflict_root=10 attack_rate=0.5 attack_range=20 regeneration=40 res_fire=-0.5 field_radius=24 field_targets=all growth*2.5 diet=photosynthesis habitat=forest color=green
+undine: mass=50 integrity=700 alive=true sentient=true intelligence=7 loyalty=4 speed_land=4 speed_water=12 dmg_water=120 attack_rate=0.8 attack_range=20 inflict_slow=8 res_fire=1 res_water=1 charm=6 breathes=both habitat=marsh,shore color=blue
+naiad: mass=50 integrity=600 alive=true sentient=true intelligence=6 loyalty=5 speed_land=5 speed_water=12 charm=8 inflict_charm=10 attack_rate=0.5 stealth=5 camouflage=water heals=10 water_output=2 breathes=both habitat=marsh,forest color=blue
+nereid: mass=55 integrity=700 alive=true sentient=true intelligence=7 loyalty=6 speed_land=4 speed_water=20 charm=8 inflict_charm=8 attack_rate=0.5 beauty=10 breathes=both counters=tempest,maelstrom,swell,riptide habitat=shore color=teal
+merman: mass=120 integrity=500 alive=true sentient=true intelligence=7 loyalty=6 hands=true speech=true speed_land=2 speed_water=16 dmg_pierce=70 attack_rate=0.9 attack_range=3 breathes=both habitat=shore color=teal
+selkie: mass=70 integrity=300 alive=true sentient=true intelligence=7 loyalty=5 hands=true speech=true speed_land=4 speed_water=18 charm=6 disguise=6 stealth=5 diet=carnivore food_need=0.03 breathes=both habitat=shore color=gray
+lamia: mass=120 integrity=1500 alive=true sentient=true intelligence=7 loyalty=2 aggression=7 hands=true speech=true speed_land=8 charm=7 inflict_charm=8 dmg_poison=80 dmg_crush=60 attack_rate=0.9 lifesteal=0.3 venomous=true nocturnal=true habitat=desert,marsh color=green
+hobgoblin: mass=60 height=1.4 integrity=150 alive=true sentient=true intelligence=4 loyalty=3 aggression=7 hands=true speech=true speed_land=6 night_vision=true dmg_slash=30 attack_rate=1 letter_steal=1 pack_size=6 food_need=0.03 color=green
+bugbear: mass=150 height=2.1 integrity=400 alive=true sentient=true intelligence=3 loyalty=3 aggression=8 hands=true speed_land=7 stealth=6 nocturnal=true dmg_blunt=60 attack_rate=0.8 fear_aura=4 food_need=0.06 color=brown
+ogress: mass=300 height=2.8 integrity=1800 alive=true sentient=true intelligence=3 loyalty=3 aggression=8 hands=true speed_land=5 strength=9 dmg_blunt=140 attack_rate=0.6 fear_aura=5 food_need=0.3 diet=carnivore color=green
+giantess: mass=7000 height=7.5 integrity=8500 alive=true sentient=true intelligence=4 loyalty=4 aggression=5 hands=true speech=true speed_land=8 strength=10 dmg_crush=450 attack_rate=0.4 attack_range=6 attack_area=3 knockback=8 fear_aura=6 siege=3 food_need=2 color=brown
+lycanthrope: mass=110 integrity=800 alive=true sentient=true intelligence=4 aggression=9 nocturnal=true night_vision=true speed_land=14 dmg_slash=110 dmg_pierce=60 attack_rate=1.2 inflict_bleed=6 regeneration=30 res_holy=-0.5 fear_aura=7 smell_range=500 diet=carnivore food_need=0.1 color=gray
+wolfman: mass=110 integrity=800 alive=true sentient=true intelligence=4 aggression=9 nocturnal=true night_vision=true speed_land=14 dmg_slash=110 dmg_pierce=60 attack_rate=1.2 inflict_bleed=6 regeneration=30 res_holy=-0.5 fear_aura=7 smell_range=500 diet=carnivore food_need=0.1 color=gray
+firedrake: mass=6000 length=12 integrity=20000 alive=true sentient=true intelligence=6 loyalty=3 aggression=8 diet=carnivore food_need=3 speed_land=8 speed_air=35 flight_ceiling=4000 dmg_fire=1500 attack_rate=0.5 attack_range=30 attack_area=6 targets=land,air inflict_burn=8 armor=80 res_fire=1 immune_burn=true luminosity=6 fear_aura=8 habitat=volcanic color=orange
+wivern: mass=3000 length=10 integrity=35000 alive=true sentient=true intelligence=5 loyalty=3 aggression=8 diet=carnivore food_need=2 speed_land=7 speed_air=40 flight_ceiling=4000 mountable=true seats=1 dmg_pierce=900 dmg_poison=900 attack_rate=0.8 attack_range=10 attack_area=3 targets=land,air inflict_poison=10 armor=70 res_fire=0.5 fear_aura=8 color=green
+wyrm: mass=30000 length=40 integrity=50000 alive=true sentient=true intelligence=7 loyalty=1 aggression=9 diet=carnivore food_need=4 speed_land=6 speed_underground=2 dmg_crush=1500 dmg_fire=800 attack_rate=0.4 attack_range=20 attack_area=8 armor=150 res_fire=1 fear_aura=9 storage_letters=2000 security=8 habitat=mountain,volcanic color=red
+lindworm: mass=5000 length=15 integrity=12000 alive=true sentient=true intelligence=4 loyalty=2 aggression=8 diet=carnivore food_need=1.5 speed_land=8 dmg_poison=600 dmg_pierce=400 attack_rate=0.7 inflict_poison=10 venomous=true armor=60 fear_aura=7 habitat=forest,mountain color=green
+jinni: mass=0 integrity=20000 alive=true sentient=true intelligence=9 loyalty=2 phase=true hover=true speed_air=40 dmg_fire=900 dmg_wind=600 attack_rate=0.8 attack_range=40 attack_area=6 teleport_range=200 res_fire=1 fear_aura=6 diet=none color=blue
+djinni: mass=0 integrity=20000 alive=true sentient=true intelligence=9 loyalty=2 phase=true hover=true speed_air=40 dmg_fire=900 dmg_wind=600 attack_rate=0.8 attack_range=40 attack_area=6 teleport_range=200 res_fire=1 fear_aura=6 diet=none color=blue
+jinn: mass=0 integrity=20000 alive=true sentient=true intelligence=9 loyalty=2 phase=true hover=true speed_air=40 dmg_fire=900 dmg_wind=600 attack_rate=0.8 attack_range=40 attack_area=6 teleport_range=200 res_fire=1 fear_aura=6 diet=none color=blue
+ifrit: mass=0 integrity=25000 alive=true sentient=true intelligence=8 loyalty=1 aggression=9 phase=true hover=true speed_air=40 dmg_fire=1500 attack_rate=0.8 attack_range=30 attack_area=6 inflict_burn=8 res_fire=1 immune_burn=true luminosity=8 fear_aura=8 diet=none color=red
+efreet: mass=0 integrity=25000 alive=true sentient=true intelligence=8 loyalty=1 aggression=9 phase=true hover=true speed_air=40 dmg_fire=1500 attack_rate=0.8 attack_range=30 attack_area=6 inflict_burn=8 res_fire=1 immune_burn=true luminosity=8 fear_aura=8 diet=none color=red
+dybbuk: mass=0 integrity=300 alive=false sentient=true intelligence=6 aggression=7 phase=true hover=true speed_land=5 stealth=8 dmg_psychic=60 attack_rate=0.8 inflict_confuse=8 inflict_rage=6 res_blunt=1 res_slash=1 res_pierce=1 res_holy=-1 diet=none color=gray
+silenus: mass=90 integrity=200 alive=true sentient=true intelligence=8 loyalty=5 hands=true speech=true speed_land=3 charm=6 field_radius=20 field_targets=all inflict_confuse=3 morale+2 courage+2 diet=omnivore food_need=0.05 color=purple
+sylph: mass=0.1 integrity=200 alive=true sentient=true intelligence=7 loyalty=4 hover=true speed_air=30 stealth=7 evasion=0.5 dmg_wind=60 attack_rate=1 attack_range=30 knockback=6 diet=none color=white
+minotaur: mass=600 height=2.5 integrity=5000 alive=true sentient=true intelligence=3 loyalty=1 aggression=10 courage=10 hands=true speed_land=12 strength=10 dmg_crush=350 dmg_pierce=250 attack_rate=0.7 knockback=10 immune_fear=true fear_aura=8 siege=3 diet=carnivore food_need=0.5 color=brown
+pegasus: mass=500 length=2.4 integrity=3000 alive=true sentient=true intelligence=6 loyalty=9 courage=9 diet=herbivore food_need=0.3 speed_land=20 speed_air=55 flight_ceiling=6000 mountable=true seats=1 equip_slot=mount tamable=true dmg_blunt=120 attack_rate=0.6 beauty=10 color=white
+cerberus: mass=900 length=3 integrity=18000 alive=true sentient=true intelligence=4 loyalty=7 aggression=10 speed_land=14 dmg_pierce=600 dmg_fire=300 attack_rate=1.5 multi_target=3 alarm=true sight_range=600 night_vision=true fear_aura=9 diet=carnivore food_need=1 color=black
+gorgon: mass=80 integrity=3000 alive=true sentient=true intelligence=7 loyalty=2 aggression=8 hands=true venomous=true dmg_poison=200 attack_rate=0.8 attack_range=40 inflict_root=20 inflict_stun=8 fear_aura=9 res_holy=-0.3 counters=mirror color=green
+chupacabra: mass=40 length=1.2 integrity=400 alive=true intelligence=4 aggression=8 nocturnal=true stealth=8 speed_land=12 dmg_pierce=60 lifesteal=0.5 attack_rate=1.2 counters=goat,sheep,hen,chicken diet=carnivore food_need=0.02 habitat=desert,badlands color=gray
+wendigo: mass=200 height=3.5 integrity=5000 alive=true sentient=true intelligence=4 loyalty=1 aggression=10 nocturnal=true speed_land=14 dmg_slash=300 dmg_cold=200 attack_rate=0.9 inflict_freeze=4 lifesteal=0.3 res_cold=1 temp_min=-80 fear_aura=9 diet=carnivore food_need=3 habitat=tundra,taiga color=white
+bunyip: mass=800 length=4 integrity=3500 alive=true aggression=7 nocturnal=true speed_land=4 speed_water=12 dmg_crush=300 attack_rate=0.6 inflict_fear=4 loudness=10 fear_aura=7 breathes=both diet=carnivore food_need=0.5 habitat=marsh color=brown
+simurgh: mass=2000 length=10 integrity=30000 alive=true sentient=true intelligence=10 loyalty=8 diet=none speed_air=60 flight_ceiling=8000 dmg_slash=600 attack_rate=0.8 targets=land,air heals=60 field_radius=40 field_targets=owned regeneration+20 beauty=10 color=teal
+garuda: mass=1000 length=8 integrity=28000 alive=true sentient=true intelligence=8 loyalty=7 courage=10 diet=carnivore food_need=1 speed_air=60 flight_ceiling=8000 dmg_slash=900 dmg_fire=400 attack_rate=0.9 targets=land,air,water fear_aura=7 counters=naga,serpent,snake,cobra,amphisbaena,lamia color=orange
+naga: mass=300 length=6 integrity=4000 alive=true sentient=true intelligence=8 loyalty=4 hands=true speech=true speed_land=8 speed_water=10 dmg_poison=300 attack_rate=0.9 inflict_poison=8 venomous=true storage_letters=500 breathes=both habitat=jungle,marsh color=green
+rakshasa: mass=150 integrity=6000 alive=true sentient=true intelligence=8 loyalty=1 aggression=9 hands=true speech=true speed_land=10 disguise=8 stealth=6 dmg_slash=300 dmg_dark=200 attack_rate=1 regeneration=50 res_magic=0.5 nocturnal=true fear_aura=7 diet=carnivore food_need=0.2 color=orange
+tengu: mass=60 integrity=800 alive=true sentient=true intelligence=8 loyalty=4 hands=true speech=true speed_land=8 speed_air=30 training=9 evasion=0.4 stealth=6 dmg_slash=120 attack_rate=1.5 habitat=forest,mountain color=red
+kitsune: mass=8 length=1 integrity=900 alive=true sentient=true intelligence=9 loyalty=4 speed_land=14 stealth=8 disguise=9 charm=8 inflict_charm=6 dmg_fire=150 attack_rate=0.8 attack_range=20 luck+2 habitat=forest color=orange
+qilin: mass=500 length=2.5 integrity=20000 alive=true sentient=true intelligence=9 loyalty=9 aggression=1 hover=true speed_land=25 speed_air=20 dmg_holy=500 attack_rate=0.8 heals=50 field_radius=30 field_targets=owned luck+2 morale+2 immune_fear=true beauty=10 diet=herbivore food_need=0.3 color=yellow
+kirin: mass=500 length=2.5 integrity=20000 alive=true sentient=true intelligence=9 loyalty=9 aggression=1 hover=true speed_land=25 speed_air=20 dmg_holy=500 attack_rate=0.8 heals=50 field_radius=30 field_targets=owned luck+2 morale+2 immune_fear=true beauty=10 diet=herbivore food_need=0.3 color=yellow
+lich: mass=60 integrity=8000 alive=false sentient=true intelligence=10 loyalty=1 aggression=8 hands=true speech=true speed_land=4 dmg_dark=400 dmg_cold=300 attack_rate=0.6 attack_range=60 inflict_freeze=3 regeneration=100 res_holy=-1 res_cold=1 fear_aura=9 field_radius=30 field_targets=enemies morale+-3 diet=none color=purple
+kobold: mass=15 height=0.9 integrity=40 alive=true sentient=true intelligence=5 loyalty=4 aggression=5 hands=true speech=true speed_land=6 stealth=6 night_vision=true labor=1 harvest_bonus=2 harvest_sources=digging dmg_pierce=10 attack_rate=1 pack_size=8 food_need=0.01 habitat=mountain,hills color=red
+sasquatch: mass=300 height=2.7 integrity=2000 alive=true sentient=true intelligence=5 aggression=3 speed_land=10 stealth=9 camouflage=forest strength=9 dmg_blunt=150 attack_rate=0.7 smell_range=200 diet=omnivore food_need=0.1 habitat=forest,taiga color=brown
+bigfoot: mass=300 height=2.7 integrity=2000 alive=true sentient=true intelligence=5 aggression=3 speed_land=10 stealth=9 camouflage=forest strength=9 dmg_blunt=150 attack_rate=0.7 smell_range=200 diet=omnivore food_need=0.1 habitat=forest,taiga color=brown
+yowie: mass=280 height=2.5 integrity=1800 alive=true sentient=true intelligence=5 aggression=4 speed_land=10 stealth=9 camouflage=forest strength=9 dmg_blunt=140 attack_rate=0.7 diet=omnivore food_need=0.1 habitat=forest,savanna color=brown
+homunculus: mass=1 height=0.3 integrity=30 alive=true sentient=true intelligence=7 loyalty=10 hands=true speech=true speed_land=3 stealth=6 labor=1 read_inventory=true diet=none color=pink
+boggart: mass=20 integrity=120 alive=true sentient=true intelligence=5 loyalty=2 aggression=5 hands=true speed_land=6 stealth=8 letter_steal=2 inflict_fear=4 nocturnal=true diet=omnivore food_need=0.01 color=brown
+redcap: mass=30 integrity=250 alive=true sentient=true intelligence=4 loyalty=2 aggression=10 hands=true speed_land=9 dmg_slash=60 inflict_bleed=8 lifesteal=0.4 attack_rate=1.4 fear_aura=5 food_need=0.02 color=red
+nixie: mass=20 integrity=150 alive=true sentient=true intelligence=6 loyalty=3 speed_land=3 speed_water=12 charm=7 inflict_charm=8 stealth=6 camouflage=water breathes=both habitat=marsh color=blue
+pooka: mass=200 integrity=900 alive=true sentient=true intelligence=7 loyalty=2 speed_land=18 mountable=true seats=1 disguise=7 luck+-2 inflict_confuse=6 attack_rate=0.5 nocturnal=true color=black
+ettin: mass=4000 height=6 integrity=7000 alive=true sentient=true intelligence=2 loyalty=3 aggression=8 hands=true speed_land=6 strength=10 dmg_blunt=400 attack_rate=0.5 multi_target=2 attack_area=3 sight_range*1.5 fear_aura=7 siege=3 food_need=1.5 color=brown
+typhon: mass=50000 height=40 integrity=150000 alive=true sentient=true intelligence=5 loyalty=0 aggression=10 speed_land=10 speed_air=30 dmg_fire=2500 dmg_wind=1500 dmg_crush=2000 attack_rate=0.5 attack_range=60 attack_area=12 multi_target=6 armor=150 fear_aura=10 loudness=10 diet=carnivore food_need=10 color=red
+scylla: mass=20000 length=20 integrity=60000 alive=true sentient=true intelligence=4 loyalty=0 aggression=10 speed_water=10 speed_land=2 dmg_pierce=1500 attack_rate=1 attack_range=20 multi_target=6 armor=80 fear_aura=9 breathes=both diet=carnivore food_need=4 habitat=shore color=green
+charybdis: placement=target placement_range=200 field_radius=40 field_targets=all field_duration=6 pull=6 waves=4 dmg_water=200 attack_rate=0.5 counters=calm,doldrums,breakwater
+ziz: mass=8000 length=40 integrity=90000 alive=true sentient=true intelligence=6 loyalty=4 speed_air=60 flight_ceiling=9000 dmg_slash=1200 dmg_wind=800 attack_rate=0.5 targets=land,air,water attack_area=10 fear_aura=8 diet=carnivore food_need=5 color=brown
+tarasque: mass=40000 length=20 integrity=120000 alive=true sentient=true intelligence=3 loyalty=0 aggression=10 speed_land=6 speed_water=6 dmg_crush=2500 dmg_fire=800 attack_rate=0.4 attack_area=8 armor=300 res_slash=0.8 res_pierce=0.8 thorns=200 siege=4 fear_aura=10 diet=carnivore food_need=8 color=green
+peryton: mass=200 integrity=1500 alive=true intelligence=3 aggression=8 speed_land=14 speed_air=30 dmg_pierce=200 attack_rate=1 targets=land,air habitat=forest color=green
+catoblepas: mass=1500 length=4 integrity=4000 alive=true intelligence=2 aggression=3 speed_land=5 dmg_poison=400 attack_range=25 inflict_root=15 inflict_sick=6 contagion=0.2 odor=10 fear_aura=6 diet=herbivore food_need=0.5 habitat=marsh color=gray
+alicorn: mass=500 length=2.5 integrity=26000 alive=true sentient=true intelligence=8 loyalty=9 aggression=2 speed_land=30 speed_air=50 flight_ceiling=6000 mountable=true seats=1 dmg_pierce=1200 dmg_holy=800 attack_rate=1 attack_range=3 heals=60 immune_poison=true immune_fear=true luminosity=7 beauty=10 diet=herbivore food_need=0.5 color=white
+treant: mass=8000 height=12 integrity=30000 hardness=6 material=wood alive=true sentient=true intelligence=6 loyalty=6 speed_land=3 strength=10 dmg_crush=800 attack_rate=0.4 attack_area=4 siege=5 regeneration=100 res_fire=-0.6 flammability=6 diet=photosynthesis field_radius=20 field_targets=all growth*2 color=green
+bahamut: mass=200000 length=200 integrity=300000 alive=true sentient=true intelligence=9 loyalty=6 speed_water=20 speed_air=40 dmg_crush=3000 dmg_light=2000 attack_rate=0.3 attack_range=80 attack_area=12 armor=200 fear_aura=10 breathes=both diet=carnivore food_need=12 color=blue
+
+# noun person
+slayer: mass=90 integrity=600 alive=true sentient=true intelligence=7 loyalty=8 courage=10 hands=true speech=true speed_land=7 training=9 dmg_slash=150 dmg_pierce=60 attack_rate=1 immune_fear=true res_fire=0.6 food_need=0.05 counters=dragon,dragonet,wyvern,wivern,wyrm,firedrake,lindworm,hydra,basilisk
+dragonslayer: mass=90 integrity=700 alive=true sentient=true intelligence=7 loyalty=8 courage=10 hands=true speech=true speed_land=7 training=9 dmg_slash=180 dmg_pierce=80 attack_rate=1 immune_fear=true res_fire=0.8 food_need=0.05 counters=dragon,dragonet,wyvern,wivern,wyrm,firedrake,lindworm,hydra
+paleontologist: mass=70 integrity=100 alive=true sentient=true intelligence=9 hands=true speech=true speed_land=5 labor=2 harvest_bonus=3 harvest_sources=digging detect_underground=true food_need=0.03
+
+# noun plant
+wolfsbane: mass=0.05 height=0.8 integrity=1 alive=true diet=photosynthesis growth_time=4 toxicity=8 edible=true dmg_poison=40 inflict_poison=6 single_use=true res_unholy+0.3 counters=werewolf,lycanthrope,wolfman color=purple
+
+# noun adornment
+phylactery: mass=0.2 integrity=40 material=silver value=200 equip_slot=neck prevents_death=1 res_dark+0.5 counters=lich color=silver
+
+# noun bird
+eaglet: mass=1 length=0.4 integrity=6 alive=true diet=carnivore food_need=0.003 speed_land=1 speed_air=4 courage=2 charm=5 tamable=true trainable=8 habitat=mountain color=brown matures_into=eagle growth_time=20
+owlet: mass=0.3 length=0.2 integrity=3 alive=true diet=carnivore food_need=0.001 speed_land=1 speed_air=3 night_vision=true charm=7 tamable=true habitat=forest color=gray matures_into=owl growth_time=15
+cygnet: mass=1.5 length=0.4 integrity=6 alive=true diet=herbivore food_need=0.002 speed_land=1 speed_water=2 charm=8 beauty=6 tamable=true habitat=marsh color=gray matures_into=swan growth_time=20
+archaeornis: mass=0.5 length=0.5 integrity=6 alive=true diet=carnivore food_need=0.002 speed_land=3 speed_air=8 climb=6 dmg_slash=4 attack_rate=1.5 habitat=jungle color=brown
+
+# noun reptile
+tyrannosaur: mass=8000 length=12 height=4 integrity=10000 alive=true aggression=10 courage=10 diet=carnivore food_need=2.5 speed_land=8 smell_range=3000 dmg_pierce=800 dmg_crush=500 attack_rate=0.5 armor_pierce=0.5 inflict_bleed=10 fear_aura=9 loudness=10 temp_min=5 habitat=jungle,volcanic,forest color=green
+allosaur: mass=2000 length=9 height=3 integrity=4000 alive=true aggression=9 diet=carnivore food_need=1.5 speed_land=9 dmg_pierce=400 dmg_slash=200 attack_rate=0.6 inflict_bleed=6 fear_aura=7 temp_min=5 habitat=savanna,jungle color=brown
+carnosaur: mass=3000 length=10 height=3 integrity=5000 alive=true aggression=9 diet=carnivore food_need=1.8 speed_land=8 dmg_pierce=500 dmg_crush=200 attack_rate=0.5 fear_aura=8 temp_min=5 habitat=jungle color=brown
+megalosaur: mass=1500 length=8 integrity=3500 alive=true aggression=8 diet=carnivore food_need=1.2 speed_land=8 dmg_pierce=350 dmg_slash=150 attack_rate=0.6 fear_aura=7 temp_min=5 habitat=forest color=brown
+megalosaurus: mass=1500 length=8 integrity=3500 alive=true aggression=8 diet=carnivore food_need=1.2 speed_land=8 dmg_pierce=350 dmg_slash=150 attack_rate=0.6 fear_aura=7 temp_min=5 habitat=forest color=brown
+ceratosaur: mass=900 length=6 integrity=2500 alive=true aggression=8 diet=carnivore food_need=0.9 speed_land=10 dmg_pierce=300 dmg_slash=100 attack_rate=0.7 fear_aura=6 temp_min=5 habitat=jungle color=red
+ceratosaurus: mass=900 length=6 integrity=2500 alive=true aggression=8 diet=carnivore food_need=0.9 speed_land=10 dmg_pierce=300 dmg_slash=100 attack_rate=0.7 fear_aura=6 temp_min=5 habitat=jungle color=red
+spinosaurus: mass=7000 length=15 height=4 integrity=11000 alive=true aggression=9 diet=carnivore food_need=2.5 speed_land=7 speed_water=8 dmg_pierce=700 dmg_slash=300 attack_rate=0.5 fear_aura=9 loudness=9 breathes=air temp_min=5 counters=crocodile,alligator habitat=marsh,jungle color=red
+herrerasaurus: mass=300 length=5 integrity=900 alive=true aggression=8 diet=carnivore food_need=0.3 speed_land=12 dmg_pierce=150 attack_rate=1 temp_min=5 habitat=jungle color=brown
+staurikosaurus: mass=30 length=2 integrity=120 alive=true aggression=7 diet=carnivore food_need=0.03 speed_land=13 dmg_pierce=30 attack_rate=1.4 temp_min=5 habitat=jungle color=brown
+eoraptor: mass=10 length=1 integrity=50 alive=true aggression=6 diet=omnivore food_need=0.01 speed_land=12 dmg_pierce=15 attack_rate=1.5 temp_min=5 habitat=desert color=brown
+utahraptor: mass=500 length=6 integrity=1400 alive=true sentient=true intelligence=6 aggression=9 diet=carnivore food_need=0.4 speed_land=15 jump=3 agility=8 dmg_slash=200 inflict_bleed=10 attack_rate=1.2 pack_size=3 fear_aura=6 temp_min=5 habitat=desert,badlands color=brown
+deinonychus: mass=70 length=3 integrity=300 alive=true sentient=true intelligence=7 aggression=9 diet=carnivore food_need=0.06 speed_land=16 jump=3 agility=9 stealth=5 dmg_slash=80 inflict_bleed=8 attack_rate=1.6 pack_size=4 tracking=8 fear_aura=4 temp_min=5 habitat=jungle,forest color=brown
+dromaeosaur: mass=40 length=2 integrity=150 alive=true sentient=true intelligence=7 aggression=9 diet=carnivore food_need=0.04 speed_land=16 jump=3 dmg_slash=50 inflict_bleed=6 attack_rate=1.8 pack_size=4 temp_min=5 habitat=jungle,desert color=brown
+maniraptor: mass=30 length=2 integrity=120 alive=true sentient=true intelligence=7 aggression=7 diet=carnivore food_need=0.03 speed_land=15 dmg_slash=40 attack_rate=1.8 pack_size=4 temp_min=5 habitat=jungle color=brown
+compsognathus: mass=3 length=1 integrity=15 alive=true aggression=6 diet=carnivore food_need=0.004 speed_land=14 dmg_pierce=6 attack_rate=2 pack_size=12 temp_min=5 habitat=jungle color=green
+oviraptorid: mass=30 length=2 integrity=100 alive=true intelligence=5 diet=omnivore food_need=0.02 speed_land=13 dmg_pierce=15 attack_rate=1.2 letter_steal=1 temp_min=5 habitat=desert color=orange
+apatosaurus: mass=20000 length=22 height=5 integrity=25000 alive=true aggression=2 diet=herbivore food_need=4 speed_land=4 dmg_crush=1500 attack_rate=0.2 attack_range=10 knockback=12 siege=3 loudness=8 temp_min=5 habitat=meadow,jungle color=green
+apatosaur: mass=20000 length=22 height=5 integrity=25000 alive=true aggression=2 diet=herbivore food_need=4 speed_land=4 dmg_crush=1500 attack_rate=0.2 attack_range=10 knockback=12 siege=3 loudness=8 temp_min=5 habitat=meadow,jungle color=green
+brontosaur: mass=17000 length=22 height=5 integrity=25000 alive=true diet=herbivore food_need=4 speed_land=4 dmg_crush=1500 attack_rate=0.2 attack_range=10 knockback=12 siege=3 temp_min=5 habitat=meadow,jungle color=gray
+barosaurus: mass=15000 length=26 height=6 integrity=20000 alive=true aggression=2 diet=herbivore food_need=3 speed_land=4 dmg_crush=1200 attack_rate=0.2 attack_range=12 knockback=10 siege=3 temp_min=5 habitat=meadow color=gray
+seismosaur: mass=30000 length=33 height=6 integrity=35000 alive=true aggression=2 diet=herbivore food_need=5 speed_land=3 dmg_crush=2000 attack_rate=0.15 attack_range=12 knockback=14 siege=4 loudness=9 temp_min=5 habitat=meadow color=gray
+titanosaur: mass=60000 length=35 height=8 integrity=50000 alive=true aggression=2 diet=herbivore food_need=8 speed_land=3 dmg_crush=3000 attack_rate=0.15 attack_range=14 knockback=16 siege=5 fear_aura=6 loudness=10 temp_min=5 habitat=meadow,savanna color=gray
+argentinosaur: mass=70000 length=35 height=8 integrity=55000 alive=true aggression=2 diet=herbivore food_need=9 speed_land=3 dmg_crush=3200 attack_rate=0.15 attack_range=14 knockback=16 siege=5 fear_aura=6 loudness=10 temp_min=5 habitat=meadow color=gray
+sauropod: mass=25000 length=25 height=6 integrity=30000 alive=true aggression=2 diet=herbivore food_need=5 speed_land=3 dmg_crush=1800 attack_rate=0.2 attack_range=12 knockback=12 siege=4 loudness=8 temp_min=5 habitat=meadow,jungle color=gray
+stegosaur: mass=5000 length=9 height=4 integrity=8000 alive=true aggression=3 courage=8 diet=herbivore food_need=1 speed_land=5 armor=30 thorns=60 dmg_pierce=350 attack_rate=0.5 temp_min=5 habitat=forest,meadow color=green
+ankylosaur: mass=6000 length=8 height=2 integrity=9000 alive=true aggression=4 diet=herbivore food_need=1.5 speed_land=3 armor=80 res_pierce=0.6 res_slash=0.6 dmg_crush=400 attack_rate=0.4 knockback=8 temp_min=5 habitat=forest color=brown
+styracosaurus: mass=3000 length=5.5 height=2 integrity=6000 alive=true aggression=5 courage=9 diet=herbivore food_need=1 speed_land=8 armor=40 dmg_pierce=400 attack_rate=0.5 knockback=6 temp_min=5 habitat=meadow color=brown
+ceratopsian: mass=4000 length=7 integrity=7000 alive=true aggression=5 courage=9 diet=herbivore food_need=1.2 speed_land=8 armor=35 dmg_pierce=450 attack_rate=0.5 knockback=6 temp_min=5 habitat=meadow color=brown
+protoceratops: mass=180 length=2 integrity=400 alive=true aggression=4 diet=herbivore food_need=0.1 speed_land=6 armor=10 dmg_pierce=40 attack_rate=0.8 temp_min=5 habitat=desert color=brown
+psittacosaurus: mass=20 length=2 integrity=80 alive=true aggression=2 diet=herbivore food_need=0.01 speed_land=8 dmg_pierce=10 attack_rate=1 temp_min=5 habitat=forest color=green
+pachycephalosaurus: mass=450 length=4.5 integrity=1200 alive=true aggression=6 courage=8 diet=herbivore food_need=0.2 speed_land=10 dmg_blunt=250 attack_rate=0.6 knockback=8 inflict_stun=2 siege=2 temp_min=5 habitat=forest color=brown
+hadrosaur: mass=3000 length=9 integrity=4000 alive=true aggression=2 diet=herbivore food_need=1 speed_land=8 loudness=9 dmg_blunt=100 attack_rate=0.5 temp_min=5 habitat=marsh,meadow color=green
+hadrosaurus: mass=3000 length=9 integrity=4000 alive=true aggression=2 diet=herbivore food_need=1 speed_land=8 loudness=9 dmg_blunt=100 attack_rate=0.5 temp_min=5 habitat=marsh,meadow color=green
+corythosaurus: mass=3500 length=9 integrity=4200 alive=true aggression=2 diet=herbivore food_need=1 speed_land=8 loudness=10 alarm=true dmg_blunt=100 attack_rate=0.5 temp_min=5 habitat=marsh color=green
+edmontosaurus: mass=4000 length=12 integrity=5000 alive=true aggression=2 diet=herbivore food_need=1.2 speed_land=8 loudness=8 dmg_blunt=120 attack_rate=0.5 temp_min=5 habitat=marsh,meadow color=green
+trachodon: mass=3000 length=9 integrity=4000 alive=true aggression=2 diet=herbivore food_need=1 speed_land=8 loudness=8 dmg_blunt=100 attack_rate=0.5 temp_min=5 habitat=marsh color=green
+anatotitan: mass=5000 length=12 integrity=6000 alive=true aggression=2 diet=herbivore food_need=1.5 speed_land=8 loudness=8 dmg_blunt=150 attack_rate=0.5 temp_min=5 habitat=marsh color=green
+plesiosaurus: mass=2000 length=10 integrity=3500 alive=true aggression=7 diet=carnivore food_need=1.5 breathes=air speed_water=8 dive_depth=200 dmg_pierce=300 attack_rate=0.6 placeable_on=water temp_min=5 habitat=shore color=teal
+ichthyosaurus: mass=1500 length=8 integrity=2500 alive=true aggression=7 diet=carnivore food_need=1 breathes=air speed_water=12 dive_depth=500 dmg_pierce=250 attack_rate=0.8 placeable_on=water temp_min=5 habitat=shore color=blue
+mosasaur: mass=10000 length=15 integrity=14000 alive=true aggression=9 diet=carnivore food_need=3 breathes=air speed_water=14 dive_depth=300 dmg_pierce=900 dmg_crush=400 attack_rate=0.5 placeable_on=water fear_aura=8 counters=shark,plesiosaur,ichthyosaur temp_min=5 habitat=shore color=teal
+nothosaur: mass=200 length=4 integrity=500 alive=true aggression=6 diet=carnivore food_need=0.2 breathes=air speed_water=8 speed_land=2 dmg_pierce=80 attack_rate=0.8 temp_min=5 habitat=shore color=teal
+pteranodon: mass=25 length=2 integrity=90 alive=true aggression=6 diet=carnivore food_need=0.02 speed_land=2 speed_air=28 flight_ceiling=1500 sight_range=2000 dmg_pierce=40 attack_rate=1 targets=land,air,water temp_min=5 habitat=shore color=brown
+dimetrodon: mass=250 length=3.5 integrity=700 alive=true aggression=7 diet=carnivore food_need=0.15 speed_land=6 dmg_pierce=120 attack_rate=0.8 temp_min=8 habitat=desert,badlands color=orange
+pelycosaur: mass=200 length=3 integrity=600 alive=true aggression=6 diet=carnivore food_need=0.12 speed_land=6 dmg_pierce=100 attack_rate=0.8 temp_min=8 habitat=desert color=orange
+dicynodont: mass=400 length=3 integrity=900 alive=true aggression=3 diet=herbivore food_need=0.2 speed_land=4 dmg_pierce=80 attack_rate=0.6 speed_underground=0.1 habitat=desert,savanna color=brown
+cynodont: mass=10 length=0.6 integrity=30 alive=true aggression=4 diet=carnivore food_need=0.01 speed_land=8 dmg_pierce=10 attack_rate=1.4 habitat=forest color=brown
+thecodont: mass=60 length=2 integrity=150 alive=true aggression=6 diet=carnivore food_need=0.05 speed_land=7 dmg_pierce=40 attack_rate=1 temp_min=8 habitat=marsh color=green
+archosaur: mass=80 length=2.5 integrity=200 alive=true aggression=6 diet=carnivore food_need=0.06 speed_land=7 dmg_pierce=50 attack_rate=1 temp_min=8 habitat=marsh color=green
+saurian: mass=100 length=3 integrity=250 alive=true aggression=6 diet=carnivore food_need=0.08 speed_land=7 dmg_pierce=60 attack_rate=1 temp_min=8 habitat=jungle,marsh color=green
+
+# noun amphibian
+labyrinthodont: mass=200 length=3 integrity=500 alive=true aggression=6 diet=carnivore food_need=0.1 speed_land=3 speed_water=6 dmg_pierce=90 attack_rate=0.8 breathes=both habitat=marsh color=brown
+
+# noun fish
+megalodon: mass=50000 length=16 integrity=30000 alive=true aggression=10 diet=carnivore food_need=6 breathes=water speed_water=20 dive_depth=500 dmg_pierce=2500 attack_rate=0.5 inflict_bleed=12 armor_pierce=0.6 placeable_on=water fear_aura=10 counters=shark,whale,dolphin habitat=shore color=gray
+
+# noun invertebrate
+eurypterid: mass=50 length=2.5 integrity=300 alive=true aggression=7 diet=carnivore food_need=0.05 speed_water=6 speed_land=2 armor=12 dmg_slash=60 attack_rate=1 breathes=water habitat=shore color=brown
+belemnite: mass=1 length=0.4 integrity=10 alive=true diet=carnivore speed_water=6 breathes=water placeable_on=water inflict_blind=4 habitat=shore color=brown
+crinoid: mass=0.5 length=0.6 integrity=5 alive=true diet=scavenger speed_water=0.1 breathes=water placeable_on=water beauty=6 habitat=shore color=pink
+
+# noun mammal
+smilodon: mass=350 length=2 integrity=600 alive=true aggression=8 diet=carnivore food_need=0.25 speed_land=14 dmg_pierce=220 inflict_bleed=12 attack_rate=0.8 fear_aura=6 res_cold=0.5 habitat=tundra,savanna color=brown
+megatherium: mass=4000 height=6 integrity=6000 alive=true aggression=3 diet=herbivore food_need=1 speed_land=3 strength=10 dmg_slash=400 attack_rate=0.4 armor=20 res_cold=0.4 habitat=forest,savanna color=brown
+megathere: mass=4000 height=6 integrity=6000 alive=true aggression=3 diet=herbivore food_need=1 speed_land=3 strength=10 dmg_slash=400 attack_rate=0.4 armor=20 res_cold=0.4 habitat=forest,savanna color=brown
+mylodon: mass=1500 height=3 integrity=2500 alive=true aggression=3 diet=herbivore food_need=0.5 speed_land=3 dmg_slash=200 attack_rate=0.5 armor=30 res_cold=0.5 habitat=forest,meadow color=brown
+glyptodont: mass=2000 length=3.3 integrity=5000 alive=true aggression=2 diet=herbivore food_need=0.5 speed_land=2 armor=150 res_pierce=0.8 res_slash=0.8 dmg_blunt=250 attack_rate=0.4 cover=0.8 habitat=savanna color=brown
+aurochs: mass=1000 length=3 height=1.8 integrity=1500 alive=true aggression=6 courage=9 diet=herbivore food_need=0.4 speed_land=14 dmg_pierce=200 dmg_crush=120 attack_rate=0.6 knockback=6 tamable=true edible=true nutrition=120 habitat=meadow,forest color=black
+megaloceros: mass=600 length=3 height=2.1 integrity=900 alive=true aggression=4 diet=herbivore food_need=0.25 speed_land=16 dmg_pierce=140 attack_rate=0.6 intimidation=4 res_cold=0.5 habitat=meadow,taiga color=brown
+elasmotherium: mass=4000 length=5 height=2.5 integrity=6000 alive=true aggression=6 courage=9 diet=herbivore food_need=1 speed_land=12 armor=25 dmg_pierce=500 dmg_crush=300 attack_rate=0.4 knockback=10 res_cold=0.8 habitat=tundra,meadow color=brown
+indricothere: mass=15000 height=5 integrity=15000 alive=true aggression=2 diet=herbivore food_need=3 speed_land=6 dmg_crush=600 attack_rate=0.3 knockback=10 habitat=savanna,forest color=gray
+uintathere: mass=4000 length=4 integrity=5500 alive=true aggression=4 diet=herbivore food_need=1 speed_land=6 armor=20 dmg_pierce=300 attack_rate=0.5 habitat=forest color=gray
+gomphothere: mass=5000 length=5 integrity=7000 alive=true aggression=3 diet=herbivore food_need=0.8 speed_land=8 dmg_pierce=250 dmg_crush=150 attack_rate=0.3 knockback=8 habitat=forest,savanna color=gray
+mastodont: mass=7000 length=5 height=3 integrity=8500 alive=true aggression=3 courage=8 diet=herbivore food_need=0.8 speed_land=9 dmg_crush=220 dmg_pierce=140 attack_rate=0.3 knockback=8 res_cold=0.9 habitat=tundra,taiga color=brown
+dinocerate: mass=3000 length=4 integrity=4500 alive=true aggression=4 diet=herbivore food_need=0.8 speed_land=6 armor=15 dmg_pierce=250 attack_rate=0.5 habitat=forest color=gray
+eohippus: mass=10 length=0.6 integrity=20 alive=true diet=herbivore food_need=0.005 speed_land=12 stealth=5 tamable=true matures_into=horse growth_time=30 habitat=forest color=brown
+mesohippus: mass=40 length=1 integrity=50 alive=true diet=herbivore food_need=0.01 speed_land=14 tamable=true matures_into=horse growth_time=20 habitat=forest,meadow color=brown
+protohippus: mass=70 length=1.2 integrity=80 alive=true diet=herbivore food_need=0.02 speed_land=15 tamable=true matures_into=horse growth_time=15 habitat=meadow color=brown
+
+# noun killing
+extinction: placement=region event_radius=400 event_duration=1 counters=dinosaur,tyrannosaurus,tyrannosaur,triceratops,velociraptor,stegosaurus,stegosaur,brontosaurus,brontosaur,diplodocus,apatosaurus,apatosaur,ankylosaurus,ankylosaur,allosaurus,allosaur,iguanodon,pterodactyl,pterosaur,pteranodon,spinosaurus,mammoth,mastodon,mastodont,sabertooth,smilodon,dodo,moa,plesiosaur,plesiosaurus,ichthyosaur,ichthyosaurus,mosasaur,megalodon,titanosaur,sauropod,hadrosaur,hadrosaurus,deinonychus,utahraptor,dromaeosaur,dimetrodon,megatherium,megathere,glyptodont,aurochs,trilobite,hatchling,dragonet

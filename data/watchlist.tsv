@@ -8,7 +8,7 @@ any	absolute and scaling modifiers	3	7.8	2.6	-	adjective:quality
 total	absolute and scaling modifiers	5	7.8	1.6	-	adjective:quality
 more	absolute and scaling modifiers	4	7.8	1.9	-	adjective:quality
 epic	absolute and scaling modifiers	4	8.3	2.1	-	adjective:quality
-most	absolute and scaling modifiers	4	8.6	2.1	-	adjective:quality
+most	absolute and scaling modifiers	4	8.5	2.1	-	adjective:quality
 pure	absolute and scaling modifiers	4	9.1	2.3	-	adjective:quality
 ultra	absolute and scaling modifiers	5	9.2	1.8	-	adjective:quality
 dual	absolute and scaling modifiers	4	9.4	2.4	-	adjective:quality
@@ -37,9 +37,9 @@ vast	absolute and scaling modifiers	4	15.1	3.8	V	adjective:quality
 ultimate	absolute and scaling modifiers	8	15.1	1.9	-	adjective:quality
 supreme	absolute and scaling modifiers	7	15.5	2.2	-	adjective:quality
 deadly	absolute and scaling modifiers	6	15.6	2.6	-	adjective:quality
-myriad	absolute and scaling modifiers	6	16.0	2.7	-	adjective:quality
+myriad	absolute and scaling modifiers	6	15.9	2.6	-	adjective:quality
 double	absolute and scaling modifiers	6	16.0	2.7	-	adjective:quality
-immortal	absolute and scaling modifiers	8	16.4	2.0	-	adjective:absolute
+immortal	absolute and scaling modifiers	8	16.3	2.0	-	adjective:absolute
 infinite	absolute and scaling modifiers	8	17.6	2.2	-	adjective:absolute
 hundred	absolute and scaling modifiers	7	18.0	2.6	-	adjective:quality
 thousand	absolute and scaling modifiers	8	18.4	2.3	-	noun:quantity
@@ -49,16 +49,17 @@ every	absolute and scaling modifiers	5	18.9	3.8	V	adjective:quality
 omnipotent	absolute and scaling modifiers	10	18.9	1.9	-	adjective:quality
 perfect	absolute and scaling modifiers	7	19.4	2.8	-	adjective:quality
 mighty	absolute and scaling modifiers	6	20.3	3.4	-	adjective:quality
-almighty	absolute and scaling modifiers	8	23.5	2.9	-	adjective:quality
+almighty	absolute and scaling modifiers	8	23.4	2.9	-	adjective:quality
 invisible	absolute and scaling modifiers	9	25.6	2.8	V	adjective:absolute
 invincible	absolute and scaling modifiers	10	27.8	2.8	V	adjective:absolute
-max	absolute and scaling modifiers	3	37.0	12.3	X	noun:medicine
+max	absolute and scaling modifiers	3	36.9	12.3	X	noun:medicine
 toxic	absolute and scaling modifiers	5	38.8	7.8	X	adjective:quality
 titan	beings and forces	5	7.2	1.4	-	noun:supernatural
 ogre	beings and forces	4	8.7	2.2	-	noun:supernatural
 host	beings and forces	4	9.2	2.3	-	noun:group
 genie	beings and forces	5	9.3	1.9	-	noun:supernatural
 god	beings and forces	3	9.5	3.2	-	noun:supernatural
+lich	beings and forces	4	9.8	2.5	-	noun:supernatural
 reaper	beings and forces	6	10.0	1.7	-	noun:supernatural
 angel	beings and forces	5	10.2	2.0	-	noun:supernatural
 giant	beings and forces	5	10.2	2.0	-	noun:supernatural
@@ -79,7 +80,7 @@ colossus	beings and forces	8	15.5	1.9	-	noun:supernatural
 devil	beings and forces	5	17.8	3.6	V	noun:supernatural
 navy	beings and forces	4	18.2	4.5	V	noun:group
 king	beings and forces	4	20.0	5.0	K	noun:leader
-swarm	beings and forces	5	22.4	4.5	W	noun:phenomenon
+swarm	beings and forces	5	22.3	4.5	W	noun:phenomenon
 behemoth	beings and forces	8	22.9	2.9	-	noun:supernatural
 leviathan	beings and forces	9	24.6	2.7	V	noun:supernatural
 kraken	beings and forces	6	30.7	5.1	K	noun:supernatural
@@ -137,7 +138,7 @@ lexicon	letter and word meta	7	41.6	5.9	X	noun:knowledge
 ice	map-scale terrain and states	3	4.6	1.5	-	noun:mineral
 pit	map-scale terrain and states	3	6.4	2.1	-	noun:depression
 sand	map-scale terrain and states	4	7.9	2.0	-	noun:mineral
-moon	map-scale terrain and states	4	8.4	2.1	-	noun:celestial
+moon	map-scale terrain and states	4	8.3	2.1	-	noun:celestial
 earth	map-scale terrain and states	5	9.8	2.0	-	noun:celestial
 space	map-scale terrain and states	5	10.0	2.0	-	noun:phenomenon
 planet	map-scale terrain and states	6	10.8	1.8	-	noun:celestial
@@ -156,7 +157,7 @@ star	mass destruction	4	6.1	1.5	-	noun:celestial
 sun	mass destruction	3	6.2	2.1	-	noun:celestial
 tide	mass destruction	4	7.1	1.8	-	noun:event
 sarin	mass destruction	5	7.3	1.5	-	noun:gas
-mine	mass destruction	4	7.5	1.9	-	noun:structure
+mine	mass destruction	4	7.4	1.9	-	noun:structure
 ocean	mass destruction	5	7.8	1.6	-	noun:water
 atom	mass destruction	4	8.1	2.0	-	noun:material
 hell	mass destruction	4	9.0	2.2	-	noun:place
@@ -176,7 +177,7 @@ lava	mass destruction	4	14.9	3.7	V	noun:material
 abyss	mass destruction	5	15.0	3.0	-	noun:landform
 plague	mass destruction	6	15.3	2.6	-	noun:affliction
 bomb	mass destruction	4	15.9	4.0	-	noun:weapon
-antimatter	mass destruction	10	16.3	1.6	-	noun:material
+antimatter	mass destruction	10	16.2	1.6	-	noun:material
 flood	mass destruction	5	16.5	3.3	-	noun:phenomenon
 void	mass destruction	4	16.6	4.2	V	noun:quality
 inferno	mass destruction	7	16.7	2.4	-	noun:place
@@ -211,7 +212,7 @@ spy	rules, fate and information	3	10.3	3.4	-	noun:worker
 fate	rules, fate and information	4	12.1	3.0	-	noun:event
 miracle	rules, fate and information	7	12.9	1.8	-	noun:event
 magic	rules, fate and information	5	13.2	2.6	-	noun:knowledge
-charm	rules, fate and information	5	13.3	2.7	-	noun:attribute
+charm	rules, fate and information	5	13.2	2.6	-	noun:attribute
 veto	rules, fate and information	4	14.6	3.6	V	noun:act
 law	rules, fate and information	3	17.2	5.7	W	noun:knowledge
 key	rules, fate and information	3	18.6	6.2	K	noun:tool
@@ -259,13 +260,13 @@ breed	verbs that escape or multiply	5	12.2	2.4	-	verb:body
 copy	verbs that escape or multiply	4	12.5	3.1	-	noun:artifact
 teleport	verbs that escape or multiply	8	13.7	1.7	-	verb:movement
 fly	verbs that escape or multiply	3	15.0	5.0	-	verb:movement
-summon	verbs that escape or multiply	6	15.2	2.5	-	verb:create
+summon	verbs that escape or multiply	6	15.1	2.5	-	verb:create
 resurrect	verbs that escape or multiply	9	15.3	1.7	-	verb:social
 double	verbs that escape or multiply	6	16.0	2.7	-	adjective:quality
 warp	verbs that escape or multiply	4	20.6	5.2	W	verb:movement
 vanish	verbs that escape or multiply	6	20.6	3.4	V	verb:movement
 wish	verbs that escape or multiply	4	21.5	5.4	W	noun:feeling
-multiply	verbs that escape or multiply	8	21.7	2.7	-	verb:transform
+multiply	verbs that escape or multiply	8	21.6	2.7	-	verb:transform
 grow	verbs that escape or multiply	4	21.8	5.5	W	verb:transform
 spawn	verbs that escape or multiply	5	22.3	4.5	W	noun:creature
 revive	verbs that escape or multiply	6	25.7	4.3	V	verb:transform

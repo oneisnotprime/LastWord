@@ -24,7 +24,8 @@ import {
   sails, SAIL_COST, LAUNCH_TILES, BOARD_TILES, PORT_TILES, PORT_TOLL, waveDamage, waveSlow, fishTable, catchOf,
   LUCK_POINT, RING_FLOOR, FLAG_TILES, STAKES_MAX, CHALLENGE_MINUTES, ahead, pot, backInRing, peaceOf, chaosOps, doomDamage, typoOf, type Challenge,
   standIn, spellchecked, salePrice,
-  interiorOf, doorAt, within as inRoom, opensDoors, seesThroughWalls, DOOR_MEND, DOOR_QUIET,
+  interiorOf, doorAt, within as inRoom, opensDoors, seesThroughWalls, DOOR_MEND, DOOR_QUIET, doorGuard, opensPast, GUARD_SHARE, BESIDE_TILES,
+  hatches, knownMaterial,
 } from "@lastword/shared";
 import { affords, botSettings, chooseWord, held, phraseFor, SKILL, wordBook, type BotWord, type Difficulty, type Use } from "./bots.js";
 import { loadDictionary, loadKits } from "./data.js";
@@ -389,8 +390,10 @@ interface Walker {
  * A walk-in building on the ground (shared interior.ts): its centre, room radius in tiles, and door
  * left and full. A broken door stands open until it has mended all the way.
  */
-interface Indoors { x: number; y: number; r: number; door: number; max: number; broken?: boolean; struck?: number }
+interface Indoors { x: number; y: number; r: number; door: number; max: number; broken?: boolean; struck?: number; guards?: Map<string, number> }
 
+/** Seconds a bot keeps at a door it has made no headway on before it gives up the raid. */
+const RAID_PATIENCE = 25;
 /** Seconds between telling a person a door is shut. */
 const SHUT_SECONDS = 3;
 
@@ -506,6 +509,14 @@ interface BotMind {
   /** Roads it has laid, and when it last made an offer. */
   roads: number;
   offeredAt: number;
+  /** Door guards it has hung (shared interior.ts). */
+  guards?: number;
+  /** The door it is raiding, how whole it was when last dented, and when. */
+  raid?: { id: string; door: number; at: number };
+  /** Doors it gave up on: it does not choose them again unless its quarry hides there. */
+  given?: Set<string>;
+  /** A theme word it has a target for but cannot yet afford (borers for an enemy's wooden house, a siege word for a door): what it trades toward first. */
+  wants?: { use: Use; eats?: string };
   /** The themes' systems (`botThemes`, `botCure`, `botBoat`): traps laid, shrines built, aimed words that missed, when it last stepped away from the sick, a boat trip. */
   traps?: number;
   shrines?: number;
@@ -1990,13 +2001,16 @@ export class WorldRoom extends Room {
       return !law;
     };
     let foe = keep && (!current || !("player" in current) || strikable({ id: w.foe!, d: 0, hp: 0, person: true })) ? w.foe : null;
+    if (foe && this.rooms.has(foe) && !this.raidHeadway(mind, foe, this.rooms.get(foe)!)) foe = null;
     // A raid (shared interior.ts): its quarry went indoors, or it is at a door already; it keeps at
     // the door unless someone attacks it.
     if (!foe && !attackers.length && w.foe && this.rooms.size) {
       const quarry = this.walkers.get(w.foe);
       const door = quarry?.inside && this.walkerHidden(id, w, quarry) ? quarry.inside : w.foe;
       const r = this.rooms.get(door);
-      if (r && !r.broken && !this.homeSide(id, w, door)) { if (door !== w.foe) this.botUsed(mind, "raid"); foe = door; }
+      if (r && !r.broken && !this.homeSide(id, w, door)) {
+        if (this.raidHeadway(mind, door, r)) { if (door !== w.foe) this.botUsed(mind, "raid"); foe = door; }
+      }
     }
     if (!foe && attackers.length) foe = pick(attackers.filter(strikable));
     else if (!foe && !peaceful && (!easy || armed)) foe = pick(people.filter((e) => e.d <= (easy ? 5 : w.sight * 2) && strikable(e)));
@@ -2014,7 +2028,7 @@ export class WorldRoom extends Room {
     if (!foe && armed && !easy && !peaceful && this.rooms.size && this.rng() < skill.systems * 0.04) {
       for (const [bid, r] of this.rooms) {
         const owner = this.state.things.get(bid)?.owner;
-        if (!r.broken && owner && this.walkers.has(owner) && !this.homeSide(id, w, bid) && Math.hypot(r.x - w.player.x, r.y - w.player.y) <= w.sight) { foe = bid; this.botUsed(mind, "raid"); break; }
+        if (!r.broken && owner && this.walkers.has(owner) && !this.homeSide(id, w, bid) && !mind.given?.has(bid) && Math.hypot(r.x - w.player.x, r.y - w.player.y) <= w.sight) { foe = bid; this.botUsed(mind, "raid"); break; }
       }
     }
     if (!foe && armed && !easy && this.elapsed > BOT_BOSS_AFTER) {
@@ -2508,18 +2522,59 @@ export class WorldRoom extends Room {
         }
         return null;
       },
-      // Borers on an enemy's thing made of what they eat, standing beside it (shared bug.ts): TERMITES on a wooden house.
+      // Borers on an enemy's thing made of what they eat, in sight (shared bug.ts): TERMITES on a wooden
+      // house. It then goes for the thing, and its borers, following it, eat into it.
       () => {
         if (easy || peaceful) return null;
         for (const [tid, g] of this.grounded) {
           const t = this.state.things.get(tid);
-          if (!t || g.terrain || !t.owner || t.owner === id || dist(t) > BORE_TILES - 0.5) continue;
+          if (!t || g.terrain || g.fixture || !t.owner || t.owner === id || dist(t) > w.sight || this.thingHidden(id, w, tid)) continue;
+          const o = this.walkers.get(t.owner);
+          if (o && this.side(t.owner, o) === this.side(id, w)) continue;
+          // What it is made of, as a borer reads it (shared bug.ts `bores`: the first known material).
           const made = this.statsOf(g).tags("material").map((m) => m.toLowerCase());
-          const done = cast("borer", choose("borer", (x) => !!x.eats?.some((m) => made[0] === m)));
-          if (done) this.botUsed(mind, "borer");
+          const main = knownMaterial(this.dict, made) ?? made[0];
+          if (!main) continue;
+          const done = cast("borer", choose("borer", (x) => !!x.eats?.includes(main)));
+          if (!done) { if (!mind.wants && (wordBook(this.dict).byUse.get("borer") ?? []).some((x) => x.eats?.includes(main))) mind.wants = { use: "borer", eats: main }; continue; }
+          mind.wants = undefined;
+          this.botUsed(mind, "borer");
+          w.foe = tid; w.gathering = 0;
           return done;
         }
         return null;
+      },
+      // Siege (shared interior.ts): an enemy's walk-in building in sight, door standing: a RAM or a PETARD
+      // to carry, an engine to ride, a SAPPER, or a BREACH aimed at it; then at the door.
+      () => {
+        // Never instead of a fight with a person in the open: only a raid already begun, or buildings when nobody is fought.
+        if (easy || peaceful || !this.rooms.size || person || attackers.length) return null;
+        let target: [string, Indoors] | null = null;
+        const raiding = w.foe ? this.rooms.get(w.foe) : undefined;
+        if (raiding && !raiding.broken && !this.homeSide(id, w, w.foe!)) target = [w.foe!, raiding];
+        else for (const [bid, r] of this.rooms) {
+          const owner = this.state.things.get(bid)?.owner;
+          if (!r.broken && owner && this.walkers.has(owner) && !this.homeSide(id, w, bid) && !mind.given?.has(bid) && dist(r) <= w.sight) { target = [bid, r]; break; }
+        }
+        if (!target) return null;
+        const [bid, r] = target, door = doorAt(r.x, r.y, r.r);
+        const ridingEngine = !!w.unit.riding && w.unit.riding.stats.num("siege") > 1;
+        const x = choose("siege", (x) => x.aim === "spot" ? dist(door) <= x.reach : !(ridingEngine && this.dict.base(x.word, "mountable") === true));
+        if (!x) { mind.wants ??= { use: "siege" }; return null; }
+        mind.wants = undefined;
+        const done = x.aim === "spot" ? (this.botCast(id, w, mind, x, bid, door) ? "siege" : null) : cast("siege", x);
+        if (!done) return null;
+        if (!this.rooms.get(bid)?.broken) { w.foe = bid; w.gathering = 0; this.botUsed(mind, "raid"); }
+        return done;
+      },
+      // A door guard for its own walk-in building, at home (a PORTCULLIS: the door gains its integrity, bolted against rams).
+      () => {
+        if (!this.rooms.size || (mind.guards ?? 0) >= (hard ? 2 : 1)) return null;
+        const home = this.ownRoom(id, w, 2);
+        if (!home) return null;
+        const d = cast("guard", choose("guard"));
+        if (d) mind.guards = (mind.guards ?? 0) + 1;
+        return d;
       },
       // A trap or two at home once others are about (hidden from enemies who cannot see it).
       () => atHome && !peaceful && (mind.traps ?? 0) < (hard ? 2 : 1) ? (() => { const d = cast("trap", choose("trap")); if (d) mind.traps = (mind.traps ?? 0) + 1; return d; })() : null,
@@ -2641,9 +2696,11 @@ export class WorldRoom extends Room {
    */
   private botWant(mind: BotMind, have: Uint8Array, w?: Walker): { word: BotWord; letter: string } | null {
     const book = wordBook(this.dict);
-    for (const use of ["producer", "weapon", "armor", "creature"] as Use[]) {
+    const wanted = mind.wants;
+    for (const use of [...(wanted ? [wanted.use] : []), "producer", "weapon", "armor", "creature"] as Use[]) {
       for (const word of book.byUse.get(use) ?? []) {
         if (mind.tried.has(word.word)) continue;
+        if (wanted?.eats && use === wanted.use && !word.eats?.includes(wanted.eats)) continue;
         let short = -1, count = 0;
         for (let i = 0; i < 26; i++) if (word.cost[i]! > have[i]!) { count += word.cost[i]! - have[i]!; short = i; }
         if (count === 1) return { word, letter: String.fromCharCode(97 + short) };
@@ -3126,6 +3183,8 @@ export class WorldRoom extends Room {
           const nw = this.walkers.get(nid)!;
           nw.hp = Math.max(1, nw.unit.body.stats.num("integrity") * share); nw.unit.body.integrity = nw.hp;
           if (master !== "-") { this.sendTo(master, "notice", `${was} grew into ${g.phrase.toUpperCase()}`); this.command(master); }
+          const mind = this.bots.get(master);
+          if (mind) this.botUsed(mind, "grow up");
           changed = true;
           continue;
         }
@@ -3138,11 +3197,39 @@ export class WorldRoom extends Room {
       for (const [tid, g] of [...this.grounded]) {
         const t = this.state.things.get(tid);
         if (!t || g.terrain || g.fixture === "ruin" || (w.master !== "-" && t.owner === w.master)) continue;
-        if (Math.hypot(t.x - w.player.x, t.y - w.player.y) > BORE_TILES + 0.5) continue;
+        // From a walk-in building's wall, not its middle: a CASTLE is eaten from outside too.
+        if (Math.hypot(t.x - w.player.x, t.y - w.player.y) > BORE_TILES + 0.5 + (this.rooms.get(tid)?.r ?? 0)) continue;
         if (!bores(this.dict, stats, this.statsOf(g))) continue;
         this.strikeThing(id, bite, tid, t, false, "");
         break;
       }
+    }
+    // Hatching (shared bug.ts `hatches`): an EGG, a COCOON or a CLUTCH lying or carried becomes its creature, its owner's.
+    const hatch = (g: Gear, owner: string, at: Point): string | null => {
+      const stats = this.statsOf(g);
+      if (!stats.get("matures_into") || !hatches(this.dict, stats) || this.elapsed - (g.born ?? this.elapsed) < matureSeconds(stats)) return null;
+      const next = matured(this.dict, g.spelled, stats);
+      if (!next) return null;
+      const young: Gear = { spelled: next, phrase: [...(next.adjectives ?? []), next.noun].join(" "), vehicle: false, integrity: null };
+      if (becomes(resolveSpelled(this.dict, next)) !== "creature") return null;
+      const master = owner && this.walkers.has(owner) ? owner : "-";
+      this.addCreature(young, master, at.x, at.y, next.count ?? 1);
+      if (master !== "-") { this.sendTo(master, "notice", `${g.phrase.toUpperCase()} hatched: ${young.phrase.toUpperCase()}`); this.command(master); }
+      const mind = this.bots.get(master);
+      if (mind) this.botUsed(mind, "grow up");
+      return master;
+    };
+    for (const [tid, g] of [...this.grounded]) {
+      const t = this.state.things.get(tid);
+      if (!t || g.terrain || g.fixture) continue;
+      if (hatch(g, t.owner, t) === null) continue;
+      this.removeThing(tid);
+      changed = true;
+    }
+    for (const [wid, w] of [...this.walkers]) {
+      const before = w.gear.length;
+      w.gear = w.gear.filter((g) => hatch(g, wid, w.player) === null);
+      if (w.gear.length !== before) { this.rebuild(w); this.tell(w); changed = true; }
     }
     if (changed) this.refreshViews();
   }
@@ -4398,8 +4485,10 @@ export class WorldRoom extends Room {
     const key = this.addArea(area, true);
     const began = this.begin(area, s);
     this.burn(key, area, 0);
+    // A breach (shared interior.ts: `counters` door, gate or lockable) breaks every enemy door in its reach, past the bolts it counters.
+    const breached = opensDoors(s) ? this.breachDoors(id, walker, phrase, at, radius) : 0;
     const span = minutes >= 1 ? `${minutes} minute${minutes === 1 ? "" : "s"}` : "a moment";
-    return `${word} for ${span}${began ? `: ${began}` : ""}`;
+    return `${word} for ${span}${began ? `: ${began}` : ""}${breached ? `; ${breached} door${breached === 1 ? "" : "s"} broken` : ""}`;
   }
 
   /**
@@ -4939,6 +5028,7 @@ export class WorldRoom extends Room {
   private placeInRoom(id: string, gear: Gear, thing: Thing) {
     const room = gear.fixture || gear.terrain ? null : interiorOf(this.statsOf(gear), thing.count);
     if (!room) {
+      if (this.hangGuard(id, gear, thing)) return;
       const bid = this.roomAt(thing);
       if (!bid) return;
       this.roomOfThing.set(id, bid);
@@ -4955,8 +5045,50 @@ export class WorldRoom extends Room {
     for (const w of this.walkers.values()) if (!w.inside && inRoom(w.player, thing.x, thing.y, room.radius)) w.inside = id;
   }
 
+  /**
+   * A door guard (shared interior.ts `doorGuard`: a PORTCULLIS, a DRAWBRIDGE) put down in or beside
+   * a walk-in building of its owner's side is hung on its door: the door gains its integrity and is
+   * bolted against what it counters. True if it was hung.
+   */
+  private hangGuard(id: string, gear: Gear, thing: Thing): boolean {
+    const stats = this.statsOf(gear);
+    if (!thing.owner || !doorGuard(stats)) return false;
+    const owner = this.walkers.get(thing.owner);
+    for (const [bid, r] of this.rooms) {
+      if (Math.hypot(thing.x - r.x, thing.y - r.y) > r.r + BESIDE_TILES) continue;
+      if (!owner || !this.homeSide(thing.owner, owner, bid)) continue;
+      const add = Math.max(1, stats.num("integrity") * (thing.count || 1) * GUARD_SHARE);
+      (r.guards ??= new Map()).set(id, add);
+      r.max += add;
+      if (!r.broken) r.door += add;
+      this.roomOfThing.set(id, bid);
+      const b = this.state.things.get(bid);
+      if (b && !r.broken) b.door = Math.max(1, Math.ceil((r.door / r.max) * 100));
+      const name = this.grounded.get(bid)?.phrase.toUpperCase() ?? "the building";
+      this.sendTo(thing.owner, "notice", `${gear.phrase.toUpperCase()} hung on ${name}'s door: +${Math.round(add)} HP`);
+      const mind = this.bots.get(thing.owner);
+      if (mind) this.botUsed(mind, "bolt door");
+      return true;
+    }
+    return false;
+  }
+
+  /** The guards hung on a room's door, by noun with their properties. */
+  private guardsOf(r: Indoors): { noun: string; stats: Stats }[] {
+    const out: { noun: string; stats: Stats }[] = [];
+    for (const gid of r.guards?.keys() ?? []) { const g = this.grounded.get(gid); if (g) out.push({ noun: g.spelled.noun, stats: this.statsOf(g) }); }
+    return out;
+  }
+
   /** Forgets a thing taken off the ground: a room's walls are gone, and whoever was inside is outdoors. */
   private leaveRoom(id: string) {
+    for (const r of this.rooms.values()) {
+      const add = r.guards?.get(id);
+      if (add === undefined) continue;
+      r.guards!.delete(id);
+      r.max = Math.max(1, r.max - add);
+      r.door = Math.min(r.door, r.max);
+    }
     this.roomOfThing.delete(id);
     if (!this.rooms.delete(id)) return;
     this.doorEntities.delete(id);
@@ -4990,10 +5122,15 @@ export class WorldRoom extends Room {
     for (const g of w.gear) yield this.statsOf(g);
   }
 
-  /** A door counter on it (shared `opensDoors`: a KEY, a RAM, a THIEF): the word that breaks doors at a touch. */
-  private doorBreaker(w: Walker): string | null {
-    if (opensDoors(w.unit.body.stats)) return w.player.name;
-    for (const g of w.gear) if (opensDoors(this.statsOf(g))) return g.phrase;
+  /**
+   * A door counter on it (shared `opensDoors`: a KEY, a RAM, a THIEF): the word that breaks doors at
+   * a touch, unless a guard hung on that door bolts it against that word (shared `opensPast`).
+   */
+  private doorBreaker(w: Walker, r?: Indoors): string | null {
+    const guards = r ? this.guardsOf(r) : [];
+    const past = (noun: string, s: Stats) => opensPast({ noun, archetype: this.dict.word(noun)?.archetype ?? "", counters: s.tags("counters") }, guards);
+    if (opensDoors(w.unit.body.stats) && past(w.body.noun, w.unit.body.stats)) return w.player.name;
+    for (const g of w.gear) { const s = this.statsOf(g); if (opensDoors(s) && past(g.spelled.noun, s)) return g.phrase; }
     return null;
   }
 
@@ -5035,7 +5172,7 @@ export class WorldRoom extends Room {
     const bid = this.roomAt(w.player);
     if (bid === w.inside) return;
     if (!bid || this.mayEnter(w.id, w, bid)) { w.inside = bid; return; }
-    const breaker = this.doorBreaker(w);
+    const breaker = this.doorBreaker(w, this.rooms.get(bid));
     if (breaker) { this.breakDoor(bid, w.id, breaker); w.inside = bid; return; }
     const r = this.rooms.get(bid)!, target = w.target;
     const step = Math.hypot(w.player.x - from.x, w.player.y - from.y);
@@ -5063,6 +5200,19 @@ export class WorldRoom extends Room {
     w.inside = this.roomAt(w.player);
   }
 
+  /**
+   * Whether a bot raiding a door is getting anywhere: a door it cannot dent (a PORTCULLIS hung on
+   * it, a feeble weapon) it gives up after RAID_PATIENCE seconds, and does not choose again.
+   */
+  private raidHeadway(mind: BotMind, bid: string, r: Indoors): boolean {
+    if (mind.given?.has(bid)) return false;
+    const was = mind.raid?.id === bid ? mind.raid : (mind.raid = { id: bid, door: r.door, at: this.elapsed });
+    if (r.door < was.door - 1) { was.door = r.door; was.at = this.elapsed; }
+    if (this.elapsed - was.at < RAID_PATIENCE) return true;
+    (mind.given ??= new Set()).add(bid);
+    return false;
+  }
+
   /** A door broken (by blows, or at a touch by a door counter): anyone may walk in until it mends. */
   private breakDoor(bid: string, by: string, how: string) {
     const r = this.rooms.get(bid), t = this.state.things.get(bid), g = this.grounded.get(bid);
@@ -5070,6 +5220,8 @@ export class WorldRoom extends Room {
     r.door = 0;
     r.broken = true;
     t.door = 0;
+    // The guards hung on it (a PORTCULLIS) break with it.
+    for (const gid of [...(r.guards?.keys() ?? [])]) this.removeThing(gid);
     const name = g.phrase.toUpperCase(), who = this.walkers.get(by);
     const payer = this.payee(by)?.[0] ?? by;
     this.sendTo(payer, "notice", `${name} door broken${how ? ` by ${how.toUpperCase()}` : ""}: walk in`);
@@ -5082,6 +5234,19 @@ export class WorldRoom extends Room {
       bot.gathering = 0;
       bot.target = { x: r.x, y: r.y }; bot.route = []; bot.routeTo = null;
     }
+  }
+
+  /** Breaks the doors of enemies' walk-in buildings within `radius` tiles of a spot, unless a guard bolts them against the word. */
+  private breachDoors(id: string, walker: Walker, phrase: Phrase, at: Point, radius: number): number {
+    const s = phrase.stats, breaker = { noun: phrase.noun, archetype: this.dict.word(phrase.noun)?.archetype ?? "", counters: s.tags("counters") };
+    let n = 0;
+    for (const [bid, r] of [...this.rooms]) {
+      if (r.broken || Math.hypot(r.x - at.x, r.y - at.y) > radius + r.r || this.homeSide(id, walker, bid)) continue;
+      if (!opensPast(breaker, this.guardsOf(r))) continue;
+      this.breakDoor(bid, id, phrase.noun);
+      n++;
+    }
+    return n;
   }
 
   /** A blow from outside on a walk-in building lands on its door while the door stands. */

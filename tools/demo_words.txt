@@ -124,7 +124,7 @@ compass: mass=0.1 integrity=10 equip_slot=held detect_letters=200 map_reveal=5
 magnet: mass=2 integrity=200 material=iron magnetism=8 letter_steal=1 attack_range=5 counters=steel,iron
 lamp: mass=1 integrity=10 material=glass,brass luminosity=6 night_vision=true upkeep_fuel=0.01 counters=genie
 clock: mass=3 integrity=20 material=brass,glass extends_duration=1.5 produce_Y=0.2
-mirror: mass=10 integrity=10 brittleness=9 material=glass reflectivity=10 res_light=1 reflect=0.3 duplicates=1 single_use=true
+mirror: mass=10 integrity=10 brittleness=9 material=glass reflectivity=10 res_light=1 reflect=0.3 duplicates=1 single_use=true counters=gorgon,medusa,basilisk,cockatrice,catoblepas
 oven: mass=80 footprint=1 integrity=300 material=iron temperature=250 food_output=4 upkeep_fuel=0.05 produce_B=0.2 produce_F=0.2
 
 # noun document
@@ -333,7 +333,7 @@ bread: mass=0.5 integrity=1 edible=true nutrition=6 restores=15 single_use=true 
 meat: mass=1 integrity=1 edible=true nutrition=10 restores=25 single_use=true odor=5 decay_rate=0.1
 cheese: mass=1 integrity=1 edible=true nutrition=8 restores=20 single_use=true odor=4
 honey: mass=0.5 state=liquid edible=true nutrition=7 restores=30 stickiness=8 single_use=true decay_rate=0
-egg: mass=0.06 integrity=1 brittleness=10 edible=true nutrition=3 restores=8 single_use=true plural_count=12
+egg: mass=0.06 integrity=1 brittleness=10 edible=true nutrition=3 restores=8 single_use=true plural_count=12 matures_into=chick growth_time=20
 
 # noun drink
 milk: mass=1 state=liquid edible=true nutrition=4 restores=12 single_use=true decay_rate=0.2
@@ -745,7 +745,7 @@ warfare: placement=region event_radius=400 event_duration=6 sets_hostile=true la
 
 # noun disaster
 tsunami: placement=target placement_range=400 event_radius=60 event_duration=1 dmg_water=2000 dmg_crush=500 friendly_fire=true siege=4 tile_type=water radius=5 produce_O*3
-meteor: placement=target placement_range=400 event_radius=20 event_duration=6 dmg_blast=1500 dmg_fire=500 inflict_stun=3 friendly_fire=true luminosity=10 tile_type=pit radius=3 lode=z,x,q,j lode_share=0.6 lode_stock=6
+meteor: placement=target placement_range=400 event_radius=20 event_duration=6 dmg_blast=1500 dmg_fire=500 inflict_stun=3 friendly_fire=true luminosity=10 tile_type=pit radius=3 lode=z,x,q,j lode_share=0.6 lode_stock=6 counters=dinosaur,tyrannosaurus,tyrannosaur,triceratops,velociraptor,stegosaurus,stegosaur,brontosaurus,brontosaur,diplodocus,apatosaurus,apatosaur,ankylosaurus,ankylosaur,allosaurus,allosaur,iguanodon,spinosaurus,titanosaur,sauropod,hadrosaur,deinonychus,utahraptor,hatchling
 meteorite: placement=target placement_range=300 event_radius=8 event_duration=4 dmg_blast=400 dmg_fire=100 friendly_fire=true tile_type=pit radius=1 lode=x,z lode_share=0.5 lode_stock=3
 asteroid: placement=target placement_range=600 event_radius=80 event_duration=8 dmg_blast=20000 dmg_fire=5000 friendly_fire=true siege=10 inflict_stun=5 luminosity=10 tile_type=pit radius=10 lode=z,q,x lode_share=0.8 lode_stock=15
 apocalypse: placement=map event_duration=5 sets_hostile=true dmg_fire=5 attack_rate=0.1 friendly_fire=true aggression+5 morale+-3 produce_K*3 produce_D*3 produce_F*3
@@ -954,7 +954,7 @@ palisade: mass=30000 footprint=8 height=4 integrity=8000 material=wood portable=
 # unholy). Materials are what transmuting to Z starts from.
 
 # noun metal
-silver: mass=10.5 density=10500 hardness=3 melting_point=962 conductivity=10 integrity=80 value=500 beauty=8 color=silver dmg_holy=40 res_unholy=0.5
+silver: mass=10.5 density=10500 hardness=3 melting_point=962 conductivity=10 integrity=80 value=500 beauty=8 color=silver dmg_holy=40 res_unholy=0.5 counters=werewolf,lycanthrope,wolfman,vampire
 copper: mass=9 density=8960 hardness=3 melting_point=1085 conductivity=10 integrity=120 value=8 color=copper
 bronze: mass=8.8 density=8800 hardness=5 melting_point=950 conductivity=6 integrity=220 value=10 color=copper sharpness=6
 brass: mass=8.5 density=8500 hardness=4 melting_point=930 conductivity=6 integrity=180 value=8 color=gold loudness=4
@@ -1497,7 +1497,7 @@ warthog: mass=90 length=1.3 integrity=150 alive=true aggression=4 diet=omnivore 
 wildebeest: mass=250 length=2.2 integrity=220 alive=true diet=herbivore food_need=0.1 speed_land=22 dmg_pierce=35 attack_rate=0.7 pack_size=200 reproduction=0.3 habitat=savanna color=gray
 armadillo: mass=5 length=0.7 integrity=60 alive=true diet=carnivore food_need=0.01 speed_land=4 speed_underground=0.5 armor=12 res_slash=0.7 res_pierce=0.5 habitat=desert,savanna color=gray
 anteater: mass=40 length=2 integrity=80 alive=true diet=carnivore food_need=0.02 speed_land=4 dmg_slash=35 attack_rate=0.8 counters=ant,termite habitat=jungle,savanna color=brown
-mongoose: mass=2 length=0.6 integrity=15 alive=true diet=carnivore food_need=0.005 speed_land=10 agility=10 res_poison=0.9 dmg_pierce=8 attack_rate=2 counters=snake,cobra,viper,serpent habitat=savanna,desert color=brown
+mongoose: mass=2 length=0.6 integrity=15 alive=true diet=carnivore food_need=0.005 speed_land=10 agility=10 res_poison=0.9 dmg_pierce=8 attack_rate=2 counters=snake,cobra,viper,serpent,amphisbaena,naga,lamia habitat=savanna,desert color=brown
 dolphin: mass=200 length=2.5 integrity=200 alive=true sentient=true intelligence=9 loyalty=7 diet=carnivore food_need=0.06 speed_water=16 dive_depth=300 breathes=air placeable_on=water dmg_blunt=30 attack_rate=1 charm=6 tamable=true habitat=shore color=gray
 orca: mass=5000 length=8 integrity=4000 alive=true sentient=true intelligence=8 aggression=7 diet=carnivore food_need=1 speed_water=15 dive_depth=250 breathes=air placeable_on=deep_water dmg_pierce=300 attack_rate=0.8 pack_size=5 fear_aura=6 counters=seal,shark,penguin habitat=shore,tundra color=black
 manatee: mass=500 length=3.5 integrity=400 alive=true diet=herbivore food_need=0.2 speed_water=3 placeable_on=water comfort=1 charm=5 habitat=shore,marsh color=gray
@@ -2670,6 +2670,50 @@ malachite: mass=4 density=4000 hardness=4 brittleness=5 flammability=0 toxicity=
 galena: mass=7.6 density=7600 hardness=3 brittleness=7 flammability=0 toxicity=5 reflectivity=6 integrity=60 value=3 color=silver res_radiation=0.5 raw=true cooks_into=lead smelts_at=700
 cinnabar: mass=8 density=8100 hardness=2 brittleness=5 toxicity=7 integrity=40 value=60 color=red melting_point=580 dmg_poison=20 flammability=0 raw=true cooks_into=mercury smelts_at=700
 bauxite: mass=2.5 density=2500 hardness=2 brittleness=5 flammability=0 integrity=60 value=1 color=red raw=true cooks_into=aluminium smelts_at=1000
+
+# Theme 28, medieval siege and arms (shared interior.ts). Siege engines are ridden: their blows
+# on buildings, walls and doors are multiplied by their `siege`, from hundreds of metres off
+# (TREBUCHET ×12 from 1200 m: a HOUSE's door in one stone). Door guards (lockable, blocking the
+# way: PORTCULLIS, DRAWBRIDGE, GATE) put down in or beside their owner's walk-in building hang on
+# its door: the door gains their integrity and is bolted against what they counter (a PORTCULLIS
+# counters RAM, KEY and THIEF: those no longer open it at a touch). A breaker that counters the
+# guard (PETARD) still opens it; breaching events (BREACH, ESCALADE, UNDERMINING) break every
+# enemy door where they land. Counters: fire on wooden engines, cavalry and sorties, guards.
+
+# noun weapon
+trebuchet: mass=12000 length=15 height=12 integrity=4000 hardness=6 material=wood,iron flammability=6 speed_land=1 mountable=true seats=6 dmg_crush=900 dmg_blunt=300 attack_rate=0.08 attack_range=1200 attack_area=4 attack_windup=4 accuracy=0.5 siege=12 targets=land loudness=7 color=brown
+catapult: mass=3000 length=6 integrity=1800 hardness=6 material=wood flammability=6 speed_land=2 mountable=true seats=3 dmg_crush=450 attack_rate=0.12 attack_range=600 attack_area=3 attack_windup=3 accuracy=0.55 siege=8 targets=land loudness=6 color=brown
+ballista: mass=800 length=4 integrity=900 material=wood,iron flammability=5 speed_land=3 mountable=true seats=2 dmg_pierce=600 attack_rate=0.25 attack_range=800 accuracy=0.85 armor_pierce=0.6 siege=4 targets=land,air counters=wyvern,wivern,griffin,gryphon,griffon,hippogriff,manticore,roc color=brown
+petard: mass=10 integrity=20 material=iron equip_slot=held hands_required=1 single_use=true dmg_blast=1500 attack_area=2 attack_windup=3 siege=10 friendly_fire=true loudness=10 counters=portcullis,drawbridge,gate,postern,sallyport,door,lockable color=black
+
+ram: mass=600 length=6 integrity=2000 hardness=7 material=wood,iron equip_slot=held hands_required=2 speed_land*0.5 dmg_blunt=300 dmg_crush=200 siege=10 attack_rate=0.2 knockback=5 counters=gate,door,wall,fort color=brown
+
+# noun structure
+portcullis: mass=5000 footprint=1 height=5 integrity=6000 hardness=8 material=iron,oak portable=false lockable=true security=8 blocks=land dmg_pierce=80 cover=0.6 counters=ram,key,thief,burglar,charge,cavalry,siege color=black
+drawbridge: mass=30000 footprint=3 height=1 integrity=4000 material=wood,iron flammability=5 portable=false lockable=true security=6 blocks=land counters=ram,key,thief,burglar,cavalry,charge color=brown
+
+# noun attack
+breach: placement=target placement_range=60 event_target=structure event_radius=6 event_duration=1 dmg_crush=400 siege=8 counters=door,gate,lockable,portcullis,drawbridge
+
+# Theme 29, mythic beasts and prehistoric giants (shared bug.ts growing up and hatching). Young
+# ones grow into their beast: a HATCHLING into a DINOSAUR, a DRAGONET into a DRAGON, an EGG
+# lying about hatches into a CHICK that grows into a HEN. Counters are the old stories': a
+# WEASEL, a ROOSTER or a MIRROR against gaze beasts, a SLAYER against dragons, SILVER and
+# WOLFSBANE against werewolves, a BRIDLE against water horses, a METEOR or EXTINCTION against
+# dinosaurs; cold kills reptiles (temp_min), and a grown beast that is not fed goes wild.
+
+# noun supernatural
+dragonet: mass=40 length=1.5 integrity=400 alive=true sentient=true intelligence=6 loyalty=6 aggression=5 diet=carnivore food_need=0.05 speed_land=6 speed_air=10 dmg_fire=40 attack_rate=1 attack_range=4 res_fire=1 charm=5 tamable=true color=red matures_into=dragon growth_time=60
+
+# noun creature
+hatchling: mass=0.05 length=0.1 integrity=1 alive=true diet=omnivore food_need=0.0005 speed_land=1 courage=0 charm=6 comfort=1 tamable=true trainable=8 color=green matures_into=dinosaur growth_time=40
+
+# noun bird
+chick: mass=0.05 length=0.08 integrity=1 alive=true diet=omnivore food_need=0.0005 speed_land=2 courage=0 comfort=2 charm=7 loudness=4 tamable=true habitat=meadow color=yellow matures_into=hen growth_time=30
+rooster: mass=3 length=0.5 integrity=8 alive=true aggression=5 courage=9 diet=omnivore food_need=0.004 speed_land=5 speed_air=4 dmg_pierce=6 dmg_slash=5 attack_rate=1.5 loudness=10 alarm=true reproduction=6 tamable=true habitat=meadow color=red counters=basilisk,cockatrice
+
+# noun tool
+bridle: mass=1 integrity=40 material=leather obedience+4 agility+2 equip_slot=mount color=brown counters=kelpie,kelpy,pooka
 
 # Ways out (polish batch 2): every lasting area has a word that ends it (`counters`). These
 # generated words are copied here, unchanged but for the areas they end; the rest of the new
