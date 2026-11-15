@@ -35,8 +35,8 @@ export const TRADE_RANGE = 6;
 export const OFFER_SECONDS = 60;
 /** Seconds before the same two players' trades pay T again: a trade is a deal, not a loop. */
 export const PAIR_COOLDOWN = 30;
-/** Round seconds at which roaming bosses rise, and the Z each drops. */
-export const BOSS_TIMES = [240, 540, 900] as const;
+/** Storm-clock seconds (shared round.ts) at which roaming bosses rise, and the Z each drops: before the last circles. */
+export const BOSS_TIMES = [240, 420, 540] as const;
 export const BOSS_Z = 3;
 /** Everyday letters a slain boss drops besides its Z. */
 export const BOSS_HOARD = 6;

@@ -1,3 +1,4 @@
+import { priceOf, rulesLines, NO_RULES, type SpeechRules } from "@lastword/shared";
 import { countersShown, bestWords, forageOdds, type BiomeInfo, selfRisk, effectText, heldText, spellableNow, SPELL_GROUPS, type SpellGroup, tipOfTheMoment, inspectText, LETTER_GUIDE, missing, parsePhrase, readTrade, standIn, standsFor, type Card, type Dictionary, type Letters, type LoadoutDetail, type Offer } from "@lastword/shared";
 import { BADGE } from "./art/paper.js";
 import { ideasHtml, setTipsOn, tipRng, tipsOn } from "./tips.js";
@@ -44,6 +45,8 @@ export interface HudFrame {
   alive: number;
   /** Seconds since the round began. */
   clock: number;
+  /** Ghosts haunting the map (shared death.ts): the knocked out, never counted alive. */
+  ghosts?: number;
 }
 
 const esc = (t: string) => t.replace(/[&<>"]/g, (c) => `&#${c.charCodeAt(0)};`);
@@ -119,6 +122,38 @@ export class Hud {
   private readonly tipRng = tipRng();
   /** Knocked out, and whom you are watching. */
   private out: string | null = null;
+  /** Haunting as a ghost (shared death.ts): seconds between words, else 0. */
+  private ghostGap = 0;
+  /** Words a ghost may spell (shared `haunts`), worked out once. */
+  private hauntList: string[] | null = null;
+
+  /** The spelling rules binding you (shared speech.ts), from the loadout. */
+  private get rules(): SpeechRules {
+    return this.detail?.spelling ?? NO_RULES;
+  }
+
+  /** Why a spelling cannot be paid for under your rules ("E is banned", "You need S"), or "" if it can; a ghost's words are free. */
+  lacking(letters: string, words: readonly string[]): string {
+    if (this.ghostGap) return "";
+    return priceOf(letters, words, this.rules, this.held).problem ?? "";
+  }
+
+  /** Knocked out, you haunt as a ghost (shared death.ts): spelling opens again, for haunting words only. */
+  ghostMode(gap: number) {
+    this.ghostGap = gap;
+    this.locked = false;
+    this.out = "";
+    this.drawHud();
+  }
+
+  /** Back from the dead: everything as before. */
+  back() {
+    this.ghostGap = 0;
+    this.locked = false;
+    this.out = null;
+    this.drawHud();
+    this.drawLetters();
+  }
 
   /** On a controller: the letter box the field picker types into (an offer's letters), by id. */
   private field: string | null = null;
@@ -425,7 +460,8 @@ export class Hud {
   /** A letter typed that you do not hold (one E too many counts) is not added: the window flashes red and shakes. */
   private typed() {
     const text = this.input.value;
-    const short = (t: string) => missing(this.held, this.spends(t)).length;
+    // Blanks pay for letters you do not hold (shared speech.ts); a ghost's words are free.
+    const short = (t: string) => this.ghostGap ? 0 : Math.max(0, missing(this.held, this.spends(t)).length - this.rules.wild);
     if (short(text) > short(this.lastText)) {
       const caret = Math.max(0, (this.input.selectionStart ?? text.length) - (text.length - this.lastText.length));
       this.input.value = this.lastText;
@@ -459,7 +495,13 @@ export class Hud {
     // Its strikes can land on you too (a STORM, a QUAKE around you): said before you spell it (shared `selfRisk`).
     let risk: string | null = null;
     try { risk = selfRisk(parsePhrase(this.dict, stood ? stood.word : t)); } catch { /* not a phrase */ }
-    el.innerHTML = `<div><b>${esc(c.title)}</b>${c.kind ? ` <span class="kind">${esc(c.kind)}</span>` : ""}</div>` +
+    // What it costs under your spelling rules (shared speech.ts): banned letters, a tax, blanks used.
+    const rules = this.rules, words = t.split(/\s+/);
+    const price = this.ghostGap ? null : priceOf(this.spends(t), words, rules, this.held);
+    const cost = !price ? "" : price.problem && !/^You need/.test(price.problem) ? `<div class="warn">🔒 ${esc(price.problem)}</div>`
+      : price.extra || price.free || price.wild ? `<div class="cost">pays <b>${esc(price.pay.toUpperCase())}</b>${price.extra ? ` · +${esc(price.extra.toUpperCase())} tax` : ""}${price.free ? ` · ${esc(price.free.toUpperCase())} free` : ""}${price.wild ? ` · ${price.wild} blank${price.wild === 1 ? "" : "s"}` : ""}</div>` : "";
+    const ghostly = this.ghostGap && !this.dict.word(stood ? stood.word : t.split(/\s+/).at(-1)!)?.set.haunts ? `<div class="warn">a ghost cannot spell this</div>` : "";
+    el.innerHTML = `<div><b>${esc(c.title)}</b>${c.kind ? ` <span class="kind">${esc(c.kind)}</span>` : ""}</div>` + cost + ghostly +
       (stats.length ? `<div class="lead">${esc(stats.join(" · "))}</div>` : "") + (does.length ? `<div class="key">${esc(does.join(" · "))}</div>` : "") +
       (risk ? `<div class="warn">⚠ ${esc(risk)}</div>` : "") +
       // With insight (shared knowledge.ts) the preview names the words that end it.
@@ -649,8 +691,12 @@ export class Hud {
   private drawHud() {
     const f = this.frame, d = this.detail;
     if (!f) return;
-    const parts = [`<div class="top"><span class="me">${esc(f.name.toUpperCase())}</span><span class="round">${this.ended ? "round over" : `<b>${f.alive}</b> alive`} · <b>${clock(f.clock)}</b></span></div>`];
-    if (this.out !== null) {
+    const parts = [`<div class="top"><span class="me">${esc(f.name.toUpperCase())}</span><span class="round">${this.ended ? "round over" : `<b>${f.alive}</b> alive${f.ghosts ? ` · ${f.ghosts} ghost${f.ghosts === 1 ? "" : "s"}` : ""}`} · <b>${clock(f.clock)}</b></span></div>`];
+    if (this.ghostGap && !this.ended) {
+      // A ghost (shared death.ts): drift where you like, haunt the living with a word every few seconds.
+      parts.push(`<div class="out ghost">GHOST</div><div class="watch">${this.out ? `watching ${esc(this.out.toUpperCase())}` : "haunting"} · a word every ${this.ghostGap} s</div>` +
+        `<div class="does">Enter: haunt (BOO, SCARE, CURSE…) · ${keyGlyph("Tab")} watch the living</div><button class="again">Start new round</button>`);
+    } else if (this.out !== null) {
       // Knocked out: no bars, no gear; just that, and whom the camera follows.
       parts.push(`<div class="out">KNOCKED OUT</div>${this.out ? `<div class="watch">watching ${esc(this.out.toUpperCase())}</div>` : ""}` +
         `<button class="again">Start new round</button>`);
@@ -668,6 +714,12 @@ export class Hud {
       // A mount that lives (a HORSE, an ASS) is one of your animals too, ridden.
       const animals = rides.filter((g) => this.alive(g.phrase)).map((g) => `${esc(g.phrase)} (ridden)`);
       const creatures = [...(d?.creatures.length ? [`${d.creatures.length} of ${d.command.limit}`] : []), ...animals].join(", ");
+      // Followers and their loyalty (shared mind.ts): hunger and fear wear it down; at nothing they desert.
+      const loyalty = d?.command.loyalty;
+      const followers = d?.creatures.length ? `<span class="chip follow${loyalty !== undefined && loyalty < 3 ? " low" : ""}" title="followers you lead / can lead · their loyalty left (hunger and fear wear it down)">FOLLOWERS ${d.creatures.length}/${d.command.limit}${loyalty !== undefined ? ` · LOYALTY ${loyalty}` : ""}</span>` : "";
+      const lives = d?.lives ? `<span class="chip life" title="extra lives: when you would fall you stand again">♥ ${d.lives >= 99 ? "∞" : d.lives} ${d.lives === 1 ? "LIFE" : "LIVES"}</span>` : "";
+      const stand = d?.stand ? `<span class="chip life" title="last stand: past death you fight on">LAST STAND ${d.stand}s</span>` : "";
+      const spelling = this.detail?.spelling && rulesLines(this.detail.spelling).length ? `<span class="chip rule" title="${esc(`spelling rules on you: ${this.detail.spelling.by.join(", ")}`)}">${esc(rulesLines(this.detail.spelling).join(" · ").toUpperCase())}</span>` : "";
       const rows: [string, string][] = [
         ["Hands", list(["held"])],
         ["Wears", list(["head", "face", "neck", "body", "back", "hands", "feet", "finger", "graft"])],
@@ -690,6 +742,7 @@ export class Hud {
       // Luck and size in force (shared idea.ts, scale.ts): a hint that rolls lean your way, or against you.
       const luck = d?.luck, sized = d?.size ?? 1;
       const chips = [
+        followers, lives, stand, spelling,
         ...(luck && (luck.percent || luck.rerolls) ? [`<span class="chip luck${luck.percent < 0 ? " bad" : ""}" title="every roll: gathering, hits, criticals, dodging, rare drops, traps, gambles">♣ LUCK ${luck.percent >= 0 ? "+" : "−"}${Math.abs(luck.percent)}%${luck.rerolls ? ` · ${luck.rerolls} REROLL${luck.rerolls > 1 ? "S" : ""}` : ""}</span>`] : []),
         ...(Math.abs(sized - 1) >= 0.05 ? [`<span class="chip size" title="reach, sight, stride, carrying, doors and rides follow your size">SIZE ×${+sized.toFixed(2)}</span>`] : []),
         ...(d?.statuses ?? []).map((s) => chip(s.status, s.left)),
@@ -699,7 +752,7 @@ export class Hud {
         // Eight hungry wolves are one chip: WOLF IS HUNGRY (NO FOOD) ×8.
         ...[...countEach(d?.short ?? [])].map(([t, n]) => chip("hungry").replace("HUNGRY", esc(t.toUpperCase()) + (n > 1 ? ` ×${n}` : ""))),
       ];
-      if (chips.length) parts.push(`<div class="chips">${chips.join("")}</div>`);
+      if (chips.some(Boolean)) parts.push(`<div class="chips">${chips.join("")}</div>`);
     }
     const html = parts.join("");
     if (html === this.drawnHud) return;
@@ -905,6 +958,17 @@ export class Hud {
   private drawSpellable() {
     const el = $("canspell");
     if (!this.typing) { el.innerHTML = ""; return; }
+    if (this.ghostGap) {
+      // A ghost spells only haunting words (shared `haunts`), free: a few short ones to pick from.
+      if (!this.hauntList) {
+        this.hauntList = [];
+        for (const [w, def] of this.dict.words) if (def.set.haunts === true && !this.dict.crude(w)) this.hauntList.push(w);
+        this.hauntList.sort((a, b) => a.length - b.length || a.localeCompare(b));
+      }
+      const pick = this.hauntList.slice(0, 60);
+      el.innerHTML = `<div class="tabs"><span>A ghost can spell</span><button class="on">Haunting <small>${this.hauntList.length}</small></button></div><div class="words">${pick.map((w) => `<button data-word="${w}">${w}</button>`).join("")}</div>`;
+      return;
+    }
     const key = Object.entries(this.held).filter(([, n]) => n > 0).sort().map(([c, n]) => `${c}${n}`).join("");
     if (this.spellable?.key !== key) this.spellable = { key, groups: spellableNow(this.dict, this.held) };
     const g = this.spellable.groups;
@@ -1016,16 +1080,26 @@ export class Hud {
       el.dataset.letter = ch;
       tiles.push(el);
     };
+    // Spelling rules (shared speech.ts): a banned letter greyed under a lock, a doubled one marked, blanks as wild tiles.
+    const rules = this.rules, banned = new Set(rules.banned), doubled = new Set(rules.doubled);
     for (const ch of Object.keys(this.held).filter((c) => this.held[c]! > 0).sort()) {
       const n = this.held[ch]!, used = need[ch] ?? 0;
-      if (n > COPIES_SHOWN) tile(ch, used ? "used" : "", n);
-      else for (let i = 0; i < n; i++) tile(ch, i < used ? "used" : "");
+      const mark = banned.has(ch) ? " banned" : doubled.has(ch) ? " doubled" : "";
+      if (n > COPIES_SHOWN) tile(ch, (used ? "used" : "") + mark, n);
+      else for (let i = 0; i < n; i++) tile(ch, (i < used ? "used" : "") + mark);
     }
+    const short = Math.max(0, missing(this.held, typed).length);
+    for (let i = 0; i < rules.wild; i++) tile("★", `wild${i < short ? " used" : ""}`);
+    for (const el of tiles) if (el.classList.contains("banned")) el.insertAdjacentHTML("beforeend", `<i class="lock"></i>`);
+    if (this.ghostGap) tiles.length = 0;
     $("letters").replaceChildren(...tiles);
     this.drawPicker();
     this.drawSpellable();
     // The alphabet guide lights the letters you hold.
-    for (const el of $("abc").children) el.classList.toggle("have", (this.held[(el as HTMLElement).dataset.letter!] ?? 0) > 0);
+    for (const el of $("abc").children) {
+      el.classList.toggle("have", (this.held[(el as HTMLElement).dataset.letter!] ?? 0) > 0);
+      el.classList.toggle("banned", banned.has((el as HTMLElement).dataset.letter!));
+    }
   }
 }
 

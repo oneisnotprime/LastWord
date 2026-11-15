@@ -373,6 +373,27 @@ restores|num|0|hp|integrity restored
 gamble|num|0||spelled or used: stakes this many of its speller's letters on a throw (half, shifted by luck): won, they come back doubled; lost, they are gone; passed on a person, the loser pays the winner (shared idea.ts)
 """
 
+GROUPS["rules"] = """
+ban_letters|text|||letters whoever it binds cannot spell with: letters (e or qz), vowels, or top (each one's commonest held letter); a field, event or thing that radiates binds whoever its area reaches, an act passed on a person binds them, a verb its speller, a thing anyone owns its owner (shared speech.ts)
+spell_cost|num|1|x|letters a spelling costs whoever it binds, times this: 1.5 adds half the word's length again in copies of its own letters, 0.5 makes the rarer half free (shared speech.ts)
+word_limit|num|0|letters|the longest word whoever it binds may spell (0: no limit) (shared speech.ts)
+wild_letters|num|0||blanks: letters a spelling by whoever it binds may use without holding them, any letter not banned (shared speech.ts)
+double_letters|text|||letters that count double for whoever it binds: each one held pays for two copies (letters, vowels, consonants or all) (shared speech.ts)
+misspell_ok|num|0||whoever it binds may spell a word with a letter wrong, missing or extra and it reads as the real word, paid as typed (shared speech.ts)
+free_speech|bool|false||spelling rules others lay do not bind whoever has it: banned letters, costs over 1 and word limits (shared speech.ts)
+mutiny|scale|0||followers of others it reaches whose loyalty, less what hunger and fear have cost, is below this break away: they run wild, or join its speller with mutiny_joins (shared mind.ts)
+mutiny_joins|bool|false||followers a mutiny breaks away come over to its speller, within their command (shared mind.ts)
+revives|frac|0||brings a knocked-out person back from their ghost with this share of full health and what their grave still holds: a word spelled with the ghost clicked, or a follower or thing of their side beside the ghost, once a minute (shared death.ts)
+last_stand|num|0|s|when its holder would die they fight on this many seconds, unable to fall and enraged, then fall (shared death.ts)
+haunts|bool|false||a ghost may spell it: the knocked out haunt the living with it, free of letters, one word every 12 s (shared death.ts)
+raises|text|||the creature whatever its holder kills, or whatever dies in its area, rises as, under the killer's (or the area maker's) command (shared death.ts)
+entombs|bool|false||a tomb: at its owner's death every letter they hold goes inside it, not to their killer, for whoever takes or breaks it, or back to them if they are revived (shared death.ts)
+denies_revival|bool|false||a death it deals cannot be cheated: no extra life, last stand or rising (shared death.ts)
+storm_pause|num|0|s|holds the storm wall where it is for this many seconds: the round runs that much longer and bosses wait too; a word that counters it ends the hold (shared round.ts)
+storm_shift|num|0|s|moves the storm wall's clock on this many seconds at once: it closes sooner and bosses come sooner (shared round.ts)
+sudden_death|bool|false||the storm wall jumps to its last circle at once (shared round.ts)
+"""
+
 # Which property groups an archetype class normally fills in. Everything else stays at default.
 CLASS_GROUPS = {
     "artifact": "physical mobility offence defence perception economy spatial slots".split(),

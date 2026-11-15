@@ -23,6 +23,8 @@ export const Player = schema(
     traits: t.string(),
     /** A roaming boss: slay it for Z. */
     boss: t.boolean(),
+    /** A knocked-out person haunting the map (shared death.ts): never alive, never struck. */
+    ghost: t.boolean(),
     /** Size against its word (shared scale.ts): the standee is drawn this much bigger. 0 is read as 1. */
     size: t.float32(),
     /** Whom it is leashed to (shared control.ts): a tether line is drawn to them. "" when none. */
@@ -109,6 +111,16 @@ export const WorldState = schema(
     clock: t.uint32(),
     /** The wind over the map as a percentage (shared `windAt`): windmills turn with it. */
     wind: t.uint8(),
+    /** The storm wall (shared round.ts): where it stands, the circle it closes to, seconds to its next change. */
+    stormX: t.float32(), stormY: t.float32(), stormR: t.float32(),
+    stormNextX: t.float32(), stormNextY: t.float32(), stormNextR: t.float32(),
+    stormLeft: t.uint16(), stormStage: t.uint8(),
+    /** "calm" before it first closes, "waiting", "closing", "held" (a word holds it) or "closed". */
+    stormMode: t.string(),
+    /** Percent of full health a second it takes from whoever is outside, and the word holding it. */
+    stormDps: t.float32(), stormHeld: t.string(),
+    /** Ghosts haunting the map: the knocked out, never counted alive. */
+    ghosts: t.uint16(),
   },
   "WorldState",
 );

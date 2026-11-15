@@ -26,7 +26,7 @@ async function players(n = 2) {
   const said = clients.map(() => [] as string[]);
   const got = clients.map(() => [] as [string, any][]);
   clients.forEach((c, i) => {
-    for (const t of ["letters", "loadout", "dead", "won", "roundover", "gathered", "spelled", "refused", "notice", "sensed", "watching", "described"]) {
+    for (const t of ["letters", "loadout", "dead", "won", "roundover", "gathered", "spelled", "refused", "notice", "sensed", "watching", "described", "ghost", "revived", "reborn"]) {
       c.onMessage(t, (m: any) => {
         got[i]!.push([t, m]);
         if (t === "spelled" || t === "refused" || t === "notice") said[i]!.push(m);
@@ -144,10 +144,15 @@ it("a person's route search never waits on the per-tick budget the bots and crea
   expect(Math.hypot(wa.player.x - start.x, wa.player.y - start.y)).toBeGreaterThan(1);
 });
 
-it("the knocked out watch their killer, and when the killer falls, the killer's killer", async () => {
+it("the knocked out haunt as ghosts, may watch their killer, and when the killer falls, the killer's killer", async () => {
   const { room, clients: [a, b, c], ws: [wa, wb, wc], got } = await players(3);
   (room as any).kill(a.sessionId, b.sessionId);
   await wait();
+  // A ghost where they fell (shared death.ts): never counted alive.
+  expect(got[0]!.some(([t]) => t === "ghost")).toBe(true);
+  expect(room.state.players.get(a.sessionId)?.ghost).toBe(true);
+  expect(room.state.alive).toBe(2);
+  a.send("watch", { id: b.sessionId }); await wait();
   expect(got[0]!.find(([t]) => t === "watching")?.[1]).toEqual({ id: b.sessionId, name: wb.player.name });
   room.refreshViews(); await wait();
   expect(a.state.players.has(b.sessionId)).toBe(true); // A is sent what B sees

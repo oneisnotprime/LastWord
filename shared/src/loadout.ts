@@ -37,7 +37,12 @@ export interface LoadoutDetail {
   /** Things of yours that went short at the last count, by name: hungry creatures, stalled machines. */
   short: string[];
   /** Creatures you can command at once, and how many you have. */
-  command: { limit: number; have: number };
+  command: { limit: number; have: number; loyalty?: number };
+  /** Spelling rules binding you now (shared speech.ts), for the spell window. */
+  spelling?: import("./speech.js").SpeechRules;
+  /** Extra lives you can still use, and seconds of last stand (shared death.ts). */
+  lives?: number;
+  stand?: number;
   creatures: { name: string; health: number; hungry?: boolean; fleeing?: boolean }[];
   /** Words that are part of your screen (shared `senseOf`): a MAP's minimap. Empty: no minimap. */
   senses: { word: string; reveal: number; letters: number; life: number }[];

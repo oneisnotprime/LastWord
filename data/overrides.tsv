@@ -2414,6 +2414,7 @@ chard	noun	produce
 charge	verb	combat
 charged	adjective	quality
 charger	noun	mammal
+charisma	noun	attribute
 charismatic	adjective	quality
 charitable	adjective	pertaining
 charity	noun	possession
@@ -3945,6 +3946,7 @@ descriptor	noun	knowledge
 desert	noun	landform
 deserted	adjective	quality
 deserter	noun	person
+desertion	noun	act
 deserve	verb	social
 deserved	adjective	participle
 deserving	adjective	quality
@@ -13391,6 +13393,7 @@ stalker	noun	criminal
 stalking	noun	act
 stall	noun	structure
 stallion	noun	mammal
+stammer	noun	act
 stamp	noun	weapon
 stampede	noun	event
 stance	noun	attribute
@@ -13659,6 +13662,7 @@ stupidity	noun	event
 stupor	noun	feeling
 sturdy	adjective	quality
 sturgeon	noun	fish
+stutter	noun	act
 sty	noun	structure
 style	noun	attribute
 stylish	adjective	quality

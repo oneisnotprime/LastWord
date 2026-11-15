@@ -7,8 +7,9 @@ dropped, a word that cannot be placed is skipped, and both are counted). Hand-wr
 
 build_demo.py --overrides   add each word's role and archetype to overrides.tsv
 build_demo.py [wordnet dir] validate against properties.json and lexicon.tsv, apply derive.py's
-                            generator rules and meaning.py's (screen, knowledge,
-                            communication) (needs WordNet: the argument, WORDNET_DICT or
+                            generator rules, meaning.py's (screen, knowledge, communication) and
+                            rules.py's (rules.txt: spelling rules, command, death, the storm wall)
+                            (needs WordNet: the argument, WORDNET_DICT or
                             ../node_modules/wordnet-db/dict), write demo.json
 """
 import os, re, sys, json
@@ -87,6 +88,24 @@ def producers(out, props, errors):
             needs = [n for ch in made for n in NEEDS.get(ch, [])]
             if needs:
                 out[w]["set"]["production_needs"] = list(dict.fromkeys(needs)) if "vowel" not in needs else needs
+
+def rule_token(t, props):
+    """A rules.txt token as (op, property, value), or why it is bad."""
+    m = re.fullmatch(r"(\w+)([=*+])(.+)", t)
+    if not m or m.group(1) not in props:
+        return f"bad token {t}"
+    pid, op, val = m.groups()
+    p = props[pid]
+    numeric = p["type"] in ("num", "scale", "frac")
+    if op != "=":
+        if not numeric: return f"{t}: {op} needs a numeric property"
+        return ("mul" if op == "*" else "add", pid, float(val))
+    if numeric: return ("set", pid, "ABS" if val == "ABS" else float(val))
+    if p["type"] == "bool": return ("set", pid, val == "true")
+    if p["type"] == "enum":
+        return ("set", pid, val) if val in p["values"] else f"{t}: not one of {p['values']}"
+    if p["type"] == "tags": return ("set", pid, val.split(","))
+    return ("set", pid, val)
 
 def main():
     entries = [e[:5] for e in entries_all()]
@@ -181,6 +200,12 @@ def main():
     full = {l.split("\t")[0]: l.rstrip("\n").split("\t")[1:] for l in list(open(os.path.join(D, "lexicon.tsv")))[1:]}
     told = meaning.apply(out, full, wn_dir)
     print("meaning rules added:", {d: len(ws) for d, ws in sorted(told.items())}, "words in each dimension:", meaning.report(out))
+    # Generator rules (rules.txt, rules.py): spelling rules, command, death and the storm wall by meaning.
+    import rules
+    report = {}
+    counts = rules.apply(out, props, rules.Meaning(wn_dir, full), lambda t: rule_token(t, props), errors, report)
+    json.dump({"counts": counts, "words": {k: sorted(v) for k, v in report.items()}}, open(os.path.join(D, "rules.json"), "w"), indent=0)
+    print("round rules added:", sum(counts.values()))
     for k in [k for v in out.values() for k in v["set"]] + [o[0] for v in out.values() for o in v["ops"]]:
         if k not in props:
             errors.append(f"derive.py: unknown property {k}")

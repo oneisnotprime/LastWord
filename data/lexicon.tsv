@@ -49702,6 +49702,7 @@ stamen	noun	flora	plant	2.0	uncommon	n11695547	-
 stamina	noun	aura	attribute	3.39	common	n05040073	-
 staminate	adjective	modifier	quality	1.64	rare	a01480558	-
 stammel	noun	artifact	fabric	0.0	obscure	n04306966	-
+stammer	noun	event	act	2.49	uncommon	n14426326	verb:communication
 stammerer	noun	person	person	1.57	rare	n10666219	-
 stamp	noun	artifact	weapon	4.11	core	n13936581	verb:movement
 stampede	noun	event	event	3.13	common	n07460870	verb:movement
@@ -50543,6 +50544,7 @@ sturdily	adverb	verb_modifier	manner	1.75	rare	r00471643	-
 sturdiness	noun	aura	attribute	1.87	rare	n05038881	-
 sturdy	adjective	modifier	quality	3.44	common	a02046401	-
 sturgeon	noun	creature	fish	3.34	common	n02642872	-
+stutter	noun	event	act	2.95	uncommon	n14426326	verb:communication
 stutterer	noun	person	person	1.77	rare	n10666219	-
 sty	noun	artifact	structure	2.47	uncommon	n04353506	-
 stygian	adjective	modifier	quality	2.04	uncommon	a01307185	-

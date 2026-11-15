@@ -14,6 +14,12 @@ import {
 import { grand, grandeur } from "@lastword/shared";
 import { READ_TILES, DECOY_CALL_SECONDS, fakeCall, grandWords, hears, INTEL_MAX, insightOf, isPing, KNOWS, PING_GAP, readPerson, restoresOf, screenOf, voiceOf, SCREEN_RULES, type Intel, type Panel, type Ping, type Screen } from "@lastword/shared";
 import {
+  speechOf, speechFromSet, speechSet, combineSpeech, lettersOf, priceOf, readMisspelt, helpful, NO_RULES, type SpeechRule, type SpeechRules, type Price,
+  stormPlan, stormAt, outsideBy, stormDamage, stormBendOf, bentClock, STORM_WEATHER_STAGE, type StormPlan, type Storm,
+  livesOf, lastStandOf, raisesOf, revivesOf, graveSplit, REBORN_SHARE, REBORN_SECONDS, GHOST_GAP, GHOST_SPEED, GHOST_SIGHT, REVIVE_TILES, REVIVE_COOLDOWN,
+  FEAR_LOYALTY, loyaltyLeft, mutinies,
+} from "@lastword/shared";
+import {
   LAWS, takeLetters, pactOf, breachText, BREACH_LETTERS, BREACH_LOYALTY, BREACH_MINUTES, cooked, rotted, cooks, cookable, spoils, toxin, heatNeeded, matured, matureSeconds, bores, BORE_TILES, BORE_TIMES,
   COOK_RANGE, COOK_SECONDS, alchemyRatio, jobsOf, haggled, builtBy, WORK_RANGE, SCOUT_RANGE, grow, SEEDLING, type PactSpec,
   comfortOf, homeComfort, storageOf, keepSafe, exposed, hoards, eyeOf, automates, breedRate, HERD_RANGE, craftPlan, craftsOf, CRAFT_RANGE, CRAFTED,
@@ -30,7 +36,7 @@ import {
   statureOf, sizeOf, hitbox, doorProblem, slipsUnder, rideProblem, carries, wobbleDrift, mirrored, isReversed, leashed, LEASH_TILES,
   magnetPull, isMetal, MAGNET_FROM, MAGNET_TILES, luckyChance, trapMissChance, gambleOdds,
 } from "@lastword/shared";
-import { affords, botSettings, chooseWord, held, phraseFor, SKILL, wordBook, type BotWord, type Difficulty, type Use } from "./bots.js";
+import { affords, botSettings, chooseWord, currentWordLimit, held, heldUnder, phraseFor, SKILL, wordBook, type BotWord, type Difficulty, type Use } from "./bots.js";
 import { loadDictionary, loadKits } from "./data.js";
 import { City, Edit, Player, Thing, WorldState, Zone } from "./state.js";
 
@@ -71,6 +77,12 @@ interface Gear {
   built?: number;
   /** A peace keeper whose truce has been given (shared sport.ts `peace`): it gives no more. */
   peaceUsed?: boolean;
+  /** Extra lives (shared death.ts `prevents_death`) this thing has given. */
+  livesUsed?: number;
+  /** A grave (shared death.ts): whose, so their ghost gets back what it holds if revived. */
+  graveOf?: string;
+  /** A follower or thing that revives ghosts (shared death.ts `revives`): room time it may again. */
+  reviveAt?: number;
 }
 
 /** People on one side for a while (shared law.ts): a TREATY, an ALLIANCE. */
@@ -184,6 +196,10 @@ interface Radiating { holder: string; keys: string[] }
 /** How a status reads in "you cannot spell while you are ...". */
 const STATE_WORDS: Partial<Record<Status, string>> = { stun: "stunned", freeze: "frozen", sleep: "asleep", silence: "silenced", stasis: "out of time (stasis)", truce: "under a truce" };
 
+/** What a ghost's words never carry (shared death.ts: ghosts haunt, they never kill). */
+const GHOST_HARMLESS = ["inflict_poison", "inflict_burn", "inflict_bleed", "inflict_doom", "inflict_sick", "inflict_freeze", "contagion", "meteors", "destroys_target"];
+/** Tiles a mutiny reaches round where it lands when its word gives no radius (shared mind.ts `mutiny`). */
+const MUTINY_TILES = 20;
 /** Seconds an oracle's reading of someone's rack is kept before it is read again (shared knowledge.ts). */
 const ORACLE_SECONDS = 5;
 
@@ -403,7 +419,27 @@ interface Walker {
   harm?: Harm[];
   /** The walk-in building it is inside (shared interior.ts), by thing id, or undefined outdoors. */
   inside?: string;
+  /** Spelling rules put on it (shared speech.ts): an act passed on it, a verb it cast; until when, and by whom. */
+  speech?: { word: string; rule: SpeechRule; until: number; by: string }[];
+  /** Extra lives words granted it (shared death.ts), used before its things' and its own. */
+  lives?: { word: string; n: number }[];
+  /** Lives its own body (`prevents_death` on it) has used. */
+  bodyLivesUsed?: number;
+  /** A last stand (shared death.ts): when it falls, and to whom. */
+  standing?: { until: number; killer: string; used: boolean };
+  /** Room time until which it cannot be touched, back from a used life. */
+  reborn?: number;
+  /** For a creature: the person it followed until they fell (a reviver brings them back). */
+  formerMaster?: string;
+  /** Room time it last revived a ghost (shared death.ts REVIVE_COOLDOWN). */
+  reviveAt?: number;
 }
+
+/**
+ * A knocked-out person haunting the map (shared death.ts): not a walker, so never alive and never
+ * struck. `proxy` stands in for them when they spell (its player is the ghost's, in the state).
+ */
+interface Ghost { id: string; proxy: Walker; target: Point | null; next: number; grave: string | null; killer: string; bot: boolean; tries: number }
 
 /**
  * A walk-in building on the ground (shared interior.ts): its centre, room radius in tiles, and door
@@ -496,6 +532,12 @@ const thingKey = (x: number, y: number) => Math.floor(x / THING_CELL) * 4096 + M
 /** What a bot remembers between thoughts. */
 interface BotMind {
   difficulty: Difficulty;
+  /** Where it heads in from the storm wall, for which stage (shared round.ts). */
+  stormGoal?: { stage: number; x: number; y: number };
+  /** What it spelled heading in from the storm wall this thought (shared round.ts), to count as a spelling. */
+  stormSpelled?: string;
+  /** Room time it last spelled a word of the round's systems (concept rules), to space them out. */
+  conceptAt?: number;
   /** An ally's HELP ping it heard (shared comms.ts): where, and until when it answers; when it last asked for help itself. */
   help?: { x: number; y: number; until: number; from: string };
   askedAt?: number;
@@ -750,10 +792,31 @@ export class WorldRoom extends Room {
   private suppliers = new Map<Supply, string[]>();
 
   messages = {
+    /**
+     * The knocked out choose whom to watch (shared death.ts): { id } a person still in the round,
+     * or null for their own ghost again.
+     */
+    watch: (client: Client, what: unknown) => {
+      const v = this.watchers.get(client.sessionId);
+      if (!v || this.walkers.has(client.sessionId)) return;
+      const id = (what as { id?: unknown } | null)?.id;
+      const target = typeof id === "string" && this.walkers.get(id)?.master === null ? id : this.ghosts.has(client.sessionId) ? client.sessionId : null;
+      if (!target || target === v.watch) return;
+      v.watch = target;
+      client.send("watching", { id: target, name: target === client.sessionId ? "your ghost" : this.walkers.get(target)!.player.name });
+      this.refreshViews();
+    },
     /** Walk toward a point on the map. */
     move: (client: Client, to: unknown) => {
       const walker = this.walkers.get(client.sessionId);
       const p = to as Partial<Point> | null;
+      const ghost = walker ? undefined : this.ghosts.get(client.sessionId);
+      if (ghost && p && Number.isFinite(p.x) && Number.isFinite(p.y)) {
+        ghost.target = { x: Math.min(this.map.size - 1e-3, Math.max(0, p.x!)), y: Math.min(this.map.size - 1e-3, Math.max(0, p.y!)) };
+        const v = this.watchers.get(client.sessionId);
+        if (v && v.watch !== client.sessionId) { v.watch = client.sessionId; client.send("watching", { id: client.sessionId, name: "your ghost" }); }
+        return;
+      }
       if (walker?.picking) return;
       if (!walker || !p || !Number.isFinite(p.x) || !Number.isFinite(p.y)) return;
       const clamp = (v: number) => Math.min(this.map.size - 1e-3, Math.max(0, v));
@@ -774,6 +837,8 @@ export class WorldRoom extends Room {
     /** Stop where you stand now (arrow keys released). The server's position, not the client's older copy. */
     stop: (client: Client) => {
       const walker = this.walkers.get(client.sessionId);
+      const ghost = walker ? undefined : this.ghosts.get(client.sessionId);
+      if (ghost) ghost.target = null;
       if (!walker) return;
       walker.target = null;
       walker.route = [];
@@ -848,7 +913,7 @@ export class WorldRoom extends Room {
      * { x, y } for a spot on the map, or null to clear.
      */
     pick: (client: Client, what: unknown) => {
-      const walker = this.walkers.get(client.sessionId);
+      const walker = this.walkers.get(client.sessionId) ?? this.ghosts.get(client.sessionId)?.proxy;
       if (!walker) return;
       const w = what as { id?: unknown; x?: unknown; y?: unknown } | null;
       walker.picked = null;
@@ -856,6 +921,7 @@ export class WorldRoom extends Room {
       // Nothing indoors can be picked from outside (shared interior.ts).
       const indoors = (id: string) => { const o = this.walkers.get(id); return o ? this.walkerHidden(client.sessionId, walker, o) : this.thingHidden(client.sessionId, walker, id); };
       if (w && typeof w.id === "string" && (this.walkers.has(w.id) || this.state.things.has(w.id)) && !indoors(w.id)) walker.picked = w.id;
+      else if (w && typeof w.id === "string" && this.ghosts.has(w.id)) walker.picked = w.id; // a ghost, to revive (shared death.ts)
       else if (w && Number.isFinite(w.x) && Number.isFinite(w.y)) {
         const clamp = (v: number) => Math.min(this.map.size, Math.max(0, v));
         walker.aim = { x: clamp(w.x as number), y: clamp(w.y as number) };
@@ -959,6 +1025,11 @@ export class WorldRoom extends Room {
     ping: (client: Client, what: unknown) => this.attempt(client, (id, w) => this.ping(id, w, what)),
     spell: (client: Client, text: unknown) => {
       const walker = this.walkers.get(client.sessionId);
+      const ghost = walker ? undefined : this.ghosts.get(client.sessionId);
+      if (ghost) {
+        try { this.haunt(client.sessionId, ghost, text); } catch (e) { client.send("refused", (e as Error).message); }
+        return;
+      }
       if (!walker) return;
       if (walker.picking) return void client.send("refused", "Pick your starting kit first");
       try {
@@ -1148,10 +1219,37 @@ export class WorldRoom extends Room {
     if (hushed) throw new Error(`${hushed}: no spelling here`);
     // A stand-in (shared idea.ts `standIn`: WORD WOLF, BOOK MAP) spells the word after it for its own letters.
     const stood = standIn(this.dict, text);
-    const phrase = parsePhrase(this.dict, stood ? stood.word : text);
-    const cost = stood ? stood.letters : phrase.letters;
-    const lacking = missing(walker.letters, cost);
-    if (lacking) throw new Error(`You need ${lacking.toUpperCase().split("").join(" ")}`);
+    // Spelling rules (shared speech.ts): a word a letter off reads as the real one where typos are allowed (SLANG), paid as typed.
+    const rules = this.speechFor(id, walker);
+    let phrase: Phrase, misspelt: { text: string; fixed: [string, string][] } | null = null;
+    try { phrase = parsePhrase(this.dict, stood ? stood.word : text); } catch (e) {
+      misspelt = rules.typos > 0 && !stood ? readMisspelt(this.dict, text) : null;
+      if (!misspelt) throw e;
+      phrase = parsePhrase(this.dict, misspelt.text);
+    }
+    const typedWords = text.toLowerCase().trim().split(/\s+/).filter(Boolean);
+    const cost = stood ? stood.letters : misspelt ? typedWords.join("").replace(/[^a-z]/g, "") : phrase.letters;
+    // Banned letters, word limits, taxes, blanks and doubled letters decide what is paid.
+    const price = priceOf(cost, typedWords, rules, walker.letters);
+    if (price.problem) throw new Error(price.problem);
+    // A word that brings the fallen back, spelled with a ghost picked (shared death.ts `revives`).
+    const ghost = walker.picked ? this.ghosts.get(walker.picked) : undefined;
+    if (ghost && revivesOf(phrase.stats) > 0) {
+      const reach = Math.max(4, walker.sight, phrase.stats.num("placement_range") / TILE_METERS);
+      if (Math.hypot(ghost.proxy.player.x - walker.player.x, ghost.proxy.player.y - walker.player.y) > reach) throw new Error(`Too far from ${ghost.proxy.player.name}'s ghost`);
+      const unfaithfulRevive = faithProblem(phrase.stats, walker.stores.faith);
+      if (unfaithfulRevive) throw new Error(`${phrase.noun.toUpperCase()}: ${unfaithfulRevive}`);
+      spend(walker.letters, price.pay);
+      this.spendFaith(walker, phrase.stats);
+      this.sendTo(id, "letters", walker.letters);
+      const name = ghost.proxy.player.name;
+      this.revive(ghost.id, revivesOf(phrase.stats), `${walker.player.name}'s ${phrase.noun.toUpperCase()}`);
+      const mind = this.bots.get(id);
+      if (mind) this.botUsed(mind, "revive");
+      const said = `${phrase.noun.toUpperCase()}: ${name} is back from the dead`;
+      this.sendTo(id, "spelled", said);
+      return said;
+    }
     // A miracle spends faith (shared faith.ts); a word that pays needs the letters too (money.ts).
     const unfaithful = faithProblem(phrase.stats, walker.stores.faith);
     if (unfaithful) throw new Error(`${phrase.noun.toUpperCase()}: ${unfaithful}`);
@@ -1175,7 +1273,10 @@ export class WorldRoom extends Room {
         : this.sky(id, phrase, name);
       if (city >= 0) { this.rule(city, id, phrase.noun); done = done ? `${done}; the city is yours` : "The city is yours"; }
       if (phrase.kind !== "sky") done = this.withCounters(phrase.noun, done, id, walker);
-      spend(walker.letters, cost);
+      const more = this.conceptSpell(id, walker, phrase);
+      if (more.length) done = `${done}; ${more.join("; ")}`;
+      if (misspelt) done = `${misspelt.fixed.map(([a, b]) => `${a.toUpperCase()} reads as ${b.toUpperCase()}`).join(", ")}: ${done}`;
+      spend(walker.letters, price.pay);
       this.spendFaith(walker, phrase.stats);
       this.settlePay(id, walker);
       // A gamble spelled and not passed on anyone is thrown against the house (shared idea.ts).
@@ -1188,14 +1289,16 @@ export class WorldRoom extends Room {
       return done;
     }
     if (phrase.count < 1) throw new Error(`${spelledAs} is none at all`);
-    spend(walker.letters, cost);
+    spend(walker.letters, price.pay);
     this.spendFaith(walker, phrase.stats);
     const countered = this.counter(phrase.noun);
     if (countered) this.sendTo(id, "notice", `${phrase.noun.toUpperCase()} ended ${countered} area${countered === 1 ? "" : "s"}`);
     const culled = this.exterminate(phrase.noun, id, walker);
     if (culled) this.sendTo(id, "notice", `${phrase.noun.toUpperCase()} wiped out ${culled}`);
     this.freePact(id, phrase.noun);
-    const done = this.make(id, walker, phrase);
+    const made = this.make(id, walker, phrase);
+    const more = this.conceptSpell(id, walker, phrase);
+    const done = more.length ? `${made}; ${more.join("; ")}` : made;
     this.sendTo(id, "letters", walker.letters);
     const many = phrase.count > 1 || phrase.plural;
     const said = (stood ? `${stood.stand.toUpperCase()} stands for ${stood.word.toUpperCase()}: ` : "") + (many ? `${spelledAs} (${phrase.count}) ${done.replace(/^is /, "are ").replace(/^runs /, "run ")}`
@@ -1232,10 +1335,10 @@ export class WorldRoom extends Room {
   describeWord(id: string, walker: Walker, text: unknown, target: unknown, gearIndex?: unknown): string {
     if (typeof text !== "string" || text.length > 80) throw new Error("Spell something");
     if (!walker.hamper.spells) throw new Error(`You cannot spell while you are ${STATE_WORDS[walker.hamper.muteBy!] ?? walker.hamper.muteBy}`);
-    const read = readDescription(this.dict, text);
-    if (!read) return this.spellWord(id, walker, text);
-    const lacking = missing(walker.letters, read.letters);
-    if (lacking) throw new Error(`You need ${lacking.toUpperCase().split("").join(" ")}`);
+    const described = readDescription(this.dict, text);
+    if (!described) return this.spellWord(id, walker, text);
+    // Spelling rules (shared speech.ts) decide what is paid: banned letters, taxes, blanks.
+    const read = { ...described, letters: this.spellPrice(id, walker, described.letters, described.adjectives).pay };
     const words = read.adjectives.join(" ").toUpperCase();
     if (typeof target !== "string") throw new Error(`Click something for ${words}`);
     const shown = (adjectives: readonly string[], noun: string) => [...adjectives.filter((a) => !this.onlyCounts(a)), noun].join(" ");
@@ -1324,6 +1427,7 @@ export class WorldRoom extends Room {
     this.kitsOn = WorldRoom.kits;
     this.map = generateMap(seed);
     this.placeSources();
+    this.startStorm();
     this.state.seed = seed;
     this.state.daylight = "day";
     this.state.phase = "playing";
@@ -1656,6 +1760,7 @@ export class WorldRoom extends Room {
     this.walkers.delete(client.sessionId);
     this.watchers.delete(client.sessionId);
     this.state.players.delete(client.sessionId);
+    if (this.ghosts.delete(client.sessionId)) this.state.ghosts = this.ghosts.size;
     this.unradiateAll(client.sessionId);
   }
 
@@ -1838,7 +1943,10 @@ export class WorldRoom extends Room {
         have: Math.round(walker.stores[k] * 100) / 100, need: Math.round(walker.upkeep.need[k] * 100) / 100, make: Math.round(walker.upkeep.make[k] * 100) / 100,
       }])) as LoadoutDetail["stores"],
       short: walker.upkeep.short,
-      command: { limit: walker.upkeep.limit, have: walker.upkeep.have },
+      command: { limit: walker.upkeep.limit, have: walker.upkeep.have, loyalty: this.loyaltyOf(walker.id) },
+      spelling: this.speechFor(walker.id, walker),
+      lives: Math.min(99, this.livesLeft(walker.id, walker)),
+      stand: Math.round(this.standOf(walker.id, walker)),
       creatures: [...this.walkers.values()].filter((w) => w.master === walker.id).map((w) => ({
         name: w.player.name, health: w.player.hp, ...(w.hungry ? { hungry: true } : {}), ...(w.fleeing ? { fleeing: true } : {}),
       })),
@@ -2009,7 +2117,8 @@ export class WorldRoom extends Room {
     if (w.fleeing && (w.fleeFrom || this.elapsed < (this.bots.get(id)?.peaceUntil ?? 0))) return;
     const skill = SKILL[mind.difficulty];
     const hard = mind.difficulty === "hard", easy = mind.difficulty === "easy";
-    const have = held(w.letters);
+    // Spelling rules on it (shared speech.ts): banned letters, a tax and a word limit shape what it can afford.
+    const have = heldUnder(w.letters, this.speechFor(id, w));
     const canSpell = () => this.elapsed >= mind.nextSpell;
     const spelled = (what: string) => {
       mind.spelled++;
@@ -2068,6 +2177,9 @@ export class WorldRoom extends Room {
       return;
     }
     mind.running = false;
+
+    // The storm wall (shared round.ts): outside the circle it closes to, it heads in, holding it with a word if it can.
+    if (this.botStorm(id, w, mind, have, attackers.length > 0, canSpell())) { if (mind.stormSpelled) { spelled(mind.stormSpelled); mind.stormSpelled = undefined; } return; }
 
     // Held in an enemy's lockup (shared interior.ts `holds`): a breakout word if it has one, else it batters the door from inside.
     if (w.inside && this.heldIn(id, w, w.inside)) {
@@ -2789,6 +2901,19 @@ export class WorldRoom extends Room {
       },
       // Luck before a stretch of gathering.
       () => (peaceful || w.gathering > 0) && this.rng() < 0.5 ? cast("luck", choose("luck", (x) => !owns(x))) : null,
+      // The round's systems (concept rules), through the same words people spell:
+      // an extra life when it has none (shared death.ts),
+      () => !easy && this.livesLeft(id, w) === 0 && (person || this.rng() < 0.3) ? cast("life", choose("life", free)) : null,
+      // a last stand when a fight goes badly,
+      () => person && w.hp < maxHp * 0.6 && this.standOf(id, w) === 0 ? cast("stand", choose("stand")) : null,
+      // a spelling rule that helps it (blanks, cheaper words) when nothing helps it yet (shared speech.ts),
+      () => { const r = this.speechFor(id, w); return !r.wild && r.cost >= 1 && this.rng() < 0.5 ? cast("wordsmith", choose("wordsmith", free)) : null; },
+      // one that hinders the person it fights: their commonest letter banned, a tax, a short tongue,
+      () => person && SKILL[mind.difficulty].aims && !(person.speech ?? []).some((p) => p.until > this.elapsed) ? cast("censor", choose("censor", (x) => dist(person.player) <= Math.max(x.reach, 8)), person.id, person.player) : null,
+      // a mutiny among the followers of the person it fights (shared mind.ts),
+      () => person && [...this.walkers.values()].some((c) => c.master === person.id && dist(c.player) <= 15) ? cast("mutiny", choose("mutiny"), person.id, person.player) : null,
+      // and, playing well and strong, a word that hurries the storm wall on the rest (shared round.ts).
+      () => hard && !peaceful && w.hp > maxHp * 0.8 && this.state.alive > 2 && this.stormInside(w) ? cast("storm hurry", choose("stormhurry")) : null,
     ];
     const start = Math.floor(this.rng() * tries.length);
     for (let i = 0; i < tries.length; i++) {
@@ -3004,7 +3129,7 @@ export class WorldRoom extends Room {
   private botWord(id: string, w: Walker, mind: BotMind, have: Uint8Array, armed: boolean, mine: number, peaceful: boolean): BotWord | null {
     const book = wordBook(this.dict);
     const ok = (x: BotWord) => !mind.tried.has(x.word);
-    const key = have.join(",");
+    const key = `${have.join(",")}|${currentWordLimit()}`;
     if (mind.affordable?.key !== key) mind.affordable = { key, byUse: new Map() };
     const cache = mind.affordable.byUse;
     const listOf = (use: Use) => cache.get(use) ?? cache.set(use, (book.byUse.get(use) ?? []).filter((x) => affords(have, x))).get(use)!;
@@ -3981,7 +4106,7 @@ export class WorldRoom extends Room {
       this.breed(id, w, h, since);
       const round = (n: number) => Math.round(n * 10) / 10;
       const shown = JSON.stringify([round(w.morale), SUPPLIES.map((k) => round(w.stores[k])), w.upkeep.short, w.upkeep.limit, w.upkeep.have,
-        h.creatures.map(([, c]) => `${c.hungry}${c.fleeing}`)]);
+        h.creatures.map(([, c]) => `${c.hungry}${c.fleeing}${Math.round(c.hungerLost)}`), (w.speech ?? []).filter((p) => p.until > this.elapsed).length, this.bots.has(id) ? "" : this.speechSig(id, w)]);
       if (shown !== w.shown) { w.shown = shown; this.tell(w); }
     }
     for (const [id, w] of [...this.walkers]) if (w.master === "-") this.roam(id, w); else if (w.master !== null) this.temper(id, w);
@@ -4009,7 +4134,11 @@ export class WorldRoom extends Room {
     // BOSS_AT=20 (local testing only) brings the first one on at 20 s, and the rest as many seconds apart.
     const early = Number(process.env.BOSS_AT);
     const due = early > 0 ? early * (this.bossesRisen + 1) : BOSS_TIMES[this.bossesRisen];
-    if (!this.bare && due !== undefined && this.bossesRisen < BOSS_TIMES.length && this.elapsed >= due) this.riseBoss();
+    // On the storm clock: a word that holds the storm wall holds them back, DOOMSDAY hurries them (shared round.ts).
+    if (!this.bare && due !== undefined && this.bossesRisen < BOSS_TIMES.length && (early > 0 ? this.elapsed : this.roundClock()) >= due) this.riseBoss();
+    this.stormBeat(since);
+    this.deathBeat(since);
+    if (this.ghosts.size) this.ghostBots();
   }
 
   /**
@@ -4421,12 +4550,13 @@ export class WorldRoom extends Room {
    */
   private touch(id: string, walker: Walker, phrase: Phrase): string | null {
     const s = phrase.stats, given = inflicts(s), word = phrase.noun.toUpperCase();
-    if (!given.length && !(s.num("severs") > 0) && !(s.num("pays") > 0) && !s.flag("read_inventory")) return null;
+    const speech = speechOf(s);
+    if (!given.length && !(s.num("severs") > 0) && !(s.num("pays") > 0) && !s.flag("read_inventory") && !speech) return null;
     const selected = walker.picked ?? walker.foe ?? "";
     const victim = this.walkers.get(selected);
     if (!victim) throw new Error(`Select someone for ${word} first: click them`);
     if (Math.hypot(victim.player.x - walker.player.x, victim.player.y - walker.player.y) > Math.max(1.5, walker.sight)) throw new Error(`Too far away for ${word}`);
-    const harmless = given.every(([st]) => isBoon(st)) && !(s.num("severs") > 0); // a BLESS or a WAGE is no attack
+    const harmless = given.every(([st]) => isBoon(st)) && !(s.num("severs") > 0) && !(speech && !helpful(speech)); // a BLESS or a WAGE is no attack
     if (selected !== id && !harmless) {
       if (victim.hamper.untouchable) throw new Error(`${victim.player.name.toUpperCase()} cannot be touched just now`);
       const barred = this.lawAgainst("attack", selected, victim, victim.player, id);
@@ -4441,6 +4571,8 @@ export class WorldRoom extends Room {
       said.push(given.map(([st]) => st).join(", "));
     }
     said.push(...this.informAndPay(id, walker, victim, s, word));
+    // A spelling rule passed on them (shared speech.ts): a GAG, a SILENCE touched on someone.
+    if (speech && victim.master === null) { this.bindSpeech(victim, phrase.noun, speech, effectSeconds(s.num("duration")) || 60, id); said.push(this.speechWords(speech)); }
     if (victim.id !== id && victim.master === null) this.sendTo(victim.id, "notice", `${walker.player.name} used ${word} on you: ${said.join("; ")}`);
     return `${word} on ${victim.player.name}: ${said.join("; ")}`;
   }
@@ -4471,7 +4603,7 @@ export class WorldRoom extends Room {
     else if (s.get("effect_target") === "touched") { const t = this.touch(id, walker, phrase); if (t) said.push(t); }
     const done = this.affect(walker, name, s, effect);
     const counters = this.dict.word(phrase.noun)?.set.counters;
-    if (!said.length && !done && !(Array.isArray(counters) && counters.length)) throw new Error(`${name.toUpperCase()} does nothing yet`);
+    if (!said.length && !done && !(Array.isArray(counters) && counters.length) && !this.conceptual(s)) throw new Error(`${name.toUpperCase()} does nothing yet`);
     said.push(done ?? name.toUpperCase());
     return said.join("; ");
   }
@@ -4672,10 +4804,11 @@ export class WorldRoom extends Room {
     // Passed on a person (ARREST, SENTENCE, EXILE, VERDICT, PARDON: law theme): its statuses given or
     // ended, health restored, letters taken as a fine; no blow is struck. Resisted by its contest.
     const onPerson = s.get("event_target") === "character" && !hasDamage(s) && !(s.num("event_radius") > 0) && !(s.num("inflict_stun") > 0); // a stun is an AMBUSH: a blow
-    if (onPerson && (inflicts(s).length || s.tags("effect_status").length || s.num("letter_steal") > 0 || s.num("restores") > 0 || s.num("pays") > 0 || s.flag("read_inventory") || s.num("rewinds") > 0)) {
+    const speech = speechOf(s);
+    if (onPerson && (inflicts(s).length || s.tags("effect_status").length || s.num("letter_steal") > 0 || s.num("restores") > 0 || s.num("pays") > 0 || s.flag("read_inventory") || s.num("rewinds") > 0 || speech)) {
       const victim = needCreature();
       const given = inflicts(s);
-      const harmful = given.some(([st]) => !isBoon(st) && st !== "charm"); // a GIFT's goodwill is no attack
+      const harmful = given.some(([st]) => !isBoon(st) && st !== "charm") || (!!speech && !helpful(speech)); // a GIFT's goodwill is no attack
       if (harmful) lawful(victim, "attack");
       if (s.num("letter_steal") > 0) lawful(victim, "theft");
       if (harmful || s.num("letter_steal") > 0 || s.flag("read_inventory")) contest(victim.unit.body.stats, victim.player.name, true);
@@ -4684,6 +4817,8 @@ export class WorldRoom extends Room {
       const ended = cure(victim.statuses, s.tags("effect_status"));
       if (ended.length) { this.statusChanged(victim); said.push(`no longer ${ended.join(", ")}`); }
       if (s.num("restores") > 0) { this.restore(victim, s.num("restores")); said.push("restored"); }
+      // A spelling rule passed on them (shared speech.ts): a GAG bans their commonest letter for a while.
+      if (speech && victim.master === null) { this.bindSpeech(victim, phrase.noun, speech, Math.max(30, (s.num("event_duration") || 1) * 60), id); said.push(this.speechWords(speech)); }
       if (capturesInto(s) && victim.id !== id) { const held = this.capture(victim, id, walker.player); if (held) said.push(`dropped into ${held}`); }
       if (s.num("rewinds") > 0 && this.rewind(victim, s.num("rewinds"))) { this.tell(victim); said.push(`the last ${Math.round(Math.min(REWIND_WINDOW, s.num("rewinds")))} s of harm undone`); }
       said.push(...this.informAndPay(id, walker, victim, s, word));
@@ -4782,7 +4917,10 @@ export class WorldRoom extends Room {
     const flags = bodyFlags(def.set);
     const effect = bodyOps.length || Object.keys(flags).length ? { word: phrase.noun, set: flags, ops: bodyOps, until: Infinity } : null;
     const summons = this.summonsOf(s), tile = TILE_TYPES[String(s.get("tile_type"))];
-    if (!hasDamage(s) && !rules && !effect && !given.length && !s.flag("sets_hostile") && !summons && tile === undefined && !s.tags("counters").length && !(s.num("decoys") > 0) && !s.flag("jams") && !motionOf(s).pull && !motionOf(s).waves && !motionOf(s).meteors) throw new Error(`${word} does nothing yet`);
+    if (!hasDamage(s) && !rules && !effect && !given.length && !s.flag("sets_hostile") && !summons && tile === undefined && !s.tags("counters").length && !(s.num("decoys") > 0) && !s.flag("jams") && !motionOf(s).pull && !motionOf(s).waves && !motionOf(s).meteors) {
+      if (this.conceptual(s)) return word; // it acts through the round's systems alone (the storm wall, a mutiny, lives)
+      throw new Error(`${word} does nothing yet`);
+    }
     // A region event covers the speller's surroundings. Anything else lands where it was aimed:
     // a picked spot, else the picked or attacked target. It must be in reach.
     const regional = s.get("placement") === "region" || s.get("placement") === "map" || s.get("placement") === "self";
@@ -5030,7 +5168,10 @@ export class WorldRoom extends Room {
     if (area.rules) area.lodeLeft = this.lodeStock(area.rules);
     const rates = production(s);
     const ends = s.tags("counters").length > 0; // VETO, REPEAL: they end what they counter, and that is all
-    if (!acts(area) && !Object.keys(rates).length && !this.summonsOf(s) && !ends) throw new Error(`${word} does nothing yet`);
+    if (!acts(area) && !Object.keys(rates).length && !this.summonsOf(s) && !ends) {
+      if (this.conceptual(s)) return word; // it acts through the round's systems alone (the storm wall, a mutiny, lives)
+      throw new Error(`${word} does nothing yet`);
+    }
     // Casting it again replaces your earlier one.
     for (const [k, a] of this.areas) if (a.owner === id && a.word === phrase.noun) { this.areas.delete(k); this.state.zones.delete(k); }
     const key = this.addArea(area, true);
@@ -5264,6 +5405,13 @@ export class WorldRoom extends Room {
     }
     for (const [key, a] of [...this.areas]) {
       if (this.countered(word, a.word)) { this.areas.delete(key); this.state.zones.delete(key); this.producers.delete(`field:${key}`); this.fieldsDirty = true; n++; }
+    }
+    // Spelling rules put on people (shared speech.ts) end the same way.
+    for (const w of this.walkers.values()) {
+      if (!w.speech?.some((p) => this.countered(word, p.word))) continue;
+      w.speech = w.speech.filter((p) => !this.countered(word, p.word));
+      this.tell(w);
+      n++;
     }
     return n;
   }
@@ -5872,6 +6020,7 @@ export class WorldRoom extends Room {
   private statusChanged(w: Walker) {
     w.hamper = hampered(w.statuses);
     if (w.picking) w.hamper.untouchable = true; // choosing a kit: nothing lands
+    if (w.reborn !== undefined && w.reborn > this.elapsed) w.hamper.untouchable = true; // back from a used life (shared death.ts)
 
     const key = [...new Set(w.statuses.map((a) => a.status))].join(" ");
     if (key !== w.statusKey) {
@@ -6630,7 +6779,7 @@ export class WorldRoom extends Room {
   }
 
   /** Knocks a player out of the round. Their letters go to the killer; their gear falls. */
-  private kill(id: string, killerId: string) {
+  private kill(id: string, killerId: string, final = false) {
     const dead = this.walkers.get(id);
     if (!dead) return;
     // A blow in a challenge cannot kill (shared sport.ts): left standing at a tenth, the other wins.
@@ -6644,6 +6793,9 @@ export class WorldRoom extends Room {
       for (const o of this.walkers.values()) if (o.foe === id && (o.id === killerId || o.master === killerId)) o.foe = null;
       return;
     }
+    // An extra life or a last stand keeps it up (shared death.ts).
+    if (this.state.phase === "playing" && this.cheatDeath(id, dead, killerId, final)) return;
+    final ||= this.deniesRevival(killerId);
     if (this.altars.size) this.sacrificed(dead.unit.body.stats, dead.player); // a death by an altar is an offering (shared faith.ts)
     // A creature's kill is its master's.
     const [payId, killer] = this.payee(killerId) ?? ["", undefined];
@@ -6664,9 +6816,12 @@ export class WorldRoom extends Room {
       });
       hand = loose;
     }
+    // A person who falls leaves a grave with the rarer half of their letters (shared death.ts).
+    const person = dead.master === null && dead.citizenOf === undefined;
+    const buried = person ? this.bury(id, dead, hand, !!killer && payId !== id) : null;
     if (killer && payId !== id) {
-      const loot = Object.entries(hand).map(([ch, n]) => (n > 0 ? ch.repeat(n) : "")).join("");
-      this.award(payId, killer, loot, `${dead.player.name.toUpperCase()}'s letters`, dead.player);
+      const loot = buried ? buried.loot : Object.entries(hand).map(([ch, n]) => (n > 0 ? ch.repeat(n) : "")).join("");
+      if (loot) this.award(payId, killer, loot, `${dead.player.name.toUpperCase()}'s letters`, dead.player);
       const kc = this.clients.find((c) => c.sessionId === payId);
       // K comes from kills of people, V from beating someone's creature, H from hunting the wild;
       // the place's rules multiply them (a WAR over it: K ×3, a SAFARI: H ×3).
@@ -6718,20 +6873,25 @@ export class WorldRoom extends Room {
     }
     this.walkers.delete(id);
     this.state.players.delete(id);
+    if (!final) this.rise(dead, killerId); // a ZOMBIE's victims rise (shared death.ts)
+    this.state.alive = this.people.length;
     // The knocked out watch whoever knocked them out (a creature's master), and when that one falls, their killer.
     const next = this.blame(killerId);
     if (client) this.watchers.set(id, { watch: id, seen: dead.seen, seenThings: dead.seenThings });
     for (const [cid, v] of this.watchers) {
-      if (v.watch !== id || !next) continue;
+      if (v.watch !== id || !next || (cid === id && person)) continue;
       v.watch = next;
       this.sendTo(cid, "watching", { id: next, name: this.walkers.get(next)!.player.name });
     }
+    // Then they haunt the map as a ghost, watching from where they fell (shared death.ts).
+    if (person && this.state.phase === "playing" && this.people.length > 1) this.makeGhost(id, dead, killerId, buried?.grave ?? null);
+    else if (person && client && next) { const v = this.watchers.get(id); if (v) { v.watch = next; this.sendTo(id, "watching", { id: next, name: this.walkers.get(next)!.player.name }); } }
     const owner = dead.master ? this.walkers.get(dead.master) : undefined;
     if (owner) this.tell(owner);
     for (const w of this.walkers.values()) {
       if (w.foe === id) w.foe = null;
       if (w.picked === id) w.picked = null;
-      if (w.master === id) { w.master = "-"; w.player.owner = "-"; this.showStatus(w); } // creatures outlive their master, ownerless
+      if (w.master === id) { w.master = "-"; w.player.owner = "-"; w.formerMaster = id; this.showStatus(w); } // creatures outlive their master, ownerless
     }
     if (dead.master === null && this.people.length === 1 && this.everJoined > 1) {
       const [winnerId] = this.people;
@@ -7837,6 +7997,7 @@ export class WorldRoom extends Room {
       this.lastBeat = this.elapsed;
       this.beat(since);
     }
+    if (this.ghosts.size) this.driftGhosts(seconds);
     this.think();
     this.thinkBots();
     if (this.bots.size) this.botDodge();
@@ -8225,20 +8386,671 @@ export class WorldRoom extends Room {
   }
 
   /** Puts in each client's view exactly the players and things within its sight range. */
+  // ------------------------------------------------------------------------------------------
+  // Concept rules: spelling rules (shared speech.ts), command and loyalty (mind.ts), death and
+  // ghosts (death.ts), and the round's storm wall (round.ts). Every word acts through these by
+  // its properties, whatever its kind.
+
+  /** The storm wall's circles (null: no storm, as in most room tests), its clock and the words holding it. */
+  private storm: StormPlan | null = null;
+  private stormClock = 0;
+  private stormHolds: { word: string; by: string; until: number }[] = [];
+  private stormShown = -1;
+  private stormWeather = false;
+  /** Room tests run without the storm unless they turn it on (like kits). */
+  static storms = !process.env.VITEST;
+  /** The knocked out, haunting the map (shared death.ts), by session id. */
+  private ghosts = new Map<string, Ghost>();
+
+  /** A walker or a ghost's stand-in, by id: for views and picking. */
+  private bodyOf(id: string): Walker | undefined {
+    return this.walkers.get(id) ?? this.ghosts.get(id)?.proxy;
+  }
+
+  /** A person's body changed (a ghost, back to life): everyone sees the new one afresh. */
+  private forgetSeen(id: string) {
+    for (const w of this.walkers.values()) if (w.id !== id) w.seen.delete(id);
+    for (const v of this.watchers.values()) v.seen.delete(id);
+    for (const g of this.ghosts.values()) if (g.id !== id) g.proxy.seen.delete(id);
+  }
+
+  /** True if two people (or their creatures) are on one side; `a` may have left the round. */
+  private sameSide(a: string, b: string, bw: Walker): boolean {
+    if (a === b || bw.master === a) return true;
+    const aw = this.walkers.get(a);
+    return !!aw && this.side(a, aw) === this.side(b, bw);
+  }
+
+  /** The storm clock: what bosses and the round's weather go by (the room clock with no storm). */
+  private roundClock(): number {
+    return this.storm ? this.stormClock : this.elapsed;
+  }
+
+  /** Starts the storm wall for a round (shared round.ts `stormPlan`). */
+  private startStorm() {
+    if (this.bare || !WorldRoom.storms) return;
+    this.storm = stormPlan(this.map.size, this.rng, (x, y) => walkableAt(this.map, x, y));
+    // For local testing only: STORM_CLOCK=200 starts the storm clock 200 s in.
+    this.stormClock = Number(process.env.STORM_CLOCK) || 0;
+    this.stormBeat(0);
+  }
+
+  /** The wall now, or null with no storm. */
+  stormNow(): Storm | null {
+    return this.storm ? stormAt(this.storm, this.stormClock) : null;
+  }
+
+  /**
+   * Once a second: the storm clock runs unless a word holds it; the state carries where the wall
+   * stands; whoever is outside it (people and their followers, not the wild) loses its share of
+   * full health; and from STORM_WEATHER_STAGE the round brings its own weather.
+   */
+  private stormBeat(since: number) {
+    if (!this.storm) return;
+    this.stormHolds = this.stormHolds.filter((h) => h.until > this.elapsed);
+    const held = this.stormHolds.length ? this.stormHolds.reduce((a, b) => (b.until > a.until ? b : a)) : null;
+    if (!held) this.stormClock += since;
+    const st = stormAt(this.storm, this.stormClock);
+    Object.assign(this.state, {
+      stormX: st.x, stormY: st.y, stormR: st.r, stormNextX: st.nextX, stormNextY: st.nextY, stormNextR: st.nextR,
+      stormLeft: Math.ceil(held ? held.until - this.elapsed : st.left), stormStage: st.stage,
+      stormMode: st.closed ? "closed" : held ? "held" : st.shrinking ? "closing" : st.stage === 0 ? "calm" : "waiting",
+      stormDps: Math.round(st.dps * 1000) / 10, stormHeld: held?.word.toUpperCase() ?? "",
+    });
+    const key = st.stage * 2 + (st.shrinking ? 1 : 0);
+    if (key !== this.stormShown && since > 0) {
+      this.stormShown = key;
+      if (st.shrinking) for (const c of this.clients) c.send("notice", `The storm wall closes in: get inside the circle (${Math.round(st.dps * 100)}% health a second outside)`);
+    }
+    if (!this.stormWeather && st.stage >= STORM_WEATHER_STAGE) { this.stormWeather = true; this.roundWeather(); }
+    if (!(st.dps > 0) || since <= 0) return;
+    for (const [id, w] of [...this.walkers]) {
+      if (w.master === "-" || w.citizenOf !== undefined || w.boss || w.picking || !this.walkers.has(id)) continue;
+      if (outsideBy(st, w.player.x, w.player.y) <= 0) continue;
+      const harm = stormDamage(st, w.unit.body.stats.num("integrity")) * since;
+      w.unit.body.integrity -= harm;
+      (w.harm ??= []).push({ who: "STORM", what: "wall", kind: "storm", amount: harm, t: this.elapsed });
+      this.settle(id, w);
+      if (w.unit.dead) this.kill(id, "");
+    }
+  }
+
+  /** The round's own weather over its last circles: the dictionary's storm, if it has one. */
+  private roundWeather() {
+    for (const word of ["thunderstorm", "storm", "tempest"]) {
+      let phrase: Phrase;
+      try { phrase = parsePhrase(this.dict, word); } catch { continue; }
+      if (phrase.kind !== "sky") continue;
+      try { this.sky("", phrase, word); } catch { continue; }
+      for (const c of this.clients) c.send("notice", `The storm wall brings ${word.toUpperCase()} over the map`);
+      return;
+    }
+  }
+
+  /**
+   * A word that bends the round (shared round.ts `stormBendOf`), whatever its kind: it holds the
+   * storm wall, moves its clock on, or brings sudden death. A word that counters a holding word
+   * ends that hold. Returns what it did, or "".
+   */
+  private bendStorm(id: string, walker: Walker, noun: string, s: Stats): string {
+    if (!this.storm) return "";
+    const before = this.stormHolds.length;
+    this.stormHolds = this.stormHolds.filter((h) => !this.countered(noun, h.word));
+    const freed = before - this.stormHolds.length;
+    const b = stormBendOf(s);
+    const said: string[] = [];
+    if (freed) said.push(`the storm wall moves again`);
+    if (b) {
+      if (b.pause > 0) {
+        const from = Math.max(this.elapsed, ...this.stormHolds.map((h) => h.until));
+        this.stormHolds.push({ word: noun, by: id, until: from + b.pause });
+        said.push(`the storm wall holds ${Math.round(from + b.pause - this.elapsed)} s`);
+      }
+      if (b.shift > 0 || b.sudden) {
+        this.stormClock = bentClock(this.stormClock, b);
+        said.push(b.sudden ? "sudden death: the storm wall jumps to its last circle" : `the storm wall closes ${Math.round(b.shift)} s sooner`);
+      }
+    }
+    if (!said.length) return "";
+    this.stormBeat(0);
+    for (const c of this.clients) if (c.sessionId !== id) c.send("notice", `${walker.player.name}'s ${noun.toUpperCase()}: ${said.join(", ")}`);
+    return said.join(", ");
+  }
+
+  /**
+   * The spelling rules binding a person (shared speech.ts): what they own (body, job, gear,
+   * followers, things; a thing that radiates acts through its area instead), rules put on them,
+   * and the areas reaching them (their maker's side spared what hinders).
+   */
+  speechFor(id: string, w: Walker): SpeechRules {
+    const parts: { word: string; rule: SpeechRule; mine: boolean }[] = [];
+    const own = (word: string, s: Stats) => {
+      if (s.num("field_radius") > 0) return;
+      const rule = speechOf(s);
+      if (rule) parts.push({ word, rule, mine: true });
+    };
+    own(w.player.name, w.unit.body.stats);
+    for (const t of this.jobTool(w)) own(t.name, t.stats);
+    for (const g of w.gear) own(g.phrase, this.statsOf(g));
+    if (w.master === null) {
+      for (const c of this.walkers.values()) if (c.master === id) own(c.player.name, c.unit.body.stats);
+      this.state.things.forEach((t, tid) => { const g = t.owner === id ? this.grounded.get(tid) : undefined; if (g && !g.terrain) own(g.phrase, this.statsOf(g)); });
+    }
+    w.speech = (w.speech ?? []).filter((p) => p.until > this.elapsed);
+    for (const p of w.speech) parts.push({ word: p.word, rule: p.rule, mine: p.by === id });
+    for (const a of this.rulesAt(w.player, id, w).areas) {
+      const rule = a.rules?.speech;
+      if (!rule) continue;
+      const ours = this.sameSide(a.owner, id, w);
+      if (ours && !helpful(rule)) continue;
+      parts.push({ word: a.word, rule, mine: ours });
+    }
+    return parts.length ? combineSpeech(parts, w.letters) : NO_RULES;
+  }
+
+  /** What a spelling of `letters` (typed as `words`) costs a person under their rules; throws why not. */
+  private spellPrice(id: string, w: Walker, letters: string, words: readonly string[]): Price {
+    const price = priceOf(letters, words, this.speechFor(id, w), w.letters);
+    if (price.problem) throw new Error(price.problem);
+    return price;
+  }
+
+  /** Puts a word's spelling rule on someone for a while (an act passed on them, a verb on its caster). */
+  private bindSpeech(target: Walker, word: string, rule: SpeechRule, seconds: number, by: string) {
+    // "top" is their commonest letter as it is put on them: a GAG holds that letter, whatever they gather after.
+    if (rule.ban === "top") rule = { ...rule, ban: lettersOf("top", target.letters).join("") };
+    target.speech = (target.speech ?? []).filter((p) => p.word !== word && p.until > this.elapsed);
+    target.speech.push({ word, rule, until: this.elapsed + seconds, by });
+    this.tell(target);
+  }
+
+  /** Extra lives a person can still use (shared death.ts), Infinity for an undying body. */
+  private livesLeft(id: string, w: Walker): number {
+    let n = (w.lives ?? []).reduce((a, l) => a + l.n, 0);
+    for (const g of w.gear) n += Math.max(0, livesOf(this.statsOf(g)) - (g.livesUsed ?? 0));
+    this.state.things.forEach((t, tid) => { const g = t.owner === id && w.master === null ? this.grounded.get(tid) : undefined; if (g && !g.terrain) n += Math.max(0, livesOf(this.statsOf(g)) - (g.livesUsed ?? 0)); });
+    return n + Math.max(0, livesOf(this.ownBody(w)) - (w.bodyLivesUsed ?? 0));
+  }
+
+  /** A body as spelled (its noun and the adjectives on it), without what verbs and fields lend it for a while: lives words lend are granted apart. */
+  private ownBody(w: Walker): Stats {
+    try { return resolveSpelled(this.dict, w.body); } catch { return w.unit.body.stats; }
+  }
+
+  /** Uses one extra life, granted ones first, then carried things, things owned, the body. Returns what gave it, or null. */
+  private useLife(id: string, w: Walker): string | null {
+    const granted = (w.lives ?? []).find((l) => l.n > 0);
+    if (granted) { granted.n--; w.lives = w.lives!.filter((l) => l.n > 0); return granted.word; }
+    for (const g of w.gear) {
+      const s = this.statsOf(g);
+      if (livesOf(s) > (g.livesUsed ?? 0)) {
+        g.livesUsed = (g.livesUsed ?? 0) + 1;
+        if (s.flag("single_use")) { w.gear.splice(w.gear.indexOf(g), 1); this.rebuild(w); }
+        return g.phrase;
+      }
+    }
+    if (w.master === null) {
+      for (const [tid, t] of this.state.things) {
+        const g = t.owner === id ? this.grounded.get(tid) : undefined;
+        if (!g || g.terrain) continue;
+        const s = this.statsOf(g);
+        if (livesOf(s) > (g.livesUsed ?? 0)) { g.livesUsed = (g.livesUsed ?? 0) + 1; if (s.flag("single_use")) this.removeThing(tid); return g.phrase; }
+      }
+    }
+    if (livesOf(this.ownBody(w)) > (w.bodyLivesUsed ?? 0)) { w.bodyLivesUsed = (w.bodyLivesUsed ?? 0) + 1; return w.player.name; }
+    return null;
+  }
+
+  /** Seconds of last stand a walker has (shared death.ts `last_stand`): its body, what it carries and owns, and words it spelled. */
+  private standOf(id: string, w: Walker): number {
+    let best = lastStandOf(w.unit.body.stats);
+    for (const g of w.gear) best = Math.max(best, lastStandOf(this.statsOf(g)));
+    for (const b of w.buffs) if (typeof b.set.last_stand === "number") best = Math.max(best, b.set.last_stand);
+    if (w.master === null) this.state.things.forEach((t, tid) => { const g = t.owner === id ? this.grounded.get(tid) : undefined; if (g && !g.terrain && !(this.statsOf(g).num("field_radius") > 0)) best = Math.max(best, lastStandOf(this.statsOf(g))); });
+    return best;
+  }
+
+  /** True if whatever struck the blow denies coming back (shared death.ts `denies_revival`). */
+  private deniesRevival(killerId: string): boolean {
+    const k = this.walkers.get(killerId);
+    return !!k && (k.unit.attack.flag("denies_revival") || k.unit.body.stats.flag("denies_revival"));
+  }
+
+  /**
+   * Before a walker falls (shared death.ts): an extra life stands it up again, untouchable for a
+   * moment; with none, a last stand keeps it fighting a few seconds more. Returns true if it does
+   * not fall now.
+   */
+  private cheatDeath(id: string, w: Walker, killerId: string, final: boolean): boolean {
+    const max = w.unit.body.stats.num("integrity");
+    const stand = (hp: number) => { w.unit.body.integrity = hp; w.hp = hp; w.player.hp = Math.max(1, Math.ceil((hp / max) * 100)); };
+    if (w.standing && this.elapsed < w.standing.until) { stand(1); return true; }
+    if (final || w.standing || this.deniesRevival(killerId)) return false;
+    const life = this.useLife(id, w);
+    if (life) {
+      stand(max * REBORN_SHARE);
+      w.statuses = w.statuses.filter((a) => isBoon(a.status));
+      w.reborn = this.elapsed + REBORN_SECONDS;
+      this.statusChanged(w);
+      this.rebuild(w);
+      const message = { id, x: w.player.x, y: w.player.y, word: life.toUpperCase(), name: w.player.name };
+      for (const c of this.clients) {
+        const v = this.bodyOf(c.sessionId);
+        if (c.sessionId === id || w.master === c.sessionId || (v && Math.hypot(v.player.x - w.player.x, v.player.y - w.player.y) <= v.sight)) c.send("reborn", message);
+      }
+      this.sendTo(id, "notice", `${life.toUpperCase()}: you cheat death (${this.livesLeft(id, w) === Infinity ? "undying" : `${this.livesLeft(id, w)} more`})`);
+      if (w.master && w.master !== "-") this.sendTo(w.master, "notice", `Your ${w.player.name.toUpperCase()} rises again (${life.toUpperCase()})`);
+      for (const o of this.walkers.values()) if (o.foe === id) o.foe = null; // the blow that downed it is spent
+      const mind = this.bots.get(w.master && w.master !== "-" ? w.master : id);
+      if (mind) this.botUsed(mind, "life used");
+      return true;
+    }
+    const seconds = this.standOf(id, w);
+    if (seconds > 0) {
+      w.standing = { until: this.elapsed + seconds, killer: killerId, used: true };
+      stand(1);
+      this.hurtWith(w, [["rage", seconds]], id, id, false);
+      this.sendTo(id, "notice", `Last stand: you fight on ${Math.round(seconds)} s`);
+      const mind = this.bots.get(w.master && w.master !== "-" ? w.master : id);
+      if (mind) this.botUsed(mind, "last stand");
+      return true;
+    }
+    return false;
+  }
+
+  /** What rises from a body that falls (shared death.ts `raises`): from its killer, or an area over it. */
+  private raiserFor(killerId: string, at: Point): { noun: string; master: string } | null {
+    const k = this.walkers.get(killerId);
+    if (k) {
+      const noun = raisesOf(k.unit.attack) || raisesOf(k.unit.body.stats);
+      if (noun && this.dict.word(noun)) return { noun, master: k.master === null ? killerId : k.master };
+    }
+    for (const a of this.areas.values()) {
+      if (Math.hypot(at.x - a.x, at.y - a.y) > a.radius) continue;
+      const raises = this.dict.word(a.word)?.set.raises;
+      if (typeof raises === "string" && this.dict.word(raises.toLowerCase())) return { noun: raises.toLowerCase(), master: this.walkers.has(a.owner) ? a.owner : "-" };
+    }
+    return null;
+  }
+
+  /** The dead rise (shared death.ts `raises`): a living body killed by a raiser comes up as its creature. */
+  private rise(dead: Walker, killerId: string) {
+    if (!dead.unit.body.stats.flag("alive") || dead.boss) return;
+    const r = this.raiserFor(killerId, dead.player);
+    if (!r) return;
+    const master = r.master !== "-" && this.walkers.get(r.master)?.master === null ? r.master : "-";
+    const id = this.addCreature({ spelled: { noun: r.noun }, phrase: r.noun, vehicle: false, integrity: null }, master, dead.player.x, dead.player.y);
+    const said = `${dead.player.name.toUpperCase()} rises as ${r.noun.toUpperCase()}`;
+    if (master !== "-") { this.sendTo(master, "notice", `${said}: yours`); this.command(master); const m = this.bots.get(master); if (m) this.botUsed(m, "raised"); }
+    for (const c of this.clients) { const v = this.bodyOf(c.sessionId); if (v && c.sessionId !== master && Math.hypot(v.player.x - dead.player.x, v.player.y - dead.player.y) <= v.sight) c.send("notice", said); }
+    void id;
+  }
+
+  /**
+   * A person falls (shared death.ts): what they hold is split, the commoner half to their killer
+   * and the rarer half into a GRAVE where they fell (all of it with nobody to take it; all of it
+   * into their own tomb if they own one: `entombs`). Returns the letters the killer takes and the
+   * grave's id.
+   */
+  private bury(id: string, dead: Walker, hand: Letters, killed: boolean): { loot: string; grave: string | null } {
+    const all = Object.entries(hand).map(([ch, n]) => (n > 0 ? ch.repeat(n) : "")).join("");
+    if (!all) return { loot: "", grave: null };
+    for (const [tid, t] of this.state.things) {
+      const g = t.owner === id ? this.grounded.get(tid) : undefined;
+      if (g && this.statsOf(g).flag("entombs")) {
+        g.hoard = (g.hoard ?? "") + all;
+        g.graveOf = id;
+        t.owner = "";
+        this.producers.delete(tid);
+        this.unradiateAll(tid);
+        return { loot: "", grave: tid };
+      }
+    }
+    const { grave, loot } = graveSplit(all, killed);
+    if (!grave || !this.dict.word("grave")) return { loot: all, grave: null };
+    const gid = this.addThing({ spelled: { noun: "grave" }, phrase: "grave", vehicle: false, integrity: null, hoard: grave, graveOf: id }, "", dead.player.x, dead.player.y);
+    return { loot, grave: gid };
+  }
+
+  /**
+   * A knocked-out person becomes a ghost where they fell (shared death.ts): never alive, never
+   * struck, gliding through everything, spelling only `haunts` words, free, every GHOST_GAP s.
+   */
+  private makeGhost(id: string, dead: Walker, killerId: string, grave: string | null) {
+    const player = new Player();
+    Object.assign(player, { name: dead.player.name, x: dead.player.x, y: dead.player.y, hp: 0, gear: "", owner: "", status: "", count: 1, traits: "", ghost: true });
+    const unit = new Unit(this.dict, { body: { noun: "human" }, effects: [{ set: { untargetable: true }, ops: [] }] });
+    const proxy: Walker = {
+      ...dead, player, unit, gear: [], hp: unit.body.integrity, foe: null, picked: null, aim: null, buffs: [], flying: true, target: null, route: [], routeTo: null,
+      statuses: [], hamper: { ...hampered([]), untouchable: true }, letters: {}, sight: GHOST_SIGHT, speech: [], lives: [], standing: undefined, inside: undefined,
+      seen: dead.seen, seenThings: dead.seenThings,
+    };
+    this.state.players.set(id, player);
+    this.ghosts.set(id, { id, proxy, target: null, next: this.elapsed + GHOST_GAP / 2, grave, killer: this.blame(killerId) ?? "", bot: this.bots.has(id), tries: 0 });
+    this.state.ghosts = this.ghosts.size;
+    this.forgetSeen(id);
+    this.sendTo(id, "ghost", { gap: GHOST_GAP, sight: GHOST_SIGHT });
+  }
+
+  /** Moves ghosts toward where they are going, through everything (each tick). */
+  private driftGhosts(seconds: number) {
+    for (const g of this.ghosts.values()) {
+      const p = g.proxy.player;
+      if (!g.target) continue;
+      const dx = g.target.x - p.x, dy = g.target.y - p.y, d = Math.hypot(dx, dy), step = GHOST_SPEED * seconds;
+      if (d <= step) { p.x = g.target.x; p.y = g.target.y; g.target = null; }
+      else { p.x += (dx / d) * step; p.y += (dy / d) * step; }
+    }
+  }
+
+  /**
+   * A ghost spells (shared death.ts): only a word with `haunts`, free, once every GHOST_GAP s. Its
+   * damage is left out (ghosts haunt; they never kill). An act or field goes where it is aimed, a
+   * touch on whoever is picked, and a verb (HAUNT, BOO) on whoever the ghost touches.
+   */
+  haunt(id: string, g: Ghost, text: unknown): string {
+    if (typeof text !== "string" || text.length > 40) throw new Error("Spell something");
+    if (this.elapsed < g.next) throw new Error(`Your ghost gathers itself: ${Math.ceil(g.next - this.elapsed)} s`);
+    const phrase = parsePhrase(this.dict, text.trim().split(/\s+/).at(-1)!);
+    if (!phrase.stats.flag("haunts")) throw new Error(`A ghost cannot spell ${phrase.noun.toUpperCase()}: only haunting words`);
+    // Ghosts haunt; they never kill: no damage, and no harm that wears a body down (poison, burns, a sealed fate).
+    for (const [k, v] of phrase.stats.entries()) if ((k.startsWith("dmg_") || GHOST_HARMLESS.includes(k)) && typeof v === "number" && v > 0) phrase.stats.set(k, 0);
+    const w = g.proxy, word = phrase.noun.toUpperCase();
+    let done: string;
+    if (phrase.kind === "verb" && phrase.stats.get("effect_target") !== "touched") {
+      const touch = new Sheet(this.dict);
+      touch.apply(phrase.effect?.ops ?? []);
+      const given = inflicts(phrase.stats, touch);
+      const picked = w.picked ? this.walkers.get(w.picked) : undefined;
+      const near = (o: Walker) => Math.hypot(o.player.x - w.player.x, o.player.y - w.player.y);
+      const victim = picked && near(picked) <= 4 ? picked : [...this.walkers.values()].filter((o) => !o.hamper.untouchable && near(o) <= 4).sort((a, b) => near(a) - near(b))[0];
+      if (!victim) throw new Error(`Nobody near to ${word}: drift up to someone`);
+      for (let i = given.length - 1; i >= 0; i--) if (GHOST_HARMLESS.includes(`inflict_${given[i]![0]}`)) given.splice(i, 1);
+      if (!given.length) given.push(["fear", 4]);
+      this.hurtWith(victim, given, id, id, false);
+      done = `${word} on ${victim.player.name}: ${given.map(([st]) => st).join(", ")}`;
+      if (victim.master === null) this.sendTo(victim.id, "notice", `${w.player.name}'s ghost: ${word} (${given.map(([st]) => st).join(", ")})`);
+    } else if (phrase.kind === "verb") done = this.touch(id, w, phrase) ?? word;
+    else if (phrase.kind === "event") done = this.happen(id, w, phrase);
+    else if (phrase.kind === "field") done = this.field(id, w, phrase);
+    else if (phrase.kind === "sky") done = this.sky(id, phrase, phrase.noun);
+    else throw new Error(`A ghost cannot make things: ${word}`);
+    g.next = this.elapsed + GHOST_GAP;
+    this.sendTo(id, "spelled", `Ghost: ${done}`);
+    const mind = this.allBots.get(id); // a fallen bot's mind is kept there
+    if (mind) this.botUsed(mind, "haunt");
+    return done;
+  }
+
+  /**
+   * A ghost comes back to life (shared death.ts `revives`): where it drifts, with `share` of full
+   * health and what its grave still holds. False if it is not a ghost.
+   */
+  private revive(gid: string, share: number, by: string): boolean {
+    const g = this.ghosts.get(gid);
+    if (!g || this.state.phase !== "playing") return false;
+    const at = { x: g.proxy.player.x, y: g.proxy.player.y }, name = g.proxy.player.name;
+    this.ghosts.delete(gid);
+    this.state.players.delete(gid);
+    this.state.ghosts = this.ghosts.size;
+    const spot = nearestWalkable(this.map, at);
+    const w = this.addPerson(gid, name, spot);
+    this.everJoined--; // the same person back, not a new one
+    this.forgetSeen(gid);
+    this.state.alive = this.people.length;
+    w.letters = {};
+    const grave = g.grave ? this.grounded.get(g.grave) : undefined;
+    if (grave?.hoard) { addLetters(w.letters, grave.hoard); grave.hoard = ""; if (grave.graveOf === gid && grave.spelled.noun === "grave") this.removeThing(g.grave!); }
+    const max = w.unit.body.stats.num("integrity");
+    w.hp = Math.max(1, max * Math.max(0.1, share));
+    w.unit.body.integrity = w.hp;
+    w.player.hp = Math.ceil((w.hp / max) * 100);
+    w.reborn = this.elapsed + REBORN_SECONDS;
+    this.statusChanged(w);
+    // Followers that waited for them come back to them.
+    for (const [cid, c] of this.walkers) if (c.formerMaster === gid && c.master === "-") { this.setMaster(cid, c, gid); c.formerMaster = undefined; }
+    this.command(gid);
+    const client = this.clients.find((c) => c.sessionId === gid);
+    const watching = this.watchers.get(gid);
+    if (watching) { w.seen = watching.seen; w.seenThings = watching.seenThings; this.watchers.delete(gid); }
+    if (client) { client.view ??= new StateView(); client.view.add(w.player); client.send("letters", w.letters); client.send("revived", { by }); }
+    this.tell(w);
+    for (const c of this.clients) if (c.sessionId !== gid) c.send("notice", `${name} is back from the dead (${by})`);
+    // A bot back from the dead thinks again.
+    const mind = this.allBots.get(gid);
+    if (mind) { this.bots.set(gid, mind); this.botUsed(mind, "revived"); mind.peaceUntil = this.elapsed + 10; }
+    this.refreshViews();
+    return true;
+  }
+
+  /**
+   * Once a second: ghosts beside a follower or thing of their side that `revives` come back (a
+   * MEDIC that followed them, their HOSPITAL), each reviver once every REVIVE_COOLDOWN s; last
+   * stands run out; the reborn are touchable again; and frightened followers lose loyalty
+   * (FEAR_LOYALTY a minute), deserting when it runs out.
+   */
+  private deathBeat(since: number) {
+    for (const [gid, g] of [...this.ghosts]) {
+      const p = g.proxy.player;
+      const ready = (stats: Stats, at: number | undefined) => revivesOf(stats) > 0 && (at ?? -Infinity) <= this.elapsed;
+      let done = false;
+      for (const [cid, c] of this.walkers) {
+        if (done || Math.hypot(c.player.x - p.x, c.player.y - p.y) > REVIVE_TILES || !ready(c.unit.body.stats, c.reviveAt)) continue;
+        if (c.formerMaster !== gid && !(c.master && c.master !== "-" && this.sameSide(c.master, gid, g.proxy))) continue;
+        c.reviveAt = this.elapsed + REVIVE_COOLDOWN;
+        done = this.revive(gid, revivesOf(c.unit.body.stats), c.player.name.toUpperCase());
+        void cid;
+      }
+      if (done) continue;
+      for (const [tid, t] of this.state.things) {
+        const tg = this.grounded.get(tid);
+        if (!tg || t.owner !== gid || Math.hypot(t.x - p.x, t.y - p.y) > REVIVE_TILES + (this.rooms.get(tid)?.r ?? 0) || !ready(this.statsOf(tg), tg.reviveAt)) continue;
+        tg.reviveAt = this.elapsed + REVIVE_COOLDOWN;
+        if (this.revive(gid, revivesOf(this.statsOf(tg)), tg.phrase.toUpperCase())) break;
+      }
+    }
+    for (const [id, w] of [...this.walkers]) {
+      if (w.reborn !== undefined && this.elapsed >= w.reborn) { w.reborn = undefined; this.statusChanged(w); }
+      if (w.standing && this.elapsed >= w.standing.until) {
+        const killer = w.standing.killer;
+        w.standing.until = -Infinity;
+        this.kill(id, killer, true);
+        continue;
+      }
+      if (!w.master || w.master === "-") continue;
+      const afraid = w.fleeing || w.statuses.some((a) => a.status === "fear");
+      if (!afraid) continue;
+      w.hungerLost += FEAR_LOYALTY * (since / 60);
+      if (w.hungerLost >= w.unit.body.stats.num("loyalty")) {
+        const master = w.master;
+        this.sendTo(master, "notice", `Your ${w.player.name.toUpperCase()} deserted you in fear`);
+        this.setMaster(id, w, "-");
+        this.command(master);
+      }
+    }
+  }
+
+  /**
+   * A mutiny (shared mind.ts `mutiny`), from any word that carries one: followers of others it
+   * reaches whose loyalty left is below it break away, running wild, or coming over to the
+   * speller with `mutiny_joins` while they have command to spare. Returns what it did, or "".
+   */
+  private mutiny(id: string, walker: Walker, s: Stats): string {
+    const m = s.num("mutiny");
+    if (!(m > 0)) return "";
+    const picked = walker.picked ? this.walkers.get(walker.picked)?.player : undefined;
+    const at = walker.aim ?? picked ?? walker.player;
+    const map = s.get("placement") === "map";
+    const reach = map ? Infinity : Math.max(MUTINY_TILES, (s.num("event_radius") || s.num("field_radius")) / TILE_METERS || 0);
+    const joins = s.flag("mutiny_joins");
+    let left = 0, came = 0;
+    const room = () => { const h = this.holdings(id).get(id); return h ? commandLimit(this.sources(walker, h)) - h.creatures.length : 0; };
+    for (const [cid, c] of [...this.walkers]) {
+      if (!c.master || c.master === "-" || c.master === id || this.sameSide(c.master, id, walker)) continue;
+      if (Math.hypot(c.player.x - at.x, c.player.y - at.y) > reach) continue;
+      if (!mutinies(c.unit.body.stats.num("loyalty"), c.hungerLost, m)) continue;
+      const was = c.master;
+      if (joins && room() > 0) { this.setMaster(cid, c, id); came++; } else { this.setMaster(cid, c, "-"); left++; }
+      this.sendTo(was, "notice", `Your ${c.player.name.toUpperCase()} ${joins ? `went over to ${walker.player.name}` : "deserted"}`);
+      this.command(was);
+    }
+    if (came) this.command(id);
+    const mind = this.bots.get(id);
+    if (mind && (left || came)) this.botUsed(mind, "mutiny");
+    return left || came ? [came ? `${came} follower${came === 1 ? "" : "s"} came over to you` : "", left ? `${left} deserted` : ""].filter(Boolean).join(", ") : "";
+  }
+
+  /**
+   * What a spelling does through the concept systems besides its kind, whatever its kind: the
+   * storm wall, a mutiny, extra lives and a last stand for whoever it is aimed at (someone picked
+   * for an act on a person or a touch, else the speller), and a spelling rule a verb puts on its
+   * speller. Returns the lines to add.
+   */
+  private conceptSpell(id: string, walker: Walker, phrase: Phrase): string[] {
+    const s = phrase.stats, said: string[] = [];
+    const storm = this.bendStorm(id, walker, phrase.noun, s);
+    if (storm) said.push(storm);
+    const mut = this.mutiny(id, walker, s);
+    if (mut) said.push(mut);
+    if (phrase.kind === "object") return said;
+    const aimed = (phrase.kind === "verb" && s.get("effect_target") === "touched") || (phrase.kind === "event" && s.get("event_target") === "character" && s.get("placement") === "target");
+    const target = aimed && walker.picked ? this.walkers.get(walker.picked) ?? walker : walker;
+    const lives = livesOf(s);
+    if (lives > 0) {
+      target.lives = [...(target.lives ?? []).filter((l) => l.word !== phrase.noun), { word: phrase.noun, n: lives === Infinity ? 99 : lives }];
+      said.push(`${target === walker ? "you have" : `${target.player.name} has`} ${lives === Infinity ? "lives without end" : `${lives} extra ${lives === 1 ? "life" : "lives"}`}`);
+      this.tell(target);
+    }
+    const stand = lastStandOf(s);
+    if (stand > 0 && !(s.num("field_radius") > 0 && s.get("field_targets") !== "self")) {
+      const seconds = Math.max(120, effectSeconds(s.num("duration")) || (s.num("field_duration") || s.num("event_duration")) * 60);
+      target.buffs = target.buffs.filter((b) => b.word !== `${phrase.noun} (stand)`);
+      target.buffs.push({ word: `${phrase.noun} (stand)`, set: { last_stand: stand }, ops: [], until: this.elapsed + seconds });
+      said.push(`a last stand of ${Math.round(stand)} s`);
+    }
+    if (phrase.kind === "verb" && s.get("effect_target") !== "touched") {
+      const rule = speechOf(s);
+      if (rule) { this.bindSpeech(walker, phrase.noun, rule, effectSeconds(s.num("duration")) || 60, id); said.push(`your spelling: ${this.speechWords(rule)}`); }
+    }
+    return said;
+  }
+
+  /** Words a ghost may spell (shared death.ts `haunts`), worked out once: acts, fields and verbs. */
+  private hauntWords: string[] | null = null;
+
+  /**
+   * Bot ghosts (the same code as a person's ghost): drift toward whoever knocked them out (else
+   * the nearest person) and haunt them with a word of theirs whenever it is ready.
+   */
+  private ghostBots() {
+    if (!this.hauntWords) {
+      this.hauntWords = [];
+      for (const [word, def] of this.dict.words) {
+        if (def.set.haunts !== true || this.dict.crude(word)) continue;
+        try { const p = parsePhrase(this.dict, word); if (p.kind !== "object") this.hauntWords.push(word); } catch { /* not spellable alone */ }
+      }
+    }
+    for (const [gid, g] of this.ghosts) {
+      if (!g.bot) continue;
+      const p = g.proxy.player;
+      const killer = this.walkers.get(g.killer);
+      const near = (o: Walker) => Math.hypot(o.player.x - p.x, o.player.y - p.y);
+      const quarry = killer && killer.master === null ? killer : [...this.walkers.values()].filter((o) => o.master === null).sort((a, b) => near(a) - near(b))[0];
+      if (!quarry) continue;
+      if (near(quarry) > 2.5) g.target = { x: quarry.player.x + (this.rng() - 0.5) * 2, y: quarry.player.y + (this.rng() - 0.5) * 2 };
+      if (this.elapsed < g.next || near(quarry) > 6 || !this.hauntWords.length) continue;
+      g.proxy.picked = quarry.id;
+      g.proxy.aim = { x: quarry.player.x, y: quarry.player.y };
+      for (let i = 0; i < 4; i++) {
+        const word = this.hauntWords[Math.floor(this.rng() * this.hauntWords.length)]!;
+        try { this.haunt(gid, g, word); break; } catch { g.tries++; }
+      }
+      if (this.elapsed < g.next) continue;
+      g.next = this.elapsed + 2; // nothing took: try again soon
+    }
+  }
+
+  /** What binds a person's spelling, as a short key: the loadout is sent again when it changes. */
+  private speechSig(id: string, w: Walker): string {
+    const r = this.speechFor(id, w);
+    return `${r.banned.join("")}|${r.cost}|${r.limit}|${r.wild}|${r.doubled.join("")}|${r.typos}`;
+  }
+
+  /** The mean loyalty left of a person's followers (shared mind.ts `loyaltyLeft`), or undefined with none. */
+  private loyaltyOf(id: string): number | undefined {
+    const list = [...this.walkers.values()].filter((c) => c.master === id).map((c) => loyaltyLeft(c.unit.body.stats.num("loyalty"), c.hungerLost));
+    return list.length ? Math.round((list.reduce((a, b) => a + b, 0) / list.length) * 10) / 10 : undefined;
+  }
+
+  /**
+   * The storm wall for a bot (shared round.ts), the same wall people see: outside the circle it
+   * closes to while it closes (or soon), or outside the wall itself, it heads for that circle's
+   * middle, and far out it spells a word that holds the wall if it has one. A fight right by it
+   * goes on unless the wall is on it. Returns true while it heads in.
+   */
+  private botStorm(id: string, w: Walker, mind: BotMind, have: Uint8Array, attacked: boolean, canSpell: boolean): boolean {
+    const st = this.stormNow();
+    if (!st) return false;
+    const outNow = outsideBy(st, w.player.x, w.player.y);
+    const outNext = outsideBy({ x: st.nextX, y: st.nextY, r: st.nextR }, w.player.x, w.player.y);
+    const soon = st.shrinking || st.stage > 0 || st.left < 60;
+    if (!(outNow > -1 || (soon && outNext > -1))) return false;
+    const foe = w.foe ? this.walkers.get(w.foe) : undefined;
+    const close = !!foe && Math.hypot(foe.player.x - w.player.x, foe.player.y - w.player.y) <= 6;
+    if ((attacked || close) && outNow < 3) return false;
+    if (canSpell && outNow > 3 && !this.stormHolds.length) {
+      const x = chooseWord(wordBook(this.dict).byUse.get("stormhold"), have, mind.difficulty, this.rng, (x) => !mind.tried.has(x.word));
+      if (x) { try { this.spellWord(id, w, x.word); mind.stormSpelled = "storm hold"; } catch { mind.tried.add(x.word); } }
+    }
+    const stage = st.stage * 2 + (st.shrinking ? 1 : 0);
+    if (!mind.stormGoal || mind.stormGoal.stage !== stage) {
+      const t = this.rng() * Math.PI * 2, d = Math.sqrt(this.rng()) * st.nextR * 0.4;
+      mind.stormGoal = { stage, ...nearestWalkable(this.map, { x: st.nextX + Math.cos(t) * d, y: st.nextY + Math.sin(t) * d }) };
+      this.botUsed(mind, "storm");
+    }
+    if (Math.hypot(mind.stormGoal.x - w.player.x, mind.stormGoal.y - w.player.y) < 1.5) return false;
+    w.foe = null; w.gathering = 0; mind.fetch = undefined; mind.goal = undefined;
+    w.target = { x: mind.stormGoal.x, y: mind.stormGoal.y };
+    return true;
+  }
+
+  /** True if a walker stands well inside the circle the storm wall closes to (shared round.ts). */
+  private stormInside(w: Walker): boolean {
+    const st = this.stormNow();
+    return !!st && !st.closed && outsideBy({ x: st.nextX, y: st.nextY, r: st.nextR }, w.player.x, w.player.y) < -3;
+  }
+
+  /** A spelling rule in a few words for messages. */
+  private speechWords(rule: SpeechRule): string {
+    return [rule.ban ? `${rule.ban === "top" ? "commonest letter" : rule.ban.toUpperCase()} banned` : "", rule.cost !== 1 ? `cost ×${+rule.cost.toFixed(2)}` : "",
+      rule.limit ? `${rule.limit} letters at most` : "", rule.wild ? `${rule.wild} blank${rule.wild === 1 ? "" : "s"}` : "", rule.double ? `${rule.double} count double` : "",
+      rule.typos ? "typos read" : "", rule.free ? "free speech" : ""].filter(Boolean).join(", ");
+  }
+
+  /** True if a word does something through the concept systems (so a verb or event is not "nothing yet"). */
+  private conceptual(s: Stats): boolean {
+    return !!speechOf(s) || livesOf(s) > 0 || lastStandOf(s) > 0 || !!stormBendOf(s) || s.num("mutiny") > 0 || revivesOf(s) > 0;
+  }
+
   refreshViews() {
     // Bucket players into cells one sight range wide, so each client checks nine cells.
     // Only people have views, so only their sight sets the cell size; a far-sighted creature must not.
-    const cell = Math.max(1, ...this.clients.map((c) => this.walkers.get(c.sessionId)?.sight ?? 0));
+    const cell = Math.max(1, ...this.clients.map((c) => this.bodyOf(c.sessionId)?.sight ?? 0));
     const grid = new Map<number, string[]>();
     const key = (x: number, y: number) => Math.floor(x / cell) * 4096 + Math.floor(y / cell);
     for (const [id, w] of this.walkers) {
       const k = key(w.player.x, w.player.y);
       (grid.get(k) ?? grid.set(k, []).get(k)!).push(id);
     }
+    // Ghosts are seen by the living and by each other (shared death.ts).
+    for (const [id, g] of this.ghosts) {
+      const k = key(g.proxy.player.x, g.proxy.player.y);
+      (grid.get(k) ?? grid.set(k, []).get(k)!).push(id);
+    }
     for (const client of this.clients) {
-      // The knocked out see what their killer sees (`watchers`), with their own record of what is in view.
+      // The knocked out see what their killer sees (`watchers`), or what their ghost sees, with their own record of what is in view.
       const own = this.walkers.get(client.sessionId), watching = own ? undefined : this.watchers.get(client.sessionId);
-      const me = own ?? (watching && this.walkers.get(watching.watch));
+      const me = own ?? (watching && this.bodyOf(watching.watch));
       if (!me || !client.view) continue;
       const seenBy = own ?? watching!;
       const meId = own ? client.sessionId : watching!.watch;
@@ -8246,16 +9058,16 @@ export class WorldRoom extends Room {
       for (let dx = -1; dx <= 1; dx++) {
         for (let dy = -1; dy <= 1; dy++) {
           for (const id of grid.get(key(me.player.x + dx * cell, me.player.y + dy * cell)) ?? []) {
-            const o = this.walkers.get(id)!, other = o.player;
+            const o = this.bodyOf(id)!, other = o.player;
             // Indoors is out of sight from outside (shared interior.ts).
             if (Math.hypot(other.x - me.player.x, other.y - me.player.y) <= me.sight && !(o.inside && this.walkerHidden(meId, me, o))) now.add(id);
           }
         }
       }
-      for (const id of now) if (!seenBy.seen.has(id)) client.view.add(this.walkers.get(id)!.player);
+      for (const id of now) if (!seenBy.seen.has(id)) client.view.add(this.bodyOf(id)!.player);
       for (const id of seenBy.seen) {
         if (!now.has(id)) {
-          const gone = this.walkers.get(id)?.player;
+          const gone = this.bodyOf(id)?.player;
           if (gone) client.view.remove(gone);
         }
       }

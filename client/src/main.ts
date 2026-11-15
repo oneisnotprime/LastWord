@@ -23,6 +23,7 @@ import { Painter, PX, useMade, useStandee, ZOOM } from "./paint.js";
 import { Sky } from "./sky.js";
 import { Zones } from "./zones.js";
 import { RoomView } from "./rooms.js";
+import { StormView, stormOf, stormChip } from "./storm.js";
 import { callLine, drawIntel, Pings, ScreenView } from "./comms.js";
 
 /** The fog canvas's size, and the radius of its clear middle, in canvas pixels. */
@@ -203,6 +204,12 @@ class World extends Phaser.Scene {
   private reticle!: Phaser.GameObjects.Graphics;
   /** Blows shown so far, for browser checks. */
   hitCount = 0;
+  /** Views drawn as ghosts, to undo when someone is revived. */
+  private ghostViews = new WeakSet<object>();
+  /** The storm wall on the map (shared round.ts). */
+  private stormView!: StormView;
+  /** Knocked out and haunting as a ghost (shared death.ts): you drift and spell haunting words. */
+  ghost = false;
 
   async create() {
     // The list of generated word images (a few KB); each image loads when its word first appears.
@@ -217,8 +224,9 @@ class World extends Phaser.Scene {
       try { phrase = alone ? null : parsePhrase(dictionary, text); } catch { /* the server says why */ }
       const how = alone ? "describe" : phrase ? aimOf(phrase) : null;
       if (!how) return this.net?.spell(text);
-      const lacking = missing(this.hud.letters, alone ? alone.letters : phrase!.letters);
-      if (lacking) return this.hud.toast(`No ${lacking.toUpperCase().split("").join(" ")}`, "bad");
+      // Your spelling rules (shared speech.ts: blanks, banned letters, a tax), or a ghost's free words.
+      const lacking = this.hud.lacking(alone ? alone.letters : phrase!.letters, text.trim().toLowerCase().split(/\s+/));
+      if (lacking) return this.hud.toast(lacking, "bad");
       const words = alone ? alone.adjectives.join(" ") : text.trim().toLowerCase();
       if (target) this.release(words, how, target.id);
       else this.startAim(words, how);
@@ -244,6 +252,8 @@ class World extends Phaser.Scene {
     window.addEventListener("keydown", (e) => {
       if (e.repeat || this.hud.typing || !this.net || this.over) return;
       const key = e.key.toLowerCase();
+      // A ghost (shared death.ts): Tab watches the next person still in the round, then your ghost again.
+      if (this.ghost && key === "tab") { e.preventDefault(); return this.nextWatch(); }
       if (this.pings.key(key)) return;
       if (key === "v") this.pings.toggle();
       else if (key === "g") this.net.gather();
@@ -300,7 +310,17 @@ class World extends Phaser.Scene {
           this.deathBeat();
           this.recapView.death(recap);
         },
-        watching: (who) => { this.watching = who.id; this.hud.knockedOut(who.name); },
+        watching: (who) => { this.watching = who.id; this.hud.knockedOut(who.id === this.net.sessionId ? null : who.name); },
+        ghost: (info) => {
+          // A ghost (shared death.ts): you drift (click or keys), spell only haunting words, and Tab watches the living.
+          this.ghost = true; this.over = false;
+          this.hud.ghostMode(info.gap);
+        },
+        revived: (info) => {
+          this.ghost = false; this.over = false; this.watching = null;
+          this.hud.back(); this.hud.toast(`Back from the dead (${info.by})`, "good");
+        },
+        reborn: (e) => this.rebornBurst(e),
         sensed: (what) => this.minimap.picked(what),
         won: () => {},
         roundover: (info) => {
@@ -345,6 +365,7 @@ class World extends Phaser.Scene {
     this.tracerGfx = this.add.graphics().setDepth(11001);
     this.fog = this.makeFog();
     this.reticle = this.add.graphics().setDepth(11600);
+    this.stormView = new StormView(this, PX, () => this.map?.size ?? 256);
     pad.world = (p, dt) => this.padFrame(p, dt);
     // enableCapture false: the keys must still reach the spelling box.
     this.keys = this.input.keyboard!.addKeys(
@@ -436,6 +457,24 @@ class World extends Phaser.Scene {
   }
 
   /** The player, creature or thing under a map point, by id; `self` counts you too. */
+  /** A ghost watches the next person still in the round (Tab), and after the last, its own ghost again. */
+  private nextWatch() {
+    const people: string[] = [];
+    this.net.state.players.forEach((p: any, id: string) => { if (p.owner === "" && !p.ghost && id !== this.net.sessionId) people.push(id); });
+    const i = this.watching ? people.indexOf(this.watching) : -1;
+    const next = people[i + 1] ?? null;
+    this.net.watch(next);
+    if (!next) this.watching = null;
+  }
+
+  /** Someone used an extra life (shared death.ts): a gold ring and their life's word over them. */
+  private rebornBurst(e: { x: number; y: number; word: string; name: string }) {
+    const x = e.x * PX, y = e.y * PX;
+    const ring = this.add.circle(x, y, 10, 0xffe9a8, 0.0).setStrokeStyle(4, 0xffd25a, 1).setDepth(12000);
+    this.tweens.add({ targets: ring, scale: 5, alpha: 0, duration: 900, onComplete: () => ring.destroy() });
+    this.fx.note(e.x, e.y - 1.6, `${e.word} · rises again`);
+  }
+
   private hitAt(x: number, y: number, self = false): string | null {
     let hit: string | null = null, best = Infinity;
     this.net.state.things.forEach((t: any, id: string) => { const d = Math.hypot(t.x - x, t.y - y); if (d < 0.7 && d < best) { hit = id; best = d; } });
@@ -1384,8 +1423,11 @@ class World extends Phaser.Scene {
         const traits = String(p.traits ?? "");
         const look = sized(lookOf(dictionary, traits ? `${traits} human` : "human"), p.size, traits ? `${traits} human` : "human");
         this.dress(v, { ...look, colour: look.colour === lookOf(dictionary, "human").colour ? colour : look.colour }, this.slotOf(p.gear, "held"), statuses, this.slotOf(p.gear, "ride"));
-        const name = traits ? `${String(p.name).toUpperCase()} · ${traits.toUpperCase()}` : String(p.name).toUpperCase();
+        const name = p.ghost ? `${String(p.name).toUpperCase()} · GHOST` : traits ? `${String(p.name).toUpperCase()} · ${traits.toUpperCase()}` : String(p.name).toUpperCase();
         this.label(v, p.gear ? [name, `+ ${p.gear}`] : [name], id === mine ? TAG_INK.me : TAG_INK.person);
+        // A ghost (shared death.ts): pale and see-through, bobbing over the ground.
+        if (p.ghost) { v.body.setAlpha(0.4 + Math.sin(time / 300) * 0.08).setTint(0xcfe0ff); this.ghostViews.add(v); }
+        else if (this.ghostViews.delete(v)) v.body.clearTint().setAlpha(1);
         this.keepTags.add(v.tag); // people's tags are never hidden in a pile
       }
       // Ease toward the server's position (fanned out of a pile) so ten updates a second look smooth.
@@ -1402,13 +1444,17 @@ class World extends Phaser.Scene {
       const shown = !f?.hidden && !blind;
       v.tag.setVisible(shown);
       for (const b of v.badges) b.setVisible(shown);
-      if (id === mine || (id === this.watching && !state.players.get(mine))) this.cameras.main.centerOn(v.x, v.y);
+      // The camera follows you, or whoever you watch once knocked out (a ghost may watch the living: Tab).
+      const watchingOther = !!this.watching && this.watching !== mine && (this.ghost || !state.players.get(mine));
+      if ((id === mine && !watchingOther) || (id === this.watching && watchingOther)) this.cameras.main.centerOn(v.x, v.y);
     });
     for (const [id, v] of this.views) if (!live.has(id)) this.drop(id, v);
     this.roomView.keep(rooms);
     this.indoors = indoors;
     this.unstackTags();
     this.overlays(time, delta);
+    const storm = stormOf(state);
+    this.stormView.update(storm, time);
     if (time - this.screenAt > 250) { this.screenAt = time; this.screenView.apply(); }
     this.pings.frame((x, y) => {
       const cam = this.cameras.main;
@@ -1425,10 +1471,14 @@ class World extends Phaser.Scene {
     this.sky.update(state.daylight, state.weather, overMap, lights, time, delta);
 
     const me = state.players.get(mine);
-    if (!me) {
-      this.hud.lock(); // dead or spectating: no spelling
+    if (!me || (this.ghost && this.watching && this.watching !== mine)) {
+      if (!this.ghost) this.hud.lock(); // dead or spectating: no spelling (a ghost still haunts)
+      const watched = this.watching ? state.players.get(this.watching) : null;
+      if (storm) this.chips.update([], state.clock ?? 0, stormChip(storm, watched));
+      if (watched) this.minimap.draw(this.map, watched, this.editsApplied, time, storm);
+      if (this.ghost) this.hud.hud({ name: this.myName, hp: 0, alive: state.alive, clock: state.clock ?? 0, ghosts: state.ghosts ?? 0 });
       if (this.over) {
-        this.hud.hud({ name: this.myName, hp: 0, alive: state.alive, clock: state.clock ?? 0 }); // the round goes on
+        this.hud.hud({ name: this.myName, hp: 0, alive: state.alive, clock: state.clock ?? 0, ghosts: state.ghosts ?? 0 }); // the round goes on
         this.hud.knockedOut(this.watching ? String(state.players.get(this.watching)?.name ?? "") || null : null);
       }
       return;
@@ -1451,9 +1501,9 @@ class World extends Phaser.Scene {
       this.steering = false;
     }
     let others = 0;
-    state.players.forEach((p: any, id: string) => { if (id !== mine && p.owner === "") others++; });
+    state.players.forEach((p: any, id: string) => { if (id !== mine && p.owner === "" && !p.ghost) others++; });
     this.myName = String(me.name);
-    this.hud.hud({ name: this.myName, hp: me.hp, alive: state.alive || others + 1, clock: state.clock ?? 0 });
+    this.hud.hud({ name: this.myName, hp: me.hp, alive: state.alive || others + 1, clock: state.clock ?? 0, ghosts: state.ghosts ?? 0 });
     let city = "";
     state.cities?.forEach((c: any) => {
       if (Math.hypot(c.x - me.x, c.y - me.y) <= c.radius + 1) city = `${c.ruler ? `ruled by ${c.ruler}` : "nobody rules it"} · ${c.citizens} citizen${c.citizens === 1 ? "" : "s"}`;
@@ -1471,8 +1521,8 @@ class World extends Phaser.Scene {
       const p = this.input.activePointer, at = this.cameras.main.getWorldPoint(p.x, p.y);
       this.hover = this.hitAt(at.x / PX, at.y / PX, this.aimHow === "describe");
     } else this.hover = null;
-    this.chips.update(Events.at(state, me.x, me.y), state.clock ?? 0);
-    this.minimap.draw(this.map, me, this.editsApplied, time);
+    this.chips.update(Events.at(state, me.x, me.y), state.clock ?? 0, storm ? stormChip(storm, me) : null);
+    this.minimap.draw(this.map, me, this.editsApplied, time, storm);
   }
 }
 

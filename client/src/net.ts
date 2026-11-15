@@ -35,6 +35,8 @@ export interface Connection {
   /** Pick a starting kit by its index among those offered. */
   pickKit(step: number, index: number): void;
   act(type: "market" | "sell" | "hire" | "swap" | "transmute" | "offer" | "answer", payload: unknown): void;
+  /** Knocked out: watch a person still in the round, or null for your own ghost (shared death.ts). */
+  watch(id: string | null): void;
   /** A ping (shared comms.ts) at a spot on the map, else where you stand. */
   ping(kind: Ping, x?: number, y?: number): void;
 }
@@ -95,6 +97,12 @@ export interface Handlers {
   kit(state: KitState): void;
   /** A grand spelling somewhere on the map (a DRAGON, a METEOR): it makes an entrance. */
   entrance(e: Entrance): void;
+  /** Knocked out, you haunt the map as a ghost (shared death.ts): a word every `gap` seconds. */
+  ghost(info: { gap: number; sight: number }): void;
+  /** Someone in sight used an extra life (shared death.ts): where, and what gave it. */
+  reborn(e: { id: string; x: number; y: number; word: string; name: string }): void;
+  /** You are back from the dead. */
+  revived(info: { by: string }): void;
   /** People read through insight (shared knowledge.ts): racks, gear, what they can spell. */
   intel(list: Intel[]): void;
   /** A spelling said aloud in earshot (shared comms.ts), or a lie's made-up one. */
@@ -156,6 +164,9 @@ export async function connect(on: Handlers): Promise<Connection> {
   room.onMessage("kits", on.kits);
   room.onMessage("kit", on.kit);
   room.onMessage("entrance", on.entrance);
+  room.onMessage("ghost", on.ghost);
+  room.onMessage("reborn", on.reborn);
+  room.onMessage("revived", on.revived);
   room.onMessage("intel", on.intel);
   room.onMessage("call", on.call);
   room.onMessage("pinged", on.pinged);
@@ -186,6 +197,7 @@ export async function connect(on: Handlers): Promise<Connection> {
     act: (type, payload) => room.send(type, payload),
     ping: (kind, x, y) => room.send("ping", { kind, ...(x !== undefined && y !== undefined ? { x, y } : {}) }),
     pickKit: (step, index) => room.send("kit", { step, index }),
+    watch: (id) => room.send("watch", id ? { id } : null),
     leave: () => { room.onLeave.clear?.(); void room.leave(true); },
     describe: (text, target, gear) => room.send("describe", { text, target, ...(gear !== undefined ? { gear } : {}) }),
   };

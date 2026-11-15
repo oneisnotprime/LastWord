@@ -6,6 +6,7 @@
  * whoever is in it.
  */
 import { type Blot, combineSenses, Tile, tileAt, type LoadoutDetail, type Sensed, type WorldMap } from "@lastword/shared";
+import type { StormState } from "./storm.js";
 
 const COLOURS: Record<Tile, [number, number, number]> = {
   [Tile.DeepWater]: [61, 103, 120], [Tile.Water]: [109, 158, 170], [Tile.Sand]: [230, 211, 163], [Tile.Grass]: [163, 184, 111],
@@ -38,7 +39,8 @@ export class Minimap {
     this.range = combineSenses(d.senses ?? []);
     this.eyes = d.eyes ?? [];
     const on = (d.senses ?? []).length > 0 || this.eyes.length > 0;
-    this.canvas.classList.toggle("show", on);
+    this.sensing = on;
+    this.canvas.classList.toggle("show", on || this.storm);
     if (on) this.canvas.title = `MINIMAP: ${[...(d.senses ?? []).map((s) => s.word), ...new Set(this.eyes.map((e) => e.word))].map((w) => w.toUpperCase()).join(", ")}`;
   }
 
@@ -52,8 +54,15 @@ export class Minimap {
   }
 
   /** Redraws a few times a second around `me`; `edits` is how many terrain edits the map has had. */
-  draw(map: WorldMap, me: { x: number; y: number }, edits: number, now: number) {
+  /** Whether senses show land (else, with a storm, only the storm's circles over fog). */
+  private sensing = false;
+  private storm = false;
+
+  draw(map: WorldMap, me: { x: number; y: number }, edits: number, now: number, storm: StormState | null = null) {
+    // With no sense the minimap still shows the storm wall over the whole map in fog (shared round.ts).
+    if (!!storm !== this.storm) { this.storm = !!storm; this.canvas.classList.toggle("show", this.sensing || this.storm); }
     if (!this.shown || now - this.drawnAt < 250) return;
+    if (!this.sensing && storm) return this.drawStorm(map, me, storm);
     this.drawnAt = now;
     const css = this.canvas.clientWidth || 190, px = Math.round(css * this.dpr);
     if (this.canvas.width !== px) { this.canvas.width = px; this.canvas.height = px; }
@@ -117,5 +126,34 @@ export class Minimap {
     }
     for (const l of this.sensed.life) dot(l.x, l.y, l.person ? 3.2 : 2.2, l.mine ? "#4f8a3a" : l.person ? "#c9453f" : "#8a6a4a");
     dot(me.x, me.y, 3.6, "#2f5a8e");
+    if (storm) this.circles(storm, at, k);
+  }
+
+  /** The storm wall and the circle it closes to, in map tiles through `at`. */
+  private circles(s: StormState, at: (x: number, y: number) => [number, number], k: number) {
+    const c = this.ctx;
+    const [sx, sy] = at(s.x, s.y);
+    c.save();
+    c.beginPath(); c.rect(0, 0, this.canvas.width, this.canvas.height); c.arc(sx, sy, Math.max(0, s.r * k), 0, Math.PI * 2, true);
+    c.fillStyle = "rgba(91,63,140,.45)"; c.fill("evenodd");
+    c.beginPath(); c.arc(sx, sy, Math.max(0, s.r * k), 0, Math.PI * 2); c.lineWidth = 2 * this.dpr; c.strokeStyle = "#b48cf0"; c.stroke();
+    if (s.mode !== "closed" && s.nr > 0) {
+      const [nx, ny] = at(s.nx, s.ny);
+      c.beginPath(); c.arc(nx, ny, s.nr * k, 0, Math.PI * 2); c.setLineDash([4 * this.dpr, 3 * this.dpr]);
+      c.lineWidth = 1.5 * this.dpr; c.strokeStyle = "#ffffff"; c.stroke(); c.setLineDash([]);
+    }
+    c.restore();
+  }
+
+  /** No senses: the whole map in fog with the storm's circles and you. */
+  private drawStorm(map: WorldMap, me: { x: number; y: number }, s: StormState) {
+    const css = this.canvas.clientWidth || 190, px = Math.round(css * this.dpr);
+    if (this.canvas.width !== px) { this.canvas.width = px; this.canvas.height = px; }
+    const c = this.ctx, k = px / map.size;
+    c.fillStyle = "rgb(42,63,72)"; c.fillRect(0, 0, px, px);
+    const at = (x: number, y: number): [number, number] => [x * k, y * k];
+    this.circles(s, at, k);
+    const [mx, my] = at(me.x, me.y);
+    c.beginPath(); c.arc(mx, my, 3.6 * this.dpr, 0, Math.PI * 2); c.fillStyle = "#2f5a8e"; c.fill(); c.lineWidth = 1.2 * this.dpr; c.strokeStyle = "#fbf6ea"; c.stroke();
   }
 }

@@ -120,3 +120,26 @@ export function recruitRate(sources: readonly Stats[]): number {
 export function theftResistance(stats: Stats, contestedBy: string): number {
   return Math.max(stats.num(contestedBy), stats.num("loyalty"));
 }
+
+/**
+ * Loyalty lost a minute to fear (a follower afraid or broken), on top of hunger's (upkeep.ts
+ * HUNGER_LOYALTY). Fed and unafraid, it comes back at the hunger rate. A follower whose loyalty
+ * left reaches nothing turns wild.
+ */
+export const FEAR_LOYALTY = 2;
+
+/** A follower's loyalty now: its own less what hunger and fear have cost. */
+export const loyaltyLeft = (loyalty: number, lost: number): number => Math.max(0, loyalty - lost);
+
+/** True if a mutiny of `mutiny` breaks a follower away (shared property `mutiny`). */
+export const mutinies = (loyalty: number, lost: number, mutiny: number): boolean => mutiny > 0 && loyaltyLeft(loyalty, lost) < mutiny;
+
+/** What a word does to followers and command, in short lines for its card. */
+export function commandText(s: Stats): string[] {
+  const out: string[] = [];
+  const limit = s.num("command_limit");
+  if (limit > 0 && Number.isFinite(limit)) out.push(`leads ${Math.round(limit)} more followers`);
+  const m = s.num("mutiny");
+  if (m > 0) out.push(`followers with loyalty under ${+m.toFixed(1)} ${s.flag("mutiny_joins") ? "come over to you" : "desert"}`);
+  return out;
+}

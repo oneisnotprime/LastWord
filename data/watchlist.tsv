@@ -24,7 +24,7 @@ atomic	absolute and scaling modifiers	6	11.7	1.9	-	adjective:quality
 free	absolute and scaling modifiers	4	11.8	3.0	-	adjective:quality
 lethal	absolute and scaling modifiers	6	11.9	2.0	-	adjective:absolute
 safe	absolute and scaling modifiers	4	12.3	3.1	-	adjective:quality
-trillion	absolute and scaling modifiers	8	12.4	1.6	-	adjective:quality
+trillion	absolute and scaling modifiers	8	12.3	1.5	-	adjective:quality
 nuclear	absolute and scaling modifiers	7	12.6	1.8	-	adjective:quality
 holy	absolute and scaling modifiers	4	12.7	3.2	-	adjective:quality
 huge	absolute and scaling modifiers	4	12.9	3.2	-	adjective:quality
@@ -71,7 +71,7 @@ horde	beings and forces	5	11.8	2.4	-	noun:group
 deity	beings and forces	5	12.0	2.4	-	noun:supernatural
 tyrant	beings and forces	6	12.4	2.1	-	noun:leader
 golem	beings and forces	5	12.6	2.5	-	noun:supernatural
-fleet	beings and forces	5	13.7	2.7	-	noun:group
+fleet	beings and forces	5	13.6	2.7	-	noun:group
 dragon	beings and forces	6	13.8	2.3	-	noun:supernatural
 ghost	beings and forces	5	13.8	2.8	-	noun:supernatural
 emperor	beings and forces	7	13.9	2.0	-	noun:leader

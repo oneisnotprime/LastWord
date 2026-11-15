@@ -63,13 +63,15 @@ export class Events {
   }
 
   /** Redraws the chips if what is in force, or the time left, changed. `clock` is the round clock in seconds. */
-  update(list: InForce[], clock: number) {
+  update(list: InForce[], clock: number, storm: { text: string; warn: boolean; out: string } | null = null) {
     this.now = clock;
     this.list = list;
-    const key = list.map((f) => `${f.word}:${f.until ? Math.max(0, f.until - clock) : ""}`).join("|");
+    const key = list.map((f) => `${f.word}:${f.until ? Math.max(0, f.until - clock) : ""}`).join("|") + (storm ? `#${storm.text}${storm.out}` : "");
     if (key === this.shown) return;
     this.shown = key;
-    this.bar.innerHTML = list.map((f) => {
+    // The storm wall first (shared round.ts): when it closes, and how far out you are.
+    const wall = storm ? `<span class="ev storm${storm.warn ? " out" : ""}"><i>ϟ</i>${esc(storm.text)}${storm.out ? `<small>${esc(storm.out)}</small>` : ""}</span>` : "";
+    this.bar.innerHTML = wall + list.map((f) => {
       const def = this.dict.word(f.word);
       const style = zoneStyle(this.dict, f.word);
       const glyph = BY_WORD[f.word] ?? (def && BY_ARCHETYPE[def.archetype]) ?? "✦";
