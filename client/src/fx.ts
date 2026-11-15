@@ -155,6 +155,15 @@ export class Effects {
     this.numbers.push({ el, x, y, born: performance.now(), life: 1800, rise: 26 });
   }
 
+  /** A small neutral note over a world point ("+sight"). */
+  note(x: number, y: number, text: string) {
+    const el = document.createElement("div");
+    el.className = "fail small note";
+    el.textContent = text;
+    this.layer.append(el);
+    this.numbers.push({ el, x, y, born: performance.now(), life: 1800, rise: 26 });
+  }
+
   /**
    * A damage number over a world point: bigger and gold for a critical blow, grey when armour or a
    * vehicle took it (named), "miss" for a miss.

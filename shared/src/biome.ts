@@ -66,7 +66,7 @@ export const HARVEST_SOURCES: Readonly<Record<string, readonly string[]>> = {
   fish: ["fishing", "river"],
   dig: ["dig", "quarry", "mine"],
   cave: ["mine", "dig"],
-  cache: ["cache", "dig"],
+  chest: ["chest", "cache", "dig"],
   hunt: ["hunting"],
 };
 

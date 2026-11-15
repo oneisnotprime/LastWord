@@ -1,5 +1,5 @@
 import type { Dictionary } from "./dictionary.js";
-import { ACTION_LETTERS, ACTION_SOURCES, DEED_SOURCES, TRANSMUTE_RATIO } from "./letters.js";
+import { ACTION_LETTERS, ACTION_SOURCES, DEED_SOURCES, HAND_FILL } from "./letters.js";
 import { becomes, objectKind } from "./inspect.js";
 import { producerOf } from "./produce.js";
 import { parsePhrase, type Letters } from "./phrase.js";
@@ -9,8 +9,6 @@ import { TILE_TYPES } from "./world.js";
 /** Letters a person starts a round with. */
 export const STARTING_HAND = 8;
 
-/** Letters to fill a hand with after its starter word, by how often words use them (no J, Q, X or Z). */
-export const HAND_FILL = "eeeeeeeeeeeiiiiiiiiaaaaaaaarrrrrrrnnnnnnnttttttoooooosssssslllllccccuuuudddpppmmmhhggyybbffwwkv";
 
 let starters: { dict: Dictionary; words: string[] } | null = null;
 
@@ -111,9 +109,9 @@ export interface Route {
   /**
    * "action", "deed", "produces" (a producer: `produce_*` with its needs met), "burns" (a word
    * that deals fire damage), "ages" (anything left on the ground yields Y), "claims" (claimed
-   * ground: L, and S where it takes a city), "lays road" (R) or "transmutes" (Z).
+   * ground: L, and S where it takes a city), or "lays road" (R).
    */
-  how: "action" | "deed" | "produces" | "burns" | "ages" | "claims" | "lays road" | "transmutes";
+  how: "action" | "deed" | "produces" | "burns" | "ages" | "claims" | "lays road";
   /** The word, for a word's route. */
   word: string;
   /** Words to spell in order, from the actions, to reach it. */
@@ -198,8 +196,9 @@ export function reachability(dict: Dictionary, pending = PENDING_SOURCES): { rou
     tilled ??= newTill;
     claimed ??= newClaim;
   }
-  if (!pending.includes("z") && routes.has("e")) {
-    routes.set("z", { letter: "z", depth: 1, how: "transmutes", word: "", chain: [], note: `transmuting ${TRANSMUTE_RATIO} common letters, or a roaming boss` });
+  // Z: roaming bosses drop it to whoever fells them (alchemy, `transmute_in`, needs a word first).
+  if (!pending.includes("z") && !routes.has("z")) {
+    routes.set("z", { letter: "z", depth: 1, how: "deed", word: "", chain: [], note: "felling a roaming boss" });
   }
   const unreached = [..."abcdefghijklmnopqrstuvwxyz"].filter((ch) => !routes.has(ch));
   return { routes, unreached };

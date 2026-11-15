@@ -80,7 +80,7 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
 - `src/fx.ts` HTML effects: letter popups from `got` (a big tile with its reason tag; then each
   letter flies down to its own tile one after another, and only the tiles just added bounce and
   light up, briefly), damage numbers from `hits`, the red screen edge when you are hit,
-  and the red note when gathering finds nothing. In `main.ts`: `onHits` (flash, shake, lunge,
+  the red note when gathering finds nothing, and `note` ("+sight", from `sight`). In `main.ts`: `onHits` (flash, shake, lunge,
   tracer, health bar for a few seconds, a mark over whoever hit you), `overlays` (the camera zoomed
   so the screen holds your sight, fog past it, the gathering ring, `promptAt` hints over the
   letters: G: dig, E: claim).
@@ -107,8 +107,9 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
 - The top-left HUD lists letters coming in a minute by letter and what makes them (loadout
   `income`), and food, fuel and power in and out; the inventory screen's Producing lines say why a
   producer is idle. The corner shows the wind and the city you stand in (ruler, citizens).
-- The trade screen (T, `Hud.trade`): the market you stand at (choose a letter; you pay with your
-  commonest), hiring, transmuting into Z, and offers to people within TRADE_RANGE. Offers made
+- The trade screen (T, `Hud.trade`): the market you stand at (pick the tiles you pay, `Hud.pay`,
+  and the letter you get; the rack swap, once per market), hiring, transmuting into Z (only with
+  alchemy: loadout `transmute`), and offers to people within TRADE_RANGE. Offers made
   and received are cards at the right (`#offers`: Accept, Counter, Decline, Withdraw). Inputs on a
   screen count as typing (`Hud.typing`), so their letters are not commands.
 - A roaming boss (`Player.boss`) stands 1.6 times as tall with a red tag.
@@ -116,8 +117,8 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
   three choices each, keys 1-3 or a click, a countdown a step; `KitView.choosing` until your kit
   arrives, and meanwhile toasts (`Hud.quiet`) and legend calls are dropped, not replayed),
   your job and sealed legendary with progress on the HUD card (a click shows your card, with
-  Unseal when letters open it), and `#legendcall`, the map-wide call (with a camera shake) when
-  a legendary unseals or is spelled.
+  Unseal when letters open it), and `#legendcall`, the one map-wide call (with a camera shake)
+  when a legendary unseals and is made at once ("UNLEASHED"), or unseals to spell later.
 - `src/tips.ts` teaching tips (shared `tips.ts`): rotating word cards on the start screen (two
   columns: the word and kind, its properties with a short meaning each, `WordTip.lines`), one
   line (`#tip`) in the spell window while it is empty, and Word ideas with a reroll in the Esc

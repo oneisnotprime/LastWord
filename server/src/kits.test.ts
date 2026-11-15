@@ -117,7 +117,7 @@ it("a job acts through shared systems: a scout sees further, a farmer forages be
   expect(r.rulesAt(w.player, id, w).rules.some((x: any) => x.tradeRate === 0.75)).toBe(true);
 });
 
-it("a legendary unseals when its condition is met, is announced to everyone, and is spelled free once", async () => {
+it("a legendary unseals when its condition is met and is made at once, free, with one call to everyone", async () => {
   const { r, room, clients, me, of } = await world(2);
   pickAll(clients[0], 0); pickAll(clients[1], 0); await wait();
   const w = me();
@@ -128,29 +128,50 @@ it("a legendary unseals when its condition is met, is announced to everyone, and
   for (const ch of pay) w.letters[ch] = (w.letters[ch] ?? 0) + 1;
   room.update(1.1); await wait();
   expect(of(0, "kit").at(-1).legend.have).toBe(pay.length);
+  const calls = of(1, "legend").length;
   clients[0].send("unseal"); await wait();
-  expect(w.kit.state).toBe("open");
-  expect(of(1, "legend").at(-1)).toMatchObject({ word: dragon.word, spelled: false });
-  // Free: no letters of its own needed.
+  // Made there and then, as if spelled: no letters of its own, and no spelling it again.
+  expect(w.kit.state).toBe("used");
+  expect(of(0, "spelled").at(-1)).toMatch(new RegExp(dragon.word.toUpperCase()));
+  expect([...r.walkers.values()].some((c: any) => c.master === clients[0].sessionId && c.body.noun === dragon.word)).toBe(true);
+  // One call, not two.
+  expect(of(1, "legend").slice(calls)).toHaveLength(1);
+  expect(of(1, "legend").at(-1)).toMatchObject({ word: dragon.word, spelled: true, how: `paid ${pay.toUpperCase()}` });
   for (const ch of dragon.word) w.letters[ch] = 0;
   clients[0].send("spell", dragon.word); await wait();
-  expect(of(0, "spelled").at(-1)).toMatch(new RegExp(dragon.word.toUpperCase()));
-  expect(w.kit.state).toBe("used");
-  expect(of(1, "legend").at(-1)).toMatchObject({ word: dragon.word, spelled: true });
-  // Only once.
-  clients[0].send("spell", dragon.word); await wait();
   expect(of(0, "refused").at(-1)).toMatch(/You need/);
+  expect(of(1, "legend").slice(calls)).toHaveLength(1);
 });
 
-it("a legendary with a time condition unseals on the round clock", async () => {
+it("a legendary that cannot be made when it unseals stays open, spelled free once, with no second call", async () => {
+  const { r, room, clients, me, of } = await world(2);
+  pickAll(clients[0], 0); pickAll(clients[1], 0); await wait();
+  const w = me();
+  w.kit.legend = { word: "titan", unlock: { kind: "minutes", need: 1 }, counter: "chain" }; w.kit.state = "sealed";
+  w.hamper = { ...w.hamper, spells: false, muteBy: "silence" }; // muted as it unseals
+  for (let i = 0; i < 62; i++) room.update(1);
+  await wait();
+  expect(w.kit.state).toBe("open");
+  const calls = of(1, "legend").length;
+  expect(of(1, "legend").at(-1)).toMatchObject({ word: "titan", spelled: false });
+  room.rebuild(w);
+  w.hamper = { ...w.hamper, spells: true };
+  for (const ch of "titan") w.letters[ch] = 0;
+  clients[0].send("spell", "titan"); await wait();
+  expect(w.kit.state).toBe("used");
+  expect(of(1, "legend")).toHaveLength(calls);
+  void r;
+});
+
+it("a legendary with a time condition unseals on the round clock and walks at once", async () => {
   const { r, room, clients, me, of } = await world();
   pickAll(clients[0], 0); await wait();
   const w = me();
   w.kit.legend = { word: "titan", unlock: { kind: "minutes", need: 1 }, counter: "chain" }; w.kit.state = "sealed";
   for (let i = 0; i < 62; i++) room.update(1);
   await wait();
-  expect(w.kit.state).toBe("open");
-  expect(of(0, "legend").at(-1).word).toBe("titan");
+  expect(w.kit.state).toBe("used");
+  expect(of(0, "legend").at(-1)).toMatchObject({ word: "titan", spelled: true });
   void r;
 });
 

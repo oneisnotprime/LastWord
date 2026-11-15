@@ -26,7 +26,7 @@ function cardHtml(c: KitCard, index: number | null, state = "sealed"): string {
     (index !== null ? `<div class="key">${index + 1}</div>` : "") +
     `<section class="job"><h4>Job</h4><b>${esc(c.job.word.toUpperCase())}</b><ul>${lines(c.job.lines)}</ul></section>` +
     `<section class="building"><h4>Building</h4><b>${esc(c.building.word.toUpperCase())}</b><ul>${lines(c.building.lines)}</ul></section>` +
-    `<section class="legend"><h4>Legendary <span class="seal">${state === "open" ? "unsealed" : state === "used" ? "spelled" : "sealed"}</span></h4><b>${esc(c.legend.word.toUpperCase())}</b>` +
+    `<section class="legend"><h4>Legendary <span class="seal">${state === "open" ? "unsealed" : state === "used" ? "unleashed" : "sealed"}</span></h4><b>${esc(c.legend.word.toUpperCase())}</b>` +
     `<div class="unlock">🔒 ${esc(c.legend.unlock)}</div><ul>${lines(c.legend.lines)}</ul>` +
     `<div class="counter">countered by ${esc(c.legend.counter.toUpperCase())}</div></section>` +
     `<section class="hand"><h4>Letters</h4>${tiles(c.letters)}</section></div>`;
@@ -44,7 +44,7 @@ function optionHtml(step: number, o: KitOption, index: number): string {
 /**
  * Starting kits on screen (PLAN.md "Starting kits"): the pick of three when a round starts (keys
  * 1 to 3 or a click; the server picks for you when time runs out), your job and sealed legendary
- * on the HUD (a click shows your card again), and the map-wide call when a legendary unseals.
+ * on the HUD (a click shows your card again), and the map-wide call when a legendary unseals (and is made at once).
  */
 export class KitView {
   private readonly root: HTMLElement;
@@ -126,7 +126,9 @@ export class KitView {
     const was = this.kit?.legend.state;
     this.kit = k;
     if (this.inPick) { this.picking = this.inPick = false; clearInterval(this.timer); this.root.className = ""; }
-    if (was === "sealed" && k.legend.state === "open") this.showMine();
+    // Unsealed and made at once: the map-wide call says it, so your card closes.
+    if (was === "sealed" && k.legend.state === "used") this.hide();
+    else if (was === "sealed" && k.legend.state === "open") this.showMine();
     else if (this.open && !this.picking) this.showMine();
     this.onChange();
   }
@@ -137,7 +139,7 @@ export class KitView {
     if (!k) return "";
     const l = k.legend;
     const pct = Math.round((100 * Math.min(l.have, l.need)) / Math.max(1, l.need));
-    const state = l.state === "open" ? `<em class="open">UNSEALED: spell it free</em>` : l.state === "used" ? `<em>spelled</em>`
+    const state = l.state === "open" ? `<em class="open">UNSEALED: spell it free</em>` : l.state === "used" ? `<em>unleashed</em>`
       : `<span class="track"><i style="width:${pct}%"></i><em>${l.have} / ${l.need}</em></span>`;
     return `<div class="kitrow" data-kit="1" title="Your kit: click for the card"><span>Job</span><b>${esc(k.job.toUpperCase())}</b>` +
       `<span>Legend</span><b class="legend ${l.state}">${l.state === "sealed" ? "🔒 " : l.state === "open" ? "✨ " : ""}${esc(l.word.toUpperCase())}</b>` +
@@ -150,7 +152,7 @@ export class KitView {
     if (!k || this.inPick) return;
     const l = k.legend;
     const can = l.state === "sealed" && l.kind === "letters" && l.have >= l.need;
-    const status = l.state === "open" ? "Unsealed: spell it once, free" : l.state === "used" ? "Spelled" : `${l.have} / ${l.need}`;
+    const status = l.state === "open" ? "Unsealed: spell it once, free" : l.state === "used" ? "Unleashed" : `${l.have} / ${l.need}`;
     this.root.innerHTML = `<div class="sheet mine"><h2>Your kit</h2><div class="hint">${esc(status)}</div><div class="cards">${cardHtml(k.card, null, l.state)}</div>` +
       `<div class="buttons">${can ? `<button class="unseal">Unseal ${esc(l.word.toUpperCase())}</button>` : ""}<button class="close">Close</button></div></div>`;
     this.root.className = "show";
@@ -159,8 +161,9 @@ export class KitView {
   /** A legendary unsealed or spelled somewhere: a call across the whole screen. */
   announce(c: LegendCall, mine: boolean) {
     const who = mine ? "YOU" : c.name.toUpperCase();
+    // One call per legendary: unsealed and made at once ("spelled"), or unsealed to spell later.
     this.call.innerHTML = c.spelled
-      ? `<small>the legend walks</small><b>${esc(who)} SPELLED ${esc(c.word.toUpperCase())}</b><span>counter it with ${esc(c.counter.toUpperCase())}</span>`
+      ? `<small>a seal breaks · the legend walks</small><b>${esc(who)} UNLEASHED ${esc(c.word.toUpperCase())}</b><span>${esc(c.how)} · counter: ${esc(c.counter.toUpperCase())}</span>`
       : `<small>a seal breaks</small><b>${esc(who)} UNSEALED ${esc(c.word.toUpperCase())}</b><span>${esc(c.how)} · counter: ${esc(c.counter.toUpperCase())}</span>`;
     this.call.className = "";
     void this.call.offsetWidth; // restart the animation

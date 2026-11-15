@@ -102,13 +102,13 @@ bag: mass=0.5 integrity=10 material=cloth equip_slot=back storage_letters=60 sto
 barrel: mass=30 integrity=80 material=wood storage_objects=200 volume=0.2
 
 # noun tool
-spade: mass=1.5 length=1 integrity=50 material=steel,wood equip_slot=held hands_required=2 dmg_blunt=15 harvest_bonus=2 harvest_sources=dig,cache
+spade: mass=1.5 length=1 integrity=50 material=steel,wood equip_slot=held hands_required=2 dmg_blunt=15 harvest_bonus=2 harvest_sources=dig,chest
 rod: mass=0.5 length=2 integrity=15 material=wood equip_slot=held hands_required=1 dmg_blunt=4 harvest_bonus=2.5 harvest_sources=fishing
 basket: mass=0.5 integrity=8 flammability=6 material=fiber equip_slot=held hands_required=1 storage_objects=6 harvest_bonus=2.5 harvest_sources=forage
 sickle: mass=0.5 length=0.5 integrity=40 sharpness=6 material=steel equip_slot=held hands_required=1 dmg_slash=18 attack_rate=1.2 harvest_bonus=2 harvest_sources=field,forage
 hammer: mass=1 length=0.3 integrity=120 hardness=8 material=steel,wood equip_slot=held hands_required=1 dmg_blunt=25 attack_rate=1 build_speed=2 siege=1.5
 saw: mass=0.8 length=0.6 integrity=40 sharpness=6 material=steel equip_slot=held hands_required=1 dmg_slash=15 harvest_bonus=2 harvest_sources=tree
-shovel: mass=2 length=1.2 integrity=60 material=steel,wood equip_slot=held hands_required=2 dmg_blunt=18 speed_underground=0.2 harvest_bonus=2 harvest_sources=dig,cache
+shovel: mass=2 length=1.2 integrity=60 material=steel,wood equip_slot=held hands_required=2 dmg_blunt=18 speed_underground=0.2 harvest_bonus=2 harvest_sources=dig,chest
 pick: mass=3 length=0.9 integrity=90 hardness=8 material=steel,wood equip_slot=held hands_required=2 dmg_pierce=30 siege=2 harvest_bonus=2.5 harvest_sources=quarry,mine
 plow: mass=200 length=2 integrity=200 material=steel fertility+3 harvest_bonus=2 harvest_sources=field
 key: mass=0.02 integrity=20 material=iron equip_slot=held security+-5 counters=lockable
@@ -170,7 +170,7 @@ rat: mass=0.3 length=0.2 integrity=4 alive=true diet=scavenger food_need=0.001 s
 bat: mass=0.03 length=0.1 integrity=2 alive=true diet=carnivore speed_air=10 night_vision=true nocturnal=true sees_through=night,fog detect_stealth=4 pack_size=10 equip_slot=companion
 whale: mass=100000 length=25 integrity=40000 alive=true intelligence=6 diet=carnivore food_need=20 speed_water=8 dive_depth=1000 breathes=air placeable_on=deep_water dmg_crush=3000 attack_rate=0.1 loudness=9 mountable=true seats=10
 camel: mass=500 length=3 integrity=450 alive=true diet=herbivore food_need=0.1 water_need=0.01 speed_land=10 mountable=true seats=2 carry_capacity=250 temp_max=55 terrain_ignored=sand habitat=desert,badlands equip_slot=mount tamable=true
-mole: mass=0.1 length=0.15 integrity=3 alive=true diet=carnivore speed_underground=0.5 detect_underground=true harvest_bonus=1.5 harvest_sources=cache equip_slot=companion
+mole: mass=0.1 length=0.15 integrity=3 alive=true diet=carnivore speed_underground=0.5 detect_underground=true harvest_bonus=1.5 harvest_sources=chest equip_slot=companion
 mount: mass=450 length=2.3 height=1.6 integrity=360 alive=true sentient=true intelligence=3 loyalty=7 diet=herbivore food_need=0.2 speed_land=17 jump=2 mountable=true seats=1 carry_capacity=150 dmg_blunt=50 attack_rate=0.5 tamable=true equip_slot=mount
 human: mass=75 height=1.75 integrity=100 sight_range=60 alive=true sentient=true intelligence=7 diet=omnivore food_need=0.03 speed_land=5 hands=true speech=true labor=1 produce_N=0.3
 

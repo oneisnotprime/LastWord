@@ -23,12 +23,14 @@ server and the client import this, so anything here must give the same answer on
 - `stats.ts` also has `massed`: many of one thing as one body, integrity, mass and damage scaled.
 - `letters.ts` where letters come from (PLAN.md "Letter economy"): `ACTION_SOURCES` (the eleven
   action letters), `Deposits` (gathering: E anywhere, O by water, G in hills, U by mountains, per
-  8-tile patch, running out and growing back slowly; sites: caches give X, the temple Q),
-  `placeSources` (markets, temple, caches, ruins, wild animals on the `mainland`), `spawnPoint`
-  (people far apart), `regionOf` (exploring gives J), `MARKET` and `readTrade` ("trade eee for o"),
+  8-tile patch, running out and growing back slowly; sites: chests give X, the temple Q),
+  `placeSources` (markets, temple, chests, ruins, wild animals on the `mainland`), `spawnPoint`
+  (people far apart), `regionOf` (exploring gives J), `exploredSight` (sight from regions
+  explored: SIGHT_EXPLORE), `MARKET` (any 4 for 1) and `readTrade` ("trade eeee for o"), `rackSwap`
+  (a market's once-only swap, drawn from `HAND_FILL`), `marketRatio` (whole letters),
   `killLetters` (K, V, H) and `destroyLetters` (D, V, F, X); `production` reads `produce_*`;
   `Deposits.problem` says why gathering would find nothing; `GATHER_REASONS` names each deposit
-  for the letter popup; `cachePrize` is the prize at a cache's bottom; `LETTER_GUIDE` is the
+  for the letter popup; `chestPrize` is the prize that comes with a chest's X; `LETTER_GUIDE` is the
   alphabet guide under the spell box (test-checked against the data).
 - `produce.ts` things you own that make letters (PLAN.md table): `producerOf` reads `produce_*`
   and `production_needs` (tilled, water, labor, wind, flow, claim, harvest, extract, vowel or a
@@ -105,7 +107,8 @@ server and the client import this, so anything here must give the same answer on
     density, toughness, hardness, brittleness, flammability, conductivity, value, colour, and the
     material's own damage and resistances; `susceptibility` (brittle things shatter, flammable burn,
     low melting points melt, conductors carry lightning) is read by every `strike`; `materialText`;
-    `alchemyRatio`: a carried precious material cuts what transmuting to Z costs, and is used up.
+    `alchemyRatio`: a carried precious material lets you transmute to Z (from TRANSMUTE_RATIO, less
+    for richer stuff), and is used up. Without it or a `transmute_in` thing there is no transmuting.
   - `food.ts` (food): `raw` things by heat (`cooks`: 150 C within COOK_RANGE) become their
     `cooks_into` or COOKED (`cooked`); past `shelf_life` they go ROTTEN (`rotted`); `toxin` is the
     poison eating gives. States sit on `Spelled.states` (adjectives that take no slot).
