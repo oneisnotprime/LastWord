@@ -1257,3 +1257,16 @@ planner: produce_N=0.3
 organizer: produce_N=0.35
 handler: produce_N=0.3
 burner: produce_C=0.4 production_needs=labor,g
+
+# Frequency batch 4: hired hands pay N (a PROPRIETOR, a SUBORDINATE, a TRAINEE, a CAMERAMAN, a
+# BREEDER, an EXPORTER, a UNIONIST); a CONVERTER and a BINDER are machines (M); MAIZE is a crop (A).
+proprietor: produce_N=0.35
+subordinate: produce_N=0.3
+trainee: produce_N=0.25
+cameraman: produce_N=0.3
+breeder: produce_N=0.3
+exporter: produce_N=0.3
+unionist: produce_N=0.3
+converter: produce_M=0.5
+binder: produce_M=0.3
+maize: produce_A=0.5 tile_type=tilled radius=1

@@ -55,6 +55,11 @@ argentine leftist atheist bipolar sexist homo apartheid caste segregation evange
 intercourse brit fascism prostitute libertarian pagan gypsy raj schizophrenia apache nordic
 sexism sect bohemian homophobic liberalism sharia jihad ecclesiastical lama baptized virginity
 bondage puberty
+epilepsy extremist extremism diabetic diaspora episcopal undocumented autistic homelessness lunatic
+psychotic psychopath bigotry childbirth handicapped adultery amir bey raja bourgeois fetal papal
+heterosexual multicultural segregated interracial masculinity racially unborn welch estrogen incest
+inquisition obi blooded homophobia colonialism miscarriage synod colleen depressive priesthood
+sclerosis boomer shiva
 """.split())
 
 

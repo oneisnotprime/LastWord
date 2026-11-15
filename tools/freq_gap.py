@@ -35,10 +35,12 @@ shanghai superman troy chad randy gilbert ana easter thanksgiving
 beth burke donna ira rand tucker chapman timothy somerset jenny molly benedict brent monte
 clarence maxwell lambert silva dell congo beck
 leone kat malik benny weber dexter amelia erica milo booker bolivia burgess bach chevy jonah
-kylie dickens waterloo ling marcel skinner thatcher mercer cummings coco""".split())
+kylie dickens waterloo ling marcel skinner thatcher mercer cummings coco
+bartlett hobbit langley mei pascal cutler phoebe dixie rutherford bourne mina ridley gemma lulu
+siemens medina napa cassie kelvin muller""".split())
 # Headwords whose common use is an inflection or an abbreviation WordNet reads as something else
 # (LIED as a German song, SHOOK as a sheaf, MPH, GEN, CHI): left out of the gap.
-NOT_WORDS = set("lied shook tops mph neo gen sen chi col sang wont dug comp para mil das sol tore var divers meg ala wen ain rbi rpm".split())
+NOT_WORDS = set("lied shook tops mph neo gen sen chi col sang wont dug comp para mil das sol tore var divers meg ala wen ain rbi rpm xiii xiv xvi liv cps elves conn midi retreated".split())
 
 
 
@@ -97,7 +99,8 @@ def gap(top=30000):
 
 
 def main():
-    missing = gap()
+    # The todo list may run past the top 30k once the gap there is shorter than it.
+    missing = gap(40000 if "--todo" in sys.argv else 30000)
     print("missing headwords among wordfreq's top N, by part of speech")
     for n in (10000, 20000, 30000):
         c = collections.Counter(r[2] for r in missing if r[0] <= n)

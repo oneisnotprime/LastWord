@@ -48,9 +48,9 @@ divine	absolute and scaling modifiers	6	18.8	3.1	V	adjective:quality
 every	absolute and scaling modifiers	5	18.9	3.8	V	adjective:quality
 omnipotent	absolute and scaling modifiers	10	18.9	1.9	-	adjective:quality
 perfect	absolute and scaling modifiers	7	19.4	2.8	-	adjective:quality
-mighty	absolute and scaling modifiers	6	20.4	3.4	-	adjective:quality
+mighty	absolute and scaling modifiers	6	20.3	3.4	-	adjective:quality
 almighty	absolute and scaling modifiers	8	23.5	2.9	-	adjective:quality
-invisible	absolute and scaling modifiers	9	25.7	2.9	V	adjective:absolute
+invisible	absolute and scaling modifiers	9	25.6	2.8	V	adjective:absolute
 invincible	absolute and scaling modifiers	10	27.9	2.8	V	adjective:absolute
 max	absolute and scaling modifiers	3	37.0	12.3	X	noun:medicine
 toxic	absolute and scaling modifiers	5	38.8	7.8	X	adjective:quality
@@ -132,7 +132,7 @@ alphabet	letter and word meta	8	20.3	2.5	-	noun:knowledge
 word	letter and word meta	4	20.6	5.2	W	noun:knowledge
 dictionary	letter and word meta	10	20.6	2.1	-	noun:document
 book	letter and word meta	4	21.3	5.3	K	noun:document
-vowel	letter and word meta	5	29.0	5.8	VW	noun:inert
+vowel	letter and word meta	5	29.0	5.8	VW	noun:knowledge
 text	letter and word meta	4	36.2	9.1	X	noun:document
 lexicon	letter and word meta	7	41.6	5.9	X	noun:knowledge
 ice	map-scale terrain and states	3	4.6	1.5	-	noun:mineral
@@ -180,14 +180,14 @@ bomb	mass destruction	4	16.0	4.0	-	noun:weapon
 antimatter	mass destruction	10	16.3	1.6	-	noun:material
 flood	mass destruction	5	16.5	3.3	-	noun:phenomenon
 void	mass destruction	4	16.6	4.2	V	noun:quality
-inferno	mass destruction	7	16.7	2.4	-	noun:place
+inferno	mass destruction	7	16.7	2.4	-	noun:attribute
 famine	mass destruction	6	17.0	2.8	-	noun:disaster
 war	mass destruction	3	17.0	5.7	W	noun:conflict
 hurricane	mass destruction	9	17.9	2.0	-	noun:weather
 virus	mass destruction	5	18.0	3.6	V	noun:affliction
 pandemic	mass destruction	8	18.1	2.3	-	noun:event
 nuke	mass destruction	4	18.3	4.6	K	noun:weapon
-blight	mass destruction	6	19.0	3.2	-	noun:affliction
+blight	mass destruction	6	18.9	3.1	-	noun:affliction
 holocaust	mass destruction	9	19.3	2.1	-	noun:destruction
 volcano	mass destruction	7	20.7	3.0	V	noun:elevation
 cataclysm	mass destruction	9	21.1	2.3	-	noun:phenomenon
@@ -237,7 +237,7 @@ smite	verbs that end things	5	9.2	1.8	-	verb:social
 mute	verbs that end things	4	9.2	2.3	-	verb:social
 undo	verbs that end things	4	9.4	2.4	-	verb:contact
 delete	verbs that end things	6	9.7	1.6	-	verb:contact
-slay	verbs that end things	4	9.8	2.5	-	verb:social
+slay	verbs that end things	4	9.8	2.5	-	verb:combat
 reign	verbs that end things	5	9.9	2.0	-	verb:social
 bind	verbs that end things	4	11.5	2.9	-	verb:create
 banish	verbs that end things	6	15.5	2.6	-	verb:social

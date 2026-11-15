@@ -1,4 +1,8 @@
 {
+"after":[
+"aft",
+"comparative"
+],
 "angrier":[
 "angry",
 "comparative"
@@ -107,6 +111,10 @@
 "brown",
 "comparative"
 ],
+"bulkier":[
+"bulky",
+"comparative"
+],
 "busier":[
 "busy",
 "comparative"
@@ -166,6 +174,10 @@
 "closest":[
 "close",
 "superlative"
+],
+"coarser":[
+"coarse",
+"comparative"
 ],
 "colder":[
 "cold",
@@ -315,6 +327,10 @@
 "easy",
 "superlative"
 ],
+"edgier":[
+"edgy",
+"comparative"
+],
 "emptier":[
 "empty",
 "comparative"
@@ -453,6 +469,10 @@
 ],
 "grimmer":[
 "grim",
+"comparative"
+],
+"grittier":[
+"gritty",
 "comparative"
 ],
 "grosser":[
@@ -619,6 +639,10 @@
 "lite",
 "comparative"
 ],
+"loftier":[
+"lofty",
+"comparative"
+],
 "loner":[
 "lone",
 "comparative"
@@ -662,6 +686,10 @@
 "meanest":[
 "mean",
 "superlative"
+],
+"meeker":[
+"meek",
+"comparative"
 ],
 "merest":[
 "mere",
@@ -997,6 +1025,10 @@
 ],
 "slacker":[
 "slack",
+"comparative"
+],
+"sleeker":[
+"sleek",
 "comparative"
 ],
 "slightest":[
