@@ -1,0 +1,3001 @@
+word	round	seed	cut	note
+can	1	33	birefnet	
+back	1	33	birefnet	back view unclear
+day	1	22	birefnet	
+world	1	22	birefnet	
+must	1	22	birefnet	
+top	1	22	birefnet	
+system	1	44	birefnet	
+change	1	33	birefnet	
+support	1	22	birefnet	
+head	1	22	birefnet	
+line	1	11	birefnet	
+shit	1	22	birefnet	
+general	1	22	birefnet	
+face	1	44	birefnet	
+president	1	22	birefnet	
+video	1	11	birefnet	
+hand	1	22	birefnet	
+body	1	11	birefnet	
+food	1	22	birefnet	bread not plate
+guy	1	22	birefnet	
+matter	1	22	birefnet	
+air	1	33	birefnet	
+friend	1	33	birefnet	
+series	1	33	birefnet	
+report	1	22	birefnet	
+check	1	22	birefnet	cheque shape vague
+form	1	22	birefnet	
+heart	1	22	birefnet	
+major	1	22	birefnet	
+art	1	22	birefnet	
+works	1	22	birefnet	
+list	1	22	birefnet	
+son	1	22	birefnet	
+father	1	22	birefnet	
+board	1	22	birefnet	
+field	1	11	birefnet	
+mother	1	44	birefnet	
+wife	1	22	birefnet	
+land	1	33	birefnet	reads as globe
+shot	1	33	birefnet	
+record	1	22	birefnet	
+film	1	22	birefnet	
+lead	1	22	birefnet	
+security	1	44	birefnet	
+player	1	22	birefnet	
+private	1	22	birefnet	
+star	1	22	birefnet	
+member	1	33	birefnet	
+hands	1	22	birefnet	
+park	1	33	birefnet	ground strip but subject is a patch
+press	1	11	birefnet	
+bill	1	22	birefnet	
+director	1	22	birefnet	
+ground	1	11	birefnet	
+source	1	33	birefnet	
+official	1	33	birefnet	
+production	1	22	birefnet	
+round	1	11	birefnet	
+stuff	1	22	birefnet	
+felt	1	22	birefnet	plain grey squares, vague
+match	1	11	birefnet	
+picture	1	22	birefnet	
+mom	1	33	birefnet	
+page	1	22	birefnet	
+brother	1	22	birefnet	
+character	1	33	birefnet	
+chief	1	33	birefnet	
+china	1	33	birefnet	
+lord	1	33	birefnet	
+release	1	22	birefnet	
+website	1	33	birefnet	
+hair	1	44	birefnet	reads as head of hair
+daughter	1	22	birefnet	
+figure	1	22	birefnet	
+paper	1	11	birefnet	
+parts	1	11	birefnet	
+earth	1	22	birefnet	
+internet	1	22	birefnet	
+sea	1	22	birefnet	
+sir	1	22	birefnet	
+minister	1	22	birefnet	
+piece	1	33	birefnet	
+officer	1	22	birefnet	
+river	1	33	birefnet	
+album	1	22	birefnet	
+eye	1	33	birefnet	
+student	1	33	birefnet	
+track	1	33	birefnet	
+weight	1	11	birefnet	may read as bag
+addition	1	33	birefnet	
+gas	1	22	birefnet	
+island	1	33	birefnet	
+text	1	22	birefnet	
+female	1	22	birefnet	
+husband	1	22	birefnet	
+ice	1	11	birefnet	
+individual	1	11	birefnet	
+region	1	33	birefnet	
+section	1	22	birefnet	
+kid	1	33	birefnet	
+link	1	44	birefnet	
+justice	1	44	birefnet	
+manager	1	33	birefnet	
+photo	1	11	birefnet	
+sun	1	22	birefnet	
+subject	1	33	birefnet	
+author	1	11	birefnet	
+dad	1	22	birefnet	
+lady	1	22	birefnet	
+leader	1	22	birefnet	
+material	1	22	birefnet	
+nobody	1	22	birefnet	
+secretary	1	44	birefnet	
+sister	1	33	birefnet	
+annual	1	11	birefnet	
+brain	1	11	birefnet	
+contract	1	33	birefnet	
+opening	1	44	birefnet	
+approach	1	22	birefnet	
+defense	1	33	birefnet	
+master	1	22	birefnet	
+trump	1	22	birefnet	
+beach	1	11	birefnet	shell odd blue
+fan	1	22	birefnet	
+senior	1	22	birefnet	
+skin	-	-	-	REJECTED: unclear blobs read as faces / drew a head profile, not a patch of skin
+drink	1	11	birefnet	
+professor	1	33	birefnet	
+japan	1	44	birefnet	
+plant	1	22	birefnet	
+award	1	22	birefnet	
+coast	1	22	birefnet	
+drug	1	33	birefnet	
+executive	1	44	birefnet	
+foot	1	44	birefnet	
+hall	1	11	birefnet	
+pop	1	33	birefnet	
+coffee	1	11	birefnet	
+channel	1	11	birefnet	
+eating	1	22	birefnet	
+finding	1	33	birefnet	
+glass	1	11	birefnet	
+protection	1	22	birefnet	
+screen	1	22	birefnet	
+airport	1	33	birefnet	
+partner	1	11	birefnet	
+solution	1	11	birefnet	
+structure	1	11	birefnet	
+brand	1	22	birefnet	
+cent	1	22	birefnet	
+count	1	33	birefnet	
+lake	1	22	birefnet	
+mouth	1	11	birefnet	
+owner	1	44	birefnet	
+score	1	11	birefnet	
+tom	1	33	birefnet	
+arms	1	22	birefnet	
+budget	1	11	birefnet	
+fund	1	33	birefnet	
+hill	1	22	birefnet	
+jack	1	44	birefnet	
+metal	1	33	birefnet	
+profile	1	33	birefnet	
+agent	1	44	birefnet	
+dude	1	33	birefnet	
+foundation	1	11	birefnet	
+supply	1	22	birefnet	
+waste	1	22	birefnet	
+adult	1	22	birefnet	
+artist	1	44	birefnet	
+chairman	1	44	birefnet	
+edition	1	11	birefnet	
+institute	1	33	birefnet	
+mike	1	11	birefnet	
+option	1	22	birefnet	
+remains	1	33	birefnet	
+window	1	44	birefnet	
+winner	1	22	birefnet	person small under trophy
+cast	2	66	local	
+handle	1	11	birefnet	
+till	1	22	birefnet	
+dinner	1	44	birefnet	
+helping	1	33	birefnet	
+produce	1	44	birefnet	
+van	1	44	birefnet	
+copy	1	44	birefnet	
+garden	1	22	birefnet	
+housing	1	22	birefnet	plain brick block, vague
+journal	1	33	birefnet	
+patient	1	22	birefnet	
+setting	1	22	birefnet	
+bitch	1	22	birefnet	
+connection	1	22	birefnet	no plugs
+fellow	1	33	birefnet	
+stick	1	22	birefnet	
+vehicle	1	33	birefnet	
+aid	1	33	birefnet	
+driver	1	33	birefnet	
+file	1	11	birefnet	could read as marker
+frank	1	33	birefnet	
+guide	1	44	birefnet	
+treat	1	22	birefnet	
+youth	1	33	birefnet	
+magazine	1	44	birefnet	
+web	1	33	birefnet	
+wine	1	44	birefnet	
+arm	1	22	birefnet	
+bay	1	11	birefnet	
+core	1	44	birefnet	
+description	1	22	birefnet	
+medicine	1	33	birefnet	
+mountain	1	22	birefnet	
+steps	1	22	birefnet	
+tea	1	11	birefnet	
+assistant	1	33	birefnet	
+classic	1	22	birefnet	
+fuel	1	22	birefnet	
+sky	1	33	birefnet	
+governor	1	33	birefnet	
+joint	1	44	birefnet	pale, low contrast
+turning	2	55	local	
+vice	1	33	birefnet	
+beer	1	44	birefnet	
+border	1	22	birefnet	
+dick	1	22	birefnet	
+forest	1	33	birefnet	
+moon	1	33	birefnet	
+ocean	1	11	birefnet	
+republican	1	33	birefnet	
+suit	1	22	birefnet	
+attorney	1	33	birefnet	
+ben	1	22	birefnet	
+native	1	22	birefnet	
+tech	1	33	birefnet	
+user	1	22	birefnet	
+writer	1	22	birefnet	
+girlfriend	1	22	birefnet	
+hero	1	33	birefnet	
+planet	1	22	birefnet	
+restaurant	1	22	birefnet	
+sugar	1	22	birefnet	blue bowl
+transport	1	33	birefnet	
+device	1	11	birefnet	vague gadget
+entry	1	22	birefnet	
+feed	1	22	birefnet	
+platform	1	33	birefnet	
+pool	1	22	birefnet	
+route	1	22	birefnet	
+candidate	1	33	birefnet	
+jersey	1	33	birefnet	
+leg	1	44	birefnet	reads as foot
+liberal	1	22	birefnet	
+lunch	1	22	birefnet	
+max	1	11	birefnet	
+milk	1	22	birefnet	
+pack	1	22	birefnet	
+studio	1	33	birefnet	
+actor	1	22	birefnet	
+apartment	1	22	birefnet	
+chain	1	22	birefnet	
+chapter	1	11	birefnet	
+kitchen	1	33	birefnet	
+bird	1	22	birefnet	
+display	1	33	birefnet	
+falls	1	44	birefnet	
+ministry	1	33	birefnet	
+neck	1	33	birefnet	
+novel	1	22	birefnet	
+shirt	1	33	birefnet	
+cream	1	11	birefnet	
+editor	1	22	birefnet	
+mayor	1	44	birefnet	
+serving	1	11	birefnet	
+stream	1	33	birefnet	
+alcohol	1	44	birefnet	
+breakfast	1	33	birefnet	
+chosen	1	33	birefnet	
+customer	1	11	birefnet	
+cutting	1	22	birefnet	
+medium	1	22	birefnet	
+papers	1	33	birefnet	
+spoke	1	22	birefnet	whole wheel not one spoke
+ticket	1	33	birefnet	
+don	1	44	birefnet	
+facility	1	22	birefnet	
+painting	1	22	birefnet	
+salt	1	44	birefnet	
+switch	1	33	birefnet	
+boyfriend	1	11	birefnet	
+prize	1	22	birefnet	
+register	1	33	birefnet	
+resolution	1	22	birefnet	
+universe	1	33	birefnet	
+branch	1	33	birefnet	
+brazil	1	22	birefnet	
+drawing	1	11	birefnet	pencil only, no paper
+guest	1	33	birefnet	
+senator	1	44	birefnet	
+teeth	1	33	birefnet	single tooth
+chemical	1	11	birefnet	
+favourite	1	22	birefnet	
+index	1	33	birefnet	
+item	1	44	birefnet	
+lane	1	22	birefnet	vague shape
+mess	1	22	birefnet	
+parent	1	22	birefnet	
+representative	1	11	birefnet	
+storage	1	33	birefnet	
+transportation	1	11	birefnet	
+button	1	22	birefnet	
+consumer	1	33	birefnet	
+counter	1	33	birefnet	
+creation	2	88	local	
+expert	1	33	birefnet	
+object	1	22	birefnet	
+pattern	1	44	birefnet	
+premier	1	11	birefnet	
+tool	1	11	birefnet	
+victim	1	22	birefnet	pale, low contrast
+amazon	1	33	birefnet	
+carbon	1	44	birefnet	
+deputy	1	11	birefnet	
+factory	1	33	birefnet	
+legislation	1	22	birefnet	
+mate	1	22	birefnet	
+panel	1	33	birefnet	vague
+plate	1	33	birefnet	
+rice	1	44	birefnet	
+roof	1	44	birefnet	
+bathroom	1	44	birefnet	
+cable	1	11	birefnet	
+client	1	22	birefnet	
+print	2	55	local	
+weapon	1	22	birefnet	
+peak	1	33	birefnet	
+protein	1	44	birefnet	
+breath	1	22	birefnet	
+license	1	44	birefnet	
+paint	1	11	birefnet	
+pilot	1	33	birefnet	
+principal	1	22	birefnet	
+singer	1	11	birefnet	
+theatre	1	22	birefnet	
+therapy	1	33	birefnet	
+witness	1	22	birefnet	
+defence	1	44	birefnet	not round
+nose	1	33	birefnet	
+plastic	1	11	birefnet	
+recording	1	33	birefnet	
+semi	1	33	birefnet	
+suspect	1	22	birefnet	
+tie	1	22	birefnet	
+document	1	11	birefnet	
+employee	1	11	birefnet	
+engineer	1	33	birefnet	
+facing	1	33	birefnet	
+ford	1	33	birefnet	
+graduate	1	33	birefnet	
+miller	1	33	birefnet	
+shoulder	2	66	local	weak: vague arm blob
+wheel	1	22	birefnet	
+chocolate	1	33	birefnet	
+coal	1	22	birefnet	
+colour	1	11	birefnet	
+gallery	1	44	birefnet	
+junior	1	33	birefnet	
+auto	1	22	birefnet	
+finger	1	22	birefnet	
+heading	1	22	birefnet	
+meal	1	33	birefnet	
+pants	1	22	birefnet	
+pocket	1	33	birefnet	
+audio	1	33	birefnet	
+bone	1	22	birefnet	
+chamber	1	22	birefnet	
+chart	1	33	birefnet	
+circuit	1	11	birefnet	
+clothing	1	33	birefnet	
+format	1	44	birefnet	
+healthcare	1	22	birefnet	
+mount	1	33	birefnet	
+parking	1	22	birefnet	no asphalt
+tears	1	11	birefnet	
+accused	1	33	birefnet	
+bedroom	1	22	birefnet	
+colors	1	44	birefnet	
+founder	1	22	birefnet	
+gear	1	11	birefnet	
+hip	-	-	-	REJECTED: pale pink blobs, unreadable / reads as a dog bone, not a pelvis
+infrastructure	1	33	birefnet	
+package	1	33	birefnet	
+railway	1	33	birefnet	
+server	1	33	birefnet	
+acid	1	22	birefnet	
+actress	1	22	birefnet	
+covering	1	22	birefnet	
+duke	1	33	birefnet	
+flash	2	88	local	reads as plain light bulb
+mac	1	22	birefnet	
+publication	1	33	birefnet	
+trail	1	44	birefnet	
+uncle	1	11	birefnet	
+waters	1	44	birefnet	
+woods	1	33	birefnet	
+arrival	1	11	birefnet	
+bath	1	11	birefnet	
+concrete	1	22	birefnet	
+jimmy	2	66	local	
+lieutenant	1	33	birefnet	
+mini	1	33	birefnet	
+muscle	1	44	birefnet	
+producer	1	33	birefnet	
+replacement	1	22	birefnet	
+sand	1	22	birefnet	
+savings	1	11	birefnet	
+tag	1	33	birefnet	obscure shape
+tape	1	22	birefnet	
+thread	1	22	birefnet	
+avenue	1	22	birefnet	
+commissioner	1	33	birefnet	
+ear	1	22	birefnet	
+gym	1	11	birefnet	
+label	1	22	birefnet	
+pitch	1	22	birefnet	
+pizza	1	44	birefnet	
+plain	1	22	birefnet	
+romantic	1	11	birefnet	
+wire	1	22	birefnet	
+worker	1	22	birefnet	
+designer	1	11	birefnet	
+kit	1	22	birefnet	
+lab	1	33	birefnet	
+soil	1	33	birefnet	
+stomach	1	11	birefnet	
+trash	2	55	local	
+walker	1	22	birefnet	
+bureau	1	22	birefnet	
+cousin	1	22	birefnet	
+deck	1	44	birefnet	
+dust	1	33	birefnet	
+institution	1	22	birefnet	
+memorial	1	44	birefnet	
+mum	1	33	birefnet	
+rail	1	22	birefnet	
+remote	1	44	birefnet	
+root	1	11	birefnet	
+buddy	1	22	birefnet	
+butter	1	22	birefnet	
+crap	1	22	birefnet	
+dean	1	33	birefnet	
+desert	1	44	birefnet	
+hop	1	11	birefnet	
+landing	-	-	-	REJECTED: abstract slabs, no jetty / reads as a table, no water or pier sense
+layer	1	33	birefnet	
+pot	1	44	birefnet	
+sake	1	33	birefnet	
+sheet	1	22	birefnet	reads as paper
+string	1	22	birefnet	
+associate	1	22	birefnet	
+citizen	1	11	birefnet	
+entrance	1	33	birefnet	
+idiot	1	22	birefnet	
+liquid	1	22	birefnet	
+makeup	1	22	birefnet	
+shell	1	44	birefnet	whole turtle
+berlin	1	11	birefnet	
+findings	2	55	local	
+journalist	1	22	birefnet	
+oxford	1	11	birefnet	
+passenger	1	44	birefnet	
+pen	1	44	birefnet	
+pope	1	33	birefnet	
+resident	1	33	birefnet	
+anna	1	22	birefnet	
+creek	1	11	birefnet	
+currency	1	33	birefnet	
+honey	1	11	birefnet	
+instructions	1	44	birefnet	vague paper
+log	1	44	birefnet	
+resort	1	22	birefnet	palm trees only, no hotel
+seed	1	44	birefnet	no sprout, looks like avocado
+tongue	1	44	birefnet	
+daddy	1	44	birefnet	
+doc	1	33	birefnet	
+gene	1	22	birefnet	
+headquarters	1	33	birefnet	
+jean	1	22	birefnet	
+juice	1	22	birefnet	
+strip	2	55	local	
+tube	1	11	birefnet	
+ambassador	1	33	birefnet	
+breast	1	33	birefnet	
+cant	1	22	birefnet	
+carter	1	22	birefnet	
+cotton	-	-	-	REJECTED: vague white sheets / reads as toilet roll on holder
+leather	1	22	birefnet	
+rep	1	33	birefnet	
+reporter	1	44	birefnet	
+terrorist	1	22	birefnet	
+theater	1	11	birefnet	
+virgin	1	22	birefnet	
+asshole	1	44	birefnet	
+glasses	1	11	birefnet	
+maria	1	33	birefnet	
+reader	1	22	birefnet	
+sum	1	22	birefnet	
+billy	2	88	local	
+column	1	33	birefnet	
+genius	1	33	birefnet	
+knee	1	11	birefnet	
+shore	1	11	birefnet	
+transmission	1	22	birefnet	vague engine block
+communist	1	22	birefnet	
+component	1	44	birefnet	
+cure	1	11	birefnet	
+jacket	1	22	birefnet	
+listing	1	22	birefnet	vague paper
+manual	1	22	birefnet	
+operator	1	33	birefnet	
+pound	1	22	birefnet	
+preparation	1	44	birefnet	
+railroad	1	22	birefnet	
+registration	1	11	birefnet	
+rick	1	33	birefnet	may read as cheese
+tissue	1	11	birefnet	
+trailer	1	33	birefnet	
+arsenal	2	55	local	
+chip	1	22	birefnet	
+footage	1	22	birefnet	
+grave	1	22	birefnet	
+laboratory	1	33	birefnet	
+relation	1	11	birefnet	
+ruin	1	22	birefnet	
+terminal	1	33	birefnet	
+agenda	1	33	birefnet	
+craft	1	11	birefnet	
+finishing	1	33	birefnet	no brush
+graham	1	33	birefnet	
+hardware	1	33	birefnet	
+intellectual	1	44	birefnet	
+sauce	1	44	birefnet	
+stem	1	11	birefnet	
+throat	1	22	birefnet	
+candy	1	22	birefnet	
+celebrity	1	44	birefnet	
+certificate	1	44	birefnet	
+clay	1	22	birefnet	
+estimate	1	33	birefnet	vague
+fool	1	22	birefnet	
+framework	1	11	birefnet	
+furniture	1	22	birefnet	
+lighting	1	44	birefnet	
+loop	1	44	birefnet	
+mall	1	22	birefnet	
+butt	1	22	birefnet	
+filter	1	44	birefnet	
+globe	1	22	birefnet	
+gulf	1	33	birefnet	
+photographer	1	11	birefnet	
+pin	1	22	birefnet	
+specialist	1	22	birefnet	
+stocks	2	55	local	weak: plank with holes, may not read as stocks
+stranger	1	22	birefnet	
+tap	1	22	birefnet	
+volunteer	1	11	birefnet	
+mechanism	1	11	birefnet	
+opera	1	22	birefnet	
+passage	1	22	birefnet	
+utility	1	11	birefnet	
+vessel	1	11	birefnet	
+anime	1	11	birefnet	
+clip	2	55	local	
+cooper	1	22	birefnet	
+guardian	1	33	birefnet	
+homeless	1	22	birefnet	
+instrument	1	22	birefnet	
+lover	1	33	birefnet	
+menu	2	55	local	generic red booklet
+scope	1	33	birefnet	
+segment	1	22	birefnet	
+spectrum	1	22	birefnet	
+stays	2	66	local	
+brick	1	22	birefnet	
+emperor	1	33	birefnet	
+inspector	1	44	birefnet	
+khan	1	33	birefnet	
+oxygen	1	44	birefnet	
+pipe	1	33	birefnet	
+powder	1	33	birefnet	
+screw	2	66	local	
+signature	1	33	birefnet	
+trigger	1	11	birefnet	whole gun
+bullet	1	44	birefnet	
+democrat	1	11	birefnet	
+dirt	1	11	birefnet	
+grandfather	1	22	birefnet	
+habit	1	22	birefnet	
+mama	1	22	birefnet	
+marshall	1	33	birefnet	
+pussy	1	22	birefnet	
+shoe	1	11	birefnet	
+terry	1	33	birefnet	
+tunnel	1	33	birefnet	
+warrant	1	33	birefnet	
+backing	1	22	birefnet	
+charter	1	22	birefnet	
+essay	1	33	birefnet	handwriting not visible
+maker	1	44	birefnet	
+photograph	1	44	birefnet	
+pole	1	44	birefnet	
+rubber	1	33	birefnet	
+substance	1	11	birefnet	
+amateur	1	11	birefnet	
+batman	1	22	birefnet	
+bearing	1	33	birefnet	
+beats	1	22	birefnet	
+bobby	1	11	birefnet	
+canal	1	33	birefnet	
+charlotte	1	11	birefnet	
+employer	1	11	birefnet	
+fluid	1	33	birefnet	
+leaf	1	22	birefnet	
+outfit	1	44	birefnet	
+permit	1	11	birefnet	stamp shape weak
+perry	1	22	birefnet	
+portrait	1	22	birefnet	
+socialist	1	44	birefnet	
+advocate	1	11	birefnet	
+chips	1	11	birefnet	
+creator	1	33	birefnet	
+dish	1	33	birefnet	
+nail	1	22	birefnet	
+phoenix	1	22	birefnet	
+poet	1	22	birefnet	
+scientist	1	44	birefnet	
+stole	2	66	local	
+veteran	1	44	birefnet	
+bronze	1	11	birefnet	
+bug	1	22	birefnet	
+dose	1	11	birefnet	
+flesh	1	22	birefnet	
+flip	1	22	birefnet	
+implement	1	11	birefnet	spade not hoe
+laser	1	44	birefnet	
+marijuana	1	11	birefnet	
+opponent	1	22	birefnet	
+prisoner	1	33	birefnet	
+punk	1	33	birefnet	
+radar	1	22	birefnet	
+villa	1	22	birefnet	
+wrap	2	55	local	
+bacteria	2	77	local	
+corn	1	11	birefnet	
+dealer	1	11	birefnet	
+filling	1	11	birefnet	tub reads weakly
+nerve	-	-	-	REJECTED: looks like a sun / reads as virus, no long axon tendrils
+pie	1	11	birefnet	
+poster	1	11	birefnet	reads weakly as poster
+ram	2	88	local	
+taxi	1	44	birefnet	
+tobacco	1	44	birefnet	
+assignment	1	22	birefnet	
+carpet	1	22	birefnet	
+cherry	1	44	birefnet	
+cole	1	11	birefnet	
+earl	1	44	birefnet	
+garbage	1	22	birefnet	
+grain	1	33	birefnet	
+grid	1	33	birefnet	
+liver	1	22	birefnet	
+mixture	1	44	birefnet	
+patent	1	11	birefnet	no blueprint visible
+physician	1	33	birefnet	
+rival	1	33	birefnet	
+runner	1	22	birefnet	
+spray	1	11	birefnet	
+suite	1	22	birefnet	
+victor	1	33	birefnet	
+vintage	1	22	birefnet	
+chuck	1	22	birefnet	
+cinema	1	11	birefnet	
+dressing	1	22	birefnet	
+jam	1	22	birefnet	
+lens	1	22	birefnet	
+ash	1	11	birefnet	reads as grey rocks
+counsel	1	22	birefnet	
+creature	1	22	birefnet	
+manhattan	1	33	birefnet	
+politician	1	33	birefnet	
+spirits	1	11	birefnet	
+bacon	1	22	birefnet	
+cattle	1	33	birefnet	
+classroom	1	44	birefnet	
+collins	1	22	birefnet	
+colours	1	11	birefnet	
+crop	1	11	birefnet	
+medication	1	22	birefnet	
+portfolio	1	44	birefnet	
+salad	1	33	birefnet	
+screening	1	22	birefnet	
+soup	1	22	birefnet	
+stake	1	22	birefnet	
+tackle	1	11	birefnet	
+beam	1	11	birefnet	lamp and beam weak
+dining	1	44	birefnet	
+grandmother	1	22	birefnet	
+missile	1	11	birefnet	
+organ	1	22	birefnet	
+pearl	1	11	birefnet	
+pepper	1	44	birefnet	
+rod	1	44	birefnet	
+tattoo	1	33	birefnet	
+zoo	1	44	birefnet	
+arrow	2	77	local	
+chancellor	1	22	birefnet	
+closet	1	22	birefnet	
+combine	1	33	birefnet	
+controller	1	22	birefnet	
+disc	1	33	birefnet	
+embassy	1	22	birefnet	
+haven	1	22	birefnet	
+lip	1	22	birefnet	
+mud	1	33	birefnet	
+publisher	1	22	birefnet	
+rookie	1	33	birefnet	
+sandwich	1	33	birefnet	
+ski	1	44	birefnet	
+sterling	1	22	birefnet	plain grey circle, weak coin
+valve	1	44	birefnet	
+ham	2	66	local	
+jewelry	1	22	birefnet	
+jungle	1	33	birefnet	
+prof	1	33	birefnet	
+provisions	1	33	birefnet	
+defender	1	22	birefnet	
+generic	1	11	birefnet	
+keyboard	1	44	birefnet	
+potato	1	44	birefnet	
+potter	1	22	birefnet	
+sergeant	1	22	birefnet	
+silk	-	-	-	REJECTED: reads as paper sheets / reads as a sheet of paper
+stamp	1	22	birefnet	
+voter	1	33	birefnet	
+witch	1	33	birefnet	
+belly	1	22	birefnet	odd flesh blob
+booth	1	11	birefnet	
+cam	1	44	birefnet	
+cliff	1	11	birefnet	
+derby	1	22	birefnet	
+fig	1	44	birefnet	
+lemon	1	44	birefnet	
+lung	1	22	birefnet	
+nutrition	1	22	birefnet	
+ore	1	44	birefnet	
+cafe	1	22	birefnet	
+dairy	1	11	birefnet	
+diary	1	33	birefnet	
+euro	1	33	birefnet	
+lighter	1	44	birefnet	
+meter	1	11	birefnet	weak, plain box
+olive	1	22	birefnet	plain yellow cube
+receiver	1	22	birefnet	
+servant	1	44	birefnet	
+skull	1	22	birefnet	
+statue	1	22	birefnet	
+vacuum	1	11	birefnet	
+architect	1	11	birefnet	
+basin	1	44	birefnet	
+bud	1	44	birefnet	
+butler	1	11	birefnet	
+chick	1	44	birefnet	
+coke	1	22	birefnet	
+console	1	33	birefnet	
+fabric	-	-	-	REJECTED: reads as paper sheets / reads as paper towel roll
+fairy	1	44	birefnet	
+lodge	1	33	birefnet	
+pastor	1	33	birefnet	
+poison	1	33	birefnet	
+rebel	1	22	birefnet	
+trainer	1	33	birefnet	
+basket	1	44	birefnet	
+beard	1	22	birefnet	
+blanket	1	11	birefnet	
+burger	1	44	birefnet	
+concentrate	1	11	birefnet	
+cookie	1	33	birefnet	
+ink	1	44	birefnet	
+motorcycle	1	33	birefnet	
+nest	1	33	birefnet	
+penny	1	22	birefnet	
+reed	1	22	birefnet	
+shorts	1	22	birefnet	
+testament	1	33	birefnet	
+toe	1	22	birefnet	whole foot not toe
+ambulance	1	44	birefnet	
+ballot	2	77	local	
+chile	1	33	birefnet	
+cigarette	1	44	birefnet	
+cooling	1	11	birefnet	
+elder	1	33	birefnet	
+fiber	1	33	birefnet	
+grocery	1	11	birefnet	
+guinea	1	33	birefnet	
+hull	1	33	birefnet	
+laundry	1	22	birefnet	
+packing	1	44	birefnet	
+brass	1	11	birefnet	
+cos	1	33	birefnet	
+diesel	1	11	birefnet	engine shape weak
+oven	1	22	birefnet	weak
+passport	1	11	birefnet	
+tablet	1	33	birefnet	
+collar	1	11	birefnet	
+hart	1	22	birefnet	
+nut	1	33	birefnet	
+soda	1	11	birefnet	
+sponsor	1	33	birefnet	
+analyst	1	22	birefnet	
+buyer	1	33	birefnet	
+cannabis	1	33	birefnet	
+cloth	2	77	local	weak: plain white squares
+container	1	33	birefnet	
+fork	1	22	birefnet	
+fur	1	44	birefnet	others drew animals; pelt weak
+junk	1	44	birefnet	
+kidney	1	11	birefnet	
+lobby	1	33	birefnet	
+marc	1	44	birefnet	
+mineral	1	33	birefnet	
+navigation	1	44	birefnet	dividers not compass
+pork	1	33	birefnet	
+ranch	1	33	birefnet	
+tin	1	11	birefnet	
+vampire	1	11	birefnet	
+arch	1	22	birefnet	
+badge	1	11	birefnet	
+extract	1	44	birefnet	
+ferry	1	44	birefnet	
+fisher	1	33	birefnet	
+gauge	1	11	birefnet	
+gut	1	22	birefnet	
+instructor	1	44	birefnet	
+liar	1	22	birefnet	
+machinery	1	22	birefnet	
+mercury	1	22	birefnet	
+platinum	1	11	birefnet	
+starter	1	33	birefnet	
+tire	1	33	birefnet	
+aluminum	1	22	birefnet	
+buck	1	11	birefnet	
+disk	1	11	birefnet	odd dark blob on face
+goddess	1	44	birefnet	
+liquor	1	11	birefnet	
+loser	1	11	birefnet	
+pad	1	44	birefnet	
+seller	1	11	birefnet	
+thumb	1	11	birefnet	
+timber	1	11	birefnet	
+vitamin	1	22	birefnet	
+voluntary	1	33	birefnet	
+wheat	1	22	birefnet	
+wrist	1	44	birefnet	
+banana	1	22	birefnet	
+capitol	1	22	birefnet	
+chin	1	44	birefnet	whole head profile
+clerk	1	33	birefnet	
+flour	1	22	birefnet	
+geneva	1	44	birefnet	
+java	1	33	birefnet	
+organs	1	11	birefnet	reads as meat slab, no plate
+outlet	2	66	local	A and D look like faces
+portal	1	33	birefnet	
+prescription	1	22	birefnet	
+silicon	2	88	local	blob in middle of wafer
+vaccine	1	11	birefnet	
+vinyl	1	22	birefnet	
+asylum	1	11	birefnet	
+dancer	1	11	birefnet	
+entrepreneur	1	11	birefnet	
+fossil	1	22	birefnet	
+injection	1	33	birefnet	
+spark	1	22	birefnet	
+straw	1	33	birefnet	
+successor	1	22	birefnet	
+archive	1	33	birefnet	
+bean	1	22	birefnet	
+bicycle	1	33	birefnet	
+cord	1	44	birefnet	
+defendant	1	22	birefnet	
+hydrogen	1	22	birefnet	
+jaw	2	77	local	very pale on white
+lawn	1	22	birefnet	
+needle	1	44	birefnet	
+pond	1	33	birefnet	
+porter	1	33	birefnet	
+prey	1	11	birefnet	
+refugee	1	44	birefnet	
+ruby	1	22	birefnet	
+amber	1	22	birefnet	
+ankle	1	22	birefnet	
+berry	1	22	birefnet	
+certification	1	22	birefnet	
+licence	1	11	birefnet	blank card, weak
+mandate	1	44	birefnet	
+steak	1	22	birefnet	
+therapist	1	22	birefnet	
+canvas	1	22	birefnet	
+cheek	1	22	birefnet	
+comedian	1	44	birefnet	
+cooler	1	44	birefnet	
+curry	1	22	birefnet	
+drake	1	22	birefnet	
+investor	1	44	birefnet	
+marble	1	22	birefnet	
+nominee	1	33	birefnet	
+pillow	1	22	birefnet	
+rapper	1	33	birefnet	
+scholar	1	22	birefnet	
+spa	2	88	local	
+spike	2	55	local	
+tab	1	22	birefnet	
+underwear	1	11	birefnet	
+waist	1	22	birefnet	
+brake	1	22	birefnet	
+critic	1	11	birefnet	
+depot	2	66	local	
+eats	1	11	birefnet	
+elevator	1	33	birefnet	
+herald	1	44	birefnet	
+lily	1	33	birefnet	
+messenger	1	44	birefnet	
+pencil	1	33	birefnet	
+plasma	1	22	birefnet	
+quarterback	1	33	birefnet	
+ref	1	22	birefnet	
+sovereign	1	22	birefnet	
+supervisor	1	22	birefnet	
+automobile	1	33	birefnet	
+cement	1	22	birefnet	
+cox	1	22	birefnet	
+grove	1	33	birefnet	
+gum	1	22	birefnet	
+lance	1	11	birefnet	
+prosecutor	1	33	birefnet	
+spice	1	22	birefnet	
+towel	2	55	local	pale
+vegetable	1	44	birefnet	
+bloom	1	44	birefnet	
+clown	1	22	birefnet	
+desktop	1	44	birefnet	
+dial	1	44	birefnet	
+directory	2	88	local	
+ginger	1	33	birefnet	
+jar	1	11	birefnet	
+painter	1	44	birefnet	
+printer	1	11	birefnet	
+sanctuary	1	33	birefnet	
+sleeve	2	77	local	
+spine	2	88	local	
+steering	1	22	birefnet	
+treasurer	1	11	birefnet	
+triangle	1	22	birefnet	
+debris	1	33	birefnet	
+donor	1	22	birefnet	
+garlic	1	22	birefnet	
+indicator	1	22	birefnet	
+lounge	1	11	birefnet	
+mint	1	11	birefnet	
+nova	1	22	birefnet	
+pasta	1	11	birefnet	weak shape
+showcase	1	22	birefnet	
+wax	1	22	birefnet	
+aerial	1	44	birefnet	
+ammunition	1	44	birefnet	
+catalog	1	11	birefnet	plain pages, weak
+catalogue	1	11	birefnet	plain pages, weak
+collector	1	44	birefnet	
+danish	1	44	birefnet	
+fountain	1	11	birefnet	
+hay	1	44	birefnet	may read as cheese
+paste	1	11	birefnet	
+pioneer	1	33	birefnet	
+sack	1	11	birefnet	
+wool	2	66	local	
+cardinal	1	22	birefnet	
+champ	1	11	birefnet	trophy only, no person
+champagne	1	33	birefnet	
+chrome	1	33	birefnet	
+cleaner	1	11	birefnet	
+griffin	1	44	birefnet	
+historian	1	44	birefnet	
+hostage	1	11	birefnet	
+monument	1	22	birefnet	
+particle	1	11	birefnet	
+peanut	1	44	birefnet	
+petroleum	1	11	birefnet	
+pharmaceutical	1	44	birefnet	
+rack	1	22	birefnet	
+scrap	1	22	birefnet	
+shuttle	1	33	birefnet	weak, reads as boat
+snack	1	44	birefnet	
+spotlight	1	22	birefnet	
+striker	1	33	birefnet	
+vet	1	33	birefnet	
+broker	1	33	birefnet	
+cocktail	1	22	birefnet	
+fist	1	22	birefnet	
+heir	1	22	birefnet	
+landlord	1	22	birefnet	
+mosque	1	33	birefnet	
+moss	1	33	birefnet	
+nursery	1	22	birefnet	
+onion	1	22	birefnet	
+recruit	1	22	birefnet	
+rogue	1	11	birefnet	
+tomb	1	11	birefnet	reads as gravestone
+abbey	1	33	birefnet	
+baron	1	22	birefnet	
+bunny	1	11	birefnet	
+clutch	2	66	local	
+coconut	1	44	birefnet	
+corridor	1	33	birefnet	drew an arch
+header	1	44	birefnet	weak
+holly	1	44	birefnet	
+lining	1	22	birefnet	weak
+manila	1	44	birefnet	
+opener	1	33	birefnet	
+spoon	1	11	birefnet	
+teddy	1	33	birefnet	
+terrace	1	33	birefnet	
+villain	1	33	birefnet	
+billboard	1	44	birefnet	
+bully	1	22	birefnet	
+economist	1	33	birefnet	
+forehead	1	22	birefnet	whole face
+gem	1	44	birefnet	
+heather	1	22	birefnet	
+marker	2	55	local	
+marsh	1	11	birefnet	
+marshal	1	22	birefnet	
+ninja	1	33	birefnet	
+pharmacy	1	11	birefnet	
+processor	1	22	birefnet	
+rubbish	1	44	birefnet	
+salon	2	55	local	reads as bank/museum
+sodium	1	11	birefnet	
+swallow	1	44	birefnet	
+congressman	1	33	birefnet	
+coral	1	22	birefnet	
+correspondent	1	22	birefnet	
+coupon	1	33	birefnet	
+curtain	1	22	birefnet	
+dentist	1	11	birefnet	
+dough	1	22	birefnet	
+envelope	1	33	birefnet	
+granite	1	22	birefnet	
+greens	1	11	birefnet	
+handbook	1	22	birefnet	
+lime	1	33	birefnet	
+maid	1	11	birefnet	
+maple	1	11	birefnet	leaf not tree
+operative	1	22	birefnet	
+relay	2	55	local	
+taxpayer	1	33	birefnet	
+wheelchair	1	11	birefnet	
+atm	1	44	birefnet	
+bark	2	55	local	
+bra	1	22	birefnet	
+composer	1	11	birefnet	
+cowboy	1	22	local	
+gasoline	1	22	local	
+ivory	1	22	local	
+kirk	1	11	local	
+necklace	1	33	local	
+porch	1	44	local	
+spit	2	77	local	
+tomato	1	22	local	
+tub	1	22	local	
+uranium	1	11	local	
+volleyball	1	44	local	
+doe	1	44	local	others have antlers
+elbow	1	11	local	
+gel	1	11	local	gel not visible
+grill	1	22	local	
+heel	2	55	local	
+mat	1	33	local	
+spill	1	33	local	
+swamp	1	22	local	
+teammate	1	33	local	
+vanilla	1	11	local	no pods, generic flower
+violet	1	44	local	
+afghan	1	11	local	no crochet texture
+dessert	1	33	local	
+investigator	1	22	local	
+ivy	1	33	local	
+livestock	1	33	local	
+missionary	1	33	local	
+pumpkin	1	33	local	
+ramp	1	33	local	
+reef	1	11	local	
+sage	1	11	local	
+vodka	1	44	local	only non-empty candidate
+archbishop	1	22	local	
+calcium	1	22	local	
+decoration	1	44	local	
+dye	1	22	local	
+guru	1	11	local	
+hormone	1	11	local	
+lace	1	44	local	
+marketplace	1	44	local	
+membrane	1	11	local	weak, plain pink sheet
+murderer	1	33	local	
+nickel	1	22	local	plain grey circle, weak coin
+remedy	1	33	local	
+slate	1	44	local	
+token	1	11	local	
+yacht	1	44	local	
+archer	1	11	local	
+barber	1	22	local	
+competitor	1	22	local	only bib without numbers
+cuisine	1	22	local	
+dioxide	1	22	local	
+exhaust	1	44	local	
+fries	1	44	local	
+insulin	1	11	local	
+lid	1	33	local	whole face, not just eyelid
+manor	1	33	local	
+mic	1	22	local	
+narrator	1	11	local	
+partisan	1	22	local	
+ribbon	1	33	local	
+coffin	1	44	local	
+conductor	1	33	local	
+font	1	22	local	
+glue	1	44	local	
+luggage	1	11	local	
+microwave	1	22	local	
+morocco	-	-	-	REJECTED: drew dogs and blobs / shapeless red blob, not a hide
+peel	1	22	local	
+picnic	1	33	local	
+psychic	1	22	local	
+psychologist	1	11	local	
+puppet	1	44	local	
+sausage	1	33	local	
+skeleton	1	44	local	
+tick	1	22	local	
+capitalist	1	22	local	
+constable	1	22	local	
+goalkeeper	1	11	local	
+kindergarten	1	33	local	
+mechanic	1	33	local	
+pitcher	1	22	local	
+playground	1	22	local	
+receptor	2	77	local	reads as generic pink ball
+shrimp	1	22	local	
+spokesman	1	22	local	
+stall	1	33	local	
+strap	1	22	local	
+vendor	1	22	local	
+backpack	1	33	local	
+balcony	1	22	local	
+buffer	1	22	local	
+daisy	1	33	local	
+disco	1	33	local	mirror ball only, no building
+foam	1	11	local	
+invalid	1	33	local	
+jade	1	33	local	
+participant	1	11	local	
+phantom	1	22	local	
+stab	1	44	local	
+supermarket	1	33	local	weak shape
+tenant	1	22	local	
+tractor	1	33	local	
+turnover	1	44	local	
+whiskey	1	44	local	
+antenna	1	22	local	weak
+chop	2	88	local	no bone
+flats	1	22	local	
+flint	1	22	local	
+fortress	1	22	local	
+herb	1	11	local	
+incumbent	1	33	local	
+jelly	1	11	local	
+mold	1	44	local	
+napoleon	1	22	local	
+peach	1	22	local	
+scar	-	-	-	REJECTED: shapeless pink blobs / zigzag ribbon, no stitches, not a scar
+stereo	2	66	local	
+textbook	1	22	local	
+vein	2	66	local	could read as tree branch
+velvet	1	22	local	
+accountant	1	22	local	
+billionaire	1	33	local	
+bypass	1	33	local	
+cane	1	11	local	
+cedar	1	11	local	
+corpse	-	-	-	REJECTED: reads as gingerbread figure / shapeless white lump, no feet
+diploma	1	11	local	
+duchess	1	22	local	
+foil	1	22	local	weak
+heath	1	33	local	clean heather shrub
+insect	1	22	local	clear six-legged beetle
+iris	1	11	local	clear iris
+nitrogen	1	11	local	flask; gas reads weakly
+rover	1	33	local	clear rover
+stainless	1	22	local	plain ingot
+syrup	1	11	local	bottle; generic
+turf	1	11	local	rolled turf visible
+volcano	1	22	local	clear
+ark	1	11	local	cabin visible
+chandler	1	33	local	candles readable
+dwarf	1	22	local	single pickaxe, helmet
+flagship	1	22	local	clear warship with flag
+glucose	1	44	local	jar of powder; generic
+gore	1	22	local	blood puddle; mild gore
+gown	1	22	local	full ball gown
+halo	1	33	local	reads as ring with halo
+limestone	1	11	local	white block
+liner	1	22	local	clear liner
+mortar	1	11	local	cannon on baseplate
+retailer	1	22	local	shopping bag clear
+spacecraft	1	33	local	clear rocket
+specification	1	44	local	rolled blueprint
+textile	2	55	local	
+tray	1	11	local	flat tray with handles
+authorization	1	44	local	document with wax seal
+baggage	1	22	local	clear suitcase
+beacon	1	11	local	clear signal tower
+boxer	1	33	local	clear boxer
+ceramic	1	22	local	clean vase
+cereal	1	44	local	wheat bundle
+challenger	1	22	local	raised sword clear
+cola	1	44	local	glass with straw
+credentials	1	33	local	badge on lanyard
+folder	1	44	local	papers sticking out
+hedge	2	66	local	
+ingredient	1	33	local	egg and carrot in bowl
+jewellery	1	33	local	necklace with gem
+joker	1	22	local	jester card readable
+notebook	1	22	local	open laptop
+palette	1	44	local	classic palette shape
+reverend	1	11	local	no white collar visible
+rust	1	11	local	corroded lump
+serum	1	44	local	dropper vial
+skate	1	22	local	clear ice skate
+stray	1	22	local	scruffy dog
+stud	2	66	local	reads as pin
+supper	1	11	local	plate of roast dinner
+aluminium	1	11	local	plain ingot
+arcade	1	22	local	arched colonnade
+chili	1	33	local	bowl of chili
+covenant	1	11	local	scroll with seal
+hose	1	33	local	coiled hose with nozzle
+millionaire	1	22	local	top hat and money bag
+patron	1	22	local	purse barely readable
+popcorn	1	22	local	striped tub
+proxy	1	22	local	cloaked figure with mask
+sniper	1	22	local	scoped rifle
+thigh	1	11	local	drumstick
+troll	1	44	local	troll with club
+vest	1	33	local	buttoned waistcoat
+vine	1	22	local	leafy vine; tendrils weak
+yen	1	22	local	generic coin
+apparel	1	33	local	shirt on hanger
+atom	1	33	local	atom readable
+cholesterol	1	11	local	flask of yellow liquid
+grease	1	22	local	tin of yellow grease
+hallway	1	11	local	reads as door only
+jeep	1	33	local	military jeep
+knot	2	77	local	crossed ropes more than a knot
+lecturer	1	22	local	pointer clear
+mayo	1	22	local	jar of white cream
+petrol	1	33	local	jerrycan
+philosopher	1	44	local	toga and scroll
+plantation	1	22	local	crop rows with farmhouse
+razor	2	88	local	
+rug	1	22	local	patterned rug
+strawberry	1	11	local	clear
+sunglasses	1	22	local	clear
+tile	2	55	local	
+boiler	1	22	local	gauge and pipes
+coating	1	33	local	paint can with drip
+cork	1	11	local	stopper shape
+detector	2	66	local	
+magistrate	1	44	local	robe and gavel
+mug	1	33	local	clear mug
+pod	1	33	local	open pod with peas
+predator	1	33	local	prowling tiger
+recorder	1	33	local	cassette recorder; reads as tape
+stove	1	33	local	stove with chimney
+tract	1	22	local	plot with fence
+bikini	1	22	local	clear
+bracelet	1	22	local	chain links
+capsule	1	22	local	two-tone capsule
+captive	1	22	local	shackled wrists
+cinnamon	1	33	local	tied sticks
+confederate	1	22	local	hooded figure with lantern
+contamination	1	11	local	leaking barrel
+crisp	1	11	local	weak, reads as pasta
+cutter	1	44	local	box cutter
+delegate	1	11	local	suit with briefcase
+emission	1	33	local	smoke cloud
+fin	1	44	local	fin shape; abstract
+grape	1	22	local	bunch of grapes
+gravel	1	11	local	pebble pile
+indictment	1	11	local	document; stamp unclear
+jumper	1	33	local	knit jumper
+limb	1	22	local	weak, bent arm
+mack	1	33	local	belted raincoat
+offender	1	11	local	striped prisoner, ball and chain
+oracle	1	22	local	crystal ball
+pottery	1	22	local	workshop with kiln
+prairie	1	22	local	grass tuft with flowers
+psychiatrist	1	33	local	white coat clipboard
+quartz	1	11	local	crystal cluster
+songwriter	1	33	local	guitar
+technician	1	33	local	overalls and wrench
+yuan	1	33	local	banknote
+aide	1	22	local	folder
+avatar	1	33	local	four arms
+beverage	1	33	local	drink with straw and lemon
+bumper	1	22	local	reads as car front, not bumper
+chalk	1	22	local	chalk stick
+coaster	1	33	local	could read as cookie
+councillor	1	33	local	gold chain
+diplomat	1	33	local	briefcase
+fallout	1	33	local	ash pile with glow
+footballer	1	11	local	striped kit, ball
+lipstick	1	44	local	single tube
+mart	1	22	local	shop with awning
+monarch	1	44	local	crown, sceptre
+mustard	1	22	local	squeeze bottle
+plaque	1	22	local	artery with blob; abstract
+rabbi	1	33	local	hat, book
+scoop	1	33	local	hand scoop
+scotch	1	22	local	tumbler with ice
+shale	1	22	local	layered stack
+shin	1	11	local	lower leg
+solicitor	1	22	local	briefcase and papers
+taco	1	11	local	clear taco
+tinder	1	11	local	twig pile
+titan	1	33	local	giant with boulder
+traitor	1	33	local	hidden dagger
+wallpaper	1	22	local	roll of wallpaper
+willow	1	11	local	weeping willow
+ale	1	22	local	pint with foam
+courier	1	22	local	satchel and parcel
+drummer	1	22	local	drum and sticks
+gin	1	44	local	clear bottle
+ignition	1	44	local	key; no slot
+jewel	1	33	local	faceted gem
+pike	1	22	local	long green pike
+piper	1	33	local	bagpipes and kilt
+pulp	1	44	local	bucket of pulp
+reel	1	33	local	fishing reel; small detail
+staple	-	-	-	REJECTED: drawn as plain block / ramp/wedge shapes, no U staple
+sushi	1	44	local	nigiri with nori
+tails	1	33	local	tailcoat with tails
+bakery	1	11	local	brick building with chimney
+believer	1	22	local	praying hands
+caffeine	1	11	local	powder jar; generic
+coward	1	22	local	hiding behind shield
+fibre	1	33	local	strands; weak
+garrison	1	22	local	fort with gate and tower
+hacker	1	33	local	laptop
+harness	-	-	-	REJECTED: reads as horse / drew a whole horse, extra creature
+insulation	1	11	local	pink roll; toilet-roll-like
+intern	1	22	local	coffee cup and badge
+mole	1	22	local	mole with pink paws
+molecule	1	22	local	ball and stick
+parcel	1	33	local	string-tied parcel
+partition	1	44	local	folding screen
+savior	1	22	local	halo, outstretched arms
+toby	1	33	local	mug with tricorn hat
+translator	1	11	local	two books barely
+tutor	1	22	local	book and pencil
+yeast	1	22	local	pale block
+assassin	1	22	local	dagger
+brewery	1	22	local	vats and chimney
+bulb	1	22	local	glowing bulb
+cardboard	2	55	local	
+dictator	1	22	local	uniform with medals
+dime	1	33	local	small coin
+freezer	1	22	local	chest freezer; plain box
+oxide	1	22	local	red powder lump
+rouge	1	33	local	compact with brush; muddled
+softball	1	22	local	clear
+spur	-	-	-	REJECTED: gears, not a riding spur / bare C shape, no rowel, unrecognisable
+artery	1	11	local	red tube
+bamboo	1	33	local	stalk with leaves
+basil	1	22	local	basil sprig
+blackberry	1	33	local	berry with leaves
+booze	1	44	local	whisky bottle
+cellphone	1	22	local	smartphone
+corporal	1	22	local	rifle; stripes not visible
+crest	1	22	local	rooster rather than comb alone
+decor	1	22	local	armchair and plant
+elf	1	22	local	pointed ears and bow
+graffiti	1	22	local	spray can with rainbow
+helm	1	33	local	ship's wheel
+monastery	1	22	local	bell tower
+nightclub	1	44	local	neon entrance
+samurai	1	22	local	katana
+seafood	1	22	local	shrimp crab mussels
+spaghetti	1	22	local	weak, reads as omelette
+stein	1	33	local	lidded stein
+woodland	1	22	local	three trees
+zinc	1	22	local	ingot
+baton	1	11	local	baton
+brew	1	22	local	tankard with foam
+charger	1	22	local	horse; no armour
+checkout	1	33	local	counter with till
+coca	1	11	local	shrub; generic leaves
+cocoa	1	44	local	mug with cream
+compartment	1	11	local	locker
+cove	1	44	local	curved bay
+lever	2	55	local	
+mutant	1	22	local	three eyes
+neon	1	22	local	red tube; glow weak
+nun	1	33	local	habit and rosary
+polymer	1	33	local	white pellet pile
+pup	1	11	local	puppy
+salesman	1	22	local	sample case
+spokesperson	1	22	local	microphone
+sultan	1	33	local	turban and sceptre
+vinegar	1	11	local	brown bottle
+accessory	1	33	local	belt with buckle
+broadcaster	1	44	local	blue suit with mic
+cache	1	22	local	chest under leaves
+condo	1	11	local	apartment block
+edible	1	22	local	basket of bread, fruit, cheese
+fax	1	11	local	paper coming out
+fowler	1	22	local	shotgun
+gag	-	-	-	REJECTED: reads as apron or dress / reads as scarf or ribbon
+gill	1	11	local	whole fish, gill visible
+guitarist	1	22	local	electric guitar
+hash	1	33	local	bowl of hash
+hogan	1	22	local	earth lodge
+laurel	1	22	local	tree
+podium	1	44	local	speaker podium
+practitioner	1	33	local	white coat stethoscope
+puck	1	22	local	hockey puck
+rum	1	44	local	dark rum bottle
+scorer	1	44	local	raising ball
+shareholder	1	33	local	holding certificate
+soy	1	33	local	open pod with beans
+squash	1	44	local	butternut
+tar	1	22	local	bucket of tar
+turbine	1	11	local	wind turbine
+warden	1	22	local	ring of keys
+whisky	1	22	local	brown bottle
+yogurt	1	44	local	cup with spoon
+barbecue	1	22	local	meat skewer
+bladder	1	11	local	weak, organ unclear
+blossom	1	44	local	pink branch
+carrot	1	33	local	carrot
+filmmaker	1	22	local	beret and clapperboard
+fuse	1	22	local	cartridge fuse
+gluten	1	22	local	dough lump; reads as rock
+lotus	1	22	local	lotus on pad
+mantle	1	22	local	cloak; collar faint
+mascot	1	22	local	plush bear
+ottoman	1	22	local	round footstool
+paddy	1	22	local	flooded plot with shoots
+paperback	1	44	local	book
+peasant	1	33	local	tunic and pitchfork
+pointer	1	22	local	laser beam
+regulator	1	11	local	valve; no gauge
+tally	2	77	local	
+wedge	1	22	local	cheese wedge
+alloy	1	22	local	boat-shaped ingot
+bale	1	11	local	tied straw bale
+courthouse	1	33	local	columns
+crank	1	11	local	crank handle
+enclosure	1	22	local	fence pen; no mesh
+jasmine	1	11	local	white flower sprig
+linen	2	88	local	weak: reads as paper sheets
+lookout	1	33	local	sailor with spyglass
+mosquito	1	44	local	long legs and proboscis
+motel	1	33	local	row of doors
+novelist	1	11	local	quill pen
+pavement	1	33	local	concrete slab
+pudding	1	22	local	holly on top
+resin	1	22	local	golden lump
+simulator	-	-	-	REJECTED: drawn as airplane / white blob on legs, reads as bug or sheep
+sock	1	22	local	striped sock
+storey	1	44	local	floor section with windows
+tailor	1	22	local	tape measure and scissors
+waiter	1	44	local	vest and tray
+adapter	1	33	local	plug adapter
+attendant	1	44	local	towel over arm
+bourbon	1	33	local	amber bottle
+breaker	2	88	local	
+cockpit	1	44	local	seat with canopy
+colon	1	22	local	large intestine
+consul	1	33	local	passport
+contender	1	22	local	championship belt
+emerald	1	44	local	faceted emerald
+mare	1	33	local	brown horse
+meadow	1	33	local	meadow patch with flowers
+mystic	1	11	local	glowing crystal
+quarry	2	66	local	reads as bowl/arena
+sap	1	22	local	yellow drop
+sheikh	1	33	local	white robes, beads
+strait	1	22	local	channel between shores
+weaver	1	33	local	shuttle unclear
+yarn	1	22	local	ball of yarn
+attacker	1	22	local	raised axe
+banquet	1	11	local	table with roast and goblets
+chamberlain	1	22	local	ring of keys
+coloring	1	11	local	small red bottle
+cortex	1	33	local	brain
+dynamite	1	22	local	stick with fuse
+garment	1	11	local	dress on hanger
+impeachment	1	33	local	document with stamp
+inventor	1	22	local	goggles and gadget
+jasper	1	22	local	red stone
+librarian	1	22	local	glasses and books
+lumber	1	33	local	plank stack
+muse	1	22	local	lyre
+nanny	1	33	local	pushing pram
+nucleus	1	33	local	cell with nucleus
+poppy	1	44	local	poppy with stem
+rib	-	-	-	REJECTED: generic dog bone, not a rib / dog bone, not a curved rib
+sponge	1	22	local	yellow sponge
+sucker	1	22	local	treasure map
+vaccination	1	22	local	syringe with vial
+announcer	1	22	local	herald trumpet
+baba	1	22	local	weak, generic cake
+charcoal	1	22	local	black lumps
+citrus	1	33	local	three fruits
+columnist	1	22	local	newspaper; pen faint
+courtroom	1	22	local	judge's bench
+cushion	1	44	local	square cushion
+cyclist	1	33	local	helmet, bike
+dorm	1	22	local	brick block
+duct	2	55	local	
+emblem	2	55	local	
+foreman	1	22	local	hard hat, clipboard
+glacier	1	33	local	blue-white ice block
+kernel	1	22	local	corn kernel
+mustang	1	22	local	rearing horse
+patty	1	33	local	weak, could be macaron
+pineapple	1	11	local	clear
+potassium	1	11	local	silver lump
+scissors	1	22	local	red-handled scissors
+seaside	1	33	local	beach umbrella on sand
+shampoo	1	22	local	pink pump bottle
+autopsy	1	11	local	report on clipboard
+cartridge	2	55	local	
+cashier	1	33	local	cash tray
+cigar	1	33	local	cigar with band
+cologne	1	22	local	fancy bottle
+colt	1	33	local	young horse
+concession	1	11	local	contract with ribbon
+crescent	1	33	local	crescent moon
+hog	1	33	local	pink hog
+jockey	1	11	local	silks and crop
+mummy	1	22	local	bandaged mummy
+orchard	1	33	local	trees with fence
+riches	1	22	local	chest of gold coins
+rosemary	1	33	local	sprig
+sandstone	1	22	local	orange block
+scooter	1	33	local	kick scooter
+springer	1	44	local	spaniel with long ears
+venom	1	22	local	green vial; no fang
+winger	1	22	local	kicking ball
+abdomen	1	22	local	belly torso; weak
+aquarium	1	22	local	fish tank
+batter	1	22	local	bowl with whisk
+booster	1	22	local	reads as whole rocket
+bun	1	33	local	round bun
+calculator	1	22	local	calculator
+chemotherapy	1	33	local	IV bag on stand
+consulate	1	33	local	building with flag
+convict	1	33	local	stripes, ball and chain
+glitter	1	44	local	jar; sparkle weak
+hen	1	22	local	brown hen
+lettuce	1	33	local	lettuce head
+lithium	1	22	local	ingot
+mango	1	44	local	mango
+porcelain	1	44	local	teapot
+programmer	1	33	local	laptop
+rue	1	22	local	herb sprig; generic
+scanner	1	33	local	flatbed scanner
+sup	1	44	local	bowl of broth
+tanner	1	22	local	apron and hide
+thinner	2	77	local	
+topping	1	33	local	whipped cream with cherry
+vapor	2	88	local	
+veronica	1	22	local	flower spike; weak
+waitress	1	33	local	coffee pot
+walnut	1	22	local	wood plank
+bowel	1	22	local	coiled intestine
+brow	1	11	local	eyebrow over eye
+cabbage	1	33	local	cabbage
+convertible	1	33	local	top-down car
+crater	1	11	local	round crater
+curator	1	33	local	magnifying glass
+educator	1	33	local	pointer and book
+finch	1	33	local	yellow finch
+gangster	1	22	local	pinstripe, fedora, gun
+heater	1	11	local	radiator
+kite	1	44	local	kite with tail
+lighthouse	1	44	local	striped lighthouse
+mash	1	33	local	bucket of mash
+messiah	1	22	local	halo, raised hands
+plaintiff	1	33	local	holding document; faint
+plum	1	22	local	plum with leaf
+rag	1	44	local	tattered cloth; weak
+sedan	1	33	local	four-door car
+sewage	1	11	local	pipe pouring sludge
+suitcase	1	22	local	wheeled suitcase
+titanium	1	22	local	ingot
+ulster	1	22	local	long overcoat
+vibes	1	44	local	vibraphone
+algae	1	11	local	green clump; reads as bush
+asbestos	1	22	local	jar of fibre; weak
+boutique	1	22	local	shop with awning
+brewer	1	22	local	apron, tankard
+buffet	1	22	local	table with trays
+catcher	1	22	local	mask and mitt
+dryer	1	22	local	tumble dryer
+fireplace	1	22	local	fireplace with fire
+fugitive	1	11	local	running with bundle
+hazel	1	44	local	forked rod; fork-like
+headset	1	33	local	headset with mic
+inmate	1	11	local	orange jumpsuit, cup
+interpreter	1	33	local	headset and notepad
+methane	1	22	local	flask; gas weak
+oyster	1	44	local	oyster with pearl
+pea	1	33	local	pod with peas
+sawyer	1	22	local	two-handled saw
+seminary	1	11	local	building with spire
+skipper	1	33	local	ship's wheel
+transcription	1	44	local	clipboard
+unicorn	1	44	local	unicorn
+vat	1	22	local	steel vat
+vineyard	1	33	local	vines with grapes
+viola	1	33	local	viola with bow
+adobe	1	33	local	brick stack
+almond	1	22	local	almond
+asphalt	1	44	local	black slab
+backbone	1	22	local	stacked vertebrae
+booklet	2	66	local	
+countess	1	33	local	gown, tiara, fan
+fungus	1	22	local	mushroom cluster
+lingerie	1	22	local	nightgown on hanger
+magician	1	33	local	top hat and wand
+marrow	1	33	local	bone showing marrow
+pastry	1	22	local	croissant
+pawn	1	22	local	spear
+plaster	1	33	local	bag of powder
+residue	-	-	-	REJECTED: grey paper squares, no dish / grey smear in dish unreadable
+salsa	1	33	local	bowl of salsa
+semiconductor	1	33	local	microchip
+thyroid	2	55	local	
+vomit	1	33	local	cartoon puddle
+wiring	2	55	local	
+adrenaline	1	33	local	vial with syringe
+ballroom	1	11	local	chandelier only
+canopy	1	22	local	canopy tent
+comb	2	55	local	
+cruiser	1	44	local	police car
+dart	1	11	local	dart with flights
+denim	1	22	local	jeans
+encyclopedia	1	44	local	thick book
+freshwater	1	33	local	bottle of water
+mandarin	1	33	local	mandarin with leaf
+mast	1	44	local	radio mast
+matte	1	22	local	black lump
+nicotine	1	44	local	brown dropper bottle
+rye	1	44	local	grain stalk
+socket	2	55	local	weak: reads as mushroom/pestle
+weir	1	22	local	low weir with water
+wrestler	1	11	local	holding belt
+appendix	2	55	local	
+auditorium	1	11	local	curved roof hall
+brandy	1	22	local	brandy glass
+chemist	1	44	local	pill bottle
+coastline	1	33	local	rocky coast with waves
+cuff	2	77	local	weak
+loft	1	22	local	barn with hay door
+outlaw	1	22	local	bandana and revolver
+parasite	2	77	local	
+perennial	1	22	local	potted plant
+spectator	1	22	local	cap and binoculars
+tyre	1	22	local	car tyre
+ultrasound	1	33	local	screen and cart
+usher	1	11	local	torch
+bartender	1	22	local	vest and shaker
+birch	1	11	local	white trunk
+broccoli	1	33	local	broccoli
+buckle	1	33	local	brass buckle
+canoe	1	33	local	canoe with paddle
+cider	1	22	local	golden glass
+destroyer	1	44	local	warship
+hind	1	44	local	female deer, no antlers
+hitter	1	22	local	helmet and bat
+imam	1	33	local	robes, cap, book
+locomotive	1	33	local	steam locomotive
+microscope	1	22	local	microscope
+mixer	1	11	local	stand mixer
+paycheck	1	22	local	cheque in envelope
+primer	1	11	local	small textbook
+raspberry	1	33	local	raspberry
+router	1	11	local	router with antennas
+tug	1	33	local	tugboat
+ancestor	1	22	local	ghostly elder
+arbor	1	33	local	arch with roses
+attire	1	33	local	suit on hanger
+axle	2	66	local	
+barley	1	11	local	barley stalk
+cheque	1	33	local	cheque with lines
+cisco	1	11	local	silver fish
+cub	1	22	local	bear cub
+derrick	1	44	local	derrick tower
+diaper	1	44	local	white diaper
+fingerprint	1	33	local	magnifier over card; weak
+fisherman	1	22	local	raincoat and rod
+homestead	1	33	local	farmhouse with porch
+icing	1	22	local	piping bag
+ledger	1	22	local	leather book with clasp
+loaf	1	22	local	reads as slice not loaf
+magnesium	1	22	local	ingot
+mimic	1	11	local	white face, stripes
+musk	1	33	local	small perfume bottle
+paddle	1	22	local	paddle oar
+peg	2	55	local	
+refinery	1	44	local	tower with pipes
+siding	1	33	local	siding panels
+stocking	1	11	local	nylon stocking
+swimmer	1	11	local	cap, goggles, towel
+teller	1	33	local	counting notes
+ape	1	22	local	gorilla
+bidder	1	33	local	auction paddle
+bowler	1	33	local	bowler hat
+cameo	1	33	local	cameo brooch
+caramel	1	11	local	pile of candies
+chromosome	1	22	local	X-shaped
+contestant	1	33	local	sash and trophy
+convent	1	44	local	bell tower with cross
+diner	1	33	local	chrome diner
+envoy	1	22	local	sealed scroll
+fir	1	33	local	plank stack
+goalie	1	22	local	gloves and ball
+gravy	2	66	local	
+herring	1	11	local	silver fish
+hopper	1	44	local	funnel on legs
+paw	1	33	local	paw pad
+pianist	1	33	local	at piano with music
+placebo	1	22	local	white pill
+punt	1	11	local	flat boat with pole
+scalp	1	11	local	hair on head
+shutter	1	22	local	roller shutter
+sparrow	1	33	local	sparrow
+spinach	1	22	local	leaf bunch
+stew	1	44	local	beef stew
+tequila	1	44	local	golden bottle
+thorn	1	22	local	thorny stem
+thug	1	44	local	crowbar
+alto	1	33	local	robe and book
+aperture	1	22	local	camera lens
+char	1	22	local	charred wood pile
+coupling	1	11	local	reads as crane hook
+crate	1	44	local	slatted crate
+funnel	1	44	local	funnel
+gloss	2	66	local	
+mermaid	1	33	local	green tail, long hair
+pear	1	11	local	green pear
+piston	1	33	local	piston with rod
+stuffing	1	22	local	bowl with herbs
+summons	1	22	local	paper with wax seal
+throttle	2	55	local	
+wand	1	11	local	plain wooden wand
+apostle	1	33	local	beard, robes, staff
+bowman	1	22	local	longbow
+brunch	1	22	local	eggs, bacon, pancakes
+chestnut	1	33	local	wood plank
+ethanol	1	11	local	flask; faint
+flashlight	1	44	local	torch with beam
+garland	1	33	local	flower garland
+grail	1	22	local	golden chalice
+illustrator	1	22	local	brush and sketchbook
+ketchup	1	11	local	ketchup bottle
+martyr	1	33	local	palm branch
+opium	1	11	local	poppy pod with crown
+plank	1	44	local	plank; weak
+privy	1	44	local	wooden outhouse
+serpent	1	44	local	coiled snake
+sesame	1	22	local	seed pile
+stalk	2	55	local	
+statesman	1	22	local	suit and scroll
+swine	1	33	local	pink pig
+tram	1	33	local	red tram
+amplifier	1	22	local	guitar amp
+avocado	1	22	local	halved avocado
+bathtub	1	11	local	clawfoot tub
+biscuit	1	22	local	round biscuit
+caretaker	1	44	local	overalls and broom
+clamp	1	44	local	
+cracker	1	22	local	
+empress	1	22	local	
+finalist	1	44	local	
+gadget	1	33	local	reads a bit like a drill
+hamburger	1	44	local	
+inlet	1	22	local	
+lotion	1	33	local	
+marquis	1	22	local	
+mould	1	22	local	
+pinnacle	1	44	local	
+racer	1	33	local	
+regent	1	22	local	
+stalker	1	11	local	
+steward	1	22	local	
+stump	1	44	local	
+synagogue	1	11	local	
+bead	1	44	local	string barely visible
+berth	2	66	local	
+cafeteria	1	33	local	
+godfather	1	11	local	
+lemonade	1	22	local	
+orderly	1	44	local	
+patio	1	44	local	
+powerhouse	1	44	local	
+questionnaire	1	44	local	
+riddle	1	44	local	
+roe	1	22	local	
+rubble	1	22	local	
+sapphire	1	11	local	
+sectional	1	33	local	
+solvent	1	33	local	
+tanker	1	22	local	
+torpedo	1	33	local	
+trolley	1	22	local	
+yearbook	1	33	local	
+abbot	1	22	local	
+aspen	1	22	local	
+bearer	1	22	local	
+blender	1	22	local	
+chaplain	1	22	local	
+chlorine	1	11	local	
+chow	1	33	local	
+coroner	1	33	local	
+grit	1	33	local	
+hostel	1	22	local	
+lagoon	1	44	local	
+mead	1	33	local	beer mug, not horn
+pendant	1	33	local	chain missing
+pouch	1	33	local	
+saloon	1	22	local	
+sulfur	1	44	local	
+tummy	2	77	local	
+accelerator	2	55	local	
+acrylic	2	66	local	vague pale sheet
+anchorage	1	22	local	
+blanc	1	22	local	
+bookstore	1	22	local	
+brute	1	44	local	
+diva	1	22	local	
+farmhouse	1	44	local	
+fertilizer	1	22	local	
+filler	1	44	local	
+flea	1	33	local	
+footwear	1	22	local	single boot
+handbag	1	44	local	
+helium	1	11	local	
+hemp	1	44	local	
+merlin	1	33	local	
+noodle	1	33	local	
+nylon	1	11	local	
+paving	1	22	local	
+phosphate	1	22	local	
+physicist	1	22	local	
+rigging	1	44	local	
+rotor	2	66	local	extra hub blob
+trooper	1	22	local	
+turret	1	33	local	
+bouquet	1	22	local	
+boxers	1	22	local	
+bullock	1	11	local	
+clubhouse	1	44	local	
+crook	1	33	local	
+cucumber	1	11	local	
+diver	1	22	local	
+evergreen	1	22	local	
+filth	1	22	local	no flies
+foliage	1	11	local	
+genie	2	66	local	lamp and smoke, no genie figure
+goo	2	88	local	
+helper	1	33	local	
+hoop	1	33	local	
+hurdle	1	33	local	
+kicker	1	33	local	
+malt	1	33	local	
+mustache	1	33	local	
+novice	1	33	local	
+pew	1	11	local	
+projector	1	33	local	
+qualifier	1	33	local	
+rink	1	44	local	plain oval, others are skates
+sentinel	1	22	local	
+torso	1	44	local	reads as whole figure
+abyss	1	33	local	
+batsman	1	33	local	
+bedding	1	33	local	
+buzzer	1	11	local	
+cassette	1	33	local	
+culprit	1	22	local	
+ether	1	33	local	
+latex	1	11	local	
+modem	1	22	local	
+retina	1	44	local	
+shear	1	22	local	
+sherry	1	44	local	
+silicone	1	22	local	
+stylist	1	11	local	
+tenor	1	44	local	
+thrift	1	11	local	
+vocalist	1	33	local	
+broth	1	11	local	
+checkpoint	1	22	local	barrier only, no booth
+chloride	1	22	local	
+conditioner	1	22	local	
+conglomerate	1	33	local	
+deacon	1	33	local	
+espresso	1	44	local	
+hospice	1	22	local	
+kremlin	1	11	local	
+magnum	1	22	local	
+mop	-	-	-	REJECTED: drew hammers and a squeegee / reads as a mace
+outpost	1	33	local	
+pickle	1	33	local	
+playwright	1	33	local	
+rainforest	1	44	local	
+restroom	1	22	local	
+robber	1	22	local	
+roulette	1	22	local	
+satin	2	88	local	
+spruce	1	11	local	
+tonic	1	11	local	
+affidavit	1	11	local	
+baroness	1	22	local	
+biomass	1	22	local	
+blouse	1	11	local	
+bodyguard	1	33	local	
+bulldog	1	33	local	
+cleric	1	22	local	
+compressor	1	33	local	
+cougar	1	11	local	
+disciple	1	22	local	
+fife	1	22	local	
+gland	-	-	-	REJECTED: pink blobs, unreadable / reads as a pink leaf
+kale	2	66	local	
+kraft	1	11	local	
+lash	1	44	local	
+leftovers	1	33	local	container hard to read
+madras	1	22	local	
+orphanage	1	22	local	
+pilgrim	1	22	local	
+slime	1	22	local	
+toothbrush	2	77	local	
+workings	1	22	local	
+adhesive	1	22	local	
+bandit	1	11	local	
+barrister	1	22	local	
+bazaar	1	22	local	
+brochure	1	11	local	
+cobalt	1	11	local	
+collier	1	33	local	
+commodore	1	33	local	
+compiler	1	22	local	
+conserve	1	22	local	
+constellation	1	22	local	stars not connected by lines
+eyebrow	1	33	local	
+firefighter	1	22	local	
+gearing	1	33	local	
+judas	2	55	local	reads as keyhole
+morphine	1	22	local	
+oatmeal	1	11	local	
+pigment	1	11	local	
+registrar	1	33	local	
+rein	2	66	local	
+relic	1	33	local	
+tack	1	22	local	looks like a nail
+tart	1	44	local	
+toothpaste	1	22	local	
+transformer	1	33	local	
+vicar	1	22	local	
+ammonia	1	22	local	very pale
+anarchist	1	44	local	
+apron	1	22	local	
+burr	1	22	local	
+censor	1	22	local	
+clover	1	33	local	three leaves not four
+cookbook	1	22	local	
+duff	2	66	local	
+elm	1	22	local	
+fleece	1	22	local	whole sheep
+hump	1	22	local	whole camel
+linebacker	1	11	local	
+pasture	1	33	local	
+plumber	1	33	local	
+preserves	1	11	local	
+spinner	1	22	local	
+steamer	1	33	local	
+sunflower	1	22	local	
+surveyor	1	22	local	
+tyrant	1	22	local	
+wastewater	1	33	local	
+wreath	1	33	local	
+appliance	1	22	local	
+biologist	1	11	local	
+bonnet	1	11	local	reads partly as a head
+cadet	1	11	local	
+catfish	1	22	local	
+cupcake	1	22	local	
+davenport	1	11	local	
+deli	1	22	local	
+dyer	1	11	local	
+enamel	1	11	local	
+goggles	1	44	local	
+golfer	1	33	local	
+graphite	1	44	local	
+hostess	1	44	local	
+iceberg	1	33	local	
+muffin	1	22	local	
+palate	2	77	local	lips/mouth rather than palate
+pancake	1	22	local	
+pip	1	11	local	
+rattle	1	44	local	
+saliva	1	22	local	just a bottle
+tammy	1	22	local	
+treadmill	1	22	local	
+watermelon	1	22	local	
+aspirin	1	11	local	
+bard	1	22	local	
+bestseller	1	44	local	
+bungalow	1	22	local	
+cooker	1	44	local	
+coupe	1	44	local	
+ebony	1	22	local	
+fumes	1	33	local	
+hardwood	1	33	local	
+infirmary	1	33	local	
+latch	1	33	local	
+ligament	2	66	local	
+loom	1	22	local	
+myrtle	1	11	local	
+parlor	1	22	local	
+pharmacist	1	33	local	
+radiator	1	33	local	
+rector	1	11	local	
+rocker	1	33	local	
+sculptor	1	11	local	
+sling	1	11	local	
+sturgeon	1	22	local	shark-like
+subpoena	1	44	local	
+washer	1	11	local	
+wick	2	55	local	
+canine	1	33	local	
+carver	1	11	local	
+cheerleader	1	22	local	
+corvette	1	11	local	
+dashboard	1	33	local	
+doggy	1	33	local	
+farce	1	22	local	bowl barely visible
+fudge	1	11	local	
+hairstyle	1	33	local	face shown
+jackass	1	22	local	
+kiwi	1	33	local	
+limo	1	33	local	
+mane	1	22	local	whole lion head
+mascara	1	11	local	
+mitt	1	22	local	
+plaid	1	11	local	
+playback	2	66	local	
+plush	1	22	local	
+propeller	1	33	local	
+saline	1	22	local	very pale
+saviour	1	11	local	
+spade	1	11	local	
+steroid	1	22	local	
+toaster	1	33	local	
+turquoise	1	44	local	
+underdog	2	66	local	
+voyager	1	22	local	
+werewolf	2	66	local	
+antagonist	1	33	local	
+berg	1	33	local	
+brig	1	11	local	
+buggy	1	44	local	
+celery	1	22	local	
+grinder	1	44	local	
+gunman	1	22	local	
+hardcover	1	22	local	
+healer	1	22	local	
+jock	1	33	local	
+melon	1	11	local	
+mojo	1	22	local	
+ornament	1	22	local	
+outpatient	1	33	local	
+pamphlet	1	11	local	
+perpetrator	1	22	local	
+quid	1	22	local	
+relish	1	22	local	
+rowan	1	33	local	
+skater	1	22	local	
+takeaway	1	33	local	
+bastion	1	44	local	
+bolster	1	33	local	
+briefs	1	22	local	
+chopper	1	22	local	
+commando	1	33	local	
+donut	1	11	local	
+goblin	1	11	local	
+gunner	1	22	local	
+hydra	1	22	local	
+indigo	1	44	local	
+labyrinth	1	33	local	
+lac	1	22	local	
+luncheon	1	33	local	no soup or salad
+mailbox	1	22	local	
+mammal	1	22	local	
+paisley	1	22	local	
+patriarch	1	33	local	
+penthouse	1	33	local	reads as a plain tower
+raider	1	22	local	
+roc	1	22	local	
+rooster	1	22	local	
+scuba	1	33	local	
+soprano	1	22	local	
+tendon	-	-	-	REJECTED: pink blobs, unreadable / drew a high-heel shoe
+vigilante	1	22	local	
+ballpark	1	22	local	
+beak	1	44	local	
+blueberry	1	33	local	
+bran	1	22	local	
+brigadier	1	33	local	
+chateau	1	22	local	
+conservatory	1	44	local	
+emery	1	22	local	
+headphone	1	22	local	
+jug	1	33	local	
+latte	1	44	local	
+lobe	1	44	local	
+loo	1	33	local	
+margarita	1	44	local	
+orchid	1	22	local	
+peat	1	22	local	
+piggy	1	22	local	
+reaper	1	22	local	
+remnant	1	33	local	
+sonar	1	22	local	dome is a weak read
+starch	1	22	local	
+surfer	1	33	local	
+teaspoon	1	33	local	
+toxin	1	33	local	
+veg	1	22	local	
+waffle	1	22	local	
+winery	1	44	local	
+writ	1	33	local	
+zipper	2	55	local	
+cello	1	11	local	
+cheddar	1	33	local	
+chilli	1	22	local	
+dishwasher	1	33	local	
+draper	1	11	local	no measuring tape
+grange	1	11	local	
+hangar	1	44	local	
+housekeeper	1	44	local	
+husky	1	44	local	
+mahogany	1	33	local	
+nightingale	1	22	local	
+nuke	1	44	local	
+perch	1	44	local	
+physique	1	33	local	
+playbook	1	22	local	no play diagrams
+plywood	1	33	local	
+sunscreen	1	11	local	
+tights	1	22	local	
+tofu	1	33	local	
+tripoli	1	33	local	
+adamant	1	44	local	
+barbarian	1	22	local	
+brittle	1	33	local	
+flooring	1	33	local	
+forearm	1	11	local	
+glaze	1	22	local	no brush
+grizzly	1	11	local	
+pap	1	33	local	
+pore	2	66	local	
+seasoning	1	22	local	
+sinus	1	44	local	just a nose
+squire	1	22	local	
+swimsuit	1	11	local	
+tam	1	22	local	
+beech	1	22	local	
+blazer	1	22	local	
+ensign	1	33	local	
+fern	1	33	local	
+incense	1	33	local	
+invoice	1	22	local	
+martini	1	11	local	
+midwife	1	33	local	
+monoxide	1	11	local	
+parsley	1	44	local	
+pendulum	1	33	local	
+silica	1	33	local	
+snag	1	44	local	
+tote	1	11	local	
+trident	1	44	local	
+artisan	1	44	local	
+blacksmith	1	33	local	
+burrito	1	11	local	
+cartilage	2	66	local	
+casket	1	22	local	reads as a chest
+daphne	1	33	local	
+electrician	1	33	local	
+estuary	2	55	local	map patch, scene-like
+gunpowder	1	22	local	
+kosher	1	11	local	
+maestro	1	22	local	
+maxi	1	22	local	
+mercenary	1	11	local	
+packer	1	22	local	
+pelvis	2	66	local	could read as bow
+potty	2	55	local	reads as toilet
+projectile	2	77	local	
+puddle	-	-	-	REJECTED: reads as flame or blob / reads as cloud or splash
+railing	1	11	local	
+receptionist	1	44	local	
+starship	2	77	local	
+typewriter	1	44	local	
+veggie	1	22	local	
+alum	1	44	local	plain white lump
+antidote	1	11	local	
+asparagus	1	22	local	
+balm	2	88	local	
+bologna	1	11	local	
+collagen	1	11	local	
+cricketer	1	44	local	
+cypress	1	33	local	
+fluoride	1	22	local	
+headmaster	1	33	local	
+hoe	2	88	local	other options are spades
+nectar	1	33	local	
+nitrate	1	11	local	
+pastel	1	11	local	
+pesticide	1	22	local	
+phosphorus	1	44	local	
+platter	1	22	local	
+prod	2	88	local	
+psychotherapy	1	22	local	armchair, not a couch
+quilt	1	44	local	
+reptile	1	33	local	turtle-like
+sauna	1	33	local	
+smoothie	1	11	local	
+sod	1	44	local	
+stag	1	33	local	
+suede	1	33	local	
+teal	1	33	local	
+tweed	1	22	local	no tweed texture
+bittersweet	1	11	local	
+cabaret	1	33	local	
+commandant	1	22	local	
+cyanide	1	11	local	
+firewall	1	22	local	
+hanger	1	33	local	
+hem	2	77	local	weak
+hitman	1	33	local	
+kayak	1	33	local	
+mathematician	1	11	local	compass not clear
+mayonnaise	1	11	local	
+netting	2	88	local	
+nozzle	2	55	local	
+plutonium	1	11	local	
+spectre	1	33	local	
+tapestry	1	22	local	
+terrier	1	44	local	
+thistle	1	33	local	
+urn	1	11	local	trophy-like
+arsenic	1	22	local	
+cheater	1	33	local	
+domino	1	33	local	
+dung	1	22	local	
+hawthorn	1	33	local	
+imp	2	66	local	
+intestine	1	22	local	
+pantry	1	22	local	
+parchment	1	22	local	
+pollock	1	22	local	whole fish, not a fillet
+renegade	1	22	local	
+ripper	1	22	local	
+sash	1	11	local	
+sled	1	44	local	
+sludge	1	22	local	
+stretcher	-	-	-	REJECTED: drew easels / reads as sun lounger
+trimming	-	-	-	REJECTED: blobs, unreadable / unreadable blobs
+watercolor	1	11	local	
+abrasive	-	-	-	REJECTED: plain gray blob / star shape on grey sheet, not sandpaper
+accomplice	1	22	local	
+carbonate	1	22	local	
+cheesecake	1	44	local	
+clam	2	88	local	
+colouring	1	22	local	
+craftsman	1	22	local	
+cyborg	1	22	local	
+distillery	1	33	local	
+fishery	1	44	local	
+fullback	1	44	local	
+galley	1	22	local	no oars visible
+knuckle	1	11	local	reads as a hand
+lineman	1	11	local	
+medalist	2	77	local	
+methyl	1	22	local	very pale
+pantheon	1	44	local	
+payer	1	33	local	
+prospectus	1	11	local	
+puma	1	44	local	
+redwood	1	11	local	
+scrubs	1	44	local	
+seaweed	1	11	local	
+serge	1	22	local	
+shaman	2	66	local	
+thermometer	1	22	local	
+babysitter	1	33	local	
+bile	1	11	local	
+bling	1	11	local	
+brownie	1	33	local	
+cardigan	1	44	local	
+carousel	1	22	local	
+cartwright	1	22	local	
+compost	1	11	local	
+cot	1	22	local	
+crusader	1	33	local	
+geologist	1	33	local	
+goldsmith	1	22	local	
+hermit	1	33	local	
+lorry	1	22	local	
+magnolia	1	33	local	
+mover	1	22	local	
+plow	2	55	local	reads close to a shovel
+propane	1	22	local	
+rowdy	1	33	local	
+saffron	1	44	local	
+scoreboard	1	22	local	
+sender	1	11	local	
+skateboard	1	33	local	
+tome	1	44	local	
+transistor	1	11	local	
+bassist	1	33	local	
+blocker	1	22	local	
+bubbly	1	22	local	
+cauliflower	1	11	local	
+chainsaw	1	33	local	
+clockwork	1	44	local	
+detergent	1	33	local	
+fireman	1	33	local	
+flask	1	22	local	
+fluff	1	11	local	
+gearbox	-	-	-	REJECTED: gray blob, unreadable / grey disc, unrecognisable
+gnome	1	44	local	no beard
+janitor	1	22	local	
+legislator	1	11	local	
+limousine	1	22	local	
+linden	1	22	local	
+lymph	1	44	local	
+manure	1	11	local	
+opal	1	22	local	
+partridge	1	22	local	
+rodent	1	22	local	
+rudder	-	-	-	REJECTED: drew a ship's wheel / reads as knife or club
+seaman	1	44	local	
+skier	1	22	local	
+telly	1	44	local	
+cayman	1	44	local	
+clot	1	22	local	
+coolant	1	11	local	
+drier	1	22	local	
+fielder	1	33	local	
+gator	1	33	local	
+glossary	1	33	local	
+gymnasium	1	22	local	
+iodine	1	33	local	
+keel	-	-	-	REJECTED: drew birds / unreadable white shapes
+magma	1	44	local	
+marbles	1	33	local	
+molding	2	66	local	plain white strip
+motorbike	1	11	local	
+paramedic	1	22	local	
+plume	1	11	local	
+shopper	1	22	local	
+shrub	1	22	local	
+slag	1	44	local	
+sprinter	1	44	local	
+sprite	1	22	local	
+sulfate	1	11	local	
+sweatshirt	1	22	local	
+transporter	2	66	local	
+veterinarian	1	22	local	
+watchdog	1	22	local	
+andromeda	1	33	local	
+bagel	1	22	local	
+barometer	1	11	local	reads a bit like a compass
+boa	1	33	local	
+bullion	1	11	local	
+delicacy	1	22	local	
+flannel	1	22	local	
+handkerchief	1	44	local	
+marquee	1	22	local	
+nag	1	44	local	head not drooping
+nook	1	44	local	
+overdrive	1	22	local	
+penitentiary	1	11	local	
+saber	1	11	local	
+snowball	1	11	local	
+spelt	1	44	local	
+sulphur	1	22	local	
+tulip	1	22	local	
+turnpike	1	33	local	
+undertaker	1	33	local	
+whistleblower	1	33	local	
+beggar	1	22	local	
+canteen	1	33	local	
+capacitor	1	11	local	
+carbohydrate	1	22	local	
+chauffeur	1	33	local	
+clergyman	1	33	local	
+climber	1	22	local	
+coliseum	1	22	local	
+cranberry	1	22	local	
+croft	1	22	local	
+custard	1	11	local	
+digger	1	22	local	
+doughnut	1	44	local	
+felon	1	33	local	
+garnet	1	22	local	
+grapefruit	1	11	local	
+greyhound	1	22	local	
+hairdresser	1	11	local	
+lei	1	22	local	
+palladium	1	22	local	
+pathogen	1	22	local	
+ration	1	33	local	tin not obvious
+seine	1	22	local	
+selector	2	77	local	
+shawl	1	22	local	
+shilling	1	11	local	
+valet	1	44	local	
+wiener	2	88	local	
+alderman	1	22	local	
+autopilot	1	44	local	
+ballast	1	33	local	
+blackjack	1	33	local	reads as paddle
+bloodstream	1	22	local	abstract
+camo	1	22	local	
+cockroach	1	22	local	
+collaborator	1	22	local	
+dynamo	1	22	local	
+elixir	1	22	local	
+firewood	1	22	local	
+hamstring	-	-	-	REJECTED: looks like boots or glasses / reads as pink sock/boot
+horseshoe	1	22	local	
+lager	1	33	local	
+napkin	1	22	local	
+neuron	1	22	local	
+nugget	1	11	local	
+probate	1	33	local	
+rosary	1	22	local	
+sheath	1	11	local	
+snowman	1	22	local	
+sportsman	1	33	local	
+thong	1	33	local	
+tsar	1	11	local	
+tycoon	1	22	local	
+viscount	1	33	local	
+windmill	1	11	local	
+acetate	2	77	local	reads as document icon
+auctioneer	1	11	local	
+battleship	1	44	local	
+caviar	1	22	local	
+embankment	1	22	local	
+exchequer	1	22	local	
+filly	1	11	local	
+halal	1	22	local	
+hijab	1	11	local	
+isotope	1	22	local	
+jigsaw	2	66	local	
+juniper	1	44	local	
+lander	1	22	local	
+lollipop	1	33	local	
+machete	2	88	local	reads as kitchen knife
+marshmallow	1	33	local	
+mucus	1	44	local	
+mulberry	1	11	local	
+newsroom	1	22	local	
+pathologist	1	22	local	
+pixie	1	22	local	
+raptor	1	22	local	
+ratchet	1	22	local	plain wrench
+sax	1	33	local	
+saxophone	1	22	local	
+settler	1	11	local	
+shellfish	1	22	local	
+shortening	1	11	local	
+sickle	2	77	local	little curve, knife-like
+tablespoon	1	22	local	
+tombstone	1	11	local	
+cantor	1	22	local	
+chime	1	33	local	
+chromium	1	22	local	
+cuckoo	1	11	local	
+gauntlet	1	33	local	
+grouse	1	44	local	
+lark	1	22	local	
+mohawk	1	44	local	
+ombudsman	1	44	local	
+pancreas	2	55	local	reads as meat
+primate	1	44	local	
+showroom	1	44	local	others are flat sign cards
+sorcerer	1	33	local	
+spleen	1	22	local	could read as liver
+trampoline	1	33	local	
+chipotle	1	22	local	
+choreographer	1	22	local	
+concierge	1	22	local	
+duplex	1	22	local	
+hypnotic	1	22	local	
+juror	1	44	local	
+lactose	1	22	local	
+lube	1	22	local	
+macon	1	11	local	
+negotiator	1	44	local	
+peroxide	1	22	local	
+screwdriver	1	22	local	
+transfusion	1	22	local	
+veneer	1	33	local	
+wafer	1	11	local	
+archaeologist	1	22	local	
+atrium	1	22	local	
+bouncer	1	33	local	
+cashmere	1	22	local	
+cheeseburger	1	44	local	
+clarinet	1	11	local	
+custodian	1	33	local	
+cyst	-	-	-	REJECTED: reads as onion or pouch / plain yellow circle
+delinquent	1	44	local	
+dormitory	1	22	local	
+feline	1	22	local	
+forage	1	44	local	unclear as hay
+grapple	1	44	local	hook not four prongs
+grub	2	66	local	
+hickory	1	22	local	
+hoist	1	11	local	
+lasagna	1	44	local	
+leaflet	2	77	local	
+moat	1	11	local	
+mouthpiece	1	22	local	
+muck	1	22	local	
+patsy	1	22	local	
+philanthropist	1	33	local	
+pinto	1	44	local	
+seawater	1	11	local	
+stockpile	1	33	local	
+tungsten	1	22	local	
+bethel	1	33	local	
+bookshop	1	11	local	
+caregiver	1	11	local	
+chesterfield	1	22	local	
+corrosive	1	22	local	
+cyclops	1	33	local	
+dahl	1	33	local	
+dill	1	11	local	leaves too broad for dill
+folio	1	11	local	
+franc	1	11	local	
+goon	1	33	local	
+gurney	1	22	local	
+handball	2	66	local	
+hologram	-	-	-	REJECTED: drew megaphones / reads as torch/spotlight, no floating image
+lilac	1	22	local	reads a bit like cauliflower
+limelight	1	44	local	
+macaroni	1	11	local	
+manganese	1	22	local	
+mantis	1	11	local	
+notary	1	22	local	
+paddock	1	22	local	
+padre	1	11	local	
+polyester	2	55	local	
+porridge	1	33	local	
+pug	1	11	local	
+quill	1	22	local	
+rower	1	11	local	
+scapegoat	1	33	local	
+spectacles	1	33	local	
+spire	1	33	local	
+sprout	1	33	local	
+ballerina	1	11	local	
+binoculars	1	44	local	
+campfire	1	33	local	
+centerpiece	1	44	local	
+condominium	1	22	local	
+cordial	1	11	local	
+crypt	1	22	local	
+dory	1	22	local	
+epoxy	1	11	local	reads as one syringe
+evangelist	1	44	local	
+extraterrestrial	1	33	local	
+eyeball	1	33	local	
+fledgling	1	44	local	
+fob	1	22	local	
+haw	1	11	local	
+hearth	1	22	local	
+horoscope	1	44	local	abstract, zodiac not clear
+humanoid	1	33	local	
+jerky	1	33	local	
+loader	1	33	local	
+macintosh	1	22	local	
+marguerite	1	22	local	
+medallion	1	22	local	
+medusa	2	66	local	
+mower	1	22	local	
+mozzarella	1	22	local	
+ogre	1	44	local	
+palliative	1	44	local	
+patchwork	1	33	local	
+pinball	1	44	local	others look like armchairs
+planter	1	33	local	
+postman	1	22	local	
+rook	1	33	local	
+scaffolding	2	77	local	
+snitch	1	33	local	
+snug	1	11	local	reads as market stall
+spindle	1	33	local	
+staffer	1	11	local	
+supermodel	1	44	local	
+sweats	1	22	local	
+thermostat	2	77	local	
+touchscreen	1	44	local	
+vial	1	22	local	
+violinist	1	22	local	
+warlord	1	33	local	
+angelica	1	11	local	
+assailant	1	11	local	
+avenger	1	22	local	
+barricade	1	44	local	
+beater	-	-	-	REJECTED: drew vegetable peelers / drew balloons, not a whisk
+benefactor	1	33	local	
+briefcase	1	22	local	
+diaphragm	1	44	local	
+dispensary	2	66	local	
+executioner	1	22	local	
+filament	1	33	local	
+foyer	2	88	local	
+gilt	1	11	local	
+leviathan	1	33	local	
+motley	1	22	local	
+peppermint	1	44	local	
+plough	2	55	local	
+prefect	1	33	local	
+salmonella	1	11	local	
+savoy	1	11	local	
+soybean	1	11	local	
+toggle	1	44	local	
+wren	1	33	local	
+yoke	2	77	local	
+acorn	1	33	local	
+basilica	1	33	local	
+blaster	1	22	local	
+cornerback	1	22	local	
+debtor	1	11	local	
+dispatcher	1	33	local	
+draught	1	22	local	
+earring	1	11	local	
+gallows	1	22	local	grim
+harrow	1	33	local	unclear at small size
+mackerel	1	22	local	
+marge	1	22	local	
+medallist	1	33	local	
+mite	1	11	local	
+morgue	1	33	local	generic office block
+mulligan	1	33	local	
+octane	1	22	local	
+pry	-	-	-	REJECTED: plain black bars, not a crowbar / reads as wrench, no crowbar claw
+radiotherapy	1	44	local	
+scribe	1	33	local	
+sentry	1	33	local	
+sexton	1	22	local	
+silverware	1	22	local	
+slipper	2	77	local	reads as slide sandal
+snout	1	44	local	whole pig rather than snout
+specter	1	22	local	
+storyteller	1	33	local	
+tundra	1	44	local	
+tunic	1	22	local	
+veal	1	44	local	
+viceroy	1	33	local	
+whiting	1	33	local	
+alchemist	1	22	local	
+bootleg	1	44	local	
+brine	1	22	local	
+casserole	1	22	local	
+cellulose	1	33	local	
+circuitry	1	22	local	
+compress	2	77	local	could read as box
+cubicle	1	33	local	
+dainty	1	33	local	
+drugstore	1	33	local	
+electrolyte	1	33	local	
+equine	1	22	local	
+faucet	1	11	local	
+gymnast	1	22	local	
+hairline	1	33	local	
+handset	1	22	local	
+heiress	1	22	local	
+holster	2	88	local	weak
+keg	1	33	local	
+lancet	1	22	local	
+lawmaker	1	44	local	
+lifeguard	1	33	local	
+mogul	1	33	local	
+nomad	2	66	local	
+pathfinder	1	44	local	
+pediatrician	1	11	local	
+ponytail	1	22	local	
+poplar	1	22	local	
+rascal	1	11	local	
+roper	1	22	local	
+sacking	1	22	local	reads as paper bag
+seatbelt	1	22	local	
+shank	1	33	local	
+sledge	1	22	local	
+steamship	1	11	local	
+thyme	1	33	local	
+toner	1	22	local	
+transponder	1	11	local	
+almanac	1	44	local	
+aloe	1	11	local	
+anesthetic	1	22	local	
+ascot	1	22	local	
+beagle	1	22	local	
+biceps	1	22	local	white patch on arm
+cauldron	1	22	local	
+chalet	1	11	local	
+cleanser	1	11	local	
+clipper	1	33	local	
+colossus	1	33	local	
+corral	1	22	local	
+dermatologist	1	22	local	
+diode	1	33	local	
+fedora	1	22	local	
+hoof	2	66	local	
+impala	1	11	local	
+mime	1	22	local	
+minivan	1	44	local	
+nave	1	33	local	
+nib	1	22	local	
+quack	2	77	local	
+sari	1	11	local	
+saucer	1	33	local	
+spar	1	22	local	
+tabernacle	1	33	local	
+talisman	1	22	local	
+tortilla	2	77	local	reads as cheese/cookie
+truffle	2	88	local	
+wad	1	44	local	plain white blob
+asp	1	33	local	
+azalea	1	22	local	
+bacterium	1	44	local	
+beet	1	22	local	
+bistro	1	22	local	
+centurion	1	33	local	
+confessional	2	77	local	
+crayon	1	44	local	
+crossbow	1	44	local	weak shape
+doorbell	2	66	local	
+emir	1	44	local	
+emu	1	22	local	
+freighter	1	33	local	
+frosting	1	22	local	
+lubricant	1	22	local	
+punter	1	22	local	
+ruff	2	55	local	
+rump	1	11	local	whole animal rather than rump
+sprinkler	2	55	local	
+swede	1	11	local	
+whey	1	11	local	
+bastille	1	33	local	
+brooch	1	11	local	
+bunting	1	11	local	
+cob	1	11	local	
+dredge	1	33	local	
+drool	1	11	local	
+escrow	1	33	local	
+fiberglass	2	55	local	vague pink roll
+friar	1	22	local	
+garnish	1	33	local	
+gnu	1	33	local	
+goody	1	33	local	
+hutch	1	33	local	
+jetty	-	-	-	REJECTED: drew tables with rocks / reads as bench/table, no water
+khaki	1	22	local	
+magnate	1	33	local	
+magneto	1	44	local	
+mortuary	1	11	local	
+neurologist	1	22	local	
+nutmeg	1	44	local	
+petal	1	33	local	whole flower not one petal
+quartermaster	1	11	local	
+rupee	1	11	local	plain coin
+saltwater	1	11	local	
+seaboard	1	11	local	
+shortstop	1	22	local	
+snipe	1	33	local	
+streamer	1	11	local	
+tarmac	1	22	local	
+wainwright	1	22	local	
+winch	1	33	local	
+workstation	1	44	local	
+yam	1	44	local	
+yolk	1	22	local	
+ammonium	1	11	local	
+authorisation	1	11	local	
+confetti	1	33	local	
+corset	1	22	local	
+dispenser	1	22	local	
+dugout	2	66	local	
+gingerbread	1	33	local	
+giro	2	55	local	
+gosling	1	11	local	
+grasshopper	2	77	local	
+hydrate	1	33	local	
+hydrocarbon	1	44	local	
+kebab	1	22	local	
+locator	1	33	local	weak, gray box
+loyalist	1	33	local	
+mariner	1	22	local	
+milkshake	1	11	local	
+nourishment	1	22	local	
+paintball	2	55	local	
+piccolo	1	33	local	
+priory	1	11	local	
+rancher	1	22	local	
+scaffold	1	22	local	
+scavenger	1	22	local	
+schooner	1	44	local	
+starling	1	22	local	
+steamboat	1	22	local	no paddle wheel
+ticker	1	22	local	
+twig	1	11	local	
+warhead	1	44	local	
+wraith	1	44	local	
+yew	1	33	local	
+agar	1	22	local	
+agnostic	1	11	local	
+amputation	2	55	local	reads as serrated knife
+banger	1	22	local	
+basalt	1	22	local	
+blackboard	1	33	local	
+chino	1	33	local	
+crucifix	1	22	local	
+escalator	1	33	local	
+fawn	1	33	local	
+fructose	1	44	local	
+jukebox	1	22	local	
+jumpsuit	1	44	local	
+kerosene	2	55	local	
+mince	1	11	local	
+moray	1	22	local	
+nacho	1	22	local	
+nobleman	1	22	local	
+overlord	1	22	local	
+poodle	1	33	local	
+pus	2	55	local	
+racetrack	1	11	local	weak shape
+roadblock	1	33	local	
+sabre	1	33	local	
+sandbox	1	22	local	
+seagull	1	33	local	
+shifter	1	22	local	
+shoemaker	1	33	local	
+soot	1	22	local	
+stylus	1	22	local	
+suture	2	55	local	
+tutu	1	22	local	
+vapour	1	11	local	vapour not visible
+acacia	1	11	local	
+aggressor	1	11	local	
+amethyst	1	33	local	
+bovine	1	33	local	
+cumin	1	44	local	
+cutlery	1	33	local	
+decal	1	22	local	no peeling corner
+distillation	1	11	local	
+eggplant	1	22	local	
+eucalyptus	1	22	local	
+eyelid	1	44	local	
+financier	1	22	local	
+florist	1	44	local	
+garb	1	22	local	
+grocer	1	22	local	
+marlin	1	33	local	
+mutton	2	66	local	
+outfielder	1	44	local	
+pepperoni	1	44	local	
+raisin	1	22	local	
+redeemer	1	22	local	
+resistor	1	33	local	
+rhea	1	44	local	
+roux	2	88	local	
+saucepan	1	22	local	
+seer	1	22	local	
+sneaker	1	22	local	
+solitaire	1	22	local	
+spiegel	1	22	local	
+swimwear	1	33	local	
+ukulele	1	22	local	
+ump	1	33	local	
+watchman	1	22	local	
+yeti	1	22	local	
+yoghurt	1	22	local	
+armpit	2	66	local	
+bagging	1	11	local	reads as paper bag
+bailiff	1	11	local	
+blister	-	-	-	REJECTED: plain pink blobs / drew a head profile, not a blister
+bower	1	22	local	
+buoy	1	44	local	
+chalice	1	22	local	
+czar	1	33	local	
+doggie	1	22	local	
+extremity	1	22	local	
+femur	1	22	local	
+fowl	1	22	local	
+gelatin	2	66	local	
+halfback	1	33	local	
+headband	1	22	local	
+heretic	1	22	local	
+hummus	1	22	local	
+kingpin	1	33	local	
+kiosk	1	22	local	
+locust	-	-	-	REJECTED: look like bees / reads as winged griffin/bird
+molasses	1	22	local	
+narcotic	1	44	local	
+peso	1	11	local	
+pita	1	11	local	
+racecourse	1	11	local	weak shape
+rainwater	1	33	local	
+reflector	-	-	-	REJECTED: plain white discs / reads as red ball/gem
+sieve	1	33	local	
+soloist	1	11	local	
+sphinx	2	77	local	
+spore	2	66	local	
+starfish	1	22	local	
+succulent	1	22	local	
+telemetry	1	22	local	reads as satellite dish
+vane	1	11	local	
+wicker	1	11	local	
+amulet	1	11	local	
+aristocrat	1	22	local	
+barbershop	1	22	local	
+beanie	1	33	local	
+bronco	1	22	local	not bucking
+cask	1	22	local	
+clog	1	22	local	
+duvet	2	55	local	
+enforcer	1	22	local	
+fryer	2	55	local	
+hippocampus	1	11	local	
+informer	1	22	local	
+juggernaut	1	22	local	
+larva	1	22	local	
+lint	1	44	local	plain gray blob
+lira	1	11	local	
+loon	1	33	local	
+mainframe	1	33	local	
+manger	1	22	local	
+mica	1	44	local	
+molar	1	11	local	
+onyx	1	33	local	
+rayon	2	55	local	
+retriever	1	22	local	
+rosewood	1	22	local	
+sedative	1	44	local	
+setter	1	33	local	
+sleigh	1	33	local	
+slush	1	11	local	
+smelt	1	33	local	
+sustenance	1	22	local	bread only, no soup
+swivel	2	77	local	
+toolbox	1	33	local	
+tuff	1	33	local	
+warlock	1	33	local	
+ade	1	33	local	
+apricot	1	22	local	
+arbiter	1	22	local	
+arbitrator	1	33	local	
+archangel	1	44	local	
+baritone	1	33	local	
+bustle	2	77	local	
+carbide	1	33	local	

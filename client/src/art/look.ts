@@ -12,6 +12,8 @@ export interface Look {
   noun: string;
   shape: Silhouette;
   colour: string;
+  /** The colour comes from an adjective (RED, GOLDEN), not the word: generated images are dyed. */
+  dyed: boolean;
   /** 1 is the word's own size; GIANT, HUGE and TINY change it. */
   scale: number;
   burning: boolean;
@@ -74,7 +76,8 @@ export function lookOf(dict: Dictionary, phrase: string, count = 1): Look {
     const colour = text(stats, "color"), own = text(plain, "color");
     const mats = tags(stats, "material"), ownMats = tags(plain, "material");
     const newMat = mats.find((m) => !ownMats.includes(m));
-    const paint = (colour && colour !== own ? COLOUR[colour] : undefined) ?? (newMat ? MATERIAL[newMat] : undefined) ??
+    const dye = (colour && colour !== own ? COLOUR[colour] : undefined) ?? (newMat ? MATERIAL[newMat] : undefined);
+    const paint = dye ??
       shape.colour ?? COLOUR[own] ?? (ownMats[0] ? MATERIAL[ownMats[0]] : undefined) ?? "#c9b99a";
     // Size: the cube root of the mass it gained or lost, else its height.
     const m1 = num(stats, "mass"), m0 = num(plain, "mass"), h1 = num(stats, "height"), h0 = num(plain, "height");
@@ -86,7 +89,7 @@ export function lookOf(dict: Dictionary, phrase: string, count = 1): Look {
     let untargetable = false;
     try { untargetable = !!stats?.flag("untargetable"); } catch { /* not a flag */ }
     base = {
-      noun, shape, colour: paint, scale,
+      noun, shape, colour: paint, dyed: !!dye, scale,
       burning: dt >= 200 || num(stats, "dmg_fire") - num(plain, "dmg_fire") >= 40,
       frozen: dt <= -50,
       invisible: stealth === Infinity,

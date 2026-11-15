@@ -7,6 +7,7 @@ import type { Dictionary } from "@lastword/shared";
 import { type Piece, type Silhouette } from "./art/build.js";
 import { lookKey, lookOf, shapeOf, type Look } from "./art/look.js";
 import { badge, cutout, drawSilhouette, heartPts, inks, paperFlame, tag } from "./art/paper.js";
+import { rasterOf } from "./art/raster.js";
 import { renderStandee, type Standee } from "./art/standee.js";
 import { PAPER } from "./art/palette.js";
 
@@ -31,9 +32,13 @@ export class Painter {
     return key;
   }
 
-  /** The standee for a look, with what a person holds. */
+  /**
+   * The standee for a look, with what a person holds. A word's generated image is used once it
+   * has loaded (asking for it the first time); until then its drawn shape stands in.
+   */
   standee(look: Look, held?: string, ride?: string): Standee & { key: string } {
-    const id = lookKey(look, `${held ?? ""}|${ride ?? ""}`);
+    const raster = rasterOf(look.noun);
+    const id = lookKey(look, `${held ?? ""}|${ride ?? ""}|${raster ? "img" : ""}`);
     let st = this.standees.get(id);
     if (!st) {
       let heldArt: { sil: Silhouette; colour: string } | undefined;
@@ -46,7 +51,7 @@ export class Painter {
         const r = lookOf(this.dict, ride);
         rideArt = { sil: r.shape, colour: r.colour };
       }
-      const s = renderStandee(look, { k: this.k, held: heldArt, ride: rideArt });
+      const s = renderStandee(look, { k: this.k, held: heldArt, ride: rideArt, raster });
       st = { ...s, key: this.add(s.canvas) };
       this.standees.set(id, st);
     }

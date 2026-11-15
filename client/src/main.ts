@@ -7,6 +7,7 @@ import { TRADE_RANGE, aimOf, cardOf, GATHER_REASONS, missing, parsePhrase, readD
 import { Effects } from "./fx.js";
 import { playAgain } from "./start.js";
 import { lookOf, type Look } from "./art/look.js";
+import { loadManifest, rasterOf } from "./art/raster.js";
 import { CHUNK } from "./art/terrain.js";
 import type { FromWorker, ToWorker } from "./art/terrain.worker.js";
 import { dictionary } from "./data.js";
@@ -149,6 +150,8 @@ class World extends Phaser.Scene {
   hitCount = 0;
 
   async create() {
+    // The list of generated word images (a few KB); each image loads when its word first appears.
+    void loadManifest();
     this.hud = new Hud((text, target) => {
       // "give player2 abc" hands letters over; adjectives alone and events are aimed at a target
       // (the one the window was opened for, else the next click); anything else is a spelling.
@@ -899,7 +902,7 @@ class World extends Phaser.Scene {
   /** Redraws a standee when what it is changes: its look, what it holds, its statuses. */
   private dress(v: View, look: Look, held: string | undefined, statuses: string[], ride?: string) {
     const shrink = statuses.includes("shrink");
-    const key = `${look.noun}|${look.colour}|${look.scale}|${look.count}|${held ?? ""}|${ride ?? ""}|${statuses.includes("burn")}|${shrink}|${look.burning}|${look.frozen}|${look.invisible}`;
+    const key = `${look.noun}|${look.colour}|${look.scale}|${look.count}|${held ?? ""}|${ride ?? ""}|${statuses.includes("burn")}|${shrink}|${look.burning}|${look.frozen}|${look.invisible}|${rasterOf(look.noun) ? 1 : 0}`;
     if (key !== v.drawn) {
       v.drawn = key;
       const shown: Look = shrink ? { ...look, scale: look.scale * 0.55 } : look;

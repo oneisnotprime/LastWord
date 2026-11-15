@@ -153,6 +153,14 @@ tools/build_all.sh <wordnet dict dir>
 place is skipped, both listed in `data/generated_problems.txt`. Hand-written words always win.
 Needs `pip install anthropic` and an `ANTHROPIC_API_KEY`.
 
+## Generated word art
+
+`tools/art/` makes a picture for each word that has no hand-made shape: `select_words.py` picks
+the words (`tools/art/words.tsv`, with the game data and WordNet hints), `subjects.tsv` says what
+each picture shows (written from the game meaning, not the first WordNet sense), and
+`pipeline.py` generates, checks, cuts out and palette-snaps them into
+`client/public/art/words/` with a `manifest.json`. See `docs/ART_PIPELINE.md`.
+
 ## Rebuilding
 
 ```
