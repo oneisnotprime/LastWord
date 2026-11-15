@@ -11,6 +11,13 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
 ## Map
 
 - `styles.html` + `src/styles/` art style prototypes (keys 1-5, N for night); not used by the game.
+- `words.html` + `src/words/` the word browser (a dev and design tool, served at `/words.html`):
+  every playable word, searchable (`?q=`, `mode`, `gloss`), filtered (`role`, `cls`, `arch`,
+  `group`, `dim`, `prop` + `cmp` + `val`) and sorted (`sort`, `desc`), all in the query string;
+  `?w=word` opens its panel (shared card, properties with meanings, ops, counters both ways,
+  gloss, art via `standee.ts`). `model.ts` is the data side (tested), `page.ts` the DOM (a
+  virtual list: only rows in view exist). Frequency and glosses: `public/words/lexicon.json`,
+  written by `tools/build_words_page.py`; it loads after the list is up.
 - `src/main.ts` the Phaser scene: draws the map from the seed, markers for players and things,
   camera, movement input.
 - `src/start.ts` the start screen shown before joining (Play with bots, or join friends); `net.ts` calls it.
