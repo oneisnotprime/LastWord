@@ -71,6 +71,16 @@ building, trading and exploring, so most of a round is spent on the economy.
 | Q | One unique site per map |
 | Z | Roaming boss drops, and alchemy (words that transmute, precious materials) |
 
+Foraging is where E comes from, but each biome's pool also leans on letters that fit its ground,
+so where you stand changes your rack (the corner shows the odds). E is about a third of every
+pool. Forest gives P, N, T, R; meadow, grassland and tilled land A, L, I; marsh and swamp O, U, M;
+hills G, B; shore O, C, S; taiga W, Y, U; jungle a bit of everything; cities S, T, C, M, B; roads R
+and T. Hostile ground (desert, badlands, tundra, snow, volcanic ash) finds something less often
+(15 to 30%, against about 60% on common ground) but can turn up rare letters: J, K, V, Y and X,
+6 to 24% of finds, the most on snow. Their own sources stay the main ones (a forage find there is
+one try in several). Z comes from forage only on ash, 1% of finds; Q never comes from foraging.
+The pools are `BIOMES` in shared/src/biome.ts.
+
 Sources deplete over a round, so the map slowly starves and the last sources become
 flashpoints. That is how a round converges without caps.
 

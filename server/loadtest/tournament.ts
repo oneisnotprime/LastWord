@@ -8,7 +8,7 @@
  * this process (the room steps by hand, ten ticks to a second, as fast as it can).
  * WATCH=words.txt (one word a line) also counts how often bots spelled those words.
  */
-import { boot } from "@colyseus/testing";
+import { ColyseusTestServer } from "@colyseus/testing";
 import appConfig from "../src/app.config.js";
 import { sourceOf, THEME_SYSTEMS, type Difficulty } from "../src/bots.js";
 import { WorldRoom } from "../src/WorldRoom.js";
@@ -18,7 +18,9 @@ const [rooms = 4, bots = 8] = process.argv.slice(2, 4).map(Number);
 const mode = (process.argv[4] ?? "mixed") as Difficulty | "mixed";
 const cap = Number(process.argv[5] ?? 60);
 
-const server = await boot(appConfig, Number(process.env.PORT ?? 2568)); // PORT=2600 runs beside another tournament
+// PORT=2600 runs beside another tournament (`boot` would always take 2568 for a defined server).
+await appConfig.listen(Number(process.env.PORT ?? 2568));
+const server = new ColyseusTestServer(appConfig);
 const used = new Map<Difficulty, Map<string, number>>();
 const sources = new Map<string, number>();
 const rounds: { minutes: number; winner: string; difficulty: string; firstDeath: number }[] = [];
@@ -37,6 +39,12 @@ const affordable = new Map<string, number>();
 let racks = 0;
 const canSpell = (letters: Record<string, number>, word: string) => { const need: Record<string, number> = {}; for (const ch of word) need[ch] = (need[ch] ?? 0) + 1; return Object.entries(need).every(([ch, n]) => (letters[ch] ?? 0) >= n); };
 const killers = new Map<string, number>();
+// Rack variety: every 30 s each bot's rack is measured (letters held, distinct letters, nouns and
+// verbs it could spell now) and its letters added to a tally of what bots hold.
+// The opening (first five minutes) is kept apart: later racks are a few hoards.
+const rack = { n: 0, size: 0, distinct: [] as number[], spellable: [] as number[], held: new Map<string, number>(), open: { distinct: [] as number[], spellable: [] as number[] } };
+const gathered = new Map<string, number>();
+let spellWords: string[] | null = null;
 
 for (let r = 0; r < rooms; r++) {
   WorldRoom.testSeed = 1000 + r * 7919;
@@ -46,6 +54,7 @@ for (let r = 0; r < rooms; r++) {
   room.onAward = (_id, letters, why) => {
     if (process.env.WHY && sourceOf(why) === process.env.WHY) console.log(why);
     sources.set(sourceOf(why), (sources.get(sourceOf(why)) ?? 0) + letters.length);
+    if (sourceOf(why) === "gather") for (const ch of letters) gathered.set(ch, (gathered.get(ch) ?? 0) + 1);
   };
   let seconds = 0;
   const fightFrom = new Map<string, { from: number; last: number }>();
@@ -86,8 +95,21 @@ for (let r = 0; r < rooms; r++) {
     return kill(id, killerId);
   };
   let sampled = 0;
+  let rackAt = 0;
   while (room.state.phase !== "over" && seconds < cap * 60) {
     room.update(0.1); seconds += 0.1;
+    if (seconds - rackAt >= 30) {
+      rackAt = seconds;
+      spellWords ??= [...anyRoom.dict.words].filter(([w, d]: [string, { role: string }]) => (d.role === "noun" || d.role === "verb") && /^[a-z]+$/.test(w) && !anyRoom.dict.crude(w)).map(([w]: [string]) => w);
+      for (const [id, w] of anyRoom.walkers) {
+        if (!anyRoom.bots.has(id) || w.unit?.dead) continue;
+        const held = Object.entries(w.letters as Record<string, number>).filter(([, n]) => n > 0);
+        const spellable = spellWords!.filter((word) => canSpell(w.letters, word)).length;
+        rack.n++; rack.distinct.push(held.length); rack.spellable.push(spellable);
+        if (seconds <= 300) { rack.open.distinct.push(held.length); rack.open.spellable.push(spellable); }
+        for (const [ch, n] of held) { rack.size += n; rack.held.set(ch, (rack.held.get(ch) ?? 0) + n); }
+      }
+    }
     if (watched.size && seconds - sampled >= 30) {
       sampled = seconds;
       for (const [id, w] of anyRoom.walkers) {
@@ -138,6 +160,15 @@ if (watched.size) {
   console.log(`\nAll words spelled by bots: ${spelledAll}; racks sampled ${racks}; watched words some rack could spell: ${any} of ${watched.size}; mean share of racks that could spell one: ${racks ? (([...affordable.values()].reduce((a, b) => a + b, 0) / watched.size / racks) * 100).toFixed(1) : "-"}%`);
   console.log(`Most affordable watched words (share of racks): ${[...affordable].sort((a, b) => b[1] - a[1]).slice(0, 15).map(([k, v]) => `${k} ${((v / racks) * 100).toFixed(0)}%`).join(", ")}`);
   console.log(`\nWatched words spelled: ${n} times, ${spelledWatched.size} different: ${[...spelledWatched].sort((a, b) => b[1] - a[1]).slice(0, 30).map(([k, v]) => `${k} ${v}`).join(", ")}`);
+}
+if (rack.n) {
+  const all = [...rack.held.values()].reduce((a, b) => a + b, 0);
+  const mean = (a: number[]) => (a.reduce((x, y) => x + y, 0) / Math.max(1, a.length)).toFixed(1);
+  console.log(`\nRacks (${rack.n} bot samples, every 30 s): mean ${(rack.size / rack.n).toFixed(1)} letters; distinct letters mean ${mean(rack.distinct)}, median ${pct(rack.distinct, 0.5)}; nouns and verbs spellable now mean ${mean(rack.spellable)}, median ${pct(rack.spellable, 0.5)}`);
+  console.log(`Opening racks (first 5 min, ${rack.open.distinct.length}): distinct mean ${mean(rack.open.distinct)}, median ${pct(rack.open.distinct, 0.5)}; spellable mean ${mean(rack.open.spellable)}, median ${pct(rack.open.spellable, 0.5)}`);
+  const g = [...gathered.values()].reduce((a, b) => a + b, 0);
+  console.log(`Gathered letters (${g}): ${[...gathered].sort((a, b) => b[1] - a[1]).map(([k, n]) => `${k.toUpperCase()} ${((n / g) * 100).toFixed(1)}`).join(" ")}`);
+  console.log(`Letters held: ${[...rack.held].sort((a, b) => b[1] - a[1]).map(([k, n]) => `${k.toUpperCase()} ${((n / all) * 100).toFixed(1)}`).join(" ")}`);
 }
 const total = [...sources.values()].reduce((n, v) => n + v, 0);
 console.log(`\nLetter sources (${total} letters):`);
