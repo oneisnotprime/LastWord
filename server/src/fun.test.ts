@@ -79,8 +79,9 @@ it("a STORM strikes in marked cells near people, not the whole map: a roof keeps
   ticks(room, 1);
   // Nobody is struck at once, and the storm itself is no map-wide strike.
   for (const id of ids) expect(w(id).hp).toBe(100);
-  // Cells fall near people, each small and shown CELL_WARNING seconds before it lands.
-  ticks(room, 14);
+  // Cells fall near people (a STORM strikes about once in twenty seconds, as a whole), each small
+  // and shown CELL_WARNING seconds before it lands.
+  ticks(room, 40);
   expect(cells.length).toBeGreaterThan(0);
   for (const c of cells) { expect(c.radius).toBeLessThanOrEqual(4); expect(c.armed - (c.until - c.lasts)).toBeCloseTo(CELL_WARNING); }
   // Each cell strikes only its own few tiles: someone far from every cell is untouched.

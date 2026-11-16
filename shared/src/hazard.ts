@@ -9,7 +9,10 @@ import { TILE_METERS } from "./world.js";
  * - An area that strikes is marked for AREA_WARNING seconds before its first strike.
  * - An area wider than CELL_FROM tiles (weather over the map, a big quake) strikes in cells: spots
  *   CELL_TILES across or the word's `attack_area`, near the people inside, each marked on the
- *   ground CELL_WARNING seconds before it lands, so whoever sees it can step out.
+ *   ground CELL_WARNING seconds before it lands, so whoever sees it can step out. Its
+ *   `attack_rate` is the whole area's (`cellEvery`): a STORM striking once in twenty seconds drops
+ *   one cell every twenty seconds by someone inside, not one by everyone; an area with no rate
+ *   strikes once, a cell by each person inside.
  * - Indoors (a walk-in building, interior.ts) or under a roof (an `enterable` building within ROOF_TILES) nothing from an area lands; on your
  *   own side's claimed ground its `shelter` share is kept off.
  */
@@ -23,10 +26,19 @@ export const CELL_SCATTER = 4;
 export const CELL_GAP: readonly [number, number] = [4, 12];
 export const ROOF_TILES = 1.5;
 
-/** Seconds between cells near each person for an area striking `rate` times a second. */
+/** Seconds between cells near each person for an area striking `rate` times a second (no longer used for areas: `cellEvery`). */
 export function cellGap(rate: number): number {
   const every = rate > 0 ? 1 / rate : CELL_GAP[1];
   return Math.min(CELL_GAP[1], Math.max(CELL_GAP[0], every));
+}
+
+/**
+ * Seconds between an area's cells (it strikes `rate` times a second, as a whole, wherever its
+ * people are), or Infinity for an area that strikes once. However many stand in a STORM, it
+ * strikes as often as its word says.
+ */
+export function cellEvery(rate: number): number {
+  return rate > 0 && Number.isFinite(rate) ? 1 / rate : Infinity;
 }
 
 /** A cell's radius in tiles: the word's `attack_area`, at least CELL_TILES and at most twice that. */

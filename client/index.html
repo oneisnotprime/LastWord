@@ -152,6 +152,7 @@
         80% { transform: translate(calc(-50% + 4px), -50%) rotate(-0.6deg); }
       }
       #status .out { font: 700 22px/1.1 var(--hand); letter-spacing: 2px; color: var(--red); margin-top: 4px; }
+      #status .stop { margin: 3px 0 4px; padding: 3px 6px; border-radius: 3px; background: #f6d6d2; color: #6a1a14; font: 700 11.5px var(--round); letter-spacing: .3px; }
       #status .watch { font: 600 11px var(--round); color: var(--soft); margin-top: 2px; }
       /* Event chips: what is in force where you stand, top middle; click one for what it does. */
       #events { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); display: flex; flex-wrap: wrap; justify-content: center; gap: 6px;
@@ -198,6 +199,7 @@
       #best button:hover { background: var(--gold); }
       #best b { font: 700 15px/1.1 var(--hand); letter-spacing: 1px; }
       #best small { font: 600 9.5px/1.1 var(--round); color: #8a5a1a; letter-spacing: .3px; }
+      #best .hint { align-self: center; padding: 4px 9px; border-radius: 3px; background: #f3e7c6; font: 600 11px var(--round); color: #6a4a1a; }
       /* A grand spelling's map-wide call (a DRAGON, a METEOR), like a legend's but its own. */
       #bigcast { position: fixed; z-index: 7; left: 50%; top: 16%; transform: translate(-50%, -50%) scale(.6); opacity: 0; pointer-events: none; text-align: center;
         padding: 10px 34px 10px; background: #3a2416; color: #fff3dc; border-radius: 4px; box-shadow: 0 0 0 4px #d9573b, 0 3px 0 4px #7a2a1a, 0 0 60px 14px rgba(217, 87, 59, .45); }
@@ -269,6 +271,8 @@
       .tile.wild.used { background: #b48cf0; color: #fff; }
       #abc .banned { opacity: .35; text-decoration: line-through; }
       #preview .cost { font: 500 11px var(--round); color: #6a5a30; }
+      #preview .upkeep, #inspect .upkeep { font: 700 11px var(--round); color: #7a4a10; }
+      #inspect .surcharge { font: 500 11px var(--round); color: #6a5a30; }
       #status .chip.follow { background: #e9eef6; color: #2f4a6e; }
       #status .chip.follow.low { background: #f6d6d2; color: #6a1a14; }
       #status .chip.life { background: #fbecc8; color: #6a4a10; }
@@ -290,6 +294,7 @@
       #fx .num.crit { font-size: 27px; color: #ffd84a; -webkit-text-stroke: 4px #8a3a0a; }
       #fx .num.layer, #fx .num.blocked { color: #e8e4dc; -webkit-text-stroke-color: #5a5a62; font-size: 14px; }
       #fx .num.miss { color: #fbf7ec; -webkit-text-stroke-color: #8a7a60; font-size: 13px; font-style: italic; }
+      #fx .num.bump { animation: numbump .18s ease-out; } @keyframes numbump { from { scale: 1.35; } to { scale: 1; } }
       #fx .num.dodged { color: #fff3c4; -webkit-text-stroke-color: #2f5a8e; font-size: 15px; font-style: italic; }
       #fx .num .aff { display: block; font-size: 11px; letter-spacing: 0.04em; text-align: center; margin-top: 1px; -webkit-text-stroke-width: 2.5px; }
       #fx .num.weak .aff { color: #ffe27a; -webkit-text-stroke-color: #8a2a0a; font-size: 13px; }
@@ -308,6 +313,7 @@
       body.deathbeat canvas { filter: grayscale(.85) brightness(.8); transition: filter 1s; }
       /* Kill feed (recap.ts): a few terse lines at the top right. */
       #killfeed { position: fixed; top: 10px; right: 12px; z-index: 5; display: flex; flex-direction: column; align-items: flex-end; gap: 3px; pointer-events: none; }
+      body:has(#minimap.show) #killfeed { top: 212px; } /* below the minimap, never over it */
       #killfeed div { padding: 2px 9px; background: rgba(40, 30, 22, .72); color: #fbf6ea; border-radius: 3px; font: 600 12px var(--round); transition: opacity .6s; }
       #killfeed div.mine { background: rgba(160, 40, 30, .85); }
       #killfeed div.gone { opacity: 0; }
@@ -451,6 +457,7 @@
       #calls div.ally { background: rgba(47, 90, 142, .85); }
       #calls div.ping.danger, #calls div.ping.help { background: rgba(160, 40, 30, .85); }
       #calls div.gone { opacity: 0; }
+      #calls div.note { background: rgba(40, 30, 22, .5); font-weight: 500; font-size: 11px; }
       #calls i { font-style: normal; color: var(--gold); }
       body.onscreen #calls, body.onscreen #intel { visibility: hidden; }
       #pingbar { position: fixed; left: 50%; bottom: 150px; transform: translateX(-50%); display: none; gap: 4px; padding: 6px 8px; background: var(--paper); border-radius: 4px; box-shadow: var(--shadow); z-index: 6; pointer-events: auto; align-items: center; }

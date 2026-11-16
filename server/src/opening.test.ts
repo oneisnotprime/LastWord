@@ -79,7 +79,7 @@ it("a BOMB set down goes off after its windup and hits everyone near, its maker 
 });
 
 it("a grand word makes an entrance on everyone's screen; a small one does not", async () => {
-  const { c, of } = await player({ d: 2, r: 2, a: 2, g: 2, o: 2, n: 2, w: 1, l: 1, f: 1 });
+  const { c, of } = await player({ d: 2, r: 2, a: 2, g: 2, o: 2, n: 2, w: 1, l: 1, f: 1, k: 1, z: 1 }); // a DRAGON costs a K and a Z more (shared `surcharge`)
   c.send("spell", "wolf"); await wait();
   expect(of("entrance")).toEqual([]);
   c.send("spell", "dragon"); await wait();

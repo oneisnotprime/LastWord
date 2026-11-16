@@ -48,7 +48,7 @@ describe("cards", () => {
   it("a vehicle is ridden and draws fuel it comes with; plurals show a count", () => {
     const c = card("car");
     expect(c.does).toContain("you ride it: it moves and takes hits for you");
-    expect(c.does.some((d) => /draws 0\.1 fuel a minute \(comes with 30 min\)/.test(d))).toBe(true);
+    expect(c.upkeep).toBe("burns 0.1 fuel/min (comes with 30 min)"); // upkeep leads the card
     expect(card("wolves").title).toBe("WOLF ×3");
   });
   it("a GHOST follows and needs no food; BREAD can be used; adjectives alone are aimed", () => {

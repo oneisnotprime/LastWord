@@ -1,3 +1,4 @@
+import { takesControl, type Status } from "./status.js";
 import type { Stats } from "./stats.js";
 
 /**
@@ -86,4 +87,26 @@ export function deathText(s: Stats): string[] {
   if (s.flag("entombs")) out.push("its owner's letters lie in it when they fall");
   if (s.flag("denies_revival")) out.push("no coming back from its deaths");
   return out;
+}
+
+/**
+ * What a ghost's words never carry (ghosts haunt; they never kill and never hold the living
+ * down): damage, harm that wears a body down (poison, burns, bleeding, sickness, a sealed fate,
+ * debt), and any status that takes a body out of its owner's hands (status.ts `takesControl`:
+ * stun, freeze, sleep, root, confuse, hypnosis, leash, stasis) except fear. A ghost frightens,
+ * blinds, deafens, curses and scrambles; the living keep their feet.
+ */
+export function ghostSpares(status: Status): boolean {
+  return GHOST_WEARS.includes(status) || (takesControl(status) && status !== "fear");
+}
+const GHOST_WEARS: readonly Status[] = ["poison", "burn", "bleed", "doom", "sick", "debt"];
+
+/** Properties a ghost's words never carry besides damage and the statuses `ghostSpares` names. */
+export const GHOST_HARMLESS: readonly string[] = ["contagion", "meteors", "destroys_target", "captures", "severs", "letter_steal"];
+
+/** True if a ghost's word may carry this property at all (`ghostSpares`, `GHOST_HARMLESS`, no damage). */
+export function ghostMayCarry(prop: string): boolean {
+  if (prop.startsWith("dmg_") || GHOST_HARMLESS.includes(prop)) return false;
+  if (prop.startsWith("inflict_")) return !ghostSpares(prop.slice(8) as Status);
+  return true;
 }

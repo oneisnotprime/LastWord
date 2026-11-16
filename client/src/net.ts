@@ -37,6 +37,8 @@ export interface Connection {
   act(type: "market" | "sell" | "hire" | "swap" | "transmute" | "offer" | "answer", payload: unknown): void;
   /** Knocked out: watch a person still in the round, or null for your own ghost (shared death.ts). */
   watch(id: string | null): void;
+  /** Knocked out or a ghost: watch whoever is in the fight going on now. */
+  followFight(): void;
   /** A ping (shared comms.ts) at a spot on the map, else where you stand. */
   ping(kind: Ping, x?: number, y?: number): void;
 }
@@ -198,6 +200,7 @@ export async function connect(on: Handlers): Promise<Connection> {
     ping: (kind, x, y) => room.send("ping", { kind, ...(x !== undefined && y !== undefined ? { x, y } : {}) }),
     pickKit: (step, index) => room.send("kit", { step, index }),
     watch: (id) => room.send("watch", id ? { id } : null),
+    followFight: () => room.send("watch", { fight: true }),
     leave: () => { room.onLeave.clear?.(); void room.leave(true); },
     describe: (text, target, gear) => room.send("describe", { text, target, ...(gear !== undefined ? { gear } : {}) }),
   };

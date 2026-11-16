@@ -1,6 +1,6 @@
 import { shown } from "./combat.js";
 import type { Dictionary } from "./dictionary.js";
-import { becomes, countersOf, eventCard, heldText, keyStats, objectKind, opText, cardOf } from "./inspect.js";
+import { becomes, countersOf, eventCard, heldText, keyStats, objectKind, opText, cardOf, surcharge } from "./inspect.js";
 import { missing, parsePhrase, readNoun, type Letters, type Phrase } from "./phrase.js";
 import { needsText, producerOf } from "./produce.js";
 import type { Rng } from "./rng.js";
@@ -310,12 +310,25 @@ export function spellGroup(dict: Dictionary, word: string): SpellGroup | null {
 const OBJECT_GROUP = { weapon: "weapons", gear: "gear", ride: "rides", creature: "creatures", building: "buildings", terrain: "other", item: "other" } as const;
 
 const groupsKnown = new WeakMap<Dictionary, Map<string, SpellGroup | null>>();
+const costsKnown = new WeakMap<Dictionary, Map<string, string>>();
+
+/** Every letter a lone word costs (inspect.ts `spellingCost`: its own letters and a grand word's `surcharge`), remembered. */
+export function wordCost(dict: Dictionary, word: string): string {
+  let known = costsKnown.get(dict);
+  if (!known) costsKnown.set(dict, (known = new Map()));
+  let cost = known.get(word);
+  if (cost === undefined) {
+    try { cost = word + surcharge(parsePhrase(dict, word)); } catch { cost = word; }
+    known.set(word, cost);
+  }
+  return cost;
+}
 
 /** Words whose letters `held` covers right now, shortest first, by group. */
 export function spellableNow(dict: Dictionary, held: Letters): Record<SpellGroup, string[]> {
   const out = Object.fromEntries(SPELL_GROUPS.map((g) => [g, [] as string[]])) as Record<SpellGroup, string[]>;
   const words: string[] = [];
-  for (const [word, def] of dict.words) if ((def.role === "noun" || def.role === "verb") && /^[a-z]+$/.test(word) && !dict.crude(word) && !missing(held, word)) words.push(word);
+  for (const [word, def] of dict.words) if ((def.role === "noun" || def.role === "verb") && /^[a-z]+$/.test(word) && !dict.crude(word) && !missing(held, word) && !missing(held, wordCost(dict, word))) words.push(word);
   words.sort((a, b) => a.length - b.length || a.localeCompare(b));
   let known = groupsKnown.get(dict);
   if (!known) groupsKnown.set(dict, (known = new Map()));

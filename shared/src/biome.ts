@@ -140,8 +140,28 @@ export function forageOdds(b: BiomeInfo): { letter: string; pct: number }[] {
 }
 
 /** A letter drawn from a biome's finds. */
-export function forageLetter(b: BiomeInfo, rng: Rng): string {
-  return b.finds[Math.floor(rng() * b.finds.length)] ?? "e";
+export function forageLetter(b: BiomeInfo, rng: Rng, held: Readonly<Record<string, number>> = {}): string {
+  const draw = () => b.finds[Math.floor(rng() * b.finds.length)] ?? "e";
+  let ch = draw();
+  // Diminishing returns (shared `hoardShare`): a letter already hoarded turns up less; another is found instead.
+  if ((held[ch] ?? 0) >= HOARD_FROM && rng() >= hoardShare(held[ch] ?? 0)) ch = draw();
+  // A rack with no vowel finds one (the pool's own vowels, E most): the safety net that keeps words spellable.
+  if (![..."aeiou"].some((v) => (held[v] ?? 0) > 0) && !"aeiou".includes(ch)) {
+    const vowels = [...b.finds].filter((c) => "aeiou".includes(c));
+    if (vowels.length) ch = vowels[Math.floor(rng() * vowels.length)]!;
+  }
+  return ch;
+}
+
+/** Copies of a letter held from which more of it comes in less often (diminishing returns on a hoard). */
+export const HOARD_FROM = 10;
+/**
+ * The share of a letter's income that still comes to someone already holding `held` of it: all of
+ * it up to HOARD_FROM, then HOARD_FROM / (held + 1). A claim paying L slows as the L's pile up (26
+ * held: about a fifth), and a forager stops finding only E; nothing is ever refused outright.
+ */
+export function hoardShare(held: number): number {
+  return held < HOARD_FROM ? 1 : HOARD_FROM / (held + 1);
 }
 
 /**

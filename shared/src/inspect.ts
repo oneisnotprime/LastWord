@@ -39,7 +39,8 @@ import { resolve } from "./stats.js";
 import { pluralize } from "./plural.js";
 import { effectSeconds, inflicts, statusSeconds, type Status } from "./status.js";
 import { toolHelp } from "./biome.js";
-import { TILE_TYPES } from "./world.js";
+import { TILE_METERS, TILE_TYPES } from "./world.js";
+import { CELL_FROM } from "./hazard.js";
 import { isMaterial, materialText } from "./material.js";
 import { foodText } from "./food.js";
 import { bugText } from "./bug.js";
@@ -106,8 +107,25 @@ export interface Card {
   stats: string[];
   /** What it does: "follows you and fights for you", "worn: body", "draws 0.1 fuel a minute". */
   does: string[];
-  /** Every letter it costs, lower case ("" for something already in the world). */
+  /** Every letter it costs, lower case ("" for something already in the world): its own and its `surcharge`. */
   letters: string;
+  /** The letters a grand word costs besides its own (`surcharge`), if any. */
+  surcharge?: string;
+  /** What it eats or burns to keep going, shown first ("eats 6 food/min"): `upkeepText`. */
+  upkeep?: string;
+}
+
+/**
+ * What a thing draws from its owner's stores to keep going, in one short line for the top of a
+ * preview or card ("eats 6 food/min · burns 1 fuel/min"), or "" for nothing. A hungry creature
+ * runs wild and a machine out of fuel stalls, so this is the first thing to know about it.
+ */
+export function upkeepText(s: Stats, count = 1): string {
+  const n = needs(s, count);
+  const verb: Record<string, string> = { food: "eats", fuel: "burns", power: "draws", faith: "needs" };
+  const line = SUPPLIES.filter((k) => n[k] > 0).map((k) => `${verb[k]} ${num(n[k])} ${k}/min`).join(" · ");
+  // A machine arrives with a full tank (upkeep.ts `startingSupply`); a living thing brings nothing.
+  return line && !s.flag("alive") ? `${line} (comes with ${STARTING_SUPPLY_MINUTES} min)` : line;
 }
 
 const num = (n: number) => (!Number.isFinite(n) ? "total" : Math.abs(n) >= 100 ? Math.round(n).toLocaleString("en-US") : String(+n.toPrecision(2)));
@@ -315,7 +333,9 @@ const kindOf = (dict: Dictionary, noun: string, label = "") => {
 export function cardOf(dict: Dictionary, p: Phrase): Card {
   const s = p.stats;
   const title = [...(p.kind === "verb" ? p.adverbs : p.adjectives), p.noun].join(" ").toUpperCase() + (p.count > 1 ? ` ×${p.count}` : "");
-  const card: Card = { title, kind: "", stats: [], does: [], letters: p.letters };
+  const card: Card = { title, kind: "", stats: [], does: [], letters: spellingCost(p) };
+  const extra = surcharge(p);
+  if (extra) card.surcharge = extra;
   const aim = aimOf(p);
   const aimed = aim === "someone" ? "cast it, then click whom or what it acts on" : aim === "anywhere" ? "cast it, then click where it lands (or on someone)" : null;
   if (p.kind === "verb") {
@@ -391,6 +411,9 @@ export function cardOf(dict: Dictionary, p: Phrase): Card {
   // What its make-up does to blows is in its weaknesses now; the material line only says what it is made of.
   const made = kind === "terrain" ? materialText(dict, s) : materialText(dict, s).filter((l) => /^made of /.test(l));
   card.does = [...(remade ? made : []), ...does.filter((d) => !trivia(d)), ...natures, ...does.filter(trivia), ...(remade ? [] : made)];
+  // Upkeep leads: a DRAGON that eats 5 food a minute turns wild once its master's food runs out.
+  const upkeep = upkeepText(s, p.count);
+  if (upkeep) { card.upkeep = upkeep; card.does = card.does.filter((d) => !/^draws [\d.]+ (food|fuel|power|faith) a minute/.test(d)); }
   return card;
 }
 
@@ -445,6 +468,25 @@ export function countersOf(dict: Dictionary, word: string): string[] {
 }
 
 const COUNTERS = new WeakMap<Dictionary, Map<string, string[]>>();
+const CURES = new WeakMap<Dictionary, Map<string, string[]>>();
+
+/**
+ * Words that end a status (`effect_status` names it): spelled nouns and verbs, shortest first, crude
+ * words left out. The HUD's "what is stopping me" line names the first ("ended by TRUTH").
+ */
+export function curesFor(dict: Dictionary, status: string): string[] {
+  let memo = CURES.get(dict);
+  if (!memo) {
+    CURES.set(dict, (memo = new Map()));
+    for (const [w, def] of dict.words) {
+      const cures = def.set.effect_status;
+      if (!Array.isArray(cures) || (def.role !== "noun" && def.role !== "verb") || !/^[a-z]+$/.test(w) || dict.crude(w)) continue;
+      for (const st of cures) (memo.get(st) ?? memo.set(st, []).get(st)!).push(w);
+    }
+    for (const list of memo.values()) list.sort((a, b) => a.length - b.length || a.localeCompare(b));
+  }
+  return (memo.get(status) ?? []).slice();
+}
 
 function findCounters(dict: Dictionary, word: string): string[] {
   const out: string[] = [];
@@ -587,16 +629,54 @@ function batch5(s: Stats): string[] {
   return [...timeText(s), ...spaceText(s), ...seaText(s), ...sportText(s), ...ideaText(s), ...scaleText(s), ...controlText(s)];
 }
 
-/** How grand a spelling is, for its entrance (`grand`): the most of its damage and a fifth of its integrity, times how many. */
+/**
+ * How grand a spelling is, for its entrance (`grand`) and its price (`surcharge`): the most of its
+ * damage and a fifth of its integrity, times how many. An area's damage counts every strike it
+ * makes while it lasts (a STORM striking for minutes is far grander than one blow); a body counts
+ * only if it fights or goes somewhere (a TITAN, a TANK), not an OAK or a wall.
+ */
 export function grandeur(p: Phrase): number {
   if (p.kind === "verb") return 0;
   const s = p.stats;
   let hit = 0;
   for (const [id] of s.entries()) if (id.startsWith("dmg_")) hit += Math.max(0, s.num(id));
-  const body = p.kind === "object" ? s.num("integrity") / 5 : 0;
+  if (p.kind !== "object" && hit > 0) {
+    // Every strike it makes while it lasts, as far as it reaches: a STORM over fifty tiles counts
+    // them all, a FIRE half a tile wide hardly any (it strikes only whoever stands in it).
+    const rate = s.num("attack_rate"), seconds = (s.num("field_duration") || s.num("event_duration")) * 60;
+    const tiles = (s.num("field_radius") || s.num("event_radius")) / TILE_METERS;
+    const reach = Math.min(1, (tiles / CELL_FROM) ** 2);
+    if (rate > 0 && seconds > 0 && Number.isFinite(seconds) && Number.isFinite(rate)) hit *= Math.max(1, rate * seconds * (Number.isFinite(reach) ? reach : 1));
+  }
+  const moves = s.num("speed_land") > 0 || s.num("speed_air") > 0 || s.num("speed_water") > 0 || s.flag("mountable");
+  const body = p.kind === "object" && (hit > 0 || moves) ? s.num("integrity") / 5 : 0;
   const n = Math.max(1, p.count);
   return Math.max(hit, Number.isFinite(body) ? body : 1e9) * n;
 }
+
+/** Letters a grand word is paid in when its data names none (`price_letters`): kills, won fights, chests, the site. */
+export const PRICE_DEFAULT = "kvxq";
+
+/**
+ * What a grand spelling costs besides its own letters: each order of magnitude of grandeur from
+ * GRAND_FROM adds the next of its `price_letters` (data, by what it is: a legend's are K Z X Q, a
+ * machine's M V X Z, weather's W J X Q), the last again past their end. A TANK (2,400) costs an M
+ * more, a TITAN (30,000) a K and a Z, a NUKE four rare letters. Balance by what a word is worth,
+ * paid in letters that are earned, not foraged; nothing grows cheaper or dearer with time.
+ */
+export function surcharge(p: Phrase): string {
+  const g = grandeur(p);
+  if (!(g >= GRAND_FROM)) return "";
+  const seq = String(p.stats.get("price_letters") ?? "").toLowerCase().replace(/[^a-z]/g, "") || PRICE_DEFAULT;
+  // An absolute (unmeasurable) grandeur pays the whole sequence.
+  const tiers = Number.isFinite(g) ? Math.floor(Math.log10(g / GRAND_FROM)) + 1 : seq.length;
+  let out = "";
+  for (let i = 0; i < tiers; i++) out += seq[Math.min(i, seq.length - 1)];
+  return out;
+}
+
+/** Every letter a spelling costs (before spelling rules): its own, then its `surcharge`. */
+export const spellingCost = (p: Phrase): string => p.letters + surcharge(p);
 
 /** Grandeur from which a spelling makes an entrance: a camera shake, a full-size reveal and a map-wide call. */
 export const GRAND_FROM = 1000;

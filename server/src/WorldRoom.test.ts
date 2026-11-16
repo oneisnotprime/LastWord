@@ -266,15 +266,15 @@ it("fights: armor breaks before the body, the dead are knocked out and the last 
   expect(wb.gear[0].integrity).toBe(400);
   expect(gap()).toBeLessThan(startGap);
 
-  // In reach the armor takes every hit until it breaks; only then is the body hurt.
+  // In reach the armor takes every hit until it breaks; only then is the body hurt (by what the
+  // breaking blow carried through, shared unit.ts `strikeLayers`, and every blow after).
   wb.player.x = wa.player.x + 3;
   let armorBrokeAt = -1;
   for (let i = 0; i < 2000 && walkers.has(b.sessionId); i++) {
+    const whole = wb.gear.length > 0;
     room.update(0.1);
-    if (armorBrokeAt < 0 && wb.gear.length === 0) {
-      armorBrokeAt = i;
-      expect(wb.hp).toBe(100);
-    }
+    if (whole && wb.gear.length > 0) expect(wb.hp).toBe(100);
+    if (armorBrokeAt < 0 && wb.gear.length === 0) armorBrokeAt = i;
   }
   await wait();
   expect(armorBrokeAt).toBeGreaterThan(0);

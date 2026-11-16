@@ -97,6 +97,16 @@ export interface Strike {
   byType: Record<string, number>;
   /** How the blow met its target's natures and resistances (shared affinity.ts): "weak", "resist", "immune" or "". */
   aff?: Aff;
+  /**
+   * The share of the blow (as raw damage, 0 to 1) left over when it broke what it struck: what a
+   * layer could not take carries through to the next (shared unit.ts `strikeLayers`).
+   */
+  carry?: number;
+}
+
+/** The raw size of a blow felt as `y` (the inverse of `felt`). */
+export function unfelt(y: number): number {
+  return y > FELT_KNEE && y !== Infinity ? FELT_KNEE * (y / FELT_KNEE) ** 2 : y;
 }
 
 /**
@@ -153,12 +163,21 @@ export function strike(attacker: Stats, defender: Entity, rng: Rng): Strike {
   const critical = total > 0 && (chance === Infinity || rng() < chance);
   if (critical) total *= 2;
   // Felt, not raw (FELT_KNEE): what lands grows as the square root of the blow past a person's scale.
+  const raw = total;
   total = landed(total, target.num("integrity"));
 
   const absorbed = Math.min(defender.shield, total);
   defender.shield -= absorbed;
+  const before = Math.max(0, defender.integrity);
   defender.integrity -= total - absorbed;
-  return { hit: true, critical, damage: total, byType, aff };
+  // What it could not take as it broke goes on (shared unit.ts `strikeLayers`): the share of the
+  // felt blow left over, as raw damage again.
+  let carry = 0;
+  if (defender.integrity < 0 && total > 0 && raw > 0 && Number.isFinite(total)) {
+    const left = Math.min(1, (total - absorbed - before) / total);
+    carry = left > 0 ? Math.min(1, unfelt(felt(raw) * left) / raw) : 0;
+  } else if (defender.integrity <= 0 && total === Infinity) carry = 1;
+  return { hit: true, critical, damage: total, byType, aff, ...(carry > 0 ? { carry } : {}) };
 }
 
 /** Advances one entity's own clock: regeneration, shield recharge, decay. */

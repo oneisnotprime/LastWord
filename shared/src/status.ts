@@ -39,7 +39,7 @@ export interface StatusRule {
   dot?: Record<string, number>;
   /** What it does to the body's own properties while it lasts. */
   ops?: Op[];
-  /** A property that shortens it: the time is scaled by 5 / that property (5 is ordinary). */
+  /** A property that shortens it (`resistedSeconds`): 5 is ordinary, more shortens it, none doubles it. */
   resistedBy?: string;
   /** Goes for whoever is nearest, friend or foe (shared emotion.ts). */
   berserk?: boolean;
@@ -174,10 +174,36 @@ export function effectSeconds(duration: number): number {
   return Math.max(duration, (EFFECT_STRETCH * duration) / (1 + duration / 15));
 }
 
+/**
+ * True for a status that takes a body out of its owner's hands: it cannot walk, cannot act, runs,
+ * wanders at random, or is steered or tethered by someone else (stun, freeze, sleep, root, fear,
+ * confuse, hypnosis, leash, stasis). Boons (a truce) do not count. These follow diminishing
+ * returns (`afflict`): one cannot be refreshed while it is on, and leaves a resistance as it ends.
+ */
+export function takesControl(status: Status): boolean {
+  const r = STATUS_RULES[status];
+  return !r.boon && !!(r.still || r.helpless || r.random || r.flees || r.steered || r.tethered);
+}
+
+/** Seconds a status that takes control leaves its body resisting it, at the least, once it ends. */
+export const RESIST_MIN = 4;
+/** And the share of the time it ran: half of a 30 s fear is 15 s free of fear. */
+export const RESIST_SHARE = 0.5;
+
+/** Seconds a body resists each status after one that took control ended (diminishing returns). */
+export type Resistance = Map<Status, number>;
+
+/** Seconds of resistance a controlling status leaves once it has run `full` seconds. */
+export function resistanceAfter(full: number): number {
+  return Math.max(RESIST_MIN, (Number.isFinite(full) ? full : 0) * RESIST_SHARE);
+}
+
 /** A status on someone: seconds left, who is to blame, and where it came from (a walker or an area). */
 export interface Affliction {
   status: Status;
   left: number;
+  /** Seconds it was given for, when it took hold (for the resistance it leaves: `resistanceAfter`). */
+  full?: number;
   /** Who inflicted it: kills from its damage are theirs, and a charm spares them. */
   from: string;
   /** What to run from: the striker, or the area it came from. */
@@ -222,11 +248,22 @@ export function susceptible(target: Stats, status: Status): boolean {
 }
 
 /**
+ * How long a status a property resists (`resistedBy`) runs: 5 is ordinary (as given), 15 half as
+ * long, 0 or less twice as long; an absolute resistance keeps it off.
+ */
+export function resistedSeconds(seconds: number, resistance: number): number {
+  if (resistance === Infinity) return 0;
+  return seconds * (10 / (5 + Math.max(0, Number.isFinite(resistance) ? resistance : 0)));
+}
+
+/**
  * Gives a struck body the statuses its attackers carry, unless it is immune. A status it already
- * has runs for whichever is longer. Returns the statuses given.
+ * has runs for whichever is longer, except one that takes control (`takesControl`): that cannot
+ * be refreshed while it is on, nor given while the body still resists it (`resist`, filled as
+ * such statuses end). Returns the statuses given.
  */
 export function afflict(
-  list: Affliction[], given: [Status, number][], target: Stats, from: string, origin = from,
+  list: Affliction[], given: [Status, number][], target: Stats, from: string, origin = from, resist?: Resistance,
 ): Status[] {
   const done: Status[] = [];
   // The deaf hear no song or lullaby (shared sound.ts): charm and sleep do not reach them.
@@ -235,12 +272,14 @@ export function afflict(
     if (!susceptible(target, status) || (deaf && UNHEARD.includes(status))) continue;
     const by = STATUS_RULES[status].resistedBy;
     const stretched = statusSeconds(status, base);
-    const seconds = by ? stretched * (5 / Math.max(1e-3, target.num(by))) : stretched;
+    const seconds = by ? resistedSeconds(stretched, target.num(by)) : stretched;
     if (!(seconds > 0)) continue;
     const had = list.find((a) => a.status === status);
+    const control = takesControl(status);
+    if (control && (had || (resist?.get(status) ?? 0) > 0)) continue; // diminishing returns: no stun-lock
     if (had) {
-      if (seconds >= had.left) Object.assign(had, { left: seconds, from, origin });
-    } else list.push({ status, left: seconds, from, origin });
+      if (seconds >= had.left) Object.assign(had, { left: seconds, full: seconds, from, origin });
+    } else list.push({ status, left: seconds, full: seconds, from, origin });
     const ends = STATUS_RULES[status].ends;
     if (ends) remove(list, (a) => ends.includes(a.status));
     done.push(status);
@@ -249,23 +288,33 @@ export function afflict(
 }
 
 /** A blow landed: statuses that end when struck (sleep) end. Returns those removed. */
-export function wake(list: Affliction[]): Status[] {
-  return remove(list, (a) => !!STATUS_RULES[a.status].breaksOnHit);
+export function wake(list: Affliction[], resist?: Resistance): Status[] {
+  return remove(list, (a) => !!STATUS_RULES[a.status].breaksOnHit, resist);
 }
 
 /** Removes the named statuses (a HEAL clears poison, bleed and burn). Returns those removed. */
-export function cure(list: Affliction[], statuses: readonly string[]): Status[] {
-  return remove(list, (a) => statuses.includes(a.status));
+export function cure(list: Affliction[], statuses: readonly string[], resist?: Resistance): Status[] {
+  return remove(list, (a) => statuses.includes(a.status), resist);
 }
 
-function remove(list: Affliction[], drop: (a: Affliction) => boolean): Status[] {
+function remove(list: Affliction[], drop: (a: Affliction) => boolean, resist?: Resistance): Status[] {
   const gone: Status[] = [];
-  for (let i = list.length - 1; i >= 0; i--) if (drop(list[i]!)) gone.push(list.splice(i, 1)[0]!.status);
+  for (let i = list.length - 1; i >= 0; i--) {
+    if (!drop(list[i]!)) continue;
+    const a = list.splice(i, 1)[0]!;
+    gone.push(a.status);
+    // A status that took control leaves its body resisting it a while (diminishing returns).
+    if (resist && takesControl(a.status)) resist.set(a.status, Math.max(resist.get(a.status) ?? 0, resistanceAfter((a.full ?? a.left) - Math.max(0, a.left))));
+  }
   return gone;
 }
 
-/** Counts statuses down; removes and returns those that ran out. */
-export function tickStatuses(list: Affliction[], seconds: number, held = 1, time = 1): Status[] {
+/**
+ * Counts statuses down; removes and returns those that ran out. `resist` (the body's resistance
+ * to statuses that took control) runs down too, and gains those that ended.
+ */
+export function tickStatuses(list: Affliction[], seconds: number, held = 1, time = 1, resist?: Resistance): Status[] {
+  if (resist) for (const [st, left] of resist) { if (left - seconds <= 0) resist.delete(st); else resist.set(st, left - seconds); }
   // In a lockup's ground (shared home.ts `holdFactor`), root and silence wear off `held` times slower.
   // Time running fast or slow for the body (shared time.ts) wears its statuses off faster or slower,
   // except those that set its time, which run by the clock.
@@ -273,7 +322,7 @@ export function tickStatuses(list: Affliction[], seconds: number, held = 1, time
     const t = STATUS_RULES[a.status].time === undefined ? seconds * time : seconds;
     a.left -= held > 1 && HELD.includes(a.status) ? t / held : t;
   }
-  return remove(list, (a) => a.left <= 0);
+  return remove(list, (a) => a.left <= 0, resist);
 }
 
 /** The property changes statuses make, as passing effects for a `Unit`'s loadout. */
@@ -355,4 +404,35 @@ export function statusDamage(dict: Dictionary, list: readonly Affliction[]): { a
     }
   }
   return { attack, from: hurting[0]!.from };
+}
+
+/**
+ * How much each status stops its body, worst first, for the HUD's one "what is stopping me" line:
+ * helpless (stun, freeze, sleep, stasis), steered (hypnosis), rooted, frightened, confused,
+ * tethered, silenced, then what only hinders (blind, slow...). Boons never stop anyone.
+ */
+export function stopRank(status: Status): number {
+  const r = STATUS_RULES[status];
+  if (r.boon) return 0;
+  if (r.helpless) return 9;
+  if (r.steered) return 8;
+  if (r.still) return 7;
+  if (r.flees) return 6;
+  if (r.random || r.berserk) return 5;
+  if (r.tethered) return 4;
+  if (r.mute) return 3;
+  if (r.nulls || r.fated) return 2;
+  return r.dot || r.ops || r.owes || r.unheard || r.deaf || r.exposed ? 1 : 0;
+}
+
+/** The status stopping a body most (`stopRank`), the longest of the worst kind, or null. */
+export function worstStatus<T extends { status: string; left: number }>(list: readonly T[]): T | null {
+  let best: T | null = null;
+  for (const a of list) {
+    const r = stopRank(a.status as Status);
+    if (r <= 0) continue;
+    const b = best ? stopRank(best.status as Status) : 0;
+    if (!best || r > b || (r === b && a.left > best.left)) best = a;
+  }
+  return best;
 }

@@ -224,4 +224,15 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
   leashed one has a sagging rope to its holder (`Player.tether`, drawn with the tracers). Badges:
   ∿ DRUNK, ⇄ REVERSED, ◎ HYPNOTIZED, ⊸ LEASHED. Cards list natures, weaknesses and resistances
   (shared `affinityText`), size and control lines.
-
+- Playtest batch 2: the preview and cards lead with upkeep (shared `upkeepText`: "eats 5 food/min · you
+  have 2", red when short) and a grand word's price ("grand: +K Z", shared `surcharge`); the HUD card's
+  `.stop` line is the worst status, who put it on and the shortest word that ends it (shared
+  `worstStatus`, `curesFor`); routine notices (who brought what, hungry followers, the air, ghosts' words)
+  go to the feed (`routine` in main.ts), not toasts; damage numbers on one target within MERGE_MS add up
+  (fx.ts `number` key); your own gear is not on your tag, and riding, your creatures round your mount drop
+  their tags; the empty best-words strip points to the market and the rack swap; the trade screen trades
+  at home on your claim (`market.home`); `look.ts` draws a creature or person at its stature (shared
+  `statureOf` over its silhouette's `naturalStature`); fog fills the screen past its canvas (`fogEdges`:
+  no pale square when blind); the kill feed sits under the minimap; a field radiated by a thing is plain
+  tissue (zones.ts decor "none", no APIARIES scattered over it); a right-click on a target while aiming
+  casts at it (on open ground it cancels); knocked out or a ghost, F follows the fight going on.

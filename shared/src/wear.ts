@@ -9,6 +9,7 @@ import { Tile, TILE_METERS } from "./world.js";
  *   not held, not protection, which is a layer of its own) lends its wearer its `LENT_ADD`
  *   properties (armour, resistances, stealth, disguise, noise), its immunities (`immune_*`) and
  *   its camouflage. A COAT's res_cold keeps its wearer warm, a CAPE's stealth hides them.
+ *   Protection lends only its immunities (`lendImmunities`: a HELMET's immune_stun).
  * - warmth: the air at a spot is AIR_BASE C, moved by the biome (`BIOME_AIR`: tundra and snow
  *   cold, desert and ash hot), night (NIGHT_AIR), the weather and fields in force (their
  *   `temperature_delta`: a BLIZZARD, WINTER, a HEATWAVE) and fires near by (WARMTH_NEAR). Colder than
@@ -29,6 +30,16 @@ export const WORN_SLOTS = ["head", "face", "neck", "body", "back", "hands", "fee
 /** True if a thing lends to whoever wears it: worn in a body slot, and not a protection layer. */
 export function lends(item: Stats, archetype: string | undefined): boolean {
   return WORN_SLOTS.includes(String(item.get("equip_slot"))) && archetype !== "protection";
+}
+
+/**
+ * What protection worn on the body (a HELMET, ARMOR: a layer of its own, which lends nothing else)
+ * still gives its wearer: its immunities. A HELMET's `immune_stun` keeps its wearer from being
+ * stunned while it is worn and whole.
+ */
+export function lendImmunities(body: Stats, item: Stats): void {
+  if (!WORN_SLOTS.includes(String(item.get("equip_slot")))) return;
+  for (const [id, v] of item.entries()) if (id.startsWith("immune_") && v === true) body.set(id, true);
 }
 
 /**

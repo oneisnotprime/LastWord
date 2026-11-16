@@ -27,7 +27,7 @@ async function farmer() {
   }
   stampTerrain(room.map, { x: spot.x, y: spot.y, radius: 10, tile: Tile.Grass });
   w.player.x = spot.x; w.player.y = spot.y;
-  w.letters = Object.fromEntries([..."abcdefghijklmnopqrstuvwxyz"].map((ch) => [ch, 20]));
+  w.letters = Object.fromEntries([..."abcdefghijklmnopqrstuvwxyz"].map((ch) => [ch, 9]));
   room.rebuild(w);
   const of = (t: string) => got.filter(([k]) => k === t).map(([, m]) => m);
   const spell = async (word: string) => { c.send("spell", word); await wait(); };
@@ -114,7 +114,7 @@ it("a PRESS turns two vowels into an M while it has power; a KILN fires a G into
   for (const v of "aeiou") w.letters[v] = 0;
   await minutes(3);
   expect(lines().find((l: string) => l.startsWith("PRESS"))).toBe("PRESS: needs vowels");
-  for (const v of "aeiou") w.letters[v] = 20;
+  for (const v of "aeiou") w.letters[v] = 9;
   await spell("kiln");
   const g = w.letters.g;
   await minutes(3);

@@ -1,4 +1,4 @@
-import { helpful, lastStandOf, livesOf, speechOf, stormBendOf } from "@lastword/shared";
+import { helpful, lastStandOf, livesOf, speechOf, stormBendOf, spellingCost } from "@lastword/shared";
 import { restoresOf, SCREEN_RULES, ACTION_LETTERS, becomes, cannotRide, pactOf, doorGuard, hatches, matured, opensDoors, resolveSpelled, cooks, GRAFT_CAPABILITIES, GROUNDED_FROM, isBoon, isGraft, isTrap, parsePhrase, placeRules, pluralize, producerOf, sails, STATUSES, TILE_METERS, TILE_TYPES, WORN_SLOTS, type Dictionary, type Letters, type Op, type Stats, type Status } from "@lastword/shared";
 
 /**
@@ -262,14 +262,14 @@ export function wordBook(dict: Dictionary) {
     try { p = parsePhrase(dict, word); } catch { continue; }
     const s = p.stats;
     const add = (use: Use, score: number, extra: Partial<BotWord> = {}) => {
-      if (score > 0) words.push({ word, use, score, cost: costOf(p.letters), slot: "", reach: 0, ...(p.kind === "sky" ? { sky: true } : {}), ...extra });
+      if (score > 0) words.push({ word, use, score, cost: costOf(spellingCost(p)), slot: "", reach: 0, ...(p.kind === "sky" ? { sky: true } : {}), ...extra });
     };
     const against = def.set.counters;
     // Anything that ends what it counters (RAIN a FIRE, VETO a LAW, PESTICIDE locusts) is a counter-word.
     if (Array.isArray(against)) {
       for (const t of against) {
         const list = counters.get(String(t)) ?? counters.set(String(t), []).get(String(t))!;
-        list.push({ word, use: "field", score: 1, cost: costOf(p.letters), slot: "", reach: 0 });
+        list.push({ word, use: "field", score: 1, cost: costOf(spellingCost(p)), slot: "", reach: 0 });
       }
     }
     const placement = String(s.get("placement"));
@@ -549,7 +549,7 @@ export function phraseFor(dict: Dictionary, w: BotWord, have: Uint8Array, skill:
   if (w.use === "creature") {
     const many = parse(pluralize(w.word));
     if (many && many.noun === w.word) {
-      const cost = costOf(many.letters);
+      const cost = costOf(spellingCost(many));
       const value = worth(w.use, many.stats, many.count);
       if (covers(have, cost) && value > bestWorth) { best = { text: pluralize(w.word), cost, plural: true, adjective: "" }; bestWorth = value; }
     }
@@ -563,7 +563,7 @@ export function phraseFor(dict: Dictionary, w: BotWord, have: Uint8Array, skill:
     const p = parse(`${a.word} ${best.text}`);
     if (!p) continue;
     const value = worth(w.use, p.stats, p.count);
-    if (value > bestWorth * 1.05) { best = { text: `${a.word} ${best.text}`, cost: costOf(p.letters), plural: best.plural, adjective: a.word }; bestWorth = value; }
+    if (value > bestWorth * 1.05) { best = { text: `${a.word} ${best.text}`, cost: costOf(spellingCost(p)), plural: best.plural, adjective: a.word }; bestWorth = value; }
   }
   return best;
 }

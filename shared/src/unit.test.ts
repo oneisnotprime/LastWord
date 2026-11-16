@@ -62,8 +62,8 @@ describe("where damage lands", () => {
     const attacker = human([{ noun: "club" }]); // 35 blunt; armor resists 0.3 and blocks 30 flat
     expect(strikeUnit(attacker, target, hit)).toMatchObject({ on: "armor", damage: 0 });
     const gunner = human([{ noun: "cannon", adjectives: ["light"] }]);
-    while (target.outer.name === "armor") strikeUnit(gunner, target, hit);
-    expect(target.body.integrity).toBe(100);
+    while (target.layers[0]!.integrity > 0 && target.body.integrity === 100) strikeUnit(gunner, target, hit);
+    expect(target.outer.name).toBe("human");
     expect(strikeUnit(gunner, target, hit).on).toBe("human");
     expect(target.body.integrity).toBeLessThan(100);
     while (!target.dead) strikeUnit(gunner, target, hit);

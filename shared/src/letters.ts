@@ -215,7 +215,7 @@ export class Deposits {
    * `GATHER_CHANCE`, plus what `help` says the gatherer's tools add); a miss takes nothing.
    * `indoors` (inside any building's room): only foraging, from biome.ts INTERIOR.
    */
-  gather(x: number, y: number, now: number, rng: Rng, growth = 1, help: GatherHelp = () => [], indoors = false): Gathered {
+  gather(x: number, y: number, now: number, rng: Rng, growth = 1, help: GatherHelp = () => [], indoors = false, held: Letters = {}): Gathered {
     const site = this.siteAt(x, y, now);
     if (site) {
       const r = site.letter === "x" ? roll(CHEST_CHANCE, "chest", help("chest"), rng) : undefined;
@@ -240,7 +240,7 @@ export class Deposits {
       : roll(GATHER_CHANCE[kind], kind === "fish" ? "water" : kind === "dig" ? "digging" : "cave", help(kind), rng);
     if (!r.ok) return { letter: "", why: "nothing", roll: r };
     p.stock[KINDS.indexOf(kind)]! -= 1;
-    const letter = kind === "forage" && biome ? forageLetter(biome, rng) : DEPOSITS[kind].letter;
+    const letter = kind === "forage" && biome ? forageLetter(biome, rng, held) : DEPOSITS[kind].letter;
     return { letter, from: kind, roll: r };
   }
 }

@@ -16,7 +16,10 @@ const MAX_QUEUE = 8;
 const MAX_CASCADE = 16;
 const CASCADE_GAP = 110;
 
-interface Floating { el: HTMLElement; x: number; y: number; born: number; life: number; rise: number }
+interface Floating { el: HTMLElement; x: number; y: number; born: number; life: number; rise: number; key?: string; amount?: number; crit?: boolean }
+
+/** Blows on one target within this many ms add up into one number that keeps rising, not a pile. */
+const MERGE_MS = 700;
 
 const esc = (t: string) => t.replace(/[&<>"]/g, (c) => `&#${c.charCodeAt(0)};`);
 
@@ -177,17 +180,31 @@ export class Effects {
    * A damage number over a world point: bigger and gold for a critical blow, grey when armour or a
    * vehicle took it (named), "miss" for a miss.
    */
-  number(x: number, y: number, amount: number, kind: "hit" | "crit" | "miss" | "blocked" | "dodged", layer: string, mine: boolean, aff?: "weak" | "resist" | "immune") {
+  number(x: number, y: number, amount: number, kind: "hit" | "crit" | "miss" | "blocked" | "dodged", layer: string, mine: boolean, aff?: "weak" | "resist" | "immune", key?: string) {
+    // Blows landing on one target close together are one number that grows ("-12", then "-31"), not a pile.
+    const now = performance.now();
+    if (key && (kind === "hit" || kind === "crit") && amount > 0) {
+      const live = this.numbers.find((n) => n.key === key && now - n.born < MERGE_MS);
+      if (live) {
+        live.amount = (live.amount ?? 0) + amount;
+        live.crit ||= kind === "crit";
+        live.x = x; live.y = y; live.born = now;
+        live.el.firstChild!.textContent = `${live.crit ? "!" : ""}-${live.amount}${layer ? ` ${layer.toUpperCase()}` : ""}`;
+        live.el.classList.toggle("crit", live.crit);
+        live.el.classList.remove("bump"); void live.el.offsetWidth; live.el.classList.add("bump");
+        return;
+      }
+    }
     if (this.numbers.length >= MAX_NUMBERS) this.numbers.shift()!.el.remove();
     const el = document.createElement("div");
     el.className = `num ${kind}${layer ? " layer" : ""}${mine ? " me" : ""}${aff ? ` ${aff}` : ""}`;
-    el.textContent = kind === "miss" ? "miss" : kind === "dodged" ? "dodged" : kind === "blocked" ? `0${layer ? ` ${layer.toUpperCase()}` : ""}` : `${kind === "crit" ? "!" : ""}-${amount}${layer ? ` ${layer.toUpperCase()}` : ""}`;
+    el.append(document.createTextNode(kind === "miss" ? "miss" : kind === "dodged" ? "dodged" : kind === "blocked" ? `0${layer ? ` ${layer.toUpperCase()}` : ""}` : `${kind === "crit" ? "!" : ""}-${amount}${layer ? ` ${layer.toUpperCase()}` : ""}`));
     // A critical says so; a blow that met a weakness or a resistance says which (shared affinity.ts).
     const tag = [kind === "crit" ? "crit!" : "", aff === "weak" ? "weak!" : aff === "resist" ? "resists" : aff === "immune" ? "immune" : ""].filter(Boolean).join(" ");
     if (tag && kind !== "miss" && kind !== "dodged") { const t = document.createElement("span"); t.className = "aff"; t.textContent = tag; el.append(t); }
     el.style.setProperty("--jx", `${(Math.random() - 0.5) * 24}px`);
     this.layer.append(el);
-    this.numbers.push({ el, x, y, born: performance.now(), life: kind === "crit" ? 1300 : 950, rise: kind === "crit" ? 46 : 32 });
+    this.numbers.push({ el, x, y, born: now, life: kind === "crit" ? 1300 : 950, rise: kind === "crit" ? 46 : 32, ...(key && (kind === "hit" || kind === "crit") ? { key, amount, crit: kind === "crit" } : {}) });
   }
 
   /** A heavy blow is coming for you: the screen's edge pulses red until it lands (`seconds`). */

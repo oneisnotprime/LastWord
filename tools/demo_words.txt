@@ -356,7 +356,7 @@ heart: equip_slot=graft mass=0.3 integrity=30 regeneration+2 courage+2 morale+2 
 
 # noun weather
 rain: placement=region field_radius=2000 field_targets=all sets_weather=rain field_duration=10 wetness+5 flammability+-3 visibility=0.7 moisture=5 growth=1.5 produce_O=1 sight_range*0.7 produce_O*2 counters=fire,drought,thirst,dearth
-storm: placement=region field_radius=3000 field_targets=all sets_weather=storm field_duration=8 wetness+6 visibility=0.4 dmg_electric=800 dmg_wind=20 attack_rate=0.05 attack_area=5 friendly_fire=true speed_air*0.3 accuracy+-0.3 produce_W=3 loudness=9 counters=rainbow,troposphere,stratosphere
+storm: placement=region field_radius=200 field_targets=all sets_weather=storm field_duration=5 wetness+6 visibility=0.4 dmg_electric=200 dmg_wind=20 attack_rate=0.05 attack_area=5 friendly_fire=true speed_air*0.3 accuracy+-0.3 produce_W=3 loudness=9 counters=rainbow,troposphere,stratosphere
 fog: placement=region field_radius=1500 field_targets=all sets_weather=fog field_duration=15 visibility=0.1 stealth+4 sight_range*0.1 accuracy+-0.3
 wind: placement=region field_radius=3000 field_targets=all field_duration=10 dmg_wind=5 speed_air*0.7 accuracy+-0.15 spread_rate+0.3 produce_W=2 clears_weather=fog
 lightning: placement=target placement_range=300 single_use=true dmg_electric=5000 dmg_fire=500 attack_area=3 inflict_stun=3 luminosity=10 loudness=10 targets=land,air,water friendly_fire=true
@@ -632,7 +632,7 @@ typhoon: placement=map field_radius=ABS field_targets=all sets_weather=storm fie
 cyclone: placement=map field_radius=ABS field_targets=all sets_weather=storm field_duration=3 dmg_wind=20 attack_rate=0.1 friendly_fire=true speed_land*0.6 produce_W*4 produce_O*2 counters=fire
 tornado: placement=target placement_range=300 field_radius=24 field_duration=2 dmg_wind=60 dmg_crush=30 attack_rate=1 friendly_fire=true inflict_stun=1 deposit_factor=0 produce_W*4
 hail: placement=map field_radius=ABS field_targets=all sets_weather=storm field_duration=2 dmg_blunt=8 attack_rate=0.2 friendly_fire=true produce_A*0.3 produce_P*0.3
-thunderstorm: placement=map field_radius=ABS field_targets=all sets_weather=storm field_duration=4 dmg_electric=400 attack_rate=0.03 friendly_fire=true growth=1.5 produce_W*3 produce_O*2 counters=fire,drought
+thunderstorm: placement=map field_radius=ABS field_targets=all sets_weather=storm field_duration=4 dmg_electric=120 attack_rate=0.03 friendly_fire=true growth=1.5 produce_W*3 produce_O*2 counters=fire,drought
 sandstorm: placement=map field_radius=ABS field_targets=all sets_weather=fog field_duration=4 dmg_wind=5 attack_rate=0.1 friendly_fire=true inflict_blind=2 sight_range*0.2 produce_G*2 produce_E*0.5
 gale: placement=map field_radius=ABS field_targets=all field_duration=5 speed_air*0.5 accuracy+-0.2 produce_W*3
 sunrise: placement=map field_radius=ABS field_targets=all sets_daylight=day field_duration=10 morale+2 produce_E*1.5 counters=nightmare,eclipse,blackout,twilight,midnight,darkness

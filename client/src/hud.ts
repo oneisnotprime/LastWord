@@ -1,5 +1,5 @@
 import { priceOf, rulesLines, NO_RULES, type SpeechRules } from "@lastword/shared";
-import { countersShown, bestWords, forageOdds, type BiomeInfo, selfRisk, effectText, heldText, spellableNow, SPELL_GROUPS, type SpellGroup, tipOfTheMoment, inspectText, LETTER_GUIDE, missing, parsePhrase, readTrade, standIn, standsFor, type Card, type Dictionary, type Letters, type LoadoutDetail, type Offer } from "@lastword/shared";
+import { countersShown, curesFor, worstStatus, bestWords, forageOdds, type BiomeInfo, selfRisk, effectText, heldText, spellableNow, SPELL_GROUPS, type SpellGroup, tipOfTheMoment, inspectText, LETTER_GUIDE, missing, parsePhrase, readTrade, standIn, standsFor, type Card, type Dictionary, type Letters, type LoadoutDetail, type Offer } from "@lastword/shared";
 import { BADGE } from "./art/paper.js";
 import { ideasHtml, setTipsOn, tipRng, tipsOn } from "./tips.js";
 import { keyGlyph, only, pad, padGlyph } from "./pad.js";
@@ -62,7 +62,10 @@ function bar(label: string, now: number, max: number, kind = "") {
 /** A card: what something is, its numbers and what it does (the spell preview and the inspect card). */
 export function cardHtml(card: Card, extra: string[] = []): string {
   const list = (items: string[], cls: string) => (items.length ? `<ul class="${cls}">${items.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>` : "");
+  // Upkeep first (shared `upkeepText`): what it eats or burns is why a DRAGON turns wild.
   return `<div class="title">${esc(card.title)}</div>${card.kind ? `<div class="kind">${esc(card.kind)}</div>` : ""}` +
+    (card.upkeep ? `<div class="upkeep">${esc(card.upkeep)}</div>` : "") +
+    (card.surcharge ? `<div class="surcharge">grand: costs +${esc(card.surcharge.toUpperCase().split("").join(" "))}</div>` : "") +
     list(card.stats, "stats") + list(extra, "extra") + list(card.does, "does");
 }
 
@@ -497,11 +500,19 @@ export class Hud {
     try { risk = selfRisk(parsePhrase(this.dict, stood ? stood.word : t)); } catch { /* not a phrase */ }
     // What it costs under your spelling rules (shared speech.ts): banned letters, a tax, blanks used.
     const rules = this.rules, words = t.split(/\s+/);
-    const price = this.ghostGap ? null : priceOf(this.spends(t), words, rules, this.held);
+    // A grand word costs what its scale deserves besides its own letters (shared `surcharge`), and
+    // what it eats or burns comes first (shared `upkeepText`): "eats 5 food/min · you have 2".
+    const extra = c.surcharge ?? "";
+    const price = this.ghostGap ? null : priceOf(this.spends(t) + extra, words, rules, this.held);
+    const food = (k: "food" | "fuel" | "power" | "faith") => Math.round((this.detail?.stores[k].have ?? 0) * 10) / 10;
+    const kinds = c.upkeep ? (["food", "fuel", "power", "faith"] as const).filter((k) => c.upkeep!.includes(` ${k}/min`)) : [];
+    const short = !c.upkeep?.includes("comes with") && kinds.some((k) => { const m = new RegExp(`([\\d.]+) ${k}/min`).exec(c.upkeep!); return m && food(k) < Number(m[1]); });
+    const upkeep = c.upkeep ? `<div class="${short ? "warn" : "upkeep"}">${esc(c.upkeep)} · you have ${esc(kinds.map((k) => `${food(k)} ${k}`).join(", "))}</div>` : "";
+    const grand = extra ? `<div class="${price?.missing && [...extra].some((ch) => price.missing.includes(ch)) ? "warn" : "cost"}">grand: +${esc(extra.toUpperCase().split("").join(" "))}</div>` : "";
     const cost = !price ? "" : price.problem && !/^You need/.test(price.problem) ? `<div class="warn">🔒 ${esc(price.problem)}</div>`
       : price.extra || price.free || price.wild ? `<div class="cost">pays <b>${esc(price.pay.toUpperCase())}</b>${price.extra ? ` · +${esc(price.extra.toUpperCase())} tax` : ""}${price.free ? ` · ${esc(price.free.toUpperCase())} free` : ""}${price.wild ? ` · ${price.wild} blank${price.wild === 1 ? "" : "s"}` : ""}</div>` : "";
     const ghostly = this.ghostGap && !this.dict.word(stood ? stood.word : t.split(/\s+/).at(-1)!)?.set.haunts ? `<div class="warn">a ghost cannot spell this</div>` : "";
-    el.innerHTML = `<div><b>${esc(c.title)}</b>${c.kind ? ` <span class="kind">${esc(c.kind)}</span>` : ""}</div>` + cost + ghostly +
+    el.innerHTML = `<div><b>${esc(c.title)}</b>${c.kind ? ` <span class="kind">${esc(c.kind)}</span>` : ""}</div>` + upkeep + grand + cost + ghostly +
       (stats.length ? `<div class="lead">${esc(stats.join(" · "))}</div>` : "") + (does.length ? `<div class="key">${esc(does.join(" · "))}</div>` : "") +
       (risk ? `<div class="warn">⚠ ${esc(risk)}</div>` : "") +
       // With insight (shared knowledge.ts) the preview names the words that end it.
@@ -685,7 +696,9 @@ export class Hud {
     if (key === this.bestKey) return;
     this.bestKey = key;
     const best = held ? bestWords(this.dict, this.held, at) : [];
-    el.innerHTML = best.map((b) => `<button data-word="${b.word}" title="${esc(GROUP_NAME[b.group])}"><b>${b.word.toUpperCase()}</b><small>${esc(b.why)}</small></button>`).join("");
+    // Nothing spells: say where the letters change hands (a market's any-4-for-1 and its rack swap, or trading at home).
+    el.innerHTML = best.length ? best.map((b) => `<button data-word="${b.word}" title="${esc(GROUP_NAME[b.group])}"><b>${b.word.toUpperCase()}</b><small>${esc(b.why)}</small></button>`).join("")
+      : held ? `<span class="hint">nothing spells · trade at a MARKET · rack swap · ${keyGlyph("T")}</span>` : "";
   }
 
   private drawHud() {
@@ -695,13 +708,19 @@ export class Hud {
     if (this.ghostGap && !this.ended) {
       // A ghost (shared death.ts): drift where you like, haunt the living with a word every few seconds.
       parts.push(`<div class="out ghost">GHOST</div><div class="watch">${this.out ? `watching ${esc(this.out.toUpperCase())}` : "haunting"} · a word every ${this.ghostGap} s</div>` +
-        `<div class="does">Enter: haunt (BOO, SCARE, CURSE…) · ${keyGlyph("Tab")} watch the living</div><button class="again">Start new round</button>`);
+        `<div class="does">Enter: haunt (BOO, SCARE, CURSE…) · ${keyGlyph("Tab")} watch the living · ${keyGlyph("F")} follow the fight</div><button class="again">Start new round</button>`);
     } else if (this.out !== null) {
       // Knocked out: no bars, no gear; just that, and whom the camera follows.
-      parts.push(`<div class="out">KNOCKED OUT</div>${this.out ? `<div class="watch">watching ${esc(this.out.toUpperCase())}</div>` : ""}` +
+      parts.push(`<div class="out">KNOCKED OUT</div>${this.out ? `<div class="watch">watching ${esc(this.out.toUpperCase())}</div>` : ""}<div class="does">${keyGlyph("F")} follow the fight</div>` +
         `<button class="again">Start new round</button>`);
     } else {
       const max = d?.health.max ?? 100;
+      // What is stopping me (shared `worstStatus`): the worst status, who put it on, and the shortest word that ends it.
+      const worst = worstStatus(d?.statuses ?? []);
+      if (worst) {
+        const end = curesFor(this.dict, worst.status)[0];
+        parts.push(`<div class="stop">${esc([`${(BADGE[worst.status]?.text ?? worst.status).toUpperCase()} ${worst.left} s`, worst.by ?? "", end ? `ended by ${end.toUpperCase()}` : ""].filter(Boolean).join(" · "))}</div>`);
+      }
       parts.push(bar("Health", (f.hp / 100) * max, max));
       const gear = d?.gear ?? [];
       for (const g of gear) if (g.max && g.slot !== "ride") parts.push(bar("Armor", g.integrity ?? 0, g.max, "armor"));
@@ -893,17 +912,17 @@ export class Hud {
       this.pay = pay;
       const held = Object.keys(this.held).filter((c) => this.held[c]! > 0).sort();
       const total = held.reduce((n, c) => n + this.held[c]!, 0);
-      parts.push(`<h3>Market</h3><div class="hint">${m.closed ? `<b class="bad">${esc(m.closed)}: closed</b> · ` : ""}any ${m.ratio} for 1 · ${m.stock} in stock · ${m.citizens} citizen${m.citizens === 1 ? "" : "s"}${m.ruler ? ` · ruled by ${esc(m.ruler)}` : ""}</div>
+      parts.push(`<h3>${m.home ? "At home" : "Market"}</h3><div class="hint">${m.closed ? `<b class="bad">${esc(m.closed)}: closed</b> · ` : ""}any ${m.ratio} for 1 · ${m.home ? "on your own claim: a letter dearer than a market, no T" : `${m.stock} in stock · ${m.citizens} citizen${m.citizens === 1 ? "" : "s"}${m.ruler ? ` · ruled by ${esc(m.ruler)}` : ""}`}</div>
         <div class="row"><span class="slot">Pay</span><div class="words">${held.map((c) => `<button data-pay-add="${c}" ${this.unpaid(c) > 0 && pay.length < m.ratio ? "" : "disabled"}>${c.toUpperCase()}<small>${this.unpaid(c)}</small></button>`).join("") || "<i>no letters</i>"}</div></div>
         <div class="row"><span class="slot">Get</span><div class="words">${letters.map((c) => `<button data-want="${c}" class="${c === this.want ? "aim" : ""}">${c.toUpperCase()}</button>`).join("")}</div></div>
         <div class="row"><span class="words paying">${[...pay].map((c, i) => `<button data-pay-drop="${i}" class="aim" title="Take back">${c.toUpperCase()}</button>`).join("")}${"<i>·</i>".repeat(Math.max(0, m.ratio - pay.length))}</span> for ${tiles(this.want)}
           <button data-market-trade ${!this.want || pay.length !== m.ratio ? "disabled" : ""}>Trade</button></div>
-        <div class="row">Swap all ${total} letters for ${total} random · once here<button data-swap ${m.swapped || !total ? "disabled" : ""}>${m.swapped ? "Swapped" : "Swap"}</button></div>
-        <div class="row">Hire a ${m.citizens ? "citizen" : "worker (none left)"} for ${m.hire} of your letters: they work your fields and stations and pay N<button data-hire ${m.citizens ? "" : "disabled"}>Hire</button></div>
-        <h3>Sell</h3>${m.sells?.length ? `<div class="hint">${this.want ? `Paid in ${tiles(this.want)}, and a T` : "Choose a letter above to be paid in"}</div>${m.sells.map((x) =>
+        ${m.home ? "" : `<div class="row">Swap all ${total} letters for ${total} random · once here<button data-swap ${m.swapped || !total ? "disabled" : ""}>${m.swapped ? "Swapped" : "Swap"}</button></div>
+        <div class="row">Hire a ${m.citizens ? "citizen" : "worker (none left)"} for ${m.hire} of your letters: they work your fields and stations and pay N<button data-hire ${m.citizens ? "" : "disabled"}>Hire</button></div>`}
+        ${m.home ? "" : `<h3>Sell</h3>`}${m.home ? "" : m.sells?.length ? `<div class="hint">${this.want ? `Paid in ${tiles(this.want)}, and a T` : "Choose a letter above to be paid in"}</div>${m.sells.map((x) =>
           `<div class="row">${esc(x.phrase.toUpperCase())} for ${x.price} letter${x.price === 1 ? "" : "s"}<button data-sell="${x.index}" ${this.want ? "" : "disabled"}>Sell</button></div>`).join("")}`
           : `<div class="hint">Nothing you carry is worth anything to the market (things sell for their value).</div>`}`);
-    } else parts.push(`<h3>Market</h3><div class="hint">Stand by a city's MARKET to buy letters or hire workers.</div>`);
+    } else parts.push(`<h3>Market</h3><div class="hint">Stand by a city's MARKET to buy letters or hire workers, or on your own claim to trade at home.</div>`);
     // Transmuting into Z needs alchemy (something that transmutes, or a precious material): shown only then.
     const n = d?.transmute;
     if (n) parts.push(`<h3>Transmute</h3><div class="row">${tiles(this.commons(n, ""))} into ${tiles("z")}: ${n} common letters for one Z<button data-transmute>Transmute</button></div>`);

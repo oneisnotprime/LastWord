@@ -5,7 +5,7 @@ import { massed, resolve, type Stats } from "./stats.js";
 import type { Op, Value } from "./types.js";
 import { inflicts } from "./status.js";
 import { graftCosts, handsOf, isGraft } from "./body.js";
-import { lend, lends } from "./wear.js";
+import { lend, lendImmunities, lends } from "./wear.js";
 import { luckOps, rerolled } from "./idea.js";
 import { carryScale, sizeOf, sizeOps } from "./scale.js";
 
@@ -93,8 +93,8 @@ const UNARMED = 5;
  * A character in the world, with its gear.
  *
  * Damage lands on the outermost thing first: the vehicle, then each piece of protection, then
- * the body. Each has to be destroyed before the next can be hurt. Whatever a destroyed layer
- * did not absorb is lost; it does not carry through.
+ * the body. Each has to be destroyed before the next can be hurt. What a layer could not take
+ * as it broke carries through to the next (`strikeLayers`): a NUKE breaks ARMOR and goes on.
  *
  * Pets and drones are not part of a unit: they are units of their own.
  */
@@ -138,6 +138,7 @@ export class Unit {
       // Worn on the body it lends its armour, resistances, disguise and noise (shared wear.ts);
       // a graft its capabilities, at a cost (shared body.ts).
       if (lends(stats, def?.archetype)) lend(body, stats, item.count ?? 1);
+      else if (def?.archetype === "protection") lendImmunities(body, stats);
       if (isGraft(stats)) grafted.push(Math.max(0, stats.num("mass")));
       // What is carried in the hand makes its noise too: a DRUM, a TRUMPET (shared sound.ts).
       else if (!lends(stats, def?.archetype) && stats.num("loudness") > 0 && body.get("loudness") !== "ABS") body.set("loudness", body.num("loudness") + stats.num("loudness"));
@@ -234,11 +235,38 @@ function armed(weapon: Stats | null, body: Stats): Stats {
 export function strikeUnit(attacker: Unit, defender: Unit, rng: Rng, aim = 1): Strike & { on: string } {
   // Someone who cannot be targeted cannot be hit through their armor either.
   if (defender.body.stats.flag("untargetable")) return { hit: false, critical: false, damage: 0, byType: {}, on: defender.body.name };
-  const target = defender.outer;
   let attack = attacker.attack;
   if (aim !== 1) {
     attack = attack.clone();
     attack.apply([["accuracy", "mul", aim]]);
   }
-  return { ...strike(attack, target, rng), on: target.name };
+  return strikeLayers(attack, defender, rng);
+}
+
+/**
+ * One blow on a unit's outermost layer; what a layer could not take as it broke (`Strike.carry`)
+ * goes on to the next, and so on to the body. `damage` is the sum; `on` names the innermost layer
+ * it reached, and `layers` every layer it broke on the way.
+ */
+export function strikeLayers(attack: Stats, defender: Unit, rng: Rng): Strike & { on: string; broke: string[] } {
+  let target = defender.outer;
+  const first = strike(attack, target, rng);
+  const out = { ...first, on: target.name, broke: [] as string[] };
+  let carry = first.carry ?? 0;
+  while (carry > 0 && target !== defender.body) {
+    out.broke.push(target.name);
+    const next = defender.outer;
+    if (next === target) break;
+    target = next;
+    const rest = attack.clone();
+    rest.apply(rest.entries().filter(([id]) => id.startsWith("dmg_")).map(([id]) => [id, "mul", carry]));
+    rest.set("accuracy", "ABS"); // it already landed
+    rest.set("critical", 0);
+    const r = strike(rest, target, rng);
+    out.damage += r.damage;
+    for (const [k, v] of Object.entries(r.byType)) out.byType[k] = (out.byType[k] ?? 0) + v;
+    out.on = target.name;
+    carry = r.carry ?? 0;
+  }
+  return out;
 }

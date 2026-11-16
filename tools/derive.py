@@ -224,6 +224,51 @@ def natures_of(w, v, m):
     return out
 
 
+# --- price ---------------------------------------------------------------------------------------
+# A grand word (shared inspect.ts `grandeur`, GRAND_FROM 1000) costs more than its own letters: each
+# order of magnitude of grandeur adds the next of its `price_letters`, letters that are earned, not
+# foraged (shared inspect.ts `surcharge`). Which letters, by what it is: legends are paid for in
+# kills and boss drops, beasts in the hunt, machines in machine letters and won fights, weapons in
+# victories, weather and disasters in wind and exploring. A word gets them from a tenth of
+# GRAND_FROM, so an adjective that makes it grand finds them there.
+PRICED_FROM = 100
+LEGEND = {"spirit", "demon", "holy", "undead", "fae"}
+MACHINE_ARCH = {"vehicle_land", "vehicle_air", "vehicle_water", "machine", "robot"}
+
+def grandeur(v):
+    """The same as shared inspect.ts `grandeur`, over a word's own properties."""
+    s = v["set"]
+    def n(pid):
+        x = s.get(pid, 0)
+        return 1e12 if x == "ABS" else x if isinstance(x, (int, float)) else 0
+    hit = sum(max(0, n(k)) for k in s if k.startswith("dmg_"))
+    if v["role"] != "noun":
+        return 0
+    seconds = (n("field_duration") or n("event_duration")) * 60
+    if v["class"] in ("event", "world_state", "spell", "aura"):
+        tiles = (n("field_radius") or n("event_radius")) / 4
+        reach = min(1, (tiles / 8) ** 2)
+        if hit > 0 and n("attack_rate") > 0 and 0 < seconds < 1e9:
+            hit *= max(1, n("attack_rate") * seconds * reach)
+        return hit
+    moves = n("speed_land") > 0 or n("speed_air") > 0 or n("speed_water") > 0 or s.get("mountable") is True
+    body = n("integrity") / 5 if hit > 0 or moves else 0
+    return max(hit, body)
+
+def price_of(cls, arch, s, anc):
+    natures = set(s.get("nature") or [])
+    if cls in ("creature", "person") and (natures & LEGEND or arch == "supernatural"):
+        return "kzxq"
+    if cls in ("creature", "person", "flora"):
+        return "hkvz"
+    if arch in MACHINE_ARCH or "machine" in natures:
+        return "mvxz"
+    if arch == "weapon" or s.get("single_use") is True:
+        return "vkxz"
+    if cls in ("event", "world_state", "spell", "aura"):
+        return "wjxq"
+    return "kvxq"
+
 def derive(out, dict_dir, audit=False):
     wn = load_wordnet(dict_dir)
     lex = {}
@@ -330,6 +375,9 @@ def derive(out, dict_dir, audit=False):
             if "leash" not in cures:
                 s["effect_status"] = cures = list(cures) + ["leash"]
                 hooked["cure:leash"].append(w)
+        # Price: what a grand word's scale is paid in (shared inspect.ts `surcharge`), by what it is.
+        if role == "noun" and not has(v, "price_letters") and grandeur(v) >= PRICED_FROM:
+            give("price:" + (seq := price_of(cls, arch, s, anc)), w, v, pid="price_letters", value=seq)
     if audit:
         for rule in sorted(hooked):
             ws = hooked[rule]

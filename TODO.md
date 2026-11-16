@@ -21,7 +21,8 @@
 - Objects do what their data says: using one (U) acts as a verb cast on yourself; anything
   with a `field_radius`, light, fear or healing radiates around whoever carries it or where it lies.
 - Damage lands on the outermost thing first: vehicle, then armor and shield, then the character.
-  Each must be destroyed before the next is hurt.
+  Each must be destroyed before the next is hurt; what a layer could not take as it broke carries
+  through to the next (playtest batch 2).
 - A swung weapon scales with its wielder's strength; any weapon scales with training.
 - Riding: the unit fights and moves as the vehicle, and the rider's adjectives apply to it too.
 - Pets and drones act on their own, as separate units.
@@ -71,6 +72,15 @@
   shelter from striking areas, and put valuables down inside.
 - Statuses and temporary effects last several times their word's seconds (`statusSeconds`,
   `effectSeconds`): stuns about three times, most twenty, damage over time twice.
+- Diminishing returns on statuses that take control (stun, freeze, sleep, root, fear, confuse,
+  hypnosis, leash, stasis): no refresh while on, a resistance after (at least 4 s, half of a long one).
+- Ghosts never hold the living down: their words carry no status that takes control but fear, no
+  damage and no wearing harm (poison, burns, debt, doom); their areas stay put, one at a time, and
+  never reach indoors.
+- Grand words cost earned letters besides their own (shared `surcharge`, data `price_letters`), one
+  more each order of magnitude of grandeur. No timer caps.
+- Steady income of a letter tapers once you hold HOARD_FROM (10) of it; forage never leaves a rack
+  without a vowel. Trading at home on your own claim: the market's price plus one, no T.
 - Nobody strikes past their sight: a weapon's reach is cut to its wielder's sight (TELESCOPE,
   RADAR and night change it). Threats coming from beyond sight are shown at the screen's edge.
 - A click on something nobody owns claims it (walk there, take); Shift-click attacks it.
@@ -131,6 +141,12 @@ by how many words set them (minds and upkeep took `sentient`, `intelligence`, `f
       desertion, fear wears loyalty; 680 words), death (extra lives, last stands, graves and tombs,
       rising dead, revival, ghosts that haunt; 846 words) and the storm wall (shared round.ts;
       191 words bend it), by `tools/rules.txt`.
+- [x] Playtest batch 2 (PLAN.md): ghosts, stun-locks, carry-through damage, local storms and per-area
+      cells, grand-word prices, upkeep first, stature, hoard taper and vowel net, trade at home, the
+      "what is stopping me" line, feed and number clutter, follow the fight, and the bugs.
+- [ ] Playtest batch 2 follow-ups: the storm wall still ends about 5 of 12 bot rounds (the last bots
+      do not get inside in time; `botStorm` and the endgame hunt); bots never trade at home; a raster
+      drawn at a big stature is blocky (generate larger images for big creatures).
 - [ ] Round systems follow-ups: bots revive pact allies' ghosts on purpose (only by chance now);
       a ghost's words could target its killer's things too; tune STORM_STAGES against human play
       (bots end most rounds in 7 to 9 minutes); a per-person ban word chosen by the speller.

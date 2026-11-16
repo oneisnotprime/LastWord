@@ -42,15 +42,24 @@ describe("inflicting statuses", () => {
   });
 
   it("refreshes to the longer time, and ticks down until it ends", () => {
-    const list = given("stun", 5);
-    afflict(list, [["stun", 2]], human(), "b");
-    expect(list[0]).toMatchObject({ left: statusSeconds("stun", 5), from: "attacker" });
-    afflict(list, [["stun", 8]], human(), "b");
-    const eight = statusSeconds("stun", 8);
+    const list = given("poison", 5);
+    afflict(list, [["poison", 2]], human(), "b");
+    expect(list[0]).toMatchObject({ left: statusSeconds("poison", 5), from: "attacker" });
+    afflict(list, [["poison", 8]], human(), "b");
+    const eight = statusSeconds("poison", 8);
     expect(list[0]).toMatchObject({ left: eight, from: "b" });
     expect(tickStatuses(list, eight - 0.5)).toEqual([]);
-    expect(tickStatuses(list, 1)).toEqual(["stun"]);
+    expect(tickStatuses(list, 1)).toEqual(["poison"]);
     expect(list).toEqual([]);
+  });
+
+  it("never refreshes a status that takes control while it is on (diminishing returns)", () => {
+    const list = given("stun", 5);
+    afflict(list, [["stun", 8]], human(), "b");
+    expect(list[0]).toMatchObject({ left: statusSeconds("stun", 5), from: "attacker" });
+    const stun = statusSeconds("stun", 5);
+    expect(tickStatuses(list, stun - 0.5)).toEqual([]);
+    expect(tickStatuses(list, 1)).toEqual(["stun"]);
   });
 
   it("lasts longer on the cowardly and the disloyal, shorter on the brave", () => {
@@ -61,8 +70,14 @@ describe("inflicting statuses", () => {
     const a: Affliction[] = [], b: Affliction[] = [];
     afflict(a, [["fear", 4]], coward, "x");
     afflict(b, [["fear", 4]], hero, "x");
-    expect(a[0]!.left).toBeCloseTo(statusSeconds("fear", 4) * 5);
-    expect(b[0]!.left).toBeCloseTo(statusSeconds("fear", 4) / 2);
+    expect(a[0]!.left).toBeCloseTo(statusSeconds("fear", 4) * (10 / 6));
+    expect(b[0]!.left).toBeCloseTo(statusSeconds("fear", 4) * (10 / 15));
+    // No courage at all (or less) doubles it; it never runs away to days (a chip once read "FEAR 533315s").
+    const hollow = human();
+    hollow.set("courage", 0.0000001);
+    const d: Affliction[] = [];
+    afflict(d, [["fear", 4]], hollow, "x");
+    expect(d[0]!.left).toBeCloseTo(statusSeconds("fear", 4) * 2);
     const brave = human();
     brave.set("courage", "ABS");
     const c: Affliction[] = [];

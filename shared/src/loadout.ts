@@ -25,7 +25,7 @@ export interface LoadoutDetail {
   /** Verbs in force, with seconds left; fields you stand in, with -1. */
   effects: { word: string; left: number }[];
   /** Statuses on you (stun, poison...), with seconds left. */
-  statuses: { status: string; left: number }[];
+  statuses: { status: string; left: number; by?: string }[];
   /** Morale, 0 to 10 and beyond: shaken below 3, fleeing at 0. */
   morale: number;
   /** Luck as the percent it shifts every roll, and rerolls of a failed roll (shared idea.ts); 0 and 0 when none. */
@@ -63,7 +63,7 @@ export interface LoadoutDetail {
    * used its one rack swap. `sells`: what you carry the market would buy, by gear index, and the
    * letters it pays (shared `salePrice`).
    */
-  market?: { ratio: number; stock: number; refuses: string; closed: string; hire: number; citizens: number; ruler: string; swapped: boolean; sells?: { index: number; phrase: string; price: number }[] };
+  market?: { ratio: number; stock: number; refuses: string; closed: string; hire: number; citizens: number; ruler: string; swapped: boolean; sells?: { index: number; phrase: string; price: number }[]; home?: boolean };
   /** Common letters a transmutation into Z takes for you now; absent without alchemy (`transmute_in`, a precious material). */
   transmute?: number;
   /** What is greyed, blanked or scrambled on your screen and what your things give back (shared screen.ts). */

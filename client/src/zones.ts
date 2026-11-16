@@ -10,7 +10,7 @@ import { mix, num } from "./art/palette.js";
 import { hash } from "./art/util.js";
 import { PX, useMade, type Made, type Painter } from "./paint.js";
 
-type Decor = "flame" | "heart" | "swords" | "bubble" | "cloud" | "crack" | "wheat" | "star" | "skull" | "word";
+type Decor = "flame" | "heart" | "swords" | "bubble" | "cloud" | "crack" | "wheat" | "star" | "skull" | "word" | "none";
 
 export interface ZoneStyle { colour: string; ink: string; decor: Decor; warm?: boolean }
 
@@ -56,8 +56,13 @@ const BY_ARCHETYPE: Record<string, ZoneStyle> = {
   possession: { colour: "#c8b070", ink: "#6a5a1a", decor: "word" }, act: { colour: "#d8a070", ink: "#7a4a1a", decor: "word" }, phenomenon: { colour: "#a88ad9", ink: "#4a2a8a", decor: "word" },
 };
 
+/** Classes of things that stand in the world: the field one gives off is drawn as tissue alone, not as copies of it. */
+const PHYSICAL = new Set(["artifact", "creature", "person", "flora", "terrain", "material", "consumable", "bodypart"]);
+
 export function zoneStyle(dict: Dictionary, word: string): ZoneStyle {
   const def = dict.word(word);
+  // An APIARY's or a TOTEM's field is not thirty APIARIES scattered over the ground (some on water).
+  if (!BY_WORD[word] && def && PHYSICAL.has(def.class)) return { colour: "#c9b46a", ink: "#5a4a1a", decor: "none" };
   return BY_WORD[word] ?? (def && BY_ARCHETYPE[def.archetype]) ?? { colour: "#a88ad9", ink: "#4a3a7a", decor: "word" };
 }
 
@@ -122,6 +127,7 @@ export class Zones {
     z.decor = [];
     const rt = z.r / PX;
     const orbit = z.style.decor === "heart";
+    if (z.style.decor === "none") { z.laidFor = z.r; return; }
     const n = orbit ? Math.max(6, Math.min(26, Math.round(rt * 3.2))) : Math.max(4, Math.min(34, Math.round(rt * rt * 1.1)));
     for (let i = 0; i < n; i++) {
       const img = this.scene.add.image(0, 0, "__WHITE");
