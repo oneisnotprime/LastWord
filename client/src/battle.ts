@@ -8,7 +8,7 @@ interface FighterSheet {
 }
 /** The battle as one fighter sees it (server `sendBattle`), or its end. */
 export interface BattleSheet {
-  word?: string; round?: number; cap?: number; phase?: "plan" | "show"; left?: number; you?: string; fighters?: FighterSheet[]; moves?: Move[]; chosen?: string; pot?: number; fatigue?: number;
+  word?: string; round?: number; cap?: number; phase?: "plan" | "show"; left?: number; you?: string; fighters?: FighterSheet[]; moves?: Move[]; chosen?: string; pot?: number; fatigue?: number; lethal?: boolean;
   over?: { why: string; won: boolean; draw: boolean; rounds: number; text: string };
 }
 export interface BattleRound { round: number; lines: string[]; events: { kind: string; by?: string; on?: string; who?: string; hit?: boolean }[] }
@@ -127,7 +127,7 @@ export class BattleView {
       : s.chosen ? `<div class="wait">${esc(s.chosen.toUpperCase())} · waiting</div>` : `<div class="wait pick">choose: 1 to 4${me?.windup ? "" : ""}</div>`;
     const tired = (s.fatigue ?? 1) > 1 ? `<b class="tired">fatigue ×${(s.fatigue ?? 1).toFixed(2)}</b>` : "";
     this.root.innerHTML = `<div class="sheet">
-      <header><b>${esc(s.word ?? "BATTLE")}</b><span>ROUND ${s.round}/${s.cap}</span>${tired}<span class="clock">${s.phase === "plan" && !s.over ? "" : "–"}</span>${s.pot ? `<span class="pot">pot ${s.pot}</span>` : ""}</header>
+      <header><b>${esc(s.word ?? "BATTLE")}</b><span>ROUND ${s.round}/${s.cap}</span>${tired}<span class="clock">${s.phase === "plan" && !s.over ? "" : "–"}</span>${s.pot ? `<span class="pot">pot ${s.pot}</span>` : s.lethal ? `<span class="pot">to the death</span>` : ""}</header>
       <div class="lines">${order.map(fighter).join('<div class="vs">vs</div>')}</div>
       <div class="log">${this.log.map((l) => `<div>${l}</div>`).join("")}</div>
       <div class="moves">${moves}</div>${status}

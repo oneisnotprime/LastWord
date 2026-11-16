@@ -231,6 +231,8 @@ class World extends Phaser.Scene {
       // (the one the window was opened for, else the next click); anything else is a spelling.
       const give = /^\s*give\s+(\S+)\s+([a-z]+)\s*$/i.exec(text);
       if (give) return this.net?.give(give[1]!, give[2]!.toLowerCase());
+      // In a battle what you spell is your move for the round: the server points it (at the foe if it harms, else at you).
+      if (this.battle?.active) return this.net?.spell(text);
       const alone = readDescription(dictionary, text);
       let phrase: Phrase | null = null;
       try { phrase = alone ? null : parsePhrase(dictionary, text); } catch { /* the server says why */ }

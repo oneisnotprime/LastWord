@@ -221,6 +221,12 @@ console.log(`Ghost haunts: ${haunts} (${(haunts / Math.max(1, rounds.length)).to
     console.log(`  ended by: ${tally(battles.map((b) => b.why))}`);
     console.log(`  flee: ${sum((b) => b.fleeTries)} tries, ${share(sum((b) => b.fleeOk), sum((b) => b.fleeTries))} got away; battles ended by flight ${share(battles.filter((b) => b.why === "fled").length, battles.length)}`);
     console.log(`  actions (${all}): ${[...acts].sort((a, b) => b[1] - a[1]).map(([k, n]) => `${k} ${share(n, all)}`).join(", ")}; not Attack ${share(all - (acts.get("attack") ?? 0), all)}`);
+    {
+      const capped = battles.filter((b) => b.why === "cap"), m = new Map<string, number>();
+      for (const b of capped) for (const [k, n] of Object.entries(b.actions)) m.set(k, (m.get(k) ?? 0) + n);
+      const n = [...m.values()].reduce((a, b) => a + b, 0);
+      if (n) console.log(`  in battles that reached the cap: ${[...m].sort((a, b) => b[1] - a[1]).map(([k, v]) => `${k} ${share(v, n)}`).join(", ")}; blows that landed nothing ${share(capped.reduce((x, b) => x + b.nothing, 0), capped.reduce((x, b) => x + b.blows, 0))}`);
+    }
     console.log(`  heavy blows: ${sum((b) => b.heavy)}, dodged by Defend ${share(sum((b) => b.dodged), sum((b) => b.heavy))}; battles with a dodge ${share(battles.filter((b) => b.dodged > 0).length, battles.length)}`);
     console.log(`  timeouts: ${sum((b) => b.timeouts)} of ${sum((b) => b.choices)} choices by people`);
     const words = battles.flatMap((b) => b.spells);

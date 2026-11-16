@@ -63,6 +63,29 @@ export const FLEE_RETRY = 0.15;
 export const HELPLESS_CAP = 2;
 export const HELPLESS_FREE = 2;
 
+/**
+ * Engagement (plan 1.1): a person who goes for another person closes to ENGAGE_TILES (or the
+ * weapon's reach if shorter), then a wind-up of ENGAGE_SECONDS runs, shown to the target. If the
+ * target is still within ENGAGE_TILES when it ends, both are pinned in a ring of RING_TILES and the
+ * battle begins; if not, the attacker cannot try that person again for ENGAGE_RETRY seconds. Someone
+ * who cannot see the attacker gets no wind-up. Whoever leaves a battle alive cannot be engaged for
+ * BATTLE_REST seconds, nor by the same opponent for REMATCH_SECONDS; the winner gets SECOND_WIND of
+ * their body back; whoever ran leaves FLEE_LETTERS letters behind.
+ */
+export const ENGAGE_TILES = 6;
+export const ENGAGE_SECONDS = 2;
+export const ENGAGE_RETRY = 10;
+export const BATTLE_REST = 20;
+export const REMATCH_SECONDS = 60;
+export const SECOND_WIND = 0.25;
+export const RING_TILES = 4;
+export const FLEE_LETTERS = 2;
+
+/** Tiles within which an attacker's engage wind-up starts: the weapon's reach, at most ENGAGE_TILES, at least arm's length. */
+export function engageReach(attackRangeMeters: number, tileMeters: number): number {
+  return Math.max(1.5, Math.min(ENGAGE_TILES, attackRangeMeters / tileMeters));
+}
+
 /** One combatant. The server fills the sheet from its walker before each round (`BattleHooks.refresh`). */
 export interface Fighter {
   id: string;
