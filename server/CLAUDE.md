@@ -372,3 +372,19 @@ Node process that owns the game state. One room per map instance (from milestone
   `botOffer` never in a fight. `watch` { fight: true } follows the fight going on (`hottestFight`).
   `loadtest/tournament.ts` also prints what killed people (blow, storm wall, area or weather), what decided
   each round, ghost haunts and statuses per living person.
+- Turn-based fork (`docs/TURN_BASED_PLAN.md`, `battle.test.ts`): the room option `combat: "realtime" | "turns"`
+  (`WorldRoom.combat`: turns by default, real time under Vitest; COMBAT=realtime overrides; rooms filter by it;
+  `state.combat`). In turns a DUEL (`challenge`, not a race) opens a battle: `openBattle`, `battles`
+  (`BattleRun`, keyed by the ring's area), `Walker.battle` (pinned: `stepBattles` clears targets each tick, the
+  combat loop and `thinkBots` skip it, nothing outside strikes it, `pinned` refuses take/drop/use/trade),
+  `beginPlan` (PLAN_FIRST/PLAN_SECONDS for people, BOT_ROUND_SECONDS for bots; twice timed out is `away`: the
+  bot mind plays after AWAY_SECONDS), `battleAct` (message `battleAct` { move, target?, text? }; a `spell`
+  message from a fighter is its move), `resolveBattle` (shared `resolveRound` with hooks: `spellWord` for
+  words, `blow`/`settle`/`kill`/`hurtWith` for blows; statuses pass STATUS_ROUND_SECONDS a round with one
+  round's damage: `sufferStatuses(…, dotSeconds)`; Defend lays a `spell_cost` rule for one round, DEFEND_WORD),
+  `closeBattle` (settles the challenge: a knock-down via `kill`'s RING_FLOOR, a runner gives up the pot),
+  `sendBattle` (private `battle` sheet; `battleEvents` { round, events, lines }; never another's choice).
+  Bots: bots.ts `botMove` (pure policy over `movesOf`), `botBattleWord` (a better weapon, a mend, armour, a
+  ride). `battleLog` (`BattleRecord`) feeds `loadtest/tournament.ts` (COMBAT=…; prints battles and duels) and
+  `loadtest/duels.ts` (the same duels in both modes on the same seeds). A DEBUG=1 server takes "debug near"
+  (brings the nearest person beside you) for browser checks.

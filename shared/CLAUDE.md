@@ -316,3 +316,13 @@ server and the client import this, so anything here must give the same answer on
   else), `upkeepText` and `Card.upkeep`/`Card.surcharge`; tips.ts `wordCost` (spellableNow counts the
   surcharge). biome.ts `hoardShare`/HOARD_FROM (income of a hoarded letter tapers; forage redraws a hoarded
   find) and `forageLetter`'s vowel net (no vowel held: a find is one of the pool's vowels).
+- Turn-based fork (`docs/TURN_BASED_PLAN.md`, `battle.test.ts`): `battle.ts` is a battle between people in
+  rounds, pure and seedable. `fighter`/`startBattle`, `movesOf` (the menu, read from the `Unit`: the strike's
+  verb, what it would land, weak/resists, loading n/m, heavy; Defend; Spell; Flee with its chance), `legal`,
+  `resolveRound(battle, choices, rng, hooks)` -> `BattleEvent[]` (order: defenders, flee tries, then by speed;
+  round 1 ranged first), `eventLine` (the log), `playOut`, `preview`, `bars`, `fleeChance`, `fatigue`,
+  `rateOf`/`loading`, `canAct` (HELPLESS_CAP). One round is one second of the old fight: charge gains
+  `attack_rate × tempo` a round and a strike spends 1; a heavy blow (`windupOf`) is announced and lands next
+  round, and misses a defender. `BattleHooks` (`refresh`, `spell`, `struck`) is how the server plugs in the
+  real spelling, statuses and kills. combat.ts `StrikeHow` (`pace`, `block`) is passed through `strike`,
+  `strikeLayers` and `strikeUnit` for Defend and fatigue.

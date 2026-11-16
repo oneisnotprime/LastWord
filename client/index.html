@@ -377,6 +377,55 @@
         border: 0; border-radius: 3px; padding: 5px 8px; cursor: pointer; box-shadow: 0 2px 0 #b8902a, 0 4px 8px rgba(40, 28, 16, .3); }
       #status button.again:hover { transform: translateY(-1px) rotate(-1deg); }
       /* Starting kits (kits.ts): the pick of three. */
+      /* The battle panel (turn-based fork): a plain sheet over the map. */
+      #battle { position: fixed; left: 50%; top: 64px; transform: translateX(-50%); z-index: 5; display: none; pointer-events: auto; font: 500 13px/1.35 var(--round); color: var(--ink); }
+      #battle.show { display: block; }
+      /* While you spell your move the panel folds to its bars, clear of the spell window. */
+      body.spelling #battle .log, body.spelling #battle .moves, body.spelling #battle .wait { display: none; }
+      body.spelling #battle { top: 8px; }
+      #battle .sheet { width: min(760px, 94vw); padding: 10px 14px 12px; background: var(--card); border-radius: 4px; box-shadow: 0 6px 22px rgba(0, 0, 0, .45); }
+      #battle header { display: flex; gap: 14px; align-items: baseline; border-bottom: 1px dashed rgba(60, 44, 28, .35); padding-bottom: 4px; }
+      #battle header b:first-child { font: 700 22px var(--hand); letter-spacing: 2px; }
+      #battle header .clock { margin-left: auto; font: 700 20px var(--hand); min-width: 44px; text-align: right; }
+      #battle header .clock.low { color: #b3261e; }
+      #battle header .pot, #battle header .tired { font-size: 12px; opacity: .8; }
+      #battle header .tired { color: #b3261e; opacity: 1; }
+      #battle .lines { display: flex; gap: 10px; align-items: flex-start; margin: 8px 0 6px; }
+      #battle .lines section { flex: 1; min-width: 0; }
+      #battle .lines section.gone { opacity: .45; }
+      #battle .vs { align-self: center; font: 700 16px var(--hand); opacity: .6; }
+      #battle h3 { margin: 0 0 4px; font: 700 15px var(--round); display: flex; justify-content: space-between; }
+      #battle h3 u { text-decoration: none; font: 500 11px var(--round); opacity: .6; }
+      #battle h3 u.in { color: #2e6b2e; opacity: 1; }
+      #battle .bar { display: grid; grid-template-columns: 78px 1fr 70px; gap: 6px; align-items: center; margin: 2px 0; font-size: 11px; }
+      #battle .bar span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; opacity: .8; }
+      #battle .bar > div { height: 10px; background: rgba(60, 44, 28, .18); border-radius: 2px; overflow: hidden; }
+      #battle .bar i { display: block; height: 100%; background: #6f7f8f; transition: width .35s; }
+      #battle .bar.body i { background: #b3402e; }
+      #battle section.me .bar.body i { background: #3f8a3a; }
+      #battle .bar em { font-style: normal; text-align: right; font-variant-numeric: tabular-nums; }
+      #battle .tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+      #battle .tags b { font: 500 11px var(--round); background: rgba(60, 44, 28, .1); border-radius: 3px; padding: 0 5px; }
+      #battle .heavy { margin-top: 4px; color: #b3261e; font-weight: 700; }
+      #battle .log { height: 96px; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; border-top: 1px dashed rgba(60, 44, 28, .35); border-bottom: 1px dashed rgba(60, 44, 28, .35); padding: 3px 0; font-size: 12px; }
+      #battle .log i { opacity: .55; font-style: normal; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; }
+      #battle .moves { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 8px; }
+      #battle .moves button { all: unset; cursor: pointer; display: grid; grid-template-columns: 18px 1fr; gap: 0 4px; padding: 5px 7px; border: 1.5px solid rgba(60, 44, 28, .5); border-radius: 4px; background: rgba(255, 255, 255, .35); }
+      #battle .moves button:hover { background: rgba(255, 255, 255, .7); }
+      #battle .moves button kbd { grid-row: span 2; align-self: center; font: 700 14px var(--hand); opacity: .6; }
+      #battle .moves button b { font: 700 13px var(--round); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      #battle .moves button span { font-size: 11px; line-height: 1.25; opacity: .85; }
+      #battle .moves button.off { opacity: .4; cursor: default; }
+      #battle .moves button.picked { border-color: #2e6b2e; background: rgba(110, 170, 100, .35); opacity: 1; }
+      #battle .moves button.hint { border-color: #b3261e; box-shadow: 0 0 0 2px rgba(179, 38, 30, .25); }
+      #battle .moves button.weak b { color: #2e6b2e; }
+      #battle .moves button.resist b, #battle .moves button.immune b { color: #8a5a1c; }
+      #battle .wait { margin-top: 6px; text-align: center; font-size: 12px; opacity: .7; min-height: 18px; }
+      #battle .wait.pick { opacity: 1; font-weight: 700; }
+      #battle .result { margin-top: 6px; text-align: center; font: 700 26px var(--hand); letter-spacing: 2px; }
+      #battle .result.won { color: #2e6b2e; }
+      #battle .result.lost { color: #b3261e; }
+      #battle .result small { display: block; font: 500 11px var(--round); letter-spacing: 0; opacity: .7; }
       #kits { position: fixed; inset: 0; z-index: 6; display: none; pointer-events: auto; background: rgba(28, 22, 16, .55); font: 500 13px/1.35 var(--round); color: var(--ink); }
       #kits.show { display: flex; align-items: center; justify-content: center; }
       #kits .sheet { width: min(1060px, 96vw); max-height: 94vh; overflow: auto; padding: 16px 22px 20px; background: var(--card); border-radius: 4px; transform: rotate(-.4deg);

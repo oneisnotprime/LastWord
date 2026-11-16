@@ -121,6 +121,8 @@ export const WorldState = schema(
     stormDps: t.float32(), stormHeld: t.string(),
     /** Ghosts haunting the map: the knocked out, never counted alive. */
     ghosts: t.uint16(),
+    /** How fights between people are resolved: "realtime" or "turns" (shared battle.ts). */
+    combat: t.string(),
   },
   "WorldState",
 );

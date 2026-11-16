@@ -1,3 +1,4 @@
+import type { BattleRound, BattleSheet } from "./battle.js";
 import type { Threat } from "./threats.js";
 import { Client } from "@colyseus/sdk";
 import type { Intel, Letters, LoadoutDetail, Offer, Ping, Sensed } from "@lastword/shared";
@@ -41,6 +42,8 @@ export interface Connection {
   followFight(): void;
   /** A ping (shared comms.ts) at a spot on the map, else where you stand. */
   ping(kind: Ping, x?: number, y?: number): void;
+  /** A move in a battle round (shared battle.ts): attack, defend or flee; a spelling is sent with `spell`. */
+  battleAct(move: string): void;
 }
 
 /** Letters gained and why ("forage", "hunted COW (+12 food)"), and where they came from. */
@@ -111,6 +114,8 @@ export interface Handlers {
   call(c: { name: string; word: string; x: number; y: number; ally: boolean }): void;
   /** A ping heard (shared comms.ts). */
   pinged(p: Pinged): void;
+  battle(sheet: BattleSheet): void;
+  battleEvents(round: BattleRound): void;
 }
 
 /** One blow, as the server tells it (server `Hit`). */
@@ -138,9 +143,11 @@ const endpoint =
 export async function connect(on: Handlers): Promise<Connection> {
   const choice = await chooseGame();
   const client = new Client(endpoint);
+  // The fork fights in turns (shared battle.ts); ?combat=realtime asks for a room that fights in world ticks, to compare.
+  const combat = { combat: new URLSearchParams(location.search).get("combat") === "realtime" ? "realtime" : "turns" };
   const room: any = choice.bots > 0
-    ? await client.create("world", { mode: "bots", bots: choice.bots, difficulty: choice.difficulty })
-    : await client.joinOrCreate("world", { mode: "friends", bots: 0 });
+    ? await client.create("world", { mode: "bots", bots: choice.bots, difficulty: choice.difficulty, ...combat })
+    : await client.joinOrCreate("world", { mode: "friends", bots: 0, ...combat });
   room.onMessage("letters", on.letters);
   room.onMessage("spelled", on.spelled);
   room.onMessage("refused", on.refused);
@@ -172,6 +179,8 @@ export async function connect(on: Handlers): Promise<Connection> {
   room.onMessage("intel", on.intel);
   room.onMessage("call", on.call);
   room.onMessage("pinged", on.pinged);
+  room.onMessage("battle", on.battle);
+  room.onMessage("battleEvents", on.battleEvents);
   room.onLeave(on.closed);
   room.onDrop(on.dropped);
   // Listening now: the server sends the kits to pick from (or your kit), here and after a reconnect.
@@ -199,6 +208,7 @@ export async function connect(on: Handlers): Promise<Connection> {
     act: (type, payload) => room.send(type, payload),
     ping: (kind, x, y) => room.send("ping", { kind, ...(x !== undefined && y !== undefined ? { x, y } : {}) }),
     pickKit: (step, index) => room.send("kit", { step, index }),
+    battleAct: (move) => room.send("battleAct", { move }),
     watch: (id) => room.send("watch", id ? { id } : null),
     followFight: () => room.send("watch", { fight: true }),
     leave: () => { room.onLeave.clear?.(); void room.leave(true); },

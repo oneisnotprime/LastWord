@@ -13,6 +13,7 @@ import type { FromWorker, ToWorker } from "./art/terrain.worker.js";
 import { dictionary } from "./data.js";
 import { Events } from "./events.js";
 import { KitView } from "./kits.js";
+import { BattleView } from "./battle.js";
 import { Hud, type Aimed } from "./hud.js";
 import { Minimap } from "./minimap.js";
 import { pad, type Pad } from "./pad.js";
@@ -202,6 +203,8 @@ class World extends Phaser.Scene {
   private lastPrompt = 0;
   /** Starting kits: the pick. */
   private kits!: KitView;
+  /** The battle panel (turn-based fork). */
+  private battle!: BattleView;
   /**
    * Controller: a cursor on the map (tiles) moved by the right stick or snapped to a target, the
    * target it is on, when the stick last moved it, and whether LT's inspect card is up.
@@ -245,6 +248,7 @@ class World extends Phaser.Scene {
       this.endAim();
     }, () => { this.net?.leave(); playAgain(); });
     this.kits = new KitView((step, i) => this.net?.pickKit(step, i));
+    this.battle = new BattleView((move) => this.net?.battleAct(move), () => this.hud.openSpell(), () => this.hud.typing);
     // While you pick your kit, toasts are dropped, not kept for later.
     this.hud.quiet = () => this.kits.choosing;
     // Trading: what the trade screen and offer cards send, and the people near enough to trade with.
@@ -308,6 +312,8 @@ class World extends Phaser.Scene {
         threats: (list) => this.threatList.set(list),
         kits: (offer) => this.kits.offer(offer),
         kit: (state) => this.kits.set(state),
+        battle: (sheet) => this.battle.set(sheet),
+        battleEvents: (round) => this.battle.played(round),
         entrance: (e) => this.entrance(e),
         intel: (list) => drawIntel(list),
         call: (c) => callLine(c),

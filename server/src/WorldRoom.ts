@@ -35,8 +35,10 @@ import {
   hatches, knownMaterial,
   statureOf, sizeOf, hitbox, doorProblem, slipsUnder, rideProblem, carries, wobbleDrift, mirrored, isReversed, leashed, LEASH_TILES,
   magnetPull, isMetal, MAGNET_FROM, MAGNET_TILES, luckyChance, trapMissChance, gambleOdds,
+  fighter, startBattle, resolveRound, movesOf, legal, loading, bars, preview, fatigue, eventLine, PLAN_FIRST, PLAN_SECONDS, BOT_ROUND_SECONDS, RESOLVE_SECONDS, ROUND_CAP,
+  STATUS_ROUND_SECONDS, ROUND_SECONDS, DEFEND_SPELL_COST, type Battle, type Fighter, type Action,
 } from "@lastword/shared";
-import { affords, botSettings, chooseWord, currentWordLimit, held, heldUnder, phraseFor, SKILL, wordBook, type BotWord, type Difficulty, type Use } from "./bots.js";
+import { botMove, affords, botSettings, chooseWord, currentWordLimit, held, heldUnder, phraseFor, SKILL, wordBook, type BotWord, type Difficulty, type Use } from "./bots.js";
 import { loadDictionary, loadKits } from "./data.js";
 import { City, Edit, Player, Thing, WorldState, Zone } from "./state.js";
 
@@ -414,6 +416,8 @@ interface Walker {
   picking?: { kits: Kit[]; until: number; step?: number; chosen?: Partial<Kit>; hands?: StarterHand[] };
   /** For a person: the starting kit they picked (PLAN.md "Starting kits"). */
   kit?: PersonKit;
+  /** The battle it is in (shared battle.ts), by its ring's key: pinned there until it ends. */
+  battle?: string;
   /** How fast time runs for it (shared time.ts `timeOf`): its speed, strikes and statuses. */
   time?: number;
   /** The gravity on it (shared space.ts), and how far its shots carry for it. */
@@ -542,6 +546,46 @@ const THING_CELL = 16;
 const thingKey = (x: number, y: number) => Math.floor(x / THING_CELL) * 4096 + Math.floor(y / THING_CELL);
 
 /** What a bot remembers between thoughts. */
+/** How fights between people are resolved: in world ticks, or in battle rounds (shared battle.ts). */
+export type CombatMode = "realtime" | "turns";
+/** Seconds a round waits for people who are all away (the bot mind then plays for them). */
+const AWAY_SECONDS = 3;
+/** The name the Defend discount goes by among a fighter's spelling rules. */
+const DEFEND_WORD = "defend";
+/** What a battle came to, for the bot tournament and the plan's metrics. */
+export interface BattleRecord {
+  word: string; rounds: number; seconds: number; why: string; winner: string; people: number;
+  /** Actions chosen, by kind. */
+  actions: Record<string, number>;
+  fleeTries: number; fleeOk: number;
+  /** Rounds a person let the timer choose, of the rounds people chose in. */
+  timeouts: number; choices: number;
+  spells: string[];
+  /** Seconds each planning phase took. */
+  roundSeconds: number[];
+  /** Heavy blows that came down, and how many of them a Defend dodged. */
+  heavy: number; dodged: number;
+}
+/** A battle in progress, keyed by its ring's area. */
+interface BattleRun {
+  key: string;
+  word: string;
+  battle: Battle;
+  phase: "plan" | "show";
+  /** Room time the phase ends. */
+  deadline: number;
+  planFrom?: number;
+  choices: Map<string, Action>;
+  /** Rounds in a row each person let the timer choose. */
+  idle: Map<string, number>;
+  started: number;
+  /** The ring's challenge was settled (a knock-down, a forfeit, a counter-word): who took it. */
+  settled?: { winner: string | null; why: string };
+  /** Words a bot tried as its move and could not spell. */
+  tried?: Map<string, Set<string>>;
+  record: BattleRecord;
+}
+
 interface BotMind {
   difficulty: Difficulty;
   /** Where it heads in from the storm wall, for which stage (shared round.ts). */
@@ -741,6 +785,13 @@ export class WorldRoom extends Room {
   private markets = new Map<string, { stock: number; at: number; swapped?: Set<string> }>();
   /** Challenges on (shared sport.ts): a duel's ring or a race's flag, by the key of the area that shows it. */
   private challenges = new Map<string, Challenge>();
+  /** How this room's fights between people are resolved (the room option `combat`). */
+  combat: CombatMode = "realtime";
+  /** The default for new rooms: the fork plays in turns; room tests stay in real time unless they ask. COMBAT=realtime overrides. */
+  static combat: CombatMode = process.env.COMBAT === "realtime" || process.env.COMBAT === "turns" ? process.env.COMBAT : process.env.VITEST ? "realtime" : "turns";
+  /** Battles in progress (shared battle.ts), by the key of the ring's area, and every battle that has ended. */
+  private battles = new Map<string, BattleRun>();
+  battleLog: BattleRecord[] = [];
   /** The fish a catch can be (shared sea.ts `fishTable`), worked out once. */
   private fishes: [string, number][] | null = null;
   /** What each thing on the ground is, so it can be picked up again. */
@@ -869,7 +920,7 @@ export class WorldRoom extends Room {
      */
     take: (client: Client, message?: unknown) => {
       const walker = this.walkers.get(client.sessionId);
-      if (!walker) return;
+      if (!walker || this.pinned(client)) return;
       const named = message && typeof message === "object" && typeof (message as { id?: unknown }).id === "string" ? (message as { id: string }).id : null;
       try { this.takeNear(client.sessionId, walker, named); } catch (e) {
         if (!named && this.deposits.siteAt(walker.player.x, walker.player.y, this.elapsed)) return this.startGather(client, walker);
@@ -882,13 +933,13 @@ export class WorldRoom extends Room {
      */
     dismount: (client: Client) => {
       const walker = this.walkers.get(client.sessionId);
-      if (!walker) return;
+      if (!walker || this.pinned(client)) return;
       try { client.send("notice", this.dismountWalker(client.sessionId, walker)); } catch (e) { client.send("refused", (e as Error).message); }
     },
     /** Put down something you carry: the one at `index`, or the last thing equipped. */
     drop: (client: Client, index: unknown) => {
       const walker = this.walkers.get(client.sessionId);
-      if (!walker) return;
+      if (!walker || this.pinned(client)) return;
       const at = Number.isInteger(index) && walker.gear[index as number] ? (index as number) : walker.gear.length - 1;
       const [gear] = walker.gear.splice(at, 1);
       if (!gear) return;
@@ -905,7 +956,7 @@ export class WorldRoom extends Room {
      */
     use: (client: Client, which: unknown) => {
       const walker = this.walkers.get(client.sessionId);
-      if (!walker) return;
+      if (!walker || this.pinned(client)) return;
       try {
         client.send("spelled", this.use(walker, which));
         this.refreshViews();
@@ -1037,6 +1088,8 @@ export class WorldRoom extends Room {
     /** Spend letters to make an object where the player stands. */
     /** A ping (shared comms.ts): { kind, x?, y? }, heard by your side and whoever is in earshot. */
     ping: (client: Client, what: unknown) => this.attempt(client, (id, w) => this.ping(id, w, what)),
+    /** A move in a battle round (shared battle.ts): { move: "attack" | "defend" | "spell" | "flee", target?, text? }. */
+    battleAct: (client: Client, what: unknown) => this.battleAct(client.sessionId, what),
     spell: (client: Client, text: unknown) => {
       const walker = this.walkers.get(client.sessionId);
       const ghost = walker ? undefined : this.ghosts.get(client.sessionId);
@@ -1046,6 +1099,8 @@ export class WorldRoom extends Room {
       }
       if (!walker) return;
       if (walker.picking) return void client.send("refused", "Pick your starting kit first");
+      // In a battle a spelling is the round's move: it is cast when the round resolves.
+      if (walker.battle) return void this.battleAct(client.sessionId, { move: "spell", text });
       try {
         this.spellWord(client.sessionId, walker, text);
       } catch (e) {
@@ -1083,6 +1138,7 @@ export class WorldRoom extends Room {
 
   /** G: starts a gathering try where the walker stands, or says at once why nothing is to be found. */
   private startGather(client: Client, walker: Walker) {
+    if (this.pinned(client)) return;
     if (walker.gathering > 0 || walker.picking) return;
     // Nothing to find here: say so at once rather than after the wait.
     const problem = this.deposits.problem(walker.player.x, walker.player.y, this.elapsed);
@@ -1150,7 +1206,7 @@ export class WorldRoom extends Room {
   /** Runs an action for a client's person (it tells them what happened); a refusal goes back as `refused`. */
   private attempt(client: Client, act: (id: string, w: Walker) => string) {
     const w = this.walkers.get(client.sessionId);
-    if (!w || w.master !== null) return;
+    if (!w || w.master !== null || this.pinned(client)) return;
     try {
       act(client.sessionId, w);
       this.tell(w);
@@ -1214,6 +1270,16 @@ export class WorldRoom extends Room {
       for (const ch of "abcdefghijklmnopqrstuvwxyz") walker.letters[ch] = DEBUG_LETTERS;
       this.sendTo(id, "letters", walker.letters);
       this.sendTo(id, "spelled", `DEBUG: ${DEBUG_LETTERS} of every letter`);
+      return typed;
+    }
+    // A server started with DEBUG=1: "debug near" brings the nearest other person beside you (browser checks of duels and battles).
+    if (debugging() && typed === "debug near") {
+      let best: Walker | null = null, d = Infinity;
+      for (const [oid, o] of this.walkers) if (oid !== id && o.master === null && !o.battle) { const dd = Math.hypot(o.player.x - walker.player.x, o.player.y - walker.player.y); if (dd < d) { d = dd; best = o; } }
+      if (!best) throw new Error("Nobody to bring");
+      best.player.x = walker.player.x + 1; best.player.y = walker.player.y; best.target = null; best.route = [];
+      this.refreshViews();
+      this.sendTo(id, "spelled", `DEBUG: ${best.player.name} is beside you`);
       return typed;
     }
     const deal = readTrade(text);
@@ -1440,6 +1506,9 @@ export class WorldRoom extends Room {
     this.dict = loadDictionary();
     this.kitData = loadKits();
     this.kitsOn = WorldRoom.kits;
+    const asked = (options as { combat?: unknown } | null | undefined)?.combat;
+    this.combat = asked === "realtime" || asked === "turns" ? asked : WorldRoom.combat;
+    this.state.combat = this.combat;
     this.map = generateMap(seed);
     this.placeSources();
     this.startStorm();
@@ -1764,6 +1833,8 @@ export class WorldRoom extends Room {
       // Back mid-pick: the kits again, with the time left; else their kit as it stands.
       if (walker.picking) this.sendKits(client.sessionId, walker);
       else if (walker.kit) this.sendKit(client.sessionId, walker);
+      const run = this.battleOf(walker);
+      if (run) this.sendBattle(run);
     }
     this.refreshViews();
   }
@@ -2100,6 +2171,7 @@ export class WorldRoom extends Room {
       const w = this.walkers.get(id);
       if (!w) { this.bots.delete(id); continue; }
       const every = mind.difficulty === "easy" ? TICK_HZ : TICK_HZ / 2;
+      if (w.battle) continue; // its battle moves are chosen each round (`botBattleMove`)
       if ((this.tickCount + mind.phase) % every === 0) this.thinkBot(id, w, mind);
     }
   }
@@ -6091,10 +6163,10 @@ export class WorldRoom extends Room {
   }
 
   /** Burn, poison and bleeding hurt once a second, and statuses run down. */
-  private sufferStatuses(id: string, w: Walker, seconds: number) {
+  private sufferStatuses(id: string, w: Walker, seconds: number, dotSeconds = seconds) {
     const hurt = w.hamper.untouchable ? null : statusDamage(this.dict, w.statuses); // in stasis nothing hurts
     if (hurt) {
-      w.dot += seconds;
+      w.dot += dotSeconds; // a battle round passes more of a status than it deals (shared battle.ts)
       const longest = Math.max(...w.statuses.map((a) => a.left));
       const before = w.unit.body.integrity;
       for (let n = Math.min(Math.floor(w.dot), Math.ceil(longest)); n > 0 && !w.unit.dead; n--) strike(hurt.attack, w.unit.body, this.rng);
@@ -6545,14 +6617,327 @@ export class WorldRoom extends Room {
       word: phrase.noun, a: { id, staked: mine, dealt: 0 }, b: { id: otherId, staked: theirs, dealt: 0 },
       ring: race ? null : { x: at.x, y: at.y, radius }, flag: race ? { x: at.x, y: at.y } : null, until,
     });
-    const what = race ? `race to the flag ${Math.round(Math.hypot(at.x - mid.x, at.y - mid.y) * TILE_METERS)} m off` : "fight in the ring: blows here cannot kill";
+    // In turns the duel is a battle: the ring holds the two until one is knocked down, runs, or the rounds run out.
+    if (this.combat === "turns" && !race) {
+      const open = this.elapsed + 3600; // the battle's own round cap ends it
+      this.challenges.get(key)!.until = open;
+      this.areas.get(key)!.until = open;
+      this.openBattle(key, phrase.noun, [id, otherId]);
+    }
+    const what = this.combat === "turns" && !race ? "a battle in rounds: blows here cannot kill" : race ? `race to the flag ${Math.round(Math.hypot(at.x - mid.x, at.y - mid.y) * TILE_METERS)} m off` : "fight in the ring: blows here cannot kill";
     this.sendTo(otherId, "notice", `${walker.player.name} challenged you: ${word}! Each staked ${n} letters (${(mine + theirs).length} in the pot); ${what}`);
     return `${word} with ${other.player.name}: ${(mine + theirs).length} letters in the pot; ${what}`;
+  }
+
+  // ---- Turn-based battles (shared battle.ts; docs/TURN_BASED_PLAN.md) ----
+
+  /** The battle a walker is in, if any. */
+  private battleOf(w: Walker | undefined): BattleRun | undefined {
+    return w?.battle ? this.battles.get(w.battle) : undefined;
+  }
+
+  /** Tells a person in a battle that what they tried waits until it is over. True if they are in one. */
+  private pinned(client: Client): boolean {
+    if (!this.walkers.get(client.sessionId)?.battle) return false;
+    client.send("refused", "You are in a battle");
+    return true;
+  }
+
+  /**
+   * Opens a battle between people in a ring on the map (`key`: the ring's area). They are pinned
+   * there: no walking, gathering or real-time blows, and nothing strikes them from outside the ring.
+   */
+  private openBattle(key: string, word: string, ids: string[]) {
+    const fighters = ids.map((id, i) => {
+      const w = this.walkers.get(id)!;
+      w.battle = key;
+      w.target = null; w.route = []; w.routeTo = null; w.foe = null; w.gathering = 0; w.windup = undefined;
+      return fighter(id, w.player.name, i, w.unit, w.speed);
+    });
+    const run: BattleRun = {
+      key, word, battle: startBattle(fighters), phase: "plan", deadline: 0, choices: new Map(), idle: new Map(), started: this.elapsed,
+      record: { word, rounds: 0, seconds: 0, why: "", winner: "", people: ids.filter((id) => !this.allBots.has(id) && !this.bots.has(id)).length, actions: {}, fleeTries: 0, fleeOk: 0, timeouts: 0, choices: 0, spells: [], roundSeconds: [], dodged: 0, heavy: 0 },
+    };
+    this.battles.set(key, run);
+    for (const f of fighters) this.syncFighter(run, f);
+    this.beginPlan(run);
+  }
+
+  /** Reads a fighter's sheet from its walker. False if it no longer stands in the battle. */
+  private syncFighter(run: BattleRun, f: Fighter): boolean {
+    const w = this.walkers.get(f.id);
+    if (!w || w.battle !== run.key) return false;
+    if (run.settled && run.settled.winner !== f.id) return false;
+    f.unit = w.unit;
+    f.speed = w.speed;
+    f.tempo = w.hamper.tempo * Math.max(0.05, w.time ?? 1);
+    f.acts = w.hamper.acts && !w.hamper.flees.length && !w.hamper.untouchable;
+    f.moves = w.hamper.moves && w.hamper.leashedTo === undefined;
+    f.spells = w.hamper.spells;
+    f.aim = moraleAim(w.morale);
+    f.stalled = !!this.strikesWith(w)?.stalled;
+    return true;
+  }
+
+  /** The planning phase of a round begins: bots choose at once, people get the timer. */
+  private beginPlan(run: BattleRun) {
+    const b = run.battle;
+    run.phase = "plan";
+    run.choices.clear();
+    const live = b.fighters.filter((f) => !f.gone);
+    for (const f of live) this.syncFighter(run, f);
+    const people = live.filter((f) => !this.bots.has(f.id));
+    // A person who let the timer run out twice in a row is away: the bot mind plays for them, after a short wait in which they can take over.
+    const here = people.filter((f) => !this.away(run, f.id));
+    run.deadline = this.elapsed + (here.length ? (b.round === 0 ? PLAN_FIRST : PLAN_SECONDS) : people.length ? AWAY_SECONDS : BOT_ROUND_SECONDS);
+    run.planFrom = this.elapsed;
+    for (const f of live) {
+      const mind = this.bots.get(f.id);
+      if (mind) run.choices.set(f.id, this.botBattleMove(run, f, mind.difficulty, mind));
+    }
+    this.sendBattle(run);
+  }
+
+  /** Whether a person has let the timer choose twice in a row. */
+  private away(run: BattleRun, id: string): boolean {
+    return !this.bots.has(id) && (run.idle.get(id) ?? 0) >= 2;
+  }
+
+  /** A bot's choice for the round (bots.ts `botMove`), with a word its rack affords now. */
+  private botBattleMove(run: BattleRun, f: Fighter, difficulty: Difficulty, mind?: BotMind): Action {
+    const w = this.walkers.get(f.id)!;
+    return botMove(run.battle, f, difficulty, this.rng, (need) => this.botBattleWord(run, f, w, difficulty, need, mind));
+  }
+
+  /**
+   * A word a bot would spell as its move: a weapon that does more to its foe than what it holds,
+   * a mend when hurt, armour for a free slot. All from its rack, under the spelling rules on it.
+   */
+  private botBattleWord(run: BattleRun, f: Fighter, w: Walker, difficulty: Difficulty, need: "weapon" | "any", mind?: BotMind): string | null {
+    const have = heldUnder(w.letters, this.speechFor(f.id, w));
+    const book = wordBook(this.dict);
+    const tried = (run.tried ??= new Map()).get(f.id) ?? run.tried.set(f.id, new Set<string>()).get(f.id)!;
+    const ok = (x: BotWord) => !tried.has(x.word) && !(mind?.tried.has(x.word)) && (x.faith ?? 0) <= w.stores.faith;
+    const foe = run.battle.fighters.find((o) => !o.gone && o.side !== f.side);
+    const now = foe ? preview(f.unit.attack, foe.unit).damage : 0;
+    const pick = (use: Use, also: (x: BotWord) => boolean = () => true) => chooseWord(book.byUse.get(use), have, difficulty, this.rng, (x) => ok(x) && also(x));
+    // A weapon that lands more on this foe than what it strikes with now.
+    const better = (x: BotWord) => {
+      if (!foe) return false;
+      try { const s = parsePhrase(this.dict, x.word).stats; return !s.flag("single_use") && preview(s, foe.unit).damage > now * 1.3 + 1; } catch { return false; }
+    };
+    const weapon = pick("weapon", better);
+    if (weapon) return weapon.word;
+    if (need === "weapon") return null;
+    // Hurt: a mend first. Then another layer between it and the blows: armour for a free slot, something to ride.
+    const hurt = w.hp < w.unit.body.stats.num("integrity") * 0.6;
+    const slots = new Set(w.gear.map((g) => this.slotOf(g)));
+    const riding = w.gear.some((g) => g.vehicle);
+    for (const use of [...(hurt ? ["heal"] : []), "armor", ...(riding ? [] : ["mount"])] as Use[]) {
+      const x = pick(use, (y) => use !== "armor" || !slots.has(y.slot));
+      if (x) return x.word;
+    }
+    return null;
+  }
+
+  /** A person's choice for the round: { move: "attack" | "defend" | "spell" | "flee", target?, text? }. */
+  private battleAct(id: string, what: unknown) {
+    const w = this.walkers.get(id), run = this.battleOf(w);
+    if (!w || !run || run.phase !== "plan") return;
+    const m = (what ?? {}) as { move?: unknown; target?: unknown; text?: unknown };
+    const target = typeof m.target === "string" ? m.target : undefined;
+    const action: Action | null = m.move === "attack" ? { kind: "attack", ...(target ? { target } : {}) } : m.move === "defend" ? { kind: "defend" } : m.move === "flee" ? { kind: "flee" }
+      : m.move === "spell" && typeof m.text === "string" ? { kind: "spell", text: m.text, ...(target ? { target } : {}) } : null;
+    if (!action || !legal(run.battle, id, action)) {
+      const why = action ? movesOf(run.battle, id).find((x) => x.id === action.kind)?.why : undefined;
+      return void this.sendTo(id, "refused", why ? `You cannot: ${why}` : "Not a move you can make");
+    }
+    run.choices.set(id, action);
+    run.idle.set(id, 0);
+    this.sendBattle(run);
+  }
+
+  /** Each tick: fighters stay pinned; a round resolves when everyone has chosen or the timer runs out. */
+  private stepBattles() {
+    for (const run of [...this.battles.values()]) {
+      const b = run.battle;
+      const live = b.fighters.filter((f) => !f.gone);
+      // Someone left the round, fell to the world outside (the storm wall), or the ring was called off.
+      const broken = live.some((f) => this.walkers.get(f.id)?.battle !== run.key) || !!run.settled || (this.challenges.size ? !this.challenges.has(run.key) : true);
+      if (broken) { this.closeBattle(run); continue; }
+      for (const f of live) {
+        const w = this.walkers.get(f.id)!;
+        w.target = null; w.foe = null; w.gathering = 0; w.windup = undefined;
+        if (w.route.length) { w.route = []; w.routeTo = null; }
+      }
+      if (run.phase === "show") { if (this.elapsed >= run.deadline) this.beginPlan(run); continue; }
+      const allIn = live.every((f) => run.choices.has(f.id) || this.away(run, f.id));
+      const here = live.some((f) => !this.bots.has(f.id) && !this.away(run, f.id));
+      if (this.elapsed >= run.deadline || (allIn && here)) this.resolveBattle(run);
+    }
+  }
+
+  /** Plays the round: the committed actions through shared `resolveRound`, with the game's own spelling, statuses and kills. */
+  private resolveBattle(run: BattleRun) {
+    const b = run.battle, rec = run.record;
+    const live = b.fighters.filter((f) => !f.gone);
+    for (const f of live) {
+      let chose = run.choices.get(f.id);
+      if (!this.bots.has(f.id)) {
+        rec.choices++;
+        if (!chose) {
+          rec.timeouts++;
+          if (this.away(run, f.id)) run.choices.set(f.id, chose = this.botBattleMove(run, f, "normal"));
+          run.idle.set(f.id, (run.idle.get(f.id) ?? 0) + 1);
+        }
+      }
+      const kind = chose?.kind ?? "defend";
+      rec.actions[kind] = (rec.actions[kind] ?? 0) + 1;
+    }
+    rec.roundSeconds.push(this.elapsed - (run.planFrom ?? this.elapsed));
+    const foeOf = (f: Fighter) => b.fighters.find((o) => !o.gone && o.side !== f.side);
+    const events = resolveRound(b, run.choices, this.rng, {
+      refresh: (f) => this.syncFighter(run, f),
+      spell: (f, text, target) => {
+        const w = this.walkers.get(f.id)!;
+        // Aimed words fall on the foe unless something else was picked, as when attacking on the map.
+        const foe = foeOf(f);
+        w.foe = foe?.id ?? null;
+        w.picked = target && this.walkers.has(target) ? target : null;
+        try {
+          const said = this.spellWord(f.id, w, text);
+          rec.spells.push(text.trim().toLowerCase());
+          const mind = this.bots.get(f.id);
+          if (mind) { mind.spelled++; this.botUsed(mind, "battle word"); }
+          return said;
+        } catch (e) {
+          // A bot does not try a word again that it could not spell here.
+          if (this.bots.has(f.id)) ((run.tried ??= new Map()).get(f.id) ?? run.tried.set(f.id, new Set<string>()).get(f.id)!).add(text.trim().toLowerCase());
+          throw e;
+        } finally { w.foe = null; w.picked = null; }
+      },
+      struck: (by, on, r, attack) => {
+        const striker = this.walkers.get(by.id), foe = this.walkers.get(on.id);
+        if (!striker || !foe) return;
+        const c = this.challenges.get(run.key);
+        if (c && r.hit) (c.a.id === by.id ? c.a : c.b).dealt += r.damage;
+        this.blow(by.id, on.id, r, r.on === foe.unit.body.name ? "" : r.on, attack.num("attack_range") > RANGED_TILES * TILE_METERS);
+        striker.unmasked = this.elapsed + UNMASKED_SECONDS;
+        if (attack.flag("single_use") && striker.unit.weapon) {
+          const spent = striker.unit.weapon; // a grenade is gone once thrown
+          striker.gear = striker.gear.filter((g) => g.spelled !== spent);
+          this.rebuild(striker);
+        }
+        this.settle(on.id, foe);
+        if (foe.unit.dead) this.kill(on.id, by.id);
+        else if (r.hit) {
+          this.hurtWith(foe, inflicts(attack, striker.unit.body.stats), by.id, by.id, true, attack.num("contagion"));
+          if (attack.num("severs") > 0) this.sever(foe, attack.num("severs"));
+        }
+      },
+    });
+    rec.rounds = b.round;
+    for (const e of events) {
+      if (e.kind === "flee") { rec.fleeTries++; if (e.ok) rec.fleeOk++; }
+      if (e.kind === "strike" && e.heavy) { rec.heavy++; if (e.dodged) rec.dodged++; }
+    }
+    // The end of the round: statuses pass (their damage once), and who defended spells cheaper next round.
+    for (const f of b.fighters) {
+      const w = this.walkers.get(f.id);
+      if (!w || w.battle !== run.key) continue;
+      w.speech = (w.speech ?? []).filter((p) => p.word !== DEFEND_WORD);
+      if (f.gone) continue;
+      if (f.defended) w.speech.push({ word: DEFEND_WORD, rule: { ban: "", cost: DEFEND_SPELL_COST, limit: 0, wild: 0, double: "", typos: 0, free: false }, until: Infinity, by: f.id });
+      if (w.statuses.length) this.sufferStatuses(f.id, w, STATUS_ROUND_SECONDS, ROUND_SECONDS);
+      if (!this.walkers.has(f.id) || this.walkers.get(f.id)!.unit.dead) f.gone = "down";
+    }
+    const name = (id: string) => b.fighters.find((f) => f.id === id)?.name.toUpperCase() ?? "?";
+    const lines = events.map((e) => eventLine(e, name));
+    for (const f of b.fighters) this.sendTo(f.id, "battleEvents", { round: b.round, events, lines });
+    if (b.over || run.settled || !this.challenges.has(run.key) || b.fighters.filter((f) => !f.gone).length < 2) return this.closeBattle(run);
+    run.phase = "show";
+    // With a person in it the round is shown before the next; bots go straight on (their round is BOT_ROUND_SECONDS).
+    const people = b.fighters.some((f) => !f.gone && !this.bots.has(f.id));
+    run.deadline = this.elapsed + (people ? RESOLVE_SECONDS : 0);
+    this.sendBattle(run);
+  }
+
+  /** Ends a battle: the ring opens, the duel is settled, whoever ran is put outside it. */
+  private closeBattle(run: BattleRun) {
+    if (!this.battles.has(run.key)) return;
+    const b = run.battle;
+    const fled = b.fighters.filter((f) => f.gone === "fled");
+    const standing = b.fighters.filter((f) => !f.gone && this.walkers.get(f.id)?.battle === run.key);
+    const c = this.challenges.get(run.key);
+    if (c) {
+      // A duel: whoever ran gives up the pot; at the cap whoever landed more takes it; alone in the ring, it is yours.
+      const side = b.over ? b.over.winner : standing.length === 1 ? standing[0]!.side : null;
+      const winner = side === null ? null : b.fighters.find((f) => f.side === side)?.id ?? null;
+      const why = fled.length ? `${fled[0]!.name} ran` : b.over?.why === "cap" ? (winner ? "more blows landed" : "a draw") : b.over ? "knocked down" : winner ? "the other is gone" : "was called off";
+      this.settleChallenge(run.key, c, winner, why);
+    }
+    this.battles.delete(run.key);
+    const winner = run.settled?.winner ?? null;
+    run.record.why = fled.length ? "fled" : b.over?.why ?? (winner ? "down" : "called off");
+    run.record.winner = winner ?? "";
+    run.record.seconds = this.elapsed - run.started;
+    this.battleLog.push(run.record);
+    for (const f of b.fighters) {
+      const w = this.walkers.get(f.id);
+      if (!w || w.battle !== run.key) continue;
+      w.battle = undefined;
+      w.speech = (w.speech ?? []).filter((p) => p.word !== DEFEND_WORD);
+      if (f.gone === "fled") {
+        // Out of the ring, away from whoever is still in it.
+        const other = b.fighters.find((o) => o.side !== f.side);
+        const from = other ? this.walkers.get(other.id) : undefined;
+        if (from) {
+          this.runFrom(w, from.player);
+          const was = { x: w.player.x, y: w.player.y };
+          if (w.target) stepToward(this.map, w.player, w.target, FLEE_TILES * TILE_METERS, 1, w.flying, w.sailing ? SAIL_COST : undefined);
+          if (this.rooms.size) this.bar(w, was);
+          w.target = null;
+        }
+      }
+      this.sendTo(f.id, "battle", {
+        over: { why: run.record.why, won: winner === f.id, draw: winner === null, rounds: b.round, text: winner === null ? (run.record.why === "called off" ? "called off" : "a draw") : winner === f.id ? "you won" : fled.some((x) => x.id === f.id) ? "you ran" : "you lost" },
+      });
+      this.tell(w);
+    }
+    this.refreshViews();
+  }
+
+  /** The battle as one of its fighters sees it: everyone's bars, their own moves, the timer. Never another's committed action. */
+  private sendBattle(run: BattleRun) {
+    const b = run.battle;
+    const sheet = b.fighters.map((f) => {
+      const w = this.walkers.get(f.id);
+      const load = loading(f);
+      return {
+        id: f.id, name: f.name, side: f.side, bars: bars(f.unit), gone: f.gone ?? "", ready: run.choices.has(f.id),
+        statuses: (w?.statuses ?? []).map((a) => ({ status: a.status, rounds: Math.max(1, Math.ceil(a.left / STATUS_ROUND_SECONDS)) })),
+        weapon: (f.unit.riding && f.unit.attack === f.unit.riding.stats ? f.unit.riding.name : f.unit.weapon?.noun ?? "fist").toUpperCase(),
+        load: Number.isFinite(load.need) && load.need > 1 ? `${load.have}/${load.need}` : "",
+        windup: f.windup?.on ?? "", speed: Math.round(f.speed * 10) / 10,
+      };
+    });
+    const c = this.challenges.get(run.key);
+    for (const f of b.fighters) {
+      if (f.gone || this.bots.has(f.id)) continue;
+      const mine = run.choices.get(f.id);
+      this.sendTo(f.id, "battle", {
+        word: run.word.toUpperCase(), round: b.round + (run.phase === "plan" ? 1 : 0), cap: ROUND_CAP, phase: run.phase, left: Math.max(0, Math.round((run.deadline - this.elapsed) * 10) / 10),
+        you: f.id, fighters: sheet, moves: movesOf(b, f.id), chosen: mine ? (mine.kind === "spell" ? `spell ${mine.text.toUpperCase()}` : mine.kind) : "",
+        pot: c ? pot(c).length : 0, fatigue: fatigue(b.round + 1),
+      });
+    }
   }
 
   /** A challenge ends: the winner takes the pot, or with none each gets their stake back. */
   private settleChallenge(key: string, c: Challenge, winner: string | null, why: string) {
     this.challenges.delete(key);
+    const run = this.battles.get(key);
+    if (run) run.settled = { winner, why };
     if (this.areas.has(key)) { this.areas.delete(key); this.state.zones.delete(key); }
     const word = c.word.toUpperCase();
     for (const side of [c.a, c.b]) {
@@ -8086,6 +8471,7 @@ export class WorldRoom extends Room {
     const started = performance.now();
     this.elapsed += seconds;
     this.routesLeft = ROUTES_PER_TICK;
+    if (this.battles.size) this.stepBattles();
     if (this.weather && this.elapsed >= this.weather.until) {
       this.clearWeather();
       for (const w of this.walkers.values()) this.rebuild(w);
@@ -8106,7 +8492,7 @@ export class WorldRoom extends Room {
       if (w.target && w.hamper.moves && (w.route.length || w.flying || this.routesLeft > 0 || this.steered(w))) this.walk(w, seconds);
     }
     this.tether(seconds);
-    for (const [id, w] of [...this.walkers]) if (w.statuses.length && this.walkers.has(id)) this.sufferStatuses(id, w, seconds);
+    for (const [id, w] of [...this.walkers]) if (w.statuses.length && !w.battle && this.walkers.has(id)) this.sufferStatuses(id, w, seconds);
     for (const [key, a] of [...this.areas]) this.burn(key, a, seconds);
     // Traps spring five times a second (shared crime.ts).
     if (this.traps.size && this.tickCount % 2 === 0) this.springTraps();
@@ -8129,6 +8515,8 @@ export class WorldRoom extends Room {
       if (w.windup && (w.windup.on !== foeId || !w.hamper.acts)) w.windup = undefined; // turned away, or stopped: the blow is lost
       if (!foeId || !this.walkers.has(id)) continue;
       const foe = this.walkers.get(foeId);
+      // A battle (shared battle.ts): its fighters strike only in its rounds, and nothing outside the ring strikes them.
+      if (w.battle || foe?.battle) { w.foe = null; continue; }
       const thing = foe ? undefined : this.state.things.get(foeId);
       // A walk-in building is struck at its door from outside (shared interior.ts).
       const room = thing ? this.rooms.get(foeId) : undefined;

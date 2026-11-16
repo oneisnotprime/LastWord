@@ -1,4 +1,4 @@
-import { destroyed, spawn, strike, type Entity, type Strike } from "./combat.js";
+import { destroyed, spawn, strike, type Entity, type Strike, type StrikeHow } from "./combat.js";
 import type { Dictionary } from "./dictionary.js";
 import type { Rng } from "./rng.js";
 import { massed, resolve, type Stats } from "./stats.js";
@@ -232,7 +232,7 @@ function armed(weapon: Stats | null, body: Stats): Stats {
 }
 
 /** One strike from one unit on another's outermost layer. `aim` multiplies its accuracy (a shaken striker's is halved). */
-export function strikeUnit(attacker: Unit, defender: Unit, rng: Rng, aim = 1): Strike & { on: string } {
+export function strikeUnit(attacker: Unit, defender: Unit, rng: Rng, aim = 1, how?: StrikeHow): Strike & { on: string; broke?: string[] } {
   // Someone who cannot be targeted cannot be hit through their armor either.
   if (defender.body.stats.flag("untargetable")) return { hit: false, critical: false, damage: 0, byType: {}, on: defender.body.name };
   let attack = attacker.attack;
@@ -240,7 +240,7 @@ export function strikeUnit(attacker: Unit, defender: Unit, rng: Rng, aim = 1): S
     attack = attack.clone();
     attack.apply([["accuracy", "mul", aim]]);
   }
-  return strikeLayers(attack, defender, rng);
+  return strikeLayers(attack, defender, rng, how);
 }
 
 /**
@@ -248,9 +248,9 @@ export function strikeUnit(attacker: Unit, defender: Unit, rng: Rng, aim = 1): S
  * goes on to the next, and so on to the body. `damage` is the sum; `on` names the innermost layer
  * it reached, and `layers` every layer it broke on the way.
  */
-export function strikeLayers(attack: Stats, defender: Unit, rng: Rng): Strike & { on: string; broke: string[] } {
+export function strikeLayers(attack: Stats, defender: Unit, rng: Rng, how?: StrikeHow): Strike & { on: string; broke: string[] } {
   let target = defender.outer;
-  const first = strike(attack, target, rng);
+  const first = strike(attack, target, rng, how);
   const out = { ...first, on: target.name, broke: [] as string[] };
   let carry = first.carry ?? 0;
   while (carry > 0 && target !== defender.body) {
@@ -262,7 +262,7 @@ export function strikeLayers(attack: Stats, defender: Unit, rng: Rng): Strike & 
     rest.apply(rest.entries().filter(([id]) => id.startsWith("dmg_")).map(([id]) => [id, "mul", carry]));
     rest.set("accuracy", "ABS"); // it already landed
     rest.set("critical", 0);
-    const r = strike(rest, target, rng);
+    const r = strike(rest, target, rng, how?.pace !== undefined ? { pace: how.pace } : undefined);
     out.damage += r.damage;
     for (const [k, v] of Object.entries(r.byType)) out.byType[k] = (out.byType[k] ?? 0) + v;
     out.on = target.name;
