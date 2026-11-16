@@ -626,7 +626,8 @@ export function botMove(b: Battle, f: Fighter, difficulty: Difficulty, rng: () =
   const body = f.unit.body, share = body.integrity / Math.max(1, body.stats.num("integrity"));
   const flee = moves.find((m) => m.id === "flee");
   if (share < skill.flee && flee?.legal && (flee.chance ?? 0) >= 0.4 && f.unit.outer === body) return { kind: "flee" };
-  if (!useful) return spell("weapon") ?? (can("defend") ? { kind: "defend" } : { kind: "attack" });
+  // Its blows do nothing to this foe: a weapon that does, else away while it can, else behind its guard.
+  if (!useful) return spell("weapon") ?? (flee?.legal && (flee.chance ?? 0) >= 0.3 && share < 0.9 ? { kind: "flee" } : can("defend") ? { kind: "defend" } : { kind: "attack" });
   if (!ready) return (rng() < skill.systems ? spell("any") : null) ?? (can("defend") ? { kind: "defend" } : { kind: "attack" });
   if (difficulty === "hard" && foe) {
     // The blow it would take against the one it would give: wait behind its guard for a loading foe's shot.

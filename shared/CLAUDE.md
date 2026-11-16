@@ -326,3 +326,5 @@ server and the client import this, so anything here must give the same answer on
   round, and misses a defender. `BattleHooks` (`refresh`, `spell`, `struck`) is how the server plugs in the
   real spelling, statuses and kills. combat.ts `StrikeHow` (`pace`, `block`) is passed through `strike`,
   `strikeLayers` and `strikeUnit` for Defend and fatigue.
+  Engagement (MVP batch 4): ENGAGE_TILES, ENGAGE_SECONDS, ENGAGE_RETRY, `engageReach`, BATTLE_REST,
+  REMATCH_SECONDS, SECOND_WIND, RING_TILES, FLEE_LETTERS.

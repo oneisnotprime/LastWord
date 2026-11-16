@@ -208,3 +208,147 @@ it("realtime: the same room option keeps the old duel, with no battle", async ()
   expect(said("a", "spelled").at(-1)).toMatch(/fight in the ring: blows here cannot kill/);
   expect(said("a", "battle")).toHaveLength(0);
 });
+
+/** Two people a few tiles apart with every letter, in a room that fights in turns. */
+async function pair(gap = 3, seed = 78) {
+  WorldRoom.testSeed = seed;
+  const room = (await colyseus.createRoom("world", { combat: "turns" })) as unknown as WorldRoom;
+  const a: any = await colyseus.connectTo(room as never);
+  const b: any = await colyseus.connectTo(room as never);
+  const inbox: Record<string, [string, any][]> = { a: [], b: [] };
+  for (const t of [...MESSAGES, "windups", "dead"]) { a.onMessage(t, (m: unknown) => inbox.a!.push([t, m])); b.onMessage(t, (m: unknown) => inbox.b!.push([t, m])); }
+  const any = room as any;
+  const wa = any.walkers.get(a.sessionId), wb = any.walkers.get(b.sessionId);
+  const c = room.map.cities[0]!;
+  for (const w of [wa, wb]) { w.letters = all(); room.rebuild(w); }
+  wa.player.x = c.x + 0.5; wa.player.y = c.y + 0.5;
+  wb.player.x = c.x + 0.5 + gap; wb.player.y = c.y + 0.5;
+  any.refreshViews();
+  const said = (who: "a" | "b", type: string) => inbox[who]!.filter(([t]) => t === type).map(([, m]) => m);
+  const seconds = (n: number) => { for (let i = 0; i < Math.round(n * 10); i++) room.update(0.1); };
+  const round = async (ma: unknown, mb: unknown) => {
+    if (ma) a.send("battleAct", ma);
+    if (mb) b.send("battleAct", mb);
+    await wait(); room.update(0.1); await wait(60);
+    return said("a", "battleEvents").at(-1) as { round: number; events: any[]; lines: string[] };
+  };
+  const next = async () => { seconds(RESOLVE_SECONDS + 0.2); await wait(60); };
+  return { room, any, a, b, wa, wb, said, seconds, round, next, battles: any.battles as Map<string, any> };
+}
+
+it("turns: going for a person winds up for two seconds, then pins both in a ring: a battle to the death", async () => {
+  const { room, any, a, b, wa, wb, said, seconds, round, next, battles } = await pair(1);
+  a.send("attack", b.sessionId); await wait();
+  seconds(1); await wait();
+  // No blow in real time: the wind-up is shown to the target, who is told.
+  expect(wb.hp).toBe(100);
+  expect(battles.size).toBe(0);
+  expect(said("b", "windups").flat().some((w: any) => w.on === b.sessionId && w.seconds === 2)).toBe(true);
+  expect(said("b", "notice").join("|")).toMatch(/is closing in: run or fight/);
+  seconds(1.3); await wait();
+  expect(battles.size).toBe(1);
+  const run = [...battles.values()][0];
+  expect(run.duel).toBe(false);
+  expect(any.areas.get(run.key)).toMatchObject({ word: "battle", radius: 4 });
+  expect(room.state.zones.has(run.key)).toBe(true); // everyone in sight sees the ring
+  expect(said("b", "battle").at(-1)).toMatchObject({ word: "BATTLE", round: 1, lethal: true, pot: 0 });
+  // To the death: the loser is out of the round, the winner gets a second wind and the letters.
+  wb.hp = 12; room.rebuild(wb);
+  wa.hp = 40; room.rebuild(wa);
+  await round({ move: "spell", text: "sword" }, { move: "defend" }); await next();
+  let last: any;
+  for (let i = 0; i < 12 && battles.size; i++) { wa.unit.body.stats.set("accuracy", "ABS"); last = await round({ move: "attack" }, { move: "attack" }); if (battles.size) await next(); }
+  expect(battles.size).toBe(0);
+  expect(last.events.map((e: any) => e.kind)).toContain("down");
+  expect(any.walkers.has(b.sessionId)).toBe(false);
+  expect(said("b", "dead")).toHaveLength(1);
+  expect(wa.hp).toBeGreaterThanOrEqual(40 + 25 - 12); // a quarter of the body back, less what B landed
+  expect(wa.battle).toBeUndefined();
+  expect(room.state.zones.has(run.key)).toBe(false);
+  expect(room.battleLog[0]).toMatchObject({ word: "battle", duel: false, why: "down", winner: a.sessionId });
+  expect(said("a", "battle").at(-1).over.text).toBe("you won");
+});
+
+it("turns: the target can run from the wind-up; then the attacker must wait to try again", async () => {
+  const { any, a, b, wa, wb, said, seconds, battles } = await pair(1);
+  a.send("attack", b.sessionId); await wait();
+  seconds(0.5);
+  expect(wa.engage).toMatchObject({ on: b.sessionId });
+  wb.player.x += 9; // away, faster than A can follow
+  wa.speed = 0.01;
+  seconds(2); await wait();
+  expect(battles.size).toBe(0);
+  expect(wa.foe).toBeNull();
+  expect(said("a", "refused").at(-1)).toMatch(/got away/);
+  expect(said("b", "notice").join("|")).toMatch(/You got away/);
+  wb.player.x = wa.player.x + 1; wa.speed = 8;
+  a.send("attack", b.sessionId); await wait(); seconds(0.3); await wait();
+  expect(said("a", "refused").at(-1)).toMatch(/cannot be engaged for \d+ s/);
+  expect(battles.size).toBe(0);
+  seconds(10.5);
+  a.send("attack", b.sessionId); await wait(); seconds(2.5);
+  expect(battles.size).toBe(1);
+  expect(any.walkers.get(b.sessionId).battle).toBeTruthy();
+});
+
+it("turns: fleeing a battle leaves two letters behind and both rest; nothing outside the ring strikes a fighter; TRUCE calls a battle off", async () => {
+  const { room, any, a, b, wa, wb, said, seconds, round, next, battles } = await pair(1);
+  a.send("attack", b.sessionId); await wait(); seconds(2.4); await wait();
+  expect(battles.size).toBe(1);
+  // A creature of nobody's fighters, set on B: its blows do not land.
+  any.spellWord(a.sessionId, Object.assign(wa, {}), "debug");
+  const wolf = any.addCreature({ spelled: { noun: "wolf" }, phrase: "wolf", vehicle: false, integrity: null }, "-", wb.player.x + 0.5, wb.player.y);
+  const beast = any.walkers.get(wolf) ?? [...any.walkers.values()].find((w: any) => w.body?.noun === "wolf");
+  beast.foe = b.sessionId;
+  const hp = wb.hp;
+  seconds(3);
+  expect(wb.hp).toBe(hp);
+  expect(beast.foe).toBeNull();
+  for (const [id, w] of [...any.walkers]) if (w.master !== null) any.walkers.delete(id), room.state.players.delete(id); // the beast goes: the rest is about the two
+  // B runs.
+  wb.speed = 40;
+  const before = count(wb.letters), mine = count(wa.letters);
+  let r = await round({ move: "defend" }, { move: "flee" });
+  for (let i = 0; i < 5 && battles.size; i++) { await next(); wb.speed = 40; r = await round({ move: "defend" }, { move: "flee" }); }
+  expect(r.events).toContainEqual(expect.objectContaining({ kind: "flee", ok: true }));
+  expect(battles.size).toBe(0);
+  expect(count(wb.letters)).toBe(before - 2);
+  expect(count(wa.letters)).toBeGreaterThanOrEqual(mine + 2);
+  expect(wb.rested).toBeGreaterThan(any.elapsed + 15);
+  expect(room.battleLog[0]).toMatchObject({ why: "fled", duel: false });
+  // Resting: A cannot engage B again yet.
+  wb.player.x = wa.player.x + 1; wb.player.y = wa.player.y;
+  a.send("attack", b.sessionId); await wait(); seconds(0.3); await wait();
+  expect(said("a", "refused").at(-1)).toMatch(/cannot be engaged/);
+  // After the rematch time a new battle; a TRUCE spelled as a move counters BATTLE: the ring goes, nobody won.
+  seconds(61);
+  wb.player.x = wa.player.x + 1; wb.player.y = wa.player.y;
+  a.send("attack", b.sessionId); await wait(); seconds(2.5); await wait();
+  expect(battles.size).toBe(1);
+  await round({ move: "defend" }, { move: "spell", text: "truce" });
+  seconds(0.2); await wait();
+  expect(battles.size).toBe(0);
+  expect(room.battleLog.at(-1)).toMatchObject({ why: "called off", winner: "" });
+  expect(any.walkers.has(a.sessionId) && any.walkers.has(b.sessionId)).toBe(true);
+});
+
+it("turns: bots engage each other and fight battles to the death through the same code", async () => {
+  WorldRoom.testSeed = 92;
+  const room = (await colyseus.createRoom("world", { combat: "turns", bots: 2, difficulty: "normal" })) as unknown as WorldRoom;
+  const any = room as any;
+  const [x, y] = [...any.bots.keys()] as string[];
+  const wx = any.walkers.get(x), wy = any.walkers.get(y);
+  const c = room.map.cities[0]!;
+  wx.letters = all(); wy.letters = all();
+  wx.player.x = c.x + 0.5; wx.player.y = c.y + 0.5; wy.player.x = c.x + 2.5; wy.player.y = c.y + 0.5;
+  any.spellWord(x, wx, "sword"); any.spellWord(y, wy, "club");
+  for (const m of any.bots.values()) m.peaceUntil = 0;
+  wx.foe = y;
+  let ticks = 0;
+  while (!room.battleLog.length && ticks < 1500) { room.update(0.1); ticks++; if (!any.battles.size && any.walkers.has(x) && any.walkers.has(y) && !wx.foe) wx.foe = y; }
+  expect(room.battleLog.length).toBeGreaterThan(0);
+  const rec = room.battleLog[0]!;
+  expect(rec).toMatchObject({ word: "battle", duel: false, people: 0 });
+  expect(["down", "fled", "cap"]).toContain(rec.why);
+  if (rec.why === "down") expect(any.walkers.has(x) && any.walkers.has(y)).toBe(false);
+});

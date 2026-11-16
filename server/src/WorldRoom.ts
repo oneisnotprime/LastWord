@@ -37,6 +37,7 @@ import {
   magnetPull, isMetal, MAGNET_FROM, MAGNET_TILES, luckyChance, trapMissChance, gambleOdds,
   fighter, startBattle, resolveRound, movesOf, legal, loading, bars, preview, fatigue, eventLine, PLAN_FIRST, PLAN_SECONDS, BOT_ROUND_SECONDS, RESOLVE_SECONDS, ROUND_CAP,
   STATUS_ROUND_SECONDS, ROUND_SECONDS, DEFEND_SPELL_COST, type Battle, type Fighter, type Action,
+  aimOf, ENGAGE_TILES, ENGAGE_SECONDS, ENGAGE_RETRY, BATTLE_REST, REMATCH_SECONDS, SECOND_WIND, RING_TILES, FLEE_LETTERS, engageReach,
 } from "@lastword/shared";
 import { botMove, affords, botSettings, chooseWord, currentWordLimit, held, heldUnder, phraseFor, SKILL, wordBook, type BotWord, type Difficulty, type Use } from "./bots.js";
 import { loadDictionary, loadKits } from "./data.js";
@@ -418,6 +419,11 @@ interface Walker {
   kit?: PersonKit;
   /** The battle it is in (shared battle.ts), by its ring's key: pinned there until it ends. */
   battle?: string;
+  /** For a person closing on another to start a battle: on whom, and the room time the wind-up ends. */
+  engage?: { on: string; at: number };
+  /** Room time until which nobody can engage it (it just left a battle), and until when each opponent cannot (a rematch, or one that got away). */
+  rested?: number;
+  rematch?: Map<string, number>;
   /** How fast time runs for it (shared time.ts `timeOf`): its speed, strikes and statuses. */
   time?: number;
   /** The gravity on it (shared space.ts), and how far its shots carry for it. */
@@ -550,11 +556,13 @@ const thingKey = (x: number, y: number) => Math.floor(x / THING_CELL) * 4096 + M
 export type CombatMode = "realtime" | "turns";
 /** Seconds a round waits for people who are all away (the bot mind then plays for them). */
 const AWAY_SECONDS = 3;
+/** The word a battle's ring goes by on the map: whatever counters it (TRUCE, ARMISTICE) calls the battle off. */
+const BATTLE_WORD = "battle";
 /** The name the Defend discount goes by among a fighter's spelling rules. */
 const DEFEND_WORD = "defend";
 /** What a battle came to, for the bot tournament and the plan's metrics. */
 export interface BattleRecord {
-  word: string; rounds: number; seconds: number; why: string; winner: string; people: number;
+  word: string; duel: boolean; rounds: number; seconds: number; why: string; winner: string; people: number;
   /** Actions chosen, by kind. */
   actions: Record<string, number>;
   fleeTries: number; fleeOk: number;
@@ -565,6 +573,8 @@ export interface BattleRecord {
   roundSeconds: number[];
   /** Heavy blows that came down, and how many of them a Defend dodged. */
   heavy: number; dodged: number;
+  /** Blows struck, and how many of them hit and took nothing off (armour, a resisting nature). */
+  blows: number; nothing: number;
 }
 /** A battle in progress, keyed by its ring's area. */
 interface BattleRun {
@@ -579,6 +589,8 @@ interface BattleRun {
   /** Rounds in a row each person let the timer choose. */
   idle: Map<string, number>;
   started: number;
+  /** A duel (a `challenge` ring: blows cannot kill, the pot is at stake), not a fight to the death. */
+  duel: boolean;
   /** The ring's challenge was settled (a knock-down, a forfeit, a counter-word): who took it. */
   settled?: { winner: string | null; why: string };
   /** Words a bot tried as its move and could not spell. */
@@ -6647,20 +6659,72 @@ export class WorldRoom extends Room {
    * Opens a battle between people in a ring on the map (`key`: the ring's area). They are pinned
    * there: no walking, gathering or real-time blows, and nothing strikes them from outside the ring.
    */
-  private openBattle(key: string, word: string, ids: string[]) {
+  private openBattle(key: string, word: string, ids: string[], duel = true) {
     const fighters = ids.map((id, i) => {
       const w = this.walkers.get(id)!;
       w.battle = key;
-      w.target = null; w.route = []; w.routeTo = null; w.foe = null; w.gathering = 0; w.windup = undefined;
+      w.target = null; w.route = []; w.routeTo = null; w.foe = null; w.gathering = 0; w.windup = undefined; w.engage = undefined;
       return fighter(id, w.player.name, i, w.unit, w.speed);
     });
     const run: BattleRun = {
-      key, word, battle: startBattle(fighters), phase: "plan", deadline: 0, choices: new Map(), idle: new Map(), started: this.elapsed,
-      record: { word, rounds: 0, seconds: 0, why: "", winner: "", people: ids.filter((id) => !this.allBots.has(id) && !this.bots.has(id)).length, actions: {}, fleeTries: 0, fleeOk: 0, timeouts: 0, choices: 0, spells: [], roundSeconds: [], dodged: 0, heavy: 0 },
+      key, word, duel, battle: startBattle(fighters), phase: "plan", deadline: 0, choices: new Map(), idle: new Map(), started: this.elapsed,
+      record: { word, duel, rounds: 0, seconds: 0, why: "", winner: "", people: ids.filter((id) => !this.allBots.has(id) && !this.bots.has(id)).length, actions: {}, fleeTries: 0, fleeOk: 0, timeouts: 0, choices: 0, spells: [], roundSeconds: [], dodged: 0, heavy: 0, blows: 0, nothing: 0 },
     };
     this.battles.set(key, run);
     for (const f of fighters) this.syncFighter(run, f);
     this.beginPlan(run);
+  }
+
+  /**
+   * A person closing on another person to fight (plan 1.1, shared battle.ts): within reach the engage
+   * wind-up starts, shown to the target as a closing ring; they may run. If they are still within
+   * ENGAGE_TILES when it ends the two are pinned in a ring and the battle begins; if not, the
+   * attacker cannot try them again for ENGAGE_RETRY seconds. Someone who cannot see the attacker
+   * coming gets no wind-up. Nobody is engaged while they rest from a battle.
+   */
+  private engageFoe(id: string, w: Walker, foeId: string, foe: Walker) {
+    const now = this.elapsed;
+    const leave = (why: string, until: number) => {
+      w.foe = null; w.engage = undefined;
+      const mind = this.bots.get(id);
+      if (mind) (mind.futile ??= new Map()).set(foeId, until); // a bot looks elsewhere meanwhile
+      else this.sendTo(id, "refused", why);
+    };
+    if (foe.picking) return leave(`${foe.player.name} is not in the round yet`, now + 5);
+    const barred = Math.max(foe.rested ?? 0, foe.rematch?.get(id) ?? 0, w.rematch?.get(foeId) ?? 0);
+    if (barred > now) return leave(`${foe.player.name} cannot be engaged for ${Math.ceil(barred - now)} s`, barred);
+    const d = Math.hypot(foe.player.x - w.player.x, foe.player.y - w.player.y);
+    if (!w.engage) {
+      const attack = w.unit.attack;
+      const range = attack.num("attack_range") > 5 ? attack.num("attack_range") * (w.range ?? 1) : attack.num("attack_range");
+      if (d > engageReach(Math.min(range, Math.max(1.5, w.sight) * TILE_METERS), TILE_METERS)) { w.target = { x: foe.player.x, y: foe.player.y }; return; }
+      // An ambush: the target cannot see them coming, so there is nothing to run from.
+      const ambush = !foe.seen.has(id) && !this.bots.has(foeId);
+      w.engage = { on: foeId, at: now + (ambush ? 0 : ENGAGE_SECONDS) };
+      if (!ambush) {
+        this.windups.push({ by: id, on: foeId, x: foe.player.x, y: foe.player.y, seconds: ENGAGE_SECONDS });
+        this.sendTo(foeId, "notice", `${w.player.name} is closing in: run or fight`);
+      }
+    }
+    if (now < w.engage.at) { w.target = d > 1.5 ? { x: foe.player.x, y: foe.player.y } : null; return; }
+    w.engage = undefined;
+    w.target = null;
+    if (d > ENGAGE_TILES || foe.hamper.untouchable) {
+      (w.rematch ??= new Map()).set(foeId, now + ENGAGE_RETRY);
+      this.sendTo(foeId, "notice", `You got away from ${w.player.name}`);
+      return leave(`${foe.player.name} got away`, now + ENGAGE_RETRY);
+    }
+    // The ring: a real place on the map, between the two. A word that counters BATTLE (a TRUCE) calls it off.
+    const mid = { x: (w.player.x + foe.player.x) / 2, y: (w.player.y + foe.player.y) / 2 };
+    const until = now + 3600; // the round cap ends it
+    const key = this.addArea({
+      word: BATTLE_WORD, owner: id, x: mid.x, y: mid.y, radius: RING_TILES, until, attack: null, cooldown: 0, friendlyFire: false, spread: 0,
+      effect: null, targets: "all", follows: null, ...AREA_DEFAULTS, baseRadius: RING_TILES, lasts: 3600,
+    }, true);
+    w.rested = 0; // going for someone gives up your own rest
+    w.unmasked = now + UNMASKED_SECONDS;
+    this.openBattle(key, BATTLE_WORD, [id, foeId], false);
+    this.sendTo(foeId, "notice", `${w.player.name} engaged you: a battle`);
   }
 
   /** Reads a fighter's sheet from its walker. False if it no longer stands in the battle. */
@@ -6733,7 +6797,8 @@ export class WorldRoom extends Room {
     const hurt = w.hp < w.unit.body.stats.num("integrity") * 0.6;
     const slots = new Set(w.gear.map((g) => this.slotOf(g)));
     const riding = w.gear.some((g) => g.vehicle);
-    for (const use of [...(hurt ? ["heal"] : []), "armor", ...(riding ? [] : ["mount"])] as Use[]) {
+    // Then something on the foe (a hex), or on itself (a boost).
+    for (const use of [...(hurt ? ["heal"] : []), "armor", ...(riding ? [] : ["mount"]), ...(difficulty === "easy" ? [] : ["hex", "boost"])] as Use[]) {
       const x = pick(use, (y) => use !== "armor" || !slots.has(y.slot));
       if (x) return x.word;
     }
@@ -6763,7 +6828,8 @@ export class WorldRoom extends Room {
       const b = run.battle;
       const live = b.fighters.filter((f) => !f.gone);
       // Someone left the round, fell to the world outside (the storm wall), or the ring was called off.
-      const broken = live.some((f) => this.walkers.get(f.id)?.battle !== run.key) || !!run.settled || (this.challenges.size ? !this.challenges.has(run.key) : true);
+      // A word that counters the ring's (TRUCE on a BATTLE, FOUL on a DUEL) takes the ring away: the battle is called off.
+      const broken = live.length < 2 || live.some((f) => this.walkers.get(f.id)?.battle !== run.key) || !!run.settled || (run.duel ? !this.challenges.has(run.key) : !this.areas.has(run.key));
       if (broken) { this.closeBattle(run); continue; }
       for (const f of live) {
         const w = this.walkers.get(f.id)!;
@@ -6803,7 +6869,17 @@ export class WorldRoom extends Room {
         // Aimed words fall on the foe unless something else was picked, as when attacking on the map.
         const foe = foeOf(f);
         w.foe = foe?.id ?? null;
-        w.picked = target && this.walkers.has(target) ? target : null;
+        // A word that must be pointed at someone and was not: at the foe if it harms, else at its speller.
+        let on = target && this.walkers.has(target) ? target : null;
+        if (!on) {
+          try {
+            const p = parsePhrase(this.dict, text);
+            if (aimOf(p)) on = foe && (hasDamage(p.stats) || inflicts(p.stats).length > 0 || p.stats.num("letter_steal") > 0) ? foe.id : f.id;
+          } catch { /* the spelling says why */ }
+        }
+        w.picked = on;
+        const at = on ? this.walkers.get(on) : undefined;
+        w.aim = at && on !== f.id ? { x: at.player.x, y: at.player.y } : null;
         try {
           const said = this.spellWord(f.id, w, text);
           rec.spells.push(text.trim().toLowerCase());
@@ -6814,7 +6890,7 @@ export class WorldRoom extends Room {
           // A bot does not try a word again that it could not spell here.
           if (this.bots.has(f.id)) ((run.tried ??= new Map()).get(f.id) ?? run.tried.set(f.id, new Set<string>()).get(f.id)!).add(text.trim().toLowerCase());
           throw e;
-        } finally { w.foe = null; w.picked = null; }
+        } finally { w.foe = null; w.picked = null; w.aim = null; }
       },
       struck: (by, on, r, attack) => {
         const striker = this.walkers.get(by.id), foe = this.walkers.get(on.id);
@@ -6840,6 +6916,7 @@ export class WorldRoom extends Room {
     for (const e of events) {
       if (e.kind === "flee") { rec.fleeTries++; if (e.ok) rec.fleeOk++; }
       if (e.kind === "strike" && e.heavy) { rec.heavy++; if (e.dodged) rec.dodged++; }
+      if (e.kind === "strike" && !e.dodged) { rec.blows++; if (e.hit && e.damage <= 0) rec.nothing++; }
     }
     // The end of the round: statuses pass (their damage once), and who defended spells cheaper next round.
     for (const f of b.fighters) {
@@ -6854,7 +6931,7 @@ export class WorldRoom extends Room {
     const name = (id: string) => b.fighters.find((f) => f.id === id)?.name.toUpperCase() ?? "?";
     const lines = events.map((e) => eventLine(e, name));
     for (const f of b.fighters) this.sendTo(f.id, "battleEvents", { round: b.round, events, lines });
-    if (b.over || run.settled || !this.challenges.has(run.key) || b.fighters.filter((f) => !f.gone).length < 2) return this.closeBattle(run);
+    if (b.over || run.settled || (run.duel ? !this.challenges.has(run.key) : !this.areas.has(run.key)) || b.fighters.filter((f) => !f.gone).length < 2) return this.closeBattle(run);
     run.phase = "show";
     // With a person in it the round is shown before the next; bots go straight on (their round is BOT_ROUND_SECONDS).
     const people = b.fighters.some((f) => !f.gone && !this.bots.has(f.id));
@@ -6877,16 +6954,36 @@ export class WorldRoom extends Room {
       this.settleChallenge(run.key, c, winner, why);
     }
     this.battles.delete(run.key);
-    const winner = run.settled?.winner ?? null;
+    // A fight to the death: whoever is left standing alone has won it.
+    const side = b.over ? b.over.winner : standing.length === 1 ? standing[0]!.side : null;
+    const winner = run.duel ? run.settled?.winner ?? null : side === null ? null : b.fighters.find((f) => f.side === side && this.walkers.has(f.id))?.id ?? null;
     run.record.why = fled.length ? "fled" : b.over?.why ?? (winner ? "down" : "called off");
     run.record.winner = winner ?? "";
     run.record.seconds = this.elapsed - run.started;
     this.battleLog.push(run.record);
+    if (!run.duel && this.areas.has(run.key)) { this.areas.delete(run.key); this.state.zones.delete(run.key); }
+    const left = b.fighters.filter((f) => this.walkers.get(f.id)?.battle === run.key);
     for (const f of b.fighters) {
       const w = this.walkers.get(f.id);
       if (!w || w.battle !== run.key) continue;
       w.battle = undefined;
       w.speech = (w.speech ?? []).filter((p) => p.word !== DEFEND_WORD);
+      if (!run.duel) {
+        // Out alive: nobody can engage them for a while, and not the same opponent for longer.
+        w.rested = this.elapsed + BATTLE_REST;
+        for (const o of left) if (o.id !== f.id) (w.rematch ??= new Map()).set(o.id, this.elapsed + REMATCH_SECONDS);
+        // The winner's second wind.
+        if (winner === f.id && run.record.why === "down") this.restore(w, w.unit.body.stats.num("integrity") * SECOND_WIND);
+        // Whoever ran leaves letters behind, for whoever stayed.
+        if (f.gone === "fled") {
+          const lost = takeLetters(w.letters, FLEE_LETTERS, this.rng, w.stored ?? 0);
+          this.lettersChanged.add(f.id);
+          const stayed = left.find((o) => o.side !== f.side && !o.gone);
+          const to = stayed ? this.walkers.get(stayed.id) : undefined;
+          if (lost && to) this.award(stayed!.id, to, lost, `${w.player.name} ran`, to.player);
+          if (lost) this.sendTo(f.id, "notice", `You ran: ${lost.toUpperCase()} left behind`);
+        }
+      }
       if (f.gone === "fled") {
         // Out of the ring, away from whoever is still in it.
         const other = b.fighters.find((o) => o.side !== f.side);
@@ -6928,7 +7025,7 @@ export class WorldRoom extends Room {
       this.sendTo(f.id, "battle", {
         word: run.word.toUpperCase(), round: b.round + (run.phase === "plan" ? 1 : 0), cap: ROUND_CAP, phase: run.phase, left: Math.max(0, Math.round((run.deadline - this.elapsed) * 10) / 10),
         you: f.id, fighters: sheet, moves: movesOf(b, f.id), chosen: mine ? (mine.kind === "spell" ? `spell ${mine.text.toUpperCase()}` : mine.kind) : "",
-        pot: c ? pot(c).length : 0, fatigue: fatigue(b.round + 1),
+        pot: c ? pot(c).length : 0, fatigue: fatigue(b.round + 1), lethal: !run.duel,
       });
     }
   }
@@ -8513,6 +8610,7 @@ export class WorldRoom extends Room {
       w.cooldown = Math.max(0, w.cooldown - seconds);
       const foeId = w.foe;
       if (w.windup && (w.windup.on !== foeId || !w.hamper.acts)) w.windup = undefined; // turned away, or stopped: the blow is lost
+      if (w.engage && (w.engage.on !== foeId || !w.hamper.acts)) w.engage = undefined;
       if (!foeId || !this.walkers.has(id)) continue;
       const foe = this.walkers.get(foeId);
       // A battle (shared battle.ts): its fighters strike only in its rounds, and nothing outside the ring strikes them.
@@ -8539,6 +8637,8 @@ export class WorldRoom extends Room {
         // A ban on hunting: wild animals may not be attacked where it reaches.
         ?? (foe && foe.master === "-" && foe.unit.body.stats.flag("alive") ? this.lawAgainst("hunt", id, w) ?? this.lawAgainst("hunt", foeId, foe, foe.player, id) : null);
       if (truce) { if (w.master === null) this.sendTo(id, "refused", `${truce}: no ${foe?.master === "-" ? "hunting or " : ""}fighting here`); w.foe = null; continue; }
+      // In turns a person going for a person does not strike: they close in, and a battle begins (shared battle.ts).
+      if (this.combat === "turns" && foe && w.master === null && foe.master === null) { this.engageFoe(id, w, foeId, foe); continue; }
       const attack = w.unit.attack;
       // A heavy blow winding up (shared combat.ts `windupOf`): it holds still until it lands, and
       // misses whoever has stepped DODGE_TILES from where they stood when it began.

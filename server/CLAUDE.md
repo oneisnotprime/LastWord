@@ -388,3 +388,12 @@ Node process that owns the game state. One room per map instance (from milestone
   ride). `battleLog` (`BattleRecord`) feeds `loadtest/tournament.ts` (COMBAT=…; prints battles and duels) and
   `loadtest/duels.ts` (the same duels in both modes on the same seeds). A DEBUG=1 server takes "debug near"
   (brings the nearest person beside you) for browser checks.
+- Turn-based MVP batch 4 (engagement): in turns a person whose `foe` is a person never strikes in real time:
+  `engageFoe` (from the combat loop) closes to `engageReach`, runs the wind-up (`Walker.engage`, a `windups`
+  entry and a notice to the target; none for a target who cannot see them), then opens a battle to the death
+  in a ring area whose word is BATTLE_WORD ("battle": a word that counters it, TRUCE, calls the battle off) or
+  bars the attacker for ENGAGE_RETRY if the target got ENGAGE_TILES away. `BattleRun.duel` tells the two kinds
+  apart. `closeBattle`: `Walker.rested` (BATTLE_REST) and `Walker.rematch` (REMATCH_SECONDS, per opponent),
+  the winner's SECOND_WIND, a runner's FLEE_LETTERS to whoever stayed, the ring removed. A bot refused looks
+  elsewhere (`BotMind.futile`). The spell hook points an aimed word at the foe if it harms, else at its
+  speller. Creatures still fight in real time, but never strike a fighter (party: batch 5).

@@ -816,3 +816,31 @@ Prototype rulings (smaller points the plan left open, settled while building):
   MVP batch 7.
 - **Fleeing a duel** gives up the pot (as `forfeit`); the two dropped letters are for battles
   that are not duels.
+
+---
+
+## 17. Build log
+
+- **Prototype (batches 1 to 3), merged.** `shared/src/battle.ts`, battles in `WorldRoom` behind
+  `combat`, duels (`challenge`) as battles, a plain battle panel, `botMove`, `loadtest/duels.ts`.
+- **MVP batch 4 (engagement), merged.** Lock-on between people opens a battle to the death: engage
+  wind-up with an out, a ring on the map, pinning, protection from outside, rest and rematch timers,
+  second wind, letters left by a runner, the round cap and fatigue. Not in this batch: the ambusher's free
+  round 0 (an unseen attacker only skips the wind-up), allies' prompt, creatures (they stay on the map
+  in real time and cannot strike a fighter).
+
+### Prototype evaluation (the plan's decision point)
+
+Measured with bots only (`loadtest/duels.ts`, `loadtest/tournament.ts`, same seeds both modes); no
+person has played an hour of it yet, which is the test that counts.
+
+- For: the same numbers carry over (worked examples are tests); a round has real choices (a loading
+  weapon makes Attack a wasted move, so Defend or a word is right; a telegraphed blow is dodged
+  only by giving up a round); spelling as a move works through `spellWord` unchanged; the weaker
+  side wins more often than in real time; bots play it through the same code.
+- Against: a third of bot battles reach the 15-round cap and end with nobody down (target under 5%):
+  layered health outlasts fifteen fight-seconds once people ride and wear things. Bots spell far
+  fewer words in a battle than in a real-time fight. Whoever only holds a slow weapon spends most
+  rounds loading.
+- Verdict: go, on to the MVP, with the cap and fatigue the first things to tune (fatigue from
+  round 6, or damage carried over as "ahead on blows" deciding a capped battle to the death).
