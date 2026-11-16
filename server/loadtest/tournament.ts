@@ -8,11 +8,14 @@
  * this process (the room steps by hand, ten ticks to a second, as fast as it can).
  * SEED_BASE=n starts the rooms' seeds elsewhere (default 1000), for a second set of maps.
  * WATCH=words.txt (one word a line) also counts how often bots spelled those words.
+ * COMBAT=realtime|turns picks how fights between people are resolved (the fork's default: turns);
+ * the same SEED_BASE gives the same maps, so the two can be compared. Battles (shared battle.ts)
+ * and duels are reported either way.
  */
 import { ColyseusTestServer } from "@colyseus/testing";
 import appConfig from "../src/app.config.js";
 import { sourceOf, THEME_SYSTEMS, type Difficulty } from "../src/bots.js";
-import { WorldRoom } from "../src/WorldRoom.js";
+import { WorldRoom, type BattleRecord } from "../src/WorldRoom.js";
 import { readFileSync } from "node:fs";
 import { parsePhrase, STATUS_RULES } from "@lastword/shared";
 
@@ -53,11 +56,15 @@ let haunts = 0;
 // Statuses on the living, every 10 s: how many each person has, and how many keep them helpless.
 const statusSamples: number[] = [], helplessSamples: number[] = [];
 let spellWords: string[] | null = null;
+// Battles in rounds (turns), and every challenge in a ring (either mode): how long from the word to its end, and how it ended.
+const battles: BattleRecord[] = [];
+const duels: { seconds: number; why: string; won: boolean }[] = [];
+const combat = process.env.COMBAT === "realtime" ? "realtime" : "turns";
 
 for (let r = 0; r < rooms; r++) {
   WorldRoom.testSeed = Number(process.env.SEED_BASE ?? 1000) + r * 7919;
   const first = mode === "mixed" ? "easy" : mode;
-  const room = (await server.createRoom("world", { bots: mode === "mixed" ? 0 : bots, difficulty: first })) as unknown as WorldRoom;
+  const room = (await server.createRoom("world", { bots: mode === "mixed" ? 0 : bots, difficulty: first, combat })) as unknown as WorldRoom;
   if (mode === "mixed") for (let i = 0; i < bots; i++) room.addBots(1, (["easy", "normal", "hard"] as const)[i % 3]!);
   room.onAward = (_id, letters, why) => {
     if (process.env.WHY && sourceOf(why) === process.env.WHY) console.log(why);
@@ -70,6 +77,13 @@ for (let r = 0; r < rooms; r++) {
   const blow = anyRoom.blow.bind(room), kill = anyRoom.kill.bind(room);
   let firstDeath = NaN;
   let lastDeathBy = "";
+  const duelFrom = new Map<unknown, number>();
+  const challenge = anyRoom.challenge.bind(room), settleChallenge = anyRoom.settleChallenge.bind(room);
+  anyRoom.challenge = (...args: unknown[]) => { const had = new Set(anyRoom.challenges.values()); const out = challenge(...args); for (const c of anyRoom.challenges.values()) if (!had.has(c) && c.ring) duelFrom.set(c, seconds); return out; };
+  anyRoom.settleChallenge = (key: string, c: unknown, winner: string | null, why: string) => {
+    if (duelFrom.has(c)) { duels.push({ seconds: seconds - duelFrom.get(c)!, why: why.replace(/^bot\d+ /, ""), won: winner !== null }); duelFrom.delete(c); }
+    return settleChallenge(key, c, winner, why);
+  };
   const haunt = anyRoom.haunt.bind(room);
   anyRoom.haunt = (...args: unknown[]) => { const out = haunt(...args); haunts++; return out; };
   const deathClass = (w: any, killerId: string): string => {
@@ -157,6 +171,7 @@ for (let r = 0; r < rooms; r++) {
       console.log(`  left: ${id} ${w.flying ? "flying" : "on foot"}${w.unit.riding ? ` riding ${w.unit.riding.name}` : ""}, weapon ${w.unit.weapon?.name ?? "-"} targets ${atk ? atk.tags("targets").join(",") || "land" : "-"}, hp ${Math.round(w.hp)}, foe ${w.foe ?? "-"}`);
     }
   }
+  battles.push(...room.battleLog);
   const report = room.botReport();
   for (const b of report) {
     const m = used.get(b.difficulty) ?? used.set(b.difficulty, new Map()).get(b.difficulty)!;
@@ -187,6 +202,30 @@ console.log(`Ghost haunts: ${haunts} (${(haunts / Math.max(1, rounds.length)).to
 {
   const mean = (a: number[]) => (a.reduce((x, y) => x + y, 0) / Math.max(1, a.length)).toFixed(2);
   console.log(`Statuses per living person (every 10 s, ${statusSamples.length}): mean ${mean(statusSamples)}, p90 ${pct(statusSamples, 0.9)}, max ${Math.max(0, ...statusSamples)}; helpless mean ${mean(helplessSamples)}, share of samples helpless ${((helplessSamples.filter((n) => n > 0).length / Math.max(1, helplessSamples.length)) * 100).toFixed(1)}%`);
+}
+{
+  const tally = (list: string[]) => { const m = new Map<string, number>(); for (const k of list) m.set(k, (m.get(k) ?? 0) + 1); return [...m].sort((a, b) => b[1] - a[1]).map(([k, n]) => `${k} ${n}`).join(", ") || "-"; };
+  const share = (n: number, of: number) => (of ? `${((n / of) * 100).toFixed(0)}%` : "-");
+  console.log(`\nCombat: ${combat}`);
+  console.log(`Duels (a challenge in a ring, word to end; ${duels.length}, ${(duels.length / Math.max(1, rounds.length)).toFixed(1)} a round): median ${pct(duels.map((d) => d.seconds), 0.5)} s, p25 ${pct(duels.map((d) => d.seconds), 0.25)}, p75 ${pct(duels.map((d) => d.seconds), 0.75)}; decided ${share(duels.filter((d) => d.won).length, duels.length)}; ended by: ${tally(duels.map((d) => d.why))}`);
+  if (battles.length) {
+    const sum = (f: (b: BattleRecord) => number) => battles.reduce((n, b) => n + f(b), 0);
+    const acts = new Map<string, number>();
+    for (const b of battles) for (const [k, n] of Object.entries(b.actions)) acts.set(k, (acts.get(k) ?? 0) + n);
+    const all = [...acts.values()].reduce((a, b) => a + b, 0);
+    const lengths = battles.flatMap((b) => b.roundSeconds);
+    console.log(`Battles: ${battles.length} (${(battles.length / Math.max(1, rounds.length)).toFixed(1)} a round)`);
+    console.log(`  rounds: median ${pct(battles.map((b) => b.rounds), 0.5)}, p25 ${pct(battles.map((b) => b.rounds), 0.25)}, p75 ${pct(battles.map((b) => b.rounds), 0.75)}, mean ${(sum((b) => b.rounds) / battles.length).toFixed(1)}; at the cap ${share(battles.filter((b) => b.why === "cap").length, battles.length)}; over in round 1 or 2: ${share(battles.filter((b) => b.rounds <= 2 && b.why === "down").length, battles.length)}`);
+    console.log(`  seconds: median ${pct(battles.map((b) => b.seconds), 0.5)}, p75 ${pct(battles.map((b) => b.seconds), 0.75)}; a round takes ${(lengths.reduce((a, b) => a + b, 0) / Math.max(1, lengths.length)).toFixed(1)} s to choose (bots: fixed)`);
+    console.log(`  time to knock-down: median ${pct(battles.filter((b) => b.why === "down").map((b) => b.rounds), 0.5)} rounds (${battles.filter((b) => b.why === "down").length} battles)`);
+    console.log(`  ended by: ${tally(battles.map((b) => b.why))}`);
+    console.log(`  flee: ${sum((b) => b.fleeTries)} tries, ${share(sum((b) => b.fleeOk), sum((b) => b.fleeTries))} got away; battles ended by flight ${share(battles.filter((b) => b.why === "fled").length, battles.length)}`);
+    console.log(`  actions (${all}): ${[...acts].sort((a, b) => b[1] - a[1]).map(([k, n]) => `${k} ${share(n, all)}`).join(", ")}; not Attack ${share(all - (acts.get("attack") ?? 0), all)}`);
+    console.log(`  heavy blows: ${sum((b) => b.heavy)}, dodged by Defend ${share(sum((b) => b.dodged), sum((b) => b.heavy))}; battles with a dodge ${share(battles.filter((b) => b.dodged > 0).length, battles.length)}`);
+    console.log(`  timeouts: ${sum((b) => b.timeouts)} of ${sum((b) => b.choices)} choices by people`);
+    const words = battles.flatMap((b) => b.spells);
+    console.log(`  words spelled as moves: ${words.length} (${new Set(words).size} different; ${share(battles.filter((b) => b.spells.length > 0).length, battles.length)} of battles): ${tally(words).split(", ").slice(0, 15).join(", ")}`);
+  }
 }
 const systems = [...new Set([...used.values()].flatMap((m) => [...m.keys()]))].sort();
 const levels = (["easy", "normal", "hard"] as const).filter((d) => used.has(d));

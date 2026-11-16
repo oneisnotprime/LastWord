@@ -104,6 +104,12 @@ export interface Strike {
   carry?: number;
 }
 
+/**
+ * How a blow is met, for battle rounds (shared battle.ts): `pace` multiplies what lands (a
+ * defender takes half; fatigue adds to every blow), `block` is added to the target's block.
+ */
+export interface StrikeHow { pace?: number; block?: number }
+
 /** The raw size of a blow felt as `y` (the inverse of `felt`). */
 export function unfelt(y: number): number {
   return y > FELT_KNEE && y !== Infinity ? FELT_KNEE * (y / FELT_KNEE) ** 2 : y;
@@ -118,7 +124,7 @@ export function unfelt(y: number): number {
  * fire). Without an attack absolute, an absolute resistance blocks its type entirely and an
  * indestructible defender takes nothing.
  */
-export function strike(attacker: Stats, defender: Entity, rng: Rng): Strike {
+export function strike(attacker: Stats, defender: Entity, rng: Rng, how?: StrikeHow): Strike {
   const miss: Strike = { hit: false, critical: false, damage: 0, byType: {} };
   const target = defender.stats;
   if (target.flag("untargetable")) return miss;
@@ -126,7 +132,7 @@ export function strike(attacker: Stats, defender: Entity, rng: Rng): Strike {
   const accuracy = attacker.num("accuracy");
   if (accuracy !== Infinity) {
     if (rng() >= accuracy * (1 - Math.min(1, target.num("evasion")))) return miss;
-    if (rng() < target.num("block")) return miss;
+    if (rng() < target.num("block") + (how?.block ?? 0)) return miss;
   }
 
   // Siege weapons multiply their damage against things that are built or part of the land.
@@ -164,7 +170,7 @@ export function strike(attacker: Stats, defender: Entity, rng: Rng): Strike {
   if (critical) total *= 2;
   // Felt, not raw (FELT_KNEE): what lands grows as the square root of the blow past a person's scale.
   const raw = total;
-  total = landed(total, target.num("integrity"));
+  total = landed(total, target.num("integrity")) * (how?.pace ?? 1);
 
   const absorbed = Math.min(defender.shield, total);
   defender.shield -= absorbed;

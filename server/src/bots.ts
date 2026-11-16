@@ -1,3 +1,4 @@
+import { movesOf, type Action, type Battle, type Fighter } from "@lastword/shared";
 import { helpful, lastStandOf, livesOf, speechOf, stormBendOf, spellingCost } from "@lastword/shared";
 import { restoresOf, SCREEN_RULES, ACTION_LETTERS, becomes, cannotRide, pactOf, doorGuard, hatches, matured, opensDoors, resolveSpelled, cooks, GRAFT_CAPABILITIES, GROUNDED_FROM, isBoon, isGraft, isTrap, parsePhrase, placeRules, pluralize, producerOf, sails, STATUSES, TILE_METERS, TILE_TYPES, WORN_SLOTS, type Dictionary, type Letters, type Op, type Stats, type Status } from "@lastword/shared";
 
@@ -595,4 +596,44 @@ export function sourceOf(why: string): string {
   if (/ on /.test(why)) return "levy";
   if (/^[A-Z][A-Z ]*$/.test(why)) return "producer";
   return "other";
+}
+
+/**
+ * A bot's move in a battle round (shared battle.ts), scored from `movesOf`:
+ * - easy: strikes whenever it can, never defends on purpose, never flees; spells only with nothing to strike with;
+ * - normal: defends a heavy blow shown coming (`dodges`), flees under `flee` of its health when the odds are fair,
+ *   strikes when its blow does something, and spends a loading round (or a useless weapon) on a word or on Defend;
+ * - hard: the same with its own numbers, and it also defends when the blow it would take is worth more than the one it would give.
+ * `word` offers a spelling its rack affords now (the server's `botBattleWord`), or null.
+ */
+export function botMove(b: Battle, f: Fighter, difficulty: Difficulty, rng: () => number, word: (need: "weapon" | "any") => string | null): Action {
+  const skill = SKILL[difficulty];
+  const moves = movesOf(b, f.id);
+  const can = (id: Action["kind"]) => moves.find((m) => m.id === id)?.legal ?? false;
+  const attack = moves.find((m) => m.id === "attack");
+  const foes = b.fighters.filter((o) => !o.gone && o.side !== f.side);
+  const foe = foes[0];
+  const spell = (need: "weapon" | "any"): Action | null => { if (!can("spell")) return null; const text = word(need); return text ? { kind: "spell", text } : null; };
+  const ready = !!attack?.legal && (attack.strikes ?? 0) >= 1;
+  const useful = (attack?.damage ?? 0) > 0;
+  if (difficulty === "easy") {
+    if (attack?.legal && useful) return { kind: "attack" };
+    return spell("weapon") ?? (can("defend") ? { kind: "defend" } : { kind: "attack" });
+  }
+  // A heavy blow is coming at it this round.
+  if (foes.some((o) => o.windup?.on === f.id) && can("defend") && rng() < skill.dodges) return { kind: "defend" };
+  // Badly hurt: away, if the odds are fair.
+  const body = f.unit.body, share = body.integrity / Math.max(1, body.stats.num("integrity"));
+  const flee = moves.find((m) => m.id === "flee");
+  if (share < skill.flee && flee?.legal && (flee.chance ?? 0) >= 0.4 && f.unit.outer === body) return { kind: "flee" };
+  if (!useful) return spell("weapon") ?? (can("defend") ? { kind: "defend" } : { kind: "attack" });
+  if (!ready) return (rng() < skill.systems ? spell("any") : null) ?? (can("defend") ? { kind: "defend" } : { kind: "attack" });
+  if (difficulty === "hard" && foe) {
+    // The blow it would take against the one it would give: wait behind its guard for a loading foe's shot.
+    const theirs = movesOf(b, foe.id, f.id).find((m) => m.id === "attack");
+    if (theirs?.legal && (theirs.strikes ?? 0) >= 1 && !theirs.heavy && (theirs.damage ?? 0) > (attack!.damage ?? 0) * 3 && rng() < 0.5 && can("defend")) return { kind: "defend" };
+  }
+  // Now and then a word in place of a blow: armour, a better weapon, a mend.
+  if (rng() < skill.systems * 0.25) { const s = spell("any"); if (s) return s; }
+  return { kind: "attack" };
 }

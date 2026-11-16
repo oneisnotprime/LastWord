@@ -236,3 +236,8 @@ Phaser 4 and Vite. Draws what the server says and sends the player's intents.
   no pale square when blind); the kill feed sits under the minimap; a field radiated by a thing is plain
   tissue (zones.ts decor "none", no APIARIES scattered over it); a right-click on a target while aiming
   casts at it (on open ground it cancels); knocked out or a ghost, F follows the fight going on.
+- Turn-based fork: `src/battle.ts` `BattleView`, a plain sheet over the map while you are in a battle
+  (messages `battle`, `battleEvents`): layered bars, round and timer, four moves (keys 1 to 4; 3 or Enter
+  opens the usual spell window and what you spell is your move), the round's log, the result. While it is up
+  the other game keys wait; while you spell it folds to its bars. `net.ts` asks for `combat: "turns"` rooms
+  (`?combat=realtime` for the old fight).
