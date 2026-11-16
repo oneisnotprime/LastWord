@@ -301,3 +301,18 @@ server and the client import this, so anything here must give the same answer on
   applies `rerolls` to accuracy, critical, evasion), `trapMissChance`, `gambleOdds`; `huntYield`
   takes luck for its rare letter (RARE_HUNT). `curse` lowers luck, `bless` raises it, `shrink` sets
   size ×0.25. `combat2.test.ts` prints the coverage audit.
+- Playtest batch 2 (`playtest2.test.ts`): status.ts `takesControl` (stun, freeze, sleep, root, fear,
+  confuse, hypnosis, leash, stasis) and diminishing returns in `afflict`/`tickStatuses`/`cure`/`wake`
+  (a `Resistance` map: no refresh while on, RESIST_MIN or RESIST_SHARE of its run free after),
+  `resistedSeconds` (`resistedBy`: 10 / (5 + it), no more 5/0.001), `stopRank`/`worstStatus` (the HUD's
+  "what is stopping me" line), inspect.ts `curesFor` (words whose `effect_status` ends a status).
+  wear.ts `lendImmunities` (protection worn lends its `immune_*`: a HELMET's stun immunity). combat.ts
+  `Strike.carry`/`unfelt`, unit.ts `strikeLayers` (what a breaking layer could not take goes on to the
+  next; `strikeUnit` uses it). death.ts `ghostSpares`/`ghostMayCarry`/`GHOST_HARMLESS` (a ghost's words
+  carry no damage, no wearing harm, no status that takes control but fear). hazard.ts `cellEvery` (a wide
+  area's `attack_rate` is the whole area's; no rate strikes once). inspect.ts `grandeur` (an area counts its
+  strikes over its reach; a body only if it fights or moves: no grand OAK), `surcharge`/`spellingCost`
+  (each order of magnitude from GRAND_FROM adds the next of the word's `price_letters`, PRICE_DEFAULT
+  else), `upkeepText` and `Card.upkeep`/`Card.surcharge`; tips.ts `wordCost` (spellableNow counts the
+  surcharge). biome.ts `hoardShare`/HOARD_FROM (income of a hoarded letter tapers; forage redraws a hoarded
+  find) and `forageLetter`'s vowel net (no vowel held: a find is one of the pool's vowels).

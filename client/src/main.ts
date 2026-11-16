@@ -24,7 +24,7 @@ import { Sky } from "./sky.js";
 import { Zones } from "./zones.js";
 import { RoomView } from "./rooms.js";
 import { StormView, stormOf, stormChip } from "./storm.js";
-import { callLine, drawIntel, Pings, ScreenView } from "./comms.js";
+import { callLine, drawIntel, feedLine, Pings, ScreenView } from "./comms.js";
 
 /** The fog canvas's size, and the radius of its clear middle, in canvas pixels. */
 const FOG_SIZE = 512, FOG_CLEAR = 100;
@@ -58,6 +58,13 @@ function terse(kind: "spelled" | "refused" | "notice", text: string): string | n
   if (kind === "notice" && / (equipped|in hand|dropped)$/.test(text)) return null;
   return text.replace(/^You need /, "No ").replace(/^You cannot spell while you are /, "Cannot spell: ");
 }
+
+/**
+ * Notices that are routine (the world going on: who brought what, hungry followers, the air, the
+ * storm's weather, ghosts' words, followers coming and going): they go to the feed, not a toast.
+ */
+const ROUTINE = /\bbrought\b|\bis hungry\b|^Freezing|^Scorching|bearable again|^The storm wall brings|'s ghost:|\bdeserted\b|\brises (again|as)\b|\bwent to\b|\bcaught\b|is back from the dead|\bsprang\b/i;
+const routine = (text: string): boolean => ROUTINE.test(text);
 
 /** Ink for a name tag: you, other people, yours, someone else's, nobody's. */
 const TAG_INK = { me: "#2f5a8e", person: "#a33a3a", mine: "#2f6a3a", theirs: "#8a4a1a", wild: "#4a3f33" };
@@ -190,6 +197,8 @@ class World extends Phaser.Scene {
   /** What you can see, in tiles, from the loadout; the camera zooms so the screen shows that much. */
   private sightTiles = 15;
   private fog!: Phaser.GameObjects.Image;
+  /** Fog round the fog canvas, filling the screen when your sight shrinks below it (BLIND): no pale square with clear map round it. */
+  private fogEdges: Phaser.GameObjects.Rectangle[] = [];
   private lastPrompt = 0;
   /** Starting kits: the pick. */
   private kits!: KitView;
@@ -254,6 +263,8 @@ class World extends Phaser.Scene {
       const key = e.key.toLowerCase();
       // A ghost (shared death.ts): Tab watches the next person still in the round, then your ghost again.
       if (this.ghost && key === "tab") { e.preventDefault(); return this.nextWatch(); }
+      // Knocked out or a ghost: F follows the fight going on now (the server picks who is in it).
+      if ((this.ghost || !this.net.state.players.get(this.net.sessionId)) && key === "f") { e.preventDefault(); return this.net.followFight(); }
       if (this.pings.key(key)) return;
       if (key === "v") this.pings.toggle();
       else if (key === "g") this.net.gather();
@@ -303,7 +314,7 @@ class World extends Phaser.Scene {
         pinged: (p) => this.pings.heard(p, String(this.net.state.players.get(this.net.sessionId)?.name ?? "")),
         dropped: () => this.hud.toast("Connection lost: reconnecting…", "bad"),
         reconnected: () => this.hud.toast("Reconnected", "good"),
-        notice: (text) => { const t = terse("notice", text); if (t) this.hud.toast(t, "good"); },
+        notice: (text) => { const t = terse("notice", text); if (!t) return; if (routine(t)) feedLine(esc(t), "note"); else this.hud.toast(t, "good"); },
         dead: (recap) => {
           this.over = true; this.endAim(); this.hud.closeScreens(); this.hud.lock(); this.hud.knockedOut(null);
           // A beat to take it in: the world slows and greys, then the recap says what did it.
@@ -378,8 +389,10 @@ class World extends Phaser.Scene {
       // Middle-click: a HERE ping on that spot (shared comms.ts).
       if (p.middleButtonDown()) return this.net.ping("here", x, y);
       if (this.aiming) {
-        if (p.rightButtonDown()) return this.endAim(true);
         const target = this.hitAt(x, y, this.aimHow !== "anywhere"); // yourself too: adjectives, a graft
+        // A right-click on someone casts at them too (a METEOR right-clicked onto a bot was put away
+        // unspent); a right-click on open ground puts the spelling away, as Esc does.
+        if (p.rightButtonDown() && !target) return this.endAim(true);
         if (!target && this.aimHow === "describe") return this.hud.toast("Click a thing, a creature, a person or yourself", "bad");
         if (!target && this.aimHow === "someone") return this.hud.toast("Click a person, a creature or a thing", "bad");
         return this.release(this.aiming, this.aimHow, target ?? { x, y });
@@ -670,7 +683,7 @@ class World extends Phaser.Scene {
       if (attacker && target) { attacker.lungeUntil = now + 220; attacker.lungeTo = { x: target.x, y: target.y }; }
       const at = this.net.state.players.get(h.on) ?? this.net.state.things.get(h.on) ?? (target ? { x: target.x / PX, y: target.y / PX } : null);
       this.hitCount++;
-      if (at) this.fx.number(at.x, at.y - 1.4, h.amount, h.kind, h.layer, h.on === mine, h.aff);
+      if (at) this.fx.number(at.x, at.y - 1.4, h.amount, h.kind, h.layer, h.on === mine, h.aff, `${h.on}|${h.layer}`);
       this.tracers.push({ from: h.by, to: h.on, ...(h.x !== undefined ? { fx: h.x, fy: h.y } : {}), until: now + (h.ranged ? 260 : 180), ranged: h.ranged, mine: h.on === mine || h.by === mine });
       if (h.on === mine && h.amount > 0 && h.kind !== "miss" && h.kind !== "dodged") this.hud.closeScreens(); // a fight is never hidden behind a screen
       if (h.on === mine && h.kind !== "miss" && h.kind !== "dodged") {
@@ -696,6 +709,18 @@ class World extends Phaser.Scene {
     // Past your sight: fog. The clear circle is your sight's radius on screen.
     const r = this.sightTiles * PX * cam.zoom;
     this.fog.setPosition(cam.width / 2, cam.height / 2).setScale((r / FOG_CLEAR) / (cam.zoom), (r / FOG_CLEAR) / cam.zoom);
+    // The canvas's own edge is where its fog ends: past it, fill the rest of the screen alike.
+    const side = FOG_SIZE * this.fog.scaleX, x0 = cam.width / 2 - side / 2, y0 = cam.height / 2 - side / 2, x1 = x0 + side, y1 = y0 + side;
+    if (!this.fogEdges.length) this.fogEdges = [0, 1, 2, 3].map(() => this.add.rectangle(0, 0, 1, 1, 0xe2d8c4, 0.62).setOrigin(0, 0).setScrollFactor(0).setDepth(11500));
+    const W = cam.width / cam.zoom, H = cam.height / cam.zoom; // the screen, in the fog's own (zoomed) units
+    const fit = (rect: Phaser.GameObjects.Rectangle, x: number, y: number, w: number, h: number) => rect.setVisible(w > 0 && h > 0).setPosition(x, y).setSize(Math.max(1, w), Math.max(1, h));
+    // Screen-fixed objects are zoomed about the screen's centre, like the fog canvas itself.
+    const cx = cam.width / 2, cy = cam.height / 2, sx0 = x0, sx1 = x1, sy0 = y0, sy1 = y1;
+    const L = cx - (W / 2) * 1.05, R = cx + (W / 2) * 1.05, T = cy - (H / 2) * 1.05, B = cy + (H / 2) * 1.05;
+    fit(this.fogEdges[0]!, L, T, R - L, sy0 - T);
+    fit(this.fogEdges[1]!, L, sy1, R - L, B - sy1);
+    fit(this.fogEdges[2]!, L, sy0, sx0 - L, sy1 - sy0);
+    fit(this.fogEdges[3]!, sx1, sy0, R - sx1, sy1 - sy0);
     // Gathering: a ring filling round your feet over GATHER_SECONDS, with flicks of earth.
     const g = this.gatherRing.clear();
     const mv = this.views.get(this.net.sessionId);
@@ -1424,7 +1449,8 @@ class World extends Phaser.Scene {
         const look = sized(lookOf(dictionary, traits ? `${traits} human` : "human"), p.size, traits ? `${traits} human` : "human");
         this.dress(v, { ...look, colour: look.colour === lookOf(dictionary, "human").colour ? colour : look.colour }, this.slotOf(p.gear, "held"), statuses, this.slotOf(p.gear, "ride"));
         const name = p.ghost ? `${String(p.name).toUpperCase()} · GHOST` : traits ? `${String(p.name).toUpperCase()} · ${traits.toUpperCase()}` : String(p.name).toUpperCase();
-        this.label(v, p.gear ? [name, `+ ${p.gear}`] : [name], id === mine ? TAG_INK.me : TAG_INK.person);
+        // Your own gear is on your HUD card: your tag is just your name (a rider is not buried under a list).
+        this.label(v, p.gear && id !== mine ? [name, `+ ${p.gear}`] : [name], id === mine ? TAG_INK.me : TAG_INK.person);
         // A ghost (shared death.ts): pale and see-through, bobbing over the ground.
         if (p.ghost) { v.body.setAlpha(0.4 + Math.sin(time / 300) * 0.08).setTint(0xcfe0ff); this.ghostViews.add(v); }
         else if (this.ghostViews.delete(v)) v.body.clearTint().setAlpha(1);
@@ -1440,8 +1466,12 @@ class World extends Phaser.Scene {
       // Blind (shared screen.ts `bars`): nobody else's bar or name, only your own.
       const blind = id !== mine && this.screenView.blot("bars") === "hide";
       this.place(v, id, time, p.hp, !blind && (id === mine || (p.hp < 100 && v.barUntil > time)));
-      // In a pile of one kind, only the first carries the tag ("WOLF ×5") and the badges.
-      const shown = !f?.hidden && !blind;
+      // In a pile of one kind, only the first carries the tag ("WOLF ×5") and the badges; riding, your
+      // own creatures round your mount drop theirs (the mount is not drawn under a stack of your tags).
+      const meNow = state.players.get(mine), meView = this.views.get(mine);
+      const aroundMount = creature && p.owner === mine && !!meNow && !!meView && !!this.slotOf(meNow.gear, "ride")
+        && Math.hypot(p.x - meNow.x, p.y - meNow.y) <= Math.max(2, (meView.half / PX) * 1.2 + 1);
+      const shown = !f?.hidden && !blind && !aroundMount;
       v.tag.setVisible(shown);
       for (const b of v.badges) b.setVisible(shown);
       // The camera follows you, or whoever you watch once knocked out (a ghost may watch the living: Tab).

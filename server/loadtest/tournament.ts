@@ -14,6 +14,7 @@ import appConfig from "../src/app.config.js";
 import { sourceOf, THEME_SYSTEMS, type Difficulty } from "../src/bots.js";
 import { WorldRoom } from "../src/WorldRoom.js";
 import { readFileSync } from "node:fs";
+import { parsePhrase, STATUS_RULES } from "@lastword/shared";
 
 const [rooms = 4, bots = 8] = process.argv.slice(2, 4).map(Number);
 const mode = (process.argv[4] ?? "mixed") as Difficulty | "mixed";
@@ -45,6 +46,12 @@ const killers = new Map<string, number>();
 // The opening (first five minutes) is kept apart: later racks are a few hoards.
 const rack = { n: 0, size: 0, distinct: [] as number[], spellable: [] as number[], held: new Map<string, number>(), open: { distinct: [] as number[], spellable: [] as number[] } };
 const gathered = new Map<string, number>();
+// What decided deaths and rounds: a blow (a person's weapon or creature), an area or weather word
+// (STORM, NUKE; a person's or the round's own), the storm wall, or the wild.
+const deathBy = new Map<string, number>(), roundBy = new Map<string, number>();
+let haunts = 0;
+// Statuses on the living, every 10 s: how many each person has, and how many keep them helpless.
+const statusSamples: number[] = [], helplessSamples: number[] = [];
 let spellWords: string[] | null = null;
 
 for (let r = 0; r < rooms; r++) {
@@ -62,6 +69,18 @@ for (let r = 0; r < rooms; r++) {
   const anyRoom = room as any;
   const blow = anyRoom.blow.bind(room), kill = anyRoom.kill.bind(room);
   let firstDeath = NaN;
+  let lastDeathBy = "";
+  const haunt = anyRoom.haunt.bind(room);
+  anyRoom.haunt = (...args: unknown[]) => { const out = haunt(...args); haunts++; return out; };
+  const deathClass = (w: any, killerId: string): string => {
+    const r = anyRoom.recap(w, killerId);
+    const what = String(r.what);
+    if (what === "wall") return "storm wall";
+    const isArea = [...anyRoom.areas.values()].some((a: any) => a.word.toUpperCase() === what) || String(room.state.weatherWord).toUpperCase() === what
+      || (() => { try { const k = parsePhrase(anyRoom.dict, what.toLowerCase()).kind; return k === "sky" || k === "event"; } catch { return false; } })();
+    if (isArea) return r.killer ? "area/weather (a person's)" : "area/weather (the round's)";
+    return r.killer ? "blow" : "wild";
+  };
   if (watched.size) {
     const spellWord = anyRoom.spellWord.bind(room);
     anyRoom.spellWord = (id: string, w: unknown, text: unknown) => {
@@ -90,6 +109,7 @@ for (let r = 0; r < rooms; r++) {
         const r = anyRoom.recap(w, killerId);
         console.log(`  first death ${(seconds / 60).toFixed(2)} min: ${w.player.name} by ${r.killer || "the wild"}'s ${r.what}`);
       }
+      if (w.master === null) { const c = deathClass(w, killerId); deathBy.set(c, (deathBy.get(c) ?? 0) + 1); lastDeathBy = c; }
       if (w.master === null) { const what = String(anyRoom.recap(w, killerId).what).toLowerCase(); killers.set(what, (killers.get(what) ?? 0) + 1); }
     }
     fightFrom.delete(id);
@@ -97,8 +117,17 @@ for (let r = 0; r < rooms; r++) {
   };
   let sampled = 0;
   let rackAt = 0;
+  let statusAt = 0;
   while (room.state.phase !== "over" && seconds < cap * 60) {
     room.update(0.1); seconds += 0.1;
+    if (seconds - statusAt >= 10) {
+      statusAt = seconds;
+      for (const w of anyRoom.walkers.values()) {
+        if (w.master !== null || w.unit?.dead) continue;
+        statusSamples.push(w.statuses.length);
+        helplessSamples.push(w.statuses.filter((a: any) => STATUS_RULES[a.status as keyof typeof STATUS_RULES]?.helpless).length);
+      }
+    }
     if (seconds - rackAt >= 30) {
       rackAt = seconds;
       spellWords ??= [...anyRoom.dict.words].filter(([w, d]: [string, { role: string }]) => (d.role === "noun" || d.role === "verb") && /^[a-z]+$/.test(w) && !anyRoom.dict.crude(w)).map(([w]: [string]) => w);
@@ -136,6 +165,7 @@ for (let r = 0; r < rooms; r++) {
   const winner = room.state.winner || "(none)";
   const level = report.find((b) => b.id === winner)?.difficulty ?? "-";
   wins.set(level, (wins.get(level) ?? 0) + 1);
+  if (room.state.phase === "over") roundBy.set(lastDeathBy || "-", (roundBy.get(lastDeathBy || "-") ?? 0) + 1);
   rounds.push({ minutes: +(seconds / 60).toFixed(1), winner, difficulty: level, firstDeath });
   console.log(`room ${r + 1}: ${winner} (${level}) won after ${(seconds / 60).toFixed(1)} min${room.state.phase === "over" ? "" : " (time up)"}; first death ${firstDeath} s`);
   room.onAward = undefined;
@@ -151,6 +181,13 @@ const pct = (a: number[], q: number) => { const b = [...a].sort((x, y) => x - y)
 for (const [k, a] of Object.entries(ttk)) console.log(`Time to kill (${k}s, ${a.length}): median ${pct(a, 0.5)} s, p25 ${pct(a, 0.25)}, p75 ${pct(a, 0.75)}, under 2 s ${a.filter((t) => t < 2).length}`);
 console.log(`First person dead at: ${firstDeaths.map((t) => (t / 60).toFixed(2)).join(", ")} min`);
 console.log(`People killed by: ${[...killers].sort((a, b) => b[1] - a[1]).slice(0, 12).map(([k, n]) => `${k} ${n}`).join(", ")}`);
+console.log(`Person deaths by: ${[...deathBy].sort((a, b) => b[1] - a[1]).map(([k, n]) => `${k} ${n}`).join(", ")}`);
+console.log(`Rounds decided by (the last death): ${[...roundBy].sort((a, b) => b[1] - a[1]).map(([k, n]) => `${k} ${n}`).join(", ")}`);
+console.log(`Ghost haunts: ${haunts} (${(haunts / Math.max(1, rounds.length)).toFixed(0)} a round)`);
+{
+  const mean = (a: number[]) => (a.reduce((x, y) => x + y, 0) / Math.max(1, a.length)).toFixed(2);
+  console.log(`Statuses per living person (every 10 s, ${statusSamples.length}): mean ${mean(statusSamples)}, p90 ${pct(statusSamples, 0.9)}, max ${Math.max(0, ...statusSamples)}; helpless mean ${mean(helplessSamples)}, share of samples helpless ${((helplessSamples.filter((n) => n > 0).length / Math.max(1, helplessSamples.length)) * 100).toFixed(1)}%`);
+}
 const systems = [...new Set([...used.values()].flatMap((m) => [...m.keys()]))].sort();
 const levels = (["easy", "normal", "hard"] as const).filter((d) => used.has(d));
 console.log(`\nSystems used (count per difficulty):\n${["system".padEnd(16), ...levels.map((l) => l.padStart(8))].join("")}`);

@@ -357,4 +357,18 @@ Node process that owns the game state. One room per map instance (from milestone
   sets `Player.tether`. Bots: hexes and cures include the four control statuses; a bot whose blows
   land "immune" FUTILE_BLOWS times leaves that foe for FUTILE_SECONDS (`BotMind.futile`).
   `combat2.test.ts` has a scenario per dimension.
-
+- Playtest batch 2 (`playtest6.test.ts`): ghosts (`haunt`) strip what shared `ghostMayCarry` forbids,
+  their areas are `Area.ghost` (never follow, `reaches`/`harms` skip whoever is indoors, a new haunting
+  ends the ghost's last: `Ghost.areas`, `dropArea`), bot ghosts pick only words that still do something and
+  never an indoor quarry. `Walker.resist` (shared diminishing returns) goes through every `afflict`, `cure`,
+  `wake`, `tickStatuses`. Area, fuse, trap and ambush blows use shared `strikeLayers` (shelter scales the
+  blow first). `dropCells` strikes as often as the area's word says (`Area.nextCell`; no rate: one cell by
+  each person once). `spellWord` adds shared `surcharge`; bots cost words with `spellingCost`. `earn`
+  tapers steady income (`taper`: producers, land, roads, citizens, interest) by shared `hoardShare`;
+  gathering passes the rack (`Deposits.gather(..., held)`). `trade` and `marketInfo` work at home on your
+  own claim (`homeClaim`, HOME_TRADE_EXTRA, no T, `market.home`). Loadout statuses carry `by`
+  (`sourceName`: "BOT7's ghost"). Meat and stores go to a killer within PLUNDER_TILES (`kill`). The recap
+  headline is the top harm. Wild animals leave newcomers be (`newcomer`, `Walker.arrived`, ARRIVAL_SECONDS).
+  `botOffer` never in a fight. `watch` { fight: true } follows the fight going on (`hottestFight`).
+  `loadtest/tournament.ts` also prints what killed people (blow, storm wall, area or weather), what decided
+  each round, ghost haunts and statuses per living person.

@@ -1,5 +1,5 @@
 {
- "count": 466,
+ "count": 467,
  "groups": {
   "physical": 50,
   "mobility": 25,
@@ -15,7 +15,7 @@
   "field": 22,
   "event": 23,
   "effect": 9,
-  "rules": 18
+  "rules": 19
  },
  "damage_types": [
   "blunt",
@@ -3565,6 +3565,13 @@
    "desc": "letters a spelling costs whoever it binds, times this: 1.5 adds half the word's length again in copies of its own letters, 0.5 makes the rarer half free (shared speech.ts)",
    "unit": "x",
    "default": 1
+  },
+  {
+   "id": "price_letters",
+   "group": "rules",
+   "type": "text",
+   "desc": "the letters a grand word's scale is paid in besides its own, rarest last: each order of magnitude of grandeur past 1000 adds the next (shared inspect.ts `surcharge`; tools/derive.py gives them by what it is)",
+   "default": ""
   },
   {
    "id": "word_limit",

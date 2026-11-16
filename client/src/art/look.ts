@@ -2,10 +2,10 @@
  * From a spelled phrase to how it looks: which silhouette, what colour, how big, and which
  * adjective effects are glued on. Everything comes from the word data through `shared/`.
  */
-import { parsePhrase, type Dictionary, type Stats } from "@lastword/shared";
+import { parsePhrase, statureOf, type Dictionary, type Stats } from "@lastword/shared";
 import { COLOUR, MATERIAL } from "./palette.js";
 import { ARCHETYPES, CLASSES, FALLBACK, men, WORDS } from "./shapes.js";
-import type { Silhouette } from "./build.js";
+import { biped, type Silhouette } from "./build.js";
 
 export interface Look {
   /** The word whose silhouette is drawn. */
@@ -34,6 +34,22 @@ const DISPLAY: Record<string, number> = {
 };
 
 const memo = new Map<string, Omit<Look, "count">>();
+
+/** A silhouette's height and width in units. */
+function extent(sil: Silhouette): { h: number; w: number } {
+  let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+  for (const p of sil.pieces) for (const [x, y] of p.pts) { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }
+  return Number.isFinite(x0) ? { h: y1 - y0, w: x1 - x0 } : { h: 0, w: 0 };
+}
+/** A person's height in units (an ordinary biped): stature 1 on the map. */
+const PERSON_UNITS = extent(biped()).h || 46;
+const naturals = new Map<Silhouette, number>();
+/** The stature a silhouette is drawn at as it is (its height, or most of its length), against a person's. */
+function naturalStature(sil: Silhouette): number {
+  let n = naturals.get(sil);
+  if (n === undefined) { const e = extent(sil); n = Math.max(0.1, Math.max(e.h, e.w * 0.6) / PERSON_UNITS); naturals.set(sil, n); }
+  return n;
+}
 
 /** The silhouette for a word: its own, else its archetype's, else its class's. */
 export function shapeOf(dict: Dictionary, word: string): Silhouette {
@@ -83,7 +99,13 @@ export function lookOf(dict: Dictionary, phrase: string, count = 1): Look {
     const m1 = num(stats, "mass"), m0 = num(plain, "mass"), h1 = num(stats, "height"), h0 = num(plain, "height");
     const ratio = m0 > 0 && m1 > 0 ? Math.cbrt(m1 / m0) : h0 > 0 && h1 > 0 ? h1 / h0 : 1;
     const display = DISPLAY[dict.word(noun)?.archetype ?? ""] ?? 1;
-    const scale = display * Math.max(0.45, Math.min(2.6, Math.pow(ratio, 0.6)));
+    // A living body is drawn at its stature (shared scale.ts `statureOf`: the cube root of its mass
+    // over a person's) when that is bigger than its silhouette already stands: a TITAN of 200 t
+    // stands fourteen people tall even though it shares a ghost's or a giant's cut-out.
+    const cls = dict.word(noun)?.class;
+    const stature = (cls === "creature" || cls === "person") && m0 > 0 ? statureOf(m0, 1) : 0;
+    const tall = stature > 0 ? Math.max(1, stature / naturalStature(shape)) : 1;
+    const scale = display * tall * Math.max(0.45, Math.min(2.6, Math.pow(ratio, 0.6)));
     const dt = num(stats, "temperature") - num(plain, "temperature");
     const stealth = num(stats, "stealth");
     let untargetable = false;

@@ -11,7 +11,7 @@ afterEach(() => { WorldRoom.testSeed = null; });
 
 const wait = (ms = 150) => new Promise((r) => setTimeout(r, ms));
 const TYPES = ["letters", "notice", "loadout", "dead", "won", "roundover", "refused", "spelled", "gathered", "gathering", "got", "hits", "sensed", "described", "offers"];
-const all = () => Object.fromEntries([..."abcdefghijklmnopqrstuvwxyz"].map((ch) => [ch, 40]));
+const all = () => Object.fromEntries([..."abcdefghijklmnopqrstuvwxyz"].map((ch) => [ch, 9])); // under HOARD_FROM: steady income of a hoarded letter tapers (shared biome.ts)
 
 async function world(people = 1) {
   WorldRoom.testSeed = 77;

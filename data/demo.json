@@ -313,7 +313,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -344,7 +345,8 @@
 "melting_point":1538.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -363,7 +365,8 @@
 "attack_windup":5.0,
 "siege":3.0,
 "friendly_fire":true,
-"loudness":10.0
+"loudness":10.0,
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -383,7 +386,8 @@
 "attack_range":30.0,
 "attack_area":5.0,
 "attack_windup":3.0,
-"friendly_fire":true
+"friendly_fire":true,
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -404,7 +408,8 @@
 "attack_windup":4.0,
 "siege":6.0,
 "friendly_fire":true,
-"loudness":10.0
+"loudness":10.0,
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -430,7 +435,8 @@
 "water"
 ],
 "siege":4.0,
-"friendly_fire":true
+"friendly_fire":true,
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -453,7 +459,8 @@
 "lingering":600.0,
 "radioactivity":10.0,
 "loudness":10.0,
-"luminosity":10.0
+"luminosity":10.0,
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -787,7 +794,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -816,7 +824,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -857,7 +866,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -908,7 +918,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -961,7 +972,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -997,7 +1009,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -1064,7 +1077,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -1094,7 +1108,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -1153,7 +1168,8 @@
 "melting_point":660.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -2419,7 +2435,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -2754,7 +2771,8 @@
 ],
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -2989,7 +3007,8 @@
 ],
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -3101,7 +3120,8 @@
 ],
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -3156,7 +3176,8 @@
 ],
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -3240,7 +3261,8 @@
 ],
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -3319,7 +3341,8 @@
 ],
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -3617,7 +3640,8 @@
 ],
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -3647,7 +3671,8 @@
 ],
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -3688,7 +3713,8 @@
 "produce_I":0.5,
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -3773,7 +3799,8 @@
 "seats":10.0,
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -4399,7 +4426,8 @@
 "fear_aura":6.0,
 "nature":[
 "fish"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -4487,7 +4515,8 @@
 ],
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -4806,7 +4835,8 @@
 "security":8.0,
 "nature":[
 "fire"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -4927,7 +4957,8 @@
 "nature":[
 "spirit",
 "holy"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -4959,7 +4990,8 @@
 "strength":10.0,
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -4989,7 +5021,8 @@
 "letter_steal":3.0,
 "nature":[
 "demon"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -5107,6 +5140,7 @@
 "nature":[
 "flesh"
 ],
+"price_letters":"hkvz",
 "command_limit":6.0,
 "last_stand":10.0
 },
@@ -5373,6 +5407,7 @@
 "nature":[
 "flesh"
 ],
+"price_letters":"hkvz",
 "last_stand":10.0,
 "raises":"skeleton"
 },
@@ -5922,7 +5957,8 @@
 "luminosity":6.0,
 "nature":[
 "fire"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -6237,7 +6273,8 @@
 ],
 "nature":[
 "fire"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[
 [
@@ -6554,7 +6591,8 @@
 "friendly_fire":true,
 "nature":[
 "fire"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -6621,7 +6659,8 @@
 "steel",
 "iron",
 "stone"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -6636,7 +6675,8 @@
 "inflict_poison":60.0,
 "single_use":true,
 "stealth":6.0,
-"odor":0.0
+"odor":0.0,
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -7137,12 +7177,12 @@
 "archetype":"weather",
 "set":{
 "placement":"region",
-"field_radius":3000.0,
+"field_radius":200.0,
 "field_targets":"all",
 "sets_weather":"storm",
-"field_duration":8.0,
+"field_duration":5.0,
 "visibility":0.4,
-"dmg_electric":800.0,
+"dmg_electric":200.0,
 "dmg_wind":20.0,
 "attack_rate":0.05,
 "attack_area":5.0,
@@ -7153,6 +7193,7 @@
 "troposphere",
 "stratosphere"
 ],
+"price_letters":"wjxq",
 "storm_shift":45.0
 },
 "ops":[
@@ -7255,7 +7296,8 @@
 "air",
 "water"
 ],
-"friendly_fire":true
+"friendly_fire":true,
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -7280,6 +7322,7 @@
 "pit",
 "mine"
 ],
+"price_letters":"wjxq",
 "storm_shift":120.0
 },
 "ops":[
@@ -7627,7 +7670,8 @@
 "letter_steal":50.0,
 "contest_with":"speed_land",
 "contested_by":"security",
-"dmg_fire":100.0
+"dmg_fire":100.0,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -7788,7 +7832,8 @@
 "deposit_factor":2.0,
 "counters":[
 "colossus"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -7824,6 +7869,7 @@
 "populace",
 "proletariat"
 ],
+"price_letters":"wjxq",
 "spell_cost":1.5,
 "mutiny":5.0
 },
@@ -11635,6 +11681,7 @@
 "harvest",
 "plenty"
 ],
+"price_letters":"wjxq",
 "mutiny":5.0
 },
 "ops":[
@@ -12408,6 +12455,7 @@
 "attack_rate":0.05,
 "friendly_fire":true,
 "deposit_factor":0.5,
+"price_letters":"wjxq",
 "sudden_death":true,
 "storm_shift":120.0
 },
@@ -12578,6 +12626,7 @@
 "fire",
 "wildfire"
 ],
+"price_letters":"wjxq",
 "storm_shift":45.0
 },
 "ops":[
@@ -12625,6 +12674,7 @@
 "fire",
 "wildfire"
 ],
+"price_letters":"wjxq",
 "storm_shift":45.0
 },
 "ops":[
@@ -12671,6 +12721,7 @@
 "counters":[
 "fire"
 ],
+"price_letters":"wjxq",
 "storm_shift":45.0
 },
 "ops":[
@@ -12706,6 +12757,7 @@
 "friendly_fire":true,
 "inflict_stun":1.0,
 "deposit_factor":0.0,
+"price_letters":"wjxq",
 "storm_shift":45.0
 },
 "ops":[
@@ -12728,7 +12780,8 @@
 "field_duration":2.0,
 "dmg_blunt":8.0,
 "attack_rate":0.2,
-"friendly_fire":true
+"friendly_fire":true,
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -12753,14 +12806,15 @@
 "field_targets":"all",
 "sets_weather":"storm",
 "field_duration":4.0,
-"dmg_electric":400.0,
+"dmg_electric":120.0,
 "attack_rate":0.03,
 "friendly_fire":true,
 "growth":1.5,
 "counters":[
 "fire",
 "drought"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -12789,6 +12843,7 @@
 "attack_rate":0.1,
 "friendly_fire":true,
 "inflict_blind":2.0,
+"price_letters":"wjxq",
 "haunts":true
 },
 "ops":[
@@ -13383,7 +13438,8 @@
 "produce_I":0.6,
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -13413,7 +13469,8 @@
 "produce_I":0.5,
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -13864,6 +13921,7 @@
 "friendly_fire":true,
 "contagion":0.8,
 "inflict_sick":25.0,
+"price_letters":"wjxq",
 "raises":"zombie"
 },
 "ops":[
@@ -13929,7 +13987,8 @@
 "land",
 "underground"
 ],
-"deposit_factor":1.5
+"deposit_factor":1.5,
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -13950,7 +14009,8 @@
 "dmg_earth":100.0,
 "inflict_stun":1.0,
 "friendly_fire":true,
-"deposit_factor":1.5
+"deposit_factor":1.5,
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -13971,7 +14031,8 @@
 "dmg_earth":150.0,
 "attack_rate":0.05,
 "friendly_fire":true,
-"inflict_stun":2.0
+"inflict_stun":2.0,
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -13993,7 +14054,8 @@
 "dmg_crush":1500.0,
 "friendly_fire":true,
 "tile_type":"hill",
-"radius":8.0
+"radius":8.0,
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -14017,7 +14079,8 @@
 "inflict_freeze":5.0,
 "friendly_fire":true,
 "tile_type":"snow",
-"radius":10.0
+"radius":10.0,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -14037,7 +14100,8 @@
 "friendly_fire":true,
 "tile_type":"lava",
 "radius":6.0,
-"luminosity":10.0
+"luminosity":10.0,
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -14960,7 +15024,8 @@
 "friendly_fire":true,
 "siege":4.0,
 "tile_type":"water",
-"radius":5.0
+"radius":5.0,
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -15019,7 +15084,8 @@
 "deinonychus",
 "utahraptor",
 "hatchling"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -15042,7 +15108,8 @@
 "z"
 ],
 "lode_share":0.5,
-"lode_stock":3.0
+"lode_stock":3.0,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -15069,7 +15136,8 @@
 "x"
 ],
 "lode_share":0.8,
-"lode_stock":15.0
+"lode_stock":15.0,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -15314,7 +15382,8 @@
 "counters":[
 "fire",
 "drought"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -15372,6 +15441,7 @@
 "friendly_fire":true,
 "inflict_confuse":2.0,
 "inflict_drunk":2.0,
+"price_letters":"wjxq",
 "haunts":true,
 "storm_shift":45.0
 },
@@ -15646,7 +15716,8 @@
 ],
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -15674,7 +15745,8 @@
 ],
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -15706,7 +15778,8 @@
 ],
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -15892,7 +15965,8 @@
 "friendly_fire":true,
 "inflict_root":3.0,
 "tile_type":"swamp",
-"radius":6.0
+"radius":6.0,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -15908,7 +15982,8 @@
 "dmg_crush":1600.0,
 "friendly_fire":true,
 "tile_type":"hill",
-"radius":5.0
+"radius":5.0,
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -16476,7 +16551,8 @@
 "produce_I":0.8,
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -16968,6 +17044,7 @@
 "metal",
 "machine"
 ],
+"price_letters":"mvxz",
 "free_speech":true
 },
 "ops":[]
@@ -17367,6 +17444,7 @@
 "nature":[
 "beast"
 ],
+"price_letters":"kzxq",
 "last_stand":10.0
 },
 "ops":[]
@@ -17407,6 +17485,7 @@
 "nature":[
 "fire"
 ],
+"price_letters":"kzxq",
 "prevents_death":1.0,
 "revives":0.5
 },
@@ -17446,7 +17525,8 @@
 "fear_aura":10.0,
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -17482,6 +17562,7 @@
 "nature":[
 "beast"
 ],
+"price_letters":"kzxq",
 "prevents_death":1.0
 },
 "ops":[]
@@ -17525,7 +17606,8 @@
 "brittleness":6.0,
 "nature":[
 "stone"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -17562,7 +17644,8 @@
 "fear_aura":10.0,
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -17603,7 +17686,8 @@
 "seats":12.0,
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -17640,7 +17724,8 @@
 "fear_aura":5.0,
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[
 [
@@ -17681,7 +17766,8 @@
 "fear_aura":9.0,
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -17723,7 +17809,8 @@
 "melting_point":950.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[
 [
@@ -17766,7 +17853,8 @@
 "produce_N":1.0,
 "nature":[
 "spirit"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -17801,7 +17889,8 @@
 "courage":10.0,
 "nature":[
 "holy"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -17840,7 +17929,8 @@
 "fear_aura":8.0,
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -17871,7 +17961,8 @@
 "flammability":7.0,
 "nature":[
 "wood"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -18882,7 +18973,8 @@
 "radius":1.0,
 "nature":[
 "fire"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -21723,7 +21815,8 @@
 ],
 "nature":[
 "plant"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -28295,7 +28388,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -28370,7 +28464,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -28413,7 +28508,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -28492,7 +28588,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -28599,7 +28696,8 @@
 "stone",
 "fire",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -28694,7 +28792,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -29180,7 +29279,8 @@
 "color":"gray",
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -29214,7 +29314,8 @@
 "color":"gray",
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -29975,7 +30076,8 @@
 "color":"black",
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -30649,7 +30751,8 @@
 "color":"blue",
 "nature":[
 "fish"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -30682,7 +30785,8 @@
 "color":"brown",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -30776,7 +30880,8 @@
 "color":"brown",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -30867,7 +30972,8 @@
 "color":"brown",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -30901,7 +31007,8 @@
 "color":"green",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -32643,6 +32750,7 @@
 "nature":[
 "wood"
 ],
+"price_letters":"vkxz",
 "denies_revival":true
 },
 "ops":[]
@@ -34486,6 +34594,7 @@
 "mercy",
 "calm"
 ],
+"price_letters":"wjxq",
 "last_stand":10.0
 },
 "ops":[
@@ -36894,6 +37003,7 @@
 "food_need":0.6,
 "field_radius":60.0,
 "field_targets":"owned",
+"price_letters":"kvxq",
 "double_letters":"vowels"
 },
 "ops":[
@@ -36928,7 +37038,8 @@
 "loudness":10.0,
 "food_need":1.8,
 "field_radius":80.0,
-"field_targets":"all"
+"field_targets":"all",
+"price_letters":"kvxq"
 },
 "ops":[
 [
@@ -38242,7 +38353,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -38287,7 +38399,8 @@
 "inflict_root":20.0,
 "inflict_bleed":5.0,
 "single_use":true,
-"color":"brown"
+"color":"brown",
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -40290,6 +40403,7 @@
 "dmg_fire":100.0,
 "contest_with":"authority",
 "contested_by":"courage",
+"price_letters":"wjxq",
 "last_stand":10.0
 },
 "ops":[]
@@ -40478,6 +40592,7 @@
 "demon",
 "ghost"
 ],
+"price_letters":"wjxq",
 "denies_revival":true
 },
 "ops":[]
@@ -40613,7 +40728,8 @@
 "idol",
 "relic",
 "temple"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -40648,6 +40764,7 @@
 "nature":[
 "holy"
 ],
+"price_letters":"kzxq",
 "revives":0.5
 },
 "ops":[]
@@ -40680,7 +40797,8 @@
 "nature":[
 "spirit",
 "holy"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -40792,6 +40910,7 @@
 "nature":[
 "flesh"
 ],
+"price_letters":"hkvz",
 "denies_revival":true
 },
 "ops":[]
@@ -41080,7 +41199,8 @@
 "summer",
 "thaw",
 "heatwave"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -41306,6 +41426,7 @@
 "wildfire",
 "heatwave"
 ],
+"price_letters":"wjxq",
 "storm_shift":120.0
 },
 "ops":[
@@ -42673,7 +42794,8 @@
 "counters":[
 "repulsion",
 "levitation"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -42701,6 +42823,7 @@
 "shelter",
 "lead"
 ],
+"price_letters":"wjxq",
 "haunts":true
 },
 "ops":[]
@@ -42805,7 +42928,8 @@
 "z"
 ],
 "lode_share":0.5,
-"lode_stock":2.0
+"lode_stock":2.0,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -42985,7 +43109,8 @@
 "shield",
 "lead",
 "shelter"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -43080,7 +43205,8 @@
 "bunker",
 "truce",
 "armistice"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -43102,7 +43228,8 @@
 "dome",
 "shelter",
 "bunker"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -43131,7 +43258,8 @@
 "dome",
 "shelter",
 "atmosphere"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -43263,7 +43391,8 @@
 "dome",
 "shelter",
 "atmosphere"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -43417,7 +43546,8 @@
 "melting_point":1538.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[
 [
@@ -43579,7 +43709,8 @@
 "melting_point":660.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[
 [
@@ -43948,7 +44079,8 @@
 "color":"brown",
 "nature":[
 "wood"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -43980,7 +44112,8 @@
 "flammability":7.0,
 "nature":[
 "wood"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -44015,7 +44148,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -44045,7 +44179,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -44111,7 +44246,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -44562,7 +44698,8 @@
 "calm",
 "breakwater",
 "anchor"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -44587,6 +44724,7 @@
 "breakwater",
 "anchor"
 ],
+"price_letters":"wjxq",
 "storm_shift":45.0
 },
 "ops":[]
@@ -44612,6 +44750,7 @@
 "sun",
 "clear"
 ],
+"price_letters":"wjxq",
 "storm_shift":45.0
 },
 "ops":[
@@ -44840,7 +44979,8 @@
 "counters":[
 "breakwater",
 "harbor"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -47519,6 +47659,7 @@
 "forgiveness",
 "pardon"
 ],
+"price_letters":"wjxq",
 "spell_cost":1.5,
 "haunts":true
 },
@@ -47539,6 +47680,7 @@
 "reprieve",
 "medic"
 ],
+"price_letters":"wjxq",
 "haunts":true
 },
 "ops":[]
@@ -47582,6 +47724,7 @@
 "sanctuary",
 "miracle"
 ],
+"price_letters":"wjxq",
 "denies_revival":true
 },
 "ops":[]
@@ -48223,7 +48366,8 @@
 "nature":[
 "wood",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -48257,7 +48401,8 @@
 "color":"brown",
 "nature":[
 "wood"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -48301,7 +48446,8 @@
 "nature":[
 "wood",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -48339,7 +48485,8 @@
 "melting_point":1538.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -48373,7 +48520,8 @@
 "flammability":7.0,
 "nature":[
 "wood"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[
 [
@@ -48420,7 +48568,8 @@
 "melting_point":1538.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -48477,7 +48626,8 @@
 "lockable",
 "portcullis",
 "drawbridge"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -48788,6 +48938,7 @@
 "nation",
 "state"
 ],
+"price_letters":"wjxq",
 "storm_shift":120.0
 },
 "ops":[
@@ -49902,7 +50053,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -49935,7 +50087,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -49974,7 +50127,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -50171,7 +50325,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -50410,6 +50565,7 @@
 "inflict_fear":10.0,
 "loudness":10.0,
 "siege":4.0,
+"price_letters":"wjxq",
 "haunts":true,
 "storm_shift":120.0
 },
@@ -50432,6 +50588,7 @@
 "tile_type":"lava",
 "radius":4.0,
 "friendly_fire":true,
+"price_letters":"wjxq",
 "storm_shift":120.0
 },
 "ops":[]
@@ -50455,6 +50612,7 @@
 "building",
 "tower"
 ],
+"price_letters":"wjxq",
 "denies_revival":true
 },
 "ops":[]
@@ -51093,7 +51251,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -51124,7 +51283,8 @@
 "flammability":7.0,
 "nature":[
 "wood"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -51187,7 +51347,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -51241,7 +51402,8 @@
 "woodland",
 "grassland",
 "meadow"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -51286,6 +51448,7 @@
 "inflict_fear":15.0,
 "multi_target":8.0,
 "friendly_fire":true,
+"price_letters":"wjxq",
 "haunts":true,
 "denies_revival":true
 },
@@ -51316,7 +51479,8 @@
 "nature":[
 "spirit"
 ],
-"food_need":0.0
+"food_need":0.0,
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -51473,7 +51637,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -51505,7 +51670,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -51533,7 +51699,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -51566,7 +51733,8 @@
 "food_need":0.08,
 "nature":[
 "flesh"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -51597,6 +51765,7 @@
 "undead"
 ],
 "food_need":0.0,
+"price_letters":"kzxq",
 "raises":"zombie"
 },
 "ops":[]
@@ -51647,6 +51816,7 @@
 "fortification",
 "rampart"
 ],
+"price_letters":"wjxq",
 "haunts":true
 },
 "ops":[]
@@ -51673,7 +51843,8 @@
 "jungle",
 "rainforest",
 "greenwood"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -51697,6 +51868,7 @@
 "truce",
 "pax"
 ],
+"price_letters":"wjxq",
 "last_stand":10.0,
 "haunts":true,
 "storm_shift":45.0
@@ -51882,7 +52054,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -51993,6 +52166,7 @@
 "inflict_fear":10.0,
 "loudness":10.0,
 "friendly_fire":true,
+"price_letters":"wjxq",
 "haunts":true
 },
 "ops":[]
@@ -52014,7 +52188,8 @@
 "inflict_deaf":10.0,
 "inflict_stun":6.0,
 "loudness":10.0,
-"friendly_fire":true
+"friendly_fire":true,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -183526,6 +183701,7 @@
 "inflict_stun":2.0,
 "inflict_blind":2.0,
 "multi_target":3.0,
+"price_letters":"wjxq",
 "haunts":true
 },
 "ops":[]
@@ -184672,7 +184848,8 @@
 "counters":[
 "anchor",
 "inertia"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -184845,7 +185022,8 @@
 "balloon",
 "blimp"
 ],
-"loudness":8.0
+"loudness":8.0,
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -184948,7 +185126,8 @@
 "event_duration":1.0,
 "dmg_fire":120.0,
 "temperature":100.0,
-"inflict_burn":6.0
+"inflict_burn":6.0,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -184990,7 +185169,8 @@
 "bunker",
 "shelter",
 "antiaircraft"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -185008,7 +185188,8 @@
 "inflict_stun":6.0,
 "inflict_expose":20.0,
 "loudness":10.0,
-"friendly_fire":true
+"friendly_fire":true,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -186226,7 +186407,8 @@
 "event_duration":1.0,
 "dmg_crush":80.0,
 "dmg_slash":30.0,
-"inflict_bleed":4.0
+"inflict_bleed":4.0,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -186275,7 +186457,8 @@
 "event_duration":1.0,
 "dmg_suffocation":150.0,
 "inflict_silence":10.0,
-"inflict_stun":3.0
+"inflict_stun":3.0,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -186796,7 +186979,8 @@
 "dmg_fire":300.0,
 "inflict_burn":10.0,
 "temperature":900.0,
-"friendly_fire":true
+"friendly_fire":true,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -187754,6 +187938,7 @@
 "besieger",
 "undermining"
 ],
+"price_letters":"wjxq",
 "last_stand":10.0
 },
 "ops":[]
@@ -187974,7 +188159,8 @@
 "corpse",
 "mummy",
 "cadaver"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -188521,7 +188707,8 @@
 "event_duration":1.0,
 "placement_range":30.0,
 "dmg_acid":120.0,
-"strips_adjectives":2.0
+"strips_adjectives":2.0,
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -189494,7 +189681,8 @@
 "event_radius":5.0,
 "event_duration":1.0,
 "dmg_electric":150.0,
-"inflict_stun":2.0
+"inflict_stun":2.0,
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -189744,7 +189932,8 @@
 "read_properties":5.0,
 "dmg_slash":100.0,
 "severs":1.0,
-"inflict_expose":8.0
+"inflict_expose":8.0,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -189815,7 +190004,8 @@
 "event_target":"object",
 "event_duration":1.0,
 "dmg_acid":120.0,
-"corrosiveness":6.0
+"corrosiveness":6.0,
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -190634,7 +190824,8 @@
 "counters":[
 "bodyguard",
 "reprieve"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -191511,6 +191702,7 @@
 "contest_with":"authority",
 "contested_by":"courage",
 "inflict_fear":10.0,
+"price_letters":"wjxq",
 "spell_cost":1.5,
 "haunts":true,
 "denies_revival":true
@@ -192807,7 +192999,8 @@
 "dmg_fire":150.0,
 "temperature":180.0,
 "inflict_burn":8.0,
-"odor":6.0
+"odor":6.0,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -193454,6 +193647,7 @@
 "loudness":10.0,
 "inflict_fear":5.0,
 "friendly_fire":true,
+"price_letters":"wjxq",
 "haunts":true
 },
 "ops":[]
@@ -193494,7 +193688,8 @@
 "dmg_pierce":260.0,
 "armor_pierce":0.3,
 "inflict_bleed":8.0,
-"loudness":10.0
+"loudness":10.0,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -194750,7 +194945,8 @@
 "bunker",
 "shelter",
 "warning"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -195525,7 +195721,8 @@
 "dmg_radiation":80.0,
 "dmg_electric":80.0,
 "inflict_stun":3.0,
-"radioactivity":4.0
+"radioactivity":4.0,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -198701,7 +198898,8 @@
 "knockback":15.0,
 "dmg_crush":200.0,
 "inflict_reverse":8.0,
-"strips_adjectives":1.0
+"strips_adjectives":1.0,
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -199930,7 +200128,8 @@
 "event_target":"object",
 "event_duration":1.0,
 "dmg_crush":120.0,
-"knockback":2.0
+"knockback":2.0,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -200620,6 +200819,7 @@
 "inflict_stun":4.0,
 "luminosity":8.0,
 "dmg_holy":100.0,
+"price_letters":"wjxq",
 "sudden_death":true,
 "storm_shift":120.0
 },
@@ -202058,6 +202258,7 @@
 "contest_with":"tracking",
 "contested_by":"stealth",
 "event_duration":5.0,
+"price_letters":"wjxq",
 "last_stand":10.0
 },
 "ops":[
@@ -202222,7 +202423,8 @@
 "dmg_fire":200.0,
 "temperature":250.0,
 "inflict_burn":10.0,
-"odor":7.0
+"odor":7.0,
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -203862,6 +204064,7 @@
 "dmg_blunt":600.0,
 "destroys_target":true,
 "loudness":8.0,
+"price_letters":"wjxq",
 "storm_pause":45.0
 },
 "ops":[]
@@ -205728,7 +205931,8 @@
 "event_duration":1.0,
 "dmg_slash":110.0,
 "multi_target":3.0,
-"knockback":3.0
+"knockback":3.0,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -206746,7 +206950,8 @@
 "event_duration":1.0,
 "dmg_crush":120.0,
 "inflict_stun":3.0,
-"inflict_bleed":4.0
+"inflict_bleed":4.0,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -206829,7 +207034,8 @@
 "gate",
 "wall",
 "lockable"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -207190,6 +207396,7 @@
 "inflict_curse":40.0,
 "contest_with":"aggression",
 "contested_by":"luck",
+"price_letters":"wjxq",
 "last_stand":10.0,
 "haunts":true
 },
@@ -212761,7 +212968,8 @@
 "color":"brown",
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -212871,7 +213079,8 @@
 "melting_point":1200.0,
 "nature":[
 "stone"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -212986,7 +213195,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -214798,7 +215008,8 @@
 "brittleness":1.0,
 "nature":[
 "paper"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[
 [
@@ -215301,7 +215512,8 @@
 "attack_area":3.0,
 "single_use":true,
 "friendly_fire":true,
-"loudness":10.0
+"loudness":10.0,
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -216079,7 +216291,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -216247,7 +216460,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -217483,7 +217697,8 @@
 "brittleness":1.0,
 "nature":[
 "paper"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -217709,7 +217924,8 @@
 "melting_point":1200.0,
 "nature":[
 "stone"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -218044,7 +218260,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -218689,7 +218906,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -218824,7 +219042,8 @@
 "event_target":"character",
 "dmg_blunt":150.0,
 "dmg_slash":150.0,
-"sets_hostile":true
+"sets_hostile":true,
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -218855,7 +219074,8 @@
 "contest_with":"accuracy",
 "contested_by":"evasion",
 "dmg_pierce":300.0,
-"event_duration":1.0
+"event_duration":1.0,
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -218877,6 +219097,7 @@
 "dmg_blunt":120.0,
 "knockback":5.0,
 "inflict_stun":2.0,
+"price_letters":"wjxq",
 "inflict_amnesia":4
 },
 "ops":[]
@@ -218894,6 +219115,7 @@
 "inflict_stun":6.0,
 "contest_with":"strength",
 "contested_by":"evasion",
+"price_letters":"wjxq",
 "inflict_amnesia":4,
 "storm_shift":45.0
 },
@@ -218923,7 +219145,8 @@
 "lockable",
 "wall",
 "barricade"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -218939,6 +219162,7 @@
 "dmg_blunt":220.0,
 "knockback":12.0,
 "inflict_stun":4.0,
+"price_letters":"wjxq",
 "inflict_amnesia":4
 },
 "ops":[]
@@ -218955,6 +219179,7 @@
 "dmg_slash":60.0,
 "dmg_blunt":40.0,
 "strips_adjectives":1.0,
+"price_letters":"wjxq",
 "storm_pause":45.0
 },
 "ops":[
@@ -218977,6 +219202,7 @@
 "dmg_blunt":60.0,
 "dmg_slash":60.0,
 "inflict_stun":2.0,
+"price_letters":"wjxq",
 "inflict_amnesia":4
 },
 "ops":[]
@@ -218992,6 +219218,7 @@
 "placement_range":50.0,
 "dmg_magic":300.0,
 "dmg_acid":150.0,
+"price_letters":"wjxq",
 "denies_revival":true
 },
 "ops":[
@@ -219067,6 +219294,7 @@
 "knockback":6.0,
 "inflict_stun":3.0,
 "accuracy":0.2,
+"price_letters":"wjxq",
 "inflict_amnesia":4
 },
 "ops":[]
@@ -219091,6 +219319,7 @@
 "loudness":10.0,
 "inflict_fear":4.0,
 "friendly_fire":true,
+"price_letters":"wjxq",
 "haunts":true
 },
 "ops":[]
@@ -219112,6 +219341,7 @@
 "inflict_blind":6.0,
 "loudness":10.0,
 "friendly_fire":true,
+"price_letters":"wjxq",
 "haunts":true
 },
 "ops":[]
@@ -219142,7 +219372,8 @@
 "zeppelin",
 "drone",
 "balloon"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -219160,7 +219391,8 @@
 "dmg_pierce":100.0,
 "letter_steal":2.0,
 "sets_hostile":true,
-"loudness":7.0
+"loudness":7.0,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -219178,7 +219410,8 @@
 "inflict_stun":4.0,
 "inflict_amnesia":4.0,
 "knockback":6.0,
-"loudness":8.0
+"loudness":8.0,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -219214,7 +219447,8 @@
 "friendly_fire":true,
 "loudness":10.0,
 "tile_type":"pit",
-"radius":2.0
+"radius":2.0,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -219349,6 +219583,7 @@
 "severs":2.0,
 "inflict_bleed":20.0,
 "inflict_fear":12.0,
+"price_letters":"wjxq",
 "haunts":true
 },
 "ops":[
@@ -219424,7 +219659,8 @@
 "dmg_crush":150.0,
 "knockback":15.0,
 "inflict_stun":4.0,
-"loudness":8.0
+"loudness":8.0,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -219469,7 +219705,8 @@
 "wall",
 "door",
 "lockable"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -219534,7 +219771,8 @@
 "raft",
 "ball",
 "bubble"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -219595,7 +219833,8 @@
 "shelter",
 "bunker",
 "deflector"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -219612,6 +219851,7 @@
 "inflict_stun":6.0,
 "inflict_fear":6.0,
 "loudness":7.0,
+"price_letters":"wjxq",
 "haunts":true
 },
 "ops":[]
@@ -219629,7 +219869,8 @@
 "attack_rate":3.0,
 "loudness":10.0,
 "contest_with":"accuracy",
-"contested_by":"evasion"
+"contested_by":"evasion",
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -219654,7 +219895,8 @@
 "shelter",
 "bunker",
 "armor"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -219670,7 +219912,8 @@
 "dmg_slash":180.0,
 "inflict_bleed":8.0,
 "critical":0.2,
-"sharpness":8.0
+"sharpness":8.0,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -219756,7 +219999,8 @@
 "event_duration":1.0,
 "dmg_crush":180.0,
 "inflict_root":4.0,
-"dmg_suffocation":40.0
+"dmg_suffocation":40.0,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -219772,7 +220016,8 @@
 "critical":0.4,
 "armor_pierce":0.3,
 "inflict_bleed":8.0,
-"attack_windup":0.3
+"attack_windup":0.3,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -219829,6 +220074,7 @@
 "moth",
 "bee"
 ],
+"price_letters":"wjxq",
 "inflict_amnesia":4
 },
 "ops":[]
@@ -219844,6 +220090,7 @@
 "event_duration":1.0,
 "dmg_blunt":140.0,
 "inflict_fear":6.0,
+"price_letters":"wjxq",
 "haunts":true
 },
 "ops":[
@@ -219878,6 +220125,7 @@
 "reputation":-20.0,
 "contest_with":"stealth",
 "contested_by":"detect_stealth",
+"price_letters":"wjxq",
 "haunts":true
 },
 "ops":[
@@ -219902,6 +220150,7 @@
 "inflict_fear":20.0,
 "inflict_bleed":10.0,
 "read_properties":5.0,
+"price_letters":"wjxq",
 "haunts":true
 },
 "ops":[
@@ -219924,6 +220173,7 @@
 "dmg_blunt":140.0,
 "inflict_stun":5.0,
 "critical":0.2,
+"price_letters":"wjxq",
 "inflict_amnesia":4
 },
 "ops":[]
@@ -219978,7 +220228,8 @@
 "dmg_slash":140.0,
 "dmg_pierce":80.0,
 "inflict_bleed":12.0,
-"inflict_slow":4.0
+"inflict_slow":4.0,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -227414,6 +227665,7 @@
 "temperature_delta":60.0,
 "luminosity":9.0,
 "friendly_fire":true,
+"price_letters":"wjxq",
 "raises":"skeleton"
 },
 "ops":[]
@@ -243131,7 +243383,8 @@
 "lifesteal":0.1,
 "nature":[
 "flesh"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -246815,7 +247068,8 @@
 "brittleness":4.0,
 "nature":[
 "stone"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -249672,7 +249926,8 @@
 "nature":[
 "stone",
 "fire"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -251062,7 +251317,8 @@
 "nature":[
 "wood",
 "ice"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[
 [
@@ -251869,7 +252125,8 @@
 "nature":[
 "stone",
 "fire"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -254132,7 +254389,8 @@
 "brittleness":4.0,
 "nature":[
 "stone"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -255407,7 +255665,8 @@
 "brittleness":4.0,
 "nature":[
 "stone"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -255454,7 +255713,8 @@
 "nature":[
 "stone",
 "fire"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -256847,7 +257107,8 @@
 "sky",
 "air",
 "flying"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[
 [
@@ -265453,7 +265714,8 @@
 "breakwater",
 "seawall",
 "harbor"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -265908,6 +266170,7 @@
 "order",
 "peace"
 ],
+"price_letters":"wjxq",
 "mutiny":5.0
 },
 "ops":[]
@@ -266658,7 +266921,8 @@
 "dmg_disease":5.0,
 "lingering":60.0,
 "movement_cost":3.0,
-"color":"brown"
+"color":"brown",
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -269841,7 +270105,8 @@
 ],
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -269867,7 +270132,8 @@
 "color":"green",
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -270788,7 +271054,8 @@
 ],
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -271195,7 +271462,8 @@
 "rain",
 "firefighter",
 "sprinkler"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -271334,7 +271602,8 @@
 "warship",
 "frigate",
 "admiral"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -271716,7 +271985,8 @@
 ],
 "dmg_blunt":200.0,
 "siege":3.0,
-"inflict_expose":20.0
+"inflict_expose":20.0,
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -271786,7 +272056,8 @@
 "inflict_sick":10.0,
 "inflict_bleed":8.0,
 "heals":-20.0,
-"fine":4.0
+"fine":4.0,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -272124,6 +272395,7 @@
 "alarm",
 "investigation"
 ],
+"price_letters":"wjxq",
 "denies_revival":true
 },
 "ops":[
@@ -272567,6 +272839,7 @@
 "alarm",
 "camera"
 ],
+"price_letters":"wjxq",
 "denies_revival":true
 },
 "ops":[
@@ -273408,7 +273681,8 @@
 "food_need":0.03,
 "nature":[
 "flesh"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -273962,7 +274236,8 @@
 "food_need":0.03,
 "nature":[
 "flesh"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -274165,7 +274440,8 @@
 "inflict_fear":10.0,
 "nature":[
 "flesh"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -275436,7 +275712,8 @@
 "inflict_root":20.0,
 "dmg_blunt":150.0,
 "stealth":3.0,
-"luminosity":0.0
+"luminosity":0.0,
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -275623,7 +275900,8 @@
 "targets":[
 "land",
 "underground"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -275846,7 +276124,8 @@
 "inflict_root":6.0,
 "inflict_stun":2.0,
 "attack_windup":2.0,
-"friendly_fire":true
+"friendly_fire":true,
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -275970,6 +276249,7 @@
 "infinity",
 "shield"
 ],
+"price_letters":"wjxq",
 "denies_revival":true,
 "storm_shift":120.0
 },
@@ -276001,7 +276281,8 @@
 "event_target":"object",
 "dmg_crush":600.0,
 "dmg_blast":300.0,
-"siege":3.0
+"siege":3.0,
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -276032,6 +276313,7 @@
 "attack_area":10.0,
 "friendly_fire":true,
 "loudness":10.0,
+"price_letters":"wjxq",
 "denies_revival":true
 },
 "ops":[]
@@ -276049,7 +276331,8 @@
 "siege":4.0,
 "strips_adjectives":2.0,
 "reclaim_rate":0.5,
-"letter_refund":0.3
+"letter_refund":0.3,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -276107,7 +276390,8 @@
 "multi_target":10.0,
 "inflict_bleed":10.0,
 "friendly_fire":true,
-"loudness":9.0
+"loudness":9.0,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -276125,6 +276409,7 @@
 "destroys_target":true,
 "loudness":10.0,
 "elevation":-4.0,
+"price_letters":"wjxq",
 "denies_revival":true
 },
 "ops":[]
@@ -276141,6 +276426,7 @@
 "event_duration":1.0,
 "dmg_crush":300.0,
 "siege":4.0,
+"price_letters":"wjxq",
 "denies_revival":true
 },
 "ops":[]
@@ -276165,6 +276451,7 @@
 "ice",
 "pottery"
 ],
+"price_letters":"wjxq",
 "storm_pause":45.0
 },
 "ops":[]
@@ -276212,6 +276499,7 @@
 "siege":6.0,
 "destroys_target":true,
 "loudness":10.0,
+"price_letters":"wjxq",
 "denies_revival":true
 },
 "ops":[]
@@ -276492,6 +276780,7 @@
 "nature":[
 "metal"
 ],
+"price_letters":"kvxq",
 "inflict_amnesia":4
 },
 "ops":[]
@@ -277051,7 +277340,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -277367,7 +277657,8 @@
 "melting_point":1538.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -277391,7 +277682,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -277914,7 +278206,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -278134,7 +278427,8 @@
 "nature":[
 "metal",
 "fire"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -278251,7 +278545,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -278464,7 +278759,8 @@
 "attack_windup":1.0,
 "siege":5.0,
 "friendly_fire":true,
-"loudness":9.0
+"loudness":9.0,
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -279196,7 +279492,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -279721,7 +280018,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -280753,7 +281051,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -282406,7 +282705,8 @@
 "melting_point":660.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[
 [
@@ -282442,7 +282742,8 @@
 "flammability":7.0,
 "nature":[
 "wood"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -282989,7 +283290,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -283015,7 +283317,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[
 [
@@ -284396,7 +284699,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -285097,7 +285401,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -285604,7 +285909,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -285899,6 +286205,7 @@
 "inflict_fear":10.0,
 "friendly_fire":true,
 "siege":5.0,
+"price_letters":"wjxq",
 "haunts":true
 },
 "ops":[
@@ -285955,7 +286262,8 @@
 "summon_count":3.0,
 "dmg_holy":150.0,
 "inflict_fear":10.0,
-"luminosity":6.0
+"luminosity":6.0,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -296047,7 +296355,8 @@
 "counters":[
 "bodyguard",
 "guard"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -296449,7 +296758,8 @@
 "knockback":6.0,
 "inflict_deaf":6.0,
 "friendly_fire":true,
-"siege":2.0
+"siege":2.0,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -296747,7 +297057,8 @@
 "providence",
 "miracle",
 "shelter"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -296800,6 +297111,7 @@
 "miracle",
 "shelter"
 ],
+"price_letters":"wjxq",
 "storm_shift":120.0
 },
 "ops":[
@@ -297117,7 +297429,8 @@
 "anchor",
 "deflector",
 "dome"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -297199,7 +297512,8 @@
 "event_target":"character",
 "event_duration":1.0,
 "dmg_crush":150.0,
-"inflict_shrink":20.0
+"inflict_shrink":20.0,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -297216,7 +297530,8 @@
 "loudness":10.0,
 "recruit_rate":3.0,
 "dmg_sonic":10.0,
-"attack_rate":0.2
+"attack_rate":0.2,
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -298703,7 +299018,8 @@
 "siege":4.0,
 "loudness":10.0,
 "luminosity":10.0,
-"friendly_fire":true
+"friendly_fire":true,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -299796,7 +300112,8 @@
 "tile_type":"water",
 "radius":4.0,
 "dmg_water":80.0,
-"dmg_suffocation":60.0
+"dmg_suffocation":60.0,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -299968,6 +300285,7 @@
 "inflict_confuse":5.0,
 "alarm":true,
 "friendly_fire":true,
+"price_letters":"wjxq",
 "haunts":true
 },
 "ops":[]
@@ -300214,6 +300532,7 @@
 "heretic",
 "demon"
 ],
+"price_letters":"wjxq",
 "denies_revival":true,
 "sudden_death":true,
 "storm_shift":120.0
@@ -300239,6 +300558,7 @@
 "heretic",
 "demon"
 ],
+"price_letters":"wjxq",
 "mutiny":6.0,
 "mutiny_joins":true,
 "denies_revival":true,
@@ -300398,6 +300718,7 @@
 "event_duration":1.0,
 "dmg_blunt":140.0,
 "inflict_stun":3.0,
+"price_letters":"wjxq",
 "inflict_amnesia":4
 },
 "ops":[
@@ -301224,7 +301545,8 @@
 "alpha",
 "genesis",
 "beginning"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -301289,6 +301611,7 @@
 "inflict_fear":10.0,
 "contest_with":"courage",
 "contested_by":"courage",
+"price_letters":"wjxq",
 "haunts":true
 },
 "ops":[]
@@ -301308,7 +301631,8 @@
 "inflict_rage":10.0,
 "knockback":8.0,
 "loudness":9.0,
-"friendly_fire":true
+"friendly_fire":true,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -301398,6 +301722,7 @@
 "dmg_electric":500.0,
 "destroys_target":true,
 "jams":true,
+"price_letters":"wjxq",
 "inflict_censor":6
 },
 "ops":[]
@@ -301725,7 +302050,8 @@
 "counters":[
 "dome",
 "deflector"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -301863,6 +302189,7 @@
 "inflict_stun":3.0,
 "loudness":8.0,
 "friendly_fire":true,
+"price_letters":"wjxq",
 "inflict_amnesia":4
 },
 "ops":[]
@@ -302200,6 +302527,7 @@
 "lead",
 "magnetosphere"
 ],
+"price_letters":"wjxq",
 "haunts":true
 },
 "ops":[
@@ -302474,7 +302802,8 @@
 "dome",
 "deflector",
 "mesosphere"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -303350,7 +303679,8 @@
 "tile_type":"deep_water",
 "radius":3.0,
 "depth":8.0,
-"dmg_water":200.0
+"dmg_water":200.0,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -303593,7 +303923,8 @@
 "radius":4.0,
 "counters":[
 "dome"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -303938,6 +304269,7 @@
 "shade",
 "eclipse"
 ],
+"price_letters":"wjxq",
 "haunts":true
 },
 "ops":[]
@@ -303955,7 +304287,8 @@
 "dmg_water":200.0,
 "knockback":8.0,
 "tile_type":"water",
-"radius":4.0
+"radius":4.0,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -304210,6 +304543,7 @@
 "inflict_deaf":10.0,
 "inflict_stun":3.0,
 "inflict_fear":5.0,
+"price_letters":"wjxq",
 "haunts":true
 },
 "ops":[]
@@ -304399,7 +304733,8 @@
 "loudness":9.0,
 "dmg_crush":100.0,
 "inflict_stun":2.0,
-"friendly_fire":true
+"friendly_fire":true,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -304832,7 +305167,8 @@
 "dmg_sonic":120.0,
 "inflict_stun":3.0,
 "siege":2.0,
-"friendly_fire":true
+"friendly_fire":true,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -319177,7 +319513,8 @@
 "pack_size":3.0,
 "nature":[
 "flesh"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -319235,7 +319572,8 @@
 "food_need":0.05,
 "nature":[
 "flesh"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -319408,6 +319746,7 @@
 "nature":[
 "flesh"
 ],
+"price_letters":"hkvz",
 "command_limit":6.0
 },
 "ops":[]
@@ -321237,7 +321576,8 @@
 "food_need":0.04,
 "nature":[
 "flesh"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -321710,7 +322050,8 @@
 "color":"yellow",
 "nature":[
 "fish"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -322312,7 +322653,8 @@
 "color":"blue",
 "nature":[
 "fish"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -322341,7 +322683,8 @@
 "color":"black",
 "nature":[
 "fish"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -322372,7 +322715,8 @@
 "color":"blue",
 "nature":[
 "fish"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -322410,7 +322754,8 @@
 "color":"gray",
 "nature":[
 "fish"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -322695,7 +323040,8 @@
 "color":"yellow",
 "nature":[
 "fish"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -330666,7 +331012,8 @@
 "melting_point":1200.0,
 "nature":[
 "stone"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -330781,7 +331128,8 @@
 "melting_point":1200.0,
 "nature":[
 "stone"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -331017,7 +331365,8 @@
 "melting_point":1200.0,
 "nature":[
 "stone"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -331760,7 +332109,8 @@
 "melting_point":1200.0,
 "nature":[
 "stone"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -331956,7 +332306,8 @@
 "brittleness":4.0,
 "nature":[
 "stone"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -332287,7 +332638,8 @@
 "melting_point":1200.0,
 "nature":[
 "stone"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[
 [
@@ -332417,7 +332769,8 @@
 "dmg_fire":150.0,
 "dmg_blast":100.0,
 "inflict_burn":6.0,
-"fuel_output":3.0
+"fuel_output":3.0,
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -332439,7 +332792,8 @@
 "color":"white",
 "dmg_fire":100.0,
 "luminosity":2.0,
-"fuel_output":2.0
+"fuel_output":2.0,
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -332513,7 +332867,8 @@
 "dmg_fire":60.0,
 "inflict_blind":20.0,
 "dmg_poison":60.0,
-"stealth":3.0
+"stealth":3.0,
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -332540,7 +332895,8 @@
 "fear_aura":6.0,
 "nature":[
 "fire"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -332562,7 +332918,8 @@
 "dmg_fire":150.0,
 "dmg_blast":100.0,
 "inflict_burn":6.0,
-"fuel_output":3.0
+"fuel_output":3.0,
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -334329,7 +334686,8 @@
 "color":"white",
 "dmg_fire":150.0,
 "dmg_blast":150.0,
-"inflict_burn":4.0
+"inflict_burn":4.0,
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -334354,7 +334712,8 @@
 "inflict_poison":20.0,
 "inflict_blind":4.0,
 "res_disease":1.0,
-"lingering":5.0
+"lingering":5.0,
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -334374,7 +334733,8 @@
 "color":"white",
 "dmg_blast":120.0,
 "dmg_fire":100.0,
-"inflict_sleep":4.0
+"inflict_sleep":4.0,
+"price_letters":"kvxq"
 },
 "ops":[
 [
@@ -334404,7 +334764,8 @@
 "dmg_poison":80.0,
 "dmg_fire":60.0,
 "inflict_burn":6.0,
-"armor_pierce":0.5
+"armor_pierce":0.5,
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -334521,7 +334882,8 @@
 "hover":true,
 "dmg_blast":200.0,
 "dmg_fire":150.0,
-"inflict_burn":4.0
+"inflict_burn":4.0,
+"price_letters":"kvxq"
 },
 "ops":[
 [
@@ -334574,7 +334936,8 @@
 "dmg_blast":150.0,
 "dmg_fire":120.0,
 "dmg_suffocation":30.0,
-"hover":true
+"hover":true,
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -334620,7 +334983,8 @@
 "res_fire":0.5,
 "nature":[
 "ice"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -334678,7 +335042,8 @@
 "dmg_blast":250.0,
 "dmg_fire":200.0,
 "inflict_burn":5.0,
-"fuel_output":1.0
+"fuel_output":1.0,
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -334722,7 +335087,8 @@
 "inflict_poison":60.0,
 "inflict_stun":8.0,
 "stealth":8.0,
-"lingering":20.0
+"lingering":20.0,
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -336243,6 +336609,7 @@
 "food_need":0.45,
 "field_radius":60.0,
 "field_targets":"owned",
+"price_letters":"kvxq",
 "double_letters":"all"
 },
 "ops":[
@@ -337262,7 +337629,8 @@
 "knockback":6.0,
 "friendly_fire":true,
 "food_output":10.0,
-"loudness":7.0
+"loudness":7.0,
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -337451,7 +337819,8 @@
 "loudness":8.0,
 "food_need":0.36,
 "field_radius":60.0,
-"field_targets":"owned"
+"field_targets":"owned",
+"price_letters":"kvxq"
 },
 "ops":[
 [
@@ -340003,7 +340372,8 @@
 "inflict_deaf":3.0,
 "food_need":0.15,
 "field_radius":60.0,
-"field_targets":"owned"
+"field_targets":"owned",
+"price_letters":"kvxq"
 },
 "ops":[
 [
@@ -341301,7 +341671,8 @@
 "food_need":2.0,
 "field_radius":100.0,
 "field_targets":"all",
-"inflict_charm":3.0
+"inflict_charm":3.0,
+"price_letters":"kvxq"
 },
 "ops":[
 [
@@ -341871,7 +342242,8 @@
 "build_speed":3.0,
 "pack_size":10.0,
 "food_need":0.2,
-"produce_N":1.5
+"produce_N":1.5,
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -342038,7 +342410,8 @@
 ],
 "nature":[
 "plant"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -347871,6 +348244,7 @@
 "nature":[
 "metal"
 ],
+"price_letters":"kvxq",
 "command_limit":4.0
 },
 "ops":[
@@ -351810,6 +352184,7 @@
 "inflict_fear":10.0,
 "raises":"ghost",
 "friendly_fire":true,
+"price_letters":"wjxq",
 "haunts":true,
 "denies_revival":true
 },
@@ -351831,6 +352206,7 @@
 "counters":[
 "life"
 ],
+"price_letters":"wjxq",
 "denies_revival":true
 },
 "ops":[]
@@ -351928,7 +352304,8 @@
 "dmg_slash":400.0,
 "inflict_bleed":20.0,
 "contest_with":"stealth",
-"contested_by":"detect_stealth"
+"contested_by":"detect_stealth",
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -351945,7 +352322,8 @@
 "dmg_pierce":150.0,
 "inflict_bleed":10.0,
 "food_output":3.0,
-"event_duration":2.0
+"event_duration":2.0,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -351984,6 +352362,7 @@
 "contested_by":"evasion",
 "inflict_curse":30.0,
 "fine":6.0,
+"price_letters":"wjxq",
 "haunts":true
 },
 "ops":[]
@@ -352014,6 +352393,7 @@
 "dmg_slash":300.0,
 "inflict_bleed":15.0,
 "inflict_fear":10.0,
+"price_letters":"wjxq",
 "haunts":true
 },
 "ops":[
@@ -352038,6 +352418,7 @@
 "contest_with":"strength",
 "contested_by":"evasion",
 "inflict_fear":10.0,
+"price_letters":"wjxq",
 "haunts":true,
 "denies_revival":true
 },
@@ -371665,7 +372046,8 @@
 "melting_point":0.0,
 "nature":[
 "ice"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -371694,7 +372076,8 @@
 "lode_stock":6.0,
 "nature":[
 "fire"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -371950,7 +372333,8 @@
 "tile_type":"water",
 "radius":1.0,
 "friendly_fire":true,
-"luminosity":2.0
+"luminosity":2.0,
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -371986,7 +372370,8 @@
 "melting_point":0.0,
 "nature":[
 "ice"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -372109,7 +372494,8 @@
 "melting_point":0.0,
 "nature":[
 "ice"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[
 [
@@ -372335,7 +372721,8 @@
 "dmg_fire":200.0,
 "attack_rate":0.5,
 "friendly_fire":true,
-"luminosity":6.0
+"luminosity":6.0,
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -374676,6 +375063,7 @@
 "nature":[
 "flesh"
 ],
+"price_letters":"hkvz",
 "command_limit":6.0,
 "last_stand":10.0
 },
@@ -377264,7 +377652,8 @@
 "inflict_poison":20.0,
 "lingering":5.0,
 "single_use":true,
-"friendly_fire":true
+"friendly_fire":true,
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -377694,7 +378083,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[
 [
@@ -377739,7 +378129,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -377842,7 +378233,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -378065,7 +378457,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -378142,7 +378535,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -378332,7 +378726,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -378378,7 +378773,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -378462,7 +378858,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -378500,7 +378897,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -378570,7 +378968,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -378748,7 +379147,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -378867,7 +379267,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -379005,7 +379406,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -379129,7 +379531,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -379194,7 +379597,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -379290,7 +379694,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -379322,7 +379727,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -379418,7 +379824,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -379799,7 +380206,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -379940,7 +380348,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -380449,7 +380858,8 @@
 "color":"black",
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -380580,7 +380990,8 @@
 "color":"white",
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -380864,7 +381275,8 @@
 "color":"brown",
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -380897,7 +381309,8 @@
 "produce_I":0.6,
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -380959,7 +381372,8 @@
 "produce_I":0.43,
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -381221,7 +381635,8 @@
 "color":"gray",
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -381288,7 +381703,8 @@
 "produce_I":0.43,
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -381743,7 +382159,8 @@
 "color":"gray",
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -381964,7 +382381,8 @@
 "produce_I":0.43,
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -381996,7 +382414,8 @@
 "color":"brown",
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -382393,7 +382812,8 @@
 "color":"brown",
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -382447,7 +382867,8 @@
 "color":"gray",
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -382519,7 +382940,8 @@
 "color":"brown",
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -382848,7 +383270,8 @@
 "color":"gray",
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -383035,7 +383458,8 @@
 "color":"orange",
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -383071,7 +383495,8 @@
 "color":"yellow",
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -383131,7 +383556,8 @@
 "produce_I":0.43,
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -383457,7 +383883,8 @@
 "color":"brown",
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -383488,7 +383915,8 @@
 "color":"brown",
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -383550,7 +383978,8 @@
 "color":"brown",
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -383579,7 +384008,8 @@
 "color":"brown",
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -383608,7 +384038,8 @@
 "color":"brown",
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -383866,7 +384297,8 @@
 "color":"brown",
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -383928,7 +384360,8 @@
 "color":"gray",
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -384728,7 +385161,8 @@
 "color":"gray",
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -384818,7 +385252,8 @@
 "color":"tan",
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -385062,7 +385497,8 @@
 "color":"gray",
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -385091,7 +385527,8 @@
 "color":"brown",
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -385571,7 +386008,8 @@
 "color":"orange",
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -385681,7 +386119,8 @@
 "color":"gray",
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -385976,7 +386415,8 @@
 "produce_I":0.45,
 "nature":[
 "beast"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -386219,7 +386659,8 @@
 "value":2.0,
 "color":"white",
 "dmg_blast":120.0,
-"fertility":5.0
+"fertility":5.0,
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -386302,7 +386743,8 @@
 "value":100000.0,
 "counters":[
 "matter"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -386348,7 +386790,8 @@
 "color":"gray",
 "dmg_poison":200.0,
 "inflict_poison":40.0,
-"stealth":4.0
+"stealth":4.0,
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -386669,7 +387112,8 @@
 "color":"red",
 "dmg_acid":60.0,
 "dmg_poison":60.0,
-"inflict_poison":10.0
+"inflict_poison":10.0,
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -386853,7 +387297,8 @@
 "value":2.0,
 "color":"white",
 "dmg_acid":100.0,
-"inflict_burn":4.0
+"inflict_burn":4.0,
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -387255,7 +387700,8 @@
 "color":"yellow",
 "dmg_acid":150.0,
 "inflict_burn":4.0,
-"armor_pierce":0.6
+"armor_pierce":0.6,
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -387334,7 +387780,8 @@
 "color":"white",
 "dmg_poison":500.0,
 "dmg_suffocation":100.0,
-"inflict_poison":20.0
+"inflict_poison":20.0,
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -387822,7 +388269,8 @@
 "dmg_radiation":100.0,
 "lingering":600.0,
 "contagion":0.1,
-"inflict_poison":20.0
+"inflict_poison":20.0,
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -388329,7 +388777,8 @@
 "odor":7.0,
 "fuel_output":5.0,
 "spread_rate":1.0,
-"friendly_fire":true
+"friendly_fire":true,
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -389766,7 +390215,8 @@
 "color":"white",
 "dmg_suffocation":150.0,
 "inflict_sleep":20.0,
-"stealth":10.0
+"stealth":10.0,
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -389923,7 +390373,8 @@
 "value":2.0,
 "color":"white",
 "dmg_fire":120.0,
-"inflict_burn":5.0
+"inflict_burn":5.0,
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -389991,7 +390442,8 @@
 "value":2.0,
 "color":"white",
 "dmg_blast":100.0,
-"fertility":6.0
+"fertility":6.0,
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -390032,7 +390484,8 @@
 "value":3.0,
 "color":"white",
 "dmg_fire":100.0,
-"dmg_blast":100.0
+"dmg_blast":100.0,
+"price_letters":"kvxq"
 },
 "ops":[
 [
@@ -390426,7 +390879,8 @@
 "dmg_fire":200.0,
 "inflict_burn":15.0,
 "dmg_poison":40.0,
-"lingering":5.0
+"lingering":5.0,
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -390742,7 +391196,8 @@
 "friendly_fire":true,
 "loudness":10.0,
 "single_use":true,
-"value":20.0
+"value":20.0,
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -390773,7 +391228,8 @@
 "integrity":2.0,
 "value":10.0,
 "color":"gray",
-"dmg_blast":200.0
+"dmg_blast":200.0,
+"price_letters":"kvxq"
 },
 "ops":[
 [
@@ -392575,7 +393031,8 @@
 "burn_time":20.0,
 "dmg_blast":150.0,
 "dmg_fire":100.0,
-"color":"clear"
+"color":"clear",
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -395380,7 +395837,8 @@
 "luminosity":1.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -395543,7 +396001,8 @@
 "dmg_fire":40.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -395682,7 +396141,8 @@
 "luminosity":2.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -395707,7 +396167,8 @@
 "luminosity":2.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -395762,7 +396223,8 @@
 "inflict_poison":20.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -395787,7 +396249,8 @@
 "inflict_burn":4.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -399217,7 +399680,8 @@
 "fertility":4.0,
 "nature":[
 "stone"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[
 [
@@ -400495,7 +400959,8 @@
 "single_use":true,
 "nature":[
 "spirit"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -400530,7 +400995,8 @@
 "luminosity":4.0,
 "nature":[
 "spirit"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -400589,7 +401055,8 @@
 "land"
 ],
 "movement_cost":5.0,
-"dmg_earth":150.0
+"dmg_earth":150.0,
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -400701,7 +401168,8 @@
 "attack_area":1.0,
 "attack_windup":2.0,
 "inflict_bleed":6.0,
-"friendly_fire":true
+"friendly_fire":true,
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -401713,7 +402181,8 @@
 "food_need":0.04,
 "nature":[
 "flesh"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -401848,7 +402317,8 @@
 ],
 "nature":[
 "flesh"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -401992,7 +402462,8 @@
 "training":8.0,
 "nature":[
 "flesh"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -403998,6 +404469,7 @@
 "nature":[
 "flesh"
 ],
+"price_letters":"hkvz",
 "command_limit":6.0
 },
 "ops":[]
@@ -404435,7 +404907,8 @@
 "food_need":0.03,
 "nature":[
 "flesh"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -406851,7 +407324,8 @@
 ],
 "nature":[
 "flesh"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -407486,6 +407960,7 @@
 "nature":[
 "flesh"
 ],
+"price_letters":"hkvz",
 "denies_revival":true
 },
 "ops":[]
@@ -408567,7 +409042,8 @@
 "food_need":0.05,
 "nature":[
 "flesh"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -409433,7 +409909,8 @@
 "food_need":0.05,
 "nature":[
 "flesh"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -409495,6 +409972,7 @@
 "nature":[
 "flesh"
 ],
+"price_letters":"hkvz",
 "denies_revival":true
 },
 "ops":[]
@@ -409884,7 +410362,8 @@
 "food_need":0.2,
 "nature":[
 "flesh"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -409988,7 +410467,8 @@
 "food_need":0.08,
 "nature":[
 "flesh"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -412180,6 +412660,7 @@
 "nature":[
 "flesh"
 ],
+"price_letters":"hkvz",
 "revives":0.5
 },
 "ops":[]
@@ -418226,7 +418707,8 @@
 ],
 "nature":[
 "flesh"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -418643,6 +419125,7 @@
 "nature":[
 "flesh"
 ],
+"price_letters":"hkvz",
 "revives":0.5,
 "raises":"skeleton"
 },
@@ -421137,6 +421620,7 @@
 "nature":[
 "flesh"
 ],
+"price_letters":"hkvz",
 "raises":"skeleton"
 },
 "ops":[]
@@ -422252,7 +422736,8 @@
 "water"
 ],
 "luminosity":5.0,
-"friendly_fire":true
+"friendly_fire":true,
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -422415,7 +422900,8 @@
 "land",
 "water"
 ],
-"friendly_fire":true
+"friendly_fire":true,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -422436,6 +422922,7 @@
 "repulsion",
 "rubber"
 ],
+"price_letters":"wjxq",
 "inflict_censor":6
 },
 "ops":[
@@ -422762,7 +423249,8 @@
 "shelter",
 "bunker",
 "magnetosphere"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -423069,7 +423557,8 @@
 "repulsion",
 "inertia",
 "tether"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -423086,6 +423575,7 @@
 "dmg_light":120.0,
 "inflict_blind":6.0,
 "friendly_fire":true,
+"price_letters":"wjxq",
 "haunts":true
 },
 "ops":[]
@@ -423102,7 +423592,8 @@
 "dmg_radiation":500.0,
 "dmg_electric":300.0,
 "luminosity":8.0,
-"friendly_fire":true
+"friendly_fire":true,
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -423158,7 +423649,8 @@
 "bunker",
 "magnetosphere",
 "spacesuit"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -423776,7 +424268,8 @@
 "luminosity":6.0,
 "loudness":7.0,
 "friendly_fire":true,
-"single_use":true
+"single_use":true,
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -423821,6 +424314,7 @@
 "siege":3.0,
 "inflict_deaf":10.0,
 "friendly_fire":true,
+"price_letters":"wjxq",
 "double_letters":"all"
 },
 "ops":[]
@@ -424607,6 +425101,7 @@
 "anchor"
 ],
 "inflict_drunk":3.0,
+"price_letters":"wjxq",
 "haunts":true
 },
 "ops":[
@@ -426252,6 +426747,7 @@
 "nature":[
 "fire"
 ],
+"price_letters":"kvxq",
 "raises":"skeleton"
 },
 "ops":[
@@ -429967,7 +430463,8 @@
 ],
 "nature":[
 "plant"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -430107,7 +430604,8 @@
 ],
 "nature":[
 "plant"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -430722,7 +431220,8 @@
 "plant",
 "wood"
 ],
-"inflict_leash":120.0
+"inflict_leash":120.0,
+"price_letters":"hkvz"
 },
 "ops":[
 [
@@ -431156,7 +431655,8 @@
 "color":"brown",
 "dmg_poison":100.0,
 "inflict_root":20.0,
-"dmg_suffocation":150.0
+"dmg_suffocation":150.0,
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -431278,7 +431778,8 @@
 "color":"white",
 "dmg_poison":600.0,
 "inflict_poison":120.0,
-"stealth":5.0
+"stealth":5.0,
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -431296,7 +431797,8 @@
 "color":"white",
 "dmg_poison":400.0,
 "inflict_poison":30.0,
-"inflict_stun":10.0
+"inflict_stun":10.0,
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -431314,7 +431816,8 @@
 "value":100.0,
 "color":"green",
 "dmg_poison":120.0,
-"inflict_poison":30.0
+"inflict_poison":30.0,
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -443337,7 +443840,8 @@
 "color":"green",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -443368,7 +443872,8 @@
 "color":"brown",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -443399,7 +443904,8 @@
 "color":"brown",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -443439,7 +443945,8 @@
 "color":"green",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -443466,7 +443973,8 @@
 "color":"green",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -443497,7 +444005,8 @@
 "color":"brown",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -443528,7 +444037,8 @@
 "color":"brown",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -443560,7 +444070,8 @@
 "color":"green",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -443592,7 +444103,8 @@
 "color":"green",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -443650,7 +444162,8 @@
 "color":"gray",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -443682,7 +444195,8 @@
 "color":"brown",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -443712,7 +444226,8 @@
 "color":"gray",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -443776,7 +444291,8 @@
 "color":"gray",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -443809,7 +444325,8 @@
 "color":"green",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -443847,7 +444364,8 @@
 "color":"black",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -443876,7 +444394,8 @@
 "color":"brown",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -443914,7 +444433,8 @@
 "color":"black",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -443943,7 +444463,8 @@
 "color":"brown",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -443971,7 +444492,8 @@
 "color":"red",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -443999,7 +444521,8 @@
 "color":"red",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -444115,7 +444638,8 @@
 "color":"green",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -444243,7 +444767,8 @@
 "color":"brown",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -444270,7 +444795,8 @@
 "color":"brown",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -444297,7 +444823,8 @@
 "color":"orange",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -444328,7 +444855,8 @@
 "color":"green",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -444388,7 +444916,8 @@
 "color":"green",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -444453,7 +444982,8 @@
 "color":"green",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -444481,7 +445011,8 @@
 "color":"green",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -444509,7 +445040,8 @@
 "color":"green",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -444535,7 +445067,8 @@
 "color":"brown",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -444566,7 +445099,8 @@
 "color":"gray",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -444597,7 +445131,8 @@
 "color":"blue",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -444625,7 +445160,8 @@
 "color":"green",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -444659,7 +445195,8 @@
 "color":"black",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -444724,7 +445261,8 @@
 "color":"black",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -444781,7 +445319,8 @@
 "color":"brown",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -444809,7 +445348,8 @@
 "color":"brown",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -444847,7 +445387,8 @@
 "color":"teal",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -444875,7 +445416,8 @@
 "color":"teal",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -444933,6 +445475,7 @@
 "nature":[
 "reptile"
 ],
+"price_letters":"hkvz",
 "inflict_amnesia":4
 },
 "ops":[]
@@ -444959,7 +445502,8 @@
 "color":"orange",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -444992,7 +445536,8 @@
 "color":"gray",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -445023,7 +445568,8 @@
 "color":"teal",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -445213,7 +445759,8 @@
 "color":"brown",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -445300,7 +445847,8 @@
 "color":"gray",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -445331,7 +445879,8 @@
 "color":"gray",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -445370,7 +445919,8 @@
 "color":"green",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -445469,7 +446019,8 @@
 "color":"red",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -445526,7 +446077,8 @@
 "color":"green",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -445559,7 +446111,8 @@
 "color":"green",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -445589,7 +446142,8 @@
 "color":"brown",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -445681,7 +446235,8 @@
 "color":"gray",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -445708,7 +446263,8 @@
 "color":"green",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -445745,7 +446301,8 @@
 "color":"brown",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -445781,7 +446338,8 @@
 "color":"green",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -445822,7 +446380,8 @@
 "color":"green",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -445856,7 +446415,8 @@
 "color":"brown",
 "nature":[
 "reptile"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -446091,7 +446651,8 @@
 "melting_point":1200.0,
 "nature":[
 "stone"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -448561,7 +449122,8 @@
 ],
 "nature":[
 "plant"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -454653,7 +455215,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -456634,7 +457197,8 @@
 "color":"white",
 "nature":[
 "holy"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -456697,7 +457261,8 @@
 "color":"green",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -456765,7 +457330,8 @@
 ],
 "nature":[
 "holy"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -456796,7 +457362,8 @@
 "upkeep_faith":2.0,
 "nature":[
 "holy"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -456827,7 +457394,8 @@
 "color":"blue",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -456861,7 +457429,8 @@
 "color":"brown",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -457001,7 +457570,8 @@
 "color":"brown",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -457032,7 +457602,8 @@
 "color":"gray",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -457069,7 +457640,8 @@
 "training":5.0,
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -457100,7 +457672,8 @@
 "color":"black",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -457125,7 +457698,8 @@
 ],
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -457181,7 +457755,8 @@
 "food_need":1.0,
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -457251,7 +457826,8 @@
 "color":"yellow",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -457347,7 +457923,8 @@
 "diet":"carnivore",
 "nature":[
 "insect"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -457375,7 +457952,8 @@
 "nature":[
 "spirit",
 "demon"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -457407,7 +457985,8 @@
 "nature":[
 "holy",
 "demon"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -457452,7 +458031,8 @@
 "nature":[
 "demon",
 "fire"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -457484,7 +458064,8 @@
 "nature":[
 "holy"
 ],
-"food_need":0.0
+"food_need":0.0,
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -457515,7 +458096,8 @@
 "nature":[
 "spirit",
 "fire"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -457546,7 +458128,8 @@
 "nature":[
 "spirit",
 "fire"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -457608,7 +458191,8 @@
 "nature":[
 "holy",
 "fae"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[
 [
@@ -457716,7 +458300,8 @@
 "nature":[
 "spirit",
 "fire"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -457807,7 +458392,8 @@
 "color":"brown",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[
 [
@@ -457967,7 +458553,8 @@
 "demon"
 ],
 "res_fire":0.8,
-"food_need":0.0
+"food_need":0.0,
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -457997,7 +458584,8 @@
 "value":8000.0,
 "nature":[
 "fire"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -458039,7 +458627,8 @@
 "color":"orange",
 "nature":[
 "fire"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -458080,7 +458669,8 @@
 "color":"orange",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -458142,7 +458732,8 @@
 "color":"brown",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -458238,7 +458829,8 @@
 "nature":[
 "spirit",
 "holy"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[
 [
@@ -458280,7 +458872,8 @@
 "color":"green",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -458353,7 +458946,8 @@
 "color":"yellow",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -458394,7 +458988,8 @@
 "color":"yellow",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -458429,7 +459024,8 @@
 "nature":[
 "holy",
 "fae"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[
 [
@@ -458503,7 +459099,8 @@
 "color":"white",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -458592,7 +459189,8 @@
 "nature":[
 "spirit",
 "fire"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -458680,7 +459278,8 @@
 "nature":[
 "spirit",
 "demon"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -458711,7 +459310,8 @@
 "nature":[
 "spirit",
 "fire"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -458742,7 +459342,8 @@
 "nature":[
 "spirit",
 "fire"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -458778,6 +459379,7 @@
 "nature":[
 "beast"
 ],
+"price_letters":"kzxq",
 "last_stand":10.0
 },
 "ops":[]
@@ -458814,7 +459416,8 @@
 "color":"black",
 "nature":[
 "demon"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -458850,7 +459453,8 @@
 "color":"black",
 "nature":[
 "demon"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -458882,7 +459486,8 @@
 "color":"yellow",
 "nature":[
 "holy"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[
 [
@@ -458923,7 +459528,8 @@
 "color":"orange",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[
 [
@@ -459002,7 +459608,8 @@
 "nature":[
 "undead",
 "demon"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -459065,6 +459672,7 @@
 "nature":[
 "undead"
 ],
+"price_letters":"kzxq",
 "prevents_death":1.0,
 "raises":"skeleton"
 },
@@ -459106,7 +459714,8 @@
 "color":"green",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -459138,6 +459747,7 @@
 "nature":[
 "beast"
 ],
+"price_letters":"kzxq",
 "raises":"vampire"
 },
 "ops":[]
@@ -459178,7 +459788,8 @@
 "color":"red",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -459268,7 +459879,8 @@
 "color":"teal",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -459306,7 +459918,8 @@
 ],
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[
 [
@@ -459350,7 +459963,8 @@
 "color":"brown",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -459377,7 +459991,8 @@
 "loudness":7.0,
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -459451,7 +460066,8 @@
 "color":"green",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -459486,7 +460102,8 @@
 "nature":[
 "holy",
 "fae"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -459520,7 +460137,8 @@
 "color":"teal",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -459622,7 +460240,8 @@
 "strength":9.0,
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -459650,7 +460269,8 @@
 "color":"green",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -459682,7 +460302,8 @@
 "color":"white",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -459710,7 +460331,8 @@
 "color":"green",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -459763,7 +460385,8 @@
 "color":"black",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[
 [
@@ -459801,7 +460424,8 @@
 "color":"yellow",
 "nature":[
 "holy"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[
 [
@@ -459845,7 +460469,8 @@
 "color":"orange",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -459886,6 +460511,7 @@
 "nature":[
 "spirit"
 ],
+"price_letters":"kzxq",
 "raises":"skeleton",
 "denies_revival":true
 },
@@ -459986,7 +460612,8 @@
 "food_need":5.0,
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -460024,6 +460651,7 @@
 "nature":[
 "holy"
 ],
+"price_letters":"kzxq",
 "prevents_death":1.0,
 "revives":0.5
 },
@@ -460093,7 +460721,8 @@
 "color":"brown",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -460241,7 +460870,8 @@
 "color":"green",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -460312,7 +460942,8 @@
 "nature":[
 "holy",
 "fire"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -460382,7 +461013,8 @@
 "color":"teal",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[
 [
@@ -460479,6 +461111,7 @@
 "nature":[
 "beast"
 ],
+"price_letters":"kzxq",
 "inflict_gag":5
 },
 "ops":[]
@@ -460539,7 +461172,8 @@
 ],
 "nature":[
 "demon"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -460600,7 +461234,8 @@
 "color":"green",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -460631,7 +461266,8 @@
 "color":"red",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -460665,7 +461301,8 @@
 "res_electric":1.0,
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -460729,7 +461366,8 @@
 "color":"green",
 "nature":[
 "wood"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[
 [
@@ -460810,7 +461448,8 @@
 "strength":9.0,
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -460844,7 +461483,8 @@
 "color":"red",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -460876,7 +461516,8 @@
 "color":"blue",
 "nature":[
 "fae"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -460915,6 +461556,7 @@
 "demon",
 "undead"
 ],
+"price_letters":"kzxq",
 "prevents_death":1.0,
 "raises":"vampire"
 },
@@ -460952,7 +461594,8 @@
 "color":"white",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -460984,6 +461627,7 @@
 "nature":[
 "beast"
 ],
+"price_letters":"kzxq",
 "raises":"vampire"
 },
 "ops":[]
@@ -461024,7 +461668,8 @@
 "color":"green",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -461055,7 +461700,8 @@
 "color":"gray",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -461093,7 +461739,8 @@
 "color":"red",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -461128,7 +461775,8 @@
 "diet":"omnivore",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -461161,7 +461809,8 @@
 "color":"brown",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -461194,7 +461843,8 @@
 "color":"brown",
 "nature":[
 "beast"
-]
+],
+"price_letters":"kzxq"
 },
 "ops":[]
 },
@@ -461220,7 +461870,8 @@
 "color":"brown",
 "nature":[
 "wood"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -461846,7 +462497,8 @@
 "melting_point":1200.0,
 "nature":[
 "stone"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -463410,7 +464062,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -464337,7 +464990,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -464479,6 +465133,7 @@
 "nature":[
 "metal"
 ],
+"price_letters":"kvxq",
 "inflict_amnesia":4
 },
 "ops":[]
@@ -464517,6 +465172,7 @@
 "nature":[
 "metal"
 ],
+"price_letters":"kvxq",
 "inflict_amnesia":4
 },
 "ops":[]
@@ -465407,7 +466063,8 @@
 "melting_point":1538.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -465444,7 +466101,8 @@
 "melting_point":1538.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -465534,7 +466192,8 @@
 "melting_point":1538.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[
 [
@@ -468625,7 +469284,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -468655,7 +469315,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -468682,7 +469343,8 @@
 "melting_point":660.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -468714,7 +469376,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -468747,7 +469410,8 @@
 "melting_point":660.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -468778,7 +469442,8 @@
 "melting_point":660.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -468841,7 +469506,8 @@
 "melting_point":660.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[
 [
@@ -468918,7 +469584,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[
 [
@@ -468955,6 +469622,7 @@
 "metal",
 "machine"
 ],
+"price_letters":"mvxz",
 "revives":0.5
 },
 "ops":[
@@ -468990,7 +469658,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -469019,7 +469688,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -469075,7 +469745,8 @@
 "nature":[
 "wood",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -469165,7 +469836,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -469192,7 +469864,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -469246,7 +469919,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -469277,7 +469951,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -469307,7 +469982,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -469338,7 +470014,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[
 [
@@ -469403,7 +470080,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -469489,7 +470167,8 @@
 "melting_point":660.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -469524,7 +470203,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -469559,7 +470239,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -469594,7 +470275,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -469625,7 +470307,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -469656,7 +470339,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -469684,7 +470368,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -469834,7 +470519,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -469902,7 +470588,8 @@
 "melting_point":660.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -469963,7 +470650,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -469997,7 +470685,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -470180,7 +470869,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[
 [
@@ -470266,7 +470956,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -470296,7 +470987,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -470372,7 +471064,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -470397,7 +471090,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -470426,7 +471120,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -470453,7 +471148,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -470481,7 +471177,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -470511,7 +471208,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -470537,7 +471235,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -470575,7 +471274,8 @@
 "flammability":7.0,
 "nature":[
 "wood"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -470613,7 +471313,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -470711,7 +471412,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -470743,7 +471445,8 @@
 "melting_point":1100.0,
 "nature":[
 "glass"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -470772,7 +471475,8 @@
 "flammability":7.0,
 "nature":[
 "wood"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -470805,7 +471509,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -470852,7 +471557,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -470900,7 +471606,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -470929,7 +471636,8 @@
 "flammability":7.0,
 "nature":[
 "wood"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -470998,7 +471706,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -471030,7 +471739,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -471060,7 +471770,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -471100,7 +471811,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -471139,7 +471851,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[
 [
@@ -471184,7 +471897,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -471220,7 +471934,8 @@
 "flammability":7.0,
 "nature":[
 "wood"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -471288,7 +472003,8 @@
 "flammability":7.0,
 "nature":[
 "wood"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -471311,7 +472027,8 @@
 "flammability":7.0,
 "nature":[
 "wood"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -471343,7 +472060,8 @@
 "melting_point":660.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[
 [
@@ -471394,7 +472112,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -471440,7 +472159,8 @@
 "melting_point":1538.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -471499,7 +472219,8 @@
 "flammability":7.0,
 "nature":[
 "wood"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -471527,7 +472248,8 @@
 "flammability":7.0,
 "nature":[
 "wood"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -471561,7 +472283,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[
 [
@@ -471600,7 +472323,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -471629,7 +472353,8 @@
 "flammability":7.0,
 "nature":[
 "wood"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -471662,7 +472387,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -471699,7 +472425,8 @@
 "melting_point":1100.0,
 "nature":[
 "glass"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -471730,7 +472457,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -471759,7 +472487,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -471793,7 +472522,8 @@
 "melting_point":1100.0,
 "nature":[
 "glass"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -471849,7 +472579,8 @@
 "color":"white",
 "nature":[
 "wood"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -471882,7 +472613,8 @@
 "nature":[
 "metal",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -471912,7 +472644,8 @@
 "flammability":7.0,
 "nature":[
 "wood"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -471977,7 +472710,8 @@
 "flammability":7.0,
 "nature":[
 "wood"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -472011,7 +472745,8 @@
 "melting_point":1100.0,
 "nature":[
 "glass"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -472042,7 +472777,8 @@
 "color":"white",
 "nature":[
 "wood"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -472073,7 +472809,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -472109,7 +472846,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -472145,7 +472883,8 @@
 "melting_point":1668.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -472178,7 +472917,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -472208,7 +472948,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -472241,7 +472982,8 @@
 "flammability":7.0,
 "nature":[
 "wood"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -472272,7 +473014,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -472304,7 +473047,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -472336,7 +473080,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -472363,7 +473108,8 @@
 "flammability":7.0,
 "nature":[
 "wood"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -472392,7 +473138,8 @@
 "melting_point":1100.0,
 "nature":[
 "glass"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -472469,7 +473216,8 @@
 "melting_point":1100.0,
 "nature":[
 "glass"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -472497,7 +473245,8 @@
 "flammability":7.0,
 "nature":[
 "wood"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -472776,7 +473525,8 @@
 "portable":false,
 "nature":[
 "water"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -473035,7 +473785,8 @@
 ],
 "nature":[
 "water"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[]
 },
@@ -473236,7 +473987,8 @@
 ],
 "nature":[
 "water"
-]
+],
+"price_letters":"kvxq"
 },
 "ops":[
 [
@@ -473514,7 +474266,8 @@
 "nature":[
 "wood",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -473548,7 +474301,8 @@
 "nature":[
 "wood",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -473583,7 +474337,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -473619,7 +474374,8 @@
 "melting_point":1538.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -474055,7 +474811,8 @@
 "melting_point":930.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -474372,7 +475129,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -474738,7 +475496,8 @@
 "melting_point":950.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -475069,7 +475828,8 @@
 "melting_point":1538.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -475149,7 +475909,8 @@
 "siege":8.0,
 "friendly_fire":true,
 "loudness":10.0,
-"res_water":1.0
+"res_water":1.0,
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -475233,7 +475994,8 @@
 "melting_point":1538.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -475328,7 +476090,8 @@
 "melting_point":1538.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -475359,7 +476122,8 @@
 "melting_point":1538.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -475394,7 +476158,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -475491,7 +476256,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -475560,7 +476326,8 @@
 "melting_point":1538.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -475605,7 +476372,8 @@
 "color":"brown",
 "nature":[
 "wood"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -475632,7 +476400,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -475827,7 +476596,8 @@
 "nature":[
 "wood",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -475860,7 +476630,8 @@
 "melting_point":1538.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -475956,7 +476727,8 @@
 "melting_point":1538.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -476117,7 +476889,8 @@
 "nature":[
 "wood",
 "machine"
-]
+],
+"price_letters":"mvxz"
 },
 "ops":[]
 },
@@ -476173,7 +476946,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -476337,7 +477111,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -476590,7 +477365,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -476624,7 +477400,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -477602,7 +478379,8 @@
 "color":"brown",
 "nature":[
 "wood"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -478045,7 +478823,8 @@
 "siege":5.0,
 "placeable_on":[
 "water"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -478266,7 +479045,8 @@
 "melting_point":1400.0,
 "nature":[
 "metal"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -478450,7 +479230,8 @@
 "counters":[
 "calm",
 "lull"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -478488,7 +479269,8 @@
 "counters":[
 "rod",
 "shelter"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[]
 },
@@ -478510,7 +479292,8 @@
 "calm",
 "breakwater",
 "seawall"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -478800,7 +479583,8 @@
 "friendly_fire":true,
 "counters":[
 "updraft"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -478885,7 +479669,8 @@
 "tent",
 "igloo",
 "umbrella"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -478947,6 +479732,7 @@
 "torrent",
 "snow"
 ],
+"price_letters":"wjxq",
 "storm_shift":120.0
 },
 "ops":[
@@ -479034,7 +479820,8 @@
 "heatwave",
 "drought",
 "calm"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -479078,7 +479865,8 @@
 "umbrella",
 "roof",
 "helmet"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -479257,7 +480045,8 @@
 "smog",
 "haze",
 "calm"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -479534,7 +480323,8 @@
 "counters":[
 "breakwater",
 "seawall"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -479561,7 +480351,8 @@
 "rain",
 "monsoon",
 "oasis"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -479720,7 +480511,8 @@
 "thaw",
 "heatwave",
 "chinook"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -479806,7 +480598,8 @@
 "friendly_fire":true,
 "counters":[
 "calm"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -479984,7 +480777,8 @@
 "rod",
 "shelter",
 "bunker"
-]
+],
+"price_letters":"vkxz"
 },
 "ops":[
 [
@@ -480018,6 +480812,7 @@
 "lull",
 "calm"
 ],
+"price_letters":"wjxq",
 "haunts":true
 },
 "ops":[
@@ -480053,7 +480848,8 @@
 "calm",
 "breakwater",
 "anchor"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[]
 },
@@ -480277,7 +481073,8 @@
 "calm",
 "lull",
 "shelter"
-]
+],
+"price_letters":"wjxq"
 },
 "ops":[
 [
@@ -485520,7 +486317,8 @@
 "food_need":0.03,
 "nature":[
 "flesh"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },
@@ -486338,6 +487136,7 @@
 "nature":[
 "flesh"
 ],
+"price_letters":"hkvz",
 "inflict_amnesia":4
 },
 "ops":[]
@@ -492720,7 +493519,8 @@
 ],
 "nature":[
 "flesh"
-]
+],
+"price_letters":"hkvz"
 },
 "ops":[]
 },

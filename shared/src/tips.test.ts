@@ -100,7 +100,7 @@ describe("the best words to spell now", () => {
     for (const g of new Set(best.map((b) => b.group))) expect(best.filter((b) => b.group === g).length).toBeLessThanOrEqual(2);
   });
   it("keeps a place for the biggest word on offer (the playtester's METEOR)", () => {
-    expect(bestWords(dict, hand("meteortrollsa"), fresh).map((b) => b.word)).toContain("meteor");
+    expect(bestWords(dict, hand("meteortrollsaw"), fresh).map((b) => b.word)).toContain("meteor");
   });
   it("once armed and mounted, weapons and rides give way; hurt, something that heals comes in", () => {
     const set = bestWords(dict, hand("swordhorsee"), { armed: true, riding: true, income: 5, creatures: 2, health: 0.3 });

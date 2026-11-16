@@ -376,6 +376,7 @@ gamble|num|0||spelled or used: stakes this many of its speller's letters on a th
 GROUPS["rules"] = """
 ban_letters|text|||letters whoever it binds cannot spell with: letters (e or qz), vowels, or top (each one's commonest held letter); a field, event or thing that radiates binds whoever its area reaches, an act passed on a person binds them, a verb its speller, a thing anyone owns its owner (shared speech.ts)
 spell_cost|num|1|x|letters a spelling costs whoever it binds, times this: 1.5 adds half the word's length again in copies of its own letters, 0.5 makes the rarer half free (shared speech.ts)
+price_letters|text|||the letters a grand word's scale is paid in besides its own, rarest last: each order of magnitude of grandeur past 1000 adds the next (shared inspect.ts `surcharge`; tools/derive.py gives them by what it is)
 word_limit|num|0|letters|the longest word whoever it binds may spell (0: no limit) (shared speech.ts)
 wild_letters|num|0||blanks: letters a spelling by whoever it binds may use without holding them, any letter not banned (shared speech.ts)
 double_letters|text|||letters that count double for whoever it binds: each one held pays for two copies (letters, vowels, consonants or all) (shared speech.ts)

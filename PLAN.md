@@ -153,7 +153,9 @@ Playtests found power arriving in huge, invisible jumps and fights ending before
   miss. Bots dodge by skill.
 - Harm from the sky and from areas is local and shown first (shared `hazard.ts`): an area strikes
   only after AREA_WARNING (3 s); one wider than CELL_FROM (8 tiles: weather, a quake) strikes in
-  cells of 2 to 4 tiles near the people inside, each marked CELL_WARNING (2.5 s) before it lands.
+  cells of 2 to 4 tiles near the people inside, each marked CELL_WARNING (2.5 s) before it lands,
+  as often as its word strikes as a whole (`cellEvery`: a STORM once in twenty seconds by someone
+  inside, not a cell for everyone; no rate, once each).
   Under a roof (an `enterable` building beside you) nothing lands; on your side's claim its
   shelter share is kept off. An area aimed elsewhere never harms its own side; one laid around its
   speller may, and the spell preview says so.
@@ -250,8 +252,10 @@ Four more shared quantities words touch, given across the dictionary by `tools/r
   NECROMANCER), graves with the rarer half of the fallen's letters (`entombs`: their TOMB takes
   all), deaths that cannot be cheated (`denies_revival`: REAPER, EXECUTION). The knocked out haunt
   as ghosts until the round ends: never alive, untouchable, they drift through everything and
-  spell `haunts` words (BOO, SCARE, CURSE, GAG: 427 of them) free every 12 s, without harm; or
-  watch the living. A `revives` word with the ghost clicked (REVIVAL, RESURRECT), or a former
+  spell `haunts` words (BOO, SCARE, CURSE, GAG: 427 of them) free every 12 s, without harm and
+  without holding anyone down (no stun, root, sleep, confusion, hypnosis or leash: fear, blindness,
+  curses and scrambles only); a ghost's area stays where it fell, gives way to its next haunting and
+  never reaches indoors; or watch the living, or follow the fight going on (F). A `revives` word with the ghost clicked (REVIVAL, RESURRECT), or a former
   follower or thing of theirs beside it (a MEDIC, their HOSPITAL), brings them back with what their
   grave holds. Last alive wins; ghosts never count.
 - The round (shared round.ts): a storm wall closes over the map: calm for three minutes, then five
@@ -260,6 +264,29 @@ Four more shared quantities words touch, given across the dictionary by `tools/r
   ARMISTICE, OVERTIME; `storm_shift`: DOOMSDAY, APOCALYPSE, a DEADLINE; `sudden_death`: a
   SHOWDOWN); bosses rise on the storm clock. The map and minimap show the wall and the next circle,
   with a chip timing it. Bots head inside and use every system through the same code.
+
+## Playtest batch 2 (the live build)
+
+Ghosts locked the living down, a bot stun-locked a player for 140 s, a STORM spelled indoors wiped
+the lobby, a NUKE killed nobody through ARMOR, big words came early and starved, racks stalled or
+flooded, and the screen drowned in tags, toasts and numbers. The rules now, none of them caps:
+
+- Statuses that take a body out of its owner's hands (stun, freeze, sleep, root, fear, confuse,
+  hypnosis, leash, stasis) cannot be refreshed while on, and leave a resistance as they end (at least
+  4 s, half of a long one). Worn protection lends its immunities (a HELMET keeps off stuns).
+- What a breaking layer could not take carries through to the next, down to the body.
+- A wide area strikes as often as its word says, as a whole. STORM is local (200 m) and its strikes
+  wound rather than kill; the round's THUNDERSTORM too. Tournaments: rounds decided by the round's
+  weather 5 of 12 before, none after.
+- Grand words cost earned letters besides their own (`surcharge`): each order of magnitude of
+  grandeur adds one, by what the word is (`price_letters`, tools/derive.py: legends K Z X Q, beasts
+  H K V Z, machines M V X Z, weapons V K X Z, weather and disasters W J X Q). Previews and cards lead
+  with upkeep. Big bodies are drawn at their stature.
+- Steady income of a hoarded letter tapers (`hoardShare`); a rack with no vowel forages one; the
+  empty best-words strip points to the market; you can trade at home on your own claim (a letter
+  dearer, no T).
+- One "what is stopping me" line (worst status, who, the word that ends it); routine notices in the
+  feed; damage numbers on one target add up; no own tags round your mount.
 
 ## Later
 
