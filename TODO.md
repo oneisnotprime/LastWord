@@ -1,5 +1,16 @@
 # Last Word: to-do
 
+## Fork: turn-based battles (branch `turn-based`)
+
+This branch follows `docs/TURN_BASED_PLAN.md` (section 16 lists the fork's decisions). It departs
+from two "Decided" lines below, on purpose, and only on this branch:
+
+- "Combat is stat-based ... resolved in world ticks": fights between people are resolved in
+  battle rounds (shared battle.ts), one round one second of the old fight. The stats are the same.
+  Real time is still there behind the room option `combat: "realtime"`.
+- "about 100 players, constant PvP": the fork tunes for 8 to 20 players; a battle takes two
+  people out of the map for about a minute.
+
 ## Decided
 
 - 2D top-down, pixel style, one generated map per instance, about 100 players, constant PvP.
